@@ -1,0 +1,523 @@
+<?php
+
+
+namespace LoveThatFit\AdminBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="product")
+ */
+
+class Product
+{   
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="ClothingType", inversedBy="products")
+     * @ORM\JoinColumn(name="clothing_type_id", referencedColumnName="id")
+     */
+    
+    protected $clothing_type;    
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="Brand", inversedBy="products")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
+     */
+    
+    
+    
+    
+    
+    protected $brand;
+    
+    
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $name;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $sku;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $image;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $waist;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $hip;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $bust;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $arm;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $leg;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $inseam;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $outseam;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $hem;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $back;
+    
+    /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $length;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $gender;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated_at;
+    
+    
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set sku
+     *
+     * @param string $sku
+     * @return Product
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+    
+        return $this;
+    }
+
+    /**
+     * Get sku
+     *
+     * @return string 
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Product
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set waist
+     *
+     * @param float $waist
+     * @return Product
+     */
+    public function setWaist($waist)
+    {
+        $this->waist = $waist;
+    
+        return $this;
+    }
+
+    /**
+     * Get waist
+     *
+     * @return float 
+     */
+    public function getWaist()
+    {
+        return $this->waist;
+    }
+
+    /**
+     * Set hip
+     *
+     * @param float $hip
+     * @return Product
+     */
+    public function setHip($hip)
+    {
+        $this->hip = $hip;
+    
+        return $this;
+    }
+
+    /**
+     * Get hip
+     *
+     * @return float 
+     */
+    public function getHip()
+    {
+        return $this->hip;
+    }
+
+    /**
+     * Set bust
+     *
+     * @param float $bust
+     * @return Product
+     */
+    public function setBust($bust)
+    {
+        $this->bust = $bust;
+    
+        return $this;
+    }
+
+    /**
+     * Get bust
+     *
+     * @return float 
+     */
+    public function getBust()
+    {
+        return $this->bust;
+    }
+
+    /**
+     * Set arm
+     *
+     * @param float $arm
+     * @return Product
+     */
+    public function setArm($arm)
+    {
+        $this->arm = $arm;
+    
+        return $this;
+    }
+
+    /**
+     * Get arm
+     *
+     * @return float 
+     */
+    public function getArm()
+    {
+        return $this->arm;
+    }
+
+    /**
+     * Set leg
+     *
+     * @param float $leg
+     * @return Product
+     */
+    public function setLeg($leg)
+    {
+        $this->leg = $leg;
+    
+        return $this;
+    }
+
+    /**
+     * Get leg
+     *
+     * @return float 
+     */
+    public function getLeg()
+    {
+        return $this->leg;
+    }
+
+    /**
+     * Set inseam
+     *
+     * @param float $inseam
+     * @return Product
+     */
+    public function setInseam($inseam)
+    {
+        $this->inseam = $inseam;
+    
+        return $this;
+    }
+
+    /**
+     * Get inseam
+     *
+     * @return float 
+     */
+    public function getInseam()
+    {
+        return $this->inseam;
+    }
+
+    /**
+     * Set outseam
+     *
+     * @param float $outseam
+     * @return Product
+     */
+    public function setOutseam($outseam)
+    {
+        $this->outseam = $outseam;
+    
+        return $this;
+    }
+
+    /**
+     * Get outseam
+     *
+     * @return float 
+     */
+    public function getOutseam()
+    {
+        return $this->outseam;
+    }
+
+    /**
+     * Set hem
+     *
+     * @param float $hem
+     * @return Product
+     */
+    public function setHem($hem)
+    {
+        $this->hem = $hem;
+    
+        return $this;
+    }
+
+    /**
+     * Get hem
+     *
+     * @return float 
+     */
+    public function getHem()
+    {
+        return $this->hem;
+    }
+
+    /**
+     * Set back
+     *
+     * @param float $back
+     * @return Product
+     */
+    public function setBack($back)
+    {
+        $this->back = $back;
+    
+        return $this;
+    }
+
+    /**
+     * Get back
+     *
+     * @return float 
+     */
+    public function getBack()
+    {
+        return $this->back;
+    }
+
+    /**
+     * Set length
+     *
+     * @param float $length
+     * @return Product
+     */
+    public function setLength($length)
+    {
+        $this->length = $length;
+    
+        return $this;
+    }
+
+    /**
+     * Get length
+     *
+     * @return float 
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     * @return Product
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string 
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return Product
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param \DateTime $updatedAt
+     * @return Product
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set clothing_type
+     *
+     * @param LoveThatFit\AdminBundle\Entity\Brand $clothingType
+     * @return Product
+     */
+    public function setClothingType(\LoveThatFit\AdminBundle\Entity\Brand $clothingType = null)
+    {
+        $this->clothing_type = $clothingType;
+    
+        return $this;
+    }
+
+    /**
+     * Get clothing_type
+     *
+     * @return LoveThatFit\AdminBundle\Entity\Brand 
+     */
+    public function getClothingType()
+    {
+        return $this->clothing_type;
+    }
+}

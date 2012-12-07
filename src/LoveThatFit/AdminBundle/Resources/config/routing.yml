@@ -1,0 +1,13 @@
+love_that_fit_admin_homepage:
+    pattern:  /products
+    defaults: { _controller: LoveThatFitAdminBundle:Product:index }
+
+love_that_fit_admin_brands:
+    pattern:  /brands
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:index }
+
+love_that_fit_admin_types:
+    pattern:  /clothing_types
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:index }
+
+

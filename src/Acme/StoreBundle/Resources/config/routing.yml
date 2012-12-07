@@ -1,0 +1,11 @@
+acme_store_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: AcmeStoreBundle:Default:index }
+
+productCreate:
+    pattern:  /create
+    defaults: { _controller: AcmeStoreBundle:Default:create }
+
+productUpdate:
+    pattern:  /update/{id}
+    defaults: { _controller: AcmeStoreBundle:Default:update, id: 1 }
