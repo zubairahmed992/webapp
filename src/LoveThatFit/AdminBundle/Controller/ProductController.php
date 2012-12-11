@@ -11,7 +11,20 @@ class ProductController extends Controller
     {
         $products = $this->getDoctrine()
         ->getRepository('LoveThatFitAdminBundle:Product')
-         ->find(2);
-        return new Response('<html><body>'.$products->getName().'</body></html>');
+         ->findAll();
+        
+        return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', array('products'=> $products));
+    }
+    
+    public function showAction($id)
+    {
+        $product = $this->getDoctrine()
+        ->getRepository('LoveThatFitAdminBundle:Product')
+         ->findOneById($id);
+        
+        return $this->render('LoveThatFitAdminBundle:Product:show.html.twig', array('product'=> $product));
     }
 }
+
+
+

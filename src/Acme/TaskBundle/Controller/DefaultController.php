@@ -52,6 +52,10 @@ class DefaultController extends Controller
      */
       public function createAction()
     {
+          $task = new Task();
+          $task->setTask('robo dobo');
+          
+          
           return new Response('Form submitted');
       }
 }

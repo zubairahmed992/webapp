@@ -11,7 +11,16 @@ class BrandController extends Controller
     {
         $brands = $this->getDoctrine()
         ->getRepository('LoveThatFitAdminBundle:Brand')
-         ->find(1);
-        return new Response('<html><body>'.$brands->getName().'</body></html>');
+         ->findAll();
+        return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', array('brands'=> $brands));
+    }
+    
+    public function showAction($id)
+    {
+        $brand = $this->getDoctrine()
+        ->getRepository('LoveThatFitAdminBundle:Brand')
+         ->findOneById($id);
+        
+        return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array('brand'=> $brand));
     }
 }

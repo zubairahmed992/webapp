@@ -539,4 +539,9 @@ class Product
     {
         return $this->brand;
     }
+    
+    public function __construct()
+    {
+        
+    }
 }

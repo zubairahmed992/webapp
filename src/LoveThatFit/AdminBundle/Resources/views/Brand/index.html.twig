@@ -1,0 +1,24 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block h1 %}Brands{% endblock %}
+{% block title %}Brands{% endblock %}
+
+
+
+
+{% block body %}
+
+<table>
+    <tr><th>Id</th><th>Name</th><th>Logo</th><th></th></tr>
+
+{% for b in brands %}
+    <tr>
+        <td>{{b.Id}}</td>
+        <td>{{b.Name}}</td>
+        <td>{{b.Logo}}</td>
+        
+      <td><a href="{{ path('admin_brand_show', {'id': b.Id}) }}">view</a>&nbsp;|&nbsp;<a href="#">edit</a>&nbsp;|&nbsp;<a href="#">del</a></td>           
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

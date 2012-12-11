@@ -1,13 +1,29 @@
-love_that_fit_admin_homepage:
+admin_product_show:
+    pattern:  /product/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:show }
+    
+admin_products:
     pattern:  /products
     defaults: { _controller: LoveThatFitAdminBundle:Product:index }
 
-love_that_fit_admin_brands:
+
+admin_brand_show:
+    pattern:  /brand/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:show }
+    
+admin_brands:
     pattern:  /brands
     defaults: { _controller: LoveThatFitAdminBundle:Brand:index }
 
-love_that_fit_admin_types:
+    
+    
+admin_clothing_type_show:
+    pattern:  /clothing_type/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:show }
+    
+admin_clothing_types:
     pattern:  /clothing_types
     defaults: { _controller: LoveThatFitAdminBundle:ClothingType:index }
+
 
 

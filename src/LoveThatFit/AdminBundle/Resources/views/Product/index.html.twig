@@ -1,0 +1,35 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block title %}Products{% endblock %}
+{% block h1 %}Products{% endblock %}
+
+{% block body %}
+
+<table>
+    <tr><th>Id</th><th>Name</th><th>Length</th><th>Sku</th><th>Gender</th><th>WAIST</th><th>HIP</th><th>BUST</th><th>ARM</th><th>LEG</th><th>INSEAM</th><th>OUTSEAM</th><th>HEM</th><th>	
+            Back</th><th>BrandId</th><th>ClothingTypeId</th></tr>
+
+{% for p in products %}
+    <tr>
+        <td>{{p.Id}}</td>
+        <td>{{p.Name}}</td>
+        <td>{{p.Length}}</td>
+        <td>{{p.Sku}}</td>
+        <td>{{p.Gender}}</td>
+        <td>{{p.Waist}}</td>
+        <td>{{p.Hip}}</td>
+        <td>{{p.Bust}}</td>
+        <td>{{p.Arm}}</td>
+        <td>{{p.Leg}}</td>
+        <td>{{p.Inseam}}</td>
+        <td>{{p.Outseam}}</td>
+        <td>{{p.Hem}}</td>
+        <td>{{p.Back}}</td>
+        <td>{{p.Brand.Name}}</td>
+        <td>{{p.ClothingType.Name}}</td>
+        <td>
+  <a href="{{ path('admin_product_show', {'id': p.Id}) }}">view</a>&nbsp;|&nbsp;<a href="#">edit</a>&nbsp;|&nbsp;<a href="#">del</a></td>           
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

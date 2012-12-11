@@ -11,7 +11,16 @@ class ClothingTypeController extends Controller
     {
         $clothing_types = $this->getDoctrine()
         ->getRepository('LoveThatFitAdminBundle:ClothingType')
-         ->find(2);
-        return new Response('<html><body>'.$clothing_types->getName().'</body></html>');
+         ->findAll();
+        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types'=> $clothing_types));
+    }
+    
+    public function showAction($id)
+    {
+        $clothing_type = $this->getDoctrine()
+        ->getRepository('LoveThatFitAdminBundle:ClothingType')
+         ->findOneById($id);
+        
+        return $this->render('LoveThatFitAdminBundle:ClothingType:show.html.twig', array('clothing_type'=> $clothing_type));
     }
 }

@@ -1,0 +1,24 @@
+
+
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block h1 %}Clothing Types{% endblock %}
+
+{% block title %}Clothing Types{% endblock %}
+
+
+{% block body %}
+
+<table>
+    <tr><th>Id</th><th>Name</th><th>Target</th><th></th></tr>
+
+{% for ct in clothing_types %}
+    <tr>
+        <td>{{ct.Id}}</td>
+        <td>{{ct.Name}}</td>
+        <td>{{ct.Target}}</td>
+        <td><a href="{{ path('admin_clothing_type_show', {'id': ct.Id}) }}">view</a>&nbsp;|&nbsp;<a href="#">edit</a>&nbsp;|&nbsp;<a href="#">del</a></td>           
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}
