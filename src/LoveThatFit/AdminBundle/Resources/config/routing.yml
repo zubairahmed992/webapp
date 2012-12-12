@@ -1,29 +1,37 @@
+#-------------------------------------------------------------
+#-------------- ADMIN ------------------------
+#-------------------------------------------------------------
+
+
+
+#-------------- PRODUCT ------------------------
+
 admin_product_show:
-    pattern:  /product/{id}
+    pattern:  /admin/product/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:Product:show }
     
 admin_products:
-    pattern:  /products
+    pattern:  /admin/products
     defaults: { _controller: LoveThatFitAdminBundle:Product:index }
 
-
-admin_brand_show:
-    pattern:  /brand/{id}
-    defaults: { _controller: LoveThatFitAdminBundle:Brand:show }
+admin_product_update:
+    pattern:  /admin/product/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Product:update" }
+    requirements: { _method: post }    
     
-admin_brands:
-    pattern:  /brands
-    defaults: { _controller: LoveThatFitAdminBundle:Brand:index }
+    #admin_product_routes:
+    #resource: "@LoveThatFitAdminBundle/Resources/config/routing/product.yml"
+    #prefix:   /
 
-    
-    
-admin_clothing_type_show:
-    pattern:  /clothing_type/{id}
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:show }
-    
-admin_clothing_types:
-    pattern:  /clothing_types
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:index }
+#-------------- BRAND ------------------------
 
+admin_brand_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/brand.yml"
+    prefix:   /
 
+    #-------------- CLOTHING TYPE ------------------------
+    
+admin_clothing_type_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/clothing_type.yml"
+    prefix:   /
 

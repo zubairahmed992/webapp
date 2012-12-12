@@ -9,3 +9,7 @@ productCreate:
 productUpdate:
     pattern:  /update/{id}
     defaults: { _controller: AcmeStoreBundle:Default:update, id: 1 }
+
+acme_store_contactinfo:
+    resource: "@AcmeStoreBundle/Resources/config/routing/contactinfo.yml"
+    prefix:   /

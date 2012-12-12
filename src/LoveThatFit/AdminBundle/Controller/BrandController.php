@@ -9,18 +9,24 @@ class BrandController extends Controller
 {
     public function indexAction()
     {
-        $brands = $this->getDoctrine()
+        $entity = $this->getDoctrine()
         ->getRepository('LoveThatFitAdminBundle:Brand')
          ->findAll();
-        return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', array('brands'=> $brands));
+        return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', array('brands'=> $entity));
     }
     
     public function showAction($id)
     {
-        $brand = $this->getDoctrine()
+        $entity = $this->getDoctrine()
         ->getRepository('LoveThatFitAdminBundle:Brand')
-         ->findOneById($id);
+         ->find($id);
+         
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Brand.');
+        }
         
-        return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array('brand'=> $brand));
+        return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
+            'brand'=> $entity
+            ));
     }
 }

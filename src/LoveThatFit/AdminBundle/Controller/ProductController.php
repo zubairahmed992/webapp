@@ -18,11 +18,17 @@ class ProductController extends Controller
     
     public function showAction($id)
     {
-        $product = $this->getDoctrine()
+        $entity = $this->getDoctrine()
         ->getRepository('LoveThatFitAdminBundle:Product')
-         ->findOneById($id);
+         ->find($id);
         
-        return $this->render('LoveThatFitAdminBundle:Product:show.html.twig', array('product'=> $product));
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+        
+        return $this->render('LoveThatFitAdminBundle:Product:show.html.twig', array(
+            'product'=> $entity
+            ));
     }
 }
 

@@ -1,0 +1,30 @@
+contactinfo:
+    pattern:  /contactinfo
+    defaults: { _controller: "AcmeStoreBundle:Contactinfo:index" }
+
+contactinfo_show:
+    pattern:  /contactinfo/{id}/show
+    defaults: { _controller: "AcmeStoreBundle:Contactinfo:show" }
+
+contactinfo_new:
+    pattern:  /contactinfo/new
+    defaults: { _controller: "AcmeStoreBundle:Contactinfo:new" }
+
+contactinfo_create:
+    pattern:  /contactinfo/create
+    defaults: { _controller: "AcmeStoreBundle:Contactinfo:create" }
+    requirements: { _method: post }
+
+contactinfo_edit:
+    pattern:  /contactinfo/{id}/edit
+    defaults: { _controller: "AcmeStoreBundle:Contactinfo:edit" }
+
+contactinfo_update:
+    pattern:  /contactinfo/{id}/update
+    defaults: { _controller: "AcmeStoreBundle:Contactinfo:update" }
+    requirements: { _method: post }
+
+contactinfo_delete:
+    pattern:  /contactinfo/{id}/delete
+    defaults: { _controller: "AcmeStoreBundle:Contactinfo:delete" }
+    requirements: { _method: post }

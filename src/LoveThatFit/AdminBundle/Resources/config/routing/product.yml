@@ -1,0 +1,31 @@
+admin_products:
+    pattern:  /products
+    defaults: { _controller: LoveThatFitAdminBundle:Product:index" }
+
+admin_product_show:
+    pattern:  /product/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Product:show }
+
+admin_product_new:
+    pattern:  /product/new
+    defaults: { _controller: LoveThatFitAdminBundle:Product:new }
+    
+
+admin_product_create:
+    pattern:  /product/create
+    defaults: { _controller: LoveThatFitAdminBundle:Product:create" }
+    requirements: { _method: post }
+
+admin_product_edit:
+    pattern:  /product/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Product:edit" }
+
+admin_product_update:
+    pattern:  /product/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Product:update" }
+    requirements: { _method: post }
+
+admin_product_delete:
+    pattern:  /product/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Product:delete" }
+    requirements: { _method: post }

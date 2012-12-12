@@ -1,0 +1,8 @@
+
+admin_brand_show:
+    pattern:  /admin/brand/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:show }
+    
+admin_brands:
+    pattern:  /admin/brands
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:index }
