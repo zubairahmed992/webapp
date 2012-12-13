@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block h1 %}Brands{% endblock %}
 {% block title %}Brands{% endblock %}
-
+{% block addNew %}<a href="{{ path('admin_brand_new') }}">Add New Brand</a>{% endblock %}
 
 
 
@@ -20,11 +20,12 @@
     <tr>
         <td>{{b.Id}}</td>
         <td>{{b.Name}}</td>
-        <td>{{b.Logo}}</td>        
+        <td> <img src={{'https://lovethatfit.s3.amazonaws.com/uploads/brand/logo/'~b.Id~'/' ~ b.Logo}}  height="80" width="80"/></td>        
         <td>
             <a href="{{ path('admin_brand_show', {'id': b.Id}) }}">view</a>&nbsp;|&nbsp;
-            <a href="#">edit</a>&nbsp;|&nbsp;
-            <a href="#">del</a>        
+            <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}">edit</a>
+            
+            
         </td>           
     </tr>
     </tbody>

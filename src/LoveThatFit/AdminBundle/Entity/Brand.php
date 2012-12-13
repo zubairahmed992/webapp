@@ -49,6 +49,11 @@ class Brand
     protected $updated_at;
     
     
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
+    
     
 
     /**
@@ -151,5 +156,37 @@ class Brand
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+    
+    
+    public function upload()
+{
+    // the file property can be empty if the field is not required
+    if (null === $this->file) {
+        return;
+    }
+
+    // use the original file name here but you should
+    // sanitize it at least to avoid any security issues
+
+    // move takes the target directory and then the
+    // target filename to move to
+    $this->file->move(
+        $this->getUploadDir(),
+        $this->file->getClientOriginalName()
+    );
+
+    // set the path property to the filename where you've saved the file
+    $this->logo = $this->file->getClientOriginalName();
+
+    // clean up the file property as you won't need it anymore
+    $this->file = null;
+}
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'D:\symfony\src\LoveThatFit\AdminBundle\Data\uploads\img\brands';
     }
 }

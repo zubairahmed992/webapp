@@ -1,11 +1,11 @@
-admin_clothing_type_show:
-    pattern:  /admin/clothing_type/{id}/show
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:show }
-    
 admin_clothing_types:
     pattern:  /admin/clothing_types
     defaults: { _controller: LoveThatFitAdminBundle:ClothingType:index }
 
+admin_clothing_type_show:
+    pattern:  /admin/clothing_type/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:show }
+    
 admin_clothing_type_create:
     pattern:  /admin/clothing_type/create
     defaults: { _controller: LoveThatFitAdminBundle:ClothingType:new }
@@ -24,6 +24,7 @@ admin_clothing_type_update:
         
 admin_clothing_type_delete:
     pattern:  /admin/clothing_type/{id}/delete
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:delete" }
-    requirements: { _method: post }
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:delete }
+    requirements: 
+           _method: POST 
         

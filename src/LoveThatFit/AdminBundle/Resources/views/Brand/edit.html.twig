@@ -1,0 +1,23 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block h1 %}Brand{% endblock %}
+
+{% block title %}Brand{% endblock %}
+
+
+{% block body %}
+
+<form action="{{ path('admin_brand_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+        <input type="submit" />
+    </form>
+
+    <a href="{{ path('admin_brands') }}">back</a>
+    <br/><br/>
+    
+    <form action="{{ path('admin_brand_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+    </form>
+
+{% endblock %}
+

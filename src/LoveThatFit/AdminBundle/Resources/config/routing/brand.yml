@@ -1,8 +1,36 @@
 
-admin_brand_show:
-    pattern:  /admin/brand/{id}/show
-    defaults: { _controller: LoveThatFitAdminBundle:Brand:show }
-    
 admin_brands:
     pattern:  /admin/brands
     defaults: { _controller: LoveThatFitAdminBundle:Brand:index }
+
+admin_brand_show:
+    pattern:  /admin/brand/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:show }
+
+admin_brand_new:
+    pattern:  /admin/brand/new
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:new }
+
+admin_brand_create:
+    pattern:  /admin/brand/create
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:create }
+    requirements: 
+      _method: post 
+      
+admin_brand_edit:
+    pattern:  /admin/brand/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:edit }
+    requirements:
+        _method:  GET
+
+admin_brand_update:
+    pattern:  /admin/brand/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:update }
+    requirements:
+        _method:  POST
+        
+admin_brand_delete:
+    pattern:  /admin/brand/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:delete }
+    requirements: 
+           _method: POST 

@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block title %}Products{% endblock %}
 {% block h1 %}Products{% endblock %}
-
+{% block addNew %}<a href="{{ path('admin_product_new') }}">Add New Product</a>{% endblock %}
 {% block body %}
 
 <table>
@@ -22,6 +22,7 @@
         <th>Back</th>
         <th>BrandId</th>
         <th>ClothingTypeId</th>
+        <th></th>
     </tr>
 
 {% for p in products %}
@@ -43,7 +44,7 @@
         <td>{{p.Brand.Name}}</td>
         <td>{{p.ClothingType.Name}}</td>
         <td>
-            <a href="{{ path('admin_product_show', {'id': p.Id}) }}">view</a>&nbsp;|&nbsp;<a href="#">edit</a>&nbsp;|&nbsp;<a href="#">del</a></td>           
+            <a href="{{ path('admin_product_show', {'id': p.Id}) }}">view</a>&nbsp;|&nbsp;<a href="{{ path('admin_product_edit', {'id': p.Id}) }}">edit</a>           
     </tr>
 {% endfor %}
 </table>

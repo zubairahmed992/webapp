@@ -5,23 +5,10 @@
 
 
 #-------------- PRODUCT ------------------------
-
-admin_product_show:
-    pattern:  /admin/product/{id}/show
-    defaults: { _controller: LoveThatFitAdminBundle:Product:show }
     
-admin_products:
-    pattern:  /admin/products
-    defaults: { _controller: LoveThatFitAdminBundle:Product:index }
-
-admin_product_update:
-    pattern:  /admin/product/{id}/update
-    defaults: { _controller: LoveThatFitAdminBundle:Product:update" }
-    requirements: { _method: post }    
-    
-    #admin_product_routes:
-    #resource: "@LoveThatFitAdminBundle/Resources/config/routing/product.yml"
-    #prefix:   /
+admin_product_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/product.yml"
+    prefix:   /
 
 #-------------- BRAND ------------------------
 
