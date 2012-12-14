@@ -1,43 +1,36 @@
 <?php
 
-
 namespace LoveThatFit\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="brand")
  */
-
-class Brand
-{
-    
+class Brand {
     /**
-  * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
-  */
-    
-    
-     /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
+     */
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
-     /**
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
-    
-  
     protected $name;
-    
-     /**
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
-    
     protected $logo;
-    
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -47,22 +40,18 @@ class Brand
      * @ORM\Column(type="datetime")
      */
     protected $updated_at;
-    
-    
+
     /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
-    
-    
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -72,10 +61,9 @@ class Brand
      * @param string $name
      * @return Brand
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -84,8 +72,7 @@ class Brand
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -95,10 +82,9 @@ class Brand
      * @param string $logo
      * @return Brand
      */
-    public function setLogo($logo)
-    {
+    public function setLogo($logo) {
         $this->logo = $logo;
-    
+
         return $this;
     }
 
@@ -107,8 +93,7 @@ class Brand
      *
      * @return string 
      */
-    public function getLogo()
-    {
+    public function getLogo() {
         return $this->logo;
     }
 
@@ -118,10 +103,9 @@ class Brand
      * @param \DateTime $createdAt
      * @return Brand
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
@@ -130,8 +114,7 @@ class Brand
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->created_at;
     }
 
@@ -141,10 +124,9 @@ class Brand
      * @param \DateTime $updatedAt
      * @return Brand
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
@@ -153,40 +135,51 @@ class Brand
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updated_at;
     }
-    
-    
-    public function upload()
-{
-    // the file property can be empty if the field is not required
-    if (null === $this->file) {
-        return;
+
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->file->move(
+                $this->getUploadRootDir(), $this->file->getClientOriginalName()
+        );
+
+        $this->logo = $this->file->getClientOriginalName();
+        $this->file = null;
     }
 
-    // use the original file name here but you should
-    // sanitize it at least to avoid any security issues
+    public function getLogoPath() {
+        return $this->getUploadDir().'/'.$this->logo;        
+    }
 
-    // move takes the target directory and then the
-    // target filename to move to
-    $this->file->move(
-        $this->getUploadDir(),
-        $this->file->getClientOriginalName()
-    );
+  public function getAbsolutePath()
+    {
+        return null === $this->logo
+            ? null
+            : $this->getUploadRootDir().'/'.$this->logo;
+    }
 
-    // set the path property to the filename where you've saved the file
-    $this->logo = $this->file->getClientOriginalName();
+    public function getWebPath()
+    {
+        return null === $this->logo
+            ? null
+            : $this->getUploadDir().'/'.$this->logo;
+    }
 
-    // clean up the file property as you won't need it anymore
-    $this->file = null;
-}
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
 
     protected function getUploadDir()
     {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
-        return 'D:\symfony\src\LoveThatFit\AdminBundle\Data\uploads\img\brands';
+        return 'uploads/ltf/brands';
     }
+
+    
 }

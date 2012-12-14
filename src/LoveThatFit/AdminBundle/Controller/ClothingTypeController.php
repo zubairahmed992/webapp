@@ -35,7 +35,7 @@ class ClothingTypeController extends Controller {
 
         $form = $this->createFormBuilder($clothing_type)
                 ->add('name', 'text')
-                ->add('target', 'text')
+                ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
                 ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -132,10 +132,11 @@ class ClothingTypeController extends Controller {
     
     private function createEditForm($entity)
     {
-        return $this->createFormBuilder($entity)
-                ->add('name')
-                ->add('target')
+        return  $this->createFormBuilder($entity)
+                ->add('name', 'text')
+                ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')))
                 ->getForm();
+
     }
 
 }

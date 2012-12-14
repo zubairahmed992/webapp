@@ -189,13 +189,7 @@ class ProductController extends Controller {
         return $brand;
         
     }
+   
     
-    private function getClothingType($id)
-    {
-        
-        
-    }
-    
-
-}
+   }
 

@@ -105,7 +105,9 @@ class BrandController extends Controller {
 
         if ($form->isValid()) {
             $entity->setUpdatedAt(new \DateTime('now'));
-
+ 
+            $entity->upload();
+            
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
@@ -146,7 +148,7 @@ class BrandController extends Controller {
     {
         return $this->createFormBuilder($entity)
                 ->add('name')
-                ->add('logo')
+                ->add('file')
                 ->getForm();
     }
     
@@ -154,7 +156,7 @@ class BrandController extends Controller {
     {
         return $this->createFormBuilder()
                 ->add('name')
-                ->add('logo')
+                ->add('file')
                 ->getForm();
     }
     

@@ -20,7 +20,11 @@
     <tr>
         <td>{{b.Id}}</td>
         <td>{{b.Name}}</td>
-        <td> <img src={{'https://lovethatfit.s3.amazonaws.com/uploads/brand/logo/'~b.Id~'/' ~ b.Logo}}  height="80" width="80"/></td>        
+        <td> <img src="{{ asset(b.WebPath) }}" height="80" width="100" />
+        
+        </td>        
+        <td> 
+        </td>        
         <td>
             <a href="{{ path('admin_brand_show', {'id': b.Id}) }}">view</a>&nbsp;|&nbsp;
             <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}">edit</a>
