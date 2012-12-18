@@ -1,8 +1,9 @@
 <?php
-
-
 namespace LoveThatFit\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 /**
  * @ORM\Entity
@@ -114,6 +115,10 @@ class Product
      */
     protected $updated_at;
     
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
     
 
     /**
@@ -500,7 +505,7 @@ class Product
      * @param LoveThatFit\AdminBundle\Entity\Brand $clothingType
      * @return Product
      */
-    public function setClothingType(\LoveThatFit\AdminBundle\Entity\Brand $clothingType = null)
+    public function setClothingType(\LoveThatFit\AdminBundle\Entity\ClothingType $clothingType = null)
     {
         $this->clothing_type = $clothingType;
     
@@ -540,8 +545,49 @@ class Product
         return $this->brand;
     }
     
-    public function __construct()
-    {
-        
+    //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+    
+       public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->file->move(
+                $this->getUploadRootDir(), $this->file->getClientOriginalName()
+        );
+
+        $this->image = $this->file->getClientOriginalName();
+        $this->file = null;
     }
+
+    
+  public function getAbsolutePath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadRootDir().'/'.$this->image;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadDir().'/'.$this->image;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads/ltf/products';
+    }
+
+    
+    
 }

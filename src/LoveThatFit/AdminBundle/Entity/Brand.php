@@ -139,6 +139,10 @@ class Brand {
         return $this->updated_at;
     }
 
+    //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+    
     public function upload() {
         // the file property can be empty if the field is not required
         if (null === $this->file) {
@@ -153,10 +157,7 @@ class Brand {
         $this->file = null;
     }
 
-    public function getLogoPath() {
-        return $this->getUploadDir().'/'.$this->logo;        
-    }
-
+    
   public function getAbsolutePath()
     {
         return null === $this->logo

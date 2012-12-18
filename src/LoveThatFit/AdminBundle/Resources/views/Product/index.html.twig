@@ -9,7 +9,7 @@
         <th>Id</th>
         <th>Name</th>
         <th>Length</th>
-        <th>Sku</th>
+        <th></th>
         <th>Gender</th>
         <th>WAIST</th>
         <th>HIP</th>
@@ -20,8 +20,8 @@
         <th>OUTSEAM</th>
         <th>HEM</th>
         <th>Back</th>
-        <th>BrandId</th>
-        <th>ClothingTypeId</th>
+        <th>Brand</th>
+        <th>ClothingType</th>
         <th></th>
     </tr>
 
@@ -30,7 +30,7 @@
         <td>{{p.Id}}</td>
         <td>{{p.Name}}</td>
         <td>{{p.Length}}</td>
-        <td>{{p.Sku}}</td>
+        <td><img src="{{ asset(p.WebPath) }}" height="40" width="60" /></td>
         <td>{{p.Gender}}</td>
         <td>{{p.Waist}}</td>
         <td>{{p.Hip}}</td>

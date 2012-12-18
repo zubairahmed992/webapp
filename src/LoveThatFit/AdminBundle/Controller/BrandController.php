@@ -9,13 +9,15 @@ use LoveThatFit\AdminBundle\Entity\Brand;
 
 class BrandController extends Controller {
 
+    //------------------------------------------------------------------------------------------
     public function indexAction() {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
                 ->findAll();
         return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', array('brands' => $entity));
     }
-
+//------------------------------------------------------------------------------------------
+    
     public function showAction($id) {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
@@ -29,7 +31,7 @@ class BrandController extends Controller {
                     'brand' => $entity
                 ));
     }
-
+//------------------------------------------------------------------------------------------
     public function newAction() {
 
         $entity = new Brand();
@@ -43,7 +45,7 @@ class BrandController extends Controller {
                     'form' => $form->createView()));
     }
     
-    
+    //------------------------------------------------------------------------------------------
     public function createAction(Request $request)
     {
         $entity  = new Brand();
@@ -74,6 +76,7 @@ class BrandController extends Controller {
         ));
     }
     
+//------------------------------------------------------------------------------------------
       public function editAction($id) {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
@@ -88,6 +91,7 @@ class BrandController extends Controller {
                     'entity' => $entity));
     }
     
+    //------------------------------------------------------------------------------------------
     
      public function updateAction(Request $request, $id) {
         
@@ -117,6 +121,8 @@ class BrandController extends Controller {
            throw $this->createNotFoundException('Unable to update Brand.');
         }
     }
+
+//------------------------------------------------------------------------------------------
     
     public function deleteAction(Request $request, $id)
     {
@@ -136,14 +142,15 @@ class BrandController extends Controller {
         }
         return $this->redirect($this->generateUrl('admin_brands'));
     }
-    
+
+//------------------------------------------------------------------------------------------    
       private function getDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm();
     }
-    
+//------------------------------------------------------------------------------------------    
     private function getEditForm($entity)
     {
         return $this->createFormBuilder($entity)
@@ -151,7 +158,7 @@ class BrandController extends Controller {
                 ->add('file')
                 ->getForm();
     }
-    
+    //------------------------------------------------------------------------------------------
     private function getCreateForm()
     {
         return $this->createFormBuilder()
