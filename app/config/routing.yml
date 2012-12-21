@@ -1,25 +1,14 @@
+love_that_fit_user:
+    resource: "@LoveThatFitUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+love_that_fit_site:
+    resource: "@LoveThatFitSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
 love_that_fit_admin:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
-acme_task:
-    resource: "@AcmeTaskBundle/Controller/"
-    type:     annotation
-    prefix:   /
 
-acme_store:
-    resource: "@AcmeStoreBundle/Resources/config/routing.yml"
-    prefix:   /
 
-acme_hello:
-    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
-    prefix:   /
-
-#cs_start:
-#    resource: "@CsStartBundle/Resources/config/routing.yml"
-#    prefix:   /
-
-# Internal routing configuration to handle ESI
-#_internal:
-#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
-#    prefix:   /_internal

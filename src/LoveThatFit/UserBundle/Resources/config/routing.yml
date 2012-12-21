@@ -1,0 +1,38 @@
+
+
+registration_step_four_create:
+    pattern:  /registration/step_four_create/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }
+
+registration_step_three_create:
+    pattern:  /registration/step_three_create
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeCreate }
+
+
+registration_step_two_create:
+    pattern:  /registration/step_two_create/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoCreate }
+    requirements: 
+      _method: post 
+
+registration_step_one_create:
+    pattern:  /registration/step_one_create
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepOneCreate }
+
+registration_step_one:
+    pattern:  /registration/step_one
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepOne }
+
+admin_login:
+    pattern:   /admin/login
+    defaults:  { _controller: LoveThatFitUserBundle:Security:adminLogin }
+
+login:
+    pattern:   /login
+    defaults:  { _controller: LoveThatFitUserBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+    
+admin_logout:
+    pattern:   /logout

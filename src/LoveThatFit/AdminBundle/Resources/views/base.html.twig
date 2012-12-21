@@ -6,14 +6,28 @@
     </head>
     <body>
         
-        <div>
+        <div  >
+            
+                
+                <ul style="float:right;">
+                <li><a href="{{ path('admin_logout') }}">Logout</a></li>
+                <li style="color: #009933">{{ app.user.username }}</li>
+                
+                
+            </ul>
+                
+            
+            
             <ul>
                 <li><a href="{{ path('admin_clothing_types') }}">Clothing Types</a></li>
                 <li><a href="{{ path('admin_brands') }}">Brands</a></li>
                 <li><a href="{{ path('admin_products') }}">Products</a></li>
+                
             </ul>
         
         </div>
+        
+        
         <h1>{% block h1 %}LoveThatFit{% endblock %}</h1>
         
         <p>{% block addNew %}&nbsp;{% endblock %}</p>

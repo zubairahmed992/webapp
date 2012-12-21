@@ -158,14 +158,6 @@ class BrandController extends Controller {
                 ->add('file')
                 ->getForm();
     }
-    //------------------------------------------------------------------------------------------
-    private function getCreateForm()
-    {
-        return $this->createFormBuilder()
-                ->add('name')
-                ->add('file')
-                ->getForm();
-    }
-    
+      
 
 }

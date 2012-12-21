@@ -1,0 +1,11 @@
+
+<h1>
+
+User Registration Step Four
+</h1>
+<img src="{{ asset(entity.WebPath) }}" height="100" width="100" />
+
+<form action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" value="Next"/>
+</form>

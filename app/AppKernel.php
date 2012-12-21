@@ -24,6 +24,9 @@ class AppKernel extends Kernel
             new Acme\StoreBundle\AcmeStoreBundle(),
             new Acme\TaskBundle\AcmeTaskBundle(),
             new LoveThatFit\AdminBundle\LoveThatFitAdminBundle(),
+            new Acme\UserBundle\AcmeUserBundle(),
+            new LoveThatFit\SiteBundle\LoveThatFitSiteBundle(),
+            new LoveThatFit\UserBundle\LoveThatFitUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

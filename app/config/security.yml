@@ -1,43 +1,54 @@
-jms_security_extra:
-    secure_all_services: false
-    expressions: true
-
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+      Symfony\Component\Security\Core\User\User:
+           algorithm:   sha1
+           iterations: 1
+           encode_as_base64: false
+      
+      LoveThatFit\UserBundle\Entity\User:
+            algorithm:   sha1
+            iterations: 1
+            encode_as_base64: false
+            
+      
+    firewalls:
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+            form_login:
+                login_path:  /login
+                check_path:  /login_check
+                
+            logout:
+               path:   /logout
+               target: /login
+            #http_basic:
+                #realm: "Secured Demo Area"
 
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    access_control:
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /admin, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        
+        
+        
 
     providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
         in_memory:
             memory:
                 users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    waq:  { password: 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8, roles: 'ROLE_ADMIN' }
+                    admin: { password: 44060752d7f7ae069c8187120455195325af0cca, roles: 'ROLE_ADMIN' }
+        user_db:
+            entity: { class: LoveThatFit\UserBundle\Entity\User, property: username }
+            
+            
 
-    firewalls:
-        dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
-        secured_area:
-            pattern:    ^/demo/secured/
-            form_login:
-                check_path: /demo/secured/login_check
-                login_path: /demo/secured/login
-            logout:
-                path:   /demo/secured/logout
-                target: /demo/
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
-
-    access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+    #encoders:
+        #
+        #Symfony\Component\Security\Core\User\User: plaintext
+        
+        
