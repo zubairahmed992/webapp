@@ -14,6 +14,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class User  implements UserInterface, \Serializable{
 
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user")
+     **/
+    private $measurement;
+    
+
+//---------------------------------------------------------------------
+
     /**
      * @var integer $id
      *
@@ -410,6 +419,29 @@ class User  implements UserInterface, \Serializable{
     }
 
     
+    /**
+     * Set measurement
+     *
+     * @param LoveThatFit\UserBundle\Entity\Measurement $measurement
+     * @return User
+     */
+    public function setMeasurement(\LoveThatFit\UserBundle\Entity\Measurement $measurement = null)
+    {
+        $this->measurement = $measurement;
+    
+        return $this;
+    }
+
+    /**
+     * Get measurement
+     *
+     * @return LoveThatFit\UserBundle\Entity\Measurement 
+     */
+    public function getMeasurement()
+    {
+        return $this->measurement;
+    }
+    
       //-------------------------------------------------
     //-------------- Image Upload ---------------------
     //-------------------------------------------------
@@ -454,5 +486,6 @@ class User  implements UserInterface, \Serializable{
     {
         return 'uploads/ltf/users';
     }
+
 
 }

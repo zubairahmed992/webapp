@@ -3,11 +3,14 @@
 registration_step_four_create:
     pattern:  /registration/step_four_create/{id}
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }
-
+    requirements: 
+          _method: post 
+      
 registration_step_three_create:
-    pattern:  /registration/step_three_create
+    pattern:  /registration/step_three_create/{id}
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeCreate }
-
+    requirements: 
+          _method: post 
 
 registration_step_two_create:
     pattern:  /registration/step_two_create/{id}
@@ -18,6 +21,8 @@ registration_step_two_create:
 registration_step_one_create:
     pattern:  /registration/step_one_create
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepOneCreate }
+    requirements: 
+      _method: post 
 
 registration_step_one:
     pattern:  /registration/step_one

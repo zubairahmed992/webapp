@@ -13,7 +13,7 @@ class RegistrationStepTwoType extends AbstractType
        
         $builder->add('firstName', 'text');
         $builder->add('lastName', 'text');
-        
+        $builder->add('email', 'text');
         $builder->add('gender', 'choice', array(
             'choices'=> array(
                 'M'=>'Male',
@@ -24,7 +24,9 @@ class RegistrationStepTwoType extends AbstractType
             
             ));
         
-        $builder->add('birthdate','date');
+        $builder->add('birthdate','date', array(
+            'years'=> range(date('Y')-14,date('Y')-60))
+                );
     }
 
     public function getName()
