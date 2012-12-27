@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Love That Fit</title>
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() { 
+
+var photo_width;
+
+function set_things(){
+ var uploaded_img_src = document.getElementById('img_to_upload');
+ var uploaded_img_obj = new Image();
+	 
+	 uploaded_img_obj.onload = function() {
+		 
+		 
+		 photo_width =  document.getElementById('img_to_upload').width;
+		 photo_height = document.getElementById('img_to_upload').height;		 
+		 photo_width =  document.getElementById('img_to_upload').style.width = photo_width + "px";
+		 
+
+		 
+		 
+	//	 document.getElementById('img_to_upload').attributes('class').reverse();
+//		 document.getElementById('img_to_upload').style.height.val(photo_height);
+		 //$("#uploaded_photo").addClass("hide");
+	 };
+	 uploaded_img_obj.src = uploaded_img_src.src;
+}
+
+
+$('#inp_file').live('change', function()
+{ 
+//$("#uploaded_photo").html('');
+$("#play_area").removeClass("hide");
+$(".int_fitting_room").addClass("hide");
+$("#play_area").append('<img src="loader.gif" alt="Uploading...."/>');
+$("#form_upload").ajaxForm(
+{
+target: '#uploaded_photo',
+success: set_things
+}
+).submit();
+});
+}); 
+</script>
+</head>
+
+<body class="full_site">
+    <div class="full_wrapper">
+        <div class="holder">
+            <section class="site_container">
+              <header class="reg">
+              	<div class="strip_lft">
+                    <div class="logo">
+                      <img src="images/logo.png" width="263" height="161" title="Love That Fit" alt="Love That Fit">
+                    </div>
+                </div>
+                <div class="strip_rgt">
+                </div>
+              </header>
+              <section class="reg_blk">
+              	<div class="reg_steps">
+                	<ul>
+                    	<li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li class="active"><a href="#">4</a></li>
+                    </ul>
+                </div>
+                <div class="action_cnt">
+                  <div class="steps step_4">
+                  	<h2>Upload Photo</h2>
+                      <form id="form_upload" enctype="multipart/form-data" action="upload_img.php" method="post">
+                      	<div class="input_file_hldr">
+                        	<input id="inp_file" name="inp_file" class="input_file" type="file" />
+                            <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
+                        </div>
+                        <div class="clr_bth"></div>
+                        <div class="frm_ele zoom_in">
+                            <label>Zoom In/Out</label>
+                            <div class="slider_wrap">
+                               <div id="slider_result_photo" class="slider_result">100</div>
+                               <div id="slider_scale_photo" class="main_slider"></div>
+                               <input type="hidden" id="hdn_photo"/>
+                            <!--/.slider_wrap--></div></div>
+                                <div class="clr_bth"></div>
+                                <div class="play_area_hldr">
+									<div class="int_fitting_room"></div>                                
+                                	<div id="play_area" class="play_area hide">
+                                        <div id="top_layer"></div>
+                                        <div id="dummy_mark"></div>
+                                        <div id="uploaded_photo" class="full_opacity"></div>
+                                    </div>
+                                <!--/.play_area_hldr--></div>
+                                <canvas id="cnv_img_crop" width="364" height="505" class="cnv_img_crop_style"></canvas>
+                                
+                             
+                        <div class="btm_buttons row">
+                        	<div class="frm_ele">
+                            	<input onClick="shift_to_canvas()" class="reg_next_step" type="submit" value="Next Step" />
+                            </div>
+                            <div class="frm_ele">
+                            	<a class="but_short" href="#">Browse Users</a>
+                            </div>
+                        </div>
+                     </form>
+                     <!--/.step_4--></div>
+                <!--/.action_cnt--></div>
+              <!--/.action_blk--></section>
+              <section class="cnt_btm">
+              	<h3>How It Works</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a nisi eu purus sollicitudin consequat porta quis orci. Nunc bibendum volutpat scelerisque. Quisque hendrerit nisl ac enim ultricies auctor. Morbi vitae eros non dui accumsan malesuada. Pellentesque sagittis luctus nunc vel gravida.</p>
+              </section>
+            <!--/.site_container--></section>
+            <div class="clr_bth"></div>
+        <!--/.holder--></div>
+        <footer class="footer">
+            <div class="ftr_logo"></div>
+            <div class="bottom_line"></div>
+            <nav class="row">
+                <ul class="with_bullet">
+                    <li><a href="#">about</a></li>
+                    <li><a href="#">contact</a></li>
+                    <li><a href="#">register</a></li>
+                </ul>
+            </nav>
+        <!--/.footer--></footer>
+	<!--/.full_wrapper--></div>
+    
+<script type="text/javascript">
+ 
+$("#slider_wrap").mousedown(function (){
+		alert(photo_width);
+		$("#slider_wrap").css('background','#4d4d4d');
+		$(this).css('background','url(images/bg_focus_grad.gif)');
+	});
+
+
+  //Slider Scale Photo
+  var photo_width = $("#img_to_upload").width();
+  var photo_height = $("#img_to_upload").height();
+  var used = 0;
+  
+  $("#slider_scale_photo").slider({ animate: true, range: "min", value: 100, min: 1, max: 600, step: 0.01, 
+  slide: function( event, ui ) {
+	  $( "#slider_result_photo" ).html( ui.value);
+	  
+	   if(used == 0)
+	   {
+		   photo_width = $("#img_to_upload").width();
+		   used = 1;
+	   }
+	  
+	  $("#img_to_upload").width(photo_width / 100 * ui.value);
+	  $("#img_to_upload").height(photo_height / 100 * ui.value);
+  },
+  change: function(event, ui) {
+  $('#hdn_photo').attr('value', ui.value);
+  
+ 
+  }	
+  });
+
+</script>
+    <script>
+	
+	function save_me(){
+		
+		 var data = document.getElementById('cnv_img_crop').toDataURL();
+		
+		$.post("process.php", {
+			imageData : data
+		}, function(data) {
+			//window.location = data;
+			alert("image saved");
+		});
+		
+	}
+	
+	
+	function shift_to_canvas (){
+      var canvas = document.getElementById('cnv_img_crop');
+      var context = canvas.getContext('2d');
+	  var img = document.getElementById('img_to_upload');
+	  
+	  var img_hldr = document.getElementById('uploaded_photo');
+	  
+      var x = img_hldr.offsetLeft;
+      var y = img_hldr.offsetTop;
+
+      var width = img.width;
+	  var height = img.height;
+      var imageObj = new Image();
+
+      imageObj.onload = function() {
+		  //alert(imageObj +"|"+ x +"|"+ y +"|"+ width +"|"+ height);
+		  context.clearRect(0,0,364,505)
+          context.drawImage(imageObj, x, y, width, height);
+		  //alert(canvas.toDataURL());
+		  setTimeout(save_me(),600);
+      };
+      imageObj.src = img.src;
+	  
+	   
+
+	  
+	}
+</script>
+    
+</body>
+</html>
