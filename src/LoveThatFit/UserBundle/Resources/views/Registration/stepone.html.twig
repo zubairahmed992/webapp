@@ -13,19 +13,32 @@
         <div class="steps step_1">
             <h2>Register</h2>
             <form action="{{ path('registration_step_one_create')}}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
 
-                    <div class="btm_buttons row">
-                        <div class="frm_ele">
-                            <input class="reg_next_step" type="submit" value="Next Step" />
-                        </div>
-                        <div class="frm_ele">
-                            <a class="but_short" href="#">Why Love Us?</a>
-                        </div>
+{{ form_errors(form) }}
+                <div class="frm_ele">                
+    {{ form_row(form.username) }}
                     </div>
-                </form>
+                    <div class="frm_ele">
+    {{ form_row(form.password.password) }}
 
-                <!--/.sttp_1--></div>
-            <!--/.action_cnt--></div>
-        <!--/.action_blk--></section>
+                        </div>
+                        <div class="frm_ele">
+    {{ form_row(form.password.confirm) }}
+ {{ form_rest(form) }}
+                            </div>
+
+
+                            <div class="btm_buttons row">
+                                <div class="frm_ele">
+                                    <input class="reg_next_step" type="submit" value="Next Step" />
+                                </div>
+                                <div class="frm_ele">
+                                    <a class="but_short" href="#">Why Love Us?</a>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!--/.sttp_1--></div>
+                    <!--/.action_cnt--></div>
+                <!--/.action_blk--></section>
 {% endblock %}

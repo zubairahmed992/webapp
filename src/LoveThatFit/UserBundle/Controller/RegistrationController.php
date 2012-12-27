@@ -88,6 +88,7 @@ class RegistrationController extends Controller {
     //--------------------------STEP-3-----------------------------------------------
    
      public function getStepThreeCreateAction() {
+         //---------- TEST METHOD ------------------
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->find(9);
 
@@ -107,6 +108,7 @@ class RegistrationController extends Controller {
         
     }
     
+   
     public function stepThreeCreateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
@@ -121,64 +123,6 @@ class RegistrationController extends Controller {
         $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
         $form->bind($request);
         if ($form->isValid()) {
-            
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            
-             $validator = $this->get('validator');
-            $errors = $validator->validate($measurement);
-
-            if (count($errors) > 0) {
-                return new Response(print_r($errors, true));
-            } else {
-                return new Response('valid! Yes!');
-            }
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            
-            
-            $measurement->setCreatedAt(new \DateTime('now'));
-            $measurement->setUpdatedAt(new \DateTime('now'));
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($measurement);
-            $em->flush();
-            
-            $form = $this->createForm(new RegistrationStepFourType(), $user);
-            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $user));
-        } else {
-            return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $user));
-        }
-    }
-    
-    public function _stepThreeCreateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-        $measurement = $user->getMeasurement();
-
-        if (!$measurement) {
-            $measurement = new Measurement();
-            $measurement->setUser($user);
-        }
-        
-        $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
-        $form->bind($request);
-        if ($form->isValid()) {
-            
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-             $validator = $this->get('validator');
-            $errors = $validator->validate($measurement);
-
-            if (count($errors) > 0) {
-                return new Response(print_r($errors, true));
-            } else {
-                return new Response('valid! Yes!');
-            }
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            
             
             $measurement->setCreatedAt(new \DateTime('now'));
             $measurement->setUpdatedAt(new \DateTime('now'));
