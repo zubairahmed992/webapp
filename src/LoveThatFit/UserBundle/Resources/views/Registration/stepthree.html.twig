@@ -5,6 +5,8 @@ User Registration Step Three
 </h1>
 
 
+
+
 <form action="{{ path('registration_step_three_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <input type="submit" value="Next"/>

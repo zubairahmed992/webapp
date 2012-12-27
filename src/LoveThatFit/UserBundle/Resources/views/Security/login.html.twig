@@ -1,16 +1,31 @@
-
+{% extends 'LoveThatFitUserBundle::base.html.twig' %}
+{% block body %}
 {% if error %}
-    <div>{{ error.message }}</div>
+<div>{{ error.message }}</div>
 {% endif %}
+<section class="action_blk lgn_blk">
+    <div class="action_cnt">
+        <div class="small_custom_heading">Log In</div>
+        <form action="{{ path('login_check') }}" method="post">
+            <div class="frm_ele">            
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </div>
+            <div class="frm_ele">
+                <input type="password" id="password" name="_password" />
+                <input type="hidden" name="_target_path" value="/welcome" />
+            </div>
+            <div class="frm_ele">
+                <input id="sbmt_bnt" type="submit" value="Submit" />
+            </div>
+        </form>
 
-<form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        <ul class="row with_sep">
+            <li><a href="#">forgot</a></li>
+            <li><a href="#">reset</a></li>
+            <li><a href="{{path('registration_step_one')}}">create</a></li>
+        </ul>
+        <!--/.action_cnt--></div>
+    <!--/.action_blk--></section>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
-    <input type="hidden" name="_target_path" value="/welcome" />
-    
 
-    <button type="submit">login</button>
-</form>
+{% endblock %}

@@ -12,6 +12,11 @@ registration_step_three_create:
     requirements: 
           _method: post 
 
+registration_step_three_create_get:
+    pattern:  /registration/step_three_create_get
+    defaults: { _controller: LoveThatFitUserBundle:Registration:getStepThreeCreate }
+
+
 registration_step_two_create:
     pattern:  /registration/step_two_create/{id}
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoCreate }

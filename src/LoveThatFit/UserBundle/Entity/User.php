@@ -36,6 +36,12 @@ class User  implements UserInterface, \Serializable{
      * @var string $username
      *
      * @ORM\Column(name="username", type="string", length=25, unique=true)
+     *      @Assert\Length(
+     *      min = "3",
+     *      max = "50",
+     *      minMessage = "User name must be at least {{ limit }} characters length",
+     *      maxMessage = "User first name cannot be longer than than {{ limit }} characters length"
+     * )
      */
     private $username;
 
@@ -50,6 +56,7 @@ class User  implements UserInterface, \Serializable{
      * @var string $password
      *
      * @ORM\Column(name="password", type="string", length=40)
+     * @Assert\Length(min = 4)
      */
     private $password;
 
@@ -57,6 +64,7 @@ class User  implements UserInterface, \Serializable{
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=60, unique=true, nullable=true)
+     * @Assert\Email
      */
     private $email;
 
@@ -71,6 +79,13 @@ class User  implements UserInterface, \Serializable{
      * @var string $firstName
      *
      * @ORM\Column(name="first_name", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "50",
+     *      minMessage = "First Name must be at least {{ limit }} characters length",
+     *      maxMessage = "First Name cannot be longer than than {{ limit }} characters length"     
+     * )
+     *  
      */
     private $firstName;
 
@@ -78,6 +93,13 @@ class User  implements UserInterface, \Serializable{
      * @var string $lastName
      *
      * @ORM\Column(name="last_name", type="string", length=50, nullable=true)
+     * 
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "50",
+     *      minMessage = "Last Name must be at least {{ limit }} characters length",
+     *      maxMessage = "Last Name cannot be longer than than {{ limit }} characters length"     
+     * )
      */
     private $lastName;
 

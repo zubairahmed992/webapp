@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,18 +11,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="ltf_measurements")
  * @ORM\Entity(repositoryClass="LoveThatFit\UserBundle\Entity\MeasurementRepository")
  */
-class Measurement
-{
-    
+class Measurement {
+
     /**
      * @ORM\OneToOne(targetEntity="User", inversedBy="measurement")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     **/
+     * */
     private $user;
-    
+
     //---------------------------------------------------------------------    
-    
-    
+
     /**
      * @var integer $id
      *
@@ -32,9 +31,17 @@ class Measurement
     private $id;
 
     /**
+
      * @var float $weight
      *
      * @ORM\Column(name="weight", type="decimal", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "90",
+     *      max = "350",
+     *      minMessage = "You must weight at least 0",
+     *      maxMessage = "You cannot weight more than 300"
+     * )
      */
     private $weight;
 
@@ -42,6 +49,14 @@ class Measurement
      * @var float $height
      *
      * @ORM\Column(name="height", type="decimal", nullable=true)
+     * 
+     * 
+     * @Assert\Range(
+     *      min = "20",
+     *      max = "96",
+     *      minMessage = "You must be at least 20 tall",
+     *      maxMessage = "You cannot taller than 96"
+     * )      
      */
     private $height;
 
@@ -49,6 +64,13 @@ class Measurement
      * @var float $waist
      *
      * @ORM\Column(name="waist", type="decimal", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "10",
+     *      max = "70",
+     *      minMessage = "You must have at least 10 waist",
+     *      maxMessage = "You cannot have more than 70 waist"
+     * )
      */
     private $waist;
 
@@ -56,6 +78,13 @@ class Measurement
      * @var float $hip
      *
      * @ORM\Column(name="hip", type="decimal", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "10",
+     *      max = "70",
+     *      minMessage = "You must have at least 10 ",
+     *      maxMessage = "You cannot have more than 70"
+     * )
      */
     private $hip;
 
@@ -63,13 +92,27 @@ class Measurement
      * @var float $bust
      *
      * @ORM\Column(name="bust", type="decimal", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "10",
+     *      max = "70",
+     *      minMessage = "You must have at least 10",
+     *      maxMessage = "You cannot have more than 70"
+     * )
      */
     private $bust;
 
     /**
      * @var float $arm
      *
-     * @ORM\Column(name="arm", type="decimal", nullable=true)
+     * @ORM\Column(name="arm", type="decimal", nullable=true)\
+     *      
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0",
+     *      maxMessage = "You cannot have more than 300"
+     * )
      */
     private $arm;
 
@@ -77,6 +120,13 @@ class Measurement
      * @var float $leg
      *
      * @ORM\Column(name="leg", type="decimal", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0",
+     *      maxMessage = "You cannot have more than 300"
+     * )
      */
     private $leg;
 
@@ -84,6 +134,13 @@ class Measurement
      * @var float $inseam
      *
      * @ORM\Column(name="inseam", type="decimal", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "6",
+     *      max = "50",
+     *      minMessage = "You must have at least 6",
+     *      maxMessage = "You cannot have more than 50"
+     * )
      */
     private $inseam;
 
@@ -91,13 +148,26 @@ class Measurement
      * @var float $back
      *
      * @ORM\Column(name="back", type="decimal", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0",
+     *      maxMessage = "You cannot have more than 300"
+     * )
      */
     private $back;
 
     /**
      * @var \DateTime $created_at
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0",
+     *      maxMessage = "You cannot have more than 300"
+     * )
+     * 
      */
     private $created_at;
 
@@ -108,14 +178,12 @@ class Measurement
      */
     private $updated_at;
 
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -125,10 +193,9 @@ class Measurement
      * @param float $weight
      * @return Measurement
      */
-    public function setWeight($weight)
-    {
+    public function setWeight($weight) {
         $this->weight = $weight;
-    
+
         return $this;
     }
 
@@ -137,8 +204,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getWeight()
-    {
+    public function getWeight() {
         return $this->weight;
     }
 
@@ -148,10 +214,9 @@ class Measurement
      * @param float $height
      * @return Measurement
      */
-    public function setHeight($height)
-    {
+    public function setHeight($height) {
         $this->height = $height;
-    
+
         return $this;
     }
 
@@ -160,8 +225,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getHeight()
-    {
+    public function getHeight() {
         return $this->height;
     }
 
@@ -171,10 +235,9 @@ class Measurement
      * @param float $waist
      * @return Measurement
      */
-    public function setWaist($waist)
-    {
+    public function setWaist($waist) {
         $this->waist = $waist;
-    
+
         return $this;
     }
 
@@ -183,8 +246,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getWaist()
-    {
+    public function getWaist() {
         return $this->waist;
     }
 
@@ -194,10 +256,9 @@ class Measurement
      * @param float $hip
      * @return Measurement
      */
-    public function setHip($hip)
-    {
+    public function setHip($hip) {
         $this->hip = $hip;
-    
+
         return $this;
     }
 
@@ -206,8 +267,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getHip()
-    {
+    public function getHip() {
         return $this->hip;
     }
 
@@ -217,10 +277,9 @@ class Measurement
      * @param float $bust
      * @return Measurement
      */
-    public function setBust($bust)
-    {
+    public function setBust($bust) {
         $this->bust = $bust;
-    
+
         return $this;
     }
 
@@ -229,8 +288,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getBust()
-    {
+    public function getBust() {
         return $this->bust;
     }
 
@@ -240,10 +298,9 @@ class Measurement
      * @param float $arm
      * @return Measurement
      */
-    public function setArm($arm)
-    {
+    public function setArm($arm) {
         $this->arm = $arm;
-    
+
         return $this;
     }
 
@@ -252,8 +309,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getArm()
-    {
+    public function getArm() {
         return $this->arm;
     }
 
@@ -263,10 +319,9 @@ class Measurement
      * @param float $leg
      * @return Measurement
      */
-    public function setLeg($leg)
-    {
+    public function setLeg($leg) {
         $this->leg = $leg;
-    
+
         return $this;
     }
 
@@ -275,8 +330,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getLeg()
-    {
+    public function getLeg() {
         return $this->leg;
     }
 
@@ -286,10 +340,9 @@ class Measurement
      * @param float $inseam
      * @return Measurement
      */
-    public function setInseam($inseam)
-    {
+    public function setInseam($inseam) {
         $this->inseam = $inseam;
-    
+
         return $this;
     }
 
@@ -298,8 +351,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getInseam()
-    {
+    public function getInseam() {
         return $this->inseam;
     }
 
@@ -309,10 +361,9 @@ class Measurement
      * @param float $back
      * @return Measurement
      */
-    public function setBack($back)
-    {
+    public function setBack($back) {
         $this->back = $back;
-    
+
         return $this;
     }
 
@@ -321,8 +372,7 @@ class Measurement
      *
      * @return float 
      */
-    public function getBack()
-    {
+    public function getBack() {
         return $this->back;
     }
 
@@ -332,10 +382,9 @@ class Measurement
      * @param \DateTime $createdAt
      * @return Measurement
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
@@ -344,8 +393,7 @@ class Measurement
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->created_at;
     }
 
@@ -355,10 +403,9 @@ class Measurement
      * @param \DateTime $updatedAt
      * @return Measurement
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
@@ -367,8 +414,7 @@ class Measurement
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updated_at;
     }
 
@@ -378,10 +424,9 @@ class Measurement
      * @param LoveThatFit\UserBundle\Entity\User $user
      * @return Measurement
      */
-    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null)
-    {
+    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null) {
         $this->user = $user;
-    
+
         return $this;
     }
 
@@ -390,8 +435,8 @@ class Measurement
      *
      * @return LoveThatFit\UserBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
+
 }

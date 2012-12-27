@@ -1,10 +1,31 @@
-
-<h1>
-
-User Registration 
-</h1>
-
-<form action="{{ path('registration_step_one_create')}}" method="post" {{ form_enctype(form) }}>
+{% extends 'LoveThatFitUserBundle::base.html.twig' %}
+{% block body %}
+<section class="reg_blk">
+    <div class="reg_steps">
+        <ul>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+        </ul>
+    </div>
+    <div class="action_cnt">
+        <div class="steps step_1">
+            <h2>Register</h2>
+            <form action="{{ path('registration_step_one_create')}}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
-    <input type="submit" value="Register"/>
-</form>
+
+                    <div class="btm_buttons row">
+                        <div class="frm_ele">
+                            <input class="reg_next_step" type="submit" value="Next Step" />
+                        </div>
+                        <div class="frm_ele">
+                            <a class="but_short" href="#">Why Love Us?</a>
+                        </div>
+                    </div>
+                </form>
+
+                <!--/.sttp_1--></div>
+            <!--/.action_cnt--></div>
+        <!--/.action_blk--></section>
+{% endblock %}

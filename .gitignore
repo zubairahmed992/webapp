@@ -6,5 +6,4 @@ build/
 vendor
 composer.phar
 web/uploads/ltf
-src/Acme
 *.php~

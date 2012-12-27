@@ -1,0 +1,3 @@
+acme_user_homepage:
+    pattern:  /hello_admin_user/{name}
+    defaults: { _controller: AcmeUserBundle:Default:index }
