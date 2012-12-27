@@ -57,6 +57,22 @@ class RegistrationController extends Controller {
     }
 
     //--------------------------STEP-2-----------------------------------------------
+
+        public function getStepTestAction() {
+
+         //---------- TEST METHOD ------------------
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find(9);
+
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $entity));
+            
+        
+    }
+
+    
     public function stepTwoCreateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
@@ -86,28 +102,6 @@ class RegistrationController extends Controller {
     }
 
     //--------------------------STEP-3-----------------------------------------------
-   
-     public function getStepThreeCreateAction() {
-         //---------- TEST METHOD ------------------
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('LoveThatFitUserBundle:User')->find(9);
-
-        $measurement = $user->getMeasurement();
-
-        if (!$measurement) {
-            $measurement = new Measurement();
-            $measurement->setUser($user);
-        }
-
-        $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
-        
-        
-            return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $user));
-        
-    }
-    
    
     public function stepThreeCreateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();

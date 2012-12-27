@@ -5,6 +5,41 @@ User Registration Step two
 </h1>
 
 <form action="{{ path('registration_step_two_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+        
+        
+        
+        <div>
+    {{ form_label(form.firstName) }}
+    {{ form_errors(form.firstName) }}
+    {{ form_widget(form.firstName) }}
+</div>
+        <div>
+    {{ form_label(form.lastName) }}
+    {{ form_errors(form.lastName) }}
+    {{ form_widget(form.lastName) }}
+</div>
+        <div>
+    {{ form_label(form.email) }}
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email) }}
+</div>
+        <div>
+    {{ form_label(form.gender) }}
+    {{ form_errors(form.gender) }}
+    {{ form_widget(form.gender) }}
+</div>
+        <div>
+    {{ form_label(form.birthdate) }}
+    {{ form_errors(form.birthdate) }}
+    {{ form_widget(form.birthdate) }}
+</div>
+        
+        
+        
+        {{ form_rest(form) }}
+        
+        
+    
     <input type="submit" value="Next"/>
 </form>

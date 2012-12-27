@@ -8,6 +8,73 @@ User Registration Step Three
 
 
 <form action="{{ path('registration_step_three_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+    
+        
+    {{ form_errors(form) }}
+    
+    
+    <div>
+    {{ form_label(form.weight) }}
+    {{ form_errors(form.weight) }}
+    {{ form_widget(form.weight) }}
+</div>
+    
+        
+    
+    <div>
+    {{ form_label(form.height) }}
+    {{ form_errors(form.height) }}
+    {{ form_widget(form.height) }}
+</div>
+    
+    
+    
+    <div>
+    {{ form_label(form.waist) }}
+    {{ form_errors(form.waist) }}
+    {{ form_widget(form.waist) }}
+</div>
+    
+    
+    <div>
+    {{ form_label(form.hip) }}
+    {{ form_errors(form.hip) }}
+    {{ form_widget(form.hip) }}
+</div>
+    
+    
+    <div>
+    {{ form_label(form.bust) }}
+    {{ form_errors(form.bust) }}
+    {{ form_widget(form.bust) }}
+</div>
+    
+    
+    <div>
+    {{ form_label(form.arm) }}
+    {{ form_errors(form.arm) }}
+    {{ form_widget(form.arm) }}
+</div>
+    
+    
+    <div>
+    {{ form_label(form.leg) }}
+    {{ form_errors(form.leg) }}
+    {{ form_widget(form.leg) }}
+</div>
+    
+    <div>
+    {{ form_label(form.inseam) }}
+    {{ form_errors(form.inseam) }}
+    {{ form_widget(form.inseam) }}
+</div>
+        
+    <div>
+    {{ form_label(form.back) }}
+    {{ form_errors(form.back) }}
+    {{ form_widget(form.back) }}
+</div>
+        
+    {{ form_rest(form) }}
     <input type="submit" value="Next"/>
 </form>
