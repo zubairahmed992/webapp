@@ -1,8 +1,17 @@
-
-<h1>
-
-User Registration Step Three
-</h1>
+{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+{% block action_block_content %}
+<section class="reg_blk">
+              	<div class="reg_steps">
+                	<ul>
+                    	<li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li class="active"><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                    </ul>
+                </div>
+                <div class="action_cnt">
+                  <div class="steps step_3">
+                  	<h2>Your Measurements</h2>
 
 
 
@@ -76,5 +85,36 @@ User Registration Step Three
 </div>
         
     {{ form_rest(form) }}
-    <input type="submit" value="Next"/>
+    
+    <div class="btm_buttons row">
+                        	<div class="frm_ele">
+                            	<input class="reg_next_step" type="submit" value="Next Step" />
+                            </div>
+                            <div class="frm_ele">
+                            	<a class="but_short" href="#">Browse Users</a>
+                            </div>
+                        </div>
+                     </form>
+                     <!--/.step_3--></div>
+                <!--/.action_cnt--></div>
+              <!--/.action_blk--></section>
+
 </form>
+{% endblock %}
+
+{% block how_it_works_content %}
+<section class="cnt_btm">
+    <h3>How It Works</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a nisi eu purus sollicitudin consequat porta quis orci. Nunc bibendum volutpat scelerisque. Quisque hendrerit nisl ac enim ultricies auctor. Morbi vitae eros non dui accumsan malesuada. Pellentesque sagittis luctus nunc vel gravida.</p>
+</section>
+{% endblock %}
+
+{% block bottom_left_nav %}
+<nav class="row">
+    <ul class="with_bullet">
+        <li><a href="#">about</a></li>
+        <li><a href="#">contact</a></li>
+        <li><a href="#">register</a></li>
+    </ul>
+</nav>
+{% endblock %}
