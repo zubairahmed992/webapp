@@ -46,3 +46,20 @@ login_check:
     
 admin_logout:
     pattern:   /logout
+    
+    
+    
+    
+registration_step_two_render:
+    pattern:  /registration/step_two_render/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoRender }
+    
+registration_step_three_render:
+    pattern:  /registration/step_three_render/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeRender }
+
+registration_step_four_render:
+    pattern:  /registration/step_four_render/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourRender }
+  
+      

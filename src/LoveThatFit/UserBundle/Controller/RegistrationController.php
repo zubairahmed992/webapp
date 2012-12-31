@@ -24,8 +24,8 @@ class RegistrationController extends Controller {
     }
 
 //--------------------------STEP-1-----------------------------------------------
-
-       public function stepOneCreateAction() {
+      
+    public function stepOneCreateAction() {
         $entity = new User();
         $form = $this->createForm(new UserType(), $entity);
         $form->bind($this->getRequest());
@@ -57,20 +57,7 @@ class RegistrationController extends Controller {
     }
 
     //--------------------------STEP-2-----------------------------------------------
-
-        public function getStepTestAction() {
-
-         //---------- TEST METHOD ------------------
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find(9);
-
-        $form = $this->createForm(new RegistrationStepFourType(), $entity);
-            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $entity));
-            
-        
-    }
+  
 
     
     public function stepTwoCreateAction(Request $request, $id) {
@@ -166,6 +153,84 @@ class RegistrationController extends Controller {
         }
     }
 
+    
+    //------------------ Test -----------------------------
+    //------------------ Test -----------------------------
+    //------------------ Test -----------------------------
+    
+    
+    public function stepTwoRenderAction($id) {
+        
+       $em = $this->getDoctrine()->getManager();
+       $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        
+       $form = $this->createForm(new UserType(), $entity);
+
+       $form = $this->createForm(new RegistrationStepTwoType(), $entity);
+       return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
+                    'form' => $form->createView(),
+                    'entity' => $entity));
+    }
+
+    
+    
+    
+    
+    
+     public function stepThreeRenderAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+        $measurement = $user->getMeasurement();
+
+        if (!$measurement) {
+            $measurement = new Measurement();
+            $measurement->setUser($user);
+        }
+        
+        $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
+        
+        
+            return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $user));
+        
+    }
+    
+    
+    
+    
+    
+    public function stepFourRenderAction($id) {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+        
+        
+            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $entity));
+        
+    }
+
+    
+    
+    
+    
+    
 }
+
+
+
+
+
+
+
 
 ?>
