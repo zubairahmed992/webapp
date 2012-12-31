@@ -18,12 +18,12 @@
         
         
         
-        <div>
+<div>
     {{ form_label(form.firstName) }}
     {{ form_errors(form.firstName) }}
     {{ form_widget(form.firstName) }}
 </div>
-        <div>
+<div>
     {{ form_label(form.lastName) }}
     {{ form_errors(form.lastName) }}
     {{ form_widget(form.lastName) }}
@@ -33,15 +33,19 @@
     {{ form_errors(form.email) }}
     {{ form_widget(form.email) }}
 </div>
-        <div>
+<div>
     {{ form_label(form.gender) }}
     {{ form_errors(form.gender) }}
     {{ form_widget(form.gender) }}
+                
 </div>
         <div>
     {{ form_label(form.birthdate) }}
     {{ form_errors(form.birthdate) }}
-    {{ form_widget(form.birthdate) }}
+    
+{{ form_widget(form.birthdate.year) }}
+                {{ form_widget(form.birthdate.month) }}
+                {{ form_widget(form.birthdate.day) }}
 </div>
         
         
