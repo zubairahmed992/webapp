@@ -155,7 +155,7 @@
           {{ form_errors(form.inseam) }}
            
         <div class="slider_wrap">
-            <div class="tip tt_arrow tip7"><!--- Tootip wrapper Start  !-->
+            <div class="tip tt_arrow tip8"><!--- Tootip wrapper Start  !-->
               <div class="grad"></div>
               <div class="tooltip_content"><!--- Tootip content Start  !--> 
                 <span class="arrow_top"></span> Dummy text,Dummy text, Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text<br>
@@ -174,7 +174,7 @@
           {{ form_errors(form.back) }}
                 
           <div class="slider_wrap">
-            <div class="tip tt_arrow tip7"><!--- Tootip wrapper Start  !-->
+            <div class="tip tt_arrow tip9"><!--- Tootip wrapper Start  !-->
               <div class="grad"></div>
               <div class="tooltip_content"><!--- Tootip content Start  !--> 
                 <span class="arrow_top"></span> Dummy text,Dummy text, Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text<br>
@@ -333,6 +333,52 @@ function show_tip(ele){
 
 }
 
+///////////////////////////////////////////
+
+ $("#slider_height").click(function(){
+	 $(".tip1").css({'margin-top':'0px'});
+	 $(".arrow_top").css({'top':'15px'});
+ });
+ 
+$("#slider_weight").click(function(){
+	 $(".tip2").css({'margin-top':'-67px'});
+	 $(".arrow_top").css({'top':'80px'});
+ });
+ 
+  $("#slider_bust").click(function(){
+	 $(".tip4").css({'margin-top':'-50px'});
+	 $(".arrow_top").css({'top':'66px'});
+ });
+ 
+ $("#slider_waist").click(function(){
+	 $(".tip5").css({'margin-top':'-60px'});
+	 $(".arrow_top").css({'top':'77px'});
+ });
+ 
+  $("#slider_hips").click(function(){
+	 $(".tip6").css({'margin-top':'-70px'});
+	 $(".arrow_top").css({'top':'85px'});
+ }); 
+
+ $("#slider_result_arm").click(function(){
+	 $(".tip7").css({'margin-top':'-137px'});
+	 $(".arrow_top").css({'top':'100px'});
+ });
+ 
+ $("#slider_result_leg").click(function(){
+	 $(".tip7").css({'margin-top':'-137px'});
+	 $(".arrow_top").css({'top':'100px'});
+ });
+ 
+ $("#slider_inseam").click(function(){
+	 $(".tip8").css({'margin-top':'-157px'});
+	 $(".arrow_top").css({'top':'100px'});
+ });
+ 
+ $("#slider_back").click(function(){
+	 $(".tip9").css({'margin-top':'-138px'});
+	 $(".arrow_top").css({'top':'152px'});
+ });
 
 
 
