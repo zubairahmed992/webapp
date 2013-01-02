@@ -1,4 +1,8 @@
 anonymous_user_home:
     pattern:  /home
     defaults: { _controller: LoveThatFitSiteBundle:Home:index}
+
+inner_site_index:
+    pattern:  /inner_site/index
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index}
     

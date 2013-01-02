@@ -4,7 +4,7 @@
             <ul {{ block('widget_container_attributes') }}>
             {% for child in form %}
                 <li>
-                    {{"brunudamp" form_widget(child) }}
+                    {{form_widget(child) }}
                     {{ form_label(child) }}
                 </li>
             {% endfor %}

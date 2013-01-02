@@ -1,17 +1,3 @@
-{% block gender_widget %}
-    {% spaceless %}
-            <ul {{ block('widget_container_attributes') }}>
-            {% for child in form %}
-                <li>
-                    {{ form_widget(child) }}
-                    {{ form_label(child) }}
-                </li>
-            {% endfor %}
-            </ul>
-    {% endspaceless %}
-{% endblock %}
-
-
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 
 {% block action_block_content %}
@@ -28,10 +14,10 @@
         <div class="steps step_2">
             <h2>Account Details</h2>
 
-<form action="{{ path('registration_step_two_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+            <form action="{{ path('registration_step_two_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
 
-    <div class="frm_ele">
+                    <div class="frm_ele">
     {{ form_label(form.firstName) }}
     {{ form_errors(form.firstName) }}
     {{ form_widget(form.firstName) }}
@@ -46,24 +32,22 @@
     {{ form_errors(form.email) }}
     {{ form_widget(form.email) }}
 
-</div>
-<div class="frm_ele">
+                                </div>
+                                <div class="frm_ele radio_buts">
     {{ form_label(form.gender) }}
     {{ form_errors(form.gender) }}
     {{ form_widget(form.gender) }}
-        
-        
-                
-</div>
-        <div class="frm_ele select_inline">
+
+                                    </div>
+                                    <div class="frm_ele select_inline">
     {{ form_label(form.birthdate) }}
     {{ form_errors(form.birthdate) }}
-    
+
 {{ form_widget(form.birthdate.year) }}
                 {{ form_widget(form.birthdate.month) }}
                 {{ form_widget(form.birthdate.day) }}
-</div>
-        
+                                        </div>
+
 
         {{ form_rest(form) }}
 
@@ -84,16 +68,16 @@
 {% block how_it_works_content %}
                         <section class="cnt_btm">
                             <h3>How It Works</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a nisi eu purus sollicitudin consequat porta quis orci. Nunc bibendum volutpat scelerisque. Quisque hendrerit nisl ac enim ultricies auctor. Morbi vitae eros non dui accumsan malesuada. Pellentesque sagittis luctus nunc vel gravida.</p>
-                </section>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a nisi eu purus sollicitudin consequat porta quis orci. Nunc bibendum volutpat scelerisque. Quisque hendrerit nisl ac enim ultricies auctor. Morbi vitae eros non dui accumsan malesuada. Pellentesque sagittis luctus nunc vel gravida.</p>
+                        </section>
 {% endblock %}
 
 {% block bottom_left_nav %}
-                <nav class="row">
-                    <ul class="with_bullet">
-                        <li><a href="#">about</a></li>
-                        <li><a href="#">contact</a></li>
-                        <li><a href="#">register</a></li>
-                    </ul>
-                </nav>
+                        <nav class="row">
+                            <ul class="with_bullet">
+                                <li><a href="#">about</a></li>
+                                <li><a href="#">contact</a></li>
+                                <li><a href="#">register</a></li>
+                            </ul>
+                        </nav>
 {% endblock %}
