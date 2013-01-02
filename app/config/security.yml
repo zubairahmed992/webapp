@@ -41,8 +41,8 @@ security:
             memory:
                 users:
                     waq:  { password: 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8, roles: 'ROLE_ADMIN' }
-                    admin: { password: 44060752d7f7ae069c8187120455195325af0cca, roles: 'ROLE_ADMIN' }
-        user_db:
+                    admin: { password: d033e22ae348aeb5660fc2140aec35850c4da997, roles: 'ROLE_ADMIN' }
+        user_db:                      
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: username }
             
             

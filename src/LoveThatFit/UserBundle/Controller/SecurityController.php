@@ -48,13 +48,6 @@ class SecurityController extends Controller
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
         
-        $pass="";
-        $factory = $this->get('security.encoder_factory');
-        $user = new LoveThatFit\UserBundle\Entity\User();
-        $encoder = $factory->getEncoder($user);
-        $password = $encoder->encodePassword('ryanpass', $user->getSalt());
-        #$user->setPassword($password);
-        
         
         return $this->render(
             'LoveThatFitUserBundle:Security:adminLogin.html.twig',
@@ -62,7 +55,7 @@ class SecurityController extends Controller
                 // last username entered by the user
                 'last_username' => $session->get(SecurityContext::LAST_USERNAME),
                 'error'         => $error,
-                'pass'         => $pass,
+        
             )
         );
     }
