@@ -1,4 +1,19 @@
+{% block gender_widget %}
+    {% spaceless %}
+            <ul {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                <li>
+                    {{ form_widget(child) }}
+                    {{ form_label(child) }}
+                </li>
+            {% endfor %}
+            </ul>
+    {% endspaceless %}
+{% endblock %}
+
+
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+
 {% block action_block_content %}
 <section class="reg_blk">
     <div class="reg_steps">
@@ -32,7 +47,7 @@
     {{ form_widget(form.email) }}
 
 </div>
-<div class="frm_ele radio_buts">
+<div class="frm_ele">
     {{ form_label(form.gender) }}
     {{ form_errors(form.gender) }}
     {{ form_widget(form.gender) }}
