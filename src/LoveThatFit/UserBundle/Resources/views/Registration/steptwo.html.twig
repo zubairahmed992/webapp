@@ -15,24 +15,13 @@
 
 <form action="{{ path('registration_step_two_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
-<<<<<<< HEAD
-        
-        
-        
-<div>
-    {{ form_label(form.firstName) }}
-    {{ form_errors(form.firstName) }}
-    {{ form_widget(form.firstName) }}
-</div>
-<div>
-=======
+
     <div class="frm_ele">
     {{ form_label(form.firstName) }}
     {{ form_errors(form.firstName) }}
     {{ form_widget(form.firstName) }}
                         </div>
                         <div class="frm_ele">
->>>>>>> 3rd step integration + script upgrade
     {{ form_label(form.lastName) }}
     {{ form_errors(form.lastName) }}
     {{ form_widget(form.lastName) }}
@@ -41,15 +30,15 @@
     {{ form_label(form.email) }}
     {{ form_errors(form.email) }}
     {{ form_widget(form.email) }}
-<<<<<<< HEAD
+
 </div>
-<div>
+<div class="frm_ele radio_buts">
     {{ form_label(form.gender) }}
     {{ form_errors(form.gender) }}
     {{ form_widget(form.gender) }}
                 
 </div>
-        <div>
+        <div class="frm_ele select_inline">
     {{ form_label(form.birthdate) }}
     {{ form_errors(form.birthdate) }}
     
@@ -58,24 +47,7 @@
                 {{ form_widget(form.birthdate.day) }}
 </div>
         
-        
-        
-=======
-                                </div>
-                                <div class="frm_ele radio_buts">
-    {{ form_label(form.gender) }}
-    {{ form_errors(form.gender) }}
-    {{ form_widget(form.gender) }}
-                                    </div>
-                                    <div class="frm_ele select_inline">
-    {{ form_label(form.birthdate) }}
-    {{ form_errors(form.birthdate) }}
-    {{ form_widget(form.birthdate) }}
-                                        </div>
 
-
-
->>>>>>> 3rd step integration + script upgrade
         {{ form_rest(form) }}
 
 
