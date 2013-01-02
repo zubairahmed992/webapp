@@ -1,120 +1,340 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 {% block action_block_content %}
 <section class="reg_blk">
-              	<div class="reg_steps">
-                	<ul>
-                    	<li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li class="active"><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                    </ul>
+  <div class="reg_steps">
+    <ul>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li class="active"><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+    </ul>
+  </div>
+  <div class="action_cnt">
+    <div class="steps step_3">
+      <h2>Your Measurements</h2>
+      <form action="{{ path('registration_step_three_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        <div class="frm_ele"> {{ form_label(form.height) }}
+          {{ form_errors(form.height) }}
+          <div class="slider_wrap">
+            <div class="tip tt_arrow tip1"><!--- Tootip wrapper Start  !-->
+              <div class="grad"></div>
+              <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                <span class="arrow_top"></span> Stand with your feet slightly apart and your back to a wall. Measure from the floor to the top of your head.<br>
+                <a href="#">Watch Video</a> 
+                <!--- Tootip content End  !--> 
+              </div>
+              <div class="grad"></div>
+              <!--- Tootip wrapper End  !--> 
+            </div>
+            <div id="slider_result_height" class="slider_result">68"</div>
+            <div id="slider_height" class="main_slider"></div>
+            {{ form_widget(form.height) }} 
+            <!--/.slider_wrap--></div>
+        </div>
+        <div class="frm_ele"> {{ form_label(form.weight) }}
+          {{ form_errors(form.weight) }}
+          <div class="slider_wrap">
+            <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
+                <div class="grad"></div>
+                <div class="tooltip_content"><!--- Tootip content Start  !--> 
+
+                  <span class="arrow_top"></span> Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,<br>
+                  <a href="#">Watch Video</a> 
+                  <!--- Tootip content End  !--> 
                 </div>
-                <div class="action_cnt">
-                  <div class="steps step_3">
-                  	<h2>Your Measurements</h2>
-
-
-
-
-<form action="{{ path('registration_step_three_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
-    
+                <div class="grad"></div>
+                <!--- Tootip wrapper End  !--> 
+              </div>
+            <div id="slider_result_weight" class="slider_result">135<span class="short_txt">lbs</span></div>
+            <div id="slider_weight" class="main_slider"></div>
+            {{ form_widget(form.weight) }} 
+            <!--/.slider_wrap--></div>
+        </div>
+        <div class="frm_ele"> {{ form_label(form.bust) }}
+          {{ form_errors(form.bust) }}
+                
+        <div class="slider_wrap">
+            <div class="tip tt_arrow tip4"><!--- Tootip wrapper Start  !-->
+              <div class="grad"></div>
+              <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                <span class="arrow_top"></span> With arms relaxed at your sides, measure the fullest part of your bust, keeping the tape parallel to the floor.<br>
+                <a href="#">Watch Video</a> 
+                <!--- Tootip content End  !--> 
+              </div>
+              <div class="grad"></div>
+              <!--- Tootip wrapper End  !--> 
+            </div>
+            <div id="slider_result_bust" class="slider_result">36"</div>
+            <div id="slider_bust" class="main_slider"></div>
+            {{ form_widget(form.bust) }}
+        <!--/.slider_wrap--></div>                
+                
+          
+        </div>
+        <div class="frm_ele"> {{ form_label(form.waist) }}
+          {{ form_errors(form.waist) }}
         
-    {{ form_errors(form) }}
-    
-    
-    <div>
-    {{ form_label(form.weight) }}
-    {{ form_errors(form.weight) }}
-    {{ form_widget(form.weight) }}
-</div>
-    
-        
-    
-    <div>
-    {{ form_label(form.height) }}
-    {{ form_errors(form.height) }}
-    {{ form_widget(form.height) }}
-</div>
-    
-    
-    
-    <div>
-    {{ form_label(form.waist) }}
-    {{ form_errors(form.waist) }}
-    {{ form_widget(form.waist) }}
-</div>
-    
-    
-    <div>
-    {{ form_label(form.hip) }}
-    {{ form_errors(form.hip) }}
-    {{ form_widget(form.hip) }}
-</div>
-    
-    
-    <div>
-    {{ form_label(form.bust) }}
-    {{ form_errors(form.bust) }}
-    {{ form_widget(form.bust) }}
-</div>
-    
-    
-    <div>
-    {{ form_label(form.arm) }}
-    {{ form_errors(form.arm) }}
-    {{ form_widget(form.arm) }}
-</div>
-    
-    
-    <div>
-    {{ form_label(form.leg) }}
-    {{ form_errors(form.leg) }}
-    {{ form_widget(form.leg) }}
-</div>
-    
-    <div>
-    {{ form_label(form.inseam) }}
-    {{ form_errors(form.inseam) }}
-    {{ form_widget(form.inseam) }}
-</div>
-        
-    <div>
-    {{ form_label(form.back) }}
-    {{ form_errors(form.back) }}
-    {{ form_widget(form.back) }}
-</div>
-        
-    {{ form_rest(form) }}
-    
-    <div class="btm_buttons row">
-                        	<div class="frm_ele">
-                            	<input class="reg_next_step" type="submit" value="Next Step" />
-                            </div>
-                            <div class="frm_ele">
-                            	<a class="but_short" href="#">Browse Users</a>
-                            </div>
-                        </div>
-                     </form>
-                     <!--/.step_3--></div>
-                <!--/.action_cnt--></div>
-              <!--/.action_blk--></section>
+            <div class="slider_wrap">
+               <div class="tip tt_arrow tip5"><!--- Tootip wrapper Start  !-->
+                 <div class="grad"></div>
+                 <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                   <span class="arrow_top"></span> Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,<br>
+                   <a href="#">Watch Video</a> 
+                   <!--- Tootip content End  !--> 
+                 </div>
+                 <div class="grad"></div>
+                 <!--- Tootip wrapper End  !--> 
+               </div>
+               <div id="slider_result_waist" class="slider_result">24"</div>
+               <div id="slider_waist" class="main_slider"></div>
+               {{ form_widget(form.waist) }}
+               <!--/.slider_wrap--></div>
 
+
+   
+        </div>
+        <div class="frm_ele"> {{ form_label(form.hip) }}
+          {{ form_errors(form.hip) }}
+                
+        <div class="slider_wrap">
+            <div class="tip tt_arrow tip6"><!--- Tootip wrapper Start  !-->
+              <div class="grad"></div>
+              <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                <span class="arrow_top"></span> Stand with your heels together, and measure around the fullest part of your hips, keeping the tape parallel to the floor.<br>
+                <a href="#">Watch Video</a> 
+                <!--- Tootip content End  !--> 
+              </div>
+              <div class="grad"></div>
+              <!--- Tootip wrapper End  !--> 
+            </div>
+            <div id="slider_result_hips" class="slider_result">36"</div>
+            <div id="slider_hips" class="main_slider"></div>
+            {{ form_widget(form.hip) }}
+            <!--/.slider_wrap--></div>
+        </div>
+        <div class="frm_ele"> {{ form_label(form.arm) }}
+          {{ form_errors(form.arm) }}
+                
+          <div class="slider_wrap">
+            <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
+              <div class="grad"></div>
+              <div class="tooltip_content"><!--- Tootip content Start  !--> 
+
+                <span class="arrow_top"></span> Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,<br>
+                <a href="#">Watch Video</a> 
+                <!--- Tootip content End  !--> 
+              </div>
+              <div class="grad"></div>
+              <!--- Tootip wrapper End  !--> 
+            </div>
+            <div id="slider_result_arm" class="slider_result">38"</div>
+            <div id="slider_arm" class="main_slider"></div>
+            {{ form_widget(form.arm) }}
+          <!--/.slider_wrap--></div>
+        </div>
+        <div class="frm_ele"> {{ form_label(form.leg) }}
+          {{ form_errors(form.leg) }}
+            <div class="slider_wrap">
+                <div class="tip tt_arrow tip7"><!--- Tootip wrapper Start  !-->
+                  <div class="grad"></div>
+                  <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                    <span class="arrow_top"></span> Dummy text,Dummy text, Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text<br>
+                    <a href="#">Watch Video</a> 
+                    <!--- Tootip content End  !--> 
+                  </div>
+                  <div class="grad"></div>
+                  <!--- Tootip wrapper End  !--> 
+                </div>
+                <div id="slider_result_leg" class="slider_result">27"</div>
+                <div id="slider_leg" class="main_slider"></div>
+                {{ form_widget(form.leg) }}
+            <!--/.slider_wrap--></div>
+        </div>
+        <div class="frm_ele"> {{ form_label(form.inseam) }}
+          {{ form_errors(form.inseam) }}
+           
+        <div class="slider_wrap">
+            <div class="tip tt_arrow tip7"><!--- Tootip wrapper Start  !-->
+              <div class="grad"></div>
+              <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                <span class="arrow_top"></span> Dummy text,Dummy text, Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text<br>
+                <a href="#">Watch Video</a> 
+                <!--- Tootip content End  !--> 
+              </div>
+              <div class="grad"></div>
+              <!--- Tootip wrapper End  !--> 
+            </div>
+            <div id="slider_result_inseam" class="slider_result">27"</div>
+            <div id="slider_inseam" class="main_slider"></div>
+            {{ form_widget(form.inseam) }}
+            <!--/.slider_wrap--></div>
+        </div>
+        <div class="frm_ele"> {{ form_label(form.back) }}
+          {{ form_errors(form.back) }}
+                
+          <div class="slider_wrap">
+            <div class="tip tt_arrow tip7"><!--- Tootip wrapper Start  !-->
+              <div class="grad"></div>
+              <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                <span class="arrow_top"></span> Dummy text,Dummy text, Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text<br>
+                <a href="#">Watch Video</a> 
+                <!--- Tootip content End  !--> 
+              </div>
+              <div class="grad"></div>
+              <!--- Tootip wrapper End  !--> 
+            </div>
+            <div id="slider_result_back" class="slider_result">27"</div>
+            <div id="slider_back" class="main_slider"></div>
+            {{ form_widget(form.back) }}
+          <!--/.slider_wrap--></div>
+           </div>
+        {{ form_rest(form) }}
+        <div class="btm_buttons row">
+          <div class="frm_ele">
+            <input class="reg_next_step" type="submit" value="Next Step" />
+          </div>
+          <div class="frm_ele"> <a class="but_short" href="#">Browse Users</a> </div>
+        </div>
+      </form>
+      <!--/.step_3--></div>
+    <!--/.action_cnt--></div>
+  <!--/.action_blk--></section>
 </form>
 {% endblock %}
 
 {% block how_it_works_content %}
 <section class="cnt_btm">
-    <h3>How It Works</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a nisi eu purus sollicitudin consequat porta quis orci. Nunc bibendum volutpat scelerisque. Quisque hendrerit nisl ac enim ultricies auctor. Morbi vitae eros non dui accumsan malesuada. Pellentesque sagittis luctus nunc vel gravida.</p>
+  <h3>How It Works</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a nisi eu purus sollicitudin consequat porta quis orci. Nunc bibendum volutpat scelerisque. Quisque hendrerit nisl ac enim ultricies auctor. Morbi vitae eros non dui accumsan malesuada. Pellentesque sagittis luctus nunc vel gravida.</p>
 </section>
 {% endblock %}
 
 {% block bottom_left_nav %}
 <nav class="row">
-    <ul class="with_bullet">
-        <li><a href="#">about</a></li>
-        <li><a href="#">contact</a></li>
-        <li><a href="#">register</a></li>
-    </ul>
+  <ul class="with_bullet">
+    <li><a href="#">about</a></li>
+    <li><a href="#">contact</a></li>
+    <li><a href="#">register</a></li>
+  </ul>
 </nav>
 {% endblock %}
+{% block bottom_random_content %} 
+<script type="text/javascript">
+$(document).ready(function(){
+
+$(".slider_wrap").mousedown(function (){
+	//$(".slider_wrap").css('background','#9dcb38');
+	$(this).css('background','#9dcb38');
+	show_tip(this);
+});
+
+
+ //Slider Height
+  $("#slider_height").slider({ animate: true, range: "min", value: 68, min: 20, max: 96, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_height" ).html( ui.value + '"' );
+  },
+  change: function(event, ui) {	
+  $(this).parent().find("input").attr('value', ui.value);
+  }	
+  });
+
+  //Slider Weight
+  $("#slider_weight").slider({ animate: true, range: "min", value: 135, min: 90, max: 350, step: 0.5, slide: function( event, ui ) {
+		  $( "#slider_result_weight" ).html( ui.value + '<span class="short_txt">lbs</span>');
+  },
+  change: function(event, ui) { 
+$(this).parent().find("input").attr('value', ui.value);	
+  }	
+  });
+
+  //Slider Arm
+  $("#slider_arm").slider({ animate: true, range: "min", value: 38, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_arm" ).html( ui.value + '"');
+  },
+  change: function(event, ui) { 
+$(this).parent().find("input").attr('value', ui.value);
+  }	
+  });
+
+  //Slider Bust
+  $("#slider_bust").slider({ animate: true, range: "min", value: 36, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_bust" ).html( ui.value + '"');
+  },
+  change: function(event, ui) { 
+$(this).parent().find("input").attr('value', ui.value);	
+  }	
+  });
+
+  //Slider Waist
+  $("#slider_waist").slider({ animate: true, range: "min", value: 24, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_waist" ).html( ui.value + '"');
+  },
+  change: function(event, ui) { 
+ $(this).parent().find("input").attr('value', ui.value);	
+  }	
+  });
+
+  //Slider Hips
+  $("#slider_hips").slider({ animate: true, range: "min", value: 36, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_hips" ).html( ui.value + '"');
+  },
+  change: function(event, ui) { 
+$(this).parent().find("input").attr('value', ui.value);	
+  }	
+  });
+ //Slider Leg
+  $("#slider_leg").slider({ animate: true, range: "min", value: 68, min: 20, max: 96, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_leg" ).html( ui.value + '"' );
+  },
+  change: function(event, ui) {	
+  $(this).parent().find("input").attr('value', ui.value);
+  }	
+  });
+   //Slider Back
+  $("#slider_back").slider({ animate: true, range: "min", value: 24, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_back" ).html( ui.value + '"');
+  },
+  change: function(event, ui) { 
+ $(this).parent().find("input").attr('value', ui.value);	
+  }	
+  });
+  //Slider Inseam
+  $("#slider_inseam").slider({ animate: true, range: "min", value: 27, min: 6, max: 50, step: 0.25, slide: function( event, ui ) {
+		  $( "#slider_result_inseam" ).html( ui.value + '"');
+  },
+  change: function(event, ui) { 
+$(this).parent().find("input").attr('value', ui.value);
+  }	
+  });
+
+});
+function show_tip(ele){
+
+
+		$(".tip").css({"left" : "-410px"});
+
+		var chk_offset = $(ele).position();
+		//alert(chk_offset);
+
+
+
+		if($(ele).find("div.tip").css("display") == "block")
+		{
+				//$(ele).find("div.tip").fadeIn(500)
+		}
+		else {
+
+						$(ele).find("div.tip").removeClass("tip").addClass("show_my_tip");
+						$(".tip").hide(20, function (){
+								$("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "-410px"}).removeClass("show_my_tip").addClass("tip");});
+						});			
+				 }
+
+}
+
+
+
+
+	</script> 
+{% endblock %} 

@@ -9,15 +9,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class RegistrationStepThreeType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('weight', 'text');
-        $builder->add('height', 'text');
-        $builder->add('waist', 'text');
-        $builder->add('hip', 'text');
-        $builder->add('bust', 'text');
-        $builder->add('arm', 'text');
-        $builder->add('leg', 'text');
-        $builder->add('inseam', 'text');
-        $builder->add('back', 'text');
+        $builder->add('weight', 'hidden');
+        $builder->add('height', 'hidden');
+        $builder->add('waist', 'hidden');
+        $builder->add('hip', 'hidden');
+        $builder->add('bust', 'hidden');
+        $builder->add('arm', 'hidden');
+        $builder->add('leg', 'hidden');
+        $builder->add('inseam', 'hidden');
+        $builder->add('back', 'hidden');
     }
 
     public function getName() {

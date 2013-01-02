@@ -855,7 +855,7 @@ label.radio_ele input {
 
 /*--Tips--*/
 .show_my_tip,
-.tip {
+/*.tip {
 	display:none;
 	background:#ffcc00;
 	color:#000;
@@ -863,4 +863,102 @@ label.radio_ele input {
 	top:-20px;
 	left:-300px;
 	border:1px solid #eee;
+}
+*/
+
+
+.tip{
+	/*background: rgb(73,81,57);
+	background: -moz-linear-gradient(top, rgba(73,81,57,1) 0%, rgba(48,53,38,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(73,81,57,1)), color-stop(100%,rgba(48,53,38,1)));
+	background: -webkit-linear-gradient(top, rgba(73,81,57,1) 0%,rgba(48,53,38,1) 100%);
+	background: -o-linear-gradient(top, rgba(73,81,57,1) 0%,rgba(48,53,38,1) 100%);
+	background: -ms-linear-gradient(top, rgba(73,81,57,1) 0%,rgba(48,53,38,1) 100%);
+	background: linear-gradient(to bottom, rgba(73,81,57,1) 0%,rgba(48,53,38,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#495139', endColorstr='#303526',GradientType=0 );*/
+	opacity:0.90;
+	display:none;
+	background:#222;
+    filter:alpha(opacity=90); /* For IE8 and earlier */	
+	position:absolute;
+	top:-20px;
+	left:-300px;
+	color:#fff;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height:25px;	
+	font-size:0.9em;
+	border-right:5px solid #87ca2e;
+	text-shadow:1px 2px 1px #000;
+	text-align:center;	
+	
+}
+
+.tip .tooltip_content{
+	position:relative;	
+	padding:15px;
+	width:325px;
+}
+
+.tip .grad{
+	background:url(../images/gra.png) no-repeat top right;
+	width:304px;
+	height:5px;
+	margin-left:52px;	
+}
+
+.tt_arrow .arrow_top{
+	background:url(../images/arrow.png) no-repeat;
+	width:55px;
+	height:37px;
+	position:absolute;
+	top:15px;
+	right:-56px;	
+}
+
+.tt_arrow .arrow_middle{
+	background:url(../images/arrow.png) no-repeat;
+	width:55px;
+	height:37px;
+	position:absolute;
+	top:90px;
+	right:-56px;	
+}
+
+.tt_arrow .arrow_bottom{
+	background:url(../images/arrow.png) no-repeat;
+	width:55px;
+	height:37px;
+	position:absolute;
+	top:170px;
+	right:-56px;	
+}
+
+.tip a{
+	text-decoration:none;
+	background:#8dcc2e;	
+	background: -moz-linear-gradient(top, rgba(202,227,125,1) 0%, rgba(202,227,125,1) 40%, rgba(135,202,46,1) 62%, rgba(135,202,46,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(202,227,125,1)), color-stop(40%,rgba(202,227,125,1)), color-stop(62%,rgba(135,202,46,1)), color-stop(100%,rgba(135,202,46,1)));
+	background: -webkit-linear-gradient(top, rgba(202,227,125,1) 0%,rgba(202,227,125,1) 40%,rgba(135,202,46,1) 62%,rgba(135,202,46,1) 100%);
+	background: -o-linear-gradient(top, rgba(202,227,125,1) 0%,rgba(202,227,125,1) 40%,rgba(135,202,46,1) 62%,rgba(135,202,46,1) 100%);
+	background: -ms-linear-gradient(top, rgba(202,227,125,1) 0%,rgba(202,227,125,1) 40%,rgba(135,202,46,1) 62%,rgba(135,202,46,1) 100%);
+	background: linear-gradient(to bottom, rgba(202,227,125,1) 0%,rgba(202,227,125,1) 40%,rgba(135,202,46,1) 62%,rgba(135,202,46,1) 100%);	
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;	
+	border-radius:5px;
+	padding:1px 8px 1px 8px;
+	color:#2b4705;
+	font-size:1.0em;
+	-moz-box-shadow:0px 2px 3px 3px #202319;
+	-webkit-box-shadow:0px 2px 3px 3px #202319;
+	box-shadow:0px 2px 3px 3px #202319;	
+	clear:left;	
+	text-align:center;	
+	margin:15px auto auto auto;
+	text-shadow:none;
+	display:inline-block;	
+	font-weight:bold;
+}
+
+.tip1{
+	
 }
