@@ -1,0 +1,4 @@
+anonymous_user_home:
+    pattern:  /home
+    defaults: { _controller: LoveThatFitSiteBundle:Home:index}
+    

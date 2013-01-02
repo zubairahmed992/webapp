@@ -14,16 +14,11 @@ class RegistrationStepTwoType extends AbstractType
         $builder->add('firstName', 'text');
         $builder->add('lastName', 'text');
         $builder->add('email', 'text');
-        $builder->add('gender', 'choice', array(
-            'choices'=> array(
-                'M'=>'Male',
-                'F'=>'Female',
-                ), 
-            'multiple'  => false, 
-            'expanded'  => true,
-            
-            ));
-         //$builder->add('gender', new GenderType());
+        
+         $builder->add('gender', new GenderType(), array(
+               
+             'multiple'  => false, 
+            'expanded'  => true));
         
         $builder->add('birthdate','date', array(
             'years'=> range(date('Y')-14,date('Y')-60),  
