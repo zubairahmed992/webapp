@@ -25,6 +25,7 @@ class RegistrationController extends Controller {
 
 //--------------------------STEP-1-----------------------------------------------
       
+        
     public function stepOneCreateAction() {
         $entity = new User();
         $form = $this->createForm(new UserType(), $entity);

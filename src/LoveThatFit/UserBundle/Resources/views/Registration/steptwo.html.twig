@@ -1,13 +1,15 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 
+{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+
 {% block action_block_content %}
 <section class="reg_blk">
     <div class="reg_steps">
         <ul>
-            <li><span>1</span></li>
-            <li class="active"><span>2</span></li>
-            <li><span>3</span></li>
-            <li><span>4</span></li>
+            <li><a href="#">1</a></li>
+            <li class="active"><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
         </ul>
     </div>
     <div class="action_cnt">
@@ -29,16 +31,20 @@
                             </div>
                             <div class="frm_ele">
     {{ form_label(form.email) }}
-    {{ form_errors(form.email) }}
+    
+    {% if form_errors(form.email) %}
+        {{form_errors(form.email)}}
+    {% endif %}
+                                    
     {{ form_widget(form.email) }}
 
                                 </div>
-                                <div class="frm_ele radio_buts">
-    {{ form_label(form.gender) }}
-    {{ form_errors(form.gender) }}
-    {{ form_widget(form.gender) }}
+                    
+                    <div class="frm_ele radio_buts">
+           {{ form_row(form.gender) }}                     
+    </div>  
 
-                                    </div>
+                                
                                     <div class="frm_ele select_inline">
     {{ form_label(form.birthdate) }}
     {{ form_errors(form.birthdate) }}
@@ -77,6 +83,8 @@
                             <ul class="with_bullet">
                                 <li><a href="#">about</a></li>
                                 <li><a href="#">contact</a></li>
+                                <li><a href="#">register</a></li>
                             </ul>
                         </nav>
+
 {% endblock %}
