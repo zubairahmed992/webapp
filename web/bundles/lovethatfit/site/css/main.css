@@ -353,11 +353,15 @@ header .logo {
 	position:absolute;
 	top:106px;
 	left:23px;
+        z-index:-1;
 }
+.action_blk .action_cnt h1 a,
+.action_blk .action_cnt h1 a:visited,
 .action_blk .action_cnt h1 {
 	font-size:34px;
 	font-weight:normal;
 	margin-top:-40px;
+        color:#6D9222;
 }
 .action_blk .action_cnt h2 {
 	font-size:16px;
@@ -483,6 +487,7 @@ header.reg .strip_rgt {
 	z-index:100;
 	position:relative;
 }
+.reg_blk .reg_steps ul li span,
 .reg_blk .reg_steps ul li a,
 .reg_blk .reg_steps ul li a:visited {
 	float:left;
@@ -495,6 +500,7 @@ header.reg .strip_rgt {
 	text-align:center;
 	background:url(../images/reg_navi_nrm_bg.png) 0 -11px no-repeat;
 }
+.reg_blk .reg_steps ul li span:hover,
 .reg_blk .reg_steps ul li a:hover,
 .reg_blk .reg_steps ul li a:active,
 .reg_blk .reg_steps ul li a:focus {
@@ -506,6 +512,7 @@ header.reg .strip_rgt {
 	padding-top:0;
 	z-index:200;
 }
+.reg_blk .reg_steps ul li.active span,
 .reg_blk .reg_steps ul li.active a,
 .reg_blk .reg_steps ul li.active a:visited {
 	float:left;
@@ -518,6 +525,7 @@ header.reg .strip_rgt {
 	font-size:22px;
 	background:url(../images/reg_navi_active_bg.png) 0 0 no-repeat;
 }
+.reg_blk .reg_steps ul li.active span:hover,
 .reg_blk .reg_steps ul li.active a:hover,
 .reg_blk .reg_steps ul li.active a:active,
 .reg_blk .reg_steps ul li.active a:focus {
@@ -571,7 +579,20 @@ header.reg .strip_rgt {
 .reg_blk select {
 	width:68px;
 }
-
+/*-- Step 1 --*/
+.step_1 h2 {
+   padding-bottom: 50px;
+}
+.step_1 .btm_buttons {
+    bottom:-36px;
+}
+/*-- Step 2 --*/
+.step_2 h2 {
+   padding-bottom: 30px;
+}
+.step_2 .btm_buttons {
+    bottom:-36px;
+}
 /*--Step 3--*/
 .slider_wrap {
 	width:352px;
