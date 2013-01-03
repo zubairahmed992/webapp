@@ -158,7 +158,7 @@ textarea {
 
 /*--Structure--*/
 body {
-	background:url(../images/bg_new.jpg) center top no-repeat;
+	background:url(../images/bg_new.jpg) center top no-repeat #e1d1a0;
 }
 .full_wrapper {
 	background:none;
@@ -298,6 +298,7 @@ ul.row li {
 	padding-top:140px;
 	min-height:360px;
 	float:left
+        padding-bottom:20px;
 }
 .full_site .bottom_line {
 	background:none;
@@ -462,7 +463,7 @@ header.reg .strip_rgt {
 	margin-right:70px;
 	margin-top:-300px;
 	float:right;
-	min-height:360px;
+	min-height:300px;
 	padding-bottom:30px;
 	margin-bottom:30px;
 }
@@ -499,6 +500,7 @@ header.reg .strip_rgt {
 	font-weight:bold;
 	text-align:center;
 	background:url(../images/reg_navi_nrm_bg.png) 0 -11px no-repeat;
+        cursor:default;
 }
 .reg_blk .reg_steps ul li span:hover,
 .reg_blk .reg_steps ul li a:hover,
@@ -587,6 +589,9 @@ header.reg .strip_rgt {
     bottom:-36px;
 }
 /*-- Step 2 --*/
+.step_2 {
+   height:322px;
+}
 .step_2 h2 {
    padding-bottom: 30px;
 }
