@@ -1,7 +1,24 @@
 {% extends 'LoveThatFitSiteBundle::base.html.twig' %}
 
 {% block left_navigation %}
-Test
+<!--LEFT MENU START-->                
+               <nav>
+                <ul>
+                    <li><a href="#"><span></span>What's New</a></li>
+                    <li><a href="#"><span></span>What's Hot<span class="mnu"></span></a></li>
+                    <li><a href="#"><span></span>Shop by Style</a></li>
+                    <li class="opn_link"><a href="#"><span></span>Shop by Brand <span class="mnu"></span></a>
+                    
+                        <ul class="filter filter2">
+                            <li><a href="#">The X Brand</a><span class="arw"></span></li>
+                            <li class="sub_active"><a href="#">Cloth Tich</a><span class="arw"></span></li>
+                            <li><a href="#">Special One</a><span class="arw"></span></li>
+                        </ul>
+                        <div style="margin-top:-10px; margin-left:5px;"><img src="images/btm_patch.jpg"></div>                      
+                    </li>
+                </ul>
+                </nav>
+<!--LEFT MENU END--></div> 
 {% endblock %}
 
 {% block left_col_btm %}
