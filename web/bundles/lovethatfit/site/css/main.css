@@ -401,11 +401,11 @@ header .logo {
 	float:left;
 }
 .cnt_btm {
-	font-size:12px;
+	font-size:13px;
 	font-family:"Times New Roman", Times, serif;
-	margin:40px 0 0 164px;
+	margin:40px 0 0 148px;
 	padding-bottom:20px;
-	width:230px;
+	width:250px;
 	color:#4d4d4d;
 }
 .cnt_btm h3 {
@@ -806,12 +806,21 @@ input[type=text] {
 .radio_buts label {
 	padding-top:0;
 }
-label.radio_ele {
-	width:auto !important;
-	padding:2px 10px 0 0;
+.radio_buts div.radio_ele {
+   display:inline-block;
+   padding-top:2px;
+   padding-left: 4px;
 }
-label.radio_ele input {
+.radio_buts div.radio_ele label {
+	width:auto !important;
+	padding: 0 16px 0 0;
+        float:left;
+}
+.radio_buts div.radio_ele input {
 	margin-right:4px;
+        border:none;
+        background: none;
+        float: left;
 }
 .play_area {
 	width:364px;

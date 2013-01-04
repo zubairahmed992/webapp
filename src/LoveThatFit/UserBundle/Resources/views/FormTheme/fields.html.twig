@@ -4,11 +4,11 @@
             
             {% for child in form %}
 
-                <label class="radio_ele">
+                <div class="radio_ele">
                     {{form_widget(child) }}
                         {{form_label(child) }}
                     
-                </label>
+                    </div>
             {% endfor %}
             
         {% else %}
