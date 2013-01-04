@@ -2,6 +2,8 @@ hello:
     pattern:  /hello/{name}
     defaults: { _controller: AcmeHelloBundle:Hello:index }
     
-intro:
-    pattern:  /intro/
+acme_intro:
+    pattern:  /acme/intro/
     defaults: { _controller: AcmeHelloBundle:Intro:index }    
+    
+    

@@ -11,4 +11,10 @@ love_that_fit_admin:
     prefix:   /
 
 
+acme_hello_routes:
+    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+    prefix:   /
 
+acme_store_routes:
+    resource: "@AcmeStoreBundle/Resources/config/routing.yml"
+    prefix:   /

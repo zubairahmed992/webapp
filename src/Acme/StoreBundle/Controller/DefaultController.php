@@ -6,56 +6,48 @@ use Acme\StoreBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+
+
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+
+use Acme\StoreBundle\Entity\Merch;
+use Acme\StoreBundle\Form\MerchType;
+
+
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('AcmeStoreBundle:Default:index.html.twig', array('name' => $name));
+         
+        return $this->render('AcmeStoreBundle:Default:index.html.twig',array(
+            'entities' => $this->getList(),
+              'entity' => $this->getNewEntity(),
+            'form'   => $this->getNewForm(),
+        ));
     }
     
-    public function createAction()
-{
-    $product = new Product();
-    $product->setName('Roap');
-    $product->setPrice('9.99');
-    $product->setDescription('Lorem ipsum dolor');
-    $em = $this->getDoctrine()->getManager();
-    $em->persist($product);
-    $em->flush();
-
-    $product = new Product();
-    $product->setName('Bag');
-    $product->setPrice('29.99');
-    $product->setDescription('Lorem ipsum dolor');
-    $em = $this->getDoctrine()->getManager();
-    $em->persist($product);
-    $em->flush();
-
-    $product = new Product();
-    $product->setName('boots');
-    $product->setPrice('39.99');
-    $product->setDescription('Lorem ipsum dolor');
-    $em = $this->getDoctrine()->getManager();
-    $em->persist($product);
-    $em->flush();
     
-    return new Response('Created product id '.$product->getId());
-}
+    #---------------------------------------------------------------------------
+ private function getNewForm()
+    {
+         return $this->createForm(new MerchType(), new Merch())->createView();
 
-public function updateAction($id)
-{
-    $em = $this->getDoctrine()->getManager();
-    $product = $em->getRepository('AcmeStoreBundle:Product')->find($id);
-
-    if (!$product) {
-        throw $this->createNotFoundException(
-            'No product found for id '.$id
-        );
     }
+    private function getForm($entity)
+    {
+         return $this->createForm(new MerchType(), $entity)->createView();
+    }
+    private function getList()
+    {
+          return $this->getDoctrine()->getRepository('AcmeStoreBundle:Merch')->findAll();
+    }
+      private function getNewEntity()
+    {
+        return new Merch();
 
-    $product->setName('New product name!');
-    $em->flush();
-
-    return $this->redirect($this->generateUrl('homepage'));
-}
+    }    
 }

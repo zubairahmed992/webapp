@@ -7,8 +7,6 @@ $(document).ready(function() {
    });
 
 
-
-
  $("#wwregistrationStepOneForm").submit(function(){
       //get the url for the form
       var url=$("#registrationStepOneForm").attr("action");

@@ -3,37 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Love That Fit</title>
+
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
         
-        <script>
-   
-   
-    $(document).ready(function() { 
-        var options = { 
-            target:        '#flash',   // target element(s) to be updated with server response 
-            success:       showResponse  // post-submit callback 
- 
-        }; 
-        $('#frmMerch').submit(function() { 
-            $(this).ajaxSubmit(options); 
-            return false; 
-        }); 
-    
-    
-    }); 
- 
-    // post-submit callback 
-    function showResponse(responseText, statusText, xhr, $form)  { 
-    $('#dv2').innerHtml'status: ' + statusText + '\n\nresponseText: \n' + responseText + 
-            '\n\nThe output div should have already been updated with the responseText.'); 
-    }
-    
-        
-            </script>
-
-            <style>
+        <style>
                     .screen {
                         width:500px;
                         height:300px;
@@ -59,14 +34,33 @@
                         padding: 20px;
                     }
                 </style>
+        
+        <script>
+   
+   
+    $(document).ready(function() { 
+        var options = { 
+            target:        '#flash',   // target element(s) to be updated with server response 
+            success:       showResponse  // post-submit callback 
+         }; 
+ 
+        $('#frmMerch').submit(function() { 
+            $(this).ajaxSubmit(options); 
+            return false; 
+        }); 
+    }); 
+ 
+    function showResponse(responseText, statusText, xhr, $form)  { 
+        $('#dv2').html(responseText); 
+    }
+    
+        
+            </script>
 
+        </head>
 
-
-            </head>
-
-            <body>
-
-                <div id="flash">
+        <body>
+   <div id="flash">
                     
                 </div>
 
@@ -83,5 +77,6 @@
                     <div class="screen" id="dv2">2</div>
                     <div class="screen" id="dv3">3</div>
                     <div class="screen" id="dv4">4</div>
-                </body>
-            </html>
+
+        </body>
+    </html>

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Acme\StoreBundle\Entity\Merch;
 use Acme\StoreBundle\Form\MerchType;
 
@@ -33,7 +34,6 @@ class MerchController extends Controller
             'entities' => $entities,
         );
     }
-
     /**
      * Finds and displays a Merch entity.
      *
@@ -82,7 +82,7 @@ class MerchController extends Controller
      * @Method("POST")
      * @Template("AcmeStoreBundle:Merch:new.html.twig")
      */
-    public function createAction(Request $request)
+    public function _createAction(Request $request)
     {
         $entity  = new Merch();
         $form = $this->createForm(new MerchType(), $entity);
@@ -93,7 +93,7 @@ class MerchController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('merch_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('acme_merch_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -153,7 +153,7 @@ class MerchController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('merch_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('acme_merch_edit', array('id' => $id)));
         }
 
         return array(
@@ -186,7 +186,7 @@ class MerchController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('merch'));
+        return $this->redirect($this->generateUrl('acme_merchs'));
     }
 
     private function createDeleteForm($id)
@@ -195,5 +195,88 @@ class MerchController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    #----------------------------------------------------------
+ public function ajaxFormAction()
+    {
+        $entity  =  $this->getNewEntity();
+        $form =  $form = $this->createForm(new MerchType(), $entity);
+        $form->bind($request);
+        return    $response= new Response("p");
+
+    }
+    
+    
+       /**
+     * Lists all Merch entities.
+     *
+     * @Template()
+     */
+   
+      public function ajaxAction()
+    {
+        return array(
+            'entities' => $this->getList(),
+              'entity' => $this->getNewEntity(),
+            'form'   => $this->getNewForm(),
+        );
+    }
+ 
+
+ public function createAction(Request $request)
+    {
+        $entity  =  $this->getNewEntity();
+        $form =  $form = $this->createForm(new MerchType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+        //return new Response(json_encode("howdee ajax!"));
+            $entities=$this->getList();
+            $fr = $this->container->get('templating')->render('AcmeStoreBundle:Merch:new.html.twig', array(
+            'form'=> $form->createView(),
+            'entity'=> $entity ));
+            
+            $response= new Response(json_encode(array(
+            'entities' => $entities,
+            'entity' => $entity,
+            'form'   => $fr,
+            'message' => "Entity succesfully  Inserted"    
+                
+        )));
+            
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+else
+{
+    return new Response("ajax we have a problem!");
+    
+}
+        
+    }
+    
+    
+    private function getNewForm()
+    {
+         return $this->createForm(new MerchType(), new Merch())->createView();
+
+    }
+    private function getForm($entity)
+    {
+         return $this->createForm(new MerchType(), $entity)->createView();
+    }
+    private function getList()
+    {
+          return $this->getDoctrine()->getRepository('AcmeStoreBundle:Merch')->findAll();
+    }
+      private function getNewEntity()
+    {
+        return new Merch();
+
     }
 }

@@ -23,17 +23,17 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('merch') }}">
+        <a href="{{ path('acme_merchs') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('merch_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('acme_merch_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
     <li>
-        <form action="{{ path('merch_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('acme_merch_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
