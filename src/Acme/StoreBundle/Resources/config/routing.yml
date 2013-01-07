@@ -2,6 +2,26 @@ acme_default:
     pattern:  /acme/default
     defaults: { _controller: AcmeStoreBundle:Default:index }
 
+acme_product_new:
+    pattern:  /acme/default/new
+    defaults: { _controller: AcmeStoreBundle:Default:new }
+
+acme_product_create:
+    pattern:  /acme/default/create
+    defaults: { _controller: AcmeStoreBundle:Default:create }
+
+acme_product_edit:
+    pattern:  /acme/default/{id}/edit
+    defaults: { _controller: AcmeStoreBundle:Default:edit }
+    requirements:
+        _method:  GET
+
+acme_product_update:
+    pattern:  /acme/default/{id}/update
+    defaults: { _controller: AcmeStoreBundle:Default:update }
+    requirements:
+        _method:  POST
+
 acme_merch_ajax_form:
     pattern:  /acme/merch/ajaxform
     defaults: { _controller: AcmeStoreBundle:Merch:ajaxForm }

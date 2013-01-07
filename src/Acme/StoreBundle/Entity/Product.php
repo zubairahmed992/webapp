@@ -1,7 +1,7 @@
 <?php
 // src/Acme/StoreBundle/Entity/Product.php
 namespace Acme\StoreBundle\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -33,6 +33,16 @@ class Product
      */
     protected $description;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $imageurl;
+
+      /**
+     * @Assert\File(maxSize="6000000")
+     */
+     public $file;
+    
     /**
      * Get id
      *
@@ -140,5 +150,71 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set imageurl
+     *
+     * @param string $imageurl
+     * @return Product
+     */
+    public function setImageurl($imageurl)
+    {
+        $this->imageurl = $imageurl;
+    
+        return $this;
+    }
+
+    /**
+     * Get imageurl
+     *
+     * @return string 
+     */
+    public function getImageurl()
+    {
+        return $this->imageurl;
+    }
+    
+     //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+    
+    public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->file->move(
+                $this->getUploadRootDir(), $this->file->getClientOriginalName()
+        );
+
+        $this->imageurl = $this->file->getClientOriginalName();
+        $this->file = null;
+    }
+
+    
+  public function getAbsolutePath()
+    {
+        return null === $this->imageurl
+            ? null
+            : $this->getUploadRootDir().'/'.$this->imageurl;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->imageurl
+            ? null
+            : $this->getUploadDir().'/'.$this->imageurl;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads/acme/products';
     }
 }
