@@ -125,7 +125,72 @@ class RegistrationController extends Controller {
     }
 
 //--------------------------STEP-4-----------------------------------------------
-    public function stepFourCreateAction(Request $request, $id) {
+      public function stepFourCreateAction(Request $request, $id) {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+
+            $entity->upload();
+
+            $em->persist($entity);
+            $em->flush();
+  
+            $fp = fopen($entity->getWebPath(), "rb");
+            $str = stream_get_contents($fp);
+            fclose($fp);
+
+            $response = new Response($str, 200);
+            $response->headers->set('Content-Type', 'image/png');
+            return $response;  
+                    
+        } 
+    }
+    
+    public function __stepFourCreateAction(Request $request, $id) {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+
+            $entity->upload();
+
+            $em->persist($entity);
+            $em->flush();
+
+            #return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array('form' => $form->createView(),'entity' => $entity));
+              
+            $response= new Response(json_encode(array(
+            'entity' => $entity,
+            'imageurl' => $entity->getWebPath()
+                    )));
+                $response->headers->set('Content-Type', 'application/json');
+            return $response;
+                    
+        } else {
+            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $entity));
+        }
+    }
+    
+    
+    
+    public function _stepFourCreateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);

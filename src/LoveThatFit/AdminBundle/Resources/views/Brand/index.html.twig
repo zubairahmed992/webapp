@@ -1,39 +1,43 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-{% block h1 %}Brands{% endblock %}
-{% block title %}Brands{% endblock %}
-{% block addNew %}<a href="{{ path('admin_brand_new') }}">Add New Brand</a>{% endblock %}
 
-
+{% block breadcrumb %}
+    Brands
+{% endblock %}
 
 {% block body %}
+<div class="p_listing">     
+    <h1>Brand Listing</h1>
 
-<table>
-    <tbody>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Logo</th>
-        <th></th>
-    </tr>
+    <div class="bs-docs-grid">              
 
-{% for b in brands %}
-    <tr>
-        <td>{{b.Id}}</td>
-        <td>{{b.Name}}</td>
-        <td> <img src="{{ asset(b.WebPath) }}" height="80" width="100" />
-        
-        </td>        
-        <td> 
-        </td>        
-        <td>
-            <a href="{{ path('admin_brand_show', {'id': b.Id}) }}">view</a>&nbsp;|&nbsp;
-            <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}">edit</a>
-            
-            
-        </td>           
-    </tr>
-    </tbody>
+        <div class="row-fluid show-grid">
+            <div class="span1 hds">ID</div>
+            <div class="span1 hds">Name</div>
+            <div class="span1 hds">Logo</div>
+            <div class="span1 hds"><a href="{{ path('admin_brand_new') }}">Add New</a></div>              
+        </div>  
+
+          {% for b in brands %}
+
+        <div class="row-fluid show-grid">
+            <div class="span1">{{b.Id}}</div>
+            <div class="span1">{{b.Name}}</div>
+            <div class="span1"><img src="{{ asset(b.WebPath) }}"/></div>
+            <div class="span1">                  
+                <div>
+                    <a href="{{ path('admin_brand_show', {'id': b.Id}) }}"><i class="icon-eye-open"></i></a>
+                    <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}"><i class="icon-edit"></i></a>
+                </div> 
+            </div>              
+        </div>
+
+
 {% endfor %}
-</table>
+
+
+
+    </div>
+</div>
+
 
 {% endblock %}

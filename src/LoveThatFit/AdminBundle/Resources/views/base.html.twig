@@ -44,26 +44,18 @@
     </div>
     
     <!-- Breadcrumb Start -->
-	<ul class="breadcrumb">
+    <ul class="breadcrumb">
           <li><a href="#">Admin</a> <span class="divider">/</span></li>
-          <li class="active">Brands</li>
+          <li class="active">{% block breadcrumb %}{% endblock %}</li>
     </ul>
-    
-    
-    
+
     <!-- Breadcrumb End -->      
       
+   <div class="container-fluid">      
    
-   <h1>{% block h1 %}LoveThatFit{% endblock %}</h1>
-        
-        <p>{% block addNew %}&nbsp;{% endblock %}</p>
-     
-
-        <div id="content">
             {% block body %}{% endblock %}
-        </div>
-    
    
+   </div>  
     
        
     <footer>

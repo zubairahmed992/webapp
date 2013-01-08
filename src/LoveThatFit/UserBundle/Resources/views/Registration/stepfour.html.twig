@@ -1,4 +1,7 @@
+
+
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+
 {% block action_block_content %}
 <section class="reg_blk">
     <div class="reg_steps">
@@ -12,23 +15,19 @@
     <div class="action_cnt">
         <div class="steps step_4">
             <h2>Upload Photo</h2>
-            <img src="{{ asset(entity.WebPath) }}" height="100" width="100" />
-
-            <form action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+            <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+                
+                
      {{ form_errors(form) }}
-                    <div>
-    {{ form_label(form.file) }}
-    {{ form_errors(form.file) }}
-    {{ form_widget(form.file) }}
-                        </div>
-
-
+                <div class="input_file_hldr">
+                    {{ form_errors(form.file) }}
+                            {{ form_widget(form.file, { 'attr': {'class': 'input_file'} }) }}
+                        	
+                            <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
+                        </div>    
          {{ form_rest(form) }}
 
-                        <div class="input_file_hldr">
-                            <input id="inp_file" name="inp_file" class="input_file" type="file" />
-                            <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
-                        </div>
+                    
                         <div class="clr_bth"></div>
                         <div class="frm_ele zoom_in">
                             <label>Zoom In/Out</label>
@@ -57,10 +56,7 @@
                                 <a class="but_short" href="#">Browse Users</a>
                             </div>
                         </div>
-
-
-
-                        <input type="submit" value="Next"/>
+                        
                     </form>
                     <!--/.step_4--></div>
                 <!--/.action_cnt--></div>
