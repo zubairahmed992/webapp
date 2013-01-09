@@ -125,7 +125,7 @@ class RegistrationController extends Controller {
     }
 
 //--------------------------STEP-4-----------------------------------------------
-      public function stepFourCreateAction(Request $request, $id) {
+      public function ___stepFourCreateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
@@ -142,7 +142,7 @@ class RegistrationController extends Controller {
 
             $em->persist($entity);
             $em->flush();
-  
+             
             $fp = fopen($entity->getWebPath(), "rb");
             $str = stream_get_contents($fp);
             fclose($fp);
@@ -150,11 +150,13 @@ class RegistrationController extends Controller {
             $response = new Response($str, 200);
             $response->headers->set('Content-Type', 'image/png');
             return $response;  
+            
+            #"<img id='img_to_upload' src='users/test_user_1/actual_uploaded/".$actual_image_name."' class='preview'>";
                     
         } 
     }
     
-    public function __stepFourCreateAction(Request $request, $id) {
+    public function stepFourCreateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
@@ -172,8 +174,6 @@ class RegistrationController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            #return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array('form' => $form->createView(),'entity' => $entity));
-              
             $response= new Response(json_encode(array(
             'entity' => $entity,
             'imageurl' => $entity->getWebPath()

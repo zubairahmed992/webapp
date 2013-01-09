@@ -19,17 +19,10 @@ function set_things(){
 	 
 	 uploaded_img_obj.onload = function() {
 		 
-		 
 		 photo_width =  document.getElementById('img_to_upload').width;
 		 photo_height = document.getElementById('img_to_upload').height;		 
 		 photo_width =  document.getElementById('img_to_upload').style.width = photo_width + "px";
 		 
-
-		 
-		 
-	//	 document.getElementById('img_to_upload').attributes('class').reverse();
-//		 document.getElementById('img_to_upload').style.height.val(photo_height);
-		 //$("#uploaded_photo").addClass("hide");
 	 };
 	 uploaded_img_obj.src = uploaded_img_src.src;
 }
@@ -37,7 +30,6 @@ function set_things(){
 
 $('#inp_file').live('change', function()
 { 
-//$("#uploaded_photo").html('');
 $("#play_area").removeClass("hide");
 $(".int_fitting_room").addClass("hide");
 $("#play_area").append('<img src="loader.gif" alt="Uploading...."/>');

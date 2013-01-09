@@ -15,9 +15,10 @@
     <div class="action_cnt">
         <div class="steps step_4">
             <h2>Upload Photo</h2>
+            
             <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
                 
-                
+                <input type="hidden" id="hdn_srverpath" value="{{asset('')}}"/>
      {{ form_errors(form) }}
                 <div class="input_file_hldr">
                     {{ form_errors(form.file) }}
@@ -35,6 +36,7 @@
                                 <div id="slider_result_photo" class="slider_result">100</div>
                                 <div id="slider_scale_photo" class="main_slider"></div>
                                 <input type="hidden" id="hdn_photo"/>
+                                
                                 <!--/.slider_wrap--></div></div>
                         <div class="clr_bth"></div>
                         <div class="play_area_hldr">

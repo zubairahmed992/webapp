@@ -46,13 +46,7 @@ $(document).ready(function(){
 		show_tip(this);
 	});
 
-	//Photo Area
-		$("#inp_file").change(function (){
-			
-		var photo_file_name = $("#inp_file").val();
-//			alert(photo_file_name);
-		$("#inp_txt_file_name").val(photo_file_name);
-	});
+	
 	
 	//$("#top_layer").draggable();
 	$("#uploaded_photo").draggable({
