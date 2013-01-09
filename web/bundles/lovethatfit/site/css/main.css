@@ -153,7 +153,6 @@ textarea {
   overflow: auto;
   vertical-align: top;
 }
-
 /*--/Bootstrap--*/
 
 /*--Structure--*/
@@ -174,6 +173,10 @@ body {
 	width:100%;
 	position:relative;
 	background:url(../images/bg_lft_colm.png) 0 0 repeat-y;
+}
+.logo {
+    padding: 40px 0 40px 18px;
+    
 }
 .footer {
 	width:840px;
@@ -328,7 +331,7 @@ header .logo {
 	color:#6d9222;
 }
 .action_blk .action_cnt {
-	padding-top:270px;
+	padding-top:226px;
 	background:url(../images/cnt_circle_bg.png) 0 0 no-repeat;
 	z-index:10;
 	position:relative;
@@ -340,8 +343,8 @@ header .logo {
 	text-shadow: 0px 0px 8px #555;
 	color:#fff;
 	position:absolute;
-	top:84px;
-	left:17px;
+	top:52px;
+	left:16px;
 	text-align:center;
 	width:400px;
 }
@@ -352,8 +355,8 @@ header .logo {
 	text-shadow: 0px 0px 8px #555;
 	color:#fff;
 	position:absolute;
-	top:106px;
-	left:23px;
+	top:80px;
+	left:18px;
         z-index:-1;
 }
 .action_blk .action_cnt h1 a,
@@ -361,7 +364,7 @@ header .logo {
 .action_blk .action_cnt h1 {
 	font-size:34px;
 	font-weight:normal;
-	margin-top:-40px;
+	margin-top:-34px;
         color:#6D9222;
 }
 .action_blk .action_cnt h2 {
@@ -998,28 +1001,29 @@ input[type=text] {
 
 /*--After Login--*/
 
-.left_menu{	
-	left:-5px;
-	top:40px;
+.left_column{	
 	width:224px;
-	margin-bottom:20px;
 	position:relative;
 		
 }
 
-.left_menu nav ul{
+.left_column nav {
+   left:-5px;
+   position: relative;
+}
+.left_column nav ul{
 	padding:0px 0px 0px 0px;
 	margin:0px 0px 0px 0px;	
 	position:relative;
 }
 
-.left_menu nav ul li{
+.left_column nav ul li{
 	list-style:none;
-	margin-bottom:8px;
+	margin-bottom:10px;
 	margin-left:5px;
 	
 }
-.left_menu nav ul li span:first-child{
+.left_column nav ul li span:first-child{
 	background-image:url(../images/menu_left.png);
 	width:5px;
 	height:47px;
@@ -1031,7 +1035,7 @@ input[type=text] {
 	left:-5px;	
 }
 
-.left_menu nav ul li a{
+.left_column nav ul li a{
 	color:#fff;		
 	width:199px;
 	position:relative;
@@ -1053,12 +1057,12 @@ input[type=text] {
 	height:42px;
 }
 
-.left_menu nav ul li:hover span{
+.left_column nav ul li:hover span{
 	background-image:url(../images/menu_left_green.png);
 	margin-top:-6px;	
 }
 
-.left_menu nav ul li a:hover, .mnu{
+.left_column nav ul li a:hover, .mnu{
 	color:#fff;		
 	width:199px;
 	line-height:40px;
@@ -1077,7 +1081,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 
 }
 
-.left_menu nav ul li.opn_link a{
+.left_column nav ul li.opn_link a{
 	color:#000;	
 	width:199px;
 	position:relative;
@@ -1090,21 +1094,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 	
 }
 
-.left_menu nav ul li.opn_link ul li a{	
+.left_column nav ul li.opn_link ul li a{	
 	background: none;	
 	line-height:29px;
 	height:auto;
 	
 }
 
-.left_menu nav ul .opn_link span:first-child{
+.left_column nav ul .opn_link span:first-child{
 	background-image:url(../images/menu_left_white.png)!important;
 	margin-top:0px;	
 	float:left;
 	height:47px;
 }
 
-.left_menu nav ul li:hover .mnu{
+.left_column nav ul li:hover .mnu{
 	background: url("../images/menu_icon.png") no-repeat scroll 0 0 transparent;
     height: 15px;
     position: absolute;
@@ -1113,7 +1117,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
     width: 16px;
 }
 
-.left_menu nav ul li span.mnu{
+.left_column nav ul li span.mnu{
 	background: url("../images/menu_icon.png") no-repeat scroll 0 0 transparent;
     height: 15px;
     position: absolute;
@@ -1123,7 +1127,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 	filter:none;
 }
 
-.left_menu nav ul li .filter{	
+.left_column nav ul li .filter{	
 	
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#969696), color-stop(8%,#c9c8c8), color-stop(100%,#fefefe));
 	background: -webkit-linear-gradient(top, #969696 1%,#c9c8c8 8%,#fefefe 100%);
@@ -1139,14 +1143,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 }		
 
 
-.left_menu nav ul li ul li{
+.left_column nav ul li ul li{
 	background:url(../images/bullet.png) no-repeat;
 	background-position:9px 10px;
 	display:inline-block;	
 	position:relative;	
 }
 
-.left_menu nav ul li ul li a{
+.left_column nav ul li ul li a{
 	background:none;
 	font-size:90%;
 	display:block;
@@ -1155,27 +1159,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 	filter:none;		
 }
 
-.left_menu nav ul li ul li a:hover{
+.left_column nav ul li ul li a:hover{
 	background:#94c93c;
 	color:#000;
 	width:185px;	
 }
 
-.left_menu nav ul li ul li span:first-child{
+.left_column nav ul li ul li span:first-child{
 	background:none;		
 }
 
-.left_menu nav ul li ul li:hover,
-.left_menu nav ul li ul li.sub_active{
+.left_column nav ul li ul li:hover,
+.left_column nav ul li ul li.sub_active{
     background:#94c93c;	
 	width:195px;	
 }
 
-.left_menu nav ul li ul li.sub_active{   
+.left_column nav ul li ul li.sub_active{   
 	width:219px!important;	
 }
 
-.left_menu nav ul li ul li.sub_active .arw {
+.left_column nav ul li ul li.sub_active .arw {
 	border-bottom: 14px solid transparent;
 	border-left: 14px solid #94c93c;
 	border-top: 14px solid transparent;
