@@ -1192,5 +1192,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 	display:block;
 	overflow:hidden;
 	margin:0px;
-	background:none;	
+	background:none;
+}
+
+/*-- Products --*/
+.products {
+    position: absolute;
+    top:50px;
+    left:160px;
+    z-index: 50;
+    width:150px;
+    height:500px;
+    background: #ffcc00;
 }
