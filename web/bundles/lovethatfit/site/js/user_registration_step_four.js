@@ -11,9 +11,9 @@ $(document).ready(function() {
 
     function set_things(responseText, statusText, xhr, $form){
 
-//hack: not accessing assetic for the value of the image path from here, placed a hidden field, holds the server path in twig template.
-    
-        var url = document.getElementById('hdn_srverpath').value + responseText.imageurl;
+//temporary hack: not accessing assetic for the value of the image path from here, placed a hidden field, holds the server path in twig template.
+
+        var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
         $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
     
         var uploaded_img_src = document.getElementById('img_to_upload');
@@ -88,20 +88,40 @@ $("#slider_scale_photo").slider({
         
         
 //----------------------------------------------------------------------------------
-
-
-
 function save_me(){
-		
-    var data = document.getElementById('cnv_img_crop').toDataURL();		
-    $.post("process.php", {
-        imageData : data
-    }, function(data) {
-        alert("image saved");
-    });
+    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
+    var entity_id = document.getElementById('hdn_entity_id').value;
+    var img_update_url = document.getElementById('hdn_image_update_url').value;
+    
+    var data = document.getElementById('cnv_img_crop').toDataURL();
+              $.post(img_update_url, {
+                      imageData : data,
+                      id : entity_id
+              }, function(data) {
+                      alert(data);
+              });  
+  
 		
 }
-	
+
+function _save_me()
+{  
+   var data = document.getElementById('cnv_img_crop').toDataURL();		
+   var form = document.forms['frmUserImage'];
+   var el = document.createElement("input");
+   el.type = "file";
+   el.name = "updated_image";
+   el.id = "updated_image";
+   el.value = data;
+   form.appendChild(el);
+     
+     $("#frmUserImage").ajaxForm(
+        {
+            target: '#uploaded_photo',
+            success: set_things
+        }
+        ).submit();
+}
 	
 function shift_to_canvas (){
     var canvas = document.getElementById('cnv_img_crop');
@@ -115,7 +135,7 @@ function shift_to_canvas (){
     var imageObj = new Image();
 
     imageObj.onload = function() {
-        context.clearRect(0,0,364,505)
+        context.clearRect(0,0,364,505);
         context.drawImage(imageObj, x, y, width, height);
         setTimeout(save_me(),600);
     };

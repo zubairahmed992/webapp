@@ -125,7 +125,7 @@ class RegistrationController extends Controller {
     }
 
 //--------------------------STEP-4-----------------------------------------------
-      public function ___stepFourCreateAction(Request $request, $id) {
+      public function stepFourCreateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
@@ -135,38 +135,7 @@ class RegistrationController extends Controller {
 
         $form = $this->createForm(new RegistrationStepFourType(), $entity);
         $form->bind($request);
-
-        if ($form->isValid()) {
-
-            $entity->upload();
-
-            $em->persist($entity);
-            $em->flush();
-             
-            $fp = fopen($entity->getWebPath(), "rb");
-            $str = stream_get_contents($fp);
-            fclose($fp);
-
-            $response = new Response($str, 200);
-            $response->headers->set('Content-Type', 'image/png');
-            return $response;  
-            
-            #"<img id='img_to_upload' src='users/test_user_1/actual_uploaded/".$actual_image_name."' class='preview'>";
-                    
-        } 
-    }
-    
-    public function stepFourCreateAction(Request $request, $id) {
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User.');
-        }
-
-        $form = $this->createForm(new RegistrationStepFourType(), $entity);
-        $form->bind($request);
-
+       
         if ($form->isValid()) {
 
             $entity->upload();
@@ -182,42 +151,32 @@ class RegistrationController extends Controller {
             return $response;
                     
         } else {
-            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $entity));
+            $response="Invalid image data";
+            return new Response($response);  
         }
     }
-    
-    
-    
-    public function _stepFourCreateAction(Request $request, $id) {
-
+    //--------------------------------- for image Cropping & resizing.
+      public function stepFourImageUpdateAction(Request $request) {
+        
         $em = $this->getDoctrine()->getManager();
+        $id=$_POST['id'];
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
-
-        $form = $this->createForm(new RegistrationStepFourType(), $entity);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-
-            $entity->upload();
-
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $entity));
-        } else {
-            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $entity));
-        }
+        
+        $data = substr($_POST['imageData'], strpos($_POST['imageData'], ",") + 1);
+        $decodedData = base64_decode($data);
+        $fp = fopen($entity->getAbsolutePath(), 'wb');
+        fwrite($fp, $decodedData);
+        fclose($fp);
+        $response="Image has been updated.";
+        return new Response($response);  
+                    
+       
     }
+    
 
     
     //------------------ Test -----------------------------

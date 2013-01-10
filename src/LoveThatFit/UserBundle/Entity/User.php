@@ -498,6 +498,11 @@ class User  implements UserInterface, \Serializable{
             ? null
             : $this->getUploadDir().'/'.$this->image;
     }
+    
+      public function getDirWebPath()
+    {
+        return $this->getUploadDir().'/';
+    }
 
     protected function getUploadRootDir()
     {

@@ -1,5 +1,8 @@
 
-
+registration_step_four_image_update:
+    pattern:  /registration/step_four_image_update
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourImageUpdate }
+    
 registration_step_four_create:
     pattern:  /registration/step_four_create/{id}
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }

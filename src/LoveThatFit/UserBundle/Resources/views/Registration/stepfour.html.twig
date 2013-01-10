@@ -12,13 +12,16 @@
             <li class="active"><span>4</span></li>
         </ul>
     </div>
+        <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update')}}"</span>    
     <div class="action_cnt">
         <div class="steps step_4">
             <h2>Upload Photo</h2>
             
             <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
                 
-                <input type="hidden" id="hdn_srverpath" value="{{asset('')}}"/>
+                <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
+                <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
      {{ form_errors(form) }}
                 <div class="input_file_hldr">
                     {{ form_errors(form.file) }}
@@ -52,14 +55,14 @@
 
                         <div class="btm_buttons row">
                             <div class="frm_ele">
-                                <input onClick="shift_to_canvas()" class="reg_next_step" type="submit" value="Next Step" />
+                                <input onClick="shift_to_canvas(); return false;" class="reg_next_step" type="button" value="Next Step" />
                             </div>
                             <div class="frm_ele">
                                 <a class="but_short" href="#">Browse Users</a>
                             </div>
                         </div>
                         
-                    </form>
+                  </form>  
                     <!--/.step_4--></div>
                 <!--/.action_cnt--></div>
             <!--/.action_blk--></section>

@@ -2,6 +2,11 @@ acme_default:
     pattern:  /acme/default
     defaults: { _controller: AcmeStoreBundle:Default:index }
 
+acme_default_crop:
+    pattern:  /acme/default/crop
+    defaults: { _controller: AcmeStoreBundle:Default:cropImage }
+
+
 acme_product_new:
     pattern:  /acme/default/new
     defaults: { _controller: AcmeStoreBundle:Default:new }

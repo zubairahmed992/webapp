@@ -192,13 +192,30 @@ class DefaultController extends Controller
            throw $this->createNotFoundException('Unable to update Product.');
         }
     }
+    
+     public function cropImageAction(Request $request) 
+    {
+        $em = $this->getDoctrine()->getManager();
+        $id=$_POST['id'];
+        $entity = $em->getRepository('AcmeStoreBundle:Product')->find($id);
+
+       $data = substr($_POST['imageData'], strpos($_POST['imageData'], ",") + 1);
+       $decodedData = base64_decode($data);
+       $fp = fopen($entity->getAbsolutePath(), 'wb');
+       fwrite($fp, $decodedData);
+       fclose($fp);
+
+         return new Response($request);  
+     
+         #return $this->createForm(new MerchType(), new Merch())->createView();
+    }
     #---------------------------------------------------------------------------
- public function getNewProductForm() 
+ public function getNewProductForm($data) 
     {
     $product = new Product();
-    $product->setName('A Foo Bar');
+    $product->setName('Trio');
     $product->setPrice('19.99');
-    $product->setDescription('Lorem ipsum dolor');
+    $product->setDescription($data);
     $product->setImageUrl('y:/Lorem ipsum dolor');
 
     $em = $this->getDoctrine()->getManager();

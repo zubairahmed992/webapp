@@ -7,65 +7,80 @@
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
         <style>
-                  
-                    #cnv_img_crop
-                    {
-                        background: Silver;
-                        
-                    }
-                    body
-                    {
-                        padding: 20px;
-                    }
-                </style>
-        <script>
-   
-   
-    $(document).ready(function() { 
-            var options = { 
-            target:        '#flash',   // target element(s) to be updated with server response 
-            success:       showResponse  // post-submit callback  
-            }; 
-                $('#form_file').change(function(){
-        $('#frmProduct').submit();
-    
-});
 
- $('#frmProduct').submit(function() { 
-            $(this).ajaxSubmit(options); 
-            return false; 
-        }); 
+                #cnv_img_crop
+                {
+                    background: Silver;
+
+                }
+                body
+                {
+                    padding: 20px;
+                }
+            </style>
+            <script>
+   
+   
+        $(document).ready(function() { 
+                var options = { 
+                target:        '#flash',   // target element(s) to be updated with server response 
+                success:       showResponse  // post-submit callback  
+                }; 
+                    $('#form_file').change(function(){
+            $('#frmProduct').submit();
+        
+    });
+
+            $('#btnUpdateImage').click(function() { 
+                
+                var data = document.getElementById('cnv_img_crop').toDataURL();
+                $.post("{{ path('acme_default_crop') }}", {
+			imageData : data,
+                        id : "{{ entity.id }}"
+		}, function(data) {
+			croppingDone(data);
+		});
+            
+            }); 
+        
+     $('#frmProduct').submit(function() { 
+                $(this).ajaxSubmit(options); 
+                return false; 
+            }); 
             
     
-}); 
+    }); 
  
-function showResponse(responseText, statusText, xhr, $form)  { 
-    var url = "{{asset('')}}" + responseText.imageurl;
-    $("#flash").html("<img id='img' src='" + url + "'/>");
-    shift_to_canvas (url);
-    }      
+    function showResponse(responseText, statusText, xhr, $form)  { 
+        var url = "{{asset('')}}" + responseText.imageurl;
+        $("#flash").html("<img id='img' src='" + url + "'/>");
+        shift_to_canvas (url);
+        }      
     
     
-    function shift_to_canvas (url){
+        function shift_to_canvas (url){
       
-       var canvas = document.getElementById('cnv_img_crop');
-      var context = canvas.getContext('2d');
-      var imageObj = new Image();
+           var canvas = document.getElementById('cnv_img_crop');
+          var context = canvas.getContext('2d');
+          var imageObj = new Image();
 
-      imageObj.onload = function() {
-        context.drawImage(imageObj, 69, 50);
-      };
-      imageObj.src = url;
+          imageObj.onload = function() {
+            context.drawImage(imageObj, 69, 50);
+          };
+          imageObj.src = url;
 	  
 	   
 
 	  
-	}
+            }
     
-        
-            </script>
+        function croppingDone(responseData)
+        {
+        alert(responseData["imageData"]);
+        }
+                </script>
 
-      
+
 
 
             </head>
@@ -73,37 +88,38 @@ function showResponse(responseText, statusText, xhr, $form)  {
             <body>
 
                 <div id="flash">
-                    
+
                 </div>
 
                 <div class="screen" id="dv1">
-           
-                    <img src="{{ asset(entity.WebPath) }}" height="80" width="100" />
-                    
-                        
-                        <form  id="frmProduct" action="{{ path('acme_product_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+
+                    <img src="{{ asset(entity.WebPath) }}"/>
+
+
+                    <form  id="frmProduct" action="{{ path('acme_product_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
-                    <div>
-    Select image
+                            <div>
+                                Select image
     {{ form_errors(form.file) }}
     {{ form_widget(form.file) }}
-                        </div>
+                            </div>
 
 
          {{ form_rest(form) }}
-        <input type="submit" />
-    </form>
+                            <input type="submit" />
+                        </form>
 
-    <a href="{{ path('admin_brands') }}">back</a>
-    <br/><br/>
-    
+                        <br/><br/>
 
+                        <input id="btnUpdateImage" value="update" type="button" />
 
                     </div>
                     <div class="screen" id="dv2">2</div>
                     <div class="screen" id="dv3">
-                    
-                    <canvas id="cnv_img_crop" width="364" height="505"></canvas>
+
+                        <canvas id="cnv_img_crop" width="364" height="505"></canvas>
+
+
                     </div>
                     <div class="screen" id="dv4">4</div>
                 </body>
