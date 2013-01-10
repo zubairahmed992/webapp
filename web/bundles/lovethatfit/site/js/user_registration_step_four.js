@@ -1,18 +1,40 @@
 
 $(document).ready(function() { 
+       //Slider Scale Photo
+  var photo_width = $("#img_to_upload").width();
+  var photo_height = $("#img_to_upload").height();
+  var used = 0;
+  
+  $("#slider_scale_photo").slider({ animate: true, range: "min", value: 100, min: 1, max: 600, step: 0.01, 
+  slide: function( event, ui ) {
+	  $( "#slider_result_photo" ).html( ui.value);
+	  
+	   if(used == 0)
+	   {
+		   photo_width = $("#img_to_upload").width();
+		   used = 1;
+	   }
+	  
+	  $("#img_to_upload").width(photo_width / 100 * ui.value);
+	  $("#img_to_upload").height(photo_height / 100 * ui.value);
+  },
+  change: function(event, ui) {
+  $('#hdn_photo').attr('value', ui.value);
+  }	
+  });
+    
+    
+    
 
-    //--------input file display hack -------------
-    $("#user_file").change(function (){
-        var photo_file_name = $("#user_file").val();
-        $("#inp_txt_file_name").val(photo_file_name);
-    });
-    //---------------------------------------------
+
     var photo_width;
 
     function set_things(responseText, statusText, xhr, $form){
 
 //temporary hack: not accessing assetic for the value of the image path from here, placed a hidden field, holds the server path in twig template.
-
+        
+        $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
+        
         var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
         $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
     
@@ -31,6 +53,8 @@ $(document).ready(function() {
 
     $('#user_file').live('change', function()
     { 
+        var photo_file_name = $("#user_file").val();
+        $("#inp_txt_file_name").val(photo_file_name);
         $("#play_area").removeClass("hide");
         $(".int_fitting_room").addClass("hide");
         //$("#play_area").append('<img src="loader.gif" alt="Uploading...."/>');
@@ -47,43 +71,10 @@ $(document).ready(function() {
 //------------ image resize & slide related ---------------------------------------------------------
 
 
-$("#slider_wrap").mousedown(function (){
-    alert(photo_width);
-    $("#slider_wrap").css('background','#4d4d4d');
-    $(this).css('background','url(images/bg_focus_grad.gif)');
-});
 
 
-//Slider Scale Photo
-var photo_width = $("#img_to_upload").width();
-var photo_height = $("#img_to_upload").height();
-var used = 0;
-  
-$("#slider_scale_photo").slider({
-    animate: true, 
-    range: "min", 
-    value: 100, 
-    min: 1, 
-    max: 600, 
-    step: 0.01, 
-    slide: function( event, ui ) {
-        $( "#slider_result_photo" ).html( ui.value);
-	  
-        if(used == 0)
-        {
-            photo_width = $("#img_to_upload").width();
-            used = 1;
-        }
-	  
-        $("#img_to_upload").width(photo_width / 100 * ui.value);
-        $("#img_to_upload").height(photo_height / 100 * ui.value);
-    },
-    change: function(event, ui) {
-        $('#hdn_photo').attr('value', ui.value);
-  
- 
-    }	
-});
+
+
         
         
         

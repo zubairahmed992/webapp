@@ -42,7 +42,7 @@ $(document).ready(function(){
 	
 	$(".slider_wrap").mousedown(function (){
 		$(".slider_wrap").css('background','#4d4d4d');
-		$(this).css('background','url(images/bg_focus_grad.gif)');
+		$(this).css('background','#9DCB38');
 		show_tip(this);
 	});
 
