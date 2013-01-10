@@ -174,9 +174,8 @@ body {
 	position:relative;
 	background:url(../images/bg_lft_colm.png) 0 0 repeat-y;
 }
-.logo {
+.left_column .logo {
     padding: 40px 0 40px 18px;
-    
 }
 .footer {
 	width:840px;
