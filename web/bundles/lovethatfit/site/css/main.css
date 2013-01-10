@@ -172,7 +172,6 @@ body {
 .site_container {
 	width:100%;
 	position:relative;
-	background:url(../images/bg_lft_colm.png) 0 0 repeat-y;
 }
 .left_column .logo {
     padding: 40px 0 40px 18px;
@@ -209,8 +208,8 @@ body {
 	background:#000;
 	width:220px;
 	-webkit-box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
-    box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
+        box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
 }
 .footer nav ul {
 	list-style:none;
@@ -1003,7 +1002,9 @@ input[type=text] {
 .left_column{	
 	width:224px;
 	position:relative;
-		
+	background:url(../images/bg_lft_colm.png) 0 0 repeat-y;
+        z-index: 100;
+        float:left;
 }
 
 .left_column nav {
@@ -1196,21 +1197,30 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 
 /*-- Products --*/
 .products {
-    position: absolute;
-    top:50px;
-    left:160px;
+    position: relative;
+    float:left;
     z-index: 50;
-    width:250px;   
-    background: #ffffff;
+    width:256px;
+    margin:6px 0 -10px -6px;
 }
-
-.prod_wrapper{
-	padding:0px;
-	margin:0px 0px 0px 0px;	
+.prod_slider_hldr {
+    width:256px;
 }
 
 .prod_sliding_area{
-	overflow:auto;	
+	overflow:auto;
+        z-index: 50;
+        width:256px;
+}
+
+ul.prod_wrapper{
+	padding:0px;
+	margin:0px 0px 0px 0px;	
+        background: #fff;
+        width:250px;
+        -webkit-box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.5);
+        box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.5);
 }
 
 .featured_content {
@@ -1262,4 +1272,29 @@ background:#f0f0f0;
 .featured_img {
     float: right;   
     padding-right: 30px;
+}
+.slider_but_top,
+.slider_but_btm {
+   width:250px;
+   height:31px;
+   position:relative;
+   z-index: 56;
+}
+.slider_but_btm {
+   background:url(../images/bottom_nav.png) 0 0 no-repeat;
+   margin-top:-6px;
+}
+.slider_but_top {
+    background:url(../images/top_nav.png) 0 0 no-repeat;
+    margin-bottom:-6px;
+}
+.slider_but_top:hover,
+.slider_but_top:focus,
+.slider_but_top:active {
+   background:url(../images/top_nav_hover.png) 0 0 no-repeat;
+}
+.slider_but_btm:hover,
+.slider_but_btm:focus,
+.slider_but_btm:active {
+   background:url(../images/bottom_nav_hover.png) 0 0 no-repeat;
 }
