@@ -1094,7 +1094,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 }
 
 .left_column nav ul li.opn_link ul li a{	
-	background: none;	
+	background: none;
 	line-height:29px;
 	height:auto;
 	
@@ -1187,7 +1187,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 	float:left;	
 	position:absolute;
 	top:0px;
-	left:219px;	
+	left:219px;
 	display:block;
 	overflow:hidden;
 	margin:0px;
@@ -1200,7 +1200,66 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
     top:50px;
     left:160px;
     z-index: 50;
-    width:150px;
-    height:500px;
-    background: #ffcc00;
+    width:250px;   
+    background: #ffffff;
+}
+
+.prod_wrapper{
+	padding:0px;
+	margin:0px 0px 0px 0px;	
+}
+
+.prod_sliding_area{
+	overflow:auto;	
+}
+
+.featured_content {
+    float: left;    
+}
+
+.prod_wrapper li{
+	list-style:none;	
+	overflow:auto;
+	padding:10px 0px 10px 20px;	
+}
+
+.prod_wrapper li:hover{
+background:#f0f0f0;	
+}
+
+.prod_wrapper li:hover span {	
+	background:url(../images/patch.png) repeat-x top left;
+	height:4px;
+	width:250px;
+	float:left;	
+	margin:-10px 0px -10px -20px;	
+}
+
+.prod_wrapper li:hover span:last-child{	
+	background:url(../images/patch2.png) repeat-x bottom left;
+	height:4px;
+	width:250px;	
+	padding-bottom:16px;
+}
+
+.prod_wrapper h3{
+	color: #D31359;
+	font-size: 1.2em;
+	padding-bottom: 10px;
+}
+
+.prod_wrapper p{
+	color: #4D4D4D;
+    font-size: 0.8em;
+}
+
+.pro_price {
+    color: #3EA9F5;
+    font-size: 1.2em;
+    padding-top: 10px;
+}
+
+.featured_img {
+    float: right;   
+    padding-right: 30px;
 }
