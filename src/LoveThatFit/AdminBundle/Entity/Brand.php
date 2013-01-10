@@ -148,12 +148,13 @@ class Brand {
         if (null === $this->file) {
             return;
         }
-
+        
+        $this->logo = $this->id . '_ltf_brand_' . $this->file->getClientOriginalName();
+        
         $this->file->move(
-                $this->getUploadRootDir(), $this->file->getClientOriginalName()
+                $this->getUploadRootDir(), $this->logo
         );
 
-        $this->logo = $this->file->getClientOriginalName();
         $this->file = null;
     }
 

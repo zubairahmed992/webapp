@@ -554,12 +554,13 @@ class Product
         if (null === $this->file) {
             return;
         }
-
+  
+        $this->image = $this->id . '_ltf_product_' . $this->file->getClientOriginalName();
+        
         $this->file->move(
-                $this->getUploadRootDir(), $this->file->getClientOriginalName()
+                $this->getUploadRootDir(), $this->image
         );
-
-        $this->image = $this->file->getClientOriginalName();
+        
         $this->file = null;
     }
 

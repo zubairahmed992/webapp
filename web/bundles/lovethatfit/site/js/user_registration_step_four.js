@@ -88,7 +88,7 @@ $("#slider_scale_photo").slider({
         
         
 //----------------------------------------------------------------------------------
-function save_me(){
+function post_content_of_canvas(){
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;
     var img_update_url = document.getElementById('hdn_image_update_url').value;
@@ -100,29 +100,8 @@ function save_me(){
               }, function(data) {
                       alert(data);
               });  
-  
-		
+  		
 }
-
-function _save_me()
-{  
-   var data = document.getElementById('cnv_img_crop').toDataURL();		
-   var form = document.forms['frmUserImage'];
-   var el = document.createElement("input");
-   el.type = "file";
-   el.name = "updated_image";
-   el.id = "updated_image";
-   el.value = data;
-   form.appendChild(el);
-     
-     $("#frmUserImage").ajaxForm(
-        {
-            target: '#uploaded_photo',
-            success: set_things
-        }
-        ).submit();
-}
-	
 function shift_to_canvas (){
     var canvas = document.getElementById('cnv_img_crop');
     var context = canvas.getContext('2d');
@@ -137,7 +116,7 @@ function shift_to_canvas (){
     imageObj.onload = function() {
         context.clearRect(0,0,364,505);
         context.drawImage(imageObj, x, y, width, height);
-        setTimeout(save_me(),600);
+        setTimeout('post_content_of_canvas()','600');
     };
     imageObj.src = img.src;
 	  

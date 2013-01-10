@@ -473,17 +473,18 @@ class User  implements UserInterface, \Serializable{
         if (null === $this->file) {
             return;
         }
-
-        $this->image = $this->id . '_' . $this->file->getClientOriginalName();
+        $original_name= $this->id . '_ltf_user_original_' . $this->file->getClientOriginalName();
+        
+        $this->image = $this->id . '_ltf_user_' . $this->file->getClientOriginalName();
         
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
         );
-
         
-        $this->file = null;
+        $this->file = null;             
+        copy($this->getAbsolutePath(),$this->getUploadRootDir().'/'.$original_name);
+        
     }
-
     
   public function getAbsolutePath()
     {
