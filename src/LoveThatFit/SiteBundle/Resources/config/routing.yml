@@ -5,4 +5,12 @@ anonymous_user_home:
 inner_site_index:
     pattern:  /inner_site/index
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index}
+
+ajax_product_list:
+    pattern:  /ajax/products
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:products}
+
+ajax_product_ajax:
+    pattern:  /ajax
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax}
     

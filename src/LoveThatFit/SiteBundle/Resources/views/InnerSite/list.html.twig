@@ -1,0 +1,34 @@
+<style>
+        #item
+        {
+            clear: both;
+        }
+        #product
+        {
+            float: left;
+        }
+        #detail
+        {
+            float: left;
+        }
+
+
+    </style>
+
+          {% for p in products %}
+    <div id="item">
+        <div id="product">
+            <img src="{{asset(p.WebPath)}}" width="100px" height="100px"/>
+        </div>
+        <div id="detail">
+            <ul>
+                <li>{{p.name}}</li>
+                <li>{{p.brand.name}}</li>
+                <li>{{p.gender}}</li>
+                <li>{{p.clothingType.name}}</li>
+            </ul>
+        </div>
+        
+
+    </div>
+        {% endfor %}
