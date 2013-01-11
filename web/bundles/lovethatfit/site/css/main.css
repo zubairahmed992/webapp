@@ -757,6 +757,22 @@ a.but_short:visited {
 	text-align:center;
 	width:380px;
 }
+
+.step_4 .step_4_tip {
+    left:-252px;
+    top: 170px;
+    width:200px;
+}
+.step_4 .tip .grad {
+    width:200px;
+    background-position: right top;
+    margin-left: 0;
+}
+.step_4 .tip .tooltip_content {
+    width:174px;
+    line-height: 22px;
+}
+
 .fff_links a,
 .fff_links a:visited {
 	color:#fff;
@@ -891,7 +907,7 @@ input[type=text] {
 
 #cnv_img_crop {
 	z-index:6000;
-	display:block;
+	display:none;
 	position:absolute;
 	left:-400px;
 	top:130px;

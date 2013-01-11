@@ -23,9 +23,6 @@ $(document).ready(function() {
   }	
   });
     
-    
-    
-
 
     var photo_width;
 
@@ -34,6 +31,8 @@ $(document).ready(function() {
 //temporary hack: not accessing assetic for the value of the image path from here, placed a hidden field, holds the server path in twig template.
         
         $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
+        $(".step_4_tip").fadeIn(50);
+        $(".step_4 .reg_next_step").attr("value","Save Photo");
         
         var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
         $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
