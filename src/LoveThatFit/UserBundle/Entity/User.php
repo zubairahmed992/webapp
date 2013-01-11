@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * LoveThatFit\UserBundle\Entity\User
  *  
  * @ORM\Table(name="ltf_users")
- * @ORM\Entity(repositoryClass="loveThatFit\UserBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="LoveThatFit\UserBundle\Entity\UserRepository")
  */
 
 class User  implements UserInterface, \Serializable{
