@@ -1,17 +1,34 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-{% block h1 %}Product{% endblock %}
 
-{% block title %}Product{% endblock %}
+{% block breadcrumb %}
+   Products / New
+{% endblock %}
+   
 
 
 {% block body %}
 
-<form action="{{ path('admin_product_create') }}" method="post" {{ form_enctype(form) }}>
+
+<a href="{{ path('admin_products') }}">back</a>
+
+   <!-- Product Editing Page -->       
+   <h1 style="float:left;width:100%;">New Product </h1>
+    <div class="container-fluid">      
+      
+
+ <form action="{{ path('admin_product_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
 
     <input type="submit" />
 </form>
+      
+                               
+                 </div>      
+              </div><!-- End pro_detail -->      
+          </div><!-- End product_content --> 
+      </div> <!-- End detail_wrapper -->
+    </div>
+    <!-- End Product Editing Page -->
 
-<a href="{{ path('admin_products') }}">back</a>
 {% endblock %}
 
