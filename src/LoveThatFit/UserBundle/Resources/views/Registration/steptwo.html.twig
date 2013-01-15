@@ -20,12 +20,12 @@
     {{ form_errors(form) }}
 
                     <div class="frm_ele">
-    {{ form_label(form.firstName) }}
+                        <label>First Name</label>
     {{ form_errors(form.firstName) }}
     {{ form_widget(form.firstName) }}
                         </div>
                         <div class="frm_ele">
-    {{ form_label(form.lastName) }}
+    <label>Last Name</label>
     {{ form_errors(form.lastName) }}
     {{ form_widget(form.lastName) }}
                             </div>
@@ -49,9 +49,10 @@
     {{ form_label(form.birthdate) }}
     {{ form_errors(form.birthdate) }}
 
-{{ form_widget(form.birthdate.year) }}
+
                 {{ form_widget(form.birthdate.month) }}
                 {{ form_widget(form.birthdate.day) }}
+                {{ form_widget(form.birthdate.year) }}
                                         </div>
 
 
