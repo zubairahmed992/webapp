@@ -1237,9 +1237,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 .prod_sliding_area{
 	overflow:auto;
         z-index: 50;
-        width:256px;
+        width:750px;
 }
-
+.prod_sliding_area .play_area_hldr {
+   float: right;
+}
 ul.prod_wrapper{
 	padding:0px;
 	margin:0px 0px 0px 0px;	
