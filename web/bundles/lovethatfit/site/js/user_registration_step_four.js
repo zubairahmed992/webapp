@@ -33,6 +33,7 @@ $(document).ready(function() {
         $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
         $(".step_4_tip").fadeIn(50);
         $(".step_4 .reg_next_step").attr("value","Save Photo");
+        document.getElementById("hdn_skip_flag").value="process";
         
         var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
         $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
@@ -71,13 +72,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-        
-        
-        
-//----------------------------------------------------------------------------------
 function post_content_of_canvas(){
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;
@@ -92,6 +86,25 @@ function post_content_of_canvas(){
               });  
   		
 }
+
+function go_to_index(){
+        window.location = "../../inner_site/index";
+    }
+    
+function next_button_click()
+{
+    var hd_flag=document.getElementById("hdn_skip_flag").value;
+    
+    if (hd_flag=='skip'){
+        go_to_index();
+    }else{
+        shift_to_canvas ();
+        setTimeout(go_to_index,'1000');
+    }
+    
+}
+
+
 function shift_to_canvas (){
     var canvas = document.getElementById('cnv_img_crop');
     var context = canvas.getContext('2d');

@@ -12,13 +12,13 @@
             <li class="active"><span>4</span></li>
         </ul>
     </div>
-        <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update')}}"</span>    
+    <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update')}}"</span>    
     <div class="action_cnt">
         <div class="steps step_4">
             <h2>Upload Photo</h2>
-            
+
             <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
-                
+
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
@@ -26,75 +26,68 @@
                 <div class="input_file_hldr">
                     {{ form_errors(form.file) }}
                             {{ form_widget(form.file, { 'attr': {'class': 'input_file'} }) }}
-                        	
-                            <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
-                        </div>    
+
+                        <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
+                    </div>    
          {{ form_rest(form) }}
 
-                    
-                        <div class="clr_bth"></div>
-                        <div class="frm_ele zoom_in hide">
-                            <label>Zoom In/Out</label>
-                            <div class="slider_wrap">
-                               <div id="slider_result_photo" class="slider_result">100</div>
-                               <div id="slider_scale_photo" class="main_slider"></div>
-                               <input type="hidden" id="hdn_photo"/>
+
+                    <div class="clr_bth"></div>
+                    <div class="frm_ele zoom_in hide">
+                        <label>Zoom In/Out</label>
+                        <div class="slider_wrap">
+                            <div id="slider_result_photo" class="slider_result">100</div>
+                            <div id="slider_scale_photo" class="main_slider"></div>
+                            <input type="hidden" id="hdn_photo"/>
                             <!--/.slider_wrap--></div></div>
-                        <div class="clr_bth"></div>
-                        <div class="play_area_hldr">
-                            
-                            <div class="tip tt_arrow step_4_tip"><!--- Tootip wrapper Start  !-->
-                                    <div class="grad"></div>
-                                    <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                      <span class="arrow_top"></span>You can adjust photo by Draging & using Zoom In/Out slider. Click the button <b>Save Photo</b> when you done.<br />
-                                      <a href="#">Watch Video</a> 
-                                      <!--- Tootip content End  !--> 
-                                    </div>
-                                    <div class="grad"></div>
-                                    <!--- Tootip wrapper End  !--></div>
-                            
-                            <div class="int_fitting_room"></div>                                
-                            <div id="play_area" class="play_area hide">
-                                
-                                
-                                
-                                <div id="top_layer"></div>
-                                <div id="dummy_mark"></div>
-                                <div id="uploaded_photo" class="full_opacity"></div>
+                    <div class="clr_bth"></div>
+                    <div class="play_area_hldr">
+
+                        <div class="tip tt_arrow step_4_tip"><!--- Tootip wrapper Start  !-->
+                            <div class="grad"></div>
+                            <div class="tooltip_content"><!--- Tootip content Start  !--> 
+                                <span class="arrow_top"></span>You can adjust photo by Draging & using Zoom In/Out slider. Click the button <b>Save Photo</b> when you done.<br />
+                                <a href="#">Watch Video</a> 
+                                <!--- Tootip content End  !--> 
                             </div>
-                            <!--/.play_area_hldr--></div>
-                        <canvas id="cnv_img_crop" width="364" height="505" class="cnv_img_crop_style"></canvas>
+                            <div class="grad"></div>
+                            <!--- Tootip wrapper End  !--></div>
+
+                        <div class="int_fitting_room"></div>                                
+                        <div id="play_area" class="play_area hide">
 
 
-                        <div class="btm_buttons row">
-                            <div class="frm_ele">
-                                <input onClick="shift_to_canvas(); return false;" class="reg_next_step" type="button" value="Skip Step" />
-                            </div>
-                            <div class="frm_ele">
-                                <a class="but_short" href="#">Browse Users</a>
-                            </div>
+
+                            <div id="top_layer"></div>
+                            <div id="dummy_mark"></div>
+                            <div id="uploaded_photo" class="full_opacity"></div>
                         </div>
-                        
-                  </form>  
-                    <!--/.step_4--></div>
-                <!--/.action_cnt--></div>
-            <!--/.action_blk--></section>
+                        <!--/.play_area_hldr--></div>
+                    <canvas id="cnv_img_crop" width="364" height="505" class="cnv_img_crop_style"></canvas>
+
+
+                    <div class="btm_buttons row">
+                        <div class="frm_ele">
+                            <input onClick="next_button_click(); return false;" class="reg_next_step" type="button" value="Skip Step" />
+                        </div>
+                        <div class="frm_ele">
+                            <a class="but_short" href="#">Browse Users</a>
+                        </div>
+                    </div>
+
+                </form>  
+                <input type="hidden" id="hdn_skip_flag" value="skip"/>
+                <!--/.step_4--></div>
+            <!--/.action_cnt--></div>
+        <!--/.action_blk--></section>
 {% endblock %}
 {% block how_it_works_content %}
-        <section class="cnt_btm">
-            <h3>How It Works</h3>
-            <p>LoveThatFit provides the most realistic shopping experience and allows you to try clothes on like you were shopping in the store.  Mix and match outfits, compare outfits side-by-side, save in your personal closet, and shop with friends.  You can do all this from any computer, laptop or smartphone! LoveThatFit is here to give you the confidence in online shopping until now.</p>
-        </section>
+        {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
 {% endblock %}
 
 {% block bottom_left_nav %}
-        <nav class="row">
-            <ul class="with_bullet">
-                <li><a href="#">about</a></li>
-                <li><a href="#">contact</a></li>
-            </ul>
-        </nav>
-<script>
+        {% include 'LoveThatFitUserBundle::bottomNavigation.html.twig'%}
+    <script>
    
-</script>
+        </script>
 {% endblock %}
