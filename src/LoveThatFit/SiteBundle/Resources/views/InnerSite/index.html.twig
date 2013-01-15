@@ -27,8 +27,8 @@
     <div class="prod_slider_hldr">
         <div class="slider_but_top"></div>
         <div class="prod_sliding_area">
-            
-            <div class="play_area_hldr">
+            <div class="int_fitting_room"></div> 
+            <div class="play_area_hldr hide">
                <div id="play_area" class="play_area">
                   <div id="top_layer"></div>
                   <div id="dummy_mark"></div>
@@ -107,4 +107,7 @@
 {% endblock %}
 
 {% block fitting_room %}
+<script>
+    $( ".prod_wrapper li .prod_node .featured_img" ).draggable({ revert: true, helper: "clone" });
+</script>
 {% endblock %}
