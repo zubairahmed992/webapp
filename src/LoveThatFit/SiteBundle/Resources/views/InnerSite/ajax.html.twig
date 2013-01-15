@@ -1,3 +1,4 @@
-{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% render 'LoveThatFitSiteBundle:InnerSite:products' with {'gender' : app.user.gender} %}
 
 

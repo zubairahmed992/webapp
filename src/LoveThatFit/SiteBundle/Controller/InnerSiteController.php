@@ -14,21 +14,43 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig');
     }
 
-    public function productsAction() {
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findAll();
-        
-        return $this->render('LoveThatFitSiteBundle:InnerSite:list.html.twig', array('products' => $entity));
-        //$response = new Response(json_encode(array($entity)));
-        //$response->headers->set('Content-Type', 'application/json');
-        //return $response;
+    public function productsAction($gender) {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender')->setParameter('gender', $gender);
+        return $this->renderList($query);
     }
+    
+      public function productsLatestAction($gender) {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender' )->setParameter('gender', $gender)->setMaxResults(20);
+        return $this->renderList($query);
+    }
+
+        public function productsByBrandAction($gender, $brand_id) {
+        $em = $this->getDoctrine()->getManager();
+#        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.brand_id = :brand_id AND  p.gender = :gender')->setParameters(array('gender' => $gender, 'brand_id' => $brand_id));
+        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender')->setParameter('gender', $gender);
+        return $this->renderList($query);
+    }
+
+        public function productsByClothingTypeAction($gender, $clothing_type_id) {
+        $em = $this->getDoctrine()->getManager();
+#        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.clothing_type_id = :clothing_type_id AND  p.gender = :gender')->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id));
+                $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender')->setParameter('gender', $gender);
+        return $this->renderList($query);
+    }
+
+    
     
     public function ajaxAction() {
         
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');
         
+    }
+    
+    private function renderList($query) {
+        $entity = $query->getResult();
+        return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
     }
 
 }
