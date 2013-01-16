@@ -9,6 +9,10 @@ inner_site_index:
 ajax_product_list:
     pattern:  /ajax/products/{gender}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:products}
+    
+ajax_product_detail:
+    pattern:  /ajax/product/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productDetail}
 
 ajax_product_latest:
     pattern:  /ajax/products/{gender}/latest
