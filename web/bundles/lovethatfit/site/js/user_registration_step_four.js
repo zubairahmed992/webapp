@@ -30,6 +30,7 @@ $(document).ready(function() {
 
 //temporary hack: not accessing assetic for the value of the image path from here, placed a hidden field, holds the server path in twig template.
         
+        $(".uploading_in_progress").fadeOut(300).remove();
         $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
         $(".step_4_tip").fadeIn(50);
         $(".step_4 .reg_next_step").attr("value","Save Photo");
@@ -57,7 +58,7 @@ $(document).ready(function() {
         $("#inp_txt_file_name").val(photo_file_name);
         $("#play_area").removeClass("hide");
         $(".int_fitting_room").addClass("hide");
-        //$("#play_area").append('<img src="loader.gif" alt="Uploading...."/>');
+        $("#play_area").prepend('<div class="uploading_in_progress"></div>');
         $("#frmUserImage").ajaxForm(
         {
             target: '#uploaded_photo',

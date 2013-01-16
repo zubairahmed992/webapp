@@ -591,19 +591,27 @@ header.reg .strip_rgt {
 }
 /*-- Step 2 --*/
 .step_2 {
-   height:322px;
+   height:auto;
 }
 .step_2 h2 {
-   padding-bottom: 30px;
+   padding-bottom: 10px;
 }
 .step_2 .btm_buttons {
     bottom:-36px;
+}
+.fff_color {
+    color:#fff;
+    font-family: century gothic;
+    font-size: 12px;
+}
+.short_inp input {
+    width:52px !important;
 }
 /*--Step 3--*/
 .slider_wrap {
 	width:352px;
 	background:#4d4d4d;
-	margin-bottom:5px;
+	margin-bottom:3px;
 	padding:2px 6px 2px 6px;
 	float:left;
 	-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
@@ -615,18 +623,17 @@ header.reg .strip_rgt {
 .main_slider {
 	width:232px;
 	height:20px;
-	background:url(../images/img_dashed.png) 0 15px repeat-x;
+	background:url(../images/img_dashed.png) 0 13px repeat-x;
 	position:relative;
 	margin:0;
 	padding:5px 10px 0;
 	float:left;
-	margin-top:2px;
 }
 .ui-slider-handle {
 	width:5px;
 	height:17px;
 	position:absolute;
-	top:7px;
+	top:5px;
 	margin-left:-5px;
 	z-index:200;
 	background:#fff;
@@ -635,7 +642,7 @@ header.reg .strip_rgt {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 .slider_result {
-	font-size:26px;
+	font-size:21px;
 	font-family:"Century Gothic";
 	color:#fff;
 	font-weight:bold;
@@ -652,7 +659,7 @@ header.reg .strip_rgt {
 }
 .step_3 {
 	height:auto;
-	padding-bottom:30px;
+	padding-bottom:10px;
 }
 .step_3 h2 {
 	margin-bottom:0px;
@@ -708,7 +715,14 @@ a.but_short:visited {
 .step_4 .btm_buttons {
     bottom: -36px;
 }
-
+.uploading_in_progress {
+    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
+    height: 72px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    z-index: 5000;
+}
 
 .int_fitting_room {
 	background:url(../images/fitting_room.png) 0 0 no-repeat;
@@ -759,7 +773,7 @@ a.but_short:visited {
 }
 
 .step_4 .step_4_tip {
-    left:-252px;
+    left:-246px;
     top: 170px;
     width:200px;
 }
@@ -966,17 +980,17 @@ input[type=text] {
 .tip .grad{
 	background:url(../images/gra.png) no-repeat top right;
 	width:304px;
-	height:5px;
+	height:3px;
 	margin-left:52px;	
 }
 
 .tt_arrow .arrow_top{
 	background:url(../images/arrow.png) no-repeat;
-	width:55px;
-	height:37px;
+	width:50px;
+	height:29px;
 	position:absolute;
-	top:15px;
-	right:-56px;	
+	top:18px;
+	right:-48px;	
 }
 
 .tt_arrow .arrow_middle{

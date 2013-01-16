@@ -14,43 +14,8 @@
             <h2>Your Measurements</h2>
             <form action="{{ path('registration_step_three_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
-                    <div class="frm_ele"> {{ form_label(form.height) }}
-          {{ form_errors(form.height) }}
-                            <div class="slider_wrap">
-                                <div class="tip tt_arrow tip1"><!--- Tootip wrapper Start  !-->
-                                    <div class="grad"></div>
-                                    <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                        <span class="arrow_top"></span> Measure your height. Stand barefoot on a hard, solid surface with your back against the wall. Look forward with your chin level. Make a mark on the wall right above your head with a pencil. Measure the distance to the nearest 1/2-inch using a tape measure.<br />
-                                        <a href="#">Watch Video</a> 
-                                        <!--- Tootip content End  !--> 
-                                    </div>
-                                    <div class="grad"></div>
-                                    <!--- Tootip wrapper End  !--> 
-                                </div>
-                                <div id="slider_result_height" class="slider_result">68"</div>
-                                <div id="slider_height" class="main_slider"></div>
-            {{ form_widget(form.height) }} 
-                                <!--/.slider_wrap--></div>
-                        </div>
-                        <div class="frm_ele"> {{ form_label(form.weight) }}
-          {{ form_errors(form.weight) }}
-                                <div class="slider_wrap">
-                                    <div class="tip tt_arrow tip2"><!--- Tootip wrapper Start  !-->
-                                        <div class="grad"></div>
-                                        <div class="tooltip_content"><!--- Tootip content Start  !--> 
-
-                                            <span class="arrow_top"></span> Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,Dummy text,<br />
-                                            <a href="#">Watch Video</a> 
-                                            <!--- Tootip content End  !--> 
-                                        </div>
-                                        <div class="grad"></div>
-                                        <!--- Tootip wrapper End  !--> 
-                                    </div>
-                                    <div id="slider_result_weight" class="slider_result">135<span class="short_txt">lbs</span></div>
-                                    <div id="slider_weight" class="main_slider"></div>
-            {{ form_widget(form.weight) }} 
-                                    <!--/.slider_wrap--></div>
-                            </div>
+                    
+                    
                             <div class="frm_ele"> {{ form_label(form.bust) }}
           {{ form_errors(form.bust) }}
 
