@@ -1,0 +1,8 @@
+{{data}}
+
+<form action="{{ path('ajax_determine') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <input type="submit" value='determine'/>
+</form>
+

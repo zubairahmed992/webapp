@@ -33,4 +33,12 @@ ajax_product_type:
 ajax_product_ajax:
     pattern:  /ajax
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax}
+
+ajax_determine_test:
+    pattern:  /ajax/determine_test
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:determineTest}
+
+ajax_determine:
+    pattern:  /ajax/determine
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:determine}
     

@@ -61,6 +61,35 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
     }
     
+    public function determineTestAction() {
+    
+    $form = $this->createFormBuilder()
+        ->add('user', 'text')
+        ->add('product', 'text')
+        ->getForm();
+        
+        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array(
+                    'form' => $form->createView()));        
+    }
+    
+    public function determineAction(Request $request) {
+    
+        
+    $form = $this->createFormBuilder()
+        ->add('user', 'text')
+        ->add('product', 'text')
+        ->getForm();
+     
+    if ($request->isMethod('POST')) {
+            $form->bind($request);
+            $data = $form->getData();            
+            return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array(
+                    'form' => $form->createView(), 'data'=>"sdsd"));        
+        }
+        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array(
+                    'form' => $form->createView(), 'data'=>"tt"));        
+    }
+    
     private function renderList($query) {
         $entity = $query->getResult();
         return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
