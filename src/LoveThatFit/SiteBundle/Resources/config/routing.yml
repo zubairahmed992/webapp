@@ -42,3 +42,8 @@ ajax_determine:
     pattern:  /ajax/determine
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:determine}
     
+ajax_compare:
+    pattern:  /ajax/compare/{user_id}/{product_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:compare}
+
+    

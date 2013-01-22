@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class MeasurementRepository extends EntityRepository
 {
+    
+    public function findOneByUserId($id)
+{
+    $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT m FROM LoveThatFitUserBundle:Measurement m
+            JOIN m.user u
+            WHERE u.id = :id'
+        )->setParameter('id', $id);
+
+    try {
+        return $query->getSingleResult();
+    } catch (\Doctrine\ORM\NoResultException $e) {
+        return null;
+    }
+}
 }

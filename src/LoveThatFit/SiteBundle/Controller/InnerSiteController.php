@@ -5,6 +5,7 @@ use LoveThatFit\SiteBundle\comparison;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\UserBundle\Entity\Measurement;
+use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -64,35 +65,16 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
     }
     
-    public function determineTestAction() {
-    
-    $form = $this->createFormBuilder()
-        ->add('user', 'text')
-        ->add('product', 'text')
-        ->getForm();
-        
-        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array(
-                    'form' => $form->createView(), 'data'=>'freebees'));        
+    public function compareAction($user_id, $product_id) {    
+        $fit=new comparison($this->getMeasurement($user_id),  $this->getProduct($product_id));    
+        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->determine(), 'json'=>  json_encode($fit->getDifference()), 'msg'=>  json_encode($fit->getMessageArray())));        
     }
     
-    public function determineAction(Request $request) {
-    
+    public function determineAction($user_id, $product_id) {
         
-    $form = $this->createFormBuilder()
-        ->add('user', 'text')
-        ->add('product', 'text')
-        ->getForm();
-    $uid=$this->get('request')->request->get('user');
-    $fit=new comparison($this->getMeasurement(1),  $this->getProduct(1));
-    
-    if ($request->isMethod('POST')) {
-            $form->bind($request);
-            $data = $form->getData();            
-            return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array(
-                    'form' => $form->createView(), 'data'=>$fit->determine()));        
-        }
-        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array(
-                    'form' => $form->createView(), 'data'=>$fit->determine()));        
+        $uid=$this->get('request')->request->get('user');
+    $fit=new comparison($this->getMeasurement($user_id),  $this->getProduct($product_id));    
+    return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->determine()));        
     }
     
     private function renderList($query) {
@@ -111,8 +93,10 @@ class InnerSiteController extends Controller {
     private function getMeasurement($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-        return $user->getMeasurement();
+        #$user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        #return $user->getMeasurement();
+        return $em->getRepository('LoveThatFitUserBundle:Measurement')->findOneByUserId($id);
+        
     }
 
 }

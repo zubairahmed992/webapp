@@ -41,6 +41,11 @@ class Product
     protected $name;
     
     /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    protected $adjustment;
+    
+    /**
      * @ORM\Column(type="string", length=255)
      */
     protected $sku;
@@ -154,6 +159,29 @@ class Product
         return $this->name;
     }
 
+     /**
+     * Set adjustment
+     *
+     * @param float $adjustment
+     * @return Product
+     */
+    public function setAdjustment($adjustment)
+    {
+        $this->adjustment = $adjustment;
+    
+        return $this;
+    }
+
+    /**
+     * Get adjustment
+     *
+     * @return float 
+     */
+    public function getAdjustment()
+    {
+        return $this->adjustment;
+    }
+    
     /**
      * Set sku
      *
