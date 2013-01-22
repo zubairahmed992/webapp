@@ -8,11 +8,12 @@ class comparison
 {
     var $user_measurement;
     var $product;
+    var $adjustment;
     
     function __construct($measurement, $outfit) {
     $this->user_measurement=$measurement;
-    $this->product=$outfit;
-    
+    $this->product=$outfit;    
+    $this->adjustment=$this->product->getAdjustment();    
     }
     
    function determine(){
@@ -36,8 +37,7 @@ class comparison
            case 'Dress':
                return $this->determine_dress();
                break;
-           
-       }
+        }
            
                
        return "Clothing type not matched";
@@ -45,7 +45,7 @@ class comparison
    
    function determine_top(){
        
-       return $this->compare_waist();
+       return "Top aai";
        
    }
    
@@ -62,49 +62,7 @@ class comparison
        return $os-$us;
    }
    
-    function compare_waist(){
-        $str="";
-        $difference =$this->user_measurement->getWaist();# $this->product->getWaist() - $this->user_measurement->getWaist();
-         switch($difference)
-       {
-           case 0:
-               $str="perfect match";
-               break;
-           case 1:
-               $str="1 inch bigger";               
-               break;
-           case ($difference > 1 && $difference < 2):
-                $str="more than 1  inch bigger";
-               break;
-            case 2:
-               $str="2  inch bigger";
-               break;
-           case ($difference > 2):
-               $str="more than 2 inch bigger";
-               break;
-           case ($difference > -1 && $difference < 0):
-               $str="smaller";
-                break;
-           case -1:
-               $str="1  inch smaller";
-               break;
-           case ($difference > -1 && $difference < -2):
-               $str="more than 1 inch smaller";
-                break;
-            case -2:
-               $str="2 inch smaller";
-               break;
-           case ($difference < -2):
-               $str="more than 2 inch smaller";
-               break;
-       }
-            
-         return $str . " * " . $difference;   
-        
-                
-    }
-    
-    function getDifference(){
+   function getDifference(){
           if (!$this->user_measurement)
            return "Measurement not found.";
        

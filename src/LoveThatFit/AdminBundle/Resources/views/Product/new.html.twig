@@ -1,9 +1,9 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
-   Products / New
+Products / New
 {% endblock %}
-   
+
 
 
 {% block body %}
@@ -11,24 +11,107 @@
 
 <a href="{{ path('admin_products') }}">back</a>
 
-   <!-- Product Editing Page -->       
-   <h1 style="float:left;width:100%;">New Product </h1>
-    <div class="container-fluid">      
-      
+<!-- Product Editing Page -->       
 
- <form action="{{ path('admin_product_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+<div class="container-fluid">      
+    <h1 style="float:left;width:100%;">New Product </h1>
+    <div class="clearfix"></div>  
+    <form action="{{ path('admin_product_create') }}" method="post" {{ form_enctype(form) }}>
+ {{ form_errors(form) }}
 
-    <input type="submit" />
-</form>
-      
-                               
-                 </div>      
-              </div><!-- End pro_detail -->      
-          </div><!-- End product_content --> 
-      </div> <!-- End detail_wrapper -->
-    </div>
-    <!-- End Product Editing Page -->
+            <div id="detail_wrapper">      
+                <div id="p_hd">Product Detail</div>
+                <div class="span3">
+                    <div id="pro_img"><img src="../images/pro_img.png">
+                    </div><!--/.well -->
+
+                    <div class="clearfix"></div>
+                    <div style="margin-top:20px; margin-left:5px;">
+    {{ form_errors(form.file) }}
+    {{ form_widget(form.file) }}
+                        </div>
+                    </div>         
+
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container">         
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Name</div>
+                                    <div class="span3">{{ form_widget(form.name) }}</div>
+                                    <div class="span3">Waist</div>
+                                    <div class="span3">{{ form_widget(form.waist) }}</div>
+
+                                    
+                                </div>          
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Sku</div>
+                                    <div class="span3">{{ form_widget(form.sku) }}</div>
+                                    <div class="span3">Gender</div>
+                                    <div class="span3">{{ form_widget(form.gender) }}</div>
+
+                                </div>          
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Brand</div>
+                                    <div class="span3">{{ form_widget(form.Brand) }}</div>
+                                    <div class="span3">Clothing Type</div>
+                                    <div class="span3">{{ form_widget(form.ClothingType) }}</div>
+
+                                </div>          
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Inseam</div>
+                                    <div class="span3">{{ form_widget(form.inseam) }}</div>
+                                    <div class="span3">Outseam</div>
+                                    <div class="span3">{{ form_widget(form.outseam) }}</div>
+
+                                </div>          
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Hip</div>
+                                    <div class="span3">{{ form_widget(form.hip) }}</div>
+                                    <div class="span3">Hem</div>
+                                    <div class="span3">{{ form_widget(form.hem) }}</div>
+
+                                </div>          
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Bust</div>
+                                    <div class="span3">{{ form_widget(form.bust) }}</div>
+                                    <div class="span3">Back</div>
+                                    <div class="span3">{{ form_widget(form.back) }}</div>
+
+                                </div>          
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Arm</div>
+                                    <div class="span3">{{ form_widget(form.arm) }}</div>
+                                    <div class="span3">Length</div>
+                                    <div class="span3">{{ form_widget(form.length) }}</div>
+
+                                </div>          
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Leg</div>
+                                    <div class="span3">{{ form_widget(form.leg) }}</div>
+                                    <div class="span3">Adjustment</div>
+                                    <div class="span3">{{ form_widget(form.adjustment) }}</div>
+                                    </div>
+                                </div> 
+                                    <div class="row-fluid show-grid">
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">
+				{{ form_rest(form) }}
+                                        <div style="margin:30px 0px 0px 30px;"> <input type="submit" />                                     
+                                    </div>                                    
+                                    </div>
+                                </div> 
+
+
+
+                                </div>      
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+                    </div> <!-- End detail_wrapper -->
+                </form>    
+            </div>      
+
 
 {% endblock %}
 
