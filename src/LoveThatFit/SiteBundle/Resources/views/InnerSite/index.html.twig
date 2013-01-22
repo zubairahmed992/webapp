@@ -47,6 +47,10 @@
                     <span></span>
                 <div class="featured_box">                
                 <div class="featured_content">
+                    <div class="prod_details">
+                        <input type="hidden" class="prod_height" value="66" />
+                        <input type="hidden" class="prod_width" value="34" />
+                    </div>
                     <h3>Athletic Tops</h3>
                     <p>All sizes Available<br />
                     All colors Available</p>
@@ -112,6 +116,28 @@
 
 {% block fitting_room %}
 <script>
-    $( ".prod_wrapper li .prod_node .featured_img" ).draggable({ revert: true, helper: "clone" });
+    $( ".prod_wrapper li .prod_node .featured_img .prod_top" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            
+        },
+        drag:function(){
+        },
+        stop:function (){
+            
+        }
+    });
+    
+    /// Dropable ///
+    $( "#top_dropable" ).droppable({
+    accept: ".prod_wrapper li .prod_node .featured_img .prod_top",
+    activeClass: "ui-state-hover",
+    hoverClass: "ui-state-active",
+    drop: function( event, ui ) {
+    $( this ).addClass( "ui-state-highlight" ).html(ui.draggable);
+    var chk = ui.draggable.parent().attr("class");
+    alert(chk);
+    }
+    });
+    
 </script>
 {% endblock %}
