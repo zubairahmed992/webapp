@@ -1,22 +1,22 @@
 {% extends 'LoveThatFitSiteBundle::base.html.twig' %}
 
 {% block left_navigation %}
-             
-               <nav>
-                <ul>
-                    <li><a href="#"><span></span>What's New</a></li>
-                    <li><a href="#"><span></span>What's Hot<span class="mnu"></span></a></li>
-                    <li><a href="#"><span></span>Shop by Style</a></li>
-                    <li class="opn_link"><a href="#"><span></span>Shop by Brand <span class="mnu"></span></a>
-                        <ul class="filter filter2">
-                            <li><a href="#">The X Brand</a><span class="arw"></span></li>
-                            <li class="sub_active"><a href="#">Cloth Tich</a><span class="arw"></span></li>
-                            <li><a href="#">Special One</a><span class="arw"></span></li>
-                        </ul>
-                        <div style="margin-top:-10px; margin-left:5px;"><img src="images/btm_patch.jpg"></div>                      
-                    </li>
-                </ul>
-                </nav>
+
+<nav>
+    <ul>
+        <li><a href="#"><span></span>What's New</a></li>
+        <li><a href="#"><span></span>What's Hot<span class="mnu"></span></a></li>
+        <li><a href="#"><span></span>Shop by Style</a></li>
+        <li class="opn_link"><a href="#"><span></span>Shop by Brand <span class="mnu"></span></a>
+            <ul class="filter filter2">
+                <li><a href="#">The X Brand</a><span class="arw"></span></li>
+                <li class="sub_active"><a href="#">Cloth Tich</a><span class="arw"></span></li>
+                <li><a href="#">Special One</a><span class="arw"></span></li>
+            </ul>
+            <div style="margin-top:-10px; margin-left:5px;"><img src="images/btm_patch.jpg"></div>                      
+        </li>
+    </ul>
+</nav>
 {% endblock %}
 
 {% block left_col_btm %}
@@ -28,88 +28,93 @@
         <div class="slider_but_top"></div>
         <div class="prod_sliding_area">
             <div class="int_fitting_room">
-                <div id="full_dropable"></div>
-                <div id="top_dropable"></div>
-                <div id="bottom_dropable"></div>
+                <div id="full_dropable" class="hide"></div>
+                <div id="top_dropable" class="hide"></div>
+                <div id="bottom_dropable" class="hide"></div>
             </div> 
             <div class="play_area_hldr hide">
-               <div id="play_area" class="play_area">
-                  <div id="top_layer"></div>
-                  <div id="dummy_mark"></div>
-                  <div id="uploaded_photo" class="full_opacity"></div>
-               </div>
-            <!--/.play_area_hldr--></div>
-            
-            
+                <div id="play_area" class="play_area">
+                    <div id="top_layer"></div>
+                    <div id="dummy_mark"></div>
+                    <div id="uploaded_photo" class="full_opacity"></div>
+                </div>
+                <!--/.play_area_hldr--></div>
+
+
             <ul class="prod_wrapper">
                 <li>
                     <div class="prod_node">
-                    <span></span>
-                <div class="featured_box">                
-                <div class="featured_content">
-                    <div class="prod_details">
-                        <input type="hidden" class="prod_height" value="66" />
-                        <input type="hidden" class="prod_width" value="34" />
-                    </div>
-                    <h3>Athletic Tops</h3>
-                    <p>All sizes Available<br />
-                    All colors Available</p>
-                    <div class="pro_price">$29.99 - $69.99</div>
-                </div>
-                <div class="featured_img"><img src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108"></div>              
-                </div>
-                 <span></span>
-                    <!--/prod_node--></div>
-                </li>            
+                        <span></span>
+                        <div class="featured_box">                
+                            <div class="featured_content">
+
+                                <h3>Athletic Tops</h3>
+                                <p>All sizes Available<br />
+                                    All colors Available</p>
+                                <div class="pro_price">$29.99 - $69.99</div>
+                            </div>
+                            <div class="featured_img">
+                                <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
+                                <div class="prod_details">
+                                    <input type="hidden" class="prod_height" value="160" />
+                                    <input type="hidden" class="prod_width" value="120" />
+                                </div>
+                            </div>              
+                        </div>
+                        <span></span>
+                        <!--/prod_node--></div>
+                </li>   
+
                 <li>
                     <div class="prod_node">
-                    <span></span>
-                <div class="featured_box">                
-                <div class="featured_content">
-                    <h3>Athletic Tops</h3>
-                    <p>All sizes Available<br />
-                    All colors Available</p>
-                    <div class="pro_price">$29.99 - $69.99</div>
-                </div>
-                <div class="featured_img"><img src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108"></div>              
-                </div>
-                 <span></span>
-                    <!--/prod_node--></div>
-                </li>
+                        <span></span>
+                        <div class="featured_box">                
+                            <div class="featured_content">
+
+                                <h3>Athletic Tops</h3>
+                                <p>All sizes Available<br />
+                                    All colors Available</p>
+                                <div class="pro_price">$29.99 - $69.99</div>
+                            </div>
+                            <div class="featured_img">
+                                <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
+                                <div class="prod_details">
+                                    <input type="hidden" class="prod_height" value="130" />
+                                    <input type="hidden" class="prod_width" value="100" />
+                                </div>
+                            </div>              
+                        </div>
+                        <span></span>
+                        <!--/prod_node--></div>
+                </li> 
+                
                 <li>
                     <div class="prod_node">
-                    <span></span>
-                <div class="featured_box">                
-                <div class="featured_content">
-                    <h3>Athletic Tops</h3>
-                    <p>All sizes Available<br />
-                    All colors Available</p>
-                    <div class="pro_price">$29.99 - $69.99</div>
-                </div>
-                <div class="featured_img"><img src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108"></div>              
-                </div>
-                 <span></span>
-                    <!--/prod_node--></div>
-                </li>
-                <li>
-                    <div class="prod_node">
-                    <span></span>
-                <div class="featured_box">                
-                <div class="featured_content">
-                    <h3>Athletic Tops</h3>
-                    <p>All sizes Available<br />
-                    All colors Available</p>
-                    <div class="pro_price">$29.99 - $69.99</div>
-                </div>
-                <div class="featured_img"><img src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108"></div>              
-                </div>
-                 <span></span>
-                    <!--/prod_node--></div>
-                </li>
+                        <span></span>
+                        <div class="featured_box">                
+                            <div class="featured_content">
+
+                                <h3>Athletic Tops</h3>
+                                <p>All sizes Available<br />
+                                    All colors Available</p>
+                                <div class="pro_price">$29.99 - $69.99</div>
+                            </div>
+                            <div class="featured_img">
+                                <img class="prod_bottom" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
+                                <div class="prod_details">
+                                    <input type="hidden" class="prod_height" value="210" />
+                                    <input type="hidden" class="prod_width" value="100" />
+                                </div>
+                            </div>              
+                        </div>
+                        <span></span>
+                        <!--/prod_node--></div>
+                </li> 
+
             </ul>
-        <!--.prod_sliding_area--></div>
+            <!--.prod_sliding_area--></div>
         <div class="slider_but_btm"></div>
-    <!--/.prod_slider_hldr--></div>
+        <!--/.prod_slider_hldr--></div>
 </section>
 
 {% endblock %}
@@ -118,26 +123,58 @@
 <script>
     $( ".prod_wrapper li .prod_node .featured_img .prod_top" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
+            var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            
+            $( "#top_dropable").removeClass("hide").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
             
         },
         drag:function(){
         },
         stop:function (){
-            
+            $( "#top_dropable").removeClass("top_active");
         }
     });
     
     /// Dropable ///
     $( "#top_dropable" ).droppable({
-    accept: ".prod_wrapper li .prod_node .featured_img .prod_top",
-    activeClass: "ui-state-hover",
-    hoverClass: "ui-state-active",
-    drop: function( event, ui ) {
-    $( this ).addClass( "ui-state-highlight" ).html(ui.draggable);
-    var chk = ui.draggable.parent().attr("class");
-    alert(chk);
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_top",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            $( this ).addClass( "ui-state-highlight" ).html(ui.draggable);
     }
     });
     
-</script>
+    
+    //////////Bottom//////////
+    
+    $( ".prod_wrapper li .prod_node .featured_img .prod_bottom" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            
+            $( "#bottom_dropable").removeClass("hide").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+            
+        },
+        drag:function(){
+        },
+        stop:function (){
+            $( "#top_dropable").removeClass("top_active");
+        }
+    });
+    
+    /// Dropable ///
+    $( "#bottom_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_bottom",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            $( this ).addClass( "ui-state-highlight" ).html(ui.draggable);
+    }
+    });
+    
+    
+    
+    </script>
 {% endblock %}

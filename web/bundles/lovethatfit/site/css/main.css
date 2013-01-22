@@ -1349,30 +1349,31 @@ background:#f0f0f0;
 .prod_sliding_area .int_fitting_room {
     position: relative;
 }
-#full_dropable {
-   background:#ffcc00;
-   width: 200px;
-   height:200px;
-   position: absolute;
-   left:0;
-   top:0;
-}
 
 #top_dropable {
-   background:#cc0000;
-   width: 160px;
-   height:300px;
    position: absolute;
    left:0;
-   top:0;
-   z-index: 300;
+   top:114px;
+   text-align: center;
 }
 
 #bottom_dropable {
-   background:#cc00cc;
-   width: 180px;
-   height:400px;
+   position: absolute;
+   left:0;
+   top:210px;
+   text-align: center;
+}
+
+#full_dropable {
    position: absolute;
    left:0;
    top:0;
+   text-align: center;
+}
+
+
+
+.top_active {
+    border:1px dashed #87ca2e;
+    display: block;
 }
