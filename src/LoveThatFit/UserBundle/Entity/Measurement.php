@@ -15,7 +15,7 @@ class Measurement {
 
     /**
      * @ORM\OneToOne(targetEntity="User", inversedBy="measurement")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * */
     private $user;
 
@@ -40,7 +40,9 @@ class Measurement {
      *      min = "90",
      *      max = "350",
      *      minMessage = "You must weight at least 0",
-     *      maxMessage = "You cannot weight more than 300"
+     *      maxMessage = "You cannot weight more than 300",
+     *      groups = {"step2"}
+     * 
      * )
      */
     private $weight;
@@ -55,7 +57,8 @@ class Measurement {
      *      min = "20",
      *      max = "96",
      *      minMessage = "You must be at least 20 tall",
-     *      maxMessage = "You cannot taller than 96"
+     *      maxMessage = "You cannot taller than 96",
+     *      groups  = "step2"
      * )      
      */
     private $height;
@@ -69,7 +72,8 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10 waist",
-     *      maxMessage = "You cannot have more than 70 waist"
+     *      maxMessage = "You cannot have more than 70 waist",
+     *      groups  = "step3"
      * )
      */
     private $waist;

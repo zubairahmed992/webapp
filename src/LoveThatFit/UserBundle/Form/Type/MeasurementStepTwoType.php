@@ -13,6 +13,15 @@ class MeasurementStepTwoType extends AbstractType
        $builder->add('weight');
        $builder->add('height');
     }
+  
+     public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'LoveThatFit\UserBundle\Entity\Measurement',
+        );
+    }
+
+    
     public function getName()
     {
         return 'measurement';

@@ -56,11 +56,11 @@
                                         </div>
 <div class="frm_ele short_inp">
     <label>Height</label>
-    <input type="text" value="" required="required" name="user[height]" id="user_height"> <span class="fff_color">(inches)</span>
+                {{ form_widget(form.measurement.height) }} <span class="fff_color">(inches)</span>
                             </div>
 <div class="frm_ele short_inp">
     <label>Weight</label>
-    <input type="text" value="" required="required" name="user[weight]" id="user_weight"> <span class="fff_color">(lbs)</span>
+    {{ form_widget(form.measurement.weight) }} <span class="fff_color">(lbs)</span>
                             </div>
 
         {{ form_rest(form) }}

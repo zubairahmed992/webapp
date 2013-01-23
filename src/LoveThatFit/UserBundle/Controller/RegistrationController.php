@@ -45,6 +45,9 @@ class RegistrationController extends Controller {
             $em->persist($entity);
             $em->flush();
 
+            $measurement = new Measurement();
+            $measurement->setUser($entity);    
+       
             $form = $this->createForm(new RegistrationStepTwoType(), $entity);
             return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                         'form' => $form->createView(),
@@ -58,9 +61,10 @@ class RegistrationController extends Controller {
     }
 
     //--------------------------STEP-2-----------------------------------------------
-  
+   
 
-    
+
+
     public function stepTwoCreateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
@@ -69,15 +73,22 @@ class RegistrationController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
-
+        $measurement = new Measurement(); 
+        $measurement->setUser($entity);
+        #$form = $this->createForm(new RegistrationStepTwoType(), array($entity,$measurement));
+        
         $form = $this->createForm(new RegistrationStepTwoType(), $entity);
         $form->bind($request);
-
-        if ($form->isValid()) {
-            $em->persist($entity);
+        
+        if ($form->isValid()) {       
+                
+            $em->persist($entity);            
             $em->flush();
 
-            $measurement = new Measurement();
+            $measurement = $entity->getMeasurement();
+            if (!$measurement){
+                $measurement = new Measurement();
+            }
             $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
             return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                         'form' => $form->createView(),
@@ -183,6 +194,18 @@ class RegistrationController extends Controller {
     //------------------ Test -----------------------------
     //------------------ Test -----------------------------
     
+     public function addMeasurement($id)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+            
+            $measurement = new Measurement();
+            $measurement->setWaist(45);
+            $measurement->setHeight(45);
+            $measurement->setUser($user);
+            $em->persist($measurement);
+            $em->flush();            
+    }
     
     public function stepTwoRenderAction($id) {
         
@@ -192,9 +215,12 @@ class RegistrationController extends Controller {
        $form = $this->createForm(new UserType(), $entity);
 
        $form = $this->createForm(new RegistrationStepTwoType(), $entity);
+       
        return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                     'form' => $form->createView(),
                     'entity' => $entity));
+    
+       
     }
 
     
@@ -236,7 +262,6 @@ class RegistrationController extends Controller {
         }
 
         $form = $this->createForm(new RegistrationStepFourType(), $entity);
-        
         
             return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                         'form' => $form->createView(),

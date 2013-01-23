@@ -14,6 +14,7 @@ class RegistrationStepTwoType extends AbstractType
         $builder->add('firstName', 'text');
         $builder->add('lastName', 'text');
         $builder->add('email', 'text');
+        $builder->add('measurement', new MeasurementStepTwoType());
         
          $builder->add('gender', new GenderType(), array(
                
@@ -26,6 +27,13 @@ class RegistrationStepTwoType extends AbstractType
             'format' => 'yyyy MM dd',
             )
                 );
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'LoveThatFit\UserBundle\Entity\User',
+        );
     }
 
     public function getName()

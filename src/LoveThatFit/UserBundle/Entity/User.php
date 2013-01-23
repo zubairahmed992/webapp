@@ -16,7 +16,7 @@ class User  implements UserInterface, \Serializable{
 
     
     /**
-     * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user", cascade={"persist", "remove"})
      **/
     private $measurement;
     

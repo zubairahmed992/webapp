@@ -65,18 +65,28 @@ class comparison
    function getDifference(){
           if (!$this->user_measurement)
            return "Measurement not found.";
+          
        
        if (!$this->product)
            return "Product not found.";
+       
+       	$waist_diff = $this->product->getWaist() - $this->user_measurement->getWaist();
+        $hip_diff = $this->product->getHip() - $this->user_measurement->getHip();
+        $bust_diff = $this->product->getBust() - $this->user_measurement->getBust();
+        $arm_diff = $this->product->getArm() - $this->user_measurement->getArm();
+        $leg_diff = $this->product->getLeg() - $this->user_measurement->getLeg();
+        $inseam_diff = $this->product->getInseam() - $this->user_measurement->getInseam();
+        $back_diff = $this->product->getBack() - $this->user_measurement->getBack();
+       
        $msg=$this->getMessageArray();
         $array = array(
-        "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg"=>$msg["waist"][$this->get_key($this->product->getWaist() - $this->user_measurement->getWaist())]),
-        "hip" => array("diff" => $this->product->getHip() - $this->user_measurement->getHip(), "msg"=>$msg["hip"][$this->get_key($this->product->getHip() - $this->user_measurement->getHip())]),
-        "bust" => array("diff" => $this->product->getBust() - $this->user_measurement->getBust(), "msg"=>$msg["bust"][$this->get_key($this->product->getBust() - $this->user_measurement->getBust())]),
-        "arm" => array("diff" => $this->product->getArm() - $this->user_measurement->getArm(), "msg"=>$msg["arm"][$this->get_key($this->product->getArm() - $this->user_measurement->getArm())]),
-        "leg" => array("diff" => $this->product->getLeg() - $this->user_measurement->getLeg(), "msg"=>$msg["leg"][$this->get_key($this->product->getLeg() - $this->user_measurement->getLeg())]),
-        "inseam" => array("diff" => $this->product->getInseam() - $this->user_measurement->getInseam(), "msg"=>$msg["inseam"][$this->get_key($this->product->getInseam() - $this->user_measurement->getInseam())]),
-        "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg"=>$msg["back"][$this->get_key($this->product->getBack() - $this->user_measurement->getBack())]),  
+        "waist" => array("diff" => $waist_diff, "msg"=>$msg["waist"][$this->get_key($waist_diff)]),
+        "hip" => array("diff" => $hip_diff, "msg"=>$msg["hip"][$this->get_key($hip_diff)]),
+        "bust" => array("diff" => $bust_diff, "msg"=>$msg["bust"][$this->get_key($bust_diff)]),
+        "arm" => array("diff" => $arm_diff, "msg"=>$msg["arm"][$this->get_key($arm_diff)]),
+        "leg" => array("diff" => $leg_diff, "msg"=>$msg["leg"][$this->get_key($leg_diff)]),
+        "inseam" => array("diff" => $inseam_diff, "msg"=>$msg["inseam"][$this->get_key($inseam_diff)]),
+        "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg"=>$msg["back"][$this->get_key($back_diff)]),  
 );
     
         return $array;
