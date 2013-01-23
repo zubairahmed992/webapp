@@ -6,24 +6,30 @@
 
 {% block body %}
 <div class="p_listing">     
-    <h1>Brand Listing</h1>
-
+    <h1 style="float:left;">Brands</h1>
+<div class="btn_wrapper">     
+     <a href="{{ path('admin_brand_new') }}" class="btn">Add New</a>
+      </div>
+     <div class="clearfix"></div>
     <div class="bs-docs-grid">              
 
+    
+       
+    
         <div class="row-fluid show-grid">
-            <div class="span1 hds">ID</div>
-            <div class="span1 hds">Name</div>
-            <div class="span1 hds">Logo</div>
-            <div class="span1 hds"><a href="{{ path('admin_brand_new') }}">Add New</a></div>              
+            <div class="span3 hds">ID</div>
+            <div class="span3 hds">Name</div>
+            <div class="span3 hds">Logo</div>
+            <div class="span3 hds"></div>          
         </div>  
 
           {% for b in brands %}
 
         <div class="row-fluid show-grid">
-            <div class="span1">{{b.Id}}</div>
-            <div class="span1">{{b.Name}}</div>
-            <div class="span1"><img src="{{ asset(b.WebPath) }}"/></div>
-            <div class="span1">                  
+            <div class="span3 show">{{b.Id}}</div>
+            <div class="span3 show">{{b.Name}}</div>
+            <div class="span3 show"><img src="{{ asset(b.WebPath) }}"/></div>
+            <div class="span3 show">                  
                 <div>
                     <a href="{{ path('admin_brand_show', {'id': b.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}"><i class="icon-edit"></i></a>

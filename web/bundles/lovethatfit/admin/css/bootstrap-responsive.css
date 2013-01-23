@@ -259,7 +259,7 @@
     *width: 31.570740134569924%;
   }
   .row-fluid .span3 {
-    width: 23.076923076923077%;
+    width: 25%;
     *width: 23.023731587561375%;
   }
   
@@ -267,8 +267,8 @@
    border-bottom:1px solid #ccc!important;
   }
   .row-fluid .span2 {
-    width: 15.7299%;
-    *width: 15.7299%;
+    width: 14.5299%;
+    *width: 14. 599%;
   }
   .row-fluid .span1:not(.hds) {
     width: 5.982905982905983%;
@@ -279,6 +279,12 @@
         overflow:hidden;
 	
   }
+  
+  .row-fluid .span3:not(.hds) {
+    
+    overflow: hidden;
+        
+}
   
    .span1 img{
 	margin-top:-30px;  

@@ -6158,6 +6158,7 @@ a.badge:hover {
 	border:1px solid #8f9e71;
 	overflow:auto;	
 	margin-bottom:50px;
+        padding-bottom: 50px;
 }
 
 #p_hd{
@@ -6308,6 +6309,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', end
 .span1:last-child div{     
     margin-top:-40px;
   }
+  
+  .brands .span1:last-child div{     
+    margin-top:0px;
+  }
 
 #detail_wrapper select, input[type="file"] {
     height: 30px;
@@ -6315,3 +6320,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', end
     width:220px;
 }
 
+.show{
+    padding-top: 30px;
+    max-height: 93px;
+    min-height: 93px!important;
+    
+    
+}
+
+.span8 .span5{    
+border-bottom:1px solid #ccc !important;
+}

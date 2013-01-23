@@ -33,6 +33,12 @@ body {
 	min-height:20px;
 	margin-right:10px;	
 }
+
+.span3 div i{	
+	line-height:20px;
+	min-height:20px;
+	margin-right:10px;	
+}
 .row-fluid{
 border-left:1px solid #ccc;	
 border-right:1px solid #ccc;	
@@ -47,12 +53,6 @@ border-left:0px solid #ccc;
 border-right:0px solid #ccc;
 }
 
-.row-fluid .span3 {
-    width: 34.99%!important;
-	padding:5px;
-}
 
-.span3{
-	width:230px!important;
-	
-}
+
+
