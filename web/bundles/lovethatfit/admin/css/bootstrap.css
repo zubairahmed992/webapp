@@ -6182,13 +6182,14 @@ a.badge:hover {
 }
 
 #pro_img{
-	width:165px;
+	width:215px;
 	text-align:center;
 	padding:10px 0px 10px 0px;
 	border:1px solid #dedee0;	
 	float:left;	
 	margin-top:10px;
-	margin-left:5px;		
+	margin-left:10px;
+        min-height: 230px;
 }
 
 .det_container{	}
@@ -6278,8 +6279,8 @@ border:0px;
 
 .edt_container .btn-large{
    border-radius: 6px 6px 6px 6px;
-    font-size: 25.5px;
-    padding: 11px 19px;
+    font-size: 22px;
+    padding: 8px 11px;
 }
 
 .edt_container .btn-primary {
@@ -6295,12 +6296,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', end
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     color: #FFFFFF;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	padding:12px 50px 12px 50px;
+	padding:8px 30px 8px 30px;
+}
+
+.edt_container .btn-primary:hover {
+   
+   background: #1f3b08;
+
 }
 
 #detail_wrapper select, input[type="file"] {
-    height: 24px;
+    height: 30px;
     line-height: 42px;
-	width:50px;
+    width:220px;
 }
 
