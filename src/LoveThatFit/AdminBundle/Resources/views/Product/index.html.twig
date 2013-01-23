@@ -7,8 +7,11 @@
 
 {% block body %}
 <div class="p_listing">     
-    <h1>Products</h1>
-
+    <h1 style="float:left;">Products</h1>
+ <div class="btn_wrapper">     
+     <a href="{{ path('admin_product_new') }}" class="btn">Add New</a>
+      </div>
+     <div class="clearfix"></div> 
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">
@@ -18,7 +21,7 @@
             <div class="span1 hds">Brand</div>
             <div class="span1 hds">Type</div>
             <div class="span1 hds">image</div>              
-            <div class="span1 hds"><a href="{{ path('admin_product_new') }}">Add New</a></div>      
+            <div class="span1 hds"></div>      
             
         </div>  
 
@@ -31,7 +34,7 @@
             <div class="span1">{{p.Brand.Name}}</div>
             <div class="span1">{{p.ClothingType.Name}}</div>
             <div class="span1"><img src="{{ asset(p.WebPath) }}"/></div>
-            <div class="span1">                  
+            <div class="span1">&nbsp;                 
                 <div>
                     <a href="{{ path('admin_product_show', {'id': p.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_product_edit', {'id': p.Id}) }}"><i class="icon-edit"></i></a>

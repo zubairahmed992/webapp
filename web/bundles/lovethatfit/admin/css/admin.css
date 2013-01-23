@@ -12,7 +12,7 @@ body {
 }	
 
 .row-fluid .span1 {
-    width: 11.9829%!important;
+    width: 14.28%!important;
 }
 
 [class*="span"] {
@@ -39,7 +39,7 @@ border-right:1px solid #ccc;
 }
 
 .p_listing .span1{
-width:10.9em!important;	
+/*width:10.9em!important;*/	
 }
 
 .p_listing .row-fluid{

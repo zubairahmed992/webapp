@@ -9,14 +9,14 @@ Products / New
 {% block body %}
 
 
-<a href="{{ path('admin_products') }}" class="btn">Back</a>
+
 
 <!-- Product Editing Page -->       
 
 <div>      
     <h1 style="float:left;">New Product </h1>
      <div class="btn_wrapper">     
-      <button class="btn" type="button">Delete Product</button>
+     <a href="{{ path('admin_products') }}" class="btn">Back</a>
       </div>
       <div class="clearfix"></div>   
     <form action="{{ path('admin_product_create') }}" method="post" {{ form_enctype(form) }}>
