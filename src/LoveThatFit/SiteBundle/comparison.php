@@ -1,238 +1,212 @@
 <?php
 
 namespace LoveThatFit\SiteBundle;
+
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 
-class comparison
-{
+class comparison {
+
     var $user_measurement;
     var $product;
     var $adjustment;
-    
+
     function __construct($measurement, $outfit) {
-    $this->user_measurement=$measurement;
-    $this->product=$outfit;    
-    $this->adjustment=$this->product->getAdjustment();    
+        $this->user_measurement = $measurement;
+        $this->product = $outfit;
+        $this->adjustment = $this->product->getAdjustment();
     }
-    
-   function determine(){
-    
-       if (!$this->user_measurement)
-           return "Measurement not found.";
-       
-       if (!$this->product)
-           return "Product not found.";
-       
-       
-       $target= $this->product->getClothingType()->getTarget();
-       switch($target)
-       {
-           case'Top':
-           return $this->determine_top();
-               break;
-           case 'Bottom':
-           return $this->determine_bottom();
-               break;
-           case 'Dress':
-               return $this->determine_dress();
-               break;
+
+    function determine() {
+        return $this->testing123();
+
+        if (!$this->user_measurement)
+            return "Measurement not found.";
+
+        if (!$this->product)
+            $target = $this->product->getClothingType()->getTarget();
+        switch ($target) {
+            case'Top':
+                return $this->determine_top();
+                break;
+            case 'Bottom':
+                return $this->determine_bottom();
+                break;
+            case 'Dress':
+                return $this->determine_dress();
+                break;
         }
-           
-               
-       return "Clothing type not matched";
-   }
-   
-   function determine_top(){
-       
-       return "Top aai";
-       
-   }
-   
-   function determine_bottom(){
-       
-       return "bottom aai";
-   }
-   function determine_dress(){
-       
-       return "dress aai";
-   }
-   
-   function compare($us,$os){
-       return $os-$us;
-   }
-   
-   function getDifference(){
-          if (!$this->user_measurement)
-           return "Measurement not found.";
-          
-       
-       if (!$this->product)
-           return "Product not found.";
-       
-       	$waist_diff = $this->product->getWaist() - $this->user_measurement->getWaist();
-        $hip_diff = $this->product->getHip() - $this->user_measurement->getHip();
-        $bust_diff = $this->product->getBust() - $this->user_measurement->getBust();
-        $arm_diff = $this->product->getArm() - $this->user_measurement->getArm();
-        $leg_diff = $this->product->getLeg() - $this->user_measurement->getLeg();
-        $inseam_diff = $this->product->getInseam() - $this->user_measurement->getInseam();
-        $back_diff = $this->product->getBack() - $this->user_measurement->getBack();
-       
-       $msg=$this->getMessageArray();
+
+
+        return "Clothing type not matched";
+    }
+
+    function determine_top() {
+
+        return "Top aai";
+    }
+
+    function determine_bottom() {
+
+        return "bottom aai";
+    }
+
+    function determine_dress() {
+
+        return "dress aai";
+    }
+
+    function getDifference() {
+        if (!$this->user_measurement)
+            return "Measurement not found.";
+
+
+        if (!$this->product)
+            return "Product not found.";
+
         $array = array(
-        "waist" => array("diff" => $waist_diff, "msg"=>$msg["waist"][$this->get_key($waist_diff)]),
-        "hip" => array("diff" => $hip_diff, "msg"=>$msg["hip"][$this->get_key($hip_diff)]),
-        "bust" => array("diff" => $bust_diff, "msg"=>$msg["bust"][$this->get_key($bust_diff)]),
-        "arm" => array("diff" => $arm_diff, "msg"=>$msg["arm"][$this->get_key($arm_diff)]),
-        "leg" => array("diff" => $leg_diff, "msg"=>$msg["leg"][$this->get_key($leg_diff)]),
-        "inseam" => array("diff" => $inseam_diff, "msg"=>$msg["inseam"][$this->get_key($inseam_diff)]),
-        "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg"=>$msg["back"][$this->get_key($back_diff)]),  
-);
-    
+            "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg" => ""),
+            "hip" => array("diff" => $this->product->getHip() - $this->user_measurement->getHip(), "msg" => ""),
+            "bust" => array("diff" => $this->product->getBust() - $this->user_measurement->getBust(), "msg" => ""),
+            "arm" => array("diff" => $this->product->getArm() - $this->user_measurement->getArm(), "msg" => ""),
+            "leg" => array("diff" => $this->product->getLeg() - $this->user_measurement->getLeg(), "msg" => ""),
+            "inseam" => array("diff" => $this->product->getInseam() - $this->user_measurement->getInseam(), "msg" => ""),
+            "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg" => ""),
+        );
+
         return $array;
     }
-    
-    function get_key($difference)
-    {
-        $str="";
-          switch($difference)
-       {
-           case 0:
-               $str="zero";
-               break;
-           case 1:
-               $str="one";               
-               break;
-            case 2:
-               $str="two";
-               break;
-           case ($difference > 2):
-               $str="more_than_two";
-               break;
-           case -1:
-               $str="one_minus";
-               break;
-            case -2:
-               $str="two_minus";
-               break;
-           case ($difference < -2):
-               $str="less_than_two_minus";
-               break;
-       }
-            
-        return $str;
-    }
-    
-    function getMessageArray(){
-          return     array (
-	"sku" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
+
+    function getSuggestionArray() {
         
-    "waist" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-      
-    "hip" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
+        if (!$this->user_measurement)
+            return "Measurement not found.";
 
-    "bust" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
+        if (!$this->product)
+            return "Product not found.";
 
-    "arm" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-      
+        $msg = $this->getMessageArray();
+        $sug = $this->getDifference();
+        
+        foreach ($sug as $key => $value) {
+            $sug[$key]["msg"]=$this->getSuggestion($msg[$key], $value["diff"]);           
+        }
 
-    "leg" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-      
-    
-    "inseam" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-      
-
-    "outseam" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-      
-
-    "hem" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-      
-
-    "back" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-      
-      
-    "length" => array(
-      "less_than_two_minus" => 'Less than two inch short',
-      "two_minus" => 'two inch short',
-      "one_minus" => 'one inch short',
-      "zero" => 'Exact fit',
-      "one" =>  'One inch bigger',
-      "two" =>  'two inch bigger',
-      "more_than_two" =>  'more than two inch bigger'),
-	  );
-      
-
+        return $sug;
     }
-   
+
+    function getSuggestion($part, $diff) {
+        
+        $prev_key = Null;
+        $curr_key = Null;
+        $msg=Null;
+    
+        foreach ($part as $key => $value) {
+
+            $curr_key = doubleval($key);
+            
+            if ($curr_key == $diff) {
+                $msg= $value;
+                break;
+            } elseif ($curr_key > $diff && !$prev_key) {
+                $msg= $value;
+                break;
+            } elseif ($prev_key) {
+                if ($curr_key < $diff && $prev_key > $diff) {
+                    $msg= $value;
+                    break;
+                } elseif ($curr_key > $diff && $prev_key < $diff) {
+                    $msg= $value;
+                    break;
+                }                
+            }
+            $prev_key = $curr_key;
+        }
+        if ($prev_key == $curr_key)
+        {
+            
+        }
+            
+        return $msg;
+    }
+
+    function testing123() {
+        return json_encode($this->getSuggestionArray());
+        #return json_encode($this->getSuggestion($this->getMessageArray()['bust'],"-2"));
+    }
+
+
+    function getMessageArray() {
+        return array(
+            "sku" => array(
+                "-100" => 'more than two inch bigger',
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger',
+                "100" => 'more than two inch bigger'),
+            "waist" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "hip" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "bust" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "arm" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "leg" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "inseam" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "outseam" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "hem" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "back" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+            "length" => array(
+                "-2" => '2 inch short',
+                "-1" => '1 inch short',
+                "0" => 'Exact fit',
+                "1" => 'One inch bigger',
+                "2" => '2 inch bigger'),
+        );
+    }
 
 }

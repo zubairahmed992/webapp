@@ -40,8 +40,11 @@ class User  implements UserInterface, \Serializable{
      *      min = "3",
      *      max = "50",
      *      minMessage = "User name must be at least {{ limit }} characters length",
-     *      maxMessage = "User first name cannot be longer than than {{ limit }} characters length"
+     *      maxMessage = "User first name cannot be longer than than {{ limit }} characters length",
+     *      groups={"registration_step_one"}
      * )
+     *      @Assert\NotBlank(groups={"registration_step_one"})
+     *      @Assert\Blank(groups={"registration_step_two"})
      */
     private $username;
 
@@ -55,8 +58,16 @@ class User  implements UserInterface, \Serializable{
     /**
      * @var string $password
      *
-     * @ORM\Column(name="password", type="string", length=40)
-     * @Assert\Length(min = 4)
+     * @ORM\Column(name="password", type="string", length=40)       
+     *      @Assert\Length(
+     *      min = "6",
+     *      max = "50",
+     *      minMessage = "Password must be at least {{ limit }} characters length",
+     *      maxMessage = "Password cannot be longer than than {{ limit }} characters length",
+     *      groups={"registration_step_one"}
+     * )
+     *      @Assert\NotBlank(groups={"registration_step_one"})
+     *      @Assert\Blank(groups={"registration_step_two"})
      */
     private $password;
 
@@ -65,6 +76,8 @@ class User  implements UserInterface, \Serializable{
      *
      * @ORM\Column(name="email", type="string", length=60, unique=true, nullable=true)
      * @Assert\Email
+     * @Assert\Blank(groups={"registration_step_one"})
+     * @Assert\NotBlank(groups={"registration_step_two"})
      */
     private $email;
 
@@ -85,7 +98,8 @@ class User  implements UserInterface, \Serializable{
      *      minMessage = "First Name must be at least {{ limit }} characters length",
      *      maxMessage = "First Name cannot be longer than than {{ limit }} characters length"     
      * )
-     *  
+     * @Assert\Blank(groups={"registration_step_one"})
+     * @Assert\NotBlank(groups={"registration_step_two"})  
      */
     private $firstName;
 
@@ -100,6 +114,8 @@ class User  implements UserInterface, \Serializable{
      *      minMessage = "Last Name must be at least {{ limit }} characters length",
      *      maxMessage = "Last Name cannot be longer than than {{ limit }} characters length"     
      * )
+     * @Assert\Blank(groups={"registration_step_one"})
+     * @Assert\NotBlank(groups={"registration_step_two"})  
      */
     private $lastName;
 
@@ -107,6 +123,8 @@ class User  implements UserInterface, \Serializable{
      * @var string $gender
      *
      * @ORM\Column(name="gender", type="string", length=10, nullable=true)
+     * @Assert\Blank(groups={"registration_step_one"})
+     * @Assert\NotBlank(groups={"registration_step_two"})  
      */
     private $gender;
 
@@ -114,6 +132,8 @@ class User  implements UserInterface, \Serializable{
      * @var datetime $birthDate
      *
      * @ORM\Column(name="birth_date", type="datetime", nullable=true)
+     * @Assert\Blank(groups={"registration_step_one"})
+     * @Assert\NotBlank(groups={"registration_step_two"})  
      */
     private $birthDate;
 

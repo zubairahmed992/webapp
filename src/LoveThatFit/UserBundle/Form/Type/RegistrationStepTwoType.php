@@ -29,6 +29,12 @@ class RegistrationStepTwoType extends AbstractType
                 );
     }
     
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'validation_groups' => array('registration_step_two')
+        ));
+    }
+    
     public function getDefaultOptions(array $options)
     {
         return array(
