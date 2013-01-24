@@ -41,7 +41,7 @@
                 <!--/.play_area_hldr--></div>
 
 
-            <ul class="prod_wrapper">
+            <ul class="prod_wrapper">   
                 <li>
                     <div class="prod_node">
                         <span></span>
@@ -54,7 +54,7 @@
                                 <div class="pro_price">$29.99 - $69.99</div>
                             </div>
                             <div class="featured_img">
-                                <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
+                                <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/products/tops/jacket.png') }}" width="63" height="108">
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="160" />
                                     <input type="hidden" class="prod_width" value="120" />
@@ -64,7 +64,30 @@
                         </div>
                         <span></span>
                         <!--/prod_node--></div>
-                </li>   
+                </li> 
+                <li>
+                    <div class="prod_node">
+                        <span></span>
+                        <div class="featured_box">                
+                            <div class="featured_content">
+
+                                <h3>Athletic Tops</h3>
+                                <p>All sizes Available<br />
+                                    All colors Available</p>
+                                <div class="pro_price">$29.99 - $69.99</div>
+                            </div>
+                            <div class="featured_img">
+                                <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/products/tops/jacket_1.png') }}" width="63" height="108">
+                                <div class="prod_details">
+                                    <input type="hidden" class="prod_height" value="160" />
+                                    <input type="hidden" class="prod_width" value="120" />
+                                    <input type="hidden" class="prod_for_dummy" value="bundles/lovethatfit/site/images/featured_img_bigger.png" />
+                                </div>
+                            </div>              
+                        </div>
+                        <span></span>
+                        <!--/prod_node--></div>
+                </li> 
 
                 <li>
                     <div class="prod_node">
@@ -78,7 +101,7 @@
                                 <div class="pro_price">$29.99 - $69.99</div>
                             </div>
                             <div class="featured_img">
-                                <img class="prod_bottom" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
+                                <img class="prod_bottom" src="{{ asset('bundles/lovethatfit/site/products/bottoms/jeans.png') }}" />
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="210" />
                                     <input type="hidden" class="prod_width" value="100" />
@@ -101,7 +124,7 @@
                                 <div class="pro_price">$29.99 - $69.99</div>
                             </div>
                             <div class="featured_img">
-                                <img class="prod_full" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
+                                <img class="prod_full" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="310" />
                                     <input type="hidden" class="prod_width" value="100" />
@@ -143,7 +166,12 @@
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
-            $(this).addClass( "ui-state-highlight" ).html(ui.draggable);
+            $(this).fadeOut(500, function (){
+                    var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
+                    apply_prod = apply_prod + "_apply.png";
+                    $(this).html("<img src='/webapp/web/bundles/lovethatfit/site/products/tops/"+apply_prod+"' />").fadeIn();
+                });
+            
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
  
     }
@@ -171,7 +199,11 @@
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
-            $(this).addClass( "ui-state-highlight" ).html(ui.draggable);
+            $(this).fadeOut(500, function (){
+                    var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
+                    apply_prod = apply_prod + "_apply.png";
+                    $(this).html("<img src='/webapp/web/bundles/lovethatfit/site/products/bottoms/"+apply_prod+"' />").fadeIn();
+                });
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
  
     }
@@ -199,7 +231,11 @@
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
-            $(this).addClass( "ui-state-highlight" ).html(ui.draggable);
+            $(this).fadeOut(500, function (){
+                    var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
+                    apply_prod = apply_prod + "_apply.png";
+                    $(this).html("<img src='/webapp/web/bundles/lovethatfit/site/products/dress/"+apply_prod+"' />").fadeIn();
+                });
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
  
     }

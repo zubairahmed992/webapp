@@ -1353,8 +1353,9 @@ background:#f0f0f0;
 #top_dropable {
    position: absolute;
    left:0;
-   top:114px;
+   top:108px;
    text-align: center;
+   z-index: 2;
 }
 
 #bottom_dropable {
@@ -1362,18 +1363,21 @@ background:#f0f0f0;
    left:0;
    top:210px;
    text-align: center;
+   z-index: 1;
 }
 
 #full_dropable {
    position: absolute;
    left:0;
-   top:114px;
+   top:108px;
    text-align: center;
+   z-index: 3;
 }
-
-
-
 .top_active {
     border:1px dashed #87ca2e;
     display: block;
+}
+
+.show_loading {
+    background: url("../images/uploading.gif") center center no-repeat;
 }
