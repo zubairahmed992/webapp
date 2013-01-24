@@ -1367,7 +1367,7 @@ background:#f0f0f0;
 #full_dropable {
    position: absolute;
    left:0;
-   top:0;
+   top:114px;
    text-align: center;
 }
 

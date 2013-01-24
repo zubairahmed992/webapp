@@ -58,6 +58,7 @@
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="160" />
                                     <input type="hidden" class="prod_width" value="120" />
+                                    <input type="hidden" class="prod_for_dummy" value="bundles/lovethatfit/site/images/featured_img_bigger.png" />
                                 </div>
                             </div>              
                         </div>
@@ -65,29 +66,6 @@
                         <!--/prod_node--></div>
                 </li>   
 
-                <li>
-                    <div class="prod_node">
-                        <span></span>
-                        <div class="featured_box">                
-                            <div class="featured_content">
-
-                                <h3>Athletic Tops</h3>
-                                <p>All sizes Available<br />
-                                    All colors Available</p>
-                                <div class="pro_price">$29.99 - $69.99</div>
-                            </div>
-                            <div class="featured_img">
-                                <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
-                                <div class="prod_details">
-                                    <input type="hidden" class="prod_height" value="130" />
-                                    <input type="hidden" class="prod_width" value="100" />
-                                </div>
-                            </div>              
-                        </div>
-                        <span></span>
-                        <!--/prod_node--></div>
-                </li> 
-                
                 <li>
                     <div class="prod_node">
                         <span></span>
@@ -110,6 +88,29 @@
                         <span></span>
                         <!--/prod_node--></div>
                 </li> 
+                
+                <li>
+                    <div class="prod_node">
+                        <span></span>
+                        <div class="featured_box">                
+                            <div class="featured_content">
+
+                                <h3>Athletic Tops</h3>
+                                <p>All sizes Available<br />
+                                    All colors Available</p>
+                                <div class="pro_price">$29.99 - $69.99</div>
+                            </div>
+                            <div class="featured_img">
+                                <img class="prod_full" src="{{ asset('bundles/lovethatfit/site/images/featured_img.png') }}" width="63" height="108">
+                                <div class="prod_details">
+                                    <input type="hidden" class="prod_height" value="310" />
+                                    <input type="hidden" class="prod_width" value="100" />
+                                </div>
+                            </div>              
+                        </div>
+                        <span></span>
+                        <!--/prod_node--></div>
+                </li> 
 
             </ul>
             <!--.prod_sliding_area--></div>
@@ -125,8 +126,8 @@
         start:function (){
             var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
-            
-            $( "#top_dropable").removeClass("hide").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+
+        $( "#top_dropable").removeClass("hide").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
             
         },
         drag:function(){
@@ -142,25 +143,25 @@
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
-            $( this ).addClass( "ui-state-highlight" ).html(ui.draggable);
+            $(this).addClass( "ui-state-highlight" ).html(ui.draggable);
+            //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
+ 
     }
     });
     
-    
-    //////////Bottom//////////
     
     $( ".prod_wrapper li .prod_node .featured_img .prod_bottom" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
             var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
-            
-            $( "#bottom_dropable").removeClass("hide").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+
+        $( "#bottom_dropable").removeClass("hide").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
             
         },
         drag:function(){
         },
         stop:function (){
-            $( "#top_dropable").removeClass("top_active");
+            $( "#bottom_dropable").removeClass("top_active");
         }
     });
     
@@ -170,7 +171,37 @@
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
-            $( this ).addClass( "ui-state-highlight" ).html(ui.draggable);
+            $(this).addClass( "ui-state-highlight" ).html(ui.draggable);
+            //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
+ 
+    }
+    });
+    
+    
+    $( ".prod_wrapper li .prod_node .featured_img .prod_full" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+
+        $( "#full_dropable").removeClass("hide").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+            
+        },
+        drag:function(){
+        },
+        stop:function (){
+            $( "#full_dropable").removeClass("top_active");
+        }
+    });
+    
+    /// Dropable ///
+    $( "#full_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_full",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            $(this).addClass( "ui-state-highlight" ).html(ui.draggable);
+            //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
+ 
     }
     });
     
