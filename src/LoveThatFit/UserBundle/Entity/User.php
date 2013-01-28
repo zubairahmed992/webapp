@@ -18,7 +18,7 @@ class User  implements UserInterface, \Serializable{
     /**
      * Bidirectional (INVERSE SIDE)
      * 
-     * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user", cascade={"ALL"}, orphanRemoval=true)
      **/
     private $measurement;
     

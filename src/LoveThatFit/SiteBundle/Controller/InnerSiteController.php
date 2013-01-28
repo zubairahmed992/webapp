@@ -4,6 +4,7 @@ namespace LoveThatFit\SiteBundle\Controller;
 use LoveThatFit\SiteBundle\comparison;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\Brand;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,31 +24,49 @@ class InnerSiteController extends Controller {
         $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender')->setParameter('gender', $gender);
         return $this->renderList($query);
     }
-    
+    //----------------------------------- Whats New ..............
       public function productsLatestAction($gender) {
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender ORDER BY p.created_at DESC' )->setParameter('gender', $gender)->setMaxResults(20);
         return $this->renderList($query);
     }
 
+    //----------------------------------- by Brand ..............
         public function productsByBrandAction($gender, $brand_id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderBrand($gender, $brand_id);
         return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
     }
 
+    //----------------------------------- By Clothing Type ..............
         public function productsByClothingTypeAction($gender, $clothing_type_id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderClothingType($gender, $clothing_type_id);
         return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
     }
 
+    //----------------------------------- Sample Clothing Type ..............
         public function productsClothingTypeAction($gender) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findSampleClothingTypeGender($gender);
         return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
     }
-        
+
+    //----------------------------------- List Clothing Types ..............
+        public function clothingTypesAction() {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:ClothingType')->findAll();
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_clothingTypes.html.twig', array('clothing_types' => $entity));
+    }
+    
+//----------------------------------- List Brands ..............
+        public function brandsAction() {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Brand')->findAll();
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_brands.html.twig', array('brands' => $entity));
+    }
+
+//----------------------------------- Product Detail ..............        
     public function productDetailAction($id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()
@@ -93,8 +112,6 @@ class InnerSiteController extends Controller {
     private function getMeasurement($id)
     {
         $em = $this->getDoctrine()->getManager();
-        #$user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-        #return $user->getMeasurement();
         return $em->getRepository('LoveThatFitUserBundle:Measurement')->findOneByUserId($id);
         
     }

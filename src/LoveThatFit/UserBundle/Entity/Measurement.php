@@ -17,7 +17,7 @@ class Measurement {
      * Bidirectional (OWNING SIDE - FK)
      * 
      * @ORM\OneToOne(targetEntity="User", inversedBy="measurement")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user_id", onDelete="CASCADE", referencedColumnName="id")
      * */
     private $user;
 
