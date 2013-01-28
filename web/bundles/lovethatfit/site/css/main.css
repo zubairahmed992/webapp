@@ -1381,3 +1381,18 @@ background:#f0f0f0;
 .show_loading {
     background: url("../images/uploading.gif") center center no-repeat;
 }
+
+#user_dummy_img_hldr {
+    float:left;
+    background: #ffcc00;
+    width:234px;
+    height: 446px;
+    position: relative;
+    overflow: hidden;
+}
+#user_dummy_img_hldr img.user_dummy_img{
+   
+    position: relative;
+    left:-65px;
+    top:0;
+}
