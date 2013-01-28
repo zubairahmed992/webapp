@@ -14,8 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Measurement {
 
     /**
+     * Bidirectional (OWNING SIDE - FK)
+     * 
      * @ORM\OneToOne(targetEntity="User", inversedBy="measurement")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * */
     private $user;
 
@@ -41,9 +43,10 @@ class Measurement {
      *      max = "350",
      *      minMessage = "You must weight at least 0",
      *      maxMessage = "You cannot weight more than 300",
-     *      groups = {"step2"}
+     *      groups = {"registration_step_two"}
      * 
      * )
+     * @Assert\NotBlank(groups={"registration_step_two"})  
      */
     private $weight;
 
@@ -58,8 +61,9 @@ class Measurement {
      *      max = "96",
      *      minMessage = "You must be at least 20 tall",
      *      maxMessage = "You cannot taller than 96",
-     *      groups  = "step2"
+     *      groups  = "registration_step_two"
      * )      
+     * @Assert\NotBlank(groups={"registration_step_two"})  
      */
     private $height;
 
@@ -87,7 +91,8 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10 ",
-     *      maxMessage = "You cannot have more than 70"
+     *      maxMessage = "You cannot have more than 70",
+     *      groups  = "step3"
      * )
      */
     private $hip;
@@ -101,7 +106,8 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10",
-     *      maxMessage = "You cannot have more than 70"
+     *      maxMessage = "You cannot have more than 70",
+     *      groups  = "step3"
      * )
      */
     private $bust;

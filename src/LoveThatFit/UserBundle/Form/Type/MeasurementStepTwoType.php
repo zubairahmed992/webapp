@@ -18,6 +18,8 @@ class MeasurementStepTwoType extends AbstractType
     {
         return array(
             'data_class' => 'LoveThatFit\UserBundle\Entity\Measurement',
+            'cascade_validation' => true,
+            'validation_groups' => array('registration_step_two'),
         );
     }
 
