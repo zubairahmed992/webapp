@@ -40,6 +40,10 @@ $(document).ready(function(){
 //	}
 //	);	
 	
+        
+        ///--Set left column bg--///
+        $(".left_column").css("height", $(".holder").height());
+        
 	$(".slider_wrap").mousedown(function (){
 		$(".slider_wrap").css('background','#4d4d4d');
 		$(this).css('background','#9DCB38');
