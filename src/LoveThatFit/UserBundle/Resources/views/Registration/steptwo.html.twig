@@ -19,53 +19,42 @@
             <form action="{{ path('registration_step_two_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
 
-                    <div class="frm_ele">
-                        <label>First Name</label>
-    {{ form_errors(form.firstName) }}
-    {{ form_widget(form.firstName) }}
-                        </div>
-                        <div class="frm_ele">
-    <label>Last Name</label>
-    {{ form_errors(form.lastName) }}
-    {{ form_widget(form.lastName) }}
-                            </div>
-                            <div class="frm_ele">
-    {{ form_label(form.email) }}
-    
-    {% if form_errors(form.email) %}
-        {{form_errors(form.email)}}
-    {% endif %}
-                                    
-    {{ form_widget(form.email) }}
-
-                                </div>
-                    
-                    <div class="frm_ele radio_buts">
-           {{ form_row(form.gender) }}                     
-    </div>  
-
-                                
-                                    <div class="frm_ele select_inline">
-    {{ form_label(form.birthdate) }}
-    {{ form_errors(form.birthdate) }}
-
-
-                {{ form_widget(form.birthdate.month) }}
-                {{ form_widget(form.birthdate.day) }}
-                {{ form_widget(form.birthdate.year) }}
-                                        </div>
-<div class="frm_ele short_inp">
-    <label>Height</label>
-                {{ form_widget(form.measurement.height) }} <span class="fff_color">(inches)</span>
-                            </div>
-<div class="frm_ele short_inp">
-    <label>Weight</label>
-    {{ form_widget(form.measurement.weight) }} <span class="fff_color">(lbs)</span>
-                            </div>
-
-        {{ form_rest(form) }}
-
-
+            <div class="frm_ele">
+                {{ form_errors(form.firstName) }}
+                <label>First Name</label>   
+                {{ form_widget(form.firstName) }}
+            </div>
+            <div class="frm_ele">
+                {{ form_errors(form.lastName) }}
+                <label>Last Name</label>
+                {{ form_widget(form.lastName) }}
+            </div>
+            <div class="frm_ele">
+                {% if form_errors(form.email) %}
+                    {{form_errors(form.email)}}
+                {% endif %}
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="frm_ele radio_buts">
+                {{ form_row(form.gender) }}                     
+            </div>
+            <div class="frm_ele select_inline">
+                 {{ form_errors(form.birthdate) }}
+                 {{ form_label(form.birthdate) }}
+                 {{ form_widget(form.birthdate.month) }}
+                 {{ form_widget(form.birthdate.day) }}
+                 {{ form_widget(form.birthdate.year) }}
+            </div>
+            <div class="frm_ele short_inp">
+                 <label>Height</label>
+                 {{ form_widget(form.measurement.height) }} <span class="fff_color">(inches)</span>
+            </div>
+            <div class="frm_ele short_inp">
+                 <label>Weight</label>
+                 {{ form_widget(form.measurement.weight) }} <span class="fff_color">(lbs)</span>
+            </div>
+            {{ form_rest(form) }}
                                         <div class="btm_buttons row">
                                             <div class="frm_ele">
                                                 <input class="reg_next_step" type="submit" value="Next Step" />

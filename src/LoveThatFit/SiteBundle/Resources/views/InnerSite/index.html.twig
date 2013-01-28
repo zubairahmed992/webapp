@@ -169,7 +169,7 @@
             $(this).fadeOut(500, function (){
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
-                    $(this).html("<img src='/webapp/web/bundles/lovethatfit/site/products/tops/"+apply_prod+"' />").fadeIn();
+                    $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/tops/') }}"+apply_prod+"' />").fadeIn();
                 });
             
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
@@ -202,7 +202,7 @@
             $(this).fadeOut(500, function (){
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
-                    $(this).html("<img src='/webapp/web/bundles/lovethatfit/site/products/bottoms/"+apply_prod+"' />").fadeIn();
+                    $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/bottoms/') }}"+apply_prod+"' />").fadeIn();
                 });
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
  
@@ -234,7 +234,7 @@
             $(this).fadeOut(500, function (){
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
-                    $(this).html("<img src='/webapp/web/bundles/lovethatfit/site/products/dress/"+apply_prod+"' />").fadeIn();
+                    $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/dress/') }}"+apply_prod+"' />").fadeIn();
                 });
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
  
