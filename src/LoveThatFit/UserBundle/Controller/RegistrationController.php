@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Controller;
-
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Form\Type\UserType;
@@ -23,6 +23,15 @@ class RegistrationController extends Controller {
                     'form' => $form->createView()));
     }
 
+    //------------------------- Login after registration------------------------------
+    
+    public function getLoggedIn($userEntity)
+    {
+        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
+        $this->get('security.context')->setToken($token);    
+    }
+            
+    
 //--------------------------STEP-1-----------------------------------------------
       
         
@@ -47,7 +56,10 @@ class RegistrationController extends Controller {
 
             $measurement = new Measurement();
             $measurement->setUser($entity);    
-       
+            
+            //Login after registration
+            $this->getLoggedIn($entity);
+            
             $form = $this->createForm(new RegistrationStepTwoType(), $entity);
             return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                         'form' => $form->createView(),
@@ -62,9 +74,6 @@ class RegistrationController extends Controller {
 
     //--------------------------STEP-2-----------------------------------------------
    
-
-
-
     public function stepTwoCreateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
@@ -184,29 +193,16 @@ class RegistrationController extends Controller {
         fclose($fp);
         $response="Image has been updated.";
         return new Response($response);  
-                    
        
     }
     
-
     
     //------------------ Test -----------------------------
     //------------------ Test -----------------------------
     //------------------ Test -----------------------------
     
-     public function addMeasurement($id)
-    {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-            
-            $measurement = new Measurement();
-            $measurement->setWaist(45);
-            $measurement->setHeight(45);
-            $measurement->setUser($user);
-            $em->persist($measurement);
-            $em->flush();            
-    }
     
+     //------------------------render step two, Name should change to edit
     public function stepTwoRenderAction($id) {
         
        $em = $this->getDoctrine()->getManager();
@@ -219,15 +215,10 @@ class RegistrationController extends Controller {
        return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                     'form' => $form->createView(),
                     'entity' => $entity));
-    
-       
     }
 
     
-    
-    
-    
-    
+//------------------------render step three, Name should change to edit
      public function stepThreeRenderAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
@@ -241,17 +232,13 @@ class RegistrationController extends Controller {
         
         $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
         
-        
             return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                         'form' => $form->createView(),
                         'entity' => $user));
-        
     }
+
     
-    
-    
-    
-    
+    //------------------------render step four, Name should change to edit
     public function stepFourRenderAction($id) {
 
         $em = $this->getDoctrine()->getManager();
@@ -265,8 +252,7 @@ class RegistrationController extends Controller {
         
             return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                         'form' => $form->createView(),
-                        'entity' => $entity));
-        
+                        'entity' => $entity));        
     }
 
     

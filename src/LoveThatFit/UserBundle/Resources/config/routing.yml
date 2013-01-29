@@ -65,4 +65,6 @@ registration_step_four_render:
     pattern:  /registration/step_four_render/{id}
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourRender }
   
-      
+go_secure:
+    pattern:  /gosecure/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Security:goSecure }      

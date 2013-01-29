@@ -1,9 +1,12 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Controller;
-
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Response;
+
 class SecurityController extends Controller
 {
      public function loginAction()
@@ -58,5 +61,19 @@ class SecurityController extends Controller
         
             )
         );
+    }
+    public function goSecureAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userEntity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        
+        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
+        $this->get('security.context')->setToken($token);    
+        
+        $user = $token->getUser();
+
+        //return new Response($session->get(SecurityContext::USERNAME));
+        
+        return new Response($user->getUserName());
     }
 }
