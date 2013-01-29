@@ -1,12 +1,11 @@
-
-            <ul class="prod_wrapper">
-                
-                          {% for ct in clothing_types %}
-                <li>
-                    {{ct.name}}
-                </li>            
-                {% endfor %}
-                
-            </ul>
         
+            <ul class="filter filter2">
+     {% for ct in clothing_types %}
+                    <li>
+                        <a href="{{path('ajax_product_by_clothing_type',{'gender' : app.user.gender, 'clothing_type_id' : ct.id })}}">{{ct.name}}</a>
+                        <span class="arw"></span>
+                    </li>
+    {% endfor %}
+                </ul>
+
 

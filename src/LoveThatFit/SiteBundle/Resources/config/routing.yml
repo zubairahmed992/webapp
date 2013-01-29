@@ -15,7 +15,7 @@ ajax_brand_list:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:brands}
 
 ajax_clothing_type_list:
-    pattern:  /ajax/clothingTypes
+    pattern:  /ajax/clothing_types
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:clothingTypes}    
     
 ajax_product_detail:
@@ -30,7 +30,7 @@ ajax_product_by_brand:
     pattern:  /ajax/products/{gender}/brand/{brand_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByBrand}
 
-ajax_product_by_type:
+ajax_product_by_clothing_type:
     pattern:  /ajax/products/{gender}/type/{clothing_type_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByClothingType}
     

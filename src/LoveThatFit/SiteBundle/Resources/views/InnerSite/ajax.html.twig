@@ -1,4 +1,22 @@
 
-{% render 'LoveThatFitSiteBundle:InnerSite:products' with {'gender' : app.user.gender} %}
+{# render 'LoveThatFitSiteBundle:InnerSite:products' with {'gender' : app.user.gender} #}
+
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+{% block left_navigation %}
+<nav>
+    <ul>
+        <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's New</a></li>
+        <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="mnu"></span></a></li>
+        <li class="opn_link"><a href="#"><span></span>Shop by Style <span class="mnu"></span></a>
+            {% render 'LoveThatFitSiteBundle:InnerSite:clothingTypes' %}
+            </li>        
+        <li class="opn_link"><a href="#"><span></span>Shop by Brand <span class="mnu"></span></a>
+            {% render 'LoveThatFitSiteBundle:InnerSite:brands' %}
+            </li>
+        </ul>
+    </nav>
+
+{% endblock %}
+
 
 

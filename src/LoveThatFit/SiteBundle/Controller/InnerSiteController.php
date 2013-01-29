@@ -35,21 +35,21 @@ class InnerSiteController extends Controller {
         public function productsByBrandAction($gender, $brand_id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderBrand($gender, $brand_id);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
     }
 
     //----------------------------------- By Clothing Type ..............
         public function productsByClothingTypeAction($gender, $clothing_type_id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderClothingType($gender, $clothing_type_id);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
     }
 
     //----------------------------------- Sample Clothing Type ..............
         public function productsClothingTypeAction($gender) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findSampleClothingTypeGender($gender);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
     }
 
     //----------------------------------- List Clothing Types ..............
@@ -77,7 +77,7 @@ class InnerSiteController extends Controller {
             throw $this->createNotFoundException('Unable to find Product.');
         }
         
-        return $this->render('LoveThatFitSiteBundle:InnerSite:productDetail.html.twig', array('product' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_productDetail.html.twig', array('product' => $entity));
     }
     
     public function ajaxAction() {
@@ -98,7 +98,7 @@ class InnerSiteController extends Controller {
     
     private function renderList($query) {
         $entity = $query->getResult();
-        return $this->render('LoveThatFitSiteBundle:InnerSite:products.html.twig', array('products' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
     }
     
     

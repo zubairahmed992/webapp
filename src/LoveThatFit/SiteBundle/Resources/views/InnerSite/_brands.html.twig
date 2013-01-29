@@ -1,12 +1,9 @@
-
-            <ul class="prod_wrapper">
-                
-                          {% for b in brands %}
-                <li>
-                    {{b.name}}
-                </li>            
-                {% endfor %}
-                
-            </ul>
-        
+            <ul class="filter filter2">
+    {% for b in brands %}
+                    <li>
+                        <a href="{{path('ajax_product_by_brand',{'gender' : app.user.gender, 'brand_id' : b.id })}}">{{b.name}}</a>
+                        <span class="arw"></span>
+                    </li>
+    {% endfor %}
+                </ul>
 
