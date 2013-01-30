@@ -651,8 +651,14 @@ header.reg .strip_rgt {
 	padding:0 0;
 	padding-left:4px;
 	float:left;
-	width:90px;
+	width:80px;
+        margin-right: 12px;
+        margin-top:7px;
 	text-shadow: 0px 0px 8px #555;
+}
+#slider_result_photo {
+    color:#8ec73e;
+    text-shadow: 0 0 1px #444;
 }
 .step_3_hgh .site_container {
 	min-height:600px !important;
@@ -708,6 +714,9 @@ a.but_short:visited {
 	min-height:700px !important;
 }*/
 
+#slider_scale_photo {
+    margin-top:8px;
+}
 .zoom_in label {
     width:100px;
     padding:0 0 2px 8px;

@@ -63,11 +63,16 @@ $(document).ready(function(){
 
             },
             stop: function() {
-				$("#dummy_mark").removeClass("put_me_top");
+		$("#dummy_mark").removeClass("put_me_top");
             }
 		
 		});
 	$("#uploaded_photo").mousedown(function (){$("#dummy_mark").addClass("put_me_top");});
+        //$("#uploaded_photo").mouseup(function (){$("#dummy_mark").removeClass("put_me_top");});
+        $(".play_area").click(function (){$("#dummy_mark").removeClass("put_me_top");});
+        //$(".play_area").dblclick(function (){$("#dummy_mark").removeClass("put_me_top");});
+        //$("#top_layer").click(function (){$("#dummy_mark").removeClass("put_me_top");});
+        
 	$(".play_area").hover(function (){
 		
 		$("#top_layer").addClass("hide");

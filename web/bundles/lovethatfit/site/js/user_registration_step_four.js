@@ -5,9 +5,9 @@ $(document).ready(function() {
   var photo_height = $("#img_to_upload").height();
   var used = 0;
   
-  $("#slider_scale_photo").slider({ animate: true, range: "min", value: 100, min: 1, max: 600, step: 0.01, 
+  $("#slider_scale_photo").slider({ animate: true, range: "min", value: 100, min: 1, max: 200, step: 0.01, 
   slide: function( event, ui ) {
-	  $( "#slider_result_photo" ).html( ui.value);
+	  $( "#slider_result_photo" ).attr('value' , ui.value);
 	  
 	   if(used == 0)
 	   {
@@ -19,10 +19,29 @@ $(document).ready(function() {
 	  $("#img_to_upload").height(photo_height / 100 * ui.value);
   },
   change: function(event, ui) {
-  $('#hdn_photo').attr('value', ui.value);
+       $( "#slider_result_photo" ).attr('value' , ui.value);
+	  
+	   if(used == 0)
+	   {
+		   photo_width = $("#img_to_upload").width();
+		   used = 1;
+	   }
+	  
+	  $("#img_to_upload").width(photo_width / 100 * ui.value);
+	  $("#img_to_upload").height(photo_height / 100 * ui.value);
+  //$('#hdn_photo').attr('value', ui.value);
+  $( "#slider_result_photo" ).attr('value' , ui.value);
   }	
   });
     
+$( "#slider_result_photo" ).change(function (){
+  
+  $("#slider_scale_photo").slider("value", $( "#slider_result_photo" ).attr("value") );
+  
+  //alert("asd");
+  //$(".ui-slider-handle").trigger('slider:slide');
+});
+
 
     var photo_width;
 

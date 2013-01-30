@@ -171,6 +171,33 @@
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/tops/') }}"+apply_prod+"' />").fadeIn();
+                    
+                    
+                    $("#top_dropable img").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            var prod_axis = $(this).offset();
+                            //alert($(this).offset().left);
+                            if(prod_axis.left < $(this).parent().offset().left - 30 || prod_axis.left > $(this).parent().offset().left + 30 || prod_axis.top < $(this).parent().offset().top - 30 || prod_axis.top > $(this).parent().offset().top + 30){
+                                //alert("bahar");
+                                $( "#top_dropable img" ).draggable( "option", "revert", false )
+                            }
+                            else{
+                               // alert("andar");
+                               $( "#top_dropable img" ).draggable( "option", "revert", true )
+                            }
+                        },
+                        stop: function() {
+                           // alert($( "#top_dropable img" ).parent().offset().left );
+                            if($( "#top_dropable img" ).offset().left != $( "#top_dropable img" ).parent().offset().left){
+                                $( "#top_dropable img").fadeOut();
+                            }
+                           
+                        }
+                    });
+                    
+                    
                 });
             
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
@@ -206,8 +233,10 @@
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/bottoms/') }}"+apply_prod+"' />").fadeIn();
                 });
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
- 
-    }
+     },
+     out: function(event, ui){
+        alert("me");
+     }
     });
     
     
@@ -241,6 +270,9 @@
  
     }
     });
+    
+    
+    
     
     
     
