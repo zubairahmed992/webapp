@@ -146,6 +146,28 @@
 
 {% block fitting_room %}
 <script>
+    
+    //---Function to check drag limit and set revert---//
+    
+    function product_drag_limit_check(prod_type){
+        var prod_axis = $(prod_type).offset();
+
+        if(prod_axis.left < $(prod_type).parent().offset().left - 30 || prod_axis.left > $(prod_type).parent().offset().left + 30 || prod_axis.top < $(prod_type).parent().offset().top - 30 || prod_axis.top > $(prod_type).parent().offset().top + 30){
+            $( prod_type ).draggable( "option", "revert", false )
+        }
+        else{
+            $( prod_type ).draggable( "option", "revert", true )
+        }
+    }
+    
+    //---Function to check position and remove applied product---//
+    function remove_product_applied (prod_type){
+        if($( prod_type ).offset().left != $( prod_type ).parent().offset().left){
+            $( prod_type).fadeOut();
+        }
+    }
+    
+    
     $( ".prod_wrapper li .prod_node .featured_img .prod_top" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
             var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
@@ -161,6 +183,10 @@
         }
     });
     
+
+    
+    
+    
     /// Dropable ///
     $( "#top_dropable" ).droppable({
         accept: ".prod_wrapper li .prod_node .featured_img .prod_top",
@@ -173,26 +199,14 @@
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/tops/') }}"+apply_prod+"' />").fadeIn();
                     
                     
-                    $("#top_dropable img").draggable({
+                    $("#"+this.id+" img").draggable({
                         start: function(){
                         },
                         drag: function(){
-                            var prod_axis = $(this).offset();
-                            //alert($(this).offset().left);
-                            if(prod_axis.left < $(this).parent().offset().left - 30 || prod_axis.left > $(this).parent().offset().left + 30 || prod_axis.top < $(this).parent().offset().top - 30 || prod_axis.top > $(this).parent().offset().top + 30){
-                                //alert("bahar");
-                                $( "#top_dropable img" ).draggable( "option", "revert", false )
-                            }
-                            else{
-                               // alert("andar");
-                               $( "#top_dropable img" ).draggable( "option", "revert", true )
-                            }
+                            product_drag_limit_check(this);
                         },
                         stop: function() {
-                           // alert($( "#top_dropable img" ).parent().offset().left );
-                            if($( "#top_dropable img" ).offset().left != $( "#top_dropable img" ).parent().offset().left){
-                                $( "#top_dropable img").fadeOut();
-                            }
+                            remove_product_applied(this);
                            
                         }
                     });
@@ -232,10 +246,22 @@
                     apply_prod = apply_prod + "_apply.png";
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/bottoms/') }}"+apply_prod+"' />").fadeIn();
                 });
+                
+                
+                $("#"+this.id+" img").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                           
+                        }
+                    });
+                
+                
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
-     },
-     out: function(event, ui){
-        alert("me");
      }
     });
     
@@ -266,6 +292,21 @@
                     apply_prod = apply_prod + "_apply.png";
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/dress/') }}"+apply_prod+"' />").fadeIn();
                 });
+                
+                
+                $("#"+this.id+" img").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                           
+                        }
+                    });
+                
+                
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
  
     }
