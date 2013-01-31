@@ -162,7 +162,8 @@
     
     //---Function to check position and remove applied product---//
     function remove_product_applied (prod_type){
-        if($( prod_type ).offset().left != $( prod_type ).parent().offset().left){
+        //alert($( prod_type ).css("left"));
+        if($( prod_type ).css("left") != "0px" || $( prod_type ).css("top") != "0px" ){
             $( prod_type).fadeOut();
         }
     }
@@ -198,7 +199,7 @@
                     apply_prod = apply_prod + "_apply.png";
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/tops/') }}"+apply_prod+"' />").fadeIn();
                     
-                    
+
                     $("#"+this.id+" img").draggable({
                         start: function(){
                         },
@@ -245,8 +246,8 @@
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/bottoms/') }}"+apply_prod+"' />").fadeIn();
-                });
                 
+                //alert($( '#bottom_dropable' ).offset().left + "***" + $( '#bottom_dropable' ).parent().offset().left);
                 
                 $("#"+this.id+" img").draggable({
                         start: function(){
@@ -260,7 +261,7 @@
                         }
                     });
                 
-                
+               }); 
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
      }
     });
@@ -291,10 +292,8 @@
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
                     $(this).html("<img src='{{ asset('bundles/lovethatfit/site/products/dress/') }}"+apply_prod+"' />").fadeIn();
-                });
-                
-                
-                $("#"+this.id+" img").draggable({
+                    
+                    $("#"+this.id+" img").draggable({
                         start: function(){
                         },
                         drag: function(){
@@ -305,6 +304,10 @@
                            
                         }
                     });
+                });
+                
+                
+                
                 
                 
             //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);

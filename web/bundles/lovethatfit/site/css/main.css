@@ -1382,6 +1382,12 @@ background:#f0f0f0;
    text-align: center;
    z-index: 3;
 }
+
+#top_dropable img,
+#bottom_dropable img,
+#full_dropable img{
+    top:0px;
+}
 .top_active {
     border:1px dashed #87ca2e;
     display: block;
