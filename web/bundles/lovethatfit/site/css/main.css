@@ -888,7 +888,6 @@ input[type=text] {
 }
 .img_hldr {
 	text-align:center;
-	background:#ffcc00;
 	padding:4px;
 }
 #dummy_mark {
@@ -1268,6 +1267,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 .prod_sliding_area .int_fitting_room {
     float:right;
 }
+#slider_dis_canv {
+    width:254px;
+    height:522px;
+    overflow: hidden;
+}
 ul.prod_wrapper{
 	padding:0px;
 	margin:0px 0px 0px 0px;	
@@ -1334,6 +1338,7 @@ background:#f0f0f0;
    height:31px;
    position:relative;
    z-index: 56;
+   cursor: pointer;
 }
 .slider_but_btm {
    background:url(../images/bottom_nav.png) 0 0 no-repeat;
@@ -1357,12 +1362,13 @@ background:#f0f0f0;
 /*-- Fitting room + Drag/Drop --*/
 .prod_sliding_area .int_fitting_room {
     position: relative;
+    padding-top: 17px;
 }
 
 #top_dropable {
    position: absolute;
    left:0;
-   top:108px;
+   top:125px;
    text-align: center;
    z-index: 2;
 }
@@ -1370,7 +1376,7 @@ background:#f0f0f0;
 #bottom_dropable {
    position: absolute;
    left:0;
-   top:210px;
+   top:227px;
    text-align: center;
    z-index: 1;
 }
@@ -1378,15 +1384,16 @@ background:#f0f0f0;
 #full_dropable {
    position: absolute;
    left:0;
-   top:108px;
+   top:125px;
    text-align: center;
    z-index: 3;
 }
 
-#top_dropable img,
-#bottom_dropable img,
-#full_dropable img{
-    top:0px;
+#top_dropable img.curr_prod,
+#bottom_dropable img.curr_prod,
+#full_dropable img.curr_prod {
+    top:0;
+    left:0;
 }
 .top_active {
     border:1px dashed #87ca2e;
@@ -1399,15 +1406,15 @@ background:#f0f0f0;
 
 #user_dummy_img_hldr {
     float:left;
-    background: #ffcc00;
-    width:234px;
+    width:218px;
     height: 446px;
     position: relative;
+    margin-left: 8px;
     overflow: hidden;
 }
 #user_dummy_img_hldr img.user_dummy_img{
    
     position: relative;
-    left:-65px;
+    left:-73px;
     top:0;
 }
