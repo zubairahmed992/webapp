@@ -22,11 +22,11 @@
 {% block field_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
-        <ul class="error_list">
+         <div class="error_list">
             {% for error in errors %}
-                <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+               {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}
             {% endfor %}
-        </ul>
+       </div>
         {% endif %}
     {% endspaceless %}
 {% endblock field_errors %}

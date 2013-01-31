@@ -1,8 +1,5 @@
 {% extends 'LoveThatFitUserBundle::base_home_login.html.twig' %}
 {% block action_block_content %}
-{% if error %}
-<div>{{ error.message }}</div>
-{% endif %}
 <section class="action_blk lgn_blk">
     <div class="action_cnt">
         <div class="small_custom_heading">Log In</div>
@@ -18,6 +15,13 @@
                 <input id="sbmt_bnt" type="submit" value="Submit" />
             </div>
         </form>
+        {% if error %}
+        <div class="login_error" >
+        <div id="triangle-left"></div>
+        <div id="error_content">{{ error.message }}</div>
+        
+        </div>
+{% endif %}
         <ul class="row with_sep">
             <li><a href="#">forgot</a></li>
             <li><a href="#">reset</a></li>

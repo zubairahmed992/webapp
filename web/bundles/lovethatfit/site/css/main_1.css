@@ -1,0 +1,48 @@
+.login_error{
+ padding: 17px 5px 17px 5px;
+ width: 230px;
+ position: absolute;
+ top: 186px;
+ left: 325px;
+ color: #333;
+ font-size: 0.95em;
+ 
+}
+
+#triangle-left { 
+    width: 0; 
+    float:left;
+    height: 0; 
+    position: relative;
+    border-top: 20px solid transparent; 
+    border-right: 12px solid #eee; 
+    border-bottom: 20px solid transparent; 
+}
+
+#error_content{
+border-top-right-radius: 3px;
+border-bottom-right-radius: 3px;
+float:left;
+padding: 10px 8px 10px 8px;
+background: #eeeeee;
+box-shadow: 1px 0 2px #333333;
+
+}
+
+
+.lgn_blk .action_cnt {
+	padding:197px 0 28px;
+        position:relative;
+}
+
+.error_list{
+ color:#333;
+ background:#ccc;
+ font-family:arial;
+ padding: 5px;
+ font-size: 0.75em;
+ margin: -7px auto 7px auto;
+ width: 90%;
+ 
+}
+}
