@@ -32,21 +32,15 @@ class RegistrationController extends Controller {
         $this->get('security.context')->setToken($token);    
     }
     
-    //------------------------- These methods will likely to be moved somewhere on refactoring------------------------------
+    //------------------------- methods will likely to be moved somewhere on refactoring make thin controllers------------------------------
             private function isDuplicateUserName($username)
             {
-                $em = $this->getDoctrine()->getManager();
-                $entity = $em->getRepository('LoveThatFitUserBundle:User')->findByUsername($username);
-                return $entity ? true : false;                
+                return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isUserNameExist($username);                
             }
             
                private function isDuplicateEmail($id, $email)
             {
-                $em = $this->getDoctrine()->getManager();
-                $entity = $em->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
-                
-                //$entity = $em->getRepository('LoveThatFitUserBundle:User')->findByEmail($email);
-                return $entity? true : false;                
+                return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);                                          
             }
     
 //--------------------------STEP-1-----------------------------------------------
@@ -59,37 +53,36 @@ class RegistrationController extends Controller {
             $form->bind($this->getRequest());
 
             if ($form->isValid()) {
+                    //Duplicate user name check
+                if ($this->isDuplicateUserName($entity->getUsername())) {
+                    $form->get('username')->addError(new FormError('User name already taken'));
 
-                if ($this->isDuplicateUserName($entity->getUsername())){
-                 $form->get('username')->addError(new FormError('User name already taken'));
-                    //$form->addError(new FormError('User name already taken.'));
-                return $this->render('LoveThatFitUserBundle:Registration:stepone.html.twig', array(
+                    return $this->render('LoveThatFitUserBundle:Registration:stepone.html.twig', array(
                                 'form' => $form->createView(),
                                 'entity' => $entity));
-                }
-                else    {
-                $entity->setCreatedAt(new \DateTime('now'));
-                $entity->setUpdatedAt(new \DateTime('now'));
+                } else {
+                    $entity->setCreatedAt(new \DateTime('now'));
+                    $entity->setUpdatedAt(new \DateTime('now'));
 
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-                $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-                $entity->setPassword($password);
+                    $factory = $this->get('security.encoder_factory');
+                    $encoder = $factory->getEncoder($entity);
+                    $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+                    $entity->setPassword($password);
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
-                $em->flush();
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($entity);
+                    $em->flush();
 
-                $measurement = new Measurement();
-                $measurement->setUser($entity);
+                    $measurement = new Measurement();
+                    $measurement->setUser($entity);
 
-                //Login after registration
-                $this->getLoggedIn($entity);
+                    //Login after registration
+                    $this->getLoggedIn($entity);
 
-                $form = $this->createForm(new RegistrationStepTwoType(), $entity);
-                return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
-                            'form' => $form->createView(),
-                            'entity' => $entity));
+                    $form = $this->createForm(new RegistrationStepTwoType(), $entity);
+                    return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
+                                'form' => $form->createView(),
+                                'entity' => $entity));
                 }
             } else {
 
@@ -98,19 +91,17 @@ class RegistrationController extends Controller {
                             'entity' => $entity));
             }
         } catch (\Doctrine\DBAL\DBALException $e) {
-                
-            //return new Response($e->getMessage());           
-            $form->addError(new FormError('User cannot be created'));
+       
+            $form->addError(new FormError('Something went wrong.'));
             return $this->render('LoveThatFitUserBundle:Registration:stepone.html.twig', array(
-                            'form' => $form->createView(),
-                            'entity' => $entity));
-                
+                        'form' => $form->createView(),
+                        'entity' => $entity));
         }
     }
     //--------------------------STEP-2-----------------------------------------------
    
     public function stepTwoCreateAction(Request $request, $id) {
-
+             
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
@@ -118,27 +109,50 @@ class RegistrationController extends Controller {
             throw $this->createNotFoundException('Unable to find User.');
         }
       
-
-        $measurement = new Measurement(); 
-        $measurement->setUser($entity);
-                
+        $postData = $request->request->get('user');
+        $form_email = $postData['email'];
+        $exists = $this->isDuplicateEmail($id, $form_email);
+        
+        if($exists)
+        {
+            
         $form = $this->createForm(new RegistrationStepTwoType(), $entity);
         $form->bind($request);
-        
-        if ($form->isValid()) {       
-              // -------------- check for duplicate email??????????????????????????
-            //---------------------- Need to work here ------------------------
-            $em->persist($entity);            
-            $em->flush();
-
-            $measurement = $entity->getMeasurement();
-            if (!$measurement){
-                $measurement = new Measurement();
-            }
-            $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
-            return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
+        $form->get('email')->addError(new FormError('Email already exists'));
+             return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                         'form' => $form->createView(),
                         'entity' => $entity));
+        }
+        
+        
+        $measurement = new Measurement(); 
+        $measurement->setUser($entity);
+        $form = $this->createForm(new RegistrationStepTwoType(), $entity);
+        $form->bind($request);
+               
+             
+        if ($form->isValid()) {       
+              // check for duplicate email            
+            if ($this->isDuplicateEmail($id, $entity->getEmail())) {
+                $form->get('email')->addError(new FormError('Email already exists'));
+                return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
+                            'form' => $form->createView(),
+                            'entity' => $entity));
+            } else {
+                $em->persist($entity);
+                $em->flush();
+
+                $measurement = $entity->getMeasurement();
+
+                if (!$measurement) {
+                    $measurement = new Measurement();
+                }
+
+                $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
+                return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
+                            'form' => $form->createView(),
+                            'entity' => $entity));
+            }
         } else {
             return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                         'form' => $form->createView(),
@@ -293,8 +307,14 @@ class RegistrationController extends Controller {
     }
 
      public function getStepTestAction() {         
-        return new Response($this->isDuplicateEmail(47, 'farooq2@cs.com')?'true':'false');
-         //return new Response($this->isDuplicateUserName('farooq3')?'got it already':'naaaah');
+         $username='waqas0';
+         $email='farooq@cs.com';
+         $id=47;
+         $em = $this->getDoctrine()->getManager();
+         //$exists = $em->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
+         $exists = $this->isDuplicateEmail(40, 'farooq2@cs.com');
+         return new Response($exists?"true":"false");
+         
 
     }
     
