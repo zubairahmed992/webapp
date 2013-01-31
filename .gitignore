@@ -1,3 +1,4 @@
+app/config/parameters.yml
 app/bootstrap.php.cache
 app/cache/*
 app/logs/*
@@ -7,4 +8,4 @@ composer.phar
 web/uploads/ltf
 web/uploads/acme
 *.php~
-app/config/parameters.yml
+
