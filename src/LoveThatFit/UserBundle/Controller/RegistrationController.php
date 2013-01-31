@@ -101,7 +101,11 @@ class RegistrationController extends Controller {
     //--------------------------STEP-2-----------------------------------------------
    
     public function stepTwoCreateAction(Request $request, $id) {
-             
+
+        // ID should be taken from the current user, not by passing in params !!!!
+        // !!!!!!!!!!!!!!! AS
+        //$id = $this->get('security.context')->getToken()->getUser()->getId();
+        
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
@@ -109,6 +113,7 @@ class RegistrationController extends Controller {
             throw $this->createNotFoundException('Unable to find User.');
         }
       
+             // check for duplicate email ------------------------
         $postData = $request->request->get('user');
         $form_email = $postData['email'];
         $exists = $this->isDuplicateEmail($id, $form_email);
@@ -123,6 +128,7 @@ class RegistrationController extends Controller {
                         'form' => $form->createView(),
                         'entity' => $entity));
         }
+        //////////////////////////////////////////
         
         
         $measurement = new Measurement(); 
@@ -132,13 +138,7 @@ class RegistrationController extends Controller {
                
              
         if ($form->isValid()) {       
-              // check for duplicate email            
-            if ($this->isDuplicateEmail($id, $entity->getEmail())) {
-                $form->get('email')->addError(new FormError('Email already exists'));
-                return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
-                            'form' => $form->createView(),
-                            'entity' => $entity));
-            } else {
+         
                 $em->persist($entity);
                 $em->flush();
 
@@ -152,7 +152,7 @@ class RegistrationController extends Controller {
                 return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                             'form' => $form->createView(),
                             'entity' => $entity));
-            }
+            
         } else {
             return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                         'form' => $form->createView(),
@@ -226,7 +226,8 @@ class RegistrationController extends Controller {
             return new Response($response);  
         }
     }
-    //--------------------------------- for image Cropping & resizing.
+
+    //---------------------------------Step-4 Update (image Cropping & resizing)
       public function stepFourImageUpdateAction(Request $request) {
         
         $em = $this->getDoctrine()->getManager();
@@ -248,50 +249,50 @@ class RegistrationController extends Controller {
     }
     
     
-    //------------------ Test -----------------------------
-    //------------------ Test -----------------------------
-    //------------------ Test -----------------------------
     
-    
-     //------------------------render step two, Name should change to edit
-    public function stepTwoRenderAction($id) {
-        
+     //------------------------Step-2 Edit ----------------
+    public function stepTwoEditAction() {
+       $id = $this->get('security.context')->getToken()->getUser()->getId();
+       
        $em = $this->getDoctrine()->getManager();
        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-        
-       $form = $this->createForm(new UserType(), $entity);
-
-       $form = $this->createForm(new RegistrationStepTwoType(), $entity);
        
+       $form = $this->createForm(new UserType(), $entity);
+       $form = $this->createForm(new RegistrationStepTwoType(), $entity);
+    
        return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                     'form' => $form->createView(),
                     'entity' => $entity));
     }
 
     
-//------------------------render step three, Name should change to edit
-     public function stepThreeRenderAction($id) {
+//------------------------Step-3 Edit ----------------
+     public function stepThreeEditAction() {
+       
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $measurement = $user->getMeasurement();
-
         if (!$measurement) {
             $measurement = new Measurement();
             $measurement->setUser($user);
         }
         
         $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
-        
-            return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
+        return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                         'form' => $form->createView(),
                         'entity' => $user));
     }
 
     
-    //------------------------render step four, Name should change to edit
-    public function stepFourRenderAction($id) {
+    //------------------------Step-4 Edit ----------------
+    
+    public function stepFourEditAction() {
 
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
@@ -299,8 +300,7 @@ class RegistrationController extends Controller {
             throw $this->createNotFoundException('Unable to find User.');
         }
 
-        $form = $this->createForm(new RegistrationStepFourType(), $entity);
-        
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);        
         return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                     'form' => $form->createView(),
                     'entity' => $entity));        

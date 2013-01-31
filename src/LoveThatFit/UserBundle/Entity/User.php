@@ -530,5 +530,10 @@ class User  implements UserInterface, \Serializable{
         return 'uploads/ltf/users';
     }
 
-
+    public function getOriginalImageWebPath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadDir().'/'.str_replace('_ltf_user_', '_ltf_user_original_', $this->image);    
+    }
 }

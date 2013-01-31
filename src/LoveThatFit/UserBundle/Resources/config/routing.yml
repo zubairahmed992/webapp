@@ -49,21 +49,18 @@ login_check:
     
 admin_logout:
     pattern:   /logout
+        
+registration_step_two_edit:
+    pattern:  /registration/step_two_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoEdit }
     
-    
-    
-    
-registration_step_two_render:
-    pattern:  /registration/step_two_render/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoRender }
-    
-registration_step_three_render:
-    pattern:  /registration/step_three_render/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeRender }
+registration_step_three_edit:
+    pattern:  /registration/step_three_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeEdit }
 
-registration_step_four_render:
-    pattern:  /registration/step_four_render/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourRender }
+registration_step_four_edit:
+    pattern:  /registration/step_four_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
   
 go_secure:
     pattern:  /gosecure/{id}
