@@ -18,17 +18,24 @@ class InnerSiteController extends Controller {
     public function indexAction() {
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig');
     }
-
+////////////////////////////////// Product Slider /////////////////////////////////////////////////////////////////
     public function productsAction($gender) {
-        $em = $this->getDoctrine()->getManager();
+        
+        $page_number = 1;
+        $limit = 10;
+        
+        $em = $this->getDoctrine()->getManager();        
         $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender')->setParameter('gender', $gender);
-        return $this->renderList($query);
+        return $this->renderList($query, $page_number, $limit);
     }
+    
     //----------------------------------- Whats New ..............
       public function productsLatestAction($gender) {
+        $page_number = 1;
+        $limit = 10;
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender ORDER BY p.created_at DESC' )->setParameter('gender', $gender)->setMaxResults(20);
-        return $this->renderList($query);
+        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender ORDER BY p.created_at DESC' )->setParameter('gender', $gender);
+        return $this->renderList($query, $page_number, $limit);
     }
 
     //----------------------------------- by Brand ..............
@@ -36,7 +43,8 @@ class InnerSiteController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderBrand($gender, $brand_id);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
-    }
+        
+        }
 
     //----------------------------------- By Clothing Type ..............
         public function productsByClothingTypeAction($gender, $clothing_type_id) {
@@ -45,6 +53,20 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
     }
 
+        
+
+//------------------- Product Slider Render-----------
+     private function renderList($query, $page_number, $limit) {
+        
+         $query->setFirstResult($limit * ($page_number - 1));
+        $query->setMaxResults($limit);        
+        $entity = $query->getResult();        
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
+    }
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    
     //----------------------------------- Sample Clothing Type ..............
         public function productsClothingTypeAction($gender) {
         $em = $this->getDoctrine()->getManager();
@@ -52,6 +74,9 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
     }
 
+    
+    
+    
     //----------------------------------- List Clothing Types ..............
         public function clothingTypesAction() {
         $em = $this->getDoctrine()->getManager();
@@ -96,10 +121,7 @@ class InnerSiteController extends Controller {
     return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->determine()));        
     }
     
-    private function renderList($query) {
-        $entity = $query->getResult();
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
-    }
+   
     
     
     private function getProduct($id)
@@ -118,4 +140,7 @@ class InnerSiteController extends Controller {
 
 }
 
+
+
 ?>
+

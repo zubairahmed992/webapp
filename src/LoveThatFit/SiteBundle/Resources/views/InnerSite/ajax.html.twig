@@ -20,3 +20,9 @@
 
 
 
+
+{% block fitting_room %}
+{{app.user.id}}
+    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}">   
+{% endblock %}
+
