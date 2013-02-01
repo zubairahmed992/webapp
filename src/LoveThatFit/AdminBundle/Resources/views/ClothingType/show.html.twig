@@ -6,23 +6,49 @@
 
 {% block body %}
 
-<table>
-    <tbody>
+<div>      
+    <h1 style="float:left;">Clothing Type Details</h1>
+     <div class="btn_wrapper">     
+         <a href="{{ path('admin_clothing_types') }}" class="btn">back</a>
+      <a href="" class="btn">Edit</a>
+      <a href="" class="btn">Delete</a>
+      
+      </div>
+      <div class="clearfix"></div>   
+    
 
-        <tr>
-            <th>Id</th> 
-            <td>{{clothing_type.id }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{clothing_type.name }}</td>
-        </tr>
-        <tr>
-            <th>Length</th>
-            <td>{{clothing_type.target }}</td>
-        </tr>
-    </tbody>
-</table>
-<a href="{{ path('admin_clothing_types') }}">back</a>
+            <div id="detail_wrapper">      
+                <div id="p_hd">Product Detail</div>
+                    
+
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container">         
+                                <div class="row-fluid show-grid edt_span">
+                                    <div class="span8">
+                                    <div class="span3">Name</div>
+                                    <div class="span3">{{clothing_type.name }}</div>
+                                    </div>
+                                     <div class="span8">
+                                    <div class="span3">Target</div>
+                                    <div class="span3">{{clothing_type.target }}</div>
+                                    </div>
+                                     
+                                    
+                                </div>  
+                                
+                                </div> 
+                                     
+
+
+
+                                </div>      
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+                    </div> <!-- End detail_wrapper -->
+                </form>  
+                
+            </div>      
+
 {% endblock %}
 

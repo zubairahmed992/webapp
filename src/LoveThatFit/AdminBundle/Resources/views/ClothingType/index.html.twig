@@ -10,24 +10,28 @@
 
 {% block body %}
 <div class="p_listing">     
-    <h1>Clothing Types</h1>
+    <h1 style="float:left;">Clothing Types</h1>
+    <div class="btn_wrapper">     
+     <a href="{{ path('admin_clothing_type_create') }}" class="btn">Add New</a>
+      </div>
+     <div class="clearfix"></div>
 
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">
-            <div class="span1 hds">ID</div>
-            <div class="span1 hds">Name</div>
-            <div class="span1 hds">Target</div>
-            <div class="span1 hds"><a href="{{ path('admin_clothing_type_create') }}">Add New</a></div>              
+            <div class="span3 hds">ID</div>
+            <div class="span3 hds">Name</div>
+            <div class="span3 hds">Target</div>
+            <div class="span3 hds">&nbsp;</div>              
         </div>  
 
           {% for ct in clothing_types %}
 
         <div class="row-fluid show-grid">
-            <div class="span1">{{ct.Id}}</div>
-            <div class="span1">{{ct.Name}}</div>
-            <div class="span1">{{ct.Target}}</div>
-            <div class="span1">                  
+            <div class="span3">{{ct.Id}}</div>
+            <div class="span3">{{ct.Name}}</div>
+            <div class="span3">{{ct.Target}}</div>
+            <div class="span3">                  
                 <div>
                     <a href="{{ path('admin_clothing_type_show', {'id': ct.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_clothing_type_edit', {'id': ct.Id}) }}"><i class="icon-edit"></i></a>
