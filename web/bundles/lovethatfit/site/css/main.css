@@ -1341,13 +1341,29 @@ background:#f0f0f0;
    cursor: pointer;
 }
 .slider_but_btm {
-   background:url(../images/bottom_nav.png) 0 0 no-repeat;
+   /*background:url(../images/bottom_nav.png) 0 0 no-repeat;*/
    margin-top:-6px;
+   background:url(../images/bottom_nav_hover.png) 0 0 no-repeat;
 }
 .slider_but_top {
-    background:url(../images/top_nav.png) 0 0 no-repeat;
+    /*background:url(../images/top_nav.png) 0 0 no-repeat;*/
+    background:url(../images/top_nav_hover.png) 0 0 no-repeat;
     margin-bottom:-6px;
 }
+
+.disable_me_top {
+    background:url(../images/top_nav.png) 0 0 no-repeat !important;
+    margin-bottom:-6px;
+    cursor: default
+}
+.disable_me_btm {
+   background:url(../images/bottom_nav.png) 0 0 no-repeat !important;
+   margin-top:-6px;
+   cursor: default;
+}
+
+
+
 .slider_but_top:hover,
 .slider_but_top:focus,
 .slider_but_top:active {

@@ -22,7 +22,7 @@
 {% block product_slider %}
 <section class="products">
     <div class="prod_slider_hldr">
-        <div class="slider_but_top"></div>
+        <div class="slider_but_top click_able_top"></div>
         <div class="prod_sliding_area">
             <div class="int_fitting_room">
                 <div id="full_dropable" class="hide"></div>
@@ -274,7 +274,7 @@
             </ul>
             <!--.prod_sliding_area--></div>
         <!---/#dis canv---></div>
-        <div class="slider_but_btm"></div>
+        <div class="slider_but_btm click_able_btm"></div>
         <!--/.prod_slider_hldr--></div>
 </section>
 
@@ -283,15 +283,35 @@
 {% block fitting_room %}
 <script>
     
-    //--Slider--//
-var scroll_heighting = 534;
-
-    $(".slider_but_btm").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){} );
-    });
+//--Slider--//
     
-    $(".slider_but_top").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){} );
+function set_slider_buttons(){
+  if($("#slider_dis_canv").scrollTop() == 0){
+      $(".slider_but_top").removeClass("click_able_top").addClass("disable_me_top");
+      //alert("top_disabled now");
+  }
+  else {
+      $(".slider_but_top").removeClass("disable_me_top").addClass("click_able_top");
+  }
+  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 534){
+      $(".slider_but_btm").removeClass("click_able_btm").addClass("disable_me_btm");
+      //alert("bottom_disabled now");
+  }
+  else {
+      $(".slider_but_btm").removeClass("disable_me_btm").addClass("click_able_btm");
+  }
+}
+$(document).ready(function(){
+  set_slider_buttons();
+});
+var scroll_heighting = 534;
+    $(".click_able_top").click(function (){
+        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        
+    });
+    $(".click_able_btm").click(function (){
+        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        
     });
     
     
