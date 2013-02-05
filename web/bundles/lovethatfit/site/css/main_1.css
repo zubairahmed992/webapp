@@ -93,3 +93,36 @@ box-shadow: 1px 0 2px #333333;
    
     
 }
+
+.left_column nav ul li ul li a{
+	background:none;
+	font-size:90%;
+	display:block;
+	padding:0px 0 0px 20px;
+	color:#000;
+	filter:none;		
+}
+
+.left_column nav ul li ul li a{
+	background:none;
+	font-size:90%;
+	display:block;	
+	color:#000;
+	filter:none;
+        line-height: 25px;
+}
+
+.left_column nav ul li ul li a:hover{
+	background:#94c93c;
+	color:#000;
+	width:184px;
+        padding:0px 0 0px 20px;
+        line-height: 25px;
+}
+
+.left_column nav ul li.opn_link ul li a{	
+	background: none;
+	line-height:25px;
+	height:auto;
+	
+}
