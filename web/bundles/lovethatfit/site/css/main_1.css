@@ -86,8 +86,16 @@ box-shadow: 1px 0 2px #333333;
     padding: 0;
 }
 
-#hd_image{
+#hd_image_about{
    background:url(../images/about_header.png) center top no-repeat; 
+   height: 239px;
+   border-bottom: 8px solid #000000;
+   
+    
+}
+
+#hd_image_contact{
+   background:url(../images/contact_header.png) center top no-repeat; 
    height: 239px;
    border-bottom: 8px solid #000000;
    
