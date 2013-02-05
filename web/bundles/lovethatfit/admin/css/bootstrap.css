@@ -160,6 +160,7 @@ img {
   max-width: 100%;
   vertical-align: middle;
   border: 0;
+  margin-top:-15px;
   -ms-interpolation-mode: bicubic;
 }
 
@@ -5004,6 +5005,7 @@ input[type="submit"].btn.btn-mini {
 
 .pagination {
   margin: 20px 0;
+  float: right;
 }
 
 .pagination ul {
@@ -6307,7 +6309,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', end
 }
 
 .span1:last-child div{     
-    margin-top:-40px;
+    margin-top:-25px;
   }
   
   .brands .span1:last-child div{     
@@ -6330,4 +6332,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', end
 
 .span8 .span5{    
 border-bottom:1px solid #ccc !important;
+}
+
+.show-grid img{
+width:70px;
+height:60px;
+
 }
