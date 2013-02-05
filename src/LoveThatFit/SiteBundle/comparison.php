@@ -89,6 +89,7 @@ class comparison {
         $sug = $this->getDifference();
         
         foreach ($sug as $key => $value) {
+            //sendnig the body part related messages array & the difference (between body & clothing)
             $sug[$key]["msg"]=$this->getSuggestion($msg[$key], $value["diff"]);           
         }
 
@@ -100,15 +101,16 @@ class comparison {
         $prev_key = Null;
         $curr_key = Null;
         $msg=Null;
-    
+    //keys are the difference range limits 
+        
         foreach ($part as $key => $value) {
 
             $curr_key = doubleval($key);
-            
+            //current key is difference 
             if ($curr_key == $diff) {
                 $msg= $value;
                 break;
-            } elseif ($curr_key > $diff && !$prev_key) {
+            } elseif ($curr_key > $diff && !$prev_key) {//current key is greater than difference 
                 $msg= $value;
                 break;
             } elseif ($prev_key) {
@@ -124,8 +126,12 @@ class comparison {
         }
         if ($prev_key == $curr_key)
         {
-            
+            $msg= "larger than the upper most limit..";
+        }elseif ($curr_key-$diff > -3)
+        {
+            $msg= "larger than the upper most limit..";
         }
+        
             
         return $msg;
     }
@@ -138,14 +144,12 @@ class comparison {
 
     function getMessageArray() {
         return array(
-            "sku" => array(
-                "-100" => 'more than two inch bigger',
+            "sku" => array(                
                 "-2" => '2 inch short',
                 "-1" => '1 inch short',
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "100" => 'more than two inch bigger'),
+                "2" => '2 inch bigger'),
             "waist" => array(
                 "-2" => '2 inch short',
                 "-1" => '1 inch short',

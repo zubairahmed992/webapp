@@ -6,9 +6,15 @@ admin_clothing_type_show:
     pattern:  /admin/clothing_type/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:ClothingType:show }
     
+admin_clothing_type_new:
+    pattern:  /admin/clothing_type/new
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:new }
+
 admin_clothing_type_create:
     pattern:  /admin/clothing_type/create
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:new }
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:create }
+    requirements: 
+      _method: post 
     
 admin_clothing_type_edit:
     pattern:  /admin/clothing_type/{id}/edit

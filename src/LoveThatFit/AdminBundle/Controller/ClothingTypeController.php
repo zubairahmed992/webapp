@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 
 class ClothingTypeController extends Controller {
-
+//------------------------------------------------------------------------------------------
     public function indexAction() {
         $clothing_types = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ClothingType')
@@ -16,7 +16,7 @@ class ClothingTypeController extends Controller {
 
         return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types' => $clothing_types));
     }
-
+//------------------------------------------------------------------------------------------
     public function showAction($id) {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ClothingType')
@@ -29,17 +29,31 @@ class ClothingTypeController extends Controller {
         return $this->render('LoveThatFitAdminBundle:ClothingType:show.html.twig', array('clothing_type' => $entity));
     }
 
-    public function newAction(Request $request) {
+   //------------------------------------------------------------------------------------------
+    public function newAction() {
 
         $clothing_type = new ClothingType();
 
-        $form = $this->createFormBuilder($clothing_type)
+         $form = $this->createFormBuilder($clothing_type)
                 ->add('name', 'text')
                 ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
                 ->getForm();
 
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
+           return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
+                        'form' => $form->createView()));
+    }
+    
+    //------------------------------------------------------------------------------------------
+    public function createAction(Request $request)
+    {
+        $clothing_type = new ClothingType();
+
+         $form = $this->createFormBuilder($clothing_type)
+                ->add('name', 'text')
+                ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
+                ->getForm();
+        
+        $form->bind($request);
 
             if ($form->isValid()) {
 
@@ -52,12 +66,15 @@ class ClothingTypeController extends Controller {
 
                 return $this->redirect($this->generateUrl('admin_clothing_types'));
             }
-        } else {
-            return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
-                        'form' => $form->createView()));
-        }
-    }
 
+        return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
+                        'form' => $form->createView()));
+    }
+    
+    
+    
+    
+//------------------------------------------------------------------------------------------
     public function editAction($id) {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ClothingType')
@@ -71,7 +88,7 @@ class ClothingTypeController extends Controller {
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));
     }
-
+//------------------------------------------------------------------------------------------
     public function updateAction(Request $request, $id) {
         
         $em = $this->getDoctrine()->getManager();
@@ -99,7 +116,7 @@ class ClothingTypeController extends Controller {
         }
     }
     
-    
+    //------------------------------------------------------------------------------------------
     
      public function deleteAction(Request $request, $id)
     {
@@ -121,7 +138,7 @@ class ClothingTypeController extends Controller {
         return $this->redirect($this->generateUrl('admin_clothing_types'));
     }
     
-    
+    //------------------------------------------------------------------------------------------
     
      private function createDeleteForm($id)
     {
@@ -129,7 +146,7 @@ class ClothingTypeController extends Controller {
             ->add('id', 'hidden')
             ->getForm();
     }
-    
+    //------------------------------------------------------------------------------------------
     private function createEditForm($entity)
     {
         return  $this->createFormBuilder($entity)
