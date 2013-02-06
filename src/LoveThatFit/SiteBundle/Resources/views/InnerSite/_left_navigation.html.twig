@@ -1,12 +1,32 @@
 <nav>
-    <ul>
+    <ul id="accordion">
         <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's New</a></li>
         <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="mnu"></span></a></li>
-        <li><a href="#"><span></span>Shop by Style</a>
+        <li id="ulopen"><a href="#"><span></span>Shop by Style<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:brands' %}
             </li>
-            <li class="opn_link"><a href="#"><span></span>Shop by Brand <span class="mnu"></span></a>
+            <li id="ulopen2"><a href="#"><span></span>Shop by Brand<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:clothingTypes' %}                     
                 </li>
             </ul>
         </nav>
+
+<script>
+    $(document).ready(function(){
+   $("#accordion").accordion({
+              collapsible: true,
+              heightStyle: "content"
+             
+    
+});
+   
+$("#ulopen").click(function(){   
+   $("#accordion #ulopen").toggleClass("opn_link");
+    });
+    
+    $("#ulopen2").click(function(){   
+   $("#accordion #ulopen2").toggleClass("opn_link");
+    });
+});
+    
+    </script>
