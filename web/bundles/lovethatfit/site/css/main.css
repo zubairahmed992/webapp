@@ -1259,13 +1259,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 .prod_sliding_area{
 	overflow:auto;
         z-index: 50;
-        width:750px;
+        width:510px;
 }
 .prod_sliding_area .play_area_hldr {
    float: right;
 }
 .prod_sliding_area .int_fitting_room {
     float:right;
+    background:url(../images/fitting_room_bk_4.png) 0 0 no-repeat;
 }
 #slider_dis_canv {
     width:254px;
@@ -1465,4 +1466,35 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', end
 
 padding:4px 10px;
     display:none;
+}
+
+.welcome_box{
+	background: rgb(175,175,175);
+	background: -moz-linear-gradient(top, rgba(175,175,175,1) 0%, rgba(124,123,123,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(175,175,175,1)), color-stop(100%,rgba(124,123,123,1)));
+	background: -webkit-linear-gradient(top, rgba(175,175,175,1) 0%,rgba(124,123,123,1) 100%);
+	background: -o-linear-gradient(top, rgba(175,175,175,1) 0%,rgba(124,123,123,1) 100%);
+	background: -ms-linear-gradient(top, rgba(175,175,175,1) 0%,rgba(124,123,123,1) 100%);
+	background: linear-gradient(to bottom, rgba(175,175,175,1) 0%,rgba(124,123,123,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#afafaf', endColorstr='#7c7b7b',GradientType=0 );
+	border-bottom-left-radius: 5px;
+    color: #FFFFFF;
+    float: right;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 0.8em;
+    padding: 5px 0 5px 10px;
+	box-shadow:-1px 2px 3px #ccc;
+}
+
+.welcome_box a{
+	background: url("../images/logout_icon.png") no-repeat scroll center center #383839;
+    display: inline;
+    height: 12px;
+    margin-left: 10px;
+    padding: 5px 10px 5px 20px;
+    width: 12px;	
+}
+
+.welcome_box a:hover{
+	background: url("../images/logout_icon_hover.png") no-repeat scroll center center #94c93c;   	
 }
