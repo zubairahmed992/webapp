@@ -151,4 +151,43 @@ box-shadow: 1px 0 2px #333333;
 	margin:0 auto;
 	padding-top:10px;
 	margin-left:5px;	
-}		
+}
+
+.left_column nav ul li .activemenu  {
+	background:url(../images/left_menu_arrow.png) no-repeat!important;
+	width:22px!important;
+	height:40px!important;
+	float:right!important;
+	position:absolute;
+        top:0px;
+        left:219px;
+        display:none;
+        
+}
+
+.left_column nav ul li a:active  {
+	background: linear-gradient(to bottom, #CADB27 0%, #8CC640 79%) repeat scroll 0 0 transparent;
+	
+}
+
+.left_column nav ul li a:active .activemenu {
+    background:url(../images/left_menu_arrow.png) no-repeat!important;
+    width:22px!important;
+	height:40px!important;
+	float:right!important;
+	position:absolute!important;
+        top:6px!important;
+        left:219px!important;
+        display:block!important;
+}
+
+.left_column nav ul li a:active span{
+	background-image:url(../images/menu_left_green.png);
+	margin-top:-6px;	
+}
+
+.left_column nav ul li ul li {
+    list-style: none outside none;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
