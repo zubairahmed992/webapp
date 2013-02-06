@@ -111,7 +111,7 @@ class InnerSiteController extends Controller {
     
     public function compareAction($user_id, $product_id) {    
         $fit=new comparison($this->getMeasurement($user_id),  $this->getProduct($product_id));    
-        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->determine(), 'json'=>  json_encode($fit->getDifference()), 'msg'=>  json_encode($fit->getMessageArray())));        
+        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->determine()));        
     }
     
     public function determineAction($user_id, $product_id) {
