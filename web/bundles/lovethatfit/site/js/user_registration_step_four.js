@@ -102,13 +102,15 @@ function post_content_of_canvas(){
                       imageData : data,
                       id : entity_id
               }, function(data) {
-                      alert(data);
+                      //alert(data);
               });  
   		
 }
 
 function go_to_index(){
-        window.location = "../../inner_site/index";
+    
+    window.location = document.getElementById("hdn_inner_site_index_url").value;
+        //window.location = "../inner_site/index";
     }
     
 function next_button_click()
@@ -119,7 +121,7 @@ function next_button_click()
         go_to_index();
     }else{
         shift_to_canvas ();
-        setTimeout(go_to_index,'1000');
+        setTimeout(go_to_index,'3000');
     }
     
 }
