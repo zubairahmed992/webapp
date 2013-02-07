@@ -1,29 +1,44 @@
 #fitting_alerts{
-    background:#fff;
-    border-radius:10px;
-    font-size: 0.80em;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: -2px 1px 9px -1px #333333;
+    color: #484748;
     font-family: arial;
-    padding: 10px 10px 10px 10px;
+    font-size: 0.8em;
+    left: 502px;
+    padding: 10px;
     position: absolute;
-    top: 10px;
+    top: 71px;
     width: 200px;
     z-index: 2;
-    left:255px;
-    color:#484748;
 }
 
 #fitting_alerts ul{
     padding:0px 0px 0px 0px;
-    margin:0px 0px 0px 0px;
+    margin:0px 0px 0px 15px;
    
 }
 
-#fitting_alerts ul li{
-    list-style: none;
-    font-size: 0.85em;    
+#fitting_alerts ul li{   
+    font-size: 0.90em; 
+    line-height:16px;
    
 }
 
 #fitting_alerts h3{ 
- font-size: 1.1em;   
+ font-size: 1.0em; 
+ margin-top:15px;
+ margin-bottom: 3px; 
+}
+
+
+.arrow_img_alerts {
+    border-bottom: 13px solid transparent;
+    border-right: 13px solid #FFFFFF;
+    border-top: 13px solid transparent;
+    height: 0;
+    left: -13px;
+    position: absolute;
+    top: 8px;
+    width: 0;
 }
