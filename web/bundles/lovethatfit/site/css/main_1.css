@@ -49,8 +49,7 @@ box-shadow: 1px 0 2px #333333;
 .page_container {    
     font-family: Arial,Helvetica,sans-serif;
     overflow: auto;
-    padding: 0;
-    
+    padding: 0;    
 }
 
 #page_content {
@@ -108,17 +107,10 @@ box-shadow: 1px 0 2px #333333;
 	display:block;
 	padding:0px 0 0px 20px;
 	color:#000;
-	filter:none;		
-}
-
-.left_column nav ul li ul li a{
-	background:none;
-	font-size:90%;
-	display:block;	
-	color:#000;
 	filter:none;
         line-height: 25px;
 }
+
 
 .left_column nav ul li ul li a:hover{
 	background:#94c93c;
@@ -137,20 +129,6 @@ box-shadow: 1px 0 2px #333333;
 
 .left_column nav ul .opn_link ul{		
         display:block;        
-}
-
-.left_column nav ul li .filter{	
-	
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#969696), color-stop(8%,#c9c8c8), color-stop(100%,#fefefe));
-	background: -webkit-linear-gradient(top, #969696 1%,#c9c8c8 8%,#fefefe 100%);
-	background: -o-linear-gradient(top, #969696 1%,#c9c8c8 8%,#fefefe 100%);
-	background: -ms-linear-gradient(top, #969696 1%,#c9c8c8 8%,#fefefe 100%);
-	background: linear-gradient(to bottom, #969696 1%,#c9c8c8 8%,#fefefe 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#969696', endColorstr='#fefefe',GradientType=0 );	
-	width:209px;
-	margin:0 auto;
-	padding-top:10px;
-	margin-left:5px;	
 }
 
 .left_column nav ul li .activemenu  {
@@ -173,12 +151,12 @@ box-shadow: 1px 0 2px #333333;
 .left_column nav ul li a:active .activemenu {
     background:url(../images/left_menu_arrow.png) no-repeat!important;
     width:22px!important;
-	height:40px!important;
-	float:right!important;
-	position:absolute!important;
-        top:6px!important;
-        left:219px!important;
-        display:block!important;
+    height:40px!important;
+    float:right!important;
+    position:absolute!important;
+    top:6px!important;
+    left:219px!important;
+    display:block!important;
 }
 
 .left_column nav ul li a:active span{

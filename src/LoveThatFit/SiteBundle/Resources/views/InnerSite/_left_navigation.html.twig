@@ -12,23 +12,20 @@
         </nav>
 
 <script>
-    $(document).ready(function(){
-   $("#accordion").accordion({
-              collapsible: true,
-              heightStyle: "content"            
-    
+$(document).ready(function(){
+$("#accordion").accordion({
+      collapsible: true,
+      heightStyle: "content"            
 });    
 
 $("#ulopen").click(function(){ 
-     $("#accordion #ulopen2").removeClass("opn_link");
-     $("#accordion #ulopen").toggleClass("opn_link");
-   
+    $("#accordion #ulopen2").removeClass("opn_link");
+    $("#accordion #ulopen").toggleClass("opn_link");
 });
-    
-   $("#ulopen2").click(function(){  
+$("#ulopen2").click(function(){  
    $("#accordion #ulopen").removeClass("opn_link");
    $("#accordion #ulopen2").toggleClass("opn_link");
     });
 });
     
-    </script>
+</script>
