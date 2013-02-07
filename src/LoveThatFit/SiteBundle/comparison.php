@@ -11,23 +11,38 @@ class comparison {
     var $adjustment;
 
     function __construct($measurement, $outfit) {
+        
         $this->user_measurement = $measurement;
         $this->product = $outfit;
-        $this->adjustment = $this->product->getAdjustment();
+        if($this->product)
+            $this->adjustment = $this->product->getAdjustment();
+        
     }
 
 //$array = array("waist" => array("diff" => -22, "msg" => ""),"hip" => array("diff" => -1.5, "msg" => ""),"bust" => array("diff" => 0, "msg" => ""),"arm" => array("diff" => 1.5, "msg" => ""),"leg" => array("diff" => 22, "msg" => ""),"inseam" => array("diff" => 2, "msg" => ""),"back" => array("diff" => -2, "msg" => ""));
 //------------------------------------------------------------------------
-    function determine() {
+    function getFeedBackJson() {
         if (!$this->user_measurement)
             return "Measurement not found.";
 
         if (!$this->product)
             return "Product not found.";
 
-        //return json_encode($this->getSuggestionArray());
-        return $this->formatToList($this->getSuggestionArray());
+        return json_encode($this->getSuggestionArray());
+        
     }
+    
+    //------------------------------------------------------------------------
+    function getFeedBackArray() {
+        if (!$this->user_measurement)
+            return "Measurement not found.";
+
+        if (!$this->product)
+            return "Product not found.";
+
+        return $this->getSuggestionArray();
+    }
+    
 //------------------------------------------------------------------------
     private function getDifference($target) {
         switch ($target) {
@@ -109,17 +124,7 @@ class comparison {
         }
         return $msg;
     }
-private function formatToList($sug)
-{
-    $str = "<ul>";
-        foreach ($sug as $key => $value) {
-            $str = $str . "<li>";
-            $str = $str . $sug[$key]["msg"];
-            $str = $str . "</li>";
-        }
-        $str = $str . "</ul>";
-        return $str;
-}
+
 //------------------------------------------------------------------------    
     function getMessageArray() {
         return array(

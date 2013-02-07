@@ -50,16 +50,12 @@ ajax_product_ajax:
     pattern:  /ajax
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax}
 
-ajax_determine_test:
-    pattern:  /ajax/determine_test
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:determineTest}
+ajax_fitting_feedback_json:
+    pattern:  /ajax/fitting_feedback_json/{user_id}/{product_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackJSON}
 
-ajax_determine:
-    pattern:  /ajax/determine
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:determine}
+ajax_fitting_feedback_list:
+    pattern:  /ajax/fitting_feedback_list/{product_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackList}
     
-ajax_compare:
-    pattern:  /ajax/compare/{user_id}/{product_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:compare}
-
     
