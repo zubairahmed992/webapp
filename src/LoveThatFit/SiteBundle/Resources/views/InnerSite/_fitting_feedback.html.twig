@@ -1,14 +1,10 @@
-
-<h4>{{product.name}}</h4>         
-{{product.brand.name}}<br/>
-{{product.clothingType.name}}<br/>
-{{product.clothingType.target}}<br/>
-
-    <ul class="filter filter2">
-     {% for key, value in data %} 
-        <li>
-             {{key~' : '~value['msg']}}               
-        </li>
-    {% endfor %}
+<div id="{{product.clothingType.target}}_item_hldr" class="item_hldr">
+    <h3>{{product.name}}</h3>
+    <ul>
+         {% for key, value in data %} 
+       <li>{{key~' : '~value['msg']}}</li>
+         {% endfor %}
     </ul>
+<!--/.item_hldr--></div>
 
+            
