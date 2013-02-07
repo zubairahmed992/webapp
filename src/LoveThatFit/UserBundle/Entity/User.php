@@ -41,8 +41,8 @@ class User  implements UserInterface, \Serializable{
      *      @Assert\Length(
      *      min = "3",
      *      max = "50",
-     *      minMessage = "User name must be at least {{ limit }} characters length",
-     *      maxMessage = "User first name cannot be longer than than {{ limit }} characters length",
+     *      minMessage = "User name must be at least {{ limit }} characters long",
+     *      maxMessage = "User first name cannot be longer than than {{ limit }} characters long",
      *      groups={"registration_step_one"}
      * )
      *      @Assert\NotBlank(groups={"registration_step_one"})
@@ -63,8 +63,8 @@ class User  implements UserInterface, \Serializable{
      *      @Assert\Length(
      *      min = "6",
      *      max = "50",
-     *      minMessage = "Password must be at least {{ limit }} characters length",
-     *      maxMessage = "Password cannot be longer than than {{ limit }} characters length",
+     *      minMessage = "Password must be at least {{ limit }} characters long",
+     *      maxMessage = "Password cannot be longer than than {{ limit }} characters long",
      *      groups={"registration_step_one"}
      * )
      *      @Assert\NotBlank(groups={"registration_step_one"})
@@ -94,8 +94,8 @@ class User  implements UserInterface, \Serializable{
      * @Assert\Length(
      *      min = "3",
      *      max = "50",
-     *      minMessage = "First Name must be at least {{ limit }} characters length",
-     *      maxMessage = "First Name cannot be longer than than {{ limit }} characters length"     
+     *      minMessage = "First Name must be at least {{ limit }} characters long",
+     *      maxMessage = "First Name cannot be longer than than {{ limit }} characters long"     
      * )
      * @Assert\NotBlank(groups={"registration_step_two"})  
      */
@@ -109,8 +109,8 @@ class User  implements UserInterface, \Serializable{
      * @Assert\Length(
      *      min = "3",
      *      max = "50",
-     *      minMessage = "Last Name must be at least {{ limit }} characters length",
-     *      maxMessage = "Last Name cannot be longer than than {{ limit }} characters length"     
+     *      minMessage = "Last Name must be at least {{ limit }} characters long",
+     *      maxMessage = "Last Name cannot be longer than than {{ limit }} characters long"     
      * )
      * @Assert\NotBlank(groups={"registration_step_two"})  
      */
