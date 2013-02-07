@@ -1,7 +1,7 @@
 <nav>
     <ul id="accordion">
         <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's New<span class="activemenu"></span></a></li>
-        <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot</a></li>
+        <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="activemenu"></span></a></li>
         <li id="ulopen"><a href="#"><span></span>Shop by Style<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:brands' %}
             </li>
