@@ -1633,3 +1633,25 @@ padding:4px 10px;
 	margin-top:-6px;	
 }
 
+
+/*---------------------*/
+
+.upload_again_hldr {
+    text-align: right;
+    width:372px;
+    padding-top: 10px;
+    display: none;
+}
+.upload_again_hldr a,
+.upload_again_hldr a:visited {
+    font-size: 13px;
+    font-weight: bold;
+    color:#fff;
+}
+.upload_again_hldr a:hover,
+.upload_again_hldr a:active,
+.upload_again_hldr a:focus {
+    font-size: 13px;
+    font-weight: bold;
+    color:#fff;
+}

@@ -69,6 +69,7 @@ $( "#slider_result_photo" ).change(function (){
 		 
         };
         uploaded_img_obj.src = uploaded_img_src.src;
+        
     }
 
     $('#user_file').live('change', function()
@@ -78,6 +79,8 @@ $( "#slider_result_photo" ).change(function (){
         $("#play_area").removeClass("hide");
         $(".int_fitting_room").addClass("hide");
         $("#play_area").prepend('<div class="uploading_in_progress"></div>');
+        $(".input_file_hldr").css("display","none");
+        $(".upload_again_hldr").css("display","block");
         $("#frmUserImage").ajaxForm(
         {
             target: '#uploaded_photo',
@@ -120,6 +123,7 @@ function next_button_click()
     if (hd_flag=='skip'){
         go_to_index();
     }else{
+        $(".step_4 .reg_next_step").attr("value","Uploading...");
         shift_to_canvas ();
         setTimeout(go_to_index,'3000');
     }
