@@ -80,3 +80,32 @@
 .welcome_box a:hover{
    background: url("../images/logout_icon_hover.png") no-repeat scroll center center #94c93c;   	
 }
+
+#fitting_tab{
+    background: #4d4d4d;
+    border-radius:10px 10px 0px 0px;    
+    position: absolute;
+    top:5px;
+    left: 8px;
+    width:218px;
+    padding:5px 0px 5px 0px;
+    z-index: 1;
+    box-shadow: 0 1px 1px #333333;
+    
+}
+
+#fitting_tab a{
+    text-decoration: none;
+    color: #afafaf;
+    display: inline-block;
+    font-size: 0.80em;
+    width:106px;
+    text-align:center;
+    font-family: arial;   
+    
+}
+
+#fitting_tab a:first-child{
+    border-right:1px solid #afafaf;      
+    
+}
