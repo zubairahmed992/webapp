@@ -16,6 +16,8 @@
                 <div class="featured_img">
                     <img class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.WebPath)}}" width="63" height="108"/>
                 </div>
+                  
+                    <span id="url_{{p.id}}">{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}</span>
                 <span></span>
                 <!--/prod_node--></div>
     </li>            
