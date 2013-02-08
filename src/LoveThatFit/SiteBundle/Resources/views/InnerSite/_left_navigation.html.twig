@@ -1,6 +1,6 @@
 <nav>
     <ul>
-        <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's New<span class="activemenu"></span></a></li>
+        <li><a href="/webapp/web/app_dev.php/inner_site/index"><span></span>What's New<span class="activemenu"></span></a></li>
         <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="activemenu"></span></a></li>
         <li><a href="#"><span></span>Shop by Style<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:brands' %}
@@ -13,9 +13,18 @@
 
 <script>
     $(document).ready(function(){
+        
+        var curr_url = window.location.pathname;
+
+        var chk_active_url = $(".left_column nav ul li a").find("href", curr_url).parent().addClass("active");
+
+        if(chk_active_url == curr_url){
+            $(chk_active_url).parent().addClass("active");
+        }
+        
         $(".left_column nav ul li ul").parent().addClass("sub_menu");
         $(".left_column nav ul li ul").css("display","none");
-        $(".left_column nav ul li a").click(function (){
+        $(".left_column nav > ul > li > a").click(function (){
             $(".left_column nav ul li ul").slideUp().parent().removeClass("opn_link");
             var chk_curr_ele = $(this).parent().find("ul").css("display");
             if(chk_curr_ele == "none" ){
