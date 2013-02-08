@@ -123,3 +123,16 @@
 .left_column nav ul li.open_me ul {
     display:block;
 }
+
+
+.reg_blk label {
+    color: #FFFFFF;
+    display: inline-block;
+    font-family: "Century Gothic";
+    font-size: 11px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 4px;
+    vertical-align: top;
+    width: 95px;
+}
