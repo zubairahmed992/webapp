@@ -16,6 +16,7 @@ class comparison {
         $this->product = $outfit;
         if($this->product)
             $this->adjustment = $this->product->getAdjustment();
+            
         
     }
 
@@ -97,7 +98,8 @@ class comparison {
         if ($diff > 2) {
             $msg = $part['upper'];
         } elseif ($diff < -2) {
-            $msg = $part['lower'];
+            $msg = $this->adjustmentUpply($diff)? $part['adjust']:$part['lower'];
+            //$msg = $part['lower'];
         } else {
             foreach ($part as $key => $value) {
                 $curr_key = doubleval($key);
@@ -107,14 +109,14 @@ class comparison {
                         $msg = $value;
                         break;
                     } elseif ($curr_key > $diff && !$prev_key) {//current key is greater than difference 
-                        $msg = $value;
+                        $msg = $this->adjustmentUpply($diff)? $part['adjust']:$value;
                         break;
                     } elseif ($prev_key) {
                         if ($curr_key < $diff && $prev_key > $diff) {
-                            $msg = $value;
+                            $msg = $this->adjustmentUpply($diff)? $part['adjust']:$value;
                             break;
                         } elseif ($curr_key > $diff && $prev_key < $diff) {
-                            $msg = $value;
+                            $msg = $this->adjustmentUpply($diff)? $part['adjust']:$value;
                             break;
                         }
                     }
@@ -124,7 +126,18 @@ class comparison {
         }
         return $msg;
     }
+//------------------------------------------------------------------------
 
+    private function adjustmentUpply($diff)
+    {
+        if ($this->adjustment==0)
+            return false;
+        
+        if ($diff<0 && $diff + $this->adjustment >= 0)
+            return true;
+        else        
+            return false;
+    }
 //------------------------------------------------------------------------    
     function getMessageArray() {
         return array(
@@ -135,6 +148,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "waist" => array(
                 "lower" => 'crossing lower most limit',
@@ -143,6 +157,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "hip" => array(
                 "lower" => 'crossing lower most limit',
@@ -151,6 +166,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "bust" => array(
                 "lower" => 'crossing lower most limit',
@@ -159,6 +175,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "arm" => array(
                 "lower" => 'crossing lower most limit',
@@ -167,6 +184,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "leg" => array(
                 "lower" => 'crossing lower most limit',
@@ -175,6 +193,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "inseam" => array(
                 "lower" => 'crossing lower most limit',
@@ -183,6 +202,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "outseam" => array(
                 "lower" => 'crossing lower most limit',
@@ -191,6 +211,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "hem" => array(
                 "lower" => 'crossing lower most limit',
@@ -199,6 +220,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "back" => array(
                 "lower" => 'crossing lower most limit',
@@ -207,6 +229,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
             "length" => array(
                 "lower" => 'crossing lower most limit',
@@ -215,6 +238,7 @@ class comparison {
                 "0" => 'Exact fit',
                 "1" => 'One inch bigger',
                 "2" => '2 inch bigger',
+                "adjust" =>' adjustment upplied, streched & fit',
                 "upper" => 'crossing upper most limit'),
         );
     }
