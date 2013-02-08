@@ -29,7 +29,7 @@
 
                         <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
                     </div>
-                <div class="upload_again_hldr"><a href="{{ path('registration_step_four_edit') }}">Try Another Photo</div>
+                <div class="upload_again_hldr"><a href="{{ path('registration_step_four_edit') }}">Try Another Photo</a></div>
          {{ form_rest(form) }}
 
 
@@ -44,15 +44,18 @@
                     <div class="clr_bth"></div>
                     <div class="play_area_hldr">
 
-                        <div class="tip tt_arrow step_4_tip"><!--- Tootip wrapper Start  !-->
+                        <div class="tip tt_arrow step_4_tip">
+                            <!--- Tootip wrapper Start  !-->
                             <div class="grad"></div>
                             <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                <span class="arrow_top"></span>You can adjust photo by Draging & using Zoom In/Out slider. Click the button <b>Save Photo</b> when you done.<br />
+                                <span class="arrow_top"></span>
+                                <p>You can adjust photo by Draging & using Zoom In/Out slider. Click the button <b>Save Photo</b> when you done.</p>
                                 <a href="#">Watch Video</a> 
                                 <!--- Tootip content End  !--> 
                             </div>
                             <div class="grad"></div>
-                            <!--- Tootip wrapper End  !--></div>
+                            <!--- Tootip wrapper End  !-->
+                        </div>
 
                         <div class="int_fitting_room"></div>                                
                         <div id="play_area" class="play_area hide">
@@ -83,7 +86,10 @@
         <!--/.action_blk--></section>
 {% endblock %}
 {% block how_it_works_content %}
-        {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
+        <section class="cnt_btm">
+    <h3>Upload Photo</h3>
+    <p>Upload your photo here. Use the zoom feature to best fit your image into the outline.  Then save and start shopping!!</p>
+</section>
 {% endblock %}
 
 {% block bottom_left_nav %}

@@ -1,31 +1,26 @@
 <nav>
-    <ul id="accordion">
+    <ul>
         <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's New<span class="activemenu"></span></a></li>
         <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="activemenu"></span></a></li>
-        <li id="ulopen"><a href="#"><span></span>Shop by Style<span class="mnu"></span></a>
+        <li><a href="#"><span></span>Shop by Style<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:brands' %}
             </li>
-            <li id="ulopen2"><a href="#"><span></span>Shop by Brand<span class="mnu"></span></a>
+            <li><a href="#"><span></span>Shop by Brand<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:clothingTypes' %}                     
                 </li>
             </ul>
         </nav>
 
 <script>
-$(document).ready(function(){
-$("#accordion").accordion({
-      collapsible: true,
-      heightStyle: "content"            
-});    
-
-$("#ulopen").click(function(){ 
-    $("#accordion #ulopen2").removeClass("opn_link");
-    $("#accordion #ulopen").toggleClass("opn_link");
-});
-$("#ulopen2").click(function(){  
-   $("#accordion #ulopen").removeClass("opn_link");
-   $("#accordion #ulopen2").toggleClass("opn_link");
+    $(document).ready(function(){
+        $(".left_column nav ul li ul").parent().addClass("sub_menu");
+        $(".left_column nav ul li ul").css("display","none");
+        $(".left_column nav ul li a").click(function (){
+            $(".left_column nav ul li ul").slideUp().parent().removeClass("opn_link");
+            var chk_curr_ele = $(this).parent().find("ul").css("display");
+            if(chk_curr_ele == "none" ){
+                $(this).parent().find("ul").slideDown().parent().addClass("opn_link");
+            }
+        });
     });
-});
-    
 </script>

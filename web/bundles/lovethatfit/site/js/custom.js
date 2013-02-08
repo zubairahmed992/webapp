@@ -42,7 +42,7 @@ $(document).ready(function(){
 	
         
         ///--Set left column bg--///
-        $(".left_column").css("height", $(".holder").height());
+        $(".left_column").css("minHeight", $(".holder").height());
         
         
         //---Sliders active---//
