@@ -1,6 +1,6 @@
 <nav>
     <ul>
-        <li><a href="/webapp/web/app_dev.php/inner_site/index"><span></span>What's New<span class="activemenu"></span></a></li>
+        <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's New<span class="activemenu"></span></a></li>
         <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="activemenu"></span></a></li>
         <li><a href="#"><span></span>Shop by Style<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:brands' %}
@@ -13,15 +13,16 @@
 
 <script>
     $(document).ready(function(){
-        
-        var curr_url = window.location.pathname;
 
-        var chk_active_url = $(".left_column nav ul li a").find("href", curr_url).parent().addClass("active");
+////////// To apply active class on current list item /////////
 
-        if(chk_active_url == curr_url){
-            $(chk_active_url).parent().addClass("active");
-        }
+//var chk_active_url = $(".left_column nav ul li ul a").attr("href");
+        //var curr_url = window.location.pathname;
         
+       // if(chk_active_url == curr_url){
+       //     alert("asdf");
+        //}
+
         $(".left_column nav ul li ul").parent().addClass("sub_menu");
         $(".left_column nav ul li ul").css("display","none");
         $(".left_column nav > ul > li > a").click(function (){
@@ -31,5 +32,17 @@
                 $(this).parent().find("ul").slideDown().parent().addClass("opn_link");
             }
         });
+        
+        $(".left_column nav ul li a").click(
+            function (){
+                if($(this).parent().hasClass("sub_menu")){
+                    return flase;
+                }
+                else {
+                    alert("wind");
+                }
+            }
+        );
+        
     });
 </script>
