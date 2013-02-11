@@ -14,10 +14,6 @@ contact_us:
     pattern:  /contact_us
     defaults: { _controller: LoveThatFitSiteBundle:Home:contactUs}
     
-ajax_product_list:
-    pattern:  /ajax/products/{gender}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:products}
-
 ajax_brand_list:
     pattern:  /ajax/brands
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:brands}
@@ -31,24 +27,25 @@ ajax_product_detail:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productDetail}
 
 ajax_product_latest:
-    pattern:  /ajax/products/{gender}/latest
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsLatest}
+    pattern:  /ajax/products/{gender}/latest/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsLatest, page_number: 0, limit: 0}
 
 ajax_product_by_brand:
-    pattern:  /ajax/products/{gender}/brand/{brand_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByBrand}
+    pattern:  /ajax/products/{gender}/brand/{brand_id}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByBrand, page_number: 0, limit: 0}
 
 ajax_product_by_clothing_type:
-    pattern:  /ajax/products/{gender}/type/{clothing_type_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByClothingType}
+    pattern:  /ajax/products/{gender}/type/{clothing_type_id}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByClothingType, page_number: 0, limit: 0}
     
 ajax_product_type:
     pattern:  /ajax/products/{gender}/type
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsClothingType}
 
-ajax_product_ajax:
-    pattern:  /ajax
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax}
+ajax_product_list:
+    pattern:  /ajax/products/{gender}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:products, page_number: 0, limit: 0}
+
 
 ajax_fitting_feedback_json:
     pattern:  /ajax/fitting_feedback_json/{user_id}/{product_id}
@@ -58,4 +55,6 @@ ajax_fitting_feedback_list:
     pattern:  /ajax/fitting_feedback_list/{product_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackList}
     
-    
+ajax_product_ajax:
+    pattern:  /ajax
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax}

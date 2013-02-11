@@ -1,4 +1,4 @@
-
+<!--/ this templete should have the objects products, page_number, limit & row_count -->
 <ul class="prod_wrapper">
 
                           {% for p in products %}
@@ -17,7 +17,7 @@
                     <img class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.WebPath)}}" width="63" height="108"/>
                 </div>
                   
-                    <span id="url_{{p.id}}">{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}</span>
+                    <span id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}'>feedback</a></span>
                 <span></span>
                 <!--/prod_node--></div>
     </li>            

@@ -19,51 +19,37 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig');
     }
 ////////////////////////////////// Product Slider /////////////////////////////////////////////////////////////////
-    public function productsAction($gender) {
-        
-        $page_number = 1;
-        $limit = 10;
-        
+    public function productsAction($gender, $page_number=0, $limit=0) {
         $em = $this->getDoctrine()->getManager();        
-        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender')->setParameter('gender', $gender);
-        return $this->renderList($query, $page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGender($gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
     }
     
     //----------------------------------- Whats New ..............
-      public function productsLatestAction($gender) {
-        $page_number = 1;
-        $limit = 10;
+      public function productsLatestAction($gender, $page_number=0, $limit=0) {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p WHERE p.gender = :gender ORDER BY p.created_at DESC' )->setParameter('gender', $gender);
-        return $this->renderList($query, $page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
     }
 
     //----------------------------------- by Brand ..............
-        public function productsByBrandAction($gender, $brand_id) {
+        public function productsByBrandAction($gender, $brand_id, $page_number=0, $limit=0) {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderBrand($gender, $brand_id);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderBrand($gender, $brand_id, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
         
         }
 
     //----------------------------------- By Clothing Type ..............
-        public function productsByClothingTypeAction($gender, $clothing_type_id) {
+        public function productsByClothingTypeAction($gender, $clothing_type_id, $page_number=0, $limit=0) {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderClothingType($gender, $clothing_type_id);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderClothingType($gender, $clothing_type_id, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
     }
-
-        
-
-//------------------- Product Slider Render-----------
-     private function renderList($query, $page_number, $limit) {
-        
-         $query->setFirstResult($limit * ($page_number - 1));
-        $query->setMaxResults($limit);        
-        $entity = $query->getResult();        
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
-    }
-    
+//------------------------------------------- render method ----------------------------------------
+        private function renderProductTemplate($entity, $page_number, $limit){        
+            return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity, 'page_number'=>$page_number, 'limit'=> $limit, 'row_count'=>count($entity)));
+        }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     
