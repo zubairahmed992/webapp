@@ -49,7 +49,7 @@
             <div class="int_fitting_room">
                 <div id="fitting_tab">
                     <a href="{{ path('registration_step_four_edit') }}">Change Photo</a>
-                    <a href="#">Fitting Alerts</a>
+                    <a class="fitting_alert_link" href="#">Fitting Alerts</a>
                 </div>
                 <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
                 <div id="full_dropable" class="hide"></div>
@@ -330,6 +330,20 @@ function set_slider_buttons(){
 }
 $(document).ready(function(){
   set_slider_buttons();
+  
+  ///--- Fitting Alert ---///
+  
+
+            
+            $(".fitting_alert_link").toggle(
+                function () {
+                  $("#fitting_alerts").fadeIn(300);
+                },
+                function () {
+                  $("#fitting_alerts").fadeOut(300);
+                }
+              );
+
 });
 var scroll_heighting = 534;
     $(".click_able_top").click(function (){
