@@ -41,7 +41,9 @@
                 else {
                     var clicked_url = $(this).attr("href");
                     //alert(clicked_url);
-
+                        $(".left_column nav ul li a").parent().removeClass("active");
+                        $(this).parent().addClass("active");
+                        
                         $.ajax({
                         url: clicked_url,
                         cache: false,
