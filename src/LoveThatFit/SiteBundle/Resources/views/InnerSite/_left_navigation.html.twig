@@ -40,17 +40,13 @@
                 }
                 else {
                     var clicked_url = $(this).attr("href");
-                    $(".left_column nav ul li a").parent().removeClass("active");
-                    $(this).parent().addClass("active");
                     //alert(clicked_url);
-                    
-                    
-                    
-                     $.ajax({
+
+                        $.ajax({
                         url: clicked_url,
                         cache: false,
                         success: function(html){
-                        $("#slider_dis_canv").html(html).animate({scrollTop : "0px"}, 200, "swing", function (){set_slider_buttons();} );
+                        $("#slider_dis_canv").html(html).animate({scrollTop : "0px"}, 200, "swing", function (){set_slider_buttons();});
                         //$("#slider_dis_canv ul").remove();
                           
                           
