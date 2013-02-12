@@ -1226,16 +1226,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 }
 
 .left_column nav ul li ul li:hover,
-.left_column nav ul li ul li.sub_active{
+.left_column nav ul li ul li.active{
     background:#94c93c;	
 	width:195px;	
 }
 
-.left_column nav ul li ul li.sub_active{   
+.left_column nav ul li ul li.active{   
 	width:219px!important;	
 }
 
-.left_column nav ul li ul li.sub_active .arw {
+.left_column nav ul li ul li.active .arw {
 	border-bottom: 14px solid transparent;
 	border-left: 14px solid #94c93c;
 	border-top: 14px solid transparent;
@@ -1681,6 +1681,7 @@ padding:4px 10px;
     top: 71px;
     width: 200px;
     z-index: 2;
+    display: none;
 }
 
 #fitting_alerts ul{

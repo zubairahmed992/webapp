@@ -36,10 +36,32 @@
         $(".left_column nav ul li a").click(
             function (){
                 if($(this).parent().hasClass("sub_menu")){
-                    return flase;
+                    return false;
                 }
                 else {
-                    alert("wind");
+                    var clicked_url = $(this).attr("href");
+                    $(".left_column nav ul li a").parent().removeClass("active");
+                    $(this).parent().addClass("active");
+                    //alert(clicked_url);
+                    
+                    
+                    
+                     $.ajax({
+                        url: clicked_url,
+                        cache: false,
+                        success: function(html){
+                        $("#slider_dis_canv").html(html).animate({scrollTop : "0px"}, 200, "swing", function (){set_slider_buttons();} );
+                        //$("#slider_dis_canv ul").remove();
+                          
+                          
+                          
+                        }
+                      });
+                    
+                    
+                    
+                    
+                    return false;
                 }
             }
         );
