@@ -18,3 +18,7 @@ acme_hello_routes:
 acme_store_routes:
     resource: "@AcmeStoreBundle/Resources/config/routing.yml"
     prefix:   /
+
+_welcome:
+    pattern:  /
+    defaults: { _controller: LoveThatFitSiteBundle:Home:index}

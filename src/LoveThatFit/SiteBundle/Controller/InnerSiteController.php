@@ -95,9 +95,15 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
     }
     //-------------------------------------------------------------------
-    public function compareAction($user_id, $product_id) {    
-        $fit=new comparison($this->getMeasurement($user_id),  $this->getProduct($product_id));    
-        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->determine()));        
+    public function emailAction() {    
+         $message = \Swift_Message::newInstance()
+        ->setSubject('Hello Email')
+        ->setFrom('waqasmuddasir@gmail.com')
+        ->setTo('waqasmuddasir@gmail.com')
+        ->setBody('this is a test email generated: LoveThatFit email services.');
+        $this->get('mailer')->send($message);
+
+    return new Response('email sent');
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
