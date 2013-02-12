@@ -1236,9 +1236,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
 }
 
 .left_column nav ul li ul li.active .arw {
-	border-bottom: 14px solid transparent;
+	border-bottom: 12px solid transparent;
 	border-left: 14px solid #94c93c;
-	border-top: 14px solid transparent;
+	border-top: 13px solid transparent;
 	height: 0;
 	width: 0;
 	float:left;	
@@ -1754,3 +1754,48 @@ padding:4px 10px;
 .left_column nav ul li.open_me ul {
     display:block;
 }
+
+.left_column nav ul li.active a {
+    background: linear-gradient(to bottom, #CADB27 0%, #8CC640 79%) repeat scroll 0 0 transparent!important;    
+
+}
+
+.left_column nav ul li.active a span:first-child {
+    background-image: url("../images/menu_left_green.png");
+    display: inline-block;
+    float: left;
+    height: 47px;
+    left: -5px;
+    margin-top: -6px;
+    position: absolute;
+    top: 0;
+    width: 5px;
+}
+
+.left_column nav ul li.active a span:last-child {
+    background:url(../images/left_menu_arrow.png) no-repeat!important;
+    width:22px!important;
+	height:40px!important;
+	float:right!important;
+	position:absolute!important;
+        top:0px!important;
+        left:219px!important;
+        display:block!important;
+}
+
+.left_column nav ul li.active a:hover span:last-child {
+    background:url(../images/left_menu_arrow.png) no-repeat!important;
+    width:22px!important;
+	height:40px!important;
+	float:right!important;
+	position:absolute!important;
+        top:6px!important;
+        left:219px!important;
+        display:block!important;
+}
+
+.left_column nav ul li .filter li.active a{
+    background:#94C93C!important;
+    
+}
+
