@@ -42,6 +42,20 @@ class RegistrationController extends Controller {
             {
                 return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);                                          
             }
+            
+             private function sendRegistrationEmail($userEmail) {         
+         
+        $message = \Swift_Message::newInstance()
+        ->setSubject('Registration Email')
+        ->setFrom('waqasmuddasir@gmail.com')
+        ->setTo($userEmail)
+        ->setBody('Thankyou for registering with LoveThatFit. ');
+        $this->get('mailer')->send($message);
+
+        return new Response('email sent');
+         
+
+    }
     
 //--------------------------STEP-1-----------------------------------------------
       
@@ -72,11 +86,12 @@ class RegistrationController extends Controller {
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($entity);
                     $em->flush();
-
+                    
+                    // This is because the two fields (height & weight) added/moved from measurement to this step
                     $measurement = new Measurement();
                     $measurement->setUser($entity);
 
-                    //Login after registration
+                    //Login after registration, the rest of the steps are secured for logged In users access only
                     $this->getLoggedIn($entity);
 
                     $form = $this->createForm(new RegistrationStepTwoType(), $entity);
@@ -108,7 +123,8 @@ class RegistrationController extends Controller {
         
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+        $is_new_user=$entity->getEmail()?true:false;    
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -141,7 +157,11 @@ class RegistrationController extends Controller {
          
                 $em->persist($entity);
                 $em->flush();
-
+                //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                //send registration email ....
+                //$this->sendRegistrationEmail($entity->getEmail());
+                //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                
                 $measurement = $entity->getMeasurement();
 
                 if (!$measurement) {
@@ -317,6 +337,8 @@ class RegistrationController extends Controller {
          
 
     }
+    
+   
     
     
     
