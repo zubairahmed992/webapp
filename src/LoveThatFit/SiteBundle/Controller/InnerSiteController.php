@@ -1,7 +1,8 @@
 <?php
 
 namespace LoveThatFit\SiteBundle\Controller;
-use LoveThatFit\SiteBundle\comparison;
+use Symfony\Component\Yaml\Dumper;
+use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\Brand;
@@ -96,14 +97,15 @@ class InnerSiteController extends Controller {
     }
     //-------------------------------------------------------------------
     public function emailAction() {    
-         $message = \Swift_Message::newInstance()
-        ->setSubject('Hello Email')
-        ->setFrom('waqasmuddasir@gmail.com')
-        ->setTo('waqasmuddasir@gmail.com')
-        ->setBody('this is a test email generated: LoveThatFit email services.');
-        $this->get('mailer')->send($message);
-
-    return new Response('email sent');
+        // $message = \Swift_Message::newInstance()
+        //->setSubject('Hello Email')
+        //->setFrom('waqasmuddasir@gmail.com')
+        //->setTo(array('waqasmuddasir@gmail.com' => 'Receiver Name'))
+        //->setBody('this is a test email generated: LoveThatFit email services to test the default address.');
+        //$this->get('mailer')->send($message, $failures);
+        $dumper = new Dumper();
+        $yaml = $dumper->dump(Comparison::getMessageArray());
+        return new Response($yaml);
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
@@ -120,7 +122,7 @@ class InnerSiteController extends Controller {
         if (!$measurement)
             return new Response("Measurement not found!");
          
-        $fit = new comparison($measurement, $product);
+        $fit = new Comparison($measurement, $product);
     return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->getFeedBackJson()));        
     }
     //-------------------------------------------------------------------
@@ -138,7 +140,7 @@ class InnerSiteController extends Controller {
         if (!$measurement)
             return new Response("Measurement not found!");
          
-        $fit = new comparison($measurement, $product);
+        $fit = new Comparison($measurement, $product);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', array('product' => $product, 'data' => $fit->getFeedBackArray()));        
     }
     

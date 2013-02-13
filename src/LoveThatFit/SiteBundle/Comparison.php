@@ -3,8 +3,11 @@
 namespace LoveThatFit\SiteBundle;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
+use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
 
-class comparison {
+class Comparison {
 
     var $user_measurement;
     var $product;
@@ -80,7 +83,7 @@ class comparison {
 //------------------------------------------------------------------------
     private function getSuggestionArray() {
 
-        $msg = $this->getMessageArray();
+        $msg = self::getMessageArray();
         $sug = $this->getDifference($this->product->getClothingType()->getTarget());
 
         foreach ($sug as $key => $value) {
@@ -139,108 +142,11 @@ class comparison {
             return false;
     }
 //------------------------------------------------------------------------    
-    function getMessageArray() {
-        return array(
-            "sku" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "waist" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "hip" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "bust" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "arm" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "leg" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "inseam" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "outseam" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "hem" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "back" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-            "length" => array(
-                "lower" => 'crossing lower most limit',
-                "-2" => '2 inch short',
-                "-1" => '1 inch short',
-                "0" => 'Exact fit',
-                "1" => 'One inch bigger',
-                "2" => '2 inch bigger',
-                "adjust" =>' adjustment upplied, streched & fit',
-                "upper" => 'crossing upper most limit'),
-        );
+    static function getMessageArray() {
+        $yaml = new Parser();
+        $value = $yaml->parse(file_get_contents('../app/config/fitting_feedback.yml'));
+        return $value;
+        
     }
 
 }
