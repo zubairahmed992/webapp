@@ -97,15 +97,13 @@ class InnerSiteController extends Controller {
     }
     //-------------------------------------------------------------------
     public function emailAction() {    
-        // $message = \Swift_Message::newInstance()
-        //->setSubject('Hello Email')
-        //->setFrom('waqasmuddasir@gmail.com')
-        //->setTo(array('waqasmuddasir@gmail.com' => 'Receiver Name'))
-        //->setBody('this is a test email generated: LoveThatFit email services to test the default address.');
-        //$this->get('mailer')->send($message, $failures);
-        $dumper = new Dumper();
-        $yaml = $dumper->dump(Comparison::getMessageArray());
-        return new Response($yaml);
+         $message = \Swift_Message::newInstance()
+        ->setSubject('Hello Email')
+        ->setFrom('waqasmuddasir@gmail.com')
+        ->setTo(array('waqasmuddasir@gmail.com' => 'Receiver Name'))
+        ->setBody('this is a test email generated: LoveThatFit email services to test the default address.');
+        $this->get('mailer')->send($message, $failures);       
+        return new Response("yupeeee!");
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
