@@ -158,6 +158,20 @@ class User  implements UserInterface, \Serializable{
      */
     public $file;
 
+      /**
+     * @var string $authToken
+     *
+     * @ORM\Column(name="auth_Token", type="string", length=50, nullable=true)
+     * 
+     */
+    private $authToken;
+    
+    /**
+     * @var dateTime $authTokenCreatedAt
+     *
+     * @ORM\Column(name="auth_token_created_at", type="datetime", nullable=true)
+     */
+    private $authTokenCreatedAt;
     
     /**
      * Get id
@@ -392,6 +406,52 @@ class User  implements UserInterface, \Serializable{
     public function getUpdatedAt() {
         return $this->updatedAt;
     }
+
+ /**
+     * Get authToken
+     *
+     * @return string 
+     */
+    public function getAuthToken() {
+        return $this->authToken;
+    }
+
+/**
+     * Set authToken
+     *
+     * @param string $authToken
+     * @return User
+     */
+    public function setAuthToken($authToken) {
+        $this->authToken = $authToken;
+
+        return $this;
+    }
+
+    
+      /**
+     * Set authTokenCreatedAt
+     *
+     * @param datetime $authTokenCreatedAt
+     * @return User
+     */
+    public function setAuthTokenCreatedAt(\dateTime $authTokenCreatedAt) {
+        $this->authTokenCreatedAt = $authTokenCreatedAt;
+
+        return $this;
+    }
+
+
+
+/**
+     * Get authTokenCreatedAt
+     *
+     * @return datetime 
+     */
+    public function getAuthTokenCreatedAt() {
+        return $this->authTokenCreatedAt;
+    }
+
 
 
 //---------------------------------------  implement the UserInterface

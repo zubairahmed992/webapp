@@ -46,7 +46,16 @@ login:
 
 login_check:
     pattern:   /login_check
-    
+
+forgot_password:
+    pattern:   /forgot_password
+    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPassword }
+
+reset_password:
+    pattern:   /reset_password
+    defaults:  { _controller: LoveThatFitUserBundle:Security:resetPassword }
+
+
 admin_logout:
     pattern:   /logout
         
