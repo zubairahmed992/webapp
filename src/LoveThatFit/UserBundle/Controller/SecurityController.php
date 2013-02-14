@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Controller;
-
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
 
 class SecurityController extends Controller {
 
@@ -115,12 +116,12 @@ class SecurityController extends Controller {
     }
 
 //---------------------------------------------------------------------------------
-    public function resetPasswordAction($email_auth_token) {
+    public function resetPasswordAuthTokenAction($email_auth_token) {
         
           $em = $this->getDoctrine()->getManager();
-          return new Response($email_auth_token);
+          
                 $_user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByAuthToken($email_auth_token);
-            
+                
                 if ($_user) {
                       $defaultData = array('message' => 'Enter your email address');
         $form = $this->createFormBuilder($defaultData)
@@ -135,25 +136,85 @@ class SecurityController extends Controller {
                     'form' => $form->createView(), 'entity'=>$_user));
                 }
  else {
-        return $this->render('LoveThatFitUserBundle:Security:login.html.twig', array(
-                    'form' => $form->createView()));
+      return $this->redirect($this->generateUrl('login'));
+        
  }
       
     }
 
     //---------------------------------------------------------------------------------
    
+    
+        
+    public function resetPasswordAction(Request $request, $id) {
+        
+        $defaultData = array('message' => 'Enter your email address');
+        $form = $this->createFormBuilder($defaultData)
+                ->add('password', 'repeated', array(
+                    'first_name' => 'password',
+                    'second_name' => 'confirm',
+                    'type' => 'password',
+                    'invalid_message' => 'The password fields must match.',
+                ))
+                ->getForm();
+        
+        
+        try {
+            
+                    $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
+        if (!$entity){
+            throw $this->createNotFoundException('Authentication expired or link not found.');
+        }
+            
+            //$form = $this->createForm(new UserPasswordReset());
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                
+                    //$entity->setUpdatedAt(new \DateTime('now'));
+
+                    $factory = $this->get('security.encoder_factory');
+                    $encoder = $factory->getEncoder($entity);
+                    $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+                    $entity->setPassword($password);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($entity);
+                    $em->flush();
+                    
+                    
+                    return $this->render('LoveThatFitUserBundle:Security:passwordReset.html.twig', array(
+                    'form' => $form->createView(), 
+                        'entity'=>$entity));
+                
+            } else {
+                
+                return $this->render('LoveThatFitUserBundle:Security:passwordReset.html.twig', array(
+                    'form' => $form->createView(), 'entity'=>$entity));
+            }
+        } catch (\Doctrine\DBAL\DBALException $e) {
+       
+            $form->addError(new FormError('Something went wrong.'));
+            return $this->render('LoveThatFitUserBundle:Security:passwordReset.html.twig', array(
+                    'form' => $form->createView(), 'entity'=>$entity));
+        }
+    }
+    
+//----------------------------------------------------------------------
     private function sendResetPasswordLinkEmail($_user) {
 
         $message = \Swift_Message::newInstance()
                 ->setSubject('password reset')
                 ->setFrom('waqasmuddasir@gmail.com')
                 ->setTo($_user->getEmail())
-                ->setBody("<a href='http://lovethatfit.com/resetpassword/".$_user->getAuthToken()."'>Rest Password</a>");
+                ->setBody("<a href='http://lovethatfit.com/reset_password_auth_token/".$_user->getAuthToken()."'>Rest Password</a>");
         $this->get('mailer')->send($message);
 
         return new Response('email sent');
     }
+    
+    
 
 }
