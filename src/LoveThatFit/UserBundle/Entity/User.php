@@ -161,7 +161,7 @@ class User  implements UserInterface, \Serializable{
       /**
      * @var string $authToken
      *
-     * @ORM\Column(name="auth_Token", type="string", length=50, nullable=true)
+     * @ORM\Column(name="auth_token", type="string", length=50, nullable=true)
      * 
      */
     private $authToken;
@@ -538,8 +538,17 @@ class User  implements UserInterface, \Serializable{
     {
         return $this->measurement;
     }
+    //--------------------- Public methods --------------------------
     
-      //-------------------------------------------------
+    public function generateAuthenticationToken()
+    {
+        $this->authTokenCreatedAt= new \DateTime('now');
+        $this->authToken = md5($this->salt.$this->email.$this->authTokenCreatedAt->format('r'));
+        return $this->authToken;
+    }
+
+
+    //-------------------------------------------------
     //-------------- Image Upload ---------------------
     //-------------------------------------------------
     

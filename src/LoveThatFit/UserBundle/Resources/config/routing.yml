@@ -52,7 +52,7 @@ forgot_password:
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPassword }
 
 reset_password:
-    pattern:   /reset_password
+    pattern:   /reset_password/{email_auth_token}
     defaults:  { _controller: LoveThatFitUserBundle:Security:resetPassword }
 
 

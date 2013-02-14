@@ -13,6 +13,10 @@ class UserRepository extends EntityRepository
         return $this->findOneBy(array('email' => $email));
     }
     
+    public function loadUserByAuthToken($auth_token) {
+        return $this->findOneBy(array('authToken' => $auth_token));
+    }
+    
     public function isDuplicateEmail($id, $email) {
         try {
 
