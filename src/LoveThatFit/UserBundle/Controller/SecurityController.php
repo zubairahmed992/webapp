@@ -102,7 +102,8 @@ class SecurityController extends Controller {
                     $em->flush();
                     //emailing the link---------????? Refine~~~~~~~~
                     //$this->sendResetPasswordLinkEmail($_user);
-                    $defaultData = "Email has been sent with reset password link..";
+                    $link = $this->generateUrl('reset_password_auth_token', array('email_auth_token' => $_user->getAuthToken()));
+                    $defaultData = "Email has been sent with reset password link..<a href='".$link."'>reset</a>";
                 } else {
                     $defaultData = "email address not found..";
                 }
@@ -158,7 +159,6 @@ class SecurityController extends Controller {
                 ))
                 ->getForm();
         
-        
         try {
             
                     $em = $this->getDoctrine()->getManager();
@@ -167,17 +167,18 @@ class SecurityController extends Controller {
         if (!$entity){
             throw $this->createNotFoundException('Authentication expired or link not found.');
         }
-            
-            //$form = $this->createForm(new UserPasswordReset());
             $form->bind($request);
 
             if ($form->isValid()) {
+                    $data = $form->getData();
                 
-                    //$entity->setUpdatedAt(new \DateTime('now'));
+                    $entity->setUpdatedAt(new \DateTime('now'));
 
                     $factory = $this->get('security.encoder_factory');
                     $encoder = $factory->getEncoder($entity);
-                    $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+
+                    $password = $encoder->encodePassword($data['password'], $entity->getSalt());
+                    
                     $entity->setPassword($password);
 
                     $em = $this->getDoctrine()->getManager();
@@ -209,7 +210,7 @@ class SecurityController extends Controller {
                 ->setSubject('password reset')
                 ->setFrom('waqasmuddasir@gmail.com')
                 ->setTo($_user->getEmail())
-                ->setBody("<a href='http://lovethatfit.com/reset_password_auth_token/".$_user->getAuthToken()."'>Rest Password</a>");
+                ->setBody("<a href='http://lovethatfit.com/reset_password_auth_token/".$_user->getAuthToken()."'>Reset Password</a>");
         $this->get('mailer')->send($message);
 
         return new Response('email sent');
