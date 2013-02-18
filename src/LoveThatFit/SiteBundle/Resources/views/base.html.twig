@@ -15,11 +15,13 @@
     <body>
       <div class="full_wrapper">
         <div class="holder">
+            {%if app.user %}
             <div class="welcome_box">
                 <div>Welcome: {{app.user.username}}
                     </div>
                 <a alt="Logout" title="Logout" href="{{ path('admin_logout') }}"></a>
             </div>
+                {% endif %}
             <section class="site_container">
                 <div class="left_column">
                     <div class="logo">

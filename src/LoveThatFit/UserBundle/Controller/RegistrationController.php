@@ -325,21 +325,85 @@ class RegistrationController extends Controller {
                     'form' => $form->createView(),
                     'entity' => $entity));        
     }
-
-     public function getStepTestAction() {         
-         $username='waqas0';
-         $email='farooq@cs.com';
-         $id=47;
-         $em = $this->getDoctrine()->getManager();
-         //$exists = $em->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
-         $exists = $this->isDuplicateEmail(40, 'farooq2@cs.com');
-         return new Response($exists?"true":"false");
+     
+   //------------------- Reset Password ----------------------------
+    
+      public function passwordResetFormAction() {
+        
+          $id = $this->get('security.context')->getToken()->getUser()->getId();
+        
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);        
+            
+                      $defaultData = array('message' => 'Enter your email address');
+        $form = $this->createFormBuilder($defaultData)
+                ->add('password', 'repeated', array(
+                    'first_name' => 'password',
+                    'second_name' => 'confirm',
+                    'type' => 'password',
+                    'invalid_message' => 'The password fields must match.',
+                ))
+                ->getForm();
+        return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
+                    'form' => $form->createView(), 'entity'=>$entity));
          
-
+ 
+      
     }
-    
-   
-    
+    //---------------------------------------------------------------------------------
+   public function passwordUpdateAction(Request $request, $id) {
+        
+        $defaultData = array('message' => 'Update password');
+        $form = $this->createFormBuilder($defaultData)
+                ->add('password', 'repeated', array(
+                    'first_name' => 'password',
+                    'second_name' => 'confirm',
+                    'type' => 'password',
+                    'invalid_message' => 'The password fields must match.',
+                ))
+                ->getForm();
+        
+        try {
+            
+                    $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+        if (!$entity){
+            throw $this->createNotFoundException('Authentication expired or link not found.');
+        }
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                    $data = $form->getData();
+                
+                    $entity->setUpdatedAt(new \DateTime('now'));
+
+                    $factory = $this->get('security.encoder_factory');
+                    $encoder = $factory->getEncoder($entity);
+
+                    $password = $encoder->encodePassword($data['password'], $entity->getSalt());
+                    
+                    $entity->setPassword($password);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($entity);
+                    $em->flush();
+                                        
+                    return $this->render('LoveThatFitUserBundle:Registration:message.html.twig', array(
+                    'message'=>'You password has been changed.'));
+                
+            } else {
+                
+                return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
+                    'form' => $form->createView()));
+            }
+        } catch (\Doctrine\DBAL\DBALException $e) {
+       
+            $form->addError(new FormError('Something went wrong.'));
+            return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
+                    'form' => $form->createView()));
+        }
+    }
     
     
     

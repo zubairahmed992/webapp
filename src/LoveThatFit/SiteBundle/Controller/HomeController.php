@@ -14,11 +14,11 @@ class HomeController extends Controller {
         return $this->render('LoveThatFitSiteBundle:Home:index.html.twig');
     }
 public function aboutUsAction() {
-        return $this->render('LoveThatFitSiteBundle:Home:after_login_about_us.html.twig');
+        return $this->render('LoveThatFitSiteBundle:Home:about_us.html.twig');
     }
 
 public function contactUsAction() {
-        return $this->render('LoveThatFitSiteBundle:Home:after_login_contact_us.html.twig');
+        return $this->render('LoveThatFitSiteBundle:Home:contact_us.html.twig');
     }    
     
     

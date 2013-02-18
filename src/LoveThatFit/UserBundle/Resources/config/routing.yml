@@ -1,30 +1,8 @@
+#------------------------------- Registration Steps ---------------------------------------------------------
 
-registration_step_four_image_update:
-    pattern:  /registration/step_four_image_update
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourImageUpdate }
-    
-registration_step_four_create:
-    pattern:  /registration/step_four_create/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }
-    requirements: 
-          _method: post 
-      
-registration_step_three_create:
-    pattern:  /registration/step_three_create/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeCreate }
-    requirements: 
-          _method: post 
-
-registration_step_test:
-    pattern:  /registration/step_test
-    defaults: { _controller: LoveThatFitUserBundle:Registration:getStepTest }
-
-
-registration_step_two_create:
-    pattern:  /registration/step_two_create/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoCreate }
-    requirements: 
-      _method: post 
+registration_step_one:
+    pattern:  /registration/step_one
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepOne }
 
 registration_step_one_create:
     pattern:  /registration/step_one_create
@@ -32,9 +10,45 @@ registration_step_one_create:
     requirements: 
       _method: post 
 
-registration_step_one:
-    pattern:  /registration/step_one
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepOne }
+registration_step_two_create:
+    pattern:  /registration/step_two_create/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoCreate }
+    requirements: 
+      _method: post 
+
+registration_step_three_create:
+    pattern:  /registration/step_three_create/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeCreate }
+    requirements: 
+          _method: post 
+
+registration_step_four_create:
+    pattern:  /registration/step_four_create/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }
+    requirements: 
+          _method: post 
+
+registration_step_four_image_update:
+    pattern:  /registration/step_four_image_update
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourImageUpdate }
+
+
+#-------------------------------  Registration Edit Steps ---------------------------------------------------------
+
+registration_step_two_edit:
+    pattern:  /registration/step_two_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoEdit }
+    
+registration_step_three_edit:
+    pattern:  /registration/step_three_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeEdit }
+
+registration_step_four_edit:
+    pattern:  /registration/step_four_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
+
+
+#---------------------------------------------- Login ------------------------------------------
 
 admin_login:
     pattern:   /admin/login
@@ -47,34 +61,35 @@ login:
 login_check:
     pattern:   /login_check
 
-forgot_password:
-    pattern:   /forgot_password
-    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPassword }
-
-reset_password_auth_token:
-    pattern:   /reset_password_auth_token/{email_auth_token}
-    defaults:  { _controller: LoveThatFitUserBundle:Security:resetPasswordAuthToken }
-
-reset_password:
-    pattern:   /reset_password/{id}
-    defaults:  { _controller: LoveThatFitUserBundle:Security:resetPassword }
-
-
 admin_logout:
     pattern:   /logout
-        
-registration_step_two_edit:
-    pattern:  /registration/step_two_edit
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoEdit }
-    
-registration_step_three_edit:
-    pattern:  /registration/step_three_edit
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeEdit }
 
-registration_step_four_edit:
-    pattern:  /registration/step_four_edit
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
-  
+#----------------------------------------------- Password Reset -----------------------------------------
+
+forgot_password_form:
+    pattern:   /forgot_password_form
+    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordForm }
+
+forgot_password_reset_form:
+    pattern:   /forgot_password_reset_form/{email_auth_token}
+    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordResetForm }
+
+forgot_password_update:
+    pattern:   /forgot_password_update/{id}
+    defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdate }
+
+password_reset_form:
+    pattern:   /password_reset_form
+    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordResetForm }
+
+password_update:
+    pattern:   /password_update/{id}
+    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordUpdate }
+
+
+#----------------------------------------  Dev/Testing ------------------------------------------------  
 go_secure:
     pattern:  /gosecure/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Security:goSecure }      
+    defaults: { _controller: LoveThatFitUserBundle:Security:goSecure }     
+    
+    

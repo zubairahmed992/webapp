@@ -77,8 +77,11 @@ class SecurityController extends Controller {
         return new Response($user->getUserName());
     }
 
-//---------------------------------------------------------------------------------
-    public function forgotPasswordAction() {
+    
+//---------------------------------- Forgot Password -----------------------------------------------
+    
+    
+    public function forgotPasswordFormAction() {
         
         $defaultData = array('message' => 'Enter your email address');
         $form = $this->createFormBuilder($defaultData)
@@ -102,22 +105,26 @@ class SecurityController extends Controller {
                     $em->flush();
                     //emailing the link---------????? Refine~~~~~~~~
                     //$this->sendResetPasswordLinkEmail($_user);
-                    $link = $this->generateUrl('reset_password_auth_token', array('email_auth_token' => $_user->getAuthToken()));
-                    $defaultData = "Email has been sent with reset password link..<a href='".$link."'>reset</a>";
+                    $link = $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
+                    $defaultData = " Email has been sent with reset password link to " . $_user->getEmail() . " code is: ". $_user->getAuthToken();
+                    
+                    return $this->render('LoveThatFitSiteBundle:Home:home_message.html.twig', array(
+                    "message" => $defaultData));
+                    
                 } else {
                     $defaultData = "email address not found..";
                 }
             }
-            return $this->render('LoveThatFitUserBundle:Security:forgotPassword.html.twig', array(
+            return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(
                         'form' => $form->createView(), "defaultData" => $defaultData));
         }
 
-        return $this->render('LoveThatFitUserBundle:Security:forgotPassword.html.twig', array(
+        return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(
                     'form' => $form->createView()));
     }
 
 //---------------------------------------------------------------------------------
-    public function resetPasswordAuthTokenAction($email_auth_token) {
+    public function forgotPasswordResetFormAction($email_auth_token) {
         
           $em = $this->getDoctrine()->getManager();
           
@@ -133,7 +140,7 @@ class SecurityController extends Controller {
                     'invalid_message' => 'The password fields must match.',
                 ))
                 ->getForm();
-        return $this->render('LoveThatFitUserBundle:Security:passwordReset.html.twig', array(
+        return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetForm.html.twig', array(
                     'form' => $form->createView(), 'entity'=>$_user));
                 }
  else {
@@ -147,7 +154,7 @@ class SecurityController extends Controller {
    
     
         
-    public function resetPasswordAction(Request $request, $id) {
+    public function forgotPasswordUpdateAction(Request $request, $id) {
         
         $defaultData = array('message' => 'Enter your email address');
         $form = $this->createFormBuilder($defaultData)
@@ -185,20 +192,20 @@ class SecurityController extends Controller {
                     $em->persist($entity);
                     $em->flush();
                     
+                    $defaultData = " Your Password has been changed, please login with the new password.." ;
                     
-                    return $this->render('LoveThatFitUserBundle:Security:passwordReset.html.twig', array(
-                    'form' => $form->createView(), 
-                        'entity'=>$entity));
+                    return $this->render('LoveThatFitSiteBundle:Home:message.html.twig', array(
+                    "message" => $defaultData));
                 
             } else {
                 
-                return $this->render('LoveThatFitUserBundle:Security:passwordReset.html.twig', array(
+                return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetForm.html.twig', array(
                     'form' => $form->createView(), 'entity'=>$entity));
             }
         } catch (\Doctrine\DBAL\DBALException $e) {
        
             $form->addError(new FormError('Something went wrong.'));
-            return $this->render('LoveThatFitUserBundle:Security:passwordReset.html.twig', array(
+            return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetForm.html.twig', array(
                     'form' => $form->createView(), 'entity'=>$entity));
         }
     }
