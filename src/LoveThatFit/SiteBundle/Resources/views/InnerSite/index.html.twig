@@ -66,8 +66,13 @@
                 </div>
                 <!--/.play_area_hldr--></div>
 
-
+          <div class="loading_now">
+              <div class="loading_inner">
+                  <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}">
+              </div>
+          </div>
           <div id="slider_dis_canv">
+            
             <ul class="prod_wrapper">   
                 <li>
                     <div class="prod_node">
@@ -151,7 +156,7 @@
                                 <div class="pro_price">$29.99 - $69.99</div>
                             </div>
                             <div class="featured_img">
-                                <img class="prod_full" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
+                                <img class="prod_dress" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="310" />
                                     <input type="hidden" class="prod_width" value="100" />
@@ -196,7 +201,7 @@
                                 <div class="pro_price">$29.99 - $69.99</div>
                             </div>
                             <div class="featured_img">
-                                <img class="prod_full" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
+                                <img class="prod_dress" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="310" />
                                     <input type="hidden" class="prod_width" value="100" />
@@ -241,7 +246,7 @@
                                 <div class="pro_price">$29.99 - $69.99</div>
                             </div>
                             <div class="featured_img">
-                                <img class="prod_full" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
+                                <img class="prod_dress" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="310" />
                                     <input type="hidden" class="prod_width" value="100" />
@@ -286,7 +291,7 @@
                                 <div class="pro_price">$29.99 - $69.99</div>
                             </div>
                             <div class="featured_img">
-                                <img class="prod_full" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
+                                <img class="prod_dress" src="{{ asset('bundles/lovethatfit/site/products/dress/dress.png') }}" />
                                 <div class="prod_details">
                                     <input type="hidden" class="prod_height" value="310" />
                                     <input type="hidden" class="prod_width" value="100" />
@@ -330,7 +335,7 @@ function set_slider_buttons(){
 }
 $(document).ready(function(){
   set_slider_buttons();
-  
+  set_drag_drop_ele();
   ///--- Fitting Alert ---///
               
             $(".fitting_alert_link").toggle(
@@ -378,11 +383,23 @@ var scroll_heighting = 534;
     }
     
     
+    function set_drag_drop_ele(){
+    
+    
+    
     $( ".prod_wrapper li .prod_node .featured_img .prod_top" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
-            $(".int_fitting_room").zIndex("-1");
-            var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
-            var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            $(".int_fitting_room").zIndex("-10");
+            
+            var prod_h = 160;
+            var prod_w = 200;
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+        $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+        
+        
+        
         $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
            
         },
@@ -433,8 +450,12 @@ var scroll_heighting = 534;
     
     $( ".prod_wrapper li .prod_node .featured_img .prod_bottom" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
-            var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
-            var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            
+            var prod_h = 200;
+            var prod_w = 200;
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
             $(".int_fitting_room").zIndex("-1");
         $( "#bottom_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
             
@@ -478,10 +499,14 @@ var scroll_heighting = 534;
     });
     
     
-    $( ".prod_wrapper li .prod_node .featured_img .prod_full" ).draggable({ revert: "invalid", helper: "clone",
+    $( ".prod_wrapper li .prod_node .featured_img .prod_dress" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
-            var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
-            var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            
+            var prod_h = 300;
+            var prod_w = 200;
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
             $(".int_fitting_room").zIndex("-1");
         $( "#full_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
             
@@ -496,7 +521,7 @@ var scroll_heighting = 534;
     
     /// Dropable ///
     $( "#full_dropable" ).droppable({
-        accept: ".prod_wrapper li .prod_node .featured_img .prod_full",
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_dress",
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
@@ -530,7 +555,7 @@ var scroll_heighting = 534;
     
     
     
-    
+    }
     
     </script>
 {% endblock %}    

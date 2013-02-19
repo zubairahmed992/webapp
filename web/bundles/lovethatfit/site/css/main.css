@@ -183,6 +183,7 @@ body {
 	height:60px;
 	padding-right:140px;
 	position:relative;
+        z-index: 600;
 }
 .footer .ftr_logo {
 	background:url(../images/logo_bottom_dark.png) right 0 no-repeat;
@@ -1276,9 +1277,28 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
     background:url(../images/fitting_room_bk_4.png) 0 0 no-repeat;
 }
 #slider_dis_canv {
-    width:254px;
     height:522px;
     overflow: hidden;
+}
+.loading_now {
+    position:absolute;
+    left:0;
+    top:0;
+    width:254px;
+    height:574px;
+    z-index: 500;
+    display: none;
+}
+.loading_now .loading_inner {
+    background:url(../images/trans_dot_10.png) 0 0 repeat;
+    position:absolute;
+    left:0;
+    top:30px;
+    width:250px;
+    height:500px;
+    padding-top: 18px;
+    text-align: center;
+    vertical-align: middle;
 }
 ul.prod_wrapper{
 	padding:0px;
@@ -1323,6 +1343,9 @@ background:#f0f0f0;
 	color: #D31359;
 	font-size: 1.2em;
 	padding-bottom: 10px;
+        width:132px;
+        height:19px;
+        overflow: hidden;
 }
 
 .prod_wrapper p{
@@ -1799,3 +1822,6 @@ padding:4px 10px;
     
 }
 
+.prod_fitting_details {
+   display: none;
+}

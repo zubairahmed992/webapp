@@ -15,9 +15,10 @@
                 </div>
                 <div class="featured_img">
                     <img class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.WebPath)}}" width="63" height="108"/>
+                    <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}'>feedback</a></span>
                 </div>
                   
-                    <span id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}'>feedback</a></span>
+                    
                 <span></span>
                 <!--/prod_node--></div>
     </li>            
