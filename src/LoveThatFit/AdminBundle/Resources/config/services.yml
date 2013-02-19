@@ -2,6 +2,9 @@ parameters:
 #    love_that_fit_admin.example.class: LoveThatFit\AdminBundle\Example
 
 services:
+     mail_helper:
+        class:     LoveThatFit\AdminBundle\MailHelper
+        arguments: ['@mailer']
 #    love_that_fit_admin.example:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

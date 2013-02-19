@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\SiteBundle\Controller;
+
 use Symfony\Component\Yaml\Dumper;
 use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
@@ -97,13 +98,8 @@ class InnerSiteController extends Controller {
     }
     //-------------------------------------------------------------------
     public function emailAction() {    
-         $message = \Swift_Message::newInstance()
-        ->setSubject('Hello Email')
-        ->setFrom('waqasmuddasir@gmail.com')
-        ->setTo(array('waqasmuddasir@gmail.com' => 'Receiver Name'))
-        ->setBody('this is a test email generated: LoveThatFit email services to test the default address.');
-        $this->get('mailer')->send($message, $failures);       
-        return new Response("yupeeee!");
+        $this->get('mail_helper')->sendRegistrationEmail('waqasmuddasir@gmail.com');
+        return new Response('hight by taking a picture..., dont worry your email has been sent.');
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
