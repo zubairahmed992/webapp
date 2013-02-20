@@ -103,12 +103,18 @@ class SecurityController extends Controller {
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($_user);
                     $em->flush();
-                    //emailing the link---------????? Refine~~~~~~~~
-                    //$this->sendResetPasswordLinkEmail($_user);
-                    $link = $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
-                    $defaultData = " Email has been sent with reset password link to " . $_user->getEmail() . " code is: ". $_user->getAuthToken();
+
                     
-                    return $this->render('LoveThatFitSiteBundle:Home:home_message.html.twig', array(
+                    $link = $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
+                    $defaultData = " Email has been sent with reset password link to " . $_user->getEmail() . " link ". $link;
+
+                    //emailing the link---------
+                    $this->get('mail_helper')->sendPasswordResetLinkEmail($_user->getEmail(), $link);
+                    //------------------------------------------------------
+                    
+                    
+                    
+                    return $this->render('LoveThatFitSiteBundle:Home:message.html.twig', array(
                     "message" => $defaultData));
                     
                 } else {
@@ -210,18 +216,6 @@ class SecurityController extends Controller {
         }
     }
     
-//----------------------------------------------------------------------
-    private function sendResetPasswordLinkEmail($_user) {
-
-        $message = \Swift_Message::newInstance()
-                ->setSubject('password reset')
-                ->setFrom('waqasmuddasir@gmail.com')
-                ->setTo($_user->getEmail())
-                ->setBody("<a href='http://lovethatfit.com/reset_password_auth_token/".$_user->getAuthToken()."'>Reset Password</a>");
-        $this->get('mailer')->send($message);
-
-        return new Response('email sent');
-    }
     
     
 

@@ -159,7 +159,8 @@ class RegistrationController extends Controller {
                 $em->flush();
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 //send registration email ....
-                //$this->sendRegistrationEmail($entity->getEmail());
+                $this->get('mail_helper')->sendRegistrationEmail($entity->getEmail());
+                
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 
                 $measurement = $entity->getMeasurement();

@@ -24,7 +24,7 @@ var $conf;
             ->setTo($to)
             ->setBody($body);
 
-        $this->mailer->send($message);
+        //$this->mailer->send($message);
     }
     
     public function sendRegistrationEmail($sendTo)
