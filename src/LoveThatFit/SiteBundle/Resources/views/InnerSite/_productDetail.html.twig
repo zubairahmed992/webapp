@@ -1,80 +1,156 @@
+<script language="javascript">
 
-<table>
+(function($) {
+$(function() {
 
+	$('ul.tabs').each(function() {
+		$(this).find('li').each(function(i) {
+			$(this).click(function(){
+				$(this).addClass('current').siblings().removeClass('current')
+					.parents('div.sectionbox').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
+			});
+		});
+	});
 
-<tr>
-    <th>Id</th>
-    <td>{{product.id }}</td>
-</tr>
-<tr>
-    <th>Name</th>
-    <td>{{product.name }}</td>
-</tr>
-<tr>
-    <th>Length</th>
-    <td>{{product.length }}</td>
-</tr>
-<tr>
-    <th>Sku</th>
-    <td>{{product.sku }}</td>
-</tr>
-<tr>
-    <th>Gender</th>
-    <td>{{product.gender }}</td>
-</tr>
-<tr>
-    <th>WAIST</th>
-    <td>{{product.waist }}</td>
-</tr>
-<tr>
-    <th>HIP</th>
-    <td>{{product.hip }}</td>
-</tr>
-<tr>
-    <th>BUST</th>
-    <td>{{product.bust }}</td>
-</tr>
-<tr>
-    <th>ARM</th>
-    <td>{{product.leg }}</td>
-</tr>
-<tr>
-    <th>LEG</th>
-    <td>{{product.inseam }}</td>
-</tr>
-<tr>
-    <th>INSEAM</th>
-    <td>{{product.inseam }}</td>
-</tr>
-<tr>
-    <th>OUTSEAM</th>
-    <td>{{product.outseam }}</td>
-</tr>
-<tr>
-    <th>HEM</th>
-    <td>{{product.hem }}</td>
-</tr>
-<tr>
-    <th>Back</th>
-    <td>{{product.back }}</td>
-</tr>
-
-<tr>
-    <th></th>
-    <td><img src="{{ asset(product.WebPath) }}" height="80" width="100" /></td>
-</tr>
-
-<tr>
-    <th>Brand</th>
-    <td>{{product.brand.name }}</td>
-</tr>
-<tr>
-    <th>Clothing Type</th>
-    <td>{{product.clothingType.name }}</td>
-</tr>
+})
+})(jQuery)
 
 
 
+</script>  
 
-</table>
 
+
+<div class="second_content"><!--START SECOND CONTENT-->
+            
+            <div id="right_upper_content"><!--START RIGHT UPPER CONTENT-->
+                <div class="pro_det_cont">
+                    <div class="product_hd">{{product.name }}</div>
+                    <div class="product_price">$ 9,473.57</div>
+                    <div class="pro_size">
+                        <span>
+                            <input type="radio" value="XS" name="Radios" id="Radio1">
+                            <label for="Radio1">XS</label>
+                             <input type="radio" value="S" name="Radios" id="Radio2">
+                            <label for="Radio2">S</label>
+                             <input type="radio" value="M" name="Radios" id="Radio3">
+                            <label for="Radio3">M</label>
+                             <input type="radio" value="L" name="Radios" id="Radio4">
+                            <label for="Radio4">L</label>
+                            <input type="radio" value="XL" name="Radios" id="Radio5">
+                            <label for="Radio5">XL</label>
+                        </span>
+                    </div>
+                    <div class="pro_quantity">
+                    <label>Quantity:</label>
+                    <select id="quantity" name="quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    </div>
+                    <div class="pro_color">
+                       
+                        <span>
+                         <label>Color:</label>
+                            <input type="radio" value="XS" name="Radio" id="color1">
+                            <label class="red" for="color1"></label>
+                             <input type="radio" value="S" name="Radio" id="color2">
+                            <label class="green" for="color2"></label>
+                             <input type="radio" value="M" name="Radio" id="color3">
+                            <label class="blue" for="color3"></label>
+                             
+                        </span>
+                    </div>
+                    <div id="add_cart"><a href="#"></a></div>
+                </div>
+                <div class="pro_img_cont"><!--START pro_img_cont-->
+                <ul id="slideshow" style="display: none;">
+		<li>
+			<h3>TinySlideshow v1</h3>
+			<span>photos/1.jpg</span>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.</p>
+			<a href="#"></a>
+		</li>
+		<li>
+			<h3>Sea Turtle</h3>
+			<span>photos/2.jpg</span>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.</p>
+			<a href="#"></a>
+		</li>
+		<li>
+			<h3>Red Coral</h3>
+			<span>photos/3.jpg</span>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.</p>
+			<a href="#"></a>
+		</li>
+		
+		
+	</ul>
+                <div id="wrapper" style="display: block;">
+		<div id="fullsize">
+			<div title="Previous Image" class="imgnav" id="imgprev" style="opacity: 0.25;"></div>
+			<div id="imglink" style="cursor: pointer;"></div>
+			<div title="Next Image" class="imgnav" id="imgnext" style="opacity: 0.25;"></div>
+			<div id="image"><img style="opacity: 1;" src="{{ asset(product.WebPath) }}"></div>
+			<div id="information" style="height: 173px;">
+				
+				
+			</div>
+		</div>
+		<div id="thumbnails">
+			<div title="Slide Left" id="slideleft"></div>
+			<div id="slidearea">
+				<div id="slider" style="width: 211px;"><img width="208" alt="Orange Fish" src="{{ asset(product.WebPath) }}" style="margin-right: 5px; opacity: 0.7; border-color: rgb(255, 255, 255);"><img width="208" alt="Orange Fish" src="{{ asset(product.WebPath) }}" style="margin-right: 5px; opacity: 0.7;"><img width="208" alt="Orange Fish" src="{{ asset(product.WebPath) }}" style="opacity: 0.7;"></div>
+			</div>
+			<div title="Slide Right" id="slideright"></div>
+		</div>
+	</div>                
+                </div> <!--END pro_img_cont-->
+            </div><!--END RIGHT UPPER CONTENT-->
+            <div style="clear:both;"></div>
+            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
+            
+            
+
+            <div class="sectionbox"><!-- START section -->
+            <ul class="tabs">
+                        <li class="current">Description</li>
+                        <li>At a Glance</li>
+                        <li>Designer</li>		
+                    </ul>
+            <div class="box visible">
+                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.</p>		
+                    </div>
+            <div class="box">
+                        <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!</p>		
+                    </div>
+            <div class="box">
+                        <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.</p>		
+                    </div>
+            </div><!-- END section -->
+
+            </div><!--END PRODUCT MORE DETAIL-->
+            
+            </div>
+
+<script type="text/javascript">
+	$('slideshow').style.display='none';
+	$('wrapper').style.display='block';
+	var slideshow=new TINY.slideshow("slideshow");
+	window.onload=function(){
+		slideshow.auto=false;
+		slideshow.speed=5;
+		slideshow.link="linkhover";
+		slideshow.info="information";
+		slideshow.thumbs="slider";
+		slideshow.left="slideleft";
+		slideshow.right="slideright";
+		slideshow.scrollSpeed=4;
+		slideshow.spacing=5;
+		slideshow.active="#fff";
+		slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+	}
+</script>

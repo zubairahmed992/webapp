@@ -840,7 +840,8 @@ a.but_short:visited {
 
 /*--Form--*/
 input[type=password],
-input[type=text] {
+input[type=text],
+input[type=email]{
 	width:204px;
 	padding:4px 7px;
 	-webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.7);
