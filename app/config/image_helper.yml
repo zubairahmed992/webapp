@@ -1,0 +1,44 @@
+image category:
+	
+  brand:
+		actual:
+			prefix: ''
+			dir:  'uploads/ltf/brands'
+			
+		list:
+			height: 40
+			weight: 35
+			prefix: 'list'
+			dir:  'uploads/ltf/brands'
+			
+  product:
+		actual:
+			prefix: ''
+			dir:  'uploads/ltf/products'
+			
+		list:
+			height: 40
+			weight: 35
+			prefix: 'list'
+			dir:  'uploads/ltf/products'
+			
+		small:
+			height: 110
+			weight: 85
+			prefix: 'small'
+			dir:  'uploads/ltf/products'
+			
+		large:
+			height: 240
+			weight: 200
+			prefix:  'large'			
+			dir:  'uploads/ltf/products'
+
+  user:
+		actual:
+			prefix: ''
+			dir:  'uploads/ltf/users'
+			
+		cropped:
+			prefix:	'cropped'
+			dir:  'uploads/ltf/users'

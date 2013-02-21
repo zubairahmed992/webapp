@@ -588,7 +588,7 @@ class Product
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
         );
-        
+        //$this->duplicate($this->getUploadRootDir().'/'.$this->image);
         $this->file = null;
     }
 
@@ -617,6 +617,87 @@ class Product
         return 'uploads/ltf/products';
     }
 
+
+    protected function duplicate($filename)
+    {
+        $list = imagecreatetruecolor(35, 40);
+        $small = imagecreatetruecolor(110, 85);
+        $large = imagecreatetruecolor(200, 240);
+        
+      $image_info = getimagesize($filename);
+      $image_type = $image_info[2];
+      
+      if( $image_type == IMAGETYPE_JPEG ) {
+ 
+         $source = imagecreatefromjpeg($filename);
+      } elseif( $image_type == IMAGETYPE_GIF ) {
+ 
+         $source = imagecreatefromgif($filename);
+      } elseif( $image_type == IMAGETYPE_PNG ) {
+ 
+         $source = imagecreatefrompng($filename);
+      }
+      
+        
+        imagecopyresampled($list, $source, 0, 0, 0, 0, 35, 40, imagesx($source), imagesy($source));
+        imagecopyresampled($small, $source, 0, 0, 0, 0, 110, 85, imagesx($source), imagesy($source));
+        imagecopyresampled($large, $source, 0, 0, 0, 0, 200, 240, imagesx($source), imagesy($source));
+       
+        
+         if( $image_type == IMAGETYPE_JPEG ) {
+         //imagejpeg($small,'small.jpg',75);
+         imagejpeg($list,$this->getUploadRootDir().'/'.$this->id.'_list_'.$this->name.'.jpg',75);
+        imagejpeg($small,$this->getUploadRootDir().'/'.$this->id.'_small_'.$this->name.'.jpg',75);
+        imagejpeg($large,$this->getUploadRootDir().'/'.$this->id.'_large_'.$this->name.'.jpg',75);
+      } elseif( $image_type == IMAGETYPE_GIF ) {
+           //imagegif($small,'small.gif');
+          imagegif($list,$this->getUploadRootDir().'/'.$this->id.'_list_'.$this->name.'.gif');
+        imagegif($small,$this->getUploadRootDir().'/'.$this->id.'_small_'.$this->name.'.gif');
+        imagegif($large,$this->getUploadRootDir().'/'.$this->id.'_large_'.$this->name.'.gif');
+      } elseif( $image_type == IMAGETYPE_PNG ) {
+ 
+         //imagepng($small,'small.png');
+          imagepng($list,$this->getUploadRootDir().'/'.$this->id.'_list_'.$this->name.'.png');
+        imagepng($small,$this->getUploadRootDir().'/'.$this->id.'_small_'.$this->name.'.png');
+        imagepng($large,$this->getUploadRootDir().'/'.$this->id.'_large_'.$this->name.'.png');
+      }
+    }    
     
+    private function resize_image($filename)
+    {
+       
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        
+        $image_info = getimagesize($filename);
+      $image_type = $image_info[2];
+      
+      if( $image_type == IMAGETYPE_JPEG ) {
+ 
+         $source = imagecreatefromjpeg($filename);
+      } elseif( $image_type == IMAGETYPE_GIF ) {
+ 
+         $source = imagecreatefromgif($filename);
+      } elseif( $image_type == IMAGETYPE_PNG ) {
+ 
+         $source = imagecreatefrompng($filename);
+      }
+        
+        foreach ($conf['product'] as $key => $value) 
+        {
+               $img_resized = imagecreatetruecolor($value['width'], $value['height']);
+               
+               imagecopyresampled($key, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
+        
+               if( $image_type == IMAGETYPE_JPEG ) {
+         imagejpeg($key,$this->getUploadRootDir().'/'.$this->id.'_'.$key.'_'.$this->name.'.jpg',75);
+       } elseif( $image_type == IMAGETYPE_GIF ) {
+          imagegif($key,$this->getUploadRootDir().'/'.$this->id.'_'.$key.'_'.$this->name.'.gif');
+       } elseif( $image_type == IMAGETYPE_PNG ) {
+ 
+          imagepng($key,$this->getUploadRootDir().'/'.$this->id.'_'.$key.'_'.$this->name.'.png');
+       }
+        }
+    }
     
 }
