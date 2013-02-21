@@ -538,14 +538,16 @@ class Product {
         if (null === $this->file) {
             return;
         }
-
-        $this->image = $this->id . '_ltf_product_' . $this->file->getClientOriginalName();
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->image = uniqid() . '_ltf_product.' . $ext;
+        
+//$this->image = $this->id . '_ltf_product_' . $this->file->getClientOriginalName();
 
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
         );
-        //$this->duplicate($this->getUploadRootDir().'/'.$this->image);
-        //$this->resize_image();
+        //this should be done after saved so that id can be retained & first image should have a random number
+        $this->resize_image();
         $this->file = null;
     }
 
@@ -565,54 +567,14 @@ class Product {
         return 'uploads/ltf/products';
     }
 
-    protected function duplicate($filename) {
-        $list = imagecreatetruecolor(35, 40);
-        $small = imagecreatetruecolor(110, 85);
-        $large = imagecreatetruecolor(200, 240);
-
-        $image_info = getimagesize($filename);
-        $image_type = $image_info[2];
-
-        if ($image_type == IMAGETYPE_JPEG) {
-
-            $source = imagecreatefromjpeg($filename);
-        } elseif ($image_type == IMAGETYPE_GIF) {
-
-            $source = imagecreatefromgif($filename);
-        } elseif ($image_type == IMAGETYPE_PNG) {
-
-            $source = imagecreatefrompng($filename);
-        }
-
-
-        imagecopyresampled($list, $source, 0, 0, 0, 0, 35, 40, imagesx($source), imagesy($source));
-        imagecopyresampled($small, $source, 0, 0, 0, 0, 110, 85, imagesx($source), imagesy($source));
-        imagecopyresampled($large, $source, 0, 0, 0, 0, 200, 240, imagesx($source), imagesy($source));
-
-
-        if ($image_type == IMAGETYPE_JPEG) {
-            //imagejpeg($small,'small.jpg',75);
-            imagejpeg($list, $this->getUploadRootDir() . '/' . $this->id . '_list_' . $this->name . '.jpg', 75);
-            imagejpeg($small, $this->getUploadRootDir() . '/' . $this->id . '_small_' . $this->name . '.jpg', 75);
-            imagejpeg($large, $this->getUploadRootDir() . '/' . $this->id . '_large_' . $this->name . '.jpg', 75);
-        } elseif ($image_type == IMAGETYPE_GIF) {
-            //imagegif($small,'small.gif');
-            imagegif($list, $this->getUploadRootDir() . '/' . $this->id . '_list_' . $this->name . '.gif');
-            imagegif($small, $this->getUploadRootDir() . '/' . $this->id . '_small_' . $this->name . '.gif');
-            imagegif($large, $this->getUploadRootDir() . '/' . $this->id . '_large_' . $this->name . '.gif');
-        } elseif ($image_type == IMAGETYPE_PNG) {
-
-            //imagepng($small,'small.png');
-            imagepng($list, $this->getUploadRootDir() . '/' . $this->id . '_list_' . $this->name . '.png');
-            imagepng($small, $this->getUploadRootDir() . '/' . $this->id . '_small_' . $this->name . '.png');
-            imagepng($large, $this->getUploadRootDir() . '/' . $this->id . '_large_' . $this->name . '.png');
-        }
-    }
-
+    
     private function resize_image() {
         
         $filename = $this->getAbsolutePath();
         
+        $image_info = getimagesize($filename);
+        $image_type = $image_info[2];
+
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
         
@@ -628,28 +590,77 @@ class Product {
                 break;
         }
         
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
+        $unique_code=str_replace('_ltf_product.'.$ext, '', $this->image);
+        
         foreach ($conf['image_category']['product'] as $key => $value) {
-            
+            if ($key!='actual')
+             {
+             
             $img_new = imagecreatetruecolor($value['width'], $value['height']);
             imagecopyresampled($img_new, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
-      
-            switch ($image_type) {
-                case IMAGETYPE_JPEG:
-                    imagejpeg($img_new, $this->getUploadRootDir() . '/' . $this->id . '_' . $key . '_' . $this->name . '.jpg', 75);
-                    break;
-                case IMAGETYPE_GIF:
-                    imagegif($img_new, $this->getUploadRootDir() . '/' . $this->id . '_' . $key . '_' . $this->name . '.gif');
-                    break;
-                case IMAGETYPE_PNG:
-                    imagepng($img_new, $this->getUploadRootDir() . '/' . $this->id . '_' . $key . '_' . $this->name . '.png');
-                    break;
+            
+            $prefix=strlen($value['prefix'])==0?'':'_'.$value['prefix'];   
+            
+            if (!is_dir($value['dir'])) {
+    mkdir($value['dir'], 0700);
             }
             
             
+            switch ($image_type) {
+                case IMAGETYPE_JPEG:
+                    imagejpeg($img_new, $value['dir'] . '/' . $unique_code . $prefix . '_' . $key . '.jpg', 75);
+                    break;
+                case IMAGETYPE_GIF:
+                    imagegif($img_new, $value['dir'] . '/' . $unique_code . $prefix . '_' . $key . '.gif');
+                    break;
+                case IMAGETYPE_PNG:
+                    imagepng($img_new, $value['dir'] . '/' . $unique_code . $prefix . '_' . $key . '.png');
+                    break;
+            }
+            
+             }
             }
         
         
 }
 
-   
+   public function check() {
+        
+        $filename = $this->getAbsolutePath();
+        
+        $image_info = getimagesize($filename);
+        $image_type = $image_info[2];
+
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        
+        $n='<ul>';
+         foreach ($conf['image_category']['product'] as $key => $value) {
+             if ($key!='actual')
+             {
+                 $prefix=strlen($value['prefix'])==0?'':'_'.$value['prefix'];   
+                 $n=$n.'<li>'.uniqid();
+                 $n=$n.'<li>'.uniqid();
+                 $n=$n.'<li>'.uniqid();
+             $n=$n.'<li>';
+             
+            switch ($image_type) {
+                case IMAGETYPE_JPEG:
+                   $n=$n.  $this->getUploadRootDir() . '/' . $this->id . $prefix . '_' . $key  . '.jpg';
+                    break;
+                case IMAGETYPE_GIF:
+                    $n=$n.  $this->getUploadRootDir() . '/' . $this->id . $prefix . '_' . $key . '.gif';
+                    break;
+                case IMAGETYPE_PNG:
+                    $n=$n.  $this->getUploadRootDir() . '/' . $this->id . $prefix . '_' . $key . '.png';
+                    break;
+            }
+            
+             }
+            }
+        return $n;
+        
+}
+
 }

@@ -98,8 +98,11 @@ class InnerSiteController extends Controller {
     }
     //-------------------------------------------------------------------
     public function emailAction() {    
-        $this->get('mail_helper')->sendRegistrationEmail('waqasmuddasir@gmail.com');
-        return new Response('hight by taking a picture..., dont worry your email has been sent.');
+        //$this->get('mail_helper')->sendRegistrationEmail('waqasmuddasir@gmail.com');
+        //return new Response('hight by taking a picture..., dont worry your email has been sent.');
+    
+        $product = $this->getProduct(6);
+        return new Response($product->check());
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
