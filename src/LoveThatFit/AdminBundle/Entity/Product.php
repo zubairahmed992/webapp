@@ -1,115 +1,111 @@
 <?php
+
 namespace LoveThatFit\AdminBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
-
+use Symfony\Component\Yaml\Parser;
 
 /**
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductRepository")
  * @ORM\Table(name="product")
  */
+class Product {
 
-class Product
-{   
-    
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="ClothingType", inversedBy="products")
      * @ORM\JoinColumn(name="clothing_type_id", referencedColumnName="id")
      */
-    
-    protected $clothing_type;    
-    
-     /**
+    protected $clothing_type;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Brand", inversedBy="products")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
      */
-    
     protected $brand;
-    
-    
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
-     /**
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $adjustment;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     protected $sku;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     protected $image;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $waist;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $hip;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $bust;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $arm;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $leg;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $inseam;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $outseam;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $hem;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $back;
-    
+
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $length;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     protected $gender;
-    
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -119,20 +115,18 @@ class Product
      * @ORM\Column(type="datetime")
      */
     protected $updated_at;
-    
+
     /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
-    
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -142,10 +136,9 @@ class Product
      * @param string $name
      * @return Product
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -154,21 +147,19 @@ class Product
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
-     /**
+    /**
      * Set adjustment
      *
      * @param float $adjustment
      * @return Product
      */
-    public function setAdjustment($adjustment)
-    {
+    public function setAdjustment($adjustment) {
         $this->adjustment = $adjustment;
-    
+
         return $this;
     }
 
@@ -177,21 +168,19 @@ class Product
      *
      * @return float 
      */
-    public function getAdjustment()
-    {
+    public function getAdjustment() {
         return $this->adjustment;
     }
-    
+
     /**
      * Set sku
      *
      * @param string $sku
      * @return Product
      */
-    public function setSku($sku)
-    {
+    public function setSku($sku) {
         $this->sku = $sku;
-    
+
         return $this;
     }
 
@@ -200,8 +189,7 @@ class Product
      *
      * @return string 
      */
-    public function getSku()
-    {
+    public function getSku() {
         return $this->sku;
     }
 
@@ -211,10 +199,9 @@ class Product
      * @param string $image
      * @return Product
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
-    
+
         return $this;
     }
 
@@ -223,8 +210,7 @@ class Product
      *
      * @return string 
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -234,10 +220,9 @@ class Product
      * @param float $waist
      * @return Product
      */
-    public function setWaist($waist)
-    {
+    public function setWaist($waist) {
         $this->waist = $waist;
-    
+
         return $this;
     }
 
@@ -246,8 +231,7 @@ class Product
      *
      * @return float 
      */
-    public function getWaist()
-    {
+    public function getWaist() {
         return $this->waist;
     }
 
@@ -257,10 +241,9 @@ class Product
      * @param float $hip
      * @return Product
      */
-    public function setHip($hip)
-    {
+    public function setHip($hip) {
         $this->hip = $hip;
-    
+
         return $this;
     }
 
@@ -269,8 +252,7 @@ class Product
      *
      * @return float 
      */
-    public function getHip()
-    {
+    public function getHip() {
         return $this->hip;
     }
 
@@ -280,10 +262,9 @@ class Product
      * @param float $bust
      * @return Product
      */
-    public function setBust($bust)
-    {
+    public function setBust($bust) {
         $this->bust = $bust;
-    
+
         return $this;
     }
 
@@ -292,8 +273,7 @@ class Product
      *
      * @return float 
      */
-    public function getBust()
-    {
+    public function getBust() {
         return $this->bust;
     }
 
@@ -303,10 +283,9 @@ class Product
      * @param float $arm
      * @return Product
      */
-    public function setArm($arm)
-    {
+    public function setArm($arm) {
         $this->arm = $arm;
-    
+
         return $this;
     }
 
@@ -315,8 +294,7 @@ class Product
      *
      * @return float 
      */
-    public function getArm()
-    {
+    public function getArm() {
         return $this->arm;
     }
 
@@ -326,10 +304,9 @@ class Product
      * @param float $leg
      * @return Product
      */
-    public function setLeg($leg)
-    {
+    public function setLeg($leg) {
         $this->leg = $leg;
-    
+
         return $this;
     }
 
@@ -338,8 +315,7 @@ class Product
      *
      * @return float 
      */
-    public function getLeg()
-    {
+    public function getLeg() {
         return $this->leg;
     }
 
@@ -349,10 +325,9 @@ class Product
      * @param float $inseam
      * @return Product
      */
-    public function setInseam($inseam)
-    {
+    public function setInseam($inseam) {
         $this->inseam = $inseam;
-    
+
         return $this;
     }
 
@@ -361,8 +336,7 @@ class Product
      *
      * @return float 
      */
-    public function getInseam()
-    {
+    public function getInseam() {
         return $this->inseam;
     }
 
@@ -372,10 +346,9 @@ class Product
      * @param float $outseam
      * @return Product
      */
-    public function setOutseam($outseam)
-    {
+    public function setOutseam($outseam) {
         $this->outseam = $outseam;
-    
+
         return $this;
     }
 
@@ -384,8 +357,7 @@ class Product
      *
      * @return float 
      */
-    public function getOutseam()
-    {
+    public function getOutseam() {
         return $this->outseam;
     }
 
@@ -395,10 +367,9 @@ class Product
      * @param float $hem
      * @return Product
      */
-    public function setHem($hem)
-    {
+    public function setHem($hem) {
         $this->hem = $hem;
-    
+
         return $this;
     }
 
@@ -407,8 +378,7 @@ class Product
      *
      * @return float 
      */
-    public function getHem()
-    {
+    public function getHem() {
         return $this->hem;
     }
 
@@ -418,10 +388,9 @@ class Product
      * @param float $back
      * @return Product
      */
-    public function setBack($back)
-    {
+    public function setBack($back) {
         $this->back = $back;
-    
+
         return $this;
     }
 
@@ -430,8 +399,7 @@ class Product
      *
      * @return float 
      */
-    public function getBack()
-    {
+    public function getBack() {
         return $this->back;
     }
 
@@ -441,10 +409,9 @@ class Product
      * @param float $length
      * @return Product
      */
-    public function setLength($length)
-    {
+    public function setLength($length) {
         $this->length = $length;
-    
+
         return $this;
     }
 
@@ -453,8 +420,7 @@ class Product
      *
      * @return float 
      */
-    public function getLength()
-    {
+    public function getLength() {
         return $this->length;
     }
 
@@ -464,10 +430,9 @@ class Product
      * @param string $gender
      * @return Product
      */
-    public function setGender($gender)
-    {
+    public function setGender($gender) {
         $this->gender = $gender;
-    
+
         return $this;
     }
 
@@ -476,8 +441,7 @@ class Product
      *
      * @return string 
      */
-    public function getGender()
-    {
+    public function getGender() {
         return $this->gender;
     }
 
@@ -487,10 +451,9 @@ class Product
      * @param \DateTime $createdAt
      * @return Product
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
@@ -499,8 +462,7 @@ class Product
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->created_at;
     }
 
@@ -510,10 +472,9 @@ class Product
      * @param \DateTime $updatedAt
      * @return Product
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
@@ -522,8 +483,7 @@ class Product
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updated_at;
     }
 
@@ -533,10 +493,9 @@ class Product
      * @param LoveThatFit\AdminBundle\Entity\Brand $clothingType
      * @return Product
      */
-    public function setClothingType(\LoveThatFit\AdminBundle\Entity\ClothingType $clothingType = null)
-    {
+    public function setClothingType(\LoveThatFit\AdminBundle\Entity\ClothingType $clothingType = null) {
         $this->clothing_type = $clothingType;
-    
+
         return $this;
     }
 
@@ -545,8 +504,7 @@ class Product
      *
      * @return LoveThatFit\AdminBundle\Entity\Brand 
      */
-    public function getClothingType()
-    {
+    public function getClothingType() {
         return $this->clothing_type;
     }
 
@@ -556,10 +514,9 @@ class Product
      * @param LoveThatFit\AdminBundle\Entity\Brand $brand
      * @return Product
      */
-    public function setBrand(\LoveThatFit\AdminBundle\Entity\Brand $brand = null)
-    {
+    public function setBrand(\LoveThatFit\AdminBundle\Entity\Brand $brand = null) {
         $this->brand = $brand;
-    
+
         return $this;
     }
 
@@ -568,136 +525,131 @@ class Product
      *
      * @return LoveThatFit\AdminBundle\Entity\Brand 
      */
-    public function getBrand()
-    {
+    public function getBrand() {
         return $this->brand;
     }
-    
+
     //-------------------------------------------------
     //-------------- Image Upload ---------------------
     //-------------------------------------------------
-    
-       public function upload() {
+
+    public function upload() {
         // the file property can be empty if the field is not required
         if (null === $this->file) {
             return;
         }
-  
+
         $this->image = $this->id . '_ltf_product_' . $this->file->getClientOriginalName();
-        
+
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
         );
         //$this->duplicate($this->getUploadRootDir().'/'.$this->image);
+        //$this->resize_image();
         $this->file = null;
     }
 
-    
-  public function getAbsolutePath()
-    {
-        return null === $this->image
-            ? null
-            : $this->getUploadRootDir().'/'.$this->image;
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
 
-    public function getWebPath()
-    {
-        return null === $this->image
-            ? null
-            : $this->getUploadDir().'/'.$this->image;
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
 
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
-    protected function getUploadDir()
-    {
+    protected function getUploadDir() {
         return 'uploads/ltf/products';
     }
 
-
-    protected function duplicate($filename)
-    {
+    protected function duplicate($filename) {
         $list = imagecreatetruecolor(35, 40);
         $small = imagecreatetruecolor(110, 85);
         $large = imagecreatetruecolor(200, 240);
-        
-      $image_info = getimagesize($filename);
-      $image_type = $image_info[2];
-      
-      if( $image_type == IMAGETYPE_JPEG ) {
- 
-         $source = imagecreatefromjpeg($filename);
-      } elseif( $image_type == IMAGETYPE_GIF ) {
- 
-         $source = imagecreatefromgif($filename);
-      } elseif( $image_type == IMAGETYPE_PNG ) {
- 
-         $source = imagecreatefrompng($filename);
-      }
-      
-        
+
+        $image_info = getimagesize($filename);
+        $image_type = $image_info[2];
+
+        if ($image_type == IMAGETYPE_JPEG) {
+
+            $source = imagecreatefromjpeg($filename);
+        } elseif ($image_type == IMAGETYPE_GIF) {
+
+            $source = imagecreatefromgif($filename);
+        } elseif ($image_type == IMAGETYPE_PNG) {
+
+            $source = imagecreatefrompng($filename);
+        }
+
+
         imagecopyresampled($list, $source, 0, 0, 0, 0, 35, 40, imagesx($source), imagesy($source));
         imagecopyresampled($small, $source, 0, 0, 0, 0, 110, 85, imagesx($source), imagesy($source));
         imagecopyresampled($large, $source, 0, 0, 0, 0, 200, 240, imagesx($source), imagesy($source));
-       
+
+
+        if ($image_type == IMAGETYPE_JPEG) {
+            //imagejpeg($small,'small.jpg',75);
+            imagejpeg($list, $this->getUploadRootDir() . '/' . $this->id . '_list_' . $this->name . '.jpg', 75);
+            imagejpeg($small, $this->getUploadRootDir() . '/' . $this->id . '_small_' . $this->name . '.jpg', 75);
+            imagejpeg($large, $this->getUploadRootDir() . '/' . $this->id . '_large_' . $this->name . '.jpg', 75);
+        } elseif ($image_type == IMAGETYPE_GIF) {
+            //imagegif($small,'small.gif');
+            imagegif($list, $this->getUploadRootDir() . '/' . $this->id . '_list_' . $this->name . '.gif');
+            imagegif($small, $this->getUploadRootDir() . '/' . $this->id . '_small_' . $this->name . '.gif');
+            imagegif($large, $this->getUploadRootDir() . '/' . $this->id . '_large_' . $this->name . '.gif');
+        } elseif ($image_type == IMAGETYPE_PNG) {
+
+            //imagepng($small,'small.png');
+            imagepng($list, $this->getUploadRootDir() . '/' . $this->id . '_list_' . $this->name . '.png');
+            imagepng($small, $this->getUploadRootDir() . '/' . $this->id . '_small_' . $this->name . '.png');
+            imagepng($large, $this->getUploadRootDir() . '/' . $this->id . '_large_' . $this->name . '.png');
+        }
+    }
+
+    private function resize_image() {
         
-         if( $image_type == IMAGETYPE_JPEG ) {
-         //imagejpeg($small,'small.jpg',75);
-         imagejpeg($list,$this->getUploadRootDir().'/'.$this->id.'_list_'.$this->name.'.jpg',75);
-        imagejpeg($small,$this->getUploadRootDir().'/'.$this->id.'_small_'.$this->name.'.jpg',75);
-        imagejpeg($large,$this->getUploadRootDir().'/'.$this->id.'_large_'.$this->name.'.jpg',75);
-      } elseif( $image_type == IMAGETYPE_GIF ) {
-           //imagegif($small,'small.gif');
-          imagegif($list,$this->getUploadRootDir().'/'.$this->id.'_list_'.$this->name.'.gif');
-        imagegif($small,$this->getUploadRootDir().'/'.$this->id.'_small_'.$this->name.'.gif');
-        imagegif($large,$this->getUploadRootDir().'/'.$this->id.'_large_'.$this->name.'.gif');
-      } elseif( $image_type == IMAGETYPE_PNG ) {
- 
-         //imagepng($small,'small.png');
-          imagepng($list,$this->getUploadRootDir().'/'.$this->id.'_list_'.$this->name.'.png');
-        imagepng($small,$this->getUploadRootDir().'/'.$this->id.'_small_'.$this->name.'.png');
-        imagepng($large,$this->getUploadRootDir().'/'.$this->id.'_large_'.$this->name.'.png');
-      }
-    }    
-    
-    private function resize_image($filename)
-    {
-       
+        $filename = $this->getAbsolutePath();
+        
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
         
-        $image_info = getimagesize($filename);
-      $image_type = $image_info[2];
-      
-      if( $image_type == IMAGETYPE_JPEG ) {
- 
-         $source = imagecreatefromjpeg($filename);
-      } elseif( $image_type == IMAGETYPE_GIF ) {
- 
-         $source = imagecreatefromgif($filename);
-      } elseif( $image_type == IMAGETYPE_PNG ) {
- 
-         $source = imagecreatefrompng($filename);
-      }
-        
-        foreach ($conf['product'] as $key => $value) 
-        {
-               $img_resized = imagecreatetruecolor($value['width'], $value['height']);
-               
-               imagecopyresampled($key, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
-        
-               if( $image_type == IMAGETYPE_JPEG ) {
-         imagejpeg($key,$this->getUploadRootDir().'/'.$this->id.'_'.$key.'_'.$this->name.'.jpg',75);
-       } elseif( $image_type == IMAGETYPE_GIF ) {
-          imagegif($key,$this->getUploadRootDir().'/'.$this->id.'_'.$key.'_'.$this->name.'.gif');
-       } elseif( $image_type == IMAGETYPE_PNG ) {
- 
-          imagepng($key,$this->getUploadRootDir().'/'.$this->id.'_'.$key.'_'.$this->name.'.png');
-       }
+         switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                $source = imagecreatefromjpeg($filename);
+                break;
+            case IMAGETYPE_GIF:
+                $source = imagecreatefromgif($filename);
+                break;
+            case IMAGETYPE_PNG:
+                $source = imagecreatefrompng($filename);
+                break;
         }
-    }
-    
+        
+        foreach ($conf['image_category']['product'] as $key => $value) {
+            
+            $img_new = imagecreatetruecolor($value['width'], $value['height']);
+            imagecopyresampled($img_new, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
+      
+            switch ($image_type) {
+                case IMAGETYPE_JPEG:
+                    imagejpeg($img_new, $this->getUploadRootDir() . '/' . $this->id . '_' . $key . '_' . $this->name . '.jpg', 75);
+                    break;
+                case IMAGETYPE_GIF:
+                    imagegif($img_new, $this->getUploadRootDir() . '/' . $this->id . '_' . $key . '_' . $this->name . '.gif');
+                    break;
+                case IMAGETYPE_PNG:
+                    imagepng($img_new, $this->getUploadRootDir() . '/' . $this->id . '_' . $key . '_' . $this->name . '.png');
+                    break;
+            }
+            
+            
+            }
+        
+        
+}
+
+   
 }
