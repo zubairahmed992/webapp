@@ -19,15 +19,12 @@
     <div id="item">
         <div id="product">
             <img src="{{asset(p.WebPath)}}" width="100px" height="100px"/>
+            
+        <img src="{{asset(p.ImagePaths['large'])}}"/>
+        <img src="{{asset(p.ImagePaths['small'])}}"/>
+        <img src="{{asset(p.ImagePaths['list'])}}"/>
         </div>
-        <div id="detail">
-            <ul>
-                <li>{{p.name}}</li>
-                <li>{{p.brand.name}}</li>
-                <li>{{p.gender}}</li>
-                <li>{{p.clothingType.name}}</li>
-            </ul>
-        </div>
+        
         
 
     </div>

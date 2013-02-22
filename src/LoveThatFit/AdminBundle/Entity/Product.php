@@ -539,7 +539,7 @@ class Product {
             return;
         }
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->image = uniqid() . '_ltf_product.' . $ext;
+        $this->image = uniqid() .'.'. $ext;
         
 //$this->image = $this->id . '_ltf_product_' . $this->file->getClientOriginalName();
 
@@ -566,8 +566,23 @@ class Product {
     protected function getUploadDir() {
         return 'uploads/ltf/products';
     }
-
+//------------------------------- image Resize ------------------------------------------
     
+    
+    protected function getImageConfiguration(){
+        $yaml = new Parser();
+        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        return $conf['image_category']['product'];
+    } 
+    
+    protected function getImageExtention(){
+        return pathinfo($this->image, PATHINFO_EXTENSION);
+    }
+
+        protected function getUniqueCode(){
+        return str_replace('.'.$this->getImageExtention(), '', $this->image);
+    }
+
     private function resize_image() {
         
         $filename = $this->getAbsolutePath();
@@ -575,8 +590,7 @@ class Product {
         $image_info = getimagesize($filename);
         $image_type = $image_info[2];
 
-        $yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        $conf=$this->getImageConfiguration();//read yml to conf variable
         
          switch ($image_type) {
             case IMAGETYPE_JPEG:
@@ -591,9 +605,8 @@ class Product {
         }
         
         $ext = pathinfo($this->image, PATHINFO_EXTENSION);
-        $unique_code=str_replace('_ltf_product.'.$ext, '', $this->image);
         
-        foreach ($conf['image_category']['product'] as $key => $value) {
+        foreach ($conf as $key => $value) {
             if ($key!='actual')
              {
              
@@ -609,13 +622,13 @@ class Product {
             
             switch ($image_type) {
                 case IMAGETYPE_JPEG:
-                    imagejpeg($img_new, $value['dir'] . '/' . $unique_code . $prefix . '_' . $key . '.jpg', 75);
+                    imagejpeg($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key . '.jpg', 75);
                     break;
                 case IMAGETYPE_GIF:
-                    imagegif($img_new, $value['dir'] . '/' . $unique_code . $prefix . '_' . $key . '.gif');
+                    imagegif($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key . '.gif');
                     break;
                 case IMAGETYPE_PNG:
-                    imagepng($img_new, $value['dir'] . '/' . $unique_code . $prefix . '_' . $key . '.png');
+                    imagepng($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key . '.png');
                     break;
             }
             
@@ -625,38 +638,34 @@ class Product {
         
 }
 
-   public function check() {
+public function getImagePaths() {
         
-        $filename = $this->getAbsolutePath();
-        
-        $image_info = getimagesize($filename);
-        $image_type = $image_info[2];
-
-        $yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
-        
-        $n='<ul>';
-         foreach ($conf['image_category']['product'] as $key => $value) {
+        $conf = $this->getImageConfiguration();
+        $n[]=null;
+         foreach ($conf as $key => $value) {
              if ($key!='actual')
              {
                  $prefix=strlen($value['prefix'])==0?'':'_'.$value['prefix'];   
-                 $n=$n.'<li>'.uniqid();
-                 $n=$n.'<li>'.uniqid();
-                 $n=$n.'<li>'.uniqid();
-             $n=$n.'<li>';
-             
-            switch ($image_type) {
-                case IMAGETYPE_JPEG:
-                   $n=$n.  $this->getUploadRootDir() . '/' . $this->id . $prefix . '_' . $key  . '.jpg';
-                    break;
-                case IMAGETYPE_GIF:
-                    $n=$n.  $this->getUploadRootDir() . '/' . $this->id . $prefix . '_' . $key . '.gif';
-                    break;
-                case IMAGETYPE_PNG:
-                    $n=$n.  $this->getUploadRootDir() . '/' . $this->id . $prefix . '_' . $key . '.png';
-                    break;
+                 $n[$key] = $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key  . '.' . $this->getImageExtention();
+                 
+             }
             }
-            
+        return $n;
+        
+}
+
+   public function check() {
+        
+        $conf = $this->getImageConfiguration();
+        
+        $n='<ul>';
+         foreach ($conf as $key => $value) {
+             if ($key!='actual')
+             {
+                 $prefix=strlen($value['prefix'])==0?'':'_'.$value['prefix'];   
+                 
+             $n=$n.'<li>'. $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key  . '.' . $this->getImageExtention();
+                          
              }
             }
         return $n;

@@ -100,9 +100,12 @@ class InnerSiteController extends Controller {
     public function emailAction() {    
         //$this->get('mail_helper')->sendRegistrationEmail('waqasmuddasir@gmail.com');
         //return new Response('hight by taking a picture..., dont worry your email has been sent.');
-    
-        $product = $this->getProduct(6);
-        return new Response($product->check());
+    $em = $this->getDoctrine()->getManager();        
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findAll();
+        
+        $product = $this->getProduct(14);
+        return $this->render('LoveThatFitSiteBundle:InnerSite:list.html.twig', array('products' => $entity));
+        //return new Response($product->image_paths());
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
