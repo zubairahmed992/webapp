@@ -3,7 +3,7 @@
 <section class="action_blk lgn_blk">
     <div class="action_cnt">
         <div class="small_custom_heading">Log In</div>
-        <form action="{{ path('login_check') }}" method="post">
+        <form action="{{ path('login_check') }}" method="post" class="form">
             <div class="frm_ele">            
                 <input type="text" id="username" name="_username" value="{{ last_username }}" />
             </div>
@@ -15,6 +15,71 @@
                 <input id="sbmt_bnt" type="submit" value="Submit" />
             </div>
         </form>
+        
+        
+        <script>
+            
+         $(document).ready(function(){
+         $('#username').attr("value","username");
+         $('#password').attr("value","password");
+         
+         $('.form').find('input:password').each(function() {
+   $("<input type='text' id='text'/>").attr({ name: this.name, value: this.value }).insertBefore(this);
+}).remove();  
+     
+     $('#username').focusin(function(){
+         var tt = $(this).val();
+         if(tt=='username'){
+         $(this).val('');
+         }
+     });
+         
+    $('#username').focusout(function(){   
+         var ttt = $(this).val();
+          if(ttt==''){ 
+          $(this).val('username');
+          }            
+    });    
+    
+    
+    $('#text').live('focusin', function() {
+         
+         var ee = $(this).val();
+         if(ee=='password'){
+         $(this).val('');
+         }
+         
+         
+         $('.form').find('input[id="text"]').each(function() {             
+   $("<input type='password' id='password2' >").attr({ name: this.name, value: this.value }).insertBefore(this);
+}).remove();      
+ $('#password2').focus(); 
+         });
+         
+         
+    $('#password2').live('focusout', function() {
+   
+     if($(this).val().length===0){    
+        
+       
+     $('.form').find('input[id="password2"]').each(function() {             
+   $("<input type='text' id='text' >").attr({ name: this.name, value: this.value }).insertBefore(this);
+}).remove();
+    
+      }
+      $('#text').attr("value","password");
+      
+      
+      
+    });   
+  
+   
+         });        
+          
+            
+         </script>  
+        
+        
         {% if error %}
         <div class="login_error" >
         <div id="triangle-left"></div>
