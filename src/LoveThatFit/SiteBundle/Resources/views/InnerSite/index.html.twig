@@ -10,6 +10,11 @@
 {% endblock %}
 
 {% block product_slider %}
+<div id="current_fitting_alerts">
+    <div id="curr_top_alerts"></div>
+    <div id="curr_bottom_alerts"></div>
+    <div id="curr_dress_alerts"></div>
+</div>
 <section class="products">
     
     <div id="fitting_alerts">
@@ -387,12 +392,14 @@ var scroll_heighting = 534;
     
     
     
-    $( ".prod_wrapper li .prod_node .featured_img .prod_top" ).draggable({ revert: "invalid", helper: "clone",
+    $( ".prod_wrapper li .prod_node .prod_top" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
             $(".int_fitting_room").zIndex("-10");
             
             var prod_h = 160;
             var prod_w = 200;
+            
+            
             
             //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
@@ -417,7 +424,7 @@ var scroll_heighting = 534;
     
     /// Dropable ///
     $( "#top_dropable" ).droppable({
-        accept: ".prod_wrapper li .prod_node .featured_img .prod_top",
+        accept: ".prod_wrapper li .prod_node .prod_top",
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {

@@ -1,5 +1,14 @@
 
 $(document).ready(function() { 
+ 
+  var user_height = 66 * 8 / 4 * 3;
+  var user_back = 15 * 8 / 4 * 3;
+  //var left_hand
+  //alert(user_back);
+  
+  $("#user_body_marks").css({height: user_height, width: user_back});
+ 
+ 
        //Slider Scale Photo
   var photo_width = $("#img_to_upload").width();
   var photo_height = $("#img_to_upload").height();
