@@ -19,10 +19,11 @@
         <div class="holder">
             {%if app.user %}
             <div class="welcome_box">
-                <div>Welcome: {{app.user.username}}
-                    </div>
+                <div><span>Welcome: {{app.user.username}}<span></div>
+                <div><a href="{{ path('registration_step_three_edit') }}" id="myprofile">My Profile</a></div> 
                 <a alt="Logout" title="Logout" href="{{ path('admin_logout') }}"></a>
             </div>
+               
                 {% endif %}
             <section class="site_container">
                 <div class="left_column">
