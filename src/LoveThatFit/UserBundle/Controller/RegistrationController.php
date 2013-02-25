@@ -159,21 +159,26 @@ class RegistrationController extends Controller {
                 $em->flush();
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 //send registration email ....
-                $this->get('mail_helper')->sendRegistrationEmail($entity->getEmail());
-                
+                //
+                //Removed FOR DEMO ????????????????????????????????????????????????????
+                // $this->get('mail_helper')->sendRegistrationEmail($entity->getEmail());
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 
-                $measurement = $entity->getMeasurement();
+                //$measurement = $entity->getMeasurement();
 
-                if (!$measurement) {
-                    $measurement = new Measurement();
-                }
+                //if (!$measurement) {
+                  //  $measurement = new Measurement();
+                //}
 
-                $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
-                return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
-                            'form' => $form->createView(),
-                            'entity' => $entity));
-            
+                //$form = $this->createForm(new RegistrationStepThreeType(), $measurement);
+                //return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
+                  //          'form' => $form->createView(),
+                    //        'entity' => $entity));
+             $form = $this->createForm(new RegistrationStepFourType(), $entity);
+                return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $entity));
         } else {
             return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                         'form' => $form->createView(),
@@ -204,11 +209,13 @@ class RegistrationController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($measurement);
             $em->flush();
-            
-            $form = $this->createForm(new RegistrationStepFourType(), $user);
-            return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $user));
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Change For Demo
+            //-------------------------------------------------------------
+            //$form = $this->createForm(new RegistrationStepFourType(), $user);
+            //return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+              //          'form' => $form->createView(),
+                //        'entity' => $user));
+             return $this->redirect($this->generateUrl('inner_site_index'));
         } else {
             return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                         'form' => $form->createView(),
@@ -300,7 +307,7 @@ class RegistrationController extends Controller {
             $measurement = new Measurement();
             $measurement->setUser($user);
         }
-        
+        return new Response(json_encode($measurement));
         $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
         return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                         'form' => $form->createView(),

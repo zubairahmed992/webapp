@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Yaml\Parser;
@@ -538,51 +538,68 @@ class Product {
         if (null === $this->file) {
             return;
         }
-        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->image = uniqid() .'.'. $ext;
         
-//$this->image = $this->id . '_ltf_product_' . $this->file->getClientOriginalName();
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+        $this->image = uniqid() .'.'. $ext;
 
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
         );
-        //this should be done after saved so that id can be retained & first image should have a random number
+        //this should be done after in saved callback 
         $this->resize_image();
         $this->file = null;
     }
-
+//-------------------------------------------------------
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
-
+//-------------------------------------------------------
     public function getWebPath() {
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
-
+//-------------------------------------------------------
     protected function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
-
+//-------------------------------------------------------
     protected function getUploadDir() {
-        return 'uploads/ltf/products';
+       return 'uploads/ltf/products';
+        //return $this->getImageConfiguration()['original']['dir'];        
     }
+    
+    //-------------------------------------------------------
 //------------------------------- image Resize ------------------------------------------
+    //-------------------------------------------------------
     
     
+    //---------------- read yaml for configuration --------------------
     protected function getImageConfiguration(){
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
         return $conf['image_category']['product'];
     } 
-    
+    //---------------------------------------------------------------------
     protected function getImageExtention(){
         return pathinfo($this->image, PATHINFO_EXTENSION);
     }
 
+//---------------------------------------------------------------------
         protected function getUniqueCode(){
         return str_replace('.'.$this->getImageExtention(), '', $this->image);
     }
 
+//---------------------------------------------------------------------   
+    
+     
+function validateConf ($value)
+{
+   $value['prefix']=strlen($value['prefix'])==0?'':'_'.$value['prefix'].'_';
+   return $value;
+}
+
+    
+//-------------------- resize & save images getting params from YAML -------------------------------------------------
     private function resize_image() {
         
         $filename = $this->getAbsolutePath();
@@ -607,13 +624,12 @@ class Product {
         $ext = pathinfo($this->image, PATHINFO_EXTENSION);
         
         foreach ($conf as $key => $value) {
-            if ($key!='actual')
+            if ($key!='original')
              {
-             
+            $value=$this->validateConf($value); 
+            
             $img_new = imagecreatetruecolor($value['width'], $value['height']);
             imagecopyresampled($img_new, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
-            
-            $prefix=strlen($value['prefix'])==0?'':'_'.$value['prefix'];   
             
             if (!is_dir($value['dir'])) {
     mkdir($value['dir'], 0700);
@@ -622,49 +638,47 @@ class Product {
             
             switch ($image_type) {
                 case IMAGETYPE_JPEG:
-                    imagejpeg($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key . '.jpg', 75);
+                    imagejpeg($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix']  . $key . '.jpg', 75);
                     break;
                 case IMAGETYPE_GIF:
-                    imagegif($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key . '.gif');
+                    imagegif($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix']  . $key . '.gif');
                     break;
                 case IMAGETYPE_PNG:
-                    imagepng($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key . '.png');
+                    imagepng($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix']  . $key . '.png');
                     break;
             }
             
              }
             }
         
-        
 }
 
+//-------------------- return array of image paths regenerated getting config from yaml file ----------------------------------------
+
 public function getImagePaths() {
-        
         $conf = $this->getImageConfiguration();
         $n[]=null;
          foreach ($conf as $key => $value) {
-             if ($key!='actual')
-             {
-                 $prefix=strlen($value['prefix'])==0?'':'_'.$value['prefix'];   
-                 $n[$key] = $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key  . '.' . $this->getImageExtention();
-                 
+             if ($key!='original'){
+                 $value=$this->validateConf($value);
+                 $n[$key] = $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix'] . $key  . '.' . $this->getImageExtention();
              }
             }
-        return $n;
-        
+        return $n;        
 }
 
+//---------------------------------------------------------------
    public function check() {
         
         $conf = $this->getImageConfiguration();
         
         $n='<ul>';
          foreach ($conf as $key => $value) {
-             if ($key!='actual')
+             if ($key!='original')
              {
-                 $prefix=strlen($value['prefix'])==0?'':'_'.$value['prefix'];   
+                 $value=$this->validateConf($value);
                  
-             $n=$n.'<li>'. $value['dir'] . '/' . $this->getUniqueCode() . $prefix . '_' . $key  . '.' . $this->getImageExtention();
+             $n=$n.'<li>'. $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix'] . $key  . '.' . $this->getImageExtention();
                           
              }
             }
