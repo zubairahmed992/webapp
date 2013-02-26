@@ -10,41 +10,16 @@
 {% endblock %}
 
 {% block product_slider %}
-<div id="current_fitting_alerts">
-    <div id="curr_top_alerts"></div>
-    <div id="curr_bottom_alerts"></div>
-    <div id="curr_dress_alerts"></div>
-</div>
+
 <section class="products">
     
     <div id="fitting_alerts">
         <div class="arrow_img_alerts"></div>
         <h2>Fitting Alerts</h2>
         <div class="fitting_alerts_cnt">
-            <div class="item_hldr">
-                <h3>Top Shirt</h3>
-                <ul>
-                    <li>This is msg 1.</li>
-                    <li>We need to put two line text to check how it looks like.</li>
-                    <li>How it looks like.</li>
-                </ul>
-            <!--/.item_hldr--></div>
-                <div class="item_hldr">
-                <h3>Bottom Item Name</h3>
-                <ul>
-                    <li>This is msg 1.</li>
-                    <li>We need to put two line text to check how it looks like.</li>
-                    <li>How it looks like.</li>
-                </ul>
-            <!--/.item_hldr--></div>
-                <div class="item_hldr">
-                <h3>Dress Name</h3>
-                <ul>
-                    <li>This is msg 1.</li>
-                    <li>We need to put two line text to check how it looks like.</li>
-                    <li>How it looks like.</li>
-                </ul>
-            <!--/.item_hldr--></div>
+            <div id="curr_top_alerts"></div>
+            <div id="curr_bottom_alerts"></div>
+            <div id="curr_dress_alerts"></div>
         <!--/.fitting_alerts_cnt--></div>
     <!--/#fitting_alerts--></div>
     
@@ -413,6 +388,7 @@ var scroll_heighting = 534;
         drag:function(){
         },
         stop:function (){
+            //alert($('.ui-draggable-dragging')._parent());
             $( "#top_dropable").removeClass("top_active");
             $(".int_fitting_room").zIndex("0");
         }
@@ -428,6 +404,19 @@ var scroll_heighting = 534;
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
+            
+            var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_ccc);
+            
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_top_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });            
+            
             $(this).fadeOut(300, function (){
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
@@ -481,6 +470,19 @@ var scroll_heighting = 534;
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
+            
+            var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_curr_prod);
+            
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_bottom_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });
+            
             $(this).fadeOut(300, function (){
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
@@ -521,6 +523,8 @@ var scroll_heighting = 534;
         drag:function(){
         },
         stop:function (){
+            var my_ccc = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_ccc);
             $( "#full_dropable").removeClass("top_active");
             $(".int_fitting_room").zIndex("0");
         }
@@ -532,6 +536,20 @@ var scroll_heighting = 534;
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
+            var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_ccc);
+            
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_dress_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });
+            
+            
+            
             $(this).fadeOut(300, function (){
                     var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     apply_prod = apply_prod + "_apply.png";
@@ -545,7 +563,6 @@ var scroll_heighting = 534;
                         },
                         stop: function() {
                             remove_product_applied(this);
-                           
                         }
                     });
                 });

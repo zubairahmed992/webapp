@@ -1523,17 +1523,38 @@ padding:4px 10px;
 
 .welcome_box div{
        float:left;    
-       padding: 5px 0 5px 0px!important;
+       padding: 6px 0px 8px 0 !important
+       
+}
+
+.welcome_box span{        
+      margin-top:2px;
+      display: inline-block;
+      padding:0px 2px 0px 0px;
+      margin-right: 5px;
+       
 }
 
 .welcome_box a{    
     background: url("../images/logout_icon.png") no-repeat scroll center center #383839;
     display: inline-block;
+    float: right;
     height: 12px;
     margin-left: 10px;
-    padding: 5px 10px 11px 20px;
+    padding: 10px 10px 11px 20px;
     width: 12px;
-    float:right;
+}
+
+.welcome_box div #myprofile{   
+      background: none repeat scroll 0 0 #666666 !important;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF !important;
+    float: left;
+    font-size: 0.85em;
+    margin: -3px;
+    padding: 3px 0 8px 10px;
+    width: 60px;
 }
 
 .welcome_box a:hover{
