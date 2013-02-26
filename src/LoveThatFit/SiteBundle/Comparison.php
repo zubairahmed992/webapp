@@ -29,7 +29,7 @@ class Comparison {
     
     function getFeedBackJson() {
         if (!$this->user_measurement)
-            return "Measurement not found.";
+            return "Please update your prfile in order to get suggetions.";
 
         if (!$this->product)
             return "Product not found.";
@@ -41,7 +41,7 @@ class Comparison {
     //------------------------------------------------------------------------
     function getFeedBackArray() {
         if (!$this->user_measurement)
-            return "Measurement not found.";
+            return "Please update your prfile in order to get suggetions.";
 
         if (!$this->product)
             return "Product not found.";
