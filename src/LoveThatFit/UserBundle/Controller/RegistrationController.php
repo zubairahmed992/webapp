@@ -307,7 +307,7 @@ class RegistrationController extends Controller {
             $measurement = new Measurement();
             $measurement->setUser($user);
         }
-        return new Response(json_encode($measurement));
+        
         $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
         return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                         'form' => $form->createView(),
