@@ -12,9 +12,13 @@ class ImageHelper {
     public function __construct($category, $entity)
     {
         $yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        
         $this->category=$category;
         $this->entity=$entity;
+        
+        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
+        $this->conf = $conf['image_category']['product'];
+        
     }
 
     
@@ -68,5 +72,23 @@ function validateConf ($value)
    $value['prefix']=strlen($value['prefix'])==0?'':'_'.$value['prefix'].'_';
    return $value;
 }
+//-----------------------------------------
 
+ public function check() {
+        
+        $conf = $this->getImageConfiguration();
+        
+        $n='<ul>';
+         foreach ($conf as $key => $value) {
+             if ($key!='original')
+             {
+                 $value=$this->validateConf($value);
+                 
+             $n=$n.'<li>'. $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix'] . $key  . '.' . $this->getImageExtention();
+                          
+             }
+            }
+        return $n;
+        
+}
 }
