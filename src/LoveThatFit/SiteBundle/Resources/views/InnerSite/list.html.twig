@@ -18,11 +18,13 @@
           {% for p in products %}
     <div id="item">
         <div id="product">
+{{p.id}}            
+{{p.name}}
             <img src="{{asset(p.WebPath)}}" width="100px" height="100px"/>
-            
+        <img src="{{asset(p.ImagePaths['original'])}}"  width="200px" height="200px"/>            
         <img src="{{asset(p.ImagePaths['large'])}}"/>
         <img src="{{asset(p.ImagePaths['small'])}}"/>
-        <img src="{{asset(p.ImagePaths['list'])}}"/>
+        <img src="{{asset(p.ImagePaths['icon'])}}"/>
         </div>
         
         

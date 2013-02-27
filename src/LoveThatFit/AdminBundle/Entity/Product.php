@@ -9,6 +9,7 @@ use Symfony\Component\Yaml\Parser;
 /**
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductRepository")
  * @ORM\Table(name="product")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Product {
 
@@ -534,23 +535,21 @@ class Product {
     //-------------------------------------------------
 
     public function upload() {
-        // the file property can be empty if the field is not required
         if (null === $this->file) {
             return;
-        }
-        
-        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-//?????????????????????????????????????     Demo !!
-//        $this->image = uniqid() .'.'. $ext;
-            $this->image = $this->file->getClientOriginalName();
-        $this->file->move(
-                $this->getUploadRootDir(), $this->image
-        );
-        //this should be done after in saved callback 
-//?????????????????????????????????????     Demo   
-//$this->resize_image();
-        $this->file = null;
+        }        
+        $ih=new ImageHelper('product', $this);
+        $ih->upload();
     }
+
+    //------------------------------------------------------------
+
+public function getImagePaths() {
+    $ih=new ImageHelper('product', $this);
+    return $ih->getImagePaths();        
+}
+  
+  
 //-------------------------------------------------------
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
@@ -565,126 +564,18 @@ class Product {
     }
 //-------------------------------------------------------
     protected function getUploadDir() {
-       return 'uploads/ltf/products';
-        //return $this->getImageConfiguration()['original']['dir'];        
-    }
-    
-    //-------------------------------------------------------
-//------------------------------- image Resize ------------------------------------------
-    //-------------------------------------------------------
-    
-    
-    //---------------- read yaml for configuration --------------------
-    protected function getImageConfiguration(){
-        $yaml = new Parser();
-        $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
-        return $conf['image_category']['product'];
-    } 
-    //---------------------------------------------------------------------
-    protected function getImageExtention(){
-        return pathinfo($this->image, PATHINFO_EXTENSION);
+       return 'uploads/ltf/products';            
     }
 
-//---------------------------------------------------------------------
-        protected function getUniqueCode(){
-        return str_replace('.'.$this->getImageExtention(), '', $this->image);
-    }
-
-//---------------------------------------------------------------------   
+    //---------------------------------------------------
     
-     
-function validateConf ($value)
+ /**
+ * @ORM\postRemove
+ */
+public function deleteImages()
 {
-   $value['prefix']=strlen($value['prefix'])==0?'':'_'.$value['prefix'].'_';
-   return $value;
+     $ih=new ImageHelper('product', $this);
+     $ih->deleteImages($this->image);
 }
-
     
-//-------------------- resize & save images getting params from YAML -------------------------------------------------
-    private function resize_image() {
-        
-        $filename = $this->getAbsolutePath();
-        
-        $image_info = getimagesize($filename);
-        $image_type = $image_info[2];
-
-        $conf=$this->getImageConfiguration();//read yml to conf variable
-        
-         switch ($image_type) {
-            case IMAGETYPE_JPEG:
-                $source = imagecreatefromjpeg($filename);
-                break;
-            case IMAGETYPE_GIF:
-                $source = imagecreatefromgif($filename);
-                break;
-            case IMAGETYPE_PNG:
-                $source = imagecreatefrompng($filename);
-                break;
-        }
-        
-        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
-        
-        foreach ($conf as $key => $value) {
-            if ($key!='original')
-             {
-            $value=$this->validateConf($value); 
-            
-            $img_new = imagecreatetruecolor($value['width'], $value['height']);
-            imagecopyresampled($img_new, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
-            
-            if (!is_dir($value['dir'])) {
-    mkdir($value['dir'], 0700);
-            }
-            
-            
-            switch ($image_type) {
-                case IMAGETYPE_JPEG:
-                    imagejpeg($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix']  . $key . '.jpg', 75);
-                    break;
-                case IMAGETYPE_GIF:
-                    imagegif($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix']  . $key . '.gif');
-                    break;
-                case IMAGETYPE_PNG:
-                    imagepng($img_new, $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix']  . $key . '.png');
-                    break;
-            }
-            
-             }
-            }
-        
-}
-
-//-------------------- return array of image paths regenerated getting config from yaml file ----------------------------------------
-
-public function getImagePaths() {
-        $conf = $this->getImageConfiguration();
-        $n[]=null;
-         foreach ($conf as $key => $value) {
-             if ($key!='original'){
-                 $value=$this->validateConf($value);
-                 $n[$key] = $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix'] . $key  . '.' . $this->getImageExtention();
-             }
-            }
-        return $n;        
-}
-
-//---------------------------------------------------------------
-   public function check() {
-        
-        $conf = $this->getImageConfiguration();
-        
-        $n='<ul>';
-         foreach ($conf as $key => $value) {
-             if ($key!='original')
-             {
-                 $value=$this->validateConf($value);
-                 
-             $n=$n.'<li>'. $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix'] . $key  . '.' . $this->getImageExtention();
-                          
-             }
-            }
-        return $n;
-        
-}
-
 }

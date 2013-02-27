@@ -1,13 +1,14 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="brand")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Brand {
     /**
@@ -149,15 +150,13 @@ class Brand {
             return;
         }
         
-        $this->logo = $this->id . '_ltf_brand_' . $this->file->getClientOriginalName();
-        
-        $this->file->move(
-                $this->getUploadRootDir(), $this->logo
-        );
-
-        $this->file = null;
+        //$this->logo = $this->id . '_ltf_brand_' . $this->file->getClientOriginalName();        
+        //$this->file->move($this->getUploadRootDir(), $this->logo);
+        //$this->file = null;
+       $ih=new ImageHelper('brand', $this);
+        $ih->upload();
     }
-
+//---------------------------------------------------
     
   public function getAbsolutePath()
     {
@@ -165,23 +164,32 @@ class Brand {
             ? null
             : $this->getUploadRootDir().'/'.$this->logo;
     }
-
+//---------------------------------------------------
     public function getWebPath()
     {
         return null === $this->logo
             ? null
             : $this->getUploadDir().'/'.$this->logo;
     }
-
+//---------------------------------------------------
     protected function getUploadRootDir()
     {
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
-
+//---------------------------------------------------
     protected function getUploadDir()
     {
         return 'uploads/ltf/brands';
     }
 
+    //---------------------------------------------------
     
+ /**
+ * @ORM\postRemove
+ */
+public function deleteImages()
+{
+     $ih=new ImageHelper('brand', $this);
+     $ih->deleteImages($this->logo);
+}   
 }

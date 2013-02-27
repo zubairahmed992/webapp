@@ -4,6 +4,7 @@ namespace LoveThatFit\SiteBundle\Controller;
 
 use Symfony\Component\Yaml\Dumper;
 use LoveThatFit\SiteBundle\Comparison;
+use LoveThatFit\AdminBundle\ImageHelper;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\Brand;
@@ -100,12 +101,14 @@ class InnerSiteController extends Controller {
     public function emailAction() {    
         //$this->get('mail_helper')->sendRegistrationEmail('waqasmuddasir@gmail.com');
         //return new Response('hight by taking a picture..., dont worry your email has been sent.');
-    $em = $this->getDoctrine()->getManager();        
+    
+        $em = $this->getDoctrine()->getManager();        
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findAll();
         
-        $product = $this->getProduct(14);
+        $product = $this->getProduct(28);
+        
         return $this->render('LoveThatFitSiteBundle:InnerSite:list.html.twig', array('products' => $entity));
-        //return new Response($product->image_paths());
+        //return new Response('');
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        

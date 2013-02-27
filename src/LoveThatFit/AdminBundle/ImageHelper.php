@@ -1,94 +1,186 @@
 <?php
 
 namespace LoveThatFit\AdminBundle;
+
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 class ImageHelper {
 
+    protected $category;
+    protected $entity;
+    protected $conf;
+    protected $image;
     
-
-    public function __construct($category, $entity)
-    {
+    public function __construct($category, $entity) {
         $yaml = new Parser();
-        
-        $this->category=$category;
-        $this->entity=$entity;
-        
         $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
-        $this->conf = $conf['image_category']['product'];
+        
+        $this->category = $category;
+        $this->entity = $entity;        
+        $this->conf = $conf['image_category'][$category];
+        
+        //---------- change this!! for now just for testing
+        if ($this->category=='brand')
+            $this->image=$entity->getLogo();
+        else        
+            $this->image=$entity->getImage();
         
     }
 
-    
-    public function getImageConfiguration(){
-        return $this->conf ;
-    } 
-    
-    
-    public function save()
-    {
-        switch ($this->category)
-        {
-            case 'brand':
-                break;
-            case 'product':
-                break;
-            case 'user':
-                break;
-            default:
-                break;
-        }
+    public function getImageConfiguration() {
+        return $this->conf;
     }
-    
-   public function getImagePaths() {
-        $n[]=null;
-         foreach ($this->conf as $key => $value) {
-             if ($key!='original'){
-                 $value=$this->validateConf($value);
-                 $n[$key] = $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix'] . $key  . '.' . $this->getImageExtention();
-             }
-            }
-        return $n;        
-}
 
   
-    //---------------------------------------------------------------------
-    protected function getImageExtention(){
-        return pathinfo($this->entity->getImage(), PATHINFO_EXTENSION);
-    }
-
-//---------------------------------------------------------------------
-        protected function getUniqueCode(){
-        return str_replace('.'.$this->getImageExtention(), '', $this->entity->getImage());
-    }
-
-//---------------------------------------------------------------------   
     
-     
-function validateConf ($value)
-{
-   $value['prefix']=strlen($value['prefix'])==0?'':'_'.$value['prefix'].'_';
-   return $value;
-}
-//-----------------------------------------
+     public function upload() {
+        
+        if (null === $this->entity->file) {
+            return;
+        }
+        
+        $previous_image=$this->image;
+        $ext = pathinfo($this->entity->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        
+        $this->image=uniqid() .'.'. $ext;
+                //---------- change this!!
+        if ($this->category=='brand')
+            $this->entity->setLogo($this->image);            
+        else        
+            $this->entity->setImage($this->image);            
+        
+        $this->entity->file->move(
+                $this->getUploadRootDir(), $this->image
+        );
+        
+        $this->resize_image();
+        //$this->deleteImages($previous_image); Permission issues need to sort out
+        $this->entity->file = null;
+    }
+    
 
- public function check() {
-        
-        $conf = $this->getImageConfiguration();
-        
-        $n='<ul>';
-         foreach ($conf as $key => $value) {
-             if ($key!='original')
-             {
-                 $value=$this->validateConf($value);
-                 
-             $n=$n.'<li>'. $value['dir'] . '/' . $this->getUniqueCode() . $value['prefix'] . $key  . '.' . $this->getImageExtention();
-                          
-             }
+    private function resize_image() {
+
+        $filename = $this->getAbsolutePath();
+        $image_info = getimagesize($filename);
+        $image_type = $image_info[2];
+
+        $conf = $this->getImageConfiguration(); //read yml to conf variable
+
+        switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                $source = imagecreatefromjpeg($filename);
+                break;
+            case IMAGETYPE_GIF:
+                $source = imagecreatefromgif($filename);
+                break;
+            case IMAGETYPE_PNG:
+                $source = imagecreatefrompng($filename);
+                break;
+        }
+
+        foreach ($conf as $key => $value) {
+            if ($key != 'original') {
+                $value = $this->validateConf($value);
+                $img_new = imagecreatetruecolor($value['width'], $value['height']);
+                imagecopyresampled($img_new, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
+
+                if (!is_dir($value['dir'])) {
+                    mkdir($value['dir'], 0700);
+                }
+
+                switch ($image_type) {
+                    case IMAGETYPE_JPEG:
+                        imagejpeg($img_new, $this->generateThisImagePath($key, $value), 75);
+                        break;
+                    case IMAGETYPE_GIF:
+                        imagegif($img_new, $this->generateThisImagePath($key, $value));
+                        break;
+                    case IMAGETYPE_PNG:
+                        imagepng($img_new, $this->generateThisImagePath($key, $value));
+                        break;
+                }
+         
+            
+
             }
+        }
+    }
+
+    //------------------------------------------------------------------
+    public function getImagePaths() {
+        $n[] = null;
+        foreach ($this->conf as $key => $value) {
+            $value = $this->validateConf($value);
+            $n[$key] = $this->generateImagePath($key, $value, $this->image);
+        }
         return $n;
+    }
+    //-------------------------------------------------------
+    
+    private function generateThisImagePath($key, $value)
+    {
+        return $this->generateImagePath($key, $value, $this->image);
+    }
+    private function generateImagePath($key, $value, $filename)
+    {
+        if ($key == 'original') {
+                return $value['dir'] . '/' . $this->stripFileName($filename) . '.' . $this->stripImageExtention($filename);
+            }else{
+                return $value['dir'] . '/' . $this->stripFileName($filename) . $value['prefix'] . $key . '.' . $this->stripImageExtention($filename);
+            }         
+    }
+
+    //---------------------------------------------------------------------
+    
+    private function stripImageExtention($file_name) {
+        return pathinfo($file_name, PATHINFO_EXTENSION);
+    }
+//---------------------------------------------------------------------
+    
+    private function stripFileName($file_name) {
+        return str_replace('.' . $this->stripImageExtention($file_name), '', $file_name);
+    }
+    
+//---------------------------------------------------------------------   
+
+    private function validateConf($value) {
+        $value['prefix'] = strlen($value['prefix']) == 0 ? '' : $value['prefix'];
+        return $value;
+    }
+
+//-------------------------------------------------------
+    private function getAbsolutePath() {
+        return null === $this->image? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+
+//-------------------------------------------------------
+    private function getUploadRootDir() {
+        return __DIR__ . '/../../../web/' . $this->getUploadDir();
+    }
+
+//-------------------------------------------------------
+    private function getUploadDir() {
+        return $this->conf['original']['dir'];
+    }
+//-----------------------------------------------
+    
+    public function deleteImages($old_filename)
+    {
+        foreach ($this->conf as $key => $value) {
+            $value = $this->validateConf($value);
+            $generated_file_name =  $this->generateImagePath($key, $value, $old_filename);
+            
+            if (is_readable($generated_file_name )){
+                unlink($generated_file_name );    
+            }
+        }
         
+    }
+
+  
+    
 }
-}
+
