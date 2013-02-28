@@ -21,7 +21,7 @@ class ImageHelper {
         $this->entity = $entity;        
         $this->conf = $conf['image_category'][$category];
         
-        //---------- change this!! for now just for testing
+        //---------- needs to change the field name from logo to image for brand
         if ($this->category=='brand')
             $this->image=$entity->getLogo();
         else        
@@ -56,7 +56,10 @@ class ImageHelper {
         );
         
         $this->resize_image();
-        //$this->deleteImages($previous_image); Permission issues need to sort out
+        //if record is being updated, then delete previous images
+        if ($this->entity->getId())
+            $this->deleteImages($previous_image); 
+        
         $this->entity->file = null;
     }
     
