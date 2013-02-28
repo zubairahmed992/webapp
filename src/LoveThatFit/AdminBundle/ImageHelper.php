@@ -69,7 +69,7 @@ class ImageHelper {
         $filename = $this->getAbsolutePath();
         $image_info = getimagesize($filename);
         $image_type = $image_info[2];
-
+        
         $conf = $this->getImageConfiguration(); //read yml to conf variable
 
         switch ($image_type) {
@@ -84,11 +84,14 @@ class ImageHelper {
                 break;
         }
 
+        //scal down dimentions of the image, nearest possible to the given standard dimentions
+        $resize_dimention=$this->getResizeDimentions();
+
         foreach ($conf as $key => $value) {
             if ($key != 'original') {
                 $value = $this->validateConf($value);
-                $img_new = imagecreatetruecolor($value['width'], $value['height']);
-                imagecopyresampled($img_new, $source, 0, 0, 0, 0, $value['width'], $value['height'], imagesx($source), imagesy($source));
+                $img_new = imagecreatetruecolor($resize_dimention[$key]['width'], $resize_dimention[$key]['height']);
+                imagecopyresampled($img_new, $source, 0, 0, 0, 0, $resize_dimention[$key]['width'], $resize_dimention[$key]['height'], imagesx($source), imagesy($source));
 
                 if (!is_dir($value['dir'])) {
                     mkdir($value['dir'], 0700);
@@ -111,7 +114,24 @@ class ImageHelper {
             }
         }
     }
+//---------------------------------------------------------------------
 
+    public function getResizeDimentions() {
+        
+        $image_info = getimagesize($this->getAbsolutePath());
+        $iw = $image_info[0] ;
+        $ih = $image_info [1];
+
+        foreach ($this->conf as $key => $value) {
+            if ($key != 'original') {
+                $percent = $iw > $ih ? $value['width'] / $iw : $value['height'] / $ih;
+                $n[$key]['width'] = round($iw * $percent);
+                $n[$key]['height'] = round($ih * $percent);
+            }
+        }
+        return $n;
+    }
+    
     //------------------------------------------------------------------
     public function getImagePaths() {
         $n[] = null;
