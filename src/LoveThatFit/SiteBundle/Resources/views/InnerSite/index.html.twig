@@ -360,10 +360,10 @@ var scroll_heighting = 534;
     <nav>
     <ul>
         
-        <li><a href="#"><span></span>Applied Items<span class="mnu"></span></a>
+        <li ><a href="#"><span></span>Applied Items<span class="mnu"></span></a>
             
             
-            <ul style="display: block;">
+            <ul style="display: block;" id="fchld">
                   <li>
                        <span class="cross_icon"></span>
                        <span class="cart_item"><img src="{{ asset('bundles/lovethatfit/site/images/cart_item_1.png') }}"</span>
@@ -401,13 +401,29 @@ var scroll_heighting = 534;
             </li>
             <li><a href="#"><span></span>Twitter Notes<span class="mnu"></span></a>
                     
-                
+                <ul style="display: block;">
+                  <li>
+                       <span class="cross_icon"></span>
+                       <span class="cart_item"><img src="{{ asset('bundles/lovethatfit/site/images/cart_item_1.png') }}"</span>
+                       <a href="#">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li> 
+                    </ul>
                 
                 
                 </li>
                 <li><a href="#"><span></span>Facebook Friends<span class="mnu"></span></a>
                    
-                    
+                   <ul style="display: block;">
+                  <li>
+                       <span class="cross_icon"></span>
+                       <span class="cart_item"><img src="{{ asset('bundles/lovethatfit/site/images/cart_item_1.png') }}"</span>
+                       <a href="#">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li> 
+                    </ul>  
                     
                     
                 </li>
@@ -431,6 +447,10 @@ var scroll_heighting = 534;
 
         $(".pro_cart nav ul li ul").parent().addClass("sub_menu");
         $(".pro_cart nav ul li ul").css("display","none");
+        
+        $("#fchld").css("display","block");
+        
+        $(".pro_cart nav ul li").css("display","block");
         $(".pro_cart nav > ul > li > a").click(function (){
             $(".pro_cart nav ul li ul").slideUp().parent().removeClass("opn_link");
             var chk_curr_ele = $(this).parent().find("ul").css("display");
@@ -480,7 +500,5 @@ var scroll_heighting = 534;
         
     });
 </script>
-    
-    
-    
-{% endblock %}    
+ 
+{% endblock %} 
