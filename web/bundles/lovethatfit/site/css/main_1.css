@@ -1,0 +1,127 @@
+.pro_cart{    
+  width:210px; 
+  float: right; 
+  margin: 50px 10px 0px 0px; 
+}
+
+.pro_cart nav ul{  
+    list-style: none;
+    padding:0px 0px 0px 0px;
+    margin:0px 0px 0px 0px;
+}
+
+.pro_cart nav ul li{      
+    margin-bottom: 2px;     
+    font-size: 0.95em;
+    line-height: 25px;
+    position: relative;
+    font-family: Arial!important;
+    
+}
+
+.pro_cart nav ul li.opn_link a{	
+	
+}
+
+.pro_cart nav ul li a{  
+    background: #a7a7a9;
+    color: #fff;
+    display:block;
+    text-decoration: none;
+    padding:7px 0px 7px 10px;
+     
+}
+.pro_cart nav ul li ul{  
+    list-style: none;
+    padding:0px 0px 0px 0px;
+    margin:0px 0px 0px 0px;
+    background:url(../images/trans_dot2.png) left top repeat!important;     
+
+}
+
+.pro_cart nav ul li ul li{
+      
+    font-size: 0.95em;
+    padding:5px 0px;
+    border-bottom: 1px solid #a3a3a3;
+    overflow:auto;
+}
+
+.pro_cart nav ul li ul li a{  
+    margin-bottom: 2px;    
+    padding:5px;  
+    background: none!important;
+    color: #000;
+    font-size: 0.95em;
+    line-height: 30px;
+    float: left;
+    
+}
+
+.cross_icon{
+  background:url(../images/del_icon2.png) no-repeat!important;  
+  width:16px;
+  height:16px;
+  display:inline-block;
+  float:left;
+  margin:12px 5px 0px 5px;
+
+}
+
+.cart_item{ 
+  display:inline-block;
+  float:left;
+}
+.cart_item img{   
+  float:left;
+}
+
+.cart_item_price{ 
+  display:inline-block;
+  float:right;
+  margin: 16px 0px 0px 20px;
+}
+
+#total_cart{
+    padding:10px 0px 10px 10px;
+     background:url(../images/trans_dot3.png) left top repeat!important;     
+}
+
+#total_cart #totalamount{
+    float:right;
+    display:inline-block;
+    font-weight: bold;
+    margin-right: 10px;
+     
+}
+
+
+.pro_cart nav ul li span.mnu {    
+   background:url(../images/menu_arrow.png) no-repeat scroll 0 0 transparent;
+    height: 15px;
+    position: absolute;
+    right: 0;
+    top: 16px;
+    width: 16px;
+}
+
+
+
+
+.pro_cart nav ul li span.cl_mn{
+    background:url(../images/menu_arrow_cl.png) no-repeat scroll 0 0 transparent;
+    height: 15px;
+    position: absolute;
+    right: 0;
+    top: 13px;
+    width: 16px;	
+}
+
+.pro_cart nav ul li.opn_link a span{	
+ background:url(../images/menu_arrow_cl.png) no-repeat scroll 0 0 transparent;
+    height: 15px;
+    position: absolute;
+    
+    top: 13px;
+   	
+}
