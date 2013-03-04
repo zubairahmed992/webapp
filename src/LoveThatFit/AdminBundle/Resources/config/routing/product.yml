@@ -4,8 +4,8 @@ admin_product_show:
     defaults: { _controller: LoveThatFitAdminBundle:Product:show }
     
 admin_products:
-    pattern:  /admin/products/{page_number}/{limit}/{sort}
-    defaults: { _controller: LoveThatFitAdminBundle:Product:index , page_number: 1, limit: 5, sort:id}
+    pattern:  /admin/products/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:index , page_number: 1, sort:id}
 
 admin_product_new:
     pattern:  /product/new

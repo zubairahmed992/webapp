@@ -1,43 +1,44 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Controller;
+
 use LoveThatFit\AdminBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductType;
 
-
 class ProductController extends Controller {
+
 //---------------------------------------------------------------------
-    public function indexAction($page_number=1, $limit=5 , $sort='id') {
-		//$per_page_limit=5;
-		
-		$productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');	
-      
-	    $products = $this->getDoctrine()
+    public function indexAction($page_number = 1, $sort = 'id') {
+        $limit = 5;
+
+        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+
+        $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findAllProduct($page_number,$limit,$sort);
-				
-		//return new Response(count($products)); 
-		$rec_count = count($productObj->countAllRecord());
-		$cur_page = $page_number;
-		
-		if($page_number==0|| $limit==0)
-		{
-			$no_of_paginations=0;
-		}
-		else
-		{
-			$no_of_paginations = ceil($rec_count /$limit);
-		}
-		//return new Response(json_encode($no_of_paginations)); 
- return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', 
-	 array('products' => $products,'rec_count'=>$rec_count,'no_of_pagination'=>$no_of_paginations,'limit'=>$cur_page,'per_page_limit'=>$limit));
+                ->findAllProduct($page_number, $limit, $sort);
+
+        $rec_count = count($productObj->countAllRecord());
+        $cur_page = $page_number;
+
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
+        }
+
+        return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', 
+                array(
+                    'products' => $products, 
+                    'rec_count' => $rec_count, 
+                    'no_of_pagination' => $no_of_paginations, 
+                    'limit' => $cur_page, 
+                    'per_page_limit' => $limit,
+                    ));
     }
 
-
-    
 //--------------------------------------------------------------------- 
     public function showAction($id) {
         $entity = $this->getDoctrine()
@@ -53,38 +54,33 @@ class ProductController extends Controller {
                 ));
     }
 
-
-    
 //--------------------------------------------------------------------- 
-      public function newAction() {
+    public function newAction() {
 
         $entity = new Product();
 
-        $form = $this-> getEditForm($entity);
-        
+        $form = $this->getEditForm($entity);
+
 
         return $this->render('LoveThatFitAdminBundle:Product:new.html.twig', array(
                     'form' => $form->createView()));
     }
-    
 
-    
 //--------------------------------------------------------------------- 
-    public function createAction(Request $request)
-    {
-        $entity  = new Product();
-        
-        $form = $this -> getEditForm($entity);
-        
+    public function createAction(Request $request) {
+        $entity = new Product();
+
+        $form = $this->getEditForm($entity);
+
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
-            
-            $entity->upload();//----- file upload method 
-            
+
+            $entity->upload(); //----- file upload method 
+
             $em->persist($entity);
             $em->flush();
 
@@ -92,32 +88,30 @@ class ProductController extends Controller {
         }
 
         return $this->render('LoveThatFitAdminBundle:Product:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+                ));
     }
 
-    
 //--------------------------------------------------------------------- 
-    
-      public function editAction($id) {
+
+    public function editAction($id) {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->findOneById($id);
 
         $form = $this->getEditForm($entity);
         $deleteForm = $this->getDeleteForm($id);
-        
+
         return $this->render('LoveThatFitAdminBundle:Product:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));
     }
-   
 
 //--------------------------------------------------------------------- 
-     public function updateAction(Request $request, $id) {
-        
+    public function updateAction(Request $request, $id) {
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
@@ -131,27 +125,23 @@ class ProductController extends Controller {
         $deleteForm = $this->getDeleteForm($id);
 
         if ($form->isValid()) {
-            
-            
+
+
             $entity->setUpdatedAt(new \DateTime('now'));
-            
+
             $entity->upload(); //----- file upload method 
-            
+
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
-        } 
-
-        else {
-           throw $this->createNotFoundException('Unable to update Brand.');
+        } else {
+            throw $this->createNotFoundException('Unable to update Brand.');
         }
     }
 
-    
 //--------------------------------------------------------------------- 
-    public function deleteAction($id)
-    {
-        
+    public function deleteAction($id) {
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
@@ -161,40 +151,33 @@ class ProductController extends Controller {
 
         $em->remove($entity);
         $em->flush();
-        
+
         return $this->redirect($this->generateUrl('admin_products'));
     }
-    
-   
 
 //--------------------------------------------------------------------- 
-    
+
     private function getEditForm($entity) {
-        return  $this->createForm(new ProductType(), $entity);        
+        return $this->createForm(new ProductType(), $entity);
     }
-    
-    
+
 //---------------------------------------------------------------------
     private function getDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
                         ->add('id', 'hidden')
                         ->getForm();
     }
-   
 
 //--------------------------------------------------------------------- 
-    private function getBrand($id)
-    {
-         $em = $this->getDoctrine()->getManager();
+    private function getBrand($id) {
+        $em = $this->getDoctrine()->getManager();
         $brand = $em->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
         return $brand;
-        
     }
-   
-   
-   }
+
+}
 
