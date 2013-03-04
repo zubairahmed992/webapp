@@ -54,6 +54,10 @@ admin_login:
     pattern:   /admin/login
     defaults:  { _controller: LoveThatFitUserBundle:Security:adminLogin }
 
+admin:
+    pattern:   /admin
+    defaults:  { _controller: LoveThatFitUserBundle:Security:adminLogin }
+
 login:
     pattern:   /login
     defaults:  { _controller: LoveThatFitUserBundle:Security:login }

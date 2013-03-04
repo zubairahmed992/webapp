@@ -100,20 +100,20 @@ class ClothingTypeController extends Controller {
 
         $form = $this->createEditForm($entity);
         $form->bind($request);
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        if ($form->isValid()) {
-            $entity->setUpdatedAt(new \DateTime('now'));
+        
+         
+        
+if ($form->isValid()) {
+    
 
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('admin_clothing_types'));
-        } 
-
-        else {
-           throw $this->createNotFoundException('Unable to update Clothing Type.');
-        }
+}
+else
+{
+            return $this->redirect($this->generateUrl('admin_clothing_types'));
+}
     }
     
     //------------------------------------------------------------------------------------------
