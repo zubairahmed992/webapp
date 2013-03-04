@@ -1,4 +1,11 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('admin_clothing_types') }}" >Clothing Types</a> <span class="divider">/</span></li>
+<li class="active">Show</li>
+{% endblock %}
+
+
 {% block h1 %}Clothing Types{% endblock %}
 
 {% block title %}Clothing Type{% endblock %}
@@ -10,8 +17,8 @@
     <h1 style="float:left;">Clothing Type Details</h1>
      <div class="btn_wrapper">     
          <a href="{{ path('admin_clothing_types') }}" class="btn">back</a>
-      <a href="" class="btn">Edit</a>
-      <a href="" class="btn">Delete</a>
+        <a href="{{ path('admin_clothing_type_edit', {'id': clothing_type.Id}) }}" class="btn">Edit</a>      
+      <a href="{{ path('admin_clothing_type_delete', {'id': clothing_type.Id}) }}" class="btn">Delete</a>
       
       </div>
       <div class="clearfix"></div>   
@@ -33,15 +40,8 @@
                                     <div class="span3">Target</div>
                                     <div class="span3">{{clothing_type.target }}</div>
                                     </div>
-                                     
-                                    
                                 </div>  
-                                
                                 </div> 
-                                     
-
-
-
                                 </div>      
                             </div><!-- End pro_detail -->      
                         </div><!-- End product_content --> 

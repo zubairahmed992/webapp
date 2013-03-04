@@ -1,7 +1,10 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
-Products / New
+ 
+<li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span></li>
+          <li class="active">New</li>
+          
 {% endblock %}
 
 
@@ -30,7 +33,8 @@ Products / New
 
                     <div class="clearfix"></div>
                     <div style="margin-top:20px; margin-left:5px;">
-    {{ form_errors(form.file) }}
+    
+{{ form_errors(form.file) }}
     {{ form_widget(form.file) }}
                         </div>
                     </div>         

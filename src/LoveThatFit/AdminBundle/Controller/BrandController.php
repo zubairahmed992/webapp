@@ -48,8 +48,8 @@ class BrandController extends Controller {
     //------------------------------------------------------------------------------------------
     public function createAction(Request $request)
     {
-        $entity  = new Brand();
-        
+        $entity  = new Brand();        
+        $entity->setLogo($request->getParameter('file'));
         $form = $this->createFormBuilder($entity)
                 ->add('name', 'text')
                 ->add('file')
@@ -124,12 +124,8 @@ class BrandController extends Controller {
 
 //------------------------------------------------------------------------------------------
     
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->getDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
 
@@ -139,7 +135,7 @@ class BrandController extends Controller {
 
             $em->remove($entity);
             $em->flush();
-        }
+       
         return $this->redirect($this->generateUrl('admin_brands'));
     }
 

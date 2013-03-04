@@ -1,7 +1,6 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-
 {% block breadcrumb %}
-    Brands
+       <li class="active">Brands</li>
 {% endblock %}
 
 {% block body %}
@@ -33,6 +32,7 @@
                 <div>
                     <a href="{{ path('admin_brand_show', {'id': b.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}"><i class="icon-edit"></i></a>
+                    <a href="{{ path('admin_brand_delete', {'id': b.Id}) }}">del</a>
                 </div> 
             </div>              
         </div>

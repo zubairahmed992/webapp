@@ -32,5 +32,4 @@ admin_brand_update:
 admin_brand_delete:
     pattern:  /admin/brand/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Brand:delete }
-    requirements: 
-           _method: POST 
+    

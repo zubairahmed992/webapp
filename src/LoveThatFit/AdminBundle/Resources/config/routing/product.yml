@@ -29,4 +29,4 @@ admin_product_update:
 admin_product_delete:
     pattern:  /product/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Product:delete }
-    requirements: { _method: post }
+    

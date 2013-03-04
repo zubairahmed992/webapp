@@ -131,22 +131,19 @@ class ProductController extends Controller {
 
     
 //--------------------------------------------------------------------- 
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->getDeleteForm($id);
-        $form->bind($request);
+        
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Product.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
         }
+
+        $em->remove($entity);
+        $em->flush();
+        
         return $this->redirect($this->generateUrl('admin_products'));
     }
     

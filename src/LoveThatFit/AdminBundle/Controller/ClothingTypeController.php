@@ -118,12 +118,8 @@ class ClothingTypeController extends Controller {
     
     //------------------------------------------------------------------------------------------
     
-     public function deleteAction(Request $request, $id)
+     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
 
@@ -133,8 +129,7 @@ class ClothingTypeController extends Controller {
 
             $em->remove($entity);
             $em->flush();
-        }
-
+        
         return $this->redirect($this->generateUrl('admin_clothing_types'));
     }
     

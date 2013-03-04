@@ -1,11 +1,15 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('admin_clothing_types') }}" >Clothing Types</a> <span class="divider">/</span></li>
+<li class="active">New</li>
+{% endblock %}
+
 {% block h1 %}Clothing Types{% endblock %}
 
 {% block title %}Clothing Type{% endblock %}
 
-
 {% block body %}
-
 <div>      
     <h1 style="float:left;">New Clothing Type </h1>
     <div class="btn_wrapper">     

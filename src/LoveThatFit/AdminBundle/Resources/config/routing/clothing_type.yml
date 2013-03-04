@@ -31,6 +31,5 @@ admin_clothing_type_update:
 admin_clothing_type_delete:
     pattern:  /admin/clothing_type/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:ClothingType:delete }
-    requirements: 
-           _method: POST 
+    
         
