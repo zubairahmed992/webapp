@@ -10,12 +10,30 @@ use LoveThatFit\AdminBundle\Form\Type\ProductType;
 
 class ProductController extends Controller {
 //---------------------------------------------------------------------
-    public function indexAction() {
-        $products = $this->getDoctrine()
+    public function indexAction($page_number=1, $limit=5 , $sort='id') {
+		//$per_page_limit=5;
+		
+		$productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');	
+      
+	    $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findAll();
-
-        return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', array('products' => $products));
+                ->findAllProduct($page_number,$limit,$sort);
+				
+		//return new Response(count($products)); 
+		$rec_count = count($productObj->countAllRecord());
+		$cur_page = $page_number;
+		
+		if($page_number==0|| $limit==0)
+		{
+			$no_of_paginations=0;
+		}
+		else
+		{
+			$no_of_paginations = ceil($rec_count /$limit);
+		}
+		//return new Response(json_encode($no_of_paginations)); 
+ return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', 
+	 array('products' => $products,'rec_count'=>$rec_count,'no_of_pagination'=>$no_of_paginations,'limit'=>$cur_page,'per_page_limit'=>$limit));
     }
 
 

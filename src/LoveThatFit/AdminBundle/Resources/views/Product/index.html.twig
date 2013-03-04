@@ -6,6 +6,7 @@
 
 
 {% block body %}
+  
 <div class="p_listing">     
     <h1 style="float:left;">Products</h1>
  <div class="btn_wrapper">     
@@ -15,12 +16,12 @@
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">
-            <div class="span1 hds">ID</div>
-            <div class="span1 hds">Name</div>
-            <div class="span1 hds">Gender</div>
-            <div class="span1 hds">Brand</div>
-            <div class="span1 hds">Type</div>
-            <div class="span1 hds">image</div>              
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~ per_page_limit~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~ per_page_limit~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~ per_page_limit~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
+            <div class="span1 hds"><a href="#_">Brand</a></div>
+            <div class="span1 hds"><a href="#_">Type</a></div>
+            <div class="span1 hds"><a href="#_">image</a></div>              
             <div class="span1 hds"></div>      
             
         </div>  
@@ -39,6 +40,7 @@
                     <a href="{{ path('admin_product_show', {'id': p.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_product_edit', {'id': p.Id}) }}"><i class="icon-edit"></i></a>
                     <a href="{{ path('admin_product_delete', {'id': p.Id}) }}">del</a>
+                   
                     
                 </div> 
             </div>              
@@ -47,15 +49,28 @@
 
 {% endfor %}
 
+   
 
+ </div> 
 
     </div>
+   
+     
+     
 </div>
 
+ {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'admin_products'}
+        %}     
 
-{% endblock %}
+ {% endblock %}
+
+ 
 
 
 
+   
+  
 
 
