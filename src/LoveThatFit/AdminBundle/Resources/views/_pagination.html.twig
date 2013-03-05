@@ -11,7 +11,7 @@
     <ul>
       {% if previous_btn and limit > 1 %}
        {% set  back = limit - 1 %}
-            <li  class='active'>
+            <li>
                 <a href="{{  path(controller_name,{'page_number':back})}}"><<</a></li>
        {% elseif previous_btn %}
             <li class='disabled'>
@@ -23,10 +23,10 @@
 {#------------------- Pagination buttons --------------------------------- #}            
      {% for y in range(1,no_of_pagination) %}
       {% if limit==y %}  
-            <li   class='active'>
+            <li>
                 <a href="{{  path(controller_name,{'page_number':y}) }}">{{y}}</a></li> 
        {% else %}   
-            <li  class='active'>
+            <li>
                 <a href="{{  path(controller_name)~'/'~ y }}">{{y}}</a>
             </li>
         {% endif %}  
@@ -40,7 +40,7 @@
 
        {% if next_btn and limit < no_of_pagination %} 
                 {% set nex = limit + 1%}
-                <li  class='active'>
+                <li>
                     <a href="{{  path(controller_name,{'page_number':nex})}}" > >></a>
                 </li>
                 {% elseif next_btn %}

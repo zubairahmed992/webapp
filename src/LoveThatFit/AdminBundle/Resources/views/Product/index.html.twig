@@ -41,7 +41,7 @@
                     <a href="{{ path('admin_product_show', {'id': p.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_product_edit', {'id': p.Id}) }}"><i class="icon-edit"></i></a>
                     
-                   <a href="#myModal" role="button" class="btn" data-toggle="modal">Del</a>
+                   <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
  
 
                     
@@ -74,13 +74,13 @@
 
     </div>
    
-     
+   {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'admin_products'}
+        %}        
      
 </div>
 
- {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
-  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
-,'controller_name':'admin_products'}
-        %}     
+
 
  {% endblock %}
