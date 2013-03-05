@@ -41,7 +41,7 @@
                     <a href="{{ path('admin_product_show', {'id': p.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_product_edit', {'id': p.Id}) }}"><i class="icon-edit"></i></a>
                     
-                   <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                   <a href="#myModal{{p.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
  
 
                     
@@ -50,7 +50,7 @@
                 
         </div>
         <!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="myModal{{p.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Delete Product</h3>

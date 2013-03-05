@@ -17,8 +17,9 @@
     <h1 style="float:left;">Clothing Type Details</h1>
      <div class="btn_wrapper">     
          <a href="{{ path('admin_clothing_types') }}" class="btn">back</a>
-        <a href="{{ path('admin_clothing_type_edit', {'id': clothing_type.Id}) }}" class="btn">Edit</a>      
-      <a href="{{ path('admin_clothing_type_delete', {'id': clothing_type.Id}) }}" class="btn">Delete</a>
+         <a href="{{ path('admin_clothing_type_edit', {'id': clothing_type.Id}) }}" class="btn">Edit</a>      
+     
+        <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
       
       </div>
       <div class="clearfix"></div>   
@@ -47,7 +48,21 @@
                         </div><!-- End product_content --> 
                     </div> <!-- End detail_wrapper -->
                 </form>  
-                
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Clothing Type</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Clothing Type <b>{{clothing_type.name }}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_clothing_type_delete', {'id': clothing_type.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>                     
             </div>      
 
 {% endblock %}

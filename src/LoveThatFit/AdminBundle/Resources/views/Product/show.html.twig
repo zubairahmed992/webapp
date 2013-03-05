@@ -17,7 +17,7 @@
     <div class="btn_wrapper">     
       <a href="{{ path('admin_products') }}" class="btn">back</a>
       <a href="{{ path('admin_product_edit', {'id': product.Id}) }}" class="btn">Edit</a>      
-      <a href="{{ path('admin_product_delete', {'id': product.Id}) }}" class="btn">Delete</a>
+      <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
      </div>
       <div class="clearfix"></div>   
     
@@ -104,10 +104,28 @@
                         </div><!-- End product_content --> 
                     </div> <!-- End detail_wrapper -->
                 </form>  
+  <!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Product</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Product <b>{{product.name }}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_product_delete', {'id': product.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>              
                 
+                
+                
+                
+ 
             </div>      
 
 
 
 {% endblock %}
-
