@@ -1,7 +1,7 @@
 
 admin_brands:
-    pattern:  /admin/brands
-    defaults: { _controller: LoveThatFitAdminBundle:Brand:index }
+    pattern:  /admin/brands/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:index ,page_number: 1, sort:id }
 
 admin_brand_show:
     pattern:  /admin/brand/{id}/show

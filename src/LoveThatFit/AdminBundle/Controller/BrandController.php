@@ -10,11 +10,28 @@ use LoveThatFit\AdminBundle\Entity\Brand;
 class BrandController extends Controller {
 
     //------------------------------------------------------------------------------------------
-    public function indexAction() {
+    public function indexAction($page_number, $sort = 'id') {
+		$limit = 5;
+		$brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
-                ->findAll();
-        return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', array('brands' => $entity));
+                 ->findAllBrand($page_number, $limit, $sort);
+		$rec_count = count($brandObj->countAllRecord());
+		$cur_page = $page_number;
+
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
+        }
+        return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig',
+		       array(
+			    	'brands' => $entity,
+					'rec_count' => $rec_count, 
+                    'no_of_pagination' => $no_of_paginations, 
+                    'limit' => $cur_page, 
+                    'per_page_limit' => $limit,
+					));
     }
 //------------------------------------------------------------------------------------------
     

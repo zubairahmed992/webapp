@@ -15,7 +15,7 @@ class ClothingTypeController extends Controller {
                 ->getRepository('LoveThatFitAdminBundle:ClothingType')
                ->findAllClothingType($page_number, $limit, $sort);
 	 	$rec_count = count($clothingObj->countAllRecord());
-		 $cur_page = $page_number;
+		$cur_page = $page_number;
 
         if ($page_number == 0 || $limit == 0) {
             $no_of_paginations = 0;
