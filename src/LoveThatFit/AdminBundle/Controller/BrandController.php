@@ -143,6 +143,7 @@ class BrandController extends Controller {
     
     public function deleteAction($id)
     {
+        try{
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
 
@@ -152,8 +153,18 @@ class BrandController extends Controller {
 
             $em->remove($entity);
             $em->flush();
-       
-        return $this->redirect($this->generateUrl('admin_brands'));
+       return $this->redirect($this->generateUrl('admin_brands'));
+        }catch (\Doctrine\DBAL\DBALException $e)
+        {
+             $this->get('session')->setFlash(
+            'warning',
+            'This Brand cannot be deleted!'
+        );
+             return $this->redirect($this->getRequest()->headers->get('referer'));
+             
+        }
+        
+        
     }
 
 //------------------------------------------------------------------------------------------    

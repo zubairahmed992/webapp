@@ -51,7 +51,16 @@
     </ul>
 
     <!-- Breadcrumb End -->      
-      
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Warning!</strong> 
+  
+        {{ app.session.flash('warning') }}
+    
+</div>
+   
+{% endif %}      
    <div class="container-fluid">      
    
             {% block body %}{% endblock %}
