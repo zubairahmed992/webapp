@@ -1,6 +1,6 @@
 admin_clothing_types:
-    pattern:  /admin/clothing_types
-    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:index }
+    pattern:  /admin/clothing_types/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:index ,page_number: 1, sort:id }
 
 admin_clothing_type_show:
     pattern:  /admin/clothing_type/{id}/show

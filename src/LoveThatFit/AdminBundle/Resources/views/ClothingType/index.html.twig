@@ -1,5 +1,3 @@
-
-
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
@@ -19,9 +17,9 @@
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">
-            <div class="span3 hds">ID</div>
-            <div class="span3 hds">Name</div>
-            <div class="span3 hds">Target</div>
+            <div class="span3 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
+            <div class="span3 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+            <div class="span3 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'target' }}" style=" text-decoration: none;">Target</a></div>
             <div class="span3 hds">&nbsp;</div>              
         </div>  
 
@@ -46,6 +44,10 @@
 
 
     </div>
+      {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'admin_clothing_types'}
+        %}   
 </div>
 
 

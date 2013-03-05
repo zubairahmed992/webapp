@@ -1,7 +1,5 @@
 <?php
-
 namespace LoveThatFit\AdminBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,12 +7,30 @@ use LoveThatFit\AdminBundle\Entity\ClothingType;
 
 class ClothingTypeController extends Controller {
 //------------------------------------------------------------------------------------------
-    public function indexAction() {
-        $clothing_types = $this->getDoctrine()
+    public function indexAction($page_number, $sort = 'id') {
+		$limit = 5;
+		$clothingObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
+		
+		$clothing_types = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                ->findAll();
+               ->findAllClothingType($page_number, $limit, $sort);
+	 	$rec_count = count($clothingObj->countAllRecord());
+		 $cur_page = $page_number;
 
-        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types' => $clothing_types));
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
+        }
+		//return new Response(json_encode($clothing_types));	   
+	 return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', 
+  					array(
+                    'clothing_types' => $clothing_types, 
+                    'rec_count' => $rec_count, 
+                    'no_of_pagination' => $no_of_paginations, 
+                    'limit' => $cur_page, 
+                    'per_page_limit' => $limit,
+            		));
     }
 //------------------------------------------------------------------------------------------
     public function showAction($id) {
