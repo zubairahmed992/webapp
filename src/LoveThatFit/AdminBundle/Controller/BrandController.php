@@ -53,7 +53,8 @@ class BrandController extends Controller {
 
         $entity = new Brand();
 
-        $form = $this->createFormBuilder($entity)
+        $form = $this->createFormBuilder($entity,  array(
+    'validation_groups' => array('brand_create')))
                 ->add('name', 'text')
                 ->add('file')
                 ->getForm();
@@ -66,7 +67,6 @@ class BrandController extends Controller {
     public function createAction(Request $request)
     {
         $entity  = new Brand();        
-        $entity->setLogo($request->getParameter('file'));
         $form = $this->createFormBuilder($entity)
                 ->add('name', 'text')
                 ->add('file')
@@ -99,7 +99,11 @@ class BrandController extends Controller {
                 ->getRepository('LoveThatFitAdminBundle:Brand')
                 ->findOneById($id);
 
-        $form = $this->getEditForm($entity);
+        $form = $this->createFormBuilder($entity,  array(
+    'validation_groups' => array('brand_update')))
+                ->add('name')
+                ->add('file', null, array('required' => false))
+                ->getForm();
         $deleteForm = $this->getDeleteForm($id);
         
         return $this->render('LoveThatFitAdminBundle:Brand:edit.html.twig', array(

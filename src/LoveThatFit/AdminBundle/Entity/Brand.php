@@ -31,7 +31,6 @@ class Brand {
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
      */
     protected $logo;
 
@@ -47,6 +46,7 @@ class Brand {
 
     /**
      * @Assert\File(maxSize="6000000")
+     * @Assert\NotBlank(groups={"brand_create"})
      */
     public $file;
 
