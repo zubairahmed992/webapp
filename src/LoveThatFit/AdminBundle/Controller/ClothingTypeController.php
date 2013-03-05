@@ -136,7 +136,9 @@ else
     
      public function deleteAction($id)
     {
-            $em = $this->getDoctrine()->getManager();
+          try{ 
+              $em = $this->getDoctrine()->getManager();
+    
             $entity = $em->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
 
             if (!$entity) {
@@ -146,7 +148,19 @@ else
             $em->remove($entity);
             $em->flush();
         
-        return $this->redirect($this->generateUrl('admin_clothing_types'));
+            return $this->redirect($this->generateUrl('admin_clothing_types'));
+           }catch (\Doctrine\DBAL\DBALException $e)
+        {
+             $this->get('session')->setFlash(
+            'warning',
+            'This Clothing Type cannot be deleted!'
+        );
+             return $this->redirect($this->getRequest()->headers->get('referer'));
+             
+        }
+        
+        
+        
     }
     
     //------------------------------------------------------------------------------------------

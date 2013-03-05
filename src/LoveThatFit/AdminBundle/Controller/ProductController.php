@@ -142,7 +142,9 @@ class ProductController extends Controller {
 //--------------------------------------------------------------------- 
     public function deleteAction($id) {
 
-        $em = $this->getDoctrine()->getManager();
+     try{
+         $em = $this->getDoctrine()->getManager();
+    
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
         if (!$entity) {
@@ -153,6 +155,16 @@ class ProductController extends Controller {
         $em->flush();
 
         return $this->redirect($this->generateUrl('admin_products'));
+     } catch (\Doctrine\DBAL\DBALException $e)
+        {
+             $this->get('session')->setFlash(
+            'warning',
+            'This Product cannot be deleted!'
+        );
+             return $this->redirect($this->getRequest()->headers->get('referer'));
+             
+        }
+        
     }
 
 //--------------------------------------------------------------------- 
