@@ -137,4 +137,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccec6', end
    	
 }
 
-
+.pro_cart nav ul li iframe{
+    min-width:190px!important;
+}
