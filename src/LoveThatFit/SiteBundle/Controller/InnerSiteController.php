@@ -99,22 +99,15 @@ class InnerSiteController extends Controller {
     }
     //-------------------------------------------------------------------
     public function emailAction($id) {    
-        //$this->get('mail_helper')->sendRegistrationEmail('waqasmuddasir@gmail.com');
-        //return new Response('hight by taking a picture..., dont worry your email has been sent.');
-    
-        //$em = $this->getDoctrine()->getManager();        
-        //$entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findAll();
-        //if ($id==0)
-         //   $id=12;
-        //$product = $this->getProduct($id);
-          //$ih=new ImageHelper('product', $product);
-          
-   
-        //return $this->render('LoveThatFitSiteBundle:InnerSite:list.html.twig', array('products' => $entity));
-        //return new Response(json_encode($ih->getImageDimentions()));
-        
-        //return $this->getFeedBackListAction($id);
-        return $this->getFeedBackJSONAction(1,$id);
+       
+        $user= $this->get('security.context')->getToken()->getUser();
+        $product = $this->getProduct(22);
+        $measurement = $this->getMeasurement($user->getId());
+        $fit = new Comparison($measurement, $product);
+        //return new Response(json_encode($fit->getComparisionData()));
+        return new Response($fit->fit());
+        //return new Response('Love That Fit');
+        //return new Response('Try Another');
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
