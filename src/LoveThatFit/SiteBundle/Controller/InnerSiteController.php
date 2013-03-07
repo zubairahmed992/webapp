@@ -104,22 +104,29 @@ class InnerSiteController extends Controller {
     
         //$em = $this->getDoctrine()->getManager();        
         //$entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findAll();
-        if ($id==0)
-            $id=12;
-        $product = $this->getProduct($id);
-          $ih=new ImageHelper('product', $product);
+        //if ($id==0)
+         //   $id=12;
+        //$product = $this->getProduct($id);
+          //$ih=new ImageHelper('product', $product);
           
    
         //return $this->render('LoveThatFitSiteBundle:InnerSite:list.html.twig', array('products' => $entity));
-        return new Response(json_encode($ih->getImageDimentions()));
+        //return new Response(json_encode($ih->getImageDimentions()));
+        
+        //return $this->getFeedBackListAction($id);
+        return $this->getFeedBackJSONAction(1,$id);
     }
     //-------------------------------------------------------------------
     public function getFeedBackJSONAction($user_id, $product_id) {        
-    $user= $this->get('security.context')->getToken()->getUser();
+    //$user= $this->get('security.context')->getToken()->getUser();
+      
+            $em = $this->getDoctrine()->getManager();
+         $user= $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);        
+         
         $product = $this->getProduct($product_id);
                 
-        if (!is_object($this->get('security.context')->getToken()->getUser()))
-            return new Response("User Not found, Log in required!");
+        if (!$user)
+            return new Response("User Not found!");
         
         if (!$product)
             return new Response("Product not found!");
