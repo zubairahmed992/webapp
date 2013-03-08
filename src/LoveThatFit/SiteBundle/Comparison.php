@@ -92,7 +92,7 @@ class Comparison {
             $sug[$key]["msg"] = $sug[$key]["msg"] . $ar['msg'];
             $sug[$key]["fit"] =  $ar['fit'];
         }
-        return $sug;
+        return $this->loveThatFit($sug);
     }
 
 //------------------------------------------------------------------------
@@ -108,7 +108,7 @@ class Comparison {
         } elseif ($diff < -2) {
             $msg = $this->adjustmentUpply($diff) ? $part['adjust'] : $part['lower'];
             //$msg = $part['lower'];
-        } elseif ($diff == 0) {
+        } elseif ($diff == 0 || ($diff<=1 && $diff>0)) {
             $msg = $part[0];
             $fit=true;
             //$msg = $part['lower'];    
@@ -180,16 +180,25 @@ class Comparison {
     public function fit() {
         $sug_array=$this->getSuggestionArray();
         foreach ($sug_array as $key => $value) {
-            if ($value["diff"]!=0)
+            if ($value["diff"] > -0.5 && $value["diff"] < 1 )
                 return false;
         }
         return true;
     }
 
     //-----------------------------------------------
-     public function fitting() {
+     private function loveThatFit($sug_array) {
         
-        return 'love that fit';
+        foreach ($sug_array as $key => $value) {
+            if ($value["fit"]==false)
+                return $sug_array;
+        }
+        
+        return array( 
+            "Over All" => 
+            array("diff" => 0, "msg" => "Love That Fit", 'fit' => true),                  
+                );
+                 
     }
     
 //------------------------------------------------------------------------    
