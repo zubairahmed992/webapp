@@ -170,9 +170,13 @@ class RegistrationController extends Controller {
                     //          'form' => $form->createView(),
                     //        'entity' => $entity));
                     $form = $this->createForm(new RegistrationStepFourType(), $entity);
+            $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
             return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                         'form' => $form->createView(),
-                        'entity' => $entity));
+                        'entity' => $entity,
+                        'measurement_form' => $measurement_form->createView(),
+                        'measurement' => $measurement,
+                    ));
         } else {
             return $this->render('LoveThatFitUserBundle:Registration:steptwo.html.twig', array(
                         'form' => $form->createView(),
@@ -320,7 +324,7 @@ class RegistrationController extends Controller {
 
         $form = $this->createForm(new RegistrationStepFourType(), $entity);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-        
+
         return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                     'form' => $form->createView(),
                     'form' => $form->createView(),
