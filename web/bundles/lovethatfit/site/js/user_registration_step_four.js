@@ -6,7 +6,12 @@ $(document).ready(function() {
   //var left_hand
   //alert(user_back);
   
-  $("#user_body_marks").css({height: user_height, width: user_back});
+  $("#user_body_marks").css({height: user_height, width: user_back + 194 - 20});
+  $("#top_mid_body").css({width: user_back});
+  $("#adj_top_hldr").css({width: user_back + 194 - 20, marginTop: user_height / 7.27 - 10, height: $("#top_adj_marks").height() + 30});
+  $("#top_adj_marks").css({width: user_back + 194 - 20, top:10});
+  
+  
  
  
        //Slider Scale Photo
@@ -51,12 +56,50 @@ $( "#slider_result_photo" ).change(function (){
   //$(".ui-slider-handle").trigger('slider:slide');
 });
 
+function chk_overall(){
+            if(photo_width == null){
+                //alert("not loaded yet");
+                setTimeout(chk_overall, 200);
+                return false;
+            }else {
+                set_things();
+            }
+        }
+
+function call_settings(responseText, statusText, xhr, $form){
+      //var wwwe = document.getElementById('img_to_upload').width;
+        //var hhhe = document.getElementById('img_to_upload').height;
+        
+   var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
+        $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
+    
+        var uploaded_img_src = document.getElementById('img_to_upload');
+        var uploaded_img_obj = new Image();
+	 
+        uploaded_img_obj.onload = function() {
+            photo_width =  document.getElementById('img_to_upload').width;
+            photo_height = document.getElementById('img_to_upload').height;		 
+            photo_width =  document.getElementById('img_to_upload').style.width = photo_width + "px";
+            
+        };
+        uploaded_img_obj.src = uploaded_img_src.src;
+
+        chk_overall();
+        
+        
+    
+   //else{
+     //       alert("ts else");
+       // }
+}
+
 
     var photo_width;
 
-    function set_things(responseText, statusText, xhr, $form){
+    function set_things(){
 
 //temporary hack: not accessing assetic for the value of the image path from here, placed a hidden field, holds the server path in twig template.
+        
         
         $(".uploading_in_progress").fadeOut(300).remove();
         $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
@@ -64,25 +107,12 @@ $( "#slider_result_photo" ).change(function (){
         $(".step_4 .reg_next_step").attr("value","Save Photo");
         document.getElementById("hdn_skip_flag").value="process";
         
-        var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
-        $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
-    
-        var uploaded_img_src = document.getElementById('img_to_upload');
-        var uploaded_img_obj = new Image();
-	 
-        uploaded_img_obj.onload = function() {
-		 
-            photo_width =  document.getElementById('img_to_upload').width;
-            photo_height = document.getElementById('img_to_upload').height;		 
-            photo_width =  document.getElementById('img_to_upload').style.width = photo_width + "px";
-		 
-        };
-        uploaded_img_obj.src = uploaded_img_src.src;
-        
+                
     }
 
     $('#user_file').live('change', function()
     { 
+        
         var photo_file_name = $("#user_file").val();
         $("#inp_txt_file_name").val(photo_file_name);
         $("#play_area").removeClass("hide");
@@ -93,10 +123,25 @@ $( "#slider_result_photo" ).change(function (){
         $("#frmUserImage").ajaxForm(
         {
             target: '#uploaded_photo',
-            success: set_things
+            success: call_settings
         }
         ).submit();
     });
+    
+    
+    //--Gragable Top--//
+    $("#top_adj_marks").draggable({handle: "#top_moveable", axis: "y", containment: "parent",
+    start: function() {
+        //$("#dummy_mark").addClass("put_me_top");
+    },
+    drag: function() {
+    },
+    stop: function() {
+        //$("#dummy_mark").removeClass("put_me_top");
+    }
+});
+    
+    
 });
 
 
@@ -159,3 +204,6 @@ function shift_to_canvas (){
     imageObj.src = img.src;
 	  
 }
+
+
+//$( "#draggable5" ).draggable({ containment: "parent" });
