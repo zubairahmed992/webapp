@@ -1,17 +1,6 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 
 {% block action_block_content %}
-
-<div>
-            <form id="frmUserImage" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post" {{ form_enctype(measurement_form) }}>
-
-                {{ form_widget(measurement_form.shoulder_height) }}
-                {{ form_widget(measurement_form.waist_height) }}
-                    {{ form_rest(measurement_form) }}
-            </form>
-
-</div>
-
 <section class="reg_blk">
     <div class="reg_steps">
         <ul>
@@ -76,11 +65,13 @@
                             <div id="top_layer"></div>
                             <div id="dummy_mark">
                                 <div id="user_body_marks">
-                                    <div id="top_adj_marks">
-                                        <div id="top_moveable"></div>
-                                        <div id="neck_shoulder"></div>
-                                        <div id="left_hand"></div>
-                                        <div id="right_hand"></div>
+                                    <div id="adj_top_hldr">
+                                        <div id="top_adj_marks">
+                                            <div id="top_moveable"></div>
+                                            <div id="right_hand"></div>
+                                            <div id="top_mid_body"></div>
+                                            <div id="left_hand"></div>
+                                        </div>
                                     </div>
                                     <div id="bottom_adj_marks">
                                         <div id="bottom_pos"></div>
@@ -89,7 +80,7 @@
                                             <div class="right_leg"></div>
                                         </div>
                                     </div>
-                                    <div id="lages_marks"></div>
+                                    <div id="lages_marks"></div>                                 
                                 </div>
                             </div>
                             <div id="uploaded_photo" class="full_opacity"></div>
