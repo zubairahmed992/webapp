@@ -2,7 +2,7 @@
 
 {% block action_block_content %}
 <div>
-            <form id="frmUserImage" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post" {{ form_enctype(measurement_form) }}>
+            <form id="frmUserMeasurement" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post" {{ form_enctype(measurement_form) }}>
 
                 {{ form_widget(measurement_form.shoulder_height) }}
                 {{ form_widget(measurement_form.waist_height) }}
