@@ -169,15 +169,35 @@ class Measurement {
     private $back;
 
     /**
-     * @var \DateTime $created_at
+     * @var float $shoulder_height
      *
+     * @ORM\Column(name="shoulder_height", type="decimal", nullable=true)
+     * 
      * @Assert\Range(
      *      min = "0",
-     *      max = "300",
+     *      max = "80",
      *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 300"
+     *      maxMessage = "You cannot have more than 80"
      * )
+     */
+    private $shoulder_height;
+    
+    /**
+     * @var float $waist_height
+     *
+     * @ORM\Column(name="waist_height", type="decimal", nullable=true)
      * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "60",
+     *      minMessage = "You must have at least 0",
+     *      maxMessage = "You cannot have more than 60"
+     * )
+     */
+    private $waist_height;
+    
+    /**
+     * @var \DateTime $created_at
      */
     private $created_at;
 
@@ -449,4 +469,50 @@ class Measurement {
         return $this->user;
     }
 
+
+    /**
+     * Set shoulder_height
+     *
+     * @param float $shoulderHeight
+     * @return Measurement
+     */
+    public function setShoulderHeight($shoulderHeight)
+    {
+        $this->shoulder_height = $shoulderHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get shoulder_height
+     *
+     * @return float 
+     */
+    public function getShoulderHeight()
+    {
+        return $this->shoulder_height;
+    }
+
+    /**
+     * Set waist_height
+     *
+     * @param float $waistHeight
+     * @return Measurement
+     */
+    public function setWaistHeight($waistHeight)
+    {
+        $this->waist_height = $waistHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get waist_height
+     *
+     * @return float 
+     */
+    public function getWaistHeight()
+    {
+        return $this->waist_height;
+    }
 }

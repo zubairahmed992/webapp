@@ -33,6 +33,13 @@ registration_step_four_image_update:
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourImageUpdate }
 
 
+registration_step_four_measurement_update:
+    pattern:  /registration/step_four_measurement_update/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourMeasurementUpdate}
+    requirements: 
+          _method: post 
+
+
 #-------------------------------  Registration Edit Steps ---------------------------------------------------------
 
 registration_step_two_edit:

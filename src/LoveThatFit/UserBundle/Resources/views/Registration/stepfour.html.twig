@@ -1,6 +1,17 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 
 {% block action_block_content %}
+
+<div>
+            <form id="frmUserImage" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post" {{ form_enctype(measurement_form) }}>
+
+                {{ form_widget(measurement_form.shoulder_height) }}
+                {{ form_widget(measurement_form.waist_height) }}
+                    {{ form_rest(measurement_form) }}
+            </form>
+
+</div>
+
 <section class="reg_blk">
     <div class="reg_steps">
         <ul>
