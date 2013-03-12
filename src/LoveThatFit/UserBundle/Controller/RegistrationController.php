@@ -42,18 +42,7 @@ class RegistrationController extends Controller {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
 
-    private function sendRegistrationEmail($userEmail) {
-
-        $message = \Swift_Message::newInstance()
-                ->setSubject('Registration Email')
-                ->setFrom('waqasmuddasir@gmail.com')
-                ->setTo($userEmail)
-                ->setBody('Thankyou for registering with LoveThatFit. ');
-        $this->get('mailer')->send($message);
-
-        return new Response('email sent');
-    }
-
+   
 //--------------------------STEP-1-----------------------------------------------
 
 
@@ -154,12 +143,10 @@ class RegistrationController extends Controller {
 
             $em->persist($entity);
             $em->flush();
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            //send registration email ....
-            //
-                //Removed FOR DEMO ????????????????????????????????????????????????????
-            // $this->get('mail_helper')->sendRegistrationEmail($entity->getEmail());
-            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
+            //send registration email ....            
+            $this->get('mail_helper')->sendRegistrationEmail($entity->getEmail());
+            
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     //$measurement = $entity->getMeasurement();
                     //if (!$measurement) {
