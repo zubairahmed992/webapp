@@ -5,11 +5,15 @@ $(document).ready(function() {
   var user_back = 15 * 8 / 4 * 3;
   //var left_hand
   //alert(user_back);
+  var hands_inside = 20;
   
-  $("#user_body_marks").css({height: user_height, width: user_back + 194 - 20});
+  $("#user_body_marks").css({height: user_height, width: user_back + 194 - hands_inside});
   $("#top_mid_body").css({width: user_back});
-  $("#adj_top_hldr").css({width: user_back + 194 - 20, marginTop: user_height / 7.27 - 10, height: $("#top_adj_marks").height() + 30});
-  $("#top_adj_marks").css({width: user_back + 194 - 20, top:10});
+  $("#adj_top_hldr").css({width: user_back + 194 - hands_inside, marginTop: user_height / 7.27 - 10, height: $("#top_adj_marks").height() + 30});
+  $("#top_adj_marks").css({width: user_back + 194 - hands_inside, top:10});
+  
+  $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 15, left:60, height: $("#bottom_adj_marks").height() + 30});
+  $("#bottom_adj_marks").css({top: 15});
   
   
  
@@ -25,8 +29,8 @@ $(document).ready(function() {
 	  
 	   if(used == 0)
 	   {
-		   photo_width = $("#img_to_upload").width();
-		   used = 1;
+		photo_width = $("#img_to_upload").width();
+		used = 1;
 	   }
 	  
 	  $("#img_to_upload").width(photo_width / 100 * ui.value);
@@ -139,7 +143,19 @@ function call_settings(responseText, statusText, xhr, $form){
     stop: function() {
         //$("#dummy_mark").removeClass("put_me_top");
     }
-});
+    });
+    
+    //--Gragable Bottom--//
+    $("#bottom_adj_marks").draggable({handle: "#bottom_moveable", axis: "y", containment: "parent",
+    start: function() {
+        //$("#dummy_mark").addClass("put_me_top");
+    },
+    drag: function() {
+    },
+    stop: function() {
+        //$("#dummy_mark").removeClass("put_me_top");
+    }
+    });
     
     
 });
