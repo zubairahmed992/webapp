@@ -1,11 +1,9 @@
 <?php
 
 namespace LoveThatFit\SiteBundle\Controller;
+
 use Symfony\Component\HttpFoundation\Session\Session;
 use LoveThatFit\SiteBundle\Cart;
-use LoveThatFit\AdminBundle\Entity\ClothingType;
-use LoveThatFit\AdminBundle\Entity\Product;
-use LoveThatFit\AdminBundle\Entity\Brand;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,12 +13,56 @@ class CartController extends Controller {
     //-------------------------------------------------------------------------
 
     public function indexAction() {
-        return $this->render('LoveThatFitSiteBundle:Cart:index.html.twig');
+        $cart = $this->getCart();
+        return $this->renderCart($cart);
     }
 
-    
+    //-------------------------------------------------------------------------
+    public function addToCartAction($id) {
+        $cart = $this->getCart();
+        $cart->addToCart($this->getProduct($id));
+        return $this->renderCart($cart);
+    }
+
+//-------------------------------------------------------------------------
+
+    public function removeFromCartAction($id) {
+        $cart = $this->getCart();
+        $cart->removeFromCart($this->getProduct($id));
+        return $this->renderCart($cart);
+    }
+
+    //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+
+    private function getCart() {
+        $session = $this->get("session");
+        if ($session->has('cart')) {
+            $cart = new Cart($session->get('cart'));
+        } else {
+            $cart = new Cart(null);
+        }
+        return $cart;
+    }
+
+    //-------------------------------------------------------------------
+    private function getProduct($id) {
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->find($id);
+        return $entity;
+    }
+
+    //-------------------------------------------------------------------------
+
+    private function renderCart($cart) {
+        $session = $this->get("session");
+        $session->set("cart", $cart->getCart());
+        return new Response(json_encode($cart->getCart()));
+        return $this->render('LoveThatFitSiteBundle:Cart:index.html.twig', array('cart' => $cart->getCart(), 'total' => $cart->getTotal()));
+    }
+
 }
-
-
 ?>
 

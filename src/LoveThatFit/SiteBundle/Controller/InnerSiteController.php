@@ -103,17 +103,31 @@ class InnerSiteController extends Controller {
        
        // $user= $this->get('security.context')->getToken()->getUser();
         $product = $this->getProduct($id);
+    
+        $session = $this->get("session");
+
+
         
-        //$measurement = $this->getMeasurement($user->getId());
-        $cart = new Cart(null);
-        $cart->addToCart($this->getProduct(22));
-        $cart->addToCart($this->getProduct(7));
-        $cart->addToCart($this->getProduct(7));
-        $cart->addToCart($this->getProduct(7));
-        $cart->addToCart($this->getProduct(7));
-        $cart->removeFromCart($this->getProduct(22));
+    if ($session->has('cart')){
+        $cart = new Cart($session->get('cart')); 
         
-        return new Response(json_encode($cart->getCart($this->getProduct(7))));
+    }
+    else{
+       $cart = new Cart(null); 
+    }
+//return new Response(json_encode($session->get('cart')));
+//return new Response(json_encode($cart->getCart()));
+                        
+//$measurement = $this->getMeasurement($user->getId());
+        
+        $cart->addToCart($this->getProduct(16));
+        $cart->addToCart($this->getProduct(7));
+        $cart->addToCart($this->getProduct(7));
+        $cart->addToCart($this->getProduct(7));
+        $cart->addToCart($this->getProduct(7));
+        //$cart->removeFromCart($this->getProduct(16));
+        $session->set("cart",$cart->getCart());
+        return new Response(json_encode($cart->getCart()));
         //return new Response(json_encode($cart->getTotal($this->getProduct(7))));
         //return new Response($fit->fit());
         //return new Response('Love That Fit');
