@@ -1,4 +1,6 @@
-{% if limit!=0 or no_of_pagination!=0  or rec_count!=0%}
+{% if rec_count>limit %}
+
+{% if limit!=0 or no_of_pagination!=0 %}
 
 {% set first_btn = true %}
 {% set previous_btn = true %}
@@ -54,3 +56,4 @@
             </ul>
     </div>
   {% endif %}
+ {% endif %}
