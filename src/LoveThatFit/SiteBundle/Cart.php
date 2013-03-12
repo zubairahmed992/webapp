@@ -2,54 +2,78 @@
 
 namespace LoveThatFit\SiteBundle;
 
-use LoveThatFit\AdminBundle\Entity\Product;
-use LoveThatFit\AdminBundle\Entity\Brand;
-use LoveThatFit\AdminBundle\Entity\ClothingType;
-use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException;
-use Symfony\Component\Yaml\Yaml;
-
 class Cart {
-    
-    var $total;
+
     //id, Description, Quantity, price, image_url
-    var $cart=array();
-    
-    function __construct() {
-        
+    var $cart = array();
+
+    public function __construct($cart) {
+        if ($cart)
+            $this->cart = $cart;
     }
-    
-    function getTotal() {
-        return $this->total;
+
+    function getTotal($product) {
+        $total = 0;
+        foreach ($this->cart as $key => $value) {
+            $total = $total + ($this->cart[$key]['quantity'] * $this->cart[$key]['price']);
+        }
+
+        return $total;
     }
-    
+
     function getCart() {
         return $this->cart;
     }
-    
-    
-    function removeFromCart($id) {
-        return $this->cart;
-    }
-    
-     function addToCart($product) {
-        
-        if ($product) {
-            array_push(
-                    $this->cart, array(
-                $product->getId() => array(
-                    "title" => $product->getName(),
-                    "brand" => $product->getBrand()->getName(),
-                    "clothingType" => $product->getClothingType()->getName(),
-                    "quantity" => 1,
-                    "price" => '$99.99',
-                    "image" => $product->getImage(),
-                )
-                    )
-            );
-            
+
+    function removeFromCart($product) {
+
+        foreach ($this->cart as $key => $value) {
+            if ($value['id'] == $product->getId()) {
+                if ($value['quantity'] > 1) {
+                    $this->cart[$key]['quantity'] = $this->cart[$key]['quantity'] - 1;
+                } else {
+                    unset($this->cart[$key]);
+                }
+                return true;
+            }
         }
-        return $this->cart;
+        return false;
     }
-    
+
+    function addToCart($product) {
+
+        if ($product) {
+            if (!$this->addToExistingProduct($product)) {
+                $this->addNewProduct($product);
+            }
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private function addToExistingProduct($product) {
+        foreach ($this->cart as $key => $value) {
+            if ($value['id'] == $product->getId()) {
+                $this->cart[$key]['quantity'] = $this->cart[$key]['quantity'] + 1;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function addNewProduct($product) {
+        array_push(
+                $this->cart, array(
+            "id" => $product->getId(),
+            "title" => $product->getName(),
+            "brand" => $product->getBrand()->getName(),
+            "clothingType" => $product->getClothingType()->getName(),
+            "quantity" => 1,
+            "price" => '$99.99',
+            "image" => $product->getImage(),
+                )
+        );
+    }
+
 }

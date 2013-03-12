@@ -102,13 +102,22 @@ class InnerSiteController extends Controller {
     public function emailAction($id) {    
        
        // $user= $this->get('security.context')->getToken()->getUser();
-        //$product = $this->getProduct(22);
+        $product = $this->getProduct($id);
+        
         //$measurement = $this->getMeasurement($user->getId());
-        //$fit = new Comparison($measurement, $product);
-        //return new Response(json_encode($fit->getFeedBackArray()));
+        $cart = new Cart(null);
+        $cart->addToCart($this->getProduct(22));
+        $cart->addToCart($this->getProduct(7));
+        $cart->addToCart($this->getProduct(7));
+        $cart->addToCart($this->getProduct(7));
+        $cart->addToCart($this->getProduct(7));
+        $cart->removeFromCart($this->getProduct(22));
+        
+        return new Response(json_encode($cart->getCart($this->getProduct(7))));
+        //return new Response(json_encode($cart->getTotal($this->getProduct(7))));
         //return new Response($fit->fit());
         //return new Response('Love That Fit');
-        return new Response('Try Another');
+        //return new Response('Try Another');
         
         
     }
