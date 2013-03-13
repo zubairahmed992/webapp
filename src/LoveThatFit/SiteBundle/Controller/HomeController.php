@@ -21,16 +21,12 @@ public function contactUsAction() {
         return $this->render('LoveThatFitSiteBundle:Home:contact_us.html.twig');
     }    
     
+public function emailRegistrationAction($id) {
     
-    
-    
+   return $this->render('LoveThatFitAdminBundle::email/registration.html.twig',array('name'=>$id));
 }
 
 
 
-
-
-
-
-
+}
 ?>

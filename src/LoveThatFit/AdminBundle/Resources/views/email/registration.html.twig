@@ -1,0 +1,93 @@
+{% extends 'LoveThatFitAdminBundle::email/email_base.html.twig' %}
+{% block email %}
+<table width="570" border="0" cellspacing="0" cellpadding="0" bgcolor="#cfcfcf">
+          <tr>
+            <td width="20">&nbsp;</td>
+            <td width="530" height="30"></td>
+            <td width="20">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td align="center">
+                 
+                <img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/welcome_txt.png') }}" width="167" height="28" style="display:block;" alt="Welcome" title="Welcome" /></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td height="30"></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="20">&nbsp;</td>
+            <td align="center"><font face="Arial, Helvetica, sans-serif" size="3" color="#000000"><b>Shop online with friends, try clothes on, see how they look &amp; fit, and never return clothes purchased. Ever.</b></font></td>
+            <td width="20">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+                
+                <img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/shopping_pic.png') }}" width="570" height="231" style="display:block;" alt="Lovethatfit" title="Lovethatfit" /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><table width="490" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><font face="Arial, Helvetica, sans-serif" size="3" color="#000000">
+              <p> Hello, {{name}} </p>
+         <p> Thank you for registering and congratulations on becoming part of the LoveThatFit!
+            We hope that you enjoy the LoveThatFit and find the journey rewarding. 
+         </p>            
+                        .</font>
+                 </td>
+              </tr>
+              <tr>
+                <td height="30"></td>
+              </tr>
+              <tr>
+                <td align="center"><a href="#" style="text-decoration:none;">
+                        
+                        <img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/shopping_btn.png') }}" width="237" height="64" style="display:block;" alt="SHOP NOW!" title="SHOP NOW!" border="0" /></a></td>
+              </tr>
+              <tr>
+                <td height="10"></td>
+              </tr>
+            </table></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="3" bgcolor="#000000" height="10"></td>
+            </tr>
+          <tr>
+            <td colspan="3" height="8"></td>
+            </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td align="center"><table width="490" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center"><font face="Arial, Helvetica, sans-serif" size="2" color="#000000">
+                        If you are having trouble viewing this email, please use this link:<br />
+  <a href="{{path('emailRegistration',{'name':name})}}" target="_new" style="text-decoration:none;">Click Here .</a>
+             
+                    </font></td>
+              </tr>
+            </table></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="3" height="5"></td>
+            </tr>
+          </table></td>
+     {% endblock %}
