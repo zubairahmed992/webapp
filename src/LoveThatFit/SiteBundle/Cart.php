@@ -4,7 +4,7 @@ namespace LoveThatFit\SiteBundle;
 
 class Cart {
 
-    //id, Description, Quantity, price, image_url
+    //id, title, brand, clothingType, Quantity, price, image
     var $cart = array();
 
     public function __construct($cart) {
@@ -12,7 +12,7 @@ class Cart {
             $this->cart = $cart;
     }
 
-    function getTotal($product) {
+    function getTotal() {
         $total = 0;
         foreach ($this->cart as $key => $value) {
             $total = $total + ($this->cart[$key]['quantity'] * $this->cart[$key]['price']);
@@ -63,6 +63,7 @@ class Cart {
     }
 
     private function addNewProduct($product) {
+       $imgPath=$product->getImagePaths()['icon'];
         array_push(
                 $this->cart, array(
             "id" => $product->getId(),
@@ -70,8 +71,8 @@ class Cart {
             "brand" => $product->getBrand()->getName(),
             "clothingType" => $product->getClothingType()->getName(),
             "quantity" => 1,
-            "price" => '$99.99',
-            "image" => $product->getImage(),
+            "price" => 99.99,
+            "image" => $imgPath,
                 )
         );
     }

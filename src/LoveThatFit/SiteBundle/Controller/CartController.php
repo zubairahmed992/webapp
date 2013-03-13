@@ -59,8 +59,8 @@ class CartController extends Controller {
     private function renderCart($cart) {
         $session = $this->get("session");
         $session->set("cart", $cart->getCart());
-        return new Response(json_encode($cart->getCart()));
-        return $this->render('LoveThatFitSiteBundle:Cart:index.html.twig', array('cart' => $cart->getCart(), 'total' => $cart->getTotal()));
+        //return new Response(json_encode($cart->getCart()));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_cart.html.twig', array('cart' => $cart->getCart(), 'total_amount' => $cart->getTotal()));
     }
 
 }

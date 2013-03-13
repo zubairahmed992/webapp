@@ -1,0 +1,19 @@
+
+
+
+            <ul style="display: block;" id="fchld">
+                 {% for c in cart %}
+                  <li>
+                       <span class="cross_icon"></span>
+                       <span class="cart_item"><img src="{{ asset(c.image) }}"></span>
+                       <a href="#">{{c.title}}</a>
+                       <span class="cart_item_price">{{c.price}}</span>
+                       <span class="arw"></span>
+                    </li>
+                    
+                    {% endfor %}
+                    <div id="total_cart">
+                <span>Total<span>
+                        <span id="totalamount">{{total_amount}}</span> 
+            </div>
+                    </ul>
