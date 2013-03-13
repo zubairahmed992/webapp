@@ -5,7 +5,7 @@ namespace LoveThatFit\SiteBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use LoveThatFit\UserBundle\Entity\User;
 class HomeController extends Controller {
 
     //-------------------------------------------------------------------------
@@ -23,7 +23,12 @@ public function contactUsAction() {
     
 public function emailRegistrationAction($id) {
     
-   return $this->render('LoveThatFitAdminBundle::email/registration.html.twig',array('name'=>$id));
+      $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+            ->getRepository('LoveThatFitUserBundle:User')
+            ->find($id);
+    
+   return $this->render('LoveThatFitAdminBundle::email/registration.html.twig',array('entity'=>$entity));
 }
 
 

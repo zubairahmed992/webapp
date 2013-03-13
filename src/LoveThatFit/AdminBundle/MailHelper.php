@@ -20,7 +20,7 @@ class MailHelper {
        
     }
 
-    private function sendEmail($from, $to, $body, $subject = '')
+    private function sendEmail($from, $to, $body, $subject = '',$user)
     {
                
               
@@ -31,34 +31,24 @@ class MailHelper {
             ->setTo($to)
             ->setContentType("text/html")
              ->setBody(
-            $this->renderView(
-                'LoveThatFitAdminBundle::email/registration.html.twig',
-                array('name' => 'name')
-            )
-        );
-           
-        $this->mailer->send($message);
+            $this->templating->render($body,array('entity' => $user) ));
+            
+       
+            //$this->mailer->send($message);
+       
     }
     
-    public function sendRegistrationEmail($sendTo)
+    public function sendRegistrationEmail($user)
     { 
         
-        
-      
         $from=$this->conf['parameters']['mailer_user'];
-        $to=$sendTo;
-        $body='LoveThatFitAdminBundle::email/registration.txt.twig';
+        $to=$user->getEmail();
+        $body="LoveThatFitAdminBundle::email/registration.html.twig";
         $subject='LoveThatFit: Thank you for Registering with us. ';
-       
- 
-        if($this->sendEmail($from, $to, $body, $subject))
-        {
-        return "Mail Sent";    
-        }else{
-        return "Please Try Again!!";
-        }
-        
-        
+        $name=$user->getUsername();
+        $this->sendEmail($from, $to, $body, $subject,$user);
+         return true;
+                
     }
     
      public function sendPasswordResetLinkEmail($sendTo, $reset_link)
