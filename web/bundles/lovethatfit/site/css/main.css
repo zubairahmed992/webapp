@@ -1897,13 +1897,15 @@ padding:4px 10px;
     background: url(../images/right_hand_15_degree.png) 0 0 no-repeat;
     float:left;
 }
-
+#adj_belt_hldr {
+    width:100%;
+}
 #bottom_adj_marks {
     background: url(../images/belt.png) center 0 no-repeat;
-    float:left;
+    margin:auto;
     width:140px;
     height:32px;
-    position: absolute;
+    position: relative;
 }
 #bottom_moveable {
     position: absolute;

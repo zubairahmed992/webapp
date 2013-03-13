@@ -1,8 +1,8 @@
 
 $(document).ready(function() { 
  
-  var user_height = 66 * 8 / 4 * 3;
-  var user_back = 15 * 8 / 4 * 3;
+  var user_height = 68 * 8 / 4 * 3;
+  var user_back = 26 * 8 / 4 * 3;
   //var left_hand
   //alert(user_back);
   var hands_inside = 20;
@@ -12,7 +12,7 @@ $(document).ready(function() {
   $("#adj_top_hldr").css({width: user_back + 194 - hands_inside, marginTop: user_height / 7.27 - 10, height: $("#top_adj_marks").height() + 30});
   $("#top_adj_marks").css({width: user_back + 194 - hands_inside, top:10});
   
-  $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 15, left:60, height: $("#bottom_adj_marks").height() + 30});
+  $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 15, height: $("#bottom_adj_marks").height() + 30});
   $("#bottom_adj_marks").css({top: 15});
   
   
