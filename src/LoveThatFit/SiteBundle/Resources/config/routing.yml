@@ -76,6 +76,6 @@ ajax_cart_remove:
     defaults: { _controller: LoveThatFitSiteBundle:Cart:removeFromCart}   
     
 email_registration:
-    pattern:  /email_registration/{id}
+    pattern:  /email/registration/{id}
     defaults: { _controller: LoveThatFitSiteBundle:Home:emailRegistration}    
     
