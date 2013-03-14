@@ -1,8 +1,15 @@
 
 $(document).ready(function() { 
  
-  var user_height = 69.5 * 8 / 4 * 3;
-  var user_back = 13 * 8 / 4 * 3;
+  var user_height = $("#user_height_frm_3").attr("value");
+  var user_back = $("#user_back_frm_3").attr("value");
+
+set_markings();
+
+
+function set_markings(){
+user_height = user_height * 8 / 4 * 3;
+user_back = user_back * 8 / 4 * 3;
   //var left_hand
   //alert(user_back);
   var hands_inside = 10;
@@ -16,7 +23,7 @@ $(document).ready(function() {
   $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 15, height: $("#bottom_adj_marks").height() + 30});
   $("#bottom_adj_marks").css({top: 15});
   
-  
+}
  
  
        //Slider Scale Photo
