@@ -104,8 +104,8 @@ class SecurityController extends Controller {
                     $em->persist($_user);
                     $em->flush();
                     
-                $baseurl= $_SERVER['REMOTE_ADDR'];
-                 
+                     
+                     $baseurl =  $this->getRequest()->getHost();
                         
                     $link =$baseurl."/".$this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
                     $defaultData = " Email has been sent with reset password link to " . $_user->getEmail() . " link ". $link;
