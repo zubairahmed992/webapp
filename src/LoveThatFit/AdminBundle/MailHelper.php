@@ -20,7 +20,7 @@ class MailHelper {
        
     }
 
-    private function sendEmail($from, $to, $body, $subject = '',$user)
+    private function sendEmail($from, $to, $body, $subject = '',$user,$reset_link='')
     {
                
               
@@ -31,10 +31,10 @@ class MailHelper {
             ->setTo($to)
             ->setContentType("text/html")
              ->setBody(
-            $this->templating->render($body,array('entity' => $user) ));
+            $this->templating->render($body,array('entity' => $user,'reset_link'=>$reset_link) ));
             
        
-            //$this->mailer->send($message);
+         $this->mailer->send($message);
        
     }
     
@@ -51,13 +51,15 @@ class MailHelper {
                 
     }
     
-     public function sendPasswordResetLinkEmail($sendTo, $reset_link)
+     public function sendPasswordResetLinkEmail($user, $reset_link)
     { 
         $from=$this->conf['parameters']['mailer_user'];
-        $to=$sendTo;
-        $body='To reset you LTF password please go to the following link'.$reset_link;
+        $to=$user->getEmail();
+        $body="LoveThatFitAdminBundle::email/password_reset.html.twig";
+       // $body='To reset you LTF password please go to the following link'.$reset_link;
         $subject='LoveThatFit: Password Reset';
-        $this->sendEmail($from, $to, $body, $subject);
+        
+        $this->sendEmail($from, $to, $body, $subject,$user,$reset_link);
         return true;
         
     }

@@ -103,13 +103,15 @@ class SecurityController extends Controller {
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($_user);
                     $em->flush();
-
                     
-                    $link = $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
+                $baseurl= $_SERVER['REMOTE_ADDR'];
+                 
+                        
+                    $link =$baseurl."/".$this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
                     $defaultData = " Email has been sent with reset password link to " . $_user->getEmail() . " link ". $link;
 
                     //emailing the link---------
-                    $this->get('mail_helper')->sendPasswordResetLinkEmail($_user->getEmail(), $link);
+                    $this->get('mail_helper')->sendPasswordResetLinkEmail($_user, $link);
                     //------------------------------------------------------
                     
                     
