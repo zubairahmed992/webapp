@@ -48,7 +48,7 @@ class Measurement {
      * )
      * @Assert\NotBlank(groups={"registration_step_two"})  
      */
-    private $weight;
+    private $weight=0;
 
     /**
      * @var float $height
@@ -65,7 +65,7 @@ class Measurement {
      * )      
      * @Assert\NotBlank(groups={"registration_step_two"})  
      */
-    private $height;
+    private $height=0;
 
     /**
      * @var float $waist
@@ -80,7 +80,7 @@ class Measurement {
      *      groups  = "step3"
      * )
      */
-    private $waist;
+    private $waist=0;
 
     /**
      * @var float $hip
@@ -95,7 +95,7 @@ class Measurement {
      *      groups  = "step3"
      * )
      */
-    private $hip;
+    private $hip=0;
 
     /**
      * @var float $bust
@@ -110,7 +110,7 @@ class Measurement {
      *      groups  = "step3"
      * )
      */
-    private $bust;
+    private $bust=0;
 
     /**
      * @var float $arm
@@ -124,7 +124,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300"
      * )
      */
-    private $arm;
+    private $arm=0;
 
     /**
      * @var float $leg
@@ -138,7 +138,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300"
      * )
      */
-    private $leg;
+    private $leg=0;
 
     /**
      * @var float $inseam
@@ -152,7 +152,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 50"
      * )
      */
-    private $inseam;
+    private $inseam=0;
 
     /**
      * @var float $back
@@ -166,7 +166,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300"
      * )
      */
-    private $back;
+    private $back=0;
 
     /**
      * @var float $shoulder_height
@@ -180,7 +180,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 80"
      * )
      */
-    private $shoulder_height;
+    private $shoulder_height=0;
     
     /**
      * @var float $waist_height
@@ -194,7 +194,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 60"
      * )
      */
-    private $waist_height;
+    private $waist_height=0;
     
     /**
      * @var \DateTime $created_at

@@ -110,16 +110,15 @@ class RegistrationController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-        $is_new_user = $entity->getEmail() ? true : false;
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
 
         // check for duplicate email ------------------------
         $postData = $request->request->get('user');
-        $form_email = $postData['email'];
-        $exists = $this->isDuplicateEmail($id, $form_email);
+        
+        $exists = $this->isDuplicateEmail($id, $postData['email']);
 
         if ($exists) {
 
@@ -132,31 +131,29 @@ class RegistrationController extends Controller {
         }
         //////////////////////////////////////////
 
-
-        $measurement = new Measurement();
-        $measurement->setUser($entity);
+        $measurement = $entity->getMeasurement();
+        if (!$measurement) {
+            $measurement = new Measurement();
+            $measurement->setUser($entity);
+        }
+        
+        $measurement->setWeight($postData['measurement']['weight']);
+        $measurement->setHeight($postData['measurement']['height']);
+        $em->persist($measurement);
+        $em->flush();
+            
         $form = $this->createForm(new RegistrationStepTwoType(), $entity);
         $form->bind($request);
 
 
         if ($form->isValid()) {
-
             $em->persist($entity);
             $em->flush();
             
             //send registration email ....            
          $this->get('mail_helper')->sendRegistrationEmail($entity);
             
-                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                    //$measurement = $entity->getMeasurement();
-                    //if (!$measurement) {
-                    //  $measurement = new Measurement();
-                    //}
-                    //$form = $this->createForm(new RegistrationStepThreeType(), $measurement);
-                    //return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
-                    //          'form' => $form->createView(),
-                    //        'entity' => $entity));
-                    $form = $this->createForm(new RegistrationStepFourType(), $entity);
+            $form = $this->createForm(new RegistrationStepFourType(), $entity);
             $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
             return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                         'form' => $form->createView(),
@@ -286,8 +283,11 @@ class RegistrationController extends Controller {
         if (!$measurement) {
             $measurement = new Measurement();
             $measurement->setUser($user);
+              
+            $em->persist($measurement);
+            $em->flush();
         }
-
+        
         $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
         return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
                     'form' => $form->createView(),
