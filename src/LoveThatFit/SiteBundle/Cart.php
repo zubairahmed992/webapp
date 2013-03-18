@@ -26,7 +26,7 @@ class Cart {
     }
 //---------------------------------------------------------------------
     function removeFromCart($product) {
-       return $this->removeFromCart($product, 1);
+       return $this->removeMultipleFromCart($product, 1);
     }
     
 //---------------------------------------------------------------------
