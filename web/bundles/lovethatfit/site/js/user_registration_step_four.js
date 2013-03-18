@@ -9,7 +9,7 @@ set_markings();
 
 function set_markings(){
 user_height = user_height * 8 / 4 * 3;
-user_back = user_back * 8 / 4 * 3;
+user_back = 22 * 8 / 4 * 3;
   //var left_hand
   //alert(user_back);
   var hands_inside = 10;
@@ -21,7 +21,7 @@ user_back = user_back * 8 / 4 * 3;
   $("#right_hand").css({marginLeft: hands_inside / 2});
     
   $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 15, height: $("#bottom_adj_marks").height() + 30});
-  $("#bottom_adj_marks").css({top: 15});
+  //$("#bottom_adj_marks").css({top: 15});
   
 }
  
@@ -143,25 +143,39 @@ function call_settings(responseText, statusText, xhr, $form){
     
     //--Gragable Top--//
     $("#top_adj_marks").draggable({handle: "#top_moveable", axis: "y", containment: "parent",
+    create: function() {
+        var prod_top_pos = $("#top_adj_marks").css("top");
+        $("#measurement_shoulder_height").attr('value', prod_top_pos);
+    },
     start: function() {
         //$("#dummy_mark").addClass("put_me_top");
     },
     drag: function() {
+        prod_top_pos = $("#top_adj_marks").css("top");
+        $("#measurement_shoulder_height").attr('value', prod_top_pos);
     },
     stop: function() {
-        //$("#dummy_mark").removeClass("put_me_top");
+        prod_top_pos = $("#top_adj_marks").css("top");
+        $("#measurement_shoulder_height").attr('value', prod_top_pos);
     }
     });
     
     //--Gragable Bottom--//
     $("#bottom_adj_marks").draggable({handle: "#bottom_moveable", axis: "y", containment: "parent",
+    create: function() {
+       prod_bottom_pos = $("#bottom_adj_marks").css("top");
+       $("#measurement_waist_height").attr('value', prod_bottom_pos);
+    },
     start: function() {
         //$("#dummy_mark").addClass("put_me_top");
     },
     drag: function() {
+       prod_bottom_pos = $("#bottom_adj_marks").css("top");
+       $("#measurement_waist_height").attr('value', prod_bottom_pos);
     },
     stop: function() {
-        //$("#dummy_mark").removeClass("put_me_top");
+       prod_bottom_pos = $("#bottom_adj_marks").css("top");
+       $("#measurement_waist_height").attr('value', prod_bottom_pos);
     }
     });
     
@@ -189,9 +203,10 @@ function post_content_of_canvas(){
 }
 
 function go_to_index(){
-    
+    $("#frmUserMeasurement").submit();    
     window.location = document.getElementById("hdn_inner_site_index_url").value;
-        //window.location = "../inner_site/index";
+
+     //window.location = "../inner_site/index";
     }
     
 function next_button_click()

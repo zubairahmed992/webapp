@@ -11,6 +11,9 @@
 
 {% block product_slider %}
 
+<input id="hdn_prod_top_pos" type="hidden" value="{{ 121 + app.user.measurement.getShoulderHeight }}" />
+<input id="hdn_prod_bottom_pos" type="hidden" value="{{ 227 + app.user.measurement.getWaistHeight }}" />
+
 <section class="products">
     
     <div id="fitting_alerts">
@@ -83,7 +86,19 @@ function set_slider_buttons(){
       $(".slider_but_btm").removeClass("disable_me_btm").addClass("click_able_btm");
   }
 }
+
+function set_droppables(){
+    var top_pos_drop = $("#hdn_prod_top_pos").attr("value");
+    $("#top_dropable").css("top", top_pos_drop + "px");
+    
+    var bottom_pos_drop = $("#hdn_prod_bottom_pos").attr("value");
+    $("#bottom_dropable").css({top: bottom_pos_drop + "px"});
+    
+    var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");
+    $("#full_dropable").css({top: top_pos_drop + "px"});
+}
 $(document).ready(function(){
+  set_droppables();
   set_slider_buttons();
   set_drag_drop_ele();
   ///--- Fitting Alert ---///
