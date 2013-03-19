@@ -203,7 +203,6 @@ function post_content_of_canvas(){
 }
 
 function go_to_index(){
-    $("#frmUserMeasurement").submit();    
     window.location = document.getElementById("hdn_inner_site_index_url").value;
 
      //window.location = "../inner_site/index";
@@ -218,6 +217,9 @@ function next_button_click()
     }else{
         $(".step_4 .reg_next_step").attr("value","Uploading...");
         shift_to_canvas ();
+        
+        var act= $("#frmUserMeasurement").attr('action');
+        $("#frmUserMeasurement").ajaxSubmit({url: act, type: 'post'})
         setTimeout(go_to_index,'3000');
     }
     
