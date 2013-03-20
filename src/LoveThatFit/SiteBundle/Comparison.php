@@ -53,9 +53,7 @@ class Comparison {
         switch ($target) {
             case'Top':
                 return array(
-                    "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getWaist() . "," . $this->user_measurement->getWaist() . ")"),
                     "bust" => array("diff" => $this->product->getBust() - $this->user_measurement->getBust(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getBust() . "," . $this->user_measurement->getBust() . ")"),
-                    "arm" => array("diff" => $this->product->getArm() - $this->user_measurement->getArm(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getArm() . "," . $this->user_measurement->getArm() . ")"),
                     "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getBack() . "," . $this->user_measurement->getBack() . ")"),
                 );
                 break;
@@ -63,17 +61,15 @@ class Comparison {
                 return array(
                     "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getWaist() . "," . $this->user_measurement->getWaist() . ")"),
                     "hip" => array("diff" => $this->product->getHip() - $this->user_measurement->getHip(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getHip() . "," . $this->user_measurement->getHip() . ")"),
-                    "leg" => array("diff" => $this->product->getLeg() - $this->user_measurement->getLeg(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getLeg() . "," . $this->user_measurement->getLeg() . ")"),
-                    "inseam" => array("diff" => $this->product->getInseam() - $this->user_measurement->getInseam(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getInseam() . "," . $this->user_measurement->getInseam() . ")"),
                 );
                 break;
             case 'Dress':
                 return array(
+                    "bust" => array("diff" => $this->product->getBust() - $this->user_measurement->getBust(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getBust() . "," . $this->user_measurement->getBust() . ")"),
                     "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getWaist() . "," . $this->user_measurement->getWaist() . ")"),
                     "hip" => array("diff" => $this->product->getHip() - $this->user_measurement->getHip(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getHip() . "," . $this->user_measurement->getHip() . ")"),
-                    "arm" => array("diff" => $this->product->getArm() - $this->user_measurement->getArm(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getArm() . "," . $this->user_measurement->getArm() . ")"),
-                    "leg" => array("diff" => $this->product->getLeg() - $this->user_measurement->getLeg(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getLeg() . "," . $this->user_measurement->getLeg() . ")"),
                     "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getBack() . "," . $this->user_measurement->getBack() . ")"),
+                    
                 );
                 break;
         }
@@ -87,7 +83,6 @@ class Comparison {
         $sug = $this->getDifference($this->product->getClothingType()->getTarget());
 
         foreach ($sug as $key => $value) {
-            //$sug[$key]["msg"] = $sug[$key]["msg"] . $this->getSuggestion($msg[$key], $value["diff"]);
             $ar=$this->getSuggestion($msg[$key], $value["diff"]);
             $sug[$key]["msg"] = $sug[$key]["msg"] . $ar['msg'];
             $sug[$key]["fit"] =  $ar['fit'];
@@ -107,11 +102,11 @@ class Comparison {
             $msg = $part['upper'];
         } elseif ($diff < -2) {
             $msg = $this->adjustmentUpply($diff) ? $part['adjust'] : $part['lower'];
-            //$msg = $part['lower'];
+            
         } elseif ($diff == 0 || ($diff<=1 && $diff>0)) {
             $msg = $part[0];
             $fit=true;
-            //$msg = $part['lower'];    
+            
         } else {
             foreach ($part as $key => $value) {
                 $curr_key = doubleval($key);
@@ -127,7 +122,7 @@ class Comparison {
                         }
                         break;
                     } elseif ($curr_key > $diff && !$prev_key) {//current key is greater than difference 
-                        //$msg = $this->adjustmentUpply($diff)? $part['adjust']:$value;
+            
                         if ($this->adjustmentUpply($diff)) {
                             $msg = $part['adjust'];
                             $fit = true;
@@ -137,7 +132,7 @@ class Comparison {
                         break;
                     } elseif ($prev_key) {
                         if ($curr_key < $diff && $prev_key > $diff) {
-                            //$msg = $this->adjustmentUpply($diff)? $part['adjust']:$value;
+                        
                             if ($this->adjustmentUpply($diff)) {
                                 $msg = $part['adjust'];
                                 $fit = true;
@@ -146,7 +141,7 @@ class Comparison {
                             }
                             break;
                         } elseif ($curr_key > $diff && $prev_key < $diff) {
-                            //$msg = $this->adjustmentUpply($diff)? $part['adjust']:$value;
+                            
                             if ($this->adjustmentUpply($diff)) {
                                 $msg = $part['adjust'];
                                 $fit = true;
@@ -214,25 +209,20 @@ class Comparison {
         
         return array(
         
-        
             'Top'=> array(
-                    "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg" => "", 'fit' => false, "product" => $this->product->getWaist(), "user"=> $this->user_measurement->getWaist()),
                     "bust" => array("diff" => $this->product->getBust() - $this->user_measurement->getBust(), "msg" => "", 'fit' => false, "product" =>  $this->product->getBust() , "user"=> $this->user_measurement->getBust()),
-                    "arm" => array("diff" => $this->product->getArm() - $this->user_measurement->getArm(), "msg" => "", 'fit' => false, "product" =>  $this->product->getArm() , "user"=> $this->user_measurement->getArm()),
                     "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg" => "", 'fit' => false, "product" =>  $this->product->getBack() , "user"=> $this->user_measurement->getBack()),
                 ),
                 
             'Bottom'=> array(
                     "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg" => "", 'fit' => false, "product" =>  $this->product->getWaist() , "user"=>  $this->user_measurement->getWaist()),
                     "hip" => array("diff" => $this->product->getHip() - $this->user_measurement->getHip(), "msg" => "", 'fit' => false, "product" =>  $this->product->getHip() , "user"=>  $this->user_measurement->getHip()),
-                    "leg" => array("diff" => $this->product->getLeg() - $this->user_measurement->getLeg(), "msg" => "", 'fit' => false, "product" =>  $this->product->getLeg() , "user"=>  $this->user_measurement->getLeg()),
-                    "inseam" => array("diff" => $this->product->getInseam() - $this->user_measurement->getInseam(), "msg" => "", 'fit' => false, "product" =>  $this->product->getInseam() , "user"=>  $this->user_measurement->getInseam()),
+                 
                 ),
             'Dress'=> array(
+                    "bust" => array("diff" => $this->product->getBust() - $this->user_measurement->getBust(), "msg" => "", 'fit' => false, "data" => "(" . $this->product->getBust() . "," . $this->user_measurement->getBust() . ")"),                     
                     "waist" => array("diff" => $this->product->getWaist() - $this->user_measurement->getWaist(), "msg" => "", 'fit' => false, "product" =>  $this->product->getWaist() , "user"=>  $this->user_measurement->getWaist()),
                     "hip" => array("diff" => $this->product->getHip() - $this->user_measurement->getHip(), "msg" => "", 'fit' => false, "product" =>  $this->product->getHip() , "user"=>  $this->user_measurement->getHip()),
-                    "arm" => array("diff" => $this->product->getArm() - $this->user_measurement->getArm(), "msg" => "", 'fit' => false, "product" =>  $this->product->getArm() , "user"=>  $this->user_measurement->getArm()),
-                    "leg" => array("diff" => $this->product->getLeg() - $this->user_measurement->getLeg(), "msg" => "", 'fit' => false, "product" =>  $this->product->getLeg() , "user"=>  $this->user_measurement->getLeg()),
                     "back" => array("diff" => $this->product->getBack() - $this->user_measurement->getBack(), "msg" => "", 'fit' => false, "product" =>  $this->product->getBack() , "user"=>  $this->user_measurement->getBack()),
                 )
                         );

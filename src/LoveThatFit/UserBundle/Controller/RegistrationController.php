@@ -280,13 +280,17 @@ class RegistrationController extends Controller {
         $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $measurement = $user->getMeasurement();
+        
         if (!$measurement) {
             $measurement = new Measurement();
             $measurement->setUser($user);
               
             $em->persist($measurement);
             $em->flush();
+            $measurement = $user->getMeasurement();
+            
         }
+        
         
         $form = $this->createForm(new RegistrationStepThreeType(), $measurement);
         return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
