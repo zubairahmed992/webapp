@@ -1880,7 +1880,7 @@ padding:4px 10px;
 #left_hand {
     width:97px;
     height: 146px;
-    background: url(../images/left_hand_15_degree.png) 0 0 no-repeat;
+    background: url(../images/left_hand_st.png) 0 0 no-repeat;
     float:left;
     margin-left: -10px;
 }
@@ -1894,7 +1894,7 @@ padding:4px 10px;
     width:97px;
     height: 147px;
     margin-right: -10px;
-    background: url(../images/right_hand_15_degree.png) 0 0 no-repeat;
+    background: url(../images/right_hand_st.png) 0 0 no-repeat;
     float:left;
 }
 #adj_belt_hldr {
