@@ -1,5 +1,9 @@
 #------------------------------- Registration Steps ---------------------------------------------------------
 
+registration:
+    pattern:  /registration
+    defaults: { _controller: LoveThatFitUserBundle:Registration:registration }
+
 registration_step_one:
     pattern:  /registration/step_one
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepOne }

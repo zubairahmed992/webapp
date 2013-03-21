@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\Measurement;
+use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 use LoveThatFit\UserBundle\Form\Type\UserType;
 use LoveThatFit\UserBundle\Form\Type\MeasurementStepFourType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepTwoType;
@@ -435,6 +436,21 @@ class RegistrationController extends Controller {
         return $measurement;
     }
 
+
+        //-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+
+    public function registrationAction() {
+        $entity = new User();
+        $form = $this->createForm(new RegistrationType(), $entity);
+        return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
+                    'form' => $form->createView()));
+    }
+
+    
+
+    
 }
 
 ?>
