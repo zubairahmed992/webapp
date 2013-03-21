@@ -20,7 +20,7 @@ class RegistrationType extends AbstractType {
         $builder->add('gender', new GenderType(), array(
             'multiple' => false,
             'expanded' => true));
-        $builder->add('measurement', new RegistrationMeasurementType());
+        
         
         
     }

@@ -436,10 +436,10 @@ class RegistrationController extends Controller {
         return $measurement;
     }
 
-
-        //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+        //------------------------- New Registration Process------------------------------------------------
     //-------------------------------------------------------------------------
-    //-------------------------------------------------------------------------
+    
 
     public function registrationAction() {
         $entity = new User();
@@ -448,8 +448,11 @@ class RegistrationController extends Controller {
                     'form' => $form->createView()));
     }
 
+    //-------------------------------------------------------------------------
     
-
+public function registrationCreateAction() {
+    return new Response('this take you to the index page after gets registered + logged in');
+    }
     
 }
 
