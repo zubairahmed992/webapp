@@ -188,7 +188,7 @@ class Brand {
     //---------------------------------------------------
     
  /**
- * @ORM\postRemove
+ * @ORM\PostRemove
  */
 public function deleteImages()
 {
