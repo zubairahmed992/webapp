@@ -1,6 +1,8 @@
+set :stage_dir, 'app/config/deploy' # needed for Symfony2 only
+require 'capistrano/ext/multistage'
+set :stages, %w(dev beta)
+
 set :application, "lovethatfit"
-set :domain,      "dev.#{application}.com"
-set :deploy_to,   "/var/www/#{domain}"
 set :app_path,    "app"
 
 set :repository,  "git@github.com:lovethatfit/webapp.git"
@@ -9,10 +11,6 @@ set :scm,         :git
 
 set :model_manager, "doctrine"
 # Or: `propel`
-
-role :web,        domain                         # Your HTTP server, Apache/etc
-role :app,        domain, :primary => true                        # This may be the same as your `Web` server
-role :db,         domain, :primary => true       # This is where Symfony2 migrations will run
 
 set  :keep_releases,  3
 
