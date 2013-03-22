@@ -32,6 +32,7 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: ^/registration/step_one, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /email/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: /registration/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /registration/, roles: ROLE_USER }        
         - { path: /registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /inner_site, roles: ROLE_USER }

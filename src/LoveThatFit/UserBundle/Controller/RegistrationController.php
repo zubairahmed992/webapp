@@ -451,6 +451,52 @@ class RegistrationController extends Controller {
     //-------------------------------------------------------------------------
     
 public function registrationCreateAction() {
+      try {
+            $entity = new User();
+            $form = $this->createForm(new RegistrationType(), $entity);
+            $form->bind($this->getRequest());
+
+            if ($form->isValid()) {
+                
+                $entity->setCreatedAt(new \DateTime('now'));
+                $entity->setUpdatedAt(new \DateTime('now'));
+
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($entity);
+                $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+                $entity->setPassword($password);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+
+                // This is because the two fields (height & weight) added/moved from measurement to this step
+                $measurement = new Measurement();
+                $measurement->setUser($entity);
+                $em->persist($measurement);
+                $em->flush();
+                
+                //Login after registration, the rest of the steps are secured for logged In users access only
+                $this->getLoggedIn($entity);
+
+                
+                return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
+                            'form' => $form->createView(),
+                            'entity' => $entity));
+                
+            } else {
+
+                return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
+                            'form' => $form->createView(),
+                            'entity' => $entity));
+            }
+        } catch (\Doctrine\DBAL\DBALException $e) {
+
+            $form->addError(new FormError('Something went wrong.'));
+            return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $entity));
+        }
     return new Response('this take you to the index page after gets registered + logged in');
     }
     
