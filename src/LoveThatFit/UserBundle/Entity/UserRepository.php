@@ -17,16 +17,22 @@ class UserRepository extends EntityRepository
         return $this->findOneBy(array('authToken' => $auth_token));
     }
     
-    public function isDuplicateEmail($id, $email) {
+   public function isDuplicateEmail($id, $email) {
         try {
 
             $entityByEmail = $this->loadUserByEmail($email);
-            $entityById = $this->find($id);
-
+            
+            
+            if(!($id) && !($entityByEmail)){
+                return false;
+            }else{
+                 $entityById = $this->find($id);
+            
             if ($entityByEmail) {
                 return ($entityByEmail->getEmail() == $entityById->getEmail()) ? false : true;
             } else {
                 return false;
+            }
             }
      
             } catch (\Exception $e) {

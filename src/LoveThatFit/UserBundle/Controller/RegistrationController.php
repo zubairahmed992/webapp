@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Controller;
-
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
@@ -424,7 +424,7 @@ class RegistrationController extends Controller {
         }
     }
 
-    //------------------------------ Get MEasurement Entity -----------------------
+    //------------------------------ Get Measurement Entity -----------------------
 
     private function getMeasurement($user) {
         $measurement = $user->getMeasurement();
@@ -455,9 +455,14 @@ public function registrationCreateAction() {
             $entity = new User();
             $form = $this->createForm(new RegistrationType(), $entity);
             $form->bind($this->getRequest());
-
+            if ($this->isDuplicateUserName($entity->getUsername())) {
+                   $form->addError(new FormError('User Name already taken.'));
+            }
+            if ($this->isDuplicateEmail(Null,$entity->getEmail())) {
+                     $form->addError(new FormError('Email already taken'));
+              }
             if ($form->isValid()) {
-                
+               
                 $entity->setCreatedAt(new \DateTime('now'));
                 $entity->setUpdatedAt(new \DateTime('now'));
 
@@ -465,8 +470,10 @@ public function registrationCreateAction() {
                 $encoder = $factory->getEncoder($entity);
                 $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
                 $entity->setPassword($password);
-
+                
                 $em = $this->getDoctrine()->getManager();
+                
+                
                 $em->persist($entity);
                 $em->flush();
 
@@ -491,8 +498,9 @@ public function registrationCreateAction() {
                             'entity' => $entity));
             }
         } catch (\Doctrine\DBAL\DBALException $e) {
-
-            $form->addError(new FormError('Something went wrong.'));
+            
+             $form->addError(new FormError('Some thing went wrong'));
+           
             return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                         'form' => $form->createView(),
                         'entity' => $entity));
