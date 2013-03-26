@@ -132,18 +132,44 @@ var scroll_heighting = 534;
         var prod_axis = $(prod_type).offset();
 
         if(prod_axis.left < $(prod_type).parent().offset().left - 30 || prod_axis.left > $(prod_type).parent().offset().left + 30 || prod_axis.top < $(prod_type).parent().offset().top - 30 || prod_axis.top > $(prod_type).parent().offset().top + 30){
-            $( prod_type ).draggable( "option", "revert", false )
+            $( prod_type ).draggable( "option", "revert", false );
         }
         else{
-            $( prod_type ).draggable( "option", "revert", true )
+            $( prod_type ).draggable( "option", "revert", true );
         }
     }
+    
+    function remove_alert_box(){
+        if($(".fitting_alerts_cnt ul") != true)
+            {
+                $("#fitting_alerts").fadeOut();
+            }
+    }
+    function remove_fitting_alerts(prod_type){
+        if($( prod_type ).parent().attr('id') == "top_dropable")
+            {
+                $("#curr_top_alerts ul").fadeOut();
+                $("#curr_top_alerts h3").fadeOut();
+            }
+        if($( prod_type ).parent().attr('id') == "bottom_dropable")
+            {
+                $("#curr_bottom_alerts ul").fadeOut();
+                $("#curr_bottom_alerts h2").fadeOut();
+            }
+        if($( prod_type ).parent().attr('id') == "full_dropable")
+            {
+                $("#curr_dress_alerts ul").fadeOut();
+                $("#curr_dress_alerts h2").fadeOut();
+            }
+            
+    };
     
     //---Function to check position and remove applied product---//
     function remove_product_applied (prod_type){
         //alert($( prod_type ).css("left"));
         if($( prod_type ).css("left") != "0px" || $( prod_type ).css("top") != "0px" ){
             $( prod_type).fadeOut(300, function (){$(prod_type).parent().addClass("hide").css("display","none")});
+            remove_fitting_alerts(prod_type);
         }
     }
     
@@ -155,6 +181,7 @@ var scroll_heighting = 534;
     $( ".prod_wrapper li .prod_node .prod_top" ).draggable({ revert: "invalid", helper: "clone",
         start:function (){
             $(".int_fitting_room").zIndex("-10");
+            $("#fitting_alerts").zIndex("-8");
             
             var prod_h = 160;
             var prod_w = 200;
@@ -176,6 +203,7 @@ var scroll_heighting = 534;
             //alert($('.ui-draggable-dragging')._parent());
             $( "#top_dropable").removeClass("top_active");
             $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
         }
     });
     
@@ -238,6 +266,8 @@ var scroll_heighting = 534;
             //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
             $(".int_fitting_room").zIndex("-1");
+            $("#fitting_alerts").zIndex("-8");
+            
         $( "#bottom_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
             
         },
@@ -246,6 +276,7 @@ var scroll_heighting = 534;
         stop:function (){
             $( "#bottom_dropable").removeClass("top_active");
             $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
         }
     });
     
@@ -302,6 +333,8 @@ var scroll_heighting = 534;
             //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
             $(".int_fitting_room").zIndex("-1");
+            $("#fitting_alerts").zIndex("-8");
+            
         $( "#full_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
             
         },
@@ -312,6 +345,7 @@ var scroll_heighting = 534;
             //alert(my_ccc);
             $( "#full_dropable").removeClass("top_active");
             $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
         }
     });
     

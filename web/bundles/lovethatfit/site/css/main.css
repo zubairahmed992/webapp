@@ -1297,7 +1297,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cadb27', end
     top:30px;
     width:250px;
     height:500px;
-    padding-top: 18px;
+    padding-top: 250px;
     text-align: center;
     vertical-align: middle;
 }
@@ -1879,8 +1879,7 @@ padding:4px 10px;
 }
 #left_hand {
     width:97px;
-    height: 146px;
-    background: url(../images/left_hand_st.png) 0 0 no-repeat;
+    background: url(../images/left_hand_st.png) 0 center no-repeat;
     float:left;
     margin-left: -10px;
 }
@@ -1892,9 +1891,8 @@ padding:4px 10px;
 }
 #right_hand {
     width:97px;
-    height: 147px;
     margin-right: -10px;
-    background: url(../images/right_hand_st.png) 0 0 no-repeat;
+    background: url(../images/right_hand_st.png) 0 center no-repeat;
     float:left;
 }
 #adj_belt_hldr {
