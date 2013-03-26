@@ -455,9 +455,7 @@ public function registrationCreateAction() {
             $entity = new User();
             $form = $this->createForm(new RegistrationType(), $entity);
             $form->bind($this->getRequest());
-            if ($this->isDuplicateUserName($entity->getUsername())) {
-                   $form->addError(new FormError('User Name already taken.'));
-            }
+            
             if ($this->isDuplicateEmail(Null,$entity->getEmail())) {
                      $form->addError(new FormError('Email already taken'));
               }
@@ -477,7 +475,7 @@ public function registrationCreateAction() {
                 $em->persist($entity);
                 $em->flush();
 
-                // This is because the two fields (height & weight) added/moved from measurement to this step
+                // Adding Measurement record for the user for the later usage
                 $measurement = new Measurement();
                 $measurement->setUser($entity);
                 $em->persist($measurement);
@@ -485,10 +483,18 @@ public function registrationCreateAction() {
                 
                 //Login after registration, the rest of the steps are secured for logged In users access only
                 $this->getLoggedIn($entity);
-
+   
+                //send registration email ....            
+                $this->get('mail_helper')->sendRegistrationEmail($entity);
+                
+                $registrationMeasurementform = $this->createForm(new RegistrationStepThreeType(), $measurement);
+                
+                return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
+                            'form' => $form->createView(),
+                            'entity' => $user));
                 
                 return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
-                            'form' => $form->createView(),
+                            
                             'entity' => $entity));
                 
             } else {
@@ -505,7 +511,7 @@ public function registrationCreateAction() {
                         'form' => $form->createView(),
                         'entity' => $entity));
         }
-    return new Response('this take you to the index page after gets registered + logged in');
+    
     }
     
 }

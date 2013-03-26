@@ -35,21 +35,6 @@ class User  implements UserInterface, \Serializable{
     private $id;
 
     /**
-     * @var string $username
-     *
-     * @ORM\Column(name="username", type="string", length=25, unique=true)
-     *      @Assert\Length(
-     *      min = "3",
-     *      max = "50",
-     *      minMessage = "User name must be at least {{ limit }} characters long",
-     *      maxMessage = "User first name cannot be longer than than {{ limit }} characters long",
-     *      groups={"registration_step_one"}
-     * )
-     *      @Assert\NotBlank(groups={"registration_step_one"})
-     */
-    private $username;
-
-    /**
      * @var string $salt
      *
      * @ORM\Column(name="salt", type="string", length=32, nullable=true)
@@ -74,7 +59,7 @@ class User  implements UserInterface, \Serializable{
     /**
      * @var string $email
      *
-     * @ORM\Column(name="email", type="string", length=60, unique=true, nullable=true)
+     * @ORM\Column(name="email", type="string", length=60, unique=true, nullable=false)
      * @Assert\Email(groups={"registration_step_two"})
      * @Assert\NotBlank(groups={"registration_step_two"})
      */
@@ -182,18 +167,7 @@ class User  implements UserInterface, \Serializable{
         return $this->id;
     }
 
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return User
-     */
-    public function setUsername($username) {
-        $this->username = $username;
-
-        return $this;
-    }
-
+  
     /**
      * Set salt
      *
@@ -466,7 +440,7 @@ class User  implements UserInterface, \Serializable{
      * @return string 
      */
     public function getUsername() {
-        return $this->username;
+        return $this->email;
     }
 
     /**

@@ -1,27 +1,7 @@
-{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
-
-{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
-
-{% block action_block_content %}
-<section class="reg_blk">
-    <div class="reg_steps">
-        <ul>
-            <li class="active"><span>1</span></li>
-            <li><span>2</span></li>
-            <li><span>3</span></li>
-            <li><span>4</span></li>
-        </ul>
-    </div>
-    <div class="action_cnt">
-        <div class="steps step_1">
+  
             <h2>Register</h2>
             <form id="registration" action="{{ path('registration_create')}}" method="post" {{ form_enctype(form) }}>
 {{ form_errors(form) }}
-                <div class="frm_ele">
-                {{ form_errors(form.username) }}
-                {{ form_label(form.username) }}
-                {{ form_widget(form.username) }}
-                    </div>
                     
                     <div class="frm_ele">
                 {{ form_errors(form.email) }}
@@ -33,7 +13,6 @@
                 {{ form_errors(form.password.password) }}
                 {{ form_label(form.password.password) }}
                 {{ form_widget(form.password.password) }}
-
                         </div>
                         <div class="frm_ele">
                 {{ form_errors(form.password.confirm) }}
@@ -47,26 +26,9 @@
                 {{ form_row(form.gender) }}                     
                                     </div>
 
-                                    
-
                 {{ form_rest(form) }}
 
-                                    <div class="btm_buttons row">
-                                        <div class="frm_ele">
                                             <input class="reg_next_step" type="submit" value="Register" />
-                                        </div>
-                                        <div class="frm_ele">
-                                            <a class="but_short" href="#">Why Love Us?</a>
-                                        </div>
-                                    </div>
                                 </form>
 
-                                <!--/.sttp_1--></div>
-                            <!--/.action_cnt--></div>
-                        <!--/.action_blk--></section>
-
-{% endblock %}
-{% block how_it_works_content %}
-            {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
-{% endblock %}
 
