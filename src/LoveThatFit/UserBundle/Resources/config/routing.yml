@@ -1,11 +1,27 @@
+getme:
+    pattern:  /getme
+    defaults: { _controller: LoveThatFitUserBundle:Registration:renderThis }
+
+
+
 #--------------------------------- New Registration Process ----------------
+
+
 registration:
     pattern:  /registration
     defaults: { _controller: LoveThatFitUserBundle:Registration:registration }
 
-registration_create:
-    pattern:  /registration/create
+registration_user_create:
+    pattern:  /registration/user/create
     defaults: { _controller: LoveThatFitUserBundle:Registration:registrationCreate }
+
+registration_measurement_create:
+    pattern:  /registration/measurement/create
+    defaults: { _controller: LoveThatFitUserBundle:Registration:measurementCreate }
+
+
+
+     
     
 #------------------------------- Registration Steps ---------------------------------------------------------
 

@@ -10,7 +10,12 @@ class RegistrationMeasurementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       $builder->add('height');
+        
+        $builder->add('height', 'hidden');
+        $builder->add('back', 'hidden');
+        $builder->add('bust', 'hidden');
+        $builder->add('waist', 'hidden');
+        $builder->add('hip', 'hidden');        
     }
   
      public function getDefaultOptions(array $options)
@@ -18,7 +23,7 @@ class RegistrationMeasurementType extends AbstractType
         return array(
             'data_class' => 'LoveThatFit\UserBundle\Entity\Measurement',
             'cascade_validation' => true,
-            'validation_groups' => array('registration'),
+            'validation_groups' => array('registrationMeasurement'),
         );
     }
 

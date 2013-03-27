@@ -12,6 +12,7 @@ use LoveThatFit\UserBundle\Form\Type\MeasurementStepFourType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepTwoType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepThreeType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepFourType;
+use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -437,7 +438,7 @@ class RegistrationController extends Controller {
     }
 
 //-------------------------------------------------------------------------
-        //------------------------- New Registration Process------------------------------------------------
+        //------------------------- New Registration Process ------------------------------------------------
     //-------------------------------------------------------------------------
     
 
@@ -457,8 +458,9 @@ public function registrationCreateAction() {
             $form->bind($this->getRequest());
             
             if ($this->isDuplicateEmail(Null,$entity->getEmail())) {
-                     $form->addError(new FormError('Email already taken'));
+                     $form->addError(new FormError('This email has already taken.'));
               }
+              
             if ($form->isValid()) {
                
                 $entity->setCreatedAt(new \DateTime('now'));
@@ -470,7 +472,6 @@ public function registrationCreateAction() {
                 $entity->setPassword($password);
                 
                 $em = $this->getDoctrine()->getManager();
-                
                 
                 $em->persist($entity);
                 $em->flush();
@@ -487,14 +488,11 @@ public function registrationCreateAction() {
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($entity);
                 
-                $registrationMeasurementform = $this->createForm(new RegistrationStepThreeType(), $measurement);
-                
-                return $this->render('LoveThatFitUserBundle:Registration:stepthree.html.twig', array(
-                            'form' => $form->createView(),
-                            'entity' => $user));
-                
-                return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
-                            
+                $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
+                                
+                return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
+                            'form' => $registrationMeasurementform->createView(),
+                            'measurement' => $measurement,
                             'entity' => $entity));
                 
             } else {
@@ -512,6 +510,53 @@ public function registrationCreateAction() {
                         'entity' => $entity));
         }
     
+    }
+    
+     public function measurementCreateAction() {
+
+         $id = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+        $measurement = $entity->getMeasurement();
+        
+        $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
+        $registrationMeasurementform->bind($this->getRequest());
+
+        $em->persist($measurement);
+        $em->flush();
+        
+          // Rendering step four
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+
+        return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                    'form' => $form->createView(),
+                    'measurement_form' => $measurement_form->createView(),
+                    'entity' => $entity,
+                    'measurement' => $measurement,
+                ));
+        
+
+    }
+    
+     
+    public function renderThisAction() {
+
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+        $measurement = $entity->getMeasurement();
+        
+        $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
+
+        return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
+                    'form' => $registrationMeasurementform->createView(),
+                    'measurement' => $measurement,
+                    'entity' => $entity));
     }
     
 }
