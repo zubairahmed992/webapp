@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Love That Fit</title>
+        <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/lovethatfit/site/css/main_1.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/custom.js') }}"></script>
+    </head>
+    <body class="full_site home">
+        <div class="full_wrapper">
+            <div class="holder">
+                <section class="site_container">
+                    <header class="home">
+                        <div class="logo">
+                            <img src="{{ asset('bundles/lovethatfit/site/images/logo.png') }}" width="263" height="161" title="Love That Fit" alt="Love That Fit">
+                        </div>
+                    </header>
+            {% block action_block_content %}
+            {% endblock %} 
+           
+            {% block how_it_works_content %}
+            {% endblock %}
+
+                    <!--/.site_container--></section>
+                <div class="clr_bth"></div>
+                <!--/.holder--></div>
+            <footer class="footer">
+                <div class="ftr_logo"></div>
+                <div class="bottom_line"></div>
+                {% block bottom_left_nav %}
+                    {% include 'LoveThatFitSiteBundle::_bottomNavigation.html.twig'%}
+                {% endblock %} 
+                    <!--/.footer--></footer>
+                <!--/.full_wrapper--></div>
+        </body>
+    </html>
