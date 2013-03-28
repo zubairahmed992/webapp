@@ -1,13 +1,14 @@
 .pro_cart{    
-  width:210px; 
+  width:160px; 
   float: right; 
   margin: 50px 10px 0px 0px; 
 }
 
-.pro_cart nav ul{  
+.pro_cart nav ul:first-child{  
     list-style: none;
     padding:0px 0px 0px 0px;
     margin:0px 0px 0px 0px;
+    box-shadow: 3px 0px 8px -2px #ccc;
 }
 
 .pro_cart nav ul li{      
@@ -23,45 +24,36 @@
 	
 }
 
-.pro_cart nav ul li a{  
-    background: rgb(204,206,198);
-background: -moz-linear-gradient(top, rgba(204,206,198,1) 0%, rgba(170,168,157,1) 100%);
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(204,206,198,1)), color-stop(100%,rgba(170,168,157,1)));
-background: -webkit-linear-gradient(top, rgba(204,206,198,1) 0%,rgba(170,168,157,1) 100%);
-background: -o-linear-gradient(top, rgba(204,206,198,1) 0%,rgba(170,168,157,1) 100%);
-background: -ms-linear-gradient(top, rgba(204,206,198,1) 0%,rgba(170,168,157,1) 100%);
-background: linear-gradient(to bottom, rgba(204,206,198,1) 0%,rgba(170,168,157,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccec6', endColorstr='#aaa89d',GradientType=0 );
-    color: #fff;
+.pro_cart nav ul li a{    
+    color: #535352;
     display:block;
     text-decoration: none;
     padding:7px 0px 7px 10px;
-    border:1px solid #999;
+   background:url(../images/open_menu_shade.png) left bottom no-repeat!important;
+   
      
 }
 .pro_cart nav ul li ul{  
     list-style: none;
     padding:0px 0px 0px 0px;
-    margin:0px 0px 0px 0px;
-    background:url(../images/trans_dot2.png) left top repeat!important;     
+    margin:0px 0px 0px 0px;    
 
 }
+
 
 .pro_cart nav ul li ul li{
       
     font-size: 0.95em;
-    padding:5px 0px;
-    border-bottom: 1px solid #a3a3a3;
+    padding:3px 0px;    
     overflow:auto;
 }
 
-.pro_cart nav ul li ul li a{  
-    margin-bottom: 2px;    
+.pro_cart nav ul li ul li a{      
     padding:5px;  
     background: none!important;
-    color: #000;
+    color: #a4a73b;
     font-size: 0.95em;
-   width:60px;
+    width:60px;
     float: left;
     border:none;
     
@@ -87,15 +79,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccec6', end
 
 .cart_item_price{ 
   display:inline-block;
-  float:right;
-  font-weight: bold;
-  color:#444;
-  margin: 8px 0px 0px 20px;
+  color:#535352;
+  margin: 8px 0px 0px 10px;
 }
 
 #total_cart{
-    padding:10px 0px 10px 10px;
-     background:url(../images/trans_dot2.png) left top repeat!important;     
+    padding:5px 0px 5px 10px;
+     background:url(../images/open_menu_shade2.png) right top no-repeat!important; 
 }
 
 #total_cart #totalamount{
@@ -140,3 +130,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccec6', end
 .pro_cart nav ul li iframe{
     min-width:190px!important;
 }
+
+.pro_cart{
+    display:block!important;   
+
+}
+
