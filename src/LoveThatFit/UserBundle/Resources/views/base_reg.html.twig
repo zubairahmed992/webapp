@@ -15,23 +15,16 @@
 
     <body class="full_site home">
         <div class="full_wrapper">
-            <div class="holder">
+            <div class="holder">    
                 <section class="site_container">
-                    
-                    <header class="reg">
-                        <div class="strip_lft">
-                            <div class="logo">
-                                <img src="{{ asset('bundles/lovethatfit/site/images/logo.png') }}" width="263" height="161" title="Love That Fit" alt="Love That Fit">
-                            </div>
-                        </div>
-                        <div class="strip_rgt">
-                        </div>
-                    </header>
-            {% block action_block_content %}
-            {% endblock %}
+                     <div class="left_column">
+                    <div class="logo">
+                        <img src="{{ asset('bundles/lovethatfit/site/images/logo_inner.png') }}" width="177" height="107">
+                    </div>
+                    {% block action_block_content %}
+                    {% endblock %}
+                <!--/.left_menu--></div>
             
-            {% block how_it_works_content %}
-            {% endblock %}
 
                     <!--/.site_container--></section>
                 <div class="clr_bth"></div>
