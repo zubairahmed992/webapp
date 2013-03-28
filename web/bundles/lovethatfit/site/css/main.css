@@ -113,7 +113,7 @@ textarea {
   font-size: 11px;
   vertical-align: middle;
   font-family:"Century Gothic";
-  border:1px solid #999;
+  border:1px solid #ccc;
   margin-bottom:6px;
   color:#333;
   background:#fff;
@@ -171,16 +171,21 @@ body {
 	width:1004px;
 	border:1px solid #cccccc;	
         position: relative;
+        background:none;
+}
+.full_site .holder {
+        background:url(../images/home_image.png) right top no-repeat;
 }
 .site_container {
 	width:100%;
 	position:relative;
 }
 .left_column .logo {
-    padding: 40px 0 40px 18px;
+    padding: 40px 0 40px 0;
+    text-align: center;
 }
 .footer {
-	width:1004px;
+	width:996px;
 	margin:0 auto;
 	height:60px;
 	padding-right:10px;
@@ -287,7 +292,7 @@ ul.row li {
 /*--Full Site--*/
 .full_site .site_container {
 	background:none;
-	padding-top:140px;
+	padding-top:0;
 	min-height:360px;
 	float:left
         padding-bottom:20px;
@@ -467,16 +472,12 @@ header.reg .strip_rgt {
 	padding-bottom:120px;
 }*/
 .reg_blk {
-	background:url(../images/trans_dot_65.png) 0 0 repeat;
-	width:380px;
+	width:330px;
 	height:auto;
 	position:relative;
-	margin-right:70px;
-	margin-top:-300px;
-	float:right;
 	min-height:300px;
-	padding-bottom:30px;
 	margin-bottom:30px;
+        margin: auto;
 }
 
 .reg_blk .reg_steps {
@@ -546,20 +547,21 @@ header.reg .strip_rgt {
 }
 
 .reg_blk h2 {
-	font-family: 'VollkornItalic';
-	font-size:38px;
+	font-family: 'century gothic';
+	font-size:26px;
 	color:#fff;
 	text-align:center;
 	margin-bottom:0;
 	padding-top:10px;
+        font-weight: normal;
 }
 .reg_blk label {
 	padding-right:20px;
 	padding-left:20px;
 	font-size:11px;
 	font-family:"Century Gothic";
-	width:95px;
-	color:#fff;
+	width:auto;
+	color:#a2a2a2;
 	vertical-align:top;
 	padding-top:4px;
 	display:inline-block;
@@ -592,9 +594,19 @@ header.reg .strip_rgt {
 .reg_blk select {
 	width:68px;
 }
+.reg_blk p {
+    margin-bottom: 26px;
+    font-size: 13px;
+    color:#A2A2A2;
+}
 /*-- Step 1 --*/
+.step_1 {
+    text-align: center;
+    padding-bottom: 30px;
+}
 .step_1 h2 {
-   padding-bottom: 50px;
+   padding-bottom: 6px;
+   color:#535352;
 }
 .step_1 .btm_buttons {
     bottom:-36px;
@@ -619,7 +631,7 @@ header.reg .strip_rgt {
 }
 /*--Step 3--*/
 .slider_wrap {
-	width:352px;
+	width:250px;
 	background:#4d4d4d;
 	margin-bottom:3px;
 	padding:2px 6px 2px 6px;
@@ -849,11 +861,11 @@ a.but_short:visited {
 input[type=password],
 input[type=text],
 input[type=email]{
-	width:204px;
+	width:234px;
 	padding:4px 7px;
-	-webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.7);
-    box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.3);
 }
 .lgn_blk input[type=submit] {
 	background:url(../images/bg_top_rnd_btn.png) 0 0 no-repeat;
@@ -1059,11 +1071,23 @@ input[type=email]{
 
 /*--After Login--*/
 
+
 .left_column{	
 	width:210px;
 	position:relative;	
         z-index: 100;
         float:left;
+        background: #fff;
+}
+.full_site .left_column {	
+	width:357px;
+	position:relative;	
+        z-index: 100;
+        float:left;
+        background: #fff;
+        -webkit-box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.7);
+        box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .left_column nav {

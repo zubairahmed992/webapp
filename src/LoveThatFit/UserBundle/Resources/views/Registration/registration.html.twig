@@ -6,26 +6,26 @@
 <section class="reg_blk">
     <div class="action_cnt">
         <div class="steps step_1">  
-            <h2>Register</h2>
+            <h2>Let's Get Started!</h2>
+            <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
 
             <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
 
                     <div class="frm_ele">
                 {{ form_errors(form.email) }}
-                {{ form_label(form.email) }}
                 {{ form_widget(form.email) }}
                         </div>
 
                         <div class="frm_ele">
                 {{ form_errors(form.password.password) }}
-                {{ form_label(form.password.password) }}
+                
                 {{ form_widget(form.password.password) }}
                             </div>
 
                             <div class="frm_ele">
                 {{ form_errors(form.password.confirm) }}
-                                    <label>Confirm Password</label>
+                                    
                 {{ form_widget(form.password.confirm) }}
                                 </div>
 
