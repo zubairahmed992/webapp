@@ -1038,7 +1038,7 @@ input[type=email]{
 /*--After Login--*/
 
 .left_column{	
-	width:224px;
+	width:210px;
 	position:relative;	
         z-index: 100;
         float:left;
@@ -1084,7 +1084,7 @@ input[type=email]{
 	position:relative;
 	text-decoration:none;
 	display:inline-block;
-	padding:0px 0px 0px 20px;
+	padding:0px 0px 7px 20px;
 	
 
 
@@ -1201,7 +1201,7 @@ input[type=email]{
     float:left;
     z-index: 50;
     width:256px;
-    margin:6px 0 -10px -6px;
+    margin:6px 0 -10px 15px;
 }
 .prod_slider_hldr {
     width:256px;
