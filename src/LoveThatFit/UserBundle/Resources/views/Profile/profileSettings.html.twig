@@ -1,0 +1,33 @@
+{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+            
+<h2>Account Settings</h2>
+<div>
+            <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+
+            <div class="frm_ele">
+                {{ form_errors(form.firstName) }}
+                <label>First Name</label>   
+                {{ form_widget(form.firstName) }}
+            </div>
+            <div class="frm_ele">
+                {{ form_errors(form.lastName) }}
+                <label>Last Name</label>
+                {{ form_widget(form.lastName) }}
+            </div>
+            <div class="frm_ele radio_buts">
+                {{ form_row(form.gender) }}                     
+            </div>
+            <div class="frm_ele select_inline">
+                 {{ form_errors(form.birthdate) }}
+                 {{ form_label(form.birthdate) }}
+                 {{ form_widget(form.birthdate.month) }}
+                 {{ form_widget(form.birthdate.day) }}
+                 {{ form_widget(form.birthdate.year) }}
+            </div>
+            {{ form_rest(form) }}
+                                                <input type="submit" value="Update" />
+                                    </form>
+</div>
+<br><br><br>
+<div></div>

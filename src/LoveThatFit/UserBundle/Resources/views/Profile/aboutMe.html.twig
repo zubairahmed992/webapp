@@ -1,0 +1,67 @@
+<h1>About me</h1>
+<form action="{{ path('user_profile_about_me_update')}}" method="post" {{ form_enctype(form) }}>
+    <div id='frm_height'>
+        {{ form_errors(form.height) }}
+        {{ form_label(form.height) }}
+        {{ form_widget(form.height) }}
+        </div>
+        
+    <div id='frm_weight'>
+        {{ form_errors(form.weight) }}
+        {{ form_label(form.weight) }}
+        {{ form_widget(form.weight) }}
+        </div>
+        
+    <div id='frm_bust'>
+        {{ form_errors(form.bust) }}
+        {{ form_label(form.bust) }}
+        {{ form_widget(form.bust) }}
+        </div>
+        
+    <div id='frm_waist'>
+        {{ form_errors(form.waist) }}
+        {{ form_label(form.waist) }}
+        {{ form_widget(form.waist) }}
+        </div>
+        
+    <div id='frm_hip'>
+        {{ form_errors(form.hip) }}
+        {{ form_label(form.hip) }}
+        {{ form_widget(form.hip) }}
+        </div>
+        
+    <div id='frm_inseam'>
+        {{ form_errors(form.inseam) }}
+        {{ form_label(form.inseam) }}
+        {{ form_widget(form.inseam) }}
+        </div>
+        
+    <div id='frm_leg'>
+        {{ form_errors(form.leg) }}
+        {{ form_label(form.leg) }}
+        {{ form_widget(form.leg) }}
+        </div>
+        
+    <div id='frm_back'>
+        {{ form_errors(form.back) }}
+        {{ form_label(form.back) }}
+        {{ form_widget(form.back) }}
+        </div>
+    <div id='frm_arm'>
+        {{ form_errors(form.arm) }}
+        {{ form_label(form.arm) }}
+        {{ form_widget(form.arm) }}
+        </div>    
+    <div id='frm_outseam'>
+    Outseam   {{measurement.waistHeight}} 
+    </div>    
+        <div id='frm_bmi'>
+    BMI {{measurement.BMI}} 
+    </div>    
+     <div id='frm_age'>
+    Age    {{app.user.age}}
+    </div>       
+        
+        <input type="submit" value="Update" />
+    </form>
+</form>

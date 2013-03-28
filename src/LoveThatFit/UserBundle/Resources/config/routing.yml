@@ -19,9 +19,23 @@ registration_measurement_create:
     pattern:  /registration/measurement/create
     defaults: { _controller: LoveThatFitUserBundle:Registration:measurementCreate }
 
+#----------------------------- Profile ---------------------------------------------
 
+user_profile_about_me:
+    pattern:  /profile/about_me
+    defaults: { _controller: LoveThatFitUserBundle:Profile:aboutMe }
 
-     
+user_profile_about_me_update:
+    pattern:  /profile/about_me/update
+    defaults: { _controller: LoveThatFitUserBundle:Profile:aboutMeUpdate }
+
+user_profile_settings:
+    pattern:  /profile/settings
+    defaults: { _controller: LoveThatFitUserBundle:Profile:accountSettings}
+    
+user_profile_settings_update:
+    pattern:  /profile/settings/update
+    defaults: { _controller: LoveThatFitUserBundle:Profile:accountSettingsUpdate}
     
 #------------------------------- Registration Steps ---------------------------------------------------------
 

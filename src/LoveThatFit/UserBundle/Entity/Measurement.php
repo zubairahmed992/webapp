@@ -515,4 +515,19 @@ class Measurement {
     {
         return $this->waist_height;
     }
+
+    /*
+     * 
+English BMI Formula
+BMI = ( Weight in Pounds / ( Height in inches x Height in inches ) ) x 703
+Metric BMI Formula
+BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
+     */
+    
+    public function getBMI()
+    {
+        return (($this->weight / ($this->height * $this->height)) * 703);
+    }
+
+    
 }

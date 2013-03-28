@@ -34,7 +34,7 @@ class MailHelper {
             $this->templating->render($body,array('entity' => $user,'reset_link'=>$reset_link) ));
             
        
-         $this->mailer->send($message);
+       //  $this->mailer->send($message);
        
     }
     
