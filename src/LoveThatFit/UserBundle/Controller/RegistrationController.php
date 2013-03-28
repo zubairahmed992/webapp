@@ -254,7 +254,7 @@ class RegistrationController extends Controller {
         $fp = fopen($entity->getAbsolutePath(), 'wb');
         fwrite($fp, $decodedData);
         fclose($fp);
-        $response = "Image has been updated.";
+        $response = "true";
         return new Response($response);
     }
 
