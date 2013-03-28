@@ -20,11 +20,28 @@
       <div class="full_wrapper">
         <div class="holder">
             {%if app.user %}
-            <div class="welcome_box">
-                <div><span>Welcome: {{app.user.username}}<span></div>
-                <div><a href="{{ path('registration_step_three_edit') }}" id="myprofile">My Profile</a></div> 
-                <a alt="Logout" title="Logout" href="{{ path('admin_logout') }}"></a>
+           
+                <div id="header">
+                    <div id="top_nav">
+               {% block top_nav %}
+                    {% include 'LoveThatFitSiteBundle::_topNavigation.html.twig'%}
+                {% endblock %} 
+                </div>
+                
+            <div class="welcome_box">                
+              <div id="toprightrow">
+               {% block toprightrow %}
+                    {% include 'LoveThatFitSiteBundle::_welcomeNavigation.html.twig'%}
+                {% endblock %} 
+                </div>  
+                
             </div>
+                
+                
+               </div> 
+                
+                
+                <div style="clear:both;">&nbsp;</div>
                
                 {% endif %}
             <section class="site_container">
@@ -48,10 +65,8 @@
                 <!--/.holder--></div>
             <footer class="footer">
                 <div class="ftr_logo"></div>
-                <div class="bottom_line"></div>
-                {% block bottom_left_nav %}
-                    {% include 'LoveThatFitSiteBundle::_bottomNavigation.html.twig'%}
-                {% endblock %} 
+                <div id="copyrights_txt">Copyright 2010-2013.  All rights reserved LoveThatFit</div>
+               
                     <!--/.footer--></footer>
                 <!--/.full_wrapper--></div>
             {% block bottom_random_content %}
