@@ -127,7 +127,7 @@ function call_settings(responseText, statusText, xhr, $form){
 
     $('#user_file').live('change', function()
     { 
-        
+        $("body").addClass("remove_bg");
         var photo_file_name = $("#user_file").val();
         $("#inp_txt_file_name").val(photo_file_name);
         $("#play_area").removeClass("hide");
