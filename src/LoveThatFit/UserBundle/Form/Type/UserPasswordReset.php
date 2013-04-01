@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class UserPasswordReset extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $builder->add('old_password','password');
+            
         $builder->add('password', 'repeated', array(
             'first_name' => 'password',
             'second_name' => 'confirm',

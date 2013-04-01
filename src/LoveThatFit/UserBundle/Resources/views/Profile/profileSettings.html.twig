@@ -30,15 +30,31 @@
              </form>
         <a href="{{ path('inner_site_index')}}">Cancel</a>
 </div>
+
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">
+        <strong>Warning!</strong> 
+        {{ app.session.flash('warning') }}
+        </div>
+   
+{% endif %}      
+{% if app.session.hasFlash('success') %}
+  <div class="alert alert-success">
+    <strong>success</strong> 
+    {{ app.session.flash('success') }}
+   </div>
+   
+{% endif %}
 <div>
   <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }}>
     {{ form_errors(form_password_reset) }}
 
             
            <div class="frm_ele">
-                {{ form_errors(form_password_reset.password.password) }}
-                {{ form_label(form_password_reset.password.password) }}
+                {{ form_errors(form_password_reset.password) }}
+                {{ form_label(form_password_reset.password) }}
                 {{ form_widget(form_password_reset.password.password) }}
+                   
 
                         </div>
                         <div class="frm_ele">

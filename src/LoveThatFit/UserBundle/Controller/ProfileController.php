@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Controller;
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -16,52 +17,47 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ProfileController extends Controller {
 
-        public function aboutMeAction() {
-        
+    public function aboutMeAction() {
+
         $id = $this->get('security.context')->getToken()->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $measurement = $entity->getMeasurement();
-        
+
         $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
 
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
-                     'validation_groups' => array('profile_measurement'),
+                    'validation_groups' => array('profile_measurement'),
                     'measurement' => $measurement,
-                    ));
-        }
-        
-        
-        //-------------------------------------------------------------
-        public function aboutMeUpdateAction() {
-            
+                ));
+    }
+
+    //-------------------------------------------------------------
+    public function aboutMeUpdateAction() {
+
         $id = $this->get('security.context')->getToken()->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $measurement = $entity->getMeasurement();
-        
+
         $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
         $measurementForm->bind($this->getRequest());
 
         $em->persist($measurement);
         $em->flush();
-        
+
         return new Response('updated');
-        
-        
+    }
 
-            
-        }
+    //-------------------------------------------------------------
 
-        //-------------------------------------------------------------
-     
-        public function accountSettingsAction() {
-            
+    public function accountSettingsAction() {
+
         $id = $this->get('security.context')->getToken()->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
@@ -69,69 +65,97 @@ class ProfileController extends Controller {
 
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
-        
+
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
                     'form_password_reset' => $passwordResetForm->createView(),
-                    ));
-        
-        }
-        
-       
-        //-------------------------------------------------------------
-     
-        public function accountSettingsUpdateAction() {
-            
+                ));
+    }
+
+    //-------------------------------------------------------------
+
+    public function accountSettingsUpdateAction() {
+
         $id = $this->get('security.context')->getToken()->getUser()->getId();
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $userForm = $this->createForm(new UserPasswordReset(), $entity);
-        $userForm ->bind($this->getRequest());
-
+        $userForm->bind($this->getRequest());
+    
         $em->persist($entity);
         $em->flush();
         return new Response('lay giyaeen oey...');
-        }
-        
-      /***************************************************
-       * Created: Suresh
-       * Description: Password Reset method
-       * param :Form password data, id
-      ******************************************************/
-       
-        public function passwordResetUpdateAction(Request $request) {
-       
+    }
+
+    /*     * *************************************************
+     * Created: Suresh
+     * Description: Password Reset method
+     * param :Form password data, id
+     * **************************************************** */
+
+    public function passwordResetUpdateAction(Request $request) {
+
         $id = $this->get('security.context')->getToken()->getUser()->getId();
+        
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        
+        $user_old_password = $entity->getPassword();
+        $salt_value_old = $entity->getSalt();
+
         $userForm = $this->createForm(new UserPasswordReset(), $entity);
-        $userForm ->bind($request);
-        $em->persist($entity);
-        $em->flush();
-         
-        if ($userForm->isValid()) {
+        $userForm->bind($request);
+        $data = $userForm->getData();
+        
+        $oldpassword = $data->getOldpassword();
+        
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($entity);
+        $password_old_enc = $encoder->encodePassword($oldpassword, $salt_value_old);
+        
+        if ($user_old_password == $password_old_enc) {
+        
+            $em->persist($entity);
+            $em->flush();
+            
+            if ($userForm->isValid()) {
+
                 $data = $userForm->getData();
-                $password=$data->getPassword();
-                $entity->setUpdatedAt(new \DateTime('now'));
-                $factory = $this->get('security.encoder_factory');
-                $salt_value=$entity->getSalt();
-                $encoder = $factory->getEncoder($entity);
-                $password = $encoder->encodePassword($password,$salt_value);
+                $password = $data->getPassword();
+                $salt_value = $entity->getSalt();
                 
-               
+                $entity->setUpdatedAt(new \DateTime('now'));
+            
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($entity);
+                $password = $encoder->encodePassword($password, $salt_value);
+
+
                 $entity->setPassword($password);
+                
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
-        
-      return new Response('lay giyaeen oey...');
-
-        
+                
+                $this->get('session')->setFlash('success', 'Password Updated Successfully');
+                
+                } 
+                else
+                {
+                $this->get('session')->setFlash('warning', 'Confirm pass doesnt match');
+                }
+           }
+           else 
+           {
+            $this->get('session')->setFlash('warning', 'Please Enter Correct Password');
+           
         }
+     return $this->redirect($this->getRequest()->headers->get('referer'));      
     }
+
 }
 
 ?>
