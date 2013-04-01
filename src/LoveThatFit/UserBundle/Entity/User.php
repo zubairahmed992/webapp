@@ -125,6 +125,13 @@ class User  implements UserInterface, \Serializable{
     private $image;
 
     /**
+     * @var string $avatar
+     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    
+    /**
      * @var dateTime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
@@ -142,6 +149,7 @@ class User  implements UserInterface, \Serializable{
      * @Assert\File(maxSize="6000000")
      */
     public $file;
+    
 
       /**
      * @var string $authToken
@@ -340,6 +348,25 @@ class User  implements UserInterface, \Serializable{
     }
 
     /**
+     * Set avatar
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar) {
+        $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     * @return string 
+     */
+    public function getAvatar() {
+        return $this->avatar;
+    }
+
+    
+    /**
      * Set createdAt
      *
      * @param datetime $createdAt
@@ -426,7 +453,16 @@ class User  implements UserInterface, \Serializable{
         return $this->authTokenCreatedAt;
     }
 
-
+    
+    
+    
+//----------------------- Old password field used for resetting password only
+    
+    public $old_password;
+    
+    public function getOldpassword() {
+       return $this->old_password;
+    }
 
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -541,17 +577,20 @@ class User  implements UserInterface, \Serializable{
 
     //-------------------------------------------------
     //-------------- Image Upload ---------------------
-    //-------------------------------------------------
+    
     
     public function upload() {
         
         if (null === $this->file) {
             return;
         }
-        $original_name= $this->id . '_ltf_user_original_' . $this->file->getClientOriginalName();
         
-        $this->image = $this->id . '_ltf_user_' . $this->file->getClientOriginalName();
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
         
+        //$unique_number=uniqid();
+   
+        $this->image = $this->id .'.'. $ext;
+        $original_name = $this->id . '_original.'. $ext;        
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
         );
@@ -561,39 +600,60 @@ class User  implements UserInterface, \Serializable{
         
     }
     
+    //------------------------- avatar upload ---------------------------
+   
+     public function uploadAvatar() {
+        
+        if (null === $this->file) {
+            return;
+        }
+        
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->avatar = $this->id .'_avatar.'. $ext;
+        $this->file->move(
+                $this->getUploadRootDir(), $this->avatar
+        );
+        
+        $this->file = null;             
+    }
+    
+    //----------------------------------------------------------
   public function getAbsolutePath()
     {
         return null === $this->image
             ? null
             : $this->getUploadRootDir().'/'.$this->image;
     }
-
+//----------------------------------------------------------
     public function getWebPath()
     {
         return null === $this->image
             ? null
             : $this->getUploadDir().'/'.$this->image;
     }
-    
+    //----------------------------------------------------------
       public function getDirWebPath()
     {
         return $this->getUploadDir().'/';
     }
-
+//----------------------------------------------------------
     protected function getUploadRootDir()
     {
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
-
+//----------------------------------------------------------
     protected function getUploadDir()
     {
-        return 'uploads/ltf/users';
+        return 'uploads/ltf/users/'.$this->id;
     }
-
+//----------------------------------------------------------
     public function getOriginalImageWebPath()
     {
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
         return null === $this->image
             ? null
-            : $this->getUploadDir().'/'.str_replace('_ltf_user_', '_ltf_user_original_', $this->image);    
+            : $this->getUploadDir().'/'. '_ltf_user_'.'.'.$ext;    
+        
+        
     }
 }
