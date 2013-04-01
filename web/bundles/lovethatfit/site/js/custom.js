@@ -47,8 +47,8 @@ $(document).ready(function(){
         
         //---Sliders active---//
 	$(".slider_wrap").mousedown(function (){
-		$(".slider_wrap").css('background','#4d4d4d');
-		$(this).css('background','#9DCB38');
+		$(".slider_wrap").css('background','#fff');
+		$(this).css('background','#fff');
 		show_tip(this);
 	});
 

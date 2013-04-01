@@ -2,14 +2,14 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 {% block action_block_content %}
 <section class="reg_blk">
-    <div class="reg_steps">
+    <!--<div class="reg_steps">
         <ul>
             <li><span>1</span></li>
             <li><span>2</span></li>
             <li class="active"><span>3</span></li>
             <li><span>4</span></li>
         </ul>
-    </div>
+    </div>-->
     <div class="action_cnt">
         <div class="steps step_3">
             <h2>Your Measurements</h2>
@@ -126,7 +126,7 @@
                                                     <div class="frm_ele">
                                                         <input class="reg_next_step" type="submit" value="Next Step" />
                                                     </div>
-                                                    <div class="frm_ele"> <a class="but_short" href="#">Browse Users</a> </div>
+                                                    
                                                 </div>
                                             </form>
                                             <div class="clr_bth"></div>
@@ -150,7 +150,7 @@
 
                             $(".slider_wrap").mousedown(function (){
                                     //$(".slider_wrap").css('background','#9dcb38');
-                                    $(this).css('background','#9dcb38');
+                                    $(this).css('background','#c4c934');
                                     show_tip(this);
                             });
 
@@ -204,7 +204,7 @@
                             function show_tip(ele){
 
 
-                                            $(".tip").css({"left" : "-410px"});
+                                            $(".tip").css({"left" : "267px"});
 
                                             var chk_offset = $(ele).position();
                                             //alert(chk_offset);
@@ -219,7 +219,7 @@
 
                                                                             $(ele).find("div.tip").removeClass("tip").addClass("show_my_tip");
                                                                             $(".tip").hide(20, function (){
-                                                                                            $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "-410px"}).removeClass("show_my_tip").addClass("tip");});
+                                                                                            $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "267px"}).removeClass("show_my_tip").addClass("tip");});
                                                                             });			
                                                              }
 

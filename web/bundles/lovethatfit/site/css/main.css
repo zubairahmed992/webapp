@@ -176,6 +176,9 @@ body {
 .full_site .holder {
         background:url(../images/home_image.png) right top no-repeat;
 }
+.remove_bg .holder {
+    background:none;
+}
 .site_container {
 	width:100%;
 	position:relative;
@@ -475,7 +478,7 @@ header.reg .strip_rgt {
 	width:330px;
 	height:auto;
 	position:relative;
-	min-height:300px;
+	min-height:403px;
 	margin-bottom:30px;
         margin: auto;
 }
@@ -549,7 +552,7 @@ header.reg .strip_rgt {
 .reg_blk h2 {
 	font-family: 'century gothic';
 	font-size:26px;
-	color:#fff;
+	color:#535352;
 	text-align:center;
 	margin-bottom:0;
 	padding-top:10px;
@@ -558,10 +561,10 @@ header.reg .strip_rgt {
 .reg_blk label {
 	padding-right:20px;
 	padding-left:20px;
-	font-size:11px;
+	font-size:0.9em;
 	font-family:"Century Gothic";
 	width:auto;
-	color:#a2a2a2;
+	color:#635f5f;
 	vertical-align:top;
 	padding-top:4px;
 	display:inline-block;
@@ -578,18 +581,17 @@ header.reg .strip_rgt {
 }
 .reg_blk .btm_buttons {
 	position:absolute;
-	bottom:-40px;
+	bottom:-12px;
 	left:60px;
 	width:380px;
 	height:60px;
 }
 .reg_next_step {
-	background:url(../images/btn_reg_next_step.png);
-	width:139px;
-	height:57px;
-	font-size:16px;
+	background: linear-gradient(to bottom, #929707 0%, #AAB01D 100%) repeat scroll 0 0 transparent;
+	font-size:1em;
 	color:#fff;
 	border:none;
+        padding:5px 15px;
 }
 .reg_blk select {
 	width:68px;
@@ -621,6 +623,11 @@ header.reg .strip_rgt {
 .step_2 .btm_buttons {
     bottom:-36px;
 }
+.step_3 h2 {
+   padding-bottom: 15px;
+   color:#535352;
+   font-size: 1.3em;
+}
 .fff_color {
     color:#fff;
     font-family: century gothic;
@@ -631,21 +638,21 @@ header.reg .strip_rgt {
 }
 /*--Step 3--*/
 .slider_wrap {
-	width:250px;
-	background:#4d4d4d;
-	margin-bottom:3px;
+	width:208px;
+	background:#fff;
+	margin-bottom:15px;
 	padding:2px 6px 2px 6px;
 	float:left;
-	-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-    -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+	-webkit-box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+        box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
 	margin-left:8px;
 	position:relative;
 }
 .main_slider {
-	width:232px;
-	height:20px;
-	background:url(../images/img_dashed.png) 0 13px repeat-x;
+	width:120px;
+	height:5px;	        
+        border-bottom: 1px solid #d2d1d1;        
 	position:relative;
 	margin:0;
 	padding:5px 10px 0;
@@ -655,28 +662,22 @@ header.reg .strip_rgt {
 	width:5px;
 	height:17px;
 	position:absolute;
-	top:5px;
+	top:2px;
 	margin-left:-5px;
 	z-index:200;
-	background:#fff;
-	-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-    -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+	background:#635f5f;
+	
 }
 .slider_result {
-	font-size:21px;
-	font-family:"Century Gothic";
-	color:#fff;
-	font-weight:bold;
-	font-style:italic;
+	font-size:1.0em;	
+	color:#635f5f;		
 	text-align:left;
 	padding:0 0;
 	padding-left:4px;
 	float:left;
-	width:80px;
+	width:50px;
         margin-right: 12px;
-        margin-top:7px;
-	text-shadow: 0px 0px 8px #555;
+      
 }
 #slider_result_photo {
     color:#8ec73e;
@@ -686,8 +687,8 @@ header.reg .strip_rgt {
 	min-height:600px !important;
 }
 .step_3 {
-	height:auto;
-	padding-bottom:10px;
+	height:auto;	
+        padding:40px 0px 10px 0px;
 }
 .step_3 h2 {
 	margin-bottom:0px;
@@ -700,9 +701,9 @@ span.short_txt {
 	padding-bottom:2px;
 }
 .step_3 label {
-	padding:4px;
-	display:block;
-	width:340px;
+	padding:4px;	
+	width:60px;
+        float:left;
 }
 a.but_short,
 a.but_short:visited {
@@ -901,6 +902,16 @@ input[type=email]{
 	height:505px;
 	overflow:hidden;
 	position:relative;
+        float:right;
+        margin: 50px 140px 0px 0px;
+       
+        
+        
+        -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow:         inset 0 0 10px #000000;
+        
+        
 }
 #uploaded_photo {
 	position:absolute;
@@ -944,8 +955,8 @@ input[type=email]{
 	display:block;
 }
 .play_area_hldr {
-	background:url(../images/photoshop_trans.png) 0 0 repeat;
-	width:364px;
+	
+	
 	height:505px;
 	margin-left:8px;
 }
@@ -996,7 +1007,7 @@ input[type=email]{
 	font-family:Arial, Helvetica, sans-serif;
 	line-height:25px;	
 	font-size:0.9em;
-	border-right:5px solid #87ca2e;
+	border-left:5px solid #a3b31d;
 	text-shadow:1px 2px 1px #000;
 	text-align:center;	
 	
@@ -1017,11 +1028,11 @@ input[type=email]{
 
 .tt_arrow .arrow_top{
 	background:url(../images/arrow.png) no-repeat;
-	width:50px;
+	width:30px;
 	height:29px;
 	position:absolute;
 	top:18px;
-	right:-51px;	
+	right:360px;	
 }
 
 .tt_arrow .arrow_middle{
@@ -1084,10 +1095,19 @@ input[type=email]{
 	position:relative;	
         z-index: 100;
         float:left;
-        background: #fff;
-        -webkit-box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.7);
-        -moz-box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.7);
-        box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.7);
+               
+        background: -moz-linear-gradient(top, #eaeaea 0%, #ffffff 27%, #ffffff 52%, #ffffff 72%, #dfdfdf 100%)!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(27%,#ffffff), color-stop(52%,#ffffff), color-stop(72%,#ffffff), color-stop(100%,#dfdfdf));
+	background: -webkit-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background: -o-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background: -ms-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background: linear-gradient(to bottom, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#dfdfdf',GradientType=0 );
+        
+      
+        -webkit-box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
+        box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
 }
 
 .left_column nav {
@@ -1440,7 +1460,7 @@ background:#f3f3f3;
 #user_dummy_img_hldr {
     float:left;
     width:218px;
-    height: 446px;
+    height: 510px;
     position: relative;
     margin-left: 8px;
     overflow: hidden;
@@ -1603,8 +1623,7 @@ padding:4px 10px;
 
 .upload_again_hldr {
     text-align: right;
-    width:372px;
-    padding-top: 10px;
+       padding-top: 10px;
     display: none;
 }
 .upload_again_hldr a,
@@ -1629,7 +1648,7 @@ padding:4px 10px;
     color: #484748;
     font-family: arial;
     font-size: 0.8em;
-    left: 502px;
+    left: 549px;
     padding: 10px;
     position: absolute;
     top: 71px;
@@ -1878,4 +1897,17 @@ margin:0px 0px 0px 0px;
     margin-top: -70px;
     float:right;
     
+}
+
+.frm_ele radio_buts{
+    
+    
+}
+
+.step_3 .btm_buttons {
+    bottom: 30px!important;
+    height: 60px;
+    left: 140px!important;
+    position: absolute;
+    width: 380px;  
 }

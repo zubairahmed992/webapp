@@ -13,7 +13,7 @@
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_four.js') }}"></script>
     </head>
 
-    <body class="full_site home">
+    <body class="full_site remove_bg home">
         <div class="full_wrapper">
             <div class="holder">    
                 <section class="site_container">
@@ -24,7 +24,9 @@
                     {% block action_block_content %}
                     {% endblock %}
                 <!--/.left_menu--></div>
-            
+                        
+            {% block reg_fitting_room %}
+                    {% endblock %}
 
                     <!--/.site_container--></section>
                 <div class="clr_bth"></div>
