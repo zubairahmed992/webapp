@@ -177,7 +177,7 @@ body {
         background:url(../images/home_image.png) right top no-repeat;
 }
 .remove_bg .holder {
-    background:none;
+    background:url(../images/bg_gray_st.jpg) right top repeat;
 }
 .site_container {
 	width:100%;
@@ -905,13 +905,21 @@ input[type=email]{
         float:right;
         margin: 50px 140px 0px 0px;
        
+        background:#fff;
+        
+        border:1px dotted #ccc;
         
         
-        -moz-box-shadow:    inset 0 0 10px #000000;
-   -webkit-box-shadow: inset 0 0 10px #000000;
-   box-shadow:         inset 0 0 10px #000000;
-        
-        
+}
+.play_area .shade_frame {
+    width:364px;
+	height:505px;
+	position:absolute;
+        left:0;
+        top:0
+        -moz-box-shadow: inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+   box-shadow: inset 0 0 10px #000000;
 }
 #uploaded_photo {
 	position:absolute;
