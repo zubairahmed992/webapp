@@ -37,6 +37,9 @@ user_profile_settings_update:
     pattern:  /profile/settings/update
     defaults: { _controller: LoveThatFitUserBundle:Profile:accountSettingsUpdate}
     
+user_profile_password_reset_update:
+    pattern:  /profile/settings/password_update
+    defaults: { _controller: LoveThatFitUserBundle:Profile:passwordResetUpdate}
 #------------------------------- Registration Steps ---------------------------------------------------------
 
 

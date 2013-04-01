@@ -26,8 +26,34 @@
                  {{ form_widget(form.birthdate.year) }}
             </div>
             {{ form_rest(form) }}
-                                                <input type="submit" value="Update" />
-                                    </form>
+            <input type="submit" value="Update" />
+             </form>
+        <a href="{{ path('inner_site_index')}}">Cancel</a>
+</div>
+<div>
+  <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }}>
+    {{ form_errors(form_password_reset) }}
+
+            
+           <div class="frm_ele">
+                {{ form_errors(form_password_reset.password.password) }}
+                {{ form_label(form_password_reset.password.password) }}
+                {{ form_widget(form_password_reset.password.password) }}
+
+                        </div>
+                        <div class="frm_ele">
+                {{ form_errors(form_password_reset.password.confirm) }}
+                                <label>Confirm Password</label>
+                {{ form_widget(form_password_reset.password.confirm) }}
+
+ 
+          
+            {{ form_rest(form_password_reset) }}
+            <input type="submit" value="Update" />
+             </form>
+        <a href="{{ path('inner_site_index')}}">Cancel</a>
 </div>
 <br><br><br>
+
+
 <div></div>

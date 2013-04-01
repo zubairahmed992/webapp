@@ -42,11 +42,10 @@ class Measurement {
      *      min = "90",
      *      max = "350",
      *      minMessage = "You must weight at least 0",
-     *      maxMessage = "You cannot weight more than 300",
-     *      groups = {"registration_step_two"}
-     * 
+     *      maxMessage = "You cannot weight more than 300"
+     
      * )
-     * @Assert\NotBlank(groups={"registration_step_two"})  
+     * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"})  
      */
     private $weight=0;
 
@@ -60,10 +59,10 @@ class Measurement {
      *      min = "20",
      *      max = "96",
      *      minMessage = "You must be at least 20 tall",
-     *      maxMessage = "You cannot taller than 96",
-     *      groups  = "registration_step_two"
+     *      maxMessage = "You cannot taller than 96"
+    
      * )      
-     * @Assert\NotBlank(groups={"registration_step_two"})  
+     * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"})  
      */
     private $height=0;
 
@@ -76,9 +75,9 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10 waist",
-     *      maxMessage = "You cannot have more than 70 waist",
-     *      groups  = "step3"
+     *      maxMessage = "You cannot have more than 70 waist"
      * )
+     * @Assert\NotBlank(groups={"step3","profile_measurement"})  
      */
     private $waist=0;
 
@@ -91,9 +90,9 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10 ",
-     *      maxMessage = "You cannot have more than 70",
-     *      groups  = "step3"
+     *      maxMessage = "You cannot have more than 70"
      * )
+     * @Assert\NotBlank(groups={"step3","profile_measurement"})  
      */
     private $hip=0;
 
@@ -106,9 +105,9 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10",
-     *      maxMessage = "You cannot have more than 70",
-     *      groups  = "step3"
+     *      maxMessage = "You cannot have more than 70"
      * )
+     *@Assert\NotBlank(groups={"step3","profile_measurement"})  
      */
     private $bust=0;
 
@@ -123,6 +122,7 @@ class Measurement {
      *      minMessage = "You must have at least 0",
      *      maxMessage = "You cannot have more than 300"
      * )
+     *@Assert\NotBlank(groups={"profile_measurement"})  
      */
     private $arm=0;
 
@@ -137,6 +137,7 @@ class Measurement {
      *      minMessage = "You must have at least 0",
      *      maxMessage = "You cannot have more than 300"
      * )
+     * @Assert\NotBlank(groups={"profile_measurement"})  
      */
     private $leg=0;
 
@@ -151,6 +152,7 @@ class Measurement {
      *      minMessage = "You must have at least 6",
      *      maxMessage = "You cannot have more than 50"
      * )
+     * @Assert\NotBlank(groups={"profile_measurement"})  
      */
     private $inseam=0;
 
@@ -165,6 +167,7 @@ class Measurement {
      *      minMessage = "You must have at least 0",
      *      maxMessage = "You cannot have more than 300"
      * )
+     *@Assert\NotBlank(groups={"profile_measurement"})  
      */
     private $back=0;
 

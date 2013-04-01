@@ -28,10 +28,12 @@ class ProfileMeasurementType extends AbstractType
         return array(
             'data_class' => 'LoveThatFit\UserBundle\Entity\Measurement',
             'cascade_validation' => true,
-            'validation_groups' => array('profileMeasurement'),
+            'validation_groups' => array('profile_measurement'),
         );
     }
 
+
+ 
     
     public function getName()
     {
