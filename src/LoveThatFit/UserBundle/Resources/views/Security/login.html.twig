@@ -1,8 +1,9 @@
-{% extends 'LoveThatFitUserBundle::base_home_login.html.twig' %}
+{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 {% block action_block_content %}
-<section class="action_blk lgn_blk">
+<section class="reg_blk">
     <div class="action_cnt">
-        <div class="small_custom_heading">Log In</div>
+        <h2>Log In</h2>
+        <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
         <form action="{{ path('login_check') }}" method="post" class="form">
             <div class="frm_ele">            
                 <input type="text" id="username" name="_username" value="{{ last_username }}" />
@@ -80,7 +81,7 @@
          </script>  
         
         
-        {% if error %}
+{% if error %}
         <div class="login_error" >
         <div id="triangle-left"></div>
         <div id="error_content">{{ error.message }}</div>
@@ -96,13 +97,4 @@
     <!--/.action_blk--></section>
 {% endblock %}
 
-{% block how_it_works_content %}
-<section class="cnt_btm">
-    <h3>How It Works</h3>
-    <p>LoveThatFit all you to try clothes on your own body, see how they actually look and fit prior to purchasing and is social!  Mix and match outfits, compare outfits side-by-side, save all in your personal closet, and show with your friends.  LTF allows you to do this from any smartphone, tablet, or computer.<br /><br />
-
-Create an account now in 4 easy steps and start shopping as if you were standing in the store right now!
-</p>
-</section>
-{% endblock %}
 
