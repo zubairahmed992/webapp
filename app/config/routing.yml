@@ -21,4 +21,4 @@ acme_store_routes:
 
 _welcome:
     pattern:  /
-    defaults: { _controller: LoveThatFitSiteBundle:Home:index}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:registration}
