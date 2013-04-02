@@ -601,6 +601,15 @@ header.reg .strip_rgt {
 	border:none;
         padding:5px 15px;
 }
+
+.reg_next_step2 {
+	background: linear-gradient(to bottom, #929707 0%, #AAB01D 100%) repeat scroll 0 0 transparent;
+	font-size:1em;
+	color:#fff;
+	border:none;
+        padding:5px 15px;
+        display:none
+}
 .reg_blk select {
 	width:68px;
 }
@@ -612,7 +621,7 @@ header.reg .strip_rgt {
 /*-- Step 1 --*/
 .step_1 {
     text-align: center;
-    padding-bottom: 30px;
+    
 }
 .step_1 h2 {
    padding-bottom: 6px;
@@ -773,37 +782,34 @@ a.but_short:visited {
 .input_file_hldr {
 	float:left;
 	background:url(../images/upload_file_inp.png) center 0 no-repeat;
-	width:380px;
+	width:320px;
 	position:relative;
 	height:45px;
         padding-bottom: 10px;
 }
 .input_file_hldr input.input_file {
-	height:32px;
-	right:45px;
-	position:absolute;
-	top:6px;
-	width:287px;
-	text-align:right;
-	z-index:200;
-	opacity:0;
-	filter:alpha(opacity=0);
-	cursor:pointer;
+    cursor: pointer;
+    height: 32px;
+    opacity: 0;
+    position: absolute;
+    right: 20px;
+    text-align: right;
+    top: 6px;
+    width: 280px;
+    z-index: 200;
 }
 .input_file_hldr input.input_text {
-	width:206px;
-	height:20px;
-	position:absolute;
-	z-index:100;
-	top:12px;
-	left:55px;
-	font-size:15px;
-	color:#a6a5a3;
-	padding:0;
-	border:none;
-	-webkit-box-shadow: none;
-    -moz-box-shadow: none;
+	border: medium none;
     box-shadow: none;
+    color: #A6A5A3;
+    font-size: 15px;
+    height: 20px;
+    left: 28px;
+    padding: 0;
+    position: absolute;
+    top: 13px;
+    width: 205px;
+    z-index: 100;
 }
 
 /*--Step 4 - Upload Profile Picture--*/
@@ -1562,7 +1568,7 @@ margin:0 auto;
     font-size: 0.8em;
     text-align: left;   
     
-    color:#AAB01D;
+   color:#D14;
     
 }
 
@@ -1927,8 +1933,7 @@ margin:0px 0px 0px 0px;
 }
 
 .login_section {
-    padding:20px 0px 0px 0px;   
-
+    padding:20px 0px 0px 0px;
 }
 
 .login_section p {
@@ -1936,7 +1941,6 @@ margin:0px 0px 0px 0px;
     color:#635F5F;
     margin:0px 0px 5px 0px;
     font-size: 0.8em;
-
 }
 
 .login_section a {
@@ -1944,6 +1948,20 @@ margin:0px 0px 0px 0px;
     padding:0px 15px;
     color:#AAB01D;
     font-weight:bold;
-    
+}
 
+.error_cls{    
+color:#D14;
+font-size:0.75em;
+width:245px;
+margin:0 auto;
+text-align: left;
+}
+
+.save_btn_4{
+    position: absolute;
+    right:10px;
+    top:525px;
+        
+  
 }

@@ -7,25 +7,18 @@
         <form action="{{ path('login_check') }}" method="post" class="form">
             <div class="frm_ele">            
                 <input type="text" id="username" name="_username" value="{{ last_username }}" />
-                
-                
-                
-                
+                          </div>
+            <div class="frm_ele">
+                <input type="password" id="password" name="_password" />
                 {% if error %}
         <div class="login_error" >        
         <div id="error_content">{{ error.message }}</div>
         
         </div>
 {% endif %}
-                
-                
-                
-                
-            </div>
-            <div class="frm_ele">
-                <input type="password" id="password" name="_password" />
                 <input type="hidden" name="_target_path" value="/inner_site/index" />
             </div>
+                 
             <div class="frm_ele">
                 <input id="sbmt_bnt" type="submit" value="Login" class="reg_next_step" />
             </div>

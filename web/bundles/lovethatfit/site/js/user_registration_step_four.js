@@ -115,11 +115,11 @@ function call_settings(responseText, statusText, xhr, $form){
 
 //temporary hack: not accessing assetic for the value of the image path from here, placed a hidden field, holds the server path in twig template.
         
-        
+        $(".reg_next_step2").css("display","block");
         $(".uploading_in_progress").fadeOut(300).remove();
         $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
         $(".step_4_tip").fadeIn(50);
-        $(".step_4 .reg_next_step").attr("value","Save Photo");
+        $(".reg_next_step2").attr("value","Save Photo");
         document.getElementById("hdn_skip_flag").value="process";
         
                 

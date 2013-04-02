@@ -10,30 +10,41 @@
             <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
 
             <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
-            {{ form_errors(form) }}
+           
 
                     <div class="frm_ele">
-                {{ form_errors(form.email) }}
+                       
+                            
                 {{ form_widget(form.email) }}
+                        
+                         <div class="error_cls">Email already exist    {{ form_errors(form.email) }}          
+</div>
+                        
                         </div>
 
                         <div class="frm_ele">
-                {{ form_errors(form.password.password) }}
+                
                 
                 {{ form_widget(form.password.password) }}
                             </div>
 
                             <div class="frm_ele">
-                {{ form_errors(form.password.confirm) }}
+               
                                     
                 {{ form_widget(form.password.confirm) }}
+                                 <div class="error_cls">{{ form_errors(form.password.password) }}asdasd</div>
+                
+                <div class="error_cls"> {{ form_errors(form.password.confirm) }}sdfsfsf</div>
                                 </div>
+                
+                
+               
 
                     <div style="float:left; margin-left:20px;">            
                     <div class="frm_ele radio_buts">
                  {{ form_row(form.gender) }}                     
                         </div></div>
-
+ <div class="error_cls"> {{ form_rest(form) }}</div>
                 {{ form_rest(form) }}
 
                                     <input class="reg_next_step" type="submit" value="Register" />
