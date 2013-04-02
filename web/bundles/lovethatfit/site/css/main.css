@@ -244,6 +244,14 @@ ul.with_bullet li:first-child {
 ul.with_sep {
 	list-style:none;
 }
+
+ul.with_sep a {
+	text-decoration: none;
+        color:#333;
+        font-size: 0.9em;
+}
+
+
 ul.with_sep li {
 	list-style:none;
 	background:url(../images/sep_small.png) 0 8px no-repeat;
@@ -1532,11 +1540,10 @@ padding:4px 10px;
 
 
 .login_error{
- padding: 17px 5px 17px 5px;
- width: 230px;
- position: absolute;
- top: 186px;
- left: 325px;
+margin:0 auto;
+ width: 245px;
+ 
+
  color: #333;
  font-size: 0.95em; 
 }
@@ -1551,13 +1558,12 @@ padding:4px 10px;
     border-bottom: 20px solid transparent; 
 }
 
-#error_content{
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    float:left;
-    padding: 10px 8px 10px 8px;
-    background: #eeeeee;
-    box-shadow: 1px 0 2px #333333;
+#error_content{    
+    font-size: 0.8em;
+    text-align: left;   
+    
+    color:#AAB01D;
+    
 }
 
 .error_list{
