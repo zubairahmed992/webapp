@@ -589,7 +589,7 @@ class User  implements UserInterface, \Serializable{
         
         //$unique_number=uniqid();
    
-        $this->image = $this->id .'.'. $ext;
+        $this->image = $this->id .'_cropped.'. $ext;
         $original_name = $this->id . '_original.'. $ext;        
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
@@ -597,6 +597,24 @@ class User  implements UserInterface, \Serializable{
         
         $this->file = null;             
         copy($this->getAbsolutePath(),$this->getUploadRootDir().'/'.$original_name);
+        
+    }
+    //----------------------------------------------------
+       public function uploadTempImage() {
+        
+        if (null === $this->file) {
+            return;
+        }
+        
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        
+        $temp_name = $this->id . '_temp.'. $ext;        
+        $this->file->move(
+                $this->getUploadRootDir(), $temp_name
+        );
+        
+        $this->file = null;             
+        return $temp_name;
         
     }
     
@@ -654,6 +672,16 @@ class User  implements UserInterface, \Serializable{
             ? null
             : $this->getUploadDir().'/'. '_ltf_user_'.'.'.$ext;    
         
+        
+    }
+    
+    //----------------------------------------------------------
+    public function getAvatarWebPath()
+    {
+        $ext = pathinfo($this->avatar, PATHINFO_EXTENSION);
+        return null === $this->avatar
+            ? null
+            : $this->getUploadDir().'/'. '_avatar'.'.'.$ext;    
         
     }
 }
