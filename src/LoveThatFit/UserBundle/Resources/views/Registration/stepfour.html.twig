@@ -2,7 +2,7 @@
 
 {% block action_block_content %}
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
-<input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.weight }}" />
+<input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.back }}" />
 <div>
             <form id="frmUserMeasurement" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post" {{ form_enctype(measurement_form) }}>
                 {{ form_widget(measurement_form.shoulder_height) }}
