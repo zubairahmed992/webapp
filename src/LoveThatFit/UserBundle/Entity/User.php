@@ -60,8 +60,8 @@ class User  implements UserInterface, \Serializable{
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=60, unique=true, nullable=false)
-     * @Assert\Email(groups={"registration_step_two"})
-     * @Assert\NotBlank(groups={"registration_step_two"})
+     * @Assert\Email(groups={"registration_step_one"})
+     * @Assert\NotBlank(groups={"registration_step_one"})
      */
     private $email;
 
@@ -82,7 +82,7 @@ class User  implements UserInterface, \Serializable{
      *      minMessage = "First Name must be at least {{ limit }} characters long",
      *      maxMessage = "First Name cannot be longer than than {{ limit }} characters long"     
      * )
-     * @Assert\NotBlank(groups={"registration_step_two"})  
+     * @Assert\NotBlank(groups={"profile_settings"})  
      */
     private $firstName;
 
@@ -97,7 +97,7 @@ class User  implements UserInterface, \Serializable{
      *      minMessage = "Last Name must be at least {{ limit }} characters long",
      *      maxMessage = "Last Name cannot be longer than than {{ limit }} characters long"     
      * )
-     * @Assert\NotBlank(groups={"registration_step_two"})  
+     * @Assert\NotBlank(groups={"profile_settings"})  
      */
     private $lastName;
 
@@ -105,7 +105,7 @@ class User  implements UserInterface, \Serializable{
      * @var string $gender
      *
      * @ORM\Column(name="gender", type="string", length=10, nullable=true)
-     * @Assert\NotBlank(groups={"registration_step_two"})  
+     * @Assert\NotBlank(groups={"profile_settings"})  
      */
     private $gender;
 
@@ -113,7 +113,7 @@ class User  implements UserInterface, \Serializable{
      * @var datetime $birthDate
      *
      * @ORM\Column(name="birth_date", type="datetime", nullable=true)
-     * @Assert\NotBlank(groups={"registration_step_two"})  
+     * @Assert\NotBlank(groups={"profile_settings"})  
      */
     private $birthDate;
 
@@ -681,7 +681,7 @@ class User  implements UserInterface, \Serializable{
         $ext = pathinfo($this->avatar, PATHINFO_EXTENSION);
         return null === $this->avatar
             ? null
-            : $this->getUploadDir().'/'. '_avatar'.'.'.$ext;    
+            : $this->getUploadDir().'/'.$this->id. '_avatar'.'.'.$ext;    
         
     }
 }

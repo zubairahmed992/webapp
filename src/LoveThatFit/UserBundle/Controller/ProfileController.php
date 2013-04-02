@@ -10,6 +10,7 @@ use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Form\Type\UserType;
 use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementType;
 use LoveThatFit\UserBundle\Form\Type\ProfileSettingsType;
+use LoveThatFit\UserBundle\Form\Type\RegistrationStepFourType;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,13 +26,13 @@ class ProfileController extends Controller {
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $measurement = $entity->getMeasurement();
-
         $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
-
+       
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'validation_groups' => array('profile_measurement'),
                     'measurement' => $measurement,
+                    
                 ));
     }
 
@@ -47,12 +48,23 @@ class ProfileController extends Controller {
 
         $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
         $measurementForm->bind($this->getRequest());
-
+       
+        if($measurementForm->isValid())
+        {
+        
+        $measurement->setUpdatedAt(new \DateTime('now')); 
         $em->persist($measurement);
         $em->flush();
-
-        return new Response('updated');
-    }
+        $this->get('session')->setFlash('success', 'Updated Successfully');
+        }
+        else
+        {
+         $this->get('session')->setFlash('warning', 'Try Again');   
+        }
+             
+  
+       return $this->redirect($this->getRequest()->headers->get('referer'));      
+       }
 
     //-------------------------------------------------------------
 
@@ -65,11 +77,13 @@ class ProfileController extends Controller {
 
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
+        
+       
 
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
-                    'form_password_reset' => $passwordResetForm->createView(),
+                    'form_password_reset' => $passwordResetForm->createView()
                 ));
     }
 
@@ -82,15 +96,28 @@ class ProfileController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
-        $userForm = $this->createForm(new UserPasswordReset(), $entity);
+        $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
+        
+        
+        if ($userForm->isValid())
+        {
+            $entity->uploadAvatar();
+            $em->persist($entity);
+            $em->flush(); 
+            $this->get('session')->setFlash('success', 'Profile  Updated Successfully');    
+        }
+        else
+        {
+            
+            $this->get('session')->setFlash('warning', 'Please Try again');    
+        }
+        
     
-        $em->persist($entity);
-        $em->flush();
-        return new Response('lay giyaeen oey...');
+      return $this->redirect($this->getRequest()->headers->get('referer'));      
     }
 
-    /*     * *************************************************
+     /***************************************************
      * Created: Suresh
      * Description: Password Reset method
      * param :Form password data, id

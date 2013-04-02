@@ -44,8 +44,10 @@ class Measurement {
      *      minMessage = "You must weight at least 0",
      *      maxMessage = "You cannot weight more than 300"
      
+     
      * )
-     * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"})  
+     * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"}) 
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $weight=0;
 
@@ -63,6 +65,7 @@ class Measurement {
     
      * )      
      * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $height=0;
 
@@ -77,7 +80,8 @@ class Measurement {
      *      minMessage = "You must have at least 10 waist",
      *      maxMessage = "You cannot have more than 70 waist"
      * )
-     * @Assert\NotBlank(groups={"step3","profile_measurement"})  
+     * @Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $waist=0;
 
@@ -92,7 +96,8 @@ class Measurement {
      *      minMessage = "You must have at least 10 ",
      *      maxMessage = "You cannot have more than 70"
      * )
-     * @Assert\NotBlank(groups={"step3","profile_measurement"})  
+     * @Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $hip=0;
 
@@ -107,7 +112,8 @@ class Measurement {
      *      minMessage = "You must have at least 10",
      *      maxMessage = "You cannot have more than 70"
      * )
-     *@Assert\NotBlank(groups={"step3","profile_measurement"})  
+     *@Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $bust=0;
 
@@ -123,6 +129,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300"
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $arm=0;
 
@@ -138,6 +145,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300"
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $leg=0;
 
@@ -153,6 +161,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 50"
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $inseam=0;
 
@@ -168,6 +177,7 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300"
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $back=0;
 
@@ -182,6 +192,7 @@ class Measurement {
      *      minMessage = "You must have at least 0",
      *      maxMessage = "You cannot have more than 80"
      * )
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $shoulder_height=0;
     
@@ -196,6 +207,7 @@ class Measurement {
      *      minMessage = "You must have at least 0",
      *      maxMessage = "You cannot have more than 60"
      * )
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $waist_height=0;
     

@@ -1,6 +1,20 @@
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
             
 <h2>Account Settings</h2>
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">
+        <strong>Warning!</strong> 
+        {{ app.session.flash('warning') }}
+        </div>
+   
+{% endif %}      
+{% if app.session.hasFlash('success') %}
+  <div class="alert alert-success">
+    <strong>success</strong> 
+    {{ app.session.flash('success') }}
+   </div>
+   
+{% endif %}
 <div>
             <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
@@ -25,6 +39,10 @@
                  {{ form_widget(form.birthdate.day) }}
                  {{ form_widget(form.birthdate.year) }}
             </div>
+                <div class="frm_ele image">
+                {{ form_row(form.file) }}                     
+            </div>    
+           
             {{ form_rest(form) }}
             <input type="submit" value="Update" />
              </form>

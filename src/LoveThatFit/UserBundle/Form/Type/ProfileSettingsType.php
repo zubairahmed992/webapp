@@ -25,6 +25,7 @@ class ProfileSettingsType extends AbstractType
             'format' => 'yyyy MM dd',
             )
                 );
+       $builder->add('file');  
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

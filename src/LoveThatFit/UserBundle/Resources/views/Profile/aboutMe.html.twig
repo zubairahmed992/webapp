@@ -1,4 +1,18 @@
 <h1>About me</h1>
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">
+        <strong>Warning!</strong> 
+        {{ app.session.flash('warning') }}
+        </div>
+   
+{% endif %}      
+{% if app.session.hasFlash('success') %}
+  <div class="alert alert-success">
+    <strong>success</strong> 
+    {{ app.session.flash('success') }}
+   </div>
+   
+{% endif %}
 <form action="{{ path('user_profile_about_me_update')}}" method="post" {{ form_enctype(form) }}>
     <div id='frm_height'>
         {{ form_errors(form.height) }}
@@ -60,9 +74,21 @@
     </div>    
      <div id='frm_age'>
     Age    {{app.user.age}}
-    </div>       
+    </div>   
+      <div id="userimage" align="left">
+       {% if(app.user.AvatarWebPath) %} 
+          <img src="{{asset(app.user.AvatarWebPath)}}">
+      
+       {% else %}
+          <div >No Image Found</idv>  
+   {% endif %} 
+          </div>  
         
+      {{ form_rest(form) }}  
         <input type="submit" value="Update" />
-       
+        
    <a href="{{ path('inner_site_index')}}">Cancel</a>
+  
+   
+  
 </form>

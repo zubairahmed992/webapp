@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class RegistrationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('email', 'text');
+        $builder->add('email', 'email');
         $builder->add('password', 'repeated', array(
             'first_name' => 'password',
             'second_name' => 'confirm',
@@ -27,7 +27,7 @@ class RegistrationType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'validation_groups' => array('registration')
+            'validation_groups' => array('registration_step_one')
         ));
     }
 

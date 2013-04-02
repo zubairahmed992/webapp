@@ -23,6 +23,11 @@ class RegistrationStepThreeType extends AbstractType {
     public function getName() {
         return 'measurement';
     }
+     public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'validation_groups' => array('profile_measurement')
+        ));
+    }
 
 }
 
