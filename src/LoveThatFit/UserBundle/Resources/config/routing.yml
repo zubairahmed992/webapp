@@ -40,6 +40,10 @@ user_profile_settings_update:
 user_profile_password_reset_update:
     pattern:  /profile/settings/password_update
     defaults: { _controller: LoveThatFitUserBundle:Profile:passwordResetUpdate}
+        
+user_profile_what_i_like:
+    pattern:  /profile/what_i_like
+    defaults: { _controller: LoveThatFitUserBundle:Profile:whatILike }    
 #------------------------------- Registration Steps ---------------------------------------------------------
 
 
@@ -145,5 +149,3 @@ password_update:
 go_secure:
     pattern:  /gosecure/{id}
     defaults: { _controller: LoveThatFitUserBundle:Security:goSecure }     
-    
-    

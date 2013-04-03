@@ -21,4 +21,8 @@ admin_brand_routes:
 admin_clothing_type_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/clothing_type.yml"
     prefix:   /
+    
+admin_survey_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/survey.yml"
+    prefix:   /
 

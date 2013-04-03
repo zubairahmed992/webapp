@@ -1,0 +1,43 @@
+admin_survey:
+    pattern:  /admin/survey/questions
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:index }
+    
+admin_survey_add_new_question:
+    pattern:  /admin/survey/add_new_question
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:addNewQuestion }
+    
+admin_survey_edit_question:
+    pattern:  /admin/survey/edit_question/{question_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:editQuestion }
+    
+admin_survey_edit_update_question:
+    pattern:  /admin/survey/edit_updates_questions/{question_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:editUpdatesQuestions }
+    
+admin_survey_delete_question:
+    pattern:  /admin/survey/delete_question/{question_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:deleteQuestion }
+    
+admin_survey_add_new_answer:
+    pattern:  /admin/survey/add_new_answer/{question_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:addNewAnswer }
+    
+admin_survey_add_answer:
+    pattern:  /admin/survey/add_answer/{question_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:addAnswer }
+
+admin_survey_delete_answer:
+    pattern:  /admin/survey/delete_answers/{answer_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:deleteAnswers }
+    
+admin_survey_edit_answer:
+    pattern:  /admin/survey/edit_answer/{answer_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:editAnswer }
+    
+admin_survey_edit_update_answer:
+    pattern:  /admin/survey/dit_update_answer/{answer_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:editUpdateAnswer }
+
+  
+    
+    

@@ -1,0 +1,13 @@
+<h1>What I Like</h1>
+
+{% for item in data %}  
+
+{{item.question}}<br/>
+{% for a in answer %}
+{%if(item.id==a.question.id)%}
+<input type="radio">{{a.answer}}<br/>
+
+{%endif%}
+{%endfor%}
+{%endfor%}
+<input type="submit" value="Submit">

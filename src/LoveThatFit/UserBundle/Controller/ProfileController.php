@@ -15,6 +15,8 @@ use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use LoveThatFit\AdminBundle\Entity\SurveyQuestion;
+use LoveThatFit\AdminBundle\Entity\SurveyAnswer;
 
 class ProfileController extends Controller {
 
@@ -182,6 +184,35 @@ class ProfileController extends Controller {
         }
      return $this->redirect($this->getRequest()->headers->get('referer'));      
     }
+    
+    /*     * *************************************************
+     * Created: Azeem
+     * Description: What Am I Like     
+     * **************************************************** */
+    
+    public function whatILikeAction()
+    {       
+        return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
+                    'data' =>  $this->getQuestionsList(),
+                    'answer' => $this->getAnswersList(),
+                    
+        ));
+    }
+    
+     private function getQuestionsList() {
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion');
+        return $repository->findAll();
+    }
+
+    private function getAnswersList() {
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyAnswer');
+        return $repository->findAll();
+    }
+    
+    
+    
+    
+    
 
 }
 
