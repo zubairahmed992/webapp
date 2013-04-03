@@ -12,14 +12,14 @@ class ProfileMeasurementType extends AbstractType
     {
         
         $builder->add('height');
-        $builder->add('weight');
-        $builder->add('bust');
-        $builder->add('hip');        
-        $builder->add('waist');
-        $builder->add('inseam');
-        $builder->add('leg');        
-        $builder->add('back');
-        $builder->add('arm');
+        $builder->add('weight', 'number', array('precision' => 2));
+        $builder->add('bust', 'number', array('precision' => 2));
+        $builder->add('hip', 'number', array('precision' => 2));        
+        $builder->add('waist', 'number', array('precision' => 2));
+        $builder->add('inseam', 'number', array('precision' => 2));
+        $builder->add('leg', 'number', array('precision' => 2));        
+        $builder->add('back', 'number', array('precision' => 2));
+        $builder->add('arm', 'number', array('precision' => 2));
         
     }
   

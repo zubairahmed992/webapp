@@ -36,7 +36,7 @@ class Measurement {
 
      * @var float $weight
      *
-     * @ORM\Column(name="weight", type="decimal", nullable=true)
+     * @ORM\Column(name="weight", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "90",
@@ -54,7 +54,7 @@ class Measurement {
     /**
      * @var float $height
      *
-     * @ORM\Column(name="height", type="decimal", nullable=true)
+     * @ORM\Column(name="height", type="float", nullable=true)
      * 
      * 
      * @Assert\Range(
@@ -72,7 +72,7 @@ class Measurement {
     /**
      * @var float $waist
      *
-     * @ORM\Column(name="waist", type="decimal", nullable=true)
+     * @ORM\Column(name="waist", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "10",
@@ -88,7 +88,7 @@ class Measurement {
     /**
      * @var float $hip
      *
-     * @ORM\Column(name="hip", type="decimal", nullable=true)
+     * @ORM\Column(name="hip", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "10",
@@ -104,7 +104,7 @@ class Measurement {
     /**
      * @var float $bust
      *
-     * @ORM\Column(name="bust", type="decimal", nullable=true)
+     * @ORM\Column(name="bust", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "10",
@@ -120,7 +120,7 @@ class Measurement {
     /**
      * @var float $arm
      *
-     * @ORM\Column(name="arm", type="decimal", nullable=true)\
+     * @ORM\Column(name="arm", type="float", nullable=true)\
      *      
      * @Assert\Range(
      *      min = "0",
@@ -136,7 +136,7 @@ class Measurement {
     /**
      * @var float $leg
      *
-     * @ORM\Column(name="leg", type="decimal", nullable=true)
+     * @ORM\Column(name="leg", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "0",
@@ -152,7 +152,7 @@ class Measurement {
     /**
      * @var float $inseam
      *
-     * @ORM\Column(name="inseam", type="decimal", nullable=true)
+     * @ORM\Column(name="inseam", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "6",
@@ -168,7 +168,7 @@ class Measurement {
     /**
      * @var float $back
      *
-     * @ORM\Column(name="back", type="decimal", nullable=true)
+     * @ORM\Column(name="back", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "0",
@@ -184,7 +184,7 @@ class Measurement {
     /**
      * @var float $shoulder_height
      *
-     * @ORM\Column(name="shoulder_height", type="decimal", nullable=true)
+     * @ORM\Column(name="shoulder_height", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "0",
@@ -199,7 +199,7 @@ class Measurement {
     /**
      * @var float $waist_height
      *
-     * @ORM\Column(name="waist_height", type="decimal", nullable=true)
+     * @ORM\Column(name="waist_height", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "0",
