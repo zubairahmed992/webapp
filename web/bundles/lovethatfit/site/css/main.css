@@ -305,8 +305,8 @@ ul.row li {
 	background:none;
 	padding-top:0;
 	min-height:360px;
-	float:left
-        padding-bottom:20px;
+	float:left;
+        padding-bottom:0px;
 }
 .full_site .bottom_line {
 	background:none;
@@ -761,12 +761,15 @@ a.but_short:visited {
     width:100px;
     padding:0 0 2px 8px;
 }
+
 .zoom_in .slider_wrap {
     width: 302px;
 }
 .zoom_in .main_slider {
     width: 208px;
 }
+
+
 .step_4 .btm_buttons {
     bottom: -36px;
 }
@@ -781,9 +784,9 @@ a.but_short:visited {
 
 .int_fitting_room {
 	
-	width:234px;
+	width:364px;
 	height:505px;
-	margin:0 auto;
+	margin:18px auto 0;
 }
 .input_file_hldr {
 	float:left;
@@ -1304,7 +1307,7 @@ input[type=email]{
 .prod_sliding_area{
 	overflow:hidden;
         z-index: 50;
-        width:590px;
+        width:650px;
          background:url(../images/slider_bg.png) no-repeat 0 0;
         
        
@@ -1323,27 +1326,30 @@ input[type=email]{
     
 }
 .loading_now {
+
+    z-index: 500;
+    display:none;
     height: 532px;
     left: 0;
     position: absolute;
     top: 0;
-    width: 280px;
-    z-index: 500;
+    width: 280px;   
 }
 .loading_now .loading_inner {
-    background: url("../images/trans_dot_10.png") repeat scroll 0 0 transparent;
-    display: block;
-    height: 278px;
-    left: 0;
-    padding-top: 240px;
-    position: absolute;
-    text-align: center;
-    top: 13px;
-    vertical-align: middle;
-    width: 280px;
+background: url("../images/trans_dot_10.png") repeat scroll 0 0 transparent;
+display: block;
+height: 278px;
+left: 0;
+padding-top: 240px;
+position: absolute;
+text-align: center;
+top: 13px;
+vertical-align: middle;
+width: 280px;
+
 }
 ul.prod_wrapper{
-	padding:0px;
+	padding:0;
 	margin:0px 0px 0px 0px;	       
        
 }
@@ -1355,8 +1361,8 @@ ul.prod_wrapper{
 .prod_wrapper li{
 	list-style:none;	
 	overflow:auto;
-        width:250px;
-	padding:10px 15px;
+        width:260px;
+	padding:10px;
         border-bottom:1px dashed #c4c5c4;
 }
 
@@ -1443,7 +1449,7 @@ background:#f3f3f3;
 /*-- Fitting room + Drag/Drop --*/
 .prod_sliding_area .int_fitting_room {
     position: relative;
-    padding-top: 17px;
+    padding-top: 0;
 }
 
 #top_dropable {
@@ -1452,6 +1458,7 @@ background:#f3f3f3;
    top:125px;
    text-align: center;
    z-index: 2;
+   width:364px;
 }
 
 #bottom_dropable {
@@ -1459,6 +1466,7 @@ background:#f3f3f3;
    left:0;
    top:227px;
    text-align: center;
+   width:364px;
    z-index: 1;
 }
 
@@ -1468,6 +1476,7 @@ background:#f3f3f3;
    top:125px;
    text-align: center;
    z-index: 3;
+   width:364px;
 }
 
 #top_dropable img.curr_prod,
@@ -1487,16 +1496,15 @@ background:#f3f3f3;
 
 #user_dummy_img_hldr {
     float:left;
-    width:218px;
+    width:364px;
     height: 510px;
     position: relative;
-    margin-left: 8px;
     overflow: hidden;
 }
 #user_dummy_img_hldr img.user_dummy_img{
    
     position: relative;
-    left:-71px;
+    left:0;
     top:0;
 }
 
@@ -1656,14 +1664,14 @@ margin:0 auto;
 .upload_again_hldr a:visited {
     font-size: 13px;
     font-weight: bold;
-    color:#fff;
+    color:#C4C934;
 }
 .upload_again_hldr a:hover,
 .upload_again_hldr a:active,
 .upload_again_hldr a:focus {
     font-size: 13px;
     font-weight: bold;
-    color:#fff;
+    color:#C4C934;
 }
 
 
@@ -1716,9 +1724,10 @@ margin:0 auto;
 #fitting_tab{
     
     position: absolute;
-    top:5px;
-    left: 8px;
-    width:218px;
+    top:-30px;
+    left: 0;
+    width:356px;
+    text-align: center;
     padding:5px 0px 5px 0px;
     z-index: 1;
     
@@ -1730,7 +1739,8 @@ margin:0 auto;
     color: #a3a621;
     display: inline-block;
     font-size: 0.80em;
-    width:106px;
+    padding-right:12px;
+    padding-left:8px;
     text-align:center;
     font-family: arial;   
     
@@ -1804,7 +1814,7 @@ margin:0 auto;
 }
 #left_hand {
     width:97px;
-    background: url(../images/left_hand_st.png) 0 center no-repeat;
+    background: url(../images/left_hand_st.png) -20px center no-repeat;
     float:left;
     margin-left: -10px;
 }
@@ -1817,7 +1827,7 @@ margin:0 auto;
 #right_hand {
     width:97px;
     margin-right: -10px;
-    background: url(../images/right_hand_st.png) 0 center no-repeat;
+    background: url(../images/right_hand_st.png) 20px center no-repeat;
     float:left;
 }
 #adj_belt_hldr {
@@ -1849,8 +1859,9 @@ margin:0 auto;
 .pro_cart {
     float: right;
     margin: 50px 10px 0 0;
-    width: 210px;
+    width: 110px;
     display:none;
+    position: relative;
 }
 
 .toprow ul{
@@ -1970,4 +1981,51 @@ text-align: left;
     top:525px;
         
   
+}
+
+/*---Behlool 3/4/2013---*/
+
+
+#profile_wrapper{
+    width:754px;
+    float:right;
+    margin-top:20px;
+}
+
+.top_gra{
+	background:url(../images/top_gra.png) no-repeat top left;
+	height:9px;	
+}
+
+.pro_content{
+	border-left:2px solid #c4c933;
+	padding:20px;	
+}
+
+.pro_content label{
+    font-size: 0.85em;
+    width:80px;
+    margin-bottom:15px;
+    display:inline-block;
+	
+}
+
+.pro_content input[type=submit]{
+    background:#a8ae20;
+    color:#fff;
+    padding:5px 20px 5px 20px;
+    font-size: 0.85em; 
+    margin-left: 170px;
+	
+}
+
+#profile_wrapper h1{
+    font-size: 1em;
+    text-transform: uppercase;
+		
+}
+
+.bottom_gra{
+	background:url(../images/bottom_gra.png) no-repeat top left;
+	height:9px;	
 }

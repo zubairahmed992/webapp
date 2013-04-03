@@ -89,7 +89,7 @@ function set_slider_buttons(){
 
 function set_droppables(){
     var top_pos_drop = $("#hdn_prod_top_pos").attr("value");
-    $("#top_dropable").css("top", top_pos_drop + "px");
+    $("#top_dropable").css("top", top_pos_drop - 14 + "px");
     
     var bottom_pos_drop = $("#hdn_prod_bottom_pos").attr("value");
     $("#bottom_dropable").css({top: bottom_pos_drop + "px"});
@@ -184,17 +184,17 @@ var scroll_heighting = 534;
             $("#fitting_alerts").zIndex("-8");
             
             var prod_h = 160;
-            var prod_w = 200;
-            
+            var prod_w = 264;
+            var left_pos_drop = 182;
             
             
             //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
-        $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
         
         
         
-        $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+        
+        $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
            
         },
         drag:function(){
@@ -261,14 +261,15 @@ var scroll_heighting = 534;
         start:function (){
             
             var prod_h = 200;
-            var prod_w = 200;
+            var prod_w = 264;
+            var left_pos_drop = 182;
             
             //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
             $(".int_fitting_room").zIndex("-1");
             $("#fitting_alerts").zIndex("-8");
             
-        $( "#bottom_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+        $( "#bottom_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
             
         },
         drag:function(){
@@ -328,14 +329,15 @@ var scroll_heighting = 534;
         start:function (){
             
             var prod_h = 300;
-            var prod_w = 200;
+            var prod_w = 264;
+            var left_pos_drop = 182;
             
             //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
             //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
             $(".int_fitting_room").zIndex("-1");
             $("#fitting_alerts").zIndex("-8");
             
-        $( "#full_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (117 - (prod_w / 2))});
+        $( "#full_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
             
         },
         drag:function(){
