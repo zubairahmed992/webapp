@@ -761,6 +761,12 @@ a.but_short:visited {
     width:100px;
     padding:0 0 2px 8px;
 }
+.zoom_in .slider_wrap {
+    width: 302px;
+}
+.zoom_in .main_slider {
+    width: 208px;
+}
 .step_4 .btm_buttons {
     bottom: -36px;
 }
@@ -1317,24 +1323,24 @@ input[type=email]{
     
 }
 .loading_now {
-    position:absolute;
-    left:0;
-    top:0;
-    width:254px;
-    height:574px;
+    height: 532px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 280px;
     z-index: 500;
-    display: none;
 }
 .loading_now .loading_inner {
-    background:url(../images/trans_dot_10.png) 0 0 repeat;
-    position:absolute;
-    left:0;
-    top:30px;
-    width:250px;
-    height:500px;
-    padding-top: 250px;
+    background: url("../images/trans_dot_10.png") repeat scroll 0 0 transparent;
+    display: block;
+    height: 278px;
+    left: 0;
+    padding-top: 240px;
+    position: absolute;
     text-align: center;
+    top: 13px;
     vertical-align: middle;
+    width: 280px;
 }
 ul.prod_wrapper{
 	padding:0px;
@@ -1350,7 +1356,7 @@ ul.prod_wrapper{
 	list-style:none;	
 	overflow:auto;
         width:250px;
-	padding:10px 0px 10px 20px;
+	padding:10px 15px;
         border-bottom:1px dashed #c4c5c4;
 }
 

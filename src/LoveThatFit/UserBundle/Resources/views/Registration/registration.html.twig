@@ -13,7 +13,7 @@
            
 
                     <div class="frm_ele">
-                       
+                       {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
                             
                 {{ form_widget(form.email) }}
                         
@@ -23,14 +23,13 @@
                         </div>
 
                         <div class="frm_ele">
-                
-                
+                {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
                 {{ form_widget(form.password.password) }}
                             </div>
 
                             <div class="frm_ele">
                
-                                    
+                 {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
                 {{ form_widget(form.password.confirm) }}
                                  <div class="error_cls">{{ form_errors(form.password.password) }}</div>
                 

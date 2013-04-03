@@ -34,7 +34,7 @@ user_back = user_back * 8 / 4 * 3;
   var photo_height = $("#img_to_upload").height();
   var used = 0;
   
-  $("#slider_scale_photo").slider({orientation: "vertical", animate: true, range: "min", value: 100, min: 1, max: 200, step: 0.01, 
+  $("#slider_scale_photo").slider({ animate: true, range: "min", value: 100, min: 1, max: 200, step: 0.01, 
   slide: function( event, ui ) {
 	  $( "#slider_result_photo" ).attr('value' , ui.value);
 	  
