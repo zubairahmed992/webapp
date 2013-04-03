@@ -17,7 +17,7 @@
                             
                 {{ form_widget(form.email) }}
                         
-                         <div class="error_cls">Email already exist    {{ form_errors(form.email) }}          
+                         <div class="error_cls">{{ form_errors(form.email) }}          
 </div>
                         
                         </div>
@@ -32,9 +32,9 @@
                
                                     
                 {{ form_widget(form.password.confirm) }}
-                                 <div class="error_cls">{{ form_errors(form.password.password) }}asdasd</div>
+                                 <div class="error_cls">{{ form_errors(form.password.password) }}</div>
                 
-                <div class="error_cls"> {{ form_errors(form.password.confirm) }}sdfsfsf</div>
+                <div class="error_cls"> {{ form_errors(form.password.confirm) }}</div>
                                 </div>
                 
                 
