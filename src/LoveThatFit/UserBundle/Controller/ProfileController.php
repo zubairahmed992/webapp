@@ -2,15 +2,10 @@
 
 namespace LoveThatFit\UserBundle\Controller;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\Measurement;
-use LoveThatFit\UserBundle\Form\Type\UserType;
 use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementType;
 use LoveThatFit\UserBundle\Form\Type\ProfileSettingsType;
-use LoveThatFit\UserBundle\Form\Type\RegistrationStepFourType;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,15 +52,18 @@ class ProfileController extends Controller {
         $measurement->setUpdatedAt(new \DateTime('now')); 
         $em->persist($measurement);
         $em->flush();
-        $this->get('session')->setFlash('success', 'Updated Successfully');
+        $this->get('session')->setFlash('Success', 'Your measurement information has been saved.');
         }
-        else
-        {
-         $this->get('session')->setFlash('warning', 'Try Again');   
-        }
+       
+         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
+                    'form' => $measurementForm->createView(),
+                    'measurement' => $measurement,
+                    
+                ));   
+       
              
   
-       return $this->redirect($this->getRequest()->headers->get('referer'));      
+             
        }
 
     //-------------------------------------------------------------
@@ -80,8 +78,6 @@ class ProfileController extends Controller {
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
         
-       
-
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
@@ -101,30 +97,29 @@ class ProfileController extends Controller {
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
         
+        $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
         
         if ($userForm->isValid())
         {
             $entity->uploadAvatar();
             $em->persist($entity);
             $em->flush(); 
-            $this->get('session')->setFlash('success', 'Profile  Updated Successfully');    
-        }
-        else
-        {
-            
-            $this->get('session')->setFlash('warning', 'Please Try again');    
+            $this->get('session')->setFlash('Success', 'Profile has been updated.');    
         }
         
+        
+      return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
+                    'form' => $userForm->createView(),
+                    'entity' => $entity,
+                    'form_password_reset' => $passwordResetForm->createView()
+                ));  
     
-      return $this->redirect($this->getRequest()->headers->get('referer'));      
+            
     }
 
-     /***************************************************
-     * Created: Suresh
-     * Description: Password Reset method
-     * param :Form password data, id
-     * **************************************************** */
-
+//-------------------------------------------------------------------------
+    
+    
     public function passwordResetUpdateAction(Request $request) {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -185,11 +180,8 @@ class ProfileController extends Controller {
      return $this->redirect($this->getRequest()->headers->get('referer'));      
     }
     
-    /*     * *************************************************
-     * Created: Azeem
-     * Description: What Am I Like     
-     * **************************************************** */
-    
+
+    //--------------------------- What I like --------------------------
     public function whatILikeAction()
     {       
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(

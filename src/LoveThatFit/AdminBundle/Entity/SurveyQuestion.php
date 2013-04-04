@@ -17,13 +17,13 @@ class SurveyQuestion
     // ...
 
     /**
-     * @ORM\OneToMany(targetEntity="SurveyAnswer", mappedBy="SurveyQuestion")
+     * @ORM\OneToMany(targetEntity="SurveyAnswer", mappedBy="question")
      */
-    protected $answer;
+    protected $answers;
 
     public function __construct()
     {
-        $this->answer = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
     /**
      * @var integer $id
@@ -103,8 +103,8 @@ class SurveyQuestion
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getAnswer()
+    public function getAnswers()
     {
-        return $this->answer;
+        return $this->answers;
     }
 }

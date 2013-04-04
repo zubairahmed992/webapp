@@ -684,4 +684,7 @@ class User  implements UserInterface, \Serializable{
             : $this->getUploadDir().'/'.$this->id. '_avatar'.'.'.$ext;    
         
     }
+
+    
+    
 }

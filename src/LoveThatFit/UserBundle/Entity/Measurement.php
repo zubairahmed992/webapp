@@ -41,9 +41,9 @@ class Measurement {
      * @Assert\Range(
      *      min = "90",
      *      max = "350",
-     *      minMessage = "You must weight at least 0",
-     *      maxMessage = "You cannot weight more than 300"
-     
+     *      minMessage = "You must weight at least 90",
+     *      maxMessage = "You cannot weight more than 300",
+     *      groups={"registration_step_two","profile_measurement"}
      
      * )
      * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"}) 
@@ -61,7 +61,8 @@ class Measurement {
      *      min = "20",
      *      max = "96",
      *      minMessage = "You must be at least 20 tall",
-     *      maxMessage = "You cannot taller than 96"
+     *      maxMessage = "You cannot taller than 96",
+     *      groups={"registration_step_two","profile_measurement"}
     
      * )      
      * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"})  
@@ -78,7 +79,8 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10 waist",
-     *      maxMessage = "You cannot have more than 70 waist"
+     *      maxMessage = "You cannot have more than 70 waist",
+     *      groups={"registration_step_two","profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
@@ -94,7 +96,8 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10 ",
-     *      maxMessage = "You cannot have more than 70"
+     *      maxMessage = "You cannot have more than 70",
+     *      groups={"registration_step_two","profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
@@ -110,7 +113,8 @@ class Measurement {
      *      min = "10",
      *      max = "70",
      *      minMessage = "You must have at least 10",
-     *      maxMessage = "You cannot have more than 70"
+     *      maxMessage = "You cannot have more than 70",
+     *      groups={"registration_step_two","profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
@@ -126,7 +130,8 @@ class Measurement {
      *      min = "0",
      *      max = "300",
      *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 300"
+     *      maxMessage = "You cannot have more than 300",
+     *      groups={"profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
@@ -142,7 +147,8 @@ class Measurement {
      *      min = "0",
      *      max = "300",
      *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 300"
+     *      maxMessage = "You cannot have more than 300",
+     *      groups={"profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
@@ -158,7 +164,8 @@ class Measurement {
      *      min = "6",
      *      max = "50",
      *      minMessage = "You must have at least 6",
-     *      maxMessage = "You cannot have more than 50"
+     *      maxMessage = "You cannot have more than 50",
+     *      groups={"profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
@@ -174,7 +181,8 @@ class Measurement {
      *      min = "0",
      *      max = "300",
      *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 300"
+     *      maxMessage = "You cannot have more than 300",
+     *      groups={"registration_step_two","profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 

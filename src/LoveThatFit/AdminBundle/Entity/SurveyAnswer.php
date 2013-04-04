@@ -16,13 +16,14 @@ class SurveyAnswer
     // ...
 
     /**
-     * @ORM\ManyToOne(targetEntity="SurveyQuestion", inversedBy="SurveyAnswer")
+     * @ORM\ManyToOne(targetEntity="SurveyQuestion", inversedBy="surveyAnswers")
      * @ORM\JoinColumn(name="question_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $question;
+    
     public function __construct()
     {
-        $this->question = new ArrayCollection();
+        
     }
     /**
      * @var integer $id
