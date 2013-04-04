@@ -39,10 +39,10 @@ class Measurement {
      * @ORM\Column(name="weight", type="float", nullable=true)
      * 
      * @Assert\Range(
-     *      min = "90",
+     *      min = "0",
      *      max = "350",
-     *      minMessage = "You must weight at least 90 inches",
-     *      maxMessage = "You cannot weight more than 300 inches",
+     *      minMessage = "You must Enter the your weight",
+     *      maxMessage = "You cannot weight more than 300 lbs",
      *      groups={"registration_step_two","profile_measurement"}
      
      * )
@@ -58,7 +58,7 @@ class Measurement {
      * 
      * 
      * @Assert\Range(
-     *      min = "20",
+     *      min = "0",
      *      max = "96",
      *      minMessage = "You must be at least 20 tall inches",
      *      maxMessage = "You cannot taller than 96 inches",
@@ -76,7 +76,7 @@ class Measurement {
      * @ORM\Column(name="waist", type="float", nullable=true)
      * 
      * @Assert\Range(
-     *      min = "10",
+     *      min = "0",
      *      max = "70",
      *      minMessage = "You must have at least 10 waist inches",
      *      maxMessage = "You cannot have more than 70 waist inches",
@@ -93,7 +93,7 @@ class Measurement {
      * @ORM\Column(name="hip", type="float", nullable=true)
      * 
      * @Assert\Range(
-     *      min = "10",
+     *      min = "0",
      *      max = "70",
      *      minMessage = "You must have at least 10 inches ",
      *      maxMessage = "You cannot have more than 70 inches",
@@ -110,7 +110,7 @@ class Measurement {
      * @ORM\Column(name="bust", type="float", nullable=true)
      * 
      * @Assert\Range(
-     *      min = "10",
+     *      min = "0",
      *      max = "70",
      *      minMessage = "You must have at least 10 inches ",
      *      maxMessage = "You cannot have more than 70 inches ",
@@ -161,7 +161,7 @@ class Measurement {
      * @ORM\Column(name="inseam", type="float", nullable=true)
      * 
      * @Assert\Range(
-     *      min = "6",
+     *      min = "0",
      *      max = "50",
      *      minMessage = "You must have at least 6 inches",
      *      maxMessage = "You cannot have more than 50 inches",

@@ -121,12 +121,18 @@ class User  implements UserInterface, \Serializable{
      * @var string $image
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @Assert\File(maxSize = "128k", mimeTypes={"image/gif", "image/jpeg", "image/png"}
+     * )
      */
     private $image;
 
     /**
-     * @var string $avatar
+     * @var file $avatar
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     * @Assert\File(
+     * mimeTypes={"image/png", "image/jpeg", "image/pjpeg"},
+     * groups={"profile_settings"}
+     * )
      */
     private $avatar;
 
