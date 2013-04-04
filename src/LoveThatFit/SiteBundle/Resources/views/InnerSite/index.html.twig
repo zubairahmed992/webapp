@@ -89,13 +89,13 @@ function set_slider_buttons(){
 
 function set_droppables(){
     var top_pos_drop = $("#hdn_prod_top_pos").attr("value");
-    $("#top_dropable").css("top", top_pos_drop - 14 + "px");
+    $("#top_dropable").css("top", top_pos_drop - 28 + "px");
     
     var bottom_pos_drop = $("#hdn_prod_bottom_pos").attr("value");
-    $("#bottom_dropable").css({top: bottom_pos_drop + "px"});
+    $("#bottom_dropable").css({top: bottom_pos_drop - 28 + "px"});
     
     var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");
-    $("#full_dropable").css({top: top_pos_drop + "px"});
+    $("#full_dropable").css({top: top_pos_drop - 28 + "px"});
 }
 $(document).ready(function(){
   set_droppables();
@@ -154,12 +154,12 @@ var scroll_heighting = 534;
         if($( prod_type ).parent().attr('id') == "bottom_dropable")
             {
                 $("#curr_bottom_alerts ul").fadeOut();
-                $("#curr_bottom_alerts h2").fadeOut();
+                $("#curr_bottom_alerts h3").fadeOut();
             }
         if($( prod_type ).parent().attr('id') == "full_dropable")
             {
                 $("#curr_dress_alerts ul").fadeOut();
-                $("#curr_dress_alerts h2").fadeOut();
+                $("#curr_dress_alerts h3").fadeOut();
             }
             
     };
