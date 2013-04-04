@@ -10,57 +10,45 @@
             <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
 
             <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
-           
+                {{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
 
                     <div class="frm_ele">
                        {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
-                            
-                {{ form_widget(form.email) }}
-                        
-                         <div class="error_cls">{{ form_errors(form.email) }}          
-</div>
-                        
-                        </div>
+                       {{ form_errors(form.email) }}
+                    </div>
 
-                        <div class="frm_ele">
-                {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
-                {{ form_widget(form.password.password) }}
-                            </div>
+                    <div class="frm_ele">
+                        {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
+                    </div>
 
-                            <div class="frm_ele">
-               
-                 {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
-                {{ form_widget(form.password.confirm) }}
-                                 <div class="error_cls">{{ form_errors(form.password.password) }}</div>
-                
-                <div class="error_cls"> {{ form_errors(form.password.confirm) }}</div>
-                                </div>
-                
-                
-               
+                    <div class="frm_ele">
+                        {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
+                        {{ form_errors(form.password.password) }}
+                        {{ form_errors(form.password.confirm) }}
+                    </div>
 
                     <div style="float:left; margin-left:20px;">            
-                    <div class="frm_ele radio_buts">
-                 {{ form_row(form.gender) }}                     
-                        </div></div>
- <div class="error_cls"> {{ form_rest(form) }}</div>
-                {{ form_rest(form) }}
-
-                                    <input class="reg_next_step" type="submit" value="Register" />
-                                    
-                                    
-                                    <div class="login_section">
-            <p>Already Registered?</p>
-            <div><a href="{{path('login')}}">Login Now!</a></div>
-            </div>
-                                </form>
-            
-            
+                        <div class="frm_ele radio_buts">
+                            {{ form_row(form.gender) }}                     
+                        </div>
+                    </div>
+                    {{ form_rest(form) }}
+                
+                    <input class="reg_next_step" type="submit" value="Register" />
 
 
-                                <!--/.sttp_1--></div>
-                            <!--/.action_cnt--></div>
-                        <!--/.action_blk--></section>
+                    <div class="login_section">
+                        <p>Already Registered?</p>
+                        <div><a href="{{path('login')}}">Login Now!</a></div>
+                    </div>
+                </form>
+
+
+
+
+                            <!--/.sttp_1--></div>
+                        <!--/.action_cnt--></div>
+                    <!--/.action_blk--></section>
 
 {% endblock %}
 {% block how_it_works_content %}

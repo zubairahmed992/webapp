@@ -458,7 +458,7 @@ public function registrationCreateAction() {
             $form->bind($this->getRequest());
             
             if ($this->isDuplicateEmail(Null,$entity->getEmail())) {
-                     $form->addError(new FormError('This email has already taken.'));
+                     $form->get('email')->addError(new FormError('This email has already taken.'));
               }
               
             if ($form->isValid()) {
