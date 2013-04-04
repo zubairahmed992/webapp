@@ -1,15 +1,20 @@
 {% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
- {% block profile_heading %}
+{% block profile_heading %}
 <h1>What I Like</h1>
-        {% endblock %}
+{% endblock %}
+
+
 {% block profile_section %}
 
+<div style="min-height: 100px;">
 
+
+    
 {% for item in data %}  
 
-{{item.question}}<br/>
+    <div class="pf_question">{{item.question}}</div>
 {% for a in item.answers %}
-<input type="radio">{{a.answer}}<br/>
+    <input type="radio" ><span class="pf_answer">{{a.answer}}</span><br/>
 {%endfor%}
 {%endfor%}
 <input type="submit" value="Submit">

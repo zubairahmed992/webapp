@@ -1999,7 +1999,8 @@ text-align: left;
 
 .pro_content{
 	border-left:2px solid #c4c933;
-	padding:20px;	
+	padding:20px;
+        min-height: 320px;
 }
 
 .pro_content label{
@@ -2086,3 +2087,31 @@ padding-bottom:20px;
 .acct_second input[type="password"]{    
 width:200px;
 }
+
+.pf_question{
+    font-weight: bold;
+    color:#707172;
+    font-size: 0.95em;
+    padding: 0px 0px 5px 0px;    
+}
+
+.pf_answer{
+ font-size: 0.9em; 
+ padding:0px 0px 10px 5px;
+ margin-top: -3px;
+    
+}
+
+#fitting_link a{
+    
+    position:absolute;
+    right: 10px;
+    top: 10px;
+    display: block;
+    text-decoration: none;
+    color:#fff;
+    font-size: 0.85em;
+    background: #c4c933;
+    padding: 5px;
+}
+
