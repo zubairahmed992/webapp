@@ -1,6 +1,9 @@
 {% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
-{% block product_slider %}
+ {% block profile_heading %}
 <h1>About me</h1>
+        {% endblock %}
+{% block profile_section %}
+
 {% if app.session.hasFlash('warning') %}
        <div class="alert alert-error">
         <strong>Warning!</strong> 
@@ -68,15 +71,23 @@
         {{ form_label(form.arm) }}
         {{ form_widget(form.arm) }}
         </div>    
+   
+  
+        
     <div id='frm_outseam'>
-    Outseam   {{measurement.waistHeight}} 
+        <label>
+            Outseam  </label> {{measurement.waistHeight}} 
     </div>    
         <div id='frm_bmi'>
-    BMI {{measurement.BMI}} 
+            <label>BMI</label> {{measurement.BMI}} 
     </div>    
      <div id='frm_age'>
-    Age    {{app.user.age}}
-    </div>   
+         <label>Age</label>    {{app.user.age}}
+    </div> 
+        
+        
+        
+        
       <div id="userimage" align="left">
        {% if(app.user.AvatarWebPath) %} 
           <img src="{{asset(app.user.AvatarWebPath)}}">
@@ -87,9 +98,9 @@
           </div>  
         
       {{ form_rest(form) }}  
-        <input type="submit" value="Update" />
+        <input type="submit" value="Edit Info" />
         
-   <a href="{{ path('inner_site_index')}}">Cancel</a>
+   
   
    
   
