@@ -2097,8 +2097,9 @@ width:200px;
 
 .pf_answer{
  font-size: 0.9em; 
- padding:0px 0px 10px 5px;
+ padding:0px 0px 0px 5px;
  margin-top: -3px;
+ display: inline;
     
 }
 
@@ -2115,3 +2116,9 @@ width:200px;
     padding: 5px;
 }
 
+.pf_box{    
+margin-bottom: 20px;
+float:left;
+width:350px;
+
+}

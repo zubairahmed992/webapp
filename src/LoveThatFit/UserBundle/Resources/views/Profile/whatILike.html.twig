@@ -8,15 +8,18 @@
 
 <div style="min-height: 100px;">
 
-
-    
+ 
 {% for item in data %}  
 
+   <div class="pf_box"> 
     <div class="pf_question">{{item.question}}</div>
 {% for a in item.answers %}
-    <input type="radio" ><span class="pf_answer">{{a.answer}}</span><br/>
+    <input type="radio" ><span class="pf_answer">{{a.answer}}</span><br>
+    
 {%endfor%}
+    </div>
 {%endfor%}
+    <div class="clr_bth"></div> 
 <input type="submit" value="Submit">
 
 {% endblock %}
