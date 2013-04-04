@@ -41,8 +41,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "90",
      *      max = "350",
-     *      minMessage = "You must weight at least 90",
-     *      maxMessage = "You cannot weight more than 300",
+     *      minMessage = "You must weight at least 90 inches",
+     *      maxMessage = "You cannot weight more than 300 inches",
      *      groups={"registration_step_two","profile_measurement"}
      
      * )
@@ -60,8 +60,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "20",
      *      max = "96",
-     *      minMessage = "You must be at least 20 tall",
-     *      maxMessage = "You cannot taller than 96",
+     *      minMessage = "You must be at least 20 tall inches",
+     *      maxMessage = "You cannot taller than 96 inches",
      *      groups={"registration_step_two","profile_measurement"}
     
      * )      
@@ -78,8 +78,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "10",
      *      max = "70",
-     *      minMessage = "You must have at least 10 waist",
-     *      maxMessage = "You cannot have more than 70 waist",
+     *      minMessage = "You must have at least 10 waist inches",
+     *      maxMessage = "You cannot have more than 70 waist inches",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
@@ -95,8 +95,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "10",
      *      max = "70",
-     *      minMessage = "You must have at least 10 ",
-     *      maxMessage = "You cannot have more than 70",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
@@ -112,8 +112,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "10",
      *      max = "70",
-     *      minMessage = "You must have at least 10",
-     *      maxMessage = "You cannot have more than 70",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
@@ -129,8 +129,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "300",
-     *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 300",
+     *      minMessage = "You must have at least 0 inches ",
+     *      maxMessage = "You cannot have more than 300 inches ",
      *      groups={"profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
@@ -146,8 +146,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "300",
-     *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 300",
+     *      minMessage = "You must have at least 0 inches ",
+     *      maxMessage = "You cannot have more than 300 inches ",
      *      groups={"profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
@@ -163,8 +163,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "6",
      *      max = "50",
-     *      minMessage = "You must have at least 6",
-     *      maxMessage = "You cannot have more than 50",
+     *      minMessage = "You must have at least 6 inches",
+     *      maxMessage = "You cannot have more than 50 inches",
      *      groups={"profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
@@ -180,8 +180,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "300",
-     *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 300",
+     *      minMessage = "You must have at least 0 inches ",
+     *      maxMessage = "You cannot have more than 300 inches",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
@@ -197,8 +197,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "80",
-     *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 80"
+     *      minMessage = "You must have at least 0 inches",
+     *      maxMessage = "You cannot have more than 80 inches "
      * )
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
@@ -212,8 +212,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "60",
-     *      minMessage = "You must have at least 0",
-     *      maxMessage = "You cannot have more than 60"
+     *      minMessage = "You must have at least 0 inches ",
+     *      maxMessage = "You cannot have more than 60 inches "
      * )
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
