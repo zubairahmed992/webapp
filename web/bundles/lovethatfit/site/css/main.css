@@ -2056,13 +2056,33 @@ padding: 6px 0px 6px 10px!important;
 
 .act_set{
 float:left; 
-margin-right: 20px;
+margin: 0px 20px 10px 0px;
 }
 
 .act_set input[type="text"]{
     width:200px;
 }
 
-.act_set input[type="radio"]{
-   
+.act_set input[type="file"]{
+    width:200px;
+}
+
+.act_set input[type="radio"]{   
+}
+
+.act_radio{
+margin-left:47px!important;
+float:left!important;
+}
+
+.acct_second{    
+padding-top:30px;
+}
+
+.acct_second h5{    
+padding-bottom:20px;
+}
+
+.acct_second input[type="password"]{    
+width:200px;
 }
