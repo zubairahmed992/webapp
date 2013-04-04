@@ -1,4 +1,9 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+ {% block profile_heading %}
 <h1>What I Like</h1>
+        {% endblock %}
+{% block profile_section %}
+
 
 {% for item in data %}  
 
@@ -8,3 +13,5 @@
 {%endfor%}
 {%endfor%}
 <input type="submit" value="Submit">
+
+{% endblock %}
