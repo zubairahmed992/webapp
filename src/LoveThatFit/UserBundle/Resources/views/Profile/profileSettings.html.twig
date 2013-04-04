@@ -1,6 +1,11 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
-            
-<h2>Account Settings</h2>
+{% block profile_heading %}
+<h1>Account Settings</h1>
+        {% endblock %}
+
+{% block profile_section %}            
+
 {% if app.session.hasFlash('warning') %}
        <div class="alert alert-error">
         <strong>Warning!</strong> 
@@ -19,26 +24,32 @@
             <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
 
-            <div class="frm_ele">
+            <div class="frm_ele act_set">
                 {{ form_errors(form.firstName) }}
                 <label>First Name</label>   
                 {{ form_widget(form.firstName) }}
             </div>
-            <div class="frm_ele">
+            <div class="frm_ele act_set">
                 {{ form_errors(form.lastName) }}
                 <label>Last Name</label>
                 {{ form_widget(form.lastName) }}
             </div>
-            <div class="frm_ele radio_buts">
-                {{ form_row(form.gender) }}                     
-            </div>
-            <div class="frm_ele select_inline">
+            
+            <div class="frm_ele select_inline act_set">
                  {{ form_errors(form.birthdate) }}
                  {{ form_label(form.birthdate) }}
                  {{ form_widget(form.birthdate.month) }}
                  {{ form_widget(form.birthdate.day) }}
                  {{ form_widget(form.birthdate.year) }}
             </div>
+                    
+               
+                    <div class="frm_ele radio_buts">                
+                        <div class="radio_ele"> {{ form_label(form.gender) }}</div>
+                {{ form_widget(form.gender) }}                 
+            </div>
+                   
+                    
                 <div class="frm_ele image">
                 {{ form_row(form.file) }}                     
             </div>    
@@ -91,3 +102,4 @@
 
 
 <div></div>
+{% endblock %}
