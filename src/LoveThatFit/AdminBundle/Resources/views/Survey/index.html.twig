@@ -2,7 +2,6 @@
 {% block breadcrumb %}
 <li class="active">Survey</li>
 {% endblock %}
-
 {% block body %}
 <div class="p_listing">     
     <h1 style="float:left;">Survey</h1>
@@ -20,42 +19,60 @@
             <div class="span3 hds">&nbsp;</div>           
             <div class="span3 hds">&nbsp;</div>     
         </div>
-
-
-
-
-
-
         <ul>
 {% for item in data %}
                 <li style="list-style:none">
                     <table width="100%">
                         <tr>
-                            <td width="34%" style="padding-left:134px"><b>{{item.id}}</b></td>
-                            <td width="45%" style="padding-left: 7px;"><b>{{item.question}}</b></td>
-                            <td width="21%"><a href="{{ path('admin_survey_edit_question', {'question_id':item.id}) }}"><i class="icon-edit"></i></a>
-                                <a href="#myModal{{item.id}}" role="button" data-toggle="modal">
-                                    <i class="icon-remove"></i></a>
-
-                                <a href="{{ path('admin_survey_add_new_answer', {'question_id':item.id}) }}" class="btn">Add Answer</a></td>
+                  
+                            
+                        {%if(operation=='editQuestion' and id==item.id)%}
+                    <div class="row-fluid show-grid">
+                        <form action="{{ path('admin_survey_edit_update_question',{'question_id':id})}}"  method="post" {{ form_enctype(editForm) }}>
+                            <div align="center">
+          {{ form_widget(editForm) }}
+                                </div>          
+                                <div align="center">
+                                    <input type="submit" value="Submit" style="margin-left:30px"  />
+                                    <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
+                                        <input type="submit" value="Cancel"  />
+                                </div>
+                            </form>
+                        </div> 
+      {%else%}
+            <td width="34%" style="padding-left:134px"><b>{{item.id}}</b></td>
+            <td width="45%" style="padding-left: 7px;"><b>{{item.question}}</b></td>
+            <td width="21%"><a href="{{ path('admin_survey_edit_question', {'question_id':item.id}) }}"><i class="icon-edit"></i></a>
+            <a href="#myModal{{item.id}}" role="button" data-toggle="modal">
+            <i class="icon-remove"></i></a>
+            <a href="{{ path('admin_survey_add_new_answer', {'question_id':item.id}) }}" class="btn">Add Answer</a></td>
+      {%endif%}                   
                         </tr>
                     </table>
---------------------------------------------------------------------------
 {% for a in item.answers %}
-                        <div>{{a.answer}}                        </div>
-{%endfor%}
-----------------------------------------------------------------------
-                        
-{% for a in answer %}
-      {%if(item.id==a.question.id)%}
                     <ul>
                         <li style="list-style:none">
                             <table width="84%" align="center">
                                 <tr>
-                                    <td width="60%" style="padding-left: 348px;">{{a.answer}}</td>
-                                    <td width="40%" style="float:right;"><a href="{{ path('admin_survey_edit_answer', {'answer_id':a.id}) }}"><i class="icon-edit"></i></a>
-                                        <a href="#myModal1{{a.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a> </td>
-
+                             
+                      {%if(operation=='editAnswer' and id==a.id)%}
+                <div class="row-fluid show-grid">
+                    <form action="{{ path('admin_survey_edit_update_answer',{'answer_id':id})}}"  method="post" {{ form_enctype(editAnswerForm) }}>
+                        <div align="center">
+          {{ form_widget(editAnswerForm) }}
+                            </div>          
+                            <div align="center">
+                                <input type="submit" value="Submit" style="margin-left:30px" />             
+                                <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
+                                    <input type="submit" value="Cancel"  />
+                            </div>
+                        </form>
+                    </div>  
+{%else%}            
+                              <td width="60%" style="padding-left: 348px;">{{a.answer}}</td>
+                              <td width="40%" style="float:right;"><a href="{{ path('admin_survey_edit_answer', {'answer_id':a.id}) }}"><i class="icon-edit"></i></a>
+                              <a href="#myModal1{{a.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a> </td>
+{%endif%}  
                                 </tr>
                             </table>
 
@@ -79,39 +96,12 @@
                     </div>
                 </div>
 
-{%if(operation=='editAnswer' and id==a.id)%}
-                <div class="row-fluid show-grid">
-                    <form action="{{ path('admin_survey_edit_update_answer',{'answer_id':id})}}"  method="post" {{ form_enctype(editAnswerForm) }}>
-                        <div align="center">
-          {{ form_widget(editAnswerForm) }}
-                            </div>          
-                            <div align="center">
-                                <input type="submit" value="Submit" style="margin-left:30px" />             
-                                <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                    <input type="submit" value="Cancel"  />
-                            </div>
-                        </form>
-                    </div> 
- {%endif%} 
-{%endif%}
+
 {%endfor%}
 
 
 
-{%if(operation=='editQuestion' and id==item.id)%}
-                    <div class="row-fluid show-grid">
-                        <form action="{{ path('admin_survey_edit_update_question',{'question_id':id})}}"  method="post" {{ form_enctype(editForm) }}>
-                            <div align="center">
-          {{ form_widget(editForm) }}
-                                </div>          
-                                <div align="center">
-                                    <input type="submit" value="Submit" style="margin-left:30px"  />
-                                    <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                        <input type="submit" value="Cancel"  />
-                                </div>
-                            </form>
-                        </div> 
- {%endif%}   
+ 
 
  {%if(operation=='AddAnwser' and question_id==item.id)%}
                         <div class="row-fluid show-grid">

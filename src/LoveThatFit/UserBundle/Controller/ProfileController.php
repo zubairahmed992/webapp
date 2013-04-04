@@ -185,8 +185,7 @@ class ProfileController extends Controller {
     public function whatILikeAction()
     {       
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
-                    'data' =>  $this->getQuestionsList(),
-                    'answer' => $this->getAnswersList(),
+                    'data' =>  $this->getQuestionsList(),                   
                     
         ));
     }
@@ -196,10 +195,7 @@ class ProfileController extends Controller {
         return $repository->findAll();
     }
 
-    private function getAnswersList() {
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyAnswer');
-        return $repository->findAll();
-    }
+  
     
     
     

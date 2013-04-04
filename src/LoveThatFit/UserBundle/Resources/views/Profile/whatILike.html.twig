@@ -3,11 +3,8 @@
 {% for item in data %}  
 
 {{item.question}}<br/>
-{% for a in answer %}
-{%if(item.id==a.question.id)%}
+{% for a in item.answers %}
 <input type="radio">{{a.answer}}<br/>
-
-{%endif%}
 {%endfor%}
 {%endfor%}
 <input type="submit" value="Submit">
