@@ -5,6 +5,7 @@ namespace LoveThatFit\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * LoveThatFit\UserBundle\Entity\User
  *  
@@ -121,18 +122,13 @@ class User  implements UserInterface, \Serializable{
      * @var string $image
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
-     * @Assert\File(maxSize = "128k", mimeTypes={"image/gif", "image/jpeg", "image/png"}
-     * )
+    * )
      */
     private $image;
 
     /**
-     * @var file $avatar
+     * @var string $avatar
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
-     * @Assert\File(
-     * mimeTypes={"image/png", "image/jpeg", "image/pjpeg"},
-     * groups={"profile_settings"}
-     * )
      */
     private $avatar;
 

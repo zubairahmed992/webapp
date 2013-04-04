@@ -1,11 +1,43 @@
 {% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+
 {% block profile_heading %}
+
 <h1>Account Settings</h1>
         {% endblock %}
 
 {% block profile_section %}            
+<script>
+function validate()
+{
+var extensions = new Array("jpg","jpeg","gif","png","bmp");
+   
+var image_file = document.getElementById('user_file').value;
+var image_length = document.getElementById('user_file').length;
 
+var pos = image_file.lastIndexOf('.') + 1;
+var ext = image_file.substring(pos, image_length);
+if(image_file!="")
+{
+var final_ext = ext.toLowerCase();
+for (i = 0; i < extensions.length; i++)
+
+{
+
+if(extensions[i] == final_ext)
+{
+return true;
+}
+
+}
+document.getElementById('error').style.display="block";
+return false;
+
+}
+return true;
+}
+    
+</script>
 {% if app.session.hasFlash('warning') %}
        <div class="alert alert-error">
         <strong>Warning!</strong> 
@@ -21,7 +53,9 @@
    
 {% endif %}
 <div>
-            <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }}>
+    <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+    <br>
+    <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }} onsubmit="return validate();">
     {{ form_errors(form) }}
 
             <div class="frm_ele act_set">

@@ -5,7 +5,6 @@ namespace LoveThatFit\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\HttpFoundation\File\File;
 
 class ProfileSettingsType extends AbstractType
 {
@@ -29,18 +28,17 @@ class ProfileSettingsType extends AbstractType
        $builder->add('file');  
     }
     
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
-        $resolver->setDefaults(array(
-            'validation_groups' => array('profile_settings')
-        ));
-    }
-    
-    public function getDefaultOptions(array $options)
+  
+  
+      public function getDefaultOptions(array $options)
     {
         return array(
             'data_class' => 'LoveThatFit\UserBundle\Entity\User',
+            'cascade_validation' => true,
+            'validation_groups' => array('profile_settings'),
         );
     }
+
 
     public function getName()
     {
