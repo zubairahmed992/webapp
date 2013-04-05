@@ -83,7 +83,7 @@ return true;
                 {{ form_widget(form.gender) }}                 
             </div>
                     
-                    <div style="clear:both;"></div>
+                    <div class="clr_bth"></div>
                    
                     
                 <div class="frm_ele image">
@@ -123,20 +123,17 @@ return true;
                    
 
                         </div>
-                        <div class="frm_ele">
+           <div class="frm_ele">
                 {{ form_errors(form_password_reset.password.confirm) }}
                  <label>Confirm Password</label>
                 {{ form_widget(form_password_reset.password.confirm) }}
-
- 
-          
-            {{ form_rest(form_password_reset) }}
-            <input type="submit" value="Update" />
-             </form>
-       
+                {{ form_rest(form_password_reset) }}
+                <input type="submit" value="Update" />
 </div>
-<br><br><br>
 
+          </form>
+</div>
 
-<div></div>
 {% endblock %}
+    
+    
