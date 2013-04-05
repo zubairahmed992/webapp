@@ -6,7 +6,7 @@
         <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
         <form action="{{ path('login_check') }}" method="post" class="form">
             <div class="frm_ele">            
-                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                <input type="text" id="email" name="_username" value="{{ last_username }}" />
                           </div>
             <div class="frm_ele">
                 <input type="password" id="password" name="_password" />
@@ -28,24 +28,24 @@
         <script>
             
          $(document).ready(function(){
-         $('#username').attr("value","username");
+         $('#email').attr("value","email");
          $('#password').attr("value","password");
          
          $('.form').find('input:password').each(function() {
    $("<input type='text' id='text'/>").attr({ name: this.name, value: this.value }).insertBefore(this);
 }).remove();  
      
-     $('#username').focusin(function(){
+     $('#email').focusin(function(){
          var tt = $(this).val();
-         if(tt=='username'){
+         if(tt=='email'){
          $(this).val('');
          }
      });
          
-    $('#username').focusout(function(){   
+    $('#email').focusout(function(){   
          var ttt = $(this).val();
           if(ttt==''){ 
-          $(this).val('username');
+          $(this).val('email');
           }            
     });    
     
@@ -93,7 +93,7 @@
 
         <ul class="row with_sep">
             <li><a href="{{path('forgot_password_form')}}">forgot</a></li>
-            <li><a href="#">reset</a></li>
+            
             <li><a href="{{path('registration')}}">create</a></li>
         </ul>
         <!--/.action_cnt--></div>
