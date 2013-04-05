@@ -2125,5 +2125,11 @@ width:200px;
 margin-bottom: 20px;
 float:left;
 width:350px;
+}
+
+#userimage{
+position: absolute;
+top:70px;
+right: 70px;
 
 }
