@@ -81,9 +81,13 @@ class User  implements UserInterface, \Serializable{
      *      min = "3",
      *      max = "50",
      *      minMessage = "First Name must be at least {{ limit }} characters long",
-     *      maxMessage = "First Name cannot be longer than than {{ limit }} characters long"     
+     *      maxMessage = "First Name cannot be longer than than {{ limit }} characters long" , 
+     *      groups={"profile_settings"}   
      * )
      * @Assert\NotBlank(groups={"profile_settings"})  
+     * @Assert\Regex(pattern= "/[a-zA-Z]+$/",message="Only Character Require",
+     * groups={"profile_settings"}
+     * ) 
      */
     private $firstName;
 
@@ -96,9 +100,13 @@ class User  implements UserInterface, \Serializable{
      *      min = "3",
      *      max = "50",
      *      minMessage = "Last Name must be at least {{ limit }} characters long",
-     *      maxMessage = "Last Name cannot be longer than than {{ limit }} characters long"     
+     *      maxMessage = "Last Name cannot be longer than than {{ limit }} characters long"   ,  
+     *      groups={"profile_settings"}   
      * )
-     * @Assert\NotBlank(groups={"profile_settings"})  
+     * @Assert\NotBlank(groups={"profile_settings"}) 
+     * @Assert\Regex(pattern= "/[a-zA-Z]+$/",message="Only Character Require",
+     * groups={"profile_settings"}
+     * )  
      */
     private $lastName;
 
