@@ -26,11 +26,31 @@ class Product {
      */
     protected $brand;
 
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product")
+     */
+    protected $product_colors;
+        
+    
+    
+    
+    
+  /////////////////////////////////////////////////////////////////////////////////  
+    
+     public function __construct()
+    {
+        $this->product_colors = new ArrayCollection();
+    }
+    
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
+   
+    
     protected $id;
 
     /**
@@ -610,5 +630,38 @@ public function deleteImages()
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Add product_colors
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductColor $productColors
+     * @return Product
+     */
+    public function addProductColor(\LoveThatFit\AdminBundle\Entity\ProductColor $productColors)
+    {
+        $this->product_colors[] = $productColors;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_colors
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductColor $productColors
+     */
+    public function removeProductColor(\LoveThatFit\AdminBundle\Entity\ProductColor $productColors)
+    {
+        $this->product_colors->removeElement($productColors);
+    }
+
+    /**
+     * Get product_colors
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductColors()
+    {
+        return $this->product_colors;
     }
 }
