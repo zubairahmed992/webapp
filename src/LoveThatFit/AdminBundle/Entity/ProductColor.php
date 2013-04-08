@@ -14,7 +14,7 @@ class ProductColor
 {
     
      /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors", cascade={"ALL"}, orphanRemoval=true)
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;  
@@ -36,34 +36,35 @@ class ProductColor
      * @var string $title
      *
      * @ORM\Column(name="title", type="string")
+     * @Assert\NotBlank()
      */
     private $title;
 
     /**
      * @var string $colorA
      *
-     * @ORM\Column(name="color_a", type="string")
+     * @ORM\Column(name="color_a", type="string",nullable=true)
      */
     private $colorA;
 
     /**
      * @var string $colorB
      *
-     * @ORM\Column(name="color_b", type="string")
+     * @ORM\Column(name="color_b", type="string",nullable=true)
      */
     private $colorB;
 
     /**
      * @var string $colorC
      *
-     * @ORM\Column(name="color_c", type="string")
+     * @ORM\Column(name="color_c", type="string",nullable=true)
      */
     private $colorC;
 
     /**
      * @var string $pattern
      *
-     * @ORM\Column(name="pattern", type="string")
+     * @ORM\Column(name="pattern", type="string",nullable=true)
      */
     private $pattern;
 
@@ -71,9 +72,15 @@ class ProductColor
      * @var string $image
      *
      * @ORM\Column(name="image", type="string")
+     * @Assert\NotBlank()
      */
     private $image;
 
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
+        
 
     /**
      * Get id
