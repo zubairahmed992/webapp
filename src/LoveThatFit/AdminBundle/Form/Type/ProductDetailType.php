@@ -13,10 +13,9 @@ class ProductDetailType extends AbstractType
     {
         
         $builder->add('name');
-         $builder->add('sku');
+        $builder->add('description');
         $builder->add('adjustment');
         $builder->add('arm');
-        $builder->add('inseam');
         $builder->add('length');
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));
         $builder ->add('Brand', 'entity', array(

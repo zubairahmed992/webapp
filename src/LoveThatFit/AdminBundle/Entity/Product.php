@@ -38,16 +38,22 @@ class Product {
      * @Assert\NotBlank()
      */
     protected $name;
-
+    
+    /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="text",nullable=true)
+     */
+    private $description;
+    
     /**
      * @ORM\Column(type="decimal", scale=2)
      */
     protected $adjustment;
 
     /**
-     * @ORM\Column(type="string", length=255),
-     *  groups={"products"}
-     */
+     * @ORM\Column(type="string", length=255,nullable=true)
+      */
     protected $sku;
 
     /**
@@ -81,7 +87,7 @@ class Product {
     protected $leg;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
      */
     protected $inseam;
 
@@ -582,4 +588,27 @@ public function deleteImages()
      $ih->deleteImages($this->image);
 }
     
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Product
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }
