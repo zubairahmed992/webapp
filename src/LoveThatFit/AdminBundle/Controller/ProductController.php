@@ -197,7 +197,7 @@ class ProductController extends Controller {
  * Description: Render Product Detail Form
  * Param:Null
  ******************************************************************************/    
-    public function productDetailAction() {
+    public function productDetailNewAction() {
        
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product');
@@ -232,7 +232,90 @@ class ProductController extends Controller {
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));    
     
             }
-  }        
+  }
+ /******************************************************************************
+ * Created:Suresh
+ * Description:Edit  the Product Detail 
+ * Param:Null
+ ****************************************************************************/ 
+  public function productDetailEditAction($id)
+  {
+                $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->findOneById($id);
+
+        $form= $this->createForm(new ProductDetailType(), $entity);
+        $deleteForm = $this->getDeleteForm($id);
+
+        return $this->render('LoveThatFitAdminBundle:Product:editproduct_detail.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity));  
+  }
+/******************************************************************************
+ * Created:Suresh
+ * Description:Update the Product Detail 
+ * Param:Null
+ ****************************************************************************/ 
+   public function productDetailUpdateAction(Request $request, $id) 
+  {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+
+        $form= $this->createForm(new ProductDetailType(), $entity);
+        $form->bind($request);
+
+        $deleteForm = $this->getDeleteForm($id);
+
+        if ($form->isValid()) {
+
+            $entity->setUpdatedAt(new \DateTime('now'));
+
+            $em->persist($entity);
+            $em->flush();
+      return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
+        } else {
+            throw $this->createNotFoundException('Unable to update Product Detail.');
+        }
+  }
+  
+  /******************************************************************************
+ * Created:Suresh
+ * Description:Delete the Product Detail 
+ * Param:Null
+ ****************************************************************************/ 
+   public function productDetailDeleteAction($id) 
+  {
+        try{
+         $em = $this->getDoctrine()->getManager();
+    
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('admin_products'));
+     } catch (\Doctrine\DBAL\DBALException $e)
+        {
+             $this->get('session')->setFlash(
+            'warning',
+            'This Product cannot be deleted!'
+        );
+             return $this->redirect($this->getRequest()->headers->get('referer'));
+             
+        }
+  }
+   
+
 
 }
 

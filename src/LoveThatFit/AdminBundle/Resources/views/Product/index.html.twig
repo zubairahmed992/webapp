@@ -47,7 +47,7 @@
  |&nbsp;
          <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}"><i class="icon-eye-open"></i></a>
          <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}"><i class="icon-edit"></i></a>
-         <a href="#myModal{{p.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+         <a href="#myModaldetail{{p.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
  
 
                     
@@ -70,6 +70,22 @@
     
   </div>
 </div>
+        
+ <!-- ModalDetail -->
+<div id="myModaldetail{{p.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Product</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Product Detail <b>{{p.Name ~ ', ' ~ p.Brand.Name}}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_product_detail_delete', {'id': p.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>        
 
 
 {% endfor %}
