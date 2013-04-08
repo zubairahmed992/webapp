@@ -12,7 +12,9 @@
                 <input type="password" id="password" name="_password" />
                 {% if error %}
         <div class="login_error" >        
-        <div id="error_content">{{ error.message }}</div>
+        <div id="error_content">{{ error.message  | replace({
+        "Bad credentials": "Invalid Log-in credentials"
+    })}}</div>
         
         </div>
 {% endif %}
