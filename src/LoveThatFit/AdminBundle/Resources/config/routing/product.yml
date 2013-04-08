@@ -31,11 +31,19 @@ admin_product_delete:
     defaults: { _controller: LoveThatFitAdminBundle:Product:delete }
     
 admin_product_detail_new:
-     pattern:  /admin/product/product_detail/new
+     pattern:  /admin/product/Product_detail
      defaults: { _controller: LoveThatFitAdminBundle:Product:ProductDetail }
 
 admin_product_detail_create:
-     pattern:  /admin/product/product_detail/create
+     pattern:  /admin/product/productDetailCreate
      defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailCreate}
+
+admin_product_detail_show:
+    pattern:  /admin/productDetail/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Product:show }     
+admin_product_detail_edit:
+    pattern:  /admin/productDetail/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Product:edit }
+     
     
     
