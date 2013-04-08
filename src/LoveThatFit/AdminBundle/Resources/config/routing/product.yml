@@ -30,3 +30,12 @@ admin_product_delete:
     pattern:  /product/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Product:delete }
     
+admin_product_detail:
+     pattern:  /admin/product/ProductDetail
+     defaults: { _controller: LoveThatFitAdminBundle:Product:ProductDetail }
+
+admin_product_detail_create:
+     pattern:  /admin/product/productDetailCreate
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailCreate}
+    
+    

@@ -5,6 +5,7 @@ use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Yaml\Parser;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductRepository")
@@ -44,28 +45,28 @@ class Product {
     protected $adjustment;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255),
+     *  groups={"products"}
      */
     protected $sku;
 
     /**
-     * @ORM\Column(type="string", length=255)
-    
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     protected $image;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
-     */
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
+      */
     protected $waist;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
-     */
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
+    */
     protected $hip;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
      */
     protected $bust;
 
@@ -75,7 +76,7 @@ class Product {
     protected $arm;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
      */
     protected $leg;
 
@@ -85,17 +86,17 @@ class Product {
     protected $inseam;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
      */
     protected $outseam;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
      */
     protected $hem;
 
     /**
-     * @ORM\Column(type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2,nullable=true)
      */
     protected $back;
 

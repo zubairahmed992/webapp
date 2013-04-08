@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductType;
+use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
 
 class ProductController extends Controller {
 
@@ -190,6 +191,48 @@ class ProductController extends Controller {
         }
         return $brand;
     }
+
+ /******************************************************************************
+ * Created:Suresh
+ * Description: Render Product Detail Form
+ * Param:Null
+ ******************************************************************************/    
+    public function productDetailAction() {
+       
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product');
+       
+        $productForm = $this->createForm(new ProductDetailType());
+       
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail.html.twig', array(
+                    'form' => $productForm->createView(),
+                   ));
+    }
+ /******************************************************************************
+ * Created:Suresh
+ * Description:Create the Product Detail Value in Database
+ * Param:Null
+ ****************************************************************************/ 
+  public function productDetailCreateAction(Request $request){
+      
+            $entity = new Product();
+  
+             $form= $this->createForm(new ProductDetailType(), $entity);
+             $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $entity->setCreatedAt(new \DateTime('now'));
+            $entity->setUpdatedAt(new \DateTime('now'));
+            
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));    
+    
+            }
+  }        
 
 }
 
