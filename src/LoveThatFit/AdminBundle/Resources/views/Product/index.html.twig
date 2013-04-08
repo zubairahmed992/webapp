@@ -10,6 +10,8 @@
 <div class="p_listing">     
     <h1 style="float:left;">Products</h1>
  <div class="btn_wrapper">     
+     <a href="{{ path('admin_product_detail_new') }}">New Product Detail</a>
+     &nbsp;&nbsp;&nbsp;
      <a href="{{ path('admin_product_new') }}" class="btn">Add New</a>
       </div>
      <div class="clearfix"></div> 
@@ -39,6 +41,11 @@
             <div class="span1">&nbsp;                 
                 <div>
                     <a href="{{ path('admin_product_show', {'id': p.Id}) }}"><i class="icon-eye-open"></i></a>
+                    <a href="{{ path('admin_product_edit', {'id': p.Id}) }}"><i class="icon-edit"></i></a>
+                    
+                   <a href="#myModal{{p.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+ |&nbsp;
+         <a href="{{ path('admin_product_show', {'id': p.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_product_edit', {'id': p.Id}) }}"><i class="icon-edit"></i></a>
                     
                    <a href="#myModal{{p.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
