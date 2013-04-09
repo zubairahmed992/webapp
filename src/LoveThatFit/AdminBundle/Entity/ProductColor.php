@@ -252,4 +252,43 @@ class ProductColor
     {
         return $this->product;
     }
+   
+       //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+
+
+    public function upload() {
+        if (null === $this->file) {
+            return;
+        }        
+        $ih=new ImageHelper('product', $this);
+        $ih->upload();
+    }
+
+ //------------------------------------------------------------
+
+public function getImagePaths() {
+    $ih=new ImageHelper('product', $this);
+    return $ih->getImagePaths();        
+}
+  
+  
+//-------------------------------------------------------
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+//-------------------------------------------------------
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
+    }
+//-------------------------------------------------------
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+//-------------------------------------------------------
+    protected function getUploadDir() {
+       return 'uploads/ltf/products';            
+    }
+
+    //---------------------------------------------------
 }
