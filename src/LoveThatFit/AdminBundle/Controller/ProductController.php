@@ -294,8 +294,21 @@ class ProductController extends Controller {
              
         }
   }
-   
+ /******************************************************************************/  
+  public function productDetailShowAction($id)
+  {        
+    $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->find($id);
 
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
 
+        return $this->render('LoveThatFitAdminBundle:Product:showproduct_detail.html.twig', array(
+                    'product' => $entity
+                ));
+
+  }
 }
 

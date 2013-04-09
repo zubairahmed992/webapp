@@ -40,7 +40,7 @@ admin_product_detail_create:
 
 admin_product_detail_show:
     pattern:  /admin/productdetail/{id}/show
-    defaults: { _controller: LoveThatFitAdminBundle:Product:show }     
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailShow }     
 admin_product_detail_edit:
     pattern:  /admin/productdetail/{id}/edit
     defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailEdit }
