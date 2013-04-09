@@ -602,11 +602,15 @@ public function getImagePaths() {
  /**
  * @ORM\postRemove
  */
+    
 public function deleteImages()
 {
-     $ih=new ImageHelper('product', $this);
+    if($this->image)
+    {    
+    $ih=new ImageHelper('product', $this);
      $ih->deleteImages($this->image);
-}
+  }
+} 
     
 
     /**

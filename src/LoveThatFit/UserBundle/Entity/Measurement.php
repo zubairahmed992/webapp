@@ -576,4 +576,27 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
 
     
+
+    /**
+     * Set chest
+     *
+     * @param float $chest
+     * @return Measurement
+     */
+    public function setChest($chest)
+    {
+        $this->chest = $chest;
+    
+        return $this;
+    }
+
+    /**
+     * Get chest
+     *
+     * @return float 
+     */
+    public function getChest()
+    {
+        return $this->chest;
+    }
 }

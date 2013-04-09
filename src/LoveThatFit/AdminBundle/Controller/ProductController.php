@@ -192,11 +192,7 @@ class ProductController extends Controller {
         return $brand;
     }
 
- /******************************************************************************
- * Created:Suresh
- * Description: Render Product Detail Form
- * Param:Null
- ******************************************************************************/    
+ /*******************************************************************************/    
     public function productDetailNewAction() {
        
         $em = $this->getDoctrine()->getManager();
@@ -208,11 +204,7 @@ class ProductController extends Controller {
                     'form' => $productForm->createView(),
                    ));
     }
- /******************************************************************************
- * Created:Suresh
- * Description:Create the Product Detail Value in Database
- * Param:Null
- ****************************************************************************/ 
+ /*******************************************************************************/ 
   public function productDetailCreateAction(Request $request){
       
             $entity = new Product();
@@ -233,11 +225,7 @@ class ProductController extends Controller {
     
             }
   }
- /******************************************************************************
- * Created:Suresh
- * Description:Edit  the Product Detail 
- * Param:Null
- ****************************************************************************/ 
+ /*******************************************************************************/ 
   public function productDetailEditAction($id)
   {
                 $entity = $this->getDoctrine()
@@ -252,11 +240,7 @@ class ProductController extends Controller {
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));  
   }
-/******************************************************************************
- * Created:Suresh
- * Description:Update the Product Detail 
- * Param:Null
- ****************************************************************************/ 
+/******************************************************************************/ 
    public function productDetailUpdateAction(Request $request, $id) 
   {
 
@@ -284,11 +268,7 @@ class ProductController extends Controller {
         }
   }
   
-  /******************************************************************************
- * Created:Suresh
- * Description:Delete the Product Detail 
- * Param:Null
- ****************************************************************************/ 
+ /******************************************************************************/ 
    public function productDetailDeleteAction($id) 
   {
         try{
