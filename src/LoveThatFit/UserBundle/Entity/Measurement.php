@@ -120,6 +120,23 @@ class Measurement {
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $bust=0;
+       /**
+     * @var float $chest
+     *
+     * @ORM\Column(name="chest", type="float", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "70",
+     *      minMessage = "You must have at least 10  ",
+     *      maxMessage = "You cannot have more than 70  ",
+     *      groups={"registration_step_two","profile_measurement"}
+     * )
+     *@Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $chest=0;
+
 
     /**
      * @var float $arm
