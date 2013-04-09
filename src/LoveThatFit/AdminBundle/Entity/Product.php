@@ -31,9 +31,16 @@ class Product {
      * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product")
      */
     protected $product_colors;
-        
     
+       /**
+     * @ORM\OneToMany(targetEntity="ProductSize", mappedBy="product")
+     */
+    protected $product_sizes;
     
+      /**
+     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product")
+     */
+    protected $product_items;
     
     
   /////////////////////////////////////////////////////////////////////////////////  
@@ -41,6 +48,8 @@ class Product {
      public function __construct()
     {
         $this->product_colors = new ArrayCollection();
+        $this->product_sizes = new ArrayCollection();
+        $this->product_items = new ArrayCollection();
     }
     
     
@@ -80,6 +89,11 @@ class Product {
      * @ORM\Column(type="string", length=255,nullable=true)
      */
     protected $image;
+    
+       /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    protected $fitting_room_image;
 
     /**
      * @ORM\Column(type="decimal", scale=2,nullable=true)
@@ -151,6 +165,11 @@ class Product {
      * @Assert\File(maxSize="6000000")
      */
     public $file;
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $img_file;
 
     /**
      * Get id
@@ -245,6 +264,29 @@ class Product {
         return $this->image;
     }
 
+    
+     /**
+     * Set fitting_room_image
+     *
+     * @param string $image
+     * @return Product
+     */
+    public function setFittingRoomImage($image) {
+        $this->fitting_room_image= $image;
+
+        return $this;
+    }
+
+    /**
+     * Get fitting_room_image
+     *
+     * @return string 
+     */
+    public function getFittingRoomImage() {
+        return $this->fitting_room_image;
+    }
+
+    
     /**
      * Set waist
      *
@@ -571,6 +613,22 @@ class Product {
         $ih=new ImageHelper('product', $this);
         $ih->upload();
     }
+//----------------- temporary fitting room image upload hack for demo ------------
+
+     public function uploadFittingRoomImage() {
+        
+        if (null === $this->img_file) {
+            return;
+        }
+        
+        $ext = pathinfo($this->img_file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->fitting_room_image = $this->id .'_fr.'. $ext;        
+        $this->img_file->move(
+                $this->getUploadRootDir().'/fitting_room/', $this->fitting_room_image
+        );
+        
+        $this->img_file = null;             
+    }
 
     //------------------------------------------------------------
 
@@ -667,5 +725,72 @@ public function deleteImages()
     public function getProductColors()
     {
         return $this->product_colors;
+    }
+    
+
+    /**
+     * Add product_sizes
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductSize $productSizes
+     * @return Product
+     */
+    public function addProductSize(\LoveThatFit\AdminBundle\Entity\ProductSize $productSizes)
+    {
+        $this->product_sizes[] = $productSizes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_sizes
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductSize $productSizes
+     */
+    public function removeProductSize(\LoveThatFit\AdminBundle\Entity\ProductSize $productSizes)
+    {
+        $this->product_sizes->removeElement($productSizes);
+    }
+
+    /**
+     * Get product_sizes
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductSizes()
+    {
+        return $this->product_sizes;
+    }
+
+    /**
+     * Add product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     * @return Product
+     */
+    public function addProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items[] = $productItems;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     */
+    public function removeProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items->removeElement($productItems);
+    }
+
+    /**
+     * Get product_items
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductItems()
+    {
+        return $this->product_items;
     }
 }
