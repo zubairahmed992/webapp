@@ -185,7 +185,8 @@ class ProfileController extends Controller {
     public function whatILikeAction()
     {       
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
-                    'data' =>  $this->getQuestionsList(),                   
+                    'data' =>  $this->getQuestionsList  (), 
+                    'form'=>$this->addUserSurveyForm()->createView(),
                     
         ));
     }
@@ -195,7 +196,25 @@ class ProfileController extends Controller {
         return $repository->findAll();
     }
 
-  
+    private function addUserSurveyForm()
+    {
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        $entities = $em->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();      
+        
+        $builder = $this->createFormBuilder($entities);    
+        
+        foreach($entities as $question)
+        {
+       $form = $builder
+            ->add($question->getQuestion());
+      
+            
+        }
+      
+       return $form = $builder->getForm();
+       
+    }
     
     
     
