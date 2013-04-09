@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductType;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
+use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 
 class ProductController extends Controller {
 
@@ -203,7 +204,7 @@ class ProductController extends Controller {
        
         $productForm = $this->createForm(new ProductDetailType());
        
-        return $this->render('LoveThatFitAdminBundle:Product:product_detail.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                     'form' => $productForm->createView(),
                    ));
     }
@@ -238,7 +239,7 @@ class ProductController extends Controller {
         $form= $this->createForm(new ProductDetailType(), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
-        return $this->render('LoveThatFitAdminBundle:Product:editproduct_detail.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:Product:editproduct_detail_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));  
@@ -300,16 +301,16 @@ class ProductController extends Controller {
  /******************************************************************************/  
   public function productDetailShowAction($id)
   {        
-    $entity = $this->getDoctrine()
+   $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
-
-        return $this->render('LoveThatFitAdminBundle:Product:showproduct_detail.html.twig', array(
-                    'product' => $entity
+            $colorform= $this->createForm(new ProductColorType()); 
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,  'colorform' => $colorform->createView()
                 ));
 
   }

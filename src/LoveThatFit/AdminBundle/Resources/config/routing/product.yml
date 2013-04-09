@@ -50,6 +50,10 @@ admin_product_detail_update:
 admin_product_detail_delete:
    pattern:  /admin/productdetail/{id}/delete
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailDelete }
+   
+admin_product_detail_color_create:
+   pattern:  /admin/productdetail/color/create
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorCreate }   
   
      
     
