@@ -283,7 +283,7 @@ class Product {
      * @return string 
      */
     public function getFittingRoomImage() {
-        return $this->fitting_room_image;
+        return $this->getUploadDir(). '/fitting_room/'. $this->fitting_room_image;
     }
 
     
@@ -612,6 +612,7 @@ class Product {
         }        
         $ih=new ImageHelper('product', $this);
         $ih->upload();
+        
     }
 //----------------- temporary fitting room image upload hack for demo ------------
 
@@ -621,8 +622,10 @@ class Product {
             return;
         }
         
+        //$old_image= explode('.', $this->file->getClientOriginalName());
+        
         $ext = pathinfo($this->img_file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->fitting_room_image = $this->id .'_fr.'. $ext;        
+        $this->fitting_room_image = uniqid() .'_fr.'. $ext;        
         $this->img_file->move(
                 $this->getUploadRootDir().'/fitting_room/', $this->fitting_room_image
         );

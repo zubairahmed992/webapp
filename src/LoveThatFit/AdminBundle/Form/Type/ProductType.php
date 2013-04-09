@@ -11,8 +11,6 @@ class ProductType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
-        
         $builder->add('name');
         $builder->add('sku');
         $builder->add('file');
@@ -42,9 +40,6 @@ class ProductType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                 ));        
-
-//$builder->add('Brand', 'choice',array('choices'=>$brand_list) );
-        //$builder->add('ClothingType', 'choice', array('choices'=> array()), array('mapped' => false));
     }
 
      public function getDefaultOptions(array $options)

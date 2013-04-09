@@ -76,11 +76,14 @@ class ProductController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
+            
             $em = $this->getDoctrine()->getManager();
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
 
+            
             $entity->upload(); //----- file upload method 
+            
             $entity->uploadFittingRoomImage();
             $em->persist($entity);
             $em->flush();
