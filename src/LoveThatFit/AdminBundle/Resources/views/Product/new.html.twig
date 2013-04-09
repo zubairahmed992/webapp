@@ -34,9 +34,14 @@
                     <div class="clearfix"></div>
                     <div style="margin-top:20px; margin-left:5px;">
     
-{{ form_errors(form.file) }}
-    {{ form_widget(form.file) }}
+                {{ form_errors(form.file) }}
+                {{ form_widget(form.file) }}
                         </div>
+                     <div style="margin-top:20px; margin-left:5px;">
+                        {{ form_errors(form.img_file) }}
+                        {{ form_widget(form.img_file) }}
+                        </div>
+                 
                     </div>         
 
                     <div id="product_content">

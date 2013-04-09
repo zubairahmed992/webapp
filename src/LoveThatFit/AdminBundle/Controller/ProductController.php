@@ -81,7 +81,7 @@ class ProductController extends Controller {
             $entity->setUpdatedAt(new \DateTime('now'));
 
             $entity->upload(); //----- file upload method 
-
+            $entity->uploadFittingRoomImage();
             $em->persist($entity);
             $em->flush();
 

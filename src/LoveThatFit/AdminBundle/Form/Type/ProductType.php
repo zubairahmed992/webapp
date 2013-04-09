@@ -16,6 +16,7 @@ class ProductType extends AbstractType
         $builder->add('name');
         $builder->add('sku');
         $builder->add('file');
+        $builder->add('img_file');
         $builder->add('adjustment');
         $builder->add('waist');
         $builder->add('hip');
