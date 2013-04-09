@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +14,7 @@ class ProductColor
 {
     
      /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors", cascade={"ALL"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;  
