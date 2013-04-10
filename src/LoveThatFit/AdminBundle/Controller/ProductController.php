@@ -5,6 +5,7 @@ namespace LoveThatFit\AdminBundle\Controller;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\ProductItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -353,6 +354,14 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $em->persist($p_size);
         $em->flush();
+        
+      $p_item = new ProductItem();
+      $p_item->setProduct($product);
+      $p_item->setProductSize($p_size);
+      $p_item->setProductColor($color);
+      $em->persist($p_item);
+      $em->flush();
+        
   }
 }
 

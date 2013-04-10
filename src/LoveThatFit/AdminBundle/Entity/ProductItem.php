@@ -46,14 +46,14 @@ class ProductItem
     /**
      * @var string $lineNumber
      *
-     * @ORM\Column(name="line_number", type="string")
+     * @ORM\Column(name="line_number", type="string", nullable=true)
      */
     private $lineNumber;
 
     /**
      * @var string $image
      *
-     * @ORM\Column(name="image", type="string")
+     * @ORM\Column(name="image", type="string", nullable=true)
      */
     private $image;
 
