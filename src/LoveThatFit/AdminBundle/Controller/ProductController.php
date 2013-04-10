@@ -4,6 +4,7 @@ namespace LoveThatFit\AdminBundle\Controller;
 
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
+use LoveThatFit\AdminBundle\Entity\ProductSize;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -338,9 +339,20 @@ class ProductController extends Controller {
            
             $em->persist($entity);
             $em->flush();
-
+            $this->createSizes($product, $entity);
     return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         }
-  }        
+  }
+  
+  private function createSizes($product, $color)
+  {
+      $sizes = array('XS', 'S', 'M', 'ML', 'L', 'XL', '2XL', '3XL');
+      $p_size = new ProductSize();
+      $p_size->setProduct($product);
+      $p_size->setTitle('S');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($p_size);
+        $em->flush();
+  }
 }
 

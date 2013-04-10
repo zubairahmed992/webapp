@@ -34,63 +34,63 @@ class ProductSize
     /**
      * @var string $title
      *
-     * @ORM\Column(name="title", type="string")
+     * @ORM\Column(name="title", type="string",nullable=true)
      */
     private $title;
 
     /**
      * @var float $inseam
      *
-     * @ORM\Column(name="inseam", type="float")
+     * @ORM\Column(name="inseam", type="float",nullable=true)
      */
     private $inseam;
 
     /**
      * @var float $outseam
      *
-     * @ORM\Column(name="outseam", type="float")
+     * @ORM\Column(name="outseam", type="float",nullable=true)
      */
     private $outseam;
 
     /**
      * @var float $hip
      *
-     * @ORM\Column(name="hip", type="float")
+     * @ORM\Column(name="hip", type="float",nullable=true)
      */
     private $hip;
 
     /**
      * @var float $bust
      *
-     * @ORM\Column(name="bust", type="float")
+     * @ORM\Column(name="bust", type="float",nullable=true)
      */
     private $bust;
 
     /**
      * @var float $back
      *
-     * @ORM\Column(name="back", type="float")
+     * @ORM\Column(name="back", type="float",nullable=true)
      */
     private $back;
 
     /**
      * @var float $arm
      *
-     * @ORM\Column(name="arm", type="float")
+     * @ORM\Column(name="arm", type="float",nullable=true)
      */
     private $arm;
 
     /**
      * @var float $leg
      *
-     * @ORM\Column(name="leg", type="float")
+     * @ORM\Column(name="leg", type="float",nullable=true)
      */
     private $leg;
 
     /**
      * @var float $hem
      *
-     * @ORM\Column(name="hem", type="float")
+     * @ORM\Column(name="hem", type="float",nullable=true)
      */
     private $hem;
 

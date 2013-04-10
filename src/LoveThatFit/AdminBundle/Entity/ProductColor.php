@@ -72,8 +72,7 @@ class ProductColor
     /**
      * @var string $image
      *
-     * @ORM\Column(name="image", type="string")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="image", type="string",nullable=true)
      */
     private $image;
 
@@ -253,7 +252,17 @@ class ProductColor
     {
         return $this->product;
     }
-   
+    //------------ facilitating sizes ---------
+    private $sizes;
+   public function getSizes()
+    {
+        return $this->sizes;
+    }
+     public function setSizes($sizes)
+    {
+        $this->sizes = $sizes;    
+        return $this;
+    }
        //-------------------------------------------------
     //-------------- Image Upload ---------------------
 
@@ -292,4 +301,8 @@ public function getImagePaths() {
     }
 
     //---------------------------------------------------
+    
+    
+    
+    
 }
