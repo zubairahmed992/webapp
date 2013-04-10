@@ -1,7 +1,81 @@
 <!--/ this templete should have the objects products, page_number, limit & row_count -->
 <ul class="prod_wrapper">
 
-                          {% for p in products %}
+ 
+    <li class="selected_pro">
+        <div class="prod_node">
+            <span></span>
+            <div class="featured_box">                
+                <div class="featured_content_selected">
+                    <h3 class="selected">Green dress</h3>
+                    <div style="clear:both;"></div>
+                    <div class="featured_sizes">
+                        <select name="cloth_size">
+                            <option>XL-42"</option>
+                        </select>
+                            <select name="cloth_quantity">
+                            <option>1</option>
+                        </select>     
+                            
+                    </div>
+                     <div class="pro_color">
+                       
+                        <span>                         
+                            <input type="radio" value="XS" name="Radio" id="color1">
+                            <label class="red" for="color1"></label>
+                             <input type="radio" value="S" name="Radio" id="color2">
+                            <label class="green" for="color2"></label>
+                             <input type="radio" value="M" name="Radio" id="color3">
+                            <label class="blue" for="color3"></label>
+                             
+                        </span>
+                    </div>
+                    
+                     <div id="add_cart"><a href="#">Add to Bag</a></div>
+                     <div class="product_price">$ 9,473.57</div>
+                    
+                </div>
+                    <div class="featured_img">
+                    <img width="63" height="108" src="/webapp/web/uploads/ltf/products/blue_dress_2.png" class="prod_dress ui-draggable">
+                    <span id="fitting_feedback_26" class="prod_fitting_details"><a href="/webapp/web/app_dev.php/ajax/fitting_feedback_list/26">feedback</a></span>
+                    
+                </div>
+                    
+                  
+                    
+                 <div style="clear:both;"></div>
+            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
+            
+            
+
+            <div class="sectionbox"><!-- START section -->
+            <ul class="tabs">
+                        <li class="current">Description</li>
+                        <li>At a Glance</li>
+                        <li>Designer</li>		
+                    </ul>
+            <div class="box visible">
+                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.</p>		
+                    </div>
+            <div class="box">
+                        <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!</p>		
+                    </div>
+            <div class="box">
+                        <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.</p>		
+                    </div>
+            </div><!-- END section -->
+
+            </div><!--END PRODUCT MORE DETAIL-->   
+                    
+                    
+                    
+                <span></span>
+                <!--/prod_node--></div>
+    </div></li>
+    
+    
+    
+{% for p in products %}
     <li>
         <div class="prod_node">
             <span></span>
@@ -18,7 +92,7 @@
                     <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}'>feedback</a></span>
                     
                 </div>
-                    <span class="pro_detail"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></span>
+                    <span class="pro_detail"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></a></span>
                   
                     
                 <span></span>
@@ -27,5 +101,7 @@
                 {% endfor %}
 
 </ul>
+
+
 
 

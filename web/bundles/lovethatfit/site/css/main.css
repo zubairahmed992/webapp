@@ -2133,3 +2133,17 @@ top:70px;
 right: 70px;
 
 }
+
+.featured_content_selected{
+    
+float:left;
+}
+
+.prod_wrapper h3 .selected {
+float:left;
+}
+
+.featured_sizes{    
+float:left; 
+padding-bottom: 5px;
+}
