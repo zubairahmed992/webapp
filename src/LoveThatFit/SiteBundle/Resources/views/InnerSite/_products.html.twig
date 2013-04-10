@@ -2,7 +2,7 @@
 <ul class="prod_wrapper">
 
  
-    <li class="selected_pro">
+    <li class="selected_pro hide">
         <div class="prod_node">
             <span></span>
             <div class="featured_box">                
@@ -89,12 +89,12 @@
                 </div>
                 <div class="featured_img">
                     <img class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.WebPath)}}" width="63" height="108"/>
+                    <a class="apply_img" href="{{ asset(p.fittingRoomImage) }}"></a>
                     <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}'>feedback</a></span>
-                    
                 </div>
                     <span class="pro_detail"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></a></span>
                   
-                    <span class="apply_img">{{ asset(p.fittingRoomImage) }}</span>   
+                      
                 <span></span>
                 <!--/prod_node--></div>
     </li>            
