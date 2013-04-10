@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
+use LoveThatFit\AdminBundle\ImageHelper;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 

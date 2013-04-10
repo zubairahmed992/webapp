@@ -796,4 +796,7 @@ public function deleteImages()
     {
         return $this->product_items;
     }
+  public static function getSizes(){
+        return array('XS', 'S', 'M', 'ML', 'L', 'XL', '2XL', '3XL');
+    }  
 }

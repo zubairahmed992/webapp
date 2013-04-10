@@ -3,6 +3,7 @@
 namespace LoveThatFit\AdminBundle\Controller;
 
 use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -314,5 +315,32 @@ class ProductController extends Controller {
                 ));
 
   }
+  
+  /******************************************************************************/  
+  
+  public function productDetailColorCreateAction(Request $request, $id) {
+       
+        $product = $this->getDoctrine()
+                   ->getRepository('LoveThatFitAdminBundle:Product')
+                   ->find($id);
+ 
+        $entity = new ProductColor();
+        $entity->setProduct($product);
+        $colorform= $this->createForm(new ProductColorType(),$entity); 
+
+        $colorform->bind($request);
+
+        
+        if ($colorform->isValid()) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $entity->upload(); //----- file upload method 
+           
+            $em->persist($entity);
+            $em->flush();
+
+    return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+        }
+  }        
 }
 
