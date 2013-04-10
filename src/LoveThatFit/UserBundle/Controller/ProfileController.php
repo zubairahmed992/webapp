@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LoveThatFit\AdminBundle\Entity\SurveyQuestion;
 use LoveThatFit\AdminBundle\Entity\SurveyAnswer;
+use LoveThatFit\UserBundle\Entity\UserSurvey;
 
 class ProfileController extends Controller {
 
@@ -187,6 +188,37 @@ class ProfileController extends Controller {
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
                     'data' =>  $this->getQuestionsList  (), 
                     'form'=>$this->addUserSurveyForm()->createView(),
+                    'survey'=>  $this->getuserSurveyList(),
+                    'userid'=>$this->get('security.context')->getToken()->getUser()->getId(),
+                    
+        ));
+    }
+    public function submitUserSurveyFormAction(Request $request)
+    {
+      $userid=$this->get('security.context')->getToken()->getUser()->getId();
+        $data = $request->request->all();
+       $str='';            
+       $em = $this->getDoctrine()->getManager();       
+       foreach ($data as $key => $value) {
+         $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find($value);
+         $str=$str.','.$answer->getQuestion()->getId();
+         $strs=explode(',',$str);
+         foreach($strs as $questionId)
+         {    
+          $userSurvey = new UserSurvey();  
+          $userSurvey->setQuestionId($questionId);         
+          $userSurvey->setAnswerId($value);
+          $userSurvey->setUserId($userid);          
+         }
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($userSurvey);
+          $em->flush();
+       }
+       return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
+                    'data' =>  $this->getQuestionsList  (), 
+                    'form'=>$this->addUserSurveyForm()->createView(),
+                    'survey'=>  $this->getuserSurveyList(),
+                    'userid'=>$this->get('security.context')->getToken()->getUser()->getId(),
                     
         ));
     }
@@ -195,27 +227,19 @@ class ProfileController extends Controller {
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion');
         return $repository->findAll();
     }
-
+    
     private function addUserSurveyForm()
     {
-        
-        $em = $this->getDoctrine()->getEntityManager();
-        $entities = $em->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();      
-        
-        $builder = $this->createFormBuilder($entities);    
-        
-        foreach($entities as $question)
-        {
-       $form = $builder
-            ->add($question->getQuestion());
-      
-            
-        }
-      
-       return $form = $builder->getForm();
-       
+        $builder = $this->createFormBuilder();    
+        return $builder->getForm();       
     }
     
+    
+    private function getuserSurveyList()
+    {
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:UserSurvey');
+        return $repository->findAll();
+    }
     
     
     
