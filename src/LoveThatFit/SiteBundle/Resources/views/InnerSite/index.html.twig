@@ -233,11 +233,13 @@ var scroll_heighting = 534;
                 }
             });            
             
+            var my_curr_prod_apply = $(".ui-draggable-dragging").parent().find("a.apply_img").attr("href");
+            
             $(this).fadeOut(300, function (){
                     //var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
                     //apply_prod = apply_prod + "_apply.png";
                     //$(this).html("<img class='curr_prod' src='{{ asset('bundles/lovethatfit/site/products/tops/') }}"+apply_prod+"' />").fadeIn(300);
-                    var my_curr_prod_apply = $(".ui-draggable-dragging").parent().find("a.apply_img").attr("href");
+                    
                     $("#top_dropable").html("<img class='curr_prod' src='" + my_curr_prod_apply + "' />").fadeIn();
                     
 
