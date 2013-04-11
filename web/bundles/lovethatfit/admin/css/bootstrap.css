@@ -6181,6 +6181,8 @@ a.badge:hover {
 	overflow:hidden;	
 }
 
+
+
 #pro_detail{	
 }
 
@@ -6273,7 +6275,7 @@ a.badge:hover {
 
 .btn_wrapper{
 	float:right;
-	margin-top:15px;	
+	margin-top:62px;	
 }
 
 .edt_container .row-fluid{
@@ -6338,4 +6340,71 @@ border-bottom:1px solid #ccc !important;
 width:70px;
 height:60px;
 
+}
+
+#product_info{
+	padding:20px;
+	overflow:hidden;
+        background:#efefef;
+}
+
+#pro_color{
+         padding:10px 10px 40px 10px;
+	overflow:hidden;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+       
+    
+}
+
+#pro_clr{
+    
+     padding:10px;
+	overflow:hidden;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+}
+
+#product_info_left{
+    float:left;
+    overflow: auto;
+}
+
+#product_info_right{
+    float:left;
+margin-left: 80px;
+}
+
+#product_info .product_fld{    
+clear:left;
+padding:5px 0px 5px 0px;
+}
+
+#product_info .product_fld .p_hd{
+    
+    font-weight: bold;
+    width: 80px!important;
+    padding-right: 50px;
+}
+
+#product_info .product_fld div{ 
+    
+    float:left;
+    text-align: right;
+
+}
+
+.edt_container label {
+   display: inline-block;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 16px;
+    padding-top: 10px;
+}
+
+#photo_upload{    
+    background:#efefef; 
+    width: 220px; 
+    height: 250px; 
+    margin-top: 10px;
 }
