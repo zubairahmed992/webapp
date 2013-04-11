@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class SurveyController extends Controller {
-
 //---------------------------------------------------------------------
     public function indexAction() {
         return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
@@ -17,9 +16,9 @@ class SurveyController extends Controller {
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>null,
                     'id'=>null,
+                    'count_question'=>count($this->getQuestionsList()),
         ));
-    }
-    
+    }    
     public function addNewQuestionAction(Request $request) {
         $question = new SurveyQuestion();
         $form = $this->getQuestionForm($question);
@@ -39,9 +38,9 @@ public function addNewAnswerAction($question_id) {
                     'data' => $this->getQuestionsList(),                    
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'AddAnwser',
+                    'count_question'=>count($this->getQuestionsList()),
         ));
     }
-
     public function addAnswerAction(Request $request, $question_id) {
         $em = $this->getDoctrine()->getManager();        
         $answer = new SurveyAnswer();
@@ -64,6 +63,7 @@ public function addNewAnswerAction($question_id) {
                     'data' => $this->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editQuestion',
+                    'count_question'=>count($this->getQuestionsList()),
         ));
     }
 
@@ -87,7 +87,9 @@ public function addNewAnswerAction($question_id) {
                     'id' => $answer_id,                    
                     'data' => $this->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
-                    'operation'=>'editAnswer'
+                    'operation'=>'editAnswer',
+                    'count_question'=>count($this->getQuestionsList()),
+            
         ));
     }
 
@@ -118,11 +120,11 @@ public function addNewAnswerAction($question_id) {
         $em->flush();
         return $this->redirect($this->generateUrl('admin_survey'));
     }
-
 //---------------------------------------------------------------------------------    
     private function getQuestionsList() {
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion');
-        return $repository->findAll();
+       $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
+       $rec_count = count($question);       
+       return $question;       
     }
 
     private function getquestionById($id) {
@@ -153,12 +155,6 @@ public function addNewAnswerAction($question_id) {
                         ->add('question', 'text', array('label' =>' '))
                         ->getForm();
     }
-    
-    public function addUsersFormAction()
-    {
-        
-    }
-
     private function getAnswerForm($answer) {
         $answer = new SurveyAnswer();
         return $this->createFormBuilder($answer)

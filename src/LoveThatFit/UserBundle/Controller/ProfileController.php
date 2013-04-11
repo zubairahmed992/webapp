@@ -186,20 +186,21 @@ class ProfileController extends Controller {
     public function whatILikeAction()
     {       
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
-                    'data' =>  $this->getQuestionsList  (), 
+                    'data' =>  $this->getQuestionsList(), 
                     'form'=>$this->addUserSurveyForm()->createView(),
                     'survey'=>  $this->getuserSurveyList(),
                     'userid'=>$this->get('security.context')->getToken()->getUser()->getId(),
+                    'count_question'=>count($this->getQuestionsList()),
                     
         ));
     }
     public function submitUserSurveyFormAction(Request $request)
     {
       $userid=$this->get('security.context')->getToken()->getUser()->getId();
-        $data = $request->request->all();
-       $str='';            
-       $em = $this->getDoctrine()->getManager();       
-       foreach ($data as $key => $value) {
+      $data = $request->request->all();
+      $str='';            
+      $em = $this->getDoctrine()->getManager();       
+      foreach ($data as $key => $value) {
          $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find($value);
          $str=$str.','.$answer->getQuestion()->getId();
          $strs=explode(',',$str);
@@ -213,19 +214,14 @@ class ProfileController extends Controller {
           $em = $this->getDoctrine()->getManager();
           $em->persist($userSurvey);
           $em->flush();
+          $this->get('session')->setFlash('success', 'Answer Added Successfuly');
        }
-       return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
-                    'data' =>  $this->getQuestionsList  (), 
-                    'form'=>$this->addUserSurveyForm()->createView(),
-                    'survey'=>  $this->getuserSurveyList(),
-                    'userid'=>$this->get('security.context')->getToken()->getUser()->getId(),
-                    
-        ));
+       return $this->redirect($this->generateUrl('user_profile_what_i_like'));
     }
     
      private function getQuestionsList() {
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion');
-        return $repository->findAll();
+        $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
+        return $question;
     }
     
     private function addUserSurveyForm()
