@@ -13,6 +13,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductType;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeType;
+use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
 
 class ProductController extends Controller {
 
@@ -362,23 +363,62 @@ class ProductController extends Controller {
         return $this->renderProductDetail($entity, $size_id);
     }
 
+   
     
-//-----------------------------------------------------------------------    
+//-----------------------------------------------------------------------
+ //--------------------------------------------------------------
+    
+    public function productDetailItemEditAction($id, $item_id) {
+        $entity = $this->getProduct($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+        
+        
+        
+        $colorform = $this->createForm(new ProductColorType());
+        $itemform = $this->createForm(new ProductItemType($this->getProductItem($item_id)));
+    
+    
+    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity, 
+                    'colorform' => $colorform->createView(),
+                     'itemform' => $itemform->createView(),
+                    'item_id' => $item_id,
+        
+            
+                ));
+        
+        
+        
+        
+        
+        
+        
+        
+       // return $this->renderProductDetail($entity, $item_id);
+    }
+//        
     //------------------------- Private methods -------------------------
     
     
-    private function renderProductDetail($product, $size_id=null)
+    private function renderProductDetail($product, $size_id=null,$item_id=null)
 {
        
     $colorform = $this->createForm(new ProductColorType());
     
     $sizeform = $this->createForm(new ProductSizeType($this->getProductSize($size_id)));
+    $itemform = $this->createForm(new ProductItemType($this->getProductItem($item_id)));
+    
     
     return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product, 
                     'colorform' => $colorform->createView(),
                     'sizeform' => $sizeform->createView(),
+                    'itemform' => $itemform->createView(),
                     'size_id' => $size_id,
+                    'item_id' => $item_id,
             
                 ));
 }
@@ -396,6 +436,12 @@ class ProductController extends Controller {
                 ->getRepository('LoveThatFitAdminBundle:ProductSize')
                 ->find($id);
     }
+//------------------------------------------------------------------------
+    public function getProductItem($id) {
+        return $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductItem')
+                ->find($id);
+    }    
     
 
 //------------------------------------------------------------------

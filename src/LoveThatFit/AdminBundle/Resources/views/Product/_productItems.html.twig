@@ -7,33 +7,32 @@
                                      <th><b>Color</th>
                                       </tr>
                                   </thead>  
-                              {% for pi in product.productItems %}  
-    {% if size_id and size_id == pi.id %}
- <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
-                                 {{ form_errors(sizeform) }}
+    {% for pi in product.productItems %}  
+                          
+                                  
+    {% if item_id and item_id == pi.id %}
+ <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }}>
+                                 {{ form_errors(itemform) }}
                               
          
           <tr>
-            <td>{{ ps.title }}</td>
-            
-            <td>{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</td>
-            <td>{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</td>
+           
+            <td>{{ form_widget(itemform.line_number) }}{{ form_errors(itemform.line_number) }}</td>
+            <td>{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</td>
            
             <td >
-          {{ form_rest(sizeform) }}
+          {{ form_rest(itemform) }}
              <input type="submit" value="SAVE" class="btn btn-large btn-primary"/></td>
             </tr>
          
          {% else %}
          <tr>
-                                    <td style="text-align:'center';">{{pi.lineNumber}}</td>
-                                    <td style="text-align:'center';">{{pi.productSize.title}}</td>
-                                    <td style="text-align:'center';">{{pi.productColor.title}}</td>
-                                    <td style="text-align:'center';">
-                      <th><a href='{{path("admin_product_detail_item_edit",{"id":product.id, "size_id":pi.id})}}'>Edit</a></th>
-                                      
-                                    </td> 
-                                </tr>
+               <td style="text-align:'center';">{{pi.lineNumber}}</td>
+               <td style="text-align:'center';">{{pi.productSize.title}}</td>
+              <td style="text-align:'center';">{{pi.productColor.title}}</td>
+              <td style="text-align:'center';">
+           <th><a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}'>Edit</a></th>
+          </tr>
                                
                              {% endif %}
                              {%endfor%}
