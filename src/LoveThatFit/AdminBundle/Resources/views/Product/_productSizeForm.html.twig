@@ -1,8 +1,9 @@
-<form action="{{ path('admin_product_detail_size_edit',{'id': ps.Id }) }}" method="post" {{ form_enctype(sizeform) }}>
+
+<form action="{{ path('admin_product_detail_size_edit',{"id":product.id, "size_id":ps}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
 
         <tr>
-            <td>{{ ps.title }}</td>
+           
             
             <td>{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</td>
             <td>{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</td>
@@ -19,5 +20,4 @@
                     <input type="submit" value="SAVE" class="btn btn-large btn-primary"/></td>
             </tr>
 
-
-        </form>  
+    </form>  
