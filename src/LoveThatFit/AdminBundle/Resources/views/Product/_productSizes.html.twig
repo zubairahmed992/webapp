@@ -1,19 +1,27 @@
   <h2> Product Sizes</h2>
+  
+
                              <table style="width:50%">
-                                 <thead
-                                 <tr>
-                                    <th><b>Title</th>
-                                     <th><b>Inseam</th>
-                                     <th><b>outseam</th>
-                                     <th><b>Hip</b></th>
-                                     <th><b>Bust</th>
-                                     <th><b>Back</th>
-                                     <th><b>Arm</b></th>
-                                     <th><b>Leg</th>
-                                     <th><b>Hem</th>
+                                
                                      
-                                    </tr>
-                                  </thead>  
+                                     
+                                       <div class="row-fluid show-grid p_title">
+                                       
+                                       <div class="span1 hds"><b>Title</b></div>
+                                       <div class="span1 hds"><b>Inseam</b></div>
+                                       <div class="span1 hds"><b>outseam</b></div>
+                                       <div class="span1 hds"><b>Hip</b></div>
+                                       <div class="span1 hds"><b>Bust</b></div>
+                                       <div class="span1 hds"><b>Back</b></div>
+                                       <div class="span1 hds"><b>Arm</b></div>
+                                       <div class="span1 hds"><b>Leg</b></div>
+                                       <div class="span1 hds"><b>Hem</b></div>
+                                       <div class="span1 hds"></div>
+                                       
+                                       
+                                       </div>
+                                 
+                                  
                               
 
 {% for ps in product.productSizes %}  
@@ -22,42 +30,49 @@
                                   <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
 
-        <tr>
-            <td>{{ ps.title }}</td>
-            
-            <td>{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</td>
-            <td>{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</td>
-            <td>{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</td>
-            <td>{{ form_widget(sizeform.bust) }}{{ form_errors(sizeform.bust) }}</td>
-            <td>{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</td>
-            <td>{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</td>
-            <td>{{ form_widget(sizeform.arm) }}{{ form_errors(sizeform.arm) }}</td>
-            <td>{{ form_widget(sizeform.leg) }}{{ form_errors(sizeform.leg) }}</td> 
-            <td>{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</td> 
-            <td >
+       
+                                          
+                                          
+           <div class="row-fluid show-grid p_title">
+                                       
+                                       <div class="span1">{{ ps.title }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.bust) }}{{ form_errors(sizeform.bust) }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.arm) }}{{ form_errors(sizeform.arm) }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.leg) }}{{ form_errors(sizeform.leg) }}</div>
+                                       <div class="span1">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
+                                       
+                                       
+              </div>                        
+                                 
+                                          
+                 
                                          	{{ form_rest(sizeform) }}
 
-                    <input type="submit" value="SAVE" class="btn btn-large btn-primary"/></td>
-            </tr>
+                    <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>
+             
 
 
         </form>  
 {% else %}
 
-<tr>
-                                    <td style="text-align:'center';">{{ps.title}}</td>
-                                    <td style="text-align:'center';">{{ps.inseam}}</td>
-                                     <td style="text-align:'center';">{{ps.outseam}}</td>
-                                     <td style="text-align:'center';">{{ps.hip}}</td>
-                                     <td style="text-align:'center';">{{ps.bust}}</td>
-                                     <td style="text-align:'center';">{{ps.back}}</td>
-                                     <td style="text-align:'center';">{{ps.arm}}</td>
-                                     <td style="text-align:'center';">{{ps.leg}}</td>
-                                     <td style="text-align:'center';">{{ps.hem}}</td>
-                                     <th><a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}'>Edit</a></th>
+  <div class="row-fluid show-grid p_title">
+                                    <div class="span1">{{ps.title}}</div>
+                                    <div class="span1">{{ps.inseam}}</div>
+                                     <div class="span1">{{ps.outseam}}</div>
+                                     <div class="span1">{{ps.hip}}</div>
+                                     <div class="span1">{{ps.bust}}</div>
+                                     <div class="span1">{{ps.back}}</div>
+                                     <div class="span1">{{ps.arm}}</div>
+                                     <div class="span1">{{ps.leg}}</div>
+                                     <div class="span1">{{ps.hem}}</div>
+                                     <div class="span1"><a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}'>Edit</a></div>
                                      
                                      
-                                </tr>
+                 </div>              
                                
                                
                                 

@@ -6158,7 +6158,7 @@ a.badge:hover {
 
 #detail_wrapper{
 	border:1px solid #8f9e71;
-	overflow:auto;	
+	overflow:hidden;	
 	margin-bottom:50px;
         padding-bottom: 50px;
 }
@@ -6407,4 +6407,13 @@ padding:5px 0px 5px 0px;
     width: 220px; 
     height: 250px; 
     margin-top: 10px;
+}
+
+#product_info .p_title .span1{
+    
+    width:11%!important;
+}
+
+#product_info .show-grid:hover [class*="span2"] {
+    background: none;
 }

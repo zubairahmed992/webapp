@@ -1113,3 +1113,12 @@
     overflow: visible !important;
   }
 }
+
+
+#detail_wrapper .row-fluid .span1:not(.hds) {
+    max-height: 25px!important;
+    min-height: 25px!important;
+    overflow: hidden;
+    padding-top: 0px!important;
+    width: 5.98291%;
+}
