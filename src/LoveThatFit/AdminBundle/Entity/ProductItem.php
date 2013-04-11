@@ -182,4 +182,39 @@ class ProductItem
     {
         return $this->productColor;
     }
+    //---------------------------------------------------
+    
+     public function upload() {
+        
+        if (null === $this->file) {
+            return;
+        }
+        
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->image = uniqid() .'_fr.'. $ext;        
+        $this->file->move(
+                $this->getUploadRootDir().'/fitting_room/', $this->image
+        );
+        
+        $this->image = null;             
+    }
+    
+    //-------------------------------------------------------
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+//-------------------------------------------------------
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
+    }
+//-------------------------------------------------------
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+//-------------------------------------------------------
+    protected function getUploadDir() {
+       return 'uploads/ltf/products/fitting_room';            
+    }
+
+    
 }
