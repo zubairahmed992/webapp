@@ -11,7 +11,7 @@ class ProductColorType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $sizes = array('XS', 'S', 'M', 'ML', 'L', 'XL', '2XL', '3XL');
+        $sizes = array('XS'=>'XS', 'S'=>'S', 'M'=>'M', 'ML'=>'ML', 'L'=>'L', 'XL'=>'XL', '2XL'=>'2XL', '3XL'=>'3XL');
         
         $builder->add('title');
         $builder->add('color_a');

@@ -14,8 +14,37 @@
                                      
                                     </tr>
                                   </thead>  
-                              {% for ps in product.productSizes %}  
-                                <tr>
+                              
+
+{% for ps in product.productSizes %}  
+
+       {% if size_id and size_id == ps.id %}
+                                  <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
+                                 {{ form_errors(sizeform) }}
+
+        <tr>
+            <td>{{ ps.title }}</td>
+            
+            <td>{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</td>
+            <td>{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</td>
+            <td>{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</td>
+            <td>{{ form_widget(sizeform.bust) }}{{ form_errors(sizeform.bust) }}</td>
+            <td>{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</td>
+            <td>{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</td>
+            <td>{{ form_widget(sizeform.arm) }}{{ form_errors(sizeform.arm) }}</td>
+            <td>{{ form_widget(sizeform.leg) }}{{ form_errors(sizeform.leg) }}</td> 
+            <td>{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</td> 
+            <td >
+                                         	{{ form_rest(sizeform) }}
+
+                    <input type="submit" value="SAVE" class="btn btn-large btn-primary"/></td>
+            </tr>
+
+
+        </form>  
+{% else %}
+
+<tr>
                                     <td style="text-align:'center';">{{ps.title}}</td>
                                     <td style="text-align:'center';">{{ps.inseam}}</td>
                                      <td style="text-align:'center';">{{ps.outseam}}</td>
@@ -25,10 +54,14 @@
                                      <td style="text-align:'center';">{{ps.arm}}</td>
                                      <td style="text-align:'center';">{{ps.leg}}</td>
                                      <td style="text-align:'center';">{{ps.hem}}</td>
+                                     <th><a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}'>Edit</a></th>
+                                     
                                      
                                 </tr>
                                
-                             
+                               
+                                
+                             {% endif %}
                              {%endfor%}
                               </table>   
   
