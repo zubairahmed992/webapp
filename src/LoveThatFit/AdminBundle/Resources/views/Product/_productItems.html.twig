@@ -1,15 +1,19 @@
-  <h2> Product Items</h2>
+<div id="pro_clr"> 
+<h2> Product Items</h2>
                              <table style="width:50%">
-                                 <thead
-                                 <tr>
-                                    <th><b>Line Number</th>
-                                     <th><b>Size</th>
-                                     <th><b>Color</th>
-                                      </tr>
-                                  </thead>  
+                                 
+                                   <div class="row-fluid show-grid p_title">
+                               
+                                    <div class="span3 hds"><b>Line Number</b></div>
+                                    <div class="span3 hds"><b>Size</b></div>
+                                    <div class="span3 hds"><b>Color</b></div>
+                                    <div class="span3 hds"></div>
+                                       
+                                    </div>
+                                  
     {% for pi in product.productItems %}  
                           
-                         
+                                  
     {% if item_id and item_id == pi.id %}
  <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }}>
                                  {{ form_errors(itemform) }}
@@ -18,24 +22,26 @@
           <tr>
            
             <td>{{ form_widget(itemform.line_number) }}{{ form_errors(itemform.line_number) }}</td>
-            <td>
-          {{form_row(itemform.file)}}
-           </td>
+            <td>{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</td>
+           
             <td >
           {{ form_rest(itemform) }}
              <input type="submit" value="SAVE" class="btn btn-large btn-primary"/></td>
             </tr>
-       
+         
          {% else %}
-         <tr>
-               <td style="text-align:'center';">{{pi.lineNumber}}</td>
-               <td style="text-align:'center';">{{pi.productSize.title}}</td>
-              <td style="text-align:'center';">{{pi.productColor.title}}</td>
-              <td style="text-align:'center';">
-           <th><a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}'>Edit</a></th>
-          </tr>
+        
+             <div class="row-fluid show-grid p_title">
+                 
+               <div class="span3">{{pi.lineNumber}}</div>
+               <div class="span3">{{pi.productSize.title}}</div>
+              <div class="span3">{{pi.productColor.title}}</div>
+              <div class="span3">
+                  <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a></div>
+            
+             </div>
                                
                              {% endif %}
                              {%endfor%}
                               </table>   
-  
+</div>
