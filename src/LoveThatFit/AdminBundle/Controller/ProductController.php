@@ -391,13 +391,47 @@ class ProductController extends Controller {
                 ));
         
         
-        
-        
-        
-        
-        
-        
        // return $this->renderProductDetail($entity, $item_id);
+    }
+     public function productDetailItemUpdateAction(Request $request, $id,$item_id) {
+       
+        
+        $entity = $this->getProduct($id);
+        $colorform = $this->createForm(new ProductColorType());
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+        
+         $em = $this->getDoctrine()->getManager();
+         $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find($item_id);
+
+        if (!$entity_item) {
+            throw $this->createNotFoundException('Unable to find Product Item.');
+        }
+
+        $itemform = $this->createForm(new ProductItemType(), $entity_item);
+        $itemform->bind($request);
+
+       
+
+        if ($itemform->isValid()) {
+
+          
+          $entity_item->upload(); //----- file upload method 
+          
+          $em->persist($entity_item);
+            $em->flush();
+           
+    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity, 
+                    'colorform' => $colorform->createView(),
+                     'itemform' => $itemform->createView(),
+                    'item_id' => 0,
+        
+                ));
+        } else {
+            throw $this->createNotFoundException('Unable to update Product Detail Item');
+        }
     }
 //        
     //------------------------- Private methods -------------------------

@@ -9,7 +9,7 @@
                                   </thead>  
     {% for pi in product.productItems %}  
                           
-                                  
+                         
     {% if item_id and item_id == pi.id %}
  <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }}>
                                  {{ form_errors(itemform) }}
@@ -18,13 +18,14 @@
           <tr>
            
             <td>{{ form_widget(itemform.line_number) }}{{ form_errors(itemform.line_number) }}</td>
-            <td>{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</td>
-           
+            <td>
+          {{form_row(itemform.file)}}
+           </td>
             <td >
           {{ form_rest(itemform) }}
              <input type="submit" value="SAVE" class="btn btn-large btn-primary"/></td>
             </tr>
-         
+       
          {% else %}
          <tr>
                <td style="text-align:'center';">{{pi.lineNumber}}</td>

@@ -1,7 +1,10 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
+use LoveThatFit\AdminBundle\ImageHelper;
+use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,7 +59,11 @@ class ProductItem
      * @ORM\Column(name="image", type="string", nullable=true)
      */
     private $image;
-
+   
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
 
     /**
      * Get id
@@ -191,6 +198,7 @@ class ProductItem
         }
         
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        
         $this->image = uniqid() .'_fr.'. $ext;        
         $this->file->move(
                 $this->getUploadRootDir().'/fitting_room/', $this->image

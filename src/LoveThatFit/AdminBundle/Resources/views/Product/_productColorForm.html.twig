@@ -1,5 +1,5 @@
 
-      <form action="{{ path('admin_product_detail_color_create',{'id': product.Id }) }}" method="post" {{ form_enctype(colorform) }}>
+      <form action="{{ path('admin_product_detail_color_create',{'id': product.Id }) }}" method="post" {{ form_enctype(colorform) }} >
                                  {{ form_errors(colorform) }}
                                  
                <div id="pro_color">
@@ -7,9 +7,8 @@
                                      
                                      
                                     <div style="position: absolute; top:20px; right: 200px;">
-    
-                                    {{ form_errors(colorform.file) }}
-                                    {{ form_widget(colorform.file) }}
+                                    {{form_row(colorform.file)}}
+                                   
                                     
                                         <div id="photo_upload">&nbsp;</div>                                        
                                     </div>

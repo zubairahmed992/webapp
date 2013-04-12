@@ -25,7 +25,7 @@
                               
 
 {% for ps in product.productSizes %}  
-
+{% set size_id=null %}
        {% if size_id and size_id == ps.id %}
                                   <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
