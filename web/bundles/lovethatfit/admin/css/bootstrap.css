@@ -1178,6 +1178,10 @@ textarea,
   width: 206px;
 }
 
+  #detail_wrapper #pro_sizes_wrapper input[type="text"] {
+    width: 95px!important;
+}
+
 textarea {
   height: auto;
 }
@@ -6348,21 +6352,31 @@ height:60px;
         background:#efefef;
 }
 
+#detail_wrapper h2{
+    padding:0px 0px 0px 10px!important;
+    font-size: 1.3em!important;
+    background: linear-gradient(to bottom, #64656B 0%, #64656B 50%, #4F5056 51%, #4F5056 100%) repeat scroll 0 0 transparent;
+    color: #fff;   
+    margin:20px 0px 20px 0px;
+	
+}
+
 #pro_color{
-         padding:10px 10px 40px 10px;
+         padding:10px 10px 0px 10px;
 	overflow:hidden;
-        position: relative;
-        border-bottom: 1px solid #ccc;
+        position: relative;      
        
     
 }
 
-#pro_clr{
-    
-     padding:10px;
+#pro_clr{        
 	overflow:hidden;
-        position: relative;
-        border-bottom: 1px solid #ccc;
+        position: relative;        
+}
+
+#pro_clr table{        
+	padding:0px 20px;
+        display: block;
 }
 
 #product_info_left{

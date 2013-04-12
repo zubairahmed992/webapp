@@ -56,6 +56,16 @@ border-right:0px solid #ccc;
 #detail_wrapper .p_title .span1{
     
     width:10%!important;
+
+}
+
+
+
+#detail_wrapper .hds{
+	background:#ddd!important;
+	color:#333;
+	padding:5px 0px 0px 0px;
+	min-height:40px!important;
 }
 
 

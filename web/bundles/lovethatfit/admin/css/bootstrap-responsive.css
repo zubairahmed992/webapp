@@ -1116,9 +1116,32 @@
 
 
 #detail_wrapper .row-fluid .span1:not(.hds) {
-    max-height: 25px!important;
-    min-height: 25px!important;
-    overflow: hidden;
-    padding-top: 0px!important;
+    max-height: 0px!important;    
+    overflow: hidden;   
     width: 5.98291%;
 }
+
+  #detail_wrapper .row-fluid .span1:not(.hds) {
+    width: 5.982905982905983%;   
+    min-height:55px;
+    max-height:70px;
+    padding-top:10px;
+    overflow:hidden;
+	
+  }
+  
+  #detail_wrapper .row-fluid .span3:not(.hds) {
+    max-height: 0px!important;    
+    overflow: hidden;   
+    width: 25%;
+}
+
+  #detail_wrapper .row-fluid .span3:not(.hds) {
+    width: 25%;   
+    min-height:55px;
+    max-height:70px;
+    padding-top:10px;
+    overflow:hidden;
+	
+  }
+  
