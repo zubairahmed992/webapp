@@ -30,11 +30,23 @@
 
                     <div class="clearfix"></div>
                     <div style="margin-top:20px; margin-left:5px;">
-    {{ form_errors(form.file) }}
-    {{ form_widget(form.file) }}
+                    {{ form_errors(form.file) }}
+                    {{ form_widget(form.file) }}
                         </div>
-                    </div>         
-
+                    
+                     <div style="margin-top:20px; margin-left:5px;">
+                         <label>Fitting Room Image</label>
+                          <div id="pro_img"><img src="{{ asset(entity.fittingRoomImage) }}"/>
+                    </div>
+                    {{ form_errors(form.img_file) }}
+                    {{ form_widget(form.img_file) }}
+                        </div>
+                    </div>  
+                
+                
+                
+                
+                       
                     <div id="product_content">
                         <div id="pro_detail">
                             <div class="edt_container">         

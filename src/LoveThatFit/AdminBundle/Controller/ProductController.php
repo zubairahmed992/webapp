@@ -139,7 +139,7 @@ class ProductController extends Controller {
             $entity->setUpdatedAt(new \DateTime('now'));
 
             $entity->upload(); //----- file upload method 
-
+            $entity->uploadFittingRoomImage();
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
@@ -230,7 +230,7 @@ class ProductController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
+    return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
         }
     }
 
@@ -244,7 +244,7 @@ class ProductController extends Controller {
         $form = $this->createForm(new ProductDetailType(), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
-        return $this->render('LoveThatFitAdminBundle:Product:editproduct_detail_edit.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));
@@ -412,23 +412,20 @@ class ProductController extends Controller {
         $itemform = $this->createForm(new ProductItemType(), $entity_item);
         $itemform->bind($request);
 
-       
+         if ($itemform->isValid()) {
 
-        if ($itemform->isValid()) {
-
-          
           $entity_item->upload(); //----- file upload method 
-          
-          $em->persist($entity_item);
-            $em->flush();
            
-    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity, 
-                    'colorform' => $colorform->createView(),
-                     'itemform' => $itemform->createView(),
-                    'item_id' => 0,
-        
-                ));
+          $em->persist($entity_item);
+          $em->flush();
+           
+          return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                                'product' => $entity, 
+                                'colorform' => $colorform->createView(),
+                                'itemform' => $itemform->createView(),
+                                'item_id' => 0,
+
+                        ));
         } else {
             throw $this->createNotFoundException('Unable to update Product Detail Item');
         }

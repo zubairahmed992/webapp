@@ -669,7 +669,7 @@ public function deleteImages()
     if($this->image)
     {    
     $ih=new ImageHelper('product', $this);
-     $ih->deleteImages($this->image);
+    $ih->deleteImages($this->image);
   }
 } 
     
