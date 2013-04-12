@@ -1,12 +1,13 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Controller;
-
 use LoveThatFit\AdminBundle\Entity\SurveyQuestion;
 use LoveThatFit\AdminBundle\Entity\SurveyAnswer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use LoveThatFit\UserBundle\Entity\UserSurvey;
+use LoveThatFit\UserBundle\Entity\User;
 
 class SurveyController extends Controller {
 //---------------------------------------------------------------------
@@ -88,8 +89,7 @@ public function addNewAnswerAction($question_id) {
                     'data' => $this->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editAnswer',
-                    'count_question'=>count($this->getQuestionsList()),
-            
+                    'count_question'=>count($this->getQuestionsList()),            
         ));
     }
 
@@ -147,20 +147,32 @@ public function addNewAnswerAction($question_id) {
 
     private function getQuestionFormById($question_id) {
         $question = $this->getquestionById($question_id);
-        return $this->getQuestionForm($question);
+        return $this->geteditQuestionForm($question);
     }
 
     private function getQuestionForm($question) {
         return $this->createFormBuilder($question)
                         ->add('question', 'text', array('label' =>' '))
+                        ->add('questionstatus', 'hidden', array('data' => '1',))
                         ->getForm();
     }
+    
+    private function geteditQuestionForm($question)
+    {
+        return $this->createFormBuilder($question)
+                        ->add('question', 'text', array('label' =>' '))
+                        ->add('questionstatus', 'checkbox',array('label' =>' ','required'  => false,))
+                        ->getForm();
+    }
+    
     private function getAnswerForm($answer) {
         $answer = new SurveyAnswer();
         return $this->createFormBuilder($answer)
                         ->add('answer', 'text',array('label'=>' '))
                         ->getForm();
-    }    
+    }
+    
+    
     
 
 }

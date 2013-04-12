@@ -23,6 +23,11 @@ class User  implements UserInterface, \Serializable{
      **/
     private $measurement;
     
+    
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SurveyUser", mappedBy="user")
+     */
+    protected $survey;
 
 //---------------------------------------------------------------------
 
@@ -697,4 +702,37 @@ class User  implements UserInterface, \Serializable{
 
     
     
+
+    /**
+     * Add survey
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
+     * @return User
+     */
+    public function addSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey)
+    {
+        $this->survey[] = $survey;
+    
+        return $this;
+    }
+
+    /**
+     * Remove survey
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
+     */
+    public function removeSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey)
+    {
+        $this->survey->removeElement($survey);
+    }
+
+    /**
+     * Get survey
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSurvey()
+    {
+        return $this->survey;
+    }
 }

@@ -17,7 +17,7 @@
         <div class="row-fluid show-grid">
             <div class="span3 hds">ID</div>
             <div class="span3 hds">Question</div> 
-            <div class="span3 hds">&nbsp;</div>           
+            <div class="span3 hds">Status</div>           
             <div class="span3 hds">&nbsp;</div>     
         </div>
         <ul>
@@ -25,8 +25,6 @@
                 <li style="list-style:none">
                     <table width="100%">
                         <tr>
-                  
-                            
                         {%if(operation=='editQuestion' and id==item.id)%}
                     <div class="row-fluid show-grid">
                         <form action="{{ path('admin_survey_edit_update_question',{'question_id':id})}}"  method="post" {{ form_enctype(editForm) }}>
@@ -36,13 +34,19 @@
                                 <div align="center">
                                     <input type="submit" value="Submit" style="margin-left:30px"  />
                                     <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                        <input type="submit" value="Cancel"  />
+                                        <input type="submit" value="Cancel"  /></a>
                                 </div>
                             </form>
                         </div> 
       {%else%}
             <td width="34%" style="padding-left:134px"><b>{{item.id}}</b></td>
-            <td width="45%" style="padding-left: 7px;"><b>{{item.question}}</b></td>
+        <td width="45%" style="padding-left: 7px;">
+       <b>{{item.question}}</b>
+       <span style="float: right;font-weight: bold;padding-right: 180px;">
+       {%if(item.questionstatus==1)%} Enabled {%else%} Disabled {%endif%}
+      </span>
+     </td>
+            
             <td width="21%"><a href="{{ path('admin_survey_edit_question', {'question_id':item.id}) }}"><i class="icon-edit"></i></a>
             <a href="#myModal{{item.id}}" role="button" data-toggle="modal">
             <i class="icon-remove"></i></a>
@@ -65,13 +69,15 @@
                             <div align="center">
                                 <input type="submit" value="Submit" style="margin-left:30px" />             
                                 <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                    <input type="submit" value="Cancel"  />
+                                    <input type="submit" value="Cancel"  /></a>
                             </div>
                         </form>
                     </div>  
-{%else%}            
-                              <td width="60%" style="padding-left: 348px;">{{a.answer}}</td>
-                              <td width="40%" style="float:right;"><a href="{{ path('admin_survey_edit_answer', {'answer_id':a.id}) }}"><i class="icon-edit"></i></a>
+{%else%}              <td width="60%" style="padding-left: 348px;">
+                        {{a.answer}}
+                            </td>
+                              <td width="40%" style="float:right;">
+                                  <a href="{{ path('admin_survey_edit_answer', {'answer_id':a.id}) }}"><i class="icon-edit"></i></a>
                               <a href="#myModal1{{a.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a> </td>
 {%endif%}  
                                 </tr>
@@ -96,14 +102,7 @@
 
                     </div>
                 </div>
-
-
 {%endfor%}
-
-
-
- 
-
  {%if(operation=='AddAnwser' and question_id==item.id)%}
                         <div class="row-fluid show-grid">
                             <form action="{{ path('admin_survey_add_answer',{'question_id':question_id})}}" method="post" {{ form_enctype(answerForm) }}>
@@ -113,7 +112,7 @@
                                     <div align="center">
                                         <input type="submit" value="Add Answer" style="margin-left:30px" />             
                                         <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                            <input type="submit" value="Cancel"  />
+                                        <input type="submit" value="Cancel"  /></a>
                                     </div>
                                 </form>
                             </div> 
@@ -136,77 +135,9 @@
                             </div>          
 
 {%endfor%}
-
-
-
-
-
-                        </ul>
-
+                   </ul>
 {%else%}
     <div>No Question Found Please Add Question</div>
 {%endif%}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
  {% endblock %}

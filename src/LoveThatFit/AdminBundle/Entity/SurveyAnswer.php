@@ -21,9 +21,14 @@ class SurveyAnswer
      */
     protected $question;
     
+    /**
+     * @ORM\OneToMany(targetEntity="SurveyUser", mappedBy="answer")
+     */
+    protected $survey;
+    
     public function __construct()
     {
-        
+        $this->survey = new ArrayCollection();
     }
     /**
      * @var integer $id
@@ -96,5 +101,38 @@ class SurveyAnswer
     public function getQuestion()
     {
         return $this->question;
+    }
+
+    /**
+     * Add survey
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
+     * @return SurveyAnswer
+     */
+    public function addSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey)
+    {
+        $this->survey[] = $survey;
+    
+        return $this;
+    }
+
+    /**
+     * Remove survey
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
+     */
+    public function removeSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey)
+    {
+        $this->survey->removeElement($survey);
+    }
+
+    /**
+     * Get survey
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSurvey()
+    {
+        return $this->survey;
     }
 }
