@@ -1182,6 +1182,10 @@ textarea,
     width: 95px!important;
 }
 
+ #detail_wrapper #pro_clr input[type="text"] {
+    width: 95px!important;
+}
+
 textarea {
   height: auto;
 }

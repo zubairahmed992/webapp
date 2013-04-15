@@ -1130,6 +1130,21 @@
 	
   }
   
+  #detail_wrapper .row-fluid .span2:not(.hds) {
+    width: 20%;   
+    min-height:55px;
+    max-height:70px;
+    padding-top:10px;
+    overflow:hidden;
+	
+  }
+  
+  #detail_wrapper .row-fluid .span2 {
+    width: 20%;   
+   
+	
+  }
+  
   #detail_wrapper .row-fluid .span3:not(.hds) {
     max-height: 0px!important;    
     overflow: hidden;   
