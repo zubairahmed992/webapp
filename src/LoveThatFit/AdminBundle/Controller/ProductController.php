@@ -341,6 +341,31 @@ class ProductController extends Controller {
     }
     //--------------------------------------------------------------
     
+    public function productDetailColorEditAction($id, $color_id){
+        
+       $entity = $this->getProduct($id);  
+       if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+        
+        $colorform = $this->createForm(new ProductColorType($this->getProductColor($color_id)));
+    
+        $sizeform = $this->createForm(new ProductSizeType());
+        $itemform = $this->createForm(new ProductItemType());
+    
+    
+    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity, 
+                    'colorform' => $colorform->createView(),
+                    'sizeform' => $sizeform->createView(),
+                    'itemform' => $itemform->createView(),
+                    'color_id' =>  $color_id,
+                ));
+        
+        
+    }   
+    //--------------------------------------------------------------
+    
     public function productDetailSizeEditAction($id, $size_id) {
         $entity = $this->getProduct($id);
         
@@ -500,7 +525,12 @@ class ProductController extends Controller {
                 ->getRepository('LoveThatFitAdminBundle:ProductItem')
                 ->find($id);
     }    
-    
+    //------------------------------------------------------------------------
+    public function getProductColor($id) {
+        return $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductColor')
+                ->find($id);
+    } 
 
 //------------------------------------------------------------------
 

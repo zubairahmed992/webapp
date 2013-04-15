@@ -14,7 +14,7 @@
     {% for pi in product.productItems %}  
                           
                                   
-    {% if item_id and item_id == pi.id %}
+    {% if item_id is defined and item_id and item_id == pi.id %}
  <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }}>
                                  {{ form_errors(itemform) }}
                               
