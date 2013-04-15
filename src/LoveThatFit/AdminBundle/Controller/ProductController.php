@@ -386,6 +386,7 @@ class ProductController extends Controller {
                     'colorform' => $colorform->createView(),
                      'itemform' => $itemform->createView(),
                     'item_id' => $item_id,
+         
         
             
                 ));
@@ -424,6 +425,7 @@ class ProductController extends Controller {
                                 'colorform' => $colorform->createView(),
                                 'itemform' => $itemform->createView(),
                                 'item_id' => 0,
+                               
 
                         ));
         } else {
