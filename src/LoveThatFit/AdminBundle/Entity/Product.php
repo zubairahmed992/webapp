@@ -798,5 +798,16 @@ public function deleteImages()
     }
   public static function getSizes(){
         return array('XS', 'S', 'M', 'ML', 'L', 'XL', '2XL', '3XL');
-    }  
+    }
+    
+    public function getThisSize($sizeTitle)
+    {
+        $productSizes=$this->getProductSizes();
+        foreach ($productSizes as $ps) {
+            if ($ps->getTitle()==$sizeTitle){
+                return $ps;
+            }            
+        }
+        return;
+    }
 }
