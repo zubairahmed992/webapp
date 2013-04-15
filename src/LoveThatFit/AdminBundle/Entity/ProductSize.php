@@ -16,6 +16,7 @@ class ProductSize
     
      /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_sizes")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product; 

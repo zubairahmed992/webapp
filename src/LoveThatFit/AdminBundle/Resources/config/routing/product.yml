@@ -70,6 +70,9 @@ admin_product_detail_size_edit:
 admin_product_detail_size_update:
    pattern:  /admin/productdetail/{id}/size/{size_id}/update
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailSizeUpdate }   
+admin_product_detail_size_delete:
+   pattern:  /admin/productdetail/{id}/size/{size_id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailSizeDelete }   
     
 #--------------------------- Product Items --------------       
    
@@ -79,4 +82,8 @@ admin_product_detail_item_edit:
   
 admin_product_detail_item_update:
    pattern:  /admin/productdetail/{id}/item/{item_id}/update
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemUpdate }     
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemUpdate } 
+admin_product_detail_item_delete:
+   pattern:  /admin/productdetail/{id}/delete/{item_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemDelete }   
+   

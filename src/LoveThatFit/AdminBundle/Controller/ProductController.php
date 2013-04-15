@@ -366,6 +366,20 @@ class ProductController extends Controller {
    
     
 //-----------------------------------------------------------------------
+ public function productDetailSizeDeleteAction(Request $request,$id, $size_id){
+         $em = $this->getDoctrine()->getManager();
+        
+         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductSize');
+         $product = $repository->find($size_id);
+         
+         $em->remove($product);
+         $em->flush();
+         
+         return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
+ }
+ 
+ 
+//
  //--------------------------------------------------------------
     
     public function productDetailItemEditAction($id, $item_id) {
@@ -387,8 +401,6 @@ class ProductController extends Controller {
                      'itemform' => $itemform->createView(),
                     'item_id' => $item_id,
          
-        
-            
                 ));
         
         
@@ -432,6 +444,19 @@ class ProductController extends Controller {
             throw $this->createNotFoundException('Unable to update Product Detail Item');
         }
     }
+    
+    //-----------------------------------------------------------------------
+ public function productDetailItemDeleteAction(Request $request,$id, $item_id){
+         $em = $this->getDoctrine()->getManager();
+        
+         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
+         $product = $repository->find($item_id);
+         
+         $em->remove($product);
+         $em->flush();
+         
+         return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
+ }
 //        
     //------------------------- Private methods -------------------------
     

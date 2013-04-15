@@ -22,8 +22,9 @@ class ProductItem
      */    
     protected $product; 
     
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="ProductSize", inversedBy="product_items")
+     * @ORM\JoinColumn(name="product_size_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_size_id", referencedColumnName="id")
      */    
     protected $productSize; 
@@ -201,10 +202,10 @@ class ProductItem
         
         $this->image = uniqid() .'_fr.'. $ext;        
         $this->file->move(
-                $this->getUploadRootDir().'/fitting_room/', $this->image
+                $this->getUploadRootDir(), $this->image
         );
         
-        $this->image = null;             
+        $this->file = null;             
     }
     
     //-------------------------------------------------------

@@ -37,7 +37,10 @@
                <div class="span3">{{pi.productSize.title}}</div>
               <div class="span3">{{pi.productColor.title}}</div>
               <div class="span3">
-                  <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a></div>
+                  <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a>
+                  <a href='{{path("admin_product_detail_item_delete",{"id":product.id, "item_id":pi.id})}}' class="btn">Delete</a>
+              
+              </div>
             
              </div>
                                
