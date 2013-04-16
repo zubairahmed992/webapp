@@ -19,13 +19,8 @@ class ImageHelper {
         
         $this->category = $category;
         $this->entity = $entity;        
-        $this->conf = $conf['image_category'][$category];
-        
-        //---------- needs to change the field name from logo to image for brand
-        if ($this->category=='brand')
-            $this->image=$entity->getLogo();
-        else        
-            $this->image=$entity->getImage();
+        $this->conf = $conf['image_category'][$category];        
+        $this->image=$entity->getImage();
         
     }
 
@@ -45,12 +40,7 @@ class ImageHelper {
         $ext = pathinfo($this->entity->file->getClientOriginalName(), PATHINFO_EXTENSION);
         
         $this->image=uniqid() .'.'. $ext;
-                //---------- change this!!
-        if ($this->category=='brand')
-            $this->entity->setLogo($this->image);            
-        else        
-            $this->entity->setImage($this->image);            
-        
+        $this->entity->setImage($this->image);        
         $this->entity->file->move(
                 $this->getUploadRootDir(), $this->image
         );
@@ -202,8 +192,7 @@ class ImageHelper {
         }
         
     }
-
-  
+    
     
 }
 

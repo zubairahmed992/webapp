@@ -32,7 +32,7 @@ class Brand {
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $logo;
+    protected $image;
 
     /**
      * @ORM\Column(type="datetime")
@@ -81,24 +81,24 @@ class Brand {
     }
 
     /**
-     * Set logo
+     * Set image
      *
-     * @param string $logo
+     * @param string $image
      * @return Brand
      */
-    public function setLogo($logo) {
-        $this->logo = $logo;
+    public function setImage($image) {
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Get logo
+     * Get image
      *
      * @return string 
      */
-    public function getLogo() {
-        return $this->logo;
+    public function getImage() {
+        return $this->image;
     }
 
     /**
@@ -153,9 +153,6 @@ class Brand {
             return;
         }
         
-        //$this->logo = $this->id . '_ltf_brand_' . $this->file->getClientOriginalName();        
-        //$this->file->move($this->getUploadRootDir(), $this->logo);
-        //$this->file = null;
        $ih=new ImageHelper('brand', $this);
         $ih->upload();
     }
@@ -163,16 +160,16 @@ class Brand {
     
   public function getAbsolutePath()
     {
-        return null === $this->logo
+        return null === $this->image
             ? null
-            : $this->getUploadRootDir().'/'.$this->logo;
+            : $this->getUploadRootDir().'/'.$this->image;
     }
 //---------------------------------------------------
     public function getWebPath()
     {
-        return null === $this->logo
+        return null === $this->image
             ? null
-            : $this->getUploadDir().'/'.$this->logo;
+            : $this->getUploadDir().'/'.$this->image;
     }
 //---------------------------------------------------
     protected function getUploadRootDir()
@@ -193,6 +190,6 @@ class Brand {
 public function deleteImages()
 {
      $ih=new ImageHelper('brand', $this);
-     $ih->deleteImages($this->logo);
+     $ih->deleteImages($this->image);
 }   
 }

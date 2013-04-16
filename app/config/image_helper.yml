@@ -40,3 +40,14 @@ image_category:
       width: 200
       prefix: '_'  			
       dir:  'uploads/ltf/products/large'
+  
+  user:
+    original:
+      prefix: 
+      dir:  'uploads/ltf/users'
+      
+    profile:
+      prefix: 
+      height: 250
+      width: 220
+      dir:  'uploads/ltf/users'
