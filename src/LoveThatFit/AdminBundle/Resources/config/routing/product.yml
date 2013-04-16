@@ -59,9 +59,20 @@ admin_product_detail_delete:
 admin_product_detail_color_create:
    pattern:  /admin/productdetail/{id}/color/create
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorCreate }   
+
+admin_product_detail_color_add:
+   pattern:  /admin/productdetail/{id}/color/add
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorAddNew }
+   
 admin_product_detail_color_edit:
    pattern:  /admin/productdetail/{id}/color/{color_id}/edit
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorEdit }
+admin_product_detail_color_update:
+   pattern:  /admin/productdetail/{id}/color/{color_id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorUpdate }   
+admin_product_detail_color_delete:
+   pattern:  /admin/productdetail/{id}/color/{color_id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorDelete }  
   
 #--------------------------- Product Sizes --------------       
    

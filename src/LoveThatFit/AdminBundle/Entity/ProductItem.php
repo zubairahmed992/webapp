@@ -31,6 +31,7 @@ class ProductItem
     
     /**
      * @ORM\ManyToOne(targetEntity="ProductColor", inversedBy="product_items")
+     * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id")
      */    
     protected $productColor; 
