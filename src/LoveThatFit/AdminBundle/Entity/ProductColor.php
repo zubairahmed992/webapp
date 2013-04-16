@@ -15,7 +15,7 @@ class ProductColor
 {
     
      /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors", cascade="remove")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */

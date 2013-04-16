@@ -28,7 +28,7 @@ class Product {
 
     
     /**
-     * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product",cascade={"persist"})
      */
     protected $product_colors;
     

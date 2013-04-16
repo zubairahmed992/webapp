@@ -414,16 +414,37 @@ class ProductController extends Controller {
    }
    //--------------------------------------------------------------
     public function productDetailColorDeleteAction(Request $request,$id, $color_id){
-         $em = $this->getDoctrine()->getManager();
-      
-         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductColor');
-         $product = $repository->find($color_id);
-            
-         $em->remove($product);
-         $em->flush();
+       
+          try {
+            $em = $this->getDoctrine()->getManager();
+
+            $entity = $em->getRepository('LoveThatFitAdminBundle:ProductColor')->find($color_id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Product Color.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
+        } catch (\Doctrine\DBAL\DBALException $e) {
+            $this->get('session')->setFlash(
+                    'warning', 'This Product Color  cannot be deleted!'
+            );
+          return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
+        }
          
-         return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
- }
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         }
    
   /************************** PRODUCT DETAIL SIZE ************************************************** */ 
    
