@@ -10,7 +10,7 @@
 <script>
 function validate()
 {
-var extensions = new Array("jpg","jpeg","gif","png","bmp");
+var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
    
 var image_file = document.getElementById('user_file').value;
 var image_length = document.getElementById('user_file').length;
@@ -21,9 +21,7 @@ if(image_file!="")
 {
 var final_ext = ext.toLowerCase();
 for (i = 0; i < extensions.length; i++)
-
 {
-
 if(extensions[i] == final_ext)
 {
 return true;
@@ -35,24 +33,22 @@ return false;
 
 }
 return true;
-}
-    
+}    
 </script>
-{% if app.session.hasFlash('warning') %}
-       <div class="alert alert-error">
-        <strong>Warning!</strong> 
+
+<div>
+    {% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">        
         {{ app.session.flash('warning') }}
-        </div>
-   
+        </div>   
 {% endif %}      
-{% if app.session.hasFlash('success') %}
-  <div class="alert alert-success">
-    <strong>success</strong> 
-    {{ app.session.flash('success') }}
+{% if app.session.hasFlash('Success') %}
+  <div class="alert alert-success">    
+    {{ app.session.flash('Success') }}
    </div>
    
 {% endif %}
-<div>
+    
     <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
     <br>
     <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }} onsubmit="return validate();">
@@ -86,7 +82,7 @@ return true;
                     <div class="clr_bth"></div>
                    
                     
-                <div class="frm_ele image">
+                <div class="frm_ele image">                
                 {{ form_row(form.file) }}                     
             </div>    
            
@@ -95,22 +91,21 @@ return true;
              </form>
         
 </div>
-
-{% if app.session.hasFlash('warning') %}
-       <div class="alert alert-error">
-        <strong>Warning!</strong> 
-        {{ app.session.flash('warning') }}
-        </div>
    
-{% endif %}      
-{% if app.session.hasFlash('success') %}
-  <div class="alert alert-success">
-    <strong>success</strong> 
-    {{ app.session.flash('success') }}
+
+<div class="acct_second">
+    {% if app.session.hasFlash('Success') %}
+  <div class="alert alert-success">    
+    {{ app.session.flash('Success') }}
    </div>
    
 {% endif %}
-<div class="acct_second">
+{% if app.session.hasFlash('Warning') %}
+       <div class="alert alert-error">       
+        {{ app.session.flash('Warning') }}
+        </div>
+   
+{% endif %}   
     <h5>Change Password</h5>
   <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }}>
     {{ form_errors(form_password_reset) }}

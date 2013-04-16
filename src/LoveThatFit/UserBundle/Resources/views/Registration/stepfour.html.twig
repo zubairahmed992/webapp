@@ -4,12 +4,13 @@
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
 <input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.back }}" />
 <div>
-            <form id="frmUserMeasurement" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post" {{ form_enctype(measurement_form) }}>
+    
+            <form id="frmUserMeasurement" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_form) }}>
+             {{ form_errors(measurement_form) }}
                 {{ form_widget(measurement_form.shoulder_height) }}
                 {{ form_widget(measurement_form.waist_height) }}
                 {{ form_rest(measurement_form) }}
             </form>
-
 </div>
 
 <section class="reg_blk">
@@ -25,9 +26,10 @@
         
     <div class="action_cnt">
         <div class="steps step_4">
+            <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
             <h2>Upload Photo</h2>
 
-            <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+            <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
@@ -114,4 +116,3 @@
                     </div>
 </section>
 {% endblock %}
-

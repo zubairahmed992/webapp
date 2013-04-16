@@ -249,5 +249,29 @@ function shift_to_canvas (){
 	  
 }
 
+function validateStepFourImageName()
+{
+var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
+   
+var image_file = document.getElementById('user_file').value;
+var image_length = document.getElementById('user_file').length;
 
+var pos = image_file.lastIndexOf('.') + 1;
+var ext = image_file.substring(pos, image_length);
+if(image_file!=" ")
+{
+var final_ext = ext.toLowerCase();
+for (i = 0; i < extensions.length; i++)
+{
+if(extensions[i] == final_ext)
+{
+return false;
+}
+}
+document.getElementById('error').style.display="block";
+document.getElementById('play_area').style.display="none";
+return false;
+}
+return true;
+}    
 //$( "#draggable5" ).draggable({ containment: "parent" });

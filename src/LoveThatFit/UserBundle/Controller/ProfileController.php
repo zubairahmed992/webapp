@@ -45,26 +45,18 @@ class ProfileController extends Controller {
         $measurement = $entity->getMeasurement();
 
         $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
-        $measurementForm->bind($this->getRequest());
-       
+        $measurementForm->bind($this->getRequest());       
         if($measurementForm->isValid())
-        {
-        
+        {        
         $measurement->setUpdatedAt(new \DateTime('now')); 
         $em->persist($measurement);
         $em->flush();
-        $this->get('session')->setFlash('Success', 'Your measurement information has been saved.');
-        }
-       
+        $this->get('session')->setFlash('success', 'Your measurement information has been saved.');
+        }       
          return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
-                    'measurement' => $measurement,
-                    
-                ));   
-       
-             
-  
-             
+                    'measurement' => $measurement,                    
+                ));
        }
 
     //-------------------------------------------------------------
@@ -106,8 +98,7 @@ class ProfileController extends Controller {
             $em->persist($entity);
             $em->flush(); 
             $this->get('session')->setFlash('Success', 'Profile has been updated.');    
-        }
-        
+        }        
         
       return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
@@ -155,16 +146,16 @@ class ProfileController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();                
-                $this->get('session')->setFlash('success', 'Password Updated Successfully');                
+                $this->get('session')->setFlash('Success', 'Password Updated Successfully');                
                 } 
                 else
                 {
-                $this->get('session')->setFlash('warning', 'Confirm pass doesnt match');
+                $this->get('session')->setFlash('Warning', 'Confirm pass doesnt match');
                 }
            }
            else 
            {
-            $this->get('session')->setFlash('warning', 'Please Enter Correct Password');
+            $this->get('session')->setFlash('Warning', 'Please Enter Correct Password');
            
         }
      return $this->redirect($this->getRequest()->headers->get('referer'));      
@@ -215,22 +206,17 @@ class ProfileController extends Controller {
       $str='';
       //return new Response(json_encode($data));
       foreach ($data as $key => $value) {
-         
-          $question = $em->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->find($key);
-          $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find($value);
-            
-          $userServey = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question));
-          return new Response('hey');
-          return new Response($userServey->getSurvey());
-          if($userServey){
-              
+        $question = $em->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->find($key);
+        $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find($value);
+        $userServey = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question));
+        return new Response('hey');
+        return new Response($userServey->getSurvey());
+        if($userServey){
         $userSurvey->setAnswer($answer);
         $em = $this->getDoctrine()->getManager();
         $em->persist($userSurvey);
         $em->flush();
-              
-          }else{
-              
+        }else{              
         $userSurvey = new SurveyUser();        
         $userSurvey->setQuestion($question);
         $userSurvey->setAnswer($answer);
@@ -238,8 +224,7 @@ class ProfileController extends Controller {
         $userSurvey->setSurvey('Question Answer Survey');
         $em = $this->getDoctrine()->getManager();
         $em->persist($userSurvey);
-        $em->flush();
-              
+        $em->flush();              
           }
 //$userSurvey = new SurveyUser(); 
                     
@@ -269,12 +254,11 @@ class ProfileController extends Controller {
           $addanswer =$this->updateAnswerIfFound($question,$answers,$user);
        }
        return $this->redirect($this->generateUrl('user_profile_what_i_like'));
-    } 
-    
+    }   
     
     private function updateAnswerIfFound($question,$answers,$user) {
         $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
-        $count_result=count($result);        
+        $count_result=count($result);      
        
         if($count_result>0)
         {
