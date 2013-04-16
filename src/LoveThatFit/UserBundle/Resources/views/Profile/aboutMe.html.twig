@@ -82,17 +82,7 @@
          <label>Age</label>    {{app.user.age}}
     </div> 
         
-        
-        
-        
-      <div id="userimage" align="left">
-       {% if(app.user.AvatarWebPath) %} 
-          <img src="{{asset(app.user.AvatarWebPath)}}">
-      
-       {% else %}
-          <div > <img src="{{asset("uploads/ltf/default/no_image.jpg")}}" width="50" height="50"></idv>  
-   {% endif %} 
-          </div>  
+   {% include 'LoveThatFitUserBundle:Profile:_user_profile_image.html.twig'%} 
         
       {{ form_rest(form) }}  
         <input type="submit" value="Edit Info" />

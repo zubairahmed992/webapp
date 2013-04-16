@@ -326,7 +326,7 @@ class User  implements UserInterface, \Serializable{
      * @param datetime $birthDate
      * @return User
      */
-    public function setBirthDate(\dateTime $birthDate) {
+    public function setBirthDate($birthDate) {
         $this->birthDate = $birthDate;
 
         return $this;

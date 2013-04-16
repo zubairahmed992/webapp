@@ -1,0 +1,11 @@
+ <div id="userimage" align="left">
+       {% if(app.user.AvatarWebPath) %} 
+       <img src="{{asset(app.user.AvatarWebPath)}}">
+      {% else %}
+      {% if( app.user.gender=='m') %}
+       <img src="{{asset("bundles/lovethatfit/site/images/man_icon.jpg")}}" >
+       {% else %}
+       <img src="{{asset("bundles/lovethatfit/site/images/female_icon.jpg")}}" >
+       {% endif %} 
+       {% endif %} 
+       </div> 
