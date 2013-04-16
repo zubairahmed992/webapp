@@ -662,7 +662,7 @@ class User  implements UserInterface, \Serializable{
     {
         return null === $this->image
             ? null
-            : $this->getUploadDir().'/'.$this->image;
+            : $this->getUploadDir().'/'.$this->image .'?rand='.uniqid();
     }
     //----------------------------------------------------------
       public function getDirWebPath()
