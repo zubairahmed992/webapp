@@ -4839,7 +4839,7 @@ input[type="submit"].btn.btn-mini {
 
 
 .show-grid .span2:last-child :not(.title_hd){
-	line-height:10px!important;
+	
 	min-height:10px!important;
 	
 }
