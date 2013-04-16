@@ -415,10 +415,10 @@ class ProductController extends Controller {
    //--------------------------------------------------------------
     public function productDetailColorDeleteAction(Request $request,$id, $color_id){
          $em = $this->getDoctrine()->getManager();
-        
+      
          $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductColor');
          $product = $repository->find($color_id);
-         
+            
          $em->remove($product);
          $em->flush();
          
