@@ -345,15 +345,25 @@ class ProductController extends Controller {
 
     public function productDetailColorEditAction($id, $color_id) {
 
-        $entity = $this->getProduct($id);
-        if (!$entity) {
+        
+        $product = $this->getProduct($id);        
+        if (!$product) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
-
+        //-------------------
+        $em = $this->getDoctrine()->getManager();        
+        $selected_sizes = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->getProductSizeTitleArray(1);
+        $sizeTitle=array();
+        foreach($selected_sizes as $ss){            
+            array_push($sizeTitle, $ss['title']);
+        }
+        //-------------------
+        
         $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
-
+        $colorform->get('sizes')->setData($sizeTitle);
+        
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity,
+                    'product' => $product,
                     'colorform' => $colorform->createView(),
                     'color_id' => $color_id,
                 ));
@@ -378,19 +388,41 @@ class ProductController extends Controller {
 
     
     public function productDetailColorUpdateAction($id, $color_id) {
+        
         $product = $this->getProduct($id);
-
         if (!$product) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
 
-# UPDATE functionality ?????????????????
-        # FlASH Message ?????????????????
-        
-        $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
-        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $product,
-                ));
+        $productColor = $this->getProductColor($color_id);
+        $colorForm = $this->createForm(new ProductColorType(), $productColor);
+        $colorForm->bind($request);
+
+        if ($colorForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $productColor->upload(); //----- file upload method 
+            $em->persist($productColor);
+            $em->flush();
+
+            $this->get('session')->setFlash(
+                    'success', 'Product Color Detail has been updated!'
+            );
+
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                        'product' => $product,
+                    ));
+        } else {
+
+            $this->get('session')->setFlash(
+                    'warning', 'Unable to update Product Color Detail!'
+            );
+
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                        'product' => $product,
+                        'colorform' => $colorForm->createView(),
+                        'color_id' => $color_id,
+                    ));
+        }
     }
 
     //--------------------------------------------------------------
@@ -398,12 +430,11 @@ class ProductController extends Controller {
 
         try {
             $em = $this->getDoctrine()->getManager();
-
             $productColor = $em->getRepository('LoveThatFitAdminBundle:ProductColor')->find($color_id);
-
             if (!$productColor) {
                 throw $this->createNotFoundException('Unable to find Product Color.');
             }
+            
             $em->remove($productColor);
             $em->flush();
             
