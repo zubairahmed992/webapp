@@ -52,7 +52,7 @@ class ProductController extends Controller {
                 ->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
 
         return $this->render('LoveThatFitAdminBundle:Product:show.html.twig', array(
@@ -88,10 +88,16 @@ class ProductController extends Controller {
             $entity->uploadFittingRoomImage();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->setFlash('success','The Product has been Created!');
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
-        }
-
+        }else
+        {
+            $this->get('warning')->setFlash('warning','The Product cannot be Created!');
+             return $this->render('LoveThatFitAdminBundle:Product:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+                ));
+        }  
         return $this->render('LoveThatFitAdminBundle:Product:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -121,7 +127,7 @@ class ProductController extends Controller {
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
 
         $form = $this->getEditForm($entity);
@@ -136,9 +142,16 @@ class ProductController extends Controller {
             $entity->uploadFittingRoomImage();
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->setFlash('success','The Product has been Update!');
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
         } else {
-            throw $this->createNotFoundException('Unable to update Brand.');
+           
+            $this->get('warning')->setFlash('warning','Unable to update Brand.');
+            return $this->render('LoveThatFitAdminBundle:Product:edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity));           
+            
         }
     }
 
@@ -151,18 +164,15 @@ class ProductController extends Controller {
             $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Product.');
+                $this->get('session')->setFlash('warning','Unable to find Product.');                
             }
 
             $em->remove($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_products'));
-            
+            $this->get('success')->setFlash('success','This Product has been deleted!');
+            return $this->redirect($this->generateUrl('admin_products'));            
         } catch (\Doctrine\DBAL\DBALException $e) {
-            $this->get('session')->setFlash(
-                    'warning', 'This Product cannot be deleted!'
-            );
+            $this->get('session')->setFlash('warning','This Product cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
@@ -186,7 +196,7 @@ class ProductController extends Controller {
         $brand = $em->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning','Unable to find Brand.');            
         }
         return $brand;
     }
@@ -229,8 +239,14 @@ class ProductController extends Controller {
 
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->setFlash('success', 'Product Detail has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
+        }else
+        {
+            $this->get('session')->setFlash('warning', 'Product Detail cannot be created.');
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
+                    'form' => $productForm->createView(),
+                ));
         }
     }
 
@@ -258,7 +274,7 @@ class ProductController extends Controller {
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');            
         }
 
         $form = $this->createForm(new ProductDetailType(), $entity);
@@ -269,9 +285,15 @@ class ProductController extends Controller {
             $entity->setUpdatedAt(new \DateTime('now'));
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->setFlash('success', 'Product Detail has been Update.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
         } else {
-            throw $this->createNotFoundException('Unable to update Product Detail.');
+            $this->get('session')->setFlash('warning', 'Unable to update Product Detail.');
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                   'entity' => $entity));
+            
         }
     }
 
@@ -283,19 +305,18 @@ class ProductController extends Controller {
             $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Product.');
+               $this->get('session')->setFlash('warning', 'Unable to find Product.');               
             }
 
             $em->remove($entity);
             $em->flush();
-
+            $this->get('session')->setFlash('success', 'Product Detail has been deleted.');
             return $this->redirect($this->generateUrl('admin_products'));
             
         } catch (\Doctrine\DBAL\DBALException $e) {
             $this->get('session')->setFlash(
                     'warning', 'This Product cannot be deleted!'
-            );
-            
+            );            
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
@@ -306,7 +327,7 @@ class ProductController extends Controller {
         $product = $this->getProduct($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');            
         }
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
@@ -334,10 +355,13 @@ class ProductController extends Controller {
             $productColor->upload(); //----- file upload method 
             $em->persist($productColor);
             $em->flush();
-
+             
             $this->createSizeItem($product, $productColor, $colorform->getData()->getSizes()); //--creating sizes & item records
-            //Add FLASH messages ??????????????????????????????
+            $this->get('session')->setFlash('success', 'Product Detail color has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+        }else
+        {
+            $this->get('session')->setFlash('warning', 'Product Detail color cannot been created.');
         }
     }
 
@@ -348,7 +372,7 @@ class ProductController extends Controller {
         
         $product = $this->getProduct($id);        
         if (!$product) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
         //-------------------
         $em = $this->getDoctrine()->getManager();        
@@ -373,7 +397,7 @@ class ProductController extends Controller {
     public function productDetailColorAddNewAction($id) {
         $entity = $this->getProduct($id);
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
 
         $colorform = $this->createForm(new ProductColorType());
@@ -391,7 +415,7 @@ class ProductController extends Controller {
         
         $product = $this->getProduct($id);
         if (!$product) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
 
         $productColor = $this->getProductColor($color_id);
@@ -432,14 +456,12 @@ class ProductController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $productColor = $em->getRepository('LoveThatFitAdminBundle:ProductColor')->find($color_id);
             if (!$productColor) {
-                throw $this->createNotFoundException('Unable to find Product Color.');
+                $this->get('session')->setFlash('warning', 'Unable to find Product.');  
             }
             
             $em->remove($productColor);
-            $em->flush();
-            
-# FlASH Message ?????????????????
-
+            $em->flush();            
+            $this->get('session')->setFlash('success', 'Product Detail color has been Deleted.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } catch (\Doctrine\DBAL\DBALException $e) {
             $this->get('session')->setFlash(
@@ -457,7 +479,7 @@ class ProductController extends Controller {
         $product = $this->getProduct($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('Unable to find Product.');
+           $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
 
          $sizeForm = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
@@ -487,6 +509,7 @@ class ProductController extends Controller {
         if ($sizeform->isValid()) {
             $em->persist($entity_size);
             $em->flush();
+            $this->get('session')->setFlash('success', 'Product Detail size has been update.');
            return $this->redirect($this->generateUrl('admin_product_detail_show',  array('id' => $id)));
         } else {
             $this->get('session')->setFlash('warning', 'Please Try again');
@@ -520,7 +543,7 @@ class ProductController extends Controller {
         $entity = $this->getProduct($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+           $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
 
         $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
@@ -538,7 +561,7 @@ class ProductController extends Controller {
 
         $entity = $this->getProduct($id);
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+          $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -563,7 +586,12 @@ class ProductController extends Controller {
                         'item_id' => 0,
                     ));
         } else {
-            throw $this->createNotFoundException('Unable to update Product Detail Item');
+            $this->get('session')->setFlash('warning', 'Unable to Product Detail Item');           
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'itemform' => $itemform->createView(),
+                    'item_id' => $item_id,
+                ));
         }
     }
 
@@ -576,7 +604,7 @@ class ProductController extends Controller {
 
         $em->remove($product);
         $em->flush();
-$this->get('session')->setFlash('success', 'Successfully Deleted');
+        $this->get('session')->setFlash('success', 'Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
 
