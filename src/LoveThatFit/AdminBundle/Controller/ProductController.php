@@ -376,7 +376,7 @@ class ProductController extends Controller {
         }
         //-------------------
         $em = $this->getDoctrine()->getManager();        
-        $selected_sizes = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->getProductSizeTitleArray(1);
+        $selected_sizes = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->getProductSizeTitleArray($id);
         $sizeTitle=array();
         foreach($selected_sizes as $ss){            
             array_push($sizeTitle, $ss['title']);
@@ -411,7 +411,7 @@ class ProductController extends Controller {
     //--------------------------------------------------------------
 
     
-    public function productDetailColorUpdateAction($id, $color_id) {
+    public function productDetailColorUpdateAction(Request $request, $id, $color_id) {
         
         $product = $this->getProduct($id);
         if (!$product) {
@@ -427,6 +427,8 @@ class ProductController extends Controller {
             $productColor->upload(); //----- file upload method 
             $em->persist($productColor);
             $em->flush();
+            
+            $this->createSizeItem($product, $productColor, $colorForm->getData()->getSizes());
 
             $this->get('session')->setFlash(
                     'success', 'Product Color Detail has been updated!'
