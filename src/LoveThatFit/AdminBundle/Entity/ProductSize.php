@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * LoveThatFit\AdminBundle\Entity\ProductSize
  *
  * @ORM\Table(name="product_size")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductSizeRepository")
  */
 class ProductSize
 {
