@@ -595,7 +595,7 @@ header.reg .strip_rgt {
 	height:60px;
 }
 .reg_next_step {
-	background: linear-gradient(to bottom, #929707 0%, #AAB01D 100%) repeat scroll 0 0 transparent;
+	background: #929707;
 	font-size:1em;
 	color:#fff;
 	border:none;
