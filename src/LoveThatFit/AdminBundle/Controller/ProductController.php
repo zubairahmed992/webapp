@@ -64,10 +64,7 @@ class ProductController extends Controller {
     public function newAction() {
 
         $entity = new Product();
-
         $form = $this->getEditForm($entity);
-
-
         return $this->render('LoveThatFitAdminBundle:Product:new.html.twig', array(
                     'form' => $form->createView()));
     }
@@ -85,7 +82,6 @@ class ProductController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
-
 
             $entity->upload(); //----- file upload method 
 
@@ -134,8 +130,6 @@ class ProductController extends Controller {
         $deleteForm = $this->getDeleteForm($id);
 
         if ($form->isValid()) {
-
-
             $entity->setUpdatedAt(new \DateTime('now'));
 
             $entity->upload(); //----- file upload method 
@@ -164,6 +158,7 @@ class ProductController extends Controller {
             $em->flush();
 
             return $this->redirect($this->generateUrl('admin_products'));
+            
         } catch (\Doctrine\DBAL\DBALException $e) {
             $this->get('session')->setFlash(
                     'warning', 'This Product cannot be deleted!'
@@ -196,23 +191,28 @@ class ProductController extends Controller {
         return $brand;
     }
 
-    /*     * ****************************************************************************
-     * ************************* PRODUCT DETAIL **********************************
-     * ***************************************************************************** */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /******************************************************************************
+     ************************** PRODUCT DETAIL **********************************
+     ****************************************************************************** */
 
     public function productDetailNewAction() {
 
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product');
-
         $productForm = $this->createForm(new ProductDetailType());
-
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                     'form' => $productForm->createView(),
                 ));
     }
 
-    /*     * **************************************************************************** */
+    //------------------------------------------------------------------------------
 
     public function productDetailCreateAction(Request $request) {
 
@@ -223,18 +223,18 @@ class ProductController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
+            
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
 
             $em->persist($entity);
             $em->flush();
 
-    return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
         }
     }
 
-    /*     * **************************************************************************** */
+    //------------------------------------------------------------------------------
 
     public function productDetailEditAction($id) {
         $entity = $this->getDoctrine()
@@ -250,7 +250,7 @@ class ProductController extends Controller {
                     'entity' => $entity));
     }
 
-    /*     * *************************************************************************** */
+    //------------------------------------------------------------------------------
 
     public function productDetailUpdateAction(Request $request, $id) {
 
@@ -264,12 +264,9 @@ class ProductController extends Controller {
         $form = $this->createForm(new ProductDetailType(), $entity);
         $form->bind($request);
 
-        $deleteForm = $this->getDeleteForm($id);
-
         if ($form->isValid()) {
 
             $entity->setUpdatedAt(new \DateTime('now'));
-
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
@@ -278,12 +275,11 @@ class ProductController extends Controller {
         }
     }
 
-    /*     * *************************************************************************** */
+    //------------------------------------------------------------------------------
 
     public function productDetailDeleteAction($id) {
         try {
             $em = $this->getDoctrine()->getManager();
-
             $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
             if (!$entity) {
@@ -294,231 +290,211 @@ class ProductController extends Controller {
             $em->flush();
 
             return $this->redirect($this->generateUrl('admin_products'));
+            
         } catch (\Doctrine\DBAL\DBALException $e) {
             $this->get('session')->setFlash(
                     'warning', 'This Product cannot be deleted!'
             );
+            
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
 
-    /*     * *************************************************************************** */
+    //------------------------------------------------------------------------------
 
     public function productDetailShowAction($id) {
-            $entity = $this->getProduct($id);
-        
-        if (!$entity) {
+        $product = $this->getProduct($id);
+
+        if (!$product) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
-        
-        return $this->renderProductDetail($entity);
+
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $product
+                ));
     }
 
-    /*     * ************************* PRODUCT DETAIL COLOR ************************************************** */
-
+    //------------------------------------------------------------------------------
+    /*************************** PRODUCT DETAIL COLOR ************************************************** */
+//------------------------------------------------------------------------------
+    
+    
     public function productDetailColorCreateAction(Request $request, $id) {
 
         $product = $this->getProduct($id);
+        $productColor = new ProductColor();
+        $productColor->setProduct($product);
         
-        $entity = new ProductColor();
-        $entity->setProduct($product);
-        $colorform = $this->createForm(new ProductColorType(), $entity);
-
+        $colorform = $this->createForm(new ProductColorType(), $productColor);
         $colorform->bind($request);
 
         if ($colorform->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $entity->upload(); //----- file upload method 
-
-            $em->persist($entity);
+            $productColor->upload(); //----- file upload method 
+            $em->persist($productColor);
             $em->flush();
-            
-            $this->createSizeItem($product, $entity, $colorform->getData()->getSizes()); //--creating sizes & item records
-            
+
+            $this->createSizeItem($product, $productColor, $colorform->getData()->getSizes()); //--creating sizes & item records
+            //Add FLASH messages ??????????????????????????????
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         }
     }
+
     //--------------------------------------------------------------
-    
-    public function productDetailColorEditAction($id, $color_id){
-        
-       $entity = $this->getProduct($id);  
-       if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
-        }
-        
-        $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
-    
-        $sizeform = $this->createForm(new ProductSizeType());
-        $itemform = $this->createForm(new ProductItemType());
-    
-    
-    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity, 
-                    'colorform' => $colorform->createView(),
-                    'sizeform' => $sizeform->createView(),
-                    'itemform' => $itemform->createView(),
-                    'color_id' =>  $color_id,
-                ));
-        
-        
-    }  
- //--------------------------------------------------------------   
-   public function productDetailColorAddNewAction($id)
-   {
-        $entity = $this->getProduct($id);  
-       if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
-        }
-        
-       $colorform = $this->createForm(new ProductColorType());
-    
-        $sizeform = $this->createForm(new ProductSizeType());
-        $itemform = $this->createForm(new ProductItemType());
-      
-  
-    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity, 
-                    'colorform' => $colorform->createView(),
-                    'sizeform' => $sizeform->createView(),
-                    'itemform' => $itemform->createView(),
-                   
-                ));
-       
-   }
-   //--------------------------------------------------------------
-   public function productDetailColorUpdateAction($id, $color_id)
-   {
-         $entity = $this->getProduct($id);
-        
+
+    public function productDetailColorEditAction($id, $color_id) {
+
+        $entity = $this->getProduct($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
-       
-      $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
-    
-        $sizeform = $this->createForm(new ProductSizeType());
-        $itemform = $this->createForm(new ProductItemType());
-    
-    
-    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity, 
+
+        $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
+
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
                     'colorform' => $colorform->createView(),
-                    'sizeform' => $sizeform->createView(),
-                    'itemform' => $itemform->createView(),
-                   
+                    'color_id' => $color_id,
                 ));
-       
-       
-   }
-   //--------------------------------------------------------------
-    public function productDetailColorDeleteAction(Request $request,$id, $color_id){
-       
-          try {
+    }
+
+    //--------------------------------------------------------------   
+    public function productDetailColorAddNewAction($id) {
+        $entity = $this->getProduct($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+
+        $colorform = $this->createForm(new ProductColorType());
+
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'colorform' => $colorform->createView(),
+                ));
+    }
+
+    //--------------------------------------------------------------
+
+    
+    public function productDetailColorUpdateAction($id, $color_id) {
+        $product = $this->getProduct($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+
+# UPDATE functionality ?????????????????
+        # FlASH Message ?????????????????
+        
+        $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $product,
+                ));
+    }
+
+    //--------------------------------------------------------------
+    public function productDetailColorDeleteAction($id, $color_id) {
+
+        try {
             $em = $this->getDoctrine()->getManager();
 
-            $entity = $em->getRepository('LoveThatFitAdminBundle:ProductColor')->find($color_id);
+            $productColor = $em->getRepository('LoveThatFitAdminBundle:ProductColor')->find($color_id);
 
-            if (!$entity) {
+            if (!$productColor) {
                 throw $this->createNotFoundException('Unable to find Product Color.');
             }
-
-            $em->remove($entity);
+            $em->remove($productColor);
             $em->flush();
+            
+# FlASH Message ?????????????????
 
-            return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } catch (\Doctrine\DBAL\DBALException $e) {
             $this->get('session')->setFlash(
                     'warning', 'This Product Color  cannot be deleted!'
             );
-          return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         }
-         
-         }
-   
-  /************************** PRODUCT DETAIL SIZE ************************************************** */ 
-   
-   //--------------------------------------------------------------
-    
-    public function productDetailSizeEditAction($id, $size_id) {
-        $entity = $this->getProduct($id);
-        
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
-        }
-        
-        return $this->renderProductDetail($entity, $size_id);
-    }
-//----------------------------------------------------------------
-    public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
-        
-        
-        $entity = $this->getProduct($id);
-        
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
-        }
-        
-        return $this->renderProductDetail($entity, $size_id);
     }
 
-   
-    
-//-----------------------------------------------------------------------
- public function productDetailSizeDeleteAction(Request $request,$id, $size_id){
-         $em = $this->getDoctrine()->getManager();
-        
-         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductSize');
-         $product = $repository->find($size_id);
-         
-         $em->remove($product);
-         $em->flush();
-         
-         return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
- }
- 
- 
-//
-  /*     * ************************* PRODUCT DETAIL ITEM ************************************************** */
- //--------------------------------------------------------------
-    
-    public function productDetailItemEditAction($id, $item_id) {
-        $entity = $this->getProduct($id);
-        
-        if (!$entity) {
+    /************************* PRODUCT DETAIL SIZE ************************************************** */
+    //--------------------------------------------------------------
+
+    public function productDetailSizeEditAction($id, $size_id) {
+        $product = $this->getProduct($id);
+
+        if (!$product) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
-        
-        
-        
-        $colorform = $this->createForm(new ProductColorType());
-        $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
-    
-    
-    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity, 
-                    'colorform' => $colorform->createView(),
-                     'itemform' => $itemform->createView(),
-                    'item_id' => $item_id,
-         
+
+         $sizeForm = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
+                 
+         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $product,
+                    'sizeform' => $sizeForm->createView(),         
                 ));
         
-        
-       // return $this->renderProductDetail($entity, $item_id);
     }
-     public function productDetailItemUpdateAction(Request $request, $id,$item_id) {
-       
-        
+
+//----------------------------------------------------------------
+    public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
+
+
         $entity = $this->getProduct($id);
-        $colorform = $this->createForm(new ProductColorType());
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
-        
-         $em = $this->getDoctrine()->getManager();
-         $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find($item_id);
+//????????????? Flash
+        //???????????????????????????
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+    }
 
+//-----------------------------------------------------------------------
+    public function productDetailSizeDeleteAction(Request $request, $id, $size_id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductSize');
+        $product = $repository->find($size_id);
+
+        $em->remove($product);
+        $em->flush();
+            //????????????? Flash
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+    }
+
+//
+    /*     * ************************* PRODUCT DETAIL ITEM ************************************************** */
+    //--------------------------------------------------------------
+
+    public function productDetailItemEditAction($id, $item_id) {
+        $entity = $this->getProduct($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+
+        $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
+
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'itemform' => $itemform->createView(),
+                    'item_id' => $item_id,
+                ));
+
+    }
+//----------------------------------------------------------------
+    public function productDetailItemUpdateAction(Request $request, $id, $item_id) {
+
+
+        $entity = $this->getProduct($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find($item_id);
         if (!$entity_item) {
             throw $this->createNotFoundException('Unable to find Product Item.');
         }
@@ -526,104 +502,84 @@ class ProductController extends Controller {
         $itemform = $this->createForm(new ProductItemType(), $entity_item);
         $itemform->bind($request);
 
-         if ($itemform->isValid()) {
+        if ($itemform->isValid()) {
 
-          $entity_item->upload(); //----- file upload method 
-           
-          $em->persist($entity_item);
-          $em->flush();
-           
-          return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                                'product' => $entity, 
-                                'colorform' => $colorform->createView(),
-                                'itemform' => $itemform->createView(),
-                                'item_id' => 0,
-                               
+            $entity_item->upload(); //----- file upload method 
 
-                        ));
+            $em->persist($entity_item);
+            $em->flush();
+            //?????????????????? Flash message
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                        'product' => $entity,
+                        'itemform' => $itemform->createView(),
+                        'item_id' => 0,
+                    ));
         } else {
             throw $this->createNotFoundException('Unable to update Product Detail Item');
         }
     }
-    
+
     //-----------------------------------------------------------------------
- public function productDetailItemDeleteAction(Request $request,$id, $item_id){
-         $em = $this->getDoctrine()->getManager();
-        
-         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
-         $product = $repository->find($item_id);
-         
-         $em->remove($product);
-         $em->flush();
-         
-         return $this->redirect($this->generateUrl('admin_product_detail_show',array('id' => $id)));
- }
+    public function productDetailItemDeleteAction(Request $request, $id, $item_id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
+        $product = $repository->find($item_id);
+
+        $em->remove($product);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+    }
+
 //        
-    //------------------------- Private methods -------------------------
-    
-    
-    private function renderProductDetail($product, $size_id=null,$item_id=null)
-{
-       
-   // $colorform = $this->createForm(new ProductColorType());
-    
-    $sizeform = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
-    $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
-    
-    
-    return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $product, 
-                    'sizeform' => $sizeform->createView(),
-                    'itemform' => $itemform->createView(),
-                    'size_id' => $size_id,
-                    'item_id' => $item_id,
-            
-                ));
-}
-    
+    //------------------------- Private methods ------------------------- 
+
 //------------------------------------------------------------------------
     public function getProduct($id) {
         return $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->find($id);
+                        ->getRepository('LoveThatFitAdminBundle:Product')
+                        ->find($id);
     }
 
 //------------------------------------------------------------------------
     public function getProductSize($id) {
         return $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductSize')
-                ->find($id);
+                        ->getRepository('LoveThatFitAdminBundle:ProductSize')
+                        ->find($id);
     }
+
 //------------------------------------------------------------------------
     public function getProductItem($id) {
         return $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductItem')
-                ->find($id);
-    }    
+                        ->getRepository('LoveThatFitAdminBundle:ProductItem')
+                        ->find($id);
+    }
+
     //------------------------------------------------------------------------
     public function getProductColor($id) {
         return $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductColor')
-                ->find($id);
-    } 
+                        ->getRepository('LoveThatFitAdminBundle:ProductColor')
+                        ->find($id);
+    }
 
 //------------------------------------------------------------------
 
- 
-private function createSizeItem($product, $color, $sizes) {
+
+    private function createSizeItem($product, $color, $sizes) {
         $em = $this->getDoctrine()->getManager();
         foreach ($sizes as $s) {
-            $p_size=$product->getThisSize($s);
-            
-            if(!$p_size){
-                         //--------------inseart size------------
+            $p_size = $product->getThisSize($s);
+
+            if (!$p_size) {
+                //--------------inseart size------------
                 $p_size = new ProductSize();
                 $p_size->setProduct($product);
-                $p_size->setTitle($s);                
+                $p_size->setTitle($s);
                 $em->persist($p_size);
-                $em->flush();                
+                $em->flush();
             }
-            
+
             //-------------------- insert item ----------------
             $p_item = new ProductItem();
             $p_item->setProduct($product);
@@ -632,7 +588,7 @@ private function createSizeItem($product, $color, $sizes) {
             $em->persist($p_item);
             $em->flush();
         }
-    }    
-    
+    }
+
 }
 
