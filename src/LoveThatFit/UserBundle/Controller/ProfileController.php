@@ -90,8 +90,6 @@ class ProfileController extends Controller {
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
         
-        $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
-        
         if ($userForm->isValid())
         {
             $entity->uploadAvatar();
@@ -99,7 +97,7 @@ class ProfileController extends Controller {
             $em->flush(); 
             $this->get('session')->setFlash('Success', 'Profile has been updated.');    
         }        
-        
+        $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
       return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
@@ -146,16 +144,16 @@ class ProfileController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();                
-                $this->get('session')->setFlash('Success', 'Password Updated Successfully');                
+                $this->get('session')->setFlash('Password-Success', 'Password Updated Successfully');                
                 } 
                 else
                 {
-                $this->get('session')->setFlash('Warning', 'Confirm pass doesnt match');
+                $this->get('session')->setFlash('Password-Warning', 'Confirm pass doesnt match');
                 }
            }
            else 
            {
-            $this->get('session')->setFlash('Warning', 'Please Enter Correct Password');
+            $this->get('session')->setFlash('Password-Warning', 'Please Enter Correct Password');
            
         }
      return $this->redirect($this->getRequest()->headers->get('referer'));      

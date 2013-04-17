@@ -94,15 +94,15 @@ return true;
    
 
 <div class="acct_second">
-    {% if app.session.hasFlash('Success') %}
+    {% if app.session.hasFlash('Password-Success') %}
   <div class="alert alert-success">    
-    {{ app.session.flash('Success') }}
+    {{ app.session.flash('Password-Success') }}
    </div>
    
 {% endif %}
-{% if app.session.hasFlash('Warning') %}
+{% if app.session.hasFlash('Password-Warning') %}
        <div class="alert alert-error">       
-        {{ app.session.flash('Warning') }}
+        {{ app.session.flash('Password-Warning') }}
         </div>
    
 {% endif %}   

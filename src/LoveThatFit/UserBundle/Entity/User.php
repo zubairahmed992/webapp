@@ -1,9 +1,10 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
-
+use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -646,7 +647,35 @@ class User  implements UserInterface, \Serializable{
         $this->file->move(
                 $this->getUploadRootDir(), $this->avatar
         );
-        
+        $filename = $this->getAbsoluteAvatarPath();
+        $image_info = getimagesize($filename); //Get the size of an image
+        $image_type = $image_info[2];
+        switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                $source = imagecreatefromjpeg($filename);  //create jpg image
+                break;
+            case IMAGETYPE_GIF:
+                $source = imagecreatefromgif($filename); //create gif image
+                break;
+            case IMAGETYPE_PNG:
+                $source = imagecreatefrompng($filename); //create png image
+                break;
+        }
+        $img_new = imagecreatetruecolor(220,250); 
+        imagecolorallocate($img_new,255,255, 255);
+        imagecopyresampled($img_new, $source, 0, 0, 0, 0, 220,250, imagesx($source), imagesy($source));
+        $img_path=$this->getUploadRootDir().'/'. $this->avatar;       
+        switch ($image_type) {
+                    case IMAGETYPE_JPEG:
+                        imagejpeg($img_new,$img_path, 75);
+                        break;
+                    case IMAGETYPE_GIF:
+                        imagegif($img_new, $img_path);
+                        break;
+                    case IMAGETYPE_PNG:
+                        imagepng($img_new, $img_path);
+                        break;
+                }
         $this->file = null;             
     }
     
@@ -699,7 +728,14 @@ class User  implements UserInterface, \Serializable{
             : $this->getUploadDir().'/'.$this->id. '_avatar'.'.'.$ext;    
         
     }
-
+    
+    
+public function getAbsoluteAvatarPath()
+    {
+        return null === $this->avatar
+            ? null
+            : $this->getUploadRootDir().'/'.$this->avatar;
+    }
     
     
 
