@@ -83,8 +83,11 @@ class BrandController extends Controller {
             
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->setFlash('success','The Brand has been Created!');
             return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
+        }else
+        {
+            $this->get('warning')->setFlash('warning','The Brand can not be Created!');
         }
 
         return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
@@ -135,11 +138,12 @@ class BrandController extends Controller {
             
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->setFlash('success','The Brand has been update!');
             return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
         } 
-
         else {
-           throw $this->createNotFoundException('Unable to update Brand.');
+           $this->get('warning')->setFlash('warning','Unable to update Brand!');
+            //throw $this->createNotFoundException('Unable to update Brand.');
         }
     }
 
@@ -154,16 +158,13 @@ class BrandController extends Controller {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Brand.');
             }
-
             $em->remove($entity);
             $em->flush();
+            $this->get('session')->setFlash('success','The Brand has been deleted!');
        return $this->redirect($this->generateUrl('admin_brands'));
         }catch (\Doctrine\DBAL\DBALException $e)
         {
-             $this->get('session')->setFlash(
-            'warning',
-            'This Brand cannot be deleted!'
-        );
+             $this->get('session')->setFlash('warning','This Brand cannot be deleted!');
              return $this->redirect($this->getRequest()->headers->get('referer'));
              
         }

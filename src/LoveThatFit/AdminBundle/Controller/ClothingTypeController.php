@@ -79,8 +79,11 @@ class ClothingTypeController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($clothing_type);
                 $em->flush();
-
+                $this->get('session')->setFlash('success','The Clothing Type has been Created!');
                 return $this->redirect($this->generateUrl('admin_clothing_types'));
+            }else
+            {
+                $this->get('warning')->setFlash('warning','The Clothing Type can not be Created!');
             }
 
         return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
@@ -124,11 +127,13 @@ if ($form->isValid()) {
 
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->setFlash('success','The Clothing Type has been Update!');
             return $this->redirect($this->generateUrl('admin_clothing_types'));
 }
 else
 {
-            return $this->redirect($this->generateUrl('admin_clothing_types'));
+    $this->get('warning')->setFlash('warning','The Clothing Type cant Update!');       
+    return $this->redirect($this->generateUrl('admin_clothing_types'));
 }
     }
     
@@ -142,19 +147,16 @@ else
             $entity = $em->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Clothing Type.');
+               $this->get('warning')->setFlash('warning','Unable to find Clothing Type');
+                //throw $this->createNotFoundException('Unable to find Clothing Type.');
             }
-
             $em->remove($entity);
             $em->flush();
-        
+        $this->get('success')->setFlash('success','THis Clothing Type has been deleted');
             return $this->redirect($this->generateUrl('admin_clothing_types'));
            }catch (\Doctrine\DBAL\DBALException $e)
         {
-             $this->get('session')->setFlash(
-            'warning',
-            'This Clothing Type cannot be deleted!'
-        );
+             $this->get('session')->setFlash('warning','This Clothing Type cannot be deleted!');
              return $this->redirect($this->getRequest()->headers->get('referer'));
              
         }

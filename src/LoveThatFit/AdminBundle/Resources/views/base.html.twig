@@ -55,13 +55,17 @@
 {% if app.session.hasFlash('warning') %}
        <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Warning!</strong> 
-  
-        {{ app.session.flash('warning') }}
-    
-</div>
-   
-{% endif %}      
+  <strong>Warning!</strong>   
+ {{ app.session.flash('warning') }}    
+</div>   
+{% endif %}
+ {% if app.session.hasFlash('success') %}
+       <div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Success!</strong>   
+ {{ app.session.flash('success') }}    
+</div>   
+{% endif %}         
    <div class="container-fluid">      
    
             {% block body %}{% endblock %}
