@@ -55,7 +55,13 @@ border-right:0px solid #ccc;
 
 #detail_wrapper .p_title .span1{
     
-    width:10%!important;
+    width:9.5%!important;
+
+}
+
+#detail_wrapper .p_title .span1:last-child{
+    
+    width:14%!important;
 
 }
 
