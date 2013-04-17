@@ -152,10 +152,12 @@ class ProfileController extends Controller {
                 }
            }
            else 
-           {
-            $this->get('session')->setFlash('Password-Warning', 'Please Enter Correct Password');
-           
-        }
+
+       
+              {
+            $this->get('session')->setFlash('Warning', 'Please Enter Correct Password');
+             }
+
      return $this->redirect($this->getRequest()->headers->get('referer'));      
     }
     

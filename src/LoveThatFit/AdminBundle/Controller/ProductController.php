@@ -421,7 +421,8 @@ class ProductController extends Controller {
     /************************* PRODUCT DETAIL SIZE ************************************************** */
     //--------------------------------------------------------------
 
-    public function productDetailSizeEditAction($id, $size_id) {
+    public function productDetailSizeEditAction($id,$size_id) {
+    
         $product = $this->getProduct($id);
 
         if (!$product) {
@@ -429,10 +430,10 @@ class ProductController extends Controller {
         }
 
          $sizeForm = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
-                 
          return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
-                    'sizeform' => $sizeForm->createView(),         
+                    'sizeform' => $sizeForm->createView(),
+                    'size_id' =>$size_id,
                 ));
         
     }
@@ -444,11 +445,27 @@ class ProductController extends Controller {
         $entity = $this->getProduct($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product.');
+            $this->get('session')->setFlash('warning', 'Please Insert valid value');
         }
-//????????????? Flash
-        //???????????????????????????
-        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+        $em = $this->getDoctrine()->getManager();
+        $entity_size = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->find($size_id);
+        
+        $sizeform = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
+        $sizeform->bind($request);
+
+        if ($sizeform->isValid()) {
+            $em->persist($entity_size);
+            $em->flush();
+           return $this->redirect($this->generateUrl('admin_product_detail_show',  array('id' => $id)));
+        } else {
+            $this->get('session')->setFlash('warning', 'Please Try again');
+             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'sizeform' => $sizeform->createView(),
+                    'size_id' =>$size_id,
+                ));
+        }
+        
     }
 
 //-----------------------------------------------------------------------
@@ -460,7 +477,7 @@ class ProductController extends Controller {
 
         $em->remove($product);
         $em->flush();
-            //????????????? Flash
+       $this->get('session')->setFlash('success', 'Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
 
@@ -508,7 +525,7 @@ class ProductController extends Controller {
 
             $em->persist($entity_item);
             $em->flush();
-            //?????????????????? Flash message
+           $this->get('session')->setFlash('success', 'Product item updated  Successfully');
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                         'product' => $entity,
                         'itemform' => $itemform->createView(),
@@ -528,7 +545,7 @@ class ProductController extends Controller {
 
         $em->remove($product);
         $em->flush();
-
+$this->get('session')->setFlash('success', 'Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
 

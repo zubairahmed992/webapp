@@ -1,81 +1,96 @@
 <div id="pro_sizes_wrapper">  
-<h2> Product Sizes</h2>
-  
+    <h2> Product Sizes</h2>
+{% if app.session.hasFlash('success') %}
+  <div class="alert alert-success">   
+    {{ app.session.flash('success') }}
+   </div>
+   
+{% endif %}
+    {% if app.session.hasFlash('warning') %}
+  <div class="alert alert-error">   
+    {{ app.session.flash('warning') }}
+   </div>
+   
+{% endif %}
 
-                             <table style="width:50%">
-                                
-                                     
-                                     
-                                       <div class="row-fluid show-grid p_title">
-                                       
-                                       <div class="span1 hds"><b>Title</b></div>
-                                       <div class="span1 hds"><b>Inseam</b></div>
-                                       <div class="span1 hds"><b>outseam</b></div>
-                                       <div class="span1 hds"><b>Hip</b></div>
-                                       <div class="span1 hds"><b>Bust</b></div>
-                                       <div class="span1 hds"><b>Back</b></div>
-                                       <div class="span1 hds"><b>Arm</b></div>
-                                       <div class="span1 hds"><b>Leg</b></div>
-                                       <div class="span1 hds"><b>Hem</b></div>
-                                       <div class="span1 hds"></div>
-                                       
-                                       
-                                       </div>
-                                 
-                                  
-                              
+    <table style="width:50%">
+
+
+
+        <div class="row-fluid show-grid p_title">
+
+            <div class="span1 hds"><b>Title</b></div>
+            <div class="span1 hds"><b>Inseam</b></div>
+            <div class="span1 hds"><b>outseam</b></div>
+            <div class="span1 hds"><b>Hip</b></div>
+            <div class="span1 hds"><b>Bust</b></div>
+            <div class="span1 hds"><b>Back</b></div>
+            <div class="span1 hds"><b>Arm</b></div>
+            <div class="span1 hds"><b>Leg</b></div>
+            <div class="span1 hds"><b>Hem</b></div>
+            <div class="span1 hds"></div>
+
+
+        </div>
+
+
+
 
 {% for ps in product.productSizes %}  
 
        {% if size_id is defined and  size_id and size_id == ps.id %}
-     <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
+        <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
 
-                                          
-           <div class="row-fluid show-grid p_title">
-                                       
-                                       <div class="span1 size_input">{{ ps.title }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.bust) }}{{ form_errors(sizeform.bust) }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.arm) }}{{ form_errors(sizeform.arm) }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.leg) }}{{ form_errors(sizeform.leg) }}</div>
-                                       <div class="span1 size_input">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
-                                       
-                                       <div class="span1"><input type="submit" value="SAVE" class="btn"/></div>   
-              </div>                        
-                                 
-                                          
-                 
+
+                <div class="row-fluid show-grid p_title">
+
+                    <div class="span1 size_input">{{ ps.title }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.bust) }}{{ form_errors(sizeform.bust) }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.arm) }}{{ form_errors(sizeform.arm) }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.leg) }}{{ form_errors(sizeform.leg) }}</div>
+                    <div class="span1 size_input">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
+
+                    <div class="span1">
+                        <input type="submit" value="SAVE" class="btn"/>
+                 <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">Cancel</a>
+                    </div>  
+                     
+                </div>                        
+
+
+
                                          	{{ form_rest(sizeform) }}
 
-                   
-             
 
 
-        </form>  
+
+
+            </form>  
 {% else %}
 
-  <div class="row-fluid show-grid p_title">
-                                    <div class="span1">{{ps.title}}</div>
-                                    <div class="span1">{{ps.inseam}}</div>
-                                     <div class="span1">{{ps.outseam}}</div>
-                                     <div class="span1">{{ps.hip}}</div>
-                                     <div class="span1">{{ps.bust}}</div>
-                                     <div class="span1">{{ps.back}}</div>
-                                     <div class="span1">{{ps.arm}}</div>
-                                     <div class="span1">{{ps.leg}}</div>
-                                     <div class="span1">{{ps.hem}}</div>
-                                     <div class="span1"><a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
-        <a href='{{path("admin_product_detail_size_delete",{"id":product.id, "size_id":ps.id})}}' class="btn">Delete</a></div> 
-                                     
-                 </div>              
-                               
-                               
-                                
+            <div class="row-fluid show-grid p_title">
+                <div class="span1">{{ps.title}}</div>
+                <div class="span1">{{ps.inseam}}</div>
+                <div class="span1">{{ps.outseam}}</div>
+                <div class="span1">{{ps.hip}}</div>
+                <div class="span1">{{ps.bust}}</div>
+                <div class="span1">{{ps.back}}</div>
+                <div class="span1">{{ps.arm}}</div>
+                <div class="span1">{{ps.leg}}</div>
+                <div class="span1">{{ps.hem}}</div>
+                <div class="span1"><a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
+                    <a href='{{path("admin_product_detail_size_delete",{"id":product.id, "size_id":ps.id})}}' class="btn">Delete</a></div> 
+
+            </div>              
+
+
+
                              {% endif %}
                              {%endfor%}
-                              </table>   
-</div>
+        </table>   
+    </div>
