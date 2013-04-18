@@ -55,6 +55,7 @@ class ProductColor
      * @var string $color_a
      *
      * @ORM\Column(name="color_a", type="string",nullable=true)
+     * @Assert\NotBlank()
      */
     private $color_a;
 

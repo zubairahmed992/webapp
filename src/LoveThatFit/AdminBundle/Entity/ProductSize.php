@@ -4,6 +4,7 @@ namespace LoveThatFit\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * LoveThatFit\AdminBundle\Entity\ProductSize
  *
@@ -55,6 +56,7 @@ class ProductSize
      * @var float $inseam
      *
      * @ORM\Column(name="inseam", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $inseam;
 
@@ -62,6 +64,7 @@ class ProductSize
      * @var float $outseam
      *
      * @ORM\Column(name="outseam", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $outseam;
 
@@ -69,6 +72,7 @@ class ProductSize
      * @var float $hip
      *
      * @ORM\Column(name="hip", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $hip;
 
@@ -76,6 +80,7 @@ class ProductSize
      * @var float $bust
      *
      * @ORM\Column(name="bust", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $bust;
 
@@ -83,6 +88,7 @@ class ProductSize
      * @var float $back
      *
      * @ORM\Column(name="back", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $back;
 
@@ -90,6 +96,7 @@ class ProductSize
      * @var float $arm
      *
      * @ORM\Column(name="arm", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $arm;
 
@@ -97,6 +104,7 @@ class ProductSize
      * @var float $leg
      *
      * @ORM\Column(name="leg", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $leg;
 
@@ -104,6 +112,7 @@ class ProductSize
      * @var float $hem
      *
      * @ORM\Column(name="hem", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $hem;
 
