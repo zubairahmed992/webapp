@@ -574,20 +574,24 @@ class ProductController extends Controller {
         $itemform = $this->createForm(new ProductItemType(), $entity_item);
         $itemform->bind($request);
 
+        //condition for image ??????????????????????????????????????
+           /* if (!$entity_item->getImage())
+            {
+                $form->get('image')->addError(new FormError('Please upload image'));
+            }
+*/
+        
         if ($itemform->isValid()) {
-
             $entity_item->upload(); //----- file upload method 
 
             $em->persist($entity_item);
             $em->flush();
            $this->get('session')->setFlash('success', 'Product item updated  Successfully');
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                        'product' => $entity,
-                        'itemform' => $itemform->createView(),
-                        'item_id' => 0,
-                    ));
+            
         } else {
+            
             $this->get('session')->setFlash('warning', 'Unable to Product Detail Item');           
+             
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $entity,
                     'itemform' => $itemform->createView(),
