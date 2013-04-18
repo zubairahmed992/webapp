@@ -1,3 +1,30 @@
+<script>
+function validate()
+{
+var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
+   
+var image_file = document.getElementById('product_file').value;
+var image_length = document.getElementById('product_file').length;
+
+var pos = image_file.lastIndexOf('.') + 1;
+var ext = image_file.substring(pos, image_length);
+if(image_file!="")
+{
+var final_ext = ext.toLowerCase();
+for (i = 0; i < extensions.length; i++)
+{
+if(extensions[i] == final_ext)
+{
+return true;
+}
+}
+document.getElementById('error').style.display="block";
+return false;
+
+}
+return true;
+}    
+</script> 
 <div id="pro_clr"> 
     <h2> Product Items</h2>
     
@@ -17,10 +44,9 @@
 
 
     {% if item_id is defined and item_id and item_id == pi.id %}
-        <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }}>
+      <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+        <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }} onsubmit="return validate();">
                                  {{ form_errors(itemform) }}
-
-
                 <div class="row-fluid show-grid p_title">
 
                     <div class="span2">{{ form_widget(itemform.line_number) }}{{ form_errors(itemform.line_number) }}</div>
@@ -42,7 +68,13 @@
                     <div class="span2">{{pi.lineNumber}}</div>
                     <div class="span2">{{pi.productSize.title}}</div>
                     <div class="span2">{{pi.productColor.title}}</div>
-                    <div class="span2"><img src="{{ asset(pi.WebPath) }}"/></div>
+                    <div class="span2">
+                        {%if(pi.image!='')%}
+                          <img src="{{ asset(pi.WebPath) }}"/>   
+                        {%else%}
+                             No Image                   
+                    {%endif%}
+                    </div>
 
                     <div class="span2">
                         <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a>
