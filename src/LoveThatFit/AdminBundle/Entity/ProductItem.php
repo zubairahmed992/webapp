@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * LoveThatFit\AdminBundle\Entity\ProductItem
  *
@@ -26,15 +26,17 @@ class ProductItem
      * @ORM\ManyToOne(targetEntity="ProductSize", inversedBy="product_items")
      * @ORM\JoinColumn(name="product_size_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_size_id", referencedColumnName="id")
-     */    
-    protected $productSize; 
+     
+      */    
+    protected $product_size; 
     
     /**
      * @ORM\ManyToOne(targetEntity="ProductColor", inversedBy="product_items")
      * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id")
+     
      */    
-    protected $productColor; 
+    protected $product_color; 
     
     /////////////////////////////////////////////////////////////
     
@@ -49,11 +51,11 @@ class ProductItem
     private $id;
 
     /**
-     * @var string $lineNumber
+     * @var string $line_number
      *
      * @ORM\Column(name="line_number", type="string", nullable=true)
      */
-    private $lineNumber;
+    private $line_number;
 
     /**
      * @var string $image
@@ -78,26 +80,26 @@ class ProductItem
     }
 
     /**
-     * Set lineNumber
+     * Set line_number
      *
      * @param string $lineNumber
      * @return ProductItem
      */
     public function setLineNumber($lineNumber)
     {
-        $this->lineNumber = $lineNumber;
+        $this->line_number = $lineNumber;
     
         return $this;
     }
 
     /**
-     * Get lineNumber
+     * Get line_number
      *
      * @return string 
      */
     public function getLineNumber()
     {
-        return $this->lineNumber;
+        return $this->line_number;
     }
 
     /**
@@ -147,49 +149,49 @@ class ProductItem
     }
 
     /**
-     * Set productSize
+     * Set product_size
      *
      * @param LoveThatFit\AdminBundle\Entity\ProductSize $productSize
      * @return ProductItem
      */
     public function setProductSize(\LoveThatFit\AdminBundle\Entity\ProductSize $productSize = null)
     {
-        $this->productSize = $productSize;
+        $this->product_size = $productSize;
     
         return $this;
     }
 
     /**
-     * Get productSize
+     * Get product_size
      *
      * @return LoveThatFit\AdminBundle\Entity\ProductSize 
      */
     public function getProductSize()
     {
-        return $this->productSize;
+        return $this->product_size;
     }
 
     /**
-     * Set productColor
+     * Set product_color
      *
      * @param LoveThatFit\AdminBundle\Entity\ProductColor $productColor
      * @return ProductItem
      */
     public function setProductColor(\LoveThatFit\AdminBundle\Entity\ProductColor $productColor = null)
     {
-        $this->productColor = $productColor;
+        $this->product_color = $productColor;
     
         return $this;
     }
 
     /**
-     * Get productColor
+     * Get product_color
      *
-     * @return LoveThatFit\AdminBundle\Entity\ProductColor 
+     * @return LoveTha  tFit\AdminBundle\Entity\ProductColor 
      */
     public function getProductColor()
     {
-        return $this->productColor;
+        return $this->product_color;
     }
     //---------------------------------------------------
     

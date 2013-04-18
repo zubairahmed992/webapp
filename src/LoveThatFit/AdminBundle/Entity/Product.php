@@ -810,4 +810,38 @@ public function deleteImages()
         }
         return;
     }
+    
+    public function getThisItem($color, $size)
+    {
+        $productItems=$this->getProductItems();
+        foreach ($productItems as $pi) {
+            if ($pi->getProductSize()==$size && $pi->getProductColor()==$color){
+                return $pi;
+            }            
+        }
+        return;
+    }
+    
+    public function getProductSizeTitleArray(){
+        $productSizes=$this->getProductSizes();
+        
+        $sizeTitle=array();
+        foreach($productSizes as $ps){            
+            array_push($sizeTitle, $ps->getTitle());
+        }
+    
+        return $sizeTitle;
+    }
+    
+    public function deleteSizes($sizeTitle)
+    {
+       /* $allSizes=$self->getSizes();
+        $productSizes=$this->getProductSizes();
+        foreach ($productSizes as $ps) {
+            if ($ps->getTitle()==$sizeTitle){
+                return $ps;
+            }            
+        }*/
+        return;
+    }
 }

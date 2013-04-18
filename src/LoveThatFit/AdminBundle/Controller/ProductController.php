@@ -374,15 +374,16 @@ class ProductController extends Controller {
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
-        //-------------------
+        /*-------------------
         $em = $this->getDoctrine()->getManager();        
         $selected_sizes = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->getProductSizeTitleArray($id);
         $sizeTitle=array();
         foreach($selected_sizes as $ss){            
             array_push($sizeTitle, $ss['title']);
         }
-        //-------------------
+        */
         
+        $sizeTitle=$product->getProductSizeTitleArray();
         $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
         $colorform->get('sizes')->setData($sizeTitle);
         
@@ -434,9 +435,7 @@ class ProductController extends Controller {
                     'success', 'Product Color Detail has been updated!'
             );
 
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                        'product' => $product,
-                    ));
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } else {
 
             $this->get('session')->setFlash(
@@ -644,7 +643,7 @@ class ProductController extends Controller {
 //------------------------------------------------------------------
 
 
-    private function createSizeItem($product, $color, $sizes) {
+    private function createSizeItem($product, $p_color, $sizes) {
         $em = $this->getDoctrine()->getManager();
         foreach ($sizes as $s) {
             $p_size = $product->getThisSize($s);
@@ -656,16 +655,27 @@ class ProductController extends Controller {
                 $p_size->setTitle($s);
                 $em->persist($p_size);
                 $em->flush();
-            }
+                $this->addItem($product, $p_color, $p_size);
+            } else {
+                $p_item = $product->getThisItem($p_color, $p_size);
 
-            //-------------------- insert item ----------------
-            $p_item = new ProductItem();
-            $p_item->setProduct($product);
-            $p_item->setProductSize($p_size);
-            $p_item->setProductColor($color);
-            $em->persist($p_item);
-            $em->flush();
+                if (!$p_item) {
+                    $this->addItem($product, $p_color, $p_size);
+                }
+            }
         }
+    }
+
+//---------------------------------------------------------------------
+
+    private function addItem($product, $p_color, $p_size) {
+        $em = $this->getDoctrine()->getManager();
+        $p_item = new ProductItem();
+        $p_item->setProduct($product);
+        $p_item->setProductSize($p_size);
+        $p_item->setProductColor($p_color);
+        $em->persist($p_item);
+        $em->flush();
     }
 
 }

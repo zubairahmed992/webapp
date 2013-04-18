@@ -4,7 +4,7 @@ namespace LoveThatFit\AdminBundle\Entity;
 use LoveThatFit\AdminBundle\ImageHelper;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * LoveThatFit\AdminBundle\Entity\ProductColor
  *
@@ -18,10 +18,19 @@ class ProductColor
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     */
+      */
     protected $product;  
     
+    /**
+     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product_color")
+     */
+    protected $product_items;
     
+    
+      public function __construct()
+    {
+        $this->product_items = new ArrayCollection();
+    }
     /////////////////////////////////////////////////////////////////////////
     
     
@@ -43,25 +52,25 @@ class ProductColor
     private $title;
 
     /**
-     * @var string $colorA
+     * @var string $color_a
      *
      * @ORM\Column(name="color_a", type="string",nullable=true)
      */
-    private $colorA;
+    private $color_a;
 
     /**
-     * @var string $colorB
+     * @var string $color_b
      *
      * @ORM\Column(name="color_b", type="string",nullable=true)
      */
-    private $colorB;
+    private $color_b;
 
     /**
-     * @var string $colorC
+     * @var string $color_c
      *
      * @ORM\Column(name="color_c", type="string",nullable=true)
      */
-    private $colorC;
+    private $color_c;
 
     /**
      * @var string $pattern
@@ -117,60 +126,60 @@ class ProductColor
     }
 
     /**
-     * Set colorA
+     * Set color_a
      *
      * @param string $colorA
      * @return ProductColor
      */
     public function setColorA($colorA)
     {
-        $this->colorA = $colorA;
+        $this->color_a = $colorA;
     
         return $this;
     }
 
     /**
-     * Get colorA
+     * Get color_a
      *
      * @return string 
      */
     public function getColorA()
     {
-        return $this->colorA;
+        return $this->color_a;
     }
 
     /**
-     * Set colorB
+     * Set color_b
      *
      * @param string $colorB
      * @return ProductColor
      */
     public function setColorB($colorB)
     {
-        $this->colorB = $colorB;
+        $this->color_b = $colorB;
     
         return $this;
     }
 
     /**
-     * Get colorB
+     * Get color_b
      *
      * @return string 
      */
     public function getColorB()
     {
-        return $this->colorB;
+        return $this->color_b;
     }
 
     /**
-     * Set colorC
+     * Set color_c
      *
      * @param string $colorC
      * @return ProductColor
      */
     public function setColorC($colorC)
     {
-        $this->colorC = $colorC;
+        $this->color_c = $colorC;
     
         return $this;
     }
@@ -182,7 +191,7 @@ class ProductColor
      */
     public function getColorC()
     {
-        return $this->colorC;
+        return $this->color_c;
     }
 
     /**
@@ -253,9 +262,13 @@ class ProductColor
     {
         return $this->product;
     }
-    //------------ facilitating sizes ---------
+    
+    
+        //------------ facilitating sizes ---------
+    
     private $sizes;
-   public function getSizes()
+  
+    public function getSizes()
     {
         return $this->sizes;
     }
@@ -264,6 +277,8 @@ class ProductColor
         $this->sizes = $sizes;    
         return $this;
     }
+    
+
        //-------------------------------------------------
     //-------------- Image Upload ---------------------
 
@@ -303,7 +318,43 @@ public function getImagePaths() {
 
     //---------------------------------------------------
     
+     public function getProductColorSizeTitleArray(){
+        //This method should return the titles of sizes for this product color
+        
+    }
     
     
+
+    /**
+     * Add product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     * @return ProductColor
+     */
+    public function addProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items[] = $productItems;
     
+        return $this;
+    }
+
+    /**
+     * Remove product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     */
+    public function removeProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items->removeElement($productItems);
+    }
+
+    /**
+     * Get product_items
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductItems()
+    {
+        return $this->product_items;
+    }
 }

@@ -3,7 +3,7 @@
 namespace LoveThatFit\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * LoveThatFit\AdminBundle\Entity\ProductSize
  *
@@ -17,9 +17,21 @@ class ProductSize
      /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_sizes")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     */
+    * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+      *  */
     protected $product; 
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product_size")
+     */
+    protected $product_items;
+    
+    
+    
+      public function __construct()
+    {
+        $this->product_items = new ArrayCollection();
+    }
     
     
     /////////////////////////////////////////////////////////////
@@ -334,5 +346,38 @@ class ProductSize
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Add product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     * @return ProductSize
+     */
+    public function addProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items[] = $productItems;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     */
+    public function removeProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items->removeElement($productItems);
+    }
+
+    /**
+     * Get product_items
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductItems()
+    {
+        return $this->product_items;
     }
 }
