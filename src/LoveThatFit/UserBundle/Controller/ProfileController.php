@@ -144,21 +144,25 @@ class ProfileController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();                
-                $this->get('session')->setFlash('Password-Success', 'Password Updated Successfully');                
+                $this->get('session')->setFlash('Success', 'Password Updated Successfully');                
                 } 
                 else
                 {
-                $this->get('session')->setFlash('Password-Warning', 'Confirm pass doesnt match');
+                $this->get('session')->setFlash('Warning', 'Confirm pass doesnt match');
                 }
            }
            else 
-
-       
               {
             $this->get('session')->setFlash('Warning', 'Please Enter Correct Password');
              }
-
-     return $this->redirect($this->getRequest()->headers->get('referer'));      
+              $userForms = $this->createForm(new ProfileSettingsType(), $entity);
+        $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
+        
+        return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
+                    'form' => $userForms->createView(),
+                    'entity' => $entity,
+                    'form_password_reset' => $passwordResetForm->createView()
+                ));
     }
     
 
