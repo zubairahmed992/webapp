@@ -77,12 +77,12 @@ class Product {
     
     /**
      * @ORM\Column(type="decimal", scale=2)
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
     protected $adjustment;
-
-    /**
-     * @ORM\Column(type="string", length=255,nullable=true)
-      */
+     /**
+       * @ORM\Column(type="string", length=255,nullable=true)
+     **/
     protected $sku;
 
     /**
@@ -112,6 +112,7 @@ class Product {
 
     /**
      * @ORM\Column(type="decimal", scale=2)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     protected $arm;
 
@@ -142,6 +143,7 @@ class Product {
 
     /**
      * @ORM\Column(type="decimal", scale=2)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     protected $length;
 

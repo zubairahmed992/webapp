@@ -41,7 +41,7 @@ class ProductDetailType extends AbstractType
             return array(
             'data_class' => 'LoveThatFit\AdminBundle\Entity\Product',
             'cascade_validation' => true,
-            'validation_groups' => array('product_settings'),
+            'validation_groups' => array('product_detail'),
              );
         } 
 
