@@ -13,11 +13,7 @@
 {% block body %}
 
 <div>      
-    <h1 style="float:left;"> Product Detail </h1>
-     <div class="btn_wrapper">     
-    
-   <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
-      </div>
+    <h1 style="float:left;"> Product Detail </h1>    
       <div class="clearfix"></div>   
     <form action="{{path('admin_product_detail_create')}}" method="post" {{ form_enctype(form) }}>
  {{ form_errors(form) }}

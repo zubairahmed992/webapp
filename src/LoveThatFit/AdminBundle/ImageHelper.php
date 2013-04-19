@@ -187,7 +187,7 @@ class ImageHelper {
             $generated_file_name =  $this->generateImagePath($key, $value, $old_filename);
             
             if (is_readable($generated_file_name )){
-                unlink($generated_file_name );    
+                @unlink($generated_file_name );    
             }
         }
         
