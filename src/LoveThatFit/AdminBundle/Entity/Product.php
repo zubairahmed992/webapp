@@ -802,7 +802,7 @@ public function deleteImages()
         return array('XS', 'S', 'M', 'ML', 'L', 'XL', '2XL', '3XL');
     }
     
-    public function getThisSize($sizeTitle)
+    public function getSizeByTitle($sizeTitle)
     {
         $productSizes=$this->getProductSizes();
         foreach ($productSizes as $ps) {
@@ -817,7 +817,7 @@ public function deleteImages()
     {
         $productItems=$this->getProductItems();
         foreach ($productItems as $pi) {
-            if ($pi->getProductSize()==$size && $pi->getProductColor()==$color){
+            if ($pi->getProductSize()->getId()==$size->getId() && $pi->getProductColor()->getId()==$color->getId()){
                 return $pi;
             }            
         }

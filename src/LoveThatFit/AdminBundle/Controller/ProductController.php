@@ -374,15 +374,7 @@ class ProductController extends Controller {
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
-        /*-------------------
-        $em = $this->getDoctrine()->getManager();        
-        $selected_sizes = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->getProductSizeTitleArray($id);
-        $sizeTitle=array();
-        foreach($selected_sizes as $ss){            
-            array_push($sizeTitle, $ss['title']);
-        }
-        */
-        
+     
         $sizeTitle=$product->getProductSizeTitleArray();
         $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
         $colorform->get('sizes')->setData($sizeTitle);
@@ -430,7 +422,10 @@ class ProductController extends Controller {
             $em->flush();
             
             $this->createSizeItem($product, $productColor, $colorForm->getData()->getSizes());
-
+            
+            //$this->deleteUnselectedSizes($product, $colorForm->getData()->getSizes());
+            
+            
             $this->get('session')->setFlash(
                     'success', 'Product Color Detail has been updated!'
             );
@@ -541,8 +536,9 @@ class ProductController extends Controller {
     //--------------------------------------------------------------
 
     public function productDetailItemEditAction($id, $item_id) {
+        
         $entity = $this->getProduct($id);
-
+        
         if (!$entity) {
            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
@@ -655,7 +651,9 @@ class ProductController extends Controller {
     private function createSizeItem($product, $p_color, $sizes) {
         $em = $this->getDoctrine()->getManager();
         foreach ($sizes as $s) {
-            $p_size = $product->getThisSize($s);
+            
+            //--------------check if size already there before inserting new size------------
+            $p_size = $product->getSizeByTitle($s);
 
             if (!$p_size) {
                 //--------------inseart size------------
@@ -666,6 +664,7 @@ class ProductController extends Controller {
                 $em->flush();
                 $this->addItem($product, $p_color, $p_size);
             } else {
+                //--------------check if item already there before inserting new item------------
                 $p_item = $product->getThisItem($p_color, $p_size);
 
                 if (!$p_item) {
@@ -687,5 +686,18 @@ class ProductController extends Controller {
         $em->flush();
     }
 
+    //---------------------------------------------------------------------
+private function deleteUnselectedSizes($product, $selectedSizes)
+{
+     $sizes = array_diff($product->getProductSizeTitleArray(), $selectedSizes);
+     foreach ($sizes as $s) {
+        $p_size = $product->getSizeByTitle($s);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($p_size);
+        $em->flush();
+     }
+}
+
+    
 }
 
