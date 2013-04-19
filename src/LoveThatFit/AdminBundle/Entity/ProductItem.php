@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="product_item")
  * @ORM\Entity
+ 
  */
 class ProductItem
 {
@@ -208,7 +209,10 @@ class ProductItem
                 $this->getUploadRootDir(), $this->image
         );
         
-        $this->file = null;             
+        $this->file = null;          
+        
+        
+         
     }
     
     //-------------------------------------------------------
@@ -228,5 +232,5 @@ class ProductItem
        return 'uploads/ltf/products/fitting_room';            
     }
 
-    
+ 
 }

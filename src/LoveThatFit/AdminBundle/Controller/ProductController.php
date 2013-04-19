@@ -587,6 +587,11 @@ class ProductController extends Controller {
             $em->persist($entity_item);
             $em->flush();
            $this->get('session')->setFlash('success', 'Product item updated  Successfully');
+           return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'itemform' => $itemform->createView(),
+                  
+                ));
             
         } else {
             
