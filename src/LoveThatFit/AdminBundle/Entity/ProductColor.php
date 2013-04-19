@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="product_color")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class ProductColor
 {
@@ -358,4 +359,20 @@ public function getImagePaths() {
     {
         return $this->product_items;
     }
+    
+    
+ /**
+ * @ORM\postRemove
+ */
+    
+public function deleteImages()
+{
+    if($this->image)
+    {    
+    $ih=new ImageHelper('product', $this);
+    $ih->deleteImages($this->image);
+  }
+} 
+
+
 }

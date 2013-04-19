@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="product_item")
  * @ORM\Entity
- 
+ * @ORM\HasLifecycleCallbacks() 
  */
 class ProductItem
 {
@@ -232,5 +232,23 @@ class ProductItem
        return 'uploads/ltf/products/fitting_room';            
     }
 
- 
+    
+    
+      /**
+ * @ORM\postRemove
+ */
+    
+    public function deleteImages()
+{
+    if($this->image)
+    {
+        $generated_file_name=$this->getUploadRootDir(). '/' . $this->image;
+        if (is_readable($generated_file_name )){
+                unlink($generated_file_name );    
+            }
+    
+  }
+}
+
+
 }
