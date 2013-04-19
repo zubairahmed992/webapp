@@ -10,63 +10,81 @@
         </div>   
 {% endif %}      
 {% if app.session.hasFlash('success') %}
-  <div class="alert alert-success">   
+  <div class="success_alert">   
     {{ app.session.flash('success') }}
    </div>
    
 {% endif %}
 <form action="{{ path('user_profile_about_me_update')}}" method="post" {{ form_enctype(form) }}>
     <div id='frm_height'>
-        {{ form_errors(form.height) }}
+        
+
         {{ form_label(form.height) }}
         {{ form_widget(form.height) }}
+        <div class="form_vld_error">{{ form_errors(form.height) }}</div>
         </div>
+        
+        <div class="clr_bth"></div>
         
     <div id='frm_weight'>
-        {{ form_errors(form.weight) }}
+       
         {{ form_label(form.weight) }}
         {{ form_widget(form.weight) }}
+            <div class="form_vld_error"> {{ form_errors(form.weight) }}</div>
         </div>
-        
+         <div class="clr_bth"></div>
     <div id='frm_bust'>
-        {{ form_errors(form.bust) }}
+        
         {{ form_label(form.bust) }}
         {{ form_widget(form.bust) }}
+            <div class="form_vld_error">{{ form_errors(form.bust) }}</div>
         </div>
-        
+         <div class="clr_bth"></div>
     <div id='frm_waist'>
-        {{ form_errors(form.waist) }}
+       
         {{ form_label(form.waist) }}
         {{ form_widget(form.waist) }}
+            <div class="form_vld_error"> {{ form_errors(form.waist) }}</div>
         </div>
+         <div class="clr_bth"></div>
         
-    <div id='frm_hip'>
-        {{ form_errors(form.hip) }}
+    <div id='frm_hip'>         
         {{ form_label(form.hip) }}
         {{ form_widget(form.hip) }}
+        <div class="form_vld_error">{{ form_errors(form.hip) }}</div>
         </div>
+         
+         <div class="clr_bth"></div>
         
     <div id='frm_inseam'>
-        {{ form_errors(form.inseam) }}
         {{ form_label(form.inseam) }}
         {{ form_widget(form.inseam) }}
+            <div class="form_vld_error">{{ form_errors(form.inseam) }}</div>
         </div>
+         
+         <div class="clr_bth"></div>
         
     <div id='frm_leg'>
-        {{ form_errors(form.leg) }}
+        
         {{ form_label(form.leg) }}
         {{ form_widget(form.leg) }}
+        <div class="form_vld_error">{{ form_errors(form.leg) }}</div>
         </div>
+         
+         <div class="clr_bth"></div>
         
     <div id='frm_back'>
-        {{ form_errors(form.back) }}
+        
         {{ form_label(form.back) }}
         {{ form_widget(form.back) }}
+        <div class="form_vld_error">{{ form_errors(form.back) }}</div>
         </div>
+         <div class="clr_bth"></div>
     <div id='frm_arm'>
-        {{ form_errors(form.arm) }}
+        
         {{ form_label(form.arm) }}
         {{ form_widget(form.arm) }}
+        <div class="form_vld_error">{{ form_errors(form.arm) }}</div>
         </div>    
    
   
