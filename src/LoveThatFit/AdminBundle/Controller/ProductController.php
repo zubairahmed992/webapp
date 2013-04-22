@@ -339,8 +339,8 @@ class ProductController extends Controller {
                 ));
     }
 
-    //------------------------------------------------------------------------------
-    /*************************** PRODUCT DETAIL COLOR ************************************************** */
+ //------------------------------------------------------------------------------
+/*************************** PRODUCT DETAIL COLOR ************************************************** */
 //------------------------------------------------------------------------------
     
     
@@ -349,17 +349,21 @@ class ProductController extends Controller {
         $product = $this->getProduct($id);
         $productColor = new ProductColor();
         $productColor->setProduct($product);
-        
         $colorform = $this->createForm(new ProductColorType(), $productColor);
         $colorform->bind($request);
-
+  
         if ($colorform->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
             $productColor->upload(); //----- file upload method 
             $em->persist($productColor);
             $em->flush();
-             
+            $displayProductColor= $productColor->displayProductColor;
+           // return new response(json_encode($displayProductColor));  
+            if($displayProductColor)
+            {
+               $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
+            }
             $this->createSizeItem($product, $productColor, $colorform->getData()->getSizes()); //--creating sizes & item records
             $this->get('session')->setFlash('success', 'Product Detail color has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
@@ -422,9 +426,16 @@ class ProductController extends Controller {
         if ($colorForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $productColor->upload(); //----- file upload method 
+            
             $em->persist($productColor);
             $em->flush();
             
+            $displayProductColor= $productColor->displayProductColor;
+           // return new response(json_encode($displayProductColor));  
+            if($displayProductColor)
+            {
+               $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
+            }
             $this->createSizeItem($product, $productColor, $colorForm->getData()->getSizes());
             
             //$this->deleteUnselectedSizes($product, $colorForm->getData()->getSizes());
@@ -677,7 +688,15 @@ class ProductController extends Controller {
                         ->getRepository('LoveThatFitAdminBundle:ProductColor')
                         ->find($id);
     }
-
+ //------------------------------------------------------------------
+ public function createDisplayDefaultColor ($product,$productColor){
+             
+               $em = $this->getDoctrine()->getManager();
+               return 
+                 $product->setDisplayProductColor($productColor);
+                 $em->persist($product);
+                 $em->flush();
+ }
 //------------------------------------------------------------------
 
 

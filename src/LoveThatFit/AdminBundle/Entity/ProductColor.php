@@ -93,7 +93,14 @@ class ProductColor
      */
     public $file;
         
+    
+     /**
+     * @var string $displayProductColor
+     *
+     */
+    public $displayProductColor;
 
+    
     /**
      * Get id
      *
