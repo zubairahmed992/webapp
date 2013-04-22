@@ -16,13 +16,13 @@ class Product {
 
     /**
      * @ORM\ManyToOne(targetEntity="ClothingType", inversedBy="products")
-     * @ORM\JoinColumn(name="clothing_type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="clothing_type_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $clothing_type;
 
     /**
      * @ORM\ManyToOne(targetEntity="Brand", inversedBy="products")
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $brand;
 

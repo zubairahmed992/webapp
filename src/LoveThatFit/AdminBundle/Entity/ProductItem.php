@@ -19,20 +19,20 @@ class ProductItem
     
     /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_items")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */    
     protected $product; 
     
      /**
      * @ORM\ManyToOne(targetEntity="ProductSize", inversedBy="product_items")
-     * @ORM\JoinColumn(name="product_size_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_size_id", referencedColumnName="id", onDelete="CASCADE")
      
       */    
     protected $product_size; 
     
     /**
      * @ORM\ManyToOne(targetEntity="ProductColor", inversedBy="product_items")
-     * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id", onDelete="CASCADE")
      
      */    
     protected $product_color; 
