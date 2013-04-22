@@ -42,7 +42,11 @@ class Product {
      */
     protected $product_items;
 
-
+    /**
+     * @ORM\OneToOne(targetEntity="ProductColor") 
+     * @ORM\JoinColumn(name="display_product_color_id", referencedColumnName="id")      
+     **/
+     protected $displayProductColor;
     
     
   /////////////////////////////////////////////////////////////////////////////////  
@@ -847,5 +851,28 @@ public function deleteImages()
             }            
         }*/
         return;
+    }
+
+    /**
+     * Set displayProductColor
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductColor $displayProductColor
+     * @return Product
+     */
+    public function setDisplayProductColor(\LoveThatFit\AdminBundle\Entity\ProductColor $displayProductColor = null)
+    {
+        $this->displayProductColor = $displayProductColor;
+    
+        return $this;
+    }
+
+    /**
+     * Get displayProductColor
+     *
+     * @return LoveThatFit\AdminBundle\Entity\ProductColor 
+     */
+    public function getDisplayProductColor()
+    {
+        return $this->displayProductColor;
     }
 }
