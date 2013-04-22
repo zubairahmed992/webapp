@@ -17,16 +17,15 @@ class ProductSize
     
      /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_sizes")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
-    * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-      *  */
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *  */
     protected $product; 
 
-    /**
-     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product_size")
+     /**
+     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product_size", orphanRemoval=true)
      */
-    protected $product_items;
     
+    protected $product_items; 
     
     
       public function __construct()

@@ -17,13 +17,12 @@ class ProductColor
     
      /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_colors")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
       */
     protected $product;  
     
-    /**
-     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product_color")
+  /**
+     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product_color", orphanRemoval=true)
      */
     protected $product_items;
     

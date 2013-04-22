@@ -27,20 +27,22 @@ class Product {
     protected $brand;
 
     
-    /**
-     * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product",cascade={"persist"})
+   /**
+     * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product", orphanRemoval=true)
      */
     protected $product_colors;
     
        /**
-     * @ORM\OneToMany(targetEntity="ProductSize", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="ProductSize", mappedBy="product", orphanRemoval=true)
      */
     protected $product_sizes;
     
       /**
-     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product", orphanRemoval=true)
      */
     protected $product_items;
+
+
     
     
   /////////////////////////////////////////////////////////////////////////////////  
