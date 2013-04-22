@@ -14,6 +14,10 @@ use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
+use LoveThatFit\AdminBundle\Form\Type\ProductSizeTopType;
+use LoveThatFit\AdminBundle\Form\Type\ProductSizeBottomType;
+use LoveThatFit\AdminBundle\Form\Type\ProductSizeDressType;
+
 
 class ProductController extends Controller {
 
@@ -477,8 +481,22 @@ class ProductController extends Controller {
         if (!$product) {
            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
+       
+        
+        if($product->getClothingType()->getTarget()=="Top")
+        {
+        $sizeForm = $this->createForm(new ProductSizeTopType(),$this->getProductSize($size_id));   
+        }
+        if($product->getClothingType()->getTarget()=="Bottom")
+        {
+        $sizeForm = $this->createForm(new ProductSizeBottomType(),$this->getProductSize($size_id));   
+        }
+        if($product->getClothingType()->getTarget()=="dress")
+        {
+        $sizeForm = $this->createForm(new ProductSizeDressType(),$this->getProductSize($size_id));       
+        }
 
-         $sizeForm = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
+        // $sizeForm = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
          return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'sizeform' => $sizeForm->createView(),
@@ -491,18 +509,33 @@ class ProductController extends Controller {
     public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
 
 
-        $entity = $this->getProduct($id);
+        $product = $this->getProduct($id);
 
-        if (!$entity) {
+        if (!$product) {
             $this->get('session')->setFlash('warning', 'Please Insert valid value');
         }
         $em = $this->getDoctrine()->getManager();
         $entity_size = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->find($size_id);
+       
+        if($product->getClothingType()->getTarget()=="Top")
+        {
+        $sizeForm = $this->createForm(new ProductSizeTopType(),$this->getProductSize($size_id));   
+        }
+        if($product->getClothingType()->getTarget()=="Bottom")
+        {
+        $sizeForm = $this->createForm(new ProductSizeBottomType(),$this->getProductSize($size_id));   
+        }
+        if($product->getClothingType()->getTarget()=="dress")
+        {
+        $sizeForm = $this->createForm(new ProductSizeDressType(),$this->getProductSize($size_id));       
+        }
         
-        $sizeform = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
-        $sizeform->bind($request);
+        
+        //$sizeform = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
+      
+        $sizeForm->bind($request);
 
-        if ($sizeform->isValid()) {
+        if ($sizeForm->isValid()) {
             $em->persist($entity_size);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail size has been update.');
@@ -510,8 +543,8 @@ class ProductController extends Controller {
         } else {
             $this->get('session')->setFlash('warning', 'Please Try again');
              return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity,
-                    'sizeform' => $sizeform->createView(),
+                    'product' => $product,
+                    'sizeform' => $sizeForm->createView(),
                     'size_id' =>$size_id,
                 ));
         }

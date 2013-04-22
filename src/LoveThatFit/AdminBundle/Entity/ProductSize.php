@@ -115,6 +115,22 @@ class ProductSize
      */
     private $hem;
 
+      /**
+     * @var float $length
+     *
+     * @ORM\Column(name="length", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $length;
+    
+    /**
+     * @var float $waist
+     *
+     * @ORM\Column(name="waist", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $waist;
+
 
     /**
      * Get id
@@ -387,5 +403,51 @@ class ProductSize
     public function getProductItems()
     {
         return $this->product_items;
+    }
+
+    /**
+     * Set length
+     *
+     * @param float $length
+     * @return ProductSize
+     */
+    public function setLength($length)
+    {
+        $this->length = $length;
+    
+        return $this;
+    }
+
+    /**
+     * Get length
+     *
+     * @return float 
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    /**
+     * Set waist
+     *
+     * @param float $waist
+     * @return ProductSize
+     */
+    public function setWaist($waist)
+    {
+        $this->waist = $waist;
+    
+        return $this;
+    }
+
+    /**
+     * Get waist
+     *
+     * @return float 
+     */
+    public function getWaist()
+    {
+        return $this->waist;
     }
 }
