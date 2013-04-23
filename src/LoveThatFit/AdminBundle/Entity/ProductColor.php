@@ -271,6 +271,17 @@ class ProductColor
     {
         return $this->product;
     }
+    //---------------------------------------
+    
+    public function getSizeTitleArray(){
+        $items = $this->product_items;
+        $size_titles=array();
+        foreach($items as $i){
+            array_push($size_titles, $i->getProductSize()->getTitle());
+        }
+        return $size_titles;
+    }
+    
     
     
         //------------ facilitating sizes ---------

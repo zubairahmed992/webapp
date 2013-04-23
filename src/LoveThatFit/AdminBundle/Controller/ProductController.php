@@ -378,12 +378,15 @@ class ProductController extends Controller {
     public function productDetailColorEditAction($id, $color_id) {
                 
         $product = $this->getProduct($id);        
+        
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
+
+        $productColor = $this->getProductColor($color_id);
+        $sizeTitle = $productColor->getSizeTitleArray();           
         
-        $sizeTitle=$this->getProductColorSizeTitleArray($color_id);
-        $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
+        $colorform = $this->createForm(new ProductColorType(), $productColor);
         $colorform->get('sizes')->setData($sizeTitle);
         
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
@@ -737,31 +740,6 @@ class ProductController extends Controller {
     }
 
     //---------------------------------------------------------------------
-private function deleteUnselectedSizes($product, $selectedSizes)
-{
-     $sizes = array_diff($product->getProductSizeTitleArray(), $selectedSizes);
-     foreach ($sizes as $s) {
-        $p_size = $product->getSizeByTitle($s);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($p_size);
-        $em->flush();
-     }
-}
-  //---------------------------------------------------------------------
-// this needs to be refactored & moved or get done in a better way.....
-private function getProductColorSizeTitleArray($color_id)
-{
-    $productColorSizeTitles = $this->getDoctrine()
-                        ->getRepository('LoveThatFitAdminBundle:ProductColor')
-                        ->getRelatedSizeTitleArray($color_id);
-    
-      $sizeTitle=array();
-        foreach($productColorSizeTitles as $ps){            
-            array_push($sizeTitle, $ps['title']);
-        }
-    
-        return $sizeTitle;
-}
     
 }
 
