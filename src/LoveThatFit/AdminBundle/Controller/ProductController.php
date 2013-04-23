@@ -690,9 +690,8 @@ class ProductController extends Controller {
  //------------------------------------------------------------------
  public function createDisplayDefaultColor ($product,$productColor){
              
-               $em = $this->getDoctrine()->getManager();
-               return 
-                 $product->setDisplayProductColor($productColor);
+                $em = $this->getDoctrine()->getManager();
+                  $product->setDisplayProductColor($productColor);
                  $em->persist($product);
                  $em->flush();
  }
