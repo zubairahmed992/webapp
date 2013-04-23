@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductType;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
+use LoveThatFit\AdminBundle\Form\Type\ProductColorImageType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeTopType;
@@ -387,14 +388,31 @@ class ProductController extends Controller {
         $sizeTitle = $productColor->getSizeTitleArray();           
         
         $colorform = $this->createForm(new ProductColorType(), $productColor);
+        $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorform->get('sizes')->setData($sizeTitle);
         
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'colorform' => $colorform->createView(),
                     'color_id' => $color_id,
+                    'colorImageForm' => $colorImageForm->createView(),
+            
                 ));
     }
+//----------------------------------------------------
+
+    public function productDetailColorImageUploadAction($id){
+        $product = $this->getProduct($id);
+        if (!$product) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
+        }
+        // here we temporarily upload the image & return the image path 
+        //once the patern is selected by the user & gets temporarily uploaded as well
+        //& the form gets submitted & new color is created, then the images gets transfered to 
+        // a perminant place & gets renamed
+        return ;
+    }
+            
 
     //--------------------------------------------------------------   
     public function productDetailColorAddNewAction($id) {

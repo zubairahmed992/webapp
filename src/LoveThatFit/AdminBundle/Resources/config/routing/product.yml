@@ -55,6 +55,10 @@ admin_product_detail_delete:
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailDelete }
    
 #--------------------------- Product Color --------------       
+
+admin_product_detail_color_image_upload:
+   pattern:  /admin/productdetail/{id}/color/image_upload
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailColorImageUpload }   
    
 admin_product_detail_color_create:
    pattern:  /admin/productdetail/{id}/color/create
