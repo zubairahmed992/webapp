@@ -1,3 +1,14 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+{% block left_navigation %}
+
+{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+{% block product_slider %}
 <script language="javascript">
 
 (function($) {
@@ -20,97 +31,56 @@ $(function() {
 </script>  
 
 
-
-<div class="second_content"><!--START SECOND CONTENT-->
-            
-            <div id="right_upper_content"><!--START RIGHT UPPER CONTENT-->
-                <div class="pro_det_cont">
-                    <div class="product_hd">{{product.name }}</div>
-                    <div class="product_price">$ 9,473.57</div>
-                    <div class="pro_size">
-                        <span>
-                            <input type="radio" value="XS" name="Radios" id="Radio1">
-                            <label for="Radio1">XS</label>
-                             <input type="radio" value="S" name="Radios" id="Radio2">
-                            <label for="Radio2">S</label>
-                             <input type="radio" value="M" name="Radios" id="Radio3">
-                            <label for="Radio3">M</label>
-                             <input type="radio" value="L" name="Radios" id="Radio4">
-                            <label for="Radio4">L</label>
-                            <input type="radio" value="XL" name="Radios" id="Radio5">
-                            <label for="Radio5">XL</label>
-                        </span>
+<ul class="prod_wrapper">
+<li class="selected_pro">
+        <div class="prod_node">
+            <span></span>
+            <div class="featured_box">                
+                <div class="featured_content_selected">
+                    <h3 class="selected">{{product.name}}</h3>
+                    <div style="clear:both;"></div>
+                    <div class="featured_sizes">
+                        
+                        <select name="cloth_size">
+                            {%for ps in product.productSizes%}
+                            <option value="">{{ps.title}}</option>
+                             {%endfor%}
+                        </select>
+                           
+                            <select name="cloth_quantity">
+                            <option>1</option>
+                        </select>
                     </div>
-                    <div class="pro_quantity">
-                    <label>Quantity:</label>
-                    <select id="quantity" name="quantity">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                    </div>
+                    
                     <div class="pro_color">
                        
-                        <span>
-                         <label>Color:</label>
+                        <span>                         
+                          
+                           {%for pc in product.productColors%}
                             <input type="radio" value="XS" name="Radio" id="color1">
-                            <label class="red" for="color1"></label>
-                             <input type="radio" value="S" name="Radio" id="color2">
-                            <label class="green" for="color2"></label>
-                             <input type="radio" value="M" name="Radio" id="color3">
-                            <label class="blue" for="color3"></label>
-                             
+                            <label style="background-color:#{{pc.colorA}}"  for="color1"></label>
+                            {%endfor%}
+                            
                         </span>
                     </div>
-                    <div id="add_cart"><a href="#"></a></div>
+                    
+                     <div id="add_cart"><a href="#">Add to Bag</a></div>
+                     <div class="product_price">$ 9,473.57</div>
+                    
                 </div>
-                <div class="pro_img_cont"><!--START pro_img_cont-->
-                <ul id="slideshow" style="display: none;">
-		<li>
-			<h3>TinySlideshow v1</h3>
-			<span>photos/1.jpg</span>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.</p>
-			<a href="#"></a>
-		</li>
-		<li>
-			<h3>Sea Turtle</h3>
-			<span>photos/2.jpg</span>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.</p>
-			<a href="#"></a>
-		</li>
-		<li>
-			<h3>Red Coral</h3>
-			<span>photos/3.jpg</span>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.</p>
-			<a href="#"></a>
-		</li>
-		
-		
-	</ul>
-                <div id="wrapper" style="display: block;">
-		<div id="fullsize">
-			<div title="Previous Image" class="imgnav" id="imgprev" style="opacity: 0.25;"></div>
-			<div id="imglink" style="cursor: pointer;"></div>
-			<div title="Next Image" class="imgnav" id="imgnext" style="opacity: 0.25;"></div>
-			<div id="image"><img style="opacity: 1;" src="{{ asset(product.WebPath) }}"></div>
-			<div id="information" style="height: 173px;">
-				
-				
-			</div>
-		</div>
-		<div id="thumbnails">
-			<div title="Slide Left" id="slideleft"></div>
-			<div id="slidearea">
-				<div id="slider" style="width: 211px;"><img width="208" alt="Orange Fish" src="{{ asset(product.WebPath) }}" style="margin-right: 5px; opacity: 0.7; border-color: rgb(255, 255, 255);"><img width="208" alt="Orange Fish" src="{{ asset(product.WebPath) }}" style="margin-right: 5px; opacity: 0.7;"><img width="208" alt="Orange Fish" src="{{ asset(product.WebPath) }}" style="opacity: 0.7;"></div>
-			</div>
-			<div title="Slide Right" id="slideright"></div>
-		</div>
-	</div>                
-                </div> <!--END pro_img_cont-->
-            </div><!--END RIGHT UPPER CONTENT-->
-            <div style="clear:both;"></div>
+                    <div class="featured_img">
+                    {%if(product.displayProductColor!=null)%}
+                        <img width="63" height="108" src="{{asset(product.displayProductColor.WebPath)}}" class="prod_dress ui-draggable">
+                        {%endif%}
+                  <a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}"></a>
+                    <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
+                   
+                    
+                </div>
+                    
+                  
+                    
+                 <div style="clear:both;"></div>
             <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
             
             
@@ -122,19 +92,24 @@ $(function() {
                         <li>Designer</li>		
                     </ul>
             <div class="box visible">
-                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.</p>		
+                        <p>{{product.description}}</p>		
                     </div>
             <div class="box">
-                        <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!</p>		
+                        <p>{{product.description}}</p>
                     </div>
             <div class="box">
-                        <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.</p>		
+                        <p>{{product.description}}</p>
                     </div>
             </div><!-- END section -->
 
-            </div><!--END PRODUCT MORE DETAIL-->
-            
-            </div>
+            </div><!--END PRODUCT MORE DETAIL-->   
+                    
+                    
+                    
+                <span></span>
+                <!--/prod_node--></div>
+    </div></li>
+</ul>
 
 <script type="text/javascript">
 	$('slideshow').style.display='none';
@@ -154,3 +129,4 @@ $(function() {
 		slideshow.init("slideshow","image","imgprev","imgnext","imglink");
 	}
 </script>
+{% endblock %}
