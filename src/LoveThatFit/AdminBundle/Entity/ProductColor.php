@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * LoveThatFit\AdminBundle\Entity\ProductColor
  *
  * @ORM\Table(name="product_color")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductColorRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class ProductColor
@@ -325,15 +325,7 @@ public function getImagePaths() {
        return 'uploads/ltf/products';            
     }
 
-    //---------------------------------------------------
-    
-     public function getProductColorSizeTitleArray(){
-        //This method should return the titles of sizes for this product color
-        
-    }
-    
-    
-
+   
     /**
      * Add product_items
      *

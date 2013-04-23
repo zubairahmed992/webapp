@@ -376,14 +376,13 @@ class ProductController extends Controller {
     //--------------------------------------------------------------
 
     public function productDetailColorEditAction($id, $color_id) {
-
-        
+                
         $product = $this->getProduct($id);        
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
-     
-        $sizeTitle=$product->getProductSizeTitleArray();
+        
+        $sizeTitle=$this->getProductColorSizeTitleArray($color_id);
         $colorform = $this->createForm(new ProductColorType(), $this->getProductColor($color_id));
         $colorform->get('sizes')->setData($sizeTitle);
         
@@ -749,7 +748,21 @@ private function deleteUnselectedSizes($product, $selectedSizes)
         $em->flush();
      }
 }
-
+  //---------------------------------------------------------------------
+// this needs to be refactored & moved or get done in a better way.....
+private function getProductColorSizeTitleArray($color_id)
+{
+    $productColorSizeTitles = $this->getDoctrine()
+                        ->getRepository('LoveThatFitAdminBundle:ProductColor')
+                        ->getRelatedSizeTitleArray($color_id);
+    
+      $sizeTitle=array();
+        foreach($productColorSizeTitles as $ps){            
+            array_push($sizeTitle, $ps['title']);
+        }
+    
+        return $sizeTitle;
+}
     
 }
 
