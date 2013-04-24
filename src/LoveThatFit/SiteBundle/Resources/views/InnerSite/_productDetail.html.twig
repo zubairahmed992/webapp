@@ -71,8 +71,9 @@ $(function() {
                     <div class="featured_img">
                     {%if(product.displayProductColor!=null)%}
                         <img width="63" height="108" src="{{asset(product.displayProductColor.WebPath)}}" class="prod_dress ui-draggable">
-                        {%endif%}
-                  <a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}"></a>
+<a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}"></a>                        
+{%endif%}
+                  
                     <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
                    
                     
