@@ -376,41 +376,56 @@ class ProductController extends Controller {
 
     //--------------------------------------------------------------
 
-    public function productDetailColorEditAction($id, $color_id) {
+    public function productDetailColorEditAction($id, $color_id, $temp_img_path=null) {
                 
         $product = $this->getProduct($id);        
         
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
-
+        
         $productColor = $this->getProductColor($color_id);
         $sizeTitle = $productColor->getSizeTitleArray();           
         
         $colorform = $this->createForm(new ProductColorType(), $productColor);
-        $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorform->get('sizes')->setData($sizeTitle);
         
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'colorform' => $colorform->createView(),
                     'color_id' => $color_id,
-                    'colorImageForm' => $colorImageForm->createView(),
-            
                 ));
     }
 //----------------------------------------------------
 
-    public function productDetailColorImageUploadAction($id){
-        $product = $this->getProduct($id);
+    public function productDetailColorImageUploadAction(Request $request, $id){
+       
+        $product = $this->getProduct($id);        
+        
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
+        $productColor = new ProductColor();
+        $productColor->setProduct($product);
+        
         // here we temporarily upload the image & return the image path 
         //once the patern is selected by the user & gets temporarily uploaded as well
         //& the form gets submitted & new color is created, then the images gets transfered to 
         // a perminant place & gets renamed
-        return ;
+        
+        $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
+        $colorImageForm->bind($request);
+        $temp=$productColor->uploadTemporaryImage();
+         $response = new Response(json_encode(array(
+                                'entity' => $productColor,
+                                'imageurl' => $productColor->getWebPath()
+                            )));
+            $response->headers->set('Content-Type', 'application/json');
+           
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+            $response = new Response($temp);
+            return $response;
+      
     }
             
 
@@ -422,10 +437,11 @@ class ProductController extends Controller {
         }
 
         $colorform = $this->createForm(new ProductColorType());
-
+        
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $entity,
                     'colorform' => $colorform->createView(),
+        
                 ));
     }
 

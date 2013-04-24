@@ -54,7 +54,7 @@ class ProductColorType extends AbstractType
     
     public function getName()
     {
-        return 'product';
+        return 'product_color';
     }
 
     

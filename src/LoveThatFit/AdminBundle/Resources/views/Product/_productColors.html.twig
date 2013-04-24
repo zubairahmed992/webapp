@@ -137,7 +137,7 @@ return true;
                                             <div class="span3">Available sizes</div>
                                             <div>{{ form_widget(colorform.sizes) }}</div>
                                         </div>      
-                                          {% if product.getDisplayProductColor and color_id != product.getDisplayProductColor.id %} 
+                                          {% if (product.getDisplayProductColor and color_id != product.getDisplayProductColor.id) or not product.getDisplayProductColor %} 
                                         <div class="span3" style=""> 
                                         <div class="row-fluid show-grid"> 
                                             Make It Default Color

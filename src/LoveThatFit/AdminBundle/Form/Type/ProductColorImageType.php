@@ -14,9 +14,16 @@ class ProductColorImageType extends AbstractType
         $builder->add('file');        
     }
     
+      public function getDefaultOptions(array $options)
+     {
+             return array(
+            'data_class' => 'LoveThatFit\AdminBundle\Entity\ProductColor',
+            
+             );
+      } 
     public function getName()
     {
-        return 'product';
+        return 'product_color';
     }
 
     

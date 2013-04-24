@@ -336,7 +336,26 @@ public function getImagePaths() {
        return 'uploads/ltf/products';            
     }
 
-   
+   //------------------------------------------------
+    
+     public function uploadTemporaryImage() {
+         
+        
+        if (null === $this->file) {
+            return;
+        }
+        
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->image =  $this->product->getId() .'_temp.'. $ext;        
+        $this->file->move(
+                $this->getUploadRootDir().'/temp/', $this->image
+        );
+        
+        $this->file = null;             
+        return $this->getUploadDir() . '/temp/' . $this->image;
+    }
+//---------------------------------------------------------------
+    
     /**
      * Add product_items
      *
@@ -349,7 +368,7 @@ public function getImagePaths() {
     
         return $this;
     }
-
+//---------------------------------------------------------------
     /**
      * Remove product_items
      *
@@ -359,7 +378,7 @@ public function getImagePaths() {
     {
         $this->product_items->removeElement($productItems);
     }
-
+//---------------------------------------------------------------
     /**
      * Get product_items
      *
@@ -369,7 +388,7 @@ public function getImagePaths() {
     {
         return $this->product_items;
     }
-    
+//---------------------------------------------------------------    
     
  /**
  * @ORM\postRemove
