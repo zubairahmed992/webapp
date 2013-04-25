@@ -92,7 +92,7 @@ class InnerSiteController extends Controller {
             throw $this->createNotFoundException('Unable to find Product.');
         }
         
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_productDetail.html.twig', array('product' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', array('product' => $entity));
     }
     //-------------------------------------------------------------------
     public function ajaxAction() {
