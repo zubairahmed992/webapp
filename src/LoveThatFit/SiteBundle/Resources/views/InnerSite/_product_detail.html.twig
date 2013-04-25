@@ -41,13 +41,13 @@ $(function() {
                     <h3 class="selected">{{product.name}}</h3>
                     <div style="clear:both;"></div>
                     <div class="featured_sizes">
-                        
+                        {% if product.displayProductColor %}
                         <select name="cloth_size">
                             {%for ps in product.displayProductColor.getSizeTitleArray%}
                                 <option value="">{{ps}}</option>
                              {%endfor%}
                         </select>
-                           
+                           {% endif %}
                             <select name="cloth_quantity">
                             <option>1</option>
                         </select>
@@ -56,11 +56,12 @@ $(function() {
                     <div class="pro_color">
                        
                         <span>                         
-                          
+                          {%if(product.displayProductColor!=null)%}
                            {%for pc in product.productColors%}
                             <input type="radio" value="XS" name="Radio" id="color1">
                             <label style="background-color:#{{pc.colorA}}"  for="color1"></label>
                             {%endfor%}
+                            {% endif %}
                             
                         </span>
                     </div>
@@ -104,7 +105,9 @@ $(function() {
                         <p>{{product.description}}</p>
                     </div>
             </div><!-- END section -->
+            {%if(product.displayProductColor!=null)%}
             <ul>
+                
                 {%for pi in product.displayProductColor.productItems%}
                 <li><a class="apply_img" href="{{ asset(pi.WebPath) }}"></a>
 <a href="{{ asset(pi.WebPath) }}">{{pi.productColor.title}}-{{pi.productSize.title}}</a>
@@ -112,6 +115,7 @@ $(function() {
                 </li>
                              {%endfor%}
                 </ul>
+            {% endif %}
             </div><!--END PRODUCT MORE DETAIL-->   
                     
                     
