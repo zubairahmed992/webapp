@@ -350,7 +350,7 @@ class ProductController extends Controller {
         $product = $this->getProduct($id);
         $productColor = new ProductColor();
         $productColor->setProduct($product);
-        $colorform = $this->createForm(new ProductColorType(), $productColor);
+        $colorform = $this->createForm(new ProductColorType(), $productColor);        
         $colorform->bind($request);
   
         if ($colorform->isValid()) {
@@ -388,12 +388,16 @@ class ProductController extends Controller {
         $sizeTitle = $productColor->getSizeTitleArray();           
         
         $colorform = $this->createForm(new ProductColorType(), $productColor);
+        $patternImageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
+        $imageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
         $colorform->get('sizes')->setData($sizeTitle);
         
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'colorform' => $colorform->createView(),
                     'color_id' => $color_id,
+                    'patternImageUploadForm'=>$patternImageUploadForm->createView(),
+                    'imageUploadForm'=>$imageUploadForm->createView(),
                 ));
     }
 //----------------------------------------------------
@@ -423,8 +427,36 @@ class ProductController extends Controller {
             $response->headers->set('Content-Type', 'application/json');
            
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
-            $response = new Response($temp);
-            return $response;
+            
+      
+    }
+    
+    public function productDetailColorPatternImageUploadAction(Request $request, $id){
+       
+        $product = $this->getProduct($id);        
+        
+        if (!$product) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
+        }
+        $productColor = new ProductColor();
+        $productColor->setProduct($product);
+        
+        // here we temporarily upload the image & return the image path 
+        //once the patern is selected by the user & gets temporarily uploaded as well
+        //& the form gets submitted & new color is created, then the images gets transfered to 
+        // a perminant place & gets renamed
+        
+        $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
+        $colorImageForm->bind($request);
+        $temp=$productColor->uploadTemporaryPatternImage();
+         $response = new Response(json_encode(array(
+                                'entity' => $productColor,
+                                'imageurl' => $productColor->getWebPath()
+                            )));
+            $response->headers->set('Content-Type', 'application/json');
+           
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+            
       
     }
             
@@ -437,10 +469,13 @@ class ProductController extends Controller {
         }
 
         $colorform = $this->createForm(new ProductColorType());
-        
+        $patternImageUploadForm=$this->createForm(new ProductColorImageType());
+        $imageUploadForm=$this->createForm(new ProductColorImageType());
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $entity,
                     'colorform' => $colorform->createView(),
+                    'patternImageUploadForm'=>$patternImageUploadForm->createView(),
+                    'imageUploadForm'=>$imageUploadForm->createView(),
         
                 ));
     }
@@ -457,6 +492,7 @@ class ProductController extends Controller {
 
         $productColor = $this->getProductColor($color_id);
         $colorForm = $this->createForm(new ProductColorType(), $productColor);
+        $patternform=$this->createForm(new ProductColorImageType(),$productColor);
         $colorForm->bind($request);
 
         if ($colorForm->isValid()) {
@@ -492,6 +528,7 @@ class ProductController extends Controller {
                         'product' => $product,
                         'colorform' => $colorForm->createView(),
                         'color_id' => $color_id,
+                        'patternform'=>$patternform->createView(),
                     ));
         }
     }
