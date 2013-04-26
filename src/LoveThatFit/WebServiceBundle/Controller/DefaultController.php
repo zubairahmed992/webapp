@@ -85,9 +85,9 @@ class DefaultController extends Controller {
         }
 
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+        $count_rec=count($entity);  
 
-
-        return new Response($this->json_view($entity));
+        return new Response($this->json_view($count_rec,$entity));
     }
 
     //--------------------------------------------------Clothing Type----------------------///   
@@ -107,42 +107,44 @@ class DefaultController extends Controller {
             $no_of_paginations = ceil($rec_count / $limit);
         }
 
-       
-        return new Response($this->json_view($rec_count));
+        $count_rec=count($clothing_types);  
+        return new Response($this->json_view($count_rec,$clothing_types));
     }
 
     //--------------------------------------------------Proudct List----------------------///   
-    public function productListAction(Request $request, $page_number, $sort = 'id')
+    public function productListAction(Request $request)
     {
-        
-        $limit = 5;
-        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-
+       $em = $this->getDoctrine()->getManager();
         $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findAllProduct($page_number, $limit, $sort);
-
-        $rec_count = count($productObj->countAllRecord());
-        $cur_page = $page_number;
-
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-      
-        return new Response($this->json_view($products)); 
+                ->productList();
+     $count_rec=count($products); 
+     return new Response($this->json_view($count_rec,$products)); 
+    }
+  //--------------------------Proudct List By Brand----------------------///   
+    public function productListByBrandAction(Request $request,$brand_id,$gender)
+    {
+       $em = $this->getDoctrine()->getManager();
+        $products = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->productListByBrand($brand_id,$gender);
         
+        $count_rec=count($products); 
+        return new Response($this->json_view($count_rec,$products));
     }
 
     
     
     #---------------------------Render Json--------------------------------------------------------------------#
 
-    private function json_view($entity) {
-        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
-                    JsonEncoder()));
-        return $serializer->serialize($entity, 'json');
+    private function json_view($rec_count,$entity) {
+         if ($rec_count > 0) {
+            $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+                        JsonEncoder()));
+            return $serializer->serialize($entity, 'json');
+        } else {
+            return json_encode("Record Not Found");
+        }
     }
 
 }

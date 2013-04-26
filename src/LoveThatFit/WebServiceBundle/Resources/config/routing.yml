@@ -17,5 +17,9 @@ web_service_clothingtype:
     defaults: { _controller: LoveThatFitWebServiceBundle:Default:clothingTypeList,_format: json  ,page_number: 1, sort:id }
 
 web_service_products:
-    pattern:  /web_service/products/{page_number}/{sort}
-    defaults: { _controller: LoveThatFitWebServiceBundle:Default:productList,_format: json  ,page_number: 1, sort:id }
+    pattern:  /web_service/products
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:productList,_format: json  }
+
+web_service_products_by_brand:
+    pattern:  /web_service/products_by_brand/{brand_id}/{gender}
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:productListByBrand,_format: json,brand_id:1,gender:'M'  }

@@ -29,6 +29,7 @@ class ProductRepository extends EntityRepository {
 
     /* ------------------------------------------------------------------ */
 
+    
     public function countAllRecord() {
 
         $total_record = $this->getEntityManager()
@@ -174,5 +175,47 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
+//-----------------------------------------------------------------
+public function productList() {
+
+      $query = $this->getEntityManager()
+            ->createQuery("
+      SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type , b.name as brand_name FROM LoveThatFitAdminBundle:Product p 
+      JOIN p.clothing_type ct
+      JOIN p.brand b 
+      ");
+     
+       try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+ //-------------------------------------------------------------------------
+ public function productListByBrand($brand_id,$gender)
+ {
+      $query = $this->getEntityManager()
+                        ->createQuery("
+      SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
+      p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type ,p.gender,
+      b.name as brand_name,b.id as brand_id
+      FROM LoveThatFitAdminBundle:Product p 
+      JOIN p.clothing_type ct
+      JOIN p.brand b 
+      WHERE
+       p.gender = :gender
+       AND b.id = :brand_id"                          
+                        )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id)) ;
+                        
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+  
+  
 
 }
