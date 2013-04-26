@@ -1,3 +1,21 @@
-web_service:
-    pattern:  /web_service/{name}
-    defaults: { _controller: LoveThatFitWebServiceBundle:Default:index }
+web_service_create:
+    pattern:  /web_service/create
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:createForm }
+
+
+web_service_login:
+    pattern:  /web_service/login
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:login }
+    
+    
+web_service_brands:
+    pattern:  /web_service/brands/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:brandList,_format: json  ,page_number: 1, sort:id }
+
+web_service_clothingtype:
+    pattern:  /web_service/clothingtype/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:clothingTypeList,_format: json  ,page_number: 1, sort:id }
+
+web_service_products:
+    pattern:  /web_service/products/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:productList,_format: json  ,page_number: 1, sort:id }
