@@ -14,233 +14,216 @@
 (function($) {
 $(function() {
 
-	$('ul.tabs').each(function() {
-		$(this).find('li').each(function(i) {
-			$(this).click(function(){
-				$(this).addClass('current').siblings().removeClass('current')
-					.parents('div.sectionbox').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
-			});
-		});
-	});
+        $('ul.tabs').each(function() {
+                $(this).find('li').each(function(i) {
+                        $(this).click(function(){
+                                $(this).addClass('current').siblings().removeClass('current')
+                                        .parents('div.sectionbox').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
+                        });
+                });
+        });
 
 })
 })(jQuery)
 
 
 
-</script>  
+    </script>  
+    <ul class="prod_wrapper">
+        
+{% if productColor is defined %}
+    
 
-
-<ul class="prod_wrapper">
-        <!------------------------------------------------------------------------------------>
-<li class="selected_pro">
-        <div class="prod_node">
-            <span></span>
-            <div class="featured_box">                
-                <div class="featured_content_selected">
-                    <h3 class="selected">{{product.name}}</h3>
-                    <div style="clear:both;"></div>
-                    <div class="featured_sizes">
-                        {% if product.displayProductColor %}
-                        <select name="cloth_size">
-                            {%for ps in product.displayProductColor.getSizeTitleArray%}
-                                <option value="">{{ps}}</option>
-                             {%endfor%}
-                        </select>
-                           {% endif %}
-                            <select name="cloth_quantity">
-                            <option>1</option>
-                        </select>
-                    </div>
-                    
-                    <div class="pro_color">
-                       
-                        <span>                         
-                          {%if(product.displayProductColor!=null)%}
-                           {%for pc in product.productColors%}
-                            <input type="radio" value="XS" name="Radio" id="color1">
-                            <label style="background-color:#{{pc.colorA}}"  for="color1"></label>
-                            {%endfor%}
-                            {% endif %}
-                            
-                        </span>
-                    </div>
-                    
-                     <div id="add_cart"><a href="#">Add to Bag</a></div>
-                     <div class="product_price">$ 9,473.57</div>
-                    
-                </div>
-                    <div class="featured_img">
-                    {%if(product.displayProductColor!=null)%}
-                            
-                        <img width="63" height="108" src="{{asset(product.displayProductColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-<a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}"></a>                        
-{%endif%}
-                  
-                    <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
-                   
-                    
-                </div>
-                    
-                  
-                    
-                 <div style="clear:both;"></div>
-            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
-            
-            
-
-            <div class="sectionbox"><!-- START section -->
-            <ul class="tabs">
-                        <li class="current">Description</li>
-                        <li>At a Glance</li>
-                        <li>Designer</li>		
-                    </ul>
-            <div class="box visible">
-                        <p>{{product.description}}</p>		
-                    </div>
-            <div class="box">
-                        <p>{{product.description}}</p>
-                    </div>
-            <div class="box">
-                        <p>{{product.description}}</p>
-                    </div>
-            </div><!-- END section -->
-            {%if(product.displayProductColor!=null)%}
-            <ul>
-                
-                {%for pi in product.displayProductColor.productItems%}
-                <li><a class="apply_img" href="{{ asset(pi.WebPath) }}"></a>
-<a href="{{ asset(pi.WebPath) }}">{{pi.productColor.title}}-{{pi.productSize.title}}</a>
-
-                </li>
-                             {%endfor%}
-                </ul>
-            {% endif %}
-            </div><!--END PRODUCT MORE DETAIL-->   
-                    
-                    
-                    
+        <li class="selected_pro">
+            <div class="prod_node">
                 <span></span>
-                <!--/prod_node--></div>
-    </div></li>
-    <!------------------------------------------------------------------------------------>
-    
-    {%for pc in product.productColors%}
+                <div class="featured_box">                
+                    <div class="featured_content_selected">
+                        <h3 class="selected">{{product.name}}</h3>
+                        <div style="clear:both;"></div>
+                        <div class="featured_sizes">
 
-    
-    <li class="selected_pro">
-        <div class="prod_node">
-            <span></span>
-            <div class="featured_box">                
-                <div class="featured_content_selected">
-                    <h3 class="selected">{{product.name}}</h3>
-                    <div style="clear:both;"></div>
-                    <div class="featured_sizes">
-                        
-                        <select name="cloth_size">
-                            {%for pcsa in pc.getSizeTitleArray%}
-                                <option value="">{{pcsa}}</option>
+                            <select name="cloth_size">
+                            {%for pcsa in productColor.getSizeTitleArray%}
+                                    <option value="">{{pcsa}}</option>
                              {%endfor%}
-                        </select>
-                           
-                            <select name="cloth_quantity">
-                            <option>1</option>
-                        </select>
-                    </div>
-                    
-                    <div class="pro_color">
-                       
-                        <span>                         
-                          
+                                </select>
+
+                                <select name="cloth_quantity">
+                                    <option>1</option>
+                                </select>
+                            </div>
+
+                            <div class="pro_color">
+
+                                <span>                         
+
                            {%for apc in product.productColors%}
-                            <input type="radio" value="XS" name="Radio" id="color1">
-                            <label style="background-color:#{{apc.colorA}}"  for="color1"></label>
+                                    <input type="radio" value="XS" name="Radio" id="color1">
+                                    <label style="background-color:#{{apc.colorA}}"  for="color1"></label>
                             {%endfor%}
-                            
-                        </span>
-                    </div>
-                    
-                     <div id="add_cart"><a href="#">Add to Bag</a></div>
-                     <div class="product_price">$ 9,473.57</div>
-                    
-                </div>
-                    <div class="featured_img">
-                    {%if(product.displayProductColor!=null)%}
-                        <img width="63" height="108" src="{{asset(pc.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-<a class="apply_img" href="{{ asset(pc.WebPath) }}"></a>                        
-{%endif%}
-                  
-                    <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
-                   
-                    
-                </div>
-                    
-                  
-                    
-                 <div style="clear:both;"></div>
-            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
-            
-            
 
-            <div class="sectionbox"><!-- START section -->
-            <ul class="tabs">
-                        <li class="current">Description</li>
-                        <li>At a Glance</li>
-                        <li>Designer</li>		
-                    </ul>
-            <div class="box visible">
-                        <p>{{product.description}}</p>		
-                    </div>
-            <div class="box">
-                        <p>{{product.description}}</p>
-                    </div>
-            <div class="box">
-                        <p>{{product.description}}</p>
-                    </div>
-            </div><!-- END section -->
-<ul>
-                {%for pi in pc.productItems%}
-                <li>
-<a class="apply_img" href="{{ asset(pi.WebPath) }}"></a>
-<a href="{{ asset(pi.WebPath) }}">{{pi.productColor.title}}-{{pi.productSize.title}}</a>
-                </li>
+                                </span>
+                            </div>
+
+                            <div id="add_cart"><a href="#">Add to Bag</a></div>
+                            <div class="product_price">$ 9,473.57</div>
+
+                        </div>
+                        <div class="featured_img">
+                    
+                                <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
+                                <a class="apply_img" href="{{ asset(productColor.WebPath) }}"></a>                        
+                    
+                                <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
+                            </div>
+
+
+
+                            <div style="clear:both;"></div>
+                            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
+
+
+
+                                <div class="sectionbox"><!-- START section -->
+                                    <ul class="tabs">
+                                        <li class="current">Description</li>
+                                        <li>At a Glance</li>
+                                        <li>Designer</li>		
+                                    </ul>
+                                    <div class="box visible">
+                                        <p>{{product.description}}</p>		
+                                    </div>
+                                    <div class="box">
+                                        <p>{{product.description}}</p>
+                                    </div>
+                                    <div class="box">
+                                        <p>{{product.description}}</p>
+                                    </div>
+                                </div><!-- END section -->
+                                <ul>
+                            {%for pi in pc.productItems%}
+                                        <li>
+                                            <a class="apply_img" href="{{ asset(pi.WebPath) }}"></a>
+                                            <a href="{{ asset(pi.WebPath) }}">{{pi.productColor.title}}-{{pi.productSize.title}}</a>
+                                        </li>
                              {%endfor%}
-                </ul>
-            
-            </div><!--END PRODUCT MORE DETAIL-->   
-                    
-                    
-                    
+                                    </ul>
+
+                                </div><!--END PRODUCT MORE DETAIL-->   
+
+                                <span></span>
+                                <!--/prod_node--></div>
+                        </div></li>
+
+{% else %}
+        
+        <li class="selected_pro">
+            <div class="prod_node">
                 <span></span>
-                <!--/prod_node--></div>
-    </div></li>
+                <div class="featured_box">                
+                    <div class="featured_content_selected">
+                        <h3 class="selected">{{product.name}}</h3>
+                        <div style="clear:both;"></div>
+                        <div class="featured_sizes">
+
+                            <select name="cloth_size">
+                            {%for pcsa in product.displayProductColor.getSizeTitleArray%}
+                                    <option value="">{{pcsa}}</option>
+                             {%endfor%}
+                                </select>
+
+                                <select name="cloth_quantity">
+                                    <option>1</option>
+                                </select>
+                            </div>
+
+                            <div class="pro_color">
+
+                                <span>                         
+
+                           {%for apc in product.productColors%}
+                                    <input type="radio" value="XS" name="Radio" id="color1">
+                                    <label style="background-color:#{{apc.colorA}}"  for="color1"></label>
+                            {%endfor%}
+
+                                </span>
+                            </div>
+
+                            <div id="add_cart"><a href="#">Add to Bag</a></div>
+                            <div class="product_price">$ 9,473.57</div>
+
+                        </div>
+                        <div class="featured_img">
+                    
+                                <img width="63" height="108" src="{{asset(product.displayProductColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
+                                <a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}"></a>                        
+                    
+                                <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
+                            </div>
+
+
+
+                            <div style="clear:both;"></div>
+                            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
+
+
+
+                                <div class="sectionbox"><!-- START section -->
+                                    <ul class="tabs">
+                                        <li class="current">Description</li>
+                                        <li>At a Glance</li>
+                                        <li>Designer</li>		
+                                    </ul>
+                                    <div class="box visible">
+                                        <p>{{product.description}}</p>		
+                                    </div>
+                                    <div class="box">
+                                        <p>{{product.description}}</p>
+                                    </div>
+                                    <div class="box">
+                                        <p>{{product.description}}</p>
+                                    </div>
+                                </div><!-- END section -->
+                                <ul>
+                            {%for pi in product.displayProductColor.productItems%}
+                                        <li>
+                                            <a class="apply_img" href="{{ asset(pi.WebPath) }}"></a>
+                                            <a href="{{ asset(pi.WebPath) }}">{{pi.productColor.title}}-{{pi.productSize.title}}</a>
+                                        </li>
+                             {%endfor%}
+                                    </ul>
+
+                                </div><!--END PRODUCT MORE DETAIL-->   
+
+                                <span></span>
+                                <!--/prod_node--></div>
+                        </div></li>
+
+{% endif %}
 
     
-    
-    
-    
-    {%endfor%}
-    
-    <!------------------------------------------------------------------------------------>
-    
-</ul>
 
-<script type="text/javascript">
-	$('slideshow').style.display='none';
-	$('wrapper').style.display='block';
-	var slideshow=new TINY.slideshow("slideshow");
-	window.onload=function(){
-		slideshow.auto=false;
-		slideshow.speed=5;
-		slideshow.link="linkhover";
-		slideshow.info="information";
-		slideshow.thumbs="slider";
-		slideshow.left="slideleft";
-		slideshow.right="slideright";
-		slideshow.scrollSpeed=4;
-		slideshow.spacing=5;
-		slideshow.active="#fff";
-		slideshow.init("slideshow","image","imgprev","imgnext","imglink");
-	}
-</script>
+                    <!------------------------------------------------------------------------------------>
+
+                </ul>
+
+                <script type="text/javascript">
+                        $('slideshow').style.display='none';
+                        $('wrapper').style.display='block';
+                        var slideshow=new TINY.slideshow("slideshow");
+                        window.onload=function(){
+                                slideshow.auto=false;
+                                slideshow.speed=5;
+                                slideshow.link="linkhover";
+                                slideshow.info="information";
+                                slideshow.thumbs="slider";
+                                slideshow.left="slideleft";
+                                slideshow.right="slideright";
+                                slideshow.scrollSpeed=4;
+                                slideshow.spacing=5;
+                                slideshow.active="#fff";
+                                slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+                        }
+                    </script>
 {% endblock %}
