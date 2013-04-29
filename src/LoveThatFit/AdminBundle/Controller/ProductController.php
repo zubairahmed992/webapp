@@ -403,35 +403,14 @@ class ProductController extends Controller {
 //----------------------------------------------------
 
     public function productDetailColorImageUploadAction(Request $request, $id){
-       
-        $product = $this->getProduct($id);        
-        
-        if (!$product) {
-            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
-        }
-        $productColor = new ProductColor();
-        $productColor->setProduct($product);
-        
-        // here we temporarily upload the image & return the image path 
-        //once the patern is selected by the user & gets temporarily uploaded as well
-        //& the form gets submitted & new color is created, then the images gets transfered to 
-        // a perminant place & gets renamed
-        
-        $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
-        $colorImageForm->bind($request);
-        $temp=$productColor->uploadTemporaryImage();
-         $response = new Response(json_encode(array(
-                                'entity' => $productColor,
-                                'imageurl' => $productColor->getWebPath()
-                            )));
-            $response->headers->set('Content-Type', 'application/json');
-           
-            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
-            
-      
+        return $this->productColorTemporaryImageUpload($request, $id, 'image');
     }
     
     public function productDetailColorPatternImageUploadAction(Request $request, $id){
+      return $this->productColorTemporaryImageUpload($request, $id, 'pattern');
+    }
+    
+    public function productColorTemporaryImageUpload(Request $request, $id, $img_type){
        
         $product = $this->getProduct($id);        
         
@@ -440,23 +419,20 @@ class ProductController extends Controller {
         }
         $productColor = new ProductColor();
         $productColor->setProduct($product);
-        
-        // here we temporarily upload the image & return the image path 
-        //once the patern is selected by the user & gets temporarily uploaded as well
-        //& the form gets submitted & new color is created, then the images gets transfered to 
-        // a perminant place & gets renamed
-        
         $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorImageForm->bind($request);
-        $temp=$productColor->uploadTemporaryPatternImage();
-         $response = new Response(json_encode(array(
+        
+        $temp=$productColor->uploadTemporaryImage($img_type);
+        
+        $response = new Response(json_encode(array(
                                 'entity' => $productColor,
-                                'imageurl' => $productColor->getWebPath()
+                                'imageurl' => $productColor->getWebPath(),
+                                'temp' => $temp,
                             )));
-            $response->headers->set('Content-Type', 'application/json');
-           
-            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+            $response->headers->set('Content-Type', 'application/json');          
             
+            $this->get('session')->setFlash('success','Image uploaded '.$response);
+             return $this->redirect($this->getRequest()->headers->get('referer'));
       
     }
             

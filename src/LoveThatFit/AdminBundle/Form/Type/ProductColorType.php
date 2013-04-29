@@ -14,11 +14,8 @@ class ProductColorType extends AbstractType
         $sizes = array('XS'=>'XS', 'S'=>'S', 'M'=>'M', 'ML'=>'ML', 'L'=>'L', 'XL'=>'XL', '2XL'=>'2XL', '3XL'=>'3XL');
         $displayProductColor=array('Yes'=>'Yes');
         $builder->add('title');
-        $builder->add('color_a');
-        $builder->add('color_b');
-        $builder->add('color_c');
+        $builder->add('image');
         $builder->add('pattern');
-        $builder->add('file');
         $builder->add(
                 'sizes', 'choice', 
                 array('choices'=>$sizes,

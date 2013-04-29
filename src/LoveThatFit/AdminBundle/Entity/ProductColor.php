@@ -307,6 +307,9 @@ class ProductColor
         if (null === $this->file) {
             return;
         }        
+
+        //$this.file = fopen('people.txt','r');
+        //$this->file= file_get_contents($this->getAbsoluteTempPath());
         $ih=new ImageHelper('product', $this);
         $ih->upload();
     }
@@ -318,6 +321,10 @@ public function getImagePaths() {
     return $ih->getImagePaths();        
 }
   
+//-------------------------------------------------------
+    public function getAbsoluteTempPath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/temp/' . $this->image;
+    }
   
 //-------------------------------------------------------
     public function getAbsolutePath() {
@@ -338,15 +345,21 @@ public function getImagePaths() {
 
    //------------------------------------------------
     
-     public function uploadTemporaryImage() {
+     public function uploadTemporaryImage($type) {
          
+        $name_prefix='_temp';
         
         if (null === $this->file) {
             return;
         }
         
+        if ($type){
+           $name_prefix= $name_prefix. '_' .$type;           
+        }
+        
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->image =  $this->product->getId() .'_temp.'. $ext;        
+        $this->image =  $this->product->getId() . $name_prefix .'.'. $ext;        
+        
         $this->file->move(
                 $this->getUploadRootDir().'/temp/', $this->image
         );
@@ -354,22 +367,7 @@ public function getImagePaths() {
         $this->file = null;             
         return $this->getUploadDir() . '/temp/' . $this->image;
     }
-    public function uploadTemporaryPatternImage() {
-         
-        
-        if (null === $this->file) {
-            return;
-        }
-        
-        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->image =  $this->product->getId() .'_pattern.'. $ext;        
-        $this->file->move(
-                $this->getUploadRootDir().'/temp/', $this->image
-        );
-        
-        $this->file = null;             
-        return $this->getUploadDir() . '/temp/' . $this->image;
-    }
+    
 //---------------------------------------------------------------
     
     /**
