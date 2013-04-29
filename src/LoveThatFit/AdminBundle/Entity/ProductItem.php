@@ -8,10 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * LoveThatFit\AdminBundle\Entity\ProductItem
- *
- * @ORM\Table(name="product_item")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductItemRepository")
+ * @ORM\Table(name="product_item")
  * @ORM\HasLifecycleCallbacks() 
  */
 class ProductItem
@@ -36,6 +35,19 @@ class ProductItem
      
      */    
     protected $product_color; 
+ 
+    
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="LoveThatFit\UserBundle\Entity\User", mappedBy="product_items")
+     **/
+    private $users;
+
+    public function __construct() {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    
     
     /////////////////////////////////////////////////////////////
     
@@ -249,4 +261,37 @@ class ProductItem
 }
 
 
+
+    /**
+     * Add users
+     *
+     * @param LoveThatFit\UserBundle\Entity\User $users
+     * @return ProductItem
+     */
+    public function addUser(\LoveThatFit\UserBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+    
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param LoveThatFit\UserBundle\Entity\User $users
+     */
+    public function removeUser(\LoveThatFit\UserBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }

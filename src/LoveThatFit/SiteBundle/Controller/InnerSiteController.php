@@ -8,6 +8,7 @@ use LoveThatFit\SiteBundle\Cart;
 use LoveThatFit\AdminBundle\ImageHelper;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\ProductItem;
 use LoveThatFit\AdminBundle\Entity\Brand;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Entity\User;
@@ -94,6 +95,13 @@ class InnerSiteController extends Controller {
         
         return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', array('product' => $entity));
     }
+    
+    public function getProductItemByUserAction($user_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->findProductItemByUser($user_id);
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig');
+    }
     //-------------------------------------------------------------------
     public function ajaxAction() {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
@@ -176,6 +184,20 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', array('product' => $product, 'data' => $fit->getFeedBackArray()));        
     }
     
+    public function addToCloestAction($product_item_id)
+    {
+        $user=$this->get('security.context')->getToken()->getUser();         
+        $product_item = $this->getProductItemById($product_item_id);
+        
+        $em = $this->getDoctrine()->getManager();        
+        $product_item->addUser($user); 
+        $user->addProductItem($product_item); 
+        $em->persist($product_item);        
+        $em->persist($user);       
+        $em->flush();
+        return new Response($product_item_id);
+    }
+
     //-------------------------------------------------------------------
     private function getProduct($id)
     {
@@ -189,6 +211,14 @@ class InnerSiteController extends Controller {
     {
         $em = $this->getDoctrine()->getManager();
         return $em->getRepository('LoveThatFitUserBundle:Measurement')->findOneByUserId($id);        
+    }
+    
+    private function getProductItemById($id)
+    {       
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
+        $product_item = $repository->find($id);
+        return $product_item;       
     }
 
 }

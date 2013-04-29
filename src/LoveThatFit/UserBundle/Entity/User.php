@@ -29,6 +29,26 @@ class User  implements UserInterface, \Serializable{
      * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SurveyUser", mappedBy="user")
      */
     protected $survey;
+    
+    
+    // ...
+
+    /**
+     * @ORM\ManyToMany(targetEntity="LoveThatFit\AdminBundle\Entity\ProductItem", inversedBy="users")
+     * @ORM\JoinTable(name="users_product_items")
+     **/
+    private $product_items;
+
+    
+//---------------------------------------  implement the UserInterface
+    public function __construct() {
+        $this->isActive = true;
+        $this->salt = md5(uniqid(null, true));
+        $this->product_items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    
+    
 
 //---------------------------------------------------------------------
 
@@ -480,11 +500,6 @@ class User  implements UserInterface, \Serializable{
        return $this->old_password;
     }
 
-//---------------------------------------  implement the UserInterface
-    public function __construct() {
-        $this->isActive = true;
-        $this->salt = md5(uniqid(null, true));
-    }
 
     /**
      * Get username
@@ -770,5 +785,38 @@ public function getAbsoluteAvatarPath()
     public function getSurvey()
     {
         return $this->survey;
+    }
+
+    /**
+     * Add product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     * @return User
+     */
+    public function addProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items[] = $productItems;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     */
+    public function removeProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
+    {
+        $this->product_items->removeElement($productItems);
+    }
+
+    /**
+     * Get product_items
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductItems()
+    {
+        return $this->product_items;
     }
 }
