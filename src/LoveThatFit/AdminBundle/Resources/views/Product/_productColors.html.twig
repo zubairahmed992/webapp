@@ -33,11 +33,11 @@ return true;
 {% if patternImageUploadForm is defined %}
     <div id="pro_color">
         Upload Pattern Image
-    <form action="{{ path('admin_product_detail_color_pattern_image_upload',{'id': product.Id }) }}" method="post" {{form_enctype(patternImageUploadForm) }}>
+    <form action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}" method="post" {{form_enctype(patternImageUploadForm) }}>
            {{form_errors(patternImageUploadForm) }}           
            {{form_row(patternImageUploadForm.file)}}   
            <input type="submit" value="SAVE" class="btn"/>
-    </form>
+    </form>        
     </div>    
 {% endif %}
 {% if imageUploadForm is defined %}
