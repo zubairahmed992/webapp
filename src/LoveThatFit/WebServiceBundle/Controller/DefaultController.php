@@ -121,11 +121,11 @@ class DefaultController extends Controller {
      $count_rec=count($products); 
      return new Response($this->json_view($count_rec,$products)); 
     }
-  //--------------------------Proudct List By Brand----------------------///   
+  //--------------------------Proudct List By Brand Wtih Gender----------------------///   
     public function productListByBrandAction(Request $request,$brand_id,$gender)
     {
        $em = $this->getDoctrine()->getManager();
-        $products = $this->getDoctrine()
+       $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->productListByBrand($brand_id,$gender);
         
@@ -133,6 +133,43 @@ class DefaultController extends Controller {
         return new Response($this->json_view($count_rec,$products));
     }
 
+    //--------------------------Proudct List By Clothing Type With Gender----------------------///   
+    public function productListByClothingTypeAction(Request $request,$clothing_type_id,$gender)
+    {
+       $em = $this->getDoctrine()->getManager();
+       $products = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->productListByClothingType($clothing_type_id,$gender);
+        
+        $count_rec=count($products); 
+        return new Response($this->json_view($count_rec,$products));
+    }
+ //------Proudct List By Clothing Type and By Brand  With Gender----------------------///   
+    public function productListByBrandClothingTypeAction(Request $request,$brand_id,$clothing_type_id,$gender)
+    {
+       $em = $this->getDoctrine()->getManager();
+       $products = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->productListByBrandClothingType($brand_id,$clothing_type_id,$gender);
+        
+        $count_rec=count($products); 
+       
+       return new Response($this->json_view($count_rec,$products));
+    }
+    
+  
+    //------Proudct List By Product Detail----------------------///   
+    public function productDetailListAction(Request $request,$product_id)
+    {
+       $em = $this->getDoctrine()->getManager();
+       $products = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->productDetail($product_id);
+        
+        $count_rec=count($products); 
+        return new Response($this->json_view($count_rec,$products));
+    }
+    
     
     
     #---------------------------Render Json--------------------------------------------------------------------#
@@ -143,7 +180,7 @@ class DefaultController extends Controller {
                         JsonEncoder()));
             return $serializer->serialize($entity, 'json');
         } else {
-            return json_encode("Record Not Found");
+            return json_encode(array('msg'=>'Record Not Found'));
         }
     }
 
