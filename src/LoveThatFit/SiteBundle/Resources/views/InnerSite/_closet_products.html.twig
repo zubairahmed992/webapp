@@ -1,0 +1,18 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+{% block left_navigation %}
+
+{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+{% block product_slider %}
+{%for p in product%}
+{%for pi in p.productItems%}
+{{p.name}}<br>
+<img width="63" height="108" src="{{asset(pi.WebPath)}}" class="prod_dress ui-draggable"><br>
+{%endfor%}
+{%endfor%}
+{% endblock %}

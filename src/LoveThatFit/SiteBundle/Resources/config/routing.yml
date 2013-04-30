@@ -29,6 +29,10 @@ ajax_product_detail:
 ajax_user_product_item_create:
     pattern:  /ajax/user_product_item/create/{product_item_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:addToCloest}
+    
+ajax_products_by_my_closet:
+    pattern:  /ajax/products/my_closet
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByMyCloset, page_number: 0, limit: 0}
 
 ajax_product_latest:
     pattern:  /ajax/products/{gender}/latest/{page_number}/{limit}

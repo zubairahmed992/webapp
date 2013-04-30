@@ -96,11 +96,15 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', array('product' => $entity));
     }
     
-    public function getProductItemByUserAction($user_id)
+    public function productsByMyClosetAction($page_number=0 , $limit=0)
     {
+        $user_id=$this->get('security.context')->getToken()->getUser()->getId(); 
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->findProductItemByUser($user_id);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig');
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id , $page_number , $limit);
+
+    //return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product'=>$entity));        
+    return $this->renderPrductTemplate($entity , $page_number , $limit);        
+        
     }
     //-------------------------------------------------------------------
     public function ajaxAction() {
