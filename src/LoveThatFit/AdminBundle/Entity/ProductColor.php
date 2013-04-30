@@ -308,8 +308,14 @@ class ProductColor
             return;
         }        
 
-        //$this.file = fopen('people.txt','r');
+        /*$this->file = fopen('people.txt','r');
         //$this->file= file_get_contents($this->getAbsoluteTempPath());
+        $file = $this->getAbsoluteTempPath();
+        $type = 'image/jpeg';
+        header('Content-Type:'.$type);
+        header('Content-Length: ' . filesize($file));
+        $this->file= readfile($file);
+*/
         $ih=new ImageHelper('product', $this);
         $ih->upload();
     }

@@ -357,6 +357,7 @@ class ProductController extends Controller {
 
             $em = $this->getDoctrine()->getManager();
             $productColor->upload(); //----- file upload method 
+            
             $em->persist($productColor);
             $em->flush();
             $displayProductColor= $productColor->displayProductColor;
@@ -427,7 +428,7 @@ class ProductController extends Controller {
         $response = new Response(json_encode(array(
                                 'entity' => $productColor,
                                 'imageurl' => $productColor->getWebPath(),
-                                'temp' => $temp,
+                                'file_name' => $temp,
                             )));
             $response->headers->set('Content-Type', 'application/json');          
             
