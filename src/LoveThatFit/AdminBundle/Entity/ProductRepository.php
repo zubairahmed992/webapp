@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
  * ProductRepository
  */
 class ProductRepository extends EntityRepository {
-    
+
     public function findAllProduct($page_number = 0, $limit = 0, $sort = 'id') {
 
         if ($page_number <= 0 || $limit <= 0) {
@@ -29,7 +29,6 @@ class ProductRepository extends EntityRepository {
 
     /* ------------------------------------------------------------------ */
 
-    
     public function countAllRecord() {
 
         $total_record = $this->getEntityManager()
@@ -175,11 +174,12 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-//-----------------------------------------------------------------
-public function productList() {
 
-      $query = $this->getEntityManager()
-            ->createQuery("
+//-----------------------------------------------------------------
+    public function productList() {
+
+        $query = $this->getEntityManager()
+                ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type , b.name as brand_name,
       b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
@@ -187,17 +187,17 @@ public function productList() {
       JOIN p.brand b 
       JOIN p.product_colors pc
       ");
-     
-       try {
+
+        try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
- //-------------------------------------------------------------------------
- public function productListByBrand($brand_id,$gender)
- {
-      $query = $this->getEntityManager()
+
+    //-------------------------------------------------------------------------
+    public function productListByBrand($brand_id, $gender) {
+        $query = $this->getEntityManager()
                         ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
       p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type ,p.gender,
@@ -207,20 +207,18 @@ public function productList() {
       JOIN p.brand b 
       JOIN p.product_colors pc
       WHERE
-       p.gender = :gender
-       AND b.id = :brand_id"                          
-                        )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id)) ;
-                        
+      p.gender = :gender
+      AND b.id = :brand_id"
+                        )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-    
-   public function productListByClothingType($clothing_type_id,$gender)
-   {
-      $query = $this->getEntityManager()
+
+    public function productListByClothingType($clothing_type_id, $gender) {
+        $query = $this->getEntityManager()
                         ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
       p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type ,p.gender,
@@ -232,19 +230,16 @@ public function productList() {
       WHERE
       p.gender = :gender
       AND ct.id = :clothing_type_id"
-     
-                        )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id)) ;
-                        
+                        )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        } 
-  }
-  
-   public function productListByBrandClothingType($brand_id,$clothing_type_id,$gender)
-   {
-      $query = $this->getEntityManager()
+        }
+    }
+
+    public function productListByBrandClothingType($brand_id, $clothing_type_id, $gender) {
+        $query = $this->getEntityManager()
                         ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
       p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type ,p.gender,
@@ -256,18 +251,18 @@ public function productList() {
       WHERE
       p.gender = :gender
       AND ct.id = :clothing_type_id
-      AND b.id = :brand_id"                             
-                        )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id,'brand_id' => $brand_id)) ;
-                        
+      AND b.id = :brand_id"
+                        )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id, 'brand_id' => $brand_id));
+
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        } 
-  }
-  public function productDetail($product_id)
-  {
-     $query = $this->getEntityManager()
+        }
+    }
+
+    public function productDetail($product_id) {
+        $query = $this->getEntityManager()
                         ->createQuery("
       SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
       p.inseam,p.outseam,p.hem,p.back,p.length,p.description,p.fitting_room_image ,
@@ -278,23 +273,20 @@ public function productList() {
       ps.title as size_title,ps.inseam as size_inseam,ps.outseam as size_outseam,ps.hip as size_hip,ps.bust as size_bust,
       ps.back as size_back,ps.arm as size_arm, ps.leg as size_leg,ps.hem as size_hem,
       ps.length as size_lenght,ps.waist as size_waist,
-      ct.id as clothing_type_id, pc.image as product_image
+      ct.id as clothing_type_id, pc.image as product_image,
+      pi.id as porduct_item_id, ps.id as product_size_id , pc.id as prodcut_color_id
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
       JOIN p.brand b 
       JOIN p.product_items pi
-      JOIN p.product_colors pc
-      JOIN p.product_sizes ps
-      
-      WHERE  p.id=:id" )->setParameters('id',$product_id) ;
-        
-     
+      JOIN pi.product_color pc
+      JOIN pi.product_size ps
+      WHERE  p.id=:id")->setParameter('id', $product_id);
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }   
-      
-  }
+        }
+    }
 
 }
