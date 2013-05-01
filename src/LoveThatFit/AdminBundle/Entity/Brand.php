@@ -15,7 +15,11 @@ class Brand {
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
      */
-
+     
+     /**
+     * @ORM\OneToMany(targetEntity="SizeChart", mappedBy="brand")
+     */
+    protected $sizechart;
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -192,4 +196,44 @@ public function deleteImages()
      $ih=new ImageHelper('brand', $this);
      $ih->deleteImages($this->image);
 }   
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sizechart = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add sizechart
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SizeChart $sizechart
+     * @return Brand
+     */
+    public function addSizechart(\LoveThatFit\AdminBundle\Entity\SizeChart $sizechart)
+    {
+        $this->sizechart[] = $sizechart;
+    
+        return $this;
+    }
+
+    /**
+     * Remove sizechart
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SizeChart $sizechart
+     */
+    public function removeSizechart(\LoveThatFit\AdminBundle\Entity\SizeChart $sizechart)
+    {
+        $this->sizechart->removeElement($sizechart);
+    }
+
+    /**
+     * Get sizechart
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSizechart()
+    {
+        return $this->sizechart;
+    }
 }

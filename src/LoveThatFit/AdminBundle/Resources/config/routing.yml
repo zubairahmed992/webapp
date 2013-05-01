@@ -26,3 +26,6 @@ admin_survey_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/survey.yml"
     prefix:   /
 
+admin_sizechart_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/sizechart.yml"
+    prefix:   /

@@ -1,0 +1,28 @@
+admin_size_chart:
+    pattern:  /admin/size_chart
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:index}
+
+admin_size_chart_show:
+    pattern:  /admin/size_chart/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:show}
+
+admin_size_chart_new:
+    pattern:  /admin/size_chart/new
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:new}
+
+admin_size_chart_create:
+    pattern:  /admin/size_chart/create
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:create}   
+      
+admin_size_chart_edit:
+    pattern:  /admin/size_chart/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:edit}    
+
+admin_size_chart_update:
+    pattern:  /admin/size_chart/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:update}   
+        
+admin_size_chart_delete:
+    pattern:  /admin/size_chart/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:delete }
+    
