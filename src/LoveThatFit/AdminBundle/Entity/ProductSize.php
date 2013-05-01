@@ -58,6 +58,20 @@ class ProductSize
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $inseam;
+    /**
+     * @var float $inseam_min
+     *
+     * @ORM\Column(name="inseam_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $inseam_min;
+    /**
+     * @var float $inseam_max
+     *
+     * @ORM\Column(name="inseam_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $inseam_max;
 
     /**
      * @var float $outseam
@@ -66,14 +80,42 @@ class ProductSize
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $outseam;
-
+     /**
+     * @var float $outseam_min
+     *
+     * @ORM\Column(name="outseam_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $outseam_min;
+     /**
+     * @var float $outseam_max
+     *
+     * @ORM\Column(name="outseam_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $outseam_max;
     /**
      * @var float $hip
      *
      * @ORM\Column(name="hip", type="float",nullable=true)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $hip;
+     private $hip;
+     
+     /**
+     * @var float $hip_min
+     *
+     * @ORM\Column(name="hip_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $hip_min;
+     /**
+     * @var float $hip_max
+     *
+     * @ORM\Column(name="hip_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $hip_max;
 
     /**
      * @var float $bust
@@ -82,6 +124,20 @@ class ProductSize
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $bust;
+    /**
+     * @var float $bust_min
+     *
+     * @ORM\Column(name="bust_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $bust_min;
+    /**
+     * @var float $bust_max
+     *
+     * @ORM\Column(name="bust_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $bust_max;
 
     /**
      * @var float $back
@@ -89,7 +145,21 @@ class ProductSize
      * @ORM\Column(name="back", type="float",nullable=true)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $back;
+     private $back;
+     /**
+     * @var float $back_min
+     *
+     * @ORM\Column(name="back_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $back_min;
+     /**
+     * @var float $back_max
+     *
+     * @ORM\Column(name="back_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $back_max;
 
     /**
      * @var float $arm
@@ -130,7 +200,92 @@ class ProductSize
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $waist;
+     /**
+     * @var float $waist_min
+     *
+     * @ORM\Column(name="waist_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $waist_min; /**
+     * @var float $waist_max
+     *
+     * @ORM\Column(name="waist_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $waist_max;
 
+    
+    /**
+     * @var float $chest
+     *
+     * @ORM\Column(name="chest", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $chest;
+
+   /**
+     * @var float $chest_min
+     *
+     * @ORM\Column(name="chest_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $chest_min;
+     
+     /**
+     * @var float $chest_max
+     *
+     * @ORM\Column(name="chest_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $chest_max;
+
+     
+     /**
+     * @var float $neck
+     *
+     * @ORM\Column(name="neck", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $neck;
+     
+      /**
+     * @var float $neck_min
+     *
+     * @ORM\Column(name="neck_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $neck_min;
+     
+      /**
+     * @var float $neck_max
+     *
+     * @ORM\Column(name="neck_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+      private $neck_max;
+      
+     /**
+     * @var float $sleeve
+     *
+     * @ORM\Column(name="sleeve", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $sleeve;
+     
+      /**
+     * @var float $sleeve_min
+     *
+     * @ORM\Column(name="sleeve_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $sleeve_min;
+      /**
+     * @var float $sleeve_max
+     *
+     * @ORM\Column(name="sleeve_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $sleeve_max;
 
     /**
      * Get id
@@ -449,5 +604,488 @@ class ProductSize
     public function getWaist()
     {
         return $this->waist;
+    }
+
+    /**
+     * Set inseam_min
+     *
+     * @param float $inseamMin
+     * @return ProductSize
+     */
+    public function setInseamMin($inseamMin)
+    {
+        $this->inseam_min = $inseamMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get inseam_min
+     *
+     * @return float 
+     */
+    public function getInseamMin()
+    {
+        return $this->inseam_min;
+    }
+
+    /**
+     * Set inseam_max
+     *
+     * @param float $inseamMax
+     * @return ProductSize
+     */
+    public function setInseamMax($inseamMax)
+    {
+        $this->inseam_max = $inseamMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get inseam_max
+     *
+     * @return float 
+     */
+    public function getInseamMax()
+    {
+        return $this->inseam_max;
+    }
+
+    /**
+     * Set outseam_min
+     *
+     * @param float $outseamMin
+     * @return ProductSize
+     */
+    public function setOutseamMin($outseamMin)
+    {
+        $this->outseam_min = $outseamMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get outseam_min
+     *
+     * @return float 
+     */
+    public function getOutseamMin()
+    {
+        return $this->outseam_min;
+    }
+
+    /**
+     * Set outseam_max
+     *
+     * @param float $outseamMax
+     * @return ProductSize
+     */
+    public function setOutseamMax($outseamMax)
+    {
+        $this->outseam_max = $outseamMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get outseam_max
+     *
+     * @return float 
+     */
+    public function getOutseamMax()
+    {
+        return $this->outseam_max;
+    }
+
+    /**
+     * Set hip_min
+     *
+     * @param float $hipMin
+     * @return ProductSize
+     */
+    public function setHipMin($hipMin)
+    {
+        $this->hip_min = $hipMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get hip_min
+     *
+     * @return float 
+     */
+    public function getHipMin()
+    {
+        return $this->hip_min;
+    }
+
+    /**
+     * Set hip_max
+     *
+     * @param float $hipMax
+     * @return ProductSize
+     */
+    public function setHipMax($hipMax)
+    {
+        $this->hip_max = $hipMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get hip_max
+     *
+     * @return float 
+     */
+    public function getHipMax()
+    {
+        return $this->hip_max;
+    }
+
+    /**
+     * Set bust_min
+     *
+     * @param float $bustMin
+     * @return ProductSize
+     */
+    public function setBustMin($bustMin)
+    {
+        $this->bust_min = $bustMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get bust_min
+     *
+     * @return float 
+     */
+    public function getBustMin()
+    {
+        return $this->bust_min;
+    }
+
+    /**
+     * Set bust_max
+     *
+     * @param float $bustMax
+     * @return ProductSize
+     */
+    public function setBustMax($bustMax)
+    {
+        $this->bust_max = $bustMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get bust_max
+     *
+     * @return float 
+     */
+    public function getBustMax()
+    {
+        return $this->bust_max;
+    }
+
+    /**
+     * Set back_min
+     *
+     * @param float $backMin
+     * @return ProductSize
+     */
+    public function setBackMin($backMin)
+    {
+        $this->back_min = $backMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get back_min
+     *
+     * @return float 
+     */
+    public function getBackMin()
+    {
+        return $this->back_min;
+    }
+
+    /**
+     * Set back_max
+     *
+     * @param float $backMax
+     * @return ProductSize
+     */
+    public function setBackMax($backMax)
+    {
+        $this->back_max = $backMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get back_max
+     *
+     * @return float 
+     */
+    public function getBackMax()
+    {
+        return $this->back_max;
+    }
+
+    /**
+     * Set waist_min
+     *
+     * @param float $waistMin
+     * @return ProductSize
+     */
+    public function setWaistMin($waistMin)
+    {
+        $this->waist_min = $waistMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get waist_min
+     *
+     * @return float 
+     */
+    public function getWaistMin()
+    {
+        return $this->waist_min;
+    }
+
+    /**
+     * Set waist_max
+     *
+     * @param float $waistMax
+     * @return ProductSize
+     */
+    public function setWaistMax($waistMax)
+    {
+        $this->waist_max = $waistMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get waist_max
+     *
+     * @return float 
+     */
+    public function getWaistMax()
+    {
+        return $this->waist_max;
+    }
+
+    /**
+     * Set chest
+     *
+     * @param float $chest
+     * @return ProductSize
+     */
+    public function setChest($chest)
+    {
+        $this->chest = $chest;
+    
+        return $this;
+    }
+
+    /**
+     * Get chest
+     *
+     * @return float 
+     */
+    public function getChest()
+    {
+        return $this->chest;
+    }
+
+    /**
+     * Set chest_min
+     *
+     * @param float $chestMin
+     * @return ProductSize
+     */
+    public function setChestMin($chestMin)
+    {
+        $this->chest_min = $chestMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get chest_min
+     *
+     * @return float 
+     */
+    public function getChestMin()
+    {
+        return $this->chest_min;
+    }
+
+    /**
+     * Set chest_max
+     *
+     * @param float $chestMax
+     * @return ProductSize
+     */
+    public function setChestMax($chestMax)
+    {
+        $this->chest_max = $chestMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get chest_max
+     *
+     * @return float 
+     */
+    public function getChestMax()
+    {
+        return $this->chest_max;
+    }
+
+    /**
+     * Set neck
+     *
+     * @param float $neck
+     * @return ProductSize
+     */
+    public function setNeck($neck)
+    {
+        $this->neck = $neck;
+    
+        return $this;
+    }
+
+    /**
+     * Get neck
+     *
+     * @return float 
+     */
+    public function getNeck()
+    {
+        return $this->neck;
+    }
+
+    /**
+     * Set neck_min
+     *
+     * @param float $neckMin
+     * @return ProductSize
+     */
+    public function setNeckMin($neckMin)
+    {
+        $this->neck_min = $neckMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get neck_min
+     *
+     * @return float 
+     */
+    public function getNeckMin()
+    {
+        return $this->neck_min;
+    }
+
+    /**
+     * Set neck_max
+     *
+     * @param float $neckMax
+     * @return ProductSize
+     */
+    public function setNeckMax($neckMax)
+    {
+        $this->neck_max = $neckMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get neck_max
+     *
+     * @return float 
+     */
+    public function getNeckMax()
+    {
+        return $this->neck_max;
+    }
+
+    /**
+     * Set sleeve
+     *
+     * @param float $sleeve
+     * @return ProductSize
+     */
+    public function setSleeve($sleeve)
+    {
+        $this->sleeve = $sleeve;
+    
+        return $this;
+    }
+
+    /**
+     * Get sleeve
+     *
+     * @return float 
+     */
+    public function getSleeve()
+    {
+        return $this->sleeve;
+    }
+
+    /**
+     * Set sleeve_min
+     *
+     * @param float $sleeveMin
+     * @return ProductSize
+     */
+    public function setSleeveMin($sleeveMin)
+    {
+        $this->sleeve_min = $sleeveMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get sleeve_min
+     *
+     * @return float 
+     */
+    public function getSleeveMin()
+    {
+        return $this->sleeve_min;
+    }
+
+    /**
+     * Set sleeve_max
+     *
+     * @param float $sleeveMax
+     * @return ProductSize
+     */
+    public function setSleeveMax($sleeveMax)
+    {
+        $this->sleeve_max = $sleeveMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get sleeve_max
+     *
+     * @return float 
+     */
+    public function getSleeveMax()
+    {
+        return $this->sleeve_max;
     }
 }
