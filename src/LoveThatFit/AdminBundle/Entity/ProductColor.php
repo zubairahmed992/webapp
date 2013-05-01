@@ -304,10 +304,14 @@ class ProductColor
 
 
     public function upload() {
-        if (null === $this->file) {
-            return;
-        }        
-
+       // if (null === $this->file) {
+         //   return "test";
+       // }        
+      $name_prefix='_pattern';
+      $this->file=$this->getAbsoluteTempPath();
+      $dest=$this->getUploadRootDir().'/pattern/'. $this->image;
+      rename($this->file,$dest);
+     
         /*$this->file = fopen('people.txt','r');
         //$this->file= file_get_contents($this->getAbsoluteTempPath());
         $file = $this->getAbsoluteTempPath();
@@ -316,10 +320,22 @@ class ProductColor
         header('Content-Length: ' . filesize($file));
         $this->file= readfile($file);
 */
-        $ih=new ImageHelper('product', $this);
-        $ih->upload();
+        //$ih=new ImageHelper('product',$this);
+        //$ih->upload();
     }
-
+ //------------------------------------------------------------
+   public function uploadPattern() {             
+      $pattern_file_name=$this->getAbsolutePatternTempPath();
+      $dest=$this->getUploadRootDir().'/pattern/'. $this->pattern;
+      rename($pattern_file_name,$dest);
+    } 
+    
+ //------------------------------------------------------------
+   public function uploadImage() {   
+   $image_file_name= $this->image;
+   $ih=new ImageHelper('product',$this);
+   $ih->upload();
+   } 
  //------------------------------------------------------------
 
 public function getImagePaths() {
@@ -331,11 +347,19 @@ public function getImagePaths() {
     public function getAbsoluteTempPath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/temp/' . $this->image;
     }
+    //-------------------------------------------------------
+    public function getAbsolutePatternTempPath() {
+        return null === $this->pattern ? null : $this->getUploadRootDir() . '/temp/' . $this->pattern;
+    }
   
 //-------------------------------------------------------
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
+//-------------------------------------------------------
+    public function getAbsolutePatternPath() {
+        return null === $this->pattern ? null : $this->getUploadRootDir() . '/' . $this->pattern;
+    }    
 //-------------------------------------------------------
     public function getWebPath() {
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;

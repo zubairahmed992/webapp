@@ -206,15 +206,7 @@ class ProductController extends Controller {
         return $brand;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+      
     /******************************************************************************
      ************************** PRODUCT DETAIL **********************************
      ****************************************************************************** */
@@ -353,10 +345,15 @@ class ProductController extends Controller {
         $colorform = $this->createForm(new ProductColorType(), $productColor);        
         $colorform->bind($request);
   
+   
         if ($colorform->isValid()) {
 
+            
             $em = $this->getDoctrine()->getManager();
-            $productColor->upload(); //----- file upload method 
+            
+            $productColor->uploadPattern(); //----- file upload method 
+            $productColor->uploadImage(); //----- file upload method 
+            
             
             $em->persist($productColor);
             $em->flush();
@@ -430,10 +427,10 @@ class ProductController extends Controller {
                                 'imageurl' => $productColor->getWebPath(),
                                 'file_name' => $temp,
                             )));
-            $response->headers->set('Content-Type', 'application/json');          
+        $response->headers->set('Content-Type', 'application/json');          
             
-            $this->get('session')->setFlash('success','Image uploaded '.$response);
-             return $this->redirect($this->getRequest()->headers->get('referer'));
+       $this->get('session')->setFlash('success','Image uploaded '.$response);
+       return $this->redirect($this->getRequest()->headers->get('referer'));
       
     }
             
