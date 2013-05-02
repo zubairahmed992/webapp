@@ -1283,11 +1283,11 @@ input[type=email]{
 .left_column nav ul li ul li:hover,
 .left_column nav ul li ul li.active{
     background:#c4c934;	
-	width:195px;	
+	width:175px;	
 }
 
 .left_column nav ul li ul li.active{   
-	width:219px!important;	
+	width:175px!important;	
 }
 
 
