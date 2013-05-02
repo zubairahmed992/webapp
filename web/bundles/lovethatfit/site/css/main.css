@@ -908,6 +908,7 @@ input[type=email]{
    display:inline-block;
    padding-top:2px;
    padding-left: 4px;
+   float:left;
 }
 .radio_buts div.radio_ele label {
 	width:auto !important;
@@ -1541,7 +1542,7 @@ padding:4px 10px;
 }
 
 .welcome_box{	    
-    width: 560px;
+    width: 562px;
     float:right;        
 }
 
@@ -1575,10 +1576,12 @@ margin:0 auto;
 
 #error_content{    
     font-size: 0.8em;
-    text-align: left;   
-    
-   color:#D14;
-    
+    text-align: left;      
+   color:#D14;    
+}
+
+#error_content ul li{ 
+    list-style: none;   
 }
 
 .error_list{
@@ -2068,11 +2071,13 @@ padding: 6px 0px 6px 10px!important;
 
 .act_set{
 float:left; 
+width:336px;
 margin: 0px 20px 10px 0px;
 }
 
 .act_set input[type="text"]{
-    width:200px;
+    width:235px;
+    
 }
 
 .act_set input[type="file"]{
@@ -2083,7 +2088,6 @@ margin: 0px 20px 10px 0px;
 }
 
 .act_radio{
-margin-left:47px!important;
 float:left!important;
 }
 
@@ -2164,7 +2168,7 @@ padding-bottom: 5px;
 }
 
 .pro_content form{
-    width:340px;
+    
 }
 
 .pro_content form ul li{
@@ -2177,5 +2181,16 @@ padding-bottom: 5px;
     margin-top:-10px;
     float:right;
     padding-bottom:10px;
+}
+
+#user_gender{
+    
+    float:left;
+}
+
+.left_active{    
+    background: none repeat scroll 0 0 #C4C933;
+    font-size: 0.95em;
+    padding: 6px 0 6px 10px !important;
 }
 

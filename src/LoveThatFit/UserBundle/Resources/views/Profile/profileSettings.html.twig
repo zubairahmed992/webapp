@@ -1,5 +1,5 @@
 {% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
-{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+
 
 {% block profile_heading %}
 
@@ -55,14 +55,21 @@ return true;
     {{ form_errors(form) }}
 
             <div class="frm_ele act_set">
-                {{ form_errors(form.firstName) }}
+                
                 <label>First Name</label>   
                 {{ form_widget(form.firstName) }}
+                
+                 <div class="form_vld_error">  
+                {{ form_errors(form.firstName) }}
+                     </div>
             </div>
             <div class="frm_ele act_set">
-                {{ form_errors(form.lastName) }}
+               
                 <label>Last Name</label>
                 {{ form_widget(form.lastName) }}
+                 <div class="form_vld_error">  
+                 {{ form_errors(form.lastName) }}
+                 </div>
             </div>
             
             <div class="frm_ele select_inline act_set">
