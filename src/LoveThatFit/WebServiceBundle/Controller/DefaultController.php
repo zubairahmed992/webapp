@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+
 class DefaultController extends Controller {
 
     public function createFormAction(Request $request) {
@@ -40,29 +41,29 @@ class DefaultController extends Controller {
 
             $email = $data['email'];
             $password = $data['password'];
-            $id = 2;
+            
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+            $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
+           
+            if (count($entity) >0) {
 
+                $user_db_password = $entity->getPassword();
+                $salt_value_db = $entity->getSalt();
 
-            $user_old_password = $entity->getPassword();
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($entity);
+                $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
+                if ($user_db_password == $password_old_enc) {
 
-            return new response(json_encode($user_old_password));
-            $salt_value_old = $entity->getSalt();
-
-
-            $userForm = $this->createForm(new UserPasswordReset(), $entity);
-            $userForm->bind($request);
-            $data = $userForm->getData();
-
-            $oldpassword = $data->getOldpassword();
-
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($entity);
-            $password_old_enc = $encoder->encodePassword($oldpassword, $salt_value_old);
-        }
-
-        return new response(json_encode($email));
+                    return new Response(json_encode('Successfully'));
+                } else {
+                     return new Response(json_encode('Login Fail'));
+                }
+            }
+           else {
+               return new Response(json_encode('Invalid Email Address'));
+           }  
+       }
     }
 
     //--------------------------------------------------Brand Type----------------------///   
