@@ -161,21 +161,8 @@ class ProductSize
      */
      private $back_max;
 
-    /**
-     * @var float $arm
-     *
-     * @ORM\Column(name="arm", type="float",nullable=true)
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
-     */
-    private $arm;
+   
 
-    /**
-     * @var float $leg
-     *
-     * @ORM\Column(name="leg", type="float",nullable=true)
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
-     */
-    private $leg;
 
     /**
      * @var float $hem
@@ -435,52 +422,8 @@ class ProductSize
         return $this->back;
     }
 
-    /**
-     * Set arm
-     *
-     * @param float $arm
-     * @return ProductSize
-     */
-    public function setArm($arm)
-    {
-        $this->arm = $arm;
-    
-        return $this;
-    }
-
-    /**
-     * Get arm
-     *
-     * @return float 
-     */
-    public function getArm()
-    {
-        return $this->arm;
-    }
-
-    /**
-     * Set leg
-     *
-     * @param float $leg
-     * @return ProductSize
-     */
-    public function setLeg($leg)
-    {
-        $this->leg = $leg;
-    
-        return $this;
-    }
-
-    /**
-     * Get leg
-     *
-     * @return float 
-     */
-    public function getLeg()
-    {
-        return $this->leg;
-    }
-
+   
+   
     /**
      * Set hem
      *

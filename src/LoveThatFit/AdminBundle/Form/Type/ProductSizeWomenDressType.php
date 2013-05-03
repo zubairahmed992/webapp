@@ -6,18 +6,39 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductSizeTopType extends AbstractType
+class ProductSizeWomenDressType extends AbstractType
 {
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
         $builder->add('bust');
-        $builder->add('back');
-        $builder->add('arm');
+        $builder->add('bust_min');
+        $builder->add('bust_max');
+        
+        $builder->add('hip');
+        $builder->add('hip_min');
+        $builder->add('hip_max');
+        
         $builder->add('hem');
         
-                }
+        $builder->add('length');
+        
+        $builder->add('back');
+        $builder->add('back_min');
+        $builder->add('back_max');
+        
+        
+        $builder->add('waist');
+        $builder->add('waist_min');
+        $builder->add('waist_max');
+        
+        $builder->add('sleeve');
+        $builder->add('sleeve_min');
+        $builder->add('sleeve_max');
+        
+        
+     }
 
 
      public function getDefaultOptions(array $options)

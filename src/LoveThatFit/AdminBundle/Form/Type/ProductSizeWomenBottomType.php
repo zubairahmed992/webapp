@@ -6,24 +6,39 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductSizeDressType extends AbstractType
+class ProductSizeWomenBottomType extends AbstractType
 {
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('back');
-        $builder->add('bust');
-        $builder->add('length');
         $builder->add('waist');
-        $builder->add('hip');
-        $builder->add('hem');
+        $builder->add('waist_min');
+        $builder->add('waist_max');
         
-                }
+        $builder->add('hip');
+        $builder->add('hip_min');
+        $builder->add('hip_max');
+        
+        $builder->add('inseam');
+        $builder->add('inseam_min');
+        $builder->add('inseam_max');
+        
+        $builder->add('outseam');
+        $builder->add('outseam_min');
+        $builder->add('outseam_max');
+        
+        $builder->add('length');
+        
+        
+        
+       $builder->add('hem');
+        
+     }
 
 
      public function getDefaultOptions(array $options)
-      {
+      {  
             return array(
             'data_class' => 'LoveThatFit\AdminBundle\Entity\ProductSize',
             'cascade_validation' => true,

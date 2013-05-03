@@ -54,8 +54,17 @@ class DefaultController extends Controller {
                 $encoder = $factory->getEncoder($entity);
                 $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
                 if ($user_db_password == $password_old_enc) {
-
-                    return new Response(json_encode('Successfully'));
+                    $first_name=$entity->getFirstName();
+                    $last_name=$entity->getLastName();
+                    $gender=$entity->getGender();
+                    $birth_date=$entity->getBirthDate();
+                   $userinfo=array();
+                   $userinfo[]=$email;
+                   $userinfo[]=$first_name;
+                   $userinfo[]=$last_name;
+                   $userinfo[]=$gender;
+                   $userinfo[]=$birth_date;
+                    return new Response(json_encode($userinfo));
                 } else {
                      return new Response(json_encode('Login Fail'));
                 }
