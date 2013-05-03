@@ -306,5 +306,26 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
+    
+    public function countMyCloset($user_id)
+    {
+        $total_record= $this->getEntityManager()
+	   ->createQuery("SELECT p,pi FROM LoveThatFitAdminBundle:Product p
+      JOIN p.product_items pi
+      JOIN pi.users u
+      WHERE
+      u.id = :id"      
+                        )->setParameters(array('id' => $user_id));
+	  try 
+	    {
+		 return $total_record->getResult();
+		}
+		catch (\Doctrine\ORM\NoResultException $e) 
+		 {
+		   return null;
+		 }						
+	  } 
+    
+    
 
 }

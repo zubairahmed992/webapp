@@ -7,16 +7,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Yaml\Parser;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * LoveThatFit\AdminBundle\Entity\SizeChart
- *
- * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\SizeChartRepository") 
+ * @ORM\Table()
+ * @ORM\HasLifecycleCallbacks()
  */
 class SizeChart
 {
     
     /**
-     * @ORM\ManyToOne(targetEntity="Brand", inversedBy="SizeChart")
+     * @ORM\ManyToOne(targetEntity="Brand", inversedBy="sizechart")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $brand;
@@ -340,6 +340,10 @@ class SizeChart
     {
         return $this->sleeve;
     }
+
+   
+
+    
 
     /**
      * Set brand

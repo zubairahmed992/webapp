@@ -17,7 +17,7 @@ class Brand {
      */
      
      /**
-     * @ORM\OneToMany(targetEntity="SizeChart", mappedBy="brand")
+     * @ORM\OneToMany(targetEntity="sizechart", mappedBy="brand")
      */
     protected $sizechart;
     /**
@@ -204,13 +204,20 @@ public function deleteImages()
         $this->sizechart = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+    
+    
+
+    
+
+    
+
     /**
      * Add sizechart
      *
-     * @param LoveThatFit\AdminBundle\Entity\SizeChart $sizechart
+     * @param LoveThatFit\AdminBundle\Entity\sizechart $sizechart
      * @return Brand
      */
-    public function addSizechart(\LoveThatFit\AdminBundle\Entity\SizeChart $sizechart)
+    public function addSizechart(\LoveThatFit\AdminBundle\Entity\sizechart $sizechart)
     {
         $this->sizechart[] = $sizechart;
     
@@ -220,9 +227,9 @@ public function deleteImages()
     /**
      * Remove sizechart
      *
-     * @param LoveThatFit\AdminBundle\Entity\SizeChart $sizechart
+     * @param LoveThatFit\AdminBundle\Entity\sizechart $sizechart
      */
-    public function removeSizechart(\LoveThatFit\AdminBundle\Entity\SizeChart $sizechart)
+    public function removeSizechart(\LoveThatFit\AdminBundle\Entity\sizechart $sizechart)
     {
         $this->sizechart->removeElement($sizechart);
     }

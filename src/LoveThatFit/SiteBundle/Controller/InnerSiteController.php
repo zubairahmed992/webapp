@@ -101,8 +101,39 @@ class InnerSiteController extends Controller {
         $user_id=$this->get('security.context')->getToken()->getUser()->getId(); 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id , $page_number , $limit);
-        return $this->renderProductTemplate($entity , $page_number , $limit);       
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+               
     }
+    
+    public function countMyColosetAction()
+    {
+       $user_id=$this->get('security.context')->getToken()->getUser()->getId();
+       $em = $this->getDoctrine()->getManager();
+       $brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+                $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                 ->countMyCloset($user_id);
+		$rec_count = count($brandObj->countMyCloset($user_id));
+       return new Response($rec_count);
+    }
+
+        public function deleteMyClosetAction($id)
+    {
+        $user=$this->get('security.context')->getToken()->getUser();         
+        $product_item = $this->getProductItemById($id);
+        $em = $this->getDoctrine()->getManager();        
+        $product_item->removeUser($user); 
+        $user->removeProductItem($product_item); 
+        $em->persist($product_item);        
+        $em->persist($user);       
+        $em->flush();
+        return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
+    }
+    
+    
+
+
+    
     //-------------------------------------------------------------------
     public function ajaxAction() {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
@@ -187,16 +218,33 @@ class InnerSiteController extends Controller {
     
     public function addToCloestAction($product_item_id)
     {
-        $user=$this->get('security.context')->getToken()->getUser();         
-        $product_item = $this->getProductItemById($product_item_id);
-        
-        $em = $this->getDoctrine()->getManager();        
-        $product_item->addUser($user); 
-        $user->addProductItem($product_item); 
-        $em->persist($product_item);        
-        $em->persist($user);       
-        $em->flush();
+       $user_id=$this->get('security.context')->getToken()->getUser()->getId();
+       $em = $this->getDoctrine()->getManager();
+       $brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+                $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                 ->countMyCloset($user_id);
+		$rec_count = count($brandObj->countMyCloset($user_id));        
+                if($rec_count<=25)
+                {
+                 $user=$this->get('security.context')->getToken()->getUser();         
+                 $product_item = $this->getProductItemById($product_item_id);        
+                 $em = $this->getDoctrine()->getManager();        
+                 $product_item->addUser($user); 
+                 $user->addProductItem($product_item); 
+                 $em->persist($product_item);        
+                 $em->persist($user);       
+                 $em->flush();
         return new Response($product_item_id);
+                    
+                }else
+                {
+                    return new Response('Please Remove Some Like You can not like more than 25');
+                }
+        
+        
+        
+        
     }
 
     //-------------------------------------------------------------------
@@ -222,6 +270,9 @@ class InnerSiteController extends Controller {
         return $product_item;       
     }
 
+    
+    
+    
 }
 
 

@@ -13,7 +13,7 @@ class BrandController extends Controller {
     public function indexAction($page_number, $sort = 'id') {
 		$limit = 5;
 		$brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
-        $entity = $this->getDoctrine()
+                $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
                  ->findAllBrand($page_number, $limit, $sort);
 		$rec_count = count($brandObj->countAllRecord());

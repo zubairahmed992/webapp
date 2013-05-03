@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
-<li><a href="{{ path('admin_size_chart') }}" >Size Chart</a> <span class="divider">/</span></li>
+<li><a href="{{ path('admin_size_charts') }}" >Size Chart</a> <span class="divider">/</span></li>
 <li class="active">Show</li>
 {% endblock %}
 
@@ -15,9 +15,9 @@
 <div>      
     <h1 style="float:left;">Size Chart Details</h1>
      <div class="btn_wrapper">     
-      <a href="{{ path('admin_size_chart') }}" class="btn">back</a>
+      <a href="{{ path('admin_size_charts') }}" class="btn">back</a>
       <a href="{{ path('admin_size_chart_edit', {'id': sizechart.Id}) }}" class="btn">Edit</a>      
-      <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
+      <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a> 
       
       
       </div>

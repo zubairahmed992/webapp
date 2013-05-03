@@ -34,6 +34,14 @@ ajax_products_by_my_closet:
     pattern:  /ajax/products/my_closet
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByMyCloset, page_number: 0, limit: 0}
 
+ajax_my_closet_delete:
+    pattern:  /ajax/products/my_closet/delete/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:deleteMyCloset}  
+
+ajax_my_closet_count:
+    pattern:  /ajax/products/my_closet/count
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:countMyColoset}
+
 ajax_product_latest:
     pattern:  /ajax/products/{gender}/latest/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsLatest, page_number: 0, limit: 0}

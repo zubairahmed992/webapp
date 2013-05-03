@@ -1,28 +1,34 @@
-admin_size_chart:
-    pattern:  /admin/size_chart
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:index}
 
+admin_size_charts:
+    pattern: /admin/size_charts/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:index , page_number: 1, sort:id }
+    
 admin_size_chart_show:
-    pattern:  /admin/size_chart/{id}/show
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:show}
+    pattern: /admin/admin_size_charts/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:show }
 
 admin_size_chart_new:
-    pattern:  /admin/size_chart/new
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:new}
+    pattern: /admin/admin_size_charts/new
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:new }
 
 admin_size_chart_create:
-    pattern:  /admin/size_chart/create
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:create}   
+    pattern: /admin/admin_size_charts/create
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:create }   
+    requirements: 
+      _method: post
       
 admin_size_chart_edit:
-    pattern:  /admin/size_chart/{id}/edit
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:edit}    
-
+    pattern: /admin/admin_size_charts/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:edit }    
+    requirements:
+        _method:  GET
+        
 admin_size_chart_update:
-    pattern:  /admin/size_chart/{id}/update
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:update}   
+    pattern: /admin/admin_size_charts/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:update }   
+    requirements:
+        _method:  POST
         
 admin_size_chart_delete:
-    pattern:  /admin/size_chart/{id}/delete
+    pattern: /admin/admin_size_charts/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Brand:delete }
-    
