@@ -271,7 +271,7 @@ class ProductRepository extends EntityRepository {
       pc.color_a as color_a,pc.color_b as color_b, pc.color_c as color_c,
       pc.pattern as color_pattern, pc.image as color_image,
       ps.title as size_title,ps.inseam as size_inseam,ps.outseam as size_outseam,ps.hip as size_hip,ps.bust as size_bust,
-      ps.back as size_back,ps.arm as size_arm, ps.leg as size_leg,ps.hem as size_hem,
+      ps.back as size_back,ps.hem as size_hem,
       ps.length as size_lenght,ps.waist as size_waist,
       ct.id as clothing_type_id, pc.image as product_image,
       pi.id as porduct_item_id, ps.id as product_size_id , pc.id as prodcut_color_id
