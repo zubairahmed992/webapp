@@ -91,6 +91,15 @@ class User  implements UserInterface, \Serializable{
      * @Assert\NotBlank(groups={"registration_step_one"})
      */
     private $email;
+    
+    /**
+     * @var string $zipcode
+     *
+     * @ORM\Column(name="zipcode", type="string", length=60,nullable=false)
+     */
+    private $zipcode;
+    
+    
 
     /**
      * @var boolean $isActive
@@ -818,5 +827,28 @@ public function getAbsoluteAvatarPath()
     public function getProductItems()
     {
         return $this->product_items;
+    }
+
+    /**
+     * Set zipcode
+     *
+     * @param string $zipcode
+     * @return User
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    
+        return $this;
+    }
+
+    /**
+     * Get zipcode
+     *
+     * @return string 
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
     }
 }
