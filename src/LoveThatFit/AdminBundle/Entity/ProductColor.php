@@ -94,11 +94,13 @@ class ProductColor {
 
     /**
      * @var string $tempImage
+     * @Assert\Blank()
      */
     public $tempImage;
 
     /**
      * @var string $tempPattern
+     * @Assert\Blank()
      */
     public $tempPattern;
 

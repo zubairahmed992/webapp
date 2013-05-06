@@ -64,8 +64,6 @@ class InnerSiteController extends Controller {
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findSampleClothingTypeGender($gender);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity));
     }
-
-    
     
     
     //----------------------------------- List Clothing Types ..............
@@ -83,7 +81,7 @@ class InnerSiteController extends Controller {
     }
 
 //----------------------------------- Product Detail ..............        
-    public function productDetailAction($id) {
+    public function productDetailAction($id, $product_color_id, $product_size_id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
@@ -93,7 +91,8 @@ class InnerSiteController extends Controller {
             throw $this->createNotFoundException('Unable to find Product.');
         }
         
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', array('product' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', 
+                array('product' => $entity));
     }
     
     public function productsByMyClosetAction($page_number=0 , $limit=0)
