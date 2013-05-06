@@ -12,7 +12,7 @@ class ImageHelper {
     protected $entity;
     protected $conf;
     protected $image;
-    
+    //--------------------------------------------------------------------
     public function __construct($category, $entity) {
         $yaml = new Parser();
         $conf = $yaml->parse(file_get_contents('../app/config/image_helper.yml'));
@@ -23,32 +23,11 @@ class ImageHelper {
         $this->image=$entity->getImage();
         
     }
-
-    public function uploadTempImage()
-    {
-        
-        $ext = pathinfo($this->entity->getAbsoluteTempPath(), PATHINFO_EXTENSION);
-        
-        $new_name=uniqid() .'.'. $ext;
-                
-        $dest=$this->getUploadRootDir().'/'. $new_name;
-        rename($this->entity->getAbsoluteTempPath(),$dest);
-        $this->image=$new_name;
-        $this->entity->setImage($this->image);
-        
-        $this->resize_image();
-        
-        //if record is being updated, then delete previous images
-        if ($this->entity->getId())
-            $this->deleteImages($previous_image); 
-        
-        $this->entity->file = null;
-    }
-    
+    //--------------------------------------------------------------------
     public function getImageConfiguration() {
         return $this->conf;
     }
-
+//--------------------------------------------------------------------
   
     
      public function upload() {
@@ -73,7 +52,29 @@ class ImageHelper {
         
         $this->entity->file = null;
     }
-    
+//--------------------------------------------------------------------
+    public function uploadProductTempImage()
+    {
+        if ($this->category=='product'){
+        $ext = pathinfo($this->entity->getAbsoluteTempPath(), PATHINFO_EXTENSION);
+        
+        $new_name = uniqid() .'.'. $ext;
+        $previous_image=$this->image;
+        
+        $dest=$this->getUploadRootDir().'/'. $new_name;
+        rename($this->entity->getAbsoluteTempPath(),$dest);
+        
+        $this->image=$new_name;
+        $this->entity->setImage($this->image);        
+        $this->resize_image();        
+        
+        if ($this->entity->getId())
+            $this->deleteImages($previous_image); 
+        
+        $this->entity->file = null;
+        }
+    }
+    //--------------------------------------------------------------------
 
     private function resize_image() {
 
@@ -158,6 +159,7 @@ class ImageHelper {
     {
         return $this->generateImagePath($key, $value, $this->image);
     }
+    //--------------------------------------------------------------------
     private function generateImagePath($key, $value, $filename)
     {
         if ($key == 'original') {

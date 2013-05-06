@@ -339,6 +339,23 @@ class ProductController extends Controller {
 //------------------------------------------------------------------------------
     
     
+
+    public function productDetailColorAddNewAction($id) {
+        $entity = $this->getProduct($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
+        }
+
+        $colorform = $this->createForm(new ProductColorType());        
+        $imageUploadForm=$this->createForm(new ProductColorImageType());
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'colorform' => $colorform->createView(),
+                    'imageUploadForm'=>$imageUploadForm->createView(),        
+                ));
+    }
+
+          //--------------------------------------------------------------   
     public function productDetailColorCreateAction(Request $request, $id) {
 
         $product = $this->getProduct($id);
@@ -350,18 +367,15 @@ class ProductController extends Controller {
    
         if ($colorform->isValid()) {
 
-            
             $em = $this->getDoctrine()->getManager();
             
-            $productColor->uploadPattern(); //----- file upload method 
-            $productColor->uploadImage(); //----- file upload method 
-            
-            
+            $productColor->savePattern(); //----- file upload method 
+            $productColor->saveImage(); //----- file move from temp to permanent folder
+                        
             $em->persist($productColor);
             $em->flush();
-            $displayProductColor= $productColor->displayProductColor;
-           // return new response(json_encode($displayProductColor));  
-            if($displayProductColor)
+                       
+            if($productColor->displayProductColor)
             {
                $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
             }
@@ -387,21 +401,74 @@ class ProductController extends Controller {
         $productColor = $this->getProductColor($color_id);
         $sizeTitle = $productColor->getSizeTitleArray();           
         
-        $colorform = $this->createForm(new ProductColorType(), $productColor);
-        $patternImageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
-        $imageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
+        $colorform = $this->createForm(new ProductColorType(), $productColor);        
         $colorform->get('sizes')->setData($sizeTitle);
         
+        $imageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
+                
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'colorform' => $colorform->createView(),
                     'color_id' => $color_id,
-                    'patternImageUploadForm'=>$patternImageUploadForm->createView(),
                     'imageUploadForm'=>$imageUploadForm->createView(),
                 ));
     }
+    
+    //--------------------------------------------------------------
+    
+    public function productDetailColorUpdateAction(Request $request, $id, $color_id) {
+        
+        $product = $this->getProduct($id);
+        if (!$product) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
+        }
+
+        $productColor = $this->getProductColor($color_id);
+        $colorForm = $this->createForm(new ProductColorType(), $productColor);
+        $colorForm->bind($request);
+                
+
+        if ($colorForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+        
+            $productColor->savePattern(); //----- file upload method 
+            $productColor->saveImage(); //----- file move from temp to permanent folder
+            //return new Response($productColor->savePattern() . "  -  " . $productColor->saveImage());
+            $em->persist($productColor);
+            $em->flush();
+           
+            if($productColor->displayProductColor)
+            {
+               $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
+            }
+            
+            $this->createSizeItem($product, $productColor, $colorForm->getData()->getSizes());
+            
+            $this->get('session')->setFlash(
+                    'success', 'Product Color Detail has been updated!'
+            );
+
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+        } else {
+
+            $this->get('session')->setFlash(
+                    'warning', 'Unable to update Product Color Detail!'
+            );
+            
+            $imageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                        'product' => $product,
+                        'colorform' => $colorForm->createView(),
+                        'color_id' => $color_id,
+                        'imageUploadForm'=>$imageUploadForm->createView(),
+                    ));
+        }
+    }
+
+
 //----------------------------------------------------
- 
+
+    
     public function productColorTemporaryImageUploadAction(Request $request, $id){
        
         $product = $this->getProduct($id);        
@@ -429,76 +496,8 @@ class ProductController extends Controller {
     }
             
 
-    //--------------------------------------------------------------   
-    public function productDetailColorAddNewAction($id) {
-        $entity = $this->getProduct($id);
-        if (!$entity) {
-            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
-        }
-
-        $colorform = $this->createForm(new ProductColorType());
-        $patternImageUploadForm=$this->createForm(new ProductColorImageType());
-        $imageUploadForm=$this->createForm(new ProductColorImageType());
-        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity,
-                    'colorform' => $colorform->createView(),
-                    'imageUploadForm'=>$imageUploadForm->createView(),
-        
-                ));
-    }
-
-    //--------------------------------------------------------------
-
+  
     
-    public function productDetailColorUpdateAction(Request $request, $id, $color_id) {
-        
-        $product = $this->getProduct($id);
-        if (!$product) {
-            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
-        }
-
-        $productColor = $this->getProductColor($color_id);
-        $colorForm = $this->createForm(new ProductColorType(), $productColor);
-        $patternform=$this->createForm(new ProductColorImageType(),$productColor);
-        $colorForm->bind($request);
-
-        if ($colorForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $productColor->upload(); //----- file upload method 
-            
-            $em->persist($productColor);
-            $em->flush();
-            
-            $displayProductColor= $productColor->displayProductColor;
-           // return new response(json_encode($displayProductColor));  
-            if($displayProductColor)
-            {
-               $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
-            }
-            $this->createSizeItem($product, $productColor, $colorForm->getData()->getSizes());
-            
-            //$this->deleteUnselectedSizes($product, $colorForm->getData()->getSizes());
-            
-            
-            $this->get('session')->setFlash(
-                    'success', 'Product Color Detail has been updated!'
-            );
-
-            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
-        } else {
-
-            $this->get('session')->setFlash(
-                    'warning', 'Unable to update Product Color Detail!'
-            );
-
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                        'product' => $product,
-                        'colorform' => $colorForm->createView(),
-                        'color_id' => $color_id,
-                        'patternform'=>$patternform->createView(),
-                    ));
-        }
-    }
 
     //--------------------------------------------------------------
     public function productDetailColorDeleteAction($id, $color_id) {
