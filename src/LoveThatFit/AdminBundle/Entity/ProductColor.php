@@ -304,24 +304,9 @@ class ProductColor
 
 
     public function upload() {
-       // if (null === $this->file) {
-         //   return "test";
-       // }        
-      $name_prefix='_pattern';
-      $this->file=$this->getAbsoluteTempPath();
-      $dest=$this->getUploadRootDir().'/pattern/'. $this->image;
-      rename($this->file,$dest);
+      $ih=new ImageHelper('product',$this);
+   $ih->upload();
      
-        /*$this->file = fopen('people.txt','r');
-        //$this->file= file_get_contents($this->getAbsoluteTempPath());
-        $file = $this->getAbsoluteTempPath();
-        $type = 'image/jpeg';
-        header('Content-Type:'.$type);
-        header('Content-Length: ' . filesize($file));
-        $this->file= readfile($file);
-*/
-        //$ih=new ImageHelper('product',$this);
-        //$ih->upload();
     }
  //------------------------------------------------------------
    public function uploadPattern() {             
@@ -332,9 +317,8 @@ class ProductColor
     
  //------------------------------------------------------------
    public function uploadImage() {   
-   $image_file_name= $this->image;
    $ih=new ImageHelper('product',$this);
-   $ih->upload();
+   $ih->uploadTempImage();
    } 
  //------------------------------------------------------------
 
@@ -342,24 +326,11 @@ public function getImagePaths() {
     $ih=new ImageHelper('product', $this);
     return $ih->getImagePaths();        
 }
-  
-//-------------------------------------------------------
-    public function getAbsoluteTempPath() {
-        return null === $this->image ? null : $this->getUploadRootDir() . '/temp/' . $this->image;
-    }
-    //-------------------------------------------------------
-    public function getAbsolutePatternTempPath() {
-        return null === $this->pattern ? null : $this->getUploadRootDir() . '/temp/' . $this->pattern;
-    }
-  
+    
 //-------------------------------------------------------
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
-//-------------------------------------------------------
-    public function getAbsolutePatternPath() {
-        return null === $this->pattern ? null : $this->getUploadRootDir() . '/' . $this->pattern;
-    }    
 //-------------------------------------------------------
     public function getWebPath() {
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
@@ -373,29 +344,40 @@ public function getImagePaths() {
        return 'uploads/ltf/products';            
     }
 
-   //------------------------------------------------
+//-------------------------------------------------------
+//-------------------------------------------------------
     
-     public function uploadTemporaryImage($type) {
+    public function getAbsoluteTempPath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/temp/' . $this->image;
+    }
+    //-------------------------------------------------------
+    public function getAbsolutePatternTempPath() {
+        return null === $this->pattern ? null : $this->getUploadRootDir() . '/temp/' . $this->pattern;
+    }
+//-------------------------------------------------------
+    public function getAbsolutePatternPath() {
+        return null === $this->pattern ? null : $this->getUploadRootDir() . '/' . $this->pattern;
+    }    
+
+    
+
+//------------------------------------------------
+    
+     public function uploadTemporaryImage() {
          
-        $name_prefix='_temp';
-        
         if (null === $this->file) {
             return;
         }
         
-        if ($type){
-           $name_prefix= $name_prefix. '_' .$type;           
-        }
-        
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->image =  $this->product->getId() . $name_prefix .'.'. $ext;        
+        $temp_image =  $this->product->getId() .'_'. uniqid() .'.'. $ext;        
         
         $this->file->move(
-                $this->getUploadRootDir().'/temp/', $this->image
+                $this->getUploadRootDir().'/temp/', $temp_image
         );
         
         $this->file = null;             
-        return $this->getUploadDir() . '/temp/' . $this->image;
+        return $this->getUploadDir() . '/temp/' . $temp_image;
     }
     
 //---------------------------------------------------------------

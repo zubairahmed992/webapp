@@ -16,7 +16,6 @@ class ProductColorType extends AbstractType
         $builder->add('title');
         $builder->add('image');
         $builder->add('pattern');
-        $builder->add('file');
         $builder->add(
                 'sizes', 'choice', 
                 array('choices'=>$sizes,

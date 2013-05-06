@@ -401,16 +401,8 @@ class ProductController extends Controller {
                 ));
     }
 //----------------------------------------------------
-
-    public function productDetailColorImageUploadAction(Request $request, $id){
-        return $this->productColorTemporaryImageUpload($request, $id, 'image');
-    }
-    
-    public function productDetailColorPatternImageUploadAction(Request $request, $id){
-      return $this->productColorTemporaryImageUpload($request, $id, 'pattern');
-    }
-    
-    public function productColorTemporaryImageUpload(Request $request, $id, $img_type){
+ 
+    public function productColorTemporaryImageUploadAction(Request $request, $id){
        
         $product = $this->getProduct($id);        
         
@@ -422,7 +414,7 @@ class ProductController extends Controller {
         $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorImageForm->bind($request);
         
-        $temp=$productColor->uploadTemporaryImage($img_type);
+        $temp=$productColor->uploadTemporaryImage();
         
         $response = new Response(json_encode(array(
                                 'entity' => $productColor,
@@ -450,7 +442,6 @@ class ProductController extends Controller {
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $entity,
                     'colorform' => $colorform->createView(),
-                    'patternImageUploadForm'=>$patternImageUploadForm->createView(),
                     'imageUploadForm'=>$imageUploadForm->createView(),
         
                 ));

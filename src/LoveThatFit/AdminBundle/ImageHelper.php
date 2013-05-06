@@ -24,6 +24,27 @@ class ImageHelper {
         
     }
 
+    public function uploadTempImage()
+    {
+        
+        $ext = pathinfo($this->entity->getAbsoluteTempPath(), PATHINFO_EXTENSION);
+        
+        $new_name=uniqid() .'.'. $ext;
+                
+        $dest=$this->getUploadRootDir().'/'. $new_name;
+        rename($this->entity->getAbsoluteTempPath(),$dest);
+        $this->image=$new_name;
+        $this->entity->setImage($this->image);
+        
+        $this->resize_image();
+        
+        //if record is being updated, then delete previous images
+        if ($this->entity->getId())
+            $this->deleteImages($previous_image); 
+        
+        $this->entity->file = null;
+    }
+    
     public function getImageConfiguration() {
         return $this->conf;
     }
