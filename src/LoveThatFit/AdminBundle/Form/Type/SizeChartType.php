@@ -21,13 +21,13 @@ class SizeChartType extends AbstractType
                 );
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));
         $builder->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')));
-        $builder->add('waist');
-        $builder->add('hip');
-        $builder->add('bust');
-        $builder->add('chest');
-        $builder->add('inseam');
-        $builder->add('neck');
-        $builder->add('sleeve');
+        $builder->add('waist','text');
+        $builder->add('hip','text');
+        $builder->add('bust','text');
+        $builder->add('chest','text');
+        $builder->add('inseam','text');
+        $builder->add('neck','text');
+        $builder->add('sleeve','text');
         $builder ->add('Brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
                     'expanded' => false,
