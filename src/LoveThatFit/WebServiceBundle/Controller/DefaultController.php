@@ -180,8 +180,20 @@ class DefaultController extends Controller {
         return new Response($this->json_view($count_rec,$products));
     }
     
-    
-    
+    //---------My Closet listing--------------------------------------------//
+    public function myClostListAction($user_id)
+    {
+        
+       $em = $this->getDoctrine()->getManager();
+       $brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+                $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                 ->countMyCloset($user_id);
+      $rec_count = count($brandObj->countMyCloset($user_id)); 
+       return new Response($this->json_view($rec_count,$brandObj));          
+        
+        
+    }
     #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count,$entity) {

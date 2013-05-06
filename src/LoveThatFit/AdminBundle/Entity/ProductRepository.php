@@ -295,11 +295,10 @@ class ProductRepository extends EntityRepository {
             $query = $this->getEntityManager()
                         ->createQuery("
      SELECT p,pi FROM LoveThatFitAdminBundle:Product p
-      JOIN p.product_items pi
-      JOIN pi.users u
-      WHERE
-      u.id = :id"                         
-                        )->setParameters(array('id' => $user_id)) ;
+     JOIN p.product_items pi
+     JOIN pi.users u
+     WHERE
+     u.id = :id"  )->setParameters(array('id' => $user_id)) ;
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
