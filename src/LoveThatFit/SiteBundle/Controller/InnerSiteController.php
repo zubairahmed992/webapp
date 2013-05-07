@@ -82,19 +82,44 @@ class InnerSiteController extends Controller {
 
 //----------------------------------- Product Detail ..............        
     public function productDetailAction($id, $product_color_id, $product_size_id) {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->getDoctrine()
+        $productColor = null;
+        $productSize = null;
+        $productItem = null;
+        
+        $product = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
             ->find($id);
-
-        if (!$entity) {
+        
+        if ($product_color_id){
+        $productColor = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:ProductColor')
+            ->find($product_color_id);
+        }
+        
+        if ($product_size_id){
+        $productSize = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:ProductSize')
+            ->find($product_size_id);
+        }
+        
+        if ($product_size_id && $product_color_id){
+        $productItem = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:ProductItem')
+            ->findByColorSize($product_color_id, $product_size_id);        
+        }
+        
+        if (!$product) {
             throw $this->createNotFoundException('Unable to find Product.');
         }
         
         return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', 
-                array('product' => $entity));
+                array('product' => $product,
+                    'productColor' => $productColor,
+                    'productSize' => $productSize,
+                    'productItem' => $productItem,
+                    ));
     }
-    
+//----------------------------------------------------------------------------------    
     public function productsByMyClosetAction($page_number=0 , $limit=0)
     {
         $user_id=$this->get('security.context')->getToken()->getUser()->getId(); 
@@ -103,7 +128,7 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
                
     }
-    
+//----------------------------------------------------------------------------------    
     public function countMyColosetAction()
     {
        $user_id=$this->get('security.context')->getToken()->getUser()->getId();
@@ -115,7 +140,7 @@ class InnerSiteController extends Controller {
 		$rec_count = count($brandObj->countMyCloset($user_id));
        return new Response($rec_count);
     }
-
+//----------------------------------------------------------------------------------
         public function deleteMyClosetAction($id)
     {
         $user=$this->get('security.context')->getToken()->getUser();         
@@ -129,10 +154,7 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
     }
     
-    
-
-
-    
+        
     //-------------------------------------------------------------------
     public function ajaxAction() {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        

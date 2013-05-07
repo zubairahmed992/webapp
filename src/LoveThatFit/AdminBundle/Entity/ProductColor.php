@@ -327,10 +327,12 @@ class ProductColor {
         $items = $this->product_items;
         $size_titles = array();
         foreach ($items as $i) {
-            array_push($size_titles, $i->getProductSize()->getTitle());
+            $size_titles[$i->getProductSize()->getTitle()] = $i->getProductSize()->getId();
         }
         return $size_titles;
     }
+
+   
 
     //---------------------------------------------------------------    
     //-------------- Image Upload ---------------------
@@ -412,7 +414,12 @@ class ProductColor {
 
 //-------------------------------------------------------
     public function getAbsolutePatternPath() {
-        return null === $this->pattern ? null : $this->getUploadRootDir() . '/' . $this->pattern;
+        return null === $this->pattern ? null : $this->getUploadRootDir() . '/pattern/' . $this->pattern;
+    }
+
+//-------------------------------------------------------
+    public function getPatternWebPath() {
+        return null === $this->pattern ? null : $this->getUploadDir() . '/pattern/' . $this->pattern;
     }
 
 //------------------------------------------------

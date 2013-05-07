@@ -30,9 +30,6 @@ $(function() {
 
     </script>  
     <ul class="prod_wrapper">
-        
-{% if productColor is defined %}
-    
 
         <li class="selected_pro">
             <div class="prod_node">
@@ -44,9 +41,15 @@ $(function() {
                         <div class="featured_sizes">
 
                             <select name="cloth_size">
-                            {%for pcsa in productColor.getSizeTitleArray%}
-                                    <option value="">{{pcsa}}</option>
-                             {%endfor%}
+                            {% if productColor%}
+                                {%for key, pcsa in productColor.getSizeTitleArray%}                                    
+                                    <option value='{{pcsa}}'>{{key}}</option>
+                                 {%endfor%}
+                            {% else %}
+                               {%for key, pcsa in product.displayProductColor.getSizeTitleArray%}
+                                    <option value='{{key}}'>{{pcsa}}</option>
+                              {%endfor%}
+                            {%endif%}
                                 </select>
 
                                 <select name="cloth_quantity">
@@ -61,6 +64,7 @@ $(function() {
                            {%for apc in product.productColors%}
                                     <input type="radio" value="XS" name="Radio" id="color1">
                                     <label style="background-color:#{{apc.colorA}}"  for="color1"></label>
+                                    <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}">
                             {%endfor%}
 
                                 </span>
@@ -71,161 +75,77 @@ $(function() {
 
                         </div>
                         <div class="featured_img">
-                    
-                                <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-                                <a class="apply_img" href="{{ asset(productColor.WebPath) }}"></a>                        
-                    
-                                <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
-                            </div>
+
+                            {% if productColor%}
+                            <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
+                            <a class="apply_img" href="{{ asset(productColor.WebPath) }}">upply</a>                        
+                            {% else %}
+                            <img width="63" height="108" src="{{asset(product.displayProductColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
+                            <a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}">upply</a>                        
+                            {%endif%}
+
+                            <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
+                            {% if productItem and productItem%}
+                                <a href="{{ path('ajax_user_product_item_create', {'product_item_id':productItem.id}) }}">Love</a><br>
+                                <a class="apply_img" href="{{ asset(productItem.WebPath) }}"></a>
+                            {% endif %}
+                        </div>
 
 
 
-                            <div style="clear:both;"></div>
-                            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
-
-
-
-                                <div class="sectionbox"><!-- START section -->
-                                    <ul class="tabs">
-                                        <li class="current">Description</li>
-                                        <li>At a Glance</li>
-                                        <li>Designer</li>		
-                                    </ul>
-                                    <div class="box visible">
-                                        <p>{{product.description}}</p>		
-                                    </div>
-                                    <div class="box">
-                                        <p>{{product.description}}</p>
-                                    </div>
-                                    <div class="box">
-                                        <p>{{product.description}}</p>
-                                    </div>
-                                </div><!-- END section -->
-                                <ul>
-                            {%for pi in pc.productItems%}
-                                        <li>
-                                            <a href="{{ path('ajax_user_product_item_create', {'product_item_id':pi.id}) }}">Love</a>
-                                            <a class="apply_img" href="{{ asset(pi.WebPath) }}"></a>
-                                            <a href="{{ asset(pi.WebPath) }}">{{pi.productColor.title}}-{{pi.productSize.title}}</a>
-                                        </li>
-                             {%endfor%}
-                                    </ul>
-
-                                </div><!--END PRODUCT MORE DETAIL-->   
-
-                                <span></span>
-                                <!--/prod_node--></div>
-                        </div></li>
-
-{% else %}
-        
-        <li class="selected_pro">
-            <div class="prod_node">
-                <span></span>
-                <div class="featured_box">                
-                    <div class="featured_content_selected">
-                        <h3 class="selected">{{product.name}}</h3>
                         <div style="clear:both;"></div>
-                        <div class="featured_sizes">
-
-                            <select name="cloth_size">
-                            {%for pcsa in product.displayProductColor.getSizeTitleArray%}
-                                    <option value="">{{pcsa}}</option>
-                             {%endfor%}
-                                </select>
-
-                                <select name="cloth_quantity">
-                                    <option>1</option>
-                                </select>
-                            </div>
-
-                            <div class="pro_color">
-
-                                <span>                         
-
-                           {%for apc in product.productColors%}
-                                    <input type="radio" value="XS" name="Radio" id="color1">
-                                    <label style="background-color:#{{apc.colorA}}"  for="color1"></label>
-                            {%endfor%}
-
-                                </span>
-                            </div>
-
-                            <div id="add_cart"><a href="#">Add to Bag</a></div>
-                            <div class="product_price">$ 9,473.57</div>
-                            
-                        </div>
-                        <div class="featured_img">
-                    
-                                <img width="63" height="108" src="{{asset(product.displayProductColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-                                <a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}"></a>                        
-                    
-                                <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
-                            </div>
+                        <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
 
 
 
-                            <div style="clear:both;"></div>
-                            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
+                            <div class="sectionbox"><!-- START section -->
+                                <ul class="tabs">
+                                    <li class="current">Description</li>
+                                    <li>At a Glance</li>
+                                    <li>Designer</li>		
+                                </ul>
+                                <div class="box visible">
+                                    <p>{{product.description}}</p>		
+                                </div>
+                                <div class="box">
+                                    <p>{{product.description}}</p>
+                                </div>
+                                <div class="box">
+                                    <p>{{product.description}}</p>
+                                </div>
+                            </div><!-- END section -->
+                          
+
+                            </div><!--END PRODUCT MORE DETAIL-->   
+
+                            <span></span>
+                            <!--/prod_node--></div>
+                    </div></li>
 
 
 
-                                <div class="sectionbox"><!-- START section -->
-                                    <ul class="tabs">
-                                        <li class="current">Description</li>
-                                        <li>At a Glance</li>
-                                        <li>Designer</li>		
-                                    </ul>
-                                    <div class="box visible">
-                                        <p>{{product.description}}</p>		
-                                    </div>
-                                    <div class="box">
-                                        <p>{{product.description}}</p>
-                                    </div>
-                                    <div class="box">
-                                        <p>{{product.description}}</p>
-                                    </div>
-                                </div><!-- END section -->
-                                <ul>
-                            {%for pi in product.displayProductColor.productItems%}
-                                        <li>                                          
-                                            <a href="{{ path('ajax_user_product_item_create', {'product_item_id':pi.id}) }}">Love</a><br>
-                                            <a class="apply_img" href="{{ asset(pi.WebPath) }}"></a>                                            
-                                            <a href="{{ asset(pi.WebPath) }}">{{pi.productColor.title}}-{{pi.productSize.title}}</a>
-                                        </li>
-                             {%endfor%}
-                                    </ul>
 
-                                </div><!--END PRODUCT MORE DETAIL-->   
 
-                                <span></span>
-                                <!--/prod_node--></div>
-                        </div></li>
+                <!------------------------------------------------------------------------------------>
 
-{% endif %}
+            </ul>
 
-    
-
-                    <!------------------------------------------------------------------------------------>
-
-                </ul>
-
-                <script type="text/javascript">
-                        $('slideshow').style.display='none';
-                        $('wrapper').style.display='block';
-                        var slideshow=new TINY.slideshow("slideshow");
-                        window.onload=function(){
-                                slideshow.auto=false;
-                                slideshow.speed=5;
-                                slideshow.link="linkhover";
-                                slideshow.info="information";
-                                slideshow.thumbs="slider";
-                                slideshow.left="slideleft";
-                                slideshow.right="slideright";
-                                slideshow.scrollSpeed=4;
-                                slideshow.spacing=5;
-                                slideshow.active="#fff";
-                                slideshow.init("slideshow","image","imgprev","imgnext","imglink");
-                        }
-                    </script>
+            <script type="text/javascript">
+                    $('slideshow').style.display='none';
+                    $('wrapper').style.display='block';
+                    var slideshow=new TINY.slideshow("slideshow");
+                    window.onload=function(){
+                            slideshow.auto=false;
+                            slideshow.speed=5;
+                            slideshow.link="linkhover";
+                            slideshow.info="information";
+                            slideshow.thumbs="slider";
+                            slideshow.left="slideleft";
+                            slideshow.right="slideright";
+                            slideshow.scrollSpeed=4;
+                            slideshow.spacing=5;
+                            slideshow.active="#fff";
+                            slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+                    }
+                </script>
 {% endblock %}
