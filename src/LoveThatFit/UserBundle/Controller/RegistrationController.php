@@ -53,6 +53,7 @@ class RegistrationController extends Controller {
             $entity = new User();
             $form = $this->createForm(new UserType(), $entity);
             $form->bind($this->getRequest());
+         
 
             if ($form->isValid()) {
                 //Duplicate user name check
@@ -63,6 +64,7 @@ class RegistrationController extends Controller {
                                 'form' => $form->createView(),
                                 'entity' => $entity));
                 } else {
+                   
                     $entity->setCreatedAt(new \DateTime('now'));
                     $entity->setUpdatedAt(new \DateTime('now'));
 

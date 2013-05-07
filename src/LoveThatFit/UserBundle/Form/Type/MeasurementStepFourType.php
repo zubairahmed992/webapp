@@ -11,7 +11,7 @@ class MeasurementStepFourType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
        $builder->add('shoulder_height', 'hidden');
-       $builder->add('waist_height', 'hidden');
+       $builder->add('outseam', 'hidden');
     }
   
      public function getDefaultOptions(array $options)

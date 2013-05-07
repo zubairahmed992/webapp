@@ -95,8 +95,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "70",
-     *      minMessage = "You must have at least 10  ",
-     *      maxMessage = "You cannot have more than 70 ",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
@@ -112,8 +112,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "70",
-     *      minMessage = "You must have at least 10  ",
-     *      maxMessage = "You cannot have more than 70  ",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
@@ -128,8 +128,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "70",
-     *      minMessage = "You must have at least 10  ",
-     *      maxMessage = "You cannot have more than 70  ",
+     *      minMessage = "You must have at least 10 inches ",
+     *      maxMessage = "You cannot have more than 70 inches  ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
@@ -146,8 +146,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "300",
-     *      minMessage = "You must have at least 0  ",
-     *      maxMessage = "You cannot have more than 300  ",
+     *      minMessage = "You must have at least 0 inches ",
+     *      maxMessage = "You cannot have more than 300 inches  ",
      *      groups={"profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
@@ -155,22 +155,7 @@ class Measurement {
      */
     private $arm=0;
 
-    /**
-     * @var float $leg
-     *
-     * @ORM\Column(name="leg", type="float", nullable=true)
-     * 
-     * @Assert\Range(
-     *      min = "0",
-     *      max = "300",
-     *      minMessage = "You must have at least 0  ",
-     *      maxMessage = "You cannot have more than 300  ",
-     *      groups={"profile_measurement"}
-     * )
-     * @Assert\NotBlank(groups={"profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
-     */
-    private $leg=0;
+    
 
     /**
      * @var float $inseam
@@ -180,8 +165,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "50",
-     *      minMessage = "You must have at least 6 ",
-     *      maxMessage = "You cannot have more than 50 ",
+     *      minMessage = "You must have at least 6 inches ",
+     *      maxMessage = "You cannot have more than 50 inches ",
      *      groups={"profile_measurement"}
      * )
      * @Assert\NotBlank(groups={"profile_measurement"})  
@@ -197,8 +182,8 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "300",
-     *      minMessage = "You must have at least 0  ",
-     *      maxMessage = "You cannot have more than 300 ",
+     *      minMessage = "You must have at least 0 inches ",
+     *      maxMessage = "You cannot have more than 300 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
      *@Assert\NotBlank(groups={"profile_measurement"})  
@@ -214,7 +199,7 @@ class Measurement {
      * @Assert\Range(
      *      min = "0",
      *      max = "80",
-     *      minMessage = "You must have at least 0 ",
+     *      minMessage = "You must have at least 0 inches  ",
      *      maxMessage = "You cannot have more than 80 inches "
      * )
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
@@ -222,20 +207,51 @@ class Measurement {
     private $shoulder_height=0;
     
     /**
-     * @var float $waist_height
+     * @var float $outseam
      *
-     * @ORM\Column(name="waist_height", type="float", nullable=true)
+     * @ORM\Column(name="outseam", type="float", nullable=true)
      * 
      * @Assert\Range(
      *      min = "0",
      *      max = "60",
-     *      minMessage = "You must have at least 0  ",
-     *      maxMessage = "You cannot have more than 60  "
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 60 inches  "
      * )
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $waist_height=0;
-    
+    private $outseam=0;
+     /**
+     * @var float $sleeve
+     *
+     * @ORM\Column(name="sleeve", type="float", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0  inches  ",
+     *      maxMessage = "You cannot have more than 300 inches ",
+     *      groups={"registration_step_two","profile_measurement"}
+     * )
+     *@Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $sleeve=0;
+    /**
+     * @var float $neck
+     *
+     * @ORM\Column(name="neck", type="float", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 300 inches  ",
+     *      groups={"registration_step_two","profile_measurement"}
+     * )
+     *@Assert\NotBlank(groups={"profile_measurement"})  
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $neck=0;
     /**
      * @var \DateTime $created_at
      */
@@ -383,27 +399,7 @@ class Measurement {
         return $this->arm;
     }
 
-    /**
-     * Set leg
-     *
-     * @param float $leg
-     * @return Measurement
-     */
-    public function setLeg($leg) {
-        $this->leg = $leg;
-
-        return $this;
-    }
-
-    /**
-     * Get leg
-     *
-     * @return float 
-     */
-    public function getLeg() {
-        return $this->leg;
-    }
-
+   
     /**
      * Set inseam
      *
@@ -533,29 +529,7 @@ class Measurement {
         return $this->shoulder_height;
     }
 
-    /**
-     * Set waist_height
-     *
-     * @param float $waistHeight
-     * @return Measurement
-     */
-    public function setWaistHeight($waistHeight)
-    {
-        $this->waist_height = $waistHeight;
-    
-        return $this;
-    }
-
-    /**
-     * Get waist_height
-     *
-     * @return float 
-     */
-    public function getWaistHeight()
-    {
-        return $this->waist_height;
-    }
-
+   
     /*
      * 
 English BMI Formula
@@ -598,5 +572,74 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getChest()
     {
         return $this->chest;
+    }
+
+    /**
+     * Set sleeve
+     *
+     * @param float $sleeve
+     * @return Measurement
+     */
+    public function setSleeve($sleeve)
+    {
+        $this->sleeve = $sleeve;
+    
+        return $this;
+    }
+
+    /**
+     * Get sleeve
+     *
+     * @return float 
+     */
+    public function getSleeve()
+    {
+        return $this->sleeve;
+    }
+
+    /**
+     * Set neck
+     *
+     * @param float $neck
+     * @return Measurement
+     */
+    public function setNeck($neck)
+    {
+        $this->neck = $neck;
+    
+        return $this;
+    }
+
+    /**
+     * Get neck
+     *
+     * @return float 
+     */
+    public function getNeck()
+    {
+        return $this->neck;
+    }
+
+    /**
+     * Set outseam
+     *
+     * @param float $outseam
+     * @return Measurement
+     */
+    public function setOutseam($outseam)
+    {
+        $this->outseam = $outseam;
+    
+        return $this;
+    }
+
+    /**
+     * Get outseam
+     *
+     * @return float 
+     */
+    public function getOutseam()
+    {
+        return $this->outseam;
     }
 }

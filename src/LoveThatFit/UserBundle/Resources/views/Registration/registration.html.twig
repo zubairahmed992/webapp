@@ -26,6 +26,11 @@
                         {{ form_errors(form.password.password) }}
                         {{ form_errors(form.password.confirm) }}
                     </div>
+                     <div class="frm_ele">
+                        {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
+                        {{ form_errors(form.zipcode) }}
+                        {{ form_errors(form.zipcode) }}
+                    </div>
 
                     <div style="float:left; margin-left:20px;">            
                         <div class="frm_ele radio_buts">

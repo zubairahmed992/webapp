@@ -171,7 +171,7 @@ class ProfileController extends Controller {
     
     public function _whatILikeAction()
     {       
-     $em = $this->getDoctrine()->getManager();
+      $em = $this->getDoctrine()->getManager();
       $user=$this->get('security.context')->getToken()->getUser();
       $question = $em->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->find(1);
       $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find(1);

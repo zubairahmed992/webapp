@@ -17,7 +17,6 @@ class ProfileMeasurementType extends AbstractType
         $builder->add('hip', 'number', array('precision' => 2));        
         $builder->add('waist', 'number', array('precision' => 2));
         $builder->add('inseam', 'number', array('precision' => 2));
-        $builder->add('leg', 'number', array('precision' => 2));        
         $builder->add('back', 'number', array('precision' => 2));
         $builder->add('arm', 'number', array('precision' => 2));
         
