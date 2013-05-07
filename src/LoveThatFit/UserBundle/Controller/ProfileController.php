@@ -5,6 +5,8 @@ namespace LoveThatFit\UserBundle\Controller;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementType;
+use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementMaleType;
+use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementFemaleType;
 use LoveThatFit\UserBundle\Form\Type\ProfileSettingsType;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,14 +24,22 @@ class ProfileController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-        $measurement = $entity->getMeasurement();
-        $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
+       
+         $measurement = $entity->getMeasurement();
+       
+       
+        
+        if ($entity->getGender() == 'm') {
+          $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
+          }else{
+          $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
+          }
        
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'validation_groups' => array('profile_measurement'),
                     'measurement' => $measurement,
+                    'entity'=>$entity,
                     
                 ));
     }
@@ -44,7 +54,13 @@ class ProfileController extends Controller {
 
         $measurement = $entity->getMeasurement();
 
-        $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
+       // $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
+       if ($entity->getGender() == 'm') {
+          $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
+          }else{
+          $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
+          }
+        
         $measurementForm->bind($this->getRequest());       
         if($measurementForm->isValid())
         {        
@@ -55,7 +71,8 @@ class ProfileController extends Controller {
         }       
          return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
-                    'measurement' => $measurement,                    
+                    'measurement' => $measurement,   
+                     'entity'=>$entity,
                 ));
        }
 

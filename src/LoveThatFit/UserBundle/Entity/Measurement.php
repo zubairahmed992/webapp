@@ -21,7 +21,23 @@ class Measurement {
      * */
     private $user;
 
-    //---------------------------------------------------------------------    
+ /* 
+ * @ORM\OneToOne(targetEntity="SizeChart", mappedBy="measurement",nullable=true)
+ */
+    private $top_fitting_size_chart_id;
+
+ /* 
+ * @ORM\OneToOne(targetEntity="SizeChart", mappedBy="measurement",nullable=true)
+ */
+    private $bottom_fitting_size_chart_id;
+ 
+   /* 
+ * @ORM\OneToOne(targetEntity="SizeChart", mappedBy="measurement",nullable=true)
+ */
+    private $dress_fitting_size_chart_id;
+ 
+
+//---------------------------------------------------------------------    
 
     /**
      * @var integer $id

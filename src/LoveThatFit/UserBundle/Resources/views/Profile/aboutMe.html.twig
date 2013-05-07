@@ -33,12 +33,39 @@
             <div class="form_vld_error"> {{ form_errors(form.weight) }}</div>
         </div>
          <div class="clr_bth"></div>
-    <div id='frm_bust'>
-        
+      <div id='frm_weight'>
+       
+        {{ form_label(form.sleeve) }}
+        {{ form_widget(form.sleeve) }}
+            <div class="form_vld_error"> {{ form_errors(form.sleeve) }}</div>
+        </div>
+         <div class="clr_bth"></div>    
+    <div id='frm_weight'>
+       
+        {{ form_label(form.neck) }}
+        {{ form_widget(form.neck) }}
+            <div class="form_vld_error"> {{ form_errors(form.neck) }}</div>
+        </div>
+         <div class="clr_bth"></div>     
+     {% if(entity.gender=='m')%}    
+
+
+         <div id='frm_bust'>
+
+        {{ form_label(form.chest) }}
+        {{ form_widget(form.chest) }}
+             <div class="form_vld_error">{{ form_errors(form.chest) }}</div>
+         </div>
+
+         {%else%}
+
+         <div id='frm_bust'>
+
         {{ form_label(form.bust) }}
         {{ form_widget(form.bust) }}
-            <div class="form_vld_error">{{ form_errors(form.bust) }}</div>
-        </div>
+             <div class="form_vld_error">{{ form_errors(form.bust) }}</div>
+         </div>
+         {%endif%}
          <div class="clr_bth"></div>
     <div id='frm_waist'>
        
@@ -61,10 +88,21 @@
         {{ form_widget(form.inseam) }}
             <div class="form_vld_error">{{ form_errors(form.inseam) }}</div>
         </div>
-         
-       
+          
+    <div class="clr_bth"></div>
         
-   
+    <div id='frm_inseam'>
+        {{ form_label(form.shoulder_height) }}
+        {{ form_widget(form.shoulder_height) }}
+            <div class="form_vld_error">{{ form_errors(form.shoulder_height) }}</div>
+        </div>
+         
+         <div class="clr_bth"></div>
+          <div id='frm_inseam'>
+        {{ form_label(form.outseam) }}
+        {{ form_widget(form.outseam) }}
+            <div class="form_vld_error">{{ form_errors(form.outseam) }}</div>
+        </div>
          
          <div class="clr_bth"></div>
         
@@ -75,24 +113,26 @@
         <div class="form_vld_error">{{ form_errors(form.back) }}</div>
         </div>
          <div class="clr_bth"></div>
-    <div id='frm_arm'>
-        
-        {{ form_label(form.arm) }}
-        {{ form_widget(form.arm) }}
-        <div class="form_vld_error">{{ form_errors(form.arm) }}</div>
-        </div>    
    
-  
-        
     <div id='frm_outseam'>
-        <label>
-            Outseam  </label> {{measurement.outseam}} 
-    </div>    
+       
+    </div>   
+       
+       {%if(measurement.height=="0"  or  measurement.weight=="0")%}  
+        <div id='frm_bmi'>
+            <label>BMI</label> Please Enter Your Height and Weight For BMI Result
+    </div>   
+         {%else%}
         <div id='frm_bmi'>
             <label>BMI</label> {{measurement.BMI}} 
-    </div>    
+    </div>  
+         {%endif%}
      <div id='frm_age'>
-         <label>Age</label>    {{app.user.age}}
+         <label>Age</label>   {%if(app.user.age=="" or app.user.age=="0")%}
+                            Enter Your Age (Account Settings Tab)
+                            {%else%}
+                                 {{app.user.age}}
+                            {%endif%}
     </div> 
         
    {% include 'LoveThatFitUserBundle:Profile:_user_profile_image.html.twig'%} 

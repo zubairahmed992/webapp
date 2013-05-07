@@ -13,6 +13,8 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationStepTwoType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepThreeType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepFourType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementType;
+use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementMaleType;
+use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -148,8 +150,7 @@ class RegistrationController extends Controller {
             
         $form = $this->createForm(new RegistrationStepTwoType(), $entity);
         $form->bind($request);
-
-
+       
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
@@ -462,7 +463,8 @@ public function registrationCreateAction() {
             if ($this->isDuplicateEmail(Null,$entity->getEmail())) {
                      $form->get('email')->addError(new FormError('This email has already taken.'));
               }
-              
+             
+             
             if ($form->isValid()) {
                
                 $entity->setCreatedAt(new \DateTime('now'));
@@ -490,7 +492,12 @@ public function registrationCreateAction() {
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($entity);
                 
-                $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
+                if ($entity->getGender() == 'm') {
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType(), $measurement);
+                } else {
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
+                }
+               
                                 
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                             'form' => $registrationMeasurementform->createView(),
@@ -523,7 +530,13 @@ public function registrationCreateAction() {
 
         $measurement = $entity->getMeasurement();
         
-        $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
+       // $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
+       
+       if ($entity->getGender() == 'm') {
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType(), $measurement);
+        } else {
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
+        }
         $registrationMeasurementform->bind($this->getRequest());
 
         $em->persist($measurement);
