@@ -28,12 +28,13 @@ class SizeChartType extends AbstractType
         $builder->add('inseam','text');
         $builder->add('neck','text');
         $builder->add('sleeve','text');
-        $builder ->add('Brand', 'entity', array(
+        $builder->add('Brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'name',
-                ));        
+                ));
+       $builder->add('disabled', 'checkbox',array('label' =>'Enabled','required'=> false,));       
     }
 
      public function getDefaultOptions(array $options)

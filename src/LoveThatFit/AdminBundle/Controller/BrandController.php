@@ -57,6 +57,7 @@ class BrandController extends Controller {
     'validation_groups' => array('brand_create')))
                 ->add('name', 'text')
                 ->add('file')
+                ->add('disabled', 'hidden', array('data' => '0',))
                 ->getForm();
 
         return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
@@ -70,6 +71,7 @@ class BrandController extends Controller {
         $form = $this->createFormBuilder($entity)
                 ->add('name', 'text')
                 ->add('file')
+                ->add('disabled','hidden', array('data' => '0',))
                 ->getForm();
         
         $form->bind($request);
@@ -106,6 +108,7 @@ class BrandController extends Controller {
     'validation_groups' => array('brand_update')))
                 ->add('name')
                 ->add('file', null, array('required' => false))
+                ->add('disabled', 'checkbox',array('label' =>'Enabled','required'=> false,))                
                 ->getForm();
         $deleteForm = $this->getDeleteForm($id);
         
@@ -185,6 +188,7 @@ class BrandController extends Controller {
         return $this->createFormBuilder($entity)
                 ->add('name')
                 ->add('file')
+                ->add('disabled', 'checkbox',array('label' =>'Enabled','required'=> false,)) 
                 ->getForm();
     }
       

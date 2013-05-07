@@ -53,6 +53,7 @@ class ClothingTypeController extends Controller {
          $form = $this->createFormBuilder($clothing_type)
                 ->add('name', 'text')
                 ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
+                 ->add('disabled', 'hidden', array('data' => '0',))
                 ->getForm();
 
            return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
@@ -67,6 +68,7 @@ class ClothingTypeController extends Controller {
          $form = $this->createFormBuilder($clothing_type)
                 ->add('name', 'text')
                 ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
+                ->add('disabled', 'hidden', array('data' => '0',))
                 ->getForm();
         
         $form->bind($request);
@@ -179,6 +181,7 @@ else
         return  $this->createFormBuilder($entity)
                 ->add('name', 'text')
                 ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')))
+                ->add('disabled', 'checkbox',array('label' =>'Enabled','required'=> false,)) 
                 ->getForm();
 
     }

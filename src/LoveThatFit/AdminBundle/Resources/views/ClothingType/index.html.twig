@@ -1,43 +1,49 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-
 {% block breadcrumb %}
-       <li class="active">Clothing Types</li>
+   <li class="active">Clothing Types</li>
 {% endblock %}
 
 
 
 {% block body %}
+  
 <div class="p_listing">     
     <h1 style="float:left;">Clothing Types</h1>
-    <div class="btn_wrapper">     
+ <div class="btn_wrapper">
      <a href="{{ path('admin_clothing_type_new') }}" class="btn">Add New</a>
       </div>
-     <div class="clearfix"></div>
-
+     <div class="clearfix"></div> 
+     
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">
-            <div class="span3 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
-            <div class="span3 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
-            <div class="span3 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'target' }}" style=" text-decoration: none;">Target</a></div>
-            <div class="span3 hds">&nbsp;</div>              
+            <div class="span1 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'target' }}" style=" text-decoration: none;">Target</a></div>
+            <div class="span1 hds"></div>                  
+            <div class="span1 hds"></div>  
+            <div class="span1 hds"></div> 
+             <div class="span1 hds"></div>
+            
         </div>  
 
           {% for ct in clothing_types %}
 
         <div class="row-fluid show-grid">
-            <div class="span3">{{ct.Id}}</div>
-            <div class="span3">{{ct.Name}}</div>
-            <div class="span3">{{ct.Target}}</div>
-            <div class="span3">                  
-                <div>
+            <div class="span1">{{ct.Id}}</div>
+            <div class="span1">{{ct.Name}}</div>
+            <div class="span1">{{ct.Target}}</div>                        
+            <div class="span1">{%if(ct.disabled==0)%} Disabled {%else%}  {%endif%}</div>
+            <div class="span1">
                     <a href="{{ path('admin_clothing_type_show', {'id': ct.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_clothing_type_edit', {'id': ct.Id}) }}"><i class="icon-edit"></i></a>
                     <a href="#myModal{{ct.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-                </div> 
-            </div>              
+          
+            </div>
+                <div class="span1"></div> 
+                 <div class="span1"></div> 
         </div>
- <!-- Modal -->
+        <!-- Modal -->
 <div id="myModal{{ct.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -52,12 +58,14 @@
     
   </div>
 </div>
-
 {% endfor %}
 
+   
 
+ </div> 
 
     </div>
+   
  {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
   with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
 ,'controller_name':'admin_clothing_types'}

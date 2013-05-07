@@ -1,42 +1,49 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-       <li class="active">Brands</li>
+   <li class="active">Brands</li>
 {% endblock %}
 
+
+
 {% block body %}
+  
 <div class="p_listing">     
     <h1 style="float:left;">Brands</h1>
-<div class="btn_wrapper">     
+ <div class="btn_wrapper">
      <a href="{{ path('admin_brand_new') }}" class="btn">Add New</a>
       </div>
-     <div class="clearfix"></div>
+     <div class="clearfix"></div> 
+     
     <div class="bs-docs-grid">              
 
-    
-       
-    
         <div class="row-fluid show-grid">
-            <div class="span3 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
-            <div class="span3 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
-            <div class="span3 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'logo' }}" style=" text-decoration: none;">Logo</a></div>
-            <div class="span3 hds"></div>          
+            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'logo' }}" style=" text-decoration: none;">Logo</a></div>
+            <div class="span1 hds"></div>                  
+            <div class="span1 hds"></div>
+            <div class="span1 hds"></div>            
+            <div class="span1 hds"></div>      
+            
         </div>  
 
           {% for b in brands %}
 
         <div class="row-fluid show-grid">
-            <div class="span3 show">{{b.Id}}</div>
-            <div class="span3 show">{{b.Name}}</div>
-            <div class="span3 show"><img src="{{ asset(b.WebPath) }}"/></div>
-            <div class="span3 show">                  
-                <div>
+            <div class="span1">{{b.Id}}</div>
+            <div class="span1">{{b.Name}}</div>
+            <div class="span1"><img src="{{ asset(b.WebPath) }}"/></div>                      
+            <div class="span1">{%if(b.disabled==0)%} Disabled {%else%}  {%endif%}</div>            
+            <div class="span1">
+            <div>
                     <a href="{{ path('admin_brand_show', {'id': b.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}"><i class="icon-edit"></i></a>
                     <a href="#myModal{{b.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
                 </div> 
-            </div>              
+            </div>
+                 <div class="span1"></div>
+            <div class="span1"></div> 
         </div>
-
         <!-- Modal -->
 <div id="myModal{{b.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">

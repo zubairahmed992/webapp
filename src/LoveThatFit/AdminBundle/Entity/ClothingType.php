@@ -52,7 +52,12 @@ class ClothingType
     protected $updated_at;
     
     
-    
+    /**
+     * @var string $disabled
+     *
+     * @ORM\Column(name="disabled", type="boolean")
+     */
+    private $disabled;
 
     /**
      * Get id
@@ -157,4 +162,29 @@ class ClothingType
     }
     
      
+
+   
+
+    /**
+     * Set disabled
+     *
+     * @param boolean $disabled
+     * @return ClothingType
+     */
+    public function setDisabled($disabled)
+    {
+        $this->disabled = $disabled;
+    
+        return $this;
+    }
+
+    /**
+     * Get disabled
+     *
+     * @return boolean 
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
+    }
 }

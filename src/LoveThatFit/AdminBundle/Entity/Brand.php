@@ -55,6 +55,13 @@ class Brand {
     public $file;
 
     /**
+     * @var string $disabled
+     *
+     * @ORM\Column(name="disabled", type="boolean")
+     */
+    private $disabled;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -242,5 +249,30 @@ public function deleteImages()
     public function getSizechart()
     {
         return $this->sizechart;
+    }
+
+   
+
+    /**
+     * Set disabled
+     *
+     * @param boolean $disabled
+     * @return Brand
+     */
+    public function setDisabled($disabled)
+    {
+        $this->disabled = $disabled;
+    
+        return $this;
+    }
+
+    /**
+     * Get disabled
+     *
+     * @return boolean 
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
     }
 }

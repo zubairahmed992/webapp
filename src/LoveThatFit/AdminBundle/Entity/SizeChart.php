@@ -100,7 +100,12 @@ class SizeChart
      */
     private $sleeve;
 
-
+/**
+     * @var string $disabled
+     *
+     * @ORM\Column(name="disabled", type="boolean")
+     */
+    private $disabled;
     /**
      * Get id
      *
@@ -366,5 +371,30 @@ class SizeChart
     public function getBrand()
     {
         return $this->brand;
+    }
+
+  
+
+    /**
+     * Set disabled
+     *
+     * @param boolean $disabled
+     * @return SizeChart
+     */
+    public function setDisabled($disabled)
+    {
+        $this->disabled = $disabled;
+    
+        return $this;
+    }
+
+    /**
+     * Get disabled
+     *
+     * @return boolean 
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
     }
 }
