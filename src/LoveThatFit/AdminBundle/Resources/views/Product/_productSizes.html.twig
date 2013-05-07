@@ -12,7 +12,7 @@
             </div>
 
 {% endif %}
-   {% if product.clothingType.target =='ManTop' %}
+{% if product.clothingType.target =='Top' and product.gender =='M' %}  
             <table style="width:50%">
                 <div class="row-fluid show-grid p_title">
 
@@ -150,7 +150,7 @@
 
 {%endfor%}
                  
-  {% elseif product.clothingType.target =='WomenTop'  %}
+  {% elseif product.clothingType.target =='Top' and product.gender =='F' %}
                 <table style="width:50%">
                     <div class="row-fluid show-grid p_title">
 
@@ -276,7 +276,7 @@
                              {% endif %}
                              {%endfor%}
                     </table>      
-  {% elseif product.clothingType.target =='ManBottom'  %}
+  {% elseif product.clothingType.target =='Bottom' and product.gender =='M'  %}
                     <table style="width:50%">
                         <div class="row-fluid show-grid p_title">
 
@@ -403,7 +403,7 @@
                         </table>    
   
     
-   {% elseif product.clothingType.target =='WomenBottom'  %}
+   {% elseif product.clothingType.target =='Bottom' and product.gender =='F' %}
                     <table style="width:50%">
                         <div class="row-fluid show-grid p_title">
 
@@ -537,7 +537,7 @@
                              {%endfor%}
                         </table> 
     
-   {% elseif product.clothingType.target =='WomenDress'  %}
+   {% elseif product.clothingType.target =='Dress' and product.gender =='F'  %}
                     <table style="width:50%">
                         <div class="row-fluid show-grid p_title">
 
