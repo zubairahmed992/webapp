@@ -78,7 +78,7 @@ return true;
 
                     <div class="span2">
                         <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a>
-                       <a href="#myModal2" role="button" data-toggle="modal" class="btn">Delete</a>
+                       <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
                         
                         
 
@@ -86,7 +86,7 @@ return true;
 
                 </div>
                 
-                <div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div id="myModal2{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Delete Product</h3>
