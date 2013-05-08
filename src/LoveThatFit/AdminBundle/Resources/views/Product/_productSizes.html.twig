@@ -126,11 +126,11 @@
                         
                         <div class="span1">
                             <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
-                            <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete</a>
+                            <a href="#myModal11{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
 
 
                         </div>              
-                        <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div id="myModal11{{ps.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 <h3 id="myModalLabel">Delete Product</h3>
@@ -253,11 +253,11 @@
                             
                             <div class="span1">
                                 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
-                                <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete</a>
+                 <a href="#myModall{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
 
 
                             </div>              
-                            <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div id="myModal1{{ps.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h3 id="myModalLabel">Delete Product</h3>
@@ -274,7 +274,11 @@
                         </div>
 
                              {% endif %}
+                        
+                       
+                        
                              {%endfor%}
+                        
                     </table>      
   {% elseif product.clothingType.target =='Bottom' and product.gender =='M'  %}
                     <table style="width:50%">
@@ -378,11 +382,11 @@
                                 
                                 <div class="span1">
                                     <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
-                                    <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete</a>
+                                    <a href="#myModal1{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
 
 
                                 </div>              
-                                <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div id="myModal1{{ps.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h3 id="myModalLabel">Delete Product</h3>
@@ -513,11 +517,11 @@
                                 
                                 <div class="span1">
                                     <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
-                                    <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete</a>
+                                    <a href="#myModal1{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
 
 
                                 </div>              
-                                <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div id="myModal1{{ps.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h3 id="myModalLabel">Delete Product</h3>
@@ -661,11 +665,11 @@
                                 
                                 <div class="span1">
                                     <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
-                                    <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete</a>
+                                    <a href="#myModal1{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
 
 
                                 </div>              
-                                <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div id="myModal1{{ps.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h3 id="myModalLabel">Delete Product</h3>

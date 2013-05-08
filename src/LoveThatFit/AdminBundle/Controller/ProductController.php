@@ -619,6 +619,7 @@ class ProductController extends Controller {
 
 //-----------------------------------------------------------------------
     public function productDetailSizeDeleteAction(Request $request, $id, $size_id) {
+       
         $em = $this->getDoctrine()->getManager();
 
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductSize');
