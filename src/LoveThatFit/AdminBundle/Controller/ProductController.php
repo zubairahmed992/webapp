@@ -537,13 +537,13 @@ class ProductController extends Controller {
         {
         $sizeForm = $this->createForm(new ProductSizeManTopType(),$this->getProductSize($size_id));   
         }
-        if($product->getClothingType()->getTarget()=="WomenTop" and $product->getGender()=='F')
+        if($product->getClothingType()->getTarget()=="Top" and $product->getGender()=='F')
         {
         $sizeForm = $this->createForm(new ProductSizeWomenTopType(),$this->getProductSize($size_id));   
         }
         if($product->getClothingType()->getTarget()=="Bottom" and $product->getGender()=='M')
         {
-        $sizeForm = $this->createForm(new ProductSizeManBottomTopType(),$this->getProductSize($size_id));   
+        $sizeForm = $this->createForm(new ProductSizeManBottomType(),$this->getProductSize($size_id));   
         }
         if($product->getClothingType()->getTarget()=="Bottom" and $product->getGender()=='F')
         {
@@ -575,23 +575,23 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity_size = $em->getRepository('LoveThatFitAdminBundle:ProductSize')->find($size_id);
        
-        if($product->getClothingType()->getTarget()=="ManTop")
+        if($product->getClothingType()->getTarget()=="Top" and $product->getGender()=='M')
         {
         $sizeForm = $this->createForm(new ProductSizeManTopType(),$this->getProductSize($size_id));   
         }
-        if($product->getClothingType()->getTarget()=="WomenTop")
+        if($product->getClothingType()->getTarget()=="Top" and $product->getGender()=='F')
         {
         $sizeForm = $this->createForm(new ProductSizeWomenTopType(),$this->getProductSize($size_id));   
         }
-        if($product->getClothingType()->getTarget()=="ManBottom")
+        if($product->getClothingType()->getTarget()=="Bottom" and $product->getGender()=='M')
         {
-        $sizeForm = $this->createForm(new ProductSizeManBottomTopType(),$this->getProductSize($size_id));   
+        $sizeForm = $this->createForm(new ProductSizeManBottomType(),$this->getProductSize($size_id));   
         }
-        if($product->getClothingType()->getTarget()=="WomenBottom")
+        if($product->getClothingType()->getTarget()=="Bottom" and $product->getGender()=='F')
         {
         $sizeForm = $this->createForm(new ProductSizeWomenBottomType(),$this->getProductSize($size_id));   
         }
-        if($product->getClothingType()->getTarget()=="WomenDress")
+        if($product->getClothingType()->getTarget()=="Dress" and $product->getGender()=='M')
         {
         $sizeForm = $this->createForm(new ProductSizeWomenDressType(),$this->getProductSize($size_id));       
         }
