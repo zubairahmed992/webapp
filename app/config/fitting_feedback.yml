@@ -2,6 +2,7 @@ waist:
   tight:	'Waist: tight'
   loose:	'Waist: loose'
   fit: 'Waist: Exact fit'
+  np: 'Waist: measurement not provided'
   lower:	'wrong Waist size, Try a size up'
   -2:	'Tight at Waist. Try a size up'
   -1:	'Fitted, Tight Waist, try a size up'
@@ -15,6 +16,7 @@ hip:
   tight:	'Hip: tight'
   loose:	'Hip: loose'
   fit:  'Hip: fits'
+  np: 'Hip: measurement not provided'
   lower:	'wrong size, Try a size up'
   -2:	'Tight fit at the Hips. Try a size up'
   -1:	'Fitted, snug at the Hips'
@@ -27,7 +29,8 @@ hip:
 bust:
   tight:	'Bust: tight'
   loose:	'Bust: loose'
-  fit: 'Bust: Exact fit' 
+  fit: 'Bust: Exact fit'
+  np: 'Bust: measurement not provided'
   lower:	'wrong size, Try a size up'
   -2:	'Tight fit at the Bust. Try a size up'
   -1:	'Fitted at the Bust'
@@ -40,7 +43,8 @@ bust:
 arm:
   tight:	'Arm: tight'
   loose:	'Arm: loose'
-  fit: 'Arm: Exact fit' 
+  fit: 'Arm: Exact fit'
+  np: 'Arm: measurement not provided'
   lower:	'wrong size, Try a size up, Sleeves too short'
   -2:	'Sleeves too short, Try a size up'
   -1:	'Sleeves a bit shorter'
@@ -54,6 +58,7 @@ inseam:
   tight:	'Inseam: tight'
   loose:	'Inseam: loose'
   fit: 'Inseam: Exact fit'  
+  np: 'Inseam: measurement not provided'
   lower:	'wrong size, Try a size up'
   -2:	'Inseam too short. Try a size up'
   -1:	'Inseam short'
@@ -67,6 +72,7 @@ outseam:
   tight:	'Outseam: tight'
   loose:	'Outseam: loose'
   fit: 'Out seam: Exact fit'  
+  np: 'Out seam: measurement not provided'
   lower: 'crossing lower most limit' 
   -2: '2 inch short' 
   -1: '1 inch short' 
@@ -79,7 +85,8 @@ outseam:
 back:
   tight:	'Back: tight'
   loose:	'Back: loose'
-  fit: 'Back: Exact fit' 
+  fit: 'Back: Exact fit'
+  np: 'Back: measurement not provided'
   lower:	'wrong size, Try a size up'
   -2:	'undersized, Tight in back'
   -1:	'Fitted, tailor made, snug at the back'
@@ -93,6 +100,7 @@ length:
   tight:	'Length: tight'
   loose:	'Length: loose'
   fit: 'Length: Exact fit'
+  np: 'Length: measurement not provided'
   lower: 'crossing lower most limit' 
   -2: '2 inch short' 
   -1: '1 inch short' 
@@ -106,13 +114,16 @@ chest:
   tight:	'Chest: tight'
   loose:	'Chest: loose' 
   fit: 'Chest: Exact fit'
+  np: 'Chest: measurement not provided'
 
 neck:
   tight:	'Neck: tight'
   loose:	'Neck: loose' 
   fit: 'Neck: Exact fit'  
-
+  np: 'Neck: measurement not provided'
+  
 sleeve:
   tight:	'Sleeve: tight'
   loose:	'Sleeve: loose' 
-  fit: 'Sleeve: Exact fit'  
+  fit: 'Sleeve: Exact fit'
+  np: 'Sleeve: measurement not provided'
