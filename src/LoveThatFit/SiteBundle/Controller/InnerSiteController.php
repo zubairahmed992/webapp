@@ -4,6 +4,7 @@ namespace LoveThatFit\SiteBundle\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Yaml\Dumper;
 use LoveThatFit\SiteBundle\Comparison;
+ use LoveThatFit\SiteBundle\Algorithm;
 use LoveThatFit\SiteBundle\Cart;
 use LoveThatFit\AdminBundle\ImageHelper;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
@@ -200,9 +201,16 @@ class InnerSiteController extends Controller {
     public function getFeedBackJSONAction($user_id, $product_id) {        
     //$user= $this->get('security.context')->getToken()->getUser();
       
-            $em = $this->getDoctrine()->getManager();
-         $user= $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);        
-         
+        $em = $this->getDoctrine()->getManager();
+        $user= $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);        
+        /*
+           $productItem = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductItem')
+                ->find($product_id);
+     
+        $fit = new Algorithm($user, $productItem);
+    return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->getFeedBackJson()));
+        */
         $product = $this->getProduct($product_id);
                 
         if (!$user)
@@ -217,6 +225,9 @@ class InnerSiteController extends Controller {
          
         $fit = new Comparison($measurement, $product);
     return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->getFeedBackJson()));        
+    
+     
+        
     }
     //-------------------------------------------------------------------
    public function getFeedBackListAction($product_id) {        
@@ -236,6 +247,7 @@ class InnerSiteController extends Controller {
         $fit = new Comparison($measurement, $product);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', array('product' => $product, 'data' => $fit->getFeedBackArray()));        
     }
+   //-------------------------------------------------------------------
     
     public function addToCloestAction($product_item_id)
     {

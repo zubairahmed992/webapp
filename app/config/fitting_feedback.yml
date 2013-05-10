@@ -1,14 +1,7 @@
-sku: 
-  lower: 'crossing lower most limit' 
-  -2: '2 inch short' 
-  -1: '1 inch short' 
-  0: 'Exact fit' 
-  1: 'One inch bigger' 
-  2: '2 inch bigger' 
-  adjust: ' adjustment upplied, streched & fit' 
-  upper: 'crossing upper most limit' 
-
 waist: 
+  tight:	'Waist: tight'
+  loose:	'Waist: loose'
+  fit: 'Waist: Exact fit'
   lower:	'wrong Waist size, Try a size up'
   -2:	'Tight at Waist. Try a size up'
   -1:	'Fitted, Tight Waist, try a size up'
@@ -18,7 +11,10 @@ waist:
   adjust:	'Skin Tight Fitted at the waist'
   upper:	'wrong Waist size, try a size down'
 
-hip:  
+hip:
+  tight:	'Hip: tight'
+  loose:	'Hip: loose'
+  fit:  'Hip: fits'
   lower:	'wrong size, Try a size up'
   -2:	'Tight fit at the Hips. Try a size up'
   -1:	'Fitted, snug at the Hips'
@@ -28,7 +24,10 @@ hip:
   adjust:	'Skin Tight Fitted at the Hip'
   upper:	'wrong size, try a size down'
 
-bust: 
+bust:
+  tight:	'Bust: tight'
+  loose:	'Bust: loose'
+  fit: 'Bust: Exact fit' 
   lower:	'wrong size, Try a size up'
   -2:	'Tight fit at the Bust. Try a size up'
   -1:	'Fitted at the Bust'
@@ -38,7 +37,10 @@ bust:
   adjust:	'Skin Tight Fitted at the Bust'
   upper:	'wrong size, try a size down '
 
-arm: 
+arm:
+  tight:	'Arm: tight'
+  loose:	'Arm: loose'
+  fit: 'Arm: Exact fit' 
   lower:	'wrong size, Try a size up, Sleeves too short'
   -2:	'Sleeves too short, Try a size up'
   -1:	'Sleeves a bit shorter'
@@ -48,17 +50,10 @@ arm:
   adjust:	'Sleeves are too short'
   upper:	'wrong size, Sleeves too long, try a size down' 
 
-leg: 
-  lower:	'wrong size, Try a size up, too short'
-  -2:	'too short, Try a size up'
-  -1:	'a bit shorter'
-  0:	'Perfect Length'
-  1:	'A bit longer'
-  2:	'Long, try a size down'
-  adjust:	'too Long'
-  upper:	'wrong size, very Long'
-
-inseam:  
+inseam:
+  tight:	'Inseam: tight'
+  loose:	'Inseam: loose'
+  fit: 'Inseam: Exact fit'  
   lower:	'wrong size, Try a size up'
   -2:	'Inseam too short. Try a size up'
   -1:	'Inseam short'
@@ -68,7 +63,10 @@ inseam:
   adjust:	'Inseam too long'
   upper:	'wrong size, try a size down'
 
-outseam:  
+outseam:
+  tight:	'Outseam: tight'
+  loose:	'Outseam: loose'
+  fit: 'Out seam: Exact fit'  
   lower: 'crossing lower most limit' 
   -2: '2 inch short' 
   -1: '1 inch short' 
@@ -78,17 +76,10 @@ outseam:
   adjust: ' adjustment upplied, streched & fit' 
   upper: 'crossing upper most limit' 
 
-hem: 
-  lower: 'crossing lower most limit' 
-  -2: '2 inch short' 
-  -1: '1 inch short' 
-  0: 'Exact fit' 
-  1: 'One inch bigger' 
-  2: '2 inch bigger' 
-  adjust: ' adjustment upplied, streched & fit' 
-  upper: 'crossing upper most limit' 
-
-back: 
+back:
+  tight:	'Back: tight'
+  loose:	'Back: loose'
+  fit: 'Back: Exact fit' 
   lower:	'wrong size, Try a size up'
   -2:	'undersized, Tight in back'
   -1:	'Fitted, tailor made, snug at the back'
@@ -98,7 +89,10 @@ back:
   adjust:	'Skin tight Fitted at the Back'
   upper:	'wrong size, try a size down' 
 
-length: 
+length:
+  tight:	'Length: tight'
+  loose:	'Length: loose'
+  fit: 'Length: Exact fit'
   lower: 'crossing lower most limit' 
   -2: '2 inch short' 
   -1: '1 inch short' 
@@ -107,3 +101,18 @@ length:
   2: '2 inch bigger' 
   adjust: ' adjustment upplied, streched & fit' 
   upper: 'crossing upper most limit' 
+
+chest:
+  tight:	'Chest: tight'
+  loose:	'Chest: loose' 
+  fit: 'Chest: Exact fit'
+
+neck:
+  tight:	'Neck: tight'
+  loose:	'Neck: loose' 
+  fit: 'Neck: Exact fit'  
+
+sleeve:
+  tight:	'Sleeve: tight'
+  loose:	'Sleeve: loose' 
+  fit: 'Sleeve: Exact fit'  

@@ -52,28 +52,6 @@ class ProductColor {
     private $title;
 
     /**
-     * @var string $color_a
-     *
-     * @ORM\Column(name="color_a", type="string",nullable=true)
-     * @Assert\NotBlank()
-     */
-    private $color_a;
-
-    /**
-     * @var string $color_b
-     *
-     * @ORM\Column(name="color_b", type="string",nullable=true)
-     */
-    private $color_b;
-
-    /**
-     * @var string $color_c
-     *
-     * @ORM\Column(name="color_c", type="string",nullable=true)
-     */
-    private $color_c;
-
-    /**
      * @var string $pattern
      *
      * @ORM\Column(name="pattern", type="string",nullable=true)
@@ -141,74 +119,7 @@ class ProductColor {
     public function getTitle() {
         return $this->title;
     }
-
-//---------------------------------------------------------------
-    /**
-     * Set color_a
-     *
-     * @param string $colorA
-     * @return ProductColor
-     */
-    public function setColorA($colorA) {
-        $this->color_a = $colorA;
-
-        return $this;
-    }
-
-    /**
-     * Get color_a
-     *
-     * @return string 
-     */
-    public function getColorA() {
-        return $this->color_a;
-    }
-
-//---------------------------------------------------------------
-    /**
-     * Set color_b
-     *
-     * @param string $colorB
-     * @return ProductColor
-     */
-    public function setColorB($colorB) {
-        $this->color_b = $colorB;
-
-        return $this;
-    }
-
-    /**
-     * Get color_b
-     *
-     * @return string 
-     */
-    public function getColorB() {
-        return $this->color_b;
-    }
-
-//---------------------------------------------------------------
-    /**
-     * Set color_c
-     *
-     * @param string $colorC
-     * @return ProductColor
-     */
-    public function setColorC($colorC) {
-        $this->color_c = $colorC;
-
-        return $this;
-    }
-
-    /**
-     * Get colorC
-     *
-     * @return string 
-     */
-    public function getColorC() {
-        return $this->color_c;
-    }
-
-//---------------------------------------------------------------
+//----------------------------------------------------------------------------------
     /**
      * Set pattern
      *
@@ -352,11 +263,11 @@ class ProductColor {
             $temp_file_name = $this->getAbsolutePatternTempPath();
 
             $ext = pathinfo($this->getAbsolutePatternTempPath(), PATHINFO_EXTENSION);
-            $dest = $this->getUploadRootDir() . '/pattern/' . uniqid() . '.' . $ext;
+            $this->pattern= uniqid() . '.' . $ext;
+            $dest = $this->getUploadRootDir() . '/pattern/' . $this->pattern;
 
             rename($temp_file_name, $dest);
-            $this->pattern = $this->tempPattern; // update the file name
-
+            
             if ($this->getId()) {
                 if (is_readable($old_file_name)) {
                     @unlink($old_file_name);
