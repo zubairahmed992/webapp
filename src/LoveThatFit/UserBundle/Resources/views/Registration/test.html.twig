@@ -1,0 +1,119 @@
+{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+
+{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+
+{% block action_block_content %}
+<section class="reg_blk">
+    <div class="action_cnt">
+        <div class="steps step_1 measurements">  
+            <h2>Brands &amp; Sizes</h2>
+            
+            <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
+                
+             
+                <div>
+                    <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
+                    <input type="text" name="user_height" id="user_height" placeholder="Height">
+                </div>
+                
+                <div class="sep"></div>
+            
+                <div class="m_option">
+                    
+                    <div class="mlabel">Shirt</div>
+                    
+                    <div class="shirts_mus manual_opn" id="shirts_mus">
+                        <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
+                        <input type="text" name="user_height" id="user_height" placeholder="Height">
+                        <input type="text" name="user_height" id="user_height" placeholder="Height">
+                    </div>
+                    
+                    <div class="shirts_mus manual_opn" id="shirts_mus_opt">
+                    
+                        <select  name="sel_brands" id="sel_brands">
+                            <option value="gap">Gap</option>
+                            <option value="gap">Gap</option>
+                            <option value="gap">Gap</option>
+                        </select>
+
+                            <select  name="sel_size" id="sel_size">
+                            <option value="gap">Gap</option>
+                            <option value="gap">Gap</option>
+                            <option value="gap">Gap</option>
+                        </select>                   
+                    
+                  </div>
+                    
+                    <div class="shuf_icon shirt_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
+                
+                
+                
+                <div class="m_option">
+                    
+                    <div class="mlabel">Pant</div>
+                    
+                    <div class="pants_mus manual_opn" id="pants_mus">
+                    <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
+                    <input type="text" name="user_height" id="user_height" placeholder="Height">
+                    <input type="text" name="user_height" id="user_height" placeholder="Height">
+                    </div>
+                    
+                    
+                    <div class="pants_mus manual_opn" id="pants_mus_opt">
+                    
+                    <select  name="sel_brands" id="sel_brands">
+                        <option value="gap">Gap</option>
+                        <option value="gap">Gap</option>
+                        <option value="gap">Gap</option>
+                    </select>
+                        
+                        <select  name="sel_size" id="sel_size">
+                        <option value="gap">Gap</option>
+                        <option value="gap">Gap</option>
+                        <option value="gap">Gap</option>
+                    </select>
+                   
+                    </div>
+                    
+                    <div class="shuf_icon pant_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
+                    
+                    
+                </div>
+                
+                <div class="m_option">
+                    
+                    <div class="mlabel">Dress</div>
+                    
+                    <div class="dress_mus manual_opn" id="dress_mus">
+                    <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
+                    <input type="text" name="user_height" id="user_height" placeholder="Height">
+                    <input type="text" name="user_height" id="user_height" placeholder="Height">
+                    </div>
+                    
+                    <div class="shuf_icon"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></div>
+                    
+                    
+                </div>
+                
+                
+                <input class="reg_next_step" type="submit" value="Next Step" />
+            
+            </form>
+
+
+
+
+                            <!--/.sttp_1--></div>
+                        <!--/.action_cnt--></div>
+                    <!--/.action_blk--></section>
+
+
+
+
+{% endblock %}
+{% block how_it_works_content %}
+            {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
+
+
+{% endblock %}
+

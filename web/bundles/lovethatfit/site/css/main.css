@@ -2194,3 +2194,63 @@ padding-bottom: 5px;
     padding: 6px 0 6px 10px !important;
 }
 
+.measurements input[type="text"]{    
+  width:130px;  
+}
+
+.sep{
+    border-bottom:1px dashed #ccc;
+    padding: 0px 0px 5px 0px;
+    margin-bottom: 15px;
+}
+
+.measurements .m_option input[type="text"]{   
+ width:60px!important;     
+}
+
+.measurements .m_option select{   
+ width:116px!important; 
+ padding: 3px 7px;
+ box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.measurements .m_option select:last-child{   
+ width:117px!important; 
+ padding: 3px 7px;
+ box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.measurements .m_option .mlabel{   
+    float:left;
+    font-size: 0.95em;
+    display: inline-block;
+    width:45px;
+    padding: 5px 0px 0px 0px;
+}
+
+.manual_opn{
+  float:left;
+  margin-left: 10px;
+  margin-bottom: 6px;
+
+}
+
+.shuf_icon{
+    float:left;
+    margin: 5px 0px 0px 10px;
+}
+
+.m_option{
+   clear:both;
+   margin: 0px 0px 10px 0px;
+   overflow: auto;
+   
+}
+
+#shirts_mus{
+    display:none;
+}
+
+#pants_mus{
+    display:none;
+}
