@@ -6,6 +6,10 @@ getme:
 
 #--------------------------------- New Registration Process ----------------
 
+test:
+    pattern:  /registration/test
+    defaults: { _controller: LoveThatFitUserBundle:Registration:test }
+
 
 registration:
     pattern:  /registration

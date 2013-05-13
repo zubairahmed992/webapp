@@ -23,6 +23,17 @@ class RegistrationController extends Controller {
 
     //-------------------------------------------------------------------------
 
+      public function testAction() {
+       
+       $entity = new User();
+       $form = $this->createForm(new RegistrationType(), $entity);
+        return $this->render('LoveThatFitUserBundle:Registration:test.html.twig', array(
+                    'form' => $form->createView())); 
+        
+   }
+    
+    
+    
     public function stepOneAction() {
         $entity = new User();
         $form = $this->createForm(new UserType(), $entity);
