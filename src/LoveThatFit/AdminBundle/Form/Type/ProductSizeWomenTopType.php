@@ -12,15 +12,15 @@ class ProductSizeWomenTopType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('bust');
+      
         $builder->add('bust_min');
         $builder->add('bust_max');
         
-        $builder->add('sleeve');
+       
         $builder->add('sleeve_min');
         $builder->add('sleeve_max');
         
-        $builder->add('back');
+       
         $builder->add('back_min');
         $builder->add('back_max');
         
@@ -28,7 +28,7 @@ class ProductSizeWomenTopType extends AbstractType
         
         $builder->add('length');
         
-        $builder->add('waist');
+      
         $builder->add('waist_min');
         $builder->add('waist_max');
         

@@ -13,26 +13,21 @@ class ProductSizeManBottomType extends AbstractType
     {
         
         
-        $builder->add('waist');
+      
         $builder->add('waist_min');
         $builder->add('waist_max');
         
-        $builder->add('inseam');
+      
         $builder->add('inseam_min');
         $builder->add('inseam_max');
-        
-        $builder->add('outseam');
+      
         $builder->add('outseam_min');
         $builder->add('outseam_max');
         
         $builder->add('length');
-        
-        
-        
-        $builder->add('hip');
+      
         $builder->add('hip_min');
         $builder->add('hip_max');
-        
         
         $builder->add('hem');
         

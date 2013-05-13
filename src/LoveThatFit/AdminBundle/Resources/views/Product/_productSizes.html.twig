@@ -18,29 +18,12 @@
 
                     <div class="span1 hds"><b>Title</b></div>
                     <div class="span1 hds"><b>Neck</b></div>
-                    <div class="span1 hds"><b>Min. Neck</b></div>
-                    <div class="span1 hds"><b>Max. Neck</b></div>
-                    
                     <div class="span1 hds"><b>Sleeve</b></div>
-                    <div class="span1 hds"><b>Min. Sleeve</b></div>
-                    <div class="span1 hds"><b>Max. Sleeve</b></div>
-                    
                     <div class="span1 hds"><b>Chest</b></div>
-                    <div class="span1 hds"><b>Min. Chest</b></div>
-                    <div class="span1 hds"><b>Max. Chest</b></div>
-                    
                     <div class="span1 hds"><b>Back</b></div>
-                    <div class="span1 hds"><b>Min.Back</b></div>
-                    <div class="span1 hds"><b>Max.Back</b></div>
-                    
                     <div class="span1 hds"><b>Hem</b></div>
-                    
                     <div class="span1 hds"><b>Length</b></div>
-                    
                     <div class="span1 hds"><b>Waist</b></div>
-                    <div class="span1 hds"><b>Min. Waist</b></div>
-                    <div class="span1 hds"><b>Max. Waist</b></div>
-                    
                     <div class="span1 hds"></div>
 
 
@@ -60,29 +43,43 @@
 
                             <div class="span1 size_input">{{ ps.title }}</div>
                             
-                            <div class="span1 size_input">{{ form_widget(sizeform.neck) }}{{ form_errors(sizeform.neck) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.neck_min) }}{{ form_errors(sizeform.neck_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.neck_max) }}{{ form_errors(sizeform.neck_max) }}</div>
+                            <div class="span1 size_input">
+                           {{ form_widget(sizeform.neck_min) }}{{ form_errors(sizeform.neck_min) }}
+                           -
+                          {{ form_widget(sizeform.neck_max) }}{{ form_errors(sizeform.neck_max) }}
+                            </div>
                             
-                            <div class="span1 size_input">{{ form_widget(sizeform.sleeve) }}{{ form_errors(sizeform.sleeve) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.sleeve_min) }}{{ form_errors(sizeform.sleeve_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.sleeve_max) }}{{ form_errors(sizeform.sleeve_max) }}</div>
+                            <div class="span1 size_input">
+                            {{ form_widget(sizeform.sleeve_min) }}{{ form_errors(sizeform.sleeve_min) }}
+                               -
+                            {{ form_widget(sizeform.sleeve_max) }}{{ form_errors(sizeform.sleeve_max) }}
+                            </div>
                             
-                            <div class="span1 size_input">{{ form_widget(sizeform.chest) }}{{ form_errors(sizeform.chest) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.chest_min) }}{{ form_errors(sizeform.chest_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.chest_max) }}{{ form_errors(sizeform.chest_max) }}</div>
+                            <div class="span1 size_input">
+                            {{ form_widget(sizeform.chest_min) }}{{ form_errors(sizeform.chest_min) }}
+                                -
+                              {{ form_widget(sizeform.chest_max) }}{{ form_errors(sizeform.chest_max) }}    
+                            </div>
+                          
                             
-                            <div class="span1 size_input">{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.back_min) }}{{ form_errors(sizeform.back_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.back_max) }}{{ form_errors(sizeform.back_max) }}</div>
+                            <div class="span1 size_input">
+                            
+                            {{ form_widget(sizeform.back_min) }}{{ form_errors(sizeform.back_min) }}
+                               -
+                              {{ form_widget(sizeform.back_max) }}{{ form_errors(sizeform.back_max) }}  
+                            </div>
+                            
                             
                             <div class="span1 size_input">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
                             
                             <div class="span1 size_input">{{ form_widget(sizeform.length) }}{{ form_errors(sizeform.length) }}</div>
                             
-                            <div class="span1 size_input">{{ form_widget(sizeform.waist) }}{{ form_errors(sizeform.waist) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_max) }}</div>
+                            <div class="span1 size_input">
+                           {{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}
+                                 -
+                            {{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}        
+                            </div>
+                            
                             
                             
                             <div class="span1">
@@ -99,29 +96,22 @@
                     <div class="row-fluid show-grid p_title">
                         <div class="span1">{{ps.title}}</div>
                         
-                        <div class="span1">{{ps.neck}}</div>
-                        <div class="span1">{{ps.neckMin}}</div>
-                        <div class="span1">{{ps.neckMax}}</div>
+                        <div class="span1">{{ps.neckMin}} &nbsp;-&nbsp;{{ps.neckMax}}</div>
+                       
                         
-                        <div class="span1">{{ps.sleeve}}</div>
-                        <div class="span1">{{ps.sleeveMin}}</div>
-                        <div class="span1">{{ps.sleeveMax}}</div>
+                        <div class="span1">{{ps.sleeveMin}} &nbsp;-&nbsp;{{ps.sleeveMax}}</div>
                         
-                        <div class="span1">{{ps.chest}}</div>
-                        <div class="span1">{{ps.chestMin}}</div>
-                        <div class="span1">{{ps.ChestMax}}</div>
+                        <div class="span1">{{ps.chestMin}} &nbsp;-&nbsp;{{ps.ChestMax}}</div>
                         
-                        <div class="span1">{{ps.back}}</div>
-                        <div class="span1">{{ps.backMin}}</div>
-                        <div class="span1">{{ps.backMax}}</div>
+                        <div class="span1">{{ps.backMin}} &nbsp; -&nbsp;{{ps.backMax}}</div>
                         
                         <div class="span1">{{ps.hem}}</div>
                         
                         <div class="span1">{{ps.length}}</div>
                         
-                        <div class="span1">{{ps.waist}}</div>
-                        <div class="span1">{{ps.waistMin}}</div>
-                        <div class="span1">{{ps.waistMax}}</div>
+                        
+                        <div class="span1">{{ps.waistMin}} &nbsp; -&nbsp;{{ps.waistMax}}</div>
+                        
                         
                         
                         <div class="span1">
@@ -158,29 +148,14 @@
 
                     <div class="span1 hds"><b>Title</b></div>
                     <div class="span1 hds"><b>Bust</b></div>
-                    <div class="span1 hds"><b>Min. Bust</b></div>
-                    <div class="span1 hds"><b>Max. Bust</b></div>
-                    
                     <div class="span1 hds"><b>Sleeve</b></div>
-                    <div class="span1 hds"><b>Min. Sleeve</b></div>
-                    <div class="span1 hds"><b>Max. Sleeve</b></div>
-                    
                     <div class="span1 hds"><b>Back</b></div>
-                    <div class="span1 hds"><b>Min.Back</b></div>
-                    <div class="span1 hds"><b>Max.Back</b></div>
-                    
                     <div class="span1 hds"><b>Hem</b></div>
-                    
                     <div class="span1 hds"><b>Length</b></div>
-                    
                     <div class="span1 hds"><b>Waist</b></div>
-                    <div class="span1 hds"><b>Min. Waist</b></div>
-                    <div class="span1 hds"><b>Max. Waist</b></div>
-                    
                     <div class="span1 hds"></div>
 
-
-                </div>
+                    </div>
 
 {% for ps in product.productSizes %}  
 
@@ -193,28 +168,35 @@
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
                             
-                            <div class="span1 size_input">{{ form_widget(sizeform.bust) }}{{ form_errors(sizeform.bust) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.bust_min) }}{{ form_errors(sizeform.bust_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.bust_max) }}{{ form_errors(sizeform.bust_max) }}</div>
+                            <div class="span1 size_input">
+                        {{ form_widget(sizeform.bust_min) }}{{ form_errors(sizeform.bust_min) }}
+                               - 
+                        {{ form_widget(sizeform.bust_max) }}{{ form_errors(sizeform.bust_max) }}
+                          </div>
                             
-                            <div class="span1 size_input">{{ form_widget(sizeform.sleeve) }}{{ form_errors(sizeform.sleeve) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.sleeve_min) }}{{ form_errors(sizeform.sleeve_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.sleeve_max) }}{{ form_errors(sizeform.sleeve_max) }}</div>
-                            
-                           
-                            
-                            <div class="span1 size_input">{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.back_min) }}{{ form_errors(sizeform.back_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.back_max) }}{{ form_errors(sizeform.back_max) }}</div>
-                            
-                            <div class="span1 size_input">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
-                            
-                            <div class="span1 size_input">{{ form_widget(sizeform.length) }}{{ form_errors(sizeform.length) }}</div>
-                            
-                            <div class="span1 size_input">{{ form_widget(sizeform.waist) }}{{ form_errors(sizeform.waist) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}</div>
-                            <div class="span1 size_input">{{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}</div>
-                            
+                        <div class="span1 size_input">
+                        {{ form_widget(sizeform.sleeve_min) }}{{ form_errors(sizeform.sleeve_min) }}
+                                -
+                       {{ form_widget(sizeform.sleeve_max) }}{{ form_errors(sizeform.sleeve_max) }}     
+                        </div>
+                       <div class="span1 size_input">
+                       {{ form_widget(sizeform.back_min) }}{{ form_errors(sizeform.back_min) }}
+                               -
+                       {{ form_widget(sizeform.back_max) }}{{ form_errors(sizeform.back_max) }}
+                      </div>
+                       <div class="span1 size_input">
+                      {{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}
+                    
+                     </div>
+                      <div class="span1 size_input">
+                      {{ form_widget(sizeform.length) }}{{ form_errors(sizeform.length) }}
+                    
+                     </div>
+                      <div class="span1 size_input">
+                     {{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}
+                              -
+                      {{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}
+                          </div>         
                                     <div class="span1">
                                         <input type="submit" value="SAVE" class="btn"/>
                                         <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">Cancel</a>
@@ -229,28 +211,12 @@
                         <div class="row-fluid show-grid p_title">
                             <div class="span1">{{ps.title}}</div>
                             
-                            <div class="span1">{{ps.bust}}</div>
-                            <div class="span1">{{ps.bustMin}}</div>
-                            <div class="span1">{{ps.bustMax}}</div>
-                            
-                            <div class="span1">{{ps.sleeve}}</div>
-                            <div class="span1">{{ps.sleeveMin}}</div>
-                            <div class="span1">{{ps.sleeveMax}}</div>
-                            
-                            <div class="span1">{{ps.back}}</div>
-                            <div class="span1">{{ps.backMin}}</div>
-                            <div class="span1">{{ps.backMax}}</div>
-                            
+                            <div class="span1">{{ps.bustMin}}&nbsp;-&nbsp;{{ps.bustMax}}</div>
+                            <div class="span1">{{ps.sleeveMin}} &nbsp; - &nbsp; {{ps.sleeveMax}}</div>
+                            <div class="span1">{{ps.backMin}} &nbsp; - &nbsp; {{ps.backMax}}</div>
                             <div class="span1">{{ps.hem}}</div>
-                            
                             <div class="span1">{{ps.length}}</div>
-                            
-                            
-                            
-                            <div class="span1">{{ps.waist}}</div>
-                            <div class="span1">{{ps.waistMin}}</div>
-                            <div class="span1">{{ps.waistMax}}</div>
-                            
+                            <div class="span1">{{ps.waistMin}} &nbsp;- &nbsp;{{ps.waistMax}} </div>
                             <div class="span1">
                                 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
                  <a href="#myModall{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
@@ -287,23 +253,10 @@
                             <div class="span1 hds"><b>Title</b></div>
                             
                             <div class="span1 hds"><b>Waist</b></div>
-                            <div class="span1 hds"><b>Min.Waist</b></div>
-                            <div class="span1 hds"><b>Max.Waist</b></div>
-                            
                             <div class="span1 hds"><b>Inseam</b></div>
-                            <div class="span1 hds"><b>Min. Inseam</b></div>
-                            <div class="span1 hds"><b>Max. Inseam</b></div>
-                            
                             <div class="span1 hds"><b>Outseam</b></div>
-                            <div class="span1 hds"><b>Min. Outseam</b></div>
-                            <div class="span1 hds"><b>Max. Outseam</b></div>
-                            
                             <div class="span1 hds"><b>Hip</b></div>
-                            <div class="span1 hds"><b>Min. Hip</b></div>
-                            <div class="span1 hds"><b>Max. Hip</b></div>
-                            
                             <div class="span1 hds"><b>Hem</b></div>
-                           
                             <div class="span1 hds"><b>Length</b></div>
                             
                             <div class="span1 hds"></div>
@@ -320,22 +273,24 @@
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
                                     
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist) }}{{ form_errors(sizeform.waist) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}</div>
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.inseam_min) }}{{ form_errors(sizeform.inseam_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.inseam_max) }}{{ form_errors(sizeform.inseam_max) }}</div>
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.outseam_min) }}{{ form_errors(sizeform.outseam_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.outseam_max) }}{{ form_errors(sizeform.outseam_max) }}</div>
-                                    
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip_min) }}{{ form_errors(sizeform.hip_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip_max) }}{{ form_errors(sizeform.hip_max) }}</div>
+                                    <div class="span1 size_input">
+                                    {{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}
+                                    -    
+                                    {{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}
+                                   </div>
+                                  <div class="span1 size_input">
+                                  {{ form_widget(sizeform.inseam_min) }}{{ form_errors(sizeform.inseam_min) }}
+                                          -
+                                 {{ form_widget(sizeform.inseam_max) }}{{ form_errors(sizeform.inseam_max) }}
+                                  </div>
+                                  <div class="span1 size_input">
+                                 {{ form_widget(sizeform.outseam_min) }}{{ form_errors(sizeform.outseam_min) }}
+                                -{{ form_widget(sizeform.outseam_max) }}{{ form_errors(sizeform.outseam_max) }}
+                                  </div>
+                                    <div class="span1 size_input">
+                                    {{ form_widget(sizeform.hip_min) }}{{ form_errors(sizeform.hip_min) }}-
+                                   {{ form_widget(sizeform.hip_max) }}{{ form_errors(sizeform.hip_max) }}
+                                    </div>
                                     
                                      <div class="span1 size_input">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
                                     
@@ -357,25 +312,12 @@
                             <div class="row-fluid show-grid p_title">
                                 <div class="span1">{{ps.title}}</div>
                                 
-                                <div class="span1">{{ps.waist}}</div>
-                                <div class="span1">{{ps.waistMin}}</div>
-                                <div class="span1">{{ps.waistMax}}</div>
-                                
-                                <div class="span1">{{ps.inseam}}</div>
-                                <div class="span1">{{ps.inseamMin}}</div>
-                                <div class="span1">{{ps.inseamMax}}</div>
-                                
-                                
-                                <div class="span1">{{ps.outseam}}</div>
-                                <div class="span1">{{ps.outseamMin}}</div>
-                                <div class="span1">{{ps.outseamMax}}</div>
-                                
-                                <div class="span1">{{ps.hip}}</div>
-                                <div class="span1">{{ps.hipMin}}</div>
-                                <div class="span1">{{ps.hipMax}}</div>
-                                
+                               
+                                <div class="span1">{{ps.waistMin}}&nbsp;- &nbsp;{{ps.waistMax}}</div>
+                                <div class="span1">{{ps.inseamMin}}&nbsp;- &nbsp;{{ps.inseamMax}}</div>
+                                <div class="span1">{{ps.outseamMin}}&nbsp;- &nbsp;{{ps.outseamMax}}</div>
+                                <div class="span1">{{ps.hipMin}}&nbsp;- &nbsp;{{ps.hipMax}}</div>
                                 <div class="span1">{{ps.hem}}</div>
-                                
                                 <div class="span1">{{ps. length}}</div>
                                 
                                 
@@ -412,30 +354,12 @@
                         <div class="row-fluid show-grid p_title">
 
                             <div class="span1 hds"><b>Title</b></div>
-                            
                             <div class="span1 hds"><b>Waist</b></div>
-                            <div class="span1 hds"><b>Min.Waist</b></div>
-                            <div class="span1 hds"><b>Max.Waist</b></div>
-                            
                             <div class="span1 hds"><b>Hip</b></div>
-                            <div class="span1 hds"><b>Min. Hip</b></div>
-                            <div class="span1 hds"><b>Max. Hip</b></div>
-                            
-                            
                             <div class="span1 hds"><b>Inseam</b></div>
-                            <div class="span1 hds"><b>Min. Inseam</b></div>
-                            <div class="span1 hds"><b>Max. Inseam</b></div>
-                            
                             <div class="span1 hds"><b>Outseam</b></div>
-                            <div class="span1 hds"><b>Min. Outseam</b></div>
-                            <div class="span1 hds"><b>Max. Outseam</b></div>
-                            
-                           
-                            
                             <div class="span1 hds"><b>Hem</b></div>
-                           
                             <div class="span1 hds"><b>Length</b></div>
-                            
                             <div class="span1 hds"></div>
                          </div>
 
@@ -450,25 +374,26 @@
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
                                     
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist) }}{{ form_errors(sizeform.waist) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}</div>
+                                    <div class="span1 size_input">
+                                   {{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}-
+                                   {{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}
+                                   </div>
                                     
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip_min) }}{{ form_errors(sizeform.hip_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip_max) }}{{ form_errors(sizeform.hip_max) }}</div>
+                                    <div class="span1 size_input">
+                                    {{ form_widget(sizeform.hip_min) }}{{ form_errors(sizeform.hip_min) }}-
+                                    {{ form_widget(sizeform.hip_max) }}{{ form_errors(sizeform.hip_max) }}
+                                    </div>
                                    
-                                    
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.inseam) }}{{ form_errors(sizeform.inseam) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.inseam_min) }}{{ form_errors(sizeform.inseam_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.inseam_max) }}{{ form_errors(sizeform.inseam_max) }}</div>
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.outseam) }}{{ form_errors(sizeform.outseam) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.outseam_min) }}{{ form_errors(sizeform.outseam_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.outseam_max) }}{{ form_errors(sizeform.outseam_max) }}</div>
-                                    
-                                     
+                                    <div class="span1 size_input">
+                                   {{ form_widget(sizeform.inseam_min) }}{{ form_errors(sizeform.inseam_min) }}
+                                        -
+                                   {{ form_widget(sizeform.inseam_max) }}{{ form_errors(sizeform.inseam_max) }}
+                                    </div>
+                                   <div class="span1 size_input">
+                                   {{ form_widget(sizeform.outseam_min) }}{{ form_errors(sizeform.outseam_min) }}
+                                            -
+                                   {{ form_widget(sizeform.outseam_max) }}{{ form_errors(sizeform.outseam_max) }}
+                                   </div>
                                      <div class="span1 size_input">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
                                     
                                     <div class="span1 size_input">{{ form_widget(sizeform.length) }}{{ form_errors(sizeform.length) }}</div>
@@ -489,28 +414,12 @@
                             <div class="row-fluid show-grid p_title">
                                 <div class="span1">{{ps.title}}</div>
                                 
-                                <div class="span1">{{ps.waist}}</div>
-                                <div class="span1">{{ps.waistMin}}</div>
-                                <div class="span1">{{ps.waistMax}}</div>
-                                
-                                <div class="span1">{{ps.hip}}</div>
-                                <div class="span1">{{ps.hipMin}}</div>
-                                <div class="span1">{{ps.hipMax}}</div>
-                                
-                                
-                                <div class="span1">{{ps.inseam}}</div>
-                                <div class="span1">{{ps.inseamMin}}</div>
-                                <div class="span1">{{ps.inseamMax}}</div>
-                                
-                                
-                                <div class="span1">{{ps.outseam}}</div>
-                                <div class="span1">{{ps.outseamMin}}</div>
-                                <div class="span1">{{ps.outseamMax}}</div>
-                                
-                                
-                                
+                               
+                                <div class="span1">{{ps.waistMin}}&nbsp;- &nbsp;{{ps.waistMax}}</div>
+                                <div class="span1">{{ps.hipMin}}&nbsp;- &nbsp;{{ps.hipMax}}</div>
+                                <div class="span1">{{ps.inseamMin}}&nbsp;- &nbsp;{{ps.inseamMax}}</div>
+                                <div class="span1">{{ps.outseamMin}}&nbsp;- &nbsp;{{ps.outseamMax}}</div>
                                 <div class="span1">{{ps.hem}}</div>
-                                
                                 <div class="span1">{{ps. length}}</div>
                                 
                                 
@@ -541,39 +450,24 @@
                              {%endfor%}
                         </table> 
     
-   {% elseif product.clothingType.target =='Dress' and product.gender =='F'  %}
+   {% elseif product.clothingType.target =='dress' and product.gender =='F'  %}
                     <table style="width:50%">
                         <div class="row-fluid show-grid p_title">
 
                             <div class="span1 hds"><b>Title</b></div>
                             
                             <div class="span1 hds"><b>Bust</b></div>
-                            <div class="span1 hds"><b>Min.Bust</b></div>
-                            <div class="span1 hds"><b>Max.Bust</b></div>
                             
                             <div class="span1 hds"><b>Hip</b></div>
-                            <div class="span1 hds"><b>Min. Hip</b></div>
-                            <div class="span1 hds"><b>Max. Hip</b></div>
                             
                             <div class="span1 hds"><b>Hem</b></div>
                             
                             <div class="span1 hds"><b>Length</b></div>
                             
-                             <div class="span1 hds"><b>Back</b></div>
-                            <div class="span1 hds"><b>Min.Back</b></div>
-                            <div class="span1 hds"><b>Max.Back</b></div>
-                            
-                            
+                            <div class="span1 hds"><b>Back</b></div>
                             <div class="span1 hds"><b>Waist</b></div>
-                            <div class="span1 hds"><b>Min.Waist</b></div>
-                            <div class="span1 hds"><b>Max.Waist</b></div>
                             
                             <div class="span1 hds"><b>Sleeve</b></div>
-                            <div class="span1 hds"><b>Min. Sleeve</b></div>
-                            <div class="span1 hds"><b>Max. Sleeve</b></div>
-                            
-                           
-                           
                          </div>
 
 {% for ps in product.productSizes %}  
@@ -586,36 +480,41 @@
                                 <div class="row-fluid show-grid p_title">
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.bust) }}{{ form_errors(sizeform.bust) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.bust_min) }}{{ form_errors(sizeform.bust_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.bust_max) }}{{ form_errors(sizeform.bust_max) }}</div>
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip) }}{{ form_errors(sizeform.hip) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip_min) }}{{ form_errors(sizeform.hip_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.hip_max) }}{{ form_errors(sizeform.hip_max) }}</div>
+                                 
+                                    <div class="span1 size_input">
+                            {{ form_widget(sizeform.bust_min) }}{{ form_errors(sizeform.bust_min) }}
+                                            -
+                           {{ form_widget(sizeform.bust_max) }}{{ form_errors(sizeform.bust_max) }}
+                                   </div>
+                                   
+                                 <div class="span1 size_input">
+                                {{ form_widget(sizeform.hip_min) }}{{ form_errors(sizeform.hip_min) }}
+                                        -
+                                   {{ form_widget(sizeform.hip_max) }}{{ form_errors(sizeform.hip_max) }}
+                                    </div>
                                     
                                     <div class="span1 size_input">{{ form_widget(sizeform.hem) }}{{ form_errors(sizeform.hem) }}</div>
                                     
                                     <div class="span1 size_input">{{ form_widget(sizeform.length) }}{{ form_errors(sizeform.length) }}</div>
                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.back) }}{{ form_errors(sizeform.back) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.back_min) }}{{ form_errors(sizeform.back_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.back_max) }}{{ form_errors(sizeform.back_max) }}</div>
+                            
+                                    <div class="span1 size_input">
+                                    {{ form_widget(sizeform.back_min) }}{{ form_errors(sizeform.back_min) }}
+                                            -
+                                    {{ form_widget(sizeform.back_max) }}{{ form_errors(sizeform.back_max) }}
+                                     </div>
                                    
-                                   
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist) }}{{ form_errors(sizeform.waist) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}</div>
+                                   <div class="span1 size_input">
+                                   {{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}
+                                       -
+                                   {{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}
+                                   </div>
                                     
-                                    
-                                    <div class="span1 size_input">{{ form_widget(sizeform.sleeve) }}{{ form_errors(sizeform.sleeve) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.sleeve_min) }}{{ form_errors(sizeform.sleeve_min) }}</div>
-                                    <div class="span1 size_input">{{ form_widget(sizeform.sleeve_max) }}{{ form_errors(sizeform.sleeve_max) }}</div>
-                                    
-                                    
-                                    
-                                     
+                                    <div class="span1 size_input">
+                                    {{ form_widget(sizeform.sleeve_min) }}{{ form_errors(sizeform.sleeve_min) }}
+                                        -
+                                    {{ form_widget(sizeform.sleeve_max) }}{{ form_errors(sizeform.sleeve_max) }}
+                                    </div>
                                     
                                     <div class="span1">
                                         <input type="submit" value="SAVE" class="btn"/>
@@ -632,36 +531,16 @@
                             <div class="row-fluid show-grid p_title">
                                 <div class="span1">{{ps.title}}</div>
                                 
-                                <div class="span1">{{ps.bust}}</div>
-                                <div class="span1">{{ps.bustMin}}</div>
-                                <div class="span1">{{ps.bustMax}}</div>
                                 
-                                <div class="span1">{{ps.hip}}</div>
-                                <div class="span1">{{ps.hipMin}}</div>
-                                <div class="span1">{{ps.hipMax}}</div>
-                              
+                                <div class="span1">{{ps.bustMin}}&nbsp;-&nbsp;{{ps.bustMax}}</div>
+                                
+                                <div class="span1">{{ps.hipMin}}&nbsp;-&nbsp;{{ps.hipMax}}</div>
                                 <div class="span1">{{ps.hem}}</div>
-                                
                                 <div class="span1">{{ps. length}}</div>
-                                
-                                <div class="span1">{{ps.back}}</div>
-                                <div class="span1">{{ps.backMin}}</div>
-                                <div class="span1">{{ps.backMax}}</div>
-                                
-                                
-                                <div class="span1">{{ps.waist}}</div>
-                                <div class="span1">{{ps.waistMin}}</div>
-                                <div class="span1">{{ps.waistMax}}</div>
-                                
-                                
-                                
-                                <div class="span1">{{ps.sleeve}}</div>
-                                <div class="span1">{{ps.sleeveMin}}</div>
-                                <div class="span1">{{ps.sleeveMax}}</div>
-                                
-                                  
-                                
-                                
+                               
+                                <div class="span1">{{ps.backMin}}&nbsp;-&nbsp;{{ps.backMax}}</div>
+                                <div class="span1">{{ps.waistMin}}&nbsp;-&nbsp;{{ps.waistMax}}</div>
+                                <div class="span1">{{ps.sleeveMin}}&nbsp;-&nbsp;{{ps.sleeveMax}}</div>
                                 
                                 <div class="span1">
                                     <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>

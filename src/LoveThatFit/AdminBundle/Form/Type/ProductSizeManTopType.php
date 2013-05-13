@@ -12,19 +12,19 @@ class ProductSizeManTopType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('neck');
+        
         $builder->add('neck_min');
         $builder->add('neck_max');
         
-        $builder->add('sleeve');
+       
         $builder->add('sleeve_min');
         $builder->add('sleeve_max');
         
-        $builder->add('chest');
+       
         $builder->add('chest_min');
         $builder->add('chest_max');
         
-        $builder->add('back');
+        
         $builder->add('back_min');
         $builder->add('back_max');
         
@@ -32,7 +32,7 @@ class ProductSizeManTopType extends AbstractType
         
         $builder->add('length');
         
-        $builder->add('waist');
+      
         $builder->add('waist_min');
         $builder->add('waist_max');
    }
