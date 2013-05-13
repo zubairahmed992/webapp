@@ -226,7 +226,7 @@ public function addNewAnswerAction($question_id) {
     {
         return $this->createFormBuilder($question)
                         ->add('question', 'text', array('label' =>' '))
-                        ->add('questionstatus', 'checkbox',array('label' =>' ','required'  => false,))
+                        ->add('questionstatus', 'checkbox',array('label' =>' ','required'  => false))
                         ->getForm();
     }
     

@@ -21,6 +21,7 @@
   display: table;
   line-height: 0;
   content: "";
+  margin-bottom: 10px;
 }
 
 .clearfix:after {
