@@ -31,4 +31,4 @@ admin_size_chart_update:
         
 admin_size_chart_delete:
     pattern: /admin/admin_size_charts/{id}/delete
-    defaults: { _controller: LoveThatFitAdminBundle:Brand:delete }
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:delete }

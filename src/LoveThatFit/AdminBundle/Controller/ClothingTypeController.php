@@ -143,28 +143,24 @@ else
     
      public function deleteAction($id)
     {
-          try{ 
-              $em = $this->getDoctrine()->getManager();
-    
+          
+         try{
+            $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
 
             if (!$entity) {
-               $this->get('warning')->setFlash('warning','Unable to find Clothing Type');
-                //throw $this->createNotFoundException('Unable to find Clothing Type.');
+                throw $this->createNotFoundException('Unable to find Clothing Type.');
             }
             $em->remove($entity);
             $em->flush();
-        $this->get('success')->setFlash('success','THis Clothing Type has been deleted');
+            $this->get('session')->setFlash('success','The Clothing Type has been deleted!');
             return $this->redirect($this->generateUrl('admin_clothing_types'));
-           }catch (\Doctrine\DBAL\DBALException $e)
+        }catch (\Doctrine\DBAL\DBALException $e)
         {
              $this->get('session')->setFlash('warning','This Clothing Type cannot be deleted!');
              return $this->redirect($this->getRequest()->headers->get('referer'));
              
         }
-        
-        
-        
     }
     
     //------------------------------------------------------------------------------------------
