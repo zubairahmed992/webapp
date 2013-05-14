@@ -2,7 +2,9 @@ getme:
     pattern:  /getme
     defaults: { _controller: LoveThatFitUserBundle:Registration:renderThis }
 
-
+size_chart:
+    pattern:  /size_chart
+    defaults: { _controller: LoveThatFitUserBundle:Registration:sizeChart }
 
 #--------------------------------- New Registration Process ----------------
 

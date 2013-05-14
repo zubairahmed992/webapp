@@ -5,7 +5,7 @@ namespace LoveThatFit\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class GenderType extends AbstractType
+class SizeChartType extends AbstractType
 {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

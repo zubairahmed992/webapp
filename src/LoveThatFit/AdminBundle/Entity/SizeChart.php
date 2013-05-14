@@ -389,14 +389,7 @@ class SizeChart
         return $this;
     }
 
-    public function getSizeChartArray() {
-        $items = $this->size_chart;
-        $size_chart = array();
-        foreach ($items as $i) {
-            $size_chart[$i->getBrand()->getName()] = $i->getBrand()->getId();
-        }
-        return $size_chart;
-    }
+    
 
     /**
      * Get disabled

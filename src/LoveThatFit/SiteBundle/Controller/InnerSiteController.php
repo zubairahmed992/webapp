@@ -202,15 +202,18 @@ class InnerSiteController extends Controller {
     //$user= $this->get('security.context')->getToken()->getUser();
       
         $em = $this->getDoctrine()->getManager();
-        $user= $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);        
-        /*
-           $productItem = $this->getDoctrine()
+        $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+
+        $productItem = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductItem')
                 ->find($product_id);
-     
+
         $fit = new Algorithm($user, $productItem);
-    return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->getFeedBackJson()));
-        */
+        
+        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', 
+                array('data' => $fit->getFeedBackJson(),
+                    ));
+     //----------------------------------------------------   
         $product = $this->getProduct($product_id);
                 
         if (!$user)

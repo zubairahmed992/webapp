@@ -56,36 +56,79 @@ class Algorithm {
     // ------------------------------------------------------
 
     function filter() {
-
+        $suggestion_array = array();
         if ($this->user->getGender() == 'm') {
             if ($this->product->getClothingType()->getTarget() == 'Top') {
                 //chect neck & sleeve* / back, waist
+                array_push($suggestion_array, $this->compareNeck());
+                array_push($suggestion_array, $this->compareBack());
+                array_push($suggestion_array, $this->compareWaist());
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
                 //waist & inseam / outseam
-                return $this->compareInseam();
+                array_push($suggestion_array, $this->compareWaist());
+                array_push($suggestion_array, $this->compareInseam());
+                array_push($suggestion_array, $this->compareOutseam());
             } else {
                 return null;
             }
-        } elseif ($this->user_measurement->getGendet() == 'm') {
+        } elseif ($this->user_measurement->getGendet() == 'w') {
 
             if ($this->product->getClothingType()->getTarget() == 'Top') {
-                //bust, waist, back & sleeve*
+                //bust, waist, back & sleeve*                
+                array_push($suggestion_array, $this->compareBust());
+                array_push($suggestion_array, $this->compareWaist());
+                array_push($suggestion_array, $this->compareBack());
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
                 //waist, hip, inseam / outseam
-                return $this->compareInseam();
+                array_push($suggestion_array, $this->compareWaist());
+                array_push($suggestion_array, $this->compareHip());
+                array_push($suggestion_array, $this->compareInseam());
+                array_push($suggestion_array, $this->compareOutseam());
             } elseif ($this->product->getClothingType()->getTarget() == 'Dress') {
-                //bust, hip, waist, back & sleeve*
+                //bust, waist, back, hip & sleeve*
+                array_push($suggestion_array, $this->compareBust());
+                array_push($suggestion_array, $this->compareWaist());
+                array_push($suggestion_array, $this->compareBack());
+                array_push($suggestion_array, $this->compareHip());
             } else {
                 return null;
             }
         } else {
             return null;
         }
+        return $suggestion_array;
     }
 
 //------------------- comparison methods
-    //inseam outseam hip bust chest back length waist neck sleeve
+    //neck back chest bust sleeve waist outseam inseam hip length 
 
+    public function compareNeck() {
+        return $this->getArrayFill('neck', $this->compare($this->user_measurement->getNeck(), $this->product_measurement->getNeckMin(), $this->product_measurement->getNeckMax()));
+    }
+
+    public function compareBack() {
+        return $this->getArrayFill('back', $this->compare($this->user_measurement->getBack(), $this->product_measurement->getBackMin(), $this->product_measurement->getBackMax()));
+    }
+
+    public function compareChest() {
+        return $this->getArrayFill('chest', $this->compare($this->user_measurement->getChest(), $this->product_measurement->getChestMin(), $this->product_measurement->getChestMax()));
+    }
+
+    public function compareBust() {
+        return $this->getArrayFill('bust', $this->compare($this->user_measurement->getBust(), $this->product_measurement->getBustMin(), $this->product_measurement->getBustMax()));
+    }
+
+    public function compareSleeve() {
+        return $this->getArrayFill('sleeve', $this->compare($this->user_measurement->getSleeve(), $this->product_measurement->getSleeveMin(), $this->product_measurement->getSleeveMax()));
+    }
+
+    public function compareWaist() {
+        return $this->getArrayFill('waist', $this->compare($this->user_measurement->getWaist(), $this->product_measurement->getBustMin(), $this->product_measurement->getBustMax()));
+    }
+
+    public function compareOutseam() {
+        return $this->getArrayFill('outseam', $this->compare($this->user_measurement->getOutseam(), $this->product_measurement->getOutseamMin(), $this->product_measurement->getOutseamMax()));
+    }
 
     public function compareInseam() {
         // should fill an array element will message & values and return it
@@ -93,15 +136,8 @@ class Algorithm {
         return $this->getArrayFill('inseam', $this->compare($this->user_measurement->getInseam(), $this->product_measurement->getInseamMin(), $this->product_measurement->getInseamMax()));
     }
 
-    public function compareOutseam() {
-        return $this->getArrayFill('outseam', $this->compare($this->user_measurement->getOutseam(), $this->product_measurement->getOutseamMin(), $this->product_measurement->getOutseamMax()));
-    }
-
-//----------------------------------------------------------------------    
-    public function getNullFill($measuring_point) {
-        // incase if any of  the value is null fill null statement
-
-        return null;
+    public function compareHip() {
+        return $this->getArrayFill('hip', $this->compare($this->user_measurement->getHip(), $this->product_measurement->getHipMin(), $this->product_measurement->getHipMax()));
     }
 
 //----------------------------------------------------------------------    
@@ -113,12 +149,12 @@ class Algorithm {
         }
 
         $this->setMessageArray();
-        
+
         if (is_null($comparison_result)) {
             return array("{$measuring_point}" => array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['np'], 'fit' => false));
         }
 
-        
+
         if ($comparison_result > 0) {
             //add loose message //add diff //fits boolean false
             return array("{$measuring_point}" => array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['loose'], 'fit' => false));
