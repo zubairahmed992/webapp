@@ -61,5 +61,112 @@ class SizeChartRepository extends EntityRepository
         } 
     }
     
+    public function findBrandByTop($target)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT distinct(b.name) as brandtop,b.id FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand
+     AND sc.target=:target"
+            )->setParameters(array('target'=>$target)) ;     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
+    public function findBrandByBottom($target)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT distinct(b.name) as brandbottom ,b.id FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand
+     AND sc.target= :target"
+            )->setParameters(array('target'=>$target)) ;     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findBrandByDresses($target)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT distinct(b.name) as branddress,b.id  FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand
+     AND sc.target = :target"
+            )->setParameters(array('target'=>$target)) ;     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+    public function findSizeByTop($target)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT distinct(sc.title),sc.id FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand
+     AND sc.target=:target"
+            )->setParameters(array('target'=>$target)) ;     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
+    public function findSizeByBottom($target)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT distinct(sc.title),sc.id FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand
+     AND sc.target= :target"
+            )->setParameters(array('target'=>$target)) ;     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findSizeByDresses($target)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT distinct(sc.title),sc.id  FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand
+     AND sc.target = :target"
+            )->setParameters(array('target'=>$target)) ;     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
     
 }

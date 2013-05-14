@@ -33,7 +33,7 @@
             <div class="span1">{{b.Id}}</div>
             <div class="span1">{{b.Name}}</div>
             <div class="span1"><img src="{{ asset(b.WebPath) }}"/></div>                      
-            <div class="span1">{%if(b.disabled==0)%} Disabled {%else%}  {%endif%}</div>            
+            <div class="span1">{%if(b.disabled==1)%} Disabled {%else%}  {%endif%}</div>            
             <div class="span1">
             <div>
                     <a href="{{ path('admin_brand_show', {'id': b.Id}) }}"><i class="icon-eye-open"></i></a>

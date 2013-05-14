@@ -34,7 +34,7 @@ class SizeChartType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                 ));
-       $builder->add('disabled', 'checkbox',array('label' =>'Enabled','required'=> false,));       
+       $builder->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,));       
     }
 
      public function getDefaultOptions(array $options)

@@ -20,6 +20,7 @@ class SizeChart
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $brand;
+    
     /**
      * @var integer $id
      *
@@ -105,7 +106,7 @@ class SizeChart
      *
      * @ORM\Column(name="disabled", type="boolean")
      */
-    private $disabled;
+    public $disabled;
     /**
      * Get id
      *
@@ -386,6 +387,15 @@ class SizeChart
         $this->disabled = $disabled;
     
         return $this;
+    }
+
+    public function getSizeChartArray() {
+        $items = $this->size_chart;
+        $size_chart = array();
+        foreach ($items as $i) {
+            $size_chart[$i->getBrand()->getName()] = $i->getBrand()->getId();
+        }
+        return $size_chart;
     }
 
     /**

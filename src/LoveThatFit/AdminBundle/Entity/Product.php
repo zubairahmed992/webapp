@@ -179,6 +179,8 @@ class Product {
      */
     public $img_file;
 
+   
+    
     /**
      * Get id
      *

@@ -181,7 +181,7 @@ else
         return  $this->createFormBuilder($entity)
                 ->add('name', 'text')
                 ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')))
-                ->add('disabled', 'checkbox',array('label' =>'Enabled','required'=> false,)) 
+                ->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,)) 
                 ->getForm();
 
     }

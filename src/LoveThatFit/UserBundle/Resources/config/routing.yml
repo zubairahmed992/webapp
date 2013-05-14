@@ -22,6 +22,8 @@ registration_user_create:
 registration_measurement_create:
     pattern:  /registration/measurement/create
     defaults: { _controller: LoveThatFitUserBundle:Registration:measurementCreate }
+    
+   
 
 #----------------------------- Profile ---------------------------------------------
 
@@ -50,7 +52,13 @@ user_profile_what_i_like:
     defaults: { _controller: LoveThatFitUserBundle:Profile:whatILike }
 user_profile_what_i_like_user_survey:
     pattern:  /profile/user_profile_what_i_like_user_survey
-    defaults: { _controller: LoveThatFitUserBundle:Profile:submitUserSurveyForm }
+    defaults: { _controller: LoveThatFitUserBundle:Profile:submitUserSurveyForm }    
+    
+user_registration_size_chart:
+    pattern:  /profile/size_chart
+    defaults: { _controller: LoveThatFitUserBundle:Profile:SizeChartUserRegistrationForm} 
+    
+    
 #------------------------------- Registration Steps ---------------------------------------------------------
 
 

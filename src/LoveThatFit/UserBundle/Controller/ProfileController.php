@@ -15,6 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LoveThatFit\AdminBundle\Entity\SurveyQuestion;
 use LoveThatFit\AdminBundle\Entity\SurveyAnswer;
 use LoveThatFit\AdminBundle\Entity\SurveyUser;
+use LoveThatFit\AdminBundle\Entity\Brand;
+use LoveThatFit\AdminBundle\Entity\SizeChart;
 
 class ProfileController extends Controller {
 
@@ -275,7 +277,114 @@ class ProfileController extends Controller {
           $addanswer =$this->updateAnswerIfFound($question,$answers,$user);
        }
        return $this->redirect($this->generateUrl('user_profile_what_i_like'));
-    }   
+    }
+    
+    
+    
+    
+    //SizeChart Form Azeem
+    
+    public function SizeChartUserRegistrationFormAction()
+    {        
+        
+        $top_fitting_size_chart_id=  $this->getBrandByTop($target='Top');        
+        $bottom_fitting_size_chart_id=$this->getBrandByBottom($target='Bottom');
+        $dress_fitting_size_chart_id =$this->getBrandByDresses($target='dress');
+        $top_fittings_size_chart_id=  $this->getSizeByTop($target='Top');
+        $bottom_fittings_size_chart_id=$this->getSizeByBottom($target='Bottom');
+        $dress_fittings_size_chart_id =$this->getSizeByDresses($target='dress');
+        
+        $form = $this->createFormBuilder()
+                ->add(
+                'Brand', 'choice', 
+                array('choices'=>$top_fitting_size_chart_id,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                ))
+                ->add(
+                'Brand1', 'choice', 
+                array('choices'=>$bottom_fitting_size_chart_id,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                ))
+                ->add(
+                'Brand2', 'choice', 
+                array('choices'=>$dress_fitting_size_chart_id,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                ))                
+                ->add(
+                'sizetop', 'choice', 
+                array('choices'=>$top_fittings_size_chart_id,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                ))
+                ->add(
+                'sizebottom', 'choice', 
+                array('choices'=>$bottom_fittings_size_chart_id,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                ))
+                ->add(
+                'sizedress', 'choice', 
+                array('choices'=>$dress_fittings_size_chart_id,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                ))
+                ->getForm();       
+        return $this->render('LoveThatFitUserBundle:Profile:sizechart.html.twig', array(
+                    'form' => $form->createView()));
+    }
+    
+    
+    
+    private function getBrandByTop($target='Top')
+    {
+        $em = $this->getDoctrine()->getManager();        
+        $brand = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandByTop($target);        
+        return $brand;
+    }
+    
+    private function getBrandByBottom($target='Bottom')
+    {
+        $em = $this->getDoctrine()->getManager();        
+        $brand = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandByBottom($target);
+        
+        return $brand;
+    }
+    
+    private function getBrandByDresses($target='dress')
+    {
+        $em = $this->getDoctrine()->getManager();        
+        $brand = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandByBottom($target);
+        return $brand;
+    }
+    
+    
+    private function getSizeByTop($target='Top')
+    {
+        $em = $this->getDoctrine()->getManager();        
+        $size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findSizeByTop($target);
+        return $size;
+    }
+    
+    private function getSizeByBottom($target='Bottom')
+    {
+        $em = $this->getDoctrine()->getManager();        
+        $size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findSizeByBottom($target);
+        return $size;
+    }
+    
+    private function getSizeByDresses($target='dress')
+    {
+        $em = $this->getDoctrine()->getManager();        
+        $size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findSizeByBottom($target);
+        return $size;
+    }
+    
+    
+    
+    
     
     private function updateAnswerIfFound($question,$answers,$user) {
         $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));

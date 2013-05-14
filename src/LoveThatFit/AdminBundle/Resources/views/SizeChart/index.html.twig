@@ -35,7 +35,7 @@
             <div class="span1">{{sc.target}}</div>
             <div class="span1">{{sc.gender}}</div>
             <div class="span1">{{sc.title}}</div>            
-            <div class="span1">{%if(sc.disabled==0)%} Disabled {%else%}  {%endif%}</div>
+            <div class="span1">{%if(sc.disabled==1)%} Disabled {%else%}  {%endif%}</div>
             <div class="span1">&nbsp;                 
             <div>
                     <a href="{{path('admin_size_chart_show',{'id': sc.Id}) }}"><i class="icon-eye-open"></i></a>

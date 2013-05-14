@@ -33,7 +33,7 @@
             <div class="span1">{{ct.Id}}</div>
             <div class="span1">{{ct.Name}}</div>
             <div class="span1">{{ct.Target}}</div>                        
-            <div class="span1">{%if(ct.disabled==0)%} Disabled {%else%}  {%endif%}</div>
+            <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%}  {%endif%}</div>
             <div class="span1">
                     <a href="{{ path('admin_clothing_type_show', {'id': ct.Id}) }}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_clothing_type_edit', {'id': ct.Id}) }}"><i class="icon-edit"></i></a>
