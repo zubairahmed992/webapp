@@ -21,33 +21,26 @@
             <div class="span3 hds">Answer</div>     
         </div>
         
-{% for item in data %}
-               
-                    
-                            
-                    {%if(operation=='editQuestion' and id==item.id)%}
-                      
-    <style>
-    
+{% for item in data %}      
+     {%if(operation=='editQuestion' and id==item.id)%}                      
+    <style>    
             #form_question{    
     float:left;
 }
-            
-           
         </style>                   
          <div class="row-fluid show-grid">                      
-    
-             
              <form action="{{ path('admin_survey_edit_update_question',{'question_id':id})}}"  method="post" {{ form_enctype(editForm) }}>
                                 <div align="center">
               {{ form_widget(editForm) }}
                                     </div>          
                                 <div align="center">
                                         <input type="submit" value="Submit" style="margin-left:30px"  />
-                                        <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
+                                         </form>
+</div>
+                 <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
                                             <input type="submit" value="Cancel"  /></a>
-                                    </div>
-                             </form>
+                                    
+                            
                  
              </div>
                             
@@ -78,11 +71,13 @@
           {{ form_widget(editAnswerForm) }}
                             </div>          
                             <div align="center">
-                                <input type="submit" value="Submit" style="margin-left:30px" />             
-                                <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                    <input type="submit" value="Cancel"  /></a>
-                            </div>
-                        </form>
+                                <input type="submit" value="Submit" style="margin-left:30px" />   
+                                </form>
+                                   </div>
+                        <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
+                         <input type="submit" value="Cancel"  /></a>
+                        
+                        
                     </div>  
 {%else%}               
                             
@@ -120,11 +115,14 @@
           {{ form_widget(answerForm) }}
                                     </div>          
                                     <div align="center">
-                                        <input type="submit"  value="Add Answer" style="margin-left:30px" />             
-                                        <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                        <input type="submit" value="Cancel"  /></a>
-                                    </div>
-                                </form>
+                                        <input type="submit"  value="Add Answer" style="margin-left:30px" />
+                                        </div>
+                                        </form>
+                            <div>
+                                      <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
+                                      <input type="submit" value="Cancel"  /></a>
+                            </div>
+                                
                             </div> 
  {%endif%}  
 
