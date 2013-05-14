@@ -30,7 +30,25 @@ return false;
 return true;
 }    
 </script> 
+{% if imageUploadForm is defined %}
+    <div id="pro_color">
+        Upload Pattern 
+    <form action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}" method="post" {{form_enctype(imageUploadForm) }}>
+           {{form_errors(imageUploadForm) }}           
+           {{form_row(imageUploadForm.file)}}   
+           <input type="submit" value="SAVE" class="btn"/>
+    </form>
+    
+    </div>
+{% endif %}
+         {% if colorform is defined and colorform and color_id is not defined   %}
+
+<p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+    <br>
+    
+
   
+
     <form action="{{ path('admin_product_detail_color_create',{'id': product.Id }) }}" method="post" {{ form_enctype(colorform) }} onsubmit="return validate();">
                                  {{ form_errors(colorform) }}
 
