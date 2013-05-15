@@ -172,6 +172,7 @@ class User  implements UserInterface, \Serializable{
     /**
      * @var string $avatar
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+    
      */
     private $avatar;
 
