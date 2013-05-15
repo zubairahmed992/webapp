@@ -56,7 +56,7 @@ class Algorithm {
     // ------------------------------------------------------
 
     function filter() {
-        $suggestion_array = array();
+        
         if ($this->user->getGender() == 'm') {
             if ($this->product->getClothingType()->getTarget() == 'Top') {
                 //chect neck & sleeve* / back, waist
@@ -168,7 +168,6 @@ class Algorithm {
         if (is_null($comparison_result)) {
             return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['np'], 'fit' => false);
         }
-
 
         if ($comparison_result > 0) {
             //add loose message //add diff //fits boolean false

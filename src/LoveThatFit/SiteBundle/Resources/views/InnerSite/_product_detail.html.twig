@@ -47,7 +47,7 @@ $(function() {
                                  {%endfor%}
                             {% else %}
                                {%for key, pcsa in product.displayProductColor.getSizeTitleArray%}
-                                    <option value='{{key}}'>{{pcsa}}</option>
+                                    <option value='{{pcsa}}'>{{key}}</option>
                               {%endfor%}
                             {%endif%}
                                 </select>
@@ -63,7 +63,7 @@ $(function() {
 
                            {%for apc in product.productColors%}
                                     <input type="radio" value="XS" name="Radio" id="color1">
-                                    <label style="background-color:#{{apc.colorA}}"  for="color1"></label>
+                                    
                                     <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}">
                             {%endfor%}
 

@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Entity\SizeChart;
-use LoveThatFit\AdminBundle\Form\Type\SizeChartType;
+use LoveThatFit\UserBundle\Form\Type\SizeChartType;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 use LoveThatFit\UserBundle\Form\Type\UserType;
@@ -38,9 +38,11 @@ class RegistrationController extends Controller {
 
     public function sizeChartAction() {
 
-        $form = $this->getSizeChartForm();
+//        $form = $this->getSizeChartForm();
+        $size_chart_form = $this->createForm(new SizeChartType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')));
         return $this->render('LoveThatFitUserBundle:Registration:_size_chart.html.twig', array(
-                    'form' => $form->createView()));
+                    'size_chart_form' => $size_chart_form->createView(),    
+            ));
     }
 
     private function getSizeChartForm() {
