@@ -3,17 +3,17 @@
 <h1>What I Like</h1>
 {% endblock %}
 {% block profile_section %} 
-{% if app.session.hasFlash('warning') %}
-       <div class="alert alert-error">
-        <strong>Warning!</strong> 
+<div>
+    {% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">        
         {{ app.session.flash('warning') }}
         </div>   
 {% endif %}      
 {% if app.session.hasFlash('success') %}
-  <div class="alert alert-success">
-    <strong>success</strong> 
+  <div class="success_alert">    
     {{ app.session.flash('success') }}
-   </div>   
+   </div>
+   
 {% endif %}
 {%if(count_question>0)%} 
 <form action="{{ path('user_profile_what_i_like_user_survey') }}" method="post"{{form_enctype(form)}}>
