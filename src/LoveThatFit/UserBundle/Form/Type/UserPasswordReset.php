@@ -12,7 +12,7 @@ class UserPasswordReset extends AbstractType {
         $builder->add('old_password','password');
             
         $builder->add('password', 'repeated', array(
-            'first_name' => 'password',
+            'first_name' => 'password','label'=>'New Password',
             'second_name' => 'confirm',
             'type' => 'password',
             'invalid_message' => 'The password fields must match.',

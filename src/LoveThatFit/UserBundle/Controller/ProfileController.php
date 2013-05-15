@@ -86,7 +86,7 @@ class ProfileController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+            
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
         
@@ -111,6 +111,7 @@ class ProfileController extends Controller {
         
         if ($userForm->isValid())
         {
+            $getAvatar = $entity->getAvatar();
             $entity->uploadAvatar();
             $em->persist($entity);
             $em->flush(); 

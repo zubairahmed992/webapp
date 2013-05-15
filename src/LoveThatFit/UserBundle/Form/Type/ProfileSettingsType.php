@@ -25,7 +25,7 @@ class ProfileSettingsType extends AbstractType
             'format' => 'yyyy MM dd',
             )
                 );
-       $builder->add('file','file',array('label'=>'Upload Image'));  
+       $builder->add('file');  
     }
     
   
