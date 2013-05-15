@@ -60,14 +60,20 @@ class Algorithm {
         if ($this->user->getGender() == 'm') {
             if ($this->product->getClothingType()->getTarget() == 'Top') {
                 //chect neck & sleeve* / back, waist
-                array_push($suggestion_array, $this->compareNeck());
-                array_push($suggestion_array, $this->compareBack());
-                array_push($suggestion_array, $this->compareWaist());
+                
+                return array(
+                    "neck" => $this->compareNeck(),
+                    "waist" => $this->compareWaist(),
+                    "back" => $this->compareBack(),                    
+                );
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
                 //waist & inseam / outseam
-                array_push($suggestion_array, $this->compareWaist());
-                array_push($suggestion_array, $this->compareInseam());
-                array_push($suggestion_array, $this->compareOutseam());
+                    return array(
+                    "waist" => $this->compareWaist(),
+                    "Inseam" => $this->compareOutseam(),                    
+                    "outseam" => $this->compareInseam(),                    
+                );
+                    
             } else {
                 return null;
             }
@@ -75,28 +81,36 @@ class Algorithm {
 
             if ($this->product->getClothingType()->getTarget() == 'Top') {
                 //bust, waist, back & sleeve*                
-                array_push($suggestion_array, $this->compareBust());
-                array_push($suggestion_array, $this->compareWaist());
-                array_push($suggestion_array, $this->compareBack());
+                 return array(
+                    "bust" => $this->compareBust(),
+                    "waist" => $this->compareWaist(),
+                    "back" => $this->compareBack(),                    
+                );
+                
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
                 //waist, hip, inseam / outseam
-                array_push($suggestion_array, $this->compareWaist());
-                array_push($suggestion_array, $this->compareHip());
-                array_push($suggestion_array, $this->compareInseam());
-                array_push($suggestion_array, $this->compareOutseam());
+                    return array(
+                    "waist" => $this->compareWaist(),
+                    "hip" => $this->compareHip(),                    
+                    "Inseam" => $this->compareOutseam(),                    
+                    "outseam" => $this->compareInseam(),                    
+                );
+                
             } elseif ($this->product->getClothingType()->getTarget() == 'Dress') {
                 //bust, waist, back, hip & sleeve*
-                array_push($suggestion_array, $this->compareBust());
-                array_push($suggestion_array, $this->compareWaist());
-                array_push($suggestion_array, $this->compareBack());
-                array_push($suggestion_array, $this->compareHip());
+                return array(
+                    "bust" => $this->compareBust(),
+                    "waist" => $this->compareWaist(),
+                    "back" => $this->compareBack(),                    
+                    "hip" => $this->compareHip(),                    
+                );
             } else {
                 return null;
             }
         } else {
             return null;
         }
-        return $suggestion_array;
+        
     }
 
 //------------------- comparison methods
@@ -140,6 +154,7 @@ class Algorithm {
         return $this->getArrayFill('hip', $this->compare($this->user_measurement->getHip(), $this->product_measurement->getHipMin(), $this->product_measurement->getHipMax()));
     }
 
+     
 //----------------------------------------------------------------------    
     public function getArrayFill($measuring_point, $comparison_result) {
 
@@ -151,19 +166,19 @@ class Algorithm {
         $this->setMessageArray();
 
         if (is_null($comparison_result)) {
-            return array("{$measuring_point}" => array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['np'], 'fit' => false));
+            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['np'], 'fit' => false);
         }
 
 
         if ($comparison_result > 0) {
             //add loose message //add diff //fits boolean false
-            return array("{$measuring_point}" => array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['loose'], 'fit' => false));
+            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['loose'], 'fit' => false);
         } elseif ($comparison_result < 0) {
             //add tight message //add diff //fits boolean false
-            return array("{$measuring_point}" => array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['tight'], 'fit' => false));
+            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['tight'], 'fit' => false);
         } else {
             //get love message //add 0 or inclination //fits boolean true
-            return array("{$measuring_point}" => array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['fit'], 'fit' => true));
+            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['fit'], 'fit' => true);
         }
     }
 
