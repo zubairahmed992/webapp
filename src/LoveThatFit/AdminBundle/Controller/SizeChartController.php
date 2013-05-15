@@ -82,7 +82,14 @@ class SizeChartController extends Controller {
            $em->flush();
            $this->get('session')->setFlash('success','The Size Chart has been Created!');
             return $this->redirect($this->generateUrl('admin_size_charts'));
+            //return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', array(
+              //      'form' => $form->createView(),'sizechart' => $entity)); 
        }
+         $this->get('session')->setFlash('warning','Please Enter Values Correctly.');
+                 return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
+                    'form' => $form->createView()));
+      
+        
        }
     }
     
@@ -134,7 +141,9 @@ class SizeChartController extends Controller {
             return $this->redirect($this->generateUrl('admin_size_charts', array('id' => $entity->getId())));
         } 
         else {
-           $this->get('warning')->setFlash('warning','Unable to update Size Chart!');          
+         //  $this->get('warning')->setFlash('warning','Unable to update Size Chart!');   
+             return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
+                    'form' => $form->createView()));
         }
     }
 

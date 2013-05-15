@@ -53,53 +53,59 @@ class SizeChart
     private $target;
 
     /**
-     * @var integer $waist
-     *
-     * @ORM\Column(name="waist", type="integer", length=22)
+     * @var float $waist
+     * @ORM\Column(name="waist", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $waist;
+    private $waist=0;
 
     /**
-     * @var integer $hip
+     * @var float $hip
      *
-     * @ORM\Column(name="hip", type="integer", length=22)
+     * @ORM\Column(name="hip", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $hip;
+    private $hip=0;
 
     /**
-     * @var integer $bust
+     * @var float $bust
      *
-     * @ORM\Column(name="bust", type="integer", length=22)
+     * @ORM\Column(name="bust", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $bust;
+    private $bust=0;
 
     /**
-     * @var integer $chest
+     * @var float $chest
      *
-     * @ORM\Column(name="chest", type="integer", length=22)
+     * @ORM\Column(name="chest", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $chest;
+    private $chest=0;
 
     /**
-     * @var integer $inseam
+     * @var float $inseam
      *
-     * @ORM\Column(name="inseam", type="integer", length=22)
+     * @ORM\Column(name="inseam", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $inseam;
+    private $inseam=0;
 
     /**
-     * @var integer $neck
+     * @var float $neck
      *
-     * @ORM\Column(name="neck", type="integer", length=22)
+     * @ORM\Column(name="neck", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $neck;
+    private $neck=0;
 
     /**
-     * @var integer $sleeve
+     * @var float $sleeve
      *
-     * @ORM\Column(name="sleeve", type="integer", length=22)
+     * @ORM\Column(name="sleeve", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $sleeve;
+    private $sleeve=0;
 
 /**
      * @var string $disabled
