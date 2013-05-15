@@ -410,11 +410,11 @@ class ProfileController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $em->persist($userSurvey);
         $em->flush();
-        $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
+        $this->get('session')->setFlash('success', 'Answer Added Successfuly');
     }    
     private function updateSurveyUserAnswer()
     {
-        $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
+        $this->get('session')->setFlash('success', 'Answer Update Successfuly');
     }   
     private function getQuestionsList() {
         $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
