@@ -6,6 +6,11 @@ size_chart:
     pattern:  /size_chart
     defaults: { _controller: LoveThatFitUserBundle:Registration:sizeChart }
 
+ajax_size_chart_title_json:
+    pattern:  /ajax/size_chart_title/{brand_id}/{gender}/{target}
+    defaults: { _controller: LoveThatFitUserBundle:Ajax:sizeChartSizesByBrandJSON}
+
+
 #--------------------------------- New Registration Process ----------------
 
 test:
