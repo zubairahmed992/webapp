@@ -3,12 +3,12 @@
 <div style="float:right; margin-top: -1px; margin-right: 5px;"><a href="{{path('admin_product_detail_color_add',{'id': product.Id})}}" class="btn">Add New</a></div>
  </h2>
 <script>
-function validate()
+function validates()
 {
 var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
    
-var image_file = document.getElementById('product_file').value;
-var image_length = document.getElementById('product_file').length;
+var image_file = document.getElementById('product_color_file').value;
+var image_length = document.getElementById('product_color_file').length;
 
 var pos = image_file.lastIndexOf('.') + 1;
 var ext = image_file.substring(pos, image_length);
@@ -33,7 +33,7 @@ return true;
 {% if imageUploadForm is defined %}
     <div id="pro_color">
         Upload Pattern 
-    <form action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}" method="post" {{form_enctype(imageUploadForm) }}>
+    <form action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}" method="post" {{form_enctype(imageUploadForm) }} onsubmit="return validates();">
            {{form_errors(imageUploadForm) }}           
            {{form_row(imageUploadForm.file)}}   
            <input type="submit" value="SAVE" class="btn"/>
