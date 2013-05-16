@@ -41,13 +41,14 @@ $(function() {
                         <div class="featured_sizes">
 
                             <select name="cloth_size">
+                                <option value="">Size</option>
                             {% if productColor%}
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
-                                    <option value='{{pcsa}}'>{{key}}</option>
+                               <option value='{{key}}'>{{pcsa}}</option>
                                  {%endfor%}
                             {% else %}
                                {%for key, pcsa in product.displayProductColor.getSizeTitleArray%}
-                                    <option value='{{pcsa}}'>{{key}}</option>
+                                    <option value='{{key}}'>{{pcsa}}</option>
                               {%endfor%}
                             {%endif%}
                                 </select>
