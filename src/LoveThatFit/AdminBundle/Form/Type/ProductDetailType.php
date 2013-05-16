@@ -30,7 +30,8 @@ class ProductDetailType extends AbstractType
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'name',
-                ));        
+                ));
+        $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,));
 
 //$builder->add('Brand', 'choice',array('choices'=>$brand_list) );
         //$builder->add('ClothingType', 'choice', array('choices'=> array()), array('mapped' => false));

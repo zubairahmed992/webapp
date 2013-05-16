@@ -179,7 +179,12 @@ class Product {
      */
     public $img_file;
 
-   
+   /**
+     * @var string $disabled
+     *
+     * @ORM\Column(name="disabled", type="boolean")
+     */
+    private $disabled;
     
     /**
      * Get id
@@ -876,5 +881,28 @@ public function deleteImages()
     public function getDisplayProductColor()
     {
         return $this->displayProductColor;
+    }
+
+    /**
+     * Set disabled
+     *
+     * @param boolean $disabled
+     * @return Product
+     */
+    public function setDisabled($disabled)
+    {
+        $this->disabled = $disabled;
+    
+        return $this;
+    }
+
+    /**
+     * Get disabled
+     *
+     * @return boolean 
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
     }
 }
