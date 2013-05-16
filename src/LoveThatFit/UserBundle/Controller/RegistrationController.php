@@ -39,7 +39,7 @@ class RegistrationController extends Controller {
     public function sizeChartAction() {
 
 //        $form = $this->getSizeChartForm();
-        $size_chart_form = $this->createForm(new SizeChartType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')));
+        $size_chart_form = $this->createForm(new SizeChartType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress'), $this->getDoctrine()));
         return $this->render('LoveThatFitUserBundle:Registration:_size_chart.html.twig', array(
                     'size_chart_form' => $size_chart_form->createView(),    
             ));
@@ -579,7 +579,7 @@ class RegistrationController extends Controller {
         // $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
 
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType(), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
         }
@@ -607,9 +607,9 @@ class RegistrationController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
         $measurement = $entity->getMeasurement();
-        
+//return new Response(var_dump($this->getBrandArray('Top')));        
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType(), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
         }

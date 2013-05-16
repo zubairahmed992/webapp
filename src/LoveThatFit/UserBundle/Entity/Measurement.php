@@ -657,4 +657,10 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     {
         return $this->outseam;
     }
+    public $top_brand;
+    public $bottom_brand;
+    public $dress_brand;
+    public $top_size;
+    public $bottom_size;
+    public $dress_size;
 }
