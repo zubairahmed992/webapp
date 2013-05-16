@@ -11,389 +11,281 @@
         </ul>
     </div>-->
     <div class="action_cnt">
-        <div class="steps step_3">
-            <h2>Your Measurements</h2>
+        <div class="steps step_3 measurements">
+            <h2>Brands &amp; Sizes</h2>
             <form action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
+                    <div>
 
-                    <div class="frm_ele">
-                     {{ form_label(form.height) }}
                      {{ form_errors(form.height) }}
                      {{ form_widget(form.height) }}
 
-                           
-                          
-                          {#    Slider For Height
-                                <div class="slider_wrap">
-                                <div class="tip tt_arrow tip9"><!--- Tootip wrapper Start  !-->
-                                    <div class="grad"></div>
-                                    <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                        <span class="arrow_top"></span>Stand erect on straight surface, Measure from of Head down to the back of Heal.<br />
-                                        <a href="#">Watch Video</a> 
-                                        <!--- Tootip content End  !--> 
-                                    </div>
-                                    <div class="grad"></div>
-                                    <!--- Tootip wrapper End  !--> 
-                                </div>
-                                <div id="slider_result_height" class="slider_result">{{ measurement.height }}"</div>
-                                <div id="slider_height" class="main_slider"></div>
-            {{ form_widget(form.height) }}
-                                <!--/.slider_wrap--></div>   #}
-                        </div>
-                    <!-- START WEIGHT !-->
-                     <div class="frm_ele">
-                     {{ form_label(form.weight) }}
+
                      {{ form_errors(form.weight) }}
                      {{ form_widget(form.weight) }}
-                     </div>
-                  <!-- END WEIGHT !-->   
-{% if( entity.gender=='m') %}
-                    <div class="frm_ele"> 
-                   {{ form_label(form.chest) }}
-                    {{ form_errors(form.chest) }}
-                   {{ form_widget(form.chest) }}         
+                    </div>
 
-                                 {#   <div class="slider_wrap">
-                                        <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
-                                            <div class="grad"></div>
-                                            <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                                <span class="arrow_top"></span> Hold tape measure nipple level. Measure around your torso back to starting point.<br />
-                                                <a href="#">Watch Video</a> 
-                                                <!--- Tootip content End  !--> 
-                                            </div>
-                                            <div class="grad"></div>
-                                            <!--- Tootip wrapper End  !--> 
-                                        </div>
-                                        <div id="slider_result_chest" class="slider_result">{{ measurement.chest }}"</div>
-                                        <div id="slider_chest" class="main_slider"></div>
-            {{ form_widget(form.chest) }}
-                                        <!--/.slider_wrap--></div>                #}
+                    <div class="sep"></div>
+
+                    <div class="m_option">
+
+                        <div class="mlabel">Shirt</div>
+
+                        <div class="shirts_mus manual_opn" id="shirts_mus" style="">
 
 
-                                </div>
-               {% else %}     
-                            <div class="frm_ele"> {{ form_label(form.bust) }}
-                                                     {{ form_errors(form.bust) }}
-                                                       {{ form_widget(form.bust) }}
+                         {{ form_errors(form.sleeve) }}
+                         {{ form_widget(form.sleeve) }}
 
-                                  
-                                    {# <div class="slider_wrap">
-                                        <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
-                                            <div class="grad"></div>
-                                            <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                                <span class="arrow_top"></span> Hold tape measure nipple level. Measure around your torso back to starting point.<br />
-                                                <a href="#">Watch Video</a> 
-                                                <!--- Tootip content End  !--> 
-                                            </div>
-                                            <div class="grad"></div>
-                                            <!--- Tootip wrapper End  !--> 
-                                        </div>
-                                        <div id="slider_result_bust" class="slider_result">{{ measurement.bust }}"</div>
-                                        <div id="slider_bust" class="main_slider"></div>
-            {{ form_widget(form.bust) }}
-                                        <!--/.slider_wrap--></div>   #}
+                          {% if( entity.gender=='m') %}
+                            {{ form_errors(form.chest) }}
+                             {{ form_widget(form.chest) }}
 
+                            {%else%}
+                            {{ form_errors(form.bust) }}
+                             {{ form_widget(form.bust) }}
 
-                                </div>
-                  {% endif %}  
-                                <div class="frm_ele"> 
-          {{ form_label(form.waist) }}
-          {{ form_errors(form.waist) }}
-          {{ form_widget(form.waist) }}
+                           {%endif%} 
+                          {% if( entity.gender=='m') %}
+                            {{ form_errors(form.neck) }}
+                             {{ form_widget(form.neck) }}
 
-                                     {#   <div class="slider_wrap">
-                                            <div class="tip tt_arrow tip4"><!--- Tootip wrapper Start  !-->
-                                                <div class="grad"></div>
-                                                <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                                    <span class="arrow_top"></span> Bend to one side to find the crease or natural waist. Measure across the narrowest part.<br />
-                                                    <a href="#">Watch Video</a> 
-                                                    <!--- Tootip content End  !--> 
-                                                </div>
-                                                <div class="grad"></div>
-                                                <!--- Tootip wrapper End  !--> 
-                                            </div>
-                                            <div id="slider_result_waist" class="slider_result">{{ measurement.waist }}"</div>
-                                            <div id="slider_waist" class="main_slider"></div>
-               {{ form_widget(form.waist) }}
-                                            <!--/.slider_wrap--></div> #}
+                            {%else%}
+                            {{ form_errors(form.back) }}
+                             {{ form_widget(form.back) }}
 
-         </div>
-               {% if( entity.gender=='f') %}
-                                    <div class="frm_ele"> {{ form_label(form.hip) }}
-                                                          {{ form_errors(form.hip) }}
-                                                          {{ form_widget(form.hip) }}
-                                           {# <div class="slider_wrap">
-                                                <div class="tip tt_arrow tip5"><!--- Tootip wrapper Start  !-->
-                                                    <div class="grad"></div>
-                                                    <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                                        <span class="arrow_top"></span> Stand with your heels together, and measure around the fullest part of your hips, keeping the tape parallel to the floor.<br />
-                                                        <a href="#">Watch Video</a> 
-                                                        <!--- Tootip content End  !--> 
-                                                    </div>
-                                                    <div class="grad"></div>
-                                                    <!--- Tootip wrapper End  !--> 
-                                                </div>
-                                                <div id="slider_result_hips" class="slider_result">{{ measurement.hip }}"</div>
-                                                <div id="slider_hips" class="main_slider"></div>
-            {{ form_widget(form.hip) }}
-                                                <!--/.slider_wrap--></div> #}
-                                        </div>
-                    
-                    {%else%}
-                      <div class="frm_ele"> 
-                    {{ form_label(form.neck) }}
-                    {{ form_errors(form.neck) }}
-                     {{ form_widget(form.neck) }}
+                           {%endif%} 
 
-                                          {#  <div class="slider_wrap">
-                                                <div class="tip tt_arrow tip5"><!--- Tootip wrapper Start  !-->
-                                                    <div class="grad"></div>
-                                                    <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                                        <span class="arrow_top"></span> Stand with your heels together, and measure around the fullest part of your neck, keeping the tape parallel to the floor.<br />
-                                                        <a href="#">Watch Video</a> 
-                                                        <!--- Tootip content End  !--> 
-                                                    </div>
-                                                    <div class="grad"></div>
-                                                    <!--- Tootip wrapper End  !--> 
-                                                </div>
-                                                <div id="slider_result_neck" class="slider_result">{{ measurement.neck }}"</div>
-                                                <div id="slider_neck" class="main_slider"></div>
-            {{ form_widget(form.neck) }}
-                                                <!--/.slider_wrap--></div> #}
-                                        </div>
-                   {%endif%} 
+                        </div>
 
-                      <div class="frm_ele"> 
-                    {{ form_label(form.sleeve) }}
-                    {{ form_errors(form.sleeve) }}
-                    {{ form_widget(form.sleeve) }}
-
-                                   {# <div class="slider_wrap">
-                                        <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
-                                            <div class="grad"></div>
-                                            <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                                <span class="arrow_top"></span> Hold tape measure sleeve level. Measure around your sleeve back to starting point.<br />
-                                                <a href="#">Watch Video</a> 
-                                                <!--- Tootip content End  !--> 
-                                            </div>
-                                            <div class="grad"></div>
-                                            <!--- Tootip wrapper End  !--> 
-                                        </div>
-                                        <div id="slider_result_sleeve" class="slider_result">{{ measurement.sleeve }}"</div>
-                                        <div id="slider_sleeve" class="main_slider"></div>
-            {{ form_widget(form.sleeve) }}
-                                        <!--/.slider_wrap--></div>                #}
+                        <div class="shirts_mus manual_opn" id="shirts_mus_opt">
 
 
-                                </div>
-                    
-                      <div class="frm_ele"> 
-                          <label>  Paint Length</label>
-                             {{ form_errors(form.outseam) }}
-                             {{ form_widget(form.outseam) }}
-                                  {#  <div class="slider_wrap">
-                                        <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
-                                            <div class="grad"></div>
-                                            <div class="tooltip_content"><!--- Tootip content Start  !--> 
-                                                <span class="arrow_top"></span> Hold tape measure Outseam level. Measure around your Outseam to starting point.<br />
-                                                <a href="#">Watch Video</a> 
-                                                <!--- Tootip content End  !--> 
-                                            </div>
-                                            <div class="grad"></div>
-                                            <!--- Tootip wrapper End  !--> 
-                                        </div>
-                                        <div id="slider_result_outseam" class="slider_result">{{ measurement.outseam }}"</div>
-                                        <div id="slider_outseam" class="main_slider"></div>
-            {{ form_widget(form.outseam) }}
-                                        <!--/.slider_wrap--></div>           #}     
-                              </div>
-                   {% if( entity.gender=='f') %}
-                                    <div class="frm_ele"> 
-                                    {{ form_label(form.back) }}
-                                    {{ form_errors(form.back) }}
-                                    {{ form_widget(form.back) }}
-                                           
-                                        </div>
-                 {% endif %} 
-                  
-                   <div class="frm_ele"> 
-                    {{form_label(form.top_brand)}}   
                      {{form_errors(form.top_brand)}}  
-                     {{form_widget(form.top_brand)}}          
+                     {{form_widget(form.top_brand)}} 
 
-                       </div>    
-                   <div class="frm_ele"> 
-                    {{form_label(form.bottom_brand)}}   
-                     {{form_errors(form.bottom_brand)}}  
-                     {{form_widget(form.bottom_brand)}}          
-                    </div>    
-                  <div class="frm_ele"> 
-                    {{form_label(form.dress_brand)}}   
-                     {{form_errors(form.dress_brand)}}  
-                     {{form_widget(form.dress_brand)}}          
-                    </div> 
-                 <div class="frm_ele"> 
-                    {{form_label(form.top_size)}}   
+
                      {{form_errors(form.top_size)}}  
-                     {{form_widget(form.top_size)}}          
-                    </div> 
-                 <div class="frm_ele"> 
-                    {{form_label(form.bottom_size)}}   
+                     {{form_widget(form.top_size)}}                 
+
+                        </div>
+
+                        <div class="shuf_icon shirt_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
+                   
+                    </div>
+                    <!---  pant section  !-->
+                     
+                    
+                      <div class="m_option">
+                    
+                    <div class="mlabel">Pant</div>
+
+                        <div class="pants_mus manual_opn" id="pants_mus">
+                         {{ form_errors(form.waist) }}
+                         {{ form_widget(form.waist) }}
+                          {{ form_errors(form.outseam) }}
+                         {{ form_widget(form.outseam) }}       
+                        
+                        </div>
+
+
+                        <div class="pants_mus manual_opn" id="pants_mus_opt">
+
+                      {{form_errors(form.bottom_brand)}}  
+                     {{form_widget(form.bottom_brand)}} 
+
+
                      {{form_errors(form.bottom_size)}}  
-                     {{form_widget(form.bottom_size)}}          
-                    </div>   
-                  <div class="frm_ele"> 
-                    {{form_label(form.dress_size)}}   
+                     {{form_widget(form.bottom_size)}}  
+
+                        </div>
+
+                        <div class="shuf_icon pant_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
+                    
+                     <!---  pant section close  !-->
+                     
+                     
+                    </div><!-- m option close  !-->
+  {% if( entity.gender=='f') %}
+                    <div class="m_option">
+
+                        <div class="mlabel">Dress</div>
+
+                        <div class="dress_mus manual_opn" id="dress_mus">
+                          {{ form_errors(form.bust) }}
+                         {{ form_widget(form.bust) }} 
+                           {{ form_errors(form.hip) }}
+                         {{ form_widget(form.hip) }} 
+                                  {{ form_errors(form.back) }}
+                         {{ form_widget(form.back) }} 
+                        </div>
+                        <div class="dress_mus manual_opn" id="dress_mus">
+                      {{form_errors(form.dress_brand)}}  
+                     {{form_widget(form.dress_brand)}}
+                        
                      {{form_errors(form.dress_size)}}  
-                     {{form_widget(form.dress_size)}}          
-                    </div>  
-                 
- {{ form_rest(form) }}
-                                      </div>
-                                </div>
+                     {{form_widget(form.dress_size)}}  
+                      
+                            </div>
+ 
+                        <div class="shuf_icon"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></div>
 
-      
-                                        <div class="btm_buttons row">
-                                            <div class="frm_ele">
-                                                <input class="reg_next_step" type="submit" value="Next Step" />
-                                            </div>
 
-                                        </div>
-                                    </form>
-                                    <div class="clr_bth"></div>
-                                    <!--/.step_3--></div>
-                                <!--/.action_cnt--></div>
-                            <!--/.action_blk--></section>
-                    </form>
+                    </div>
+      {% endif %}              
+
+                    <!-- END WEIGHT !-->   
+
+              
+               
+
+                  
+                   
+
+
+                                              
+
+                                                <div class="btm_buttons row">
+                                                    <div class="frm_ele">
+                                                        <input class="reg_next_step" type="submit" value="Next Step" />
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                            <div class="clr_bth"></div>
+                                            <!--/.step_3--></div>
+                                        <!--/.action_cnt--></div>
+                                    <!--/.action_blk--></section>
+                            </form>
 {% endblock %}
 
 {% block how_it_works_content %}
-                    <section class="cnt_btm">
-                        <h3>Measurements</h3>
-                        <p>Get a friend to help you or take them yourself.  Make sure to fill them all out.  This will allow for the perfect fit every time!   If something changes you can allows come back to this step.  Any questions, watch our demonstrational videos.</p>
-                    </section>
+                            <section class="cnt_btm">
+                                <h3>Measurements</h3>
+                                <p>Get a friend to help you or take them yourself.  Make sure to fill them all out.  This will allow for the perfect fit every time!   If something changes you can allows come back to this step.  Any questions, watch our demonstrational videos.</p>
+                            </section>
 {% endblock %}
 
 
 {% block bottom_random_content %} 
-                    <script type="text/javascript">
-                    $(document).ready(function(){
+                            <script type="text/javascript">
+                            $(document).ready(function(){
 
-                    $(".slider_wrap").mousedown(function (){
-                            //$(".slider_wrap").css('background','#9dcb38');
-                            $(this).css('background','#c4c934');
-                            show_tip(this);
-                    });
+                            $(".slider_wrap").mousedown(function (){
+                                    //$(".slider_wrap").css('background','#9dcb38');
+                                    $(this).css('background','#c4c934');
+                                    show_tip(this);
+                            });
 
 
-                     //Slider Height
-                      $("#slider_height").slider({ animate: true, range: "min", value: {{ measurement.height }}, min: 20, max: 96, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_height" ).html( ui.value + '"' );
-                      },
-                      change: function(event, ui) {	
-                      $(this).parent().find("input").attr('value', ui.value);
-                      }	
-                      });
+                             //Slider Height
+                              $("#slider_height").slider({ animate: true, range: "min", value: {{ measurement.height }}, min: 20, max: 96, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_height" ).html( ui.value + '"' );
+                              },
+                              change: function(event, ui) {	
+                              $(this).parent().find("input").attr('value', ui.value);
+                              }	
+                              });
 
-                      //Slider Bust
-                      $("#slider_bust").slider({ animate: true, range: "min", value: {{ measurement.bust }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_bust" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                    $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });
+                              //Slider Bust
+                              $("#slider_bust").slider({ animate: true, range: "min", value: {{ measurement.bust }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_bust" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                            $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });
                       
-                       //Slider Chest
-                      $("#slider_chest").slider({ animate: true, range: "min", value: {{ measurement.chest }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_chest" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                    $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });
+                               //Slider Chest
+                              $("#slider_chest").slider({ animate: true, range: "min", value: {{ measurement.chest }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_chest" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                            $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });
 
-                      //Slider Waist
-                      $("#slider_waist").slider({ animate: true, range: "min", value: {{ measurement.waist }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_waist" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                     $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });
+                              //Slider Waist
+                              $("#slider_waist").slider({ animate: true, range: "min", value: {{ measurement.waist }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_waist" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                             $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });
 
-                      //Slider Hips
-                      $("#slider_hips").slider({ animate: true, range: "min", value: {{ measurement.hip }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_hips" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                    $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });
-                        //Slider Neck
-                      $("#slider_neck").slider({ animate: true, range: "min", value: {{ measurement.neck }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_neck" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                    $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });
-                       //Slider Sleeve
-                      $("#slider_sleeve").slider({ animate: true, range: "min", value: {{ measurement.sleeve }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_sleeve" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                    $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });  
-                       //Slider Outseam
-                      $("#slider_outseam").slider({ animate: true, range: "min", value: {{ measurement.outseam }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_outseam" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                    $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });   
-                       //Slider Back
-                      $("#slider_back").slider({ animate: true, range: "min", value: {{ measurement.back }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                      $( "#slider_result_back" ).html( ui.value + '"');
-                      },
-                      change: function(event, ui) { 
-                     $(this).parent().find("input").attr('value', ui.value);	
-                      }	
-                      });
+                              //Slider Hips
+                              $("#slider_hips").slider({ animate: true, range: "min", value: {{ measurement.hip }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_hips" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                            $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });
+                                //Slider Neck
+                              $("#slider_neck").slider({ animate: true, range: "min", value: {{ measurement.neck }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_neck" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                            $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });
+                               //Slider Sleeve
+                              $("#slider_sleeve").slider({ animate: true, range: "min", value: {{ measurement.sleeve }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_sleeve" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                            $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });  
+                               //Slider Outseam
+                              $("#slider_outseam").slider({ animate: true, range: "min", value: {{ measurement.outseam }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_outseam" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                            $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });   
+                               //Slider Back
+                              $("#slider_back").slider({ animate: true, range: "min", value: {{ measurement.back }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                                              $( "#slider_result_back" ).html( ui.value + '"');
+                              },
+                              change: function(event, ui) { 
+                             $(this).parent().find("input").attr('value', ui.value);	
+                              }	
+                              });
                             
-                    });
-                    function show_tip(ele){
+                            });
+                            function show_tip(ele){
 
 
-                                    $(".tip").css({"left" : "267px"});
+                                            $(".tip").css({"left" : "267px"});
 
-                                    var chk_offset = $(ele).position();
-                                    //alert(chk_offset);
+                                            var chk_offset = $(ele).position();
+                                            //alert(chk_offset);
 
 
 
-                                    if($(ele).find("div.tip").css("display") == "block")
-                                    {
-                                                    //$(ele).find("div.tip").fadeIn(500)
-                                    }
-                                    else {
+                                            if($(ele).find("div.tip").css("display") == "block")
+                                            {
+                                                            //$(ele).find("div.tip").fadeIn(500)
+                                            }
+                                            else {
 
-                                                                    $(ele).find("div.tip").removeClass("tip").addClass("show_my_tip");
-                                                                    $(".tip").hide(20, function (){
-                                                                                    $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "267px"}).removeClass("show_my_tip").addClass("tip");});
-                                                                    });			
-                                                     }
+                                                                            $(ele).find("div.tip").removeClass("tip").addClass("show_my_tip");
+                                                                            $(".tip").hide(20, function (){
+                                                                                            $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "267px"}).removeClass("show_my_tip").addClass("tip");});
+                                                                            });			
+                                                             }
 
-                    }
+                            }
 
-                    ///////////////////////////////////////////
+                            ///////////////////////////////////////////
 
                                     
 
 
 
-                        </script> 
+                                </script> 
 {% endblock %} 
 
