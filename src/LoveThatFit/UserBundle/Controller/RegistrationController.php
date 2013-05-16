@@ -541,7 +541,7 @@ class RegistrationController extends Controller {
                 $this->get('mail_helper')->sendRegistrationEmail($entity);
 
                 if ($entity->getGender() == 'm') {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType(), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
                 } else {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
                 }
