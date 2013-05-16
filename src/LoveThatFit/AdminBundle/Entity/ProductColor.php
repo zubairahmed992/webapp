@@ -238,7 +238,9 @@ class ProductColor {
         $items = $this->product_items;
         $size_titles = array();
         foreach ($items as $i) {
-            $size_titles[$i->getProductSize()->getTitle()] = $i->getProductSize()->getId();
+            //$size_titles[$i->getProductSize()->getTitle()] = $i->getProductSize()->getId();
+            $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getTitle();
+            //changed due to issue in size selection
         }
         return $size_titles;
     }
