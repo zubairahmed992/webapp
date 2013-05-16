@@ -16,10 +16,15 @@
             <form action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
 
-                    <div class="frm_ele"> {{ form_label(form.height) }}
-          {{ form_errors(form.height) }}
+                    <div class="frm_ele">
+                     {{ form_label(form.height) }}
+                     {{ form_errors(form.height) }}
+                     {{ form_widget(form.height) }}
 
-                            <div class="slider_wrap">
+                           
+                          
+                          {#    Slider For Height
+                                <div class="slider_wrap">
                                 <div class="tip tt_arrow tip9"><!--- Tootip wrapper Start  !-->
                                     <div class="grad"></div>
                                     <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -33,13 +38,22 @@
                                 <div id="slider_result_height" class="slider_result">{{ measurement.height }}"</div>
                                 <div id="slider_height" class="main_slider"></div>
             {{ form_widget(form.height) }}
-                                <!--/.slider_wrap--></div>
+                                <!--/.slider_wrap--></div>   #}
                         </div>
+                    <!-- START WEIGHT !-->
+                     <div class="frm_ele">
+                     {{ form_label(form.weight) }}
+                     {{ form_errors(form.weight) }}
+                     {{ form_widget(form.weight) }}
+                     </div>
+                  <!-- END WEIGHT !-->   
 {% if( entity.gender=='m') %}
-                    <div class="frm_ele"> {{ form_label(form.chest) }}
-          {{ form_errors(form.chest) }}
+                    <div class="frm_ele"> 
+                   {{ form_label(form.chest) }}
+                    {{ form_errors(form.chest) }}
+                   {{ form_widget(form.chest) }}         
 
-                                    <div class="slider_wrap">
+                                 {#   <div class="slider_wrap">
                                         <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
                                             <div class="grad"></div>
                                             <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -53,15 +67,17 @@
                                         <div id="slider_result_chest" class="slider_result">{{ measurement.chest }}"</div>
                                         <div id="slider_chest" class="main_slider"></div>
             {{ form_widget(form.chest) }}
-                                        <!--/.slider_wrap--></div>                
+                                        <!--/.slider_wrap--></div>                #}
 
 
                                 </div>
                {% else %}     
                             <div class="frm_ele"> {{ form_label(form.bust) }}
-          {{ form_errors(form.bust) }}
+                                                     {{ form_errors(form.bust) }}
+                                                       {{ form_widget(form.bust) }}
 
-                                    <div class="slider_wrap">
+                                  
+                                    {# <div class="slider_wrap">
                                         <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
                                             <div class="grad"></div>
                                             <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -75,15 +91,17 @@
                                         <div id="slider_result_bust" class="slider_result">{{ measurement.bust }}"</div>
                                         <div id="slider_bust" class="main_slider"></div>
             {{ form_widget(form.bust) }}
-                                        <!--/.slider_wrap--></div>                
+                                        <!--/.slider_wrap--></div>   #}
 
 
                                 </div>
                   {% endif %}  
-                                <div class="frm_ele"> {{ form_label(form.waist) }}
+                                <div class="frm_ele"> 
+          {{ form_label(form.waist) }}
           {{ form_errors(form.waist) }}
+          {{ form_widget(form.waist) }}
 
-                                        <div class="slider_wrap">
+                                     {#   <div class="slider_wrap">
                                             <div class="tip tt_arrow tip4"><!--- Tootip wrapper Start  !-->
                                                 <div class="grad"></div>
                                                 <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -97,16 +115,14 @@
                                             <div id="slider_result_waist" class="slider_result">{{ measurement.waist }}"</div>
                                             <div id="slider_waist" class="main_slider"></div>
                {{ form_widget(form.waist) }}
-                                            <!--/.slider_wrap--></div>
+                                            <!--/.slider_wrap--></div> #}
 
-
-
-                                    </div>
+         </div>
                {% if( entity.gender=='f') %}
                                     <div class="frm_ele"> {{ form_label(form.hip) }}
-          {{ form_errors(form.hip) }}
-
-                                            <div class="slider_wrap">
+                                                          {{ form_errors(form.hip) }}
+                                                          {{ form_widget(form.hip) }}
+                                           {# <div class="slider_wrap">
                                                 <div class="tip tt_arrow tip5"><!--- Tootip wrapper Start  !-->
                                                     <div class="grad"></div>
                                                     <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -120,14 +136,16 @@
                                                 <div id="slider_result_hips" class="slider_result">{{ measurement.hip }}"</div>
                                                 <div id="slider_hips" class="main_slider"></div>
             {{ form_widget(form.hip) }}
-                                                <!--/.slider_wrap--></div>
+                                                <!--/.slider_wrap--></div> #}
                                         </div>
                     
                     {%else%}
-                      <div class="frm_ele"> {{ form_label(form.neck) }}
-          {{ form_errors(form.neck) }}
+                      <div class="frm_ele"> 
+                    {{ form_label(form.neck) }}
+                    {{ form_errors(form.neck) }}
+                     {{ form_widget(form.neck) }}
 
-                                            <div class="slider_wrap">
+                                          {#  <div class="slider_wrap">
                                                 <div class="tip tt_arrow tip5"><!--- Tootip wrapper Start  !-->
                                                     <div class="grad"></div>
                                                     <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -141,14 +159,16 @@
                                                 <div id="slider_result_neck" class="slider_result">{{ measurement.neck }}"</div>
                                                 <div id="slider_neck" class="main_slider"></div>
             {{ form_widget(form.neck) }}
-                                                <!--/.slider_wrap--></div>
+                                                <!--/.slider_wrap--></div> #}
                                         </div>
                    {%endif%} 
 
-                      <div class="frm_ele"> {{ form_label(form.sleeve) }}
-          {{ form_errors(form.sleeve) }}
+                      <div class="frm_ele"> 
+                    {{ form_label(form.sleeve) }}
+                    {{ form_errors(form.sleeve) }}
+                    {{ form_widget(form.sleeve) }}
 
-                                    <div class="slider_wrap">
+                                   {# <div class="slider_wrap">
                                         <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
                                             <div class="grad"></div>
                                             <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -162,15 +182,16 @@
                                         <div id="slider_result_sleeve" class="slider_result">{{ measurement.sleeve }}"</div>
                                         <div id="slider_sleeve" class="main_slider"></div>
             {{ form_widget(form.sleeve) }}
-                                        <!--/.slider_wrap--></div>                
+                                        <!--/.slider_wrap--></div>                #}
 
 
                                 </div>
                     
-                      <div class="frm_ele"> {{ form_label(form.outseam) }}
-          {{ form_errors(form.outseam) }}
-
-                                    <div class="slider_wrap">
+                      <div class="frm_ele"> 
+                          <label>  Paint Length</label>
+                             {{ form_errors(form.outseam) }}
+                             {{ form_widget(form.outseam) }}
+                                  {#  <div class="slider_wrap">
                                         <div class="tip tt_arrow tip3"><!--- Tootip wrapper Start  !-->
                                             <div class="grad"></div>
                                             <div class="tooltip_content"><!--- Tootip content Start  !--> 
@@ -184,8 +205,49 @@
                                         <div id="slider_result_outseam" class="slider_result">{{ measurement.outseam }}"</div>
                                         <div id="slider_outseam" class="main_slider"></div>
             {{ form_widget(form.outseam) }}
-                                        <!--/.slider_wrap--></div>                
-                              <div>
+                                        <!--/.slider_wrap--></div>           #}     
+                              </div>
+                   {% if( entity.gender=='f') %}
+                                    <div class="frm_ele"> 
+                                    {{ form_label(form.back) }}
+                                    {{ form_errors(form.back) }}
+                                    {{ form_widget(form.back) }}
+                                           
+                                        </div>
+                 {% endif %} 
+                  
+                   <div class="frm_ele"> 
+                    {{form_label(form.top_brand)}}   
+                     {{form_errors(form.top_brand)}}  
+                     {{form_widget(form.top_brand)}}          
+
+                       </div>    
+                   <div class="frm_ele"> 
+                    {{form_label(form.bottom_brand)}}   
+                     {{form_errors(form.bottom_brand)}}  
+                     {{form_widget(form.bottom_brand)}}          
+                    </div>    
+                  <div class="frm_ele"> 
+                    {{form_label(form.dress_brand)}}   
+                     {{form_errors(form.dress_brand)}}  
+                     {{form_widget(form.dress_brand)}}          
+                    </div> 
+                 <div class="frm_ele"> 
+                    {{form_label(form.top_size)}}   
+                     {{form_errors(form.top_size)}}  
+                     {{form_widget(form.top_size)}}          
+                    </div> 
+                 <div class="frm_ele"> 
+                    {{form_label(form.bottom_size)}}   
+                     {{form_errors(form.bottom_size)}}  
+                     {{form_widget(form.bottom_size)}}          
+                    </div>   
+                  <div class="frm_ele"> 
+                    {{form_label(form.dress_size)}}   
+                     {{form_errors(form.dress_size)}}  
+                     {{form_widget(form.dress_size)}}          
+                    </div>  
+                 
  {{ form_rest(form) }}
                                       </div>
                                 </div>

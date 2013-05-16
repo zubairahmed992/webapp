@@ -30,13 +30,13 @@ private $dress_brands;
         $builder->add('bottom_size', 'choice', array('required' => false));
         $builder->add('dress_size', 'choice', array('required' => false));
 
-        
-        $builder->add('chest', 'hidden');
-        $builder->add('height', 'hidden');
-        $builder->add('waist', 'hidden');
-        $builder->add('neck', 'hidden');
-        $builder->add('sleeve', 'hidden');
-        $builder->add('outseam', 'hidden');
+        $builder->add('weight', 'text');
+        $builder->add('chest', 'text');
+        $builder->add('height', 'text');
+        $builder->add('waist', 'text');
+        $builder->add('neck', 'text');
+        $builder->add('sleeve', 'text');
+        $builder->add('outseam', 'text');
          }
   
      public function getDefaultOptions(array $options)

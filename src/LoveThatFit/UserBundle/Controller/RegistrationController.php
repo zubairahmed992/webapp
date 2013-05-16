@@ -543,7 +543,7 @@ class RegistrationController extends Controller {
                 if ($entity->getGender() == 'm') {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
                 } else {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
                 }
 
 
@@ -581,7 +581,7 @@ class RegistrationController extends Controller {
         if ($entity->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
 
@@ -611,7 +611,7 @@ class RegistrationController extends Controller {
         if ($entity->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType(), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
         }
 
 
