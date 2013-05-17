@@ -10,13 +10,12 @@ class RegistrationMeasurementMaleType extends AbstractType
 {
 private $top_brands;
 private $bottom_brands;
-private $dress_brands;
 
-     public function __construct($top_brands, $bottom_brands,$dress_brands)             
+
+     public function __construct($top_brands, $bottom_brands)             
     {
         $this->top_brands=$top_brands;
         $this->bottom_brands=$bottom_brands;
-        $this->dress_brands=$dress_brands;
         
     }
 
@@ -24,11 +23,10 @@ private $dress_brands;
     {
         $builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false));
         $builder->add('bottom_brand', 'choice', array('choices' => $this->bottom_brands, 'required' => false));
-        $builder->add('dress_brand', 'choice', array('choices' => $this->dress_brands, 'required' => false));
-
+        
         $builder->add('top_size', 'choice', array('required' => false));
         $builder->add('bottom_size', 'choice', array('required' => false));
-        $builder->add('dress_size', 'choice', array('required' => false));
+        
 
         $builder->add('weight', 'text');
         $builder->add('chest', 'text');
