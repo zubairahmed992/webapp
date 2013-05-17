@@ -266,6 +266,10 @@ class ProductColor {
 
             $ext = pathinfo($this->getAbsolutePatternTempPath(), PATHINFO_EXTENSION);
             $this->pattern= uniqid() . '.' . $ext;
+           
+            if (!is_dir($this->getUploadRootDir() . '/pattern')) {
+                    mkdir($this->getUploadRootDir() . '/pattern', 0700);
+                }
             $dest = $this->getUploadRootDir() . '/pattern/' . $this->pattern;
 
             rename($temp_file_name, $dest);
