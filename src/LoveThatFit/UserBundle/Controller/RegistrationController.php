@@ -39,10 +39,10 @@ class RegistrationController extends Controller {
     public function sizeChartAction() {
 
 //        $form = $this->getSizeChartForm();
-        $size_chart_form = $this->createForm(new SizeChartType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress'), $this->getDoctrine()));
+        $size_chart_form = $this->createForm(new SizeChartType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress'), $this->getDoctrine()));
         return $this->render('LoveThatFitUserBundle:Registration:_size_chart.html.twig', array(
-                    'size_chart_form' => $size_chart_form->createView(),    
-            ));
+                    'size_chart_form' => $size_chart_form->createView(),
+                ));
     }
 
     private function getSizeChartForm() {
@@ -541,9 +541,9 @@ class RegistrationController extends Controller {
                 $this->get('mail_helper')->sendRegistrationEmail($entity);
 
                 if ($entity->getGender() == 'm') {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
                 } else {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
                 }
 
 
@@ -579,11 +579,26 @@ class RegistrationController extends Controller {
         // $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
 
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       /* $measurement->top_size = 2;
+        $measurement->bottom_size = 8;
+        $measurement->dress_size = 5;
+
+        
+        return new Response(var_dump($this->evaluateWithSizeChart($measurement)));
+
+*/
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
         $em->persist($measurement);
         $em->flush();
@@ -600,6 +615,62 @@ class RegistrationController extends Controller {
                 ));
     }
 
+    private function evaluateWithSizeChart($measurement) {
+
+        if (is_null($measurement)){
+            return ;
+        }
+    
+        $em = $this->getDoctrine()->getManager();
+        if ($measurement->top_size) {
+            $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->top_size);
+            if ($top_size) {
+
+                if ($measurement->getNeck() == 0) {
+                    $measurement->setNeck($top_size->getNeck());
+                }
+                if ($measurement->getBust() == 0) {
+                    $measurement->setBust($top_size->getBust());
+                }
+                if ($measurement->getChest() == 0) {
+                    $measurement->setChest($top_size->getChest());
+                }
+                if ($measurement->getSleeve() == 0) {
+                    $measurement->setSleeve($top_size->getSleeve());
+                }
+            }
+        }
+
+        if ($measurement->bottom_size) {
+
+            $bottom_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->bottom_size);
+            if ($bottom_size) {
+                if ($measurement->getWaist() == 0) {
+                    $measurement->setWaist($bottom_size->getWaist());
+                }
+                if ($measurement->getHip() == 0) {
+                    $measurement->setHip($bottom_size->getHip());
+                }
+                if ($measurement->getInseam() == 0) {
+                    $measurement->setInseam($bottom_size->getInseam());
+                }
+            }
+        }
+
+        if ($measurement->dress_size) {
+            $dress_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->dress_size);
+            if ($dress_size) {
+                if ($measurement->getBust() == 0) {
+                    $measurement->setBust($dress_size->getBust());
+                }
+                if ($measurement->getHip() == 0) {
+                    $measurement->setHip($dress_size->getHip());
+                }
+            }
+        }
+        return $measurement;
+    }
+
     public function renderThisAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -609,9 +680,9 @@ class RegistrationController extends Controller {
         $measurement = $entity->getMeasurement();
 //return new Response(var_dump($this->getBrandArray('Top')));        
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'),$this->getBrandArray('Bottom'),$this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         }
 
 
