@@ -589,16 +589,10 @@ class RegistrationController extends Controller {
        /* $measurement->top_size = 2;
         $measurement->bottom_size = 8;
         $measurement->dress_size = 5;
-
-        
         return new Response(var_dump($this->evaluateWithSizeChart($measurement)));
-
-*/
-
-
+        */
+        $measurement = $this->evaluateWithSizeChart($measurement);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
         $em->persist($measurement);
         $em->flush();
