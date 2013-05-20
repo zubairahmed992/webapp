@@ -5,10 +5,9 @@ namespace LoveThatFit\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LoveThatFit\AdminBundle\Entity\SurveyUser
- *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\SurveyUserRepository")
+ * @ORM\Table(name="surveyuser")
+ * @ORM\HasLifecycleCallbacks()
  */
 class SurveyUser
 {

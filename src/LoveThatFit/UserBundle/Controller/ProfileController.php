@@ -389,11 +389,11 @@ class ProfileController extends Controller {
     
     private function updateAnswerIfFound($question,$answers,$user) {
         $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
-        $count_result=count($result);      
-       
+        $count_result=count($result); 
         if($count_result>0)
-        {
-            return $this->updateSurveyUserAnswer($question,$answers,$user);         
+        {            
+            
+            return $this->updateSurveyUserAnswer($question,$answers,$user);        
         }
         else
         {
@@ -412,9 +412,22 @@ class ProfileController extends Controller {
         $em->flush();
         $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
     }    
-    private function updateSurveyUserAnswer()
+    private function updateSurveyUserAnswer($question,$answers,$user)
     {
-        $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
+      $em = $this->getDoctrine()->getEntityManager();
+      $surveyUser = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
+      foreach($surveyUser as $userSurvey)
+      {
+          $surveyId=$userSurvey->getId();
+          $surveyUserId = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->find($surveyId);
+      } 
+        $surveyUserId->setQuestion($question);
+        $surveyUserId->setAnswer($answers);
+        $surveyUserId->setUser($user);
+        $surveyUserId->setSurvey('Question Answer Survey');        
+        $em->persist($surveyUserId);
+        $em->flush();      
+      $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
     }   
     private function getQuestionsList() {
         $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
@@ -450,7 +463,7 @@ class ProfileController extends Controller {
     }
     
     
-    
+   
     
 
 }
