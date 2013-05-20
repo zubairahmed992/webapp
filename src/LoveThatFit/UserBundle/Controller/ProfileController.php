@@ -187,30 +187,6 @@ class ProfileController extends Controller {
     
 
     //--------------------------- What I like --------------------------
-    
-    
-    public function _whatILikeAction()
-    {       
-      $em = $this->getDoctrine()->getManager();
-      $user=$this->get('security.context')->getToken()->getUser();
-      $question = $em->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->find(1);
-      $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find(1);
-      //$userServey = $em->getRepository('LoveThatFitAdminBundle:SurveyUser')->findBy(array('question'=>$question));
-      
-
-        $query = $em->createQuery(
-            'SELECT us, q FROM LoveThatFitAdminBundle:SurveyQuestion q 
-                JOIN q.SurveyUser us
-                WHERE q.id > :qid'                
-        )->setParameter('qid', 1);
-
-        $userServey  = $query->getResult();      
-      
-            
-      return new Response($userServey->getSurvey());
-    }
-    
-    
     public function whatILikeAction()
     {       
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
@@ -218,46 +194,9 @@ class ProfileController extends Controller {
                     'form'=>$this->addUserSurveyForm()->createView(),                    
                     'userid'=>$this->get('security.context')->getToken()->getUser(),
                     'count_question'=>count($this->getQuestionsList()),
-                    'answer'=>  $this->getAnswersList(),
-                    
         ));
     }
-    public function _submitUserSurveyFormAction(Request $request)
-    {
-      $em = $this->getDoctrine()->getManager();
-      $user=$this->get('security.context')->getToken()->getUser();
-      $data = $request->request->all();
-      $str='';
-      //return new Response(json_encode($data));
-      foreach ($data as $key => $value) {
-        $question = $em->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->find($key);
-        $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find($value);
-        $userServey = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question));
-        return new Response('hey');
-        return new Response($userServey->getSurvey());
-        if($userServey){
-        $userSurvey->setAnswer($answer);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($userSurvey);
-        $em->flush();
-        }else{              
-        $userSurvey = new SurveyUser();        
-        $userSurvey->setQuestion($question);
-        $userSurvey->setAnswer($answer);
-        $userSurvey->setUser($user);
-        $userSurvey->setSurvey('Question Answer Survey');
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($userSurvey);
-        $em->flush();              
-          }
-//$userSurvey = new SurveyUser(); 
-                    
-          
-       }
-       
-       return new Response('yuppee');
-       //return $this->redirect($this->generateUrl('user_profile_what_i_like'));
-    } 
+   
     
     public function submitUserSurveyFormAction(Request $request)
     {
@@ -280,7 +219,72 @@ class ProfileController extends Controller {
        return $this->redirect($this->generateUrl('user_profile_what_i_like'));
     }
     
+    private function updateAnswerIfFound($question,$answers,$user) {
+        $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
+        $count_result=count($result); 
+        if($count_result>0)
+        {            
+            
+            return $this->updateSurveyUserAnswer($question,$answers,$user);        
+        }
+        else
+        {
+            return $this->addSurveyUserAnswer($question,$answers,$user);
+        }       
+    }    
+    private function addSurveyUserAnswer($question,$answers,$user)
+    {
+        $userSurvey = new SurveyUser();        
+        $userSurvey->setQuestion($question);
+        $userSurvey->setAnswer($answers);
+        $userSurvey->setUser($user);
+        $userSurvey->setSurvey('Question Answer Survey');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($userSurvey);
+        $em->flush();
+        $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
+    }    
+    private function updateSurveyUserAnswer($question,$answers,$user)
+    {
+      $em = $this->getDoctrine()->getEntityManager();
+      $surveyUser = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
+      foreach($surveyUser as $userSurvey)
+      {
+          $surveyId=$userSurvey->getId();
+          $surveyUserId = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->find($surveyId);
+      } 
+        $surveyUserId->setQuestion($question);
+        $surveyUserId->setAnswer($answers);
+        $surveyUserId->setUser($user);
+        $surveyUserId->setSurvey('Question Answer Survey');        
+        $em->persist($surveyUserId);
+        $em->flush();      
+      $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
+    }   
+    private function getQuestionsList() {
+        $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
+        return $question;
+    }
     
+    private function getquestionById($id) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion');
+        $question = $repository->find($id);
+        return $question;
+    }
+    private function getAnswerById($id) {
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyAnswer');
+        $answer = $repository->find($id);
+        return $answer;
+    }
+    
+    
+    
+    private function addUserSurveyForm()
+    {
+        $builder = $this->createFormBuilder();    
+        return $builder->getForm();       
+    }
     
     
     //SizeChart Form Azeem
@@ -387,80 +391,8 @@ class ProfileController extends Controller {
     
     
     
-    private function updateAnswerIfFound($question,$answers,$user) {
-        $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
-        $count_result=count($result); 
-        if($count_result>0)
-        {            
-            
-            return $this->updateSurveyUserAnswer($question,$answers,$user);        
-        }
-        else
-        {
-            return $this->addSurveyUserAnswer($question,$answers,$user);
-        }       
-    }    
-    private function addSurveyUserAnswer($question,$answers,$user)
-    {
-        $userSurvey = new SurveyUser();        
-        $userSurvey->setQuestion($question);
-        $userSurvey->setAnswer($answers);
-        $userSurvey->setUser($user);
-        $userSurvey->setSurvey('Question Answer Survey');
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($userSurvey);
-        $em->flush();
-        $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
-    }    
-    private function updateSurveyUserAnswer($question,$answers,$user)
-    {
-      $em = $this->getDoctrine()->getEntityManager();
-      $surveyUser = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
-      foreach($surveyUser as $userSurvey)
-      {
-          $surveyId=$userSurvey->getId();
-          $surveyUserId = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->find($surveyId);
-      } 
-        $surveyUserId->setQuestion($question);
-        $surveyUserId->setAnswer($answers);
-        $surveyUserId->setUser($user);
-        $surveyUserId->setSurvey('Question Answer Survey');        
-        $em->persist($surveyUserId);
-        $em->flush();      
-      $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
-    }   
-    private function getQuestionsList() {
-        $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
-        return $question;
-    }
     
-    private function getquestionById($id) {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion');
-        $question = $repository->find($id);
-        return $question;
-    }
-    private function getAnswerById($id) {
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyAnswer');
-        $answer = $repository->find($id);
-        return $answer;
-    }
     
-    private function getAnswersList() {
-        $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->findAll();
-        return $question;
-    }
-    
-    private function addUserSurveyForm()
-    {
-        $builder = $this->createFormBuilder();    
-        return $builder->getForm();       
-    }
-    private function getUserSurveyList()
-    {
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser');
-        return $repository->findAll();
-    }
     
     
    

@@ -20,12 +20,13 @@
 {% for item in data %}  
           <div class="pf_box">           
           <div class="pf_question">
-           {{item.question}}
+           {{item.question}}<br>
+             
            </div>
            {% for a in item.answers %}
         <input type="radio" name="{{item.id}}" value="{{a.id}}"
                {%for s in a.survey%}
-                 {%if(s.survey)%}
+                 {%if(s.survey and userid==s.user)%}
                  checked="checked"
                  {%endif%}
                   {%endfor%}>        
