@@ -13,6 +13,7 @@ class AjaxController extends Controller {
   
     public function sizeChartSizesByBrandJSONAction($brand_id, $gender, $target) {
         
+      
         $sizes = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:SizeChart')
                 ->findByBrandGenderTarget($brand_id, $gender, $target);

@@ -41,7 +41,47 @@ $(document).ready(function(){
 //	);	
 	
         
-        ///--Set left column bg--///
+///// Step Two New Working//////
+
+$(".switch_button").click(function(){
+    $(this).parent().parent().find(".show_hide").toggleClass("show_it");
+});
+        
+
+
+///////Step 2 - Brand and Size///////
+$("#measurement_top_brand").change(function(){
+    var checked_option = $(this).attr("value");
+   $.ajax({
+    url: "ajax/size_chart_title/" + checked_option + "/" + "f" + "/" + "Top",
+    success: function (data) {
+    console.log(data);
+    success_fun(data)
+
+     }
+});
+
+
+
+    function success_fun(data){
+
+obj = JSON.parse(json);
+alert(obj.count);
+
+//alert(data.id.text);
+  
+        $($.parseJSON(data)).map(function () {
+            return $('<option>').val(data[0].id).text(data[0].title);
+        }).appendTo('#measurement_top_size');
+    }
+    
+    
+    
+});
+
+
+
+///--Set left column bg--///
         $(".left_column").css("minHeight", $(".holder").height());
         
         

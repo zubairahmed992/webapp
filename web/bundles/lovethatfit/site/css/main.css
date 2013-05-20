@@ -2254,3 +2254,10 @@ padding-bottom: 5px;
 #pants_mus{
     display:none;
 }
+
+.show_it {
+    display:block !important;
+}
+.show_hide {
+    display:none;
+}

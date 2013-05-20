@@ -31,7 +31,7 @@
 
                         <div class="mlabel">Shirt</div>
 
-                        <div class="shirts_mus manual_opn" id="shirts_mus" style="">
+                        <div class="shirts_mus manual_opn show_hide" id="shirts_mus" style="">
 
 
                          {{ form_errors(form.sleeve) }}
@@ -58,7 +58,7 @@
 
                         </div>
 
-                        <div class="shirts_mus manual_opn" id="shirts_mus_opt">
+                        <div class="shirts_mus manual_opn show_hide show_it" id="shirts_mus_opt">
 
 
                      {{form_errors(form.top_brand)}}  
@@ -70,7 +70,7 @@
 
                         </div>
 
-                        <div class="shuf_icon shirt_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
+                        <div class="shuf_icon shirt_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
                    
                     </div>
                     <!---  pant section  !-->
@@ -80,7 +80,7 @@
                     
                     <div class="mlabel">Pant</div>
 
-                        <div class="pants_mus manual_opn" id="pants_mus">
+                        <div class="pants_mus manual_opn show_hide" id="pants_mus">
                          {{ form_errors(form.waist) }}
                          {{ form_widget(form.waist) }}
                           {{ form_errors(form.outseam) }}
@@ -89,7 +89,7 @@
                         </div>
 
 
-                        <div class="pants_mus manual_opn" id="pants_mus_opt">
+                        <div class="pants_mus manual_opn show_hide show_it" id="pants_mus_opt">
 
                       {{form_errors(form.bottom_brand)}}  
                      {{form_widget(form.bottom_brand)}} 
@@ -100,7 +100,7 @@
 
                         </div>
 
-                        <div class="shuf_icon pant_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
+                        <div class="shuf_icon pant_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
                     
                      <!---  pant section close  !-->
                      
@@ -111,7 +111,7 @@
 
                         <div class="mlabel">Dress</div>
 
-                        <div class="dress_mus manual_opn" id="dress_mus">
+                        <div class="dress_mus manual_opn show_hide" id="dress_mus">
                           {{ form_errors(form.bust) }}
                          {{ form_widget(form.bust) }} 
                            {{ form_errors(form.hip) }}
@@ -119,7 +119,7 @@
                                   {{ form_errors(form.back) }}
                          {{ form_widget(form.back) }} 
                         </div>
-                        <div class="dress_mus manual_opn" id="dress_mus">
+                        <div class="dress_mus manual_opn show_hide show_it" id="dress_mus">
                       {{form_errors(form.dress_brand)}}  
                      {{form_widget(form.dress_brand)}}
                         
@@ -128,7 +128,7 @@
                       
                             </div>
  
-                        <div class="shuf_icon"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></div>
+                        <div class="shuf_icon"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
 
 
                     </div>
