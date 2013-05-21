@@ -241,10 +241,10 @@ class ProductController extends Controller {
             $em->persist($productColor);
             $em->flush();
                        
-            if($productColor->displayProductColor)
-            {
+           // if($productColor->displayProductColor)
+           // {
                $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
-            }
+           // }
             $this->createSizeItem($product, $productColor, $colorform->getData()->getSizes()); //--creating sizes & item records
             $this->get('session')->setFlash('success', 'Product Detail color has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
@@ -326,8 +326,6 @@ class ProductController extends Controller {
                         'product' => $product,
                         'colorform' => $colorForm->createView(),
                         'color_id' => $color_id,
-                        'imageUploadForm'=>$imageUploadForm->createView(),
-                        'patternUploadForm'=>$patternUploadForm->createView(),
                     ));
         }
     }

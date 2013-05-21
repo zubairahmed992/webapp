@@ -37,10 +37,11 @@ return true;
 ajax/libs/jquery/1.5/jquery.min.js"></script>
  
 <script type="text/javascript" >
-  var data ="";
   
- $(document).ready(function() { 
-     //For Pattern image Upload Request/////
+  var data ="";
+$( document ).ready(function() {
+  {% if(color_id is not defined)%}  
+     //For  image Upload Request/////
  $('#product_color_file').live('change', function()	{ 
 $("#preview_image").html('');
   //You need to declare data type
@@ -78,8 +79,49 @@ $("#preview_pattern").html('');
             }
 }).submit();
 })
-    
-       
+{%else %}
+
+  //For Edit image Upload Request/////
+ $('#product_color_file').live('change', function()	{ 
+//$("#edit_image_preview").html('');
+  //You need to declare data type
+ $("#edit_image_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
+ $("#imageform").ajaxForm({
+  target: '#edit_image_preview',
+                success: function(data)
+                {                                   
+               var myObject = JSON.parse(data);     
+               image_url=myObject['image_url'];
+               image_name=myObject['image_name'];;
+               
+                $('#edit_image_preview').html("<img src="+image_url+"></img>");
+                
+                $("#product_color_tempImage").val (image_name);
+            }
+}).submit();
+})
+
+//For Eidt Pattern image Upload Request/////
+$('.patternupload').live('change', function()	{ 
+//$("#edit_pattern_previe").html('');
+  //You need to declare data type
+ $("#edit_pattern_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
+ $("#patternform").ajaxForm({
+  target: '#edit_pattern_preview',
+                success: function(data)
+                {                                   
+               var myObject = JSON.parse(data);     
+               image_url=myObject['image_url'];
+               image_name=myObject['image_name'];;
+               
+                $('#edit_pattern_preview').html("<img src="+image_url+"></img>");
+                $("#product_color_tempPattern").val (image_name);
+            }
+}).submit();
+})
+
+
+{%endif%}
  
  
           }); 
