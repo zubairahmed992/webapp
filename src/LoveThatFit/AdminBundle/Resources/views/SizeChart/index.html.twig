@@ -38,9 +38,9 @@
             <div class="span1">{%if(sc.disabled==1)%} Disabled {%else%}  {%endif%}</div>
             <div class="span1">&nbsp;                 
             <div>
-                    <a href="{{path('admin_size_chart_show',{'id': sc.Id}) }}"><i class="icon-eye-open"></i></a>
-                    <a href="{{path('admin_size_chart_edit',{'id': sc.Id}) }}"><i class="icon-edit"></i></a>
-                    <a href="#myModal{{sc.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                <a href="{{path('admin_size_chart_show',{'id': sc.Id}) }}" title="Show {{sc.title}}"><i class="icon-eye-open"></i></a>
+                    <a href="{{path('admin_size_chart_edit',{'id': sc.Id}) }}" title="Edit {{sc.title}}"><i class="icon-edit"></i></a>
+                    <a href="#myModal{{sc.Id}}" role="button" data-toggle="modal" title="Delte {{sc.title}}"><i class="icon-remove"></i></a>
                 </div> 
             </div>
                 

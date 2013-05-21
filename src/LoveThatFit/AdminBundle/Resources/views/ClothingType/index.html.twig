@@ -35,9 +35,9 @@
             <div class="span1">{{ct.Target}}</div>                        
             <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%}  {%endif%}</div>
             <div class="span1">
-                    <a href="{{ path('admin_clothing_type_show', {'id': ct.Id}) }}"><i class="icon-eye-open"></i></a>
-                    <a href="{{ path('admin_clothing_type_edit', {'id': ct.Id}) }}"><i class="icon-edit"></i></a>
-                    <a href="#myModal{{ct.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    <a href="{{ path('admin_clothing_type_show', {'id': ct.Id}) }}" title="Show {{ct.Name}}"><i class="icon-eye-open"></i></a>
+                    <a href="{{ path('admin_clothing_type_edit', {'id': ct.Id}) }}" title="Edit {{ct.Name}}"><i class="icon-edit"></i></a>
+                    <a href="#myModal{{ct.Id}}" role="button" data-toggle="modal" title="Delete {{ct.Name}}"><i class="icon-remove"></i></a>
           
             </div>
                 <div class="span1"></div> 

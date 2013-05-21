@@ -54,10 +54,10 @@
                        </span></div>
      
             
-             <div class="span3"><a href="{{ path('admin_survey_edit_question', {'question_id':item.id}) }}"><i class="icon-edit"></i></a>
-            <a href="#myModal{{item.id}}" role="button" data-toggle="modal">
+             <div class="span3"><a href="{{ path('admin_survey_edit_question', {'question_id':item.id}) }}" title="Edit {{item.question}}"><i class="icon-edit"></i></a>
+            <a href="#myModal{{item.id}}" role="button" data-toggle="modal" title="Delete {{item.question}}">
             <i class="icon-remove"></i></a>
-                     <a href="{{ path('admin_survey_add_new_answer', {'question_id':item.id}) }}" class="icon-plus-sign"></a></div>
+                     <a href="{{ path('admin_survey_add_new_answer', {'question_id':item.id}) }}" class="icon-plus-sign" title="Add Answer to {{item.question}}"></a></div>
                      </div>      
 {%endif%}                   
                       
@@ -86,8 +86,8 @@
                             <div class="span3">{{a.answer}}</div>
                             <div class="span3"></div>
                             <div class="span3">
-                                  <a href="{{ path('admin_survey_edit_answer', {'answer_id':a.id}) }}"><i class="icon-edit"></i></a>
-                                  <a href="#myModal1{{a.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a> </div>
+                                  <a href="{{ path('admin_survey_edit_answer', {'answer_id':a.id}) }}" title="Edit {{a.answer}}"><i class="icon-edit"></i></a>
+                                  <a href="#myModal1{{a.id}}" role="button" data-toggle="modal" title="Delete {{a.answer}}"><i class="icon-remove"></i></a> </div>
                                    </div>
 {%endif%}   
                     

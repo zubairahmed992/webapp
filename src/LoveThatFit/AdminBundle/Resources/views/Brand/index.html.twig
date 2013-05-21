@@ -36,9 +36,9 @@
             <div class="span1">{%if(b.disabled==1)%} Disabled {%else%}  {%endif%}</div>            
             <div class="span1">
             <div>
-                    <a href="{{ path('admin_brand_show', {'id': b.Id}) }}"><i class="icon-eye-open"></i></a>
-                    <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}"><i class="icon-edit"></i></a>
-                    <a href="#myModal{{b.Id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    <a href="{{ path('admin_brand_show', {'id': b.Id}) }}" title="Show {{b.name}}"><i class="icon-eye-open"></i></a>
+                    <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}" title="Edit {{b.name}}"><i class="icon-edit"></i></a>
+                    <a href="#myModal{{b.Id}}" role="button" data-toggle="modal" title="Delete {{b.name}}"><i class="icon-remove"></i></a>
                 </div> 
             </div>
                  <div class="span1"></div>
