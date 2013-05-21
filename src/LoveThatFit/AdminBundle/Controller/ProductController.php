@@ -19,6 +19,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenTopType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeManBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenDressType;
+use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
 
 
 class ProductController extends Controller {
@@ -209,11 +210,14 @@ class ProductController extends Controller {
         }
 
         $colorform = $this->createForm(new ProductColorType());        
+        
         $imageUploadForm=$this->createForm(new ProductColorImageType());
+        $patternUploadForm=$this->createForm(new ProductColorPatternType());
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $entity,
                     'colorform' => $colorform->createView(),
-                    'imageUploadForm'=>$imageUploadForm->createView(),        
+                    'imageUploadForm'=>$imageUploadForm->createView(),
+                    'patternUploadForm'=>$patternUploadForm->createView(),
                 ));
     }
 
@@ -266,13 +270,14 @@ class ProductController extends Controller {
         $colorform = $this->createForm(new ProductColorType(), $productColor);        
         $colorform->get('sizes')->setData($sizeTitle);
         
-        $imageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
-                
+         $imageUploadForm=$this->createForm(new ProductColorImageType() , $productColor);
+         $patternUploadForm=$this->createForm(new ProductColorPatternType(),$productColor);       
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'colorform' => $colorform->createView(),
                     'color_id' => $color_id,
                     'imageUploadForm'=>$imageUploadForm->createView(),
+                    'patternUploadForm'=>$patternUploadForm->createView(),
                 ));
     }
     
@@ -289,7 +294,6 @@ class ProductController extends Controller {
         $colorForm = $this->createForm(new ProductColorType(), $productColor);
         $colorForm->bind($request);
                 
-
         if ($colorForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
         
@@ -323,6 +327,7 @@ class ProductController extends Controller {
                         'colorform' => $colorForm->createView(),
                         'color_id' => $color_id,
                         'imageUploadForm'=>$imageUploadForm->createView(),
+                        'patternUploadForm'=>$patternUploadForm->createView(),
                     ));
         }
     }
@@ -342,18 +347,13 @@ class ProductController extends Controller {
         $productColor->setProduct($product);
         $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorImageForm->bind($request);
-        
-        $temp=$productColor->uploadTemporaryImage();
-        
-        $response = new Response(json_encode(array(
-                                'entity' => $productColor,
-                                'imageurl' => $productColor->getWebPath(),
-                                'file_name' => $temp,
-                            )));
-        $response->headers->set('Content-Type', 'application/json');          
-            
-       $this->get('session')->setFlash('success','Image uploaded '.$response);
-       return $this->redirect($this->getRequest()->headers->get('referer'));
+         $temp=$productColor->uploadTemporaryImage();
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath()."/".$productColor->getWebPath(). $temp['image_url'];
+        $data=array('image_name' => $temp['image_name'],
+                 'image_url' => $baseurl);
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'text/html');          
+          return $response;
       
     }
             

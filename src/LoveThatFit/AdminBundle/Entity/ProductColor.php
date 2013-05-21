@@ -355,7 +355,7 @@ class ProductColor {
         );
 
         $this->file = null;
-        return $this->getUploadDir() . '/temp/' . $temp_image;
+        return array('image_url'=>$this->getUploadDir() . '/temp/' . $temp_image,'image_name'=>$temp_image);
     }
 
     /**
