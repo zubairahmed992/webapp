@@ -20,8 +20,8 @@
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
-            <div class="span1 hds"><a href="#_">Brand</a></div>
-            <div class="span1 hds"><a href="#_">Type</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'brand' }}">Brand</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
             <div class="span1 hds"><a href="#_"> </a></div>              
             <div class="span1 hds"></div>      
             
@@ -36,14 +36,7 @@
             <div class="span1">{{p.Brand.Name}}</div>
             <div class="span1">{{p.ClothingType.Name}}</div>
             <div class="span1">
-           {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}
-            <!--
-             {%if(p.image!='')%}
-                <img src="{{ asset(p.WebPath) }}"/>
-                {%else%}
-                No Image
-                {%endif%}
-            !-->
+           {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}            
             </div>
             <div class="span1">&nbsp;                 
          <div>

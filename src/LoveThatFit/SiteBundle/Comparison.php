@@ -39,6 +39,7 @@ class Comparison {
 
     //------------------------------------------------------------------------
     function getFeedBackArray() {
+        return 'The Code has been change please use the new algorithm';
         if (!$this->user_measurement)
             return "Please update your profile in order to get suggetions.";
 
