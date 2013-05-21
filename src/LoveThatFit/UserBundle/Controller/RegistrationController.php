@@ -24,77 +24,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class RegistrationController extends Controller {
 
-    //-------------------------------------------------------------------------
-
-    public function testAction() {
-
-        $entity = new User();
-        $form = $this->createForm(new RegistrationType(), $entity);
-        return $this->render('LoveThatFitUserBundle:Registration:test.html.twig', array(
-                    'form' => $form->createView()));
-    }
-
-    //-------------------------------------------------------------------------------
-
-    public function sizeChartAction() {
-
-//        $form = $this->getSizeChartForm();
-        $size_chart_form = $this->createForm(new SizeChartType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress'), $this->getDoctrine()));
-        return $this->render('LoveThatFitUserBundle:Registration:_size_chart.html.twig', array(
-                    'size_chart_form' => $size_chart_form->createView(),
-                ));
-    }
-
-    private function getSizeChartForm() {
-        $top_brands_array = $this->getBrandArray('Top');
-        $bottom_brands_array = $this->getBrandArray('Bottom');
-        $dress_brands_array = $this->getBrandArray('Dress');
-
-        $defaultData = array('message' => 'Type your message here');
-        $form = $this->createFormBuilder($defaultData)
-                ->add('Top', 'choice', array('choices' => $top_brands_array, 'required' => false))
-                ->add('bottom', 'choice', array('choices' => $bottom_brands_array, 'required' => false))
-                ->add('dress', 'choice', array('choices' => $dress_brands_array, 'required' => false,))
-                ->getForm();
-        return $form;
-    }
-
-    private function getBrandArray($target) {
-
-        $brands = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                ->getBrandsByTarget($target);
-
-        $brands_array = array();
-        foreach ($brands as $i) {
-            $brands_array[$i['id']] = $i['name'];
-        }
-        return $brands_array;
-    }
-
-    //-------------------------------------------------------------------------------
-    public function stepOneAction() {
-        $entity = new User();
-        $form = $this->createForm(new UserType(), $entity);
-        return $this->render('LoveThatFitUserBundle:Registration:stepone.html.twig', array(
-                    'form' => $form->createView()));
-    }
-
-    //------------------------- Login after registration------------------------------
-
-    public function getLoggedIn($userEntity) {
-        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
-        $this->get('security.context')->setToken($token);
-    }
-
-    //------------------------- methods will likely to be moved somewhere on refactoring make thin controllers------------------------------
-    private function isDuplicateUserName($username) {
-        return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isUserNameExist($username);
-    }
-
-    private function isDuplicateEmail($id, $email) {
-        return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
-    }
+   
+   
 
 //--------------------------STEP-1-----------------------------------------------
 
@@ -351,32 +282,7 @@ class RegistrationController extends Controller {
                     'entity' => $user));
     }
 
-    //------------------------Step-4 Edit ----------------
-
-    public function stepFourEditAction() {
-
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User.');
-        }
-
-        $measurement = $this->getMeasurement($entity);
-
-        $form = $this->createForm(new RegistrationStepFourType(), $entity);
-        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-
-        return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
-                    'form' => $form->createView(),
-                    'form' => $form->createView(),
-                    'measurement_form' => $measurement_form->createView(),
-                    'entity' => $entity,
-                    'measurement' => $measurement,
-                ));
-    }
+  
 
     //------------------------Step-4 Measurement Update----------------
 
@@ -476,21 +382,43 @@ class RegistrationController extends Controller {
         }
     }
 
-    //------------------------------ Get Measurement Entity -----------------------
+//-------------------------------------------------------------------------
+//------------------------- New Profile Edit ------------------------------------------------
+//-------------------------------------------------------------------------
 
-    private function getMeasurement($user) {
-        $measurement = $user->getMeasurement();
+    
+      //------------------------Step-4 Edit ----------------
 
-        if (!$measurement) {
-            $measurement = new Measurement();
-            $measurement->setUser($user);
+    public function stepFourEditAction() {
+
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
         }
-        return $measurement;
+
+        $measurement = $this->getMeasurement($entity);
+
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+
+        return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                    'form' => $form->createView(),
+                    'form' => $form->createView(),
+                    'measurement_form' => $measurement_form->createView(),
+                    'entity' => $entity,
+                    'measurement' => $measurement,
+                ));
     }
+    
+    
 
 //-------------------------------------------------------------------------
-    //------------------------- New Registration Process ------------------------------------------------
-    //-------------------------------------------------------------------------
+//------------------------- New Registration Process ------------------------------------------------
+//-------------------------------------------------------------------------
 
 
     public function registrationAction() {
@@ -566,7 +494,7 @@ class RegistrationController extends Controller {
                         'entity' => $entity));
         }
     }
-
+//--------------------------------------------------------------------------------
     public function measurementCreateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -576,8 +504,6 @@ class RegistrationController extends Controller {
 
         $measurement = $entity->getMeasurement();
 
-        // $registrationMeasurementform = $this->createForm(new RegistrationMeasurementType(), $measurement);
-
         if ($entity->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         } else {
@@ -585,12 +511,7 @@ class RegistrationController extends Controller {
         }
         $registrationMeasurementform->bind($this->getRequest());
 
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-       /* $measurement->top_size = 2;
-        $measurement->bottom_size = 8;
-        $measurement->dress_size = 5;
-        return new Response(var_dump($this->evaluateWithSizeChart($measurement)));
-        */
+        //--------------------------------
         $measurement = $this->evaluateWithSizeChart($measurement);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -609,6 +530,74 @@ class RegistrationController extends Controller {
                 ));
     }
 
+//-------------------------------------------------------------------------------------
+    public function renderThisAction() {
+
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        $measurement = $entity->getMeasurement();
+//return new Response(var_dump($this->getBrandArray('Top')));        
+        if ($entity->getGender() == 'm') {
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+        } else {
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+        }
+
+
+        return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
+                    'form' => $registrationMeasurementform->createView(),
+                    'measurement' => $measurement,
+                    'entity' => $entity));
+    }
+
+
+       //------------------------------------------------------------------------
+       //                PRIVATE
+       //methods will be moved somewhere on refactoring ------------------------------
+   //------------------------------------------------------------------------
+    private function getBrandArray($target) {
+
+        $brands = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:SizeChart')
+                ->getBrandsByTarget($target);
+
+        $brands_array = array();
+        foreach ($brands as $i) {
+            $brands_array[$i['id']] = $i['name'];
+        }
+        return $brands_array;
+    }
+
+    //------------------------- Login after registration------------------------------
+
+    private function getLoggedIn($userEntity) {
+        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
+        $this->get('security.context')->setToken($token);
+    }
+ //-------------------------------------------------------------------------------------
+    private function isDuplicateUserName($username) {
+        return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isUserNameExist($username);
+    }
+//-------------------------------------------------------------------------------------
+    private function isDuplicateEmail($id, $email) {
+        return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
+    }
+
+//------------------------------ Get Measurement Entity -----------------------
+
+    private function getMeasurement($user) {
+        $measurement = $user->getMeasurement();
+
+        if (!$measurement) {
+            $measurement = new Measurement();
+            $measurement->setUser($user);
+        }
+        return $measurement;
+    }
+    
+//-------------------------------------------------------------------------------------
     private function evaluateWithSizeChart($measurement) {
 
         if (is_null($measurement)){
@@ -664,28 +653,6 @@ class RegistrationController extends Controller {
         }
         return $measurement;
     }
-
-    public function renderThisAction() {
-
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-        $measurement = $entity->getMeasurement();
-//return new Response(var_dump($this->getBrandArray('Top')));        
-        if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
-        } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
-        }
-
-
-        return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
-                    'form' => $registrationMeasurementform->createView(),
-                    'measurement' => $measurement,
-                    'entity' => $entity));
-    }
-
 }
 
 ?>
