@@ -74,7 +74,7 @@
     </div></li>
     
     
-    
+{% if(row_count>0)%}    
 {% for p in products %}
     <li>
         <div class="prod_node">
@@ -102,6 +102,29 @@
                 <!--/prod_node--></div>
     </li>            
                 {% endfor %}
+                {%else%}
+               
+    <li>
+        <div class="prod_node">
+            <span></span>
+            <div class="featured_box">                
+                <div class="featured_content">
+                    <h3>
+There is no Product avaliable for the selected Category</h3>                    
+                </div>
+                <div class="featured_img">                    
+                    
+                </div>
+                   
+                  
+                      
+                <span></span>
+                <!--/prod_node--></div>
+    </li> 
+    
+    
+    
+                {%endif%}
 
 </ul>
 
