@@ -17,8 +17,9 @@ class AjaxController extends Controller {
         $sizes = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:SizeChart')
                 ->findByBrandGenderTarget($brand_id, $gender, $target);
-        
-        return new Response(json_encode($sizes));
+                   $response = new Response(json_encode($sizes));
+                $response->headers->set('Content-Type', 'text/html');          
+                return $response;
     }
 
 }

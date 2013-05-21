@@ -20,7 +20,7 @@ class SizeChartType extends AbstractType
                 )                
                 );
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));
-        $builder->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')));
+        $builder->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')));
         $builder->add('waist');
         $builder->add('hip');
         $builder->add('bust');

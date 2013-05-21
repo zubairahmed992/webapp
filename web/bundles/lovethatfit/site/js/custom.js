@@ -50,35 +50,61 @@ $(".switch_button").click(function(){
 
 
 ///////Step 2 - Brand and Size///////
-$("#measurement_top_brand").change(function(){
-    var checked_option = $(this).attr("value");
-   $.ajax({
-    url: "ajax/size_chart_title/" + checked_option + "/" + "f" + "/" + "Top",
-    success: function (data) {
-    console.log(data);
-    success_fun(data)
-
-     }
-});
-
-
-
-    function success_fun(data){
-
-obj = JSON.parse(json);
-alert(obj.count);
-
-//alert(data.id.text);
-  
-        $($.parseJSON(data)).map(function () {
-            return $('<option>').val(data[0].id).text(data[0].title);
-        }).appendTo('#measurement_top_size');
-    }
+ var gender=$('#gender').text();
+    $("#measurement_top_brand").change(function(){
+ 
+        var checked_option = $(this).attr("value");
+   
+        $('#measurement_top_size').html('');
+        $.ajax({
+            type:'json',
+            url: "ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Top",
+            success: function (data) {
+   
+                var top_brand = JSON.parse(data);
+                $('<option>').val(top_brand[0]['id']).text(top_brand[0]['title']).appendTo('#measurement_top_size');    
     
-    
-    
-});
+            }
+        });
+    });
 
+// Bottom 
+
+$("#measurement_bottom_brand").change(function(){
+ 
+        var checked_option = $(this).attr("value");
+   
+        $('#measurement_bottom_size').html('');
+        $.ajax({
+            type:'json',
+            url: "ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Bottom",
+            success: function (data) {
+   
+                var bottom_brand = JSON.parse(data);
+                $('<option>').val(bottom_brand[0]['id']).text(bottom_brand[0]['title']).appendTo('#measurement_bottom_size');    
+    
+            }
+        });
+    });
+
+// Dress
+
+$("#measurement_dress_brand").change(function(){
+ 
+        var checked_option = $(this).attr("value");
+   
+        $('#measurement_dress_size').html('');
+        $.ajax({
+            type:'json',
+            url: "ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Dress",
+            success: function (data) {
+   
+                var bottom_brand = JSON.parse(data);
+                $('<option>').val(bottom_brand[0]['id']).text(bottom_brand[0]['title']).appendTo('#measurement_dress_size');    
+    
+            }
+        });
+    });
 
 
 ///--Set left column bg--///
