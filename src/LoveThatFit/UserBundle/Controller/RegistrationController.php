@@ -617,7 +617,8 @@ class RegistrationController extends Controller {
     
         $em = $this->getDoctrine()->getManager();
         if ($measurement->top_size) {
-            $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->top_size);
+          $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->top_size);
+          $measurement->setTopFittingSizeChart($top_size);
             if ($top_size) {
 
                 if ($measurement->getNeck() == 0) {
@@ -638,6 +639,7 @@ class RegistrationController extends Controller {
         if ($measurement->bottom_size) {
 
             $bottom_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->bottom_size);
+            $measurement->setBottomFittingSizeChart($bottom_size);
             if ($bottom_size) {
                 if ($measurement->getWaist() == 0) {
                     $measurement->setWaist($bottom_size->getWaist());
@@ -653,6 +655,7 @@ class RegistrationController extends Controller {
 
         if ($measurement->dress_size) {
             $dress_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->dress_size);
+           $measurement->setDressFittingSizeChart($dress_size);
             if ($dress_size) {
                 if ($measurement->getBust() == 0) {
                     $measurement->setBust($dress_size->getBust());

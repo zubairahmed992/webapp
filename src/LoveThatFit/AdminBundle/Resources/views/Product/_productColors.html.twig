@@ -42,7 +42,20 @@
         $( document ).ready(function() { 
           {% if(color_id is not defined)%}  
              //For  image Upload Request/////
-         $('#product_color_file').live('change', function()	{ 
+         $('#product_color_file').live('change', function()	{
+             var val = $(this).val();
+
+    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+     
+       case 'gif': case 'jpg': case 'png':
+            
+            return true;
+        default:
+            $(this).val('');
+            // error message here
+            alert("Please Upload Only image ");
+            return false;
+            }
         $("#preview_image").html('');
           //You need to declare data type
          $("#preview_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
@@ -50,16 +63,16 @@
           target: '#preview_image',
                         success: function(data)
                         {                                   
-                       var myObject = JSON.parse(data);     
-                       image_url=myObject['image_url'];
-                       image_name=myObject['image_name'];;
+                        var myObject = JSON.parse(data);     
+                        image_url=myObject['image_url'];
+                        image_name=myObject['image_name'];
                
                         $('#preview_image').html("<img src="+image_url+"></img>");
-                
                         $("#product_color_tempImage").val (image_name);
                     }
         }).submit();
         })
+        
 
         //For Pattern image Upload Request/////
         $('.patternupload').live('change', function()	{ 
