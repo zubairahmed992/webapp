@@ -1,132 +1,132 @@
 <div id="pro_clr">  
-<h2> Product Color
-<div style="float:right; margin-top: -1px; margin-right: 5px;"><a href="{{path('admin_product_detail_color_add',{'id': product.Id})}}" class="btn">Add New</a></div>
- </h2>
-<script>
-function validates()
-{
-var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
+    <h2> Product Color
+        <div style="float:right; margin-top: -1px; margin-right: 5px;"><a href="{{path('admin_product_detail_color_add',{'id': product.Id})}}" class="btn">Add New</a></div>
+    </h2>
+    <script>
+    function validates()
+    {
+    var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
    
-var image_file = document.getElementById('product_color_file').value;
-var image_length = document.getElementById('product_color_file').length;
+    var image_file = document.getElementById('product_color_file').value;
+    var image_length = document.getElementById('product_color_file').length;
 
-var pos = image_file.lastIndexOf('.') + 1;
-var ext = image_file.substring(pos, image_length);
-if(image_file!="")
-{
-var final_ext = ext.toLowerCase();
-for (i = 0; i < extensions.length; i++)
-{
-if(extensions[i] == final_ext)
-{
-return true;
-}
+    var pos = image_file.lastIndexOf('.') + 1;
+    var ext = image_file.substring(pos, image_length);
+    if(image_file!="")
+    {
+    var final_ext = ext.toLowerCase();
+    for (i = 0; i < extensions.length; i++)
+    {
+    if(extensions[i] == final_ext)
+    {
+    return true;
+    }
 
-}
-document.getElementById('error').style.display="block";
-return false;
+    }
+    document.getElementById('error').style.display="block";
+    return false;
 
-}
-return true;
-}   
-</script> 
+    }
+    return true;
+    }   
+        </script> 
 
 
- <!-- Start Image Upload Functionlaty .. -->
-<script type="text/javascript" src="http://ajax.googleapis.com/
-ajax/libs/jquery/1.5/jquery.min.js"></script>
- 
-<script type="text/javascript" >
+        <!-- Start Image Upload Functionlaty .. -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/
+        ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+        <script type="text/javascript" >
   
-  var data ="";
-$( document ).ready(function() {
-  {% if(color_id is not defined)%}  
-     //For  image Upload Request/////
- $('#product_color_file').live('change', function()	{ 
-$("#preview_image").html('');
-  //You need to declare data type
- $("#preview_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
- $("#imageform").ajaxForm({
-  target: '#preview_image',
-                success: function(data)
-                {                                   
-               var myObject = JSON.parse(data);     
-               image_url=myObject['image_url'];
-               image_name=myObject['image_name'];;
+          var data ="";
+        $( document ).ready(function() { 
+          {% if(color_id is not defined)%}  
+             //For  image Upload Request/////
+         $('#product_color_file').live('change', function()	{ 
+        $("#preview_image").html('');
+          //You need to declare data type
+         $("#preview_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
+         $("#imageform").ajaxForm({
+          target: '#preview_image',
+                        success: function(data)
+                        {                                   
+                       var myObject = JSON.parse(data);     
+                       image_url=myObject['image_url'];
+                       image_name=myObject['image_name'];;
                
-                $('#preview_image').html("<img src="+image_url+"></img>");
+                        $('#preview_image').html("<img src="+image_url+"></img>");
                 
-                $("#product_color_tempImage").val (image_name);
-            }
-}).submit();
-})
+                        $("#product_color_tempImage").val (image_name);
+                    }
+        }).submit();
+        })
 
-//For Pattern image Upload Request/////
-$('.patternupload').live('change', function()	{ 
-$("#preview_pattern").html('');
-  //You need to declare data type
- $("#preview_pattern").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
- $("#patternform").ajaxForm({
-  target: '#preview_pattern',
-                success: function(data)
-                {                                   
-               var myObject = JSON.parse(data);     
-               image_url=myObject['image_url'];
-               image_name=myObject['image_name'];;
+        //For Pattern image Upload Request/////
+        $('.patternupload').live('change', function()	{ 
+        $("#preview_pattern").html('');
+          //You need to declare data type
+         $("#preview_pattern").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
+         $("#patternform").ajaxForm({
+          target: '#preview_pattern',
+                        success: function(data)
+                        {                                   
+                       var myObject = JSON.parse(data);     
+                       image_url=myObject['image_url'];
+                       image_name=myObject['image_name'];;
                
-                $('#preview_pattern').html("<img src="+image_url+"></img>");
-                $("#product_color_tempPattern").val (image_name);
-            }
-}).submit();
-})
-{%else %}
+                        $('#preview_pattern').html("<img src="+image_url+"></img>");
+                        $("#product_color_tempPattern").val (image_name);
+                    }
+        }).submit();
+        })
+        {%else %}
 
-  //For Edit image Upload Request/////
- $('#product_color_file').live('change', function()	{ 
-//$("#edit_image_preview").html('');
-  //You need to declare data type
- $("#edit_image_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
- $("#imageform").ajaxForm({
-  target: '#edit_image_preview',
-                success: function(data)
-                {                                   
-               var myObject = JSON.parse(data);     
-               image_url=myObject['image_url'];
-               image_name=myObject['image_name'];;
+          //For Edit image Upload Request/////
+         $('#product_color_file').live('change', function()	{ 
+        //$("#edit_image_preview").html('');
+          //You need to declare data type
+         $("#edit_image_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
+         $("#imageform").ajaxForm({
+          target: '#edit_image_preview',
+                        success: function(data)
+                        {                                   
+                       var myObject = JSON.parse(data);     
+                       image_url=myObject['image_url'];
+                       image_name=myObject['image_name'];;
                
-                $('#edit_image_preview').html("<img src="+image_url+"></img>");
+                        $('#edit_image_preview').html("<img src="+image_url+"></img>");
                 
-                $("#product_color_tempImage").val (image_name);
-            }
-}).submit();
-})
+                        $("#product_color_tempImage").val (image_name);
+                    }
+        }).submit();
+        })
 
-//For Eidt Pattern image Upload Request/////
-$('.patternupload').live('change', function()	{ 
-//$("#edit_pattern_previe").html('');
-  //You need to declare data type
- $("#edit_pattern_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
- $("#patternform").ajaxForm({
-  target: '#edit_pattern_preview',
-                success: function(data)
-                {                                   
-               var myObject = JSON.parse(data);     
-               image_url=myObject['image_url'];
-               image_name=myObject['image_name'];;
+        //For Eidt Pattern image Upload Request/////
+        $('.patternupload').live('change', function()	{ 
+        //$("#edit_pattern_previe").html('');
+          //You need to declare data type
+         $("#edit_pattern_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
+         $("#patternform").ajaxForm({
+          target: '#edit_pattern_preview',
+                        success: function(data)
+                        {                                   
+                       var myObject = JSON.parse(data);     
+                       image_url=myObject['image_url'];
+                       image_name=myObject['image_name'];;
                
-                $('#edit_pattern_preview').html("<img src="+image_url+"></img>");
-                $("#product_color_tempPattern").val (image_name);
-            }
-}).submit();
-})
+                        $('#edit_pattern_preview').html("<img src="+image_url+"></img>");
+                        $("#product_color_tempPattern").val (image_name);
+                    }
+        }).submit();
+        })
 
 
-{%endif%}
+        {%endif%}
  
  
-          }); 
+                  }); 
     
-</script>
+            </script>
 {% if imageUploadForm is defined %}
     <div id="pro_color">
         
