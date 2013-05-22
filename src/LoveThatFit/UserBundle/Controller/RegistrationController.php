@@ -511,9 +511,16 @@ class RegistrationController extends Controller {
         }
         $registrationMeasurementform->bind($this->getRequest());
                 
+        if($entity->getGender() == 'm')
+        {
         $measurement->top_size=$this->getRequest()->get('measurement')['top_size'];
         $measurement->bottom_size=$this->getRequest()->get('measurement')['bottom_size'];
-        $measurement->dress_size=$this->getRequest()->get('measurement')['dress_size'];
+        }else
+        {
+            $measurement->top_size=$this->getRequest()->get('measurement')['top_size'];
+            $measurement->bottom_size=$this->getRequest()->get('measurement')['bottom_size'];
+            $measurement->dress_size=$this->getRequest()->get('measurement')['dress_size'];
+        }
         
         //--------------------------------
         $measurement = $this->evaluateWithSizeChart($measurement);
