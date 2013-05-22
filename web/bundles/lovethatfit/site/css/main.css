@@ -2266,3 +2266,12 @@ padding-bottom: 5px;
     
     float:left;
 }
+
+.form_vld_error2 {
+  color:red;
+  float:right;
+  font-size:0.7em;
+  margin-top:-6px;
+  padding-bottom:3px;
+  margin-right:38px; 
+}

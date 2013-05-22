@@ -10,7 +10,9 @@
             <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
 
             <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
-                {{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
+                <div class="form_vld_error">
+{{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
+                        </div>
 
                     <div class="frm_ele">
                        {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
@@ -29,7 +31,8 @@
                      <div class="frm_ele">
                         {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
                         {{ form_errors(form.zipcode) }}
-                        {{ form_errors(form.zipcode) }}
+                        
+                     {{ form_errors(form.zipcode) }}
                     </div>
 
                     <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
