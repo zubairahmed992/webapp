@@ -63,18 +63,25 @@ class ClothingTypeController extends Controller {
     //------------------------------------------------------------------------------------------
     public function createAction(Request $request)
     {
-        $clothing_type = new ClothingType();
-
-         $form = $this->createFormBuilder($clothing_type)
+        $clothing_type = new ClothingType();        
+        $form = $this->createFormBuilder($clothing_type)
                 ->add('name', 'text')
                 ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
                 ->add('disabled', 'hidden', array('data' => '0',))
                 ->getForm();
         
         $form->bind($request);
-
-            if ($form->isValid()) {
-
+        $name = $clothing_type->getName();
+        $target = $clothing_type->getTarget();
+        $clothingTypes=  $this->getClothingType($name,$target);
+        if($clothingTypes>0)
+       {
+           $this->get('session')->setFlash('warning','The Clothing Type : ' .$name. ', Target: ' .$target. ' already exits!');
+            return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
+                    'form' => $form->createView()));
+       }else
+       {
+        if ($form->isValid()) {
                 $clothing_type->setCreatedAt(new \DateTime('now'));
                 $clothing_type->setUpdatedAt(new \DateTime('now'));
 
@@ -87,9 +94,10 @@ class ClothingTypeController extends Controller {
             {
                 $this->get('warning')->setFlash('warning','The Clothing Type can not be Created!');
             }
-
+       }
         return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
                         'form' => $form->createView()));
+        
     }
     
     
@@ -180,6 +188,17 @@ else
                 ->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,)) 
                 ->getForm();
 
+    }
+    
+    private function getClothingType($name,$target)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ClothingType')
+                 ->findClothingTypeBy($name,$target);
+		$rec_count = count($ClothingTypeObj->findClothingTypeBy($name,$target));
+        return $rec_count;
     }
 
 }

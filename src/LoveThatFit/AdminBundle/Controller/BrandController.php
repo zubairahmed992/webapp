@@ -75,7 +75,16 @@ class BrandController extends Controller {
                 ->getForm();
         
         $form->bind($request);
-
+        $name = $entity->getName();       
+        $brand=  $this->getBrandByName($name);
+        if($brand>0)
+       {
+            $this->get('session')->setFlash('warning','The Brand:' .$name. ' already exits!');
+            return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
+                'entity' => $entity,    
+                'form' => $form->createView()));            
+        }else
+        {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setCreatedAt(new \DateTime('now'));
@@ -91,7 +100,8 @@ class BrandController extends Controller {
         {
             $this->get('warning')->setFlash('warning','The Brand can not be Created!');
         }
-
+        
+        }
         return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -192,5 +202,14 @@ class BrandController extends Controller {
                 ->getForm();
     }
       
-
+    private function getBrandByName($name)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $BrandTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Brand')
+                 ->findBrandBy($name);
+		$rec_count = count($BrandTypeObj->findBrandBy($name));
+        return $rec_count;
+    }
 }

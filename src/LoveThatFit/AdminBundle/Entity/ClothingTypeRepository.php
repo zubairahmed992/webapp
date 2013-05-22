@@ -57,5 +57,18 @@ class ClothingTypeRepository extends EntityRepository
 		 }						
 	  }   
 	 
-	
+	public function findClothingTypeBy($name,$target) {
+        $total_record = $this->getEntityManager()
+        ->createQuery("SELECT ct FROM LoveThatFitAdminBundle:ClothingType ct      
+        WHERE
+        ct.name = :name
+        AND ct.target=:target"
+                        )->setParameters(array('name' => $name, 'target' => $target));
+        try {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+          
 }
