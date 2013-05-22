@@ -912,7 +912,7 @@ input[type=email]{
 }
 .radio_buts div.radio_ele label {
 	width:auto !important;
-	padding: 0 16px 0 0;
+	padding: 0 12px 0 0;
         float:left;
 }
 .radio_buts div.radio_ele input {
@@ -1959,7 +1959,7 @@ margin:0px 0px 0px 0px;
 }
 
 .login_section {
-    padding:20px 0px 0px 0px;
+    padding:10px 0px 0px 0px;
 }
 
 .login_section p {
@@ -2260,4 +2260,9 @@ padding-bottom: 5px;
 }
 .show_hide {
     display:none;
+}
+
+.required{
+    
+    float:left;
 }
