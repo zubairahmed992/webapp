@@ -510,7 +510,11 @@ class RegistrationController extends Controller {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
-
+                
+        $measurement->top_size=$this->getRequest()->get('measurement')['top_size'];
+        $measurement->bottom_size=$this->getRequest()->get('measurement')['bottom_size'];
+        $measurement->dress_size=$this->getRequest()->get('measurement')['dress_size'];
+        
         //--------------------------------
         $measurement = $this->evaluateWithSizeChart($measurement);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

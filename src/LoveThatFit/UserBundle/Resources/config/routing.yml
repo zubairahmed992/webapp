@@ -1,5 +1,5 @@
 getme:
-    pattern:  /getme
+    pattern:  /getme/please/quick
     defaults: { _controller: LoveThatFitUserBundle:Registration:renderThis }
 
 ajax_size_chart_title_json:
