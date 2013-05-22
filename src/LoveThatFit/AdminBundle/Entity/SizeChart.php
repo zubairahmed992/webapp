@@ -21,6 +21,25 @@ class SizeChart
      */
     protected $brand;
     
+    
+    
+   /* 
+ * @ORM\OneToOne(targetEntity="LoveThatFit\UserBundle\Entity\Measurement", mappedBy="sizechart")
+ *@ORM\JoinColumn(name="top_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
+ */
+    protected $top_fitting_size_chart;
+    
+   /* 
+ * @ORM\OneToOne(targetEntity="LoveThatFit\UserBundle\Entity\Measurement", mappedBy="sizechart")
+ *@ORM\JoinColumn(name="bottom_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
+ */ 
+   protected $bottom_fitting_size_chart;
+   
+   /* 
+ * @ORM\OneToOne(targetEntity="LoveThatFit\UserBundle\Entity\Measurement", mappedBy="sizechart")
+ *@ORM\JoinColumn(name="dress_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
+ */
+   protected $dress_fitting_size_chart;
     /**
      * @var integer $id
      *

@@ -20,20 +20,23 @@ class Measurement {
      * */
     private $user;
 
- /* 
- * @ORM\OneToOne(targetEntity="SizeChart", mappedBy="measurement",nullable=true)
- */
-    private $top_fitting_size_chart_id;
+ /**
+     * @ORM\OneToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart",inversedBy="measurement")
+     * @ORM\JoinColumn(name="top_fitting_size_chart_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $top_fitting_size_chart;
 
- /* 
- * @ORM\OneToOne(targetEntity="SizeChart", mappedBy="measurement",nullable=true)
+ /** 
+ * @ORM\OneToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart", inversedBy="measurement")
+ * @ORM\JoinColumn(name="bottom_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
  */
-    private $bottom_fitting_size_chart_id;
+    private $bottom_fitting_size_chart;
  
-   /* 
- * @ORM\OneToOne(targetEntity="SizeChart", mappedBy="measurement",nullable=true)
+ /** 
+ * @ORM\OneToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart", inversedBy="measurement")
+ * @ORM\JoinColumn(name="dress_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
  */
-    private $dress_fitting_size_chart_id;
+    private $dress_fitting_size_chart;
  
 
 //---------------------------------------------------------------------    
@@ -663,4 +666,75 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public $top_size;
     public $bottom_size;
     public $dress_size;
+
+   
+
+    /**
+     * Set top_fitting_size_chart
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SizeChart $topFittingSizeChart
+     * @return Measurement
+     */
+    public function setTopFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $topFittingSizeChart = null)
+    {
+        $this->top_fitting_size_chart = $topFittingSizeChart;
+    
+        return $this;
+    }
+
+    /**
+     * Get top_fitting_size_chart
+     *
+     * @return LoveThatFit\AdminBundle\Entity\SizeChart 
+     */
+    public function getTopFittingSizeChart()
+    {
+        return $this->top_fitting_size_chart;
+    }
+
+    /**
+     * Set bottom_fitting_size_chart
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SizeChart $bottomFittingSizeChart
+     * @return Measurement
+     */
+    public function setBottomFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $bottomFittingSizeChart = null)
+    {
+        $this->bottom_fitting_size_chart = $bottomFittingSizeChart;
+    
+        return $this;
+    }
+
+    /**
+     * Get bottom_fitting_size_chart
+     *
+     * @return LoveThatFit\AdminBundle\Entity\SizeChart 
+     */
+    public function getBottomFittingSizeChart()
+    {
+        return $this->bottom_fitting_size_chart;
+    }
+
+    /**
+     * Set dress_fitting_size_chart
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SizeChart $dressFittingSizeChart
+     * @return Measurement
+     */
+    public function setDressFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $dressFittingSizeChart = null)
+    {
+        $this->dress_fitting_size_chart = $dressFittingSizeChart;
+    
+        return $this;
+    }
+
+    /**
+     * Get dress_fitting_size_chart
+     *
+     * @return LoveThatFit\AdminBundle\Entity\SizeChart 
+     */
+    public function getDressFittingSizeChart()
+    {
+        return $this->dress_fitting_size_chart;
+    }
 }
