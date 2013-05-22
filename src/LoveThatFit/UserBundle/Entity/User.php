@@ -96,6 +96,7 @@ class User  implements UserInterface, \Serializable{
      * @var string $zipcode
      *
      * @ORM\Column(name="zipcode", type="string", length=60,nullable=false)
+     * @Assert\NotBlank(groups={"registration_step_one"})
      */
     private $zipcode;
     
