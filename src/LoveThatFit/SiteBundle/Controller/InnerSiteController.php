@@ -152,7 +152,8 @@ class InnerSiteController extends Controller {
         $em->persist($product_item);        
         $em->persist($user);       
         $em->flush();
-        return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');        
+        $this->get('session')->setFlash('success', 'Product Item Successfuly Deleted.');
+        return $this->getMyClosetList();
     }
     
         
@@ -261,21 +262,23 @@ class InnerSiteController extends Controller {
                 ->getRepository('LoveThatFitAdminBundle:Product')
                  ->countMyCloset($user_id);
 		$rec_count = count($brandObj->countMyCloset($user_id));        
-                if($rec_count<=25)
+                if($rec_count>25)
                 {
-                 $user=$this->get('security.context')->getToken()->getUser();         
-                 $product_item = $this->getProductItemById($product_item_id);        
-                 $em = $this->getDoctrine()->getManager();        
-                 $product_item->addUser($user); 
-                 $user->addProductItem($product_item); 
-                 $em->persist($product_item);        
-                 $em->persist($user);       
-                 $em->flush();
-        return new Response($product_item_id);
-                    
+                   $this->get('session')->setFlash('warning', 'Please Remove Some Like You can not like more than 25.');
+                   return $this->getMyClosetList();                    
                 }else
                 {
-                    return new Response('Please Remove Some Like You can not like more than 25');
+                    $user=$this->get('security.context')->getToken()->getUser();         
+                    $product_item = $this->getProductItemById($product_item_id);        
+                    $em = $this->getDoctrine()->getManager();        
+                    $product_item->addUser($user); 
+                    $user->addProductItem($product_item); 
+                    $em->persist($product_item);        
+                    $em->persist($user);       
+                    $em->flush();
+                    $this->get('session')->setFlash('success', 'Product Item Successfuly Added in Your Favorites.');
+                    return $this->getMyClosetList();
+                    
                 }
         
         
@@ -306,7 +309,13 @@ class InnerSiteController extends Controller {
         return $product_item;       
     }
 
-    
+    private function getMyClosetList($page_number=0 , $limit=0)
+    {
+        $user_id=$this->get('security.context')->getToken()->getUser()->getId(); 
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id , $page_number=0 , $limit=0);
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+    }
     
     
 }
