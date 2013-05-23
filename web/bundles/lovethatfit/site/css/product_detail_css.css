@@ -35,7 +35,7 @@ margin-right:10px;
 }
 
 #pro_more_det{
-margin-top:15px;
+margin-top:10px;
 }
 
 .product_hd{
@@ -90,6 +90,9 @@ margin-top:15px;
 }
 
 .pro_color{	
+    text-align: left;
+    clear:both;
+    margin-bottom: 10px;
 }
 
 .pro_color label{
@@ -97,8 +100,11 @@ margin-top:15px;
 }
 
 .pro_color span{
-	margin: 15px 0;
-    display: block;  
+    margin: 15px 0;
+    display: inline;
+    width:20px;
+   
+    clear:both;
    
 }
 

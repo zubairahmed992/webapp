@@ -1380,6 +1380,7 @@ background:#f3f3f3;
         height:19px;
         overflow: hidden;
         font-weight:normal;
+        text-align: left;
 }
 
 .prod_wrapper p{
@@ -1394,8 +1395,9 @@ background:#f3f3f3;
 }
 
 .featured_img {
-    /*float: right;   
-    padding-right: 30px;*/
+    float: right;   
+   /* padding-right: 30px;*/
+    width:110px;
 }
 .slider_but_top,
 .slider_but_btm {
@@ -1951,9 +1953,9 @@ margin:0px 0px 0px 0px;
 }
 
 .step_3 .btm_buttons {
-    bottom: 30px!important;
+    bottom: 50px!important;
     height: 60px;
-    left: 140px!important;
+    left: 90px!important;
     position: absolute;
     width: 380px;  
 }
@@ -2210,7 +2212,8 @@ padding-bottom: 5px;
 
 .measurements .m_option select{   
  width:116px!important; 
- padding: 3px 7px;
+ padding: 2px 7px;
+ height: 25px;
  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
 }
 
@@ -2242,7 +2245,7 @@ padding-bottom: 5px;
 
 .m_option{
    clear:both;
-   margin: 0px 0px 10px 0px;
+   margin: 0px 0px 5px 0px;
    overflow: auto;
    
 }
@@ -2274,4 +2277,28 @@ padding-bottom: 5px;
   margin-top:-6px;
   padding-bottom:3px;
   margin-right:38px; 
+}
+
+.sle_clth{
+    
+    width:60px;
+}
+
+.like_icon{    
+    float:right;
+    margin-right:23px;
+    margin-top:10px;
+    
+}
+
+.like_icon a{
+    text-decoration: none;     
+    
+    
+    
+}
+
+#measurement_sleeve{
+    width:61px!important;
+    
 }
