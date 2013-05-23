@@ -74,7 +74,8 @@ class SecurityController extends Controller {
 
         //return new Response($session->get(SecurityContext::USERNAME));
 
-        return new Response($user->getUserName());
+        return $this->redirect($this->generateUrl('inner_site_index'));
+        
     }
 
     

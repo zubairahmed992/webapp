@@ -7,7 +7,7 @@ ajax_size_chart_title_json:
     defaults: { _controller: LoveThatFitUserBundle:Ajax:sizeChartSizesByBrandJSON ,_format: json}
 
 
-#--------------------------------- New Registration Process ----------------
+#--------------------------------- Registration Process ----------------
 
 registration:
     pattern:  /registration
@@ -21,7 +21,26 @@ registration_measurement_create:
     pattern:  /registration/measurement/create
     defaults: { _controller: LoveThatFitUserBundle:Registration:measurementCreate }
     
-   
+registration_step_four_measurement_update:
+    pattern:  /registration/step_four_measurement_update/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourMeasurementUpdate}
+    requirements: 
+          _method: post 
+
+registration_step_four_create:
+    pattern:  /registration/step_four_create/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }
+    requirements: 
+          _method: post 
+
+registration_step_four_image_update:
+    pattern:  /registration/step_four_image_update
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourImageUpdate }
+
+registration_step_four_edit:
+    pattern:  /registration/step_four_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
+
 
 #----------------------------- Profile ---------------------------------------------
 
@@ -48,73 +67,11 @@ user_profile_password_reset_update:
 user_profile_what_i_like:
     pattern:  /profile/what_i_like
     defaults: { _controller: LoveThatFitUserBundle:Profile:whatILike }
+
 user_profile_what_i_like_user_survey:
     pattern:  /profile/user_profile_what_i_like_user_survey
     defaults: { _controller: LoveThatFitUserBundle:Profile:submitUserSurveyForm }    
     
-user_registration_size_chart:
-    pattern:  /profile/size_chart
-    defaults: { _controller: LoveThatFitUserBundle:Profile:SizeChartUserRegistrationForm} 
-    
-    
-#------------------------------- Registration Steps ---------------------------------------------------------
-
-
-registration_step_one:
-    pattern:  /registration/step_one
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepOne }
-
-registration_step_one_create:
-    pattern:  /registration/step_one_create
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepOneCreate }
-    requirements: 
-      _method: post 
-
-registration_step_two_create:
-    pattern:  /registration/step_two_create/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoCreate }
-    requirements: 
-      _method: post 
-
-registration_step_three_create:
-    pattern:  /registration/step_three_create/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeCreate }
-    requirements: 
-          _method: post 
-
-registration_step_four_create:
-    pattern:  /registration/step_four_create/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }
-    requirements: 
-          _method: post 
-
-registration_step_four_image_update:
-    pattern:  /registration/step_four_image_update
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourImageUpdate }
-
-
-registration_step_four_measurement_update:
-    pattern:  /registration/step_four_measurement_update/{id}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourMeasurementUpdate}
-    requirements: 
-          _method: post 
-
-
-#-------------------------------  Registration Edit Steps ---------------------------------------------------------
-
-registration_step_two_edit:
-    pattern:  /registration/step_two_edit
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepTwoEdit }
-    
-registration_step_three_edit:
-    pattern:  /registration/step_three_edit
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepThreeEdit }
-
-registration_step_four_edit:
-    pattern:  /registration/step_four_edit
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
-
-
 #---------------------------------------------- Login ------------------------------------------
 
 admin_login:
