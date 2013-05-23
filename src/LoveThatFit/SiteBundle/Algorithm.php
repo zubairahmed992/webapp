@@ -112,6 +112,24 @@ class Algorithm {
         }
         
     }
+    //------------------------------------------------------------------------
+
+    public function fit() {
+         
+        if (!$this->user_measurement)
+            return false;
+
+        if (!$this->product_measurement)
+            return false;
+
+        $sug_array=$this->filter();
+        
+        foreach ($sug_array as $key => $value) {
+            if ($value["fit"] == false )
+                return false;
+        }
+        return true;
+    }
 
 //------------------- comparison methods
     //neck back chest bust sleeve waist outseam inseam hip length 
