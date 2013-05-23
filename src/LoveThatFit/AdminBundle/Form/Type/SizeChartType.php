@@ -11,7 +11,7 @@ class SizeChartType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $title = array('XS'=>'XS', 'S'=>'S', 'M'=>'M', 'ML'=>'ML', 'L'=>'L', 'XL'=>'XL', '2XL'=>'2XL', '3XL'=>'3XL');
+        $title = array('00'=>'00', '0'=>'0', '2'=>'2', '4'=>'4', '6'=>'6', '8'=>'8', '10'=>'10', '12'=>'12', '14'=>'14', '16'=>'16', '18'=>'18', '20'=>'20');
         $builder->add(
                 'title', 'choice', 
                 array('choices'=>$title,
