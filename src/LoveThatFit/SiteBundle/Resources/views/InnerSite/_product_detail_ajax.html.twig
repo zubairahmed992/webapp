@@ -1,72 +1,4 @@
-
-{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
-{% block left_navigation %}
-
-{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
-
-{% endblock %}
-
-{% block left_col_btm %}
-{% endblock %}
-
-{% block product_slider %}
-   
-<script language="javascript">
-
-(function($) { 
-$(function() {
-
-        $('ul.tabs').each(function() {
-                $(this).find('li').each(function(i) {
-                        $(this).click(function(){
-                                $(this).addClass('current').siblings().removeClass('current')
-                                        .parents('div.sectionbox').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
-                        });
-                });
-        });
-
-})
-})(jQuery)
- // For Size Combox box
-var product_id={{product.id}} 
-  jQuery(document).ready(function($){
-  //you can now use $ as your jQuery object.
-   $('#cloth_sizes').live('change', function()	{
-       color_id_hidden=$('#color_id_hidden').text();
-       size_id = $(this).val();
-     
-        $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/product_detail_append/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
-          
-            success: function (data) {
-             //$('#prod_wrapper').append();  
-             $('.prod_wrapper').replaceWith(data);
-            }
-        });
-       });
-
-      
-      $('#a_color_id').live('click', function(){
-          
-      color_id=$('#color_id').text();
-       size_id =1;
-     
-        $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/product_detail_append/"+ product_id+ "/" +  color_id + "/" +size_id,
-          
-            success: function (data) {
-             //$('#prod_wrapper').append();  
-             $('.prod_wrapper').replaceWith(data);
-            }
-        });
-});
-
-});
-
-
-
-    </script>  
-    <ul class="prod_wrapper">
+ <ul class="prod_wrapper">
 
         <li class="selected_pro">
             <div class="prod_node">
@@ -81,15 +13,19 @@ var product_id={{product.id}}
                                 <option value="">Size</option>
                             {% if productColor%}
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
-                                
+                                {% if(key==productSize.id)%}
+                                <option value='{{key}}' selected="selected">{{pcsa}}</option>
+                                 {%else %}
                                 <option value='{{key}}'>{{pcsa}}</option>
-                                
-                                 {%endfor%}
+                                {%endif%}
+                                   {%endfor%}
                             {% else %}
                                {%for key, pcsa in product.displayProductColor.getSizeTitleArray%}
-                                
+                                   {% if(key==productSize.id)%}
+                                <option value='{{key}}' selected="selected">{{pcsa}}</option>
+                                 {%else %}
                                 <option value='{{key}}'>{{pcsa}}</option>
-                                
+                                {%endif%}
                               {%endfor%}
                             {%endif%}
                                 </select>
@@ -102,11 +38,10 @@ var product_id={{product.id}}
                                 <span>                         
 
                            {%for apc in product.productColors%}
-                                    
-              <span id="color_id" style="display:none;">{{apc.id}}</span>         
-              <a href="#_"  id="a_color_id"><img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" ></a>
-                           
-              {%endfor%}
+                                  
+                                    <input type="radio" value="XS" name="Radio" id="color1">
+                                      <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" onclick="pattern_box()">
+                            {%endfor%}
 
                                 </span>
                             </div>
@@ -164,31 +99,11 @@ var product_id={{product.id}}
                     </div></li>
 
 
-        <script type="text/javascript">
-                    $('slideshow').style.display='none';
-                    $('wrapper').style.display='block';
-                    var slideshow=new TINY.slideshow("slideshow");
-                    window.onload=function(){
-                            slideshow.auto=false;
-                            slideshow.speed=5;
-                            slideshow.link="linkhover";
-                            slideshow.info="information";
-                            slideshow.thumbs="slider";
-                            slideshow.left="slideleft";
-                            slideshow.right="slideright";
-                            slideshow.scrollSpeed=4;
-                            slideshow.spacing=5;
-                            slideshow.active="#fff";
-                            slideshow.init("slideshow","image","imgprev","imgnext","imglink");
-                    }
-                </script>
-
-
 
                 <!------------------------------------------------------------------------------------>
 
             </ul>
 
             
-{% endblock %}
+
     

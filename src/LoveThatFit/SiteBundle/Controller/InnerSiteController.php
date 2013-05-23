@@ -120,6 +120,47 @@ class InnerSiteController extends Controller {
                     'productItem' => $productItem,
                     ));
     }
+    
+    
+    //----------------------------------- Product Detail For Ajax..............        
+    public function productDetailAjaxAction($id, $product_color_id, $product_size_id) {
+        $productColor = null;
+        $productSize = null;
+        $productItem = null;
+        
+        $product = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:Product')
+            ->find($id);
+        
+        if ($product_color_id){
+        $productColor = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:ProductColor')
+            ->find($product_color_id);
+        }
+        
+        if ($product_size_id){
+        $productSize = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:ProductSize')
+            ->find($product_size_id);
+        }
+        
+        if ($product_size_id && $product_color_id){
+        $productItem = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:ProductItem')
+            ->findByColorSize($product_color_id, $product_size_id);        
+        }
+        
+        if (!$product) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+        
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail_ajax.html.twig', 
+                array('product' => $product,
+                    'productColor' => $productColor,
+                    'productSize' => $productSize,
+                    'productItem' => $productItem,
+                    ));
+    }
 //----------------------------------------------------------------------------------    
     public function productsByMyClosetAction($page_number=0 , $limit=0)
     {
