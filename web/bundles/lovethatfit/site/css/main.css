@@ -2197,13 +2197,13 @@ padding-bottom: 5px;
 }
 
 .measurements input[type="text"]{    
-  width:130px;  
+  width:145px;  
 }
 
 .sep{
     border-bottom:1px dashed #ccc;
     padding: 0px 0px 5px 0px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .measurements .m_option input[type="text"]{   
@@ -2212,14 +2212,14 @@ padding-bottom: 5px;
 
 .measurements .m_option select{   
  width:116px!important; 
- padding: 2px 7px;
+ padding: 2px 2px;
  height: 25px;
  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .measurements .m_option select:last-child{   
  width:117px!important; 
- padding: 3px 7px;
+ padding: 3px 2px;
  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
 }
 
@@ -2239,14 +2239,16 @@ padding-bottom: 5px;
 }
 
 .shuf_icon{
-    float:left;
+    float:right;
     margin: 5px 0px 0px 10px;
 }
 
 .m_option{
    clear:both;
-   margin: 0px 0px 5px 0px;
-   overflow: auto;
+   margin: 2px 0px 5px;  
+   position: relative;
+   display: inline-block;
+   width: 330px;
    
 }
 
@@ -2292,13 +2294,55 @@ padding-bottom: 5px;
 }
 
 .like_icon a{
-    text-decoration: none;     
-    
-    
-    
+    text-decoration: none;    
 }
 
 #measurement_sleeve{
-    width:61px!important;
+    width:61px!important;    
+}
+
+.boxlable{
+    color: #666666;
+    display: block;
+    font-size: 0.75em;
+    overflow: auto;
+    position: absolute;   
     
+}
+
+#sleeve_box{
+    top: -18px;
+}
+
+#bust_box{    
+    top: -18px;
+    left:136px;
+}
+
+#back_box{   
+    top: -18px;
+    left:217px;
+}
+
+#waist_box{
+    top: -18px;
+}
+
+#outseam_box{
+   top: -18px;
+    left:136px;      
+}
+
+#hip_box{
+    top: -18px;
+}
+
+#chest_box{    
+    top: -18px;
+    left:136px;
+}
+
+#neck_box{   
+    top: -18px;
+    left:217px;
 }

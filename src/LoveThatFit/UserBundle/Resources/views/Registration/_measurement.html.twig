@@ -18,11 +18,11 @@
                     <div>
 
                      {{ form_errors(form.height) }}
-                     {{ form_widget(form.height) }}
+                     {{ form_widget(form.height, { 'attr': {'placeholder': 'Height'} }) }}
 
 
                      {{ form_errors(form.weight) }}
-                     {{ form_widget(form.weight) }}
+                     {{ form_widget(form.weight, { 'attr': {'placeholder': 'Weight'} }) }}
                     </div>
                     <span id="gender" style="display: none;">{{entity.gender}}</span>
                     <div class="sep"></div>
@@ -35,23 +35,28 @@
 
 
                          {{ form_errors(form.sleeve) }}
-                         {{ form_widget(form.sleeve) }}
+                            <span class="boxlable" id="sleeve_box">sleeves</span>                        
+{{ form_widget(form.sleeve) }}
 
                           {% if( entity.gender=='m') %}
                             {{ form_errors(form.chest) }}
-                             {{ form_widget(form.chest) }}
+ <span class="boxlable" id="chest_box">Chest</span>                              
+{{ form_widget(form.chest) }}
 
                             {%else%}
                             {{ form_errors(form.bust) }}
+                            <span class="boxlable" id="bust_box">Bust</span>
                              {{ form_widget(form.bust) }}
 
                            {%endif%} 
                           {% if( entity.gender=='m') %}
                             {{ form_errors(form.neck) }}
-                             {{ form_widget(form.neck) }}
+ <span class="boxlable" id="neck_box">Neck</span>                             
+ {{ form_widget(form.neck) }}
 
                             {%else%}
                             {{ form_errors(form.back) }}
+                            <span class="boxlable" id="back_box">Back</span>
                              {{ form_widget(form.back) }}
 
                            {%endif%} 
@@ -82,8 +87,11 @@
 
                         <div class="pants_mus manual_opn show_hide" id="pants_mus">
                          {{ form_errors(form.waist) }}
-                         {{ form_widget(form.waist) }}
+                         <span class="boxlable" id="waist_box">Waist</span>                        
+                          {{ form_widget(form.waist) }}
                           {{ form_errors(form.outseam) }}
+                          
+                         <span class="boxlable" id="outseam_box">Outseam</span> 
                          {{ form_widget(form.outseam) }}       
                         
                         </div>
@@ -115,7 +123,9 @@
                           {{ form_errors(form.bust) }}
                          {{ form_widget(form.bust) }} 
                            {{ form_errors(form.hip) }}
-                         {{ form_widget(form.hip) }} 
+                        
+ <span class="boxlable" id="hip_box">Hip</span> 
+ {{ form_widget(form.hip) }} 
                                   {{ form_errors(form.back) }}
                          {{ form_widget(form.back) }} 
                         </div>
