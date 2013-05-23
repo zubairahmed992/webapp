@@ -45,17 +45,9 @@
          $('#product_color_file').live('change', function()	{
              var val = $(this).val();
 
-    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+   
      
-       case 'gif': case 'jpg': case 'png':
-            
-            return true;
-        default:
-            $(this).val('');
-            // error message here
-            alert("Please Upload Only image ");
-            return false;
-            }
+                
         $("#preview_image").html('');
           //You need to declare data type
          $("#preview_image").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
@@ -77,6 +69,16 @@
         //For Pattern image Upload Request/////
         $('.patternupload').live('change', function()	{ 
         $("#preview_pattern").html('');
+          var val = $(this).val();
+         if( (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='gif') || (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='jpg')||(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='png'  ) )
+         {
+        
+            
+            }else
+                {
+            alert("Please Upload Only image ");
+            return false;    
+            }
           //You need to declare data type
          $("#preview_pattern").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
          $("#patternform").ajaxForm({
@@ -96,6 +98,16 @@
 
           //For Edit image Upload Request/////
          $('#product_color_file').live('change', function()	{ 
+               var val = $(this).val();
+              if( (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='gif') || (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='jpg')||(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='png'  ) )
+         {
+        
+            
+            }else
+                {
+            alert("Please Upload Only image ");
+            return false;    
+            }
         //$("#edit_image_preview").html('');
           //You need to declare data type
          $("#edit_image_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
@@ -116,6 +128,18 @@
 
         //For Eidt Pattern image Upload Request/////
         $('.patternupload').live('change', function()	{ 
+          var val = $(this).val();
+         if( (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='gif') || (val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='jpg')||(val.substring(val.lastIndexOf('.') + 1).toLowerCase()=='png'  ) )
+         {
+       
+   
+
+}else
+           {
+            alert("Please Upload Only image ");
+           
+            return false;    
+            }
         //$("#edit_pattern_previe").html('');
           //You need to declare data type
          $("#edit_pattern_preview").html('<img src="{{ asset('bundles/lovethatfit/admin/images/loader.gif') }}" alt="Uploading...."/>');
