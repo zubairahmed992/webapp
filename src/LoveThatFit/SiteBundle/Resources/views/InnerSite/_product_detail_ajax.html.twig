@@ -56,12 +56,15 @@
                             <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
                             {% if productItem and productItem%}
                             
-                         <div class="like_icon">
+                        {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
+                             <div class="like_icon1" style="display:none;">
+                              <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">
+                               </div>  
+                            {%else%}
+                             <div class="like_icon">
                               <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
                         </div>
-                            <div class="like_icon1" style="display:none;">
-                              Loved
-                        </div>  
+                            {%endif%}
                                 <br>
                                 <a class="apply_img" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}

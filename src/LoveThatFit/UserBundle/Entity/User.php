@@ -853,4 +853,16 @@ public function getAbsoluteAvatarPath()
     {
         return $this->zipcode;
     }
+    
+    
+    public function getMyClosetListArray($product_item_id){
+        $productitem=$this->getProductItems();        
+        foreach($productitem as $ps){            
+            if($ps->getId()==$product_item_id)
+            {
+                return true;
+            }
+        }    
+        return false;
+    }
 }

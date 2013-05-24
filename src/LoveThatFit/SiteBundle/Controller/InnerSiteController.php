@@ -332,7 +332,7 @@ class InnerSiteController extends Controller {
                 if($rec_count>25)
                 {
                    $this->get('session')->setFlash('warning', 'Please Remove Some Like You can not like more than 25.');
-                   return $this->getMyClosetList();                    
+                    return new reponse('try');
                 }else
                 {
                     $user=$this->get('security.context')->getToken()->getUser();         
@@ -344,7 +344,7 @@ class InnerSiteController extends Controller {
                     $em->persist($user);       
                     $em->flush();
                     $this->get('session')->setFlash('success', 'Product Item Successfuly Added in Your Favorites.');
-                    return $this->getMyClosetList();
+                    return new reponse('success');
                     
                 }
         
@@ -381,8 +381,7 @@ class InnerSiteController extends Controller {
         $user_id=$this->get('security.context')->getToken()->getUser()->getId(); 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id , $page_number=0 , $limit=0);
-        return new response("success");
-// return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
     }
     
     
