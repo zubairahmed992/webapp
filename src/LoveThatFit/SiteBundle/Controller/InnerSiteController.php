@@ -4,7 +4,7 @@ namespace LoveThatFit\SiteBundle\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Yaml\Dumper;
 use LoveThatFit\SiteBundle\Comparison;
- use LoveThatFit\SiteBundle\Algorithm;
+use LoveThatFit\SiteBundle\Algorithm;
 use LoveThatFit\SiteBundle\Cart;
 use LoveThatFit\AdminBundle\ImageHelper;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
@@ -367,7 +367,7 @@ class InnerSiteController extends Controller {
         $em = $this->getDoctrine()->getManager();
         return $em->getRepository('LoveThatFitUserBundle:Measurement')->findOneByUserId($id);        
     }
-    
+    //-------------------------------------------------------------------
     private function getProductItemById($id)
     {       
         $em = $this->getDoctrine()->getManager();
@@ -375,7 +375,7 @@ class InnerSiteController extends Controller {
         $product_item = $repository->find($id);
         return $product_item;       
     }
-
+//-------------------------------------------------------------------
     private function getMyClosetList($page_number=0 , $limit=0)
     {
         $user_id=$this->get('security.context')->getToken()->getUser()->getId(); 

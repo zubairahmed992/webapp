@@ -4,7 +4,7 @@ namespace LoveThatFit\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use LoveThatFit\SiteBundle\Algorithm;
 /**
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\ProductRepository")
  * @ORM\Table(name="product")
@@ -107,7 +107,7 @@ class Product {
      * @ORM\Column(name="disabled", type="boolean")
      */
     private $disabled;
-    
+    //----------------------------------------------------------
     /**
      * Get id
      *
@@ -116,7 +116,7 @@ class Product {
     public function getId() {
         return $this->id;
     }
-
+//----------------------------------------------------------
     /**
      * Set name
      *
@@ -137,7 +137,7 @@ class Product {
     public function getName() {
         return $this->name;
     }
-
+//----------------------------------------------------------
     /**
      * Set adjustment
      *
@@ -164,6 +164,7 @@ class Product {
      * @param string $gender
      * @return Product
      */
+    //----------------------------------------------------------
     public function setGender($gender) {
         $this->gender = $gender;
 
@@ -185,6 +186,7 @@ class Product {
      * @param \DateTime $createdAt
      * @return Product
      */
+    //----------------------------------------------------------
     public function setCreatedAt($createdAt) {
         $this->created_at = $createdAt;
 
@@ -206,6 +208,7 @@ class Product {
      * @param \DateTime $updatedAt
      * @return Product
      */
+    //----------------------------------------------------------
     public function setUpdatedAt($updatedAt) {
         $this->updated_at = $updatedAt;
 
@@ -220,7 +223,7 @@ class Product {
     public function getUpdatedAt() {
         return $this->updated_at;
     }
-
+//----------------------------------------------------------
     /**
      * Set clothing_type
      *
@@ -247,7 +250,10 @@ class Product {
      *
      * @param LoveThatFit\AdminBundle\Entity\Brand $brand
      * @return Product
+     * 
      */
+    
+    //----------------------------------------------------------
     public function setBrand(\LoveThatFit\AdminBundle\Entity\Brand $brand = null) {
         $this->brand = $brand;
 
@@ -262,7 +268,7 @@ class Product {
     public function getBrand() {
         return $this->brand;
     }
-
+//----------------------------------------------------------
     /**
      * Set description
      *
@@ -285,7 +291,7 @@ class Product {
     {
         return $this->description;
     }
-
+//----------------------------------------------------------
     /**
      * Add product_colors
      *
@@ -318,7 +324,7 @@ class Product {
     {
         return $this->product_colors;
     }
-    
+    //----------------------------------------------------------
 
     /**
      * Add product_sizes
@@ -352,7 +358,7 @@ class Product {
     {
         return $this->product_sizes;
     }
-
+//----------------------------------------------------------
     /**
      * Add product_items
      *
@@ -385,10 +391,11 @@ class Product {
     {
         return $this->product_items;
     }
+    //----------------------------------------------------------
   public static function getSizes(){
         return array('XS', 'S', 'M', 'ML', 'L', 'XL', '2XL', '3XL');
     }
-    
+    //----------------------------------------------------------
     public function getSizeByTitle($sizeTitle)
     {
         $productSizes=$this->getProductSizes();
@@ -399,7 +406,7 @@ class Product {
         }
         return;
     }
-    
+    //----------------------------------------------------------
     public function getThisItem($color, $size)
     {
         $productItems=$this->getProductItems();
@@ -410,7 +417,7 @@ class Product {
         }
         return;
     }
-    
+    //----------------------------------------------------------
     public function getProductSizeTitleArray(){
         $productSizes=$this->getProductSizes();
         
@@ -423,7 +430,7 @@ class Product {
     }
     
    
-
+//----------------------------------------------------------
     /**
      * Set displayProductColor
      *
@@ -446,7 +453,7 @@ class Product {
     {
         return $this->displayProductColor;
     }
-
+//----------------------------------------------------------
     /**
      * Set disabled
      *
@@ -469,4 +476,18 @@ class Product {
     {
         return $this->disabled;
     }
+    //----------------------------------------------------------
+    public function getUserFittingSize($user) {
+
+        $fitting_algo = new Algorithm($user, null);
+     
+        foreach ($this->getProductSizes() as $ps) {
+            $fitting_algo->setProductMeasurement($ps);
+            if ($fitting_algo->fit()) {
+                return $ps;
+            }
+        }
+        return null;
+    }
+    
 }

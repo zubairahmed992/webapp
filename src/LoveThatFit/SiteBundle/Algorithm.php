@@ -19,22 +19,35 @@ class Algorithm {
     var $msg_array;
 
     function __construct($user, $product_item) {
-
-        if ($user) {
-            $this->user = $user;
-            $this->user_measurement = $this->user->getMeasurement();
-        }
-        if ($product_item) {
-            $this->product = $product_item->getProduct();
-            $this->product_measurement = $product_item->getProductSize();
-        }
+            $this->setUser($user);            
+            $this->setProduct($product_item);   
     }
 
 //------------------------------------------------------------------------
 
-    function setProductMeasurement($product_measurement) {
-        $this->product_measurement = $product_measurement;
+    function setProduct($product_item) {        
+        if ($product_item) {
+            $this->product = $product_item->getProduct();
+            $this->product_measurement = $product_item->getProductSize();
+            }        
     }
+    //------------------------------------------------------------------------
+    function setUser($user) {
+        if ($user) {
+            $this->user = $user;
+            $this->user_measurement = $this->user->getMeasurement();
+        }
+    }
+    
+//------------------------------------------------------------------------
+
+    function setProductMeasurement($product_size) {        
+        if ($product_size) {
+            $this->product_measurement = $product_size;            
+           $this->product = $product_size->getProduct();
+            }        
+    }
+    
 
 //------------------------------------------------------------------------
 
@@ -59,8 +72,7 @@ class Algorithm {
         
         if ($this->user->getGender() == 'm') {
             if ($this->product->getClothingType()->getTarget() == 'Top') {
-                //chect neck & sleeve* / back, waist
-                
+                //chect neck & sleeve* / back, waist                
                 return array(
                     "neck" => $this->compareNeck(),
                     "waist" => $this->compareWaist(),
