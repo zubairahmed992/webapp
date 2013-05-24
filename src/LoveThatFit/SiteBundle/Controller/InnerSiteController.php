@@ -105,18 +105,22 @@ class InnerSiteController extends Controller {
             ->getRepository('LoveThatFitAdminBundle:ProductSize')
             ->find($product_size_id);
         }else{
-            $product_size = $this->getDoctrine()
+            $color_sizes_array = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductColor')
-                ->getSizes($product_color->getId());
+                ->getSizeArray($product_color->getId());
+            
+            $product_size = $this->getDoctrine()
+            ->getRepository('LoveThatFitAdminBundle:ProductSize')
+            ->find(array_shift($color_sizes_array)['id']);
+                        
         }
         
-        return new response(var_dump(array_shift($product_size)));
         //2) else condition for random size of that color
         
-        if ($product_size && $product_color){
+        if ($product_size && $product_color){            
         $product_item = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductItem')
-            ->findByColorSize($product_color_id, $product_size_id);        
+            ->findByColorSize($product_color->getId(), $product_size->getId());                 
         }
         
         if (!$product) {

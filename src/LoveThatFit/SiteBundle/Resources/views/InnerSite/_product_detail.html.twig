@@ -32,7 +32,7 @@ var product_id={{product.id}}
   jQuery(document).ready(function($){
   //you can now use $ as your jQuery object.
    $('#cloth_sizes').live('change', function()	{
-       color_id_hidden=$('#color_id_hidden').text();
+       color_id_hidden=$('#hidden_color_id').text();
        size_id = $(this).val();
      
         $.ajax({
@@ -48,8 +48,8 @@ var product_id={{product.id}}
       
       $('#a_color_id').live('click', function(){
           
-      color_id=$('#color_id').text();
-       size_id =1;
+      color_id=$('#hidden_color_id').text();
+       size_id =$('#hidden_size_id').text();
      
         $.ajax({
             url: "http://localhost/webapp/web/app_dev.php/ajax/product_detail_append/"+ product_id+ "/" +  color_id + "/" +size_id,
@@ -66,6 +66,10 @@ var product_id={{product.id}}
 
 
     </script>  
+    <span id="hidden_color_id" style="display:none;">{{productColor.id}}</span>
+    <span id="hidden_size_id" style="display:none;">{{productSize.id}}</span>
+    <span id="hidden_item_id" style="display:none;">{{productItem.id}}</span>
+    
     <ul class="prod_wrapper">
 
         <li class="selected_pro">
@@ -77,25 +81,13 @@ var product_id={{product.id}}
                         <div style="clear:both;"></div>
                         <div class="featured_sizes">
 
-                            <span id="color_id_hidden" style="display:none;">{{productColor.id}}</span>
+                            
                             <select name="cloth_sizes" id="cloth_sizes"   class="sle_clth">
-
-
                                 <option value="">Size</option>
-                            {% if productColor%}
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
-                                
-                                <option value='{{key}}'>{{pcsa}}</option>
-                                
-                                 {%endfor%}
-                            {% else %}
-                               {%for key, pcsa in product.displayProductColor.getSizeTitleArray%}
-                                
-                                <option value='{{key}}'>{{pcsa}}</option>
-                                
-                              {%endfor%}
-                            {%endif%}
-                                </select>
+                                    <option value='{{key}}'>{{pcsa}}</option>
+                                {%endfor%}
+                            </select>
                                  <select name="cloth_quantity" class="sle_clth">
                                     <option>1</option>
                                 </select>
@@ -122,14 +114,10 @@ var product_id={{product.id}}
                         </div>
                         <div class="featured_img">
 
-                            {% if productColor%}
+                            
                             <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
                             <a class="apply_img" href="{{ asset(productColor.WebPath) }}">upply</a>                        
-                            {% else %}
-                            <img width="63" height="108" src="{{asset(product.displayProductColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-                            <a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}">upply</a>                        
-                            {%endif%}
-
+                            
                             <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
                             {% if productItem and productItem%}
                                 <a href="{{ path('ajax_user_product_item_create', {'product_item_id':productItem.id}) }}">Love</a><br>

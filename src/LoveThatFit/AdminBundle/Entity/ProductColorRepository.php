@@ -30,10 +30,10 @@ class ProductColorRepository extends EntityRepository
         }
     }
     
-     public function getSizes($id) {
+     public function getSizeArray($id) {
         $query = $this->getEntityManager()
                         ->createQuery('
-            SELECT ps.title as title, pc.id as color_id FROM LoveThatFitAdminBundle:ProductColor pc 
+            SELECT ps.id as id, ps.title as title FROM LoveThatFitAdminBundle:ProductColor pc 
             JOIN pc.product_items pi
             JOIN pi.product_size ps
             WHERE pc.id = :id'
