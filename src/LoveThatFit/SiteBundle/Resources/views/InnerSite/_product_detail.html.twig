@@ -76,13 +76,11 @@ var product_id={{product.id}}
                         <h3 class="selected">{{product.name}}</h3>
                         <div style="clear:both;"></div>
                         <div class="featured_sizes">
-<<<<<<< HEAD
-                            <span id="color_id_hidden" style="display:none;">{{productColor.id}}</span>
-                            <select name="cloth_sizes" id="cloth_sizes"  >
-=======
 
-                            <select name="cloth_size" class="sle_clth">
->>>>>>> 17f4bf6f528e9793e3acf1d362a91e1366b892bf
+                            <span id="color_id_hidden" style="display:none;">{{productColor.id}}</span>
+                            <select name="cloth_sizes" id="cloth_sizes"   class="sle_clth">
+
+
                                 <option value="">Size</option>
                             {% if productColor%}
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
@@ -98,15 +96,10 @@ var product_id={{product.id}}
                               {%endfor%}
                             {%endif%}
                                 </select>
-<<<<<<< HEAD
-                              
-                                 
-=======
-
-                                <select name="cloth_quantity" class="sle_clth">
+                                 <select name="cloth_quantity" class="sle_clth">
                                     <option>1</option>
                                 </select>
->>>>>>> 17f4bf6f528e9793e3acf1d362a91e1366b892bf
+
                             </div>
 
                             <div class="pro_color">
