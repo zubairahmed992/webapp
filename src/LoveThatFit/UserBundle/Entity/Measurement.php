@@ -67,7 +67,7 @@ class Measurement {
      * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"}) 
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $weight=0;
+    private $weight;
 
     /**
      * @var float $height
@@ -86,7 +86,7 @@ class Measurement {
      * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $height=0;
+    private $height;
 
     /**
      * @var float $waist
@@ -103,7 +103,7 @@ class Measurement {
      * @Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $waist=0;
+    private $waist;
 
     /**
      * @var float $hip
@@ -120,7 +120,7 @@ class Measurement {
      * @Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $hip=0;
+    private $hip;
 
     /**
      * @var float $bust
@@ -137,7 +137,7 @@ class Measurement {
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $bust=0;
+    private $bust;
        /**
      * @var float $chest
      *
@@ -153,7 +153,7 @@ class Measurement {
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $chest=0;
+    private $chest;
 
 
     /**
@@ -171,7 +171,7 @@ class Measurement {
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $arm=0;
+    private $arm;
 
     
 
@@ -190,7 +190,7 @@ class Measurement {
      * @Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $inseam=0;
+    private $inseam;
 
     /**
      * @var float $back
@@ -207,7 +207,7 @@ class Measurement {
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $back=0;
+    private $back;
 
     /**
      * @var float $shoulder_height
@@ -222,7 +222,7 @@ class Measurement {
      * )
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $shoulder_height=0;
+    private $shoulder_height;
     
     /**
      * @var float $outseam
@@ -237,7 +237,7 @@ class Measurement {
      * )
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $outseam=0;
+    private $outseam;
      /**
      * @var float $sleeve
      *
@@ -253,7 +253,7 @@ class Measurement {
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $sleeve=0;
+    private $sleeve;
     /**
      * @var float $neck
      *
@@ -269,7 +269,7 @@ class Measurement {
      *@Assert\NotBlank(groups={"profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $neck=0;
+    private $neck;
     /**
      * @var \DateTime $created_at
      */
