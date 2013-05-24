@@ -72,10 +72,19 @@ function loveItem(item_id)
         $.ajax({
             url: "http://localhost/webapp/web/app_dev.php/ajax/user_product_item/create/"+ item_id,
           
-            success: function (data) {
+            success: function (XMLHttpRequest, textStatus, errorThrown) {
                
-                  //$(".like_icon").css("display", "none");
-                  //$(".like_icon1").css("display", "block");
+                
+               if(textStatus=="success")
+                {
+              
+                $(".like_icon").replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
+               }   
+               if(textStatus=="try")
+                {
+                alert('Sorry .. You are overlimit please delete some of your loved products ');
+                }
+                  
                   
             }
         });
@@ -120,7 +129,7 @@ function loveItem(item_id)
                            {%for apc in product.productColors%}
                                     
               <span id="color_id_pattern" style="display:none;">{{apc.id}}</span>         
-              <a href="#_"  id="a_color_id" onclick="pattern_select({{apc.id}})">
+              <a href="javascript:void(0)"  id="a_color_id" onclick="pattern_select({{apc.id}})">
               <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" >
               </a>
                {%endfor%}
@@ -141,7 +150,7 @@ function loveItem(item_id)
                             <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
-                             <div class="like_icon1" style="display:none;">
+                             <div class="like_icon1" style="">
                               <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">
                                </div>  
                             {%else%}

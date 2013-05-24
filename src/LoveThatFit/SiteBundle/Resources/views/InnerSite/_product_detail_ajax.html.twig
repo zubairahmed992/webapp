@@ -57,7 +57,7 @@
                             {% if productItem and productItem%}
                             
                         {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
-                             <div class="like_icon1" style="display:none;">
+                             <div class="like_icon1" >
                               <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">
                                </div>  
                             {%else%}

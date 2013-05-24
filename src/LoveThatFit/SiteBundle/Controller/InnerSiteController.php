@@ -332,7 +332,7 @@ class InnerSiteController extends Controller {
                 if($rec_count>25)
                 {
                    $this->get('session')->setFlash('warning', 'Please Remove Some Like You can not like more than 25.');
-                    return new reponse('try');
+                    return new response('try');
                 }else
                 {
                     $user=$this->get('security.context')->getToken()->getUser();         
@@ -344,7 +344,7 @@ class InnerSiteController extends Controller {
                     $em->persist($user);       
                     $em->flush();
                     $this->get('session')->setFlash('success', 'Product Item Successfuly Added in Your Favorites.');
-                    return new reponse('success');
+                    return new response('success');
                     
                 }
         
