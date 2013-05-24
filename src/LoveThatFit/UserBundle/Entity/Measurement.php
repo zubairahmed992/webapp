@@ -67,7 +67,7 @@ class Measurement {
      * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"}) 
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $weight;
+    private $weight=0;
 
     /**
      * @var float $height
@@ -86,7 +86,7 @@ class Measurement {
      * @Assert\NotBlank(groups={"registration_step_two","profile_measurement"})  
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $height;
+    private $height=0;
 
     /**
      * @var float $waist

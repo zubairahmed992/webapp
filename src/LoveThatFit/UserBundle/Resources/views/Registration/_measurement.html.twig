@@ -12,17 +12,19 @@
     </div>-->
     <div class="action_cnt">
         <div class="steps step_3 measurements">
-            <h2>Brands &amp; Sizes</h2>
+            <h2 style="margin-bottom: 10px;">Brands &amp; Sizes</h2>
             <form action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
                     <div>
 
                      {{ form_errors(form.height) }}
-                     {{ form_widget(form.height, { 'attr': {'placeholder': 'Height'} }) }}
+ <span class="boxlable" id="height_box">Height</span>                       
+{{ form_widget(form.height) }}
 
 
                      {{ form_errors(form.weight) }}
-                     {{ form_widget(form.weight, { 'attr': {'placeholder': 'Weight'} }) }}
+ <span class="boxlable" id="weight_box">Weight</span>  
+                     {{ form_widget(form.weight) }}
                     </div>
                     <span id="gender" style="display: none;">{{entity.gender}}</span>
                     <div class="sep"></div>

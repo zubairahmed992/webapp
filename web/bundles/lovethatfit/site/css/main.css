@@ -1953,7 +1953,7 @@ margin:0px 0px 0px 0px;
 }
 
 .step_3 .btm_buttons {
-    bottom: 50px!important;
+    bottom: 30px!important;
     height: 60px;
     left: 90px!important;
     position: absolute;
@@ -2196,6 +2196,7 @@ padding-bottom: 5px;
     padding: 6px 0 6px 10px !important;
 }
 
+
 .measurements input[type="text"]{    
   width:145px;  
 }
@@ -2345,4 +2346,13 @@ padding-bottom: 5px;
 #neck_box{   
     top: -18px;
     left:217px;
+}
+
+#height_box{
+    top: 82px;
+}
+
+#weight_box{
+    top: 82px;
+    left:165px;
 }
