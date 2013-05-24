@@ -83,28 +83,38 @@ class InnerSiteController extends Controller {
 
 //----------------------------------- Product Detail ..............        
     public function productDetailAction($id, $product_color_id, $product_size_id) {
-        $productColor = null;
-        $productSize = null;
-        $productItem = null;
+        $product_color = null;
+        $product_size = null;
+        $product_item = null;
         
         $product = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
             ->find($id);
         
         if ($product_color_id){
-        $productColor = $this->getDoctrine()
+            $product_color = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductColor')
             ->find($product_color_id);
+        }else{
+            $product_color = $product->getDisplayProductColor();            
         }
+        
         
         if ($product_size_id){
-        $productSize = $this->getDoctrine()
+        $product_size = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductSize')
             ->find($product_size_id);
+        }else{
+            $product_size = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductColor')
+                ->getSizes($product_color->getId());
         }
         
-        if ($product_size_id && $product_color_id){
-        $productItem = $this->getDoctrine()
+        return new response(var_dump(array_shift($product_size)));
+        //2) else condition for random size of that color
+        
+        if ($product_size && $product_color){
+        $product_item = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductItem')
             ->findByColorSize($product_color_id, $product_size_id);        
         }
@@ -115,37 +125,48 @@ class InnerSiteController extends Controller {
         
         return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', 
                 array('product' => $product,
-                    'productColor' => $productColor,
-                    'productSize' => $productSize,
-                    'productItem' => $productItem,
+                    'productColor' => $product_color,
+                    'productSize' => $product_size,
+                    'productItem' => $product_item,
                     ));
     }
     
     
     //----------------------------------- Product Detail For Ajax..............        
     public function productDetailAjaxAction($id, $product_color_id, $product_size_id) {
-        $productColor = null;
-        $productSize = null;
-        $productItem = null;
+       $product_color = null;
+        $product_size = null;
+        $product_item = null;
         
         $product = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:Product')
             ->find($id);
         
+        
+        
         if ($product_color_id){
-        $productColor = $this->getDoctrine()
+            $product_color = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductColor')
             ->find($product_color_id);
+        }else{
+            $product_color = $product->getDisplayProductColor();            
         }
+        
         
         if ($product_size_id){
-        $productSize = $this->getDoctrine()
-            ->getRepository('LoveThatFitAdminBundle:ProductSize')
-            ->find($product_size_id);
+            $product_size = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductSize')
+                ->find($product_size_id);
+        }else{
+            $product_size = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductColor')
+                ->getSizes($product_color->getId());
         }
         
-        if ($product_size_id && $product_color_id){
-        $productItem = $this->getDoctrine()
+        //2) else condition for random size of that color
+        
+        if ($product_size && $product_color){
+        $product_item = $this->getDoctrine()
             ->getRepository('LoveThatFitAdminBundle:ProductItem')
             ->findByColorSize($product_color_id, $product_size_id);        
         }
@@ -154,11 +175,12 @@ class InnerSiteController extends Controller {
             throw $this->createNotFoundException('Unable to find Product.');
         }
         
+        
         return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail_ajax.html.twig', 
                 array('product' => $product,
-                    'productColor' => $productColor,
-                    'productSize' => $productSize,
-                    'productItem' => $productItem,
+                    'productColor' => $product_color,
+                    'productSize' => $product_size,
+                    'productItem' => $product_item,
                     ));
     }
 //----------------------------------------------------------------------------------    

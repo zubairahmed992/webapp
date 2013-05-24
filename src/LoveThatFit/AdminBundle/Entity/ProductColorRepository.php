@@ -29,4 +29,21 @@ class ProductColorRepository extends EntityRepository
             return null;
         }
     }
+    
+     public function getSizes($id) {
+        $query = $this->getEntityManager()
+                        ->createQuery('
+            SELECT ps.title as title, pc.id as color_id FROM LoveThatFitAdminBundle:ProductColor pc 
+            JOIN pc.product_items pi
+            JOIN pi.product_size ps
+            WHERE pc.id = :id'
+                        )->setParameter('id', $id);
+
+        try {
+            return $query->getResult();
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
