@@ -32,46 +32,47 @@ var product_id={{product.id}}
   jQuery(document).ready(function($){
   //you can now use $ as your jQuery object.
    $('#cloth_sizes').live('change', function()	{
+      
        color_id_hidden=$('#hidden_color_id').text();
        size_id = $(this).val();
-     
+    
         $.ajax({
             url: "http://localhost/webapp/web/app_dev.php/ajax/product_detail_append/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
           
             success: function (data) {
-             //$('#prod_wrapper').append();  
-             $('.prod_wrapper').replaceWith(data);
+            // $('#prod_wrapper').append(data);  
+            $('.prod_wrapper').replaceWith(data);
             }
         });
        });
 
       
-      $('#a_color_id').live('click', function(){
-          
-      color_id=$('#hidden_color_id').text();
+     
+
+});
+
+function pattern_select(color_id)
+{
+    color_id=color_id;
+     
        size_id =$('#hidden_size_id').text();
      
         $.ajax({
             url: "http://localhost/webapp/web/app_dev.php/ajax/product_detail_append/"+ product_id+ "/" +  color_id + "/" +size_id,
           
             success: function (data) {
-             //$('#prod_wrapper').append();  
              $('.prod_wrapper').replaceWith(data);
             }
         });
-});
 
-});
-
-
-
+}
     </script>  
-    <span id="hidden_color_id" style="display:none;">{{productColor.id}}</span>
-    <span id="hidden_size_id" style="display:none;">{{productSize.id}}</span>
-    <span id="hidden_item_id" style="display:none;">{{productItem.id}}</span>
+   
     
     <ul class="prod_wrapper">
-
+ <span id="hidden_color_id" style="display:none;">{{productColor.id}}</span>
+    <span id="hidden_size_id" style="display:none;">{{productSize.id}}</span>
+    <span id="hidden_item_id" style="display:none;">{{productItem.id}}</span>
         <li class="selected_pro">
             <div class="prod_node">
                 <span></span>
@@ -85,7 +86,11 @@ var product_id={{product.id}}
                             <select name="cloth_sizes" id="cloth_sizes"   class="sle_clth">
                                 <option value="">Size</option>
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
-                                    <option value='{{key}}'>{{pcsa}}</option>
+                                {% if(productSize.id==key)   %}
+                                <option value='{{key}}' selected="">{{pcsa}}</option>
+                                {%else%}
+                                <option value='{{key}}'>{{pcsa}}</option>
+                                {%endif%}
                                 {%endfor%}
                             </select>
                                  <select name="cloth_quantity" class="sle_clth">
@@ -100,10 +105,11 @@ var product_id={{product.id}}
 
                            {%for apc in product.productColors%}
                                     
-              <span id="color_id" style="display:none;">{{apc.id}}</span>         
-              <a href="#_"  id="a_color_id"><img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" ></a>
-                           
-              {%endfor%}
+              <span id="color_id_pattern" style="display:none;">{{apc.id}}</span>         
+              <a href="#_"  id="a_color_id" onclick="pattern_select({{apc.id}})">
+              <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" >
+              </a>
+               {%endfor%}
 
                                 </span>
                             </div>
@@ -116,18 +122,20 @@ var product_id={{product.id}}
 
                             
                             <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-                            <a class="apply_img" href="{{ asset(productColor.WebPath) }}">upply</a>                        
+                            
                             
                             <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
                             {% if productItem and productItem%}
-                                <a href="{{ path('ajax_user_product_item_create', {'product_item_id':productItem.id}) }}">Love</a><br>
+                            
+                            <div class="like_icon">
+                          <a href="{{ path('ajax_user_product_item_create', {'product_item_id':productItem.id}) }}"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
+                        </div>
+                                <br>
                                 <a class="apply_img" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}
                         </div>
                         
-                        <div class="like_icon">
-                            <a href="#"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
-                        </div>
+                        
 
 
 

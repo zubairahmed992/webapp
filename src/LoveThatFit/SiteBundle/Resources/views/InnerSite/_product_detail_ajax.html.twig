@@ -1,5 +1,7 @@
  <ul class="prod_wrapper">
-
+ <span id="hidden_color_id" style="display:none;">{{productColor.id}}</span>
+    <span id="hidden_size_id" style="display:none;">{{productSize.id}}</span>
+    <span id="hidden_item_id" style="display:none;">{{productItem.id}}</span>
         <li class="selected_pro">
             <div class="prod_node">
                 <span></span>
@@ -8,29 +10,22 @@
                         <h3 class="selected">{{product.name}}</h3>
                         <div style="clear:both;"></div>
                         <div class="featured_sizes">
-                            <span id="color_id_hidden" style="display:none;">{{productColor.id}}</span>
-                            <select name="cloth_sizes" id="cloth_sizes"  >
+
+                            
+                            <select name="cloth_sizes" id="cloth_sizes"   class="sle_clth">
                                 <option value="">Size</option>
-                            {% if productColor%}
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
-                                {% if(key==productSize.id)%}
-                                <option value='{{key}}' selected="selected">{{pcsa}}</option>
-                                 {%else %}
+                                {% if(productSize.id==key)   %}
+                                <option value='{{key}}' selected="">{{pcsa}}</option>
+                                {%else%}
                                 <option value='{{key}}'>{{pcsa}}</option>
                                 {%endif%}
-                                   {%endfor%}
-                            {% else %}
-                               {%for key, pcsa in product.displayProductColor.getSizeTitleArray%}
-                                   {% if(key==productSize.id)%}
-                                <option value='{{key}}' selected="selected">{{pcsa}}</option>
-                                 {%else %}
-                                <option value='{{key}}'>{{pcsa}}</option>
-                                {%endif%}
-                              {%endfor%}
-                            {%endif%}
+                                {%endfor%}
+                            </select>
+                                 <select name="cloth_quantity" class="sle_clth">
+                                    <option>1</option>
                                 </select>
-                              
-                                 
+
                             </div>
 
                             <div class="pro_color">
@@ -38,10 +33,12 @@
                                 <span>                         
 
                            {%for apc in product.productColors%}
-                                  
-                                    <input type="radio" value="XS" name="Radio" id="color1">
-                                      <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" onclick="pattern_box()">
-                            {%endfor%}
+                                    
+              <span id="color_id_pattern" style="display:none;">{{apc.id}}</span>         
+              <a href="#_"  id="a_color_id" onclick="pattern_select({{apc.id}})">
+              <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" >
+              </a>
+               {%endfor%}
 
                                 </span>
                             </div>
@@ -52,20 +49,22 @@
                         </div>
                         <div class="featured_img">
 
-                            {% if productColor%}
+                            
                             <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-                            <a class="apply_img" href="{{ asset(productColor.WebPath) }}">upply</a>                        
-                            {% else %}
-                            <img width="63" height="108" src="{{asset(product.displayProductColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
-                            <a class="apply_img" href="{{ asset(product.displayProductColor.WebPath) }}">upply</a>                        
-                            {%endif%}
-
+                            
+                            
                             <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
                             {% if productItem and productItem%}
-                                <a href="{{ path('ajax_user_product_item_create', {'product_item_id':productItem.id}) }}">Love</a><br>
+                            
+                            <div class="like_icon">
+                          <a href="{{ path('ajax_user_product_item_create', {'product_item_id':productItem.id}) }}"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
+                        </div>
+                                <br>
                                 <a class="apply_img" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}
                         </div>
+                        
+                        
 
 
 
@@ -99,11 +98,27 @@
                     </div></li>
 
 
+        <script type="text/javascript">
+                    $('slideshow').style.display='none';
+                    $('wrapper').style.display='block';
+                    var slideshow=new TINY.slideshow("slideshow");
+                    window.onload=function(){
+                            slideshow.auto=false;
+                            slideshow.speed=5;
+                            slideshow.link="linkhover";
+                            slideshow.info="information";
+                            slideshow.thumbs="slider";
+                            slideshow.left="slideleft";
+                            slideshow.right="slideright";
+                            slideshow.scrollSpeed=4;
+                            slideshow.spacing=5;
+                            slideshow.active="#fff";
+                            slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+                    }
+                </script>
+
+
 
                 <!------------------------------------------------------------------------------------>
 
             </ul>
-
-            
-
-    
