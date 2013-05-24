@@ -381,7 +381,8 @@ class InnerSiteController extends Controller {
         $user_id=$this->get('security.context')->getToken()->getUser()->getId(); 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id , $page_number=0 , $limit=0);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+        return new response("success");
+// return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
     }
     
     
