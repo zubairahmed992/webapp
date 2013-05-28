@@ -79,7 +79,8 @@
     <li>
         <div class="prod_node">
             <span></span>
-            <div class="featured_box">                
+            <div class="featured_box{{p.id}}">
+                <div class="nrm_prod_data{{p.id}}">
                 <div class="featured_content">
                     <h3>{{p.name}}</h3>
                     <!--<p>{{p.brand.name}} <br/>
@@ -90,16 +91,18 @@
                 <div class="featured_img">
                     
                     {%if p.displayProductColor%}
-                    <img class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" width="63" height="108"/>
+                    <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" width="63" height="108"/>
                     <a class="apply_img" href=""></a>
                     {%endif%}
                     <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}'>feedback</a></span>
                 </div>
-                    <span class="pro_detail"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></a></span>
+                    <span class="pro_detail"><a class="prod_details_arrow" href="#"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></a></span>
                   
                       
                 <span></span>
-                <!--/prod_node--></div>
+                <!--/nrm_prod--></div>
+            <div class="dynamic_data{{p.id}}"></div>
+            <!--Featured box--></div>
     </li>            
                 {% endfor %}
                 {%else%}
@@ -131,6 +134,31 @@ Product not avaliable<br> of selected Category</h3>
 
 </ul>
 
-
+<script>
+    
+$(".prod_details_arrow").click(
+    function(){
+        
+        var curr_prod_id = $(this).parent().parent().find(".featured_img img").attr("id");
+        
+        $.ajax({
+            url: "http://localhost/webapp/web/app_dev.php/ajax/product/"+ curr_prod_id,
+          
+            success: function (data) {
+            // $('#prod_wrapper').append(data);  
+            $('.dynamic_data'+curr_prod_id ).html(data).addClass("disp_blk");
+            $('.nrm_prod_data'+curr_prod_id ).addClass("hide");
+            set_drag_drop_ele();
+            
+            //var tesss = $(this).parent().parent().parent().find(".featured_box").attr("class");
+            
+            //alert(tesss);
+            }
+        });       
+        
+    }
+);
+    
+</script>
 
 

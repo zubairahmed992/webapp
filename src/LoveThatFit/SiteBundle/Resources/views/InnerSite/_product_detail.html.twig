@@ -1,16 +1,4 @@
 
-{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
-{% block left_navigation %}
-
-{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
-
-{% endblock %}
-
-{% block left_col_btm %}
-{% endblock %}
-
-{% block product_slider %}
-   
 <script language="javascript">
 
 (function($) { 
@@ -37,18 +25,15 @@ var product_id={{product.id}}
        size_id = $(this).val();
     
         $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/product_detail_append/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
+            url: "http://localhost/webapp/web/app_dev.php/ajax/product/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
           
             success: function (data) {
             // $('#prod_wrapper').append(data);  
-            $('.prod_wrapper').replaceWith(data);
+              $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
+              $('.nrm_prod_data'+product_id ).addClass("hide");
             }
         });
        });
-
-      
-     
-
 });
 
 function pattern_select(color_id)
@@ -58,10 +43,11 @@ function pattern_select(color_id)
        size_id =$('#hidden_size_id').text();
      
         $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/product_detail_append/"+ product_id+ "/" +  color_id + "/" +size_id,
+            url: "http://localhost/webapp/web/app_dev.php/ajax/product/"+ product_id+ "/" +  color_id + "/" +size_id,
           
             success: function (data) {
-             $('.prod_wrapper').replaceWith(data);
+              $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
+              $('.nrm_prod_data'+product_id ).addClass("hide");
             }
         });
 
@@ -92,14 +78,17 @@ function loveItem(item_id)
     </script>  
    
     
-    <ul class="prod_wrapper">
- <span id="hidden_color_id" style="display:none;">{{productColor.id}}</span>
-    <span id="hidden_size_id" style="display:none;">{{productSize.id}}</span>
-    <span id="hidden_item_id" style="display:none;">{{productItem.id}}</span>
-        <li class="selected_pro">
-            <div class="prod_node">
-                <span></span>
+
+
+
+
                 <div class="featured_box">                
+                <span></span>
+                    <span id="hidden_color_id" style="display:none;">{{productColor.id}}</span>
+                    <span id="hidden_size_id" style="display:none;">{{productSize.id}}</span>
+                    <span id="hidden_item_id" style="display:none;">{{productItem.id}}</span>
+    
+    
                     <div class="featured_content_selected">
                         <h3 class="selected">{{product.name}}</h3>
                         <div style="clear:both;"></div>
@@ -197,34 +186,8 @@ function loveItem(item_id)
 
                             <span></span>
                             <!--/prod_node--></div>
-                    </div></li>
-
-
-        <script type="text/javascript">
-                    $('slideshow').style.display='none';
-                    $('wrapper').style.display='block';
-                    var slideshow=new TINY.slideshow("slideshow");
-                    window.onload=function(){
-                            slideshow.auto=false;
-                            slideshow.speed=5;
-                            slideshow.link="linkhover";
-                            slideshow.info="information";
-                            slideshow.thumbs="slider";
-                            slideshow.left="slideleft";
-                            slideshow.right="slideright";
-                            slideshow.scrollSpeed=4;
-                            slideshow.spacing=5;
-                            slideshow.active="#fff";
-                            slideshow.init("slideshow","image","imgprev","imgnext","imglink");
-                    }
-                </script>
 
 
 
-                <!------------------------------------------------------------------------------------>
 
-            </ul>
-
-            
-{% endblock %}
     
