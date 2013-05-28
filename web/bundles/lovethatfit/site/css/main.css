@@ -2011,7 +2011,9 @@ text-align: left;
 .pro_content{
 	border-left:2px solid #c4c933;
 	padding:20px;
-        min-height: 320px;
+        min-height: 320px;      
+       
+       
 }
 
 .pro_content label{
@@ -2363,4 +2365,64 @@ padding-bottom: 5px;
 #weight_box{
     top: 82px;
     left:165px;
+}
+
+.step_4 .reg_next_step{
+    float:left;
+    margin-left: 130px;
+       
+    
+}
+
+#favourite_list{
+    max-height: 320px;
+    overflow: auto;   
+    margin-top: 5px;
+    
+}
+
+.fav_list_hd{    
+   float:left; 
+   width: 190px; 
+   background:#efefef; 
+   padding: 5px;
+}
+
+.fav_list_hd{    
+   float:left; 
+   width: 190px; 
+   background:#efefef; 
+   padding: 5px;
+}
+
+#fav_lst div:last-child{
+   background:#efefef; 
+   padding: 5px;
+   width:auto;
+   float:none;    
+}
+
+#fav_listing{    
+   border-bottom:1px dashed #ccc; 
+   padding:10px; 
+   overflow:auto; 
+   margin-bottom: 2px;
+}
+
+.f_list{
+    float:left; 
+    width: 200px; 
+    line-height: 40px;
+}
+
+#fav_listing .f_list:nth-child(3){    
+   float:left; 
+   width: 200px;
+  line-height: normal;
+}
+
+#fav_listing .f_list:last-child{    
+   float:none;
+   width:auto;  
+   line-height: 40px;
 }
