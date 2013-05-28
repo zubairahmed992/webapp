@@ -1381,6 +1381,7 @@ background:#f3f3f3;
         overflow: hidden;
         font-weight:normal;
         text-align: left;
+        text-align:center;
 }
 
 .prod_wrapper p{
@@ -1395,9 +1396,10 @@ background:#f3f3f3;
 }
 
 .featured_img {
-    float: right;   
+      
    /* padding-right: 30px;*/
     width:110px;
+    margin:0 auto;
 }
 .slider_but_top,
 .slider_but_btm {
@@ -1942,7 +1944,7 @@ margin:0px 0px 0px 0px;
 
 .pro_detail img{
     display: inline-block;
-    margin-top: -70px;
+    margin-top: -85px;
     float:right;
     
 }
