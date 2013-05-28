@@ -614,7 +614,7 @@ header.reg .strip_rgt {
 	width:68px;
 }
 .reg_blk p {
-    margin-bottom: 26px;
+    margin-bottom: 10px;
     font-size: 13px;
     color:#A2A2A2;
 }
@@ -2206,22 +2206,30 @@ padding-bottom: 5px;
     padding: 0px 0px 5px 0px;
     margin-bottom: 25px;
 }
-
-.measurements .m_option input[type="text"]{   
- width:60px!important;     
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.measurements .m_option input[type="text"]{ 
+    height:12px!important;
 }
+}
+.measurements .m_option input[type="text"]{   
+ width:60px!important;
+ height:15px;
+}
+
+
+
 
 .measurements .m_option select{   
  width:116px!important; 
- padding: 2px 2px;
+ padding: 3px 2px;
  height: 25px;
- box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+ 
 }
 
 .measurements .m_option select:last-child{   
  width:117px!important; 
  padding: 3px 2px;
- box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+ 
 }
 
 .measurements .m_option .mlabel{   
