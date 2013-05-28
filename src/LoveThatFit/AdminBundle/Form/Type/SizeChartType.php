@@ -12,6 +12,7 @@ class SizeChartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $title = array('00'=>'00', '0'=>'0', '2'=>'2', '4'=>'4', '6'=>'6', '8'=>'8', '10'=>'10', '12'=>'12', '14'=>'14', '16'=>'16', '18'=>'18', '20'=>'20');
+        $gender=array(''=>'Select Gender','M'=>'Male','F'=>'Female');
         $builder->add(
                 'title', 'choice', 
                 array('choices'=>$title,
@@ -19,22 +20,31 @@ class SizeChartType extends AbstractType
                        'expanded'  => False, 
                 )                
                 );
-        $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));
-        $builder->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')));
+        $builder->add('gender','choice', 
+                array('choices'=>$gender,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                ) );
+        $builder->add('target', 'choice', array('choices'=> array(''=>'Select Target','Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')));        
+        $builder->add('bodytype', 'choice', array('choices'=> array('Petite'=>'Petite','Regular'=>'Regular', 'Tall'=>'Tall')));
         $builder->add('waist');
         $builder->add('hip');
         $builder->add('bust');
         $builder->add('chest');
         $builder->add('inseam');
+        $builder->add('outseam');
+        $builder->add('sleeve');
         $builder->add('neck');
         $builder->add('sleeve');
+        $builder->add('back');
         $builder->add('Brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'name',
                 ));
-       $builder->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,));       
+       $builder->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,));
+       
     }
 
      public function getDefaultOptions(array $options)
