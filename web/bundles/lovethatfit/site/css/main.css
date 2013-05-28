@@ -2393,6 +2393,7 @@ padding-bottom: 5px;
    width: 190px; 
    background:#efefef; 
    padding: 5px;
+   text-align: center;
 }
 
 #fav_lst div:last-child{
@@ -2411,14 +2412,17 @@ padding-bottom: 5px;
 
 .f_list{
     float:left; 
-    width: 200px; 
+    width: 195px;
+    text-align: center;
     line-height: 40px;
+   
 }
 
 #fav_listing .f_list:nth-child(3){    
    float:left; 
-   width: 200px;
+   width: 195px;
   line-height: normal;
+  
 }
 
 #fav_listing .f_list:last-child{    
