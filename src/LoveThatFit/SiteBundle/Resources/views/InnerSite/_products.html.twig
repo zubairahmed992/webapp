@@ -77,14 +77,16 @@
 {% if(row_count>0)%}    
 {% for p in products %}
     <li>
+
         {% if(p.getRandomItem and p.getRandomItem!=null)%}
             <span id="apply_image_url" style="display:none;">{{asset(p.getRandomItem.WebPath)}}
         </span>    
         {%endif%}    
+
         <div class="prod_node">
             <span></span>
             <div class="featured_box{{p.id}}">
-                <div class="nrm_prod_data{{p.id}}">
+                <div class="nrm_prod_data{{p.id}} default_item">
                 <div class="featured_content">
                     <h3>{{p.name}}</h3>
                     <!--<p>{{p.brand.name}} <br/>
@@ -97,8 +99,14 @@
                     {%if p.displayProductColor%}
                     
                     <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" width="63" height="108"/>
+
                     <a class="apply_img" href=""></a>
                       <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : p.getRandomItem.id})}}'>feedback</a></span>
+
+                    {% if(p.getRandomItem and p.getRandomItem!=null)%}
+                        <a class="apply_img hide" href="{{asset(p.getRandomItem.WebPath)}}">{{asset(p.getRandomItem.WebPath)}}</a>    
+                    {%endif%}
+
                     {%endif%}
                                      
 

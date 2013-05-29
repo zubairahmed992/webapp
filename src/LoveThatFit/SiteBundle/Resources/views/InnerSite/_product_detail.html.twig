@@ -1,20 +1,7 @@
 
 <script language="javascript">
 
-(function($) { 
-$(function() {
 
-        $('ul.tabs').each(function() {
-                $(this).find('li').each(function(i) {
-                        $(this).click(function(){
-                                $(this).addClass('current').siblings().removeClass('current')
-                                        .parents('div.sectionbox').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
-                        });
-                });
-        });
-
-})
-})(jQuery)
  // For Size Combox box
 var product_id={{product.id}} 
   jQuery(document).ready(function($){
@@ -147,6 +134,7 @@ function loveItem(item_id)
                              <div class="like_icon1" style="">
                               <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">
                                </div>  
+                            
                             {%else%}
                              <div class="like_icon">
                               <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
@@ -156,7 +144,7 @@ function loveItem(item_id)
                            
                             
                                 <br>
-                                <a class="apply_img" href="{{ asset(productItem.WebPath) }}">Apply Image</a>
+                                <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}
                         </div>
                         
@@ -169,22 +157,7 @@ function loveItem(item_id)
 
 
 
-                            <div class="sectionbox"><!-- START section -->
-                                <ul class="tabs">
-                                    <li class="current">Description</li>
-                                    <li>At a Glance</li>
-                                    <li>Designer</li>		
-                                </ul>
-                                <div class="box visible">
-                                    <p>{{product.description}}</p>		
-                                </div>
-                                <div class="box">
-                                    <p>{{product.description}}</p>
-                                </div>
-                                <div class="box">
-                                    <p>{{product.description}}</p>
-                                </div>
-                            </div><!-- END section -->
+                            
                           
 
                             </div><!--END PRODUCT MORE DETAIL-->   
