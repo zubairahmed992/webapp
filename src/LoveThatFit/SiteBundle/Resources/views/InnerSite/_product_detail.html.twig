@@ -138,7 +138,7 @@ function loveItem(item_id)
                             <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
                             
                             
-                            <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : product.id})}}'>feedback</a></span>
+                            <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
                              <div class="like_icon1" style="">

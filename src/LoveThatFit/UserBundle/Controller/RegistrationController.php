@@ -190,13 +190,29 @@ class RegistrationController extends Controller {
                 
         if($entity->getGender() == 'm')
         {
+            if(array_key_exists('top_size',$this->getRequest()->get('measurement')))
+            {
         $measurement->top_size=$this->getRequest()->get('measurement')['top_size'];
+            }
+            if(array_key_exists('bottom_size',$this->getRequest()->get('measurement')))
+            {
         $measurement->bottom_size=$this->getRequest()->get('measurement')['bottom_size'];
+            }
         }else
         {
+            if(array_key_exists('top_size',$this->getRequest()->get('measurement')))
+            {
             $measurement->top_size=$this->getRequest()->get('measurement')['top_size'];
+            }
+            if(array_key_exists('bottom_size',$this->getRequest()->get('measurement')))
+            {
             $measurement->bottom_size=$this->getRequest()->get('measurement')['bottom_size'];
+            }
+            if(array_key_exists('dress_size',$this->getRequest()->get('measurement')))
+            {
+        
             $measurement->dress_size=$this->getRequest()->get('measurement')['dress_size'];
+            }
         }
         
         //--------------------------------

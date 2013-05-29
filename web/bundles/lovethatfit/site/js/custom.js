@@ -70,7 +70,7 @@ $(document).ready(function(){
                 if( length_obj>0)
                 {    
                     
-                    $('<option>').val('').text('Select').appendTo('#measurement_top_size');    
+                    $('<option>').val('').text('Size').appendTo('#measurement_top_size');    
                     for(i=0;i<length_obj;i++)
                     {   
 
@@ -103,7 +103,7 @@ $(document).ready(function(){
                 length_obj=Object.keys(bottom_brand).length;
                 if( length_obj>0)
                 {   
-                    $('<option>').val('').text('Select').appendTo('#measurement_bottom_size');    
+                    $('<option>').val('').text('Size').appendTo('#measurement_bottom_size');    
                     for(i=0;i<length_obj;i++)
                     {   
                         $('<option>').val(bottom_brand[i]['id']).text(bottom_brand[i]['title']).appendTo('#measurement_bottom_size');    
@@ -134,7 +134,7 @@ $(document).ready(function(){
                 length_obj=Object.keys(dress_brand).length;
                 if(length_obj>0)
                 {    
-                    $('<option>').val('').text('Select').appendTo('#measurement_dress_size');    
+                    $('<option>').val('').text('Size').appendTo('#measurement_dress_size');    
                     for(i=0;i<length_obj;i++)
                     {   
                         $('<option>').val(dress_brand[i]['id']).text(dress_brand[i]['title']).appendTo('#measurement_dress_size');    
