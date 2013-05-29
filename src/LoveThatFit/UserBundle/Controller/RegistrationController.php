@@ -408,17 +408,20 @@ class RegistrationController extends Controller {
           
           if ($top_size) {
 
-                if ($measurement->getNeck() == 0) {
+                if ($measurement->getNeck() == null || $measurement->getNeck() == 0) {
                     $measurement->setNeck($top_size->getNeck());
                 }
-                if ($measurement->getBust() == 0) {
+                if ($measurement->getBust() == null || $measurement->getBust() == 0) {
                     $measurement->setBust($top_size->getBust());
                 }
-                if ($measurement->getChest() == 0) {
+                if ($measurement->getChest() == null || $measurement->getChest() == 0) {
                     $measurement->setChest($top_size->getChest());
                 }
-                if ($measurement->getSleeve() == 0) {
+                if ($measurement->getSleeve() == null || $measurement->getSleeve() == 0) {
                     $measurement->setSleeve($top_size->getSleeve());
+                }
+                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
+                    $measurement->setBack($top_size->getBack());
                 }
             }
         }
@@ -430,14 +433,17 @@ class RegistrationController extends Controller {
             $measurement->setBottomFittingSizeChart($bottom_size); // set the selected size chart to the measurement table to have association
             
             if ($bottom_size) {
-                if ($measurement->getWaist() == 0) {
+                if ($measurement->getWaist() == null || $measurement->getWaist() == 0) {
                     $measurement->setWaist($bottom_size->getWaist());
                 }
-                if ($measurement->getHip() == 0) {
+                if ($measurement->getHip() == null || $measurement->getHip() == 0) {
                     $measurement->setHip($bottom_size->getHip());
                 }
-                if ($measurement->getInseam() == 0) {
+                if ($measurement->getInseam() == null || $measurement->getInseam() == 0) {
                     $measurement->setInseam($bottom_size->getInseam());
+                }
+                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
+                    $measurement->setBack($bottom_size->getBack());
                 }
             }
         }
@@ -449,14 +455,18 @@ class RegistrationController extends Controller {
             $measurement->setDressFittingSizeChart($dress_size); // set the selected size chart to the measurement table to have association
 
             if ($dress_size) {
-                if ($measurement->getBust() == 0) {
+                if ($measurement->getBust() == null || $measurement->getBust() == 0) {
                     $measurement->setBust($dress_size->getBust());
                 }
-                if ($measurement->getHip() == 0) {
+                if ($measurement->getHip() == null || $measurement->getHip() == 0) {
                     $measurement->setHip($dress_size->getHip());
+                }
+                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
+                    $measurement->setBack($dress_size->getBack());
                 }
             }
         }
+                
         return $measurement;
     }
 }

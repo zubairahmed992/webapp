@@ -82,15 +82,15 @@ return true;
                     
                
               <div class="frm_ele radio_buts act_radio">                
-                <div class="radio_ele"> {{ form_label(form.gender) }}</div>
-                {{ form_widget(form.gender) }}                 
+                <div class="radio_ele"> {{ form_label(form.gender) }}  {{ form_widget(form.gender) }} </div>
+                              
             </div>
                     
                     <div class="clr_bth"></div>
                    
                     
                 <div class="frm_ele image">                
-               Upload Image:   {{ form_widget(form.file) }}   
+                    <label>Upload Image:</label>   {{ form_widget(form.file) }}   
               
             </div>    
            
@@ -120,19 +120,26 @@ return true;
 
             
            <div class="frm_ele">
-                {{ form_errors(form_password_reset.password) }}
-                {{ form_label(form_password_reset.password) }}
+               <label>New Password</label>
+                {{ form_errors(form_password_reset.password) }}                
                 {{ form_widget(form_password_reset.password.password) }}
-                   
-
-                        </div>
+           </div>
+          
            <div class="frm_ele">
-                {{ form_errors(form_password_reset.password.confirm) }}
-                 <label>Confirm Password</label>
-                {{ form_widget(form_password_reset.password.confirm) }}
-                {{ form_rest(form_password_reset) }}
+             <label>Confirm Password</label>                
+              {{ form_errors(form_password_reset.password.confirm) }}                
+              {{ form_widget(form_password_reset.password.confirm) }}
+           </div>
+          
+          <div class="frm_ele">
+          <label>Old Password</label>                
+              {{ form_errors(form_password_reset.old_password) }}                
+              {{ form_widget(form_password_reset.old_password) }}
+          </div>    
+
+             {{ form_rest(form_password_reset) }}
                 <input type="submit" value="Update" />
-</div>
+
 
           </form>
 </div>

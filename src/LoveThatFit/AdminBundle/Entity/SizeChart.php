@@ -72,6 +72,12 @@ class SizeChart
     private $target;
 
     /**
+     * @var string $target
+     *
+     * @ORM\Column(name="bodytype", type="string", length=255)
+     */
+    private $bodytype;
+    /**
      * @var float $waist
      * @ORM\Column(name="waist", type="float")
      * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
@@ -109,6 +115,14 @@ class SizeChart
      * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
     private $inseam=0;
+    
+    /**
+     * @var float $outseam
+     *
+     * @ORM\Column(name="outseam", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
+     */
+    private $outseam=0;
 
     /**
      * @var float $neck
@@ -125,6 +139,14 @@ class SizeChart
      * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
     private $sleeve=0;
+    
+    /**
+     * @var float $back
+     *
+     * @ORM\Column(name="back", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
+     */
+    private $back=0;
 
 /**
      * @var string $disabled
@@ -424,5 +446,74 @@ class SizeChart
     public function getDisabled()
     {
         return $this->disabled;
+    }
+
+    /**
+     * Set bodytype
+     *
+     * @param string $bodytype
+     * @return SizeChart
+     */
+    public function setBodytype($bodytype)
+    {
+        $this->bodytype = $bodytype;
+    
+        return $this;
+    }
+
+    /**
+     * Get bodytype
+     *
+     * @return string 
+     */
+    public function getBodytype()
+    {
+        return $this->bodytype;
+    }
+
+    /**
+     * Set outseam
+     *
+     * @param float $outseam
+     * @return SizeChart
+     */
+    public function setOutseam($outseam)
+    {
+        $this->outseam = $outseam;
+    
+        return $this;
+    }
+
+    /**
+     * Get outseam
+     *
+     * @return float 
+     */
+    public function getOutseam()
+    {
+        return $this->outseam;
+    }
+
+    /**
+     * Set back
+     *
+     * @param float $back
+     * @return SizeChart
+     */
+    public function setBack($back)
+    {
+        $this->back = $back;
+    
+        return $this;
+    }
+
+    /**
+     * Get back
+     *
+     * @return float 
+     */
+    public function getBack()
+    {
+        return $this->back;
     }
 }
