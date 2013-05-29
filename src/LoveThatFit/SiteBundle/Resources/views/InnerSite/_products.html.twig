@@ -77,8 +77,10 @@
 {% if(row_count>0)%}    
 {% for p in products %}
     <li>
+        {% if(p.getRandomItem and p.getRandomItem!=null)%}
         <span id="apply_image_url">{{asset(p.getRandomItem.WebPath)}}
         </span>    
+        {%endif%}    
         <div class="prod_node">
             <span></span>
             <div class="featured_box{{p.id}}">

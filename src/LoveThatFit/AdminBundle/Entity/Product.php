@@ -495,12 +495,6 @@ class Product {
 
        $i=$this->getProductItems();
       return $this->getProductItems()->getIterator()->current(); 
-        foreach ($this->getProductItems() as $pi) {
-            
-        $it= $pi; 
-           
-        }
-      
     }
     
 }
