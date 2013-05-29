@@ -136,57 +136,7 @@ class InnerSiteController extends Controller {
     }
     
     
-    //----------------------------------- Product Detail For Ajax..............        
-    public function productDetailAjaxAction($id, $product_color_id, $product_size_id) {
-       $product_color = null;
-        $product_size = null;
-        $product_item = null;
-        
-        $product = $this->getDoctrine()
-            ->getRepository('LoveThatFitAdminBundle:Product')
-            ->find($id);
-        
-        
-        
-        if ($product_color_id){
-            $product_color = $this->getDoctrine()
-            ->getRepository('LoveThatFitAdminBundle:ProductColor')
-            ->find($product_color_id);
-        }else{
-            $product_color = $product->getDisplayProductColor();            
-        }
-        
-        
-        if ($product_size_id){
-            $product_size = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductSize')
-                ->find($product_size_id);
-        }else{
-            $product_size = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductColor')
-                ->getSizes($product_color->getId());
-        }
-        
-        //2) else condition for random size of that color
-        
-        if ($product_size && $product_color){
-        $product_item = $this->getDoctrine()
-            ->getRepository('LoveThatFitAdminBundle:ProductItem')
-            ->findByColorSize($product_color_id, $product_size_id);        
-        }
-        
-        if (!$product) {
-            throw $this->createNotFoundException('Unable to find Product.');
-        }
-        
-        
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail_ajax.html.twig', 
-                array('product' => $product,
-                    'productColor' => $product_color,
-                    'productSize' => $product_size,
-                    'productItem' => $product_item,
-                    ));
-    }
+   
 //----------------------------------------------------------------------------------    
     public function productsByMyClosetAction($page_number=0 , $limit=0)
     {
