@@ -28,13 +28,13 @@ private $bottom_brands;
         $builder->add('bottom_size', 'choice', array('required' => false));
         
 
-        $builder->add('weight', 'text');
-        $builder->add('chest', 'text');
-        $builder->add('height', 'text');
-        $builder->add('waist', 'text');
-        $builder->add('neck', 'text');
-        $builder->add('sleeve', 'text');
-        $builder->add('outseam', 'text');
+        $builder->add('weight');
+        $builder->add('chest');
+        $builder->add('height');
+        $builder->add('waist');
+        $builder->add('neck');
+        $builder->add('sleeve');
+        $builder->add('outseam');
          }
   
      public function getDefaultOptions(array $options)
@@ -42,9 +42,9 @@ private $bottom_brands;
         return array(
             'data_class' => 'LoveThatFit\UserBundle\Entity\Measurement',
             'cascade_validation' => true,
-            'validation_groups' => array('registrationMeasurement'),
+            'validation_groups' => array('registration_measurement_male'),
         );
-    }
+    } 
 
     
     public function getName()
