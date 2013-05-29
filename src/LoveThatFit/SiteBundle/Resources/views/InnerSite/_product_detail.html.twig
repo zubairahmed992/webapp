@@ -23,9 +23,9 @@ var product_id={{product.id}}
       
        color_id_hidden=$('#hidden_color_id').text();
        size_id = $(this).val();
-    
+       base_url=$('#base_url').text();
         $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/product/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
+            url:  base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
           
             success: function (data) {
             // $('#prod_wrapper').append(data);  
@@ -40,11 +40,11 @@ var product_id={{product.id}}
 function pattern_select(color_id)
 {
     color_id=color_id;
-     
+     base_url=$('#base_url').text();
        size_id =$('#hidden_size_id').text();
      
         $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/product/"+ product_id+ "/" +  color_id + "/" +size_id,
+            url: base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" +  color_id + "/" +size_id,
           
             success: function (data) {
               $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
@@ -57,8 +57,9 @@ function pattern_select(color_id)
 function loveItem(item_id)
 {
    item_id=item_id  
+   base_url=$('#base_url').text();
         $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/user_product_item/create/"+ item_id,
+            url: base_url+"/app_dev.php/ajax/user_product_item/create/"+ item_id,
           
             success: function (XMLHttpRequest, textStatus, errorThrown) {
                
@@ -84,7 +85,8 @@ function loveItem(item_id)
 
 
 
-                <div class="featured_box">                
+                <div class="featured_box">  
+                    <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>
                 <span></span>
                     <span id="hidden_color_id" style="display:none;">{{productColor.id}}</span>
                     <span id="hidden_size_id" style="display:none;">{{productSize.id}}</span>
@@ -137,10 +139,11 @@ function loveItem(item_id)
                             
                             <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
                             
-                            
-                            <span class="prod_fitting_details" id="fitting_feedback_{{product.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
+                             <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
+                           
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
+                           
                              <div class="like_icon1" style="">
                               <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">
                                </div>  

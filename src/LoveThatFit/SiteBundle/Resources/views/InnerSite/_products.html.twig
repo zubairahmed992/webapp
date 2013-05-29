@@ -67,7 +67,7 @@
 
             </div><!--END PRODUCT MORE DETAIL-->   
                     
-                    
+             <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>        
                     
                 <span></span>
                 <!--/prod_node--></div>
@@ -78,7 +78,7 @@
 {% for p in products %}
     <li>
         {% if(p.getRandomItem and p.getRandomItem!=null)%}
-        <span id="apply_image_url">{{asset(p.getRandomItem.WebPath)}}
+            <span id="apply_image_url" style="display:none;">{{asset(p.getRandomItem.WebPath)}}
         </span>    
         {%endif%}    
         <div class="prod_node">
@@ -95,10 +95,13 @@
                 <div class="featured_img">
                     
                     {%if p.displayProductColor%}
+                    
                     <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" width="63" height="108"/>
                     <a class="apply_img" href=""></a>
+                      <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : p.getRandomItem.id})}}'>feedback</a></span>
                     {%endif%}
-                    <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_id" : p.id})}}'>feedback</a></span>
+                                     
+
                 </div>
                     <span class="pro_detail"><a class="prod_details_arrow" href="#"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></a></span>
                   
@@ -142,11 +145,12 @@ Product not avaliable<br> of selected Category</h3>
     
 $(".prod_details_arrow").click(
     function(){
-        
+        base_url=$('#base_url').text();
         var curr_prod_id = $(this).parent().parent().find(".featured_img img").attr("id");
         
         $.ajax({
-            url: "http://localhost/webapp/web/app_dev.php/ajax/product/"+ curr_prod_id,
+            url:  base_url+"/app_dev.php/ajax/product/"+ curr_prod_id,
+           
           
             success: function (data) {
             // $('#prod_wrapper').append(data);  
