@@ -88,7 +88,7 @@ class Algorithm {
             } else {
                 return null;
             }
-        } elseif ($this->user_measurement->getGendet() == 'w') {
+        } elseif ($this->user->getGender() == 'w') {
 
             if ($this->product->getClothingType()->getTarget() == 'Top') {
                 //bust, waist, back & sleeve*                
