@@ -31,6 +31,7 @@ var product_id={{product.id}}
             // $('#prod_wrapper').append(data);  
               $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.nrm_prod_data'+product_id ).addClass("hide");
+              set_drag_drop_ele();
             }
         });
        });
@@ -48,6 +49,7 @@ function pattern_select(color_id)
             success: function (data) {
               $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.nrm_prod_data'+product_id ).addClass("hide");
+              set_drag_drop_ele();
             }
         });
 
