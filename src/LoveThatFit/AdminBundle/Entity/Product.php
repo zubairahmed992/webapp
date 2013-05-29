@@ -490,4 +490,17 @@ class Product {
         return null;
     }
     
+     //----------------------------------------------------------
+    public function getRandomItem() {
+
+       $i=$this->getProductItems();
+      return $this->getProductItems()->getIterator()->current(); 
+        foreach ($this->getProductItems() as $pi) {
+            
+        $it= $pi; 
+           
+        }
+      
+    }
+    
 }
