@@ -185,88 +185,40 @@ class InnerSiteController extends Controller {
         $product = $this->getProduct($id);
     
         $session = $this->get("session");
-
-
-        
-    if ($session->has('cart')){
-        $cart = new Cart($session->get('cart')); 
-        
-    }
-    else{
-       $cart = new Cart(null); 
-    }
-//return new Response(json_encode($session->get('cart')));
-//return new Response(json_encode($cart->getCart()));
-                        
-//$measurement = $this->getMeasurement($user->getId());
-        
-        $cart->addToCart($this->getProduct(16));
-        $cart->addToCart($this->getProduct(7));
-        $cart->addToCart($this->getProduct(7));
-        $cart->addToCart($this->getProduct(7));
-        $cart->addToCart($this->getProduct(7));
-        //$cart->removeFromCart($this->getProduct(16));
-        $session->set("cart",$cart->getCart());
-        return new Response(json_encode($cart->getCart()));
-        //return new Response(json_encode($cart->getTotal($this->getProduct(7))));
-        //return new Response($fit->fit());
-        //return new Response('Love That Fit');
-        //return new Response('Try Another');
-        
         
     }
     //-------------------------------------------------------------------
-    public function getFeedBackJSONAction($user_id, $product_id) {        
-    //$user= $this->get('security.context')->getToken()->getUser();
-      
+    public function getFeedBackJSONAction($user_id, $product_item_id) {        
+    
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-
-        $productItem = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductItem')
-                ->find($product_id);
-
+        $productItem = $this->getProductItemById($product_item_id);
+        
+          if (!$user)
+            return new Response("User Not found!");
+        
+        if (!$productItem)
+            return new Response("Product not found!");
+        
         $fit = new Algorithm($user, $productItem);
         
         return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', 
                 array('data' => $fit->getFeedBackJson(),
                     ));
-     //----------------------------------------------------   
-        $product = $this->getProduct($product_id);
-                
-        if (!$user)
-            return new Response("User Not found!");
-        
-        if (!$product)
-            return new Response("Product not found!");
-        
-        $measurement = $this->getMeasurement($user->getId());
-        if (!$measurement)
-            return new Response("Measurement not found!");
-         
-        $fit = new Comparison($measurement, $product);
-    return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data'=>$fit->getFeedBackJson()));        
-    
-     
-        
     }
     //-------------------------------------------------------------------
-   public function getFeedBackListAction($product_id) {        
+   public function getFeedBackListAction($product_item_id) {        
         $user= $this->get('security.context')->getToken()->getUser();
-        $product = $this->getProduct($product_id);
+        $productItem = $this->getProductItemById($product_item_id);
                 
         if (!is_object($this->get('security.context')->getToken()->getUser()))
             return new Response("User Not found, Log in required!");
         
-        if (!$product)
+        if (!$productItem)
             return new Response("Product not found!");
         
-        $measurement = $this->getMeasurement($user->getId());
-        if (!$measurement)
-            return new Response("Measurement not found!");
-         
-        $fit = new Comparison($measurement, $product);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', array('product' => $product, 'data' => $fit->getFeedBackArray()));        
+        $fit = new Algorithm($user, $productItem);
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', array('product' => $productItem->getProduct(), 'product_item' => $productItem, 'data' => $fit->getFeedBackArray()));        
     }
    //-------------------------------------------------------------------
     
@@ -311,6 +263,7 @@ class InnerSiteController extends Controller {
                 ->find($id);
         return $entity;
     }
+    
     //-------------------------------------------------------------------
     private function getMeasurement($id)
     {
@@ -320,10 +273,10 @@ class InnerSiteController extends Controller {
     //-------------------------------------------------------------------
     private function getProductItemById($id)
     {       
-        $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
-        $product_item = $repository->find($id);
-        return $product_item;       
+            $product_item = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductItem')
+                ->find($id);
+        return $product_item;
     }
 //-------------------------------------------------------------------
     private function getMyClosetList($page_number=0 , $limit=0)

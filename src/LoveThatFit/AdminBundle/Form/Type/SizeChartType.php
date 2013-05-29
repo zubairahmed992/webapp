@@ -34,8 +34,7 @@ class SizeChartType extends AbstractType
         $builder->add('inseam');
         $builder->add('outseam');
         $builder->add('sleeve');
-        $builder->add('neck');
-        $builder->add('sleeve');
+        $builder->add('neck');     
         $builder->add('back');
         $builder->add('Brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',

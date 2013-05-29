@@ -32,14 +32,14 @@ class RegistrationMeasurementFemaleType extends AbstractType
         $builder->add('dress_size', 'choice', array('required' => false));
         
         
-        $builder->add('weight', 'text');
-        $builder->add('bust', 'text');
-        $builder->add('height', 'text');
-        $builder->add('waist', 'text');
-        $builder->add('sleeve', 'text');
-        $builder->add('outseam', 'text');
-        $builder->add('hip', 'text');
-        $builder->add('back', 'text');
+        $builder->add('weight');
+        $builder->add('bust');
+        $builder->add('height');
+        $builder->add('waist');
+        $builder->add('sleeve');
+        $builder->add('outseam');
+        $builder->add('hip');
+        $builder->add('back');
     }
   
      public function getDefaultOptions(array $options)
@@ -47,7 +47,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
         return array(
             'data_class' => 'LoveThatFit\UserBundle\Entity\Measurement',
             'cascade_validation' => true,
-            'validation_groups' => array('registrationMeasurement'),
+            'validation_groups' => array('registration_measurement_female'),
         );
     }
 

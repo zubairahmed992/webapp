@@ -31,7 +31,7 @@ class ProfileMeasurementFemaleType extends AbstractType
         return array(
             'data_class' => 'LoveThatFit\UserBundle\Entity\Measurement',
             'cascade_validation' => true,
-            'validation_groups' => array('profile_measurement'),
+            'validation_groups' => array('profile_measurement_female'),
         );
     }
 
