@@ -12,7 +12,8 @@
     </div>-->
     <div class="action_cnt">
         <div class="steps step_3 measurements">
-            <h2 style="margin-bottom: 10px;">Brands &amp; Sizes</h2>
+            <h2>Brands &amp; Sizes</h2>
+            <div id="inst">Put all values in inches.</div>
             <form action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
                     <div>
