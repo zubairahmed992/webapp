@@ -72,18 +72,17 @@ class Algorithm {
         
         if ($this->user->getGender() == 'm') {
             if ($this->product->getClothingType()->getTarget() == 'Top') {
-                //chect neck & sleeve* / back, waist                
+                //chest neck & sleeve* / back, waist                
                 return array(
                     "neck" => $this->compareNeck(),
-                    "waist" => $this->compareWaist(),
-                    "back" => $this->compareBack(),                    
+                    "chest" => $this->compareChest(),
+                    
                 );
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
                 //waist & inseam / outseam
                     return array(
                     "waist" => $this->compareWaist(),
-                    "Inseam" => $this->compareOutseam(),                    
-                    "outseam" => $this->compareInseam(),                    
+                                        
                 );
                     
             } else {
@@ -96,7 +95,7 @@ class Algorithm {
                  return array(
                     "bust" => $this->compareBust(),
                     "waist" => $this->compareWaist(),
-                    "back" => $this->compareBack(),                    
+                                        
                 );
                 
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
@@ -104,8 +103,7 @@ class Algorithm {
                     return array(
                     "waist" => $this->compareWaist(),
                     "hip" => $this->compareHip(),                    
-                    "Inseam" => $this->compareOutseam(),                    
-                    "outseam" => $this->compareInseam(),                    
+                    
                 );
                 
             } elseif ($this->product->getClothingType()->getTarget() == 'Dress') {
@@ -113,7 +111,6 @@ class Algorithm {
                 return array(
                     "bust" => $this->compareBust(),
                     "waist" => $this->compareWaist(),
-                    "back" => $this->compareBack(),                    
                     "hip" => $this->compareHip(),                    
                 );
             } else {
