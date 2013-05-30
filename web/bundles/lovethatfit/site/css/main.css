@@ -1321,7 +1321,7 @@ input[type=email]{
    
 }
 #slider_dis_canv {
-    height:480px;
+    height:500px;
     overflow: hidden;
     margin-top: 10px;
     
@@ -1364,6 +1364,8 @@ ul.prod_wrapper{
 	overflow:auto;
         width:260px;
 	padding:10px;
+        position: relative;
+        min-height: 142px;
         border-bottom:1px dashed #c4c5c4;
 }
 
@@ -2159,9 +2161,9 @@ right: 70px;
 
 }
 
-.featured_content_selected{
-    
+.featured_content_selected{    
 float:left;
+width:150px;
 }
 
 .prod_wrapper h3 .selected {
@@ -2170,7 +2172,7 @@ float:left;
 
 .featured_sizes{    
 float:left; 
-padding-bottom: 5px;
+padding-bottom: 0px;
 }
 
 .success_alert{
@@ -2449,4 +2451,46 @@ padding-bottom: 5px;
    margin-bottom: 25px; 
    font-style: italic; 
    text-align: right;
+}
+
+.featured_content_selected .selected{
+    float:left;
+}
+
+.featured_content_selected #add_cart{
+    float:left;
+    clear:right;
+}
+.like_icon1{
+    padding:0px;
+    margin:0px;
+    height:0px;
+}
+
+.transp_list{
+    background:url(../images/pro_list_trans.png) 0 0 repeat-y;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 280px;
+    height: 100%;
+}
+
+.prod_bottom {    
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.prod_top {    
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.uploading_list {
+    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
+    height: 150px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    z-index: 5000;
 }

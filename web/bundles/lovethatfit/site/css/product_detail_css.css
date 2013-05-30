@@ -46,6 +46,8 @@ margin-top:10px;
 .product_price{
 	color:#9e8c17;	
 	font-size:0.9em;
+        clear:left;
+        float:left;
         padding: 10px 0px 0px 0px;
 }
 
@@ -92,7 +94,7 @@ margin-top:10px;
 .pro_color{	
     text-align: left;
     clear:both;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .pro_color label{
