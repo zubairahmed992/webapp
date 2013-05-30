@@ -244,10 +244,8 @@ class InnerSiteController extends Controller {
                     $user->addProductItem($product_item); 
                     $em->persist($product_item);        
                     $em->persist($user);       
-                    $em->flush();
-                    $this->get('session')->setFlash('success', 'Product Item Successfuly Added in Your Favorites.');
+                    $em->flush();                    
                     return new response('success');
-                    
                 }
         
         
