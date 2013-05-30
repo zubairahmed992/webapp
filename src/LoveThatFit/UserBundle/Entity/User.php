@@ -688,7 +688,10 @@ class User  implements UserInterface, \Serializable{
                 break;
         }
         $img_new = imagecreatetruecolor(220,250); 
-        imagecolorallocate($img_new,255,255, 255);
+        imagealphablending($img_new, false);
+        imagesavealpha($img_new,true);
+        $transparent = imagecolorallocatealpha($img_new, 255, 255, 255, 127);
+         imagefilledrectangle($img_new, 0, 0, 220, 255, $transparent);
         imagecopyresampled($img_new, $source, 0, 0, 0, 0, 220,250, imagesx($source), imagesy($source));
         $img_path=$this->getUploadRootDir().'/'. $this->avatar;       
         switch ($image_type) {
