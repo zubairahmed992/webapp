@@ -20,7 +20,9 @@
                   $("#chest").hide();
                   $("#outseam").hide();                  
                   $("#neck").hide();
-                  $("#back").show();                 
+                  $("#back").show();
+                  $("#sizechart_target option[value='Dress']").remove();
+                  $("#sizechart_target").append('<option value="Dress">Dress</option>');
                 }
                 if(selectVal=='M')
                 { 
