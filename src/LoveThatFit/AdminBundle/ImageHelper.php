@@ -102,7 +102,15 @@ class ImageHelper {
         foreach ($conf as $key => $value) {
             if ($key != 'original') {
                 $value = $this->validateConf($value);
+               
                 $img_new = imagecreatetruecolor($resize_dimention[$key]['width'], $resize_dimention[$key]['height']);
+                // To make the image pixel tranparent //
+                imagealphablending($img_new, false);
+                imagesavealpha($img_new,true);
+                $transparent = imagecolorallocatealpha($img_new, 255, 255, 255, 127);
+                imagefilledrectangle($img_new, 0, 0, $resize_dimention[$key]['width'],$resize_dimention[$key]['height'], $transparent);
+               
+                
                 imagecopyresampled($img_new, $source, 0, 0, 0, 0, $resize_dimention[$key]['width'], $resize_dimention[$key]['height'], imagesx($source), imagesy($source));
 
                 if (!is_dir($value['dir'])) {
