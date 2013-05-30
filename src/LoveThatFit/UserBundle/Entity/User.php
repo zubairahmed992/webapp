@@ -150,7 +150,7 @@ class User  implements UserInterface, \Serializable{
      * @var string $gender
      *
      * @ORM\Column(name="gender", type="string", length=10, nullable=true)
-     * @Assert\NotBlank(groups={"profile_settings"})  
+     * @Assert\NotBlank(groups={"registration_step_one","profile_settings"})  
      */
     private $gender;
 
