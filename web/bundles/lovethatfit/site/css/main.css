@@ -1360,12 +1360,10 @@ ul.prod_wrapper{
 }
 
 .prod_wrapper li{
-	list-style:none;	
-	overflow:auto;
+	list-style:none;
         width:260px;
 	padding:10px;
-        position: relative;
-        min-height: 142px;
+        min-height: 146px;
         border-bottom:1px dashed #c4c5c4;
 }
 
@@ -1378,7 +1376,7 @@ background:#f3f3f3;
 	color: #a3a50f;
 	font-size: 1.1em;
 	padding-bottom: 10px;
-        /*width:132px;*/
+        width:260px;
         height:19px;
         overflow: hidden;
         font-weight:normal;
@@ -1952,10 +1950,13 @@ margin:0px 0px 0px 0px;
 .featured_box{
     text-align: center; 
 }
-
+.pro_detail {
+    
+    float:right;
+    margin-top:66px;
+}
 .pro_detail img{
-    display: inline-block;
-    margin-top: -85px;
+    
     float:right;
     
 }
@@ -2164,6 +2165,10 @@ right: 70px;
 .featured_content_selected{    
 float:left;
 width:150px;
+}
+.featured_content_selected h3{    
+float:left;
+width:auto;
 }
 
 .prod_wrapper h3 .selected {
@@ -2472,10 +2477,15 @@ padding-bottom: 0px;
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 280px;
-    height: 100%;
+    width: 262px;
+    height: 142px;
 }
-
+.pos_relative {
+    position: relative;
+    width:1px;
+    height:1px;
+    margin-top: -1px;
+}
 .prod_bottom {    
     max-height: 100px;
     max-width: 100px;

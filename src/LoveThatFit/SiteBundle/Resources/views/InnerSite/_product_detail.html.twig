@@ -11,10 +11,12 @@ var product_id={{product.id}}
        color_id_hidden=$('#hidden_color_id').text();
        size_id = $(this).val();
        base_url=$('#base_url').text();
+       $('.featured_box .transp_list').removeClass("hide").addClass("disp_blk");
         $.ajax({
             url:  base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
           
             success: function (data) {
+                $('.featured_box .transp_list').removeClass("disp_blk").addClass("hide");
             // $('#prod_wrapper').append(data);  
               $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.nrm_prod_data'+product_id ).addClass("hide");
@@ -29,11 +31,13 @@ function pattern_select(color_id)
     color_id=color_id;
      base_url=$('#base_url').text();
        size_id =$('#hidden_size_id').text();
+       $('.featured_box .transp_list').removeClass("hide").addClass("disp_blk");
      
         $.ajax({
             url: base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" +  color_id + "/" +size_id,
           
             success: function (data) {
+              $('.featured_box .transp_list').removeClass("disp_blk").addClass("hide");
               $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.nrm_prod_data'+product_id ).addClass("hide");
               set_drag_drop_ele();
