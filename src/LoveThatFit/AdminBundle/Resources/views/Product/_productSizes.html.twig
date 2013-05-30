@@ -25,7 +25,7 @@
                     <div class="span1 hds"><b>Length</b></div>
                     <div class="span1 hds"><b>Waist</b></div>
                     <div class="span1 hds"></div>
-
+                    <div class="span1 hds"></div>
 
                 </div>
 
@@ -39,33 +39,40 @@
                                  {{ form_errors(sizeform) }}
 
 
-                        <div class="row-fluid show-grid p_title">
+                        <div class="row-fluid show-grid p_title size_box">
 
                             <div class="span1 size_input">{{ ps.title }}</div>
                             
                             <div class="span1 size_input">
+                                <span class="minlable">min</span>
                            {{ form_widget(sizeform.neck_min) }}{{ form_errors(sizeform.neck_min) }}
                            -
+                           <span class="minlable">max</span>
                           {{ form_widget(sizeform.neck_max) }}{{ form_errors(sizeform.neck_max) }}
                             </div>
                             
                             <div class="span1 size_input">
+                                <span class="minlable">min</span>
                             {{ form_widget(sizeform.sleeve_min) }}{{ form_errors(sizeform.sleeve_min) }}
                                -
+                               <span class="minlable">max</span>
                             {{ form_widget(sizeform.sleeve_max) }}{{ form_errors(sizeform.sleeve_max) }}
                             </div>
                             
                             <div class="span1 size_input">
+                                <span class="minlable">min</span>
                             {{ form_widget(sizeform.chest_min) }}{{ form_errors(sizeform.chest_min) }}
                                 -
+                                <span class="minlable">max</span>
                               {{ form_widget(sizeform.chest_max) }}{{ form_errors(sizeform.chest_max) }}    
                             </div>
                           
                             
                             <div class="span1 size_input">
-                            
+                            <span class="minlable">min</span>
                             {{ form_widget(sizeform.back_min) }}{{ form_errors(sizeform.back_min) }}
                                -
+                               <span class="minlable">max</span>
                               {{ form_widget(sizeform.back_max) }}{{ form_errors(sizeform.back_max) }}  
                             </div>
                             
@@ -75,8 +82,10 @@
                             <div class="span1 size_input">{{ form_widget(sizeform.length) }}{{ form_errors(sizeform.length) }}</div>
                             
                             <div class="span1 size_input">
+                                <span class="minlable">min</span>
                            {{ form_widget(sizeform.waist_min) }}{{ form_errors(sizeform.waist_min) }}
                                  -
+                                 <span class="minlable">max</span>
                             {{ form_widget(sizeform.waist_max) }}{{ form_errors(sizeform.waist_max) }}        
                             </div>
                             
@@ -84,8 +93,17 @@
                             
                             <div class="span1">
                                 <input type="submit" value="SAVE" class="btn"/>
-                                <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">Cancel</a>
-                            </div>  
+                                
+                            </div> 
+                            
+                            <div class="span1">
+                                
+                                <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn" style="margin-left:-50px;">Cancel</a>
+                            </div> 
+                            
+                             
+                            
+                            
 
                         </div>                        
 
@@ -93,7 +111,7 @@
                     </form>  
 {% else %}
 
-                    <div class="row-fluid show-grid p_title">
+                    <div class="row-fluid show-grid p_title size_box">
                         <div class="span1">{{ps.title}}</div>
                         
                         <div class="span1">{{ps.neckMin}} &nbsp;-&nbsp;{{ps.neckMax}}</div>
@@ -116,10 +134,16 @@
                         
                         <div class="span1">
                             <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
+                            
+                        </div> 
+                        
+                         <div class="span1">                            
                             <a href="#myModal11{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
-
-
-                        </div>              
+                        </div> 
+                        
+                        
+                        
+                        
                         <div id="myModal11{{ps.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

@@ -1128,6 +1128,8 @@ textarea {
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
+  position: relative;
+  
 }
 
 input,
@@ -1178,13 +1180,9 @@ textarea,
   width: 206px;
 }
 
-  #detail_wrapper #pro_sizes_wrapper input[type="text"] {
-    width: 95px!important;
-}
+ 
 
- #detail_wrapper #pro_clr input[type="text"] {
-    width: 95px!important;
-}
+
 
 textarea {
   height: auto;
@@ -6445,4 +6443,23 @@ padding:5px 0px 5px 0px;
 
 #form_questionstatus{    
     float:left;
+}
+
+.size_box input[type="text"]{
+   width:25px!important; 
+    
+}
+
+ #detail_wrapper #pro_sizes_wrapper input[type="text"] {
+    width: 95px;
+}
+ #detail_wrapper #pro_clr input[type="text"] {
+    width: 95px;
+}
+
+.minlable{
+    display: inline;
+    position:absolute;
+    margin-top: -22px
+    
 }
