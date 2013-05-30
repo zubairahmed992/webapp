@@ -13,15 +13,14 @@
     {{ app.session.flash('success') }}
    </div>   
 {% endif %}
-{%for p in product%}
-{%for pi in p.productItems%}
-
 <div id="fav_lst">
     <div class="fav_list_hd">Category</div>
     <div class="fav_list_hd">Name</div>
     <div class="fav_list_hd">Product Image</div>
     <div class="fav_list_hd">Delete</div>
 </div>
+{%for p in product%}
+{%for pi in p.productItems%}
 
 <div id="favourite_list">
 
