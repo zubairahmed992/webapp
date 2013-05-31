@@ -187,7 +187,7 @@
                         <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
 
-
+                                <div class="row-fluid show-grid p_title size_box">
                                 <div class="row-fluid show-grid p_title">
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
@@ -226,6 +226,7 @@
                                         <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">Cancel</a>
                                     </div>  
 
+                                    </div>
                                 </div>                        
                                 {{ form_rest(sizeform) }}
 
@@ -292,7 +293,7 @@
                         <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
 
-
+<div class="row-fluid show-grid p_title size_box">
                                 <div class="row-fluid show-grid p_title">
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
@@ -325,7 +326,7 @@
                                         <input type="submit" value="SAVE" class="btn"/>
                                         <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">Cancel</a>
                                     </div>  
-
+                                </div>
                                 </div>                        
                                   {{ form_rest(sizeform) }}
 
@@ -393,7 +394,7 @@
                         <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
 
-
+<div class="row-fluid show-grid p_title size_box">
                                 <div class="row-fluid show-grid p_title">
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
@@ -431,7 +432,7 @@
                                 </div>                        
                                   {{ form_rest(sizeform) }}
 
-
+</div>
                             </form>  
 {% else %}
 
@@ -500,7 +501,7 @@
                         <form action="{{ path('admin_product_detail_size_update',{"id":product.id, "size_id":ps.id}) }}" method="post" {{ form_enctype(sizeform) }}>
                                  {{ form_errors(sizeform) }}
 
-
+<div class="row-fluid show-grid p_title size_box">
                                 <div class="row-fluid show-grid p_title">
 
                                     <div class="span1 size_input">{{ ps.title }}</div>
@@ -548,7 +549,7 @@
                                 </div>                        
                                   {{ form_rest(sizeform) }}
 
-
+    </div>
                             </form>  
 {% else %}
 

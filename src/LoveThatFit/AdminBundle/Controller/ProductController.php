@@ -20,6 +20,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductSizeManBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenDressType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
+use Symfony\Component\Form\FormError;
 
 
 class ProductController extends Controller {
@@ -87,13 +88,30 @@ class ProductController extends Controller {
     //------------------------------------------------------------------------------
 
     public function productDetailCreateAction(Request $request) {
-
+        
+        
+        $data = $request->request->all();
+        $ClothingType=$data['product']['ClothingType'];
+       
         $entity = new Product();
-
+      
         $form = $this->createForm(new ProductDetailType(), $entity);
         $form->bind($request);
-
+        
+       
+       $gender=$entity->getGender();
+       $clothing_type= $entity->getClothingType()->getTarget();
+       if($gender=='M' and $clothing_type=='Dress')
+       {
+           $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));
+           
+         $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
+                    'form' => $form->createView(),
+                ));      
+       }    
         if ($form->isValid()) {
+            
             $em = $this->getDoctrine()->getManager();
             
             $entity->setCreatedAt(new \DateTime('now'));
@@ -107,7 +125,7 @@ class ProductController extends Controller {
         {
             $this->get('session')->setFlash('warning', 'Product Detail cannot be created.');
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
-                    'form' => $productForm->createView(),
+                    'form' => $form->createView(),
                 ));
         }
     }
@@ -135,13 +153,34 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
 
+        
+        
+        
+        
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');            
         }
 
         $form = $this->createForm(new ProductDetailType(), $entity);
         $form->bind($request);
-
+        $gender=$entity->getGender();
+        
+        $clothing_type= $entity->getClothingType()->getTarget();
+        if($clothing_type=='')
+        {
+             $this->get('session')->setFlash('warning', 'Select Clothing Type.');
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
+                    'form' => $form->createView(),
+                ));      
+        }
+       
+        if($gender=='M' and $clothing_type=='Dress' )
+       {
+         $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
+                    'form' => $form->createView(),
+                ));      
+       }   
         if ($form->isValid()) {
 
             $entity->setUpdatedAt(new \DateTime('now'));
@@ -392,6 +431,7 @@ class ProductController extends Controller {
            $this->get('session')->setFlash('warning', 'Unable to find Product.');  
         }
        
+      
         
         if($product->getClothingType()->getTarget()=="Top" and $product->getGender()=='M')
         {
