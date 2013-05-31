@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Controller;
+
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
@@ -187,34 +188,33 @@ class RegistrationController extends Controller {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
-                
-        if($entity->getGender() == 'm')
-        {
-            if(array_key_exists('top_size',$this->getRequest()->get('measurement')))
-            {
-        $measurement->top_size=$this->getRequest()->get('measurement')['top_size'];
-            }
-            if(array_key_exists('bottom_size',$this->getRequest()->get('measurement')))
-            {
-        $measurement->bottom_size=$this->getRequest()->get('measurement')['bottom_size'];
-            }
-        }else
-        {
-            if(array_key_exists('top_size',$this->getRequest()->get('measurement')))
-            {
-            $measurement->top_size=$this->getRequest()->get('measurement')['top_size'];
-            }
-            if(array_key_exists('bottom_size',$this->getRequest()->get('measurement')))
-            {
-            $measurement->bottom_size=$this->getRequest()->get('measurement')['bottom_size'];
-            }
-            if(array_key_exists('dress_size',$this->getRequest()->get('measurement')))
-            {
+
+        $request_array = $this->getRequest()->get('measurement');
         
-            $measurement->dress_size=$this->getRequest()->get('measurement')['dress_size'];
+        if ($entity->getGender() == 'm') {
+            
+            if (array_key_exists('top_size', $request_array)) {
+                $measurement->top_size = $request_array['top_size'];                
             }
+            if (array_key_exists('bottom_size', $request_array)) {
+                $measurement->bottom_size = $request_array['bottom_size'];                
+            }
+        
+        } else {
+
+            if (array_key_exists('top_size', $request_array)) {
+                $measurement->top_size = $request_array['top_size'];
+            }
+            if (array_key_exists('bottom_size', $request_array)) {
+                $measurement->bottom_size = $request_array['bottom_size'];
+            }
+            if (array_key_exists('dress_size', $request_array)) {
+                $measurement->dress_size = $request_array['dress_size'];
+            }
+        
+            
         }
-        
+
         //--------------------------------
         $measurement = $this->evaluateWithSizeChart($measurement);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,11 +233,10 @@ class RegistrationController extends Controller {
                     'measurement' => $measurement,
                 ));
     }
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //---------------------------------- Image upload STEP ---------------------------------------------------
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
     //------------------------ Render Fitting room image upload page
 
     public function stepFourEditAction() {
@@ -264,7 +263,7 @@ class RegistrationController extends Controller {
                     'measurement' => $measurement,
                 ));
     }
-    
+
 //--------------------------- update fitting room image, 
     public function stepFourCreateAction(Request $request, $id) {
 
@@ -294,10 +293,10 @@ class RegistrationController extends Controller {
             $response = "Invalid image data";
             return new Response($response);
         }
-    }    
+    }
 
 //-------------Updates shoulder height & outseam, input via user move sliders on image, form submit via ajax
-    
+
     public function stepFourMeasurementUpdateAction(Request $request, $id) {
 
         $em = $this->getDoctrine()->getManager();
@@ -318,7 +317,6 @@ class RegistrationController extends Controller {
         }
     }
 
-
     //--------------------------------- deals with image submitted from canvas, saves image
     public function stepFourImageUpdateAction() {
 
@@ -338,9 +336,6 @@ class RegistrationController extends Controller {
         $response = "true";
         return new Response($response);
     }
-    
-          
-
 
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
@@ -366,7 +361,6 @@ class RegistrationController extends Controller {
                     'entity' => $entity));
     }
 
-
 //------------------------------------------------------------------------
 //methods will be moved somewhere on refactoring ------------------------------
 //------------------------------------------------------------------------
@@ -390,7 +384,7 @@ class RegistrationController extends Controller {
         $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
         $this->get('security.context')->setToken($token);
     }
- 
+
 //-------------------------------------------------------------------------------------
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
@@ -407,22 +401,22 @@ class RegistrationController extends Controller {
         }
         return $measurement;
     }
-    
+
 //-------------------------------------------------------------------------------------
     private function evaluateWithSizeChart($measurement) {
 
-        if (is_null($measurement)){
-            return ;
+        if (is_null($measurement)) {
+            return;
         }
-    
+
         $em = $this->getDoctrine()->getManager();
         if ($measurement->top_size) {
-            
-          $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->top_size);
 
-          $measurement->setTopFittingSizeChart($top_size); // set the selected size chart to the measurement table to have association
-          
-          if ($top_size) {
+            $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->top_size);
+
+            $measurement->setTopFittingSizeChart($top_size); // set the selected size chart to the measurement table to have association
+
+            if ($top_size) {
 
                 if ($measurement->getNeck() == null || $measurement->getNeck() == 0) {
                     $measurement->setNeck($top_size->getNeck());
@@ -447,7 +441,7 @@ class RegistrationController extends Controller {
             $bottom_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->bottom_size);
 
             $measurement->setBottomFittingSizeChart($bottom_size); // set the selected size chart to the measurement table to have association
-            
+
             if ($bottom_size) {
                 if ($measurement->getWaist() == null || $measurement->getWaist() == 0) {
                     $measurement->setWaist($bottom_size->getWaist());
@@ -465,7 +459,7 @@ class RegistrationController extends Controller {
         }
 
         if ($measurement->dress_size) {
-            
+
             $dress_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->dress_size);
 
             $measurement->setDressFittingSizeChart($dress_size); // set the selected size chart to the measurement table to have association
@@ -482,9 +476,10 @@ class RegistrationController extends Controller {
                 }
             }
         }
-                
+
         return $measurement;
     }
+
 }
 
 ?>

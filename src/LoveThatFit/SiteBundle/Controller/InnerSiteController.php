@@ -108,12 +108,12 @@ class InnerSiteController extends Controller {
             $color_sizes_array = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductColor')
                 ->getSizeArray($product_color->getId());
-            
+            $psize=array_shift($color_sizes_array);
             $product_size = $this->getDoctrine()
-               // ->getRepository('LoveThatFitAdminBundle:ProductSize')
-              //  ->find(array_shift($color_sizes_array['id']));
-               ->getRepository('LoveThatFitAdminBundle:ProductSize')
-           ->find(array_shift($color_sizes_array)['id']);
+                ->getRepository('LoveThatFitAdminBundle:ProductSize')
+                ->find($psize['id']);
+               //->getRepository('LoveThatFitAdminBundle:ProductSize')
+           //->find(array_shift($color_sizes_array)['id']);
      
                         
         }
