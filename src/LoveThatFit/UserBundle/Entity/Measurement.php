@@ -62,8 +62,8 @@ class Measurement {
      *      minMessage = "You must Enter the your weight",
      *      maxMessage = "You cannot weight more than 300 lbs"
      * )     
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $weight=0;
     /**
@@ -80,8 +80,8 @@ class Measurement {
      *      groups={"registration_step_two","profile_measurement"}
     
      * )      
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $height=0;
 
@@ -97,8 +97,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 70 waist inches",
      *      groups={"registration_step_two","profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $waist=0;
 
@@ -114,8 +114,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 70 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $hip=0;
 
@@ -131,8 +131,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 70 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $bust=0;
        /**
@@ -147,8 +147,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 70 inches  ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $chest=0;
 
@@ -165,8 +165,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300 inches  ",
      *      groups={"profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $arm=0;
     
@@ -183,8 +183,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 50 inches ",
      *      groups={"profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $inseam=0;
 
@@ -200,8 +200,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
-    * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $back=0;
 
@@ -216,8 +216,8 @@ class Measurement {
      *      minMessage = "You must have at least 0 inches  ",
      *      maxMessage = "You cannot have more than 80 inches "
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $shoulder_height=0;
     
@@ -232,8 +232,8 @@ class Measurement {
      *      minMessage = "You must have at least 0 inches  ",
      *      maxMessage = "You cannot have more than 60 inches  "
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $outseam=0;
      /**
@@ -248,8 +248,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300 inches ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $sleeve=0;
     /**
@@ -264,8 +264,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300 inches  ",
      *      groups={"registration_step_two","profile_measurement"}
      * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"})  
-     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_male","profile_measurement_female","profile_measurement"}) 
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $neck=0;
     /**

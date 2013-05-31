@@ -59,18 +59,18 @@ class ProfileController extends Controller {
        // $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
        if ($entity->getGender() == 'm') {
           $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
-          }else{
+          }
+      if($entity->getGender() == 'f')
+         {
           $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
           }
         
-        $measurementForm->bind($this->getRequest());       
-        if($measurementForm->isValid())
-        {        
+        $measurementForm->bind($this->getRequest()); 
         $measurement->setUpdatedAt(new \DateTime('now')); 
         $em->persist($measurement);
         $em->flush();
         $this->get('session')->setFlash('success', 'Your measurement information has been saved.');
-        }       
+       
          return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'measurement' => $measurement,   

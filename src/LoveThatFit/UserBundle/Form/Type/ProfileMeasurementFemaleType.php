@@ -11,7 +11,7 @@ class ProfileMeasurementFemaleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('height');
+        $builder->add('height','number', array('precision' => 2));
         $builder->add('neck', 'number', array('precision' => 2));
         $builder->add('sleeve', 'number', array('precision' => 2));
         $builder->add('bust', 'number', array('precision' => 2));
