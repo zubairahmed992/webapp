@@ -2466,6 +2466,12 @@ padding-bottom: 0px;
     float:left;
     clear:right;
 }
+.like_icon{
+    padding:0px;
+    margin:0px;
+    height:0px;
+}
+
 .like_icon1{
     padding:0px;
     margin:0px;
@@ -2492,6 +2498,11 @@ padding-bottom: 0px;
 }
 
 .prod_top {    
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.prod_dress {    
     max-height: 100px;
     max-width: 100px;
 }
