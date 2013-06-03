@@ -6,9 +6,10 @@
 var product_id={{product.id}} 
   jQuery(document).ready(function($){
   //you can now use $ as your jQuery object.
-   $('#cloth_sizes').live('change', function()	{
+   $('.cloth_sizes').on('change', function()	{
       
-       color_id_hidden=$('#hidden_color_id').text();
+      var color_id_hidden = $(this).parent().parent().parent().find(".hidden_color_id").text();
+      
        size_id = $(this).val();
        base_url=$('#base_url').text();
        $('.featured_box .transp_list').removeClass("hide").addClass("disp_blk");
@@ -59,8 +60,7 @@ function loveItem(item_id)
                 
                if(textStatus=="success")
                 {
-              
-                $(".like_icon").replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
+              $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
                }   
                if(textStatus=="try")
                 {
@@ -81,7 +81,7 @@ function loveItem(item_id)
                 <div class="featured_box_{{product.id}}">  
                     <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>
                 <span></span>
-                    <span id="hidden_color_{{productColor.id}}" style="display:none;">{{productColor.id}}</span>
+                    <span class="hidden_color_id" style="display:none;">{{productColor.id}}</span>
                     <span id="hidden_size_{{productSize.id}}" style="display:none;">{{productSize.id}}</span>
                     <span id="hidden_item_{{productItem.id}}" style="display:none;">{{productItem.id}}</span>
     
@@ -92,7 +92,7 @@ function loveItem(item_id)
                         <div class="featured_sizes">
 
                             
-                            <select name="cloth_sizes" id="cloth_sizes"   class="sle_clth">
+                            <select name="cloth_sizes" id="cloth_sizes"   class="cloth_sizes">
                                 <option value="">Size</option>
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
                                 {% if(productSize.id==key)   %}
@@ -142,7 +142,7 @@ function loveItem(item_id)
                                </div>  
                             
                             {%else%}
-                             <div class="like_icon">
+                             <div id="like_icon_{{productItem.id}}">
                               <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
                         </div>
                             {%endif%}
