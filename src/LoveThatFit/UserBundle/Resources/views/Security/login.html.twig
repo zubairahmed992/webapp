@@ -1,17 +1,38 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 {% block action_block_content %}
+<script>
+function validates()
+{
+    var email=document.getElementById('email').value;
+    var password=document.getElementById('text').value;
+    if(email=='email' || email=='' && password=='password' || password=='')
+        {
+            document.getElementById('error_content1').style.display='block';
+            return false;
+        }else
+        {
+            return true;
+        }
+}
+</script>
 <section class="reg_blk">
     <div class="action_cnt step_1">
         <h2>Log In</h2>
         <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
-        <form action="{{ path('login_check') }}" method="post" class="form">
+        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
             <div class="frm_ele">            
                 <input type="text" id="email" name="_username" value="{{ last_username }}" />
                           </div>
             <div class="frm_ele">
                 <input type="password" id="password" name="_password" />
-                {% if error %}
-        <div class="login_error" >        
+              <div class="login_error" >
+                  <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
+    text-align:left">
+                      Enter Valid User name and password
+                  </div>
+              </div>
+  {% if error %}
+        <div class="login_error" >          
         <div id="error_content">{{ error.message  | replace({
         "Bad credentials": "Invalid Log-in credentials"
     })}}</div>
