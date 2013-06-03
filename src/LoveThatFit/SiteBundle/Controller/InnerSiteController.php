@@ -234,10 +234,10 @@ class InnerSiteController extends Controller {
                 ->getRepository('LoveThatFitAdminBundle:Product')
                  ->countMyCloset($user_id);
 		$rec_count = count($brandObj->countMyCloset($user_id));        
-                if($rec_count>25)
+                if($rec_count>=25)
                 {
                    $this->get('session')->setFlash('warning', 'Please Remove Some Like You can not like more than 25.');
-                    return new response('try');
+                   return new response('try');
                 }else
                 {
                     $user=$this->get('security.context')->getToken()->getUser();         
@@ -250,11 +250,8 @@ class InnerSiteController extends Controller {
                     $em->flush();                    
                     return new response('success');
                 }
-        
-        
-        
-        
     }
+
 
     //-------------------------------------------------------------------
     private function getProduct($id)

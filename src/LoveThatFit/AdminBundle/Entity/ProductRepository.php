@@ -309,9 +309,8 @@ class ProductRepository extends EntityRepository {
     public function countMyCloset($user_id)
     {
         $total_record= $this->getEntityManager()
-	   ->createQuery("SELECT p,pi FROM LoveThatFitAdminBundle:Product p
-      JOIN p.product_items pi
-      JOIN pi.users u
+	   ->createQuery("SELECT p FROM LoveThatFitAdminBundle:ProductItem p
+      JOIN p.users u
       WHERE
       u.id = :id"      
                         )->setParameters(array('id' => $user_id));
