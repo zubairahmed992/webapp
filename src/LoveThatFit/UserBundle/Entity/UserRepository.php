@@ -51,4 +51,39 @@ class UserRepository extends EntityRepository
             return $e;
         }
     }
+    
+    
+    public function findAllUsers($page_number = 0, $limit = 0, $sort = 'id') {
+
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us ORDER BY us.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us ORDER BY us.' . $sort . ' ASC')
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+    public function countAllUserRecord() {
+        $total_record = $this->getEntityManager()
+                ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us');
+        try {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+    
 }

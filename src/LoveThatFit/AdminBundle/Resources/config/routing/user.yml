@@ -1,0 +1,7 @@
+admin_users:
+    pattern:  /admin/users/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:User:index , page_number: 1, sort:id }
+
+admin_user_detail_show:
+    pattern:  /admin/user/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:User:show }

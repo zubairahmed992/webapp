@@ -1,0 +1,162 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('admin_users') }}" >Users</a> <span class="divider">/</span></li>
+<li class="active">Show</li>
+{% endblock %}
+
+{% block h1 %}Users{% endblock %}
+
+{% block title %}Users{% endblock %}
+
+
+{% block body %}
+
+<div>      
+    <h1 style="float:left;">User's Detail</h1>
+     <div class="btn_wrapper">     
+      <a href="{{ path('admin_users') }}" class="btn">back</a>
+      </div>
+      <div class="clearfix"></div>   
+    
+
+            <div id="detail_wrapper">      
+                <div id="p_hd">{{user.firstName }}'s Detail</div>
+                {%if(user.AvatarWebPath!='')%}
+                <div class="span3">
+                    <div id="pro_img"> <img src="{{asset(user.AvatarWebPath) }}" />
+                    </div><!--/.well -->
+                    <div class="clearfix"></div>
+                    </div>         
+                {%endif%}
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container">         
+                                <div class="row-fluid show-grid edt_span">                                    
+                                    <div class="span8">
+                                    <div class="span3">Full Name</div>
+                                    <div class="span3">{{user.firstName }} {{user.lastName }}</div>
+                                    </div>
+                                {%if(user.gender=='f') %}
+                                  <div class="span8">
+                                    <div class="span3">Gender</div>
+                                    <div class="span3">Female</div>
+                                    </div>          
+                                    {%endif%}
+                                        {%if(user.gender=='m') %}
+                                  <div class="span8">
+                                    <div class="span3">Gender</div>
+                                    <div class="span3">Male</div>
+                                    </div>          
+                                    {%endif%}
+                                    
+                                    <div class="span8">
+                                    <div class="span3">Email</div>
+                                    <div class="span3">{{user.email }}</div>
+                                    </div>   
+                                   
+                                    
+                                    <div class="span8">
+                                    <div class="span3">Date Of Birth</div>
+                                    <div class="span3">{{ user.birthDate|date('d-m-Y') }}</div>
+                                    </div>   
+                                  
+                                    <div class="span8">
+                                    <div class="span3">Weight</div>
+                                    <div class="span3">{{user.measurement.weight}}</div>
+                                    </div> 
+                                     
+                                   <div class="span8">
+                                    <div class="span3">Height</div>
+                                    <div class="span3">{{user.measurement.height}}</div>
+                                    </div>      
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Waist</div>
+                                    <div class="span3">{{user.measurement.waist}}</div>
+                                    </div> 
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Hip</div>
+                                    <div class="span3">{{user.measurement.hip}}</div>
+                                    </div> 
+                                        
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Bust</div>
+                                    <div class="span3">{{user.measurement.bust}}</div>
+                                    </div> 
+                                        
+                                        
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Chest</div>
+                                    <div class="span3">{{user.measurement.chest}}</div>
+                                    </div> 
+                                        
+                                        
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Arm</div>
+                                    <div class="span3">{{user.measurement.arm}}</div>
+                                    </div> 
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Inseam</div>
+                                    <div class="span3">{{user.measurement.inseam}}</div>
+                                    </div>     
+                                        
+                                        
+                                      <div class="span8">
+                                    <div class="span3">Inseam</div>
+                                    <div class="span3">{{user.measurement.inseam}}</div>
+                                    </div>   
+                                        
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Back</div>
+                                    <div class="span3">{{user.measurement.back}}</div>
+                                    </div>     
+                                        
+                                        
+                                   
+                                        
+                                        
+                                     <div class="span8">
+                                    <div class="span3">Outseam</div>
+                                    <div class="span3">{{user.measurement.outseam}}</div>
+                                    </div>
+                                        
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Sleeve</div>
+                                    <div class="span3">{{user.measurement.sleeve}}</div>
+                                    </div>
+                                        
+                                        
+                                     <div class="span8">
+                                    <div class="span3">Neck</div>
+                                    <div class="span3">{{user.measurement.neck}}</div>
+                                    </div>    
+                                        
+                                        
+                                        
+                                        
+                                        
+                               
+                                </div> 
+                                     
+
+
+
+                                </div>      
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+                    </div> <!-- End detail_wrapper -->
+                </form>  
+
+                       
+            </div>      
+
+{% endblock %}
+
