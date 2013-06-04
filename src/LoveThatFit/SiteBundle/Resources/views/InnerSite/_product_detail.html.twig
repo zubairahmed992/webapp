@@ -1,37 +1,27 @@
 
 <script language="javascript">
-
-
  // For Size Combox box
-var product_id={{product.id}} 
-  jQuery(document).ready(function($){
-  //you can now use $ as your jQuery object.
-   $('.cloth_sizes').on('change', function()	{
-      
-      var color_id_hidden = $(this).parent().parent().parent().find(".hidden_color_id").text();
-      
-       size_id = $(this).val();
+function select_size(size_id,product_id,color_id)
+{
+
+       var size= size_id.value;
        base_url=$('#base_url').text();
        $('.featured_box .transp_list').removeClass("hide").addClass("disp_blk");
         $.ajax({
-            url:  base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" + color_id_hidden + "/" +size_id,
+            url:  base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" + color_id + "/" +size,
           
             success: function (data) {
                 $('.featured_box .transp_list').removeClass("disp_blk").addClass("hide");
             // $('#prod_wrapper').append(data);  
-              $('.dynamic_data'+product_id ).html(data).addClass("disp_blk");
-              $('.nrm_prod_data'+product_id ).addClass("hide");
+              $('.featured_box'+product_id+' .dynamic_data'+product_id ).html(data).addClass("disp_blk");
+              $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass("hide");
               set_drag_drop_ele();
             }
         });
-       });
-});
-
+}
 function pattern_select(color_id,product_id,size_id)
 {
-    
-  
-     base_url=$('#base_url').text();
+   base_url=$('#base_url').text();
       // size_id =$('#hidden_size_id').text();
        $('.featured_box .transp_list').removeClass("hide").addClass("disp_blk");
      
@@ -50,33 +40,27 @@ function pattern_select(color_id,product_id,size_id)
 }
 function loveItem(item_id)
 {
-   item_id=item_id  
+   
    base_url=$('#base_url').text();
         $.ajax({
             url: base_url+"/app_dev.php/ajax/user_product_item/create/"+ item_id,
           
             success: function (XMLHttpRequest, textStatus, errorThrown) {
                
-                
-               if(textStatus=="success")
-                {
+            if(textStatus=="success")
+            {
               $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
-               }   
-               if(textStatus=="try")
-                {
-                alert('Sorry .. You are overlimit please delete some of your loved products ');
-                }
-                  
-                  
+            }   
+            if(textStatus=="try")
+            {
+            alert('Sorry .. You are overlimit please delete some of your loved products ');
             }
+                  
+         }
         });
 }
     </script>  
    
-    
-
-
-
 
                 <div class="featured_box_{{product.id}}">  
                     <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>
@@ -92,7 +76,7 @@ function loveItem(item_id)
                         <div class="featured_sizes">
 
                             
-                            <select name="cloth_sizes" id="cloth_sizes"   class="cloth_sizes">
+                  <select name="cloth_sizes" id="cloth_sizes"   class="cloth_sizes" onchange="select_size(this,{{product.id}},{{productColor.id}})">
                                 <option value="">Size</option>
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
                                 {% if(productSize.id==key)   %}
@@ -101,7 +85,7 @@ function loveItem(item_id)
                                 <option value='{{key}}'>{{pcsa}}</option>
                                 {%endif%}
                                 {%endfor%}
-                            </select>
+                     </select>
                                  <select name="cloth_quantity" class="sle_clth">
                                     <option>1</option>
                                 </select>
@@ -136,20 +120,17 @@ function loveItem(item_id)
                            
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
-                           
                              <div class="like_icon1" style="">
                               <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">
-                               </div>  
+                             </div>  
                             
                             {%else%}
+                             
                              <div id="like_icon_{{productItem.id}}">
                               <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
-                        </div>
+                            </div>
                             {%endif%}
                         
-                           
-                            
-                               
                                 <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}
                         </div>
