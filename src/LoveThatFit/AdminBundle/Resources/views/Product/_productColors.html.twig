@@ -167,7 +167,7 @@
                        image_url=myObject['image_url'];
                        image_name=myObject['image_name'];;
                
-                        $('#edit_pattern_preview').html("Pattern"+"<img src="+image_url+"></img>");
+                        $('#edit_pattern_preview').html("<img src="+image_url+"></img>");
                         $("#product_color_tempPattern").val (image_name);
                     }
         }).submit();}
@@ -181,21 +181,21 @@
     
             </script>
 {% if imageUploadForm is defined %}
-    <div id="pro_color">
+            <div id="pro_color" style="overflow:auto;">
         
    
 
 <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}">
 
 {{form_errors(imageUploadForm) }}           
-            <label>Upload Image </label>
+            <label><b>Upload Image</b> </label>
            {{form_widget(imageUploadForm.file)}}   
          
 </form>
         
  <form  id="patternform" action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}" method="post" {{form_enctype(imageUploadForm) }}">
            {{form_errors(patternUploadForm) }}           
-            <label>Upload Pattern </label>
+            <label><b>Upload Pattern</b></label>
           
             {{ form_widget(patternUploadForm.file, { 'attr': {'class': 'patternupload'} }) }}
           
@@ -236,9 +236,7 @@
 
                        <div class="row-fluid show-grid">    
                             <div class="span3"> Make It Default Color</div>
-                            <div class="span3">
-                             <div>{{ form_widget(colorform.displayProductColor) }}</div> 
-                            </div>
+                            <div>{{ form_widget(colorform.displayProductColor) }}</div>
                         </div> 
                     
                     
@@ -271,36 +269,33 @@
 
                             <div id="pro_color">
                                 <div class="edt_container">
-                                    <div style="position: absolute; top:20px; right: 200px;" id="edit_image_preview">
+                                    <div style="border:1px solid #ddd; position: absolute; top:-100px; padding: 10px; right: 200px; width: 200px; overflow: auto;" id="edit_image_preview">
+                                     
              <img src="{{ asset(pc.WebPath) }}"/>   
                 </div>
+                                        <div id="edit_pattern_preview" style="border:1px solid #ddd; width:15px; height: 15px; position: absolute; top:35px; right: 100px;"> <img src="{{asset(pc.PatternWebPath)}}"/> </div>
             <div class="row-fluid show-grid">    
                 <div class="span3">Title</div>
                 <div class="span3">{{ form_widget(colorform.title) }}{{ form_errors(colorform.title) }}</div>
            </div>
-           <div class="row-fluid show-grid">    
+           <!--<div class="row-fluid show-grid">    
                  <div class="span3"></div>
                  <div class="span3" id="image_upload">
                  {{ form_widget(colorform.tempImage) }}{{ form_errors(colorform.tempImage) }}</div>
-                </div>
-                <div class="row-fluid show-grid">    
-                 <div class="span3"></div>
-                                            <div class="span3">{{ form_widget(colorform.tempPattern) }}{{ form_errors(colorform.tempPattern) }}</div>
-                                            <div id="edit_pattern_preview"> <img src="{{asset(pc.PatternWebPath)}}"/> </div>
-                                        </div>    
+                </div>-->
+              
                                         <div class="row-fluid show-grid">    
                                             <div class="span3">Available sizes</div>
                                             <div>{{ form_widget(colorform.sizes) }}</div>
                                         </div>      
                                           {% if (product.getDisplayProductColor and color_id != product.getDisplayProductColor.id) or not product.getDisplayProductColor %} 
-                                        <div class="span3" style=""> 
+                                        
                                         <div class="row-fluid show-grid"> 
-                                            Make It Default Color
+                                            
+                                        <div class="span3">Make It Default Colors</div>                                        
+                                        <div> {{ form_widget(colorform.displayProductColor) }} </div> 
                                         </div>
-                                        <div class="span3">
-                                             <div> {{ form_widget(colorform.displayProductColor) }} </div> 
-                                        </div>
-                                     </div> 
+                                    
                                      {%else %}
                                        <div class="span3" style="display: none;"> 
                                         <div class="row-fluid show-grid"> 
