@@ -190,16 +190,15 @@ class RegistrationController extends Controller {
         $registrationMeasurementform->bind($this->getRequest());
 
         $request_array = $this->getRequest()->get('measurement');
-        
+
         if ($entity->getGender() == 'm') {
-            
+
             if (array_key_exists('top_size', $request_array)) {
-                $measurement->top_size = $request_array['top_size'];                
+                $measurement->top_size = $request_array['top_size'];
             }
             if (array_key_exists('bottom_size', $request_array)) {
-                $measurement->bottom_size = $request_array['bottom_size'];                
+                $measurement->bottom_size = $request_array['bottom_size'];
             }
-        
         } else {
 
             if (array_key_exists('top_size', $request_array)) {
@@ -211,8 +210,6 @@ class RegistrationController extends Controller {
             if (array_key_exists('dress_size', $request_array)) {
                 $measurement->dress_size = $request_array['dress_size'];
             }
-        
-            
         }
 
         //--------------------------------
@@ -409,7 +406,11 @@ class RegistrationController extends Controller {
             return;
         }
 
+        $bust_size = 0;
+        $hip_size = 0;
+
         $em = $this->getDoctrine()->getManager();
+
         if ($measurement->top_size) {
 
             $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->top_size);
@@ -423,6 +424,7 @@ class RegistrationController extends Controller {
                 }
                 if ($measurement->getBust() == null || $measurement->getBust() == 0) {
                     $measurement->setBust($top_size->getBust());
+                    $bust_size = $top_size->getBust();
                 }
                 if ($measurement->getChest() == null || $measurement->getChest() == 0) {
                     $measurement->setChest($top_size->getChest());
@@ -448,6 +450,7 @@ class RegistrationController extends Controller {
                 }
                 if ($measurement->getHip() == null || $measurement->getHip() == 0) {
                     $measurement->setHip($bottom_size->getHip());
+                    $hip_size = $bottom_size->getHip();
                 }
                 if ($measurement->getInseam() == null || $measurement->getInseam() == 0) {
                     $measurement->setInseam($bottom_size->getInseam());
@@ -465,12 +468,29 @@ class RegistrationController extends Controller {
             $measurement->setDressFittingSizeChart($dress_size); // set the selected size chart to the measurement table to have association
 
             if ($dress_size) {
+
                 if ($measurement->getBust() == null || $measurement->getBust() == 0) {
                     $measurement->setBust($dress_size->getBust());
+                } else {
+                    // If user already selected a brand & size for Top take average value
+                    if ($bust_size > 0 && $dress_size->getBust() > 0) {
+                        $measurement->setBust(($bust_size + $dress_size->getBust()) / 2);
+                    } else {//this condition will not be called as per current condition/ refactor                        
+                        $measurement->setBust($dress_size->getBust());
+                    }
                 }
+
                 if ($measurement->getHip() == null || $measurement->getHip() == 0) {
                     $measurement->setHip($dress_size->getHip());
+                } else {
+                    // If user already selected a brand & size for bottom/pant
+                    if ($hip_size > 0 && $dress_size->getHip() > 0) {
+                        $dress_size->getHip(($hip_size + $dress_size->getHip()) / 2);
+                    } else {//this condition will not be called as per current condition/ refactor                                                
+                        $measurement->setHip($dress_size->getHip());
+                    }
                 }
+
                 if ($measurement->getBack() == null || $measurement->getBack() == 0) {
                     $measurement->setBack($dress_size->getBack());
                 }
