@@ -77,27 +77,15 @@ class DefaultController extends Controller {
 
     //--------------------------------------------------Brand Type----------------------///   
 
-    public function brandListAction(Request $request, $page_number, $sort = 'id') {
-        $em = $this->getDoctrine()->getManager();
-        $limit = 5;
-        $brandObj = $em->getRepository('LoveThatFitAdminBundle:Brand');
-        $entity = $em
-                ->getRepository('LoveThatFitAdminBundle:Brand')
-                ->findAll($page_number, $limit, $sort);
-        $rec_count = count($brandObj->countAllRecord());
-        $cur_page = $page_number;
+    public function brandListAction(Request $request) {
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->findAll('LoveThatFitAdminBundle:Brand');
 
-
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Admin entity.');
         }
-
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-        $count_rec=count($entity);  
-
-        return new Response($this->json_view($count_rec,$entity));
+       return new Response(json_encode($entity));   
     }
 
     //--------------------------------------------------Clothing Type----------------------///   
@@ -125,11 +113,16 @@ class DefaultController extends Controller {
     public function productListAction(Request $request)
     {
        $em = $this->getDoctrine()->getManager();
-        $products = $this->getDoctrine()
+       $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->productList();
      $count_rec=count($products); 
-     return new Response($this->json_view($count_rec,$products)); 
+     $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
+     $data=array();
+   
+     $data['data']=$products;
+     $data['path']=$baseurl;
+     return new Response($this->json_view($count_rec,$data)); 
     }
   //--------------------------Proudct List By Brand Wtih Gender----------------------///   
     public function productListByBrandAction(Request $request,$brand_id,$gender)
@@ -140,7 +133,12 @@ class DefaultController extends Controller {
                 ->productListByBrand($brand_id,$gender);
         
         $count_rec=count($products); 
-        return new Response($this->json_view($count_rec,$products));
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
+        $data=array();
+   
+        $data['data']=$products;
+        $data['path']=$baseurl;
+        return new Response($this->json_view($count_rec,$data));
     }
 
     //--------------------------Proudct List By Clothing Type With Gender----------------------///   
@@ -150,9 +148,12 @@ class DefaultController extends Controller {
        $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->productListByClothingType($clothing_type_id,$gender);
-        
+        $data=array();
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
+        $data['data']=$products;
+        $data['path']=$baseurl;
         $count_rec=count($products); 
-        return new Response($this->json_view($count_rec,$products));
+        return new Response($this->json_view($count_rec,$data));
     }
  //------Proudct List By Clothing Type and By Brand  With Gender----------------------///   
     public function productListByBrandClothingTypeAction(Request $request,$brand_id,$clothing_type_id,$gender)
@@ -163,8 +164,11 @@ class DefaultController extends Controller {
                 ->productListByBrandClothingType($brand_id,$clothing_type_id,$gender);
         
         $count_rec=count($products); 
-       
-       return new Response($this->json_view($count_rec,$products));
+         $data=array();
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
+        $data['data']=$products;
+        $data['path']=$baseurl;
+       return new Response($this->json_view($count_rec,$data));
     }
     
   
@@ -177,7 +181,17 @@ class DefaultController extends Controller {
                 ->productDetail($product_id);
         
         $count_rec=count($products); 
-        return new Response($this->json_view($count_rec,$products));
+        
+        $data=array();
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
+        $brand = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/brands/';
+        $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/pattern/';
+        $data['data']=$products;
+        $data['product_color_path']=$baseurl;
+        $data['brand_path']=$brand;
+        $data['pattern_path']=$pattern;
+        
+        return new Response($this->json_view($count_rec,$data));
     }
     
     //---------My Closet listing--------------------------------------------//

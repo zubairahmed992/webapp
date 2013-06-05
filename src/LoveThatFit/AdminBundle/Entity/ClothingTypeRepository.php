@@ -13,28 +13,28 @@ use Doctrine\ORM\EntityRepository;
 class ClothingTypeRepository extends EntityRepository
 {
 	
-	 /*-----------------------------------------------------------------
-      Written:Suresh
-	  Description: Find all product with limit and sort 
-	  param:limit, page_number,limit,sort	 
-	 ------------------------------------------------------------------*/
+/*-----------------------------------------------------------------
+Written:Suresh
+Description: Find all product with limit and sort 
+param:limit, page_number,limit,sort	 
+------------------------------------------------------------------*/
 	 public function findAllClothingType($page_number = 0, $limit = 0 ,$sort='id'  ) {
 				   
-	  if ($page_number <= 0 || $limit <= 0){       
-	   $query = $this->getEntityManager()
-					 ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c ORDER BY c.'.$sort.' ASC');
-	    }else{
-			  $query = $this->getEntityManager()
-						  ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c ORDER BY c.'.$sort.' ASC')
-						  ->setFirstResult($limit * ($page_number - 1))
-						  ->setMaxResults($limit);
-		  }
-		  try {
+             if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c ORDER BY c.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c ORDER BY c.' . $sort . ' ASC')
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-	 }
+    }
    
   /*-----End Of Function-----------------*/
 	

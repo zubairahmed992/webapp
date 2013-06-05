@@ -180,7 +180,7 @@ class ProductRepository extends EntityRepository {
 
         $query = $this->getEntityManager()
                 ->createQuery("
-      SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type , b.name as brand_name,
+      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type , b.name as brand_name,
       b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
@@ -199,8 +199,7 @@ class ProductRepository extends EntityRepository {
     public function productListByBrand($brand_id, $gender) {
         $query = $this->getEntityManager()
                         ->createQuery("
-      SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
-      p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type ,p.gender,
+      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
@@ -220,8 +219,7 @@ class ProductRepository extends EntityRepository {
     public function productListByClothingType($clothing_type_id, $gender) {
         $query = $this->getEntityManager()
                         ->createQuery("
-      SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
-      p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type ,p.gender,
+      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
@@ -241,8 +239,7 @@ class ProductRepository extends EntityRepository {
     public function productListByBrandClothingType($brand_id, $clothing_type_id, $gender) {
         $query = $this->getEntityManager()
                         ->createQuery("
-      SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
-      p.inseam,p.outseam,p.hem,p.back,ct.name as clothing_type ,p.gender,
+      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
@@ -264,11 +261,9 @@ class ProductRepository extends EntityRepository {
     public function productDetail($product_id) {
         $query = $this->getEntityManager()
                         ->createQuery("
-      SELECT p.id,p.name,p.adjustment,p.waist,p.hip,p.bust,p.sku,p.arm,p.leg,
-      p.inseam,p.outseam,p.hem,p.back,p.length,p.description,p.fitting_room_image ,
-      ct.name as clothing_type ,ct.target as clothing_target ,p.gender,
+      SELECT p.id,p.name,p.adjustment,p.description,p.gender,
+      ct.name as clothing_type ,ct.target as clothing_target ,
       b.name as brand_name,b.id as brand_id,b.image as brand_image,pc.title as color_title,
-      pc.color_a as color_a,pc.color_b as color_b, pc.color_c as color_c,
       pc.pattern as color_pattern, pc.image as color_image,
       ps.title as size_title,ps.inseam as size_inseam,ps.outseam as size_outseam,ps.hip as size_hip,ps.bust as size_bust,
       ps.back as size_back,ps.hem as size_hem,

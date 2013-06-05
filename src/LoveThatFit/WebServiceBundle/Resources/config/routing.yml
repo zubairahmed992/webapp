@@ -9,8 +9,8 @@ web_service_login:
     
     
 web_service_brands:
-    pattern:  /web_service/brands/{page_number}/{sort}
-    defaults: { _controller: LoveThatFitWebServiceBundle:Default:brandList,_format: json  ,page_number: 1, sort:id }
+    pattern:  /web_service/brands
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:brandList,_format: json }
 
 web_service_clothingtype:
     pattern:  /web_service/clothingtype/{page_number}/{sort}
