@@ -8,14 +8,14 @@ image_category:
     icon:
       height: 40
       width: 35
-      prefix: '_' 
-      dir:  'uploads/ltf/brands'
+      prefix:  
+      dir:  'uploads/ltf/brands/icon'
     
     logo:
       height: 80
       width: 205
-      prefix: '_' 
-      dir:  'uploads/ltf/brands'  
+      prefix:  
+      dir:  'uploads/ltf/brands/logo'  
 
   product:
 
@@ -26,19 +26,19 @@ image_category:
     icon:
       height: 40
       width: 35
-      prefix: '_' 
+      prefix:  
       dir:  'uploads/ltf/products/list'
 
     small:
       height: 110
       width: 85
-      prefix: '_' 
+      prefix:  
       dir:  'uploads/ltf/products/small'
 
     large:
       height: 240
       width: 200
-      prefix: '_'  			
+      prefix:   			
       dir:  'uploads/ltf/products/large'
   
   user:

@@ -173,7 +173,8 @@ class ImageHelper {
         if ($key == 'original') {
                 return $value['dir'] . '/' . $this->stripFileName($filename) . '.' . $this->stripImageExtention($filename);
             }else{
-                return $value['dir'] . '/' . $this->stripFileName($filename) . $value['prefix'] . $key . '.' . $this->stripImageExtention($filename);
+                //return $value['dir'] . '/' . $this->stripFileName($filename) . $value['prefix'] . $key . '.' . $this->stripImageExtention($filename);
+                return $value['dir'] . '/' . $this->stripFileName($filename) . '.' . $this->stripImageExtention($filename);
             }         
     }
 
