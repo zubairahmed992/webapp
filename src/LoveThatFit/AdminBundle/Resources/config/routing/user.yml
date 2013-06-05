@@ -5,3 +5,9 @@ admin_users:
 admin_user_detail_show:
     pattern:  /admin/user/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:User:show }
+    
+admin_users_search:
+    pattern:  /admin/user/search
+    defaults: { _controller: LoveThatFitAdminBundle:User:search }
+    
+    

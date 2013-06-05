@@ -31,6 +31,7 @@ class UserController extends Controller {
                            'no_of_pagination' => $no_of_paginations, 
                            'limit' => $cur_page, 
                            'per_page_limit' => $limit,
+                           'searchform'=>$this->userSearchFrom()->createView(),
 			));
     }
     
@@ -46,6 +47,22 @@ class UserController extends Controller {
                 ));
         }
     }
+    
+    public function searchAction(Request $request)
+    {
+       $data = $request->request->all();
+       $gender = $data['form']['gender'];       
+       $em = $this->getDoctrine()->getManager();
+       $entity = $this->getUserListByGender($gender);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find user.');        }
+        else{
+        return $this->render('LoveThatFitAdminBundle:User:search.html.twig', array(
+                    'user' =>$entity
+                ));
+        }
+    }
+    
 //------------------------------------------------------------------------------------------
     
     private function getUsersListById($id)
@@ -56,5 +73,29 @@ class UserController extends Controller {
         return $entity;
     }
     
+    private function getUserListByGender($gender)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserByGender($gender);
+        return $entity;
+    }
+    
+    
+    
+    private function userSearchFrom()
+    {
+        $user=new User();
+        $gender=array(''=>'Select Gender','m'=>'Male','f'=>'Female');        
+        return $this->createFormBuilder($user)
+                        ->add('gender','choice', 
+                array('choices'=>$gender,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                       'required'  => false
+                ))
+                        ->getForm();
+    }
     
 }
