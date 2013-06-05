@@ -212,7 +212,7 @@ class Algorithm {
 
     protected function compare($u, $p_min, $p_max) {
         if (is_null($u) || is_null($p_min) || is_null($p_max)) {
-            return null;
+            return null; //this should return an array that says if clothing measurement not provided or users measurement not provided
         }
 
         if ($u <= $p_max && $u >= $p_min) {
