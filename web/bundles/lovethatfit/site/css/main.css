@@ -2515,3 +2515,11 @@ padding-bottom: 0px;
     width: 100%;
     z-index: 5000;
 }
+
+#reset_error{
+    
+    color:#e9322d;
+    font-size: 0.85em;
+   
+    
+}
