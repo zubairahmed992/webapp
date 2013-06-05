@@ -43,22 +43,45 @@ class UserController extends Controller {
             throw $this->createNotFoundException('Unable to find user.');        }
         else{
         return $this->render('LoveThatFitAdminBundle:User:show.html.twig', array(
-                    'user' => $entity
+                    'user' => $entity                
                 ));
         }
     }
     
     public function searchAction(Request $request)
     {
-       $data = $request->request->all();
-       $gender = $data['form']['gender'];       
        $em = $this->getDoctrine()->getManager();
-       $entity = $this->getUserListByGender($gender);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find user.');        }
+       $data = $request->request->all();
+       $gender = $data['form']['gender'];
+       $firstname = $data['form']['firstname'];
+       $lastname = $data['form']['firstname'];
+       if($data['form']['age']!='')
+       {
+         $age=$data['form']['age'];
+         $endDate=$this->getUserBirthDate($age);
+         $new_timestamp = strtotime('-12 months',strtotime($endDate));
+         $beginDate=date("Y-d-m",$new_timestamp);        
+         $entity = $this->getUserSearchListByAge($beginDate,$endDate);          
+       } 
+       if($firstname=='')
+       {
+       $entity = $this->getUserSearchListByGender($gender);      
+       }
+       if($gender=='')
+       {
+           $entity = $this->getUserSearchListByName($firstname,$lastname);
+       }
+       if($gender!='' and $firstname!='')
+       {
+           $entity = $this->getUserSearchList($firstname,$lastname,$gender);
+       }
+       if (!$entity) {
+            throw $this->createNotFoundException('Unable to find user.');
+            }
         else{
         return $this->render('LoveThatFitAdminBundle:User:search.html.twig', array(
-                    'user' =>$entity
+                    'user' =>$entity,
+                    'searchform'=>$this->userSearchFrom()->createView(),                    
                 ));
         }
     }
@@ -72,14 +95,48 @@ class UserController extends Controller {
         $entity = $repository->find($id);
         return $entity;
     }
-    
-    private function getUserListByGender($gender)
+    private function getUserSearchListByGender($gender)
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserByGender($gender);
+                 ->findUserSearchListByGender($gender);
         return $entity;
+    }
+
+
+    private function getUserSearchListByName($firstname,$lastname)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserSearchListByName($firstname,$lastname);
+        return $entity;
+    }
+    
+    private function getUserSearchList($firstname,$lastname,$gender)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserSearchListBy($firstname,$lastname,$gender);
+        return $entity;
+    }
+    
+    private function getUserSearchListByAge($beginDate,$endDate)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserSearchListByAge($beginDate,$endDate);
+        return $entity;
+    }
+    
+    private function getUserBirthDate($age)
+    {
+               $agedate = new \DateTime();
+               $agedate->sub(new \DateInterval("P" .$age. "Y"));
+               return $agedate->format("Y-d-m");
     }
     
     
@@ -87,14 +144,23 @@ class UserController extends Controller {
     private function userSearchFrom()
     {
         $user=new User();
-        $gender=array(''=>'Select Gender','m'=>'Male','f'=>'Female');        
+        $gender=array(''=>'Select Gender','m'=>'Male','f'=>'Female'); 
+        $age=array(''=>'Select Age','15'=>15,'16'=>16,'17'=>17,'18'=>18,'19'=>19,'20'=>20,'21'=>21,'22'=>22,'23'=>23,'24'=>24,'25'=>25,'26'=>26,'27'=>27,'28'=>28,'29'=>29,'30'=>30,'31'=>31,'32'=>32,'33'=>33,'34'=>34,'35'=>35,'36'=>36,'37'=>37,'38'=>38,'39'=>39,'40'=>40,'41'=>41,'42'=>42,'43'=>43,'44'=>44,'45'=>45,'46'=>46,'47'=>47,'48'=>48,'49'=>49,'50'=>50,);
         return $this->createFormBuilder($user)
-                        ->add('gender','choice', 
-                array('choices'=>$gender,
+                ->add('firstname', 'text',array('required'  => false))        
+                ->add('gender','choice', 
+                        array('choices'=>$gender,
                        'multiple'  =>False,
                        'expanded'  => False, 
                        'required'  => false
                 ))
+                ->add('age','choice', 
+                        array('choices'=>$age,
+                       'multiple'  =>False,
+                       'expanded'  => False, 
+                       'required'  => false
+                ))
+                
                         ->getForm();
     }
     

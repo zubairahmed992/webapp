@@ -6,6 +6,14 @@
 <div class="p_listing">     
     <h1 style="float:left;">Users</h1> 
      <div class="clearfix"></div> 
+     <form action="{{ path('admin_users_search') }}" method="post" {{ form_enctype(searchform) }}>
+ {{ form_errors(searchform) }}
+        <div class="row-fluid show-grid">
+        <div>Name {{ form_widget(searchform.firstname) }}{{ form_errors(searchform.firstname) }} Gender {{ form_widget(searchform.gender) }}{{ form_errors(searchform.gender) }} Age {{ form_widget(searchform.age) }}{{ form_errors(searchform.age) }}</div>
+        <input type="submit" value="Search"/>
+        </div> 
+        {{form_rest(searchform) }}
+         </form>
 <div class="bs-docs-grid">
         <div class="row-fluid show-grid">
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'id' }}" style="text-decoration: none;">ID</a></div>

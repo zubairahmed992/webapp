@@ -10,7 +10,7 @@
      <form action="{{ path('admin_users_search') }}" method="post" {{ form_enctype(searchform) }}>
  {{ form_errors(searchform) }}
         <div class="row-fluid show-grid">
-        <div class="span3">Gender {{ form_widget(searchform.gender) }}{{ form_errors(searchform.gender) }}</div>
+        <div>Name {{ form_widget(searchform.firstname) }}{{ form_errors(searchform.firstname) }} Gender {{ form_widget(searchform.gender) }}{{ form_errors(searchform.gender) }} Age {{ form_widget(searchform.age) }}{{ form_errors(searchform.age) }}</div>
         <input type="submit" value="Search"/>
         </div> 
         {{form_rest(searchform) }}

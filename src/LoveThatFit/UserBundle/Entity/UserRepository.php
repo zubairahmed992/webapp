@@ -83,7 +83,7 @@ class UserRepository extends EntityRepository
         }
     }
     
-    public function findUserByGender($gender)
+    public function findUserSearchListByGender($gender)
     {
         $query = $this->getEntityManager()
                         ->createQuery("
@@ -99,7 +99,66 @@ class UserRepository extends EntityRepository
         
     }
     
+    public function findUserSearchListByName($firstname,$lastname)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     WHERE
+        us.firstName LIKE :firstName
+        or
+        us.lastName LIKE :lastName         
+        "
+        )->setParameters(array('firstName'=>'%'.$firstname.'%','lastName'=>'%'.$lastname.'%')); 
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
     
     
+    public function findUserSearchListBy($firstname,$lastname,$gender)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     WHERE
+        us.firstName LIKE :firstName
+        or
+        us.lastName LIKE :lastName
+        or
+        us.gender=:gender        
+        "
+        )->setParameters(array('firstName'=>'%'.$firstname.'%','lastName'=>'%'.$lastname.'%','gender'=>$gender)); 
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
+    public function findUserSearchListByAge($beginDate,$endDate)
+    {
+       $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     WHERE
+        us.birthDate between :birthDate
+        and
+        :birthDate
+        "
+        )->setParameter('birthDate',$endDate)
+         ->setParameter('birthDate',$beginDate);
+        try {           
+            return $query->getResult();
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
     
 }

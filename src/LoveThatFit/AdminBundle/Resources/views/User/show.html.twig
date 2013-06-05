@@ -14,7 +14,8 @@
 
 <div>      
     <h1 style="float:left;">User's Detail</h1>
-     <div class="btn_wrapper">     
+     <div class="btn_wrapper">  
+         
       <a href="{{ path('admin_users') }}" class="btn">back</a>
       </div>
       <div class="clearfix"></div>   
@@ -50,6 +51,7 @@
                                     </div>          
                                     {%endif%}
                                     
+                                        
                                     <div class="span8">
                                     <div class="span3">Email</div>
                                     <div class="span3">{{user.email }}</div>
@@ -60,6 +62,11 @@
                                     <div class="span3">Date Of Birth</div>
                                     <div class="span3">{{ user.birthDate|date('d-m-Y') }}</div>
                                     </div>   
+                                    
+                                    <div class="span8">
+                                    <div class="span3">Age</div>
+                                    <div class="span3">{{user.age}}</div>
+                                    </div>    
                                   
                                     <div class="span8">
                                     <div class="span3">Weight</div>
@@ -134,7 +141,7 @@
                                     </div>
                                         
                                         
-                                     <div class="span8">
+                                    <div class="span8">
                                     <div class="span3">Neck</div>
                                     <div class="span3">{{user.measurement.neck}}</div>
                                     </div>    
