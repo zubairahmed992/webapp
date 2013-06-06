@@ -17,7 +17,7 @@ class Brand {
      */
      
      /**
-     * @ORM\OneToMany(targetEntity="sizechart", mappedBy="brand")
+     * @ORM\OneToMany(targetEntity="SizeChart", mappedBy="brand")
      */
     protected $sizechart;
     /**
