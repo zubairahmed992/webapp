@@ -191,39 +191,47 @@ class Algorithm {
         }
 
         $this->setMessageArray();
-
-        if (is_null($comparison_result)) {
-            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['np'], 'fit' => false);
+        
+        $diff = $comparison_result["diff"];
+        
+        if (is_null($diff)) {
+            return array("diff" => $diff, "msg" => $this->msg_array["{$measuring_point}"]['np'], 'fit' => false);
         }
 
-        if ($comparison_result > 0) {
+        if ($diff > 0) {
             //add loose message //add diff //fits boolean false
-            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['loose'], 'fit' => false);
-        } elseif ($comparison_result < 0) {
+            return array("diff" => $diff, "msg" => $this->msg_array["{$measuring_point}"]['loose'], 'fit' => false);
+        } elseif ($diff < 0) {
             //add tight message //add diff //fits boolean false
-            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['tight'], 'fit' => false);
+            return array("diff" => $diff, "msg" => $this->msg_array["{$measuring_point}"]['tight'], 'fit' => false);
         } else {
             //get love message //add 0 or inclination //fits boolean true
-            return array("diff" => $comparison_result, "msg" => $this->msg_array["{$measuring_point}"]['fit'], 'fit' => true);
+            return array("diff" => $diff, "msg" => $this->msg_array["{$measuring_point}"]['fit'], 'fit' => true);
         }
     }
 
 //----------------------------------------------------------------------
 
     protected function compare($u, $p_min, $p_max) {
-        if (is_null($u) || is_null($p_min) || is_null($p_max)) {
-            return null; //this should return an array that says if clothing measurement not provided or users measurement not provided
+        // incase if any measurement not provided
+        if (is_null($u) && (is_null($p_min) || is_null($p_max))) {
+            return array("user_measurement" => false, "item_measurement" => false, 'diff'=>null);
+        }elseif (is_null($u)) {
+            return array("user_measurement" => false, "item_measurement" => true, 'diff'=>null);
+        }elseif(is_null($p_min) || is_null($p_max)){
+            return array("user_measurement" => true, "item_measurement" => false, 'diff'=>null); 
         }
 
         if ($u <= $p_max && $u >= $p_min) {
-            return 0; //love
+            $diff =  0; //love
         } elseif ($u > $p_max) {
-            return $p_max - $u; //tight: returns a negative value, difference of measurement in inches
+            $diff =  $p_max - $u; //tight: returns a negative value, difference of measurement in inches
         } elseif ($u < $p_min) {
-            return $p_min - $u; //loose: returns a positive value, difference of measurement in inches
+            $diff =  $p_min - $u; //loose: returns a positive value, difference of measurement in inches
         } else {
-            return null;
+            $diff = null;
         }
+        return array("user_measurement" => true, "item_measurement" => true, 'diff'=>$diff);
     }
 
     //------------------------------------------------------------------------    
