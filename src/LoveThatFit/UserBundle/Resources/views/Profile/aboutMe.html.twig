@@ -1,4 +1,5 @@
 {% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+
  {% block profile_heading %}
 <h1>About me</h1>
         {% endblock %}
@@ -15,10 +16,48 @@
    </div>
    
 {% endif %}
+
+ 
+
+           {%if(app.user.gender=='f')%}
+        <form action="" method="post" {{ form_enctype(brandform) }}>
+            <span id="gender" style="display: none;">{{entity.gender}}</span>
+        {{ form_errors(brandform) }}
+            <div class="shirts_mus manual_opn show_hide show_it" id="shirts_mus_opt">   
+            Top
+                     {{form_errors(brandform.top_brand)}}  
+                     {{form_widget(brandform.top_brand)}} 
+                     {{form_errors(brandform.top_size)}}  
+                     {{form_widget(brandform.top_size)}}  
+            </div>
+            
+                    <!---  pant section  !-->
+             
+                    Bottom
+                    {{form_errors(brandform.bottom_brand)}}  
+                    {{form_widget(brandform.bottom_brand)}} 
+                    {{form_errors(brandform.bottom_size)}}  
+                     {{form_widget(brandform.bottom_size)}}  
+             
+                   
+              
+                    Dress
+                    {{form_errors(brandform.dress_brand)}}  
+                     {{form_widget(brandform.dress_brand)}}
+                        
+                     {{form_errors(brandform.dress_size)}}  
+                     {{form_widget(brandform.dress_size)}}  
+              
+                           
+          </form>
+                 {%endif%}                   
+
+
+<br/>
+
+
 <form action="{{ path('user_profile_about_me_update')}}" method="post" {{ form_enctype(form) }}>
     <div id='frm_height'>
-        
-
         {{ form_label(form.height) }}
         {{ form_widget(form.height) }} &nbsp;<b>"</b>
         <div class="form_vld_error">{{ form_errors(form.height) }}</div>
@@ -145,4 +184,98 @@
    
   
 </form>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    var gender=$('#gender').text();
+    $("#brand_size_chart_top_brand").change(function(){ 
+        var checked_option = $(this).attr("value");
+       
+        $('#brand_size_chart_top_size').html('');
+        $.ajax({
+            type:'json',
+            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Top",
+            success: function (data) {   
+                var top_brand = JSON.parse(data);
+                length_obj=Object.keys(top_brand).length;
+                if( length_obj>0)
+                {    
+                    
+                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_top_size');    
+                    for(i=0;i<length_obj;i++)
+                    {   
+
+                        $('<option>').val(top_brand[i]['id']).text(top_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
+                    }
+                } 
+                else 
+                {
+                        
+                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_top_size');       
+                }
+            }
+        });
+    });
+    
+    
+    $("#brand_size_chart_bottom_brand").change(function(){ 
+        var checked_option = $(this).attr("value");
+       
+        $('#brand_size_chart_bottom_size').html('');
+        $.ajax({
+            type:'json',
+            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Bottom",
+            success: function (data) {   
+                var bottom_brand = JSON.parse(data);
+                length_obj=Object.keys(bottom_brand).length;
+                if( length_obj>0)
+                {    
+                    
+                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_bottom_size');    
+                    for(i=0;i<length_obj;i++)
+                    {   
+
+                        $('<option>').val(bottom_brand[i]['id']).text(bottom_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
+                    }
+                } 
+                else 
+                {
+                        
+                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_bottom_size');       
+                }
+            }
+        });
+    });
+    
+    $("#brand_size_chart_dress_brand").change(function(){ 
+        var checked_option = $(this).attr("value");
+       
+        $('#brand_size_chart_dress_size').html('');
+        $.ajax({
+            type:'json',
+            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Dress",
+            success: function (data) {   
+                var dress_brand = JSON.parse(data);
+                length_obj=Object.keys(dress_brand).length;
+                if( length_obj>0)
+                {    
+                    
+                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_dress_size');    
+                    for(i=0;i<length_obj;i++)
+                    {   
+
+                        $('<option>').val(dress_brand[i]['id']).text(dress_brand[i]['title']).appendTo('#brand_size_chart_dress_size');    
+                    }
+                } 
+                else 
+                {
+                        
+                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_dress_size');       
+                }
+            }
+        });
+    });
+    
+     });
+    </script>
 {% endblock %}

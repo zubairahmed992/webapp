@@ -8,9 +8,10 @@ use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementType;
 use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementMaleType;
 use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementFemaleType;
 use LoveThatFit\UserBundle\Form\Type\ProfileSettingsType;
+use LoveThatFit\UserBundle\Form\Type\SizeChartMeasurementType;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LoveThatFit\AdminBundle\Entity\SurveyQuestion;
 use LoveThatFit\AdminBundle\Entity\SurveyAnswer;
@@ -33,8 +34,10 @@ class ProfileController extends Controller {
         
         if ($entity->getGender() == 'm') {
           $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
+          $brandSizeChartForm =$this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
           }else{
           $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
+          $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
           }
        
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
@@ -42,10 +45,26 @@ class ProfileController extends Controller {
                     'validation_groups' => array('profile_measurement'),
                     'measurement' => $measurement,
                     'entity'=>$entity,
+                    'brandform'=>$brandSizeChartForm->createView(),
                     
                 ));
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //-------------------------------------------------------------
     public function aboutMeUpdateAction() {
 
@@ -74,7 +93,7 @@ class ProfileController extends Controller {
          return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'measurement' => $measurement,   
-                     'entity'=>$entity,
+                    'entity'=>$entity,
                 ));
        }
 
@@ -218,6 +237,12 @@ class ProfileController extends Controller {
        }
        return $this->redirect($this->generateUrl('user_profile_what_i_like'));
     }
+    
+    
+   
+    
+    
+    
     
     private function updateAnswerIfFound($question,$answers,$user) {
         $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
@@ -387,6 +412,22 @@ class ProfileController extends Controller {
         return $size;
     }
     
+    //------------------------------------------------------------------------
+   //methods will be moved somewhere on refactoring ------------------------------
+   //------------------------------------------------------------------------
+
+    private function getBrandArray($target) {
+
+        $brands = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:SizeChart')
+                ->getBrandsByTarget($target);
+
+        $brands_array = array();
+        foreach ($brands as $i) {
+            $brands_array[$i['id']] = $i['name'];
+        }
+        return $brands_array;
+    }
     
     
     

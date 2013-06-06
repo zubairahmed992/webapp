@@ -21,5 +21,17 @@ class AjaxController extends Controller {
                 $response->headers->set('Content-Type', 'text/html');          
                 return $response;
     }
+    
+    public function brandSizeChartByJSONAction($brand_id, $gender, $target) {
+        
+      
+        $brandsizechart = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:SizeChart')
+                ->findByBrandGenderTarget($brand_id, $gender, $target);
+                $response = new Response(json_encode($brandsizechart));
+                $response->headers->set('Content-Type', 'text/html');          
+                return $response;
+    }
+    
 
 }
