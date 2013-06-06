@@ -271,9 +271,9 @@ public function deleteImages()
     /**
      * Remove sizechart
      *
-     * @param LoveThatFit\AdminBundle\Entity\sizechart $sizechart
+     * @param LoveThatFit\AdminBundle\Entity\SizeChart $sizechart
      */
-    public function removeSizechart(\LoveThatFit\AdminBundle\Entity\sizechart $sizechart)
+    public function removeSizechart(\LoveThatFit\AdminBundle\Entity\SizeChart $sizechart)
     {
         $this->sizechart->removeElement($sizechart);
     }
