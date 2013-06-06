@@ -55,25 +55,35 @@ class UserController extends Controller {
        $gender = $data['form']['gender'];
        $firstname = $data['form']['firstname'];
        $lastname = $data['form']['firstname'];
-       if($data['form']['age']!='')
+       if($data['form']['age']=='')
+       {
+         $age='';         
+       } else
        {
          $age=$data['form']['age'];
          $endDate=$this->getUserBirthDate($age);
          $new_timestamp = strtotime('-12 months',strtotime($endDate));
-         $beginDate=date("Y-d-m",$new_timestamp);        
-         $entity = $this->getUserSearchListByAge($beginDate,$endDate);          
-       } 
-       if($firstname=='')
+         $beginDate=date("Y-m-d",$new_timestamp);
+       }
+       if($firstname=='' and $gender=='')
+       {
+         $entity=$this->getUserByAge($beginDate,$endDate);
+       }
+       if($firstname=='' and $age=='')
        {
        $entity = $this->getUserSearchListByGender($gender);      
        }
-       if($gender=='')
+       if($gender=='' and $age=='')
        {
            $entity = $this->getUserSearchListByName($firstname,$lastname);
        }
        if($gender!='' and $firstname!='')
        {
            $entity = $this->getUserSearchList($firstname,$lastname,$gender);
+       }
+       if($gender!='' and $firstname!='' and $age!='')
+       {
+           $entity = $this->getUserSearchLists($firstname,$lastname,$gender,$beginDate,$endDate);
        }
        if (!$entity) {
             throw $this->createNotFoundException('Unable to find user.');
@@ -104,7 +114,13 @@ class UserController extends Controller {
         return $entity;
     }
 
-
+ private function getUserBirthDate($age)
+    {
+               $agedate = new \DateTime();
+               $agedate->sub(new \DateInterval("P" .$age. "Y"));
+               return $agedate->format("Y-m-d");
+    }
+    
     private function getUserSearchListByName($firstname,$lastname)
     {
         $em = $this->getDoctrine()->getManager();
@@ -123,24 +139,25 @@ class UserController extends Controller {
         return $entity;
     }
     
-    private function getUserSearchListByAge($beginDate,$endDate)
+    private function getUserSearchLists($firstname,$lastname,$gender,$beginDate,$endDate)
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserSearchListByAge($beginDate,$endDate);
+                 ->findUserSearchListsBy($firstname,$lastname,$gender,$beginDate,$endDate);
         return $entity;
     }
     
-    private function getUserBirthDate($age)
+    private function getUserByAge($beginDate,$endDate)
     {
-               $agedate = new \DateTime();
-               $agedate->sub(new \DateInterval("P" .$age. "Y"));
-               return $agedate->format("Y-d-m");
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserByAge($beginDate,$endDate);
+        return $entity;
     }
     
-    
-    
+   
     private function userSearchFrom()
     {
         $user=new User();

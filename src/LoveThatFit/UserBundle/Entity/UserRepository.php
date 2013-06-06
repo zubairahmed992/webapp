@@ -140,19 +140,19 @@ class UserRepository extends EntityRepository
         
     }
     
-    public function findUserSearchListByAge($beginDate,$endDate)
+    public function findUserByAge($beginDate,$endDate)
     {
-       $query = $this->getEntityManager()
+      $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT us FROM LoveThatFitUserBundle:User us 
-     WHERE
-        us.birthDate between :birthDate
-        and
-        :birthDate
+     SELECT u FROM LoveThatFitUserBundle:User u 
+     where
+        u.birthDate BETWEEN :startDate
+        AND 
+        :endDate
         "
-        )->setParameter('birthDate',$endDate)
-         ->setParameter('birthDate',$beginDate);
-        try {           
+        )->setParameter('startDate',$beginDate)
+         ->setParameter('endDate',$endDate);
+        try {                     
             return $query->getResult();
             
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -161,4 +161,35 @@ class UserRepository extends EntityRepository
         
     }
     
+    public function findUserSearchListsBy($firstname,$lastname,$gender,$beginDate,$endDate)
+    {
+      $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     where
+        us.firstName LIKE :firstName
+        or
+        us.lastName LIKE :lastName
+        or
+        us.gender=:gender 
+        or
+        us.birthDate BETWEEN :startDate
+        AND 
+        :endDate
+        "
+        )->setParameters(array('firstName'=>'%'.$firstname.'%','lastName'=>'%'.$lastname.'%','gender'=>$gender,'startDate'=>$beginDate,'endDate'=>$endDate));
+        try {                     
+            return $query->getResult();
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
+    
+    
 }
+
+
+
