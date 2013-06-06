@@ -221,10 +221,10 @@ public function deleteImages()
     /**
      * Add sizechart
      *
-     * @param LoveThatFit\AdminBundle\Entity\sizechart $sizechart
+     * @param LoveThatFit\AdminBundle\Entity\SizeChart $sizechart
      * @return Brand
      */
-    public function addSizechart(\LoveThatFit\AdminBundle\Entity\sizechart $sizechart)
+    public function addSizechart(\LoveThatFit\AdminBundle\Entity\SizeChart $sizechart)
     {
         $this->sizechart[] = $sizechart;
     
