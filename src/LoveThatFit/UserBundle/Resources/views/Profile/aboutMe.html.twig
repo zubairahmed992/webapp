@@ -20,32 +20,32 @@
 
 
 
-        <form action="" method="post" {{ form_enctype(brandform) }}>
+        <form action="" method="post" {{ form_enctype(sizechartsizeform) }}>
             <span id="gender" style="display: none;">{{entity.gender}}</span>
-        {{ form_errors(brandform) }}
+        {{ form_errors(sizechartsizeform) }}
 
             Top
-                     {{form_errors(brandform.top_brand)}}  
-                     {{form_widget(brandform.top_brand)}} 
-                     {{form_errors(brandform.top_size)}}  
-                     {{form_widget(brandform.top_size)}}  
+                     {{form_errors(sizechartsizeform.top_brand)}}  
+                     {{form_widget(sizechartsizeform.top_brand)}} 
+                     {{form_errors(sizechartsizeform.top_size)}}  
+                     {{form_widget(sizechartsizeform.top_size)}}  
 
 
             <!---  pant section  !-->
 
             Bottom
-                    {{form_errors(brandform.bottom_brand)}}  
-                    {{form_widget(brandform.bottom_brand)}} 
-                    {{form_errors(brandform.bottom_size)}}  
-                     {{form_widget(brandform.bottom_size)}}  
+                    {{form_errors(sizechartsizeform.bottom_brand)}}  
+                    {{form_widget(sizechartsizeform.bottom_brand)}} 
+                    {{form_errors(sizechartsizeform.bottom_size)}}  
+                     {{form_widget(sizechartsizeform.bottom_size)}}  
 
            {%if(app.user.gender=='f')%}   
             Dress
-                    {{form_errors(brandform.dress_brand)}}  
-                     {{form_widget(brandform.dress_brand)}}
+                    {{form_errors(sizechartsizeform.dress_brand)}}  
+                     {{form_widget(sizechartsizeform.dress_brand)}}
 
-                     {{form_errors(brandform.dress_size)}}  
-                     {{form_widget(brandform.dress_size)}}  
+                     {{form_errors(sizechartsizeform.dress_size)}}  
+                     {{form_widget(sizechartsizeform.dress_size)}}  
 
                             {%endif%}                   
         </form>
@@ -186,95 +186,95 @@
 
                             <script type="text/javascript">
                                 $(document).ready(function() {
-                                var gender=$('#gender').text();
-                                $("#brand_size_chart_top_brand").change(function(){ 
-                                    var checked_option = $(this).attr("value");
-       
-                                    $('#brand_size_chart_top_size').html('');
-                                    $.ajax({
-                                        type:'json',
-                                        url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Top",
-                                        success: function (data) {   
-                                            var top_brand = JSON.parse(data);
-                                            length_obj=Object.keys(top_brand).length;
-                                            if( length_obj>0)
-                                            {    
-                    
-                                                $('<option>').val('').text('Size').appendTo('#brand_size_chart_top_size');    
-                                                for(i=0;i<length_obj;i++)
-                                                {   
+                                    var gender = $('#gender').text();
+                                    $("#brand_size_chart_top_brand").change(function() {
+                                        var checked_option = $(this).attr("value");
 
-                                                    $('<option>').val(top_brand[i]['id']).text(top_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
-                                                }
-                                            } 
-                                            else 
-                                            {
-                        
-                                                $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_top_size');       
-                                            }
-                                        }
-                                    });
-                                });
-    
-    
-                                $("#brand_size_chart_bottom_brand").change(function(){ 
-                                    var checked_option = $(this).attr("value");
-       
-                                    $('#brand_size_chart_bottom_size').html('');
-                                    $.ajax({
-                                        type:'json',
-                                        url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Bottom",
-                                        success: function (data) {   
-                                            var bottom_brand = JSON.parse(data);
-                                            length_obj=Object.keys(bottom_brand).length;
-                                            if( length_obj>0)
-                                            {    
-                    
-                                                $('<option>').val('').text('Size').appendTo('#brand_size_chart_bottom_size');    
-                                                for(i=0;i<length_obj;i++)
-                                                {   
+                                        $('#brand_size_chart_top_size').html('');
+                                        $.ajax({
+                                            type: 'json',
+                                            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Top",
+                                            success: function(data) {
+                                                var top_brand = JSON.parse(data);
+                                                length_obj = Object.keys(top_brand).length;
+                                                if (length_obj > 0)
+                                                {
 
-                                                    $('<option>').val(bottom_brand[i]['id']).text(bottom_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
-                                                }
-                                            } 
-                                            else 
-                                            {
-                        
-                                                $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_bottom_size');       
-                                            }
-                                        }
-                                    });
-                                });
-    
-                                $("#brand_size_chart_dress_brand").change(function(){ 
-                                    var checked_option = $(this).attr("value");
-       
-                                    $('#brand_size_chart_dress_size').html('');
-                                    $.ajax({
-                                        type:'json',
-                                        url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Dress",
-                                        success: function (data) {   
-                                            var dress_brand = JSON.parse(data);
-                                            length_obj=Object.keys(dress_brand).length;
-                                            if( length_obj>0)
-                                            {    
-                    
-                                                $('<option>').val('').text('Size').appendTo('#brand_size_chart_dress_size');    
-                                                for(i=0;i<length_obj;i++)
-                                                {   
+                                                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_top_size');
+                                                    for (i = 0; i < length_obj; i++)
+                                                    {
 
-                                                    $('<option>').val(dress_brand[i]['id']).text(dress_brand[i]['title']).appendTo('#brand_size_chart_dress_size');    
+                                                        $('<option>').val(top_brand[i]['id']).text(top_brand[i]['title']).appendTo('#brand_size_chart_top_size');
+                                                    }
                                                 }
-                                            } 
-                                            else 
-                                            {
-                        
-                                                $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_dress_size');       
+                                                else
+                                                {
+
+                                                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_top_size');
+                                                }
                                             }
-                                        }
+                                        });
                                     });
+
+
+                                    $("#brand_size_chart_bottom_brand").change(function() {
+                                        var checked_option = $(this).attr("value");
+
+                                        $('#brand_size_chart_bottom_size').html('');
+                                        $.ajax({
+                                            type: 'json',
+                                            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Bottom",
+                                            success: function(data) {
+                                                var bottom_brand = JSON.parse(data);
+                                                length_obj = Object.keys(bottom_brand).length;
+                                                if (length_obj > 0)
+                                                {
+
+                                                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_bottom_size');
+                                                    for (i = 0; i < length_obj; i++)
+                                                    {
+
+                                                        $('<option>').val(bottom_brand[i]['id']).text(bottom_brand[i]['title']).appendTo('#brand_size_chart_bottom_size');
+                                                    }
+                                                }
+                                                else
+                                                {
+
+                                                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_bottom_size');
+                                                }
+                                            }
+                                        });
+                                    });
+
+                                    $("#brand_size_chart_dress_brand").change(function() {
+                                        var checked_option = $(this).attr("value");
+
+                                        $('#brand_size_chart_dress_size').html('');
+                                        $.ajax({
+                                            type: 'json',
+                                            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Dress",
+                                            success: function(data) {
+                                                var dress_brand = JSON.parse(data);
+                                                length_obj = Object.keys(dress_brand).length;
+                                                if (length_obj > 0)
+                                                {
+
+                                                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_dress_size');
+                                                    for (i = 0; i < length_obj; i++)
+                                                    {
+
+                                                        $('<option>').val(dress_brand[i]['id']).text(dress_brand[i]['title']).appendTo('#brand_size_chart_dress_size');
+                                                    }
+                                                }
+                                                else
+                                                {
+
+                                                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_dress_size');
+                                                }
+                                            }
+                                        });
+                                    });
+
                                 });
-    
-                                 });
                                 </script>
 {% endblock %}

@@ -45,7 +45,7 @@ class ProfileController extends Controller {
                     'validation_groups' => array('profile_measurement'),
                     'measurement' => $measurement,
                     'entity' => $entity,
-                    'brandform' => $brandSizeChartForm->createView(),
+                    'sizechartsizeform' => $brandSizeChartForm->createView(),
                 ));
     }
 
