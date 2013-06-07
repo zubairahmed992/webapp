@@ -27,44 +27,28 @@ class ProfileController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-       
-         $measurement = $entity->getMeasurement();
-       
-       
-        
+
+        $measurement = $entity->getMeasurement();
+
+
+
         if ($entity->getGender() == 'm') {
-          $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
-          $brandSizeChartForm =$this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
-          }else{
-          $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
-          $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
-          }
-       
+            $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
+        } else {
+            $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
+        }
+
+        $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'validation_groups' => array('profile_measurement'),
                     'measurement' => $measurement,
-                    'entity'=>$entity,
-                    'brandform'=>$brandSizeChartForm->createView(),
-                    
+                    'entity' => $entity,
+                    'brandform' => $brandSizeChartForm->createView(),
                 ));
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //-------------------------------------------------------------
     public function aboutMeUpdateAction() {
 
@@ -75,27 +59,26 @@ class ProfileController extends Controller {
 
         $measurement = $entity->getMeasurement();
 
-       // $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
-       if ($entity->getGender() == 'm') {
-          $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
-          }
-      if($entity->getGender() == 'f')
-         {
-          $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
-          }
-        
-        $measurementForm->bind($this->getRequest()); 
-        $measurement->setUpdatedAt(new \DateTime('now')); 
+        // $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
+        if ($entity->getGender() == 'm') {
+            $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
+        }
+        if ($entity->getGender() == 'f') {
+            $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
+        }
+
+        $measurementForm->bind($this->getRequest());
+        $measurement->setUpdatedAt(new \DateTime('now'));
         $em->persist($measurement);
         $em->flush();
         $this->get('session')->setFlash('success', 'Your measurement information has been saved.');
-       
-         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
+
+        return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
-                    'measurement' => $measurement,   
-                    'entity'=>$entity,
+                    'measurement' => $measurement,
+                    'entity' => $entity,
                 ));
-       }
+    }
 
     //-------------------------------------------------------------
 
@@ -105,10 +88,10 @@ class ProfileController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-            
+
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
-        
+
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
@@ -127,139 +110,124 @@ class ProfileController extends Controller {
 
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
-        
-        if ($userForm->isValid())
-        {
+
+        if ($userForm->isValid()) {
             $getAvatar = $entity->getAvatar();
             $entity->uploadAvatar();
             $em->persist($entity);
-            $em->flush(); 
-            $this->get('session')->setFlash('Success', 'Profile has been updated.');    
-        }        
+            $em->flush();
+            $this->get('session')->setFlash('Success', 'Profile has been updated.');
+        }
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
-      return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
+        return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
                     'form_password_reset' => $passwordResetForm->createView()
                 ));
     }
+
 //-------------------------------------------------------------------------
-    
-    
+
+
     public function passwordResetUpdateAction(Request $request) {
 
-        $id = $this->get('security.context')->getToken()->getUser()->getId();        
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-        
+
         $user_old_password = $entity->getPassword();
         $salt_value_old = $entity->getSalt();
 
         $userForm = $this->createForm(new UserPasswordReset(), $entity);
         $userForm->bind($request);
         $data = $userForm->getData();
-        
+
         $oldpassword = $data->getOldpassword();
-        
+
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($entity);
         $password_old_enc = $encoder->encodePassword($oldpassword, $salt_value_old);
-        
+
         if ($user_old_password == $password_old_enc) {
-        
+
             $em->persist($entity);
             $em->flush();
-            
+
             if ($userForm->isValid()) {
 
                 $data = $userForm->getData();
                 $password = $data->getPassword();
-                $salt_value = $entity->getSalt();                
-                $entity->setUpdatedAt(new \DateTime('now'));            
+                $salt_value = $entity->getSalt();
+                $entity->setUpdatedAt(new \DateTime('now'));
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($entity);
                 $password = $encoder->encodePassword($password, $salt_value);
-                $entity->setPassword($password);                
+                $entity->setPassword($password);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
-                $em->flush();                
-                $this->get('session')->setFlash('Success', 'Password Updated Successfully');                
-                } 
-                else
-                {
+                $em->flush();
+                $this->get('session')->setFlash('Success', 'Password Updated Successfully');
+            } else {
                 $this->get('session')->setFlash('Warning', 'Confirm pass doesnt match');
-                }
-           }
-           else 
-              {
+            }
+        } else {
             $this->get('session')->setFlash('Warning', 'Please Enter Correct Password');
-             }
-              $userForms = $this->createForm(new ProfileSettingsType(), $entity);
+        }
+        $userForms = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
-        
+
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForms->createView(),
                     'entity' => $entity,
                     'form_password_reset' => $passwordResetForm->createView()
                 ));
     }
-    
 
     //--------------------------- What I like --------------------------
-    public function whatILikeAction()
-    {       
+    public function whatILikeAction() {
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
-                    'data' =>  $this->getQuestionsList(), 
-                    'form'=>$this->addUserSurveyForm()->createView(),                    
-                    'userid'=>$this->get('security.context')->getToken()->getUser(),
-                    'count_question'=>count($this->getQuestionsList()),
-        ));
+                    'data' => $this->getQuestionsList(),
+                    'form' => $this->addUserSurveyForm()->createView(),
+                    'userid' => $this->get('security.context')->getToken()->getUser(),
+                    'count_question' => count($this->getQuestionsList()),
+                ));
     }
-   
-    
-    public function submitUserSurveyFormAction(Request $request)
-    {
-      $em = $this->getDoctrine()->getManager();
-      $user=$this->get('security.context')->getToken()->getUser();
-      $data = $request->request->all();
-      $str='';
-      foreach ($data as $key => $value) {
-         $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find($value);
-         $str = $str.','.$answer->getQuestion()->getId();
-         $strs=explode(',',$str);
-         foreach($strs as $questionId)
-         {   
-          $userSurvey = new SurveyUser(); 
-          $question = $this->getquestionById($questionId);          
-          $answers=  $this->getAnswerById($value);
-         }
-          $addanswer =$this->updateAnswerIfFound($question,$answers,$user);
-       }
-       return $this->redirect($this->generateUrl('user_profile_what_i_like'));
-    }
-    
-    
-   
-    
-    
-    
-    
-    private function updateAnswerIfFound($question,$answers,$user) {
-        $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
-        $count_result=count($result); 
-        if($count_result>0)
-        {            
-            
-            return $this->updateSurveyUserAnswer($question,$answers,$user);        
+
+    //----------------------------------------------------------------------------
+    public function submitUserSurveyFormAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $data = $request->request->all();
+        $str = '';
+        foreach ($data as $key => $value) {
+            $answer = $em->getRepository('LoveThatFitAdminBundle:SurveyAnswer')->find($value);
+            $str = $str . ',' . $answer->getQuestion()->getId();
+            $strs = explode(',', $str);
+            foreach ($strs as $questionId) {
+                $userSurvey = new SurveyUser();
+                $question = $this->getquestionById($questionId);
+                $answers = $this->getAnswerById($value);
+            }
+            $addanswer = $this->updateAnswerIfFound($question, $answers, $user);
         }
-        else
-        {
-            return $this->addSurveyUserAnswer($question,$answers,$user);
-        }       
-    }    
-    private function addSurveyUserAnswer($question,$answers,$user)
-    {
-        $userSurvey = new SurveyUser();        
+        return $this->redirect($this->generateUrl('user_profile_what_i_like'));
+    }
+
+    //----------------------------------------------------------------------------
+
+    private function updateAnswerIfFound($question, $answers, $user) {
+        $result = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question' => $question, 'user' => $user));
+        $count_result = count($result);
+        if ($count_result > 0) {
+
+            return $this->updateSurveyUserAnswer($question, $answers, $user);
+        } else {
+            return $this->addSurveyUserAnswer($question, $answers, $user);
+        }
+    }
+
+    private function addSurveyUserAnswer($question, $answers, $user) {
+        $userSurvey = new SurveyUser();
         $userSurvey->setQuestion($question);
         $userSurvey->setAnswer($answers);
         $userSurvey->setUser($user);
@@ -268,153 +236,50 @@ class ProfileController extends Controller {
         $em->persist($userSurvey);
         $em->flush();
         $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
-    }    
-    private function updateSurveyUserAnswer($question,$answers,$user)
-    {
-      $em = $this->getDoctrine()->getEntityManager();
-      $surveyUser = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question'=>$question,'user'=>$user));
-      foreach($surveyUser as $userSurvey)
-      {
-          $surveyId=$userSurvey->getId();
-          $surveyUserId = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->find($surveyId);
-      } 
+    }
+
+    private function updateSurveyUserAnswer($question, $answers, $user) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $surveyUser = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->findby(array('question' => $question, 'user' => $user));
+        foreach ($surveyUser as $userSurvey) {
+            $surveyId = $userSurvey->getId();
+            $surveyUserId = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyUser')->find($surveyId);
+        }
         $surveyUserId->setQuestion($question);
         $surveyUserId->setAnswer($answers);
         $surveyUserId->setUser($user);
-        $surveyUserId->setSurvey('Question Answer Survey');        
+        $surveyUserId->setSurvey('Question Answer Survey');
         $em->persist($surveyUserId);
-        $em->flush();      
-      $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
-    }   
+        $em->flush();
+        $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
+    }
+
     private function getQuestionsList() {
         $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
         return $question;
     }
-    
+
     private function getquestionById($id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion');
         $question = $repository->find($id);
         return $question;
     }
+
     private function getAnswerById($id) {
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyAnswer');
         $answer = $repository->find($id);
         return $answer;
     }
-    
-    
-    
-    private function addUserSurveyForm()
-    {
-        $builder = $this->createFormBuilder();    
-        return $builder->getForm();       
+
+    private function addUserSurveyForm() {
+        $builder = $this->createFormBuilder();
+        return $builder->getForm();
     }
-    
-    
-    //SizeChart Form Azeem
-    
-    public function SizeChartUserRegistrationFormAction()
-    {        
-        
-        $top_fitting_size_chart_id=  $this->getBrandByTop($target='Top');        
-        $bottom_fitting_size_chart_id=$this->getBrandByBottom($target='Bottom');
-        $dress_fitting_size_chart_id =$this->getBrandByDresses($target='dress');
-        $top_fittings_size_chart_id=  $this->getSizeByTop($target='Top');
-        $bottom_fittings_size_chart_id=$this->getSizeByBottom($target='Bottom');
-        $dress_fittings_size_chart_id =$this->getSizeByDresses($target='dress');
-        
-        $form = $this->createFormBuilder()
-                ->add(
-                'Brand', 'choice', 
-                array('choices'=>$top_fitting_size_chart_id,
-                       'multiple'  =>False,
-                       'expanded'  => False, 
-                ))
-                ->add(
-                'Brand1', 'choice', 
-                array('choices'=>$bottom_fitting_size_chart_id,
-                       'multiple'  =>False,
-                       'expanded'  => False, 
-                ))
-                ->add(
-                'Brand2', 'choice', 
-                array('choices'=>$dress_fitting_size_chart_id,
-                       'multiple'  =>False,
-                       'expanded'  => False, 
-                ))                
-                ->add(
-                'sizetop', 'choice', 
-                array('choices'=>$top_fittings_size_chart_id,
-                       'multiple'  =>False,
-                       'expanded'  => False, 
-                ))
-                ->add(
-                'sizebottom', 'choice', 
-                array('choices'=>$bottom_fittings_size_chart_id,
-                       'multiple'  =>False,
-                       'expanded'  => False, 
-                ))
-                ->add(
-                'sizedress', 'choice', 
-                array('choices'=>$dress_fittings_size_chart_id,
-                       'multiple'  =>False,
-                       'expanded'  => False, 
-                ))
-                ->getForm();       
-        return $this->render('LoveThatFitUserBundle:Profile:sizechart.html.twig', array(
-                    'form' => $form->createView()));
-    }
-    
-    
-    
-    private function getBrandByTop($target='Top')
-    {
-        $em = $this->getDoctrine()->getManager();        
-        $brand = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandByTop($target);        
-        return $brand;
-    }
-    
-    private function getBrandByBottom($target='Bottom')
-    {
-        $em = $this->getDoctrine()->getManager();        
-        $brand = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandByBottom($target);
-        
-        return $brand;
-    }
-    
-    private function getBrandByDresses($target='dress')
-    {
-        $em = $this->getDoctrine()->getManager();        
-        $brand = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandByBottom($target);
-        return $brand;
-    }
-    
-    
-    private function getSizeByTop($target='Top')
-    {
-        $em = $this->getDoctrine()->getManager();        
-        $size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findSizeByTop($target);
-        return $size;
-    }
-    
-    private function getSizeByBottom($target='Bottom')
-    {
-        $em = $this->getDoctrine()->getManager();        
-        $size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findSizeByBottom($target);
-        return $size;
-    }
-    
-    private function getSizeByDresses($target='dress')
-    {
-        $em = $this->getDoctrine()->getManager();        
-        $size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findSizeByBottom($target);
-        return $size;
-    }
-    
+
     //------------------------------------------------------------------------
-   //methods will be moved somewhere on refactoring ------------------------------
-   //------------------------------------------------------------------------
+    //methods will be moved somewhere on refactoring ------------------------------
+    //------------------------------------------------------------------------
 
     private function getBrandArray($target) {
 
@@ -428,16 +293,6 @@ class ProfileController extends Controller {
         }
         return $brands_array;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-   
-    
 
 }
 

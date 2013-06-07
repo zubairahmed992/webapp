@@ -6,276 +6,275 @@
 {% block profile_section %}
 
 {% if app.session.hasFlash('warning') %}
-       <div class="alert alert-error">        
+<div class="alert alert-error">        
         {{ app.session.flash('warning') }}
-        </div>   
+    </div>   
 {% endif %}      
 {% if app.session.hasFlash('success') %}
-  <div class="success_alert">   
+    <div class="success_alert">   
     {{ app.session.flash('success') }}
-   </div>
-   
+        </div>
+
 {% endif %}
 
- 
 
-           {%if(app.user.gender=='f')%}
+
+
         <form action="" method="post" {{ form_enctype(brandform) }}>
             <span id="gender" style="display: none;">{{entity.gender}}</span>
         {{ form_errors(brandform) }}
-            <div class="shirts_mus manual_opn show_hide show_it" id="shirts_mus_opt">   
+
             Top
                      {{form_errors(brandform.top_brand)}}  
                      {{form_widget(brandform.top_brand)}} 
                      {{form_errors(brandform.top_size)}}  
                      {{form_widget(brandform.top_size)}}  
-            </div>
-            
-                    <!---  pant section  !-->
-             
-                    Bottom
+
+
+            <!---  pant section  !-->
+
+            Bottom
                     {{form_errors(brandform.bottom_brand)}}  
                     {{form_widget(brandform.bottom_brand)}} 
                     {{form_errors(brandform.bottom_size)}}  
                      {{form_widget(brandform.bottom_size)}}  
-             
-                   
-              
-                    Dress
+
+           {%if(app.user.gender=='f')%}   
+            Dress
                     {{form_errors(brandform.dress_brand)}}  
                      {{form_widget(brandform.dress_brand)}}
-                        
+
                      {{form_errors(brandform.dress_size)}}  
                      {{form_widget(brandform.dress_size)}}  
-              
-                           
-          </form>
-                 {%endif%}                   
+
+                            {%endif%}                   
+        </form>
 
 
-<br/>
+
+        <br/>
 
 
-<form action="{{ path('user_profile_about_me_update')}}" method="post" {{ form_enctype(form) }}>
-    <div id='frm_height'>
+        <form action="{{ path('user_profile_about_me_update')}}" method="post" {{ form_enctype(form) }}>
+            <div id='frm_height'>
         {{ form_label(form.height) }}
         {{ form_widget(form.height) }} &nbsp;<b>"</b>
-        <div class="form_vld_error">{{ form_errors(form.height) }}</div>
-        </div>
-        
-        <div class="clr_bth"></div>
-        
-    <div id='frm_weight'>
-       
+                    <div class="form_vld_error">{{ form_errors(form.height) }}</div>
+                </div>
+
+                <div class="clr_bth"></div>
+
+                <div id='frm_weight'>
+
         {{ form_label(form.weight) }}
         {{ form_widget(form.weight) }} &nbsp;<b>Lbs</b>
-            <div class="form_vld_error"> {{ form_errors(form.weight) }}</div>
-        </div>
-         <div class="clr_bth"></div>
-      <div id='frm_weight'>
-       
+                    <div class="form_vld_error"> {{ form_errors(form.weight) }}</div>
+                </div>
+                <div class="clr_bth"></div>
+                <div id='frm_weight'>
+
         {{ form_label(form.sleeve) }}
         {{ form_widget(form.sleeve) }} &nbsp;<b>"</b>
-            <div class="form_vld_error"> {{ form_errors(form.sleeve) }}</div>
-        </div>
-         <div class="clr_bth"></div>    
-    <div id='frm_weight'>
-       
+                    <div class="form_vld_error"> {{ form_errors(form.sleeve) }}</div>
+                </div>
+                <div class="clr_bth"></div>    
+                <div id='frm_weight'>
+
         {{ form_label(form.neck) }}
         {{ form_widget(form.neck) }} &nbsp;<b>"</b>
-            <div class="form_vld_error"> {{ form_errors(form.neck) }}</div>
-        </div>
-         <div class="clr_bth"></div>     
+                    <div class="form_vld_error"> {{ form_errors(form.neck) }}</div>
+                </div>
+                <div class="clr_bth"></div>     
      {% if(entity.gender=='m')%}    
 
 
-         <div id='frm_bust'>
+                <div id='frm_bust'>
 
         {{ form_label(form.chest) }}
         {{ form_widget(form.chest) }} &nbsp;<b>"</b>
-             <div class="form_vld_error">{{ form_errors(form.chest) }}</div>
-         </div>
+                    <div class="form_vld_error">{{ form_errors(form.chest) }}</div>
+                </div>
 
          {%else%}
 
-         <div id='frm_bust'>
+                <div id='frm_bust'>
 
         {{ form_label(form.bust) }}
         {{ form_widget(form.bust) }} &nbsp;<b>"</b>
-             <div class="form_vld_error">{{ form_errors(form.bust) }}</div>
-         </div>
+                    <div class="form_vld_error">{{ form_errors(form.bust) }}</div>
+                </div>
          {%endif%}
-         <div class="clr_bth"></div>
-    <div id='frm_waist'>
-       
+                <div class="clr_bth"></div>
+                <div id='frm_waist'>
+
         {{ form_label(form.waist) }}
         {{ form_widget(form.waist) }} &nbsp;<b>"</b>
-            <div class="form_vld_error"> {{ form_errors(form.waist) }}</div>
-        </div>
-         <div class="clr_bth"></div>
-        
-    <div id='frm_hip'>         
+                    <div class="form_vld_error"> {{ form_errors(form.waist) }}</div>
+                </div>
+                <div class="clr_bth"></div>
+
+                <div id='frm_hip'>         
         {{ form_label(form.hip) }}
         {{ form_widget(form.hip) }} &nbsp;<b>"</b>
-        <div class="form_vld_error">{{ form_errors(form.hip) }}</div>
-        </div>
-         
-         <div class="clr_bth"></div>
-        
-    <div id='frm_inseam'>
+                        <div class="form_vld_error">{{ form_errors(form.hip) }}</div>
+                    </div>
+
+                    <div class="clr_bth"></div>
+
+                    <div id='frm_inseam'>
         {{ form_label(form.inseam) }}
         {{ form_widget(form.inseam) }} &nbsp;<b>"</b>
-            <div class="form_vld_error">{{ form_errors(form.inseam) }}</div>
-        </div>
-          
-    <div class="clr_bth"></div>
-        
-    <div id='frm_inseam'>
+                            <div class="form_vld_error">{{ form_errors(form.inseam) }}</div>
+                        </div>
+
+                        <div class="clr_bth"></div>
+
+                        <div id='frm_inseam'>
         {{ form_label(form.shoulder_height) }}
         {{ form_widget(form.shoulder_height) }} &nbsp;<b>"</b>
-            <div class="form_vld_error">{{ form_errors(form.shoulder_height) }}</div>
-        </div>
-         
-         <div class="clr_bth"></div>
-          <div id='frm_inseam'>
+                                <div class="form_vld_error">{{ form_errors(form.shoulder_height) }}</div>
+                            </div>
+
+                            <div class="clr_bth"></div>
+                            <div id='frm_inseam'>
         {{ form_label(form.outseam) }}
         {{ form_widget(form.outseam) }} &nbsp;<b>"</b>
-            <div class="form_vld_error">{{ form_errors(form.outseam) }}</div>
-        </div>
-         
-         <div class="clr_bth"></div>
-        
-    <div id='frm_back'>
-        
+                                    <div class="form_vld_error">{{ form_errors(form.outseam) }}</div>
+                                </div>
+
+                                <div class="clr_bth"></div>
+
+                                <div id='frm_back'>
+
         {{ form_label(form.back) }}
         {{ form_widget(form.back) }} &nbsp;<b>"</b>
-        <div class="form_vld_error">{{ form_errors(form.back) }}</div>
-        </div>
-         <div class="clr_bth"></div>
-   
-    <div id='frm_outseam'>
-       
-    </div>   
-       
+                                    <div class="form_vld_error">{{ form_errors(form.back) }}</div>
+                                </div>
+                                <div class="clr_bth"></div>
+
+                                <div id='frm_outseam'>
+
+                                </div>   
+
        {%if(measurement.height=="0"  or  measurement.weight=="0")%}  
-        <div id='frm_bmi'>
-            <label>BMI</label> Please Enter Your Height and Weight For BMI Result
-    </div>   
+                                <div id='frm_bmi'>
+                                    <label>BMI</label> Please Enter Your Height and Weight For BMI Result
+                                </div>   
          {%else%}
-        <div id='frm_bmi'>
-            <label>BMI</label> {{measurement.BMI}} 
-    </div>  
+                                <div id='frm_bmi'>
+                                    <label>BMI</label> {{measurement.BMI}} 
+                                </div>  
          {%endif%}
-     <div id='frm_age'>
-         <label>Age</label>   {%if(app.user.age=="" or app.user.age=="0")%}
-                            Enter Your Age (Account Settings Tab)
+                                <div id='frm_age'>
+                                    <label>Age</label>   {%if(app.user.age=="" or app.user.age=="0")%}
+                                    Enter Your Age (Account Settings Tab)
                             {%else%}
                                  {{app.user.age}}
                             {%endif%}
-    </div> 
-        
+                                </div> 
+
    {% include 'LoveThatFitUserBundle:Profile:_user_profile_image.html.twig'%} 
-         <div class="clr_bth"></div>   
+                                <div class="clr_bth"></div>   
       {{ form_rest(form) }}  
-        <input type="submit" value="Update" />
-        
-   
-  
-   
-  
-</form>
+                                <input type="submit" value="Update" />
 
-<script type="text/javascript">
-    $(document).ready(function() {
-    var gender=$('#gender').text();
-    $("#brand_size_chart_top_brand").change(function(){ 
-        var checked_option = $(this).attr("value");
+
+
+
+
+                            </form>
+
+                            <script type="text/javascript">
+                                $(document).ready(function() {
+                                var gender=$('#gender').text();
+                                $("#brand_size_chart_top_brand").change(function(){ 
+                                    var checked_option = $(this).attr("value");
        
-        $('#brand_size_chart_top_size').html('');
-        $.ajax({
-            type:'json',
-            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Top",
-            success: function (data) {   
-                var top_brand = JSON.parse(data);
-                length_obj=Object.keys(top_brand).length;
-                if( length_obj>0)
-                {    
+                                    $('#brand_size_chart_top_size').html('');
+                                    $.ajax({
+                                        type:'json',
+                                        url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Top",
+                                        success: function (data) {   
+                                            var top_brand = JSON.parse(data);
+                                            length_obj=Object.keys(top_brand).length;
+                                            if( length_obj>0)
+                                            {    
                     
-                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_top_size');    
-                    for(i=0;i<length_obj;i++)
-                    {   
+                                                $('<option>').val('').text('Size').appendTo('#brand_size_chart_top_size');    
+                                                for(i=0;i<length_obj;i++)
+                                                {   
 
-                        $('<option>').val(top_brand[i]['id']).text(top_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
-                    }
-                } 
-                else 
-                {
+                                                    $('<option>').val(top_brand[i]['id']).text(top_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
+                                                }
+                                            } 
+                                            else 
+                                            {
                         
-                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_top_size');       
-                }
-            }
-        });
-    });
+                                                $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_top_size');       
+                                            }
+                                        }
+                                    });
+                                });
     
     
-    $("#brand_size_chart_bottom_brand").change(function(){ 
-        var checked_option = $(this).attr("value");
+                                $("#brand_size_chart_bottom_brand").change(function(){ 
+                                    var checked_option = $(this).attr("value");
        
-        $('#brand_size_chart_bottom_size').html('');
-        $.ajax({
-            type:'json',
-            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Bottom",
-            success: function (data) {   
-                var bottom_brand = JSON.parse(data);
-                length_obj=Object.keys(bottom_brand).length;
-                if( length_obj>0)
-                {    
+                                    $('#brand_size_chart_bottom_size').html('');
+                                    $.ajax({
+                                        type:'json',
+                                        url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Bottom",
+                                        success: function (data) {   
+                                            var bottom_brand = JSON.parse(data);
+                                            length_obj=Object.keys(bottom_brand).length;
+                                            if( length_obj>0)
+                                            {    
                     
-                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_bottom_size');    
-                    for(i=0;i<length_obj;i++)
-                    {   
+                                                $('<option>').val('').text('Size').appendTo('#brand_size_chart_bottom_size');    
+                                                for(i=0;i<length_obj;i++)
+                                                {   
 
-                        $('<option>').val(bottom_brand[i]['id']).text(bottom_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
-                    }
-                } 
-                else 
-                {
+                                                    $('<option>').val(bottom_brand[i]['id']).text(bottom_brand[i]['title']).appendTo('#brand_size_chart_top_size');    
+                                                }
+                                            } 
+                                            else 
+                                            {
                         
-                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_bottom_size');       
-                }
-            }
-        });
-    });
+                                                $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_bottom_size');       
+                                            }
+                                        }
+                                    });
+                                });
     
-    $("#brand_size_chart_dress_brand").change(function(){ 
-        var checked_option = $(this).attr("value");
+                                $("#brand_size_chart_dress_brand").change(function(){ 
+                                    var checked_option = $(this).attr("value");
        
-        $('#brand_size_chart_dress_size').html('');
-        $.ajax({
-            type:'json',
-            url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Dress",
-            success: function (data) {   
-                var dress_brand = JSON.parse(data);
-                length_obj=Object.keys(dress_brand).length;
-                if( length_obj>0)
-                {    
+                                    $('#brand_size_chart_dress_size').html('');
+                                    $.ajax({
+                                        type:'json',
+                                        url: "../ajax/brand_size_chart/" + checked_option + "/" + gender + "/" + "Dress",
+                                        success: function (data) {   
+                                            var dress_brand = JSON.parse(data);
+                                            length_obj=Object.keys(dress_brand).length;
+                                            if( length_obj>0)
+                                            {    
                     
-                    $('<option>').val('').text('Size').appendTo('#brand_size_chart_dress_size');    
-                    for(i=0;i<length_obj;i++)
-                    {   
+                                                $('<option>').val('').text('Size').appendTo('#brand_size_chart_dress_size');    
+                                                for(i=0;i<length_obj;i++)
+                                                {   
 
-                        $('<option>').val(dress_brand[i]['id']).text(dress_brand[i]['title']).appendTo('#brand_size_chart_dress_size');    
-                    }
-                } 
-                else 
-                {
+                                                    $('<option>').val(dress_brand[i]['id']).text(dress_brand[i]['title']).appendTo('#brand_size_chart_dress_size');    
+                                                }
+                                            } 
+                                            else 
+                                            {
                         
-                    $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_dress_size');       
-                }
-            }
-        });
-    });
+                                                $('<option>').val('').text('Unavailable').appendTo('#brand_size_chart_dress_size');       
+                                            }
+                                        }
+                                    });
+                                });
     
-     });
-    </script>
+                                 });
+                                </script>
 {% endblock %}
