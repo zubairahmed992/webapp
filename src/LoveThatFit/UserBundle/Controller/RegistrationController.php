@@ -99,7 +99,8 @@ class RegistrationController extends Controller {
 
 
     public function registrationAction() {
-        $entity = new User();
+        //$entity = new User();
+        $entity = $this->get('user.helper.user')->createNewUser();
         $form = $this->createForm(new RegistrationType(), $entity);
         return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                     'form' => $form->createView()));
