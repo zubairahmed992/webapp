@@ -9,8 +9,8 @@ web_service_login:
     
     
 web_service_brands:
-    pattern:  /web_service/brands
-    defaults: { _controller: LoveThatFitWebServiceBundle:Default:brandList,_format: json }
+    pattern:  /web_service/brands/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitWebServiceBundle:Default:brandList,_format: json  ,page_number: 1, sort:id }
 
 web_service_clothingtype:
     pattern:  /web_service/clothingtype/{page_number}/{sort}
@@ -41,3 +41,10 @@ web_service_my_closet:
     pattern:  /web_service/my_closet/{user_id}
     defaults: { _controller: LoveThatFitWebServiceBundle:Default:myClostList,_format: json,user_id:1}
 
+web_service_createform:
+    pattern:  /web_service/registration_form
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:createRegistrationForm }
+
+web_service_registration_create:
+   pattern:  /web_service/registration_create
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:registrationCreate}

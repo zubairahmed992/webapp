@@ -77,15 +77,30 @@ class DefaultController extends Controller {
 
     //--------------------------------------------------Brand Type----------------------///   
 
-    public function brandListAction(Request $request) {
+    public function brandListAction(Request $request, $page_number, $sort = 'id') {
         
-        $em = $this->getDoctrine()->getEntityManager();
-        $entity = $em->findAll('LoveThatFitAdminBundle:Brand');
+       $limit = 5;
+        $brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Admin entity.');
+        $brand = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Brand')
+                ->findAllBrand($page_number, $limit, $sort);
+        $rec_count = count($brandObj->countAllRecord());
+        $cur_page = $page_number;
+
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
         }
-       return new Response(json_encode($entity));   
+
+         $count_rec=count($brandObj);  
+         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/brands/';
+         $data=array();
+   
+        $data['data']=$brand;
+        $data['path']=$baseurl;
+        return new Response($this->json_view($count_rec,$data)); 
     }
 
     //--------------------------------------------------Clothing Type----------------------///   

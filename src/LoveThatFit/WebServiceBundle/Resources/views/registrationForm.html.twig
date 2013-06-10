@@ -1,0 +1,41 @@
+
+            <form id="registration" action="{{ path('web_service_registration_create')}}" method="post" {{ form_enctype(form) }}>
+                <div class="form_vld_error">
+{{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
+                        </div>
+
+                    <div class="frm_ele">
+                       {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                       {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="frm_ele">
+                        {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
+                    </div>
+
+                    <div class="frm_ele">
+                        {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
+                        {{ form_errors(form.password.password) }}
+                        {{ form_errors(form.password.confirm) }}
+                    </div>
+                     <div class="frm_ele">
+                        {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
+                        {{ form_errors(form.zipcode) }}
+                    </div>
+
+                    <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
+                        <div class="frm_ele radio_buts">
+                            {{ form_row(form.gender) }}                     
+                        </div>
+                    </div>
+                    
+                    <div style="clear:both;"></div>
+                    {{ form_rest(form) }}
+                
+                    <input class="reg_next_step" type="submit" value="Register" />
+
+
+                   
+                </form>
+
+

@@ -22,10 +22,10 @@ public function findAllBrand($page_number = 0, $limit = 0 ,$sort='id') {
    
        if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC');
+                    ->createQuery('SELECT b.id,b.name,b.image FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC')
+                    ->createQuery('SELECT b.id,b.name,b.image FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC')
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }
