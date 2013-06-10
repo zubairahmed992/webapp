@@ -17,20 +17,22 @@ class Algorithm {
     var $product_measurement;
     var $adjustment;
     var $msg_array;
+    var $feedback_array;
 
     function __construct($user, $product_item) {
-            $this->setUser($user);            
-            $this->setProduct($product_item);   
+        $this->setUser($user);
+        $this->setProduct($product_item);
     }
 
 //------------------------------------------------------------------------
 
-    function setProduct($product_item) {        
+    function setProduct($product_item) {
         if ($product_item) {
             $this->product = $product_item->getProduct();
             $this->product_measurement = $product_item->getProductSize();
-            }        
+        }
     }
+
     //------------------------------------------------------------------------
     function setUser($user) {
         if ($user) {
@@ -38,16 +40,15 @@ class Algorithm {
             $this->user_measurement = $this->user->getMeasurement();
         }
     }
-    
+
 //------------------------------------------------------------------------
 
-    function setProductMeasurement($product_size) {        
+    function setProductMeasurement($product_size) {
         if ($product_size) {
-            $this->product_measurement = $product_size;            
-           $this->product = $product_size->getProduct();
-            }        
+            $this->product_measurement = $product_size;
+            $this->product = $product_size->getProduct();
+        }
     }
-    
 
 //------------------------------------------------------------------------
 
@@ -57,61 +58,93 @@ class Algorithm {
 
     //------------------------------------------------------------------------
     function getFeedBackArray() {
-        if (!$this->user_measurement)
+        if (!$this->user_measurement) {
             return "Please update your profile in order to get suggetions.";
+        }
 
-        if (!$this->product_measurement)
+        if (!$this->product_measurement) {
             return "Product not found.";
+        }
+        
+        $this->feedback_array = $this->getBasicFeedbackArray();
 
-        return $this->filter();
+        $fits = $this->fit($this->feedback_array);
+        
+        if ($fits==true) {
+             $basic_feedback_array= array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
+            $result = array_merge((array)$basic_feedback_array, (array)$this->getAdditionalFeedbackArray());
+            return $result;
+        } else {
+            return $this->feedback_array;
+        }
+    }
+
+    //------------------------------------------------------------------------
+
+    public function fit($sug_array = null) {
+
+        if (!$this->user_measurement) {
+            return false;
+        }
+
+        if (!$this->product_measurement) {
+            return false;
+        }
+        if ($sug_array == null) {
+            $sug_array = $this->getBasicFeedbackArray();
+        }
+        if ($sug_array != null) {
+
+            foreach ($sug_array as $key => $value) {
+                if ($value["fit"] == false) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // ------------------------------------------------------
 
-    function filter() {
-        
+    function getBasicFeedbackArray() {
+
         if ($this->user->getGender() == 'm') {
             if ($this->product->getClothingType()->getTarget() == 'Top') {
                 //chest neck & sleeve* / back, waist                
                 return array(
-                    "neck" => $this->compareNeck(),
-                    "chest" => $this->compareChest(),
-                    
+                    "neck" => $this->getNeckFeedback(),
+                    "chest" => $this->getChestFeedback(),
                 );
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
                 //waist & inseam / outseam
-                    return array(
-                    "waist" => $this->compareWaist(),
-                                        
+                return array(
+                    "waist" => $this->getWaistFeedback(),
                 );
-                    
             } else {
                 return null;
             }
-        } elseif ($this->user->getGender() == 'w') {
+        } elseif ($this->user->getGender() == 'f') {
 
             if ($this->product->getClothingType()->getTarget() == 'Top') {
                 //bust, waist, back & sleeve*                
-                 return array(
-                    "bust" => $this->compareBust(),
-                    "waist" => $this->compareWaist(),
-                                        
+                return array(
+                    "bust" => $this->getBustFeedback(),
+                    "waist" => $this->getWaistFeedback(),
                 );
-                
             } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
                 //waist, hip, inseam / outseam
-                    return array(
-                    "waist" => $this->compareWaist(),
-                    "hip" => $this->compareHip(),                    
-                    
+                return array(
+                    "waist" => $this->getWaistFeedback(),
+                    "hip" => $this->getHipFeedback(),
                 );
-                
             } elseif ($this->product->getClothingType()->getTarget() == 'Dress') {
                 //bust, waist, back, hip & sleeve*
                 return array(
-                    "bust" => $this->compareBust(),
-                    "waist" => $this->compareWaist(),
-                    "hip" => $this->compareHip(),                    
+                    "bust" => $this->getBustFeedback(),
+                    "waist" => $this->getWaistFeedback(),
+                    "hip" => $this->getHipFeedback(),
                 );
             } else {
                 return null;
@@ -119,84 +152,105 @@ class Algorithm {
         } else {
             return null;
         }
-        
     }
+
     //------------------------------------------------------------------------
 
-    public function fit() {
-         
-        if (!$this->user_measurement)
-            return false;
+    function getAdditionalFeedbackArray() {
 
-        if (!$this->product_measurement)
-            return false;
-
-        $sug_array=$this->filter();
-        
-        foreach ($sug_array as $key => $value) {
-            if ($value["fit"] == false )
-                return false;
+        if ($this->user->getGender() == 'm') {
+            if ($this->product->getClothingType()->getTarget() == 'Top') {
+                return array(
+                    "back" => $this->getBackFeedback(),
+                );
+            } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
+                return array(
+                    "inseam" => $this->getInseamFeedback(),
+                    "outseam" => $this->getOutseamFeedback(),
+                );
+            } else {
+                return null;
+            }
+        } elseif ($this->user->getGender() == 'f') {
+            if ($this->product->getClothingType()->getTarget() == 'Top') {
+                return array(
+                    "back" => $this->getBackFeedback(),
+                );
+            } elseif ($this->product->getClothingType()->getTarget() == 'Bottom') {
+                return array(
+                    "inseam" => $this->getInseamFeedback(),
+                    "outseam" => $this->getOutseamFeedback(),
+                );
+            } elseif ($this->product->getClothingType()->getTarget() == 'Dress') {
+                return array(
+                    "back" => $this->getBackFeedback(),
+                );
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
-        return true;
     }
 
 //------------------- comparison methods
     //neck back chest bust sleeve waist outseam inseam hip length 
 
-    public function compareNeck() {
-        return $this->getArrayFill('neck', $this->compare($this->user_measurement->getNeck(), $this->product_measurement->getNeckMin(), $this->product_measurement->getNeckMax()));
+    private function getNeckFeedback() {
+        return $this->getMessageFill('neck', $this->compare($this->user_measurement->getNeck(), $this->product_measurement->getNeckMin(), $this->product_measurement->getNeckMax()));
     }
 
-    public function compareBack() {
-        return $this->getArrayFill('back', $this->compare($this->user_measurement->getBack(), $this->product_measurement->getBackMin(), $this->product_measurement->getBackMax()));
+    private function getBackFeedback() {
+        return $this->getMessageFill('back', $this->compare($this->user_measurement->getBack(), $this->product_measurement->getBackMin(), $this->product_measurement->getBackMax()));
     }
 
-    public function compareChest() {
-        return $this->getArrayFill('chest', $this->compare($this->user_measurement->getChest(), $this->product_measurement->getChestMin(), $this->product_measurement->getChestMax()));
+    private function getChestFeedback() {
+        return $this->getMessageFill('chest', $this->compare($this->user_measurement->getChest(), $this->product_measurement->getChestMin(), $this->product_measurement->getChestMax()));
     }
 
-    public function compareBust() {
-        return $this->getArrayFill('bust', $this->compare($this->user_measurement->getBust(), $this->product_measurement->getBustMin(), $this->product_measurement->getBustMax()));
+    private function getBustFeedback() {
+        return $this->getMessageFill('bust', $this->compare($this->user_measurement->getBust(), $this->product_measurement->getBustMin(), $this->product_measurement->getBustMax()));
     }
 
-    public function compareSleeve() {
-        return $this->getArrayFill('sleeve', $this->compare($this->user_measurement->getSleeve(), $this->product_measurement->getSleeveMin(), $this->product_measurement->getSleeveMax()));
+    private function getSleeveFeedback() {
+        return $this->getMessageFill('sleeve', $this->compare($this->user_measurement->getSleeve(), $this->product_measurement->getSleeveMin(), $this->product_measurement->getSleeveMax()));
     }
 
-    public function compareWaist() {
-        return $this->getArrayFill('waist', $this->compare($this->user_measurement->getWaist(), $this->product_measurement->getBustMin(), $this->product_measurement->getBustMax()));
+    private function getWaistFeedback() {
+        return $this->getMessageFill('waist', $this->compare($this->user_measurement->getWaist(), $this->product_measurement->getBustMin(), $this->product_measurement->getBustMax()));
     }
 
-    public function compareOutseam() {
-        return $this->getArrayFill('outseam', $this->compare($this->user_measurement->getOutseam(), $this->product_measurement->getOutseamMin(), $this->product_measurement->getOutseamMax()));
+    private function getOutseamFeedback() {
+        return $this->getMessageFill('outseam', $this->compare($this->user_measurement->getOutseam(), $this->product_measurement->getOutseamMin(), $this->product_measurement->getOutseamMax()));
     }
 
-    public function compareInseam() {
-        // should fill an array element will message & values and return it
-        //return $this->getArrayFill('inseam', $this->compare($u, $p_min, $p_max));
-        return $this->getArrayFill('inseam', $this->compare($this->user_measurement->getInseam(), $this->product_measurement->getInseamMin(), $this->product_measurement->getInseamMax()));
+    private function getInseamFeedback() {
+        return $this->getMessageFill('inseam', $this->compare($this->user_measurement->getInseam(), $this->product_measurement->getInseamMin(), $this->product_measurement->getInseamMax()));
     }
 
-    public function compareHip() {
-        return $this->getArrayFill('hip', $this->compare($this->user_measurement->getHip(), $this->product_measurement->getHipMin(), $this->product_measurement->getHipMax()));
+    private function getHipFeedback() {
+        return $this->getMessageFill('hip', $this->compare($this->user_measurement->getHip(), $this->product_measurement->getHipMin(), $this->product_measurement->getHipMax()));
     }
 
-     
 //----------------------------------------------------------------------    
-    public function getArrayFill($measuring_point, $comparison_result) {
-
+    public function getMessageFill($measuring_point, $comparison_result) {
 
         if (is_null($measuring_point) || strlen($measuring_point) == 0) {
             return null;
         }
 
         $this->setMessageArray();
-        
+
         $diff = $comparison_result["diff"];
-        
-        if (is_null($diff)) {
-            return array("diff" => $diff, "msg" => $this->msg_array["{$measuring_point}"]['np'], 'fit' => false);
+
+        if ($comparison_result["user_measurement"] == false && $comparison_result["item_measurement"] == false) {
+            return array("diff" => $diff, "msg" => 'Measurement not provided.', 'fit' => false);
+        } elseif ($comparison_result["user_measurement"] == true && $comparison_result["item_measurement"] == false) {
+            return array("diff" => $diff, "msg" => $this->msg_array["{$measuring_point}"]['item_na'], 'fit' => false);
+        } elseif ($comparison_result["user_measurement"] == false && $comparison_result["item_measurement"] == true) {
+            return array("diff" => $diff, "msg" => $this->msg_array["{$measuring_point}"]['user_na'], 'fit' => false);
         }
+
 
         if ($diff > 0) {
             //add loose message //add diff //fits boolean false
@@ -215,23 +269,23 @@ class Algorithm {
     protected function compare($u, $p_min, $p_max) {
         // incase if any measurement not provided
         if (is_null($u) && (is_null($p_min) || is_null($p_max))) {
-            return array("user_measurement" => false, "item_measurement" => false, 'diff'=>null);
-        }elseif (is_null($u)) {
-            return array("user_measurement" => false, "item_measurement" => true, 'diff'=>null);
-        }elseif(is_null($p_min) || is_null($p_max)){
-            return array("user_measurement" => true, "item_measurement" => false, 'diff'=>null); 
+            return array("user_measurement" => false, "item_measurement" => false, 'diff' => null);
+        } elseif (is_null($u)) {
+            return array("user_measurement" => false, "item_measurement" => true, 'diff' => null);
+        } elseif (is_null($p_min) || is_null($p_max)) {
+            return array("user_measurement" => true, "item_measurement" => false, 'diff' => null);
         }
 
         if ($u <= $p_max && $u >= $p_min) {
-            $diff =  0; //love
+            $diff = 0; //love
         } elseif ($u > $p_max) {
-            $diff =  $p_max - $u; //tight: returns a negative value, difference of measurement in inches
+            $diff = $p_max - $u; //tight: returns a negative value, difference of measurement in inches
         } elseif ($u < $p_min) {
-            $diff =  $p_min - $u; //loose: returns a positive value, difference of measurement in inches
+            $diff = $p_min - $u; //loose: returns a positive value, difference of measurement in inches
         } else {
             $diff = null;
         }
-        return array("user_measurement" => true, "item_measurement" => true, 'diff'=>$diff);
+        return array("user_measurement" => true, "item_measurement" => true, 'diff' => $diff);
     }
 
     //------------------------------------------------------------------------    
