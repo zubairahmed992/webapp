@@ -15,7 +15,7 @@ class BrandController extends Controller {
 		$brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
                 $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
-                 ->findAllBrand($page_number, $limit, $sort);
+                 ->listAllBrand($page_number, $limit, $sort);
 		$rec_count = count($brandObj->countAllRecord());
 		$cur_page = $page_number;
 
@@ -26,8 +26,8 @@ class BrandController extends Controller {
         }
         return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig',
 		       array(
-			    	'brands' => $entity,
-					'rec_count' => $rec_count, 
+		    'brands' => $entity,
+		    'rec_count' => $rec_count, 
                     'no_of_pagination' => $no_of_paginations, 
                     'limit' => $cur_page, 
                     'per_page_limit' => $limit,

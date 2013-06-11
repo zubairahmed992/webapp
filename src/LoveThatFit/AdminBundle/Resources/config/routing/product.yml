@@ -28,6 +28,14 @@ admin_product_detail_delete:
    pattern:  /admin/productdetail/{id}/delete
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailDelete }
    
+admin_product_stats:
+   pattern:  /admin/product/stats
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productStats }
+   
+
+     
+     
+   
 #--------------------------- Product Color --------------       
 
 admin_product_detail_color_image_upload:

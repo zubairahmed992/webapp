@@ -1,0 +1,30 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Products Stats</li>
+{% endblock %}
+
+
+
+{% block body %}
+
+
+    
+<div class="btn_wrapper">
+   
+    <div> <a href="{{ path('admin_products') }}" class="btn">Back</a></div>
+</div> 
+
+  <div align="left">
+     Total Products:{{total_products}}<br/>
+     Female Product:{{femaleProduct}}<br/>
+     {%for p in brandproduct%}
+     {{p.name}} {{p.brand}}<br/>
+     {%endfor%}
+     Male Products:{{maleProduct}}<br/>
+     Top Product:{{topProduct}}<br/>     
+     Bottom Product:{{bottomProduct}}<br/>
+     Dress Product:{{dressProduct}}<br/>
+     </div>
+    
+     
+ {% endblock %}

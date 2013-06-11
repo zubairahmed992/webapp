@@ -1,6 +1,6 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-   <li class="active">Clothing Types</li>
+   <li class="active">Clothing Types </li>
 {% endblock %}
 
 
@@ -10,10 +10,16 @@
 <div class="p_listing">     
     <h1 style="float:left;">Clothing Types</h1>
  <div class="btn_wrapper">
+ <div align="left">
+     Total:  {{TotlaRecord}}
+     Top:   {{criteriaTop}}
+     Bottom:{{criteriaBottom}}
+     Dress:{{criteriaDress}}
+  </div>
      <a href="{{ path('admin_clothing_type_new') }}" class="btn">Add New</a>
       </div>
      <div class="clearfix"></div> 
-     
+    
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">

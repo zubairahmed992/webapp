@@ -70,5 +70,35 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
-          
+        
+    public function findAllRecord()
+    {
+      $query = $this->getEntityManager()
+                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findStatisticsBy($target)
+    {
+     $query = $this->getEntityManager()
+        ->createQuery("SELECT ct FROM LoveThatFitAdminBundle:ClothingType ct      
+        WHERE        
+        ct.target=:target"
+                        )
+             ->setParameter('target',$target);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    
+    
+    
 }

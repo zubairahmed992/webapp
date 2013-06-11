@@ -69,5 +69,27 @@ param:limit:
             return null;
         }
     }
+    
+    
+    
+    
+    public function listAllBrand($page_number = 0, $limit = 0 ,$sort='id') {
+				   
+   
+       if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b ORDER BY b.' . $sort . ' ASC')
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
 
 }

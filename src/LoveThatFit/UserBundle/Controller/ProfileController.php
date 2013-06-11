@@ -253,6 +253,54 @@ class ProfileController extends Controller {
         $em->flush();
         $this->get('session')->setFlash('success', 'Success! Answers Updated Successfully');
     }
+    
+    
+    //----------------------Profile Size Chart Sizes----------------Azeem----------
+    
+    public function profileSizeChartSizesAction()
+    {
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        
+        $measurement = $entity->getMeasurement(); 
+       
+        if ($entity->getGender() == 'm') {
+            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom')), $measurement);
+        } else {
+            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+        }
+        $brandSizeChartForm->bind($this->getRequest());
+        $request_array = $this->getRequest()->get('brand_size_chart');
+        if ($entity->getGender() == 'm') {
+
+            if (array_key_exists('top_size', $request_array)) {
+                 $measurement->top_size = $request_array['top_size'];                                
+            }
+            if (array_key_exists('bottom_size', $request_array)) {
+                $measurement->bottom_size = $request_array['bottom_size'];
+            }
+        } else {
+            if (array_key_exists('top_size', $request_array)) {
+                $measurement->top_size = $request_array['top_size'];
+            }
+            if (array_key_exists('bottom_size', $request_array)) {
+                $measurement->bottom_size = $request_array['bottom_size'];
+            }
+            if (array_key_exists('dress_size', $request_array)) {
+                $measurement->dress_size = $request_array['dress_size'];
+            }
+        }
+        
+        return new Response(json_encode($measurement));
+    }
+
+
+
+
+
+
 
     private function getQuestionsList() {
         $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();

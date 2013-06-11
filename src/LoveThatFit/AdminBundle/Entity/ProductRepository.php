@@ -320,5 +320,58 @@ class ProductRepository extends EntityRepository {
 	  } 
     
     
-
+    public function findPrductByGender($gender)
+    {
+     $query = $this->getEntityManager()
+        ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p      
+        WHERE        
+        p.gender=:gender"
+                        )
+             ->setParameter('gender',$gender);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findPrductByType($target)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT p FROM LoveThatFitAdminBundle:Product p
+     JOIN p.clothing_type ct     
+     WHERE
+     ct.target = :target"  )->setParameters(array('target' => $target)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findPrductByBrand()
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT count(p.brand) as brand,b.name FROM LoveThatFitAdminBundle:Product p
+     JOIN p.brand b group by b.name    
+     ");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findListAllProduct() {
+     $query = $this->getEntityManager()
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 }

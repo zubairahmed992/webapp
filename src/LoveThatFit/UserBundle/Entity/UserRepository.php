@@ -188,6 +188,22 @@ class UserRepository extends EntityRepository
     }
     
     
+    public function findUserByGender($gender)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     where
+        us.gender=:gender"
+        )->setParameter('gender',$gender);
+        try {                     
+            return $query->getResult();
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
     
 }
 

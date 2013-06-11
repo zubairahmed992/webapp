@@ -77,7 +77,12 @@ user_profile_what_i_like:
 
 user_profile_what_i_like_user_survey:
     pattern:  /profile/user_profile_what_i_like_user_survey
-    defaults: { _controller: LoveThatFitUserBundle:Profile:submitUserSurveyForm }    
+    defaults: { _controller: LoveThatFitUserBundle:Profile:submitUserSurveyForm }
+    
+user_profile_size_chart_size:
+    pattern:  /profile/size_chart_size
+    defaults: { _controller: LoveThatFitUserBundle:Profile:profileSizeChartSizes }   
+    
     
 #---------------------------------------------- Login ------------------------------------------
 

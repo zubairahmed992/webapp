@@ -30,6 +30,11 @@ class SizeChartController extends Controller {
                            'no_of_pagination' => $no_of_paginations, 
                            'limit' => $cur_page, 
                            'per_page_limit' => $limit,
+                           'maleSizeChart'=>$this->getSizeChartByGender('m'),
+                           'femaleSizeChart'=>$this->getSizeChartByGender('f'),
+                           'topSizeChart'=>$this->getSizeChartByTarget('Top'),
+                           'bottomSizeChart'=>  $this->getSizeChartByTarget('Bottom'),
+                           'dressSizeChart'=>  $this->getSizeChartByTarget('Dress'),
 			));
     }
         
@@ -183,5 +188,28 @@ class SizeChartController extends Controller {
         $brand = $repository->find($brand);
         return $brand;
     }
+    
+    private function getSizeChartByGender($gender)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sizechartsObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:SizeChart')
+                 ->findSizeChartByGender($gender);
+		$rec_count = count($sizechartsObj->findSizeChartByGender($gender));
+        return $rec_count;
+    }
+    
+    private function getSizeChartByTarget($target)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sizechartsObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:SizeChart')
+                 ->findSizeChartByTarget($target);
+		$rec_count = count($sizechartsObj->findSizeChartByTarget($target));
+        return $rec_count;
+    }
+    
 }
 

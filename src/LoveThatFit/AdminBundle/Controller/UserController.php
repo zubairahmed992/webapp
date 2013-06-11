@@ -32,6 +32,8 @@ class UserController extends Controller {
                            'limit' => $cur_page, 
                            'per_page_limit' => $limit,
                            'searchform'=>$this->userSearchFrom()->createView(),
+                           'femaleUsers'=>$this->getUserByGender('f'),
+                           'maleUsers'=>$this->getUserByGender('m'),
 			));
     }
     
@@ -86,7 +88,11 @@ class UserController extends Controller {
            $entity = $this->getUserSearchLists($firstname,$lastname,$gender,$beginDate,$endDate);
        }
        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find user.');
+           $this->get('session')->setFlash('warning','Unable to find User.');
+            return $this->render('LoveThatFitAdminBundle:User:search.html.twig', array(
+                    'user' =>$entity,
+                    'searchform'=>$this->userSearchFrom()->createView(),                    
+                ));
             }
         else{
         return $this->render('LoveThatFitAdminBundle:User:search.html.twig', array(
@@ -179,6 +185,17 @@ class UserController extends Controller {
                 ))
                 
                         ->getForm();
+    }
+    
+    private function getUserByGender($gender)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
+         $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserByGender($gender);
+		$rec_count = count($UserTypeObj->findUserByGender($gender));
+        return $rec_count;
     }
     
 }

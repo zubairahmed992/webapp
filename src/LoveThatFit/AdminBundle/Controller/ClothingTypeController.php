@@ -21,7 +21,10 @@ class ClothingTypeController extends Controller {
             $no_of_paginations = 0;
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
-        }
+        }      
+           
+          
+        
 		//return new Response(json_encode($clothing_types));	   
 	 return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', 
   					array(
@@ -30,7 +33,11 @@ class ClothingTypeController extends Controller {
                     'no_of_pagination' => $no_of_paginations, 
                     'limit' => $cur_page, 
                     'per_page_limit' => $limit,
-            		));
+                    'criteriaTop'=>$this->countStatistics('Top'),
+                    'criteriaBottom'=>$this->countStatistics('Bottom'),
+                    'criteriaDress'=>$this->countStatistics('Dress'),
+                    'TotlaRecord'=>$rec_count,                        
+            	));
     }
 //------------------------------------------------------------------------------------------
     public function showAction($id) {
@@ -200,6 +207,33 @@ else
 		$rec_count = count($ClothingTypeObj->findClothingTypeBy($name,$target));
         return $rec_count;
     }
+    
+    private function calculateStatistics($countResult,$totalRecord)
+    {
+      $statistics=($countResult/$totalRecord)*100;
+      return $statistics;
+    }
+    
+    private function countStatistics($target)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ClothingType')
+                 ->findStatisticsBy($target);
+		$rec_count = count($ClothingTypeObj->findStatisticsBy($target));
+        return $rec_count;
+    }
 
+    private function countAllClothingType()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ClothingType')
+                 ->findAllRecord();
+		$totalRecord = count($ClothingTypeObj->findAllRecord());
+        return $totalRecord;
+    }
 }
 

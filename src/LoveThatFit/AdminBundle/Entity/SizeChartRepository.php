@@ -213,5 +213,35 @@ class SizeChartRepository extends EntityRepository {
             return null;
         }
     }
+    
+    public function findSizeChartByGender($gender) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc     
+     WHERE     
+     sc.gender = :gender"
+                        )->setParameters(array('gender' =>$gender));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    public function findSizeChartByTarget($target) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc     
+     WHERE     
+     sc.target = :target"
+                        )->setParameters(array('target' =>$target));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 
 }

@@ -50,6 +50,11 @@ class ProductController extends Controller {
                     'no_of_pagination' => $no_of_paginations,
                     'limit' => $cur_page,
                     'per_page_limit' => $limit,
+                    'femaleProduct'=>  $this->countProductsByGender('f'),
+                    'maleProduct'=>  $this->countProductsByGender('m'),
+                    'topProduct'=>$this->countProductsByType('Top'),
+                    'bottomProduct'=>$this->countProductsByType('Bottom'),
+                    'dressProduct'=>$this->countProductsByType('Dress'),
                 ));
     }
 
@@ -652,6 +657,28 @@ class ProductController extends Controller {
                  $em->persist($product);
                  $em->flush();
  }
+ 
+ 
+ //----------------------Products Stats-----------------
+public function productStatsAction()
+{
+        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+        $products = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->findListAllProduct();
+        $rec_count = count($productObj->countAllRecord());       
+    
+        $entity=  $this->getProductByBrand();     
+    return $this->render('LoveThatFitAdminBundle:Product:product_stats.html.twig',array(
+                    'total_products'=>$rec_count,
+                    'femaleProduct'=>  $this->countProductsByGender('f'),
+                    'maleProduct'=>  $this->countProductsByGender('m'),
+                    'topProduct'=>$this->countProductsByType('Top'),
+                    'bottomProduct'=>$this->countProductsByType('Bottom'),
+                    'dressProduct'=>$this->countProductsByType('Dress'),
+                    'brandproduct'=>$entity,
+        ));
+}
 //------------------------------------------------------------------
 
 
@@ -692,7 +719,38 @@ class ProductController extends Controller {
         $em->persist($p_item);
         $em->flush();
     }
+    
+    
+    private function countProductsByGender($gender)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                 ->findPrductByGender($gender);
+		$rec_count = count($ProductTypeObj->findPrductByGender($gender));
+        return $rec_count;
+    }
 
+    private function countProductsByType($target)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                 ->findPrductByType($target);
+		$rec_count = count($ProductTypeObj->findPrductByType($target));
+        return $rec_count;
+    }
+    
+    
+    private function getProductByBrand()
+    {
+      $em = $this->getDoctrine()->getManager();     
+      $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
+                 ->findPrductByBrand();		
+        return $entity;
+    }
     //---------------------------------------------------------------------
     
 }

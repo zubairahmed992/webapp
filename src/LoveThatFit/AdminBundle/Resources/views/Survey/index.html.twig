@@ -6,6 +6,7 @@
 <div class="p_listing">     
     <h1 style="float:left;">Survey</h1>
     <div class="btn_wrapper">
+        Total Questions: {{count_question}}
         <h5>Add New Question</h5>     
         <form action="{{ path('admin_survey_add_new_question') }}" method="post" {{ form_enctype(addNewForm) }}>
       {{ form_widget(addNewForm) }} 
