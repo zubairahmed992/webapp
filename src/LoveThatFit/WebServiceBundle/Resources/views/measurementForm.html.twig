@@ -1,0 +1,29 @@
+
+            <form id="registration" action="{{ path('web_service_measurement_create')}}" method="post" {{ form_enctype(form) }}>
+                <div class="form_vld_error">
+{{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
+                        </div>
+
+                    <div class="frm_ele">
+                       {{ form_widget(form.neck, { 'attr': {'placeholder': 'neck'} }) }}
+                    </div>
+                    <div class="frm_ele">
+                       {{ form_widget(form.chest, { 'attr': {'placeholder': 'chest'} }) }}
+                    </div>
+                    <div class="frm_ele">
+                       {{ form_widget(form.waist, { 'attr': {'placeholder': 'waist'} }) }}
+                    </div>
+                    <div class="frm_ele">
+                       {{ form_widget(form.inseam, { 'attr': {'placeholder': 'inseam'} }) }}
+                    </div>
+ 
+                    <div style="clear:both;"></div>
+                    {{ form_rest(form) }}
+                
+                    <input class="reg_next_step" type="submit" value="Register" />
+
+
+                   
+                </form>
+
+

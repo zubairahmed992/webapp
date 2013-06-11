@@ -4,6 +4,7 @@ namespace LoveThatFit\WebServiceBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LoveThatFit\UserBundle\Entity\User;
+use LoveThatFit\UserBundle\Entity\Measurement;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -47,11 +48,11 @@ class UserController extends Controller {
    
     public function registrationCreateAction(Request $request) {
     
-            $request_array = $this->getRequest()->get('form');
+        $request_array = $this->getRequest()->get('form');
         $email = $request_array['email'];
         $password = implode($request_array['password']);
         $gender = $request_array['gender'];
-        $zipcode = $request_array['gender'];
+        $zipcode = $request_array['zipcode'];
         if ($request->getMethod() == 'POST') {
 
             if ($this->isDuplicateEmail(Null, $email)) {
@@ -82,8 +83,95 @@ class UserController extends Controller {
             
   }
             
-           
+   #-------------------------Measurement-----------------------------------------------------------------------------#       
+  public function createMeasurementFormAction() {
+
+       
+        $form = $this->createFormBuilder()
+                ->add('neck', 'text')
+                ->add('chest', 'text')
+                ->add('waist', 'text')
+                ->add('inseam', 'text')
+                ->getForm();
+        
+         
+        return $this->render('LoveThatFitWebServiceBundle::measurementForm.html.twig', array(
+                    'form' => $form->createView()));
+    }
  
+  public function measurementCreateAction(Request $request)
+  {
+       if ($request->getMethod() == 'POST') {
+           
+           $request_array = $this->getRequest()->get('form');
+           if(isset($request_array['weight']))
+           { $weight = $request_array['weight'];  }    
+           
+           if(isset($request_array['height']))
+           { $height = $request_array['height'];  }    
+           
+           if(isset($request_array['waist']))
+           { $waist = $request_array['waist'];  }    
+           
+           if(isset($request_array['hip']))
+           { $hip = $request_array['hip'];  }    
+           
+           if(isset($request_array['bust']))
+           { $bust = $request_array['bust'];  }    
+           
+           if(isset($request_array['arm']))
+           { $arm = $request_array['arm'];  }    
+           
+           if(isset($request_array['neck']))
+           { $neck = $request_array['neck'];  }    
+           
+           if(isset($request_array['inseam']))
+           { $inseam = $request_array['inseam'];  }    
+           
+           if(isset($request_array['back']))
+           { $back = $request_array['back'];  }    
+           
+           if(isset($request_array['shoulder_height']))
+           { $shoulder_height = $request_array['shoulder_height'];  }    
+           
+           if(isset($request_array['outseam']))
+           { $outseam = $request_array['outseam'];  }    
+           
+           if(isset($request_array['chest']))
+           { $chest = $request_array['chest'];  }    
+           
+           if(isset($request_array['sleeve']))
+           { $sleeve = $request_array['sleeve'];  }    
+           
+           
+          
+           $entity = new Measurement();
+          
+            
+            $entity->setUpdatedAt(new \DateTime('now'));  
+            
+             $entity->setWeight($weight);
+             $entity->setHeight($height);
+             $entity->setWaist($waist);
+             $entity->setHip($hip);
+             $entity->setBust($bust);
+             $entity->setArm($arm);
+             $entity->setNeck($neck);
+             $entity->setInseam($inseam);
+             $entity->setBack($back);
+             $entity->setShoulderHeight($shoulder_height);
+             $entity->setOutseam($outseam);
+             $entity->setChest($chest);
+             $entity->setSleeve($sleeve);
+             
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return new Response(json_encode(array('msg' => 'success')));
+       }
+  }
+   
     #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count,$entity) {
