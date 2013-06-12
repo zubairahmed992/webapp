@@ -204,6 +204,21 @@ class UserRepository extends EntityRepository
         }
     }
     
+  public function findUserAge()
+  {
+      $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us.birthDate, CURDATE(),TIMESTAMPDIFF(YEAR,us.birthDate,CURDATE()) AS age FROM LoveThatFitUserBundle:User us 
+     "
+        );
+        try {                     
+            return $query->getResult();
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
+    
     
 }
 

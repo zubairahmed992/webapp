@@ -2,7 +2,9 @@
 #-------------- ADMIN ------------------------
 #-------------------------------------------------------------
 
-
+admin_dashboard:
+    pattern:  /admin/dashboard
+    defaults: { _controller: LoveThatFitAdminBundle:Default:index}
 
 #-------------- PRODUCT ------------------------
     
