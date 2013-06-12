@@ -79,11 +79,11 @@ class UserController extends Controller {
                  
                     return new Response(json_encode($userinfo));
                 } else {
-                     return new Response(json_encode(Null));
+                     return new Response(json_encode(array('Message'=>'Invalid Password')));
                 }
             }
            else {
-               return new Response(json_encode(Null));
+               return new Response(json_encode(array('Message'=>'Invalid Email')));
            }  
        }
     }
