@@ -17,63 +17,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class DefaultController extends Controller {
 
-    public function createFormAction(Request $request) {
-
-        $defaultData = array('message' => 'Enter your email address');
-        $form = $this->createFormBuilder($defaultData)
-                ->add('email', 'text')
-                ->add('password', 'password')
-                ->getForm();
-        return $this->render('LoveThatFitWebServiceBundle::loginForm.html.twig', array(
-                    'form' => $form->createView()));
-    }
-
-    public function loginAction(Request $request) {
-        $defaultData = array('message' => 'Enter your email address');
-        $form = $this->createFormBuilder($defaultData)
-                ->add('email', 'text')
-                ->add('password', 'password')
-                ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-            $data = $form->getData();
-
-            $email = $data['email'];
-            $password = $data['password'];
-            
-            $em = $this->getDoctrine()->getManager();
-            $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
-           
-            if (count($entity) >0) {
-
-                $user_db_password = $entity->getPassword();
-                $salt_value_db = $entity->getSalt();
-
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-                $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
-                if ($user_db_password == $password_old_enc) {
-                    $first_name=$entity->getFirstName();
-                    $last_name=$entity->getLastName();
-                    $gender=$entity->getGender();
-                    $birth_date=$entity->getBirthDate();
-                   $userinfo=array();
-                   $userinfo[]=$email;
-                   $userinfo[]=$first_name;
-                   $userinfo[]=$last_name;
-                   $userinfo[]=$gender;
-                   $userinfo[]=$birth_date;
-                    return new Response(json_encode($userinfo));
-                } else {
-                     return new Response(json_encode('Login Fail'));
-                }
-            }
-           else {
-               return new Response(json_encode('Invalid Email Address'));
-           }  
-       }
-    }
+   
 
     //--------------------------------------------------Brand Type----------------------///   
 
