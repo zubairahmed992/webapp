@@ -31,19 +31,16 @@ class UserController extends Controller {
                     'form' => $form->createView()));
     }
 
-    public function loginAction(Request $request) {
-        $defaultData = array('message' => 'Enter your email address');
-        $form = $this->createFormBuilder($defaultData)
-                ->add('email', 'text')
-                ->add('password', 'password')
-                ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-            $data = $form->getData();
-
-            $email = $data['email'];
-            $password = $data['password'];
+    public function loginAction() {
+          $request = $this->get('request');
+           
+        if ($request->getMethod() == 'POST'){
+           // $form->bindRequest($request);
+             $email = $request->request->get('email');
+            $password=$request->request->get('password');
+            //$data = $request->getData();
+           // $email = $data['email'];
+            //$password = $data['password'];
             
             $em = $this->getDoctrine()->getManager();
             $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
@@ -61,6 +58,7 @@ class UserController extends Controller {
                     $first_name=$entity->getFirstName();
                     $last_name=$entity->getLastName();
                     $gender=$entity->getGender();
+                    $zipcode=$entity->getZipcode();
                     $birth_date=$entity->getBirthDate();
                     $image=$entity->getImage();
                     $avatar=$entity->getAvatar();
@@ -69,6 +67,7 @@ class UserController extends Controller {
                    $userinfo['email']=$email;
                    $userinfo['first_name']=$first_name;
                    $userinfo['last_name']=$last_name;
+                   $userinfo['zipcode']=$zipcode;
                    $userinfo['gender']=$gender;
                    if(isset($birth_date)){
                    $userinfo['birth_date']= $birth_date->format('Y-m-d');
@@ -80,11 +79,11 @@ class UserController extends Controller {
                  
                     return new Response(json_encode($userinfo));
                 } else {
-                     return new Response(json_encode(array('Error'=>'Login Fail')));
+                     return new Response(json_encode(Null));
                 }
             }
            else {
-               return new Response(json_encode(array('Error'=>'Invalid Email Address')));
+               return new Response(json_encode(Null));
            }  
        }
     }
