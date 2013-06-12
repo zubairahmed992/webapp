@@ -70,7 +70,9 @@ class UserController extends Controller {
                    $userinfo['first_name']=$first_name;
                    $userinfo['last_name']=$last_name;
                    $userinfo['gender']=$gender;
+                   if(isset($birth_date)){
                    $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
                    $userinfo['image']=$image;
                    $userinfo['avatar']=$avatar;
                    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
