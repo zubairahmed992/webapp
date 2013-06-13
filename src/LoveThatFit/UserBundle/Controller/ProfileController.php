@@ -72,11 +72,14 @@ class ProfileController extends Controller {
         $em->persist($measurement);
         $em->flush();
         $this->get('session')->setFlash('success', 'Your measurement information has been saved.');
+      $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
 
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
+                              'sizechartsizeform' => $brandSizeChartForm->createView(),
+  
                 ));
     }
 

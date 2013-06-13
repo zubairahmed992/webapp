@@ -18,7 +18,7 @@
 {% endif %}
 
 
-
+{% if (display_this_size_chart is defined) %}
 
         <form action="size_chart_size" method="post" {{ form_enctype(sizechartsizeform) }}>
             <span id="gender" style="display: none;">{{entity.gender}}</span>
@@ -42,7 +42,7 @@
         </form>
 
 
-
+{% endif %}
         <br/>
 
 
