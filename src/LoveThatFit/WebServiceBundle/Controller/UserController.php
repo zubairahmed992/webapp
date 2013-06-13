@@ -19,31 +19,22 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 class UserController extends Controller {
 #--------------------------------Login ----------------------------------------------------------------#
     #---------------------Login Service---------------------------------------------------------#
-    
-     public function createFormAction(Request $request) {
-
-        $defaultData = array('message' => 'Enter your email address');
-        $form = $this->createFormBuilder($defaultData)
-                ->add('email', 'text')
-                ->add('password', 'password')
-                ->getForm();
-        return $this->render('LoveThatFitWebServiceBundle::loginForm.html.twig', array(
-                    'form' => $form->createView()));
-    }
-
+   
     public function loginAction() {
-          $request = $this->get('request');
-           
-        if ($request->getMethod() == 'POST'){
-           // $form->bindRequest($request);
-             $email = $request->request->get('email');
-            $password=$request->request->get('password');
-            //$data = $request->getData();
-           // $email = $data['email'];
-            //$password = $data['password'];
-            
-            $em = $this->getDoctrine()->getManager();
-            $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
+        
+        $request = $this->getRequest();
+        $req=$request->request->get('login');
+        $email=$request->request->get('email');
+        
+         $handle = fopen('php://input','r');
+         $jsonInput = fgets($handle);
+         $decoded = json_decode($jsonInput,true);
+        
+         
+         $email=$decoded['email'];
+         $password=$decoded['password'];
+         $em = $this->getDoctrine()->getManager();
+         $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
            
             if (count($entity) >0) {
 
@@ -81,10 +72,9 @@ class UserController extends Controller {
                 } else {
                      return new Response(json_encode(array('Message'=>'Invalid Password')));
                 }
-            }
-           else {
-               return new Response(json_encode(array('Message'=>'Invalid Email')));
-           }  
+             
+       }else{
+           return new Response(json_encode(array('Message'=>'Invalid Email')));
        }
     }
 
