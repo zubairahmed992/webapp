@@ -63,6 +63,7 @@ class UserController extends Controller {
                    if(isset($birth_date)){
                    $userinfo['birth_date']= $birth_date->format('Y-m-d');
                    }
+                   
                    $userinfo['image']=$image;
                    $userinfo['avatar']=$avatar;
                    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
@@ -78,8 +79,111 @@ class UserController extends Controller {
        }
     }
 
+#------------------------------Edit Profile----------------------------------------------------------#    
+    public function editProfileFormAction()
+   {
+$form = $this->createFormBuilder()
+                ->add('email', 'email')
+                ->add('zipcode', 'text')
+                ->add('password', 'repeated', array(
+                    'first_name' => 'password',
+                    'second_name' => 'confirm',
+                    'type' => 'password',
+                    'invalid_message' => 'The password fields must match.',
+                ))
+                ->add('gender', 'choice', array('choices' => $gender,
+                    'multiple' => False,
+                    'expanded' => False,
+                    'required' => false
+                ))
+                ->getForm();
+
+
+        return $this->render('LoveThatFitWebServiceBundle::registrationForm.html.twig', array(
+                    'form' => $form->createView()));
+
+
+
+   }
+#------------------------------------------------------------------#
+    public function editProfileAction()
+{
+         $handle = fopen('php://input','r');
+         $jsonInput = fgets($handle);
+         $decoded = json_decode($jsonInput,true);
+        
+         print_r($decoded);
+         
+         $first_name=$decoded['first_name'];
+         $last_name=$decoded['last_name'];
+         $birth_date=$decoded['birth_date'];
+         $zipcode=$decoded['zipcode'];
+         $avatar=$decoded['avatar'];
+         
+            $user = new User();
+
+            $user->setCreatedAt(new \DateTime('now'));
+            $user->setUpdatedAt(new \DateTime('now'));
+            if(isset($first_name)){$user->setFirstName($first_name);}
+            if(isset($last_name)){$user->setLastName($last_name);}
+            if(isset($birth_date)){$user->setBirthDate($birth_date);}
+            if(isset($zipcode)){$user->setZipcode($zipcode);}
+            if(isset($avatar)){$user->uploadAvatar();}
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush(); 
+    return new Response(json_encode(array('Message'=>'Update Sucessfully')));
+   
+}        
+#------------------------------End of Edit Profile---------------------------------------------------#
+#------------------------------User Profile----------------------------------------------------------#
+public function userProfile()
+{
     
-    #------------------------------------------Registration---------------------------------------------#
+        $handle = fopen('php://input','r');
+         $jsonInput = fgets($handle);
+         $decoded = json_decode($jsonInput,true);
+         $email=$decoded['email'];
+        
+       $em = $this->getDoctrine()->getManager();
+       $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
+           
+            if (count($entity) >0) {
+
+               
+                    $user_id=$entity->getId();
+                    $first_name=$entity->getFirstName();
+                    $last_name=$entity->getLastName();
+                    $gender=$entity->getGender();
+                    $zipcode=$entity->getZipcode();
+                    $birth_date=$entity->getBirthDate();
+                    $image=$entity->getImage();
+                    $avatar=$entity->getAvatar();
+                   $userinfo=array();
+                   $userinfo['id']=$user_id;
+                   $userinfo['email']=$email;
+                   $userinfo['first_name']=$first_name;
+                   $userinfo['last_name']=$last_name;
+                   $userinfo['zipcode']=$zipcode;
+                   $userinfo['gender']=$gender;
+                   if(isset($birth_date)){
+                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
+                   
+                   $userinfo['image']=$image;
+                   $userinfo['avatar']=$avatar;
+                   $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
+                   $userinfo['path']=$baseurl;
+                 
+                    return new Response(json_encode($userinfo));
+                } 
+            
+            else {
+                     return new Response(json_encode(array('Message'=>'Invalid Email')));
+                }
+}
+#------------------------------End Of User Profile---------------------------------------------------#
+#------------------------------------------Registration---------------------------------------------#
     public function createRegistrationFormAction() {
 
         $gender = array('' => 'Select Gender', 'm' => 'Male', 'f' => 'Female');
