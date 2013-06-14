@@ -112,14 +112,13 @@ $form = $this->createFormBuilder()
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
         
-         print_r($decoded);
-         
          $first_name=$decoded['first_name'];
          $last_name=$decoded['last_name'];
          $birth_date=$decoded['birth_date'];
          $zipcode=$decoded['zipcode'];
-         $avatar=$decoded['avatar'];
-         
+        // $avatar=$decoded['avatar'];
+         if(isset($decoded))
+         {
             $user = new User();
 
             $user->setCreatedAt(new \DateTime('now'));
@@ -128,12 +127,16 @@ $form = $this->createFormBuilder()
             if(isset($last_name)){$user->setLastName($last_name);}
             if(isset($birth_date)){$user->setBirthDate($birth_date);}
             if(isset($zipcode)){$user->setZipcode($zipcode);}
-            if(isset($avatar)){$user->uploadAvatar();}
+          //  if(isset($avatar)){$user->uploadAvatar();}
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush(); 
-    return new Response(json_encode(array('Message'=>'Update Sucessfully')));
-   
+            return new Response(json_encode(array('Message'=>'Update Sucessfully')));
+         }
+        else 
+            {
+             return new Response(json_encode(array('Message'=>'Please try again')));
+            }
 }        
 #------------------------------End of Edit Profile---------------------------------------------------#
 #------------------------------User Profile----------------------------------------------------------#
@@ -501,9 +504,16 @@ public function userProfile()
 
     #-------------------------------------------------------------------------------------------------------#
 
-    public function changePasswordAction(Request $request) {
-        $request_array = $this->getRequest()->get('form');
-
+    public function changePasswordAction() {
+       
+          
+         $handle = fopen('php://input','r');
+         $jsonInput = fgets($handle);
+         $request_array  = json_decode($jsonInput,true);
+         
+         print_r($request_array  );
+         
+         //$email=$decoded['email'];
 
         if (isset($request_array['email'])) {
             $email = $request_array['email'];
