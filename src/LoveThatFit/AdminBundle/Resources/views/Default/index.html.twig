@@ -15,15 +15,7 @@
     <table width="100%">
         <tr>
             <td colspan="2" valign="top">
-                <div> Total Products:{{totalproducts}}</div>
-                <div>Female Product:{{femaleProduct}}</div>
-                <div> Male Products:{{maleProduct}}</div>
-     {%for p in brandproduct%}
-                <div>{{p.name}}: {{p.brand}}</div>
-      {%endfor%}   
-                <div>Top Product:{{topProduct}}</div>   
-                <div> Bottom Product:{{bottomProduct}}</div>
-                <div>  Dress Product:{{dressProduct}}</div>
+                <div> Total Products:{{totalproducts}}</div>                
             </td>
         </tr>
         
@@ -33,24 +25,20 @@
         <tr>
             <td valign="top">
         {%for p in brandproduct%}
-                    <div>{{p.name}}: {{p.brand}}</div>
+                    {%set percent=100*p.brand/totalproducts%}
+                    
+                    <div>{{p.name}}: {{p.brand}}   Percent:{{percent|number_format}}%</div>
         {%endfor%}  
                 </td>
                 <td valign="top">
                     <canvas id="piecanvas"  height="300" width="300"></canvas>
                     <script>
                         var pieData = [
-                            {
-                                value: {{totalproducts}},
-                                color: "#69D2E7",
-                                label: 'Total Products',
-                                labelColor: '#A72D19'
-                            },
                             {%for p in brandproduct%}
                             {
                                 value: {{p.brand}},
                                 color: "#E0E4CC",
-                                label: '{{p.name}}',
+                                label: '{{p.name}} {"{{p.brand}}"}',
                                 labelColor: '#1F1B33'
                             },
                               {%endfor%}
@@ -68,36 +56,30 @@
                 </tr>        
                 <tr>
                     <td valign="top">
-                        <div>Top Product:{{topProduct}}</div>   
-                        <div> Bottom Product:{{bottomProduct}}</div>
-                        <div>  Dress Product:{{dressProduct}}</div>
+                        <div>Top Product:{{topProduct}}    Percent:{%set toppercent=100*topProduct/totalproducts%} {{toppercent|number_format}}%</div>   
+                        <div> Bottom Product:{{bottomProduct}}     Percent:{%set bottompercent=100*bottomProduct/totalproducts%} {{bottompercent|number_format}}%</div>
+                        <div>  Dress Product:{{dressProduct}}   Percent:{%set dresspercent=100*dressProduct/totalproducts%} {{dresspercent|number_format}}%</div>
                     </td>
                     <td valign="top">
                         <canvas id="clothingtypecanvas"  height="300" width="300"></canvas>
                         <script>
-                            var clothingtypepieData = [
-                                {
-                                    value: {{totalproducts}},
-                                    color: "#69D2E7",
-                                    label: 'Total Products',
-                                    labelColor: '#A72D19'
-                                },
+                            var clothingtypepieData = [                               
                                 {
                                     value: {{topProduct}},
-                                    color: "#E0E4CC",
-                                    label: 'Top Products',
+                                    color: "#69D2E7",
+                                    label: 'Top Products {"{{topProduct}}"}',
                                     labelColor: '#1F1B33'
                                 },
                                 {
                                     value: {{bottomProduct}},
                                     color: "#E0E4CC",
-                                    label: 'Bottom Products',
+                                    label: 'Bottom Products {"{{bottomProduct}}"}',
                                     labelColor: '#1F1B33'
                                 },
                                 {
                                     value: {{dressProduct}},
                                     color: "#E0E4CC",
-                                    label: 'Dress Products',
+                                    label: 'Dress Products {"{{dressProduct}}"}',
                                     labelColor: '#1F1B33'
                                 },
                             ];
@@ -116,8 +98,8 @@
             <tr>
                <td valign="top" colspan="2">
                   <div> Total:  {{totalusers}}</div>
-                        <div>Female:  {{femaleUsers}}</div>
-                        <div>Male:  {{maleUsers}}</div>                                           
+                        <div>Female:  {{femaleUsers}}         Percent:{%set femalepercent=100*femaleUsers/totalusers%} {{femalepercent|number_format}}%</div>
+                        <div>Male:  {{maleUsers}}   Percent:{%set malepercent=100*maleUsers/totalusers%} {{malepercent|number_format}}%</div>                                           
                     </td>
             </tr>
             
@@ -125,48 +107,13 @@
                     <td colspan="2" valign="top"><h4 style="float:left;">Last Six Month Signups</h4></td>
                 </tr> 
             
-                    <tr>
-                    <td valign="top" colspan="2">
-                        <canvas id="clothingtypecanvas"  height="300" width="300"></canvas>
-                        <script>
-                            var clothingtypepieData = [
-                                {
-                                    value: {{totalproducts}},
-                                    color: "#69D2E7",
-                                    label: 'Total Products',
-                                    labelColor: '#A72D19'
-                                },
-                                {
-                                    value: {{topProduct}},
-                                    color: "#E0E4CC",
-                                    label: 'Top Products',
-                                    labelColor: '#1F1B33'
-                                },
-                                {
-                                    value: {{bottomProduct}},
-                                    color: "#E0E4CC",
-                                    label: 'Bottom Products',
-                                    labelColor: '#1F1B33'
-                                },
-                                {
-                                    value: {{dressProduct}},
-                                    color: "#E0E4CC",
-                                    label: 'Dress Products',
-                                    labelColor: '#1F1B33'
-                                },
-                            ];
-                            var myPie = new Chart(document.getElementById("clothingtypecanvas").getContext("2d")).Pie(clothingtypepieData, {
-                                animationSteps: 100,
-                                animationEasing: 'easeInOutQuart'
-                            });
-
-                            </script></td>
-                    </tr>
+                    
 
 
     <tr>
         <td colspan="2">
         
+       
         </td>
     </tr>
 

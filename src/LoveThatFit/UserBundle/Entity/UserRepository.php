@@ -204,6 +204,22 @@ class UserRepository extends EntityRepository
         }
     }
     
+    
+  public function findUserByMonth()
+  {
+     $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
+     "
+        );
+        try {                     
+            return $query->getResult();
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        } 
+  }
+    
   public function findUserAge()
   {
       $query = $this->getEntityManager()
@@ -223,13 +239,13 @@ class UserRepository extends EntityRepository
   {
       $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT  u  FROM LoveThatFitUserBundle:User us 
+     SELECT us FROM LoveThatFitUserBundle:User us 
      where 
      TIMESTAMPDIFF(YEAR,us.birth_date,CURRENT_DATE()) BETWEEN
-     :startDate
+     :startage
      AND 
-     :endDate"
-            )->setParameters(array('startDate'=>$startage,'endDate'=>$endage));
+     :endage"
+            )->setParameters(array('startage'=>$startage,'endage'=>$endage));
         try {                     
             return $query->getResult();
             

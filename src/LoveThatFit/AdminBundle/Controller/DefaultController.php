@@ -3,6 +3,8 @@
 namespace LoveThatFit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -17,7 +19,7 @@ class DefaultController extends Controller
 
     
  
-        $ProductByBrand=  $this->getProductByBrand();
+        $ProductByBrand=  $this->getProductByBrand(); 
         return $this->render('LoveThatFitAdminBundle:Default:index.html.twig', array(
 		    'totalclotingtypes'=>$this->countAllClothingType(),
                     'criteriaTop'=>$this->countStatistics('Top'),
@@ -33,10 +35,16 @@ class DefaultController extends Controller
                     'brandproduct'=>$ProductByBrand,
                     'totalusers'=>  $this->getAllUserList(),
                     'femaleUsers'=>$this->getUserByGender('f'),
-                    'maleUsers'=>$this->getUserByGender('m'),
+                    'maleUsers'=>$this->getUserByGender('m'),                   
 		));
         
         
+    }
+    
+     private function calculateStatistics($countResult,$totalRecord)
+    {
+       $statistics=($countResult/$totalRecord)*100;
+       return $statistics;
     }
     
     
@@ -144,19 +152,19 @@ class DefaultController extends Controller
 		$rec_count = count($UserTypeObj->findAll());
         return $rec_count;
     }
-    /*
-    private function getLastSixMonthSignUps($month)
+    
+    private function getLastSixMonthSignUps()
     {
         $em = $this->getDoctrine()->getManager();
         $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
          $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserByMonth($month);
-		$rec_count = count($UserTypeObj->findUserByMonth($month));
+                 ->findUserByMonth();
+		$rec_count = count($UserTypeObj->findUserByMonth());
         return $rec_count;
     }
     
-    
+    /*
     private function getUserByAgeGroup($startage,$endage)
     {
         $em = $this->getDoctrine()->getManager();
