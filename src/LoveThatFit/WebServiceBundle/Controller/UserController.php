@@ -485,41 +485,18 @@ public function userProfile()
     }
 
     #--------------Change Password--------------------------------------------------------#
-
-    public function changePasswordFormAction() {
-        $form = $this->createFormBuilder()
-                ->add('email', 'email')
-                ->add('old_password', 'password')
-                ->add('password', 'repeated', array(
-                    'first_name' => 'password', 'label' => 'New Password',
-                    'second_name' => 'confirm',
-                    'type' => 'password',
-                    'invalid_message' => 'The password fields must match.',
-                ))
-                ->getForm();
-
-        return $this->render('LoveThatFitWebServiceBundle::changePasswordForm.html.twig', array(
-                    'form' => $form->createView()));
-    }
-
-    #-------------------------------------------------------------------------------------------------------#
-
-    public function changePasswordAction() {
+ public function changePasswordAction() {
        
           
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
          
-         print_r($request_array  );
-         
-         //$email=$decoded['email'];
-
         if (isset($request_array['email'])) {
             $email = $request_array['email'];
         }
         if (isset($request_array['password'])) {
-            $new_password = $request_array['password']['password'];
+            $password = $request_array['password'];
         }
         if (isset($request_array['old_password'])) {
             $old_password = $request_array['old_password'];
@@ -541,7 +518,7 @@ public function userProfile()
             if ($password_old_enc == $user_db_password) {
 
                 $entity->setUpdatedAt(new \DateTime('now'));
-                $password = $encoder->encodePassword($new_password, $salt_value_old);
+                $password = $encoder->encodePassword($password, $salt_value_old);
                 $entity->setPassword($password);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
@@ -556,7 +533,7 @@ public function userProfile()
         }
     }
 
-    #---------------------------Render Json--------------------------------------------------------------------#
+#---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
         if ($rec_count > 0) {
