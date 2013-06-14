@@ -71,9 +71,10 @@ class Algorithm {
         $fits = $this->fit($this->feedback_array);
         
         if ($fits==true) {
-             $basic_feedback_array= array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
-            $result = array_merge((array)$basic_feedback_array, (array)$this->getAdditionalFeedbackArray());
-            return $result;
+             $love_that_fit_feedback= array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
+       //     $result = array_merge((array)$love_that_fit_feedback, (array)$this->getAdditionalFeedbackArray());
+         //   return $result;
+             return $love_that_fit_feedback;
         } else {
             return $this->feedback_array;
         }
@@ -217,7 +218,7 @@ class Algorithm {
     }
 
     private function getWaistFeedback() {
-        return $this->getMessageFill('waist', $this->compare($this->user_measurement->getWaist(), $this->product_measurement->getBustMin(), $this->product_measurement->getBustMax()));
+        return $this->getMessageFill('waist', $this->compare($this->user_measurement->getWaist(), $this->product_measurement->getWaistMin(), $this->product_measurement->getWaistMax()));
     }
 
     private function getOutseamFeedback() {
