@@ -26,7 +26,10 @@ ajax_product_detail:
     pattern:  /ajax/product/{id}/{product_color_id}/{product_size_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productDetail, product_color_id: null, product_size_id: null}
 
-
+ajax_product_base_url:
+    pattern:  /ajax/product/
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productDetail, id: null, product_color_id: null, product_size_id: null}
+    
 ajax_user_product_item_create:
     pattern:  /ajax/user_product_item/create/{product_item_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:addToCloest}
