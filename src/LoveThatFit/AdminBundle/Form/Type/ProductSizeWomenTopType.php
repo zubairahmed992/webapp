@@ -20,7 +20,9 @@ class ProductSizeWomenTopType extends AbstractType
         $builder->add('sleeve_min');
         $builder->add('sleeve_max');
         
-       
+       $builder->add('hip_min');
+        $builder->add('hip_max');
+        
         $builder->add('back_min');
         $builder->add('back_max');
         

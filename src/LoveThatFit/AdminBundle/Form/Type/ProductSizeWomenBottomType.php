@@ -30,7 +30,7 @@ class ProductSizeWomenBottomType extends AbstractType
         
         $builder->add('length');
         
-        
+        $builder->add('thigh');
         
        $builder->add('hem');
         

@@ -272,8 +272,29 @@ class ProductSize
      * @ORM\Column(name="sleeve_max", type="float",nullable=true)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-     private $sleeve_max;
-
+     private $sleeve_max;     
+     /**
+     * @var float $thigh
+     *
+     * @ORM\Column(name="thigh", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $thigh;
+     
+      /**
+     * @var float $thigh_min
+     *
+     * @ORM\Column(name="thigh_min", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $thigh_min;
+      /**
+     * @var float $thigh_max
+     *
+     * @ORM\Column(name="thigh_max", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+     private $thigh_max;
     /**
      * Get id
      *
@@ -1030,5 +1051,74 @@ class ProductSize
     public function getSleeveMax()
     {
         return $this->sleeve_max;
+    }
+
+    /**
+     * Set thigh
+     *
+     * @param float $thigh
+     * @return ProductSize
+     */
+    public function setThigh($thigh)
+    {
+        $this->thigh = $thigh;
+    
+        return $this;
+    }
+
+    /**
+     * Get thigh
+     *
+     * @return float 
+     */
+    public function getThigh()
+    {
+        return $this->thigh;
+    }
+
+    /**
+     * Set thigh_min
+     *
+     * @param float $thighMin
+     * @return ProductSize
+     */
+    public function setThighMin($thighMin)
+    {
+        $this->thigh_min = $thighMin;
+    
+        return $this;
+    }
+
+    /**
+     * Get thigh_min
+     *
+     * @return float 
+     */
+    public function getThighMin()
+    {
+        return $this->thigh_min;
+    }
+
+    /**
+     * Set thigh_max
+     *
+     * @param float $thighMax
+     * @return ProductSize
+     */
+    public function setThighMax($thighMax)
+    {
+        $this->thigh_max = $thighMax;
+    
+        return $this;
+    }
+
+    /**
+     * Get thigh_max
+     *
+     * @return float 
+     */
+    public function getThighMax()
+    {
+        return $this->thigh_max;
     }
 }

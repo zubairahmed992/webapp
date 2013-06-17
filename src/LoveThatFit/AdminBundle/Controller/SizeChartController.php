@@ -70,13 +70,22 @@ class SizeChartController extends Controller {
        $form = $this->getAddSizeChartForm($entity);   
        $form->bind($request); 
        $title = $entity->getTitle();
+       if($title==="00")
+       {
+           $title="00";
+       }
+      else if($title=="0"){
+         $title="0";
+        
+       }    
        $brand = $entity->getBrand()->getId();       
        $gender = $entity->getGender();       
-       $target = $entity->getTarget();       
-       $sizechart=  $this->getBrandSize($brand,$title,$gender,$target);
+       $target = $entity->getTarget();
+       $bodytype=$entity->getBodytype();
+       $sizechart=  $this->getBrandSize($brand,$title,$gender,$target,$bodytype);
        if($sizechart>0)
        {
-           $this->get('session')->setFlash('warning','The Size : ' .$title. ', Gender: ' .$gender. ', Brand: '.$this->getBrandById($brand)->getName().' , Target: ' .$target.  '  already exits!');
+           $this->get('session')->setFlash('warning','The Size : ' .$title. ', Gender: ' .$gender. ', Brand: '.$this->getBrandById($brand)->getName().' , Target: ' .$target.  ' , Body Type: ' .$bodytype. ' already exits!');
             return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
                     'form' => $form->createView()));
        }else
@@ -86,12 +95,12 @@ class SizeChartController extends Controller {
            $em->persist($entity);
            $em->flush();
            $this->get('session')->setFlash('success','The Size Chart has been Created!');
-            return $this->redirect($this->generateUrl('admin_size_charts'));
+           return $this->redirect($this->generateUrl('admin_size_charts'));
             //return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', array(
               //      'form' => $form->createView(),'sizechart' => $entity)); 
        }
-         $this->get('session')->setFlash('warning','Please Enter Values Correctly.');
-                 return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
+       $this->get('session')->setFlash('warning','Please Enter Values Correctly.');
+       return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
                     'form' => $form->createView()));
       
         
@@ -171,14 +180,14 @@ class SizeChartController extends Controller {
         return $sizeChart;
     }
     
-    private function getBrandSize($brand,$title,$gender,$target)
+    private function getBrandSize($brand,$title,$gender,$target,$bodytype)
     {
         $em = $this->getDoctrine()->getManager();
         $sizechartsObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                 ->findBrandSizeBy($brand,$title,$gender,$target);
-		$rec_count = count($sizechartsObj->findBrandSizeBy($brand,$title,$gender,$target));
+                 ->findBrandSizeBy($brand,$title,$gender,$target,$bodytype);
+		$rec_count = count($sizechartsObj->findBrandSizeBy($brand,$title,$gender,$target,$bodytype));
         return $rec_count;
     }
     
