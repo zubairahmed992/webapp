@@ -18,7 +18,7 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 
 class UserController extends Controller {
 #--------------------------------Login ----------------------------------------------------------------#
-    #---------------------Login Service---------------------------------------------------------#
+  #---------------------Login Service---------------------------------------------------------#
    
     public function loginAction() {
         
@@ -102,8 +102,6 @@ $form = $this->createFormBuilder()
         return $this->render('LoveThatFitWebServiceBundle::registrationForm.html.twig', array(
                     'form' => $form->createView()));
 
-
-
    }
 #------------------------------------------------------------------#
     public function editProfileAction()
@@ -112,10 +110,10 @@ $form = $this->createFormBuilder()
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
         
-         $first_name=$decoded['first_name'];
-         $last_name=$decoded['last_name'];
+         $first_name=$decoded['firstName'];
+         $last_name=$decoded['lastName'];
          $birth_date=$decoded['birth_date'];
-         $zipcode=$decoded['zipcode'];
+         $zipcode=$decoded['zip'];
         // $avatar=$decoded['avatar'];
          if(isset($decoded))
          {
