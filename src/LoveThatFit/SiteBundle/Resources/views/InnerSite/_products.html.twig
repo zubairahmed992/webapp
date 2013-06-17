@@ -85,7 +85,7 @@
 
         <div class="prod_node">
             <span></span>
-            <span id="{{'product_'~p.id}}">{{path('ajax_product_detail', {'id':p.id})}}</span>
+            <span id="{{'product_'~p.id}}" style="display:none;">{{path('ajax_product_detail', {'id':p.id})}}</span>
             <div class="featured_box{{p.id}}">
                 <div class="pos_relative"><div class="transp_list hide"><div class="uploading_list">&nbsp;</div></div></div>
                 <div class="nrm_prod_data{{p.id}} default_item">
