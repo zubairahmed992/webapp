@@ -77,7 +77,7 @@
 {% if(row_count>0)%}    
 {% for p in products %}
     <li>
-
+        
         {% if(p.getRandomItem and p.getRandomItem!=null)%}
             <span id="apply_image_url" style="display:none;">{{asset(p.getRandomItem.WebPath)}}
         </span>    
@@ -85,6 +85,7 @@
 
         <div class="prod_node">
             <span></span>
+            <span id="{{'product_'~p.id}}">{{path('ajax_product_detail', {'id':p.id})}}</span>
             <div class="featured_box{{p.id}}">
                 <div class="pos_relative"><div class="transp_list hide"><div class="uploading_list">&nbsp;</div></div></div>
                 <div class="nrm_prod_data{{p.id}} default_item">
@@ -156,11 +157,13 @@ Products are currently<br>  not available.</h3>
     
 $(".prod_details_arrow").click(
     function(){
-        base_url=$('#base_url').text();
+        
         var curr_prod_id = $(this).parent().parent().find(".featured_img img").attr("id");
+        base_url=$('#product_'+curr_prod_id ).text();
+        
         $('.featured_box'+curr_prod_id+' .transp_list').removeClass("hide").addClass("disp_blk");
         $.ajax({
-            url:  base_url+"/app_dev.php/ajax/product/"+ curr_prod_id,
+            url:  base_url,
            
           
             success: function (data) {
