@@ -94,7 +94,7 @@ class UserItemTryHistory
      * @param int $count
      * @return UserItemTryHistory
      */
-    public function setCount(\int $count)
+    public function setCount($count)
     {
         $this->count = $count;
     
