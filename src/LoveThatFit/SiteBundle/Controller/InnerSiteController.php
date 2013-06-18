@@ -253,7 +253,11 @@ class InnerSiteController extends Controller {
             return new response('success');
         }
     }
-
+    
+    
+    //User Item Try History----------------------------------------------
+    
+    
     //-------------------------------------------------------------------
     private function getProduct($id) {
         $entity = $this->getDoctrine()
@@ -284,6 +288,8 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
     }
 
+   
+    
 }
 ?>
 

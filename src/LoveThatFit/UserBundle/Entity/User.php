@@ -39,6 +39,10 @@ class User  implements UserInterface, \Serializable{
      **/
     private $product_items;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="User")
+     */
+    private $useritemtryhistory;
     
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -867,5 +871,40 @@ public function getAbsoluteAvatarPath()
             }
         }    
         return false;
+    }
+
+    
+
+    /**
+     * Add useritemtryhistory
+     *
+     * @param LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory
+     * @return User
+     */
+    public function addUseritemtryhistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory)
+    {
+        $this->useritemtryhistory[] = $useritemtryhistory;
+    
+        return $this;
+    }
+
+    /**
+     * Remove useritemtryhistory
+     *
+     * @param LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory
+     */
+    public function removeUseritemtryhistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory)
+    {
+        $this->useritemtryhistory->removeElement($useritemtryhistory);
+    }
+
+    /**
+     * Get useritemtryhistory
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUseritemtryhistory()
+    {
+        return $this->useritemtryhistory;
     }
 }
