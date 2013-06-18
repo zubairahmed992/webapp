@@ -359,7 +359,7 @@ class ProductColor {
     }
 
     /**
-     * @ORM\postRemove
+     * @ORM\PostRemove
      */
     public function deleteImages() {
         if ($this->image) {

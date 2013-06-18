@@ -248,7 +248,7 @@ class ProductItem
     
     
       /**
- * @ORM\postRemove
+ * @ORM\PostRemove
  */
     
     public function deleteImages()
