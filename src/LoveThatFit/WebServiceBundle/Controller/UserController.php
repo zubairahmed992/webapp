@@ -503,7 +503,7 @@ public function userProfileAction()
                         JsonEncoder()));
             return $serializer->serialize($entity, 'json');
         } else {
-            return json_encode(array('msg' => 'Record Not Found'));
+            return json_encode(array('Message' => 'Record Not Found'));
         }
     }
 

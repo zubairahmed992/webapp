@@ -95,7 +95,8 @@ param:limit:
     #---------------------------Brand List For Web Service-----------------------------------#
     public function findAllBrandWebService() {
 
-        $query = $this->getEntityManager()->createQuery('SELECT b.id as id, b.name as brand_name,b.image as brand_image FROM LoveThatFitAdminBundle:Brand b');
+        $query = $this->getEntityManager()->createQuery('SELECT b.id as id, b.name as brand_name,b.image as brand_image FROM LoveThatFitAdminBundle:Brand b
+            WHERE b.disabled=0');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
