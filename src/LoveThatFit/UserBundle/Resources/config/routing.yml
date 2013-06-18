@@ -3,7 +3,7 @@ getme:
     defaults: { _controller: LoveThatFitUserBundle:Registration:renderThis }
 
 ajax_size_chart_title_json:
-    pattern:  /ajax/size_chart_title/{brand_id}/{gender}/{target}
+    pattern:  /ajax/size_chart_title/{brand_id}/{gender}/{target}/{body_type}
     defaults: { _controller: LoveThatFitUserBundle:Ajax:sizeChartSizesByBrandJSON ,_format: json}
 
 ajax_brand_size_chart_json:

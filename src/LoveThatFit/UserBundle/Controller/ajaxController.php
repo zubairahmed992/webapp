@@ -11,17 +11,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AjaxController extends Controller {
   
-    public function sizeChartSizesByBrandJSONAction($brand_id, $gender, $target) {
+    public function sizeChartSizesByBrandJSONAction($brand_id, $gender, $target,$body_type) {
         
       
         $sizes = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                ->findByBrandGenderTarget($brand_id, $gender, $target);
+                ->findByBrandGenderTargetBodyType($brand_id, $gender, $target,$body_type);
                    $response = new Response(json_encode($sizes));
                 $response->headers->set('Content-Type', 'text/html');          
                 return $response;
     }
-    
+    #--!!!!!This should removed when profile setting update !!!!---------#
     public function brandSizeChartByJSONAction($brand_id, $gender, $target) {
         
       

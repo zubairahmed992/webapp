@@ -55,14 +55,15 @@ $(document).ready(function(){
 
     ///////Step 2 - Brand and Size///////
     var gender=$('#gender').text();
-    $("#measurement_top_brand").change(function(){
- 
-        var checked_option = $(this).attr("value");
    
+    $("#measurement_top_brand").change(function(){
+        var body_type=$('#measurement_body_types input:radio:checked').val();
+        var checked_option = $(this).attr("value");
+        
         $('#measurement_top_size').html('');
         $.ajax({
             type:'json',
-            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Top",
+            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Top/"+body_type,
             success: function (data) {
    
                 var top_brand = JSON.parse(data);
@@ -91,11 +92,11 @@ $(document).ready(function(){
     $("#measurement_bottom_brand").change(function(){
  
         var checked_option = $(this).attr("value");
-   
+   var body_type=$('#measurement_body_types input:radio:checked').val();
         $('#measurement_bottom_size').html('');
         $.ajax({
             type:'json',
-            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Bottom",
+            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Bottom/"+body_type,
             success: function (data) {
    
                 var bottom_brand = JSON.parse(data);
@@ -120,13 +121,13 @@ $(document).ready(function(){
     // Dress
 
     $("#measurement_dress_brand").change(function(){
- 
+ var body_type=$('#measurement_body_types input:radio:checked').val();
         var checked_option = $(this).attr("value");
    
         $('#measurement_dress_size').html('');
         $.ajax({
             type:'json',
-            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Dress",
+            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Dress/"+body_type,
             success: function (data) {
    
                 var dress_brand = JSON.parse(data);

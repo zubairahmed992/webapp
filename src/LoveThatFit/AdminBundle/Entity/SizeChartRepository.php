@@ -101,6 +101,30 @@ class SizeChartRepository extends EntityRepository {
     }
     
     
+       //------------Created By Suresh For Front End added Body Type ------------------------------------------------------------
+
+    public function findByBrandGenderTargetBodyType($brand_id, $gender, $target,$bodytype)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT distinct(sc.title) as title, sc.id as id FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+        b.id=:brand_id AND
+        sc.gender=:gender AND
+        sc.target=:target AND
+        sc.bodytype=:bodytype
+"
+            )->setParameters(array('brand_id' => $brand_id, 'target' => $target, 'gender' => $gender,'bodytype'=>$bodytype)) ;     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        
+    }
+    
+    
     
     
     
