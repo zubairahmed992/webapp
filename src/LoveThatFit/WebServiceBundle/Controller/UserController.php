@@ -110,7 +110,6 @@ $form = $this->createFormBuilder()
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-         
          $user=$this->get('user.helper.user');
          $entity=$user->editProfileServiceHelper($decoded);
         

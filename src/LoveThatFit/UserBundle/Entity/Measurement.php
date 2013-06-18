@@ -664,6 +664,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public $top_size;
     public $bottom_size;
     public $dress_size;
+    public $body_types;
 
    
 

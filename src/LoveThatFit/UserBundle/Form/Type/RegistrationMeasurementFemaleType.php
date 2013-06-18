@@ -11,19 +11,21 @@ class RegistrationMeasurementFemaleType extends AbstractType
     private $top_brands;
     private $bottom_brands;
     private $dress_brands;
+    private $body_types;
 
      public function __construct($top_brands, $bottom_brands,$dress_brands)             
     {
         $this->top_brands=$top_brands;
         $this->bottom_brands=$bottom_brands;
         $this->dress_brands=$dress_brands;
+        $this->body_types=array('Regular'=>'Regular','Petite'=>'Petite');
         
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
-         $builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false,'empty_value' => 'Brand',));
+        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => true,'data'=>'Regular'));
+        $builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false,'empty_value' => 'Brand',));
         $builder->add('bottom_brand', 'choice', array('choices' => $this->bottom_brands, 'required' => false,'empty_value' => 'Brand',));
         $builder->add('dress_brand', 'choice', array('choices' => $this->dress_brands, 'required' => false,'empty_value' => 'Brand',));
 

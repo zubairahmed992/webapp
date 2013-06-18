@@ -1,6 +1,5 @@
-
-
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
 {% block action_block_content %}
 <section class="reg_blk">
     <!--<div class="reg_steps">
@@ -12,6 +11,7 @@
         </ul>
     </div>-->
     <div class="action_cnt">
+          
         <div class="steps step_3 measurements">
             <h2>Brands &amp; Sizes</h2>
             <div id="inst">Put all values in inches.</div>
@@ -28,10 +28,17 @@
  <span class="boxlable" id="weight_box">Weight</span>  
                      {{ form_widget(form.weight) }}
                     </div>
+                    
+                    {{ form_errors(form.body_types) }}
+                    {{ form_widget(form.body_types) }}
                     <span id="gender" style="display: none;">{{entity.gender}}</span>
+                     
+                      
+                        
                     <div class="sep"></div>
 
                     <div class="m_option">
+                       
 
                         <div class="mlabel">Shirt</div>
 
