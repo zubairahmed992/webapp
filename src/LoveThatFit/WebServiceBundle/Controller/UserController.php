@@ -106,78 +106,40 @@ $form = $this->createFormBuilder()
 #------------------------------------------------------------------#
     public function editProfileAction()
 {
+         $request = $this->getRequest();
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
+         $user=$this->get('user.helper.user');
         
-         $first_name=$decoded['firstName'];
-         $last_name=$decoded['lastName'];
-         $birth_date=$decoded['birth_date'];
-         $zipcode=$decoded['zip'];
-        // $avatar=$decoded['avatar'];
-         if(isset($decoded))
-         {
-            $user = new User();
-
-            $user->setCreatedAt(new \DateTime('now'));
-            $user->setUpdatedAt(new \DateTime('now'));
-            if(isset($first_name)){$user->setFirstName($first_name);}
-            if(isset($last_name)){$user->setLastName($last_name);}
-            if(isset($birth_date)){$user->setBirthDate($birth_date);}
-            if(isset($zipcode)){$user->setZipcode($zipcode);}
-          //  if(isset($avatar)){$user->uploadAvatar();}
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush(); 
-            return new Response(json_encode(array('Message'=>'Update Sucessfully')));
-         }
-        else 
-            {
-             return new Response(json_encode(array('Message'=>'Please try again')));
-            }
+        $entity=$user->editProfileServiceHelper($decoded);
+    if(isset($entity))
+    {
+    return new Response(json_encode(array('Message'=>'Update Sucessfully')));
+    }
+    else 
+   {
+     return new Response(json_encode(array('Message'=>'We can not find user')));
+   }
 }        
 #------------------------------End of Edit Profile---------------------------------------------------#
 #------------------------------User Profile----------------------------------------------------------#
-public function userProfile()
+public function userProfileAction()
 {
-    
+        $request = $this->getRequest();
         $handle = fopen('php://input','r');
-         $jsonInput = fgets($handle);
-         $decoded = json_decode($jsonInput,true);
-         $email=$decoded['email'];
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput,true);
+        $email=$decoded['email'];
         
-       $em = $this->getDoctrine()->getManager();
-       $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
-           
-            if (count($entity) >0) {
-
-               
-                    $user_id=$entity->getId();
-                    $first_name=$entity->getFirstName();
-                    $last_name=$entity->getLastName();
-                    $gender=$entity->getGender();
-                    $zipcode=$entity->getZipcode();
-                    $birth_date=$entity->getBirthDate();
-                    $image=$entity->getImage();
-                    $avatar=$entity->getAvatar();
-                   $userinfo=array();
-                   $userinfo['id']=$user_id;
-                   $userinfo['email']=$email;
-                   $userinfo['first_name']=$first_name;
-                   $userinfo['last_name']=$last_name;
-                   $userinfo['zipcode']=$zipcode;
-                   $userinfo['gender']=$gender;
-                   if(isset($birth_date)){
-                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
-                   }
-                   
-                   $userinfo['image']=$image;
-                   $userinfo['avatar']=$avatar;
-                   $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
-                   $userinfo['path']=$baseurl;
-                 
-                    return new Response(json_encode($userinfo));
-                } 
+        $user=$this->get('user.helper.user');
+        $entity=$user->findByEmail($email);
+        
+          if (count($entity) >0) {
+              $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$entity['id']."/";
+              $entity['path']=$baseurl; 
+              return new Response(json_encode($entity));
+         } 
             
             else {
                      return new Response(json_encode(array('Message'=>'Invalid Email')));
@@ -295,7 +257,8 @@ public function userProfile()
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush(); 
-       #---------------Set Data of Measuremnt -------------------#
+           
+            #---------------Set Data of Measuremnt -------------------#
             $measurment = new Measurement();
 
 

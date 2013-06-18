@@ -72,6 +72,9 @@ web_service_edit_profile_form:
 web_service_edit_profile:
    pattern:  /web_service/edit_profile
    defaults: { _controller: LoveThatFitWebServiceBundle:User:editProfile}
+web_service_user_profile:
+   pattern:  /web_service/user_profile
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:userProfile}
    
    
 

@@ -63,5 +63,54 @@ public function find($id)
 {
     return $this->repo->find($id);
 }
+ #---------------------------START WEB SERVICES------- ----------------------------------------#
+public function findByEmail($email)
+{
+                  $entity= $this->repo->findOneBy(array('email'=>$email));
+                   $birth_date=$entity->getBirthDate();
+                   $userinfo=array();
+                   $userinfo['id']=$entity->getId();
+                   $userinfo['email']=$email;
+                   $userinfo['first_name']=$entity->getFirstName();
+                   $userinfo['last_name']=$entity->getLastName();
+                   $userinfo['zipcode']=$entity->getZipcode();
+                   $userinfo['gender']=$entity->getGender();
+                   if(isset($birth_date)){
+                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
+                   
+                   $userinfo['image']=$entity->getImage();
+                   $userinfo['avatar']=$entity->getAvatar();
+                 
+    return  $userinfo;
+}
+#-------------Edit/Update Profile for Web Services----------------#
+public function editProfileServiceHelper($decoded)
+{
+         $email=$decoded['email'];
+         $first_name=$decoded['firstName'];
+         $last_name=$decoded['lastName'];
+         $birth_date=$decoded['dob'];
+         $zipcode=$decoded['zip'];
+     if($email){
+         
+     $user= $this->repo->findOneBy(array('email'=>$email));
+     $user->setCreatedAt(new \DateTime('now'));
+     $user->setUpdatedAt(new \DateTime('now'));
     
+    if(isset($first_name)){$user->setFirstName($first_name);}
+    if(isset($last_name)){$user->setLastName($last_name);}
+    if(isset($birth_date)){
+    $dob=$birth_date->format('Y-m-d');
+    $user->setBirthDate($dob);}
+    if(isset($zipcode)){$user->setZipcode($zipcode);}
+    $this->saveUser($user);
+    return true;
+     }
+     else{
+         
+         return false;
+     }
+}
+
 }
