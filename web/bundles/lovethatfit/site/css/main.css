@@ -705,7 +705,7 @@ header.reg .strip_rgt {
 }
 .step_3 {
 	height:auto;	
-        padding:40px 0px 10px 0px;
+        padding:0px 0px 10px 0px;
 }
 .step_3 h2 {
 	margin-bottom:0px;
@@ -887,7 +887,7 @@ input[type=text],
 input[type=email]{
 	width:234px;
 	padding:4px 7px;
-	-webkit-box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.3);
     box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.3);
 }
@@ -2223,8 +2223,8 @@ padding-bottom: 0px;
 
 .sep{
     border-bottom:1px dashed #ccc;
-    padding: 0px 0px 5px 0px;
-    margin-bottom: 25px;
+    padding: 22px 0px 5px 0px;
+    margin-bottom: 20px;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 .measurements .m_option input[type="text"]{ 
@@ -2233,7 +2233,7 @@ padding-bottom: 0px;
 }
 .measurements .m_option input[type="text"]{   
  width:60px!important;
- height:15px;
+ 
 }
 
 
@@ -2241,14 +2241,15 @@ padding-bottom: 0px;
 
 .measurements .m_option select{   
  width:116px!important; 
- padding: 3px 2px;
+ padding: 3px 3px;
  height: 25px;
  
 }
 
 .measurements .m_option select:last-child{   
  width:117px!important; 
- padding: 3px 2px;
+ padding: 3px 3px;
+ height: 25px;
  
 }
 
@@ -2377,11 +2378,11 @@ padding-bottom: 0px;
 }
 
 #height_box{
-    top: 122px;
+    top: 80px;
 }
 
 #weight_box{
-    top: 122px;
+    top: 80px;
     left:165px;
 }
 
@@ -2522,4 +2523,20 @@ padding-bottom: 0px;
     font-size: 0.85em;
    
     
+}
+
+#measurement_body_types{
+    padding-top: 10px;
+    
+    
+}
+
+#measurement_body_types label{
+    margin-top: -5px;
+    
+    
+}
+
+#measurement_body_types input[type="radio"]{
+    float:left;    
 }
