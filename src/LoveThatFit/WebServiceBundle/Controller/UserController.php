@@ -110,10 +110,12 @@ $form = $this->createFormBuilder()
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
+         
          $user=$this->get('user.helper.user');
+         $entity=$user->editProfileServiceHelper($decoded);
         
-        $entity=$user->editProfileServiceHelper($decoded);
-    if(isset($entity))
+       // return new response(json_encode($entity));
+    if($entity)
     {
     return new Response(json_encode(array('Message'=>'Update Sucessfully')));
     }

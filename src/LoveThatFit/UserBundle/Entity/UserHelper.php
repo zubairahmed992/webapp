@@ -5,7 +5,10 @@ namespace LoveThatFit\UserBundle\Entity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use \Symfony\Component\EventDispatcher\EventDispatcher;
+use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\UserBundle\Event\UserEvent;
+
 
 
 class UserHelper{
@@ -55,7 +58,7 @@ public function saveUser(User $user)
 {
     $this->em->persist($user);
     $this->em->flush();
-    $this->dispatcher->dispatch('foo_bundle.post.comment_added', new CommentEvent($post, $comment));
+    //$this->dispatcher->dispatch('foo_bundle.post.comment_added', new CommentEvent($post, $comment));
 }
 //-------------------------------------------------------
 
@@ -100,10 +103,12 @@ public function editProfileServiceHelper($decoded)
     
     if(isset($first_name)){$user->setFirstName($first_name);}
     if(isset($last_name)){$user->setLastName($last_name);}
-    if(isset($birth_date)){
-    $dob=$birth_date->format('Y-m-d');
-    $user->setBirthDate($dob);}
-    if(isset($zipcode)){$user->setZipcode($zipcode);}
+   if(isset($birth_date)){
+   
+   
+   $user->setBirthDate(new \DateTime($birth_date));}
+    
+   if(isset($zipcode)){$user->setZipcode($zipcode);}
     $this->saveUser($user);
     return true;
      }
