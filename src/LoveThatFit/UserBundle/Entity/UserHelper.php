@@ -104,10 +104,7 @@ public function editProfileServiceHelper($decoded)
     if(isset($first_name)){$user->setFirstName($first_name);}
     if(isset($last_name)){$user->setLastName($last_name);}
    if(isset($birth_date)){
-   
-   
    $user->setBirthDate(new \DateTime($birth_date));}
-    
    if(isset($zipcode)){$user->setZipcode($zipcode);}
     $this->saveUser($user);
     return true;

@@ -17,37 +17,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class DefaultController extends Controller {
 
-   
-
-    //--------------------------------------------------Brand Type----------------------///   
-
-    public function brandListAction(Request $request, $page_number, $sort = 'id') {
-        
-       $limit = 5;
-        $brandObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
-
-        $brand = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Brand')
-                ->findAllBrand($page_number, $limit, $sort);
-        $rec_count = count($brandObj->countAllRecord());
-        $cur_page = $page_number;
-
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-
-         $count_rec=count($brandObj);  
-         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/brands/';
-         $data=array();
-   
-        $data['data']=$brand;
-        $data['path']=$baseurl;
-        return new Response($this->json_view($count_rec,$data)); 
-    }
-
-    //--------------------------------------------------Clothing Type----------------------///   
+   //--------------------------------------------------Clothing Type----------------------///   
     public function clothingTypeListAction(Request $request, $page_number, $sort = 'id') {
         $limit = 5;
         $clothingObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');

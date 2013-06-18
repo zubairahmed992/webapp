@@ -91,5 +91,16 @@ param:limit:
             return "null";
         }
     }
+    
+    #---------------------------Brand List For Web Service-----------------------------------#
+    public function findAllBrandWebService() {
+
+        $query = $this->getEntityManager()->createQuery('SELECT b.id as id, b.name as brand_name,b.image as brand_image FROM LoveThatFitAdminBundle:Brand b');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }         
 
 }
