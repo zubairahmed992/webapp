@@ -23,7 +23,9 @@ class ProductController extends Controller {
 
     public function brandListSizeChartAction() {
         $total_record = count($this->getBrandArray());
-        return new Response($this->json_view($total_record, $this->getBrandArray()));
+        $data=array();
+        $data['data']=$this->getBrandArray();
+        return new Response($this->json_view($total_record, $data));
     }
 
 #--------------------Brand List-------------------------------------------------------------------------------#
