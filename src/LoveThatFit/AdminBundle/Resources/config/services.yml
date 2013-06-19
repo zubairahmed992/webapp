@@ -1,7 +1,14 @@
 parameters:
 #    love_that_fit_admin.example.class: LoveThatFit\AdminBundle\Example
 
-services:
+services:    
+     user.helper.user:
+        class: LoveThatFit\AdminBundle\Entity\SizeChartHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\SizeChart
+            
      mail_helper:
         class:     LoveThatFit\AdminBundle\MailHelper
         arguments: ['@mailer','@templating']
