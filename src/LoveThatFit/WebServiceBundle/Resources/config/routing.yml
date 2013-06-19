@@ -80,6 +80,10 @@ web_service_brand_list_size_chart:
    pattern:  /web_service/brand_list_size_chart
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:brandListSizeChart}
 
+web_service_size_chart_brand:
+   pattern:  /web_service/size_chart_brand
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:sizeCharts}
+
 
 
   

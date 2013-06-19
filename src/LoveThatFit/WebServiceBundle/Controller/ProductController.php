@@ -27,7 +27,33 @@ class ProductController extends Controller {
         $data['data']=$this->getBrandArray();
         return new Response($this->json_view($total_record, $data));
     }
-
+#-----------------Size Chart Against The Brand Id ---------------------------------------------------#
+    public function sizeChartsAction(){
+        
+         $handle = fopen('php://input','r');
+         $jsonInput = fgets($handle);
+         $request_array  = json_decode($jsonInput,true);
+         $brand_id=$request_array['id'];
+         $gender=$request_array['gender'];
+         $bodytype=$request_array['bodytype'];
+         $brand_id=3;
+         $gender='M';
+         $bodytype='Regular';
+         if($brand_id)
+         {
+        $em = $this->getDoctrine()->getManager();
+        $size_chart =$em->getRepository('LoveThatFitAdminBundle:SizeChart')->getSizeChartByBrandGenderBodyType($brand_id,$gender,$bodytype);
+        $total_record = count($size_chart);
+        return new Response($this->json_view($total_record,$size_chart));
+         }  
+        else 
+        {
+        return new response(json_encode(array('Message' => 'Can not find Brand')));
+        }
+        
+        
+        
+    }            
 #--------------------Brand List-------------------------------------------------------------------------------#
 
     public function brandListAction() {
