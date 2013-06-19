@@ -15,17 +15,26 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use LoveThatFit\UserBundle\Form\Type\RegistrationType;
+use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementMaleType;
+use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
 
 class ProductController extends Controller {
-#--------------------Brand List Show at the Registration -------------------------------------------------------------------------------#
+#-----------------Brand List Related To Size Chart---------------------------------------------------#
+
+    public function brandListSizeChartAction() {
+        $total_record = count($this->getBrandArray());
+        return new Response($this->json_view($total_record, $this->getBrandArray()));
+    }
+
+#--------------------Brand List-------------------------------------------------------------------------------#
 
     public function brandListAction() {
-         $request = $this->getRequest();
+        $request = $this->getRequest();
         $brand = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
                 ->findAllBrandWebService();
 
-        $total_record=count( $brand);
+        $total_record = count($brand);
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/';
         $data = array();
         $data['data'] = $brand;
@@ -41,11 +50,26 @@ class ProductController extends Controller {
                         JsonEncoder()));
             return $serializer->serialize($entity, 'json');
         } else {
-            return json_encode(array('msg' => 'Record Not Found'));
+            return json_encode(array('Message' => 'Record Not Found'));
         }
     }
 
-    #----------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------#
+
+    private function getBrandArray() {
+
+        $brands = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:SizeChart')
+                ->getBrandList();
+
+        $brands_array = array();
+        foreach ($brands as $i) {
+            $brands_array[$i['id']] = $i['name'];
+        }
+        return $brands_array;
+    }
+
+#---------------------------------------------------------------------------------------------------------#
 }
 
 // End of Class
