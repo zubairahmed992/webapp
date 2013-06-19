@@ -29,10 +29,10 @@ class ClothingType
      */
     protected $id;
     
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    
+     /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255)     
+     */    
     protected $name;
     
     /**

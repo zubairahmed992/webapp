@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ClothingTypeController extends Controller {
 //------------------------------------------------------------------------------------------
@@ -79,6 +80,12 @@ class ClothingTypeController extends Controller {
         
         $form->bind($request);
         $name = $clothing_type->getName();
+        if($name=='')
+        {
+           $this->get('session')->setFlash('warning','Please enter name');
+            return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
+                    'form' => $form->createView())); 
+        }
         $target = $clothing_type->getTarget();
         $clothingTypes=  $this->getClothingType($name,$target);
         if($clothingTypes>0)

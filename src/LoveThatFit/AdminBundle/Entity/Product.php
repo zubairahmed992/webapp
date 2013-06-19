@@ -68,7 +68,7 @@ class Product {
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"product_detail"})
      */
     protected $name;
     

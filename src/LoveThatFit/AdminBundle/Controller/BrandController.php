@@ -75,7 +75,14 @@ class BrandController extends Controller {
                 ->getForm();
         
         $form->bind($request);
-        $name = $entity->getName();       
+        $name = $entity->getName();
+        if($name=='')
+        {
+           $this->get('session')->setFlash('warning','please enter Brand name');
+            return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
+                'entity' => $entity,    
+                'form' => $form->createView()));  
+        }
         $brand=  $this->getBrandByName($name);
         if($brand>0)
        {

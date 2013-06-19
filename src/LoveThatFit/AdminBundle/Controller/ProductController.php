@@ -117,11 +117,9 @@ class ProductController extends Controller {
        }    
         if ($form->isValid()) {
             
-            $em = $this->getDoctrine()->getManager();
-            
+            $em = $this->getDoctrine()->getManager();            
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
-
             $em->persist($entity);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail has been created.');
