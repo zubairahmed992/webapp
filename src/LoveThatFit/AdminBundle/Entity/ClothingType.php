@@ -187,4 +187,22 @@ class ClothingType
     {
         return $this->disabled;
     }
+    //----------------------------------- sample code for validation
+    public function isValid(){
+        $msg_array=array();
+        $valid=true;
+        if($this->name=''){
+            array_push($msg_array, array('valid'=>false, 'message'=>'Invalid name'));
+            $valid=false;
+        }
+        
+        if($this->target!='Top' || $this->target!='Bottom' || $this->target='Dress' ){
+            array_push($msg_array, array('valid'=>false, 'message'=>'Invalid Target'));
+            $valid=false;
+        }
+          
+        array_push($msg_array, array('valid'=>$valid));
+        
+        return $msg_array;
+    }
 }
