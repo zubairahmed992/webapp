@@ -63,8 +63,9 @@ class ProductController extends Controller {
                 ->getBrandList();
 
         $brands_array = array();
+       
         foreach ($brands as $i) {
-            $brands_array[$i['id']] = $i['name'];
+            array_push( $brands_array,array('id'=>$i['id'],'brand_name'=>$i['name']));
         }
         return $brands_array;
     }
