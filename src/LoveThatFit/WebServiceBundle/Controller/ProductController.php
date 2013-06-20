@@ -33,8 +33,6 @@ class ProductController extends Controller {
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
-         print_r($request_array);
-        return new response('testtttttttttttttttttt');
          $size_chart_helper=$this->get('admin.helper.sizechart');
          $size_chart=$size_chart_helper->sizeChartList($request_array);
          if($size_chart) {

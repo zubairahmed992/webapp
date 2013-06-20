@@ -67,32 +67,16 @@ public function find($id)
 #-------------------------Web Service for size chart for registration step two-------------------------------------------------#
 public function sizeChartList($request_array)
 {
-    
-         
-        $gender="M";
-        $bodytype="Regular";
-         
-         
-        if($target_top)
-        {
-         $target_top='Boss';
-         $top_size='04';
-        }    
-        if($target_bottom)
-        {
-         $target_bottom='Boss';
-         $bottom_size='00';
-            
-        }
-        if($target_dress)
-        {
-         $target_dress='Boss';
-         $dress_size='04';
-           
-        }
-         
-         
-          
+     
+        $gender=$request_array['gender'];
+        $bodytype=$request_array['body_type'];
+        $target_top=$request_array['target_top'];
+        $top_size=$request_array['top_size'];
+        $target_bottom=$request_array['target_bottom']; 
+        $bottom_size=$request_array['bottom_size'];    
+        $target_dress=$request_array['target_dress'];    
+        $dress_size=$request_array['dress_size'];     
+       
          $neck=0;
          $bust=0;
          $chest=0;
