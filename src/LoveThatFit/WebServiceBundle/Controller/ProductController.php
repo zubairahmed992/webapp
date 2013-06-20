@@ -36,8 +36,10 @@ class ProductController extends Controller {
          $size_chart_helper=$this->get('admin.helper.sizechart');
          $size_chart=$size_chart_helper->sizeChartList($request_array);
          if($size_chart) {
+             $size_chart_data=array();
+             $size_chart_data['data']=$size_chart;
          $total_record = count($size_chart);
-         return new Response($this->json_view($total_record,$size_chart));
+         return new Response($this->json_view($total_record,$size_chart_data));
         }  
         else {
         return new response(json_encode(array('Message' => 'Can not find Size Chart')));
