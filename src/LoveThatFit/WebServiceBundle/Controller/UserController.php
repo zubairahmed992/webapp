@@ -148,33 +148,12 @@ public function userProfileAction()
 }
 #------------------------------End Of User Profile---------------------------------------------------#
 #------------------------------------------Registration---------------------------------------------#
-    public function createRegistrationFormAction() {
+    public function registrationCreateAction() {
 
-        $gender = array('' => 'Select Gender', 'm' => 'Male', 'f' => 'Female');
-        $form = $this->createFormBuilder()
-                ->add('email', 'email')
-                ->add('zipcode', 'text')
-                ->add('password', 'repeated', array(
-                    'first_name' => 'password',
-                    'second_name' => 'confirm',
-                    'type' => 'password',
-                    'invalid_message' => 'The password fields must match.',
-                ))
-                ->add('gender', 'choice', array('choices' => $gender,
-                    'multiple' => False,
-                    'expanded' => False,
-                    'required' => false
-                ))
-                ->getForm();
-
-
-        return $this->render('LoveThatFitWebServiceBundle::registrationForm.html.twig', array(
-                    'form' => $form->createView()));
-    }
-
-    public function registrationCreateAction(Request $request) {
-
-        $request_array = $this->getRequest()->get('form');
+         $request = $this->getRequest();
+        $handle = fopen('php://input','r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput,true);
         $email = $request_array['email'];
         $password = implode($request_array['password']);
         $gender = $request_array['gender'];
@@ -201,9 +180,6 @@ public function userProfileAction()
                 $bust = $request_array['bust'];
             }
 
-            if (isset($request_array['arm'])) {
-                $arm = $request_array['arm'];
-            }
 
             if (isset($request_array['neck'])) {
                 $neck = $request_array['neck'];
@@ -213,17 +189,7 @@ public function userProfileAction()
                 $inseam = $request_array['inseam'];
             }
 
-            if (isset($request_array['back'])) {
-                $back = $request_array['back'];
-            }
 
-            if (isset($request_array['shoulder_height'])) {
-                $shoulder_height = $request_array['shoulder_height'];
-            }
-
-            if (isset($request_array['outseam'])) {
-                $outseam = $request_array['outseam'];
-            }
 
             if (isset($request_array['chest'])) {
                 $chest = $request_array['chest'];
@@ -235,8 +201,6 @@ public function userProfileAction()
 
 
            #-----------------End of Measuremnt data-----------------------# 
-        if ($request->getMethod() == 'POST') {
-
             if ($this->isDuplicateEmail(Null, $email)) {
                 return new Response(json_encode(array('error' => 'The Email already exists',)));
             }
@@ -280,29 +244,20 @@ public function userProfileAction()
             if (isset($request_array['bust'])) {
                 $measurment->setBust($bust);
             }
-            if (isset($request_array['arm'])) {
-                $measurment->setArm($arm);
-            }
-            if (isset($request_array['neck'])) {
-                $measurment->setNeck($neck);
-            }
+           
+           
             if (isset($request_array['inseam'])) {
                 $measurment->setInseam($inseam);
             }
-            if (isset($request_array['back'])) {
-                $measurment->setBack($back);
-            }
-            if (isset($request_array['shoulder_height'])) {
-                $measurment->setShoulderHeight($shoulder_height);
-            }
-            if (isset($request_array['outseam'])) {
-                $measurment->setOutseam($outseam);
-            }
+           
             if (isset($request_array['chest'])) {
                 $measurment->setChest($chest);
             }
             if (isset($request_array['sleeve'])) {
                 $measurment->setSleeve($sleeve);
+            }
+            if (isset($request_array['neck'])) {
+                $measurment->setNeck($neck);
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -313,9 +268,7 @@ public function userProfileAction()
           
 
             return new Response(json_encode(array('msg' => 'success')));
-        } else {
-            return new Response(json_encode(array('error' => 'Try again')));
-        }
+        
     }
 
     #-------------------------Measurement-----------------------------------------------------------------------------#       

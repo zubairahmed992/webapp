@@ -41,12 +41,8 @@ web_service_my_closet:
     pattern:  /web_service/my_closet/{user_id}
     defaults: { _controller: LoveThatFitWebServiceBundle:Default:myClostList,_format: json,user_id:1}
 
-web_service_createform:
-    pattern:  /web_service/registration_form
-    defaults: { _controller: LoveThatFitWebServiceBundle:User:createRegistrationForm }
-
 web_service_registration_create:
-   pattern:  /web_service/registration_create
+   pattern:  /web_service/register
    defaults: { _controller: LoveThatFitWebServiceBundle:User:registrationCreate}
    
 web_service_create_measuremnt_form:

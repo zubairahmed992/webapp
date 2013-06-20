@@ -151,7 +151,7 @@ class SizeChartRepository extends EntityRepository {
     {
         $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT
+     SELECT sc.id as size_chart_id,
      sc.neck as top_neck,sc.bust as top_bust,sc.chest as top_chest,sc.waist as top_waist,sc.sleeve as top_sleeve
      
      FROM LoveThatFitAdminBundle:SizeChart sc
@@ -178,7 +178,7 @@ class SizeChartRepository extends EntityRepository {
     {
         $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT
+     SELECT sc.id as size_chart_id,
      sc.waist as bottom_waist,sc.hip as bottom_hip,sc.inseam as bottom_inseam
      
      FROM LoveThatFitAdminBundle:SizeChart sc
@@ -206,7 +206,7 @@ class SizeChartRepository extends EntityRepository {
         $query = $this->getEntityManager()
                         ->createQuery("
      SELECT
-     sc.bust as dress_bottom,sc.waist as dress_waist,sc.hip as dress_hip,sc.sleeve as dress_sleeve
+      sc.id as size_chart_id,sc.bust as dress_bottom,sc.waist as dress_waist,sc.hip as dress_hip,sc.sleeve as dress_sleeve
      
      FROM LoveThatFitAdminBundle:SizeChart sc
      JOIN sc.brand b    

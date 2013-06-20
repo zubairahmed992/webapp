@@ -84,6 +84,9 @@ public function sizeChartList($request_array)
          $sleeve=0;
          $inseam=0;
          $hip=0;
+          $top_id=0;
+          $bottom_id=0;
+          $dress_id=0;
           $measurement= array();   
          if($target_top)
          {   
@@ -93,6 +96,8 @@ public function sizeChartList($request_array)
           $neck=$sizechart_top[0]['top_neck'];
           $chest=$sizechart_top[0]['top_chest'];
           $waist=$sizechart_top[0]['top_waist'];
+          $top_id=$sizechart_top[0]['size_chart_id'];
+         
           }
           
           
@@ -105,8 +110,11 @@ public function sizeChartList($request_array)
                 $waist=$sizechart_bottom[0]['bottom_waist'];
                 $hip=$sizechart_bottom[0]['bottom_hip'];
                 $inseam=$sizechart_bottom[0]['bottom_inseam'];
+                $bottom_id=$sizechart_bottom[0]['size_chart_id'];
+                
+                
                 }
-               
+              
          }
          if($target_dress)
          {     
@@ -122,6 +130,8 @@ public function sizeChartList($request_array)
             $waist_dress = $sizechart_dress[0]['dress_waist'];
             $hip_dress = $sizechart_dress[0]['dress_hip'];
             $sleeve_dress = $sizechart_dress[0]['dress_sleeve'];
+             $dress_id=$sizechart_dress[0]['size_chart_id'];
+            
             }
             
             #-----------------BUST AVERAGE-----------------------------------------------#
@@ -177,6 +187,10 @@ public function sizeChartList($request_array)
         $measurement['hip']=$hip;
         $measurement['sleeve']=$sleeve;
         $measurement['inseam']=$inseam;
+        $measurement['sc_dress_id']=$dress_id;
+        $measurement['sc_top_id']=$top_id;
+        $measurement['sc_bottom_id']=$bottom_id;
+        
         if($measurement)   
         {
             return   $measurement;
