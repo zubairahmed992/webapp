@@ -2386,11 +2386,15 @@ padding-bottom: 0px;
     left:165px;
 }
 
-.step_4 .reg_next_step{
-    float:left;
-    margin-left: 130px;
+.step_4 .reg_next_step {
+    
+    margin-left: 25px;
        
     
+}
+
+.step_4 .reg_second{
+  margin-left: 5px;  
 }
 
 #favourite_list{
