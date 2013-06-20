@@ -84,10 +84,10 @@ public function sizeChartList($request_array)
          $sleeve=0;
          $inseam=0;
          $hip=0;
-          $top_id=0;
-          $bottom_id=0;
-          $dress_id=0;
-          $measurement= array();   
+         $top_id=0;
+         $bottom_id=0;
+         $dress_id=0;
+         $measurement= array();   
          if($target_top)
          {   
           $sizechart_top = $this->repo->getSizeChartByBrandGenderBodyTypeTopSize($gender,$bodytype,$target_top,$top_size);
