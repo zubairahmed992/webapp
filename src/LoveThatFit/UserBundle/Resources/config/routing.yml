@@ -34,6 +34,10 @@ registration_step_four_measurement_update:
     requirements: 
           _method: post 
 
+registration_measurement_edit:
+    pattern:  /registration/measurement/edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:measurementEdit}
+
 registration_step_four_create:
     pattern:  /registration/step_four_create/{id}
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourCreate }

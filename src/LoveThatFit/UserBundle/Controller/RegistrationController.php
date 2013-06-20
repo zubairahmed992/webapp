@@ -231,6 +231,25 @@ class RegistrationController extends Controller {
                     'measurement' => $measurement,
                 ));
     }
+//-----------------------------------------------------------------------------
+ public function measurementEditAction() {
+
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        $measurement = $entity->getMeasurement();
+
+        if ($entity->getGender() == 'm') {
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+        } else {
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+        }
+
+        return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
+                    'form' => $registrationMeasurementform->createView(),
+                    'measurement' => $measurement,
+                    'entity' => $entity));
+    }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //---------------------------------- Image upload STEP ---------------------------------------------------
