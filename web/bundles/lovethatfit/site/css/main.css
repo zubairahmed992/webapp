@@ -2232,7 +2232,7 @@ padding-bottom: 0px;
 }
 }
 .measurements .m_option input[type="text"]{   
- width:60px!important;
+ width:50px!important;
  
 }
 
@@ -2247,7 +2247,7 @@ padding-bottom: 0px;
 }
 
 .measurements .m_option select:last-child{   
- width:117px!important; 
+ width:85px!important; 
  padding: 3px 3px;
  height: 25px;
  
@@ -2270,7 +2270,7 @@ padding-bottom: 0px;
 
 .shuf_icon{
     float:right;
-    margin: 5px 0px 0px 10px;
+    margin: 2px 0px 0px 10px;
 }
 
 .m_option{
@@ -2328,7 +2328,7 @@ padding-bottom: 0px;
 }
 
 #measurement_sleeve{
-    width:61px!important;    
+    width:50px!important;    
 }
 
 .boxlable{
