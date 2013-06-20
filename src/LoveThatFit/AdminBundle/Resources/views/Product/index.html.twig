@@ -42,6 +42,11 @@
             <div class="span1">{{p.Brand.Name}}</div>
             <div class="span1">{{p.ClothingType.Name}}</div>
             <div class="span1">
+                {%if(p.displayProductColor)%}
+                  
+                  <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
+                    {%endif%}
+                   
            {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}            
             </div>
             <div class="span1">&nbsp;                 
