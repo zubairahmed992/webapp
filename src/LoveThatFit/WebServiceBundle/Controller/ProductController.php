@@ -37,7 +37,7 @@ class ProductController extends Controller {
          $size_chart=$size_chart_helper->sizeChartList($request_array);
          if($size_chart) {
              $size_chart_data=array();
-             $size_chart_data['data']=$size_chart;
+             $size_chart_data=$size_chart;
          $total_record = count($size_chart);
          return new Response($this->json_view($total_record,$size_chart_data));
         }  
