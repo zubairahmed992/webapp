@@ -11,7 +11,7 @@ use LoveThatFit\AdminBundle\Form\Type\SizeChartType;
 class SizeChartController extends Controller {
 //---------------------------------------------------------------------
     public function indexAction($page_number=1 , $sort='id') {
-        $limit = 5;
+        $limit = 30;
         $sizechartObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:SizeChart')
