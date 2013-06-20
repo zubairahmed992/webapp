@@ -27,13 +27,19 @@
                      {{ form_errors(form.weight) }}
  <span class="boxlable" id="weight_box">Weight</span>  
                      {{ form_widget(form.weight) }}
-                    </div>
+                    </div> 
                     
                    
-                  
+                    <div class="m_option">   
+                        <div class="mlabel" style="width:100px;">Clothing Fit</div>
+                    
+                        <div>
+                        
                     <span id="gender" style="display: none;">{{entity.gender}}</span>
-                     
-                      
+                     {{ form_widget(form.body_types) }}
+                    </div>
+                    </div>
+                    
                         
                     <div class="sep"></div>
 
