@@ -144,17 +144,26 @@ class SizeChartRepository extends EntityRepository {
     
     
   //-------------------------------Web Service-----------------------------------------
-
-    public function getSizeChartByBrandGenderBodyType($brand_id,$gender,$bodytype)
+        
+        #--------------Web Service For Size with target Top -----------#
+    
+    public function getSizeChartByBrandGenderBodyTypeTopSize($gender,$bodytype,$target_top,$top_size)
     {
         $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT distinct(sc.title) as title, sc.id as id FROM LoveThatFitAdminBundle:SizeChart sc
+     SELECT
+     sc.neck as top_neck,sc.bust as top_bust,sc.chest as top_chest,sc.waist as top_waist,sc.sleeve as top_sleeve
+     
+     FROM LoveThatFitAdminBundle:SizeChart sc
      JOIN sc.brand b    
      WHERE
-     b.id=:brand_id AND
+     b.id=sc.brand AND
+     sc.target='Top' AND
+     sc.disabled='0' AND
+     b.name=:brand_name AND
      sc.gender=:gender AND
-     sc.bodytype=:bodytype")->setParameters(array('brand_id' => $brand_id,'gender' => $gender,'bodytype'=>$bodytype)) ;     
+     sc.bodytype=:bodytype AND
+    sc.title=:top_size")->setParameters(array('brand_name' =>$target_top,'gender' => $gender,'bodytype'=>$bodytype,'top_size'=>$top_size)) ;     
      try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -163,6 +172,58 @@ class SizeChartRepository extends EntityRepository {
     }   
     
     
+      #--------------Web Service For Size with target Bottom -----------#
+    
+    public function getSizeChartByBrandGenderBodyTypeBottomSize($gender,$bodytype,$target_bottom,$bottom_size)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT
+     sc.waist as bottom_waist,sc.hip as bottom_hip,sc.inseam as bottom_inseam
+     
+     FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand AND
+     sc.target='Bottom' AND
+     sc.disabled='0' AND
+     b.name=:brand_name AND
+     sc.gender=:gender AND
+     sc.bodytype=:bodytype AND
+     sc.title=:bottom_size")->setParameters(array('brand_name' => $target_bottom,'gender' => $gender,'bodytype'=>$bodytype,'bottom_size'=>$bottom_size)) ;     
+     try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }   
+    
+    
+      #--------------Web Service For Size with target Dress -----------#
+    
+    public function getSizeChartByBrandGenderBodyTypeDressSize($gender,$bodytype,$target_dress,$dress_size)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT
+     sc.bust as dress_bottom,sc.waist as dress_waist,sc.hip as dress_hip,sc.sleeve as dress_sleeve
+     
+     FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand AND
+     sc.target='Dress' AND
+     sc.disabled='0' AND
+     b.name=:brand_name AND
+     sc.gender=:gender AND
+     sc.bodytype=:bodytype AND
+    sc.title=:dress_size")->setParameters(array('brand_name' =>$target_dress,'gender' => $gender,'bodytype'=>$bodytype,'dress_size'=>$dress_size)) ;     
+     try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }   
     //---------------------------------------------------------------
     //---------------------------------------------------------------
     //---------------------------------------------------------------

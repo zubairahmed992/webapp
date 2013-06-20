@@ -2,7 +2,7 @@ parameters:
 #    love_that_fit_admin.example.class: LoveThatFit\AdminBundle\Example
 
 services:    
-     user.helper.user:
+     admin.helper.sizechart:
         class: LoveThatFit\AdminBundle\Entity\SizeChartHelper
         arguments:
             dispatcher: "@event_dispatcher"

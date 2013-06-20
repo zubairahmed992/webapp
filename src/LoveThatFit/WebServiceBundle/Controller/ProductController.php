@@ -19,7 +19,7 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementMaleType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
 
 class ProductController extends Controller {
-#-----------------Brand List Related To Size Chart---------------------------------------------------#
+#-----------------Brand List Related To Size Chart For Registration Step2---------------------------------------------------#
 
     public function brandListSizeChartAction() {
         $total_record = count($this->getBrandArray());
@@ -27,28 +27,22 @@ class ProductController extends Controller {
         $data['data']=$this->getBrandArray();
         return new Response($this->json_view($total_record, $data));
     }
-#-----------------Size Chart Against The Brand Id ---------------------------------------------------#
+#-----------------Size Chart Against The Brand Id For Registration Step2---------------------------------------------------#
     public function sizeChartsAction(){
         
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
-         $brand_id=$request_array['id'];
-         $gender=$request_array['gender'];
-         $bodytype=$request_array['bodytype'];
-         $brand_id=3;
-         $gender='M';
-         $bodytype='Regular';
-         if($brand_id)
-         {
-        $em = $this->getDoctrine()->getManager();
-        $size_chart =$em->getRepository('LoveThatFitAdminBundle:SizeChart')->getSizeChartByBrandGenderBodyType($brand_id,$gender,$bodytype);
-        $total_record = count($size_chart);
-        return new Response($this->json_view($total_record,$size_chart));
-         }  
-        else 
-        {
-        return new response(json_encode(array('Message' => 'Can not find Brand')));
+         print_r($request_array);
+        return new response('testtttttttttttttttttt');
+         $size_chart_helper=$this->get('admin.helper.sizechart');
+         $size_chart=$size_chart_helper->sizeChartList($request_array);
+         if($size_chart) {
+         $total_record = count($size_chart);
+         return new Response($this->json_view($total_record,$size_chart));
+        }  
+        else {
+        return new response(json_encode(array('Message' => 'Can not find Size Chart')));
         }
         
         
