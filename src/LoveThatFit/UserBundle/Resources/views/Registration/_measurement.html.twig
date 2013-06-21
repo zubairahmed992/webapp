@@ -1,77 +1,68 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
 {% block action_block_content %}
+
 <section class="reg_blk">
-    <!--<div class="reg_steps">
-        <ul>
-            <li><span>1</span></li>
-            <li><span>2</span></li>
-            <li class="active"><span>3</span></li>
-            <li><span>4</span></li>
-        </ul>
-    </div>-->
     <div class="action_cnt">
-          
         <div class="steps step_3 measurements">
             <h2>Brands &amp; Sizes</h2>
             <div id="inst">Put all values in inches.</div>
             <form action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
-        {{ form_errors(form) }}
-                    <div>
-
-                     {{ form_errors(form.height) }}
- <span class="boxlable" id="height_box">Height</span>                       
-{{ form_widget(form.height) }}
-
-
-                     {{ form_errors(form.weight) }}
- <span class="boxlable" id="weight_box">Weight</span>  
-                     {{ form_widget(form.weight) }}
-                    </div> 
+                {{ form_errors(form) }}
                     
-                   
+                    <div>
+                        {{ form_errors(form.height) }}
+                        <span class="boxlable" id="height_box">Height</span>                       
+                        {{ form_widget(form.height) }}
+                        
+                        {{ form_errors(form.weight) }}
+                        <span class="boxlable" id="weight_box">Weight</span>  
+                        {{ form_widget(form.weight) }}
+                    </div> 
+
+
                     <div class="m_option">   
                         <div class="mlabel" style="width:100px;">Clothing Fit</div>
-                    
                         <div>
-                        
-                    <span id="gender" style="display: none;">{{entity.gender}}</span>
-                     {{ form_widget(form.body_types) }}
+                            <span id="gender" style="display: none;">{{entity.gender}}</span>
+                            {{ form_widget(form.body_types) }}
+                        </div>
                     </div>
-                    </div>
-                    
-                        
+
                     <div class="sep"></div>
 
                     <div class="m_option">
-                       
-
+                        
                         <div class="mlabel">Shirt</div>
-
                         <div class="shirts_mus manual_opn show_hide" id="shirts_mus" style="">
-
-
-                         {{ form_errors(form.sleeve) }}
+                            
+                             {{ form_errors(form.sleeve) }}
                             <span class="boxlable" id="sleeve_box">Sleeves</span>                        
-{{ form_widget(form.sleeve) }}
+                            {{ form_widget(form.sleeve) }}
 
-                          {% if( entity.gender=='m') %}
-                            {{ form_errors(form.chest) }}
- <span class="boxlable" id="chest_box">Chest</span>                              
-{{ form_widget(form.chest) }}
-
+                            {# ---------------  Chest or Bust ------------------ #}
+                            
+                            {% if( entity.gender=='m') %}
+                                {{ form_errors(form.chest) }}
+                                <span class="boxlable" id="chest_box">Chest</span>                              
+                                {{ form_widget(form.chest) }}
                             {%else%}
-                            {{ form_errors(form.bust) }}
-                            <span class="boxlable" id="bust_box">Bust</span>
-                             {{ form_widget(form.bust) }}
-
+                            
+                                {{ form_errors(form.bust) }}
+                                <span class="boxlable" id="bust_box">Bust</span>
+                                {{ form_widget(form.bust) }}
                            {%endif%} 
+                                
+                                {# ---------------  Neck or Back ------------------ #}
+                                
                           {% if( entity.gender=='m') %}
+                            
                             {{ form_errors(form.neck) }}
- <span class="boxlable" id="neck_box">Neck</span>                             
- {{ form_widget(form.neck) }}
+                            <span class="boxlable" id="neck_box">Neck</span>                             
+                            {{ form_widget(form.neck) }}
 
                             {%else%}
+                            
                             {{ form_errors(form.back) }}
                             <span class="boxlable" id="back_box">Back</span>
                              {{ form_widget(form.back) }}
@@ -79,245 +70,239 @@
                            {%endif%} 
 
                         </div>
-
+                        
+                    {# ---------------  Top Brand & Size ------------------ #}
                         <div class="shirts_mus manual_opn show_hide show_it" id="shirts_mus_opt">
 
+                            {{form_errors(form.top_brand)}}  
+                            {{form_widget(form.top_brand)}} 
 
-                     {{form_errors(form.top_brand)}}  
-                     {{form_widget(form.top_brand)}} 
 
-
-                     {{form_errors(form.top_size)}}  
-                     {{form_widget(form.top_size)}}                 
+                            {{form_errors(form.top_size)}}  
+                            {{form_widget(form.top_size)}}                 
 
                         </div>
 
                         <div class="shuf_icon shirt_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
-                   
+
                     </div>
-                    <!---  pant section  !-->
-                     
                     
-                      <div class="m_option">
                     
-                    <div class="mlabel">Pant</div>
+                    
+                    {# ---------------  Bottom Brand & Size ------------------ #}
 
-                        <div class="pants_mus manual_opn show_hide" id="pants_mus">
-                         {{ form_errors(form.waist) }}
-                         <span class="boxlable" id="waist_box">Waist</span>                        
-                          {{ form_widget(form.waist) }}
-                          {{ form_errors(form.outseam) }}
-                          
-                         <span class="boxlable" id="outseam_box">Outseam</span> 
-                         {{ form_widget(form.outseam) }}       
+                    <div class="m_option">
+                        <div class="mlabel">Pant</div>
                         
-                        </div>
+                        <div class="pants_mus manual_opn show_hide" id="pants_mus">
+                         
+                            {{ form_errors(form.waist) }}
+                            <span class="boxlable" id="waist_box">Waist</span>                        
+                            {{ form_widget(form.waist) }}
 
+                            {{ form_errors(form.outseam) }}
+                            <span class="boxlable" id="outseam_box">Outseam</span> 
+                            {{ form_widget(form.outseam) }}       
+
+                        </div>
 
                         <div class="pants_mus manual_opn show_hide show_it" id="pants_mus_opt">
 
-                      {{form_errors(form.bottom_brand)}}  
-                     {{form_widget(form.bottom_brand)}} 
+                            {{form_errors(form.bottom_brand)}}  
+                            {{form_widget(form.bottom_brand)}} 
 
-
-                     {{form_errors(form.bottom_size)}}  
-                     {{form_widget(form.bottom_size)}}  
+                            {{form_errors(form.bottom_size)}}  
+                            {{form_widget(form.bottom_size)}}  
 
                         </div>
 
                         <div class="shuf_icon pant_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
-                    
-                     <!---  pant section close  !-->
-                     
-                     
-                    </div><!-- m option close  !-->
-  {% if( entity.gender=='f') %}
-                    <div class="m_option">
 
+                        <!---  pant section close  !-->
+
+
+                    </div><!-- m option close  !-->
+
+
+              {% if( entity.gender=='f') %}
+                    <div class="m_option">
                         <div class="mlabel">Dress</div>
 
                         <div class="dress_mus manual_opn show_hide" id="dress_mus">
-                          {{ form_errors(form.bust) }}
-                         {{ form_widget(form.bust) }} 
-                           {{ form_errors(form.hip) }}
+
+                            {{ form_errors(form.bust) }}
+                            {{ form_widget(form.bust) }} 
+                            {{ form_errors(form.hip) }}
+
+                            <span class="boxlable" id="hip_box">Hip</span> 
+                            {{ form_widget(form.hip) }} 
+                            {{ form_errors(form.back) }}
+                            {{ form_widget(form.back) }} 
                         
- <span class="boxlable" id="hip_box">Hip</span> 
- {{ form_widget(form.hip) }} 
-                                  {{ form_errors(form.back) }}
-                         {{ form_widget(form.back) }} 
                         </div>
-                        <div class="dress_mus manual_opn show_hide show_it" id="dress_mus">
-                      {{form_errors(form.dress_brand)}}  
-                     {{form_widget(form.dress_brand)}}
                         
-                     {{form_errors(form.dress_size)}}  
-                     {{form_widget(form.dress_size)}}  
-                      
-                            </div>
- 
+                        <div class="dress_mus manual_opn show_hide show_it" id="dress_mus">
+                            {{form_errors(form.dress_brand)}}  
+                            {{form_widget(form.dress_brand)}}
+
+                            {{form_errors(form.dress_size)}}  
+                            {{form_widget(form.dress_size)}}  
+                        </div>
+
                         <div class="shuf_icon"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
 
-
-                    </div>
+                        </div>
       {% endif %}              
 
-                    <!-- END WEIGHT !-->   
-
-              
-               
-
-                  
-                   
+                                <!-- END WEIGHT !-->   
 
 
-                                              
+                                <div class="btm_buttons row">
+                                    <div class="frm_ele" style="float:none;">
+                                        <input class="reg_next_step" type="submit" value="Save & Proceed" />
+                                    </div>
 
-                                                <div class="btm_buttons row">
-                                                    <div class="frm_ele" style="float:none;">
-                                                        <input class="reg_next_step" type="submit" value="Save & Proceed" />
-                                                    </div>
-                                                       
-                                                        <div class="frm_ele" style="float:none; padding: 0px;">
-                             <a class="reg_next_step" href="{{path('registration_step_four_edit')}}">Skip</a>
-                     
-                 </div>
-                                                </div>
-                                            </form>
-                                            <div class="clr_bth"></div>
-                                            <!--/.step_3--></div>
-                                        <!--/.action_cnt--></div>
-                                    <!--/.action_blk--></section>
+                                    <div class="frm_ele" style="float:none; padding: 0px;">
+                                        <a class="reg_next_step" href="{{path('registration_step_four_edit')}}">Skip</a>
+
+                                    </div>
+                                </div>
                             </form>
-                            
+                            <div class="clr_bth"></div>
+                            <!--/.step_3--></div>
+                        <!--/.action_cnt--></div>
+                    <!--/.action_blk--></section>
+            </form>
+
 {% endblock %}
 
 {% block how_it_works_content %}
-                            <section class="cnt_btm">
-                                <h3>Measurements</h3>
-                                <p>Get a friend to help you or take them yourself.  Make sure to fill them all out.  This will allow for the perfect fit every time!   If something changes you can allows come back to this step.  Any questions, watch our demonstrational videos.</p>
-                            </section>
+            <section class="cnt_btm">
+                <h3>Measurements</h3>
+                <p>Get a friend to help you or take them yourself.  Make sure to fill them all out.  This will allow for the perfect fit every time!   If something changes you can allows come back to this step.  Any questions, watch our demonstrational videos.</p>
+            </section>
 {% endblock %}
 
 
 {% block bottom_random_content %} 
-                            <script type="text/javascript">
-                            $(document).ready(function(){
+            <script type="text/javascript">
+            $(document).ready(function(){
 
-                            $(".slider_wrap").mousedown(function (){
-                                    //$(".slider_wrap").css('background','#9dcb38');
-                                    $(this).css('background','#c4c934');
-                                    show_tip(this);
-                            });
+            $(".slider_wrap").mousedown(function (){
+                    //$(".slider_wrap").css('background','#9dcb38');
+                    $(this).css('background','#c4c934');
+                    show_tip(this);
+            });
 
 
-                             //Slider Height
-                              $("#slider_height").slider({ animate: true, range: "min", value: {{ measurement.height }}, min: 20, max: 96, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_height" ).html( ui.value + '"' );
-                              },
-                              change: function(event, ui) {	
-                              $(this).parent().find("input").attr('value', ui.value);
-                              }	
-                              });
+             //Slider Height
+              $("#slider_height").slider({ animate: true, range: "min", value: {{ measurement.height }}, min: 20, max: 96, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_height" ).html( ui.value + '"' );
+              },
+              change: function(event, ui) {	
+              $(this).parent().find("input").attr('value', ui.value);
+              }	
+              });
 
-                              //Slider Bust
-                              $("#slider_bust").slider({ animate: true, range: "min", value: {{ measurement.bust }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_bust" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                            $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });
+              //Slider Bust
+              $("#slider_bust").slider({ animate: true, range: "min", value: {{ measurement.bust }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_bust" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+            $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });
                       
-                               //Slider Chest
-                              $("#slider_chest").slider({ animate: true, range: "min", value: {{ measurement.chest }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_chest" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                            $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });
+               //Slider Chest
+              $("#slider_chest").slider({ animate: true, range: "min", value: {{ measurement.chest }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_chest" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+            $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });
 
-                              //Slider Waist
-                              $("#slider_waist").slider({ animate: true, range: "min", value: {{ measurement.waist }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_waist" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                             $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });
+              //Slider Waist
+              $("#slider_waist").slider({ animate: true, range: "min", value: {{ measurement.waist }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_waist" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+             $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });
 
-                              //Slider Hips
-                              $("#slider_hips").slider({ animate: true, range: "min", value: {{ measurement.hip }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_hips" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                            $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });
-                                //Slider Neck
-                              $("#slider_neck").slider({ animate: true, range: "min", value: {{ measurement.neck }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_neck" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                            $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });
-                               //Slider Sleeve
-                              $("#slider_sleeve").slider({ animate: true, range: "min", value: {{ measurement.sleeve }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_sleeve" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                            $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });  
-                               //Slider Outseam
-                              $("#slider_outseam").slider({ animate: true, range: "min", value: {{ measurement.outseam }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_outseam" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                            $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });   
-                               //Slider Back
-                              $("#slider_back").slider({ animate: true, range: "min", value: {{ measurement.back }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                                              $( "#slider_result_back" ).html( ui.value + '"');
-                              },
-                              change: function(event, ui) { 
-                             $(this).parent().find("input").attr('value', ui.value);	
-                              }	
-                              });
+              //Slider Hips
+              $("#slider_hips").slider({ animate: true, range: "min", value: {{ measurement.hip }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_hips" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+            $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });
+                //Slider Neck
+              $("#slider_neck").slider({ animate: true, range: "min", value: {{ measurement.neck }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_neck" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+            $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });
+               //Slider Sleeve
+              $("#slider_sleeve").slider({ animate: true, range: "min", value: {{ measurement.sleeve }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_sleeve" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+            $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });  
+               //Slider Outseam
+              $("#slider_outseam").slider({ animate: true, range: "min", value: {{ measurement.outseam }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_outseam" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+            $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });   
+               //Slider Back
+              $("#slider_back").slider({ animate: true, range: "min", value: {{ measurement.back }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_back" ).html( ui.value + '"');
+              },
+              change: function(event, ui) { 
+             $(this).parent().find("input").attr('value', ui.value);	
+              }	
+              });
                             
-                            });
-                            function show_tip(ele){
+            });
+            function show_tip(ele){
 
 
-                                            $(".tip").css({"left" : "267px"});
+                            $(".tip").css({"left" : "267px"});
 
-                                            var chk_offset = $(ele).position();
-                                            //alert(chk_offset);
+                            var chk_offset = $(ele).position();
+                            //alert(chk_offset);
 
 
 
-                                            if($(ele).find("div.tip").css("display") == "block")
-                                            {
-                                                            //$(ele).find("div.tip").fadeIn(500)
-                                            }
-                                            else {
-
-                                                                            $(ele).find("div.tip").removeClass("tip").addClass("show_my_tip");
-                                                                            $(".tip").hide(20, function (){
-                                                                                            $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "267px"}).removeClass("show_my_tip").addClass("tip");});
-                                                                            });			
-                                                             }
-
+                            if($(ele).find("div.tip").css("display") == "block")
+                            {
+                                            //$(ele).find("div.tip").fadeIn(500)
                             }
+                            else {
 
-                            ///////////////////////////////////////////
+                                                            $(ele).find("div.tip").removeClass("tip").addClass("show_my_tip");
+                                                            $(".tip").hide(20, function (){
+                                                                            $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "267px"}).removeClass("show_my_tip").addClass("tip");});
+                                                            });			
+                                             }
+
+            }
+
+            ///////////////////////////////////////////
 
                                     
 
 
 
-                                </script> 
+                </script> 
 {% endblock %} 
 
