@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\UserBundle\Event\UserEvent;
+use LoveThatFit\UserBundle\Entity\Measurement;
+use LoveThatFit\AdminBundle\Entity\SizeChart;
+use Symfony\Component\HttpFoundation\Request;
 
 
 
@@ -88,31 +91,78 @@ public function findByEmail($email)
     return  $userinfo;
 }
 #-------------Edit/Update Profile for Web Services----------------#
-public function editProfileServiceHelper($decoded)
-{
-         $email=$decoded['email'];
-         $first_name=$decoded['firstName'];
-         $last_name=$decoded['lastName'];
-         $birth_date=$decoded['dob'];
-         $zipcode=$decoded['zip'];
-     if($email){
-         
-     $user= $this->repo->findOneBy(array('email'=>$email));
-     $user->setCreatedAt(new \DateTime('now'));
-     $user->setUpdatedAt(new \DateTime('now'));
+    public function editProfileServiceHelper($decoded) {
+        $email = $decoded['email'];
+        $first_name = $decoded['firstName'];
+        $last_name = $decoded['lastName'];
+        $birth_date = $decoded['dob'];
+        $zipcode = $decoded['zip'];
+        if ($email) {
+
+            $user = $this->repo->findOneBy(array('email' => $email));
+            $user->setCreatedAt(new \DateTime('now'));
+            $user->setUpdatedAt(new \DateTime('now'));
+
+            if (isset($first_name)) {
+                $user->setFirstName($first_name);
+            }
+            if (isset($last_name)) {
+                $user->setLastName($last_name);
+            }
+            if (isset($birth_date)) {
+                $user->setBirthDate(new \DateTime($birth_date));
+            }
+            if (isset($zipcode)) {
+                $user->setZipcode($zipcode);
+            }
+            $this->saveUser($user);
+            return true;
+        } else {
+
+            return false;
+        }
+    }
     
-    if(isset($first_name)){$user->setFirstName($first_name);}
-    if(isset($last_name)){$user->setLastName($last_name);}
-   if(isset($birth_date)){
-   $user->setBirthDate(new \DateTime($birth_date));}
-   if(isset($zipcode)){$user->setZipcode($zipcode);}
-    $this->saveUser($user);
-    return true;
-     }
-     else{
-         
-         return false;
-     }
-}
+#---------------------------------Web Service For Registration--------------------#
+  public function registration($request_array)
+  {
+      
+        $email = $request_array['email'];
+        $password = $request_array['password'];
+        $gender = $request_array['gender'];
+        $zipcode = $request_array['zipcode'];
+        $email='a1R22es23112i1adent@gmail.com';
+        $password='abcdef';
+        $gender='M';
+        $zipcode='123';
+       if ($this->isDuplicateEmail(Null, $email)) {
+          return false;
+         }
+       else{
+                
+            $user = new User();
+             $user->setCreatedAt(new \DateTime('now'));
+            $user->setUpdatedAt(new \DateTime('now'));
+           //$factory = $this->get('security.encoder_factory');
+           //$encoder = $factory->getEncoder($user);
+          //  $password = $encoder->encodePassword($password, $user->getSalt());
+
+            $user->setPassword($password);
+            $user->setEmail($email);
+            $user->setGender($gender);
+            $user->setZipcode($zipcode);
+            $this->saveUser($user);
+            $userinfo=array();
+            $userinfo['email']=$user->getEmail();
+            $userinfo['gender']=$user->getGender();
+            $userinfo['zipcode']=$user->getZipcode();
+           return $userinfo;
+            }
+  }
+  #----------------------------------------------------------------------------------------------#
+
+    private function isDuplicateEmail($id, $email) {
+        return $this->repo->isDuplicateEmail($id, $email);
+    }
 
 }

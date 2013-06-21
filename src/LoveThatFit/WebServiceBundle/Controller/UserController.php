@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use LoveThatFit\AdminBundle\Entity\Brand;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
+use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -154,11 +155,14 @@ public function userProfileAction()
         $handle = fopen('php://input','r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput,true);
+        
+        print_r($request_array);
+        return new response('tewsttttttt');
         $email = $request_array['email'];
-        $password = implode($request_array['password']);
+        $password =$request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
-        
+       
         #-------------------Measurement data---------------------#
          if (isset($request_array['weight'])) {
                 $weight = $request_array['weight'];
@@ -195,15 +199,28 @@ public function userProfileAction()
                 $chest = $request_array['chest'];
             }
 
-            if (isset($request_array['sleeve'])) {
+            if ($request_array['sleeve']) {
                 $sleeve = $request_array['sleeve'];
             }
-
-
+       
+            if($request_array[' sc_top_id'])
+            {
+                 $sc_top_id=$request_array['sc_top_id'];
+            }
+            if($request_array['sc_bottom_id'])
+            {
+                 $sc_bottom_id=$request_array['sc_bottom_id'];
+            }
+            if($request_array['sc_dress_id'])
+            {
+                 $sc_dress_id=$request_array['sc_dress_id'];
+            }
+            
            #-----------------End of Measuremnt data-----------------------# 
             if ($this->isDuplicateEmail(Null, $email)) {
                 return new Response(json_encode(array('error' => 'The Email already exists',)));
             }
+            else{
             $user = new User();
 
             $user->setCreatedAt(new \DateTime('now'));
@@ -223,52 +240,81 @@ public function userProfileAction()
             $em->persist($user);
             $em->flush(); 
            
-            #---------------Set Data of Measuremnt -------------------#
-            $measurment = new Measurement();
+           
+            
+ #----------------------Set Data of Measuremnt -------------------------------#
+           $measurement = new Measurement();
+           $size_chart=new SizeChart();
+           if($sc_top_id){
+           $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($sc_top_id);
+           $measurement->setTopFittingSizeChart($top_size); //
+            }
+           if($sc_bottom_id){
+              $bottom_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($sc_bottom_id);
+               $measurement->setBottomFittingSizeChart($bottom_size); //
+               }     
+           if($sc_dress_id){
+           $dress_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($sc_dress_id);
+           $measurement->setDressFittingSizeChart($dress_size); //
+           }
+        
+           
+            $measurement->setUser($user);
+            $measurement->setUpdatedAt(new \DateTime('now'));
 
-
-            $measurment->setUpdatedAt(new \DateTime('now'));
-
-            if (isset($request_array['weight'])) {
-                $measurment->setWeight($weight);
-            }
-            if (isset($request_array['height'])) {
-                $measurment->setHeight($height);
-            }
-            if (isset($request_array['waist'])) {
-                $measurment->setWaist($waist);
-            }
-            if (isset($request_array['hip'])) {
-                $measurment->setHip($hip);
-            }
+          
+                $measurement->setWeight($weight);
+           
+                $measurement->setHeight($height);
+          
+           
+                $measurement->setWaist($waist);
+          
+          
+                $measurement->setHip($hip);
+           
             if (isset($request_array['bust'])) {
-                $measurment->setBust($bust);
+                $measurement->setBust($bust);
             }
            
            
             if (isset($request_array['inseam'])) {
-                $measurment->setInseam($inseam);
+                $measurement->setInseam($inseam);
             }
            
             if (isset($request_array['chest'])) {
-                $measurment->setChest($chest);
+                $measurement->setChest($chest);
             }
             if (isset($request_array['sleeve'])) {
-                $measurment->setSleeve($sleeve);
+                $measurement->setSleeve($sleeve);
             }
             if (isset($request_array['neck'])) {
-                $measurment->setNeck($neck);
+                $measurement->setNeck($neck);
             }
-
+#---------------------------------------------------Getting Data-----------------------------#
+             $userinfo=array();
+   #--------------------User Info-------------------------------#
+             
+            $userinfo['email']=$user->getEmail();
+            $userinfo['gender']=$user->getGender();
+            $userinfo['zipcode']=$user->getZipcode();
+    #-----------------------Measurement Info--------------------#
+            $userinfo['weight']=$measurement->getWeight();
+            $userinfo['height']=$measurement->getHeight();
+            $userinfo['waist']=$measurement->getWaist();
+            $userinfo['hip']=$measurement->getHip();
+            $userinfo['bust']=$measurement->getBust();
+            $userinfo['inseam']=$measurement->getInseam();
+            $userinfo['chest']=$measurement->getChest();
+            $userinfo['sleeve']=$measurement->getSleeve();
+            $userinfo['neck']=$measurement->getNeck();
+            
             $em = $this->getDoctrine()->getManager();
-            $em->persist($measurment);
+            $em->persist($measurement);
             $em->flush();
   #------------------------End of Seting measuremt----------#          
-            
-          
-
-            return new Response(json_encode(array('msg' => 'success')));
-        
+            return new Response(json_encode($userinfo));
+            }
     }
 
     #-------------------------Measurement-----------------------------------------------------------------------------#       
