@@ -151,7 +151,7 @@ public function userProfileAction()
 #------------------------------------------Registration---------------------------------------------#
     public function registrationCreateAction() {
 
-         $request = $this->getRequest();
+        $request = $this->getRequest();
         $handle = fopen('php://input','r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput,true);
@@ -199,26 +199,30 @@ public function userProfileAction()
                 $chest = $request_array['chest'];
             }
 
-            if ($request_array['sleeve']) {
-                $sleeve = $request_array['sleeve'];
-            }
-       
-            if($request_array[' sc_top_id'])
+            if(isset($request_array['sc_top_id']))
             {
                  $sc_top_id=$request_array['sc_top_id'];
             }
-            if($request_array['sc_bottom_id'])
+            else
+            {
+                 $sc_top_id=0;
+            }
+            if(isset($request_array['sc_bottom_id']))
             {
                  $sc_bottom_id=$request_array['sc_bottom_id'];
             }
-            if($request_array['sc_dress_id'])
+             else {$sc_bottom_id=0;}
+            if(isset($request_array['sc_dress_id']))
             {
                  $sc_dress_id=$request_array['sc_dress_id'];
             }
-        
+            else{
+                 $sc_dress_id=0;
+            }
+           
            #-----------------End of Measuremnt data-----------------------# 
             if ($this->isDuplicateEmail(Null, $email)) {
-                return new Response(json_encode(array('error' => 'The Email already exists',)));
+                return new Response(json_encode(array('Message' => 'The Email already exists',)));
             }
             else{
             $user = new User();
@@ -267,10 +271,10 @@ public function userProfileAction()
            
                 $measurement->setHeight($height);
           
-           
+           if ($request_array['waist']) {
                 $measurement->setWaist($waist);
           
-          
+           }
                 $measurement->setHip($hip);
            
             if (isset($request_array['bust'])) {
@@ -285,9 +289,7 @@ public function userProfileAction()
             if (isset($request_array['chest'])) {
                 $measurement->setChest($chest);
             }
-            if (isset($request_array['sleeve'])) {
-                $measurement->setSleeve($sleeve);
-            }
+           
             if (isset($request_array['neck'])) {
                 $measurement->setNeck($neck);
             }

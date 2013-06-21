@@ -187,9 +187,21 @@ public function sizeChartList($request_array)
         $measurement['hip']=$hip;
         $measurement['sleeve']=$sleeve;
         $measurement['inseam']=$inseam;
+        if($measurement['sc_dress_id']){
         $measurement['sc_dress_id']=$dress_id;
-        $measurement['sc_top_id']=$top_id;
-        $measurement['sc_bottom_id']=$bottom_id;
+        }
+        else
+        {
+            $measurement['sc_dress_id']=0;
+        }
+        if($measurement['sc_top_id']){
+            $measurement['sc_top_id']=$top_id;
+        }else{ $measurement['sc_top_id']=0;}
+        
+        if($measurement['sc_bottom_id']){$measurement['sc_bottom_id']=$bottom_id;}
+        else{
+            $measurement['sc_bottom_id']=0;
+        }
         
         if($measurement)   
         {
