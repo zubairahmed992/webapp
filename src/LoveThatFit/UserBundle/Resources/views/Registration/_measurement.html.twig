@@ -155,8 +155,11 @@
       {% endif %}              
 
                                 <!-- END WEIGHT !-->   
-
-
+{% if( entity.gender=='f') %}
+                                <div class="btm_buttons row">
+      {%else%}                  
+                                        <div class="btm_buttons row" style="bottom:25px!important; left:0px!important;">
+{% endif %}              
                                 <div class="btm_buttons row">
                                     <div class="frm_ele" style="float:none;">
                                         <input class="reg_next_step" type="submit" value="Save & Proceed" />
