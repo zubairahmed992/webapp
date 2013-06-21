@@ -147,6 +147,14 @@ class SizeChart
      * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
     private $back=0;
+    
+    /**
+     * @var float $thigh
+     *
+     * @ORM\Column(name="thigh", type="float")
+     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
+     */
+    private $thigh=0;
 
 /**
      * @var string $disabled
@@ -515,5 +523,28 @@ class SizeChart
     public function getBack()
     {
         return $this->back;
+    }
+
+    /**
+     * Set thigh
+     *
+     * @param float $thigh
+     * @return SizeChart
+     */
+    public function setThigh($thigh)
+    {
+        $this->thigh = $thigh;
+    
+        return $this;
+    }
+
+    /**
+     * Get thigh
+     *
+     * @return float 
+     */
+    public function getThigh()
+    {
+        return $this->thigh;
     }
 }
