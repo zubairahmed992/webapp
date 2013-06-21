@@ -117,7 +117,7 @@ function loveItem(item_id)
                         <div class="featured_img">
 
                             
-                            <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_dress ui-draggable">
+                            <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="{{product.clothingType.target|lower}} ui-draggable">
                             
                              <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
                            
