@@ -130,7 +130,7 @@ public function sizeChartList($request_array)
             $waist_dress = $sizechart_dress[0]['dress_waist'];
             $hip_dress = $sizechart_dress[0]['dress_hip'];
             $sleeve_dress = $sizechart_dress[0]['dress_sleeve'];
-             $dress_id=$sizechart_dress[0]['size_chart_id'];
+            $dress_id=$sizechart_dress[0]['size_chart_id'];
             
             }
             
@@ -187,20 +187,29 @@ public function sizeChartList($request_array)
         $measurement['hip']=$hip;
         $measurement['sleeve']=$sleeve;
         $measurement['inseam']=$inseam;
-        if($measurement['sc_dress_id']){
-        $measurement['sc_dress_id']=$dress_id;
-        }
+        
+        
+        if($top_id)
+        {
+            $measurement['sc_top_id']=$top_id;  
+        }    
         else
         {
-            $measurement['sc_dress_id']=0;
+            $measurement['sc_top_id']=0;
         }
-        if($measurement['sc_top_id']){
-            $measurement['sc_top_id']=$top_id;
-        }else{ $measurement['sc_top_id']=0;}
-        
-        if($measurement['sc_bottom_id']){$measurement['sc_bottom_id']=$bottom_id;}
+        if($bottom_id)
+        {
+            $measurement['sc_bottom_id']=$bottom_id; 
+        } 
         else{
             $measurement['sc_bottom_id']=0;
+        }
+        if($dress_id)
+        {
+          $measurement['sc_dress_id']=$dress_id;  
+        }
+        else {
+            $measurement['sc_dress_id']=0;
         }
         
         if($measurement)   
