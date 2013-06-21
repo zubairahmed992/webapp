@@ -156,13 +156,13 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput,true);
         
-        print_r($request_array);
-        return new response('tewsttttttt');
+        
         $email = $request_array['email'];
         $password =$request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
-       
+      
+   
         #-------------------Measurement data---------------------#
          if (isset($request_array['weight'])) {
                 $weight = $request_array['weight'];
@@ -215,7 +215,7 @@ public function userProfileAction()
             {
                  $sc_dress_id=$request_array['sc_dress_id'];
             }
-            
+        
            #-----------------End of Measuremnt data-----------------------# 
             if ($this->isDuplicateEmail(Null, $email)) {
                 return new Response(json_encode(array('error' => 'The Email already exists',)));
