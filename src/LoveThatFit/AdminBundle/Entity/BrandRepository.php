@@ -56,7 +56,7 @@ param:limit:
 		   return null;
 		 }						
 	  }   
-	 
+//duplicate method	 
 	public function findBrandBy($name) {
         $total_record = $this->getEntityManager()
         ->createQuery("SELECT b FROM LoveThatFitAdminBundle:Brand b     
@@ -70,7 +70,23 @@ param:limit:
         }
     }
     
+    //--------------------------------------------------------------------------
     
+    
+    public function findByName($name) {
+        $total_record = $this->getEntityManager()
+        ->createQuery("SELECT b FROM LoveThatFitAdminBundle:Brand b     
+        WHERE
+        b.name = :name"
+                        )->setParameters(array('name' => $name));
+        try {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    //---------------------------------------------------------------------------
     
     
     public function listAllBrand($page_number = 0, $limit = 0 ,$sort='id') {

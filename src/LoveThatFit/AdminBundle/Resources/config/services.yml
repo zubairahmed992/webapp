@@ -2,6 +2,14 @@ parameters:
 #    love_that_fit_admin.example.class: LoveThatFit\AdminBundle\Example
 
 services:    
+     admin.helper.brand:
+        class: LoveThatFit\AdminBundle\Entity\BrandHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\Brand
+            
+
      admin.helper.sizechart:
         class: LoveThatFit\AdminBundle\Entity\SizeChartHelper
         arguments:
