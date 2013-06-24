@@ -40,14 +40,15 @@ function pattern_select(color_id,product_id,size_id)
 
 }
 function loveItem(item_id)
-{   
-   base_url=$('#ajax_product_love_url').text();
+{  
+   base_url=$('#ajax_product_love_url'+item_id).text();
+   
    //base_url=$('#ajax_product_base_url').text();
         var jqXHR = $.ajax({
             //url: base_url+"/app_dev.php/ajax/user_product_item/create/"+ item_id,
             url: base_url,
           
-            success: function (XMLHttpRequest, textStatus, errorThrown) {
+          success: function (XMLHttpRequest, textStatus, errorThrown) {
               
             if(jqXHR.responseText)
             {
@@ -135,9 +136,10 @@ function loveItem(item_id)
                              <div id="like_icon_{{productItem.id}}">
                               <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
                             </div>
+                              <span id="ajax_product_love_url"{{productItem.id}} style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
                             {%endif%}
                                 
-                                <span id="ajax_product_love_url" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
+                               
                                 <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}
                         </div>
