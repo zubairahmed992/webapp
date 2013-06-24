@@ -1969,7 +1969,7 @@ margin:0px 0px 0px 0px;
 .step_3 .btm_buttons {
     bottom: 0px!important;
     height: 60px;
-    left: 55px!important;
+    left: 30px!important;
     position: absolute;
     width: 380px;  
 }
@@ -2536,8 +2536,7 @@ padding-bottom: 0px;
 }
 
 #measurement_body_types label{
-    margin-top: -5px;
-    
+    margin-top: -5px;    
     
 }
 
@@ -2551,4 +2550,10 @@ padding-bottom: 0px;
     font-size: 0.95em;
     padding: 5px 0 0;
     width: 100px;
+}
+
+.step4_btns{
+    
+    width:190px;
+    margin:0 auto;
 }
