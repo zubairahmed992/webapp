@@ -28,7 +28,7 @@ class Brand {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
      * @Assert\NotBlank(groups={"brand_create", "brand_update"})
      */
     protected $name;
@@ -212,12 +212,6 @@ public function deleteImages()
     }
     
     
-    
-
-    
-
-    
-
     /**
      * Add sizechart
      *

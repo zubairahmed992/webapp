@@ -47,37 +47,50 @@ class BrandHelper {
 //-------------------------------------------------------
 
     public function save($entity) {
+        $msg_array =null;
+        //$msg_array = $this->validateForCreate($entity);
 
-        $msg_array = $this->validateForCreate($entity);
-
-        if ($msg_array['success'] == true) {
+        if ($msg_array==null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
 
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
+
+            return array('message' => 'Brand succesfully created.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+            return $msg_array;
         }
-        return $msg_array;
     }
 
- //-------------------------------------------------------
+    //-------------------------------------------------------
 
     public function update($entity) {
 
         $msg_array = $this->validateForUpdate($entity);
 
-        if ($msg_array['success'] == true) {
+        if ($msg_array==null) {
             $entity->setUpdatedAt(new \DateTime('now'));
 
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
+
+            return array('message' => 'Brand '.$entity->getName().' succesfully updated!',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+            return $msg_array;
         }
-        return $msg_array;
     }
-   
-    
+
 //-------------------------------------------------------
 
     public function delete($id) {
@@ -133,13 +146,13 @@ class BrandHelper {
         }
     }
 
-    
 //-------------------------------------------------------
-    public function findByName($name) {
-        return $this->repo->findByName($name);
+    public function findOneByName($name) {
+        return $this->repo->findOneByName($name);
     }
 
-    //-------------------------------------------------------
+ //-------------------------------------------------------
+    
     public function getListWithPagination($page_number, $sort) {
         $yaml = new Parser();
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
@@ -162,43 +175,31 @@ class BrandHelper {
         );
     }
 
- 
-//Validation    
-//-------------------------------------------------------
-    public function validateForUpdate($entity) {
-        return array('message' => 'Brand succesfully created.',
-            'field' => 'all',
-                'message_type' => 'success',
-            'success' => true,
-        );
-    }
-   //-------------------------------------------------------
- 
-    public function validateForCreate($entity) {
-        
-        $msg_array = $this->validateNameAlreadyExists($entity->getName());
-        if ($msg_array) {
-            return $msg_array;
-        }
-        return array('message' => 'Brand succesfully created.',
-            'field' => 'all',
-                'message_type' => 'success',
-            'success' => true,
-        );
-    }
-
-
+//Private Methods    
 //----------------------------------------------------------
-    private function validateNameAlreadyExists($name) {
-        if (count($this->findByName($name)) > 0) {
+    private function validateForCreate($name) {
+        if (count($this->findOneByName($name)) > 0) {
             return array('message' => 'Brand Name already exists!',
                 'field' => 'name',
-                    'message_type' => 'warning',
+                'message_type' => 'warning',
                 'success' => false,
             );
         }
         return;
     }
 
+//----------------------------------------------------------
+    private function validateForUpdate($entity) {
+        $brand = $this->findOneByName($entity->getName());
+        
+        if ($brand && $brand->getId()!=$entity->getId()) {
+            return array('message' => 'Brand Name already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+        return;
+    }
 
 }

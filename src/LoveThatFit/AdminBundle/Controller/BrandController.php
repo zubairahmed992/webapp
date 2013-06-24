@@ -38,7 +38,7 @@ class BrandController extends Controller {
     public function newAction() {
 
         $entity = $this->get('admin.helper.brand')->createNew();
-        $form = $this->createForm(new BrandType(), $entity);
+        $form = $this->createForm(new BrandType(), $entity, array('validation_groups'=>'brand_create'));
 
         return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
                     'form' => $form->createView()));
@@ -48,9 +48,8 @@ class BrandController extends Controller {
     public function createAction(Request $request) {
 
         $entity = $this->get('admin.helper.brand')->createNew();
-        $form = $this->createForm(new BrandType(), $entity);
+        $form = $this->createForm(new BrandType(), $entity, array('validation_groups'=>'brand_create'));
         $form->bind($request);
-
         
         if ($form->isValid()) {
             
@@ -59,9 +58,6 @@ class BrandController extends Controller {
             
             if($message_array['success']){
                 return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
-            }else{
-                $form->get($message_array['field'])->addError(new FormError($message_array['message']));
-                $form->addError(new FormError($message_array['message']));
             }
         } else {
             $this->get('session')->setFlash('warning', 'The Brand can not be Created!');
@@ -81,13 +77,8 @@ class BrandController extends Controller {
         if ($specs['success']==false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
-
-        $form = $this->createFormBuilder($entity, array(
-                    'validation_groups' => array('brand_update')))
-                ->add('name')
-                ->add('file', null, array('required' => false))
-                ->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false,))
-                ->getForm();
+        $form = $this->getEditForm($entity);
+        
         $deleteForm = $this->createForm(new DeleteType(), $entity);
         return $this->render('LoveThatFitAdminBundle:Brand:edit.html.twig', array(
                     'form' => $form->createView(),
@@ -111,9 +102,10 @@ class BrandController extends Controller {
         if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.brand')->update($entity);
+                        
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
             
-            if($message_array['success']){
+            if($message_array['success']==true){
                 return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
             }
             
@@ -147,11 +139,14 @@ class BrandController extends Controller {
 
 //------------------------------------------------------------------------------------------    
     private function getEditForm($entity) {
-        return $this->createFormBuilder($entity)
-                        ->add('name')
-                        ->add('file')
-                        ->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false,))
-                        ->getForm();
+       
+        return $this->createFormBuilder($entity, array(
+                    'validation_groups' => array('brand_update')))
+                ->add('name')
+                ->add('file', null, array('required' => false))
+                ->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false,))
+                ->getForm();
+        
     }
 
     

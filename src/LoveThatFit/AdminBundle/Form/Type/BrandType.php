@@ -16,7 +16,7 @@ class BrandType extends AbstractType {
         return array(
             'data_class' => 'LoveThatFit\AdminBundle\Entity\Brand',
             'cascade_validation' => true,
-            'validation_groups' => array('brand_create'),
+         
         );
     }
 
