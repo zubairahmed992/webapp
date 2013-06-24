@@ -9,7 +9,7 @@ class BrandType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('name', 'text');
         $builder->add('file');
-        $builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false,));
+        $builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false));
     }
 
     public function getDefaultOptions(array $options) {

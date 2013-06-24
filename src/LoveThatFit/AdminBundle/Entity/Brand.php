@@ -29,7 +29,7 @@ class Brand {
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"brand_create", "brand_update"})
      */
     protected $name;
 

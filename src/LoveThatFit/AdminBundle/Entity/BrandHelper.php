@@ -47,19 +47,61 @@ class BrandHelper {
 //-------------------------------------------------------
 
     public function save($entity) {
-        
-        $entity->setCreatedAt(new \DateTime('now'));
-        $entity->setUpdatedAt(new \DateTime('now'));    
-            
-        $entity->upload();
-        $this->em->persist($entity);
-        $this->em->flush();
-        
-        return array('brands' => $entity,
-            'message' => 'The Brand has been Created!',
-            'message_type' => 'success',
-            
-        );
+
+        $msg_array = $this->validateForCreate($entity);
+
+        if ($msg_array['success'] == true) {
+            $entity->setCreatedAt(new \DateTime('now'));
+            $entity->setUpdatedAt(new \DateTime('now'));
+
+            $entity->upload();
+            $this->em->persist($entity);
+            $this->em->flush();
+        }
+        return $msg_array;
+    }
+
+ //-------------------------------------------------------
+
+    public function update($entity) {
+
+        $msg_array = $this->validateForUpdate($entity);
+
+        if ($msg_array['success'] == true) {
+            $entity->setUpdatedAt(new \DateTime('now'));
+
+            $entity->upload();
+            $this->em->persist($entity);
+            $this->em->flush();
+        }
+        return $msg_array;
+    }
+   
+    
+//-------------------------------------------------------
+
+    public function delete($id) {
+
+        $entity = $this->repo->find($id);
+        $entity_name = $entity->getName();
+
+        if ($entity) {
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            return array('brands' => $entity,
+                'message' => 'The Brand ' . $entity_name . ' has been Deleted!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+
+            return array('brands' => $entity,
+                'message' => 'Brand not found!',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
     }
 
 //-------------------------------------------------------
@@ -68,6 +110,30 @@ class BrandHelper {
         return $this->repo->find($id);
     }
 
+    //-------------------------------------------------------
+
+    public function findWithSpecs($id) {
+        $entity = $this->repo->find($id);
+
+        if (!$entity) {
+            $entity = $this->createNew();
+            return array(
+                'entity' => $entity,
+                'message' => 'Brand not found.',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        } else {
+            return array(
+                'entity' => $entity,
+                'message' => 'Brand found!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        }
+    }
+
+    
 //-------------------------------------------------------
     public function findByName($name) {
         return $this->repo->findByName($name);
@@ -96,32 +162,43 @@ class BrandHelper {
         );
     }
 
-    //-------------------------------------------------------
-    public function isValid($entity) {
-        
-        if ($entity->getName() == '') {
-            return array('message' => 'Please enter the Brand Name!',
-                'field' => 'name',
-                'valid' => false,
-            );
-        }elseif (count($this->findByName($entity->getName())) > 0) {
-            return array('message' => 'Brand Name already exists!',
-                'field' => 'name',
-                'valid' => false,
-            );
-        }
-        
-        if ($entity->file == '') {
-            return array('message' => 'Please add the Brand Logo image!',
-                'field' => 'file',
-                'valid' => false,
-            );
-        }
-        
+ 
+//Validation    
+//-------------------------------------------------------
+    public function validateForUpdate($entity) {
         return array('message' => 'Brand succesfully created.',
             'field' => 'all',
-            'valid' => true,
+                'message_type' => 'success',
+            'success' => true,
         );
     }
+   //-------------------------------------------------------
+ 
+    public function validateForCreate($entity) {
+        
+        $msg_array = $this->validateNameAlreadyExists($entity->getName());
+        if ($msg_array) {
+            return $msg_array;
+        }
+        return array('message' => 'Brand succesfully created.',
+            'field' => 'all',
+                'message_type' => 'success',
+            'success' => true,
+        );
+    }
+
+
+//----------------------------------------------------------
+    private function validateNameAlreadyExists($name) {
+        if (count($this->findByName($name)) > 0) {
+            return array('message' => 'Brand Name already exists!',
+                'field' => 'name',
+                    'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+        return;
+    }
+
 
 }

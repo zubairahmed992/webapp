@@ -45,10 +45,15 @@ return true;
     <div>      
     <h1 style="float:left;">Edit Brand</h1>
      <div class="btn_wrapper">     
-       <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
- 
+<a href="{{ path('admin_brands') }}" class="btn">back</a>
+             
+{%if entity.id %}
+      <a href="{{ path('admin_brand_edit', {'id': entity.Id}) }}" class="btn">Edit</a>      
+      <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
+      {% endif %}
       </div>
       <div class="clearfix"></div>   
+      {%if entity.id %}
     <form action="{{ path('admin_brand_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
  {{ form_errors(form) }}
 
@@ -94,7 +99,7 @@ return true;
                     </div> <!-- End detail_wrapper -->
                 </form> 
       
-          
+          {% endif %}
             </div> 
     
     
