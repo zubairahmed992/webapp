@@ -62,8 +62,9 @@
          <input type="hidden" id="hdn_skip_flag" value="skip"/>
             <div class="frm_ele step4_btns">
                   <a class="reg_next_step" href="{{path('inner_site_index')}}">Skip</a>
+                  {% if(edit_type=="registration")%}
                   <a class="reg_next_step reg_second" href="{{path('registration_measurement_edit')}}">Back</a>
-                     
+                 {% endif%}    
                  </div>
                 <!--/.step_4--></div>
             <!--/.action_cnt--></div>

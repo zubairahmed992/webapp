@@ -229,6 +229,7 @@ class RegistrationController extends Controller {
                     'measurement_form' => $measurement_form->createView(),
                     'entity' => $entity,
                     'measurement' => $measurement,
+                    'edit_type' => 'registration',
                 ));
     }
 //-----------------------------------------------------------------------------
@@ -278,8 +279,36 @@ class RegistrationController extends Controller {
                     'measurement_form' => $measurement_form->createView(),
                     'entity' => $entity,
                     'measurement' => $measurement,
+                    'edit_type' => 'registration',
                 ));
     }
+    
+#---------------------------Profile Edit Image ---------------#
+public function fittingRoomImageEditAction() {
+
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+
+        $measurement = $this->getMeasurement($entity);
+
+        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+
+        return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                    'form' => $form->createView(),
+                    'form' => $form->createView(),
+                    'measurement_form' => $measurement_form->createView(),
+                    'entity' => $entity,
+                    'measurement' => $measurement,
+                    'edit_type' => 'fitting_room',
+                ));
+    }    
 
 //--------------------------- update fitting room image, 
     public function stepFourCreateAction(Request $request, $id) {

@@ -52,7 +52,10 @@ registration_step_four_edit:
     pattern:  /registration/step_four_edit
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
 
-
+#-------------------------Edit Fitting Room Image URL-------------------------#
+fitting_room_image_edit:
+    pattern:  /registration/fitting_room_image_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:fittingRoomImageEdit }
 #----------------------------- Profile ---------------------------------------------
 
 user_profile_about_me:
