@@ -43,21 +43,23 @@ function loveItem(item_id)
 {   
    base_url=$('#ajax_product_love_url').text();
    //base_url=$('#ajax_product_base_url').text();
-        $.ajax({
+        var jqXHR = $.ajax({
             //url: base_url+"/app_dev.php/ajax/user_product_item/create/"+ item_id,
             url: base_url,
           
             success: function (XMLHttpRequest, textStatus, errorThrown) {
-               
-            if(textStatus=="success")
+              
+            if(jqXHR.responseText)
             {
-              $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
+            
+             $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
             }   
-            if(textStatus=="try")
+             else
             {
+               
             alert('Sorry .. You are overlimit please delete some of your loved products ');
             }
-                  
+           
          }
         });
 }
@@ -65,6 +67,7 @@ function loveItem(item_id)
    
 
                 <div class="featured_box_{{product.id}}">  
+                   
                     <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>
                     <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>
                     <span></span>
