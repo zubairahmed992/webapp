@@ -537,4 +537,9 @@ class Product {
     {
         return $this->user_item_try_history;
     }
+    
+    public function getTryProductCount()
+    {
+        return count($this->getUserItemTryHistory());
+    }
 }
