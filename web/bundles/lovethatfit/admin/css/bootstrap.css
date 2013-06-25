@@ -6481,3 +6481,26 @@ padding:5px 0px 5px 0px;
 #product_color_displayProductColor{
     padding-top:18px;
 }
+
+.dashboard_tbl h4{
+    line-height: 5px;
+    font-weight: normal;
+    padding:5px;
+        
+}
+
+.mainhd{
+     padding-top:15px;
+     padding-bottom:15px;
+        
+}
+
+.hd_bdr{
+    border-bottom: 3px solid #ccc000;
+}
+
+.dashboard_tbl canvas{
+    
+    padding-top:20px;
+    padding-bottom:20px;
+}

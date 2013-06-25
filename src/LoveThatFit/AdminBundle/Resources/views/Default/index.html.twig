@@ -2,35 +2,54 @@
 {% block breadcrumb %}
 <li class="active">Dashboard</li>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/Chart.js') }}"></script>
-<style>        
-        piecanvas{
-        }
-        clothingtypecanvas{
-        }
-    </style>
+
 {% endblock %}
 
 {% block body %}
-    <h4 style="float:left;">Products</h4>
-    <table width="100%">
-        <tr>
-            <td colspan="2" valign="top">
-                <div> Total Products:{{totalproducts}}</div>                
-            </td>
-        </tr>
-        
-        <tr>
-            <td colspan="2" valign="top"><h4 style="float:left;">Products By Brand</h4></td>
+
+
+    
+<table width="100%" border="0" class="dashboard_tbl">
+    <tr>
+        <td colspan="2" class="hd_bdr"><h4 style="float:left;">Products</h4></td>
         </tr>        
         <tr>
-            <td valign="top">
-        {%for p in brandproduct%}
+            <td colspan="2" valign="top" class="mainhd">Total Products:{{totalproducts}}</td>
+        </tr>        
+        <tr>
+            <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Brand</h4></td>
+        </tr>        
+        <tr>
+            <td valign="top" class="mainhd">
+        
+                <table width="50%">
+                    <tr>
+                        <td>Brand Name</td>
+                        <td>Quantity</td>
+                        <td>Percentage</td>
+                        
+                    </tr>
+               
+
+
+
+{%for p in brandproduct%}
                     {%set percent=100*p.brand/totalproducts%}
+                
+                
+                <tr>
+                        <td>{{p.name}}</td>
+                        <td>{{p.brand}}</td>
+                        <td>{{percent|number_format}}%</td>
+                    </tr>
+                
                     
-                    <div>{{p.name}}: {{p.brand}}   Percent:{{percent|number_format}}%</div>
+                    
         {%endfor%}  
+                     </table>
+                    
                 </td>
-                <td valign="top">
+                <td valign="top" align="center">
                     <canvas id="piecanvas"  height="300" width="300"></canvas>
                     <script>
                         var pieData = [
@@ -52,15 +71,50 @@
                 </tr>
 
                 <tr>
-                    <td colspan="2" valign="top"><h4 style="float:left;">Products By Clothing Type</h4></td>
+                    <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Clothing Type</h4></td>
                 </tr>        
                 <tr>
-                    <td valign="top">
-                        <div>Top Product:{{topProduct}}    Percent:{%set toppercent=100*topProduct/totalproducts%} {{toppercent|number_format}}%</div>   
-                        <div> Bottom Product:{{bottomProduct}}     Percent:{%set bottompercent=100*bottomProduct/totalproducts%} {{bottompercent|number_format}}%</div>
-                        <div>  Dress Product:{{dressProduct}}   Percent:{%set dresspercent=100*dressProduct/totalproducts%} {{dresspercent|number_format}}%</div>
+                    <td valign="top" class="mainhd">
+                        
+                        
+                                                
+                     <table width="50%">
+                         
+                            <tr>
+                                <td>Type</td>
+                                <td>Quantity</td>
+                                <td>Percentage</td>
+
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td>Top</td>
+                                <td>{{topProduct}}</td>
+                                <td>{%set toppercent=100*topProduct/totalproducts%} {{toppercent|number_format}}%</td>
+
+                            </tr> 
+                            
+                             <tr>
+                                <td>Bottom</td>
+                                <td>{{bottomProduct}}</td>
+                                <td>{%set bottompercent=100*bottomProduct/totalproducts%} {{bottompercent|number_format}}%</td>
+
+                            </tr>
+                            
+                             <tr>
+                                <td>Dress</td>
+                                <td>{{dressProduct}}</td>
+                                <td>{%set dresspercent=100*dressProduct/totalproducts%} {{dresspercent|number_format}}%</td>
+
+                            </tr>
+                            
+                            
+                            </table>                    
+                    
+                    
                     </td>
-                    <td valign="top">
+                    <td valign="top" align="center">
                         <canvas id="clothingtypecanvas"  height="300" width="300"></canvas>
                         <script>
                             var clothingtypepieData = [                               
@@ -93,10 +147,13 @@
 
 
                 <tr>
-                    <td colspan="2" valign="top"><h4 style="float:left;">Users</h4></td>
+                    <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Users</h4></td>
                 </tr>             
             <tr>
-               <td valign="top" colspan="2">
+               <td valign="top" colspan="2" class="mainhd">
+                   
+                   
+                   
                   <div> Total:  {{totalusers}}</div>
                         <div>Female:  {{femaleUsers}}         Percent:{%set femalepercent=100*femaleUsers/totalusers%} {{femalepercent|number_format}}%</div>
                         <div>Male:  {{maleUsers}}   Percent:{%set malepercent=100*maleUsers/totalusers%} {{malepercent|number_format}}%</div>                                           
