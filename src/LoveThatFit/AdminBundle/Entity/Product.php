@@ -45,6 +45,11 @@ class Product {
      * @ORM\JoinColumn(name="display_product_color_id", referencedColumnName="id")      
      **/
      public $displayProductColor;
+     
+     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="product")
+     */
+    private $user_item_try_history;
     
     
   /////////////////////////////////////////////////////////////////////////////////  
@@ -54,6 +59,8 @@ class Product {
         $this->product_colors = new ArrayCollection();
         $this->product_sizes = new ArrayCollection();
         $this->product_items = new ArrayCollection();
+        $this->user_item_try_history = new ArrayCollection();
+        
     }
     
     
@@ -497,4 +504,37 @@ class Product {
       return $this->getProductItems()->getIterator()->current(); 
     }
     
+
+    /**
+     * Add user_item_try_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemTryHistory $userItemTryHistory
+     * @return Product
+     */
+    public function addUserItemTryHistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $userItemTryHistory)
+    {
+        $this->user_item_try_history[] = $userItemTryHistory;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_item_try_history
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserItemTryHistory $userItemTryHistory
+     */
+    public function removeUserItemTryHistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $userItemTryHistory)
+    {
+        $this->user_item_try_history->removeElement($userItemTryHistory);
+    }
+
+    /**
+     * Get user_item_try_history
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserItemTryHistory()
+    {
+        return $this->user_item_try_history;
+    }
 }

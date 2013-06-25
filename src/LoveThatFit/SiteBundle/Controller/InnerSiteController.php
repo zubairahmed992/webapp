@@ -1,7 +1,5 @@
 <?php
-
 namespace LoveThatFit\SiteBundle\Controller;
-
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Yaml\Dumper;
 use LoveThatFit\SiteBundle\Comparison;
@@ -200,7 +198,7 @@ class InnerSiteController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-        $productItem = $this->getProductItemById($product_item_id);
+        $productItem = $this->getProductItemById($product_item_id);        
 
         if (!$user)
             return new Response("User Not found!");
@@ -218,7 +216,7 @@ class InnerSiteController extends Controller {
     public function getFeedBackListAction($product_item_id) {
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->getProductItemById($product_item_id);
-
+        
         if (!is_object($this->get('security.context')->getToken()->getUser()))
             return new Response("User Not found, Log in required!");
 
@@ -228,7 +226,9 @@ class InnerSiteController extends Controller {
         $fit = new Algorithm($user, $productItem);
         $json_feedback = $fit->getFeedBackJson();
         $fits = $fit->fit();
-        $this->createUserItemTryHistory($user, $productItem, $json_feedback, $fits);
+        $product_id=$this->getProductByItemId($productItem);
+        $product_id=$product_id[0]['id'];        
+        $this->createUserItemTryHistory($user,$product_id, $productItem, $json_feedback, $fits);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', array('product' => $productItem->getProduct(), 'product_item' => $productItem, 'data' => $fit->getFeedBackArray()));
     }
 
@@ -259,11 +259,12 @@ class InnerSiteController extends Controller {
     }
 
     //User Item Try History----------------------------------------------
-    private function createUserItemTryHistory($user, $productItem, $json_feedback, $fits) {
-        $rec_count = $this->countUserItemTryHistory($user,$productItem);      
+    private function createUserItemTryHistory($user,$product_id,$productItem, $json_feedback, $fits) {
+        $product=  $this->getProduct($product_id);
+        $rec_count = $this->countUserItemTryHistory($user,$product,$productItem);      
         if ($rec_count>0) {
         $em = $this->getDoctrine()->getEntityManager();
-        $userItemTry = $this->getDoctrine()->getRepository('LoveThatFitSiteBundle:UserItemTryHistory')->findby(array('productitem' => $productItem, 'user' => $user));
+        $userItemTry = $this->getDoctrine()->getRepository('LoveThatFitSiteBundle:UserItemTryHistory')->findby(array('product'=>$product,'productitem' => $productItem, 'user' => $user));
         foreach ($userItemTry as $userTryItem) {
             $usertryItemId = $userTryItem->getId();
             $counts= $userTryItem->getCount();            
@@ -276,13 +277,14 @@ class InnerSiteController extends Controller {
         $userItemTryId->setUpdatedAt(new \DateTime('now'));
         $em->persist($userItemTryId);
         $em->flush();
-        } else {
+        } else {            
             $useritemtryhistory = new UserItemTryHistory();
             $useritemtryhistory->setCount(1);
             $useritemtryhistory->setFit($fits);
             $useritemtryhistory->setCreatedAt(new \DateTime('now'));
             $useritemtryhistory->setUpdatedAt(new \DateTime('now'));
             $useritemtryhistory->setProductitem($productItem);
+            $useritemtryhistory->setProduct($product);            
             $useritemtryhistory->setUser($user);
             $useritemtryhistory->setFeedback($json_feedback);
             $em = $this->getDoctrine()->getManager();
@@ -297,6 +299,13 @@ class InnerSiteController extends Controller {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->find($id);
+        return $entity;
+    }
+    
+    private function getProductByItemId($productItem) {
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductItem')
+                ->findProductByItemId($productItem);
         return $entity;
     }
 
@@ -322,14 +331,14 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
     }
     
-    private function countUserItemTryHistory($user,$productItem)
+    private function countUserItemTryHistory($user,$product,$productItem)
    {
         $em = $this->getDoctrine()->getManager();
         $useritemtryhistoryobj = $this->getDoctrine()->getRepository('LoveThatFitSiteBundle:UserItemTryHistory');
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitSiteBundle:UserItemTryHistory')
-                 ->findUserItemAllTryHistory($user,$productItem);
-		$rec_count = count($useritemtryhistoryobj->findUserItemAllTryHistory($user,$productItem));
+                 ->findUserItemAllTryHistory($user,$product,$productItem);
+		$rec_count = count($useritemtryhistoryobj->findUserItemAllTryHistory($user,$product,$productItem));
         return $rec_count;
    }
 }

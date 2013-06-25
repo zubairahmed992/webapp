@@ -13,7 +13,13 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="LoveThatFit\SiteBundle\Entity\UserItemTryHistoryRepository")
  */
 class UserItemTryHistory
-{
+{    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Product", inversedBy="user_ittem_try_history")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $product;
     
     /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\ProductItem", inversedBy="user_ittem_try_history")
@@ -30,6 +36,7 @@ class UserItemTryHistory
     
      public function __construct()
     {
+        $this->product = new ArrayCollection();
         $this->productitem = new ArrayCollection();
         $this->user = new ArrayCollection();        
     }
@@ -248,5 +255,28 @@ class UserItemTryHistory
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Product $product
+     * @return UserItemTryHistory
+     */
+    public function setProduct(\LoveThatFit\AdminBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }

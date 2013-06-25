@@ -42,4 +42,19 @@ class ProductItemRepository extends EntityRepository
             return null;
         }
     }
+    
+    
+    public function findProductByItemId($productItem) {
+     $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT p.id FROM LoveThatFitAdminBundle:Product p
+     JOIN p.product_items pi     
+     WHERE
+     pi.id=:product_id"  )->setParameters(array('product_id' => $productItem)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
