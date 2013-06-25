@@ -18,6 +18,7 @@ class LoadSizeChart implements FixtureInterface{
      */
     public function load(ObjectManager $manager)
     {
+        /*
         $entity = new SizeChart();
         $entity->setBack('14.5');
         $entity->setBodytype('Regular');
@@ -44,6 +45,7 @@ class LoadSizeChart implements FixtureInterface{
         $manager->persist($entity);
         $manager->persist($brand);
         $manager->flush();
+         */
     }   
 }
 

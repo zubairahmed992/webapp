@@ -14,7 +14,7 @@ class LoadClothingTypeData implements FixtureInterface{
      */
     public function load(ObjectManager $manager)
     {
-        
+        /*
         try {
         $value =Yaml::parse(@file_get_contents("../fixtures/clothingtype.yml"));
         if (is_array($value))
@@ -35,7 +35,7 @@ class LoadClothingTypeData implements FixtureInterface{
         }  
         }catch (ParseException $e) {
            printf("Unable to parse the YAML string: %s", $e->getMessage());
-    }
+    }*/
     }
     
     /**
