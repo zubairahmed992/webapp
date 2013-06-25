@@ -210,6 +210,13 @@ class User  implements UserInterface, \Serializable{
      */
     private $authToken;
     
+      /**
+     * @var string $authTokenWebService
+     *
+     * @ORM\Column(name="auth_token_web_service", type="string", length=50, nullable=true)
+     * 
+     */
+    private $authTokenWebService;
     /**
      * @var dateTime $authTokenCreatedAt
      *
@@ -906,5 +913,28 @@ public function getAbsoluteAvatarPath()
     public function getUseritemtryhistory()
     {
         return $this->useritemtryhistory;
+    }
+
+    /**
+     * Set authTokenWebService
+     *
+     * @param string $authTokenWebService
+     * @return User
+     */
+    public function setAuthTokenWebService($authTokenWebService)
+    {
+        $this->authTokenWebService = $authTokenWebService;
+    
+        return $this;
+    }
+
+    /**
+     * Get authTokenWebService
+     *
+     * @return string 
+     */
+    public function getAuthTokenWebService()
+    {
+        return $this->authTokenWebService;
     }
 }

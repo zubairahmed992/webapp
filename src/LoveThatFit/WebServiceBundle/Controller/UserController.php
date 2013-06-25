@@ -160,7 +160,6 @@ public function userProfileAction()
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
       
-   
         #-------------------Measurement data---------------------#
          if (isset($request_array['weight'])) {
                 $weight = $request_array['weight'];
@@ -217,7 +216,7 @@ public function userProfileAction()
             else{
                  $sc_dress_id=0;
             }
-           
+       
            #-----------------End of Measuremnt data-----------------------# 
             if ($this->isDuplicateEmail(Null, $email)) {
                 return new Response(json_encode(array('Message' => 'The Email already exists',)));
@@ -231,11 +230,12 @@ public function userProfileAction()
             $encoder = $factory->getEncoder($user);
 
             $password = $encoder->encodePassword($password, $user->getSalt());
-
+            $authTokenWebService=$this->genrateToken($email);
             $user->setPassword($password);
             $user->setEmail($email);
             $user->setGender($gender);
             $user->setZipcode($zipcode);
+            $user->setAuthTokenWebService($authTokenWebService);
              
 
             $em = $this->getDoctrine()->getManager();
@@ -273,8 +273,9 @@ public function userProfileAction()
                 $measurement->setWaist($waist);
           
            }
-                $measurement->setHip($hip);
-           
+          if ($request_array['hip']) {
+             $measurement->setHip($hip);
+          }
             if (isset($request_array['bust'])) {
                 $measurement->setBust($bust);
             }
@@ -310,7 +311,8 @@ public function userProfileAction()
                    
                    $userinfo['image']=$user->getImage();
                    $userinfo['avatar']=$user->getAvatar();
-                   $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
+                   $userinfo['authtoken_webservice']=$user->getAuthTokenWebService();
+                   $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
                    $userinfo['path']=$baseurl;
     #-----------------------Measurement Info--------------------#
             $userinfo['weight']=$measurement->getWeight();
@@ -322,7 +324,7 @@ public function userProfileAction()
             $userinfo['chest']=$measurement->getChest();
             $userinfo['sleeve']=$measurement->getSleeve();
             $userinfo['neck']=$measurement->getNeck();
-            
+           
             $em = $this->getDoctrine()->getManager();
             $em->persist($measurement);
             $em->flush();
@@ -459,7 +461,10 @@ public function userProfileAction()
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
-
+    private function genrateToken($email)
+    {
+      return   md5(time().$email);
+    }        
 }
 
 // End of Class
