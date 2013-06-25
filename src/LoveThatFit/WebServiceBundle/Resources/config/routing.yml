@@ -45,13 +45,9 @@ web_service_registration_create:
    pattern:  /web_service/register
    defaults: { _controller: LoveThatFitWebServiceBundle:User:registrationCreate}
    
-web_service_create_measuremnt_form:
-    pattern:  /web_service/measurement_form
-    defaults: { _controller: LoveThatFitWebServiceBundle:User:createMeasurementForm }
-
-web_service_measurement_create:
-   pattern:  /web_service/measurement_create
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:measurementCreate}
+web_service_measurement_edit:
+   pattern:  /web_service/measurement_edit
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:measurementEdit}
    
 web_service_change_password_form:
    pattern:  /web_service/change_password_form

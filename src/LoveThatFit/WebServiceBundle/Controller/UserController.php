@@ -319,131 +319,65 @@ public function userProfileAction()
             }
     }
 
-    #-------------------------Measurement-----------------------------------------------------------------------------#       
+ #-------------------------Measurement Edit Web Service-----------------------------------------------------------------------------#       
+ public function measurementEditAction() {
 
-    public function createMeasurementFormAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $email = $request_array['email'];
 
+        if ($this->isDuplicateEmail(Null, $email)) {
 
-        $form = $this->createFormBuilder()
-                ->add('neck', 'text')
-                ->add('chest', 'text')
-                ->add('waist', 'text')
-                ->add('inseam', 'text')
-                ->getForm();
-
-
-        return $this->render('LoveThatFitWebServiceBundle::measurementForm.html.twig', array(
-                    'form' => $form->createView()));
-    }
-
-    public function measurementCreateAction(Request $request) {
-        if ($request->getMethod() == 'POST') {
-
-            $request_array = $this->getRequest()->get('form');
-            if (isset($request_array['weight'])) {
-                $weight = $request_array['weight'];
-            }
-
-            if (isset($request_array['height'])) {
-                $height = $request_array['height'];
-            }
-
-            if (isset($request_array['waist'])) {
-                $waist = $request_array['waist'];
-            }
-
-            if (isset($request_array['hip'])) {
-                $hip = $request_array['hip'];
-            }
-
-            if (isset($request_array['bust'])) {
-                $bust = $request_array['bust'];
-            }
-
-            if (isset($request_array['arm'])) {
-                $arm = $request_array['arm'];
-            }
-
-            if (isset($request_array['neck'])) {
-                $neck = $request_array['neck'];
-            }
-
-            if (isset($request_array['inseam'])) {
-                $inseam = $request_array['inseam'];
-            }
-
-            if (isset($request_array['back'])) {
-                $back = $request_array['back'];
-            }
-
-            if (isset($request_array['shoulder_height'])) {
-                $shoulder_height = $request_array['shoulder_height'];
-            }
-
-            if (isset($request_array['outseam'])) {
-                $outseam = $request_array['outseam'];
-            }
-
-            if (isset($request_array['chest'])) {
-                $chest = $request_array['chest'];
-            }
-
-            if (isset($request_array['sleeve'])) {
-                $sleeve = $request_array['sleeve'];
-            }
+            $user = $this->get('user.helper.user');
+            $userinfo = $user->findByEmail($email);
+            $id = $userinfo['id'];
+           
+                $em = $this->getDoctrine()->getManager();
+                $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+                $measurement = $entity->getMeasurement();
+                if ($measurement) {
 
 
 
-            $entity = new Measurement();
+                    $measurement->setUpdatedAt(new \DateTime('now'));
 
+                    if ($request_array['weight']) {
+                        $measurement->setWeight($request_array['weight']);
+                    }
+                    if ($request_array['height']) {
+                        $measurement->setHeight($request_array['height']);
+                    }
+                    if ($request_array['waist']) {
+                        $measurement->setWaist($request_array['waist']);
+                    }
+                    if ($request_array['hip']) {
+                        $measurement->setHip($request_array['hip']);
+                    }
+                    if ($request_array['bust']) {
+                        $measurement->setBust($request_array['bust']);
+                    }
+                    if ($request_array['neck']) {
+                        $measurement->setNeck($request_array['neck']);
+                    }
+                    if ($request_array['inseam']) {
+                        $measurement->setInseam($request_array['inseam']);
+                    }
+                    if ($request_array['chest']) {
+                        $measurement->setChest($request_array['chest']);
+                    }
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($measurement);
+                    $em->flush();
 
-            $entity->setUpdatedAt(new \DateTime('now'));
-
-            if (isset($request_array['weight'])) {
-                $entity->setWeight($weight);
-            }
-            if (isset($request_array['height'])) {
-                $entity->setHeight($height);
-            }
-            if (isset($request_array['waist'])) {
-                $entity->setWaist($waist);
-            }
-            if (isset($request_array['hip'])) {
-                $entity->setHip($hip);
-            }
-            if (isset($request_array['bust'])) {
-                $entity->setBust($bust);
-            }
-            if (isset($request_array['arm'])) {
-                $entity->setArm($arm);
-            }
-            if (isset($request_array['neck'])) {
-                $entity->setNeck($neck);
-            }
-            if (isset($request_array['inseam'])) {
-                $entity->setInseam($inseam);
-            }
-            if (isset($request_array['back'])) {
-                $entity->setBack($back);
-            }
-            if (isset($request_array['shoulder_height'])) {
-                $entity->setShoulderHeight($shoulder_height);
-            }
-            if (isset($request_array['outseam'])) {
-                $entity->setOutseam($outseam);
-            }
-            if (isset($request_array['chest'])) {
-                $entity->setChest($chest);
-            }
-            if (isset($request_array['sleeve'])) {
-                $entity->setSleeve($sleeve);
-            }
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return new Response(json_encode(array('msg' => 'success')));
+                    return new Response(json_encode(array('Message' => 'success')));
+                } else {
+                    return new Response(json_encode(array('Message' => 'Sorry We can not find measurment')));
+                }
+           
+        } else {
+            return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }
 
