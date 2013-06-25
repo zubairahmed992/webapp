@@ -7,31 +7,35 @@
 
 {% block body %}
 
-
-    
 <table width="100%" border="0" class="dashboard_tbl">
-    <tr>
-        <td colspan="2" class="hd_bdr"><h4 style="float:left;">Products</h4></td>
-        </tr>        
         <tr>
-            <td colspan="2" valign="top" class="mainhd">Total Products:{{totalproducts}}</td>
-        </tr>        
+       	    <td class="hd_bdr"><h4 style="float:left;">Products</h4></td>
+        </tr>
         <tr>
+            <td class="mainhd">Total Products:{{totalproducts}}</td>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                <table width="100%">
+                    <td width="49%">
+                        <table width="100%">
+                            <tr>
             <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Brand</h4></td>
-        </tr>        
+        </tr>
+        
+        
         <tr>
             <td valign="top" class="mainhd">
         
-                <table width="50%">
+                <table width="100%">
                     <tr>
                         <td>Brand Name</td>
-                        <td>Quantity</td>
-                        <td>Percentage</td>
+                        <td>Qty</td>
+                        <td>%</td>
                         
                     </tr>
-               
-
-
 
 {%for p in brandproduct%}
                     {%set percent=100*p.brand/totalproducts%}
@@ -41,16 +45,14 @@
                         <td>{{p.name}}</td>
                         <td>{{p.brand}}</td>
                         <td>{{percent|number_format}}%</td>
-                    </tr>
-                
+                    </tr>              
                     
                     
         {%endfor%}  
                      </table>
                     
                 </td>
-                <td valign="top" align="center">
-                    <canvas id="piecanvas"  height="300" width="300"></canvas>
+            <td align="center"> <canvas id="piecanvas"  height="300" width="300"></canvas>
                     <script>
                         var pieData = [
                             {%for p in brandproduct%}
@@ -68,22 +70,33 @@
                         });
 
                         </script></td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Clothing Type</h4></td>
-                </tr>        
-                <tr>
+        
+        </tr>
+                        
+                        </table>
+                    
+                    </td>
+                    
+                    <td></td>
+                    
+                    <td width="49%" align="right">
+                        
+                        
+                        <table width="100%">
+                            <tr>
+            <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Clothing Type</h4></td>
+        </tr>
+        <tr>
                     <td valign="top" class="mainhd">
                         
                         
                                                 
-                     <table width="50%">
+                     <table width="100%">
                          
                             <tr>
                                 <td>Type</td>
-                                <td>Quantity</td>
-                                <td>Percentage</td>
+                                <td>Qty</td>
+                                <td>%</td>
 
                             </tr>
                             
@@ -144,12 +157,25 @@
 
                             </script></td>
                     </tr>
-
-
-                <tr>
+        
+                        </table>
+                    
+                    
+                    
+                    
+                    
+                    </td>
+                
+                </table>
+            
+            </td>
+        </tr>
+        
+        <tr>
                     <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Users</h4></td>
-                </tr>             
-            <tr>
+                </tr> 
+                
+                <tr>
                <td valign="top" colspan="2" class="mainhd">
                    
                    
@@ -160,22 +186,15 @@
                     </td>
             </tr>
             
-                <tr>
+            <tr>
                     <td colspan="2" valign="top"><h4 style="float:left;">Last Six Month Signups</h4></td>
                 </tr> 
-            
-                    
-
-
-    <tr>
-        <td colspan="2">
         
-       
-        </td>
-    </tr>
-
-
-
-                </table>
+        
+        
+        
+        
+        
+</table>   
 
 {% endblock %}
