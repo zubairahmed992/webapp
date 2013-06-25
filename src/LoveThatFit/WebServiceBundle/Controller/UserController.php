@@ -101,29 +101,7 @@ class UserController extends Controller {
     }
 
 #------------------------------Edit Profile----------------------------------------------------------#    
-    public function editProfileFormAction()
-   {
-$form = $this->createFormBuilder()
-                ->add('email', 'email')
-                ->add('zipcode', 'text')
-                ->add('password', 'repeated', array(
-                    'first_name' => 'password',
-                    'second_name' => 'confirm',
-                    'type' => 'password',
-                    'invalid_message' => 'The password fields must match.',
-                ))
-                ->add('gender', 'choice', array('choices' => $gender,
-                    'multiple' => False,
-                    'expanded' => False,
-                    'required' => false
-                ))
-                ->getForm();
-
-
-        return $this->render('LoveThatFitWebServiceBundle::registrationForm.html.twig', array(
-                    'form' => $form->createView()));
-
-   }
+  
 #------------------------------------------------------------------#
     public function editProfileAction()
 {
@@ -316,10 +294,24 @@ public function userProfileAction()
 #---------------------------------------------------Getting Data-----------------------------#
              $userinfo=array();
    #--------------------User Info-------------------------------#
-             
-            $userinfo['email']=$user->getEmail();
-            $userinfo['gender']=$user->getGender();
-            $userinfo['zipcode']=$user->getZipcode();
+            
+                    $birth_date=$user->getBirthDate();
+                    
+                   $userinfo['id']=$user->getId();
+                   $userinfo['email']=$user->getEmail();
+                   $userinfo['first_name']=$user->getFirstName();
+                   $userinfo['last_name']=$user->getLastName();
+                   $userinfo['zipcode']=$user->getZipcode();
+                   $userinfo['gender']=$user->getGender();
+                  
+                   if(isset($birth_date)){
+                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
+                   
+                   $userinfo['image']=$user->getImage();
+                   $userinfo['avatar']=$user->getAvatar();
+                   $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
+                   $userinfo['path']=$baseurl;
     #-----------------------Measurement Info--------------------#
             $userinfo['weight']=$measurement->getWeight();
             $userinfo['height']=$measurement->getHeight();

@@ -57,10 +57,6 @@ web_service_change_password:
    pattern:  /web_service/change_password
    defaults: { _controller: LoveThatFitWebServiceBundle:User:changePassword}
    
-web_service_edit_profile_form:
-   pattern:  /web_service/edit_profile_form
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:editProfileForm}
-
 web_service_edit_profile:
    pattern:  /web_service/edit_profile
    defaults: { _controller: LoveThatFitWebServiceBundle:User:editProfile}
