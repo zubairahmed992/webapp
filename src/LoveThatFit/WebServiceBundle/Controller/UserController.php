@@ -61,6 +61,7 @@ class UserController extends Controller {
                    $userinfo['last_name']=$last_name;
                    $userinfo['zipcode']=$zipcode;
                    $userinfo['gender']=$gender;
+                  
                    if(isset($birth_date)){
                    $userinfo['birth_date']= $birth_date->format('Y-m-d');
                    }
@@ -70,7 +71,26 @@ class UserController extends Controller {
                    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
                    $userinfo['path']=$baseurl;
                  
-                    return new Response(json_encode($userinfo));
+                   
+                 $em = $this->getDoctrine()->getManager();
+                $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+                $measurement = $entity->getMeasurement();
+               
+                   
+                        $userinfo['weight']=$measurement->getWeight();
+                        $userinfo['height']=$measurement->getHeight();
+                        $userinfo['waist']=$measurement->getWaist();
+                        $userinfo['hip']=$measurement->getHip();
+                     
+                            $userinfo['bust']=$measurement->getBust();
+                      
+                            $userinfo['chest']=$measurement->getChest();
+                        
+                        $userinfo['neck']=$measurement->getNeck();
+                        $userinfo['inseam']=$measurement->getInseam();
+                        
+                   
+                     return new Response(json_encode($userinfo));
                 } else {
                      return new Response(json_encode(array('Message'=>'Invalid Password')));
                 }
