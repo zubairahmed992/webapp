@@ -1,4 +1,9 @@
+Brands:
 Gap: 
-  Female:
-    Regular:
-      
+  image: 'image1'
+J-crew:
+  image: 'image1'
+Anthropologie:
+  image: 'image1'
+Ellie:
+  image: 'image1'
