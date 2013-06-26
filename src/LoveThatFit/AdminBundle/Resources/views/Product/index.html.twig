@@ -28,8 +28,10 @@
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'brand' }}">Brand</a></div>
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
-            <div class="span1 hds"><a href="#_"> </a></div>              
-            <div class="span1 hds"></div>      
+            <div class="span1 hds">Try Count</div>
+            <div class="span1 hds"></div>  
+            <div class="span1 hds"></div>  
+            <div class="span1 hds"></div>  
             
         </div>  
 
@@ -41,22 +43,20 @@
             <div class="span1">{{p.Gender}}</div>
             <div class="span1">{{p.Brand.Name}}</div>
             <div class="span1">{{p.ClothingType.Name}}</div>
+            <div class="span1">{{ p.getTryProductCount }}</div>
             <div class="span1">
-{{ p.getTryProductCount }}
-                {%if(p.displayProductColor)%}
-                  
+                {%if(p.displayProductColor)%}                  
                   <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
-                    {%endif%}
-                   
-           {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}            
+                    {%endif%}  
             </div>
-            <div class="span1">&nbsp;                 
-         <div>
+            <div class="span1"> {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}</div>
+            <div class="span1">           
+        
 
          <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}"><i class="icon-eye-open"></i></a>
          <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
          <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-         </div> 
+        
             </div>
                 
         </div>

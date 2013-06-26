@@ -14,28 +14,22 @@ class LoadClothingTypeData implements FixtureInterface{
      */
     public function load(ObjectManager $manager)
     {
-        /*
-        try {
-        $value =Yaml::parse(@file_get_contents("../fixtures/clothingtype.yml"));
-        if (is_array($value))
-        {
-        foreach($value['clothing_type'] as $key=>$values) {  
+       
+        $fixturesPath = realpath(dirname(__FILE__). '/../fixtures');
+        $fixtures     = Yaml::parse(file_get_contents($fixturesPath. '/clothingtype.yml'));
+        foreach($fixtures['clothing_type'] as $key=>$values) {  
          $entity = new ClothingType();
-         $name = $key;
          $target=$values;         
          $strs = implode(",", $target);   
-         $entity->setName($name);
+         $entity->setName($key);
          $entity->setTarget($strs);
          $entity->setCreatedAt(new \DateTime('now'));
          $entity->setUpdatedAt(new \DateTime('now'));
          $entity->setDisabled(false);         
          $manager->persist($entity);
          $manager->flush();
-        }
-        }  
-        }catch (ParseException $e) {
-           printf("Unable to parse the YAML string: %s", $e->getMessage());
-    }*/
+        }        
+       
     }
     
     /**
@@ -43,7 +37,7 @@ class LoadClothingTypeData implements FixtureInterface{
      */
     public function getOrder()
     {
-        return 2; // the order in which fixtures will be loaded
+        return 3; // the order in which fixtures will be loaded
     }
     
 }
