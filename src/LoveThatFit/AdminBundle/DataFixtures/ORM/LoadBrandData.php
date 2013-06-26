@@ -20,9 +20,11 @@ class LoadBrandData implements FixtureInterface{
         $fixtures     = Yaml::parse(file_get_contents($fixturesPath. '/brand.yml'));
         
         foreach ($fixtures['brands'] as $key => $value) {
+        $image=$value;         
+        $imagename = implode(",", $image);  
         $brand = new Brand();
         $brand->setName(ucwords($key));
-        $brand->setImage('image1');
+        $brand->setImage($imagename);
         $brand->setCreatedAt(new \DateTime('now'));
         $brand->setUpdatedAt(new \DateTime('now'));
         $brand->setDisabled(false);
