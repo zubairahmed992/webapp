@@ -22,11 +22,11 @@ class BrandController extends Controller {
 //------------------------------------------------------------------------------------------
 
     public function showAction($id) {
-        
+
         $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
         $entity = $specs['entity'];
-        
-        if ($specs['success']==false) {
+
+        if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
         return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
@@ -38,7 +38,7 @@ class BrandController extends Controller {
     public function newAction() {
 
         $entity = $this->get('admin.helper.brand')->createNew();
-        $form = $this->createForm(new BrandType(), $entity, array('validation_groups'=>'brand_create'));
+        $form = $this->createForm(new BrandType('add'), $entity);
 
         return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
                     'form' => $form->createView()));
@@ -48,37 +48,39 @@ class BrandController extends Controller {
     public function createAction(Request $request) {
 
         $entity = $this->get('admin.helper.brand')->createNew();
-        $form = $this->createForm(new BrandType(), $entity, array('validation_groups'=>'brand_create'));
+        $form = $this->createForm(new BrandType('add'), $entity);
         $form->bind($request);
-        
+
         if ($form->isValid()) {
-            
+
             $message_array = $this->get('admin.helper.brand')->save($entity);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-            
-            if($message_array['success']){
+
+            if ($message_array['success']) {
                 return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
             }
         } else {
             $this->get('session')->setFlash('warning', 'The Brand can not be Created!');
         }
-            return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
+        
+        return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                 ));
-        }
+    }
 
 //------------------------------------------------------------------------------------------
     public function editAction($id) {
 
         $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
         $entity = $specs['entity'];
-        
-        if ($specs['success']==false) {
+
+        if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
-        $form = $this->getEditForm($entity);
-        
+
+        $form = $this->createForm(new BrandType('edit'), $entity);
+
         $deleteForm = $this->createForm(new DeleteType(), $entity);
         return $this->render('LoveThatFitAdminBundle:Brand:edit.html.twig', array(
                     'form' => $form->createView(),
@@ -90,28 +92,28 @@ class BrandController extends Controller {
 
     public function updateAction(Request $request, $id) {
 
-        $entity = $this->get('admin.helper.brand')->find($id);
+        $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
+        $entity = $specs['entity'];
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Brand.');
+        if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+            return $this->redirect($this->generateUrl('admin_brands'));
         }
-
-        $form = $this->getEditForm($entity);
-        $form->bind($request);
         
+        $form = $this->createForm(new BrandType('edit'), $entity);
+        $form->bind($request);
+
         if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.brand')->update($entity);
-                        
+
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-            
-            if($message_array['success']==true){
+
+            if ($message_array['success'] == true) {
                 return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
             }
-            
         } else {
             $this->get('session')->setFlash('warning', 'Unable to update Brand!');
-            
         }
         $deleteForm = $this->createForm(new DeleteType(), $entity);
         return $this->render('LoveThatFitAdminBundle:Brand:edit.html.twig', array(
@@ -124,31 +126,16 @@ class BrandController extends Controller {
 
     public function deleteAction($id) {
         try {
-            
+
             $message_array = $this->get('admin.helper.brand')->delete($id);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-            
+
             return $this->redirect($this->generateUrl('admin_brands'));
-            
         } catch (\Doctrine\DBAL\DBALException $e) {
-            
+
             $this->get('session')->setFlash('warning', 'This Brand cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
-
-//------------------------------------------------------------------------------------------    
-    private function getEditForm($entity) {
-       
-        return $this->createFormBuilder($entity, array(
-                    'validation_groups' => array('brand_update')))
-                ->add('name')
-                ->add('file', null, array('required' => false))
-                ->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false,))
-                ->getForm();
-        
-    }
-
-    
 
 }

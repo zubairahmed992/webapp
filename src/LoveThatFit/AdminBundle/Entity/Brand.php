@@ -29,12 +29,12 @@ class Brand {
 
     /**
      * @ORM\Column(type="string", length=255, unique=true, nullable=false)
-     * @Assert\NotBlank(groups={"brand_create", "brand_update"})
+     * @Assert\NotBlank(groups={"add", "edit"}, message = "Please enter Brand name!")
      */
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $image;
 
@@ -50,7 +50,7 @@ class Brand {
 
     /**
      * @Assert\File(maxSize="6000000")
-     * @Assert\NotBlank(groups={"brand_create"})
+     * @Assert\NotBlank(groups={"add"}, message = "must upload brand logo image!") 
      */
     public $file;
 
