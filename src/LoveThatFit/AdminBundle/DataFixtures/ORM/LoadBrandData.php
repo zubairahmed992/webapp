@@ -12,16 +12,16 @@ class LoadBrandData implements FixtureInterface{
 
      /**
      * {@inheritDoc}
-     */
+     */ 
     public function load(ObjectManager $manager)
     {
       
         $fixturesPath = realpath(dirname(__FILE__). '/../fixtures');
         $fixtures     = Yaml::parse(file_get_contents($fixturesPath. '/brand.yml'));
         
-        foreach ($fixtures['Brands'] as $key => $value) {
-              $brand = new Brand();
-        $brand->setName($key);
+        foreach ($fixtures['brands'] as $key => $value) {
+        $brand = new Brand();
+        $brand->setName(ucwords($key));
         $brand->setImage('image1');
         $brand->setCreatedAt(new \DateTime('now'));
         $brand->setUpdatedAt(new \DateTime('now'));

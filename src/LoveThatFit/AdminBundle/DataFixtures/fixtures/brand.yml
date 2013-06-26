@@ -1,9 +1,9 @@
-Brands:
-  Gap: 
-    image: 'image1'
-  J-crew:
-    image: 'image1'
-  Anthropologie:
-    image: 'image1'
-  Ellie:
-    image: 'image1'
+brands:
+  gap: 
+    image: 'gap.png'
+  j.crew:
+    image: 'j-crew.png'
+  anthropologie:
+    image: 'anthropologie.pnh'
+  ellie:
+    image: 'ellie.png'

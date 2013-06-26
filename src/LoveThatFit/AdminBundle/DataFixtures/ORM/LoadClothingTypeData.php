@@ -21,7 +21,7 @@ class LoadClothingTypeData implements FixtureInterface{
          $entity = new ClothingType();
          $target=$values;         
          $strs = implode(",", $target);   
-         $entity->setName($key);
+         $entity->setName(ucwords($key));
          $entity->setTarget($strs);
          $entity->setCreatedAt(new \DateTime('now'));
          $entity->setUpdatedAt(new \DateTime('now'));

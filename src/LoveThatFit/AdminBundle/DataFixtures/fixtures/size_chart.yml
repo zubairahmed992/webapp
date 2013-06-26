@@ -1,7 +1,8 @@
-Gap: 
-  Female:
-    Regular:
-      Top:
+size_chart:
+gap: 
+  female:
+    regular:
+      top:
         00:
           chest: 31.5
           seleve: 30.75
@@ -39,7 +40,7 @@ Gap:
           chest: 46
           seleve: 34.5         
           
-      Bottom:
+      bottom:
         00:
           waist: 23.5
           hip: 34.5
@@ -89,7 +90,7 @@ Gap:
           hip: 48.75
           thigh: 29.5 
           
-      Dress:
+      dress:
         00:
           chest: 32.5
           waist: 24.5
@@ -127,8 +128,8 @@ Gap:
           chest: 45.75
           waist: 37.75
           
-    Petite:
-      Top:
+    petite:
+      top:
         00:
           chest: 31.5
           seleve: 29.5
@@ -166,7 +167,7 @@ Gap:
           chest: 46
           seleve: 33        
           
-      Bottom:
+      bottom:
         00:
           waist: 23.5
           hip: 34.5
@@ -216,7 +217,7 @@ Gap:
           hip: 48.75
           thigh: 29.5 
           
-      Dress:
+      dress:
         00:
           chest: 32.5
           waist: 24.5
@@ -254,8 +255,8 @@ Gap:
           chest: 45.75
           waist: 37.75
           
-      Tall:
-      Top:
+      tall:
+      top:
         00:
           chest: 31.5
           seleve: 32.75
@@ -293,7 +294,7 @@ Gap:
           chest: 46
           seleve: 36.5        
           
-      Bottom:
+      bottom:
         00:
           waist: 23.5
           hip: 34.5
@@ -343,7 +344,7 @@ Gap:
           hip: 48.75
           thigh: 29.5 
           
-      Dress:
+      dress:
         00:
           chest: 32.5
           waist: 24.5
@@ -380,10 +381,10 @@ Gap:
         20:
           chest: 45.75
           waist: 37.75
-J-Crew: 
-  Female:
-    Regular:
-      Top:
+j.crew: 
+  female:
+    regular:
+      top:
         00:
           bust: 31.5
           waist: 24
@@ -415,7 +416,7 @@ J-Crew:
           bust: 42
           waist: 34.5      
           
-      Bottom:
+      bottom:
         00:
           waist: 24
           hip: 34          
@@ -447,7 +448,7 @@ J-Crew:
           waist: 34.5
           hip: 44.5
           
-      Dress:
+      dress:
         00:
           bust: 31.5
           waist: 24
@@ -497,8 +498,8 @@ J-Crew:
           waist: 37.5
           hip: 48.5 
           
-    Petite:
-      Top:
+    petite:
+      top:
         00:
           bust: 30.5
           waist: 23
@@ -524,7 +525,7 @@ J-Crew:
           bust: 38
           waist: 30.5
           
-      Bottom:
+      bottom:
         00:
           waist: 23
           hip: 33         
@@ -549,7 +550,7 @@ J-Crew:
         12:
           waist: 30.5
           hip: 40.5
-      Dress:
+      dress:
         00:
           bust: 30.5
           waist: 23
@@ -586,8 +587,8 @@ J-Crew:
           bust: 39.5
           waist: 32
           hip: 42
-      Tall:
-      Top:
+      tall:
+      top:
         00:
           bust: 31.5
           waist: 24
@@ -619,7 +620,7 @@ J-Crew:
           bust: 42
           waist: 34.5             
           
-      Bottom:
+      bottom:
         00:
           waist: 24
           hip: 34          
@@ -650,7 +651,7 @@ J-Crew:
         16:
           waist: 34.5
           hip: 44.5    
-      Dress:
+      dress:
         00:
           bust: 31.5
           waist: 24
