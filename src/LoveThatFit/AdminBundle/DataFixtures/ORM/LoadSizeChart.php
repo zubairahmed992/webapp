@@ -56,17 +56,39 @@ class LoadSizeChart extends AbstractFixture implements OrderedFixtureInterface, 
                         $entity->setTarget($clothing_type_key);
                         $entity->setTitle($size_key);
                         
-                        $entity->setBack('14.5');
-                        $entity->setBust('20');
-                        $entity->setChest('20');
+                        if (array_key_exists('neck', $size_values)) {
+                            $entity->setNeck($size_values['neck']);
+                        }
+                        if (array_key_exists('back', $size_values)) {
+                            $entity->setBack($size_values['back']);
+                        }
+                          if (array_key_exists('chest', $size_values)) {
+                            $entity->setChest($size_values['chest']);
+                        }
+                        if (array_key_exists('bust', $size_values)) {
+                            $entity->setBust($size_values['bust']);
+                        }
+                        if (array_key_exists('sleeve', $size_values)) {
+                             $entity->setSleeve($size_values['sleeve']);
+                        }
+                        if (array_key_exists('waist', $size_values)) {
+                            $entity->setWaist($size_values['waist']);
+                        }
+                        if (array_key_exists('hip', $size_values)) {
+                            $entity->getHip($size_values['hip']);
+                        }
+                        if (array_key_exists('inseam', $size_values)) {
+                            $entity->setInseam($size_values['inseam']);
+                        }
+                        if (array_key_exists('outseam', $size_values)) {
+                            $entity->setOutseam($size_values['outseam']);
+                        }
+                        if (array_key_exists('thigh', $size_values)) {
+                            $entity->setThigh($size_values['thigh']);
+                        }
+                        
                         $entity->setDisabled(false);
-                        $entity->getHip('20');
-                        $entity->setInseam('20');
-                        $entity->setNeck('20');
-                        $entity->setOutseam('20');
-                        $entity->setSleeve('20');
-                        $entity->setThigh('20');
-                        $entity->setWaist('20');
+                        
                         $manager->persist($entity);
                         $manager->flush();
                         
