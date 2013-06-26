@@ -98,7 +98,18 @@ param:limit, page_number,limit,sort
     }
     
     
-    
-    
-    
+  #-------------Find All Clothing type for Web Service -----#
+    public function findAllBrandWebService() {
+
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT c.id as id ,c.name as name ,'clothing_type' AS type
+                    FROM LoveThatFitAdminBundle:ClothingType c
+                    WHERE c.disabled=0 ");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }

@@ -63,6 +63,30 @@ class ProductController extends Controller {
         $data['path'] = $baseurl;
         return new Response($this->json_view($total_record, $data));
     }
+#----------------------Service for Product --------------------------------------#
+    
+        //------Proudct List By Clothing Type and By Brand  With Gender----------------------///   
+    public function byBrandClothingTypeAction()
+    {
+         $request = $this->getRequest();
+        $brand = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Brand')
+                ->findAllBrandWebService();
+        $clothing_types = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ClothingType')
+                ->findAllBrandWebService(); 
+
+        $total_record = count($brand);
+        
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/';
+        $data = array();
+       
+        $data['data']=array_merge($clothing_types,$brand);
+       
+        $data['brand_image_path'] = $baseurl;
+       return new Response($this->json_view($total_record, $data));  
+        
+    }
 
 #---------------------------Render Json--------------------------------------------------------------------#
 
