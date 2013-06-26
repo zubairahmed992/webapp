@@ -1356,7 +1356,16 @@ ul.prod_wrapper{
 }
 
 .featured_content {
-    /*float: left;    */
+     overflow:hidden;
+  position:absolute;
+  top:0px;
+  width:250px !important;
+}
+
+.fbox{    
+    overflow: hidden;
+    width:260px;
+    position: relative;
 }
 
 .prod_wrapper li{
@@ -1376,7 +1385,7 @@ background:#f3f3f3;
 	color: #a3a50f;
 	font-size: 1.1em;
 	padding-bottom: 10px;
-        width:260px;
+       
         height:19px;
         overflow: hidden;
         font-weight:normal;
@@ -1409,6 +1418,7 @@ background:#f3f3f3;
     margin:0 auto;
     text-align: center;
     float:none;
+    padding-top:32px;
 }
 .slider_but_top,
 .slider_but_btm {
