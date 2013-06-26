@@ -6,5 +6,37 @@ services:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
+  
   pagination:
     limit: 20
+  
+  gender:
+    men: m, 
+    women: f
+  
+  target: 
+    {top, bottom, dress}
+  
+  body_types:
+    {regular, petite, tall}
+  
+  size_titles:
+    {xxs, xs, s, m, l, xl, xxl}
+  
+  size_numbers:
+    {00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+  
+  size_charts:
+    xxs: 00
+    xs: 0
+    xs: 2
+    s: 4
+    s: 6
+    m: 8
+    m: 10
+    l: 12
+    l: 14
+    xl: 18
+    xl: 18
+    xxl: 20
+    

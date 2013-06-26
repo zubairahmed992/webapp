@@ -667,7 +667,7 @@ class User  implements UserInterface, \Serializable{
         );
         
         $this->file = null;             
-        return $temp_name;
+        return $this->getUploadDir().'/'. $temp_name;
         
     }
     

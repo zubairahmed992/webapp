@@ -323,15 +323,19 @@ public function fittingRoomImageEditAction() {
         $form->bind($request);
 
         if ($form->isValid()) {
-
-            $entity->upload();
-
-            $em->persist($entity);
-            $em->flush();
-
+            $image_path="";
+            if($entity->getImage()){
+                $image_path=$entity->uploadTempImage();
+            }else{
+                $entity->upload();
+                $em->persist($entity);
+                $em->flush();
+                $image_path=$entity->getWebPath();
+            }
             $response = new Response(json_encode(array(
                                 'entity' => $entity,
-                                'imageurl' => $entity->getWebPath()
+                                //'imageurl' => $entity->getWebPath()
+                                'imageurl' => $image_path
                             )));
             $response->headers->set('Content-Type', 'application/json');
             return $response;
