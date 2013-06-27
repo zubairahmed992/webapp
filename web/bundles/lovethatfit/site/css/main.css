@@ -1734,9 +1734,9 @@ margin:0 auto;
     border-right: 11px solid #FFFFFF;
     border-top: 13px solid transparent;
     height: 1px;
-    left: -9px;
+    left: -7px;
     position: absolute;
-    top: 11px;
+    top: 8px;
     width: 0;   
 }
 
@@ -2396,7 +2396,7 @@ padding-bottom: 0px;
 
 .step_4 .reg_next_step {
     
-    margin-left: 25px;
+    margin-left: 52px;
        
     
 }
@@ -2596,4 +2596,25 @@ padding-bottom: 0px;
 #adj_popout_bottom {
     margin-top: 246px;
     top: 15px;
+}
+
+.how_it_works h2{
+    font-size: 1.0em;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    text-align:left;
+    font-weight: bold;
+    
+}
+
+.how_it_works ul{
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;    
+}
+
+.how_it_works ul li{
+    list-style: none;
+    font-size: 0.9em;
+    padding-bottom: 5px;
+      
 }
