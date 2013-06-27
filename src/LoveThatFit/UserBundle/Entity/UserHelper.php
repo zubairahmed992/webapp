@@ -164,5 +164,12 @@ public function findByEmail($email)
     private function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
     }
+    
+    
+    
+    //-------------------------------------------------------
+    public function findOneByName($name) {
+        return $this->repo->findOneByName($name);
+    }
 
 }

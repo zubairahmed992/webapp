@@ -15,16 +15,16 @@ constants:
     women: f
   
   target: 
-    {top, bottom, dress}
+     ({top, bottom, dress})
   
   body_types:
-    {regular, petite, tall}
+     ({regular, petite, tall})
   
   size_titles:
-    {xxs, xs, s, m, l, xl, xxl}
+     ({xxs, xs, s, m, l, xl, xxl})
   
   size_numbers:
-    {00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+     ({00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20})
   
   size_charts:
     xxs: 00

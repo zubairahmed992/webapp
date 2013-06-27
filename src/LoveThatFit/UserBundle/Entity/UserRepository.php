@@ -253,7 +253,20 @@ class UserRepository extends EntityRepository
             return null;
         }
   }
-    
+  
+  public function findOneByName($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT us FROM LoveThatFitUserBundle:User us    
+                                WHERE us.firstName = :firstName")
+                        ->setParameters(array('firstName' => $name));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+  
+  
     
 }
 

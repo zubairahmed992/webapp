@@ -1,28 +1,30 @@
 users:
-  gap_small_women_four_six:
-    first_name: small women
+  gap_small_women_four:
+    first_name: small women four
     last_name:  gap four
     email: test@gmail.com
     password: 123456
     zipcode: 123456
     gender: female
-    image: test.png 
+    image: 'test.png'
     weight: 120
     height: 180
-    waist: 26.5 
+    waist: 26.5
     hip: 37.5
     bust: 34.5
     chest: 34.5    
     back: 15.5
     shoulder_height: 15.5
     sleeve: 31.5
-    first_name: small women
+  
+  gap_small_women_six:
+    first_name: small women six
     last_name:  gap six
     email: test1@gmail.com
     password: 123456
     zipcode: 123456
     gender: female
-    image: test.png 
+    image: 'test.png'
     weight: 120
     height: 180
     waist: 26.5 
@@ -32,22 +34,25 @@ users:
     back: 15.5
     shoulder_height: 15.5
     sleeve: 31.5
-  gap_medium_women_eight_ten:
-    first_name: medium women
+    
+  gap_medium_women_eight:
+    first_name: medium women eight
     last_name:  gap eight
     email: test2@gmail.com
     password: 123456
     zipcode: 123456
     gender: female
-    image: test.png 
+    image: 'test.png'
     waist: 28.5   
     hip: 39.5
     bust: 36.5
     chest: 36.5    
     back: 16.5
     shoulder_height: 16.5    
-    sleeve: 32.5    
-    first_name: medium women
+    sleeve: 32.5
+    
+  gap_medium_women_ten:
+    first_name: medium women ten
     last_name:  gap ten
     email: test3@gmail.com
     password: 123456
@@ -61,28 +66,31 @@ users:
     back: 17
     shoulder_height: 17    
     sleeve: 33
-  gap_large_women_tweleve_fourteen:
-    first_name: large women
+    
+  gap_large_women_tweleve:
+    first_name: large women tweleve
     last_name:  gap tweleve
     email: test4@gmail.com
     password: 123456
     zipcode: 123456
     gender: female
-    image: test.png 
+    image: 'test.png'
     waist: 30.75  
     hip: 41.75
     bust: 39
     chest: 39
     back: 18
     shoulder_height: 18
-    sleeve: 33.25  
-    first_name: large women
+    sleeve: 33.25
+    
+  gap_large_women_fourteen:
+    first_name: large women fourteen
     last_name:  gap fourten
     email: test5@gmail.com
-    password: 123456
+    password: 123456 
     zipcode: 123456
     gender: female
-    image: test.png 
+    image: 'test.png'
     waist: 32  
     hip: 43
     bust: 40.5
