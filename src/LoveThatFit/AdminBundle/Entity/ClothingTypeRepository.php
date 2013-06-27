@@ -104,7 +104,7 @@ param:limit, page_number,limit,sort
         $query = $this->getEntityManager()
                 ->createQuery("SELECT c.id as id ,c.name as name ,'clothing_type' AS type
                     FROM LoveThatFitAdminBundle:ClothingType c
-                    WHERE c.disabled=0 ");
+                    WHERE c.disabled=0 ORDER BY name asc ");
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

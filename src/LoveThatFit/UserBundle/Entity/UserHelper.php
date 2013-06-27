@@ -131,10 +131,6 @@ public function findByEmail($email)
         $password = $request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
-        $email='a1R22es23112i1adent@gmail.com';
-        $password='abcdef';
-        $gender='M';
-        $zipcode='123';
        if ($this->isDuplicateEmail(Null, $email)) {
           return false;
          }
