@@ -924,13 +924,11 @@ input[type=email]{
 .play_area {
 	width:364px;
 	height:505px;
-	overflow:hidden;
+	/*overflow:hidden;*/
 	position:relative;
         float:right;
-        margin: 50px 140px 0px 0px;
-       
-        background:#fff;
-        
+        margin: 50px 140px 0px 0px;       
+        background:#fff;        
         border:1px dotted #ccc;
         
         
@@ -1383,9 +1381,8 @@ background:#f3f3f3;
 
 .prod_wrapper h3{
 	color: #a3a50f;
-	font-size: 1.1em;
-	padding-bottom: 10px;
-       
+	font-size: 1.0em;
+	padding-bottom: 10px;       
         height:19px;
         overflow: hidden;
         font-weight:normal;
@@ -1698,8 +1695,8 @@ margin:0 auto;
 
 #fitting_alerts{
     background: none repeat scroll 0 0 #FFFFFF;
-    border-radius: 10px 10px 10px 10px;
-    box-shadow: -2px 1px 9px -1px #333333;
+    border-radius: 20px 15px 15px 20px;
+    box-shadow: -5px 1px 20px 2px #CCCCCC;
     color: #484748;
     font-family: arial;
     font-size: 0.8em;
@@ -1725,21 +1722,22 @@ margin:0 auto;
 }
 
 #fitting_alerts h3{ 
- font-size: 1.0em; 
+ font-size: 1.25em; 
  margin-top:15px;
- margin-bottom: 3px; 
+ margin-bottom: 3px;
+ color: #C4C934;
 }
 
 
 .arrow_img_alerts {
     border-bottom: 13px solid transparent;
-    border-right: 13px solid #FFFFFF;
+    border-right: 11px solid #FFFFFF;
     border-top: 13px solid transparent;
-    height: 0;
-    left: -13px;
+    height: 1px;
+    left: -7px;
     position: absolute;
     top: 8px;
-    width: 0;
+    width: 0;   
 }
 
 #fitting_tab{
@@ -1857,7 +1855,7 @@ margin:0 auto;
 #bottom_adj_marks {
     background: url(../images/belt.png) center 0 no-repeat;
     margin:auto;
-    width:140px;
+    width:100%;
     height:32px;
     position: relative;
 }
