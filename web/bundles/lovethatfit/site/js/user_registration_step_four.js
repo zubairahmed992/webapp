@@ -16,15 +16,15 @@ user_back = user_back * 8 / 4 * 3;
   
   $("#user_body_marks").css({height: user_height, width: user_back + 194 - hands_inside});
   $("#top_mid_body").css({width: user_back});
-  $("#adj_top_hldr").css({width: user_back + 194 - hands_inside, marginTop: user_height / 7.27 - 10, height: $("#top_adj_marks").height() + 30});
-  $("#top_adj_marks").css({width: user_back + 194 - hands_inside, top:10});
+  $("#adj_top_hldr").css({width: user_back + 194 - hands_inside, height: $("#top_adj_marks").height() + 30});
+  $("#top_adj_marks").css({width: user_back + 194 - hands_inside, top: user_height / 7.27 - 10});
 
   $("#right_hand").css({height:user_height / 2.2});
   $("#left_hand").css({height:user_height / 2.2});
   
     
-  $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 15, height: $("#bottom_adj_marks").height() + 30});
-  //$("#bottom_adj_marks").css({top: 15});
+  $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 40, height: $("#bottom_adj_marks").height() + 80});
+  $("#bottom_adj_marks").css({top: 15});
   
 }
  
@@ -145,13 +145,13 @@ function call_settings(responseText, statusText, xhr, $form){
     
     
     //--Gragable Top--//
-    $("#top_adj_marks").draggable({handle: "#top_moveable", axis: "y", containment: "parent",
+    $("#top_adj_marks").draggable({handle: "#top_moveable", axis: "y", containment: "#adj_top_hldr", scroll: false,
     create: function() {
-        var prod_top_pos = $("#top_adj_marks").css("top");
+        prod_top_pos = $("#top_adj_marks").css("top");
         $("#measurement_shoulder_height").attr('value', prod_top_pos);
     },
     start: function() {
-        //$("#dummy_mark").addClass("put_me_top");
+        $("#dummy_mark").addClass("put_me_top");
     },
     drag: function() {
         prod_top_pos = $("#top_adj_marks").css("top");
