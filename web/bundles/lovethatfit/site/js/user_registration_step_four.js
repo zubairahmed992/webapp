@@ -149,6 +149,7 @@ function call_settings(responseText, statusText, xhr, $form){
     create: function() {
         prod_top_pos = $("#top_adj_marks").css("top");
         $("#measurement_shoulder_height").attr('value', prod_top_pos);
+        $("#adj_popout_top").css("top", prod_top_pos);
     },
     start: function() {
         $("#dummy_mark").addClass("put_me_top");
@@ -156,10 +157,12 @@ function call_settings(responseText, statusText, xhr, $form){
     drag: function() {
         prod_top_pos = $("#top_adj_marks").css("top");
         $("#measurement_shoulder_height").attr('value', prod_top_pos);
+        $("#adj_popout_top").css("top", prod_top_pos);
     },
     stop: function() {
         prod_top_pos = $("#top_adj_marks").css("top");
         $("#measurement_shoulder_height").attr('value', prod_top_pos);
+        $("#adj_popout_top").css("top", prod_top_pos);
     }
     });
     
@@ -168,6 +171,7 @@ function call_settings(responseText, statusText, xhr, $form){
     create: function() {
        prod_bottom_pos = $("#bottom_adj_marks").css("top");
        $("#measurement_waist_height").attr('value', prod_bottom_pos);
+       $("#adj_popout_bottom").css("top", prod_bottom_pos);
     },
     start: function() {
         //$("#dummy_mark").addClass("put_me_top");
@@ -175,10 +179,12 @@ function call_settings(responseText, statusText, xhr, $form){
     drag: function() {
        prod_bottom_pos = $("#bottom_adj_marks").css("top");
        $("#measurement_waist_height").attr('value', prod_bottom_pos);
+       $("#adj_popout_bottom").css("top", prod_bottom_pos);
     },
     stop: function() {
        prod_bottom_pos = $("#bottom_adj_marks").css("top");
        $("#measurement_waist_height").attr('value', prod_bottom_pos);
+       $("#adj_popout_bottom").css("top", prod_bottom_pos);
     }
     });
     

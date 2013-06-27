@@ -285,7 +285,7 @@ ul.row li {
 	float:right;
 }
 .disp_blk {
-	display:block;
+	display:block !important;
 }
 .disp_inline {
 	display:inline;
@@ -924,7 +924,7 @@ input[type=email]{
 .play_area {
 	width:364px;
 	height:505px;
-	/*overflow:hidden;*/
+	overflow: hidden;
 	position:relative;
         float:right;
         margin: 50px 140px 0px 0px;       
@@ -1734,9 +1734,9 @@ margin:0 auto;
     border-right: 11px solid #FFFFFF;
     border-top: 13px solid transparent;
     height: 1px;
-    left: -7px;
+    left: -9px;
     position: absolute;
-    top: 8px;
+    top: 11px;
     width: 0;   
 }
 
@@ -1864,7 +1864,7 @@ margin:0 auto;
     width:100%;
     height:6px;
     cursor:row-resize;
-    top:2px;
+    top:12px;
 }
 
 #lages_marks {
@@ -2564,4 +2564,36 @@ padding-bottom: 0px;
     
     width:190px;
     margin:0 auto;
+}
+
+
+
+/******* 27 / 06 / 2013 ********/
+
+#adj_top_hldr {
+    height:70px;
+}
+
+.adj_popout_msg {
+    position: absolute;
+    width:140px;
+    
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 20px 15px 15px 20px;
+    box-shadow: -5px 1px 20px 2px #CCCCCC;
+    color: #484748;
+    font-family: arial;
+    font-size: 12px;
+    right: 32px;
+    padding: 10px;
+    z-index: 5000;
+    display: none;
+}
+#adj_popout_top {
+    margin-top: 102px;
+    top: 47px;
+}
+#adj_popout_bottom {
+    margin-top: 246px;
+    top: 15px;
 }

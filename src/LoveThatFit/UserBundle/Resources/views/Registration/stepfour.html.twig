@@ -13,6 +13,7 @@
             </form>
 </div>
 
+
 <section class="reg_blk">
     <!--<div class="reg_steps">
         <ul>
@@ -68,6 +69,17 @@
                  </div>
                 <!--/.step_4--></div>
             <!--/.action_cnt--></div>
+    
+    
+    <div class="how_it_w_pts">
+        <h3>How It Works</h3>
+        <ul>
+            <li><strong>Step 1</strong> - Upload full body, front facing photo. Feet shoulder width apart & arms relaxed by sides.</li>
+            <li><strong>Step 2</strong> - Adjust height by zooming in & out so feet are standing on bottom line and head is slightly touching top line.</li>
+            <li><strong>Step 3</strong> - Adjust sliders for should height and waist height.</li>
+            <li><strong>Step 4</strong> - Save photo and continue.</li>
+        </ul>
+    </div>
         <!--/.action_blk--></section>
 {% endblock %}
 
@@ -75,7 +87,17 @@
 {% block reg_fitting_room %}
         <section>
     
-                        <div class="play_area_hldr">
+                    <div class="play_area_hldr">
+                            
+                        <div id="adj_popout_top" class="adj_popout_msg">
+                            <div class="arrow_img_alerts"></div>
+                            <span>Align with the top of your shoulder & neck</span>
+                        <!--/.adj_popout_msg--></div>
+                        
+                        <div id="adj_popout_bottom" class="adj_popout_msg">
+                            <div class="arrow_img_alerts"></div>
+                            <span>Align to where you like your pants to rest</span>
+                        <!--/.adj_popout_msg--></div>
 
                         <div class="tip tt_arrow step_4_tip">
                             <!--- Tootip wrapper Start  !-->
@@ -88,10 +110,7 @@
                         <div class="int_fitting_room"></div>                                
                         <div id="play_area" class="play_area hide">
                             
-                            <div class="adj_popout_msg">
-                                <div class="arrow_img_alerts"></div>
-                                <h5>Align with the top of your shoulder and neck</h5>
-                        <!--/.adj_popout_msg--></div>
+                            
                             
                             <div id="top_layer"></div>
                             <div id="dummy_mark">
