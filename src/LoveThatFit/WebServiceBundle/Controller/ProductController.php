@@ -97,19 +97,28 @@ class ProductController extends Controller {
      $id=$request_array['id'];
      $type=$request_array['type'];
      $gender=$request_array['gender'];
-     
-   $products=Null;
-     if($type=='brand')
-     {
-      $products = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findProductByBrandWebService($id,$gender); 
-     }
-     if ($type == 'clothing_type') {
+    
+    $products=Null;
+     if ($type == "brand") {
+            $products = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:Product')
+                    ->findProductByBrandWebService($id, $gender);
+        }
+        if ($type == "clothing_type") {
             $products = $this->getDoctrine()
                     ->getRepository('LoveThatFitAdminBundle:Product')
                     ->findProductByClothingTypeWebService($id, $gender);
         }
+        if ($type == "hot") {
+            $products = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:Product')
+                    ->findLattestProductWebService($gender);
+        }
+        if ($type == "new") {
+            $products = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:Product')
+                    ->findLattestProductWebService($gender);
+        }    
        $data=array();
    #-------Fetching The Path------------#
      if($products) {

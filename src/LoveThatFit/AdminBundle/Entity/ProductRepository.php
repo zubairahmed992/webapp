@@ -390,81 +390,57 @@ class ProductRepository extends EntityRepository {
     
     
  #--------------------------------Web Service for Product list ------------------------#
-public function findProductByBrandWebService($id,$gender)
-{
-  
-      return $this->getEntityManager()
-        ->createQueryBuilder()
-        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
-        ->from('LoveThatFitAdminBundle:Product', 'p')
-        ->innerJoin('p.product_colors','pc')
-        ->innerJoin('p.clothing_type','ct')
-       ->innerJoin('p.brand','b')
-       ->where('p.gender=:gender')
-       ->andWhere ('b.id=:brand_id')
-       ->groupBy('p.id')     
-       ->setParameters(array('gender' => $gender,'brand_id' =>$id))  
-    
-        ->getQuery()
-        ->getResult();
- 
-      
-      $query = $this->getEntityManager()
-                            ->createQuery("
-      SELECT p.id,p.name,p.description
-      FROM LoveThatFitAdminBundle:Product p 
-      WHERE
-      p.disabled=0 AND
-      p.gender = :gender
-      AND p.brand=:brand_id")->setParameters(array('gender' => $gender, 'brand_id' => $id));
-     try {
-            return $query->getResult();
-         } catch (\Doctrine\ORM\NoResultException $e) {
-                return null;
-            }
-      
-   
- }       
+ public function findProductByBrandWebService($id, $gender) {
+
+        return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->innerJoin('p.brand', 'b')
+                        ->where('p.gender=:gender')
+                        ->andWhere('b.id=:brand_id')
+                        ->groupBy('p.id')
+                        ->setParameters(array('gender' => $gender, 'brand_id' => $id))
+                        ->getQuery()
+                        ->getResult();
+    }
+
 #--------------------------------------------------------------------------------------------#
-public function findProductByClothingTypeWebService($id,$gender)
-{
-    
-    return $this->getEntityManager()
-        ->createQueryBuilder()
-        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
-        ->from('LoveThatFitAdminBundle:Product', 'p')
-        ->innerJoin('p.product_colors','pc')
-        ->innerJoin('p.clothing_type','ct')
-       ->where('p.gender=:gender')
-       ->andWhere ('ct.id=:clothing_type_id')
-       ->groupBy('p.id')     
-       ->setParameters(array('gender' => $gender,'clothing_type_id' =>$id))  
-    
-        ->getQuery()
-        ->getResult();
 
-     $query = $this->getEntityManager()
-                            ->createQuery("
-      SELECT p.id,p.name,p.description,ct.target as target ,pc.image as product_image
-      FROM LoveThatFitAdminBundle:Product p 
-      JOIN p.product_colors pc
-      JOIN  pc.display_product_color
-      JOIN p.clothing_type ct
-     WHERE
-       p.disabled=0 AND
-      p.gender=:gender
-      AND p.clothing_type=:clothing_type_id
-     ")->setParameters(array('gender' => $gender, 'clothing_type_id' => $id));
-                     
-                    
-            try {
-                return $query->getResult();
-            } catch (\Doctrine\ORM\NoResultException $e) {
-                return null;
-            }
- }
+    public function findProductByClothingTypeWebService($id, $gender) {
 
-    
+        return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->where('p.gender=:gender')
+                        ->andWhere('ct.id=:clothing_type_id')
+                        ->groupBy('p.id')
+                        ->setParameters(array('gender' => $gender, 'clothing_type_id' => $id))
+                        ->getQuery()
+                        ->getResult();
+    }
+#---------------------------------------------------------------------------------------------------------#
+    public function findLattestProductWebService($gender) {
+         return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->where('p.gender=:gender')
+                        ->andWhere('p.disabled=0')
+                        ->groupBy('p.id')
+                        ->orderBy('p.created_at','asc')
+                        ->setParameter('gender', $gender)
+                        ->getQuery()
+                        ->getResult();
+         
+    }
 
 #---------------------------------End of Web Service----------------------------------#   
     
