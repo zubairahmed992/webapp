@@ -183,10 +183,14 @@ $(document).ready(function(){
     });
     $("#uploaded_photo").mousedown(function (){
         $("#dummy_mark").addClass("put_me_top");
+        $("#adj_popout_top").addClass("disp_blk");
+        $("#adj_popout_bottom").addClass("disp_blk");
     });
     //$("#uploaded_photo").mouseup(function (){$("#dummy_mark").removeClass("put_me_top");});
     $(".play_area").click(function (){
         $("#dummy_mark").removeClass("put_me_top");
+        $("#adj_popout_top").removeClass("disp_blk");
+        $("#adj_popout_bottom").removeClass("disp_blk");
     });
     //$(".play_area").dblclick(function (){$("#dummy_mark").removeClass("put_me_top");});
     //$("#top_layer").click(function (){$("#dummy_mark").removeClass("put_me_top");});

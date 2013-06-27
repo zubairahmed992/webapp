@@ -542,4 +542,8 @@ class Product {
     {
         return count($this->getUserItemTryHistory());
     }
+    public function  getdefalutImagePaths()
+    {
+        return $this->displayProductColor->getImagePaths();
+    }         
 }

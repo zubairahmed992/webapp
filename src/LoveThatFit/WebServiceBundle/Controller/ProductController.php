@@ -68,7 +68,7 @@ class ProductController extends Controller {
         //------Proudct List By Clothing Type and By Brand  With Gender----------------------///   
     public function byBrandClothingTypeAction()
     {
-         $request = $this->getRequest();
+        $request = $this->getRequest();
         $brand = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Brand')
                 ->findAllBrandWebService();
@@ -81,13 +81,71 @@ class ProductController extends Controller {
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/';
         $data = array();
        
-        $data['data']=array_merge($clothing_types,$brand);
+        $data['data']=array_merge($brand,$clothing_types);
        
         $data['brand_image_path'] = $baseurl;
        return new Response($this->json_view($total_record, $data));  
         
     }
-
+ #-----------------------------Productlist Against Brand or Clothing Type -----------------------------------#   
+ public function productlistAction()
+ {
+     $request = $this->getRequest();
+     $handle = fopen('php://input','r');
+     $jsonInput = fgets($handle);
+     $request_array  = json_decode($jsonInput,true);
+     $id=$request_array['id'];
+     $type=$request_array['type'];
+     $gender=$request_array['gender'];
+    
+    $products=Null;
+     if ($type == "brand") {
+            $products = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:Product')
+                    ->findProductByBrandWebService($id, $gender);
+        }
+        if ($type == "clothing_type") {
+            $products = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:Product')
+                    ->findProductByClothingTypeWebService($id, $gender);
+        }
+        if ($type == "hot") {
+            $products = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:Product')
+                    ->findLattestProductWebService($gender);
+        }
+        if ($type == "new") {
+            $products = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:Product')
+                    ->findLattestProductWebService($gender);
+        }    
+       $data=array();
+   #-------Fetching The Path------------#
+     if($products) {
+       /* if($products[0]['product_image'] )
+       { 
+          $product_id=$products[0]['id'];
+          $productimage_path = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                 ->find($product_id);
+        $images_path= $productimage_path->getdefalutImagePaths(); 
+        $data['path']=$images_path;
+       }*/
+   
+      
+      $total_record=count($products);
+      $data['data']=$products;
+      $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
+      $data['path']=$baseurl;
+      return new Response($this->json_view($total_record, $data)); 
+    }
+    else
+    {
+          return new Response(json_encode(array('Message'=>'We can not find Product'))); 
+    }
+     
+ }   
+ 
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
