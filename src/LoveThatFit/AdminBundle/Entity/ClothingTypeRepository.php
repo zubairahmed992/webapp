@@ -111,5 +111,18 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
+    
+    
+    public function findclothingTypeByName($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
+                                WHERE c.name = :name")
+                        ->setParameters(array('name' => ucwords($name)));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
 }

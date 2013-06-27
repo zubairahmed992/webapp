@@ -14,6 +14,7 @@ use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
+
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface {
 
     /**
@@ -36,17 +37,16 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
 
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
-        $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));
-
+        $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));        
         foreach ($fixtures['users'] as $user_key => $user_values) {
             $user = $this->container
                     ->get('user.helper.user')
                     ->findOneByName($user_values['first_name']);
-            $entity = new User();
+            $entity = new User();            
             $entity->setFirstName(ucwords($user_values['first_name']));
             $entity->setLastName(ucwords($user_values['last_name']));
-            $entity->setEmail($user_values['email']);
             $entity->setPassword($user_values['password']);
+            $entity->setEmail($user_values['email']);           
             $entity->setImage($user_values['image']);
             $entity->setGender($user_values['gender']);
             $entity->setCreatedAt(new \DateTime('now'));

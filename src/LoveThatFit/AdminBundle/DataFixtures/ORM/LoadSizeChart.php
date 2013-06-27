@@ -47,8 +47,7 @@ class LoadSizeChart extends AbstractFixture implements OrderedFixtureInterface, 
             foreach ($brand_values as $gender_key => $gender_values) {
                 foreach ($gender_values as $body_type_key => $body_type_values) {
                     foreach ($body_type_values as $clothing_type_key => $clothing_type_values) {
-                        foreach ($clothing_type_values as $size_key => $size_values) {
-                         
+                        foreach ($clothing_type_values as $size_key => $size_values) {                         
                         $entity = new SizeChart();
                         $entity->setBrand($brand);
                         $entity->setGender($gender_key);

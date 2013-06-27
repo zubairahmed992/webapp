@@ -1,7 +1,9 @@
 clothing_type:  
   shirts: 
-      target:	'Top'
+      target:	top
   pants: 
-      target:	'Bottom'
+      target:	bottom
   dress:
-      target: 'Dress'
+      target: dress
+  skirts:
+      target: bottom
