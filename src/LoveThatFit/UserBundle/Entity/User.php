@@ -321,6 +321,10 @@ class User  implements UserInterface, \Serializable{
         return $this->firstName;
     }
 
+     public function getFullName() {
+        return $this->firstName. " " . $this->lastName;
+    }
+    
     /**
      * Set lastName
      *
