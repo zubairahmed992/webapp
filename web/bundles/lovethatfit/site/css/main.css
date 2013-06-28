@@ -2607,14 +2607,13 @@ padding-bottom: 0px;
     
 }
 
-.how_it_works ul{
-    margin:0px 0px 0px 0px;
+.how_it_works ol{
+    margin:0px 0px 0px 20px;
     padding:0px 0px 0px 0px;    
 }
 
-.how_it_works ul li{
-    list-style: none;
-    font-size: 0.9em;
-    padding-bottom: 5px;
+.how_it_works ol li{    
+    font-size: 0.80em;
+    padding-bottom: 10px;
       
 }
