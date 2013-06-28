@@ -3,44 +3,44 @@ products:
    shirts:
      name: Up All Night Tank
      description: Up All Night Tank Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    pants:
      name: 50 Shades of Lime
      description: Eclipse Legging Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    dress:
      name: Sail-Away Tank
      description: Sail-Away Tank Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    skirts:
      name: Perfect Catch Tank 
      description: Perfect Catch Tank  Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
  j.crew:  
    shirts:
      name: Embroidered gauze
      description: Embroidered gauze Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    pants:
      name: Silk foulard
      description: Silk foulard Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    dress:
      name: Hawaiian sunset
      description: Hawaiian sunset Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    skirts:
@@ -53,23 +53,23 @@ products:
    shirts:
      name: Night Fall Legging  ellie
      description: Night Fall Legging  ellie Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    pants:
      name: Solar Flare Pant
      description: Solar Flare Pant Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    dress:
      name: Under The Sea
      description: Under The Sea Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f
      
    skirts:
      name: Heat Wave Running Skirt 
      description: Heat Wave Running Skirt  Test
-     adjustment: 20.5
+     adjustment: 0
      gender: f

@@ -45,7 +45,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                     ->findOneByName($product_key);
                 foreach ($product_values as $clothing_type_key => $clothing_type_values) {                    
                     $clothing_type = $this->container
-                    ->get('admin.helper.ClothingType')
+                    ->get('admin.helper.clothingtype')
                     ->findclothingTypeByName($clothing_type_key);                    
                         $entity = new Product();
                         $entity->setBrand($brand);

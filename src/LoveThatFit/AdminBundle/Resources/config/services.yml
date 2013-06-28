@@ -17,7 +17,7 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\SizeChart
             
-     admin.helper.ClothingType:
+     admin.helper.clothingtype:
         class: LoveThatFit\AdminBundle\Entity\ClothingTypeHelper
         arguments:
             dispatcher: "@event_dispatcher"
