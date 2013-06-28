@@ -13,10 +13,10 @@ class ProductRepository extends EntityRepository {
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  WHERE p.disabled=0 ORDER BY p.' . $sort . ' ASC');
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  WHERE p.disabled=0 ORDER BY p.' . $sort . ' ASC')
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC')
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }
@@ -48,13 +48,15 @@ class ProductRepository extends EntityRepository {
             $query = $this->getEntityManager()
                             ->createQuery('
             SELECT p FROM LoveThatFitAdminBundle:Product p 
-            WHERE p.gender = :gender'
+            WHERE p.gender = :gender
+            AND p.disabled=0'
                             )->setParameter('gender', $gender);
         } else {
             $query = $this->getEntityManager()
                     ->createQuery('
             SELECT p FROM LoveThatFitAdminBundle:Product p 
-            WHERE p.gender = :gender'
+            WHERE p.gender = :gender
+            AND p.disabled=0'
                     )->setParameter('gender', $gender)
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
@@ -75,14 +77,14 @@ class ProductRepository extends EntityRepository {
             $query = $this->getEntityManager()
                             ->createQuery('
             SELECT p FROM LoveThatFitAdminBundle:Product p 
-            WHERE p.gender = :gender 
+            WHERE p.gender = :gender AND p.disabled=0
             ORDER BY p.created_at DESC'
                             )->setParameter('gender', $gender);
         } else {
             $query = $this->getEntityManager()
                     ->createQuery('
             SELECT p FROM LoveThatFitAdminBundle:Product p 
-            WHERE p.gender = :gender 
+            WHERE p.gender = :gender AND p.disabled=0
             ORDER BY p.created_at DESC'
                     )->setParameter('gender', $gender)
                     ->setFirstResult($limit * ($page_number - 1))
@@ -105,7 +107,7 @@ class ProductRepository extends EntityRepository {
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.brand b
             WHERE b.id = :id
-            AND p.gender = :gender'
+            AND p.gender = :gender AND p.disabled=0'
                             )->setParameters(array('id' => $brand_id, 'gender' => $gender));
         } else {
             $query = $this->getEntityManager()
@@ -113,7 +115,7 @@ class ProductRepository extends EntityRepository {
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.brand b
             WHERE b.id = :id
-            AND p.gender = :gender'
+            AND p.gender = :gender AND p.disabled=0'
                     )->setParameters(array('id' => $brand_id, 'gender' => $gender))
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
@@ -137,7 +139,7 @@ class ProductRepository extends EntityRepository {
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.clothing_type ct
             WHERE ct.id = :clothing_type_id
-            AND p.gender = :gender'
+            AND p.gender = :gender AND p.disabled=0'
                             )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender));
         } else {
             $query = $this->getEntityManager()
@@ -145,7 +147,7 @@ class ProductRepository extends EntityRepository {
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.clothing_type ct
             WHERE ct.id = :clothing_type_id
-            AND p.gender = :gender'
+            AND p.gender = :gender AND p.disabled=0'
                     )->setParameters(array('clothing_type_id' => $clothing_type_id, 'gender' => $gender))
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
@@ -165,7 +167,7 @@ class ProductRepository extends EntityRepository {
                         ->createQuery('
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.clothing_type ct
-            WHERE p.gender = :gender'
+            WHERE p.gender = :gender AND p.disabled=0'
                         )->setParameter('gender', $gender);
 
         try {
@@ -180,12 +182,13 @@ class ProductRepository extends EntityRepository {
 
         $query = $this->getEntityManager()
                 ->createQuery("
-      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type , b.name as brand_name,
+      SELECT p.id,p.name,p.adjustment,p.disabled,ct.name as clothing_type , b.name as brand_name,
       b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
       JOIN p.brand b 
       JOIN p.product_colors pc
+      where p.disabled=0
       ");
 
         try {
@@ -198,7 +201,7 @@ class ProductRepository extends EntityRepository {
     //-------------------------------------------------------------------------
     public function productListByBrand($brand_id, $gender) {
         $query = $this->getEntityManager()->createQuery("
-      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type ,p.gender,
+      SELECT p.id,p.name,p.adjustment,p.disabled,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
@@ -206,7 +209,7 @@ class ProductRepository extends EntityRepository {
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
-      AND b.id = :brand_id"
+      AND b.id = :brand_id AND p.disabled=0"
                         )->setParameters(array('gender' => $gender, 'brand_id' => $brand_id));
         try {
             return $query->getResult();
@@ -218,7 +221,7 @@ class ProductRepository extends EntityRepository {
     public function productListByClothingType($clothing_type_id, $gender) {
         $query = $this->getEntityManager()
                         ->createQuery("
-      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type ,p.gender,
+      SELECT p.id,p.name,p.adjustment,p.disabled,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
@@ -226,7 +229,7 @@ class ProductRepository extends EntityRepository {
       JOIN p.product_colors pc
       WHERE
       p.gender = :gender
-      AND ct.id = :clothing_type_id"
+      AND ct.id = :clothing_type_id AND p.disabled=0"
                         )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id));
         try {
             return $query->getResult();
@@ -238,7 +241,7 @@ class ProductRepository extends EntityRepository {
     public function productListByBrandClothingType($brand_id, $clothing_type_id, $gender) {
         $query = $this->getEntityManager()
                         ->createQuery("
-      SELECT p.id,p.name,p.adjustment,ct.name as clothing_type ,p.gender,
+      SELECT p.id,p.name,p.adjustment,p.disabled=0,ct.name as clothing_type ,p.gender,
       b.name as brand_name,b.id as brand_id,ct.id as clothing_type_id, pc.image as product_image
       FROM LoveThatFitAdminBundle:Product p 
       JOIN p.clothing_type ct
@@ -247,7 +250,7 @@ class ProductRepository extends EntityRepository {
       WHERE
       p.gender = :gender
       AND ct.id = :clothing_type_id
-      AND b.id = :brand_id"
+      AND b.id = :brand_id AND p.disabled=0"
                         )->setParameters(array('gender' => $gender, 'clothing_type_id' => $clothing_type_id, 'brand_id' => $brand_id));
 
         try {

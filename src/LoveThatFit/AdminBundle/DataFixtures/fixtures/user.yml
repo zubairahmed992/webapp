@@ -5,7 +5,7 @@ users:
     email: test@gmail.com
     password: 123456
     zipcode: 123456
-    gender: female
+    gender: f
     image: 'test.png'
     weight: 120
     height: 180
@@ -23,7 +23,7 @@ users:
     email: test1@gmail.com
     password: 123456
     zipcode: 123456
-    gender: female
+    gender: f
     image: 'test.png'
     weight: 120
     height: 180
@@ -41,7 +41,7 @@ users:
     email: test2@gmail.com
     password: 123456
     zipcode: 123456
-    gender: female
+    gender: f
     image: 'test.png'
     waist: 28.5   
     hip: 39.5
@@ -57,7 +57,7 @@ users:
     email: test3@gmail.com
     password: 123456
     zipcode: 123456
-    gender: female
+    gender: f
     image: test.png 
     waist: 29.5  
     hip: 40.5
@@ -73,7 +73,7 @@ users:
     email: test4@gmail.com
     password: 123456
     zipcode: 123456
-    gender: female
+    gender: f
     image: 'test.png'
     waist: 30.75  
     hip: 41.75
@@ -89,7 +89,7 @@ users:
     email: test5@gmail.com
     password: 123456 
     zipcode: 123456
-    gender: female
+    gender: f
     image: 'test.png'
     waist: 32  
     hip: 43
