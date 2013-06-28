@@ -38,10 +38,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));        
-        foreach ($fixtures['users'] as $user_key => $user_values) {
-            $user = $this->container
-                    ->get('user.helper.user')
-                    ->findOneByName($user_values['first_name']);
+        foreach ($fixtures['users'] as $user_key => $user_values) {            
             $entity = new User();            
             $entity->setFirstName(ucwords($user_values['first_name']));
             $entity->setLastName(ucwords($user_values['last_name']));
@@ -52,8 +49,14 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->setZipcode($user_values['zipcode']);
+            $manager->persist($entity);
+            $manager->flush();
             $mesurement=new Measurement();
-            $mesurement->setUser($user);
+            $firstName=$user_values['first_name'];
+            $user = $this->container
+                    ->get('user.helper.user')
+                    ->findOneByName(ucwords($firstName));
+            
             if (array_key_exists('weight', $user_values)) {
                             $mesurement->setWeight($user_values['weight']);
                         }
@@ -78,7 +81,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             if (array_key_exists('sleeve', $user_values)) {
                             $mesurement->setSleeve($user_values['sleeve']);
                         } 
-            $manager->persist($entity);
+            $mesurement->setUser($user);            
             $manager->persist($mesurement);
             $manager->flush();
         }

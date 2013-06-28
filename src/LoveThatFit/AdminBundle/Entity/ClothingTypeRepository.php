@@ -113,7 +113,7 @@ param:limit, page_number,limit,sort
     }
     
     
-    public function findclothingTypeByName($name) {
+    public function findOneByName($name) {
         $record = $this->getEntityManager()
                         ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
                                 WHERE c.name = :name")

@@ -13,10 +13,10 @@ class ProductRepository extends EntityRepository {
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC');
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  WHERE p.disabled=0 ORDER BY p.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p ORDER BY p.' . $sort . ' ASC')
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  WHERE p.disabled=0 ORDER BY p.' . $sort . ' ASC')
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }

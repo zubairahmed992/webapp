@@ -38,8 +38,8 @@ class ClothingTypeHelper {
     //---------------------------------------------------------------------   
 
 //-------------------------------------------------------
-    public function findclothingTypeByName($name) {
-        return $this->repo->findclothingTypeByName($name);
+    public function findOneByName($name) {
+        return $this->repo->findOneByName($name);
     }
 
  //-------------------------------------------------------
