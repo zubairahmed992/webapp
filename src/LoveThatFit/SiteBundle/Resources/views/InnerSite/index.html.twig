@@ -298,6 +298,8 @@ var scroll_heighting = 534;
             var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
             //alert(my_curr_prod);
             
+            $(".ui-draggable-dragging").parent().parent().find("a.prod_details_arrow").trigger('click');
+            
             
             $.ajax({
                 url: my_curr_prod,
@@ -374,6 +376,7 @@ var scroll_heighting = 534;
             var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
             //alert(my_ccc);
             
+            $(".ui-draggable-dragging").parent().parent().find("a.prod_details_arrow").trigger('click');
             
             $.ajax({
                 url: my_curr_prod,
