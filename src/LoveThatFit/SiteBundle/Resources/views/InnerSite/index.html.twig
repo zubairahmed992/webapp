@@ -78,7 +78,7 @@ function set_slider_buttons(){
   else {
       $(".slider_but_top").removeClass("disable_me_top").addClass("click_able_top");
   }
-  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 534){
+  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 500){
       $(".slider_but_btm").removeClass("click_able_btm").addClass("disable_me_btm");
       //alert("bottom_disabled now");
   }
@@ -113,7 +113,7 @@ $(document).ready(function(){
               );
 
 });
-var scroll_heighting = 534;
+var scroll_heighting = 506;
     $(".click_able_top").click(function (){
         $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
         
