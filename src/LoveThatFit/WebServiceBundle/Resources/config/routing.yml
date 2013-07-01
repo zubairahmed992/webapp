@@ -32,10 +32,9 @@ web_service_products_by_brand_type:
     pattern:  /web_service/products_by_brand_type/{brand_id}/{clothing_type_id}/{gender}
     defaults: { _controller: LoveThatFitWebServiceBundle:Default:productListByBrandClothingType,_format: json,brand_id:1,clothing_type_id:1,gender:'M'}
   
-
 web_service_product_detail:
-    pattern:  /web_service/products_detail/{product_id}
-    defaults: { _controller: LoveThatFitWebServiceBundle:Default:productDetailList,_format: json,product_id:1}
+    pattern:  /web_service/product_detail
+    defaults: { _controller: LoveThatFitWebServiceBundle:Product:productDetail,_format: json}
 
 web_service_my_closet:
     pattern:  /web_service/my_closet/{user_id}

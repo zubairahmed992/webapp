@@ -72,24 +72,25 @@ class UserController extends Controller {
                    $userinfo['path']=$baseurl;
                  
                    
-                 $em = $this->getDoctrine()->getManager();
+                $em = $this->getDoctrine()->getManager();
                 $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
                 $measurement = $entity->getMeasurement();
                
                    
-                        $userinfo['weight']=$measurement->getWeight();
-                        $userinfo['height']=$measurement->getHeight();
-                        $userinfo['waist']=$measurement->getWaist();
-                        $userinfo['hip']=$measurement->getHip();
-                     
-                            $userinfo['bust']=$measurement->getBust();
-                      
-                            $userinfo['chest']=$measurement->getChest();
-                        
-                        $userinfo['neck']=$measurement->getNeck();
-                        $userinfo['inseam']=$measurement->getInseam();
-                        
-                   
+                $userinfo['weight'] = $measurement->getWeight();
+                $userinfo['height'] = $measurement->getHeight();
+                $userinfo['waist'] = $measurement->getWaist();
+                $userinfo['hip'] = $measurement->getHip();
+
+                $userinfo['bust'] = $measurement->getBust();
+                $userinfo['chest'] = $measurement->getChest();
+                $userinfo['neck'] = $measurement->getNeck();
+                $userinfo['inseam'] = $measurement->getInseam();
+                $userinfo['back'] = $measurement->getBack();
+                   if(!$userinfo['back'])
+                   {
+                       $userinfo['back']=15.5;
+                   }    
                      return new Response(json_encode($userinfo));
                 } else {
                      return new Response(json_encode(array('Message'=>'Invalid Password')));
@@ -324,7 +325,10 @@ public function userProfileAction()
             $userinfo['chest']=$measurement->getChest();
             $userinfo['sleeve']=$measurement->getSleeve();
             $userinfo['neck']=$measurement->getNeck();
-           
+           $userinfo['back'] = $measurement->getBack();
+            if (!$userinfo['back']) {
+                $userinfo['back'] = 15.5;
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($measurement);
             $em->flush();
