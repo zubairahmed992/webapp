@@ -59,7 +59,19 @@ class ProductColorRepository extends EntityRepository
         }
     }
     
-    #-------------------WEb Service for item------------------------------------------#
+    public function findProductByProductTitle($name,$productid) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT pc FROM LoveThatFitAdminBundle:ProductColor pc                                    
+                                WHERE pc.title = :title
+                                AND pc.product=:product")
+                        ->setParameters(array('title' => ucwords($name),'product'=>  $productid));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
      public function getSizeItemImageUrlArray($id) {
         $query = $this->getEntityManager()
                         ->createQuery('
@@ -68,14 +80,11 @@ class ProductColorRepository extends EntityRepository
             JOIN pi.product_size ps
             WHERE pc.id = :id'
                         )->setParameter('id', $id);
-
-        try {
+       try {
             return $query->getResult();
-            
-
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+
     } 
 }
-
