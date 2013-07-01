@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitAdminBundle::email/email_base.html.twig' %}
 {% block email %}
 <tr>
-    <td height="20" colspan="3"><img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/welcome_bar.png') }}" width="600" height="33" alt="WELCOME" title="WELCOME" /></td>
+    <td height="20" colspan="3"><img src="{{app.request.scheme ~ '://' ~ app.request.host ~ asset('bundles/lovethatfit/miscellaneous/emails/images/welcome_bar.png') }}" width="600" height="33" alt="WELCOME" title="WELCOME" /></td>
 </tr>
 <tr>
     <td colspan="3"><table width="570" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -13,7 +13,7 @@
                             <td width="20">&nbsp;</td>
                             <td width="530" align="center"><font face="Arial, Helvetica, sans-serif" size="3" color="#000000">Dear {{entity.email}},<br>Thank you for creating an account.<br><br>
                                 We are excited to here your feedback about your LTF experience.<br><br>
-                                Please fill out this short survey so we can give you a unriveld &amp; superior
+                                Please fill out this short survey so we can give you a unrivaled &amp; superior
                                 shopping experience.<br><br>
                                 Check out What's Hot and update your profile so we can give you the most accurate Fit, Look &amp; Size.
                                 </font></td>
@@ -23,7 +23,7 @@
                             <td colspan="3">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="3" align="center"><a href="http://www.surveymonkey.com/s/Y87V8GZ" target="_blank";><img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/survey_btn.png')}}" width="167" height="41" style="display:block;" border="0" alt="CLICK TO SURVEY" title="CLICK TO SURVEY"></a></td>
+                            <td colspan="3" align="center"><a href="http://www.surveymonkey.com/s/Y87V8GZ" target="_blank";><img src="{{app.request.scheme ~ '://' ~ app.request.host ~  asset('bundles/lovethatfit/miscellaneous/emails/images/survey_btn.png')}}" width="167" height="41" style="display:block;" border="0" alt="CLICK TO SURVEY" title="CLICK TO SURVEY"></a></td>
                         </tr>
                         <tr>
                             <td colspan="3">&nbsp;</td>
@@ -32,17 +32,17 @@
                             <td colspan="3" bgcolor="#cacd61" height="2"></td>
                         </tr>
                         <tr>
-                            <td colspan="3"><img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/shopping_pic.png') }}" width="570" height="263" style="display:block;" alt="Lovethatfit" title="Lovethatfit" /></td>
+                            <td colspan="3"><img src="{{app.request.scheme ~ '://' ~ app.request.host ~ asset('bundles/lovethatfit/miscellaneous/emails/images/shopping_pic.png') }}" width="570" height="263" style="display:block;" alt="Lovethatfit" title="Lovethatfit" /></td>
                         </tr>
                         <tr>
-                            <td colspan="3"><img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/bottom_links.png')}}" width="570" height="64" border="0" usemap="#Map"></td>
+                            <td colspan="3"><img src="{{app.request.scheme ~ '://' ~ app.request.host ~  asset('bundles/lovethatfit/miscellaneous/emails/images/bottom_links.png')}}" width="570" height="64" border="0" usemap="#Map"></td>
                         </tr>
                     </table></td>
             </tr>
         </table></td>
 </tr>
 <tr>
-    <td align="center"><img src="{{ asset('bundles/lovethatfit/miscellaneous/emails/images/bottom_txt2.png')}}" width="600" height="112" alt="Shop online with friends, try clothes on, see how they look &amp; fit, and never return clothes purchased. Ever." title="Shop online with friends, try clothes on, see how they look &amp; fit, and never return clothes purchased. Ever."/></td>
+    <td align="center"><img src="{{app.request.scheme ~ '://' ~ app.request.host ~  asset('bundles/lovethatfit/miscellaneous/emails/images/bottom_txt2.png')}}" width="600" height="112" alt="Shop online with friends, try clothes on, see how they look &amp; fit, and never return clothes purchased. Ever." title="Shop online with friends, try clothes on, see how they look &amp; fit, and never return clothes purchased. Ever."/></td>
 </tr>
 
      {% endblock %}
