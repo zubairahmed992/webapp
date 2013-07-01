@@ -39,7 +39,11 @@
                 <div id="top_dropable" class="hide"></div>
                 <div id="bottom_dropable" class="hide"></div>
                 
-                <div id="user_dummy_img_hldr"><img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}"></div>
+                <div id="user_dummy_img_hldr">
+                {% if app.user.image != null %}
+                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}">
+                {% endif %}
+                </div>
             </div> 
             <div class="play_area_hldr hide">
                 <div id="play_area" class="play_area">
