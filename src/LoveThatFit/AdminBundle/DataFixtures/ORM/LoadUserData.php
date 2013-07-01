@@ -33,22 +33,24 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-
-
-
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));        
         foreach ($fixtures['users'] as $user_key => $user_values) {            
             $entity = new User();            
             $entity->setFirstName(ucwords($user_values['first_name']));
             $entity->setLastName(ucwords($user_values['last_name']));
-            $entity->setPassword($user_values['password']);
+            //$entity->setPassword($user_values['password']);
             $entity->setEmail($user_values['email']);           
             $entity->setImage($user_values['image']);
             $entity->setGender($user_values['gender']);
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->setZipcode($user_values['zipcode']);
+            $entity->setSalt(md5(uniqid()));
+            $encoder = $this->container
+            ->get('security.encoder_factory')
+            ->getEncoder($entity);
+            $entity->setPassword($encoder->encodePassword($user_values['password'], $entity->getSalt()));
             $manager->persist($entity);
             $manager->flush();
             $mesurement=new Measurement();
