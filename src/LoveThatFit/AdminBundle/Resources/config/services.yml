@@ -38,6 +38,13 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ProductColor
             
+     admin.helper.productsizes:
+        class: LoveThatFit\AdminBundle\Entity\ProductSizeHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\ProductSize
+            
             
      mail_helper:
         class:     LoveThatFit\AdminBundle\MailHelper

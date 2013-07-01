@@ -579,6 +579,7 @@ header.reg .strip_rgt {
 }
 .reg_blk .frm_ele {
 	padding-bottom:9px;
+        margin-top:10px;
 }
 .reg_blk .btm_buttons {
 	position:absolute;
@@ -699,6 +700,7 @@ header.reg .strip_rgt {
 #slider_result_photo {
     color:#8ec73e;
     text-shadow: 0 0 1px #444;
+    margin-bottom: 1px;
 }
 .step_3_hgh .site_container {
 	min-height:600px !important;
@@ -755,7 +757,7 @@ a.but_short:visited {
 }*/
 
 #slider_scale_photo {
-    margin-top:8px;
+    margin-top:2px;
 }
 .zoom_in label {
     width:100px;

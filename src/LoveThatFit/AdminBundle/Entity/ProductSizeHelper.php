@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\productcolorEvent;
+use LoveThatFit\AdminBundle\Event\ProductSizeEvent;
 
-class ProductColorHelper {
+class ProductSizeHelper {
 
     protected $dispatcher;
 
@@ -35,13 +35,13 @@ class ProductColorHelper {
         $this->class = $class;
         $this->repo = $em->getRepository($class);
     }
+    
+    public function findProductSizeByProductTitle($name,$productid) {
+        return $this->repo->findProductSizeByProductTitle($name,$productid);
+    }
+
+
+    
    
-    public function findProductColorByTitle($name) {
-        return $this->repo->findProductColorByTitle($name);
-    }
- 
-    public function findProductByProductTitle($name,$product) {
-        return $this->repo->findProductByProductTitle($name,$product);
-    }
 
 }
