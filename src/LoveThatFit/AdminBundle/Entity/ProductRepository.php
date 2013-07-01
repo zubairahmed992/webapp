@@ -447,4 +447,17 @@ class ProductRepository extends EntityRepository {
 
 #---------------------------------End of Web Service----------------------------------#   
     
+    
+    public function findProductByTitle($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p    
+                                WHERE p.name = :name")
+                        ->setParameters(array('name' => ucwords($name)));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 }

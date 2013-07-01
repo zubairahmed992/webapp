@@ -47,6 +47,18 @@ class ProductColorRepository extends EntityRepository
         }
     }
     
+    public function findProductByTitle($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT pc FROM LoveThatFitAdminBundle:ProductColor pc    
+                                WHERE c.title = :title")
+                        ->setParameters(array('title' => ucwords($name)));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 
     
 }

@@ -1,7 +1,7 @@
 users:
   gap_small_women_four:
     first_name: small women four
-    last_name:  gap four
+    last_name:  gap
     email: test@gmail.com
     password: 123456
     zipcode: 123456
@@ -19,7 +19,7 @@ users:
   
   gap_small_women_six:
     first_name: small women six
-    last_name:  gap six
+    last_name:  gap
     email: test1@gmail.com
     password: 123456
     zipcode: 123456
@@ -37,7 +37,7 @@ users:
     
   gap_medium_women_eight:
     first_name: medium women eight
-    last_name:  gap eight
+    last_name:  gap
     email: test2@gmail.com
     password: 123456
     zipcode: 123456
@@ -53,7 +53,7 @@ users:
     
   gap_medium_women_ten:
     first_name: medium women ten
-    last_name:  gap ten
+    last_name:  gap
     email: test3@gmail.com
     password: 123456
     zipcode: 123456
@@ -69,7 +69,7 @@ users:
     
   gap_large_women_tweleve:
     first_name: large women tweleve
-    last_name:  gap tweleve
+    last_name:  gap
     email: test4@gmail.com
     password: 123456
     zipcode: 123456
@@ -85,7 +85,7 @@ users:
     
   gap_large_women_fourteen:
     first_name: large women fourteen
-    last_name:  gap fourten
+    last_name:  gap
     email: test5@gmail.com
     password: 123456 
     zipcode: 123456

@@ -5,24 +5,66 @@ products:
      description: Up All Night Tank Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
+        
      
    pants:
      name: 50 Shades of Lime
      description: Eclipse Legging Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+     
+   
      
    dress:
      name: Sail-Away Tank
      description: Sail-Away Tank Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
    skirts:
      name: Perfect Catch Tank 
      description: Perfect Catch Tank  Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
  j.crew:  
    shirts:
@@ -30,24 +72,64 @@ products:
      description: Embroidered gauze Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
    pants:
      name: Silk foulard
      description: Silk foulard Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
    dress:
      name: Hawaiian sunset
      description: Hawaiian sunset Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
    skirts:
      name: Dress in linen 
      description: Dress in linen  Test
      adjustment: 20.5
-     gender: f 
+     gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
  ellie:  
    shirts:
@@ -55,21 +137,61 @@ products:
      description: Night Fall Legging  ellie Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
    pants:
      name: Solar Flare Pant
      description: Solar Flare Pant Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
    dress:
      name: Under The Sea
      description: Under The Sea Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
      
    skirts:
      name: Heat Wave Running Skirt 
      description: Heat Wave Running Skirt  Test
      adjustment: 0
      gender: f
+     color:
+          red:
+            title: red
+            image: test.png
+            pattern: test1.png
+          blue:
+            title: blue
+            image: test.png
+            pattern: test1.png
+   
