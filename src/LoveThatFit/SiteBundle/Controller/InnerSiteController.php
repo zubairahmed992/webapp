@@ -244,7 +244,7 @@ class InnerSiteController extends Controller {
         $rec_count = count($brandObj->countMyCloset($user_id));
         if ($rec_count >= 25) {
             $this->get('session')->setFlash('warning', 'Please Remove Some Like You can not like more than 25.');
-            //return new response('try');
+            return new response(0);
         } else {
             $user = $this->get('security.context')->getToken()->getUser();
             $product_item = $this->getProductItemById($product_item_id);

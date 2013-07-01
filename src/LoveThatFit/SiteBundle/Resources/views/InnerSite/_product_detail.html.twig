@@ -48,13 +48,13 @@ function loveItem(item_id)
             url: base_url,
           
           success: function (XMLHttpRequest, textStatus, errorThrown) {
-              
-            if(jqXHR.responseText)
+            
+            if(jqXHR.responseText.trim()== "success")
             {
             
              $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
             }   
-             else
+            else
             {
                
             alert('Sorry .. You are overlimit please delete some of your loved products ');
