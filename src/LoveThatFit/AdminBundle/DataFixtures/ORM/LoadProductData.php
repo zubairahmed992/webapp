@@ -11,6 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use LoveThatFit\AdminBundle\Entity\Brand;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -34,9 +35,6 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-
-
-
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product.yml'));        
         foreach ($fixtures['products'] as $product_key => $product_values) {
@@ -58,7 +56,21 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         $entity->setCreatedAt(new \DateTime('now'));
                         $entity->setUpdatedAt(new \DateTime('now'));                        
                         $manager->persist($entity);
-                        $manager->flush();                           
+                        $manager->flush();
+                 foreach($clothing_type_values['color'] as $product_color_key=>$product_color_values)
+                 {   
+                     $product = $this->container
+                    ->get('admin.helper.product')
+                    ->findProductByTitle($clothing_type_values['name']);                    
+                     $productcolor=new ProductColor();
+                     $productcolor->setProduct($product);
+                     $productcolor->setTitle($product_color_values['title']);
+                     $productcolor->setImage($product_color_values['image']);
+                     $productcolor->setPattern($product_color_values['pattern']);                     
+                     $manager->persist($productcolor);
+                     $manager->flush();
+                  
+                 }
         }
     }
     }
