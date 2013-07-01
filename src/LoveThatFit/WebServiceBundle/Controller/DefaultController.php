@@ -101,28 +101,7 @@ class DefaultController extends Controller {
     }
     
   
-    //------Proudct List By Product Detail----------------------///   
-    public function productDetailListAction(Request $request,$product_id)
-    {
-       $em = $this->getDoctrine()->getManager();
-       $products = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->productDetail($product_id);
-        
-        $count_rec=count($products); 
-        
-        $data=array();
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
-        $brand = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/brands/';
-        $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/pattern/';
-        $data['data']=$products;
-        $data['product_color_path']=$baseurl;
-        $data['brand_path']=$brand;
-        $data['pattern_path']=$pattern;
-        
-        return new Response($this->json_view($count_rec,$data));
-    }
-    
+   
     //---------My Closet listing--------------------------------------------//
     public function myClostListAction($user_id)
     {

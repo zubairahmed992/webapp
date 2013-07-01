@@ -261,33 +261,6 @@ class ProductRepository extends EntityRepository {
     }
 
 
-    public function productDetail($product_id) {
-        $query = $this->getEntityManager()
-                        ->createQuery("
-      SELECT p.id,p.name,p.adjustment,p.description,p.gender,
-      ct.name as clothing_type ,ct.target as clothing_target ,
-      b.name as brand_name,b.id as brand_id,b.image as brand_image,pc.title as color_title,
-      pc.pattern as color_pattern, pc.image as color_image,
-      ps.title as size_title,ps.inseam as size_inseam,ps.outseam as size_outseam,ps.hip as size_hip,ps.bust as size_bust,
-      ps.back as size_back,ps.hem as size_hem,
-      ps.length as size_lenght,ps.waist as size_waist,
-      ct.id as clothing_type_id, pc.image as product_image,
-      pi.id as porduct_item_id, ps.id as product_size_id , pc.id as prodcut_color_id
-      FROM LoveThatFitAdminBundle:Product p 
-      JOIN p.clothing_type ct
-      JOIN p.brand b 
-      JOIN p.product_items pi
-      JOIN pi.product_color pc
-      JOIN pi.product_size ps
-      WHERE  p.id=:id")->setParameter('id', $product_id);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-
-        }
-    }
-
 
  public function findProductItemByUser($user_id , $page_number=0 , $limit=0) {
             $query = $this->getEntityManager()
@@ -444,7 +417,61 @@ class ProductRepository extends EntityRepository {
                         ->getResult();
          
     }
+#-----------------------------------Product Detail---------------------------------------#
+     public function productDetail($product_id) {
+        $query = $this->getEntityManager()
+                        ->createQuery("SELECT
+      p.id as product_id,p.name as product_name,p.description as product_description,p.gender as product_gender,
+     ct.name as clothing_type ,ct.target as clothing_target ,
+      b.name as brand_name,b.id as brand_id
+      FROM LoveThatFitAdminBundle:Product p 
+      JOIN p.clothing_type ct
+      JOIN p.brand b 
+      WHERE  
+    p.disabled=0 AND  
+    p.id=:id")->setParameter('id', $product_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
 
+        }
+    }
+    
+#-----------------------------Product Color and Sizes---------------------------#
+    public function productDetailColorPatternSize($product_id)
+    {
+        
+    } 
+  #--------------------------------------------------------------------------------------------#  
+    public function productDetails($product_id) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+      SELECT p.id,p.name,p.adjustment,p.description,p.gender,
+      ct.name as clothing_type ,ct.target as clothing_target ,
+      b.name as brand_name,b.id as brand_id,b.image as brand_image,pc.title as color_title,
+      pc.pattern as color_pattern, pc.image as color_image,
+      ps.title as size_title,ps.inseam as size_inseam,ps.outseam as size_outseam,ps.hip as size_hip,ps.bust as size_bust,
+      ps.back as size_back,ps.hem as size_hem,
+      ps.length as size_lenght,ps.waist as size_waist,
+      ct.id as clothing_type_id, pc.image as product_image,
+      pi.id as porduct_item_id, ps.id as product_size_id , pc.id as prodcut_color_id
+      FROM LoveThatFitAdminBundle:Product p 
+      JOIN p.clothing_type ct
+      JOIN p.brand b 
+      JOIN p.product_items pi
+      JOIN pi.product_color pc
+      JOIN pi.product_size ps
+      WHERE  
+    p.disabled=0 AND  
+    p.id=:id")->setParameter('id', $product_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+
+        }
+    }
 #---------------------------------End of Web Service----------------------------------#   
     
     
