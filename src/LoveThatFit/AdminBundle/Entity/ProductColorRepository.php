@@ -78,3 +78,4 @@ class ProductColorRepository extends EntityRepository
         }
     } 
 }
+
