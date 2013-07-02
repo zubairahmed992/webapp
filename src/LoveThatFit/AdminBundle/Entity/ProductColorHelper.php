@@ -35,13 +35,9 @@ class ProductColorHelper {
         $this->class = $class;
         $this->repo = $em->getRepository($class);
     }
-   
-    public function findProductColorByTitle($name) {
-        return $this->repo->findProductColorByTitle($name);
-    }
- 
-    public function findProductByProductTitle($name,$product) {
-        return $this->repo->findProductByProductTitle($name,$product);
+
+    public function findColorByProductTitle($title) {
+        return $this->repo->findColorByProductTitle($title);
     }
 
 }

@@ -10,6 +10,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -20,7 +21,7 @@ products:
             pattern: test1.png            
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -44,7 +45,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -68,7 +69,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -93,15 +94,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
-              image: test.png
+              image: test.png              
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
               
@@ -115,6 +116,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -125,7 +127,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -149,7 +151,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -173,7 +175,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -198,15 +200,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
-              image: test.png
+              image: test.png              
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
      
@@ -222,6 +224,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -232,7 +235,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -256,7 +259,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -280,7 +283,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -305,15 +308,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
-              image: test.png
+              image: test.png             
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -328,6 +331,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -338,7 +342,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -362,7 +366,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -386,7 +390,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -411,15 +415,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -435,6 +439,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -445,7 +450,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -469,7 +474,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -493,7 +498,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -518,15 +523,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -541,6 +546,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -551,7 +557,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -575,7 +581,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -599,7 +605,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -624,15 +630,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -647,6 +653,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -657,7 +664,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -681,7 +688,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -705,7 +712,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -730,15 +737,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
      
@@ -752,6 +759,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -762,7 +770,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -786,7 +794,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -810,7 +818,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -835,15 +843,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -859,6 +867,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -869,7 +878,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -893,7 +902,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -917,7 +926,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -942,15 +951,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -965,6 +974,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -975,7 +985,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -999,7 +1009,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -1023,7 +1033,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -1048,15 +1058,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -1071,6 +1081,7 @@ products:
             title: red
             image: test.png
             pattern: test1.png
+            default: true
           blue:
             title: blue
             image: test.png
@@ -1081,7 +1092,7 @@ products:
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -1105,7 +1116,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -1129,7 +1140,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -1154,15 +1165,15 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
    
@@ -1176,18 +1187,19 @@ products:
           red:
             title: red
             image: test.png
-            pattern: test1.png
+            pattern: test1.png            
           blue:
             title: blue
             image: test.png
             pattern: test1.png
+            default: true
           green:
             title: green
             image: test.png
             pattern: test1.png
      product_sizes:
          smal:
-          title: small
+          title: S
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -1211,7 +1223,7 @@ products:
           hem: 35
           length: 35
          medium:
-          title: medium
+          title: M
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -1235,7 +1247,7 @@ products:
           hem: 45
           length: 45
          large:
-          title: large
+          title: L
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -1260,14 +1272,14 @@ products:
           length: 65
      product_item:
             small:  
-              size_title: small
+              size_title: S
               product_color_title: red
               image: test.png
             medium:
-              size_title: medium
+              size_title: M
               product_color_title: red
               image: test.png
             large:
-              size_title: large
+              size_title: L
               product_color_title: red
               image: test.png
