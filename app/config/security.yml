@@ -24,6 +24,7 @@ security:
             logout:
                path:   /logout
                target: /login
+               success_handler: authentication_handler
             #http_basic:
                 #realm: "Secured Demo Area"
 
