@@ -97,8 +97,8 @@ class ProductController extends Controller {
      $id=$request_array['id'];
      $type=$request_array['type'];
      $gender=$request_array['gender'];
-    
-    $products=Null;
+   
+     $products=Null;
      if ($type == "brand") {
             $products = $this->getDoctrine()
                     ->getRepository('LoveThatFitAdminBundle:Product')
@@ -112,7 +112,7 @@ class ProductController extends Controller {
         if ($type == "hot") {
             $products = $this->getDoctrine()
                     ->getRepository('LoveThatFitAdminBundle:Product')
-                    ->findLattestProductWebService($gender);
+                    ->findhottestProductWebService($gender);
         }
         if ($type == "new") {
             $products = $this->getDoctrine()
@@ -150,6 +150,11 @@ class ProductController extends Controller {
     public function productDetailAction()
     {
        $request = $this->getRequest();
+       $request = $this->getRequest();
+     $handle = fopen('php://input','r');
+     $jsonInput = fgets($handle);
+     $request_array  = json_decode($jsonInput,true);
+     $product_id=$request_array['id'];
        $em = $this->getDoctrine()->getManager();
        $product_id=2;
        $productdetail=array();
