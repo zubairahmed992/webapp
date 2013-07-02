@@ -417,6 +417,24 @@ class ProductRepository extends EntityRepository {
                         ->getResult();
          
     }
+ #--------------------------------------------------------------------------------------------------------------#
+  public function findhottestProductWebService($gender) {
+         return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.user_item_try_history','uih')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->where('p.gender=:gender')
+                        ->andWhere('p.disabled=0')
+                        ->groupBy('uih.product')
+                        ->orderBy('uih.count','DESC')
+                        ->setParameter('gender', $gender)
+                        ->getQuery()
+                        ->getResult();
+         
+    }   
 #-----------------------------------Product Detail---------------------------------------#
      public function productDetail($product_id) {
         $query = $this->getEntityManager()

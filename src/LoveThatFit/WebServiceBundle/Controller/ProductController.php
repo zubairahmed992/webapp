@@ -97,8 +97,8 @@ class ProductController extends Controller {
      $id=$request_array['id'];
      $type=$request_array['type'];
      $gender=$request_array['gender'];
-    
-    $products=Null;
+   
+     $products=Null;
      if ($type == "brand") {
             $products = $this->getDoctrine()
                     ->getRepository('LoveThatFitAdminBundle:Product')
@@ -112,7 +112,7 @@ class ProductController extends Controller {
         if ($type == "hot") {
             $products = $this->getDoctrine()
                     ->getRepository('LoveThatFitAdminBundle:Product')
-                    ->findLattestProductWebService($gender);
+                    ->findhottestProductWebService($gender);
         }
         if ($type == "new") {
             $products = $this->getDoctrine()
@@ -150,6 +150,11 @@ class ProductController extends Controller {
     public function productDetailAction()
     {
        $request = $this->getRequest();
+       $request = $this->getRequest();
+     $handle = fopen('php://input','r');
+     $jsonInput = fgets($handle);
+     $request_array  = json_decode($jsonInput,true);
+     $product_id=$request_array['id'];
        $em = $this->getDoctrine()->getManager();
        $product_id=2;
        $productdetail=array();
@@ -163,7 +168,7 @@ class ProductController extends Controller {
         $count_rec=count($products); 
         $productdetail['product']=$products;
          $product_color_array=array();
-      
+     
         #-- FOR COLORS AND SIZE----------
         if($count_rec>0)
         { 
@@ -178,7 +183,7 @@ class ProductController extends Controller {
                         ->getRepository('LoveThatFitAdminBundle:ProductColor')
                         ->getSizeItemImageUrlArray($product_color_id);
                 
-           $product_color_array[$product_color_value->getId()]= array(
+           $product_color_array[$product_color_value->gettitle()]= array(
                 'id'=>$product_color_value->getId(),
                 'image'=>$product_color_value->getImage(),
                 'pattern'=>$product_color_value->getPattern(),
@@ -191,20 +196,26 @@ class ProductController extends Controller {
                   
             }  
             $productdetail['product_color']=$product_color_array;
-           
-        }
-        
-        
-
+            $data= array();
+        $data['data']=$productdetail;
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/';
-        $brand = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/fitting_room/';
+        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/fitting_room/';
         $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/products/pattern/';
     
-        $productdetail['product_color_path']=$baseurl;
-        $productdetail['brand_path']=$brand;
-        $productdetail['pattern_path']=$pattern;
+        $data['product_color_path']=$baseurl;
+        $data['fitting_room_path']=$fitting_room;
+        $data['pattern_path']=$pattern;
         
-        return new Response($this->json_view($count_rec,$productdetail));
+        return new Response($this->json_view($count_rec,$data));
+        
+        }
+        else
+        {
+           return json_encode(array('Message' => 'Record Not Found'));  
+            
+        }
+        
+       
     }
     
 
