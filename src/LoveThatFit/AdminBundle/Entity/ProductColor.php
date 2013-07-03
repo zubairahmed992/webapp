@@ -316,7 +316,7 @@ class ProductColor {
     protected function getUploadDir() {
         return 'uploads/ltf/products';
     }
-
+    
 //-------------------------------------------------------
 //-------------------------------------------------------
 

@@ -30,10 +30,9 @@ class UserController extends Controller {
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-        
-         
          $email=$decoded['email'];
          $password=$decoded['password'];
+         
          $em = $this->getDoctrine()->getManager();
          $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
            
@@ -91,6 +90,14 @@ class UserController extends Controller {
                    {
                        $userinfo['back']=15.5;
                    }    
+                   $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+            if (!$userinfo['iphone_shoulder_height']) {
+                $userinfo['iphone_shoulder_height'] = 150;
+            }
+            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+            if (!$userinfo['iphone_outseam']) {
+                $userinfo['iphone_outseam'] = 400;
+            }
                      return new Response(json_encode($userinfo));
                 } else {
                      return new Response(json_encode(array('Message'=>'Invalid Password')));
@@ -265,10 +272,10 @@ public function userProfileAction()
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
 
-          
-                $measurement->setWeight($weight);
-           
-                $measurement->setHeight($height);
+
+            $measurement->setWeight($weight);
+
+            $measurement->setHeight($height);
           
            if ($request_array['waist']) {
                 $measurement->setWaist($waist);
@@ -329,6 +336,7 @@ public function userProfileAction()
             if (!$userinfo['back']) {
                 $userinfo['back'] = 15.5;
             }
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($measurement);
             $em->flush();
@@ -398,6 +406,89 @@ public function userProfileAction()
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }
+#------------------------------------Shoulder Height and Outseam Ration Edit/Update---------------------------#
+ public function shoulder_outseamEditAction() {
+
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $email = $request_array['email'];
+        $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
+        $iphone_outseam = $request_array['iphone_outseam'];
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+
+        if (count($entity) > 0) {
+
+            $user_id = $entity->getId();
+            $birth_date = $entity->getBirthDate();
+            $userinfo = array();
+            $userinfo['id'] = $user_id;
+            $userinfo['email'] = $email;
+            $userinfo['first_name'] = $entity->getFirstName();
+            $userinfo['last_name'] = $entity->getLastName();
+            $userinfo['zipcode'] = $entity->getZipcode();
+            $userinfo['gender'] = $entity->getGender();
+
+            if (isset($birth_date)) {
+                $userinfo['birth_date'] = $birth_date->format('Y-m-d');
+            }
+
+            $userinfo['image'] = $entity->getImage();
+            $userinfo['avatar'] = $entity->getAvatar();
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
+            $userinfo['path'] = $baseurl;
+
+
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+            $measurement = $entity->getMeasurement();
+            if ($measurement) {
+                $measurement->setUpdatedAt(new \DateTime('now'));
+
+                if ($iphone_shoulder_height) {
+                    $measurement->setIphoneShoulderHeight($iphone_shoulder_height);
+                }
+                if ($iphone_outseam) {
+                    $measurement->setIphoneOutseam($iphone_outseam);
+                }
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($measurement);
+                $em->flush();
+            }
+
+
+
+            $userinfo['weight'] = $measurement->getWeight();
+            $userinfo['height'] = $measurement->getHeight();
+            $userinfo['waist'] = $measurement->getWaist();
+            $userinfo['hip'] = $measurement->getHip();
+
+            $userinfo['bust'] = $measurement->getBust();
+            $userinfo['chest'] = $measurement->getChest();
+            $userinfo['neck'] = $measurement->getNeck();
+            $userinfo['inseam'] = $measurement->getInseam();
+            $userinfo['back'] = $measurement->getBack();
+            if (!$userinfo['back']) {
+                $userinfo['back'] = 15.5;
+            }
+            $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+            if (!$userinfo['iphone_shoulder_height']) {
+                $userinfo['iphone_shoulder_height'] = 150;
+            }
+            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+            if (!$userinfo['iphone_outseam']) {
+                $userinfo['iphone_outseam'] = 400;
+            }
+
+            return new Response(json_encode($userinfo));
+        } else {
+            return new Response(json_encode(array('Message' => 'Invalid Email')));
+        }
+    }
 
     #--------------Change Password--------------------------------------------------------#
  public function changePasswordAction() {
@@ -448,6 +539,33 @@ public function userProfileAction()
         }
     }
 
+ #---------------------------------------Image Upload---------------------------------------#   
+ public function imageUploadAction() {
+     
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        
+        print_r($request_array);      
+        
+    $em = $this->getDoctrine()->getManager();
+    $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
+    
+    
+    
+            $image_path="";
+            if($entity->getImage()){
+                $image_path=$entity->uploadTempImage();
+            }else{
+                $entity->upload();
+                $em->persist($entity);
+                $em->flush();
+                $image_path=$entity->getWebPath();
+            }
+            
+    return new response(json_encode($image_path));    
+    }        
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {

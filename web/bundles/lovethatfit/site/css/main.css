@@ -580,6 +580,7 @@ header.reg .strip_rgt {
 .reg_blk .frm_ele {
 	padding-bottom:9px;
         margin-top:10px;
+        text-align: center;
 }
 .reg_blk .btm_buttons {
 	position:absolute;
@@ -922,6 +923,8 @@ input[type=email]{
         border:none;
         background: none;
         float: left;
+       margin-top:3px; 
+       
 }
 .play_area {
 	width:364px;
@@ -2216,7 +2219,7 @@ padding-bottom: 0px;
 }
 
 #user_gender{
-    
+    margin-left: 15px;
     float:left;
 }
 
@@ -2398,7 +2401,8 @@ padding-bottom: 0px;
 
 .step_4 .reg_next_step {
     
-    margin-left: 52px;
+    margin-left: 0px;
+    display: inline-block;
        
     
 }

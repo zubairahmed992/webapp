@@ -269,6 +269,34 @@ class Measurement {
      */
     private $neck=0;
     /**
+     * @var float $iphone_shoulder_height
+     *
+     * @ORM\Column(name="iphone_shoulder_height", type="float", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0  inches  ",
+     *      maxMessage = "You cannot have more than 300 inches "
+     * )
+     */
+    private $iphone_shoulder_height=0;
+    
+    /**
+     * @var float $iphone_outseam
+     *
+     * @ORM\Column(name="iphone_outseam", type="float", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0  inches  ",
+     *      maxMessage = "You cannot have more than 300 inches "
+     * )
+     */
+    private $iphone_outseam=0;
+    
+    /**
      * @var \DateTime $created_at
      */
     private $created_at;
@@ -735,5 +763,74 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getDressFittingSizeChart()
     {
         return $this->dress_fitting_size_chart;
+    }
+
+    /**
+     * Set iphone_neck
+     *
+     * @param float $iphoneNeck
+     * @return Measurement
+     */
+    public function setIphoneNeck($iphoneNeck)
+    {
+        $this->iphone_neck = $iphoneNeck;
+    
+        return $this;
+    }
+
+    /**
+     * Get iphone_neck
+     *
+     * @return float 
+     */
+    public function getIphoneNeck()
+    {
+        return $this->iphone_neck;
+    }
+
+    /**
+     * Set iphone_outseam
+     *
+     * @param float $iphoneOutseam
+     * @return Measurement
+     */
+    public function setIphoneOutseam($iphoneOutseam)
+    {
+        $this->iphone_outseam = $iphoneOutseam;
+    
+        return $this;
+    }
+
+    /**
+     * Get iphone_outseam
+     *
+     * @return float 
+     */
+    public function getIphoneOutseam()
+    {
+        return $this->iphone_outseam;
+    }
+
+    /**
+     * Set iphone_shoulder_height
+     *
+     * @param float $iphoneShoulderHeight
+     * @return Measurement
+     */
+    public function setIphoneShoulderHeight($iphoneShoulderHeight)
+    {
+        $this->iphone_shoulder_height = $iphoneShoulderHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get iphone_shoulder_height
+     *
+     * @return float 
+     */
+    public function getIphoneShoulderHeight()
+    {
+        return $this->iphone_shoulder_height;
     }
 }
