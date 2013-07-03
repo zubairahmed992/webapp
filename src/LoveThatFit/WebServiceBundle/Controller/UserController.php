@@ -34,6 +34,7 @@ class UserController extends Controller {
          
          $email=$decoded['email'];
          $password=$decoded['password'];
+         
          $em = $this->getDoctrine()->getManager();
          $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
            
@@ -91,6 +92,14 @@ class UserController extends Controller {
                    {
                        $userinfo['back']=15.5;
                    }    
+                   $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+            if (!$userinfo['iphone_shoulder_height']) {
+                $userinfo['iphone_shoulder_height'] = 150;
+            }
+            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+            if (!$userinfo['iphone_outseam']) {
+                $userinfo['iphone_outseam'] = 400;
+            }
                      return new Response(json_encode($userinfo));
                 } else {
                      return new Response(json_encode(array('Message'=>'Invalid Password')));
@@ -329,14 +338,7 @@ public function userProfileAction()
             if (!$userinfo['back']) {
                 $userinfo['back'] = 15.5;
             }
-            $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
-            if (!$userinfo['iphone_shoulder_height']) {
-                $userinfo['iphone_shoulder_height'] = 150;
-            }
-            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
-            if (!$userinfo['iphone_outseam']) {
-                $userinfo['iphone_outseam'] = 400;
-            }
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($measurement);
             $em->flush();
