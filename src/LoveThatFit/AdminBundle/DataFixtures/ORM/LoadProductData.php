@@ -63,6 +63,8 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         ->findProductByTitle($clothing_type_values['name']);
                 foreach ($clothing_type_values['product_color'] as $product_color_key => $product_color_values) {
                     $productcolor = new ProductColor();
+                    $productcolor->deleteAllProductImageFiles();
+                    $productcolor->copyAllProductImageFiles();
                     $productcolor->setProduct($product_new);
                     $productcolor->setTitle($product_color_values['title']);
                     $productcolor->setImage($product_color_values['image']);

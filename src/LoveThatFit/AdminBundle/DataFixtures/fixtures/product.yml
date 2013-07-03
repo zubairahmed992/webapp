@@ -8,17 +8,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 51a752aa30d67.png
+            pattern: 51a752aa2d341.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 51a756809dc97.png
+            pattern: 51a758493d05b.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png            
+            image: 51a7587985fd7.png
+            pattern: 51c1bc7323492.png            
      product_sizes:
          smal:
           title: S
@@ -96,15 +96,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png              
+              image: 519e53576904e_fr.png              
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 519e53576904e_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 519e53576904e_fr.png
               
    pants:
      name: 50 Shades of Lime
@@ -114,17 +114,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 519e5cf502c92.png
+            pattern: 51a76cd14c5a6.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 519e57de0f444.png
+            pattern: 51a76c944ce1a.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 519e5865af0cf.png
+            pattern: 51a75879828af.png
      product_sizes:
          smal:
           title: S
@@ -202,15 +202,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png              
+              image: 519e5d5aca671_fr.png              
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 519e5d5aca671_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 519e5d5aca671_fr.png
      
    
      
@@ -222,17 +222,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 51c1bb62b6a94.png
+            pattern: 51a76cd14c5a6.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 51c1bb2881b2a.png
+            pattern: 51c1bb287da36.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 51c1bb85526f5.png
+            pattern: 51c1bb62af307.png
      product_sizes:
          smal:
           title: S
@@ -310,15 +310,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png             
+              image: 519e5dad0b8c7_fr.png             
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 519e5dad0b8c7_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 519e5dad0b8c7_fr.png
    
      
    skirts:
@@ -329,17 +329,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 51a75b5febdb1.png
+            pattern: 51a752aa2d341.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 51a75b7b33f8b.png
+            pattern: 51a7596a56dce.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 51a75b90ce2e9.png
+            pattern: 51a75988cedd1.png
      product_sizes:
          smal:
           title: S
@@ -417,15 +417,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 51a75b5febdb1.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 51a75b7b33f8b.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 51a75b90ce2e9.png
    
      
  j.crew:  
@@ -437,17 +437,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 519e5bf985dda.png
+            pattern: 51a75b90caaf6.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 519e56ee1a90b.png
+            pattern: 51a76c944ce1a.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 519e5bf985dda.png
+            pattern: 51a76caf3606f.png
      product_sizes:
          smal:
           title: S
@@ -525,15 +525,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 51a75ee9867c6_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 51a75ee9867c6_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 51a75ee9867c6_fr.png
    
      
    pants:
@@ -544,17 +544,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 519e57de0f444.png
+            pattern: 51c1bb854e9e0.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 519e5587628f4.png
+            pattern: 51c1bc9b4c404.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 519e55343a6be.png
+            pattern: 51c1bc8941d13.png
      product_sizes:
          smal:
           title: S
@@ -632,15 +632,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 519e580b1cc2b_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 519e580b1cc2b_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 519e580b1cc2b_fr.png
    
      
    dress:
@@ -651,17 +651,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 519e5c1ea102f.png
+            pattern: 51a75b5fe7be0.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 51a7596a679f5.png
+            pattern: 51a75b7b304ed.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 51a75988d2517.png
+            pattern: 51a75879828af.png
      product_sizes:
          smal:
           title: S
@@ -739,15 +739,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 51c1bba370237_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 51c1bba370237_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 51c1bba370237_fr.png
      
    skirts:
      name: Dress in linen 
@@ -757,17 +757,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 51c1bc7327594.png
+            pattern: 51a76c944ce1a.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 51c1bc8945d21.png
+            pattern: 51a76caf3606f.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 51c1bc9b4d45d.png
+            pattern: 51a76cd14c5a6.png
      product_sizes:
          smal:
           title: S
@@ -845,15 +845,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 51a75f47af1a1_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 51a75f47af1a1_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 51a75f47af1a1_fr.png
    
      
  ellie:  
@@ -865,17 +865,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 519e5bf985dda.png
+            pattern: 51a75b5fe7be0.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 519e56ee1a90b.png
+            pattern: 51a75b7b304ed.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 519e56905890c.png
+            pattern: 51a75879828af.png
      product_sizes:
          smal:
           title: S
@@ -953,15 +953,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 519e56f888fae_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 519e56f888fae_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 519e56f888fae_fr.png
    
      
    pants:
@@ -972,17 +972,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 519e57de0f444.png
+            pattern: 51a75946d7192.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 519e5865af0cf.png
+            pattern: 51a7568099fc2.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 519e5d4ff32c2.png
+            pattern: 51a75879828af.png
      product_sizes:
          smal:
           title: S
@@ -1060,15 +1060,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 519e5d5aca671_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 519e5d5aca671_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 519e5d5aca671_fr.png
    
      
    dress:
@@ -1079,17 +1079,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png
+            image: 519e5de2f32f1.png
+            pattern: 51c1bb854e9e0.png
             default: true
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 519e549a665c6.png
+            pattern: 51c1bb287da36.png
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 519e542f82d62.png
+            pattern: 51c1bb62af307.png
      product_sizes:
          smal:
           title: S
@@ -1167,15 +1167,15 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 51a775c147d9a_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 51a775c147d9a_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 51a775c147d9a_fr.png
    
      
    skirts:
@@ -1186,17 +1186,17 @@ products:
      product_color:
           red:
             title: red
-            image: test.png
-            pattern: test1.png            
+            image: 51c1bc7327594.png
+            pattern: 51c1bc7323492.png            
           blue:
             title: blue
-            image: test.png
-            pattern: test1.png
+            image: 51c1bc8945d21.png
+            pattern: 51c1bc8941d13.png
             default: true
           green:
             title: green
-            image: test.png
-            pattern: test1.png
+            image: 51c1bc9b4d45d.png
+            pattern: 51c1bc9b4c404.png
      product_sizes:
          smal:
           title: S
@@ -1274,12 +1274,12 @@ products:
             small:  
               size_title: S
               product_color_title: red
-              image: test.png
+              image: 51a75edfe6133_fr.png
             medium:
               size_title: M
               product_color_title: red
-              image: test.png
+              image: 51a75edfe6133_fr.png
             large:
               size_title: L
               product_color_title: red
-              image: test.png
+              image: 51a75edfe6133_fr.png
