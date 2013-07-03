@@ -39,8 +39,8 @@ class LoadBrandData implements FixtureInterface {
             $image = $value;
             $imagename = implode(",", $image);
             $brand = new Brand();
-            $this->emptyDir($destination);
-            $this->smartCopy($source, $destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));
+            $this->deleteAllBrandFiles($destination);
+            $this->copyAllBrandImageFiles($source, $destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));
             $brand->setName(ucwords($key));
             $brand->setImage($imagename);
             $brand->setCreatedAt(new \DateTime('now'));
@@ -51,7 +51,7 @@ class LoadBrandData implements FixtureInterface {
         }
     }
 
-    public function emptyDir($path) {
+    public function deleteAllBrandFiles($path) {
         $debugStr = '';
         if ($handle = opendir($path)) {
             while (false !== ($file = readdir($handle))) {
@@ -80,7 +80,7 @@ class LoadBrandData implements FixtureInterface {
         return $debugStr;
     }
 
-    public function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 'filePermission' => 0755)) {
+    public function copyAllBrandImageFiles($source, $dest, $options = array('folderPermission' => 0755, 'filePermission' => 0755)) {
         $result = false;
         if (is_file($source)) {
             if ($dest[strlen($dest) - 1] == '/') {
@@ -122,7 +122,7 @@ class LoadBrandData implements FixtureInterface {
                     } else {
                         $__dest = $dest . "/" . $file;
                     }
-                    $result = $this->smartCopy($source . "/" . $file, $__dest, $options);
+                    $result = $this->copyAllBrandImageFiles($source . "/" . $file, $__dest, $options);
                 }
             }
             closedir($dirHandle);

@@ -65,8 +65,8 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         ->findProductByTitle($clothing_type_values['name']);
                 foreach ($clothing_type_values['product_color'] as $product_color_key => $product_color_values) {
                     $productcolor = new ProductColor();
-                    $this->emptyDir($destination);
-                    $this->smartCopy($source,$destination,$options=array('folderPermission'=>777,'filePermission'=>777));
+                    $this->deleteAllProductImageFiles($destination);
+                    $this->copyAllProductImageFiles($source,$destination,$options=array('folderPermission'=>777,'filePermission'=>777));
                     $productcolor->setProduct($product_new);
                     $productcolor->setTitle($product_color_values['title']);
                     $productcolor->setImage($product_color_values['image']);
@@ -129,7 +129,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         }
     }
 
-    public function emptyDir($path) {
+    public function deleteAllProductImageFiles($path) {
      $debugStr = '';
      if($handle = opendir($path)) {
        while(false !== ($file = readdir($handle))) {
@@ -160,7 +160,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
 }	
 
 
-public function smartCopy($source,$dest,$options=array('folderPermission'=>777,'filePermission'=>777)) 
+public function copyAllProductImageFiles($source,$dest,$options=array('folderPermission'=>777,'filePermission'=>777)) 
     { 
         $result=false;         
         if (is_file($source)) { 
@@ -206,7 +206,7 @@ public function smartCopy($source,$dest,$options=array('folderPermission'=>777,'
                     } else { 
                         $__dest=$dest."/".$file; 
                     }
-                    $result=  $this->smartCopy($source."/".$file, $__dest, $options); 
+                    $result=  $this->copyAllProductImageFiles($source."/".$file, $__dest, $options); 
                 } 
             } 
             closedir($dirHandle);             
