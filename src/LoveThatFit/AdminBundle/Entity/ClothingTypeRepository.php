@@ -70,6 +70,28 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
+    
+    
+    public function listAllClothingType($page_number = 0, $limit = 0, $sort = 'id') {
+
+
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c ORDER BY c.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c ORDER BY c.' . $sort . ' ASC')
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+    
+    
         
     public function findAllRecord()
     {
@@ -118,6 +140,19 @@ param:limit, page_number,limit,sort
                         ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
                                 WHERE c.name = :name")
                         ->setParameters(array('name' => ucwords($name)));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
+    public function findClothingTypeByName($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
+                                WHERE c.name = :name")
+                        ->setParameters(array('name' =>$name));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

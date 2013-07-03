@@ -1,246 +1,138 @@
 <?php
+
 namespace LoveThatFit\AdminBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Yaml\Parser;
+use LoveThatFit\AdminBundle\Form\Type\DeleteType;
+use LoveThatFit\AdminBundle\Form\Type\ClothingTypes;
 
 class ClothingTypeController extends Controller {
-//------------------------------------------------------------------------------------------
-    public function indexAction($page_number, $sort = 'id') {
-		$limit = 5;
-		$clothingObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
-		
-		$clothing_types = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-               ->findAllClothingType($page_number, $limit, $sort);
-	 	$rec_count = count($clothingObj->countAllRecord());
-		$cur_page = $page_number;
 
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }      
-           
-          
-        
-		//return new Response(json_encode($clothing_types));	   
-	 return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', 
-  					array(
-                    'clothing_types' => $clothing_types, 
-                    'rec_count' => $rec_count, 
-                    'no_of_pagination' => $no_of_paginations, 
-                    'limit' => $cur_page, 
-                    'per_page_limit' => $limit,
-                    'criteriaTop'=>$this->countStatistics('Top'),
-                    'criteriaBottom'=>$this->countStatistics('Bottom'),
-                    'criteriaDress'=>$this->countStatistics('Dress'),
-                    'TotlaRecord'=>$rec_count,                        
-            	));
+//------------------------------------------------------------------------------------------
+
+
+    public function indexAction($page_number, $sort = 'id') {
+        $clothing_types_with_pagination = $this->get('admin.helper.clothingtype')->getListWithPagination($page_number, $sort);
+        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', $clothing_types_with_pagination);
     }
+
 //------------------------------------------------------------------------------------------
     public function showAction($id) {
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                ->findOneById($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Clothing Type.');
+        $specs = $this->get('admin.helper.clothingtype')->findWithSpecs($id);
+        $entity = $specs['entity'];
+
+        if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
-
-        return $this->render('LoveThatFitAdminBundle:ClothingType:show.html.twig', array('clothing_type' => $entity));
+        return $this->render('LoveThatFitAdminBundle:ClothingType:show.html.twig', array(
+                    'clothing_type' => $entity
+        ));
     }
 
-   //------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     public function newAction() {
 
-        $clothing_type = new ClothingType();
-
-         $form = $this->createFormBuilder($clothing_type)
-                ->add('name', 'text')
-                ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
-                 ->add('disabled', 'hidden', array('data' => '0',))
-                ->getForm();
-
-           return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
-                        'form' => $form->createView()));
-    }
-    
-    //------------------------------------------------------------------------------------------
-    public function createAction(Request $request)
-    {
-        $clothing_type = new ClothingType();        
-        $form = $this->createFormBuilder($clothing_type)
-                ->add('name', 'text')
-                ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'dress'=>'dress')))
-                ->add('disabled', 'hidden', array('data' => '0',))
-                ->getForm();
-        
-        $form->bind($request);
-        $name = $clothing_type->getName();
-        if($name=='')
-        {
-           $this->get('session')->setFlash('warning','Please enter name');
-            return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
-                    'form' => $form->createView())); 
-        }
-        $target = $clothing_type->getTarget();
-        $clothingTypes=  $this->getClothingType($name,$target);
-        if($clothingTypes>0)
-       {
-           $this->get('session')->setFlash('warning','The Clothing Type : ' .$name. ', Target: ' .$target. ' already exits!');
-            return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
-                    'form' => $form->createView()));
-       }else
-       {
-        if ($form->isValid()) {
-                $clothing_type->setCreatedAt(new \DateTime('now'));
-                $clothing_type->setUpdatedAt(new \DateTime('now'));
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($clothing_type);
-                $em->flush();
-                $this->get('session')->setFlash('success','The Clothing Type has been Created!');
-                return $this->redirect($this->generateUrl('admin_clothing_types'));
-            }else
-            {
-                $this->get('warning')->setFlash('warning','The Clothing Type can not be Created!');
-            }
-       }
+        $entity = $this->get('admin.helper.ClothingType')->createNew();
+        $form = $this->createForm(new ClothingTypes('add'), $entity);
         return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
-                        'form' => $form->createView()));
-        
+                    'form' => $form->createView()));
     }
-    
-    
-    
-    
+
+    //------------------------------------------------------------------------------------------
+    public function createAction(Request $request) {
+        $entity = $this->get('admin.helper.ClothingType')->createNew();
+        $form = $this->createForm(new ClothingTypes('add'), $entity);
+        $form->bind($request);
+        if ($form->isValid()) {
+            $message_array = $this->get('admin.helper.ClothingType')->save($entity);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+
+            if (!$message_array['success']) {
+                return $this->redirect($this->generateUrl('admin_clothing_type_show', array('id' => $entity->getId())));
+            }
+        } else {
+            $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
+        }
+
+        return $this->render('LoveThatFitAdminBundle:ClothingType:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
+    }
+
 //------------------------------------------------------------------------------------------
     public function editAction($id) {
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                ->findOneById($id);
 
-        $form = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-        
+        $specs = $this->get('admin.helper.ClothingType')->findWithSpecs($id);
+        $entity = $specs['entity'];
+
+        if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+        }
+
+        $form = $this->createForm(new ClothingTypes('edit'), $entity);
+
+        $deleteForm = $this->createForm(new DeleteType(), $entity);
         return $this->render('LoveThatFitAdminBundle:ClothingType:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));
     }
+
 //------------------------------------------------------------------------------------------
     public function updateAction(Request $request, $id) {
-        
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Clothing Type.');
+        $specs = $this->get('admin.helper.ClothingType')->findWithSpecs($id);
+        $entity = $specs['entity'];
+
+        if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+            return $this->redirect($this->generateUrl('admin_clothing_types'));
         }
 
-        $form = $this->createEditForm($entity);
+        $form = $this->createForm(new ClothingTypes('edit'), $entity);
         $form->bind($request);
-        
-         
-        
-if ($form->isValid()) {
-    
 
-            $em->persist($entity);
-            $em->flush();
-            $this->get('session')->setFlash('success','The Clothing Type has been Update!');
-            return $this->redirect($this->generateUrl('admin_clothing_types'));
-}
-else
-{
-    $this->get('warning')->setFlash('warning','The Clothing Type cant Update!');       
-    return $this->redirect($this->generateUrl('admin_clothing_types'));
-}
-    }
-    
-    //------------------------------------------------------------------------------------------
-    
-     public function deleteAction($id)
-    {
-          
-         try{
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
+        if ($form->isValid()) {
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Clothing Type.');
+            $message_array = $this->get('admin.helper.ClothingType')->update($entity);
+
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+
+            if ($message_array['success'] == true) {
+                return $this->redirect($this->generateUrl('admin_clothing_type_show', array('id' => $entity->getId())));
             }
-            $em->remove($entity);
-            $em->flush();
-            $this->get('session')->setFlash('success','The Clothing Type has been deleted!');
+        } else {
+            $this->get('session')->setFlash('warning', 'Unable to update Clothing Type!');
+        }
+        $deleteForm = $this->createForm(new DeleteType(), $entity);
+        return $this->render('LoveThatFitAdminBundle:ClothingType:edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity));
+    }
+
+    //------------------------------------------------------------------------------------------
+
+    public function deleteAction($id) {
+        try {
+            $message_array = $this->get('admin.helper.ClothingType')->delete($id);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+
             return $this->redirect($this->generateUrl('admin_clothing_types'));
-        }catch (\Doctrine\DBAL\DBALException $e)
-        {
-             $this->get('session')->setFlash('warning','This Clothing Type cannot be deleted!');
-             return $this->redirect($this->getRequest()->headers->get('referer'));
-             
+        } catch (\Doctrine\DBAL\DBALException $e) {
+
+            $this->get('session')->setFlash('warning', 'This Clothing cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
-    
-    //------------------------------------------------------------------------------------------
-    
-     private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm();
-    }
-    //------------------------------------------------------------------------------------------
-    private function createEditForm($entity)
-    {
-        return  $this->createFormBuilder($entity)
-                ->add('name', 'text')
-                ->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')))
-                ->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,)) 
-                ->getForm();
 
-    }
-    
-    private function getClothingType($name,$target)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                 ->findClothingTypeBy($name,$target);
-		$rec_count = count($ClothingTypeObj->findClothingTypeBy($name,$target));
-        return $rec_count;
-    }
-    
-    private function calculateStatistics($countResult,$totalRecord)
-    {
-      $statistics=($countResult/$totalRecord)*100;
-      return $statistics;
-    }
-    
-    private function countStatistics($target)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                 ->findStatisticsBy($target);
-		$rec_count = count($ClothingTypeObj->findStatisticsBy($target));
-        return $rec_count;
-    }
-
-    private function countAllClothingType()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $ClothingTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                 ->findAllRecord();
-		$totalRecord = count($ClothingTypeObj->findAllRecord());
-        return $totalRecord;
-    }
+    //------------------------------------------------------------------------------------------
 }
 
