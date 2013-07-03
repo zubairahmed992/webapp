@@ -108,10 +108,10 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                     $productid = $product_new->getId();
                     $productsize = $this->container
                             ->get('admin.helper.productsizes')
-                            ->findSizeByProductTitle($product_item_values['size_title'], $productid);
+                            ->findSizeByProductTitle($product_item_values['size_title'],$productid);
                     $productcolor = $this->container
                             ->get('admin.helper.productcolor')
-                            ->findColorByProductTitle($product_item_values['product_color_title'], $productid);
+                            ->findColorByProductTitle($product_item_values['product_color_title'],$productid);
                     $productitem = new ProductItem();
                     $productitem->setProduct($product_new);
                     $productitem->setProductColor($productcolor);

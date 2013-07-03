@@ -36,8 +36,8 @@ class ProductSizeHelper {
         $this->repo = $em->getRepository($class);
     }
 
-    public function findSizeByProductIdTitle($title, $productid) {
-        return $this->repo->findSizeByProductIdTitle($title, $productid);
+    public function findSizeByProductTitle($title, $productid) {
+        return $this->repo->findSizeByProductTitle($title, $productid);
     }
 
 }

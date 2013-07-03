@@ -44,7 +44,7 @@ class ProductColorRepository extends EntityRepository {
         }
     }
 
-    public function findSizeByProductTitle($title, $productid) {
+    public function findColorByProductTitle($title,$productid) {
         $record = $this->getEntityManager()
                 ->createQuery("SELECT pc FROM LoveThatFitAdminBundle:ProductColor pc                                    
                                 WHERE pc.title = :title

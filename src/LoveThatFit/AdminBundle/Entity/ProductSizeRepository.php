@@ -27,7 +27,7 @@ class ProductSizeRepository extends EntityRepository {
         }
     }
 
-    public function findSizeByProductIdTitle($title, $productid) {
+    public function findSizeByProductTitle($title, $productid) {
         $record = $this->getEntityManager()
                 ->createQuery("SELECT p FROM LoveThatFitAdminBundle:ProductSize p                                   
                                 WHERE p.title = :title

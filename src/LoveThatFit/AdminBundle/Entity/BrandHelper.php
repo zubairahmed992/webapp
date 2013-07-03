@@ -150,6 +150,12 @@ class BrandHelper {
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
+    
+    public function removeBrand()
+    {
+        return $this->repo->removeBrand();
+        
+    }
 
  //-------------------------------------------------------
     
@@ -202,4 +208,5 @@ class BrandHelper {
         return;
     }
 
+    
 }
