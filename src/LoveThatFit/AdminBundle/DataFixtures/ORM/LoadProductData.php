@@ -38,6 +38,8 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager) {
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product.yml'));
+        $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/products');
+        $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/products');
         foreach ($fixtures['products'] as $product_key => $product_values) {
             $brand = $this->container
                     ->get('admin.helper.brand')
@@ -63,8 +65,8 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         ->findProductByTitle($clothing_type_values['name']);
                 foreach ($clothing_type_values['product_color'] as $product_color_key => $product_color_values) {
                     $productcolor = new ProductColor();
-                    $productcolor->deleteAllProductImageFiles();
-                    $productcolor->copyAllProductImageFiles();
+                    $this->emptyDir($destination);
+                    $this->smartCopy($source,$destination,$options=array('folderPermission'=>777,'filePermission'=>777));
                     $productcolor->setProduct($product_new);
                     $productcolor->setTitle($product_color_values['title']);
                     $productcolor->setImage($product_color_values['image']);
@@ -127,6 +129,95 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         }
     }
 
+    public function emptyDir($path) {
+     $debugStr = '';
+     if($handle = opendir($path)) {
+       while(false !== ($file = readdir($handle))) {
+               if($file != "." && $file != "..") {             
+               if(is_file($path."/".$file)) { 
+                    if(@unlink($path."/".$file)) {
+                    $debugStr .=$file;     
+                    }
+               } else { 
+                    if($handle2 = opendir($path."/".$file)) { 
+                         while(false !== ($file2 = readdir($handle2))) { 
+                              if($file2 != "." && $file2 != "..") {
+                                   if(@unlink($path."/".$file."/".$file2)) {
+                                   $debugStr .=$file/$file2;     
+                                   }
+                              } 
+                         } 
+                    } 
+                    if(@rmdir($path."/".$file)) {
+                    $debugStr .=$file;     
+                    } 
+               } 
+               } 
+          } 
+          closedir($handle);
+     }
+     return $debugStr;
+}	
+
+
+public function smartCopy($source,$dest,$options=array('folderPermission'=>777,'filePermission'=>777)) 
+    { 
+        $result=false;         
+        if (is_file($source)) { 
+            if ($dest[strlen($dest)-1]=='/') { 
+                if (!file_exists($dest)) { 
+                    cmfcDirectory::makeAll($dest,$options['folderPermission'],true); 
+                } 
+                $__dest=$dest."/".basename($source); 
+            } else { 
+                $__dest=$dest; 
+            } 
+            $result=@copy($source, $__dest); 
+            chmod($__dest,$options['filePermission']); 
+            
+        } elseif(is_dir($source)) { 
+            if ($dest[strlen($dest)-1]=='/') { 
+                if ($source[strlen($source)-1]=='/') { 
+                    //Copy only contents 
+                } else { 
+                    //Change parent itself and its contents 
+                    $dest=$dest.basename($source); 
+                    @mkdir($dest); 
+                    chmod($dest,$options['filePermission']); 
+                } 
+            } else { 
+                if ($source[strlen($source)-1]=='/') { 
+                    //Copy parent directory with new name and all its content 
+                    @mkdir($dest,$options['folderPermission']); 
+                    chmod($dest,$options['filePermission']); 
+                } else { 
+                    //Copy parent directory with new name and all its content 
+                    @mkdir($dest,$options['folderPermission']); 
+                    chmod($dest,$options['filePermission']); 
+                } 
+            }
+            $dirHandle=opendir($source); 
+            while($file=readdir($dirHandle)) 
+            { 
+                if($file!="." && $file!="..") 
+                { 
+                     if(!is_dir($source."/".$file)) { 
+                        $__dest=$dest."/".$file; 
+                    } else { 
+                        $__dest=$dest."/".$file; 
+                    }
+                    $result=  $this->smartCopy($source."/".$file, $__dest, $options); 
+                } 
+            } 
+            closedir($dirHandle);             
+        } else { 
+            $result=false; 
+        } 
+        return $result; 
+    } 
+
+
+    
     /**
      * {@inheritDoc}
      */
