@@ -66,6 +66,11 @@ web_service_user_profile:
 web_service_iphone_shoulder_outseam:
    pattern:  /web_service/iphone_shoulder_outseam
    defaults: { _controller: LoveThatFitWebServiceBundle:User:shoulder_outseamEdit}
+
+web_service_image_upload:
+   pattern:  /web_service/image_upload
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:imageUpload}
+   
    
 web_service_brand_list_size_chart:
    pattern:  /web_service/brand_list_size_chart

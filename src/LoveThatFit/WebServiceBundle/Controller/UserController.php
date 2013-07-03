@@ -30,8 +30,6 @@ class UserController extends Controller {
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-        
-         
          $email=$decoded['email'];
          $password=$decoded['password'];
          
@@ -541,6 +539,33 @@ public function userProfileAction()
         }
     }
 
+ #---------------------------------------Image Upload---------------------------------------#   
+ public function imageUploadAction() {
+     
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        
+        print_r($request_array);      
+        
+    $em = $this->getDoctrine()->getManager();
+    $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
+    
+    
+    
+            $image_path="";
+            if($entity->getImage()){
+                $image_path=$entity->uploadTempImage();
+            }else{
+                $entity->upload();
+                $em->persist($entity);
+                $em->flush();
+                $image_path=$entity->getWebPath();
+            }
+            
+    return new response(json_encode($image_path));    
+    }        
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
