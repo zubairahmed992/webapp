@@ -179,16 +179,25 @@ class ProductController extends Controller {
           foreach($product_colors as $product_color_value)
           {
                $product_color_id = $product_color_value->getId();
-                $color_sizes_array = $this->getDoctrine()
+                
+               $color_sizes = $this->getDoctrine()
                         ->getRepository('LoveThatFitAdminBundle:ProductColor')
                         ->getSizeItemImageUrlArray($product_color_id);
+                
+                $color_size_array=array();
+             
+                foreach($color_sizes as $cs)
+          {
+                    array_push($color_size_array, Array($cs['title'] => $cs));
+                  
+          }
                 
            $product_color_array[$product_color_value->gettitle()]= array(
                 'id'=>$product_color_value->getId(),
                 'image'=>$product_color_value->getImage(),
                 'pattern'=>$product_color_value->getPattern(),
                'title'=>$product_color_value->getTitle(),
-               'sizes'=>$color_sizes_array,
+               'sizes'=>$color_size_array,
            );
            
           
