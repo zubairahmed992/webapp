@@ -54,7 +54,6 @@ class LoadSizeChart extends AbstractFixture implements OrderedFixtureInterface, 
                         $entity->setBodytype($body_type_key);
                         $entity->setTarget($clothing_type_key);
                         $entity->setTitle($size_key);
-                        
                         if (array_key_exists('neck', $size_values)) {
                             $entity->setNeck($size_values['neck']);
                         }
