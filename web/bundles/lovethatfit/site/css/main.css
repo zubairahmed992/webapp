@@ -2430,45 +2430,45 @@ padding-bottom: 0px;
 }
 
 .fav_list_hd{    
-   float:left; 
-   width: 190px; 
+   
+   width: 106px; 
    background:#efefef; 
-   padding: 5px;
+  
+   display: inline-block;
    text-align: center;
 }
 
 #fav_lst div:last-child{
    background:#efefef; 
-   padding: 5px;
-   width:auto;
+ 
+   width:106px;
    float:none;    
 }
 
 #fav_listing{    
    border-bottom:1px dashed #ccc; 
-   padding:10px; 
+  
    overflow:auto; 
    margin-bottom: 2px;
 }
 
+#fav_lst{    
+    width:700px;
+}
+
 .f_list{
-    float:left; 
-    width: 195px;
+    display: inline-block;   
+    width: 112px;
     text-align: center;
     line-height: 40px;
    
 }
 
-#fav_listing .f_list:nth-child(3){    
-   float:left; 
-   width: 195px;
-  line-height: normal;
-  
-}
 
-#fav_listing .f_list:last-child{    
-   float:none;
-   width:auto;  
+
+#fav_listing .f_list:last-child{   
+  
+   width:106px;  
    line-height: 40px;
 }
 
