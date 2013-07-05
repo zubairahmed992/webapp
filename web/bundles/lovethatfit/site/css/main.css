@@ -1168,8 +1168,7 @@ input[type=email]{
 	position:relative;
 	text-decoration:none;
 	display:inline-block;
-	padding:0px 0px 7px 20px;
-	
+	padding:0px 0px 7px 20px;	
         border-bottom: 1px dashed #e6e6e6;
 	
 }
@@ -1212,7 +1211,7 @@ input[type=email]{
 	line-height:25px;
 	height:auto;
         color:#5d5d5c;
-        border:none;        
+        border:none;       
 	
 }
 
@@ -1225,13 +1224,19 @@ input[type=email]{
 	height:47px;
 }
 
+
+.left_column nav ul .opn_link .mnu{
+    width: 0px;
+}
+
+
 .left_column nav ul li:hover .mnu{
-	background: url("../images/menu_icon.png") no-repeat scroll 0 0 transparent;
+   background: url("../images/menu_icon.png") no-repeat scroll 0 0 transparent;
     height: 15px;
     position: absolute;
     right: 0px;
     top: 0px;
-    width: 16px;
+    
 }
 
 .left_column nav ul li span.mnu{
@@ -1240,13 +1245,12 @@ input[type=email]{
     position: absolute;
     right: 0px;
     top: 0px;
-    width: 16px;
-	filter:none;
+    width: 5px;
+    filter:none;
+   
 }
 
-.left_column nav ul li .filter{	
-	
-	
+.left_column nav ul li .filter{		
 	
 	margin:0 auto;
 	padding-top:10px;
