@@ -65,18 +65,23 @@ class Algorithm {
         if (!$this->product_measurement) {
             return "Product not found.";
         }
-        
+
         $this->feedback_array = $this->getBasicFeedbackArray();
 
         $fits = $this->fit($this->feedback_array);
-        
-        if ($fits==true) {
-             $love_that_fit_feedback= array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
-       //     $result = array_merge((array)$love_that_fit_feedback, (array)$this->getAdditionalFeedbackArray());
-         //   return $result;
-             return $love_that_fit_feedback;
+
+        if ($fits == true) {
+            $love_that_fit_feedback = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
+            //     $result = array_merge((array)$love_that_fit_feedback, (array)$this->getAdditionalFeedbackArray());
+            //   return $result;
+            return $love_that_fit_feedback;
         } else {
-            return $this->feedback_array;
+            $current_feedback = $this->feedback_array;
+            /*$fitting_size_feedback = $this->getFittingSizeFeedBack();
+            if ($fitting_size_feedback) {
+                $current_feedback ['Try'] = $fitting_size_feedback;
+            }*/
+            return $current_feedback;
         }
     }
 
@@ -295,6 +300,30 @@ class Algorithm {
             $yaml = new Parser();
             $this->msg_array = $yaml->parse(file_get_contents('../app/config/fitting_feedback.yml'));
         }
+    }
+
+    //------------------------------------------------------------------------    
+
+    public function getFittingSizeFeedBack() {
+        $size_fits = $this->getFittingSize();
+        if ($size_fits) {
+            return array("diff" => 0, "msg" => 'Size ' . $size_fits->getTitle() . '', 'fit' => true);
+        }
+        return array("diff" => 0, "msg" => 'Your Size not available', 'fit' => false);
+    }
+    //------------------------------------------------------------------------    
+
+    public function getFittingSize() {
+        $productSizes = $this->product->getProductSizes();
+        foreach ($productSizes as $ps) {
+            $this->product_measurement = $ps;
+            $fits = $this->fit();
+
+            if ($fits) {
+                return $ps;
+            }
+        }
+        return;
     }
 
 }
