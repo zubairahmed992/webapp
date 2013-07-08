@@ -1389,7 +1389,7 @@ background:#f3f3f3;
 .prod_wrapper h3{
 	color: #a3a50f;
 	font-size: 1.0em;
-	padding-bottom: 10px;       
+	margin-bottom: 10px;       
         height:19px;
         overflow: hidden;
         font-weight:normal;
@@ -2481,6 +2481,7 @@ padding-bottom: 0px;
 
 .featured_content_selected .selected{
     float:left;
+    font-size:15px;
 }
 
 .featured_content_selected #add_cart{
