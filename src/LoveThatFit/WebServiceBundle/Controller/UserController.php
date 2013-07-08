@@ -542,30 +542,38 @@ public function userProfileAction()
  #---------------------------------------Image Upload---------------------------------------#   
  public function imageUploadAction() {
      
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $request_array = json_decode($jsonInput, true);
+     
+   
+   
+        $request = $this->get('request');
+        $uploaded_file = $request->files->get('fileToUpload');
         
-        print_r($request_array);      
+
+       $path =  'd:/wamp/www/webapp/web/uploads/';
+        $uploaded_file_info = pathinfo($uploaded_file->getClientOriginalName());
+        $filename = uniqid() . "." .$uploaded_file_info['extension'];
+
+        $uploaded_file->move($path, $filename);
+         $response = 'success';
+      
+        $response = new Response(json_encode(array('response'=>$response)));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+   
+#-----------------------------test form
+    public function imageFormAction()
+    {
         
-    $em = $this->getDoctrine()->getManager();
-    $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
-    
-    
-    
-            $image_path="";
-            if($entity->getImage()){
-                $image_path=$entity->uploadTempImage();
-            }else{
-                $entity->upload();
-                $em->persist($entity);
-                $em->flush();
-                $image_path=$entity->getWebPath();
-            }
-            
-    return new response(json_encode($image_path));    
+        
+     return $this->render('LoveThatFitWebServiceBundle::json.html.twig'); 
+        
     }        
+
+    
+    
+# ------------------------------    
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {

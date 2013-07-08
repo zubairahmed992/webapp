@@ -1,1 +1,90 @@
-{{ entity|  json_encode | raw }}
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/ajaxfileupload.js') }}"></script>
+
+
+<script type="text/javascript">
+   function ajaxFileUpload()
+    {
+      
+       
+jQuery.ajaxFileUpload
+        (
+            {
+                url:'http://localhost/webapp/web/app_dev.php/web_service/image_upload',
+                secureuri:false,
+                fileElementId:'fileToUpload',
+                type: "POST",
+                dataType: 'json',
+              
+                success: function (data, status)
+                {  
+ 
+                     if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                            alert(data.error);
+                        }else
+                        {
+                            alert(data.msg);
+                            showprofilepicture();
+                        }
+                    }
+                }
+ 
+            }
+        )
+       
+jQuery.extend({
+    handleError: function( s, xhr, status, e ) {
+        // If a local callback was specified, fire it
+        if ( s.error )
+            s.error( xhr, status, e );
+        // If we have some XML response text (e.g. from an AJAX call) then log it in the console
+        else if(xhr.responseText)
+            console.log(xhr.responseText);
+    }
+});
+       
+if(typeof(data.error) != 'undefined')
+            {
+                if(data.error != '')
+                {
+                    alert(data.error);
+                }else
+                {
+                    alert(data.msg);
+                    showprofilepicture();
+                }
+            }
+       
+jQuery.ajaxFileUpload({
+            url:'http://localhost/webapp/web/app_dev.php/web_service/image_upload',
+            secureuri:false,
+            fileElementId:'fileToUpload',
+            dataType: 'json',
+            data:{'image_desc':image_desc,'gallery_id':curr_time_stamp},
+            success: function (data, status)
+            {  
+ 
+                 if(typeof(data.error) != 'undefined')
+                {
+                    if(data.error != '')
+                    {
+                        alert(data.error);
+                    }
+                }else
+                    {
+                        alert(data.msg);
+                        showprofilepicture();
+                    }
+            }
+ 
+        }
+    )
+    }
+</script>
+
+<input type="file" name="fileToUpload" id="fileToUpload" />
+<input type="button" value="Save" onclick="ajaxFileUpload()" />
+       
