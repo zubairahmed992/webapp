@@ -16,8 +16,6 @@
 }
 
 
-
-
 /*--Bootstrap--*/
 .clearfix {
   *zoom: 1;
@@ -578,7 +576,7 @@ header.reg .strip_rgt {
 	display:inline-block;
 }
 .reg_blk .frm_ele {
-	padding-bottom:9px;
+	/*padding-bottom:9px;*/
         margin-top:10px;
         text-align: center;
 }
