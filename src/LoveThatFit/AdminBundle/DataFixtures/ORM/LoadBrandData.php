@@ -35,12 +35,11 @@ class LoadBrandData implements FixtureInterface {
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/brand.yml'));
         $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/brands');
         $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/brands');
+        $this->deleteAllBrandFiles($destination);
         foreach ($fixtures['brands'] as $key => $value) {
             $image = $value;
             $imagename = implode(",", $image);
             $brand = new Brand();
-            $this->deleteAllBrandFiles($destination);
-            $this->copyAllBrandImageFiles($source, $destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));
             $brand->setName(ucwords($key));
             $brand->setImage($imagename);
             $brand->setCreatedAt(new \DateTime('now'));
@@ -49,6 +48,7 @@ class LoadBrandData implements FixtureInterface {
             $manager->persist($brand);
             $manager->flush();
         }
+        $this->copyAllBrandImageFiles($source, $destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));
     }
 
     public function deleteAllBrandFiles($path) {

@@ -33,13 +33,17 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
+         
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
-        $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));        
-        foreach ($fixtures['users'] as $user_key => $user_values) {            
+        $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));
+        $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/users');       
+        $path = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/users');
+        $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/users/'); 
+        $this->deleteAllUserFiles($path);
+        foreach ($fixtures['users'] as $user_key => $user_values) {             
             $entity = new User();            
             $entity->setFirstName(ucwords($user_values['first_name']));
-            $entity->setLastName(ucwords($user_values['last_name']));
-            //$entity->setPassword($user_values['password']);
+            $entity->setLastName(ucwords($user_values['last_name']));                        
             $entity->setEmail($user_values['email']);           
             $entity->setImage($user_values['image']);
             $entity->setGender($user_values['gender']);
@@ -50,15 +54,14 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             $encoder = $this->container
             ->get('security.encoder_factory')
             ->getEncoder($entity);
-            $entity->setPassword($encoder->encodePassword($user_values['password'], $entity->getSalt()));
+            $entity->setPassword($encoder->encodePassword($user_values['password'], $entity->getSalt()));                              
             $manager->persist($entity);
-            $manager->flush();
+            $manager->flush();            
             $mesurement=new Measurement();
             $firstName=$user_values['first_name'];
             $user = $this->container
                     ->get('user.helper.user')
-                    ->findOneByName(ucwords($firstName));
-            
+                    ->findOneByName(ucwords($firstName));                     
             if (array_key_exists('weight', $user_values)) {
                             $mesurement->setWeight($user_values['weight']);
                         }
@@ -85,9 +88,98 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
                         } 
             $mesurement->setUser($user);            
             $manager->persist($mesurement);
-            $manager->flush();
+            $manager->flush();            
+            $userid = $this->container
+                    ->get('user.helper.user')
+                    ->findMaxUserId();
+            foreach($userid as $usersid)
+            {            
+              @mkdir($path.'/'.$usersid['id']);            
+            }
         }
     }
+    
+    public function deleteAllUserFiles($path) {
+        $debugStr = '';
+        if ($handle = opendir($path)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != "..") {
+                    if (is_file($path . "/" . $file)) {
+                        if (unlink($path . "/" . $file)) {
+                            $debugStr .=$file;
+                        }
+                    } else {
+                        if ($handle2 = opendir($path . "/" . $file)) {
+                            while (false !== ($file2 = readdir($handle2))) {
+                                if ($file2 != "." && $file2 != "..") {
+                                    if (unlink($path . "/" . $file . "/" . $file2)) {
+                                        $debugStr .=$file / $file2;
+                                    }
+                                }
+                            }
+                        }
+                        if (rmdir($path . "/" . $file)) {
+                            $debugStr .=$file;
+                        }
+                    }
+                }
+            }
+        }
+        return $debugStr;
+    }
+
+    public function copyAllUserImageFiles($source, $dest, $options = array('folderPermission' => 0755, 'filePermission' => 0755)) {
+        $result = false;
+        if (is_file($source)) {
+            if ($dest[strlen($dest) - 1] == '/') {
+                if (!file_exists($dest)) {
+                    cmfcDirectory::makeAll($dest, $options['folderPermission'], true);
+                }
+                $__dest = $dest . "/" . basename($source);
+            } else {
+                $__dest = $dest;
+            }
+            $result = copy($source, $__dest);
+            chmod($__dest, $options['filePermission']);
+        } elseif (is_dir($source)) {
+            if ($dest[strlen($dest) - 1] == '/') {
+                if ($source[strlen($source) - 1] == '/') {
+                    //Copy only contents 
+                } else {
+                    //Change parent itself and its contents 
+                    $dest = $dest . basename($source);
+                    @mkdir($dest);
+                    chmod($dest, $options['filePermission']);
+                }
+            } else {
+                if ($source[strlen($source) - 1] == '/') {
+                    //Copy parent directory with new name and all its content 
+                    @mkdir($dest, $options['folderPermission']);
+                    chmod($dest, $options['filePermission']);
+                } else {
+                    //Copy parent directory with new name and all its content 
+                    @mkdir($dest, $options['folderPermission']);
+                    chmod($dest, $options['filePermission']);
+                }
+            }
+            $dirHandle = opendir($source);
+            while ($file = readdir($dirHandle)) {
+                if ($file != "." && $file != "..") {
+                    if (!is_dir($source . "/" . $file)) {
+                        $__dest = $dest . "/" . $file;
+                    } else {
+                        $__dest = $dest . "/" . $file;
+                    }
+                    $result = $this->copyAllUserImageFiles($source . "/" . $file, $__dest, $options);
+                }
+            }
+            closedir($dirHandle);
+        } else {
+            $result = false;
+        }
+        return $result;
+    }
+
 
     /**
      * {@inheritDoc}

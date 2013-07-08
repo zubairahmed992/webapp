@@ -40,6 +40,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product.yml'));
         $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/products');
         $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/products');
+        $this->deleteAllProductImageFiles($destination);
         foreach ($fixtures['products'] as $product_key => $product_values) {
             $brand = $this->container
                     ->get('admin.helper.brand')
@@ -65,8 +66,6 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         ->findProductByTitle($clothing_type_values['name']);
                 foreach ($clothing_type_values['product_color'] as $product_color_key => $product_color_values) {
                     $productcolor = new ProductColor();
-                    $this->deleteAllProductImageFiles($destination);
-                    $this->copyAllProductImageFiles($source,$destination,$options=array('folderPermission'=>777,'filePermission'=>777));
                     $productcolor->setProduct($product_new);
                     $productcolor->setTitle($product_color_values['title']);
                     $productcolor->setImage($product_color_values['image']);
@@ -127,6 +126,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                 }
             }
         }
+        $this->copyAllProductImageFiles($source,$destination,$options=array('folderPermission'=>777,'filePermission'=>777));
     }
 
     public function deleteAllProductImageFiles($path) {

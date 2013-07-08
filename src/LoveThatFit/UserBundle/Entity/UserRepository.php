@@ -266,7 +266,17 @@ class UserRepository extends EntityRepository
         }
     }
   
-  
+  public function findMaxUserId()
+  {
+       $query = $this->getEntityManager()
+                ->createQuery('SELECT max(us.id) as id FROM LoveThatFitUserBundle:User us');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
+    
     
 }
 

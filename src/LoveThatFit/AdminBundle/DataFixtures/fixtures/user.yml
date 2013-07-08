@@ -1,5 +1,6 @@
 users:
   gap_small_women_four:
+    id: 1
     first_name: small women four
     last_name:  gap
     email: test@gmail.com
@@ -18,6 +19,7 @@ users:
     sleeve: 31.5
   
   gap_small_women_six:
+    id: 2
     first_name: small women six
     last_name:  gap
     email: test1@gmail.com
@@ -36,6 +38,7 @@ users:
     sleeve: 31.5
     
   gap_medium_women_eight:
+    id: 3
     first_name: medium women eight
     last_name:  gap
     email: test2@gmail.com
@@ -52,6 +55,7 @@ users:
     sleeve: 32.5
     
   gap_medium_women_ten:
+    id: 4
     first_name: medium women ten
     last_name:  gap
     email: test3@gmail.com
@@ -68,6 +72,7 @@ users:
     sleeve: 33
     
   gap_large_women_tweleve:
+    id: 5
     first_name: large women tweleve
     last_name:  gap
     email: test4@gmail.com
@@ -84,6 +89,7 @@ users:
     sleeve: 33.25
     
   gap_large_women_fourteen:
+    id: 6
     first_name: large women fourteen
     last_name:  gap
     email: test5@gmail.com
@@ -98,3 +104,22 @@ users:
     back: 18
     shoulder_height: 18    
     sleeve: 33.5
+  
+  ellie_small_women_four:
+    id: 7
+    first_name: ellie small women four
+    last_name:  ellie
+    email: test6@gmail.com
+    password: 123456
+    zipcode: 123456
+    gender: f
+    image: 'test.png'
+    weight: 120
+    height: 180
+    waist: 26.5
+    hip: 37.5
+    bust: 34.5
+    chest: 34.5    
+    back: 15.5
+    shoulder_height: 15.5
+    sleeve: 31.5

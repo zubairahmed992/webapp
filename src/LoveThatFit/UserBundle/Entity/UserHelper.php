@@ -167,5 +167,9 @@ public function findByEmail($email)
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
+    
+    public function findMaxUserId() {
+        return $this->repo->findMaxUserId();
+    }
 
 }
