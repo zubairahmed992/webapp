@@ -15,10 +15,10 @@
 {% endif %}
 <div id="fav_lst">
     <div class="fav_list_hd">Item</div>
-    <div class="fav_list_hd">Brand</div>
-    <div class="fav_list_hd">Item image</div>
+    <div class="fav_list_hd">Brand</div>    
     <div class="fav_list_hd">Item Size</div>
     <div class="fav_list_hd">Item color</div>
+    <div class="fav_list_hd">Item image</div>
     <div class="fav_list_hd">Delete</div>
 </div>
 {%for p in product%}
@@ -29,7 +29,12 @@
 <div class="f_list">{{p.brand.name}}</div>
 <div class="f_list">{{pi.productSize.title}}</div>
 <div class="f_list">{{pi.productColor.title}}</div>
+{%if(pi.WebPath!='')%}
 <div class="f_list"><img width="35" height="40" src="{{asset(pi.WebPath)}}" class="prod_dress ui-draggable"></div>
+{%else%}
+    <div class="f_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+{%endif%}
+    
 <div class="f_list"><a href="{{path('ajax_my_closet_delete',{'id': pi.Id}) }}"><img src="{{asset('bundles/lovethatfit/site/images/cross_icon.png')}}" class="prod_dress ui-draggable"></a></div>
 </div>
     

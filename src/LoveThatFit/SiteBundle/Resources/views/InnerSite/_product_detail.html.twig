@@ -52,7 +52,7 @@ function loveItem(item_id)
             if(jqXHR.responseText.trim()== "success")
             {
             
-             $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">');
+             $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}">');
             }   
             else
             {
@@ -127,13 +127,13 @@ function loveItem(item_id)
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
                              <div class="like_icon1" style="">
-                              <img src="{{asset('bundles/lovethatfit/site/images/love_icon_dactive.png')}}">
+                              <img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}">
                              </div>  
                             
                             {%else%}
                              
                              <div id="like_icon_{{productItem.id}}">
-                              <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/love_icon.png')}}"></a>
+                              <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
                             </div>
                               <span id="ajax_product_love_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
                             {%endif%}
