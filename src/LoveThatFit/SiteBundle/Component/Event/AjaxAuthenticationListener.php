@@ -23,7 +23,7 @@ class AjaxAuthenticationListener
  
         if ($request->isXmlHttpRequest()) {
             if ($exception instanceof AuthenticationException || $exception instanceof AccessDeniedException) {
-                $event->setResponse(new Response('beep', 403));
+                $event->setResponse(new Response('Authentication failed!', 403));
             }
         }
     }

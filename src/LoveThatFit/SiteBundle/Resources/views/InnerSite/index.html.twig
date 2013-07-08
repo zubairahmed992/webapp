@@ -580,6 +580,17 @@ var scroll_heighting = 506;
         );
         
     });
+    
+    
+   //script for redirection to login page incase if the session timed out 
+   //-----------------------------------------------------------------------------
+    $(document).ready(function() {
+    $(document).ajaxError(function (event, jqXHR) {
+        if (403 === jqXHR.status) {
+            window.location.reload();
+        }
+    });
+});
 </script>
 
  
