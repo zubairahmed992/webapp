@@ -36,21 +36,21 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
          
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));
-        $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/users');       
-        $path = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/users');
-        $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/users/'); 
-        $this->deleteAllUserFiles($path);
+        $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/users');              
+        $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/users');
+        $this->deleteAllUserFiles($destination);
         foreach ($fixtures['users'] as $user_key => $user_values) {             
             $entity = new User();            
             $entity->setFirstName(ucwords($user_values['first_name']));
             $entity->setLastName(ucwords($user_values['last_name']));                        
             $entity->setEmail($user_values['email']);           
             $entity->setImage($user_values['image']);
+            $entity->setAvatar($user_values['avater']);
             $entity->setGender($user_values['gender']);
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->setZipcode($user_values['zipcode']);
-            $entity->setSalt(md5(uniqid()));
+            $entity->setSalt(md5(uniqid()));            
             $encoder = $this->container
             ->get('security.encoder_factory')
             ->getEncoder($entity);
@@ -93,9 +93,16 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
                     ->get('user.helper.user')
                     ->findMaxUserId();
             foreach($userid as $usersid)
-            {            
-              @mkdir($path.'/'.$usersid['id']);            
-            }
+            {              
+              @mkdir($destination.'/'.$usersid['id']);
+              $current_destination=$destination.'/'.$usersid['id'];
+              $current_source = $source . '/1';  
+              $this->copyAllUserImageFiles($current_source, $current_destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));                            
+              //rename($current_destination.'/avatar.jpg',$current_destination.'/'.$usersid['id'].'_avatar.jpg' );
+              //rename($current_destination.'/original.jpg',$current_destination.'/'.$usersid['id'].'_original.jpg' );
+              //rename($current_destination.'/cropped.jpg',$current_destination.'/'.$usersid['id'].'_cropped.jpg' );              
+            }             
+            
         }
     }
     
@@ -112,8 +119,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
                         if ($handle2 = opendir($path . "/" . $file)) {
                             while (false !== ($file2 = readdir($handle2))) {
                                 if ($file2 != "." && $file2 != "..") {
-                                    if (unlink($path . "/" . $file . "/" . $file2)) {
-                                        $debugStr .=$file / $file2;
+                                    if (@unlink($path . "/" . $file . "/" . $file2)) {
+                                        $debugStr .=@($file / $file2);
                                     }
                                 }
                             }
@@ -170,6 +177,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
                     } else {
                         $__dest = $dest . "/" . $file;
                     }
+                    
                     $result = $this->copyAllUserImageFiles($source . "/" . $file, $__dest, $options);
                 }
             }

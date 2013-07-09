@@ -7,7 +7,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'test.png'
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
     weight: 120
     height: 180
     waist: 26.5
@@ -26,7 +27,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'test.png'
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
     weight: 120
     height: 180
     waist: 26.5 
@@ -45,7 +47,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'test.png'
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
     waist: 28.5   
     hip: 39.5
     bust: 36.5
@@ -62,7 +65,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: test.png 
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
     waist: 29.5  
     hip: 40.5
     bust: 37.5
@@ -79,7 +83,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'test.png'
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
     waist: 30.75  
     hip: 41.75
     bust: 39
@@ -96,7 +101,8 @@ users:
     password: 123456 
     zipcode: 123456
     gender: f
-    image: 'test.png'
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
     waist: 32  
     hip: 43
     bust: 40.5
@@ -113,7 +119,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'test.png'
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
     weight: 120
     height: 180
     waist: 26.5
