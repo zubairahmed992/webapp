@@ -20,8 +20,8 @@ products:
             image: 51a7587985fd7.png
             pattern: 51c1bc7323492.png            
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -44,8 +44,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -68,8 +68,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -93,16 +93,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4:  
+              size_title: 4
               product_color_title: red
               image: 519e53576904e_fr.png              
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 519e53576904e_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 519e53576904e_fr.png
               
@@ -126,8 +126,8 @@ products:
             image: 519e5865af0cf.png
             pattern: 51a75879828af.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -150,8 +150,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -174,8 +174,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -199,16 +199,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4:  
+              size_title: 4
               product_color_title: red
               image: 519e5d5aca671_fr.png              
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 519e5d5aca671_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 519e5d5aca671_fr.png
      
@@ -234,8 +234,8 @@ products:
             image: 51c1bb85526f5.png
             pattern: 51c1bb62af307.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -258,8 +258,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -282,8 +282,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -307,16 +307,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4:  
+              size_title: 4
               product_color_title: red
               image: 519e5dad0b8c7_fr.png             
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 519e5dad0b8c7_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 519e5dad0b8c7_fr.png
    
@@ -341,8 +341,8 @@ products:
             image: 51a75b90ce2e9.png
             pattern: 51a75988cedd1.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -365,8 +365,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -389,8 +389,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -414,16 +414,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4:  
+              size_title: 4
               product_color_title: red
               image: 51a75b5febdb1.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 51a75b7b33f8b.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 51a75b90ce2e9.png
    
@@ -449,8 +449,8 @@ products:
             image: 519e5bf985dda.png
             pattern: 51a76caf3606f.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -473,8 +473,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -497,8 +497,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -522,16 +522,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 51a75ee9867c6_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 51a75ee9867c6_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 51a75ee9867c6_fr.png
    
@@ -556,8 +556,8 @@ products:
             image: 519e55343a6be.png
             pattern: 51c1bc8941d13.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -580,8 +580,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -604,8 +604,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -629,16 +629,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 519e580b1cc2b_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 519e580b1cc2b_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 519e580b1cc2b_fr.png
    
@@ -663,8 +663,8 @@ products:
             image: 51a75988d2517.png
             pattern: 51a75879828af.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -687,8 +687,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -711,8 +711,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -736,16 +736,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 51c1bba370237_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 51c1bba370237_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 51c1bba370237_fr.png
      
@@ -769,8 +769,8 @@ products:
             image: 51c1bc9b4d45d.png
             pattern: 51a76cd14c5a6.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -793,8 +793,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -817,8 +817,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -842,16 +842,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 51a75f47af1a1_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 51a75f47af1a1_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 51a75f47af1a1_fr.png
    
@@ -877,8 +877,8 @@ products:
             image: 519e56905890c.png
             pattern: 51a75879828af.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -901,8 +901,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -925,8 +925,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -950,16 +950,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 519e56f888fae_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 519e56f888fae_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 519e56f888fae_fr.png
    
@@ -984,8 +984,8 @@ products:
             image: 519e5d4ff32c2.png
             pattern: 51a75879828af.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -1008,8 +1008,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -1032,8 +1032,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -1057,16 +1057,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 519e5d5aca671_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 519e5d5aca671_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 519e5d5aca671_fr.png
    
@@ -1091,8 +1091,8 @@ products:
             image: 519e542f82d62.png
             pattern: 51c1bb62af307.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -1115,8 +1115,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -1139,8 +1139,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -1164,16 +1164,16 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 51a775c147d9a_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 51a775c147d9a_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 51a775c147d9a_fr.png
    
@@ -1198,8 +1198,8 @@ products:
             image: 51c1bc9b4d45d.png
             pattern: 51c1bc9b4c404.png
      product_sizes:
-         smal:
-          title: S
+         4:
+          title: 4
           inseam_min: 20
           inseam_max: 25
           outseam_min: 20
@@ -1222,8 +1222,8 @@ products:
           thigh_max: 25
           hem: 35
           length: 35
-         medium:
-          title: M
+         8:
+          title: 8
           inseam_min: 26
           inseam_max: 30
           outseam_min: 26
@@ -1246,8 +1246,8 @@ products:
           thigh_max: 30
           hem: 45
           length: 45
-         large:
-          title: L
+         12:
+          title: 12
           inseam_min: 31
           inseam_max: 45
           outseam_min: 31
@@ -1271,15 +1271,493 @@ products:
           hem: 65
           length: 65
      product_item:
-            small:  
-              size_title: S
+            4l:  
+              size_title: 4
               product_color_title: red
               image: 51a75edfe6133_fr.png
-            medium:
-              size_title: M
+            8:
+              size_title: 8
               product_color_title: red
               image: 51a75edfe6133_fr.png
-            large:
-              size_title: L
+            12:
+              size_title: 12
               product_color_title: red
               image: 51a75edfe6133_fr.png
+ h&m:  
+   capri:
+     name: Black Capri
+     description: Fabric is slightly stretchy
+     adjustment: 0
+     gender: f
+     product_color:
+          black:
+            title: black
+            image: 51a752aa30d67.png
+            pattern: 51a752aa2d341.png
+            default: true                   
+     product_sizes:
+         2:
+          title: 2
+          inseam_min: 17.5
+          inseam_max: 18.5
+          outseam_min: 26
+          outseam_max: 27
+          hip_min: 31
+          hip_max: 32
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 28
+          waist_max: 29
+          chest_min: 28
+          chest_max: 29
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 18
+          thigh_max: 19
+          hem: 0
+          length: 0
+         4:
+          title: 4
+          inseam_min: 18
+          inseam_max: 19
+          outseam_min: 27
+          outseam_max: 28
+          hip_min: 31.25
+          hip_max: 31.25
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 30.25
+          waist_max: 31.25
+          chest_min: 30.25
+          chest_max: 31.25
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 18
+          thigh_max: 19
+          hem: 0
+          length: 0
+         6:
+          title: 6
+          inseam_min: 18
+          inseam_max: 19
+          outseam_min: 26.75
+          outseam_max: 27.75
+          hip_min: 31
+          hip_max: 45
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 31.25
+          waist_max: 32.25
+          chest_min: 31.25
+          chest_max: 32.25
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 20
+          thigh_max: 21
+          hem: 0
+          length: 0
+         8:
+          title: 8
+          inseam_min: 18.25
+          inseam_max: 19.25
+          outseam_min: 27.75
+          outseam_max: 28.75
+          hip_min: 34
+          hip_max: 35
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 32
+          waist_max: 33
+          chest_min: 32
+          chest_max: 33
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 21
+          thigh_max: 22
+          hem: 0
+          length: 0
+         10:
+          title: 10
+          inseam_min: 18.5
+          inseam_max: 19.5
+          outseam_min: 28
+          outseam_max: 29
+          hip_min: 37.5
+          hip_max: 38.5
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 33
+          waist_max: 34
+          chest_min: 33
+          chest_max: 35
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 22
+          thigh_max: 23
+          hem: 0
+          length: 0
+         12:
+          title: 12
+          inseam_min: 18.5
+          inseam_max: 19.5
+          outseam_min: 28
+          outseam_max: 29
+          hip_min: 37.75
+          hip_max: 38.75
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 35
+          waist_max: 36
+          chest_min: 35
+          chest_max: 36
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 22
+          thigh_max: 23
+          hem: 0
+          length: 0
+     product_item:
+            2:  
+              size_title: 2
+              product_color_title: black
+              image: 519e53576904e_fr.png              
+            4:
+              size_title: 4
+              product_color_title: black
+              image: 519e53576904e_fr.png
+            6:
+              size_title: 6
+              product_color_title: black
+              image: 519e53576904e_fr.png
+            8:
+              size_title: 8
+              product_color_title: black
+              image: 519e53576904e_fr.png
+            10:
+              size_title: 10
+              product_color_title: black
+              image: 519e53576904e_fr.png
+            12:
+              size_title: 12
+              product_color_title: black
+              image: 519e53576904e_fr.png
+              
+   t-shirts:
+     name: Blue T-Shirt
+     description: Fabric is slightly stretchy 
+     adjustment: 0
+     gender: f
+     product_color:
+          red:
+            title: blue
+            image: 519e5cf502c92.png
+            pattern: 51a76cd14c5a6.png
+            default: true          
+     product_sizes:
+         4:
+          title: 4
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 32
+          bust_max: 33
+          back_min: 12
+          back_max: 13
+          waist_min: 28
+          waist_max: 29
+          chest_min: 28
+          chest_max: 29
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 4.5
+          sleeve_max: 5.5
+          thigh_min: 18
+          thigh_max: 19
+          hem: 33
+          length: 20
+          shoulder_min: 11.5
+          shoulder_max: 12.5
+          length_back_min: 23
+          length_back_max: 24
+          length_armpit_min: 15
+          length_armpit_min: 16          
+         6:
+          title: 6
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 34
+          bust_max: 35
+          back_min: 13
+          back_max: 14
+          waist_min: 30
+          waist_max: 31
+          chest_min: 30
+          chest_max: 31
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 5
+          sleeve_max: 6
+          thigh_min: 0
+          thigh_max: 0
+          hem: 35
+          length: 19.5
+          shoulder_min: 12
+          shoulder_max: 13
+          length_back_min: 22.5
+          length_back_max: 23.5
+          length_armpit_min: 14.5
+          length_armpit_min: 15.5
+         8:
+          title: 8
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 35
+          bust_max: 36
+          back_min: 12.5
+          back_max: 13.5
+          waist_min: 31
+          waist_max: 32
+          chest_min: 31
+          chest_max: 32
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 5
+          sleeve_max: 6
+          thigh_min: 21
+          thigh_max: 22
+          hem: 36
+          length: 19.5
+          shoulder_min: 11.5
+          shoulder_max: 12.5
+          length_back_min: 22
+          length_back_max: 23
+          length_armpit_min: 15
+          length_armpit_min: 16
+         10:
+          title: 10
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 34
+          bust_max: 35
+          back_min: 13
+          back_max: 14
+          waist_min: 31.5
+          waist_max: 32.5
+          chest_min: 31.5
+          chest_max: 32.5
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 5
+          sleeve_max: 6
+          thigh_min: 22
+          thigh_max: 23
+          hem: 36
+          length: 20.75
+          shoulder_min: 18.5
+          shoulder_max: 19.5
+          length_back_min: 24
+          length_back_max: 25
+          length_armpit_min: 16.25
+          length_armpit_min: 17.25
+         12:
+          title: 12
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 36
+          bust_max: 37
+          back_min: 14
+          back_max: 15
+          waist_min: 33
+          waist_max: 34
+          chest_min: 33
+          chest_max: 34
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 5.25
+          sleeve_max: 6.25
+          thigh_min: 0
+          thigh_max: 0
+          hem: 37
+          length: 21.5
+          shoulder_min: 13.25
+          shoulder_max: 14.25
+          length_back_min: 25
+          length_back_max: 26
+          length_armpit_min: 16
+          length_armpit_min: 17
+     product_item:
+            4:
+              size_title: 4
+              product_color_title: blue
+              image: 519e53576904e_fr.png
+            6:
+              size_title: 6
+              product_color_title: blue
+              image: 519e53576904e_fr.png
+            8:
+              size_title: 8
+              product_color_title: blue
+              image: 519e53576904e_fr.png
+            10:
+              size_title: 10
+              product_color_title: blue
+              image: 519e53576904e_fr.png
+            12:
+              size_title: 12
+              product_color_title: blue
+              image: 519e53576904e_fr.png
+     
+   
+     
+   dress:
+     name: Aqua Dress
+     description: Fabric is slightly stretchy
+     adjustment: 0
+     gender: f
+     product_color:
+          aqua:
+            title: aqua
+            image: 51c1bb62b6a94.png
+            pattern: 51a76cd14c5a6.png
+            default: true          
+     product_sizes:
+         2:
+          title: 2
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 34
+          bust_max: 35
+          back_min: 0
+          back_max: 0
+          waist_min: 0
+          waist_max: 0
+          chest_min: 0
+          chest_max: 0
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 0
+          thigh_max: 0
+          hem: 0
+          length: 29
+          shoulder_min: 7.5
+          shoulder_max: 8.5
+          length_armpit_min: 26.5
+          length_armpit_min: 27.5
+         4:
+          title: 4
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 36
+          bust_max: 36
+          back_min: 0
+          back_max: 0
+          waist_min: 0
+          waist_max: 0
+          chest_min: 0
+          chest_max: 0
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 0
+          thigh_max: 0
+          hem: 0
+          length: 29
+          shoulder_min: 8
+          shoulder_max: 9
+          length_armpit_min: 26.5
+          length_armpit_min: 27.5
+         12:
+          title: 12
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 40
+          bust_max: 41
+          back_min: 0
+          back_max: 0
+          waist_min: 0
+          waist_max: 0
+          chest_min: 0
+          chest_max: 0
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 0
+          thigh_max: 0
+          hem: 0
+          length: 30.5
+          shoulder_min: 8.5
+          shoulder_max: 9.5
+          length_armpit_min: 29
+          length_armpit_min: 30
+     product_item:
+            2:
+              size_title: 2
+              product_color_title: aqua
+              image: 519e53576904e_fr.png
+            4:
+              size_title: 4
+              product_color_title: aqua
+              image: 519e53576904e_fr.png
+            12:
+              size_title: 12
+              product_color_title: aqua
+              image: 519e53576904e_fr.png

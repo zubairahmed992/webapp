@@ -7,3 +7,8 @@ clothing_type:
       target: dress
   skirts:
       target: bottom
+  capri:
+      target: bottom
+  t-shirts:
+      target:	top 
+      
