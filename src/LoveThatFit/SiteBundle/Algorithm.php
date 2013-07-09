@@ -72,15 +72,24 @@ class Algorithm {
 
         if ($fits == true) {
             $love_that_fit_feedback = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
+            //--------------- additional feedback on top of basic measurement comparison
             //     $result = array_merge((array)$love_that_fit_feedback, (array)$this->getAdditionalFeedbackArray());
             //   return $result;
+            //---------------
             return $love_that_fit_feedback;
         } else {
+            
+            
             $current_feedback = $this->feedback_array;
-            /*$fitting_size_feedback = $this->getFittingSizeFeedBack();
+            
+            //--------------- Recomend a size that fits
+            
+            $fitting_size_feedback = $this->getFittingSizeFeedBack();
+            
             if ($fitting_size_feedback) {
                 $current_feedback ['Try'] = $fitting_size_feedback;
-            }*/
+            }
+            
             return $current_feedback;
         }
     }
@@ -274,9 +283,9 @@ class Algorithm {
 
     protected function compare($u, $p_min, $p_max) {
         // incase if any measurement not provided
-        if (is_null($u) && (is_null($p_min) || is_null($p_max))) {
+        if ((is_null($u) || $u==0) && (is_null($p_min) || is_null($p_max))) {
             return array("user_measurement" => false, "item_measurement" => false, 'diff' => null);
-        } elseif (is_null($u)) {
+        } elseif (is_null($u) || $u==0) {
             return array("user_measurement" => false, "item_measurement" => true, 'diff' => null);
         } elseif (is_null($p_min) || is_null($p_max)) {
             return array("user_measurement" => true, "item_measurement" => false, 'diff' => null);
