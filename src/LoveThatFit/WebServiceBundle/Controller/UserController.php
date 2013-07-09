@@ -542,16 +542,11 @@ public function userProfileAction()
  #---------------------------------------Image Upload---------------------------------------#   
  public function imageUploadAction() {
      
+     $request = $this->getRequest();
      
-   
-   
-      $request = $this->get('request');
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $request_array = json_decode($jsonInput, true);
-
-        if (isset($request_array['email'])) {
-            $email = $request_array['email'];
+       $email=$_POST['email'];
+        if (isset($email)) {
+            $email = $email;
         }
         else{
              return new response(json_encode(array('Message' => 'Email Not Found'))); 
@@ -567,29 +562,32 @@ public function userProfileAction()
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
 
-                $entity->file=$_FILES['file']['tmp_name'];
-                $entity->upload();
-                $em->persist($entity);
+             //move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getUploadRootDir().'/'.$_FILES["file"]["name"]);    
+            $entity->setImage($_FILES["file"]["name"]);
+           if( move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath()))
+           {
+               $em->persist($entity);
                 $em->flush();
-                $image_path = $entity->getWebPath();
-            
-            
-            $image_path = "";
-            if ($entity->getImage()) {
-                $image_path = $entity->uploadTempImage();
-            } else {
-                $entity->upload();
-                $em->persist($entity);
-                $em->flush();
-                $image_path = $entity->getWebPath();
-            }
-            $response = new Response(json_encode(array(
-                                'imageurl' => $image_path
-                            )));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
-         
+              //  $image_path = $entity->getWebPath(); 
+                $userinfo=array();
+           $userinfo['image'] = $entity->getImage();
+           
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
+            $userinfo['path'] = $baseurl;  
+             $userinfo['data']=$userinfo;
+             return new Response(json_encode($userinfo));
+           }       
+           else
+           {
+             return new response(json_encode(array('Message' => 'Image not uploaded')));    
+           }
+           
     }
+    else
+           {
+             return new response(json_encode(array('Message' => 'We can not find user')));    
+           }
+           
  }   
 
    
