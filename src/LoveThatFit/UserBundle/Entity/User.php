@@ -196,9 +196,7 @@ class User  implements UserInterface, \Serializable{
      */
     private $updatedAt;
 
-     /**
-     * @Assert\File(maxSize="6000000")
-     */
+     
     public $file;
     
 

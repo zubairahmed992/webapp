@@ -545,21 +545,52 @@ public function userProfileAction()
      
    
    
-        $request = $this->get('request');
-        $uploaded_file = $request->files->get('fileToUpload');
-        
+      $request = $this->get('request');
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
 
-       $path =  'd:/wamp/www/webapp/web/uploads/';
-        $uploaded_file_info = pathinfo($uploaded_file->getClientOriginalName());
-        $filename = uniqid() . "." .$uploaded_file_info['extension'];
+        if (isset($request_array['email'])) {
+            $email = $request_array['email'];
+        }
+        else{
+             return new response(json_encode(array('Message' => 'Email Not Found'))); 
+            
+        }
 
-        $uploaded_file->move($path, $filename);
-         $response = 'success';
-      
-        $response = new Response(json_encode(array('response'=>$response)));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+
+        if (count($entity) > 0) {
+            $user_id = $entity->getId();
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+
+                $entity->file=$_FILES['file']['tmp_name'];
+                $entity->upload();
+                $em->persist($entity);
+                $em->flush();
+                $image_path = $entity->getWebPath();
+            
+            
+            $image_path = "";
+            if ($entity->getImage()) {
+                $image_path = $entity->uploadTempImage();
+            } else {
+                $entity->upload();
+                $em->persist($entity);
+                $em->flush();
+                $image_path = $entity->getWebPath();
+            }
+            $response = new Response(json_encode(array(
+                                'imageurl' => $image_path
+                            )));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+         
     }
+ }   
 
    
 #-----------------------------test form
