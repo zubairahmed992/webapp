@@ -10,5 +10,7 @@ clothing_type:
   capri:
       target: bottom
   t-shirts:
-      target:	top 
+      target:	top
+  shorts:
+      target:	bottom
       

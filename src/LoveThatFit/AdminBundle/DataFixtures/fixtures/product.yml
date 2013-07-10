@@ -1761,3 +1761,521 @@ products:
               size_title: 12
               product_color_title: aqua
               image: 519e53576904e_fr.png
+              
+ old navy:  
+   shorts:
+     name: Old Navy Blue shorts
+     description: Fabric is slightly stretchy
+     adjustment: 0
+     gender: f
+     product_color:
+          blue:
+            title: blue
+            image: 51a752aa30d67.png
+            pattern: 51a752aa2d341.png
+            default: true                   
+     product_sizes:
+         2:
+          title: 2
+          inseam_min: 3
+          inseam_max: 4
+          outseam_min: 10.5
+          outseam_max: 11.5
+          hip_min: 36
+          hip_max: 37
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 29
+          waist_max: 30
+          chest_min: 29
+          chest_max: 30
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 22
+          thigh_max: 23
+          hem: 0
+          length: 0
+         4:
+          title: 4
+          inseam_min: 3
+          inseam_max: 4
+          outseam_min: 11
+          outseam_max: 12
+          hip_min: 37
+          hip_max: 38
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 30.5
+          waist_max: 31.5
+          chest_min: 30.5
+          chest_max: 31.5
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 22
+          thigh_max: 23
+          hem: 0
+          length: 0
+         6:
+          title: 6
+          inseam_min: 3.5
+          inseam_max: 4.5
+          outseam_min: 11.5
+          outseam_max: 12.5
+          hip_min: 38
+          hip_max: 39
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 32
+          waist_max: 33
+          chest_min: 32
+          chest_max: 33
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 23
+          thigh_max: 24
+          hem: 0
+          length: 0
+         8:
+          title: 8
+          inseam_min: 3.5
+          inseam_max: 3.5
+          outseam_min: 11.5
+          outseam_max: 12.5
+          hip_min: 0
+          hip_max: 0
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 33.5
+          waist_max: 34.5
+          chest_min: 33.5
+          chest_max: 34.5
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 24
+          thigh_max: 25
+          hem: 0
+          length: 0         
+     product_item:
+            2:  
+              size_title: 2
+              product_color_title: blue
+              image: 519e53576904e_fr.png              
+            4:
+              size_title: 4
+              product_color_title: blue
+              image: 519e53576904e_fr.png
+            6:
+              size_title: 6
+              product_color_title: blue
+              image: 519e53576904e_fr.png
+            8:
+              size_title: 8
+              product_color_title: blue
+              image: 519e53576904e_fr.png          
+              
+   skirts:
+     name: Old Navy 5' Pink Short
+     description: Fabric is slightly stretchy 
+     adjustment: 0
+     gender: f
+     product_color:
+          pink:
+            title: pink
+            image: 519e5cf502c92.png
+            pattern: 51a76cd14c5a6.png
+            default: true          
+     product_sizes:
+         2:
+          title: 2
+          inseam_min: 5
+          inseam_max: 6
+          outseam_min: 12.5
+          outseam_max: 13.5
+          hip_min: 38
+          hip_max: 39
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 31
+          waist_max: 32
+          chest_min: 31
+          chest_max: 32
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 23
+          thigh_max: 24
+          hem: 0
+          length: 0 
+         4:
+          title: 4
+          inseam_min: 5
+          inseam_max: 6
+          outseam_min: 12.5
+          outseam_max: 13.5
+          hip_min: 38
+          hip_max: 39
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 32
+          waist_max: 33
+          chest_min: 32
+          chest_max: 33
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 23
+          thigh_max: 24
+          hem: 0
+          length: 0                
+         6:
+          title: 6
+          inseam_min: 5
+          inseam_max: 6
+          outseam_min: 13
+          outseam_max: 14
+          hip_min: 40
+          hip_max: 41
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 33
+          waist_max: 34
+          chest_min: 33
+          chest_max: 34
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 24
+          thigh_max: 25
+          hem: 0
+          length: 0 
+         8:
+          title: 8
+          inseam_min: 5
+          inseam_max: 6
+          outseam_min: 13
+          outseam_max: 14
+          hip_min: 41
+          hip_max: 42
+          bust_min: 0
+          bust_max: 0
+          back_min: 0
+          back_max: 0
+          waist_min: 34
+          waist_max: 35
+          chest_min: 34
+          chest_max: 35
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 24
+          thigh_max: 25
+          hem: 0
+          length: 0          
+     product_item:
+            2:
+              size_title: 2
+              product_color_title: pink
+              image: 519e53576904e_fr.png
+            4:
+              size_title: 4
+              product_color_title: pink
+              image: 519e53576904e_fr.png
+            6:
+              size_title: 6
+              product_color_title: pink
+              image: 519e53576904e_fr.png
+            8:
+              size_title: 8
+              product_color_title: pink
+              image: 519e53576904e_fr.png          
+     
+   t-shirts:
+     name: Old Navy V-neck Vintage Tee
+     description: Built in Bra, back measurement lower then usual. Razer back 
+     adjustment: 0
+     gender: f
+     product_color:
+          stripe:
+            title: stripe
+            image: 51c1bb62b6a94.png
+            pattern: 51a76cd14c5a6.png
+            default: true          
+     product_sizes:
+         0:
+          title: 0
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 31
+          bust_max: 31
+          back_min: 12.25
+          back_max: 13.25
+          waist_min: 30
+          waist_max: 31
+          chest_min: 30
+          chest_max: 31
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 7.5
+          sleeve_max: 8.5
+          thigh_min: 0
+          thigh_max: 0
+          hem: 39
+          length: 19.25
+          shoulder_min: 13.5
+          shoulder_max: 14.5
+          length_armpit_min: 17.25
+          length_armpit_min: 18.25
+          length_back_min: 25.75
+          length_back_max: 26.75
+         2:
+          title: 2
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 32.25
+          bust_max: 33.25
+          back_min: 12.25
+          back_max: 13.25
+          waist_min: 31
+          waist_max: 32
+          chest_min: 31
+          chest_max: 32
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 7.5
+          sleeve_max: 8.5
+          thigh_min: 0
+          thigh_max: 0
+          hem: 39
+          length: 18.25
+          shoulder_min: 13.25
+          shoulder_max: 14.25
+          length_armpit_min: 17
+          length_armpit_min: 18
+          length_back_min: 25.75
+          length_back_max: 26.75
+         8:
+          title: 8
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 34
+          bust_max: 35
+          back_min: 13.25
+          back_max: 14.25
+          waist_min: 33
+          waist_max: 34
+          chest_min: 33
+          chest_max: 34
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 6.75
+          sleeve_max: 7.75
+          thigh_min: 0
+          thigh_max: 0
+          hem: 40
+          length: 19.5
+          shoulder_min: 13
+          shoulder_max: 14
+          length_armpit_min: 18
+          length_armpit_min: 19
+          length_back_min: 26.5
+          length_back_max: 27.5
+         12:
+          title: 12
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 39.25
+          bust_max: 40.25
+          back_min: 14.25
+          back_max: 15.25
+          waist_min: 36
+          waist_max: 37
+          chest_min: 0
+          chest_max: 0
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 7.5
+          sleeve_max: 8.5
+          thigh_min: 0
+          thigh_max: 0
+          hem: 43.5
+          length: 19.75
+          shoulder_min: 14.75
+          shoulder_max: 15.75
+          length_armpit_min: 17.75
+          length_armpit_min: 18.75
+          length_back_min: 27.25
+          length_back_max: 28.25
+     product_item:
+            0:
+              size_title: 0
+              product_color_title: stripe
+              image: 519e53576904e_fr.png
+            2:
+              size_title: 2
+              product_color_title: stripe
+              image: 519e53576904e_fr.png
+            8:
+              size_title: 8
+              product_color_title: stripe
+              image: 519e53576904e_fr.png
+            12:
+              size_title: 12
+              product_color_title: stripe
+              image: 519e53576904e_fr.png
+   shirts:
+     name: Old Navy Pink Razer Back Tee
+     description: Built in Bra, back measurement lower then usual. Razer back
+     adjustment: 0
+     gender: f
+     product_color:
+          pink:
+            title: pink
+            image: 51c1bb62b6a94.png
+            pattern: 51a76cd14c5a6.png
+            default: true          
+     product_sizes:
+         4:
+          title: 4
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 22
+          bust_max: 23
+          back_min: 10.5
+          back_max: 11.5
+          waist_min: 22.5
+          waist_max: 23.5
+          chest_min: 22.5
+          chest_max: 23.5
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 0
+          thigh_max: 0
+          hem: 28
+          length: 20
+          shoulder_min: 8
+          shoulder_max: 9
+          length_armpit_min: 17.5
+          length_armpit_min: 18.5
+          length_back_min: 24.25
+          length_back_max: 25.25     
+         8:
+          title: 8
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 26
+          bust_max: 27
+          back_min: 12
+          back_max: 13
+          waist_min: 25
+          waist_max: 26
+          chest_min: 25
+          chest_max: 26
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 0
+          thigh_max: 0
+          hem: 30
+          length: 20
+          shoulder_min: 9
+          shoulder_max: 10
+          length_armpit_min: 18.5
+          length_armpit_min: 19.5
+          length_back_min: 25
+          length_back_max: 26
+         12:
+          title: 12
+          inseam_min: 0
+          inseam_max: 0
+          outseam_min: 0
+          outseam_max: 0
+          hip_min: 0
+          hip_max: 0
+          bust_min: 29
+          bust_max: 30
+          back_min: 14
+          back_max: 15
+          waist_min: 28.5
+          waist_max: 29.5
+          chest_min: 28.5
+          chest_max: 29.5
+          neck_min: 0
+          neck_max: 0
+          sleeve_min: 0
+          sleeve_max: 0
+          thigh_min: 0
+          thigh_max: 0
+          hem: 35
+          length: 20
+          shoulder_min: 10
+          shoulder_max: 11
+          length_armpit_min: 19
+          length_armpit_min: 20
+          length_back_min: 25
+          length_back_max: 26
+     product_item:            
+            4:
+              size_title: 4
+              product_color_title: pink
+              image: 519e53576904e_fr.png
+            8:
+              size_title: 8
+              product_color_title: pink
+              image: 519e53576904e_fr.png
+            12:
+              size_title: 12
+              product_color_title: pink
+              image: 519e53576904e_fr.png
