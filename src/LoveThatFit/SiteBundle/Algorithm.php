@@ -78,20 +78,25 @@ class Algorithm {
             //---------------
             return $love_that_fit_feedback;
         } else {
-            
-            
+
+/*
             $current_feedback = $this->feedback_array;
-            
             //--------------- Recomend a size that fits
-            
             $fitting_size_feedback = $this->getFittingSizeFeedBack();
-            
+
             if ($fitting_size_feedback) {
                 $current_feedback ['Try'] = $fitting_size_feedback;
             }
-            
+
             return $current_feedback;
-        }
+ 
+ * 
+ */ 
+   
+   //         return $this->getRecomendations();
+            return $this->feedback_array;
+            }
+ 
     }
 
     //------------------------------------------------------------------------
@@ -283,9 +288,9 @@ class Algorithm {
 
     protected function compare($u, $p_min, $p_max) {
         // incase if any measurement not provided
-        if ((is_null($u) || $u==0) && (is_null($p_min) || is_null($p_max))) {
+        if ((is_null($u) || $u == 0) && (is_null($p_min) || is_null($p_max))) {
             return array("user_measurement" => false, "item_measurement" => false, 'diff' => null);
-        } elseif (is_null($u) || $u==0) {
+        } elseif (is_null($u) || $u == 0) {
             return array("user_measurement" => false, "item_measurement" => true, 'diff' => null);
         } elseif (is_null($p_min) || is_null($p_max)) {
             return array("user_measurement" => true, "item_measurement" => false, 'diff' => null);
@@ -320,6 +325,7 @@ class Algorithm {
         }
         return array("diff" => 0, "msg" => 'Your Size not available', 'fit' => false);
     }
+
     //------------------------------------------------------------------------    
 
     public function getFittingSize() {
@@ -333,6 +339,60 @@ class Algorithm {
             }
         }
         return;
+    }
+
+    //------------------------------------------------------------------------
+
+    public function getRecomendations() {
+
+        $recomendations = $this->feedback_array;
+
+        $fits = $this->fit($this->feedback_array);
+
+        if ($fits == true) {
+            $recomendations = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
+        } else {
+
+            $current_feedback = $this->feedback_array;
+            $size_fits = $this->getFittingSize();
+            // just incase if we forgot
+            $this->feedback_array = $current_feedback;
+
+            if ($size_fits) {
+                $recomendations [''] = array("diff" => 0, "msg" => 'Try Size ' . $size_fits->getTitle() . '', 'fit' => true);
+            } else {
+                $size_suggestion = $this->getGeneralSuggestion($current_feedback);
+                $recomendations [''] = array("diff" => 0, "msg" => 'Your Perfect matching size is not available. ' . $size_suggestion, 'fit' => false);
+            }
+
+            return $recomendations;
+        }
+    }
+
+//------------------------------------------------------------------------
+
+
+    private function getGeneralSuggestion($sug_array) {
+
+        if ($sug_array != null) {
+            $diff = 0;
+            foreach ($sug_array as $key => $value) {
+                if ($value["fit"] == false) {
+                    if ($value["diff"]) {
+                        $diff = $diff + $value["diff"];
+                    }
+                }
+            }
+
+            if ($diff > 0) {
+                return 'Please try smaller sizes.';
+            } elseif ($diff > 0) {
+                return 'Please try bigger sizes.';
+            }
+            return;
+        } else {
+            return;
+        }
     }
 
 }
