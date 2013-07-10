@@ -115,7 +115,7 @@ class RegistrationController extends Controller {
             $form->bind($this->getRequest());
 
             if ($this->isDuplicateEmail(Null, $entity->getEmail())) {
-                $form->get('email')->addError(new FormError('This email has already taken.'));
+                $form->get('email')->addError(new FormError('This email address has already been taken.'));
             }
 
 

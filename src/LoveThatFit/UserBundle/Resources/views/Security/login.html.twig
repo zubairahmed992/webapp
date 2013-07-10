@@ -48,15 +48,14 @@ function validates()
         </form>
         
         
-        <script>
-            
+        <script>            
          $(document).ready(function(){
          $('#email').attr("value","email");
          $('#password').attr("value","password");
          
-         $('.form').find('input:password').each(function() {
-   $("<input type='text' id='text'/>").attr({ name: this.name, value: this.value }).insertBefore(this);
-}).remove();  
+        // $('.form').find('input:password').each(function() {
+  // $("<input type='text' id='text'/>").attr({ name: this.name, value: this.value }).insertBefore(this);
+//}).remove();  
      
      $('#email').focusin(function(){
          var tt = $(this).val();
@@ -94,16 +93,13 @@ function validates()
         
        
      $('.form').find('input[id="password2"]').each(function() {             
-   $("<input type='text' id='text' >").attr({ name: this.name, value: this.value }).insertBefore(this);
+   $("<input type='text' id='text'>").attr({ name: this.name, value: this.value }).insertBefore(this);
 }).remove();
     
       }
-      $('#text').attr("value","password");
+      $('#text').attr("value","password");      
       
-      
-      
-    });   
-  
+    });     
    
          });        
           
