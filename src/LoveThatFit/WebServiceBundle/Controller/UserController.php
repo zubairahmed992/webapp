@@ -564,7 +564,6 @@ public function userProfileAction()
             $entity->setImage($newFilename);
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath())) {
                 
-                (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath())) ;
                 
                 $em->persist($entity);
                 $em->flush();
