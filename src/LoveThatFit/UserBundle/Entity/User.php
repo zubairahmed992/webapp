@@ -196,7 +196,9 @@ class User  implements UserInterface, \Serializable{
      */
     private $updatedAt;
 
-     
+     /**
+     * @Assert\File()
+     */
     public $file;
     
 
