@@ -572,8 +572,8 @@ public function userProfileAction()
                 $userimage = $entity->getImage();
 
                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-
-                $userinfo['data'] = $baseurl . $userimage;
+                $userinfo['image']=$userimage;
+                $userinfo['path'] = $baseurl ;
                 return new Response(json_encode($userinfo));
             } else {
                 return new response(json_encode(array('Message' => 'Image not uploaded')));
