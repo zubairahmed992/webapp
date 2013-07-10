@@ -3,6 +3,15 @@
 {% block action_block_content %}
 
 <section class="reg_blk">
+    <div id="popout_blk" class="popout_blk">
+        <h2>Welcome!</h2>
+        <p>Fill out the field below for most accurate Fit, Look & Size</p>
+        <ul>
+            <li>Enter height & weight and let us know what type of fit you are.</li>
+            <li>Enter what size you are in your favorite brands. Do not know? Click 'Not Sure' and enter any of your measurements you might know.</li>
+            <li>Know measurements and brands? Then feel free to enter both!</li>
+        </ul>
+    </div>
     <div class="action_cnt">
         <div class="steps step_3 measurements">
             <h2>Brands &amp; Sizes</h2>
@@ -12,7 +21,7 @@
                     
                     <div>
                         {{ form_errors(form.height) }}
-                        <span class="boxlable" id="height_box">Height</span>                       
+                        <span class="boxlable" id="height_box">Height (inch)</span>                       
                         {{ form_widget(form.height) }}
                         
                         {{ form_errors(form.weight) }}
@@ -101,7 +110,7 @@
                             {{ form_widget(form.waist) }}
 
                             {{ form_errors(form.outseam) }}
-                            <span class="boxlable" id="outseam_box">Outseam</span> 
+                            <span class="boxlable" id="outseam_box">Pant Lenght</span> 
                             {{ form_widget(form.outseam) }}       
 
                         </div>

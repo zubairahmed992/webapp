@@ -2634,3 +2634,28 @@ padding-bottom: 0px;
     margin-left: 20px;
     margin-right: 20px;
 }
+
+
+.popout_blk {
+    width:300px;
+    height:250px;
+    background:url(../images/white_trans_dot.png) 0 0 repeat;
+    position:absolute;
+    top:50px;
+    right:-380px;
+    font-size: 13px;
+    padding:20px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;	
+    border-radius:5px;
+    border:1px solid #efefef;
+    color:#444;
+}
+.popout_blk p {
+    color:#000;
+    font-size: 15px;
+    text-align: center;
+}
+.popout_blk li {
+    padding-bottom: 10px;
+}
