@@ -154,8 +154,7 @@ class ProductController extends Controller {
         $product_id = $request_array['id'];
         $em = $this->getDoctrine()->getManager();
         
-        $product_id = 2;
-        
+       
         $productdetail = array();
         $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')

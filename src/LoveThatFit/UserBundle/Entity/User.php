@@ -83,7 +83,7 @@ class User  implements UserInterface, \Serializable{
      *      maxMessage = "Password cannot be longer than than {{ limit }} characters long",
      *      groups={"registration_step_one"}
      * )
-     *      @Assert\NotBlank(groups={"registration_step_one"})
+     *      @Assert\NotBlank(groups={"registration_step_one"}, message="Password cannot be blank")
      */
     private $password;
 
@@ -91,8 +91,8 @@ class User  implements UserInterface, \Serializable{
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=60, unique=true, nullable=false)
-     * @Assert\Email(groups={"registration_step_one"})
-     * @Assert\NotBlank(groups={"registration_step_one"})
+     * @Assert\Email(groups={"registration_step_one"}, message="Please provide a valid email")
+     * @Assert\NotBlank(groups={"registration_step_one"}, message="Email cannot be blank")
      */
     private $email;
     
@@ -100,7 +100,7 @@ class User  implements UserInterface, \Serializable{
      * @var string $zipcode
      *
      * @ORM\Column(name="zipcode", type="string", length=60,nullable=false)
-     * @Assert\NotBlank(groups={"registration_step_one"})
+     * @Assert\NotBlank(groups={"registration_step_one"}, message="Zip code cannot be blank")
      */
     private $zipcode;
     
@@ -154,7 +154,7 @@ class User  implements UserInterface, \Serializable{
      * @var string $gender
      *
      * @ORM\Column(name="gender", type="string", length=10, nullable=true)
-     * @Assert\NotBlank(groups={"registration_step_one","profile_settings"})  
+     * @Assert\NotBlank(groups={"registration_step_one","profile_settings"}, message="Choose a valid gender")  
      */
     private $gender;
 

@@ -1,30 +1,15 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 {% block action_block_content %}
-<script>
-function validates()
-{
-    var email=document.getElementById('email').value;
-    var password=document.getElementById('text').value;
-    if(email=='email' || email=='' && password=='password' || password=='')
-        {
-            document.getElementById('error_content1').style.display='block';
-            return false;
-        }else
-        {
-            return true;
-        }
-}
-</script>
 <section class="reg_blk">
     <div class="action_cnt step_1">
         <h2>Log In</h2>
         <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
         <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
             <div class="frm_ele">            
-                <input type="text" id="email" name="_username" value="{{ last_username }}" />
+                <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
                           </div>
             <div class="frm_ele">
-                <input type="password" id="password" name="_password" />
+                <input type="password" id="password" name="_password" placeholder="Password" />
               <div class="login_error" >
                   <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
     text-align:left">
@@ -48,63 +33,7 @@ function validates()
         </form>
         
         
-        <script>            
-         $(document).ready(function(){
-         $('#email').attr("value","email");
-         $('#password').attr("value","password");
-         
-        // $('.form').find('input:password').each(function() {
-  // $("<input type='text' id='text'/>").attr({ name: this.name, value: this.value }).insertBefore(this);
-//}).remove();  
-     
-     $('#email').focusin(function(){
-         var tt = $(this).val();
-         if(tt=='email'){
-         $(this).val('');
-         }
-     });
-         
-    $('#email').focusout(function(){   
-         var ttt = $(this).val();
-          if(ttt==''){ 
-          $(this).val('email');
-          }            
-    });    
-    
-    
-    $('#text').live('focusin', function() {
-         
-         var ee = $(this).val();
-         if(ee=='password'){
-         $(this).val('');
-         }
-         
-         
-         $('.form').find('input[id="text"]').each(function() {             
-   $("<input type='password' id='password2' >").attr({ name: this.name, value: this.value }).insertBefore(this);
-}).remove();      
- $('#password2').focus(); 
-         });
-         
-         
-    $('#password2').live('focusout', function() {
-   
-     if($(this).val().length===0){    
         
-       
-     $('.form').find('input[id="password2"]').each(function() {             
-   $("<input type='text' id='text'>").attr({ name: this.name, value: this.value }).insertBefore(this);
-}).remove();
-    
-      }
-      $('#text').attr("value","password");      
-      
-    });     
-   
-         });        
-          
-            
-         </script>  
         
         
 
