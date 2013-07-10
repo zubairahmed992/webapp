@@ -2626,3 +2626,11 @@ padding-bottom: 0px;
     padding-bottom: 10px;
       
 }
+
+#gender_label{
+    font-size: 0.85em;
+    color: #666;
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}

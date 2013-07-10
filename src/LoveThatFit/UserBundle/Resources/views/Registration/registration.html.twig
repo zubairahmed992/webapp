@@ -35,7 +35,11 @@
 
                     <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
                         <div class="frm_ele radio_buts">
-                            {{ form_row(form.gender) }}                     
+                            
+                            <div id="gender_label">Gender</div>
+                            {{ form_widget(form.gender) }} 
+                             
+                            {{ form_errors(form.gender) }}
                         </div>
                     </div>
                     
