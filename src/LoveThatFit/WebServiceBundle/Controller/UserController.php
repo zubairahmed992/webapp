@@ -543,52 +543,45 @@ public function userProfileAction()
  public function imageUploadAction() {
      
      $request = $this->getRequest();
-     
-       $email=$_POST['email'];
-        if (isset($email)) {
-            $email = $email;
+
+        $email = $_POST['email'];
+
+        if ($email) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+        } else {
+            return new response(json_encode(array('Message' => 'Email Not Found')));
         }
-        else{
-             return new response(json_encode(array('Message' => 'Email Not Found'))); 
-            
-        }
-
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
-
         if (count($entity) > 0) {
             $user_id = $entity->getId();
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-
-             //move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getUploadRootDir().'/'.$_FILES["file"]["name"]);    
-            $entity->setImage($_FILES["file"]["name"]);
-           if( move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath()))
-           {
-               $em->persist($entity);
+            $file_name=$_FILES["file"]["name"];
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            $newFilename = 'cropped' . $ext;
+            $newFilename_copy = 'original' . $ext;
+           
+            $entity->setImage($newFilename);
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath())) {
+                
+                
+                $em->persist($entity);
                 $em->flush();
-              //  $image_path = $entity->getWebPath(); 
-                $userinfo=array();
-           $userinfo['image'] = $entity->getImage();
-           
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-            $userinfo['path'] = $baseurl;  
-             $userinfo['data']=$userinfo;
-             return new Response(json_encode($userinfo));
-           }       
-           else
-           {
-             return new response(json_encode(array('Message' => 'Image not uploaded')));    
-           }
-           
-    }
-    else
-           {
-             return new response(json_encode(array('Message' => 'We can not find user')));    
-           }
-           
- }   
+                //  $image_path = $entity->getWebPath(); 
+                $userinfo = array();
+                $userimage = $entity->getImage();
+
+                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
+                $userinfo['image']=$userimage;
+                $userinfo['path'] = $baseurl ;
+                return new Response(json_encode($userinfo));
+            } else {
+                return new response(json_encode(array('Message' => 'Image not uploaded')));
+            }
+        } else {
+            return new response(json_encode(array('Message' => 'We can not find user')));
+        }
+    }   
 
    
 #-----------------------------test form
