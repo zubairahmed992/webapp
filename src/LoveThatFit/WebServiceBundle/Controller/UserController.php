@@ -541,7 +541,6 @@ public function userProfileAction()
 
  #---------------------------------------Image Upload---------------------------------------#   
  public function imageUploadAction() {
-     
      $request = $this->getRequest();
 
         $email = $_POST['email'];
@@ -557,9 +556,9 @@ public function userProfileAction()
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
             $file_name=$_FILES["file"]["name"];
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            $newFilename = 'cropped' . $ext;
-            $newFilename_copy = 'original' . $ext;
+            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+            $newFilename = 'cropped'."." . $ext;
+            $newFilename_copy = 'original'.'.'.  $ext;
            
             $entity->setImage($newFilename);
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath())) {
