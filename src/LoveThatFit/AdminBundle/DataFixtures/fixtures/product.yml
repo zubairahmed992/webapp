@@ -1292,8 +1292,8 @@ products:
      product_color:
           black:
             title: black
-            image: 51a752aa30d67.png
-            pattern: 51a752aa2d341.png
+            image: 51dd662d4eedc.png
+            pattern: 51dd662d4c844.png
             default: true                   
      product_sizes:
          2:
@@ -1444,27 +1444,27 @@ products:
             2:  
               size_title: 2
               product_color_title: black
-              image: 519e53576904e_fr.png              
+              image: 51dd6644ccd6a_fr.png              
             4:
               size_title: 4
               product_color_title: black
-              image: 519e53576904e_fr.png
+              image: 51dd664ed3a46_fr.png
             6:
               size_title: 6
               product_color_title: black
-              image: 519e53576904e_fr.png
+              image: 51dd6657eb1fb_fr.png
             8:
               size_title: 8
               product_color_title: black
-              image: 519e53576904e_fr.png
+              image: 51dd6666d3e0f_fr.png
             10:
               size_title: 10
               product_color_title: black
-              image: 519e53576904e_fr.png
+              image: 51dd666f48aea_fr.png
             12:
               size_title: 12
               product_color_title: black
-              image: 519e53576904e_fr.png
+              image: 51dd66776fd72_fr.png
               
    t-shirts:
      name: Blue T-Shirt
@@ -1474,8 +1474,8 @@ products:
      product_color:
           red:
             title: blue
-            image: 519e5cf502c92.png
-            pattern: 51a76cd14c5a6.png
+            image: 51dd672598fa8.png
+            pattern: 51dd6725967cb.png
             default: true          
      product_sizes:
          4:
@@ -1632,23 +1632,23 @@ products:
             4:
               size_title: 4
               product_color_title: blue
-              image: 519e53576904e_fr.png
+              image: 51dd675593492_fr.png
             6:
               size_title: 6
               product_color_title: blue
-              image: 519e53576904e_fr.png
+              image: 51dd67a96fd22_fr.png
             8:
               size_title: 8
               product_color_title: blue
-              image: 519e53576904e_fr.png
+              image: 51dd67b2168e5_fr.png
             10:
               size_title: 10
               product_color_title: blue
-              image: 519e53576904e_fr.png
+              image: 51dd67b9c70cd_fr.png
             12:
               size_title: 12
               product_color_title: blue
-              image: 519e53576904e_fr.png
+              image: 51dd67c1740fd_fr.png
      
    
      
@@ -1660,8 +1660,8 @@ products:
      product_color:
           aqua:
             title: aqua
-            image: 51c1bb62b6a94.png
-            pattern: 51a76cd14c5a6.png
+            image: 51dd68195b46f.png
+            pattern: 51dd681958b19.png
             default: true          
      product_sizes:
          2:
@@ -1752,27 +1752,27 @@ products:
             2:
               size_title: 2
               product_color_title: aqua
-              image: 519e53576904e_fr.png
+              image: 51dd682d7961a_fr.png
             4:
               size_title: 4
               product_color_title: aqua
-              image: 519e53576904e_fr.png
+              image: 51dd6835d7333_fr.png
             12:
               size_title: 12
               product_color_title: aqua
-              image: 519e53576904e_fr.png
+              image: 51dd683d8ed4a_fr.png
               
  old navy:  
    shorts:
-     name: Old Navy Blue shorts
+     name: Blue shorts
      description: Fabric is slightly stretchy
      adjustment: 0
      gender: f
      product_color:
           blue:
             title: blue
-            image: 51a752aa30d67.png
-            pattern: 51a752aa2d341.png
+            image: 51dd68bbcc323.png
+            pattern: 51dd68bbc9ac5.png
             default: true                   
      product_sizes:
          2:
@@ -1875,30 +1875,30 @@ products:
             2:  
               size_title: 2
               product_color_title: blue
-              image: 519e53576904e_fr.png              
+              image: 51dd68cc7e92b_fr.png       
             4:
               size_title: 4
               product_color_title: blue
-              image: 519e53576904e_fr.png
+              image: 51dd68d52ce37_fr.png
             6:
               size_title: 6
               product_color_title: blue
-              image: 519e53576904e_fr.png
+              image: 51dd68dec5a16_fr.png
             8:
               size_title: 8
               product_color_title: blue
-              image: 519e53576904e_fr.png          
+              image: 51dd68e6a45f6_fr.png
               
    skirts:
-     name: Old Navy 5' Pink Short
+     name: Pink Short
      description: Fabric is slightly stretchy 
      adjustment: 0
      gender: f
      product_color:
           pink:
             title: pink
-            image: 519e5cf502c92.png
-            pattern: 51a76cd14c5a6.png
+            image: 51dd696db2416.png
+            pattern: 51dd696dafa78.png
             default: true          
      product_sizes:
          2:
@@ -2001,30 +2001,30 @@ products:
             2:
               size_title: 2
               product_color_title: pink
-              image: 519e53576904e_fr.png
+              image: 51dd6980806df_fr.png
             4:
               size_title: 4
               product_color_title: pink
-              image: 519e53576904e_fr.png
+              image: 51dd69880cf06_fr.png
             6:
               size_title: 6
               product_color_title: pink
-              image: 519e53576904e_fr.png
+              image: 51dd698f93f26_fr.png
             8:
               size_title: 8
               product_color_title: pink
-              image: 519e53576904e_fr.png          
+              image: 51dd69976e340_fr.png
      
    t-shirts:
-     name: Old Navy V-neck Vintage Tee
+     name: V-neck Vintage Tee
      description: Built in Bra, back measurement lower then usual. Razer back 
      adjustment: 0
      gender: f
      product_color:
           stripe:
             title: stripe
-            image: 51c1bb62b6a94.png
-            pattern: 51a76cd14c5a6.png
+            image: 51dd6a0e0079e.png
+            pattern: 51dd6a0df23d7.png
             default: true          
      product_sizes:
          0:
@@ -2151,29 +2151,29 @@ products:
             0:
               size_title: 0
               product_color_title: stripe
-              image: 519e53576904e_fr.png
+              image: 51dd6a2b8b6dc_fr.png
             2:
               size_title: 2
               product_color_title: stripe
-              image: 519e53576904e_fr.png
+              image: 51dd6a4580f2c_fr.png
             8:
               size_title: 8
               product_color_title: stripe
-              image: 519e53576904e_fr.png
+              image: 51dd6a4ecb6dc_fr.png
             12:
               size_title: 12
               product_color_title: stripe
-              image: 519e53576904e_fr.png
+              image: 51dd6a5787e3d_fr.png
    shirts:
-     name: Old Navy Pink Razer Back Tee
+     name: Pink Razer Back Tee
      description: Built in Bra, back measurement lower then usual. Razer back
      adjustment: 0
      gender: f
      product_color:
           pink:
             title: pink
-            image: 51c1bb62b6a94.png
-            pattern: 51a76cd14c5a6.png
+            image: 51dd6ab3e05fb.png
+            pattern: 51dd6ab3ddee5.png
             default: true          
      product_sizes:
          4:
@@ -2270,12 +2270,12 @@ products:
             4:
               size_title: 4
               product_color_title: pink
-              image: 519e53576904e_fr.png
+              image: 51dd6abf4d62d_fr.png
             8:
               size_title: 8
               product_color_title: pink
-              image: 519e53576904e_fr.png
+              image: 51dd6ac7afce2_fr.png
             12:
               size_title: 12
               product_color_title: pink
-              image: 519e53576904e_fr.png
+              image: 51dd6ace7a22a_fr.png
