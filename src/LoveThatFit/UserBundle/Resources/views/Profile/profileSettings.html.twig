@@ -52,7 +52,7 @@ return true;
     <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
     <br>
     <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }} onsubmit="return validate();">
-    {{ form_errors(form) }}
+   <!-- {{ form_errors(form) }}-->
 
             <div class="frm_ele act_set">
                 
@@ -71,6 +71,8 @@ return true;
                  {{ form_errors(form.lastName) }}
                  </div>
             </div>
+   
+   <div class="clr_bth"></div>
             
             <div class="frm_ele select_inline act_set">
                  {{ form_errors(form.birthdate) }}
@@ -117,7 +119,6 @@ return true;
     <h5>Change Password</h5>
   <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }}>
     {{ form_errors(form_password_reset) }}
-
             
            <div class="frm_ele">
                <label>New Password</label>
