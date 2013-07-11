@@ -558,7 +558,7 @@ public function userProfileAction()
             $file_name=$_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
             $newFilename = 'cropped'."." . $ext;
-            $newFilename_copy = 'original'.'.'.  $ext;
+            $newFilename_copy = 'original'.'.'.$ext;
            
             $entity->setImage($newFilename);
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath())) {
@@ -581,19 +581,10 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-
-   
 #-----------------------------test form
-    public function imageFormAction()
-    {
-        
-        
-     return $this->render('LoveThatFitWebServiceBundle::json.html.twig'); 
-        
-    }        
-
-    
-    
+    public function imageFormAction() {
+     return $this->render('LoveThatFitWebServiceBundle::json.html.twig');
+    }
 # ------------------------------    
 #---------------------------Render Json--------------------------------------------------------------------#
 

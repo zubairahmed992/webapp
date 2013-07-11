@@ -80,9 +80,11 @@ web_service_size_chart:
    pattern:  /web_service/size_chart
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:sizeCharts}
 
-web_service_form:
-   pattern:  /web_service/form
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:imageForm}
+web_service_fittng_alert:
+   pattern:  /web_service/fitting_alerts
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getFeedBackJSON}
+
+
 
 
    
