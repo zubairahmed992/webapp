@@ -225,10 +225,11 @@ class ProductController extends Controller {
         $user_id = $request_array['user_id'];
         $product_id = $request_array['product_id'];
        // find product
+         if($product_id){ 
         $product = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->find($product_id);
-       if($product){ 
+      
          $product_color = $product->getDisplayProductColor();
           $product_color_id = $product_color->getId();
           
