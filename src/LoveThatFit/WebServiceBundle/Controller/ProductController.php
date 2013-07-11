@@ -96,7 +96,9 @@ class ProductController extends Controller {
         $id = $request_array['id'];
         $type = $request_array['type'];
         $gender = $request_array['gender'];
-
+        $type='brand';
+        $gender='F';
+        $id=3;
         $products = Null;
         if ($type == "brand") {
             $products = $this->getDoctrine()
@@ -213,7 +215,86 @@ class ProductController extends Controller {
             return json_encode(array('Message' => 'Record Not Found'));
         }
     }
-#------------------------------Fitting Room Alerts --------------------------------------------------#  
+#------------------------------Default Fitting Room Alerts --------------------------------------------------#
+////-------------------------------------------------------------------
+    public function defaultProductFittingAlertAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user_id = $request_array['user_id'];
+        $product_id = $request_array['product_id'];
+       // find product
+        $product = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->find($product_id);
+       if($product){ 
+         $product_color = $product->getDisplayProductColor();
+          $product_color_id = $product_color->getId();
+          
+            //get color size array, sizes that are available in this color 
+
+            $color_sizes_array = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:ProductColor')
+                    ->getSizeArray($product_color_id);
+            $size_id = null;
+
+            // find size id is not in param gets the first size id for this color
+
+            $psize = array_shift($color_sizes_array);
+            $size_id = $psize['id'];
+            $product_size_id = $size_id;
+            $product_size = $this->getDoctrine()
+                    ->getRepository('LoveThatFitAdminBundle:ProductSize')
+                    ->find($product_size_id);
+
+         
+            //2) color & size can get an item
+
+            if ($product_size && $product_color) {
+                $product_item = $this->getDoctrine()
+                        ->getRepository('LoveThatFitAdminBundle:ProductItem')
+                        ->findByColorSize($product_color->getId(), $product_size->getId());
+               $product_item_id = $product_item->getId();
+        } 
+        
+       
+        if ($user_id && $product_item_id) {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+            $productItem = $this->getProductItemById($product_item_id);
+
+            if (!$user)
+                return new Response(json_encode(array('Message' => 'User not found')));
+
+            if (!$productItem)
+                return new Response(json_encode(array('Message' => 'Product not found')));
+
+            $fit = new Algorithm($user, $productItem);
+            $data = array();
+            $data['data'] = $fit->getFeedBackJson();
+           
+            return new Response(json_encode($data));
+        }
+        else {
+            return new Response(json_encode(array('Message' => 'Missing User/Item')));
+        }
+        
+        }//End of If      
+        else {
+
+            return new Response(json_encode(array('Message' => 'Can not find' )));
+        }
+      
+        
+    }  
+    //-------------------------------------------------------------------
+    private function getProductItemById($id) {
+        $product_item = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductItem')
+                ->find($id);
+        return $product_item;
+    }
  //-------------------------------------------------------------------
     public function getFeedBackJSONAction() {
         $request = $this->getRequest();

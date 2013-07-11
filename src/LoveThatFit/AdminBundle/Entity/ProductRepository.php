@@ -457,12 +457,7 @@ class ProductRepository extends EntityRepository {
 
         }
     }
-    
-#-----------------------------Product Color and Sizes---------------------------#
-    public function productDetailColorPatternSize($product_id)
-    {
-        
-    } 
+ 
   #--------------------------------------------------------------------------------------------#  
     public function productDetails($product_id) {
         $query = $this->getEntityManager()
@@ -493,9 +488,7 @@ class ProductRepository extends EntityRepository {
         }
     }
 #---------------------------------End of Web Service----------------------------------#   
-    
-    
-    public function findProductByTitle($name) {
+     public function findProductByTitle($name) {
         $record = $this->getEntityManager()
                         ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p    
                                 WHERE p.name = :name")
