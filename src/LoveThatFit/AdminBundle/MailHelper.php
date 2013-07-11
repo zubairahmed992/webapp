@@ -51,7 +51,7 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration.html.twig";
-        $subject = 'LoveThatFit: Thank you for Registering with us. ';
+        $subject = 'LoveThatFit: Thank you for registering with us. ';
         $name = $user->getUsername();
         return $this->sendEmail($from, $to, $body, $subject, $user);
         
