@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementMaleType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
+use LoveThatFit\SiteBundle\Algorithm;
 
 class ProductController extends Controller {
 #-----------------Brand List Related To Size Chart For Registration Step2---------------------------------------------------#
@@ -212,7 +213,37 @@ class ProductController extends Controller {
             return json_encode(array('Message' => 'Record Not Found'));
         }
     }
+#------------------------------Fitting Room Alerts --------------------------------------------------#  
+ //-------------------------------------------------------------------
+    public function getFeedBackJSONAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user_id = $request_array['user_id'];
+        $product_item_id = $request_array['product_item_id'];
+        if ($user_id && $product_item_id) {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+            $productItem = $this->getProductItemById($product_item_id);
 
+            if (!$user)
+                return new Response(json_encode(array('Message' => 'User not found')));
+
+            if (!$productItem)
+                return new Response(json_encode(array('Message' => 'Product not found')));
+
+            $fit = new Algorithm($user, $productItem);
+            $data = array();
+            $data['data'] = $fit->getFeedBackJson();
+            $total_record = count($data);
+            return new Response($this->json_view($total_record, $data));
+        }
+        else {
+
+            return new Response(json_encode(array('Message' => 'Missing User/Item')));
+        }
+    }
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
