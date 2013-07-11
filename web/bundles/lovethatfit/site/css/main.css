@@ -558,7 +558,7 @@ header.reg .strip_rgt {
 .reg_blk h2 {
 	font-family: 'century gothic';
 	font-size:26px;
-	color:#535352;
+	color:#929707;
 	text-align:center;
 	margin-bottom:0;
 	padding-top:10px;
@@ -614,8 +614,8 @@ header.reg .strip_rgt {
 	width:68px;
 }
 .reg_blk p {
-    margin-bottom: 10px;
-    font-size: 13px;
+    margin-bottom: 15px;
+    font-size: 17px;
     color:#A2A2A2;
 }
 /*-- Step 1 --*/
@@ -2637,19 +2637,17 @@ padding-bottom: 0px;
 
 
 .popout_blk {
-    width:300px;
-    height:250px;
-    background:url(../images/white_trans_dot.png) 0 0 repeat;
-    position:absolute;
-    top:130px;
-    right:-357px;
+    background: url("../images/white_trans_dot.png") repeat scroll 0 0 transparent;
+    border: 1px solid #EFEFEF;
+    box-shadow: 0 0 7px 1px #444444;
+    color: #444444;
     font-size: 13px;
-    padding:10px 20px 10px 20px;
-    /*-moz-border-radius:5px;
-    -webkit-border-radius:5px;	
-    border-radius:5px;*/
-    border:1px solid #efefef;
-    color:#444;
+    height: 180px;
+    padding: 10px 20px;
+    position: absolute;
+    right: -595px;
+    top: 170px;
+    width: 470px;
 }
 .popout_blk p {
     color:#000;
@@ -2658,4 +2656,12 @@ padding-bottom: 0px;
 }
 .popout_blk li {
     padding-bottom: 10px;
+}
+
+.popout_blk ol{    
+        margin-left: 20px;
+}
+
+.popout_blk ol li{    
+    list-style: number;
 }
