@@ -91,15 +91,12 @@
                             
                             
                             
-                            <div class="span1">
+                            <div class="span2">
                                 <input type="submit" value="SAVE" class="btn"/>
-                                
+                                <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn" style="margin-left:0px;">Cancel</a>
                             </div> 
                             
-                            <div class="span1">
-                                
-                                <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn" style="margin-left:-50px;">Cancel</a>
-                            </div> 
+                          
                             
                              
                             
@@ -132,14 +129,13 @@
                         
                         
                         
-                        <div class="span1">
+                        <div class="span2">
                             <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' class="btn">Edit</a>
+                             <a href="#myModal11{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
                             
                         </div> 
                         
-                         <div class="span1">                            
-                            <a href="#myModal11{{ps.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
-                        </div> 
+                        
                         
                         
                         
