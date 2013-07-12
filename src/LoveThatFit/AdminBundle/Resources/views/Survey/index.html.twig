@@ -5,7 +5,7 @@
 {% block body %}
 <div class="p_listing">     
     <h1>Survey</h1>
-    <div class="btn_wrapper" style="float: none; margin: -59px auto auto; width: 225px;">
+    <div class="btn_wrapper" style="float: none; margin: -59px auto auto; width: 300px;">
         Total Questions: {{count_question}}
         <h5>Add New Question</h5>     
         <form action="{{ path('admin_survey_add_new_question') }}" method="post" {{ form_enctype(addNewForm) }}>
