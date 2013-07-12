@@ -13,7 +13,7 @@ document.createElement("section");
 function show_tip(ele){
 	
     var chk_offset = $(ele).position();
-    //alert(chk_offset);
+   
 	
 	
 	
