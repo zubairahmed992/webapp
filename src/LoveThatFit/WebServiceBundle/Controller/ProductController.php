@@ -96,9 +96,7 @@ class ProductController extends Controller {
         $id = $request_array['id'];
         $type = $request_array['type'];
         $gender = $request_array['gender'];
-        $type='brand';
-        $gender='F';
-        $id=3;
+     
         $products = Null;
         if ($type == "brand") {
             $products = $this->getDoctrine()
@@ -224,6 +222,7 @@ class ProductController extends Controller {
         $request_array = json_decode($jsonInput, true);
         $user_id = $request_array['user_id'];
         $product_id = $request_array['product_id'];
+        
        // find product
          if($product_id){ 
         $product = $this->getDoctrine()

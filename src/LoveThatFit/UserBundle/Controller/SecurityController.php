@@ -118,12 +118,13 @@ class SecurityController extends Controller {
                     } else {
                         $msg = " Email not sent due to some problem, please try again later.";
                     }
-
                     return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(
                                 "defaultData" => $msg,
                             ));
                 } else {
-                    $defaultData = "email address not found.";
+                    $msg = "email address not found.";
+                    return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(
+                                "defaultData" => $msg,));
                 }
             }
             return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(

@@ -365,9 +365,7 @@ public function userProfileAction()
                 $measurement = $entity->getMeasurement();
                 if ($measurement) {
 
-
-
-                    $measurement->setUpdatedAt(new \DateTime('now'));
+                     $measurement->setUpdatedAt(new \DateTime('now'));
 
                     if ($request_array['weight']) {
                         $measurement->setWeight($request_array['weight']);
@@ -563,7 +561,7 @@ public function userProfileAction()
             $entity->setImage($newFilename);
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath())) {
                 
-                
+               move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getOriginalImageAbsolutePath());
                 $em->persist($entity);
                 $em->flush();
                 //  $image_path = $entity->getWebPath(); 
