@@ -252,8 +252,8 @@ ul.with_sep a {
 
 ul.with_sep li {
 	list-style:none;
-	background:url(../images/sep_small.png) 0 8px no-repeat;
-	padding-left:8px;
+	/*background:url(../images/sep_small.png) 0 8px no-repeat;
+	padding-left:8px;*/
 	padding-right:4px;
 	padding-top:2px;
 }
@@ -597,7 +597,7 @@ header.reg .strip_rgt {
 .reg_next_step {
 	background: #929707;
 	font-size:1em;
-	color:#fff;
+	color:#fff!important;
 	border:none;
         padding:5px 15px;
 }
@@ -615,7 +615,7 @@ header.reg .strip_rgt {
 }
 .reg_blk p {
     margin-bottom: 15px;
-    font-size: 17px;
+    font-size: 14px;
     color:#A2A2A2;
 }
 /*-- Step 1 --*/
