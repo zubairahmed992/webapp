@@ -752,15 +752,22 @@ class User  implements UserInterface, \Serializable{
     {
         return 'uploads/ltf/users/'.$this->id;
     }
+ //------------------------------------------------------    
+public function getOriginalImageAbsolutePath()
+    {
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
+        return null === $this->image
+            ? null
+            : $this->getUploadRootDir().'/original'.'.'.$ext;    
+    }
+   
 //----------------------------------------------------------
     public function getOriginalImageWebPath()
     {
         $ext = pathinfo($this->image, PATHINFO_EXTENSION);
         return null === $this->image
             ? null
-            : $this->getUploadDir().'/'. '_ltf_user_'.'.'.$ext;    
-        
-        
+            : $this->getUploadDir().'/original'.'.'.$ext;    
     }
     
     //----------------------------------------------------------
@@ -773,7 +780,7 @@ class User  implements UserInterface, \Serializable{
         
     }
     
-    
+//------------------------------------------------------    
 public function getAbsoluteAvatarPath()
     {
         return null === $this->avatar
