@@ -63,6 +63,26 @@ function loveItem(item_id)
          }
         });
 }
+
+function lovedItems(item_id)
+{  
+   base_url=$('#ajax_my_closet_delete'+item_id).text();
+ //base_url=$('#ajax_product_base_url').text();
+        var jqXHR = $.ajax({
+            //url: base_url+"/app_dev.php/ajax/products/my_closet/delete/"+ item_id,
+            url: base_url,
+          
+          success: function (XMLHttpRequest, textStatus, errorThrown) {
+            
+            if(jqXHR.responseText.trim()== "success")
+            {
+            
+             $("#like_icon1_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/like.png')}}">');
+            }               
+           
+         }
+        });
+}
     </script>  
    
 
@@ -127,7 +147,10 @@ function loveItem(item_id)
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
                              <div class="like_icon1" style="">
-                              <img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}">
+                                 
+                                 <a href="{{path('ajax_my_closet_delete',{'id': productItem.id}) }}"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
+                                 
+                             
                              </div>  
                             
                             {%else%}
