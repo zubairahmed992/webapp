@@ -37,7 +37,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager) {
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
-        $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product.yml'));
+        $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product_test.yml'));
         $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/products');
         $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/products');
         $this->deleteAllProductImageFiles($destination);
