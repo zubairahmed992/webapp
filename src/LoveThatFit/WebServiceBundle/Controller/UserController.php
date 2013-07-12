@@ -24,10 +24,7 @@ class UserController extends Controller {
     public function loginAction() {
         
         $request = $this->getRequest();
-        $req=$request->request->get('login');
-        $email=$request->request->get('email');
-        
-         $handle = fopen('php://input','r');
+        $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
          $email=$decoded['email'];
@@ -276,8 +273,8 @@ public function userProfileAction()
             $measurement->setWeight($weight);
 
             $measurement->setHeight($height);
-          
-           if ($request_array['waist']) {
+
+            if ($request_array['waist']) {
                 $measurement->setWaist($waist);
           
            }
@@ -359,47 +356,46 @@ public function userProfileAction()
             $user = $this->get('user.helper.user');
             $userinfo = $user->findByEmail($email);
             $id = $userinfo['id'];
-           
-                $em = $this->getDoctrine()->getManager();
-                $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-                $measurement = $entity->getMeasurement();
-                if ($measurement) {
 
-                     $measurement->setUpdatedAt(new \DateTime('now'));
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+            $measurement = $entity->getMeasurement();
+            if ($measurement) {
 
-                    if ($request_array['weight']) {
-                        $measurement->setWeight($request_array['weight']);
-                    }
-                    if ($request_array['height']) {
-                        $measurement->setHeight($request_array['height']);
-                    }
-                    if ($request_array['waist']) {
-                        $measurement->setWaist($request_array['waist']);
-                    }
-                    if ($request_array['hip']) {
-                        $measurement->setHip($request_array['hip']);
-                    }
-                    if ($request_array['bust']) {
-                        $measurement->setBust($request_array['bust']);
-                    }
-                    if ($request_array['neck']) {
-                        $measurement->setNeck($request_array['neck']);
-                    }
-                    if ($request_array['inseam']) {
-                        $measurement->setInseam($request_array['inseam']);
-                    }
-                    if ($request_array['chest']) {
-                        $measurement->setChest($request_array['chest']);
-                    }
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($measurement);
-                    $em->flush();
+                $measurement->setUpdatedAt(new \DateTime('now'));
 
-                    return new Response(json_encode(array('Message' => 'success')));
-                } else {
-                    return new Response(json_encode(array('Message' => 'Sorry We can not find measurment')));
+                if ($request_array['weight']) {
+                    $measurement->setWeight($request_array['weight']);
                 }
-           
+                if ($request_array['height']) {
+                    $measurement->setHeight($request_array['height']);
+                }
+                if ($request_array['waist']) {
+                    $measurement->setWaist($request_array['waist']);
+                }
+                if ($request_array['hip']) {
+                    $measurement->setHip($request_array['hip']);
+                }
+                if ($request_array['bust']) {
+                    $measurement->setBust($request_array['bust']);
+                }
+                if ($request_array['neck']) {
+                    $measurement->setNeck($request_array['neck']);
+                }
+                if ($request_array['inseam']) {
+                    $measurement->setInseam($request_array['inseam']);
+                }
+                if ($request_array['chest']) {
+                    $measurement->setChest($request_array['chest']);
+                }
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($measurement);
+                $em->flush();
+
+                return new Response(json_encode(array('Message' => 'success')));
+            } else {
+                return new Response(json_encode(array('Message' => 'Sorry We can not find measurment')));
+            }
         } else {
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
@@ -569,8 +565,8 @@ public function userProfileAction()
                 $userimage = $entity->getImage();
 
                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-                $userinfo['image']=$userimage;
-                $userinfo['path'] = $baseurl ;
+                $userinfo['image'] = $userimage;
+                $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
             } else {
                 return new response(json_encode(array('Message' => 'Image not uploaded')));
@@ -579,7 +575,7 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-#-----------------------------test form
+#-----------------------------test form-----------------------------------------#
     public function imageFormAction() {
      return $this->render('LoveThatFitWebServiceBundle::json.html.twig');
     }
@@ -601,10 +597,31 @@ public function userProfileAction()
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
+    #----------------------------------------------------------------------------------------------------#   
     private function genrateToken($email)
     {
       return   md5(time().$email);
-    }        
+    }   
+ #------------------------CHECK TOKEN-------------------------------------------------------------------#   
+   private function checkToken($email,$token)
+   {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+
+        if (count($entity) > 0) {
+
+            $getAuthTokenWebService = $entity->getAuthTokenWebService();
+            if ($getAuthTokenWebService == $tken) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return json_encode(array('Message' => 'User Not Found'));
+        }
+    }
+
 }
 
 // End of Class

@@ -272,7 +272,7 @@ class ProductController extends Controller {
 
             $fit = new Algorithm($user, $productItem);
             $data = array();
-            $data['data'] = $fit->getFeedBackJson();
+            $data['data'] = $fit->getFeedBackArray();
            
             return new Response(json_encode($data));
         }
