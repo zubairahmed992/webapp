@@ -218,6 +218,25 @@ class UserRepository extends EntityRepository
             return null;
         }
   }
+  
+  public function findUserByAgeGroup($startage,$endage)
+  {
+      $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT  u  FROM LoveThatFitUserBundle:User us 
+     where 
+     TIMESTAMPDIFF(YEAR,us.birth_date,CURRENT_DATE()) BETWEEN
+     :startDate
+     AND 
+     :endDate"
+            )->setParameters(array('startDate'=>$startage,'endDate'=>$endage));
+        try {                     
+            return $query->getResult();
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
     
     
 }

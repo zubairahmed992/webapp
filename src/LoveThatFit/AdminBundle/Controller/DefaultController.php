@@ -8,6 +8,15 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {       
+        $first  = strtotime('first day this month');
+        $months = array();
+        for($i=6;$i>=1;$i--) {
+        $months=date('M', strtotime("-$i months", $first));
+       // $result=$this->getLastSixMonthSignUps($months);
+    }
+
+    
+ 
         $ProductByBrand=  $this->getProductByBrand();
         return $this->render('LoveThatFitAdminBundle:Default:index.html.twig', array(
 		    'totalclotingtypes'=>$this->countAllClothingType(),
@@ -135,4 +144,29 @@ class DefaultController extends Controller
 		$rec_count = count($UserTypeObj->findAll());
         return $rec_count;
     }
+    /*
+    private function getLastSixMonthSignUps($month)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
+         $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserByMonth($month);
+		$rec_count = count($UserTypeObj->findUserByMonth($month));
+        return $rec_count;
+    }
+    
+    
+    private function getUserByAgeGroup($startage,$endage)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
+         $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitUserBundle:User')
+                 ->findUserByAgeGroup($startage,$endage);
+		$rec_count = count($UserTypeObj->findUserByAgeGroup($startage,$endage));
+        return $rec_count;
+    }
+     */
+    
 }

@@ -2,241 +2,176 @@
 {% block breadcrumb %}
 <li class="active">Dashboard</li>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/Chart.js') }}"></script>
-<style>
-        canvas{
+<style>        
+        piecanvas{
         }
         clothingtypecanvas{
-        }
-        brandtypecanvas{
-        }
-        clothingtypescanvas{
-        }
-        piecanvas{
-        }        
-        userscanvas{
-        }
-        usersagecanvas{
         }
     </style>
 {% endblock %}
 
 {% block body %}
-    <h4 style="float:left;">Product Stats</h4>
-    <div class="clearfix"></div>
-    <div> Total Products:{{totalproducts}}</div>
-    <div>Female Product:{{femaleProduct}}</div>
-    <div> Male Products:{{maleProduct}}</div>
+    <h4 style="float:left;">Products</h4>
+    <table width="100%">
+        <tr>
+            <td colspan="2" valign="top">
+                <div> Total Products:{{totalproducts}}</div>
+                <div>Female Product:{{femaleProduct}}</div>
+                <div> Male Products:{{maleProduct}}</div>
      {%for p in brandproduct%}
-    <div>{{p.name}}: {{p.brand}}</div>
+                <div>{{p.name}}: {{p.brand}}</div>
       {%endfor%}   
-    <div>Top Product:{{topProduct}}</div>   
-    <div> Bottom Product:{{bottomProduct}}</div>
-    <div>  Dress Product:{{dressProduct}}</div>
+                <div>Top Product:{{topProduct}}</div>   
+                <div> Bottom Product:{{bottomProduct}}</div>
+                <div>  Dress Product:{{dressProduct}}</div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan="2" valign="top"><h4 style="float:left;">Products By Brand</h4></td>
+        </tr>        
+        <tr>
+            <td valign="top">
+        {%for p in brandproduct%}
+                    <div>{{p.name}}: {{p.brand}}</div>
+        {%endfor%}  
+                </td>
+                <td valign="top">
+                    <canvas id="piecanvas"  height="300" width="300"></canvas>
+                    <script>
+                        var pieData = [
+                            {
+                                value: {{totalproducts}},
+                                color: "#69D2E7",
+                                label: 'Total Products',
+                                labelColor: '#A72D19'
+                            },
+                            {%for p in brandproduct%}
+                            {
+                                value: {{p.brand}},
+                                color: "#E0E4CC",
+                                label: '{{p.name}}',
+                                labelColor: '#1F1B33'
+                            },
+                              {%endfor%}
+                        ];
+                        var myPie = new Chart(document.getElementById("piecanvas").getContext("2d")).Pie(pieData, {
+                            animationSteps: 100,
+                            animationEasing: 'easeInOutQuart'
+                        });
 
-    <div>Chart By Clothing Types</div>
-    <canvas id="clothingtypecanvas" height="300" width="200"></canvas>
-    <script>
+                        </script></td>
+                </tr>
 
-        var clothingtypebarChartData = {
-        labels : ["Top", "Bottom", "Dress"],
-                datasets : [
-        {
-        fillColor : "rgba(220,220,220,0.5)",
-                strokeColor : "rgba(220,220,220,1)",
-                data : [{{topProduct}},{{bottomProduct}},{{dressProduct}}]
-        },
-        {
-        fillColor : "rgba(151,187,205,0.5)",
-                strokeColor : "rgba(151,187,205,1)",
-                data : [{{topProduct}},{{bottomProduct}},{{dressProduct}}]
-        }
-        ]
+                <tr>
+                    <td colspan="2" valign="top"><h4 style="float:left;">Products By Clothing Type</h4></td>
+                </tr>        
+                <tr>
+                    <td valign="top">
+                        <div>Top Product:{{topProduct}}</div>   
+                        <div> Bottom Product:{{bottomProduct}}</div>
+                        <div>  Dress Product:{{dressProduct}}</div>
+                    </td>
+                    <td valign="top">
+                        <canvas id="clothingtypecanvas"  height="300" width="300"></canvas>
+                        <script>
+                            var clothingtypepieData = [
+                                {
+                                    value: {{totalproducts}},
+                                    color: "#69D2E7",
+                                    label: 'Total Products',
+                                    labelColor: '#A72D19'
+                                },
+                                {
+                                    value: {{topProduct}},
+                                    color: "#E0E4CC",
+                                    label: 'Top Products',
+                                    labelColor: '#1F1B33'
+                                },
+                                {
+                                    value: {{bottomProduct}},
+                                    color: "#E0E4CC",
+                                    label: 'Bottom Products',
+                                    labelColor: '#1F1B33'
+                                },
+                                {
+                                    value: {{dressProduct}},
+                                    color: "#E0E4CC",
+                                    label: 'Dress Products',
+                                    labelColor: '#1F1B33'
+                                },
+                            ];
+                            var myPie = new Chart(document.getElementById("clothingtypecanvas").getContext("2d")).Pie(clothingtypepieData, {
+                                animationSteps: 100,
+                                animationEasing: 'easeInOutQuart'
+                            });
 
-        }
-        var myLine = new Chart(document.getElementById("clothingtypecanvas").getContext("2d")).Bar(clothingtypebarChartData);</script>
-        <div class="clearfix"></div>
-
-
-        <div>Chart By Brands</div>
-
-        <canvas id="brandtypecanvas" height="300" width="300"></canvas>
-        <script>
-                    var brandtypebarChartData = {
-            labels : [{%for p in brandproduct%} "{{p.name}}", {%endfor%}],
-                    datasets : [
-            {
-            fillColor : "rgba(220,220,220,0.5)",
-                    strokeColor : "rgba(220,220,220,1)",
-                    data : [{%for p in brandproduct%} {{p.brand}}, {%endfor%}]
-            },
-            {
-            fillColor : "rgba(151,187,205,0.5)",
-                    strokeColor : "rgba(151,187,205,1)",
-                    data : [{%for p in brandproduct%} {{p.brand}}, {%endfor%}]
-            }
-            ]
-
-            }
-            var myLine = new Chart(document.getElementById("brandtypecanvas").getContext("2d")).Bar(brandtypebarChartData);</script>
-            <div class="clearfix"></div>
-
-            <h4 style="float:left;">Clothing Type Stats</h4>
-            <div class="clearfix"></div>
-            <div>Total:  {{totalclotingtypes}}</div>
-            <div>  Top:   {{criteriaTop}}</div>
-            <div>  Bottom:{{criteriaBottom}}</div>
-            <div> Dress:{{criteriaDress}}</div>
-            <div>Clothing Type Chart</div>
-            <div class="clearfix"></div>
-            <canvas id="clothingtypescanvas" height="300" width="200"></canvas>
-            <script>
-
-                        var clothingtypesbarChartData = {
-                labels : ["Top", "Bottom", "Dress"],
-                        datasets : [
-                {
-                fillColor : "rgba(220,220,220,0.5)",
-                        strokeColor : "rgba(220,220,220,1)",
-                        data : [{{criteriaTop}},{{criteriaBottom}},{{criteriaDress}}]
-                },
-                {
-                fillColor : "rgba(151,187,205,0.5)",
-                        strokeColor : "rgba(151,187,205,1)",
-                        data : [{{criteriaTop}},{{criteriaBottom}},{{criteriaDress}}]
-                }
-                ]
-
-                }
-                var myLine = new Chart(document.getElementById("clothingtypescanvas").getContext("2d")).Bar(clothingtypesbarChartData);</script>
-
-
-                <div class="clearfix"></div>
-
-
-                <h4 style="float:left;">Brands Stats</h4>
-                <div class="clearfix"></div>
-                <div>Total:  {{totalbrands}}</div>
-
-
-                <div class="clearfix"></div>
+                            </script></td>
+                    </tr>
 
 
-                <h4 style="float:left;">Users Stats</h4>
-                <div class="clearfix"></div>
-                 <div>Total:  {{totalusers}}</div>
-                 <div>Female:  {{femaleUsers}}</div>
-                 <div>Male:  {{maleUsers}}</div>
+                <tr>
+                    <td colspan="2" valign="top"><h4 style="float:left;">Users</h4></td>
+                </tr>             
+            <tr>
+               <td valign="top" colspan="2">
+                  <div> Total:  {{totalusers}}</div>
+                        <div>Female:  {{femaleUsers}}</div>
+                        <div>Male:  {{maleUsers}}</div>                                           
+                    </td>
+            </tr>
+            
+                <tr>
+                    <td colspan="2" valign="top"><h4 style="float:left;">Last Six Month Signups</h4></td>
+                </tr> 
+            
+                    <tr>
+                    <td valign="top" colspan="2">
+                        <canvas id="clothingtypecanvas"  height="300" width="300"></canvas>
+                        <script>
+                            var clothingtypepieData = [
+                                {
+                                    value: {{totalproducts}},
+                                    color: "#69D2E7",
+                                    label: 'Total Products',
+                                    labelColor: '#A72D19'
+                                },
+                                {
+                                    value: {{topProduct}},
+                                    color: "#E0E4CC",
+                                    label: 'Top Products',
+                                    labelColor: '#1F1B33'
+                                },
+                                {
+                                    value: {{bottomProduct}},
+                                    color: "#E0E4CC",
+                                    label: 'Bottom Products',
+                                    labelColor: '#1F1B33'
+                                },
+                                {
+                                    value: {{dressProduct}},
+                                    color: "#E0E4CC",
+                                    label: 'Dress Products',
+                                    labelColor: '#1F1B33'
+                                },
+                            ];
+                            var myPie = new Chart(document.getElementById("clothingtypecanvas").getContext("2d")).Pie(clothingtypepieData, {
+                                animationSteps: 100,
+                                animationEasing: 'easeInOutQuart'
+                            });
 
-                 <div>Users Chart</div>
-                 <div class="clearfix"></div>
-                 <canvas id="userscanvas" height="300" width="200"></canvas>
-                 <script>
-
-                             var usersbarChartData = {
-                     labels : ["Male", "Female"],
-                             datasets : [
-                     {
-                     fillColor : "rgba(220,220,220,0.5)",
-                             strokeColor : "rgba(220,220,220,1)",
-                             data : [{{maleUsers}},{{femaleUsers}}]
-                     },
-                     {
-                     fillColor : "rgba(151,187,205,0.5)",
-                             strokeColor : "rgba(151,187,205,1)",
-                             data : [{{maleUsers}},{{femaleUsers}}]
-                     }
-                     ]
-
-                     }
-                     var myLine = new Chart(document.getElementById("userscanvas").getContext("2d")).Bar(usersbarChartData);</script>
-
-
-                     <div class="clearfix"></div>
-                     <canvas id="usersagecanvas" height="300" width="200"></canvas>
-                     <script>
-
-                                 var usersagebarChartData = {
-                         labels : ["Male","Female"],
-                                 datasets : [
-                         {
-                         fillColor : "rgba(220,220,220,0.5)",
-                                 strokeColor : "rgba(220,220,220,1)",
-                                 data : [4,20]
-                         },
-                         {
-                         fillColor : "rgba(151,187,205,0.5)",
-                                 strokeColor : "rgba(151,187,205,1)",
-                                 data : [4,20]
-                         }
-                         ]
-
-                         }
-                         var myLine = new Chart(document.getElementById("usersagescanvas").getContext("2d")).Bar(usersagebarChartData);</script>
-
-                         <div class="clearfix"></div>
-                         <div>Pie Chart</div>
-                         <canvas id="piecanvas" height="550" width="550"></canvas>
+                            </script></td>
+                    </tr>
 
 
-                         <script>
+    <tr>
+        <td colspan="2">
+        
+        </td>
+    </tr>
 
-                                     var pieData = [
-                             {
-                             value : {{maleProduct}},
-                                     color : "#F38630",
-                                     label : 'Male',
-                                     labelColor : '#0C8ACF'
-                             },
-                             {
-                             value : {{femaleProduct}},
-                                     color : "#E0E4CC",
-                                     label : 'Female',
-                                     labelColor : '#1F1B33'
-                             },
-                             {
-                             value : {{topProduct}},
-                                     color : "#69D2E7",
-                                     label : 'Top Product',
-                                     labelColor : '#A72D19'
-                             },
-                             {
-                             value : {{bottomProduct}},
-                                     color : "#E0E4CC",
-                                     label : 'Bottom Product',
-                                     labelColor : '#1F1B33'
-                             },
-                             {
-                             value : {{dressProduct}},
-                                     color : "#E0E4CC",
-                                     label : 'Drees Product',
-                                     labelColor : '#1F1B33'
-                             },
-                             {
-                             value : {{femaleUsers}},
-                                     color : "#69D2E7",
-                                     label : 'Female User',
-                                     labelColor : '#1F1B33'
-                             },
-                             {
-                             value : {{maleUsers}},
-                                     color : "#E0E4CC",
-                                     label : 'Male User',
-                                     labelColor : '#1F1B33'
-                             },
-                               {%for p in brandproduct%}
-                             {
-                             value : {{p.brand}},
-                                     color : "#E0E4CC",
-                                     label : '{{p.name}}',
-                                     labelColor : '#1F1B33'
-                             },
-                               {%endfor%}
-                             ];
-                                     var myPie = new Chart(document.getElementById("piecanvas").getContext("2d")).Pie(pieData, {
-                             animationSteps: 100,
-                                     animationEasing: 'easeInOutQuart'
-                             });
 
-                             </script>
-                             <div class="clearfix"></div>
+
+                </table>
+
 {% endblock %}
