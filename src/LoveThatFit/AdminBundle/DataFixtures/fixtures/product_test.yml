@@ -1,5 +1,199 @@
 products:
  h&m:  
+   Skirt:
+     name: Black Skirt
+     description: Fabric is slightly stretchy
+     adjustment: 0
+     gender: f
+     product_color:
+          black:
+            title: black
+            image: 
+            pattern: 
+            default: true                   
+     product_sizes:
+         2:
+          title: 2
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 32.5
+          hip_max: 33.5
+          waist_min: 23
+          waist_max: 24
+          bust_min: 29.5
+          bust_max: 30.5
+         4:
+          title: 4
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 25
+          waist_max: 
+          bust_min: 30.5
+          bust_max: 31.5          
+         6:
+          title: 6
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 33 
+          bust_max: 
+         8:
+          inseam_min: 30.5
+          inseam_max: 31.5
+          inseam_max: 
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 34.5
+          bust_max: 
+         10:
+          title: 10
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 36.25
+          bust_max: 
+         12:
+          title: 12
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 37.75
+          bust_max: 
+         14:
+          title: 14 
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 39.5
+          bust_max: 
+         16:
+          title: 16
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 41
+          bust_max: 
+         18:
+          title: 18
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 43.25
+          bust_max: 
+         20:
+          title: 20
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 45.5
+          bust_max: 
+         22:
+          title: 22
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 48
+          bust_max: 
+         24:
+          title: 24
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 50.5
+          bust_max: 
+         26:
+          title: 26
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 52.75
+          bust_max: 
+         28:
+          title: 28
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 
+          hip_max: 
+          waist_min: 
+          waist_max: 
+          bust_min: 55
+          bust_max: 
+            
+     product_item:
+            2:  
+              size_title: 2
+              product_color_title: black
+              image:               
+            4:
+              size_title: 4
+              product_color_title: black
+              image: 
+            6:
+              size_title: 6
+              product_color_title: black
+              image: 
+            8:
+              size_title: 8
+              product_color_title: black
+              image: 
+            10:
+              size_title: 10
+              product_color_title: black
+              image: 
+            12:
+              size_title: 12
+              product_color_title: black
+              image: 
+            14:
+              size_title: 14
+              product_color_title: black
+              image:               
+            16:
+              size_title: 16
+              product_color_title: black
+              image:               
+            18:
+              size_title: 18
+              product_color_title: black
+              image:        
+            20:
+              size_title: 20
+              product_color_title: black
+              image:
    capri:
      name: Black Capri
      description: Fabric is slightly stretchy
@@ -225,7 +419,6 @@ products:
               size_title: 20
               product_color_title: black
               image:
-                
    t-shirts:
      name: Blue T-Shirt
      description: Fabric is slightly stretchy 
