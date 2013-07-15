@@ -12,54 +12,6 @@ products:
             pattern: 51dd662d4c844.png
             default: true                   
      product_sizes:
-         "00":
-          title: "00"
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
-         0:
-          title: 0
-          inseam_min: 17.5
-          inseam_max: 18.5
-          outseam_min: 26
-          outseam_max: 27
-          hip_min: 31
-          hip_max: 32
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 28
-          waist_max: 29
-          chest_min: 28
-          chest_max: 29
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 18
-          thigh_max: 19
-          hem: 0
-          length: 0
          2:
           title: 2
           inseam_min: 17.5
@@ -68,18 +20,8 @@ products:
           outseam_max: 27
           hip_min: 31
           hip_max: 32
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 28
           waist_max: 29
-          chest_min: 28
-          chest_max: 29
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 18
           thigh_max: 19
           hem: 0
@@ -92,18 +34,10 @@ products:
           outseam_max: 28
           hip_min: 31.25
           hip_max: 31.25
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 30.25
           waist_max: 31.25
           chest_min: 30.25
           chest_max: 31.25
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 18
           thigh_max: 19
           hem: 0
@@ -116,18 +50,10 @@ products:
           outseam_max: 27.75
           hip_min: 31
           hip_max: 45
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 31.25
           waist_max: 32.25
           chest_min: 31.25
           chest_max: 32.25
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 20
           thigh_max: 21
           hem: 0
@@ -140,18 +66,10 @@ products:
           outseam_max: 28.75
           hip_min: 34
           hip_max: 35
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 32
           waist_max: 33
           chest_min: 32
           chest_max: 33
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 21
           thigh_max: 22
           hem: 0
@@ -164,18 +82,10 @@ products:
           outseam_max: 29
           hip_min: 37.5
           hip_max: 38.5
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 33
           waist_max: 34
           chest_min: 33
           chest_max: 35
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 22
           thigh_max: 23
           hem: 0
@@ -188,18 +98,10 @@ products:
           outseam_max: 29
           hip_min: 37.75
           hip_max: 38.75
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 35
           waist_max: 36
           chest_min: 35
           chest_max: 36
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 22
           thigh_max: 23
           hem: 0
@@ -212,18 +114,10 @@ products:
           outseam_max: 0
           hip_min: 0
           hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 0
           waist_max: 0
           chest_min: 0
           chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 0
           thigh_max: 0
           hem: 0
@@ -236,18 +130,10 @@ products:
           outseam_max: 0
           hip_min: 0
           hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 0
           waist_max: 0
           chest_min: 0
           chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 0
           thigh_max: 0
           hem: 0
@@ -260,18 +146,8 @@ products:
           outseam_max: 0
           hip_min: 0
           hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 0
           waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 0
           thigh_max: 0
           hem: 0
@@ -1352,7 +1228,6 @@ products:
               size_title: 20
               product_color_title: blue
               image:	              
-              
    skirts:
      name: Pink Short
      description: Fabric is slightly stretchy 
@@ -1478,7 +1353,6 @@ products:
               size_title: 8
               product_color_title: pink
               image: 51dd69976e340_fr.png
-     
    t-shirts:
      name: V-neck Vintage Tee
      description: Built in Bra, back measurement lower then usual. Razer back 

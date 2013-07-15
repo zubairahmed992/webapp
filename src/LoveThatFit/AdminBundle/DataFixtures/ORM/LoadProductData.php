@@ -30,12 +30,45 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
+
+        $this->measurement_points = array(
+            "title",
+            "inseam_min",
+            "inseam_max",
+            "outseam_min",
+            "outseam_max",
+            "hip_min",
+            "hip_max",
+            "bust_min",
+            "bust_max",
+            "back_min",
+            "back_max",
+            "waist_min",
+            "waist_max",
+            "chest_min",
+            "chest_max",
+            "neck_min",
+            "neck_max",
+            "sleeve_min",
+            "sleeve_max",
+            "thigh_min",
+            "thigh_max",
+            "hem",
+            "length",
+            "shoulder_min",
+            "shoulder_max",
+            "length_armpit_min",
+            "length_armpit_min",
+            "length_back_min",
+            "length_back_max",
+        );
     }
 
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
+
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product_test.yml'));
         $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/products');
@@ -78,32 +111,34 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         $manager->flush();
                     }
                 }
+
                 foreach ($clothing_type_values['product_sizes'] as $product_sizes_key => $product_size_values) {
                     $productsize = new ProductSize();
                     $productsize->setProduct($product_new);
                     $productsize->setTitle($product_size_values['title']);
-                    $productsize->setInseamMin($product_size_values['inseam_min']);
-                    $productsize->setInseamMax($product_size_values['inseam_max']);
-                    $productsize->setOutseamMin($product_size_values['outseam_min']);
-                    $productsize->setOutseamMax($product_size_values['outseam_max']);
-                    $productsize->setHipMin($product_size_values['hip_min']);
-                    $productsize->setHipMax($product_size_values['hip_max']);
-                    $productsize->setBustMin($product_size_values['bust_min']);
-                    $productsize->setBustMax($product_size_values['bust_max']);
-                    $productsize->setBackMin($product_size_values['back_min']);
-                    $productsize->setBackMax($product_size_values['back_max']);
-                    $productsize->setWaistMin($product_size_values['waist_min']);
-                    $productsize->setWaistMax($product_size_values['waist_max']);
-                    $productsize->setChestMin($product_size_values['chest_min']);
-                    $productsize->setChestMax($product_size_values['chest_max']);
-                    $productsize->setNeckMin($product_size_values['neck_min']);
-                    $productsize->setNeckMax($product_size_values['neck_max']);
-                    $productsize->setSleeveMin($product_size_values['sleeve_min']);
-                    $productsize->setSleeveMax($product_size_values['sleeve_max']);
-                    $productsize->setThighMin($product_size_values['thigh_min']);
-                    $productsize->setThighMax($product_size_values['thigh_max']);
-                    $productsize->setHem($product_size_values['hem']);
-                    $productsize->setLength($product_size_values['length']);
+
+                    $productsize->setInseamMin($this->get_value_if_exists($product_size_values, 'inseam_min'));
+                    $productsize->setInseamMax($this->get_value_if_exists($product_size_values, 'inseam_max'));
+                    $productsize->setOutseamMin($this->get_value_if_exists($product_size_values, 'outseam_min'));
+                    $productsize->setOutseamMax($this->get_value_if_exists($product_size_values, 'outseam_max'));
+                    $productsize->setHipMin($this->get_value_if_exists($product_size_values, 'hip_min'));
+                    $productsize->setHipMax($this->get_value_if_exists($product_size_values, 'hip_max'));
+                    $productsize->setBustMin($this->get_value_if_exists($product_size_values, 'bust_min'));
+                    $productsize->setBustMax($this->get_value_if_exists($product_size_values, 'bust_max'));
+                    $productsize->setBackMin($this->get_value_if_exists($product_size_values, 'back_min'));
+                    $productsize->setBackMax($this->get_value_if_exists($product_size_values, 'back_max'));
+                    $productsize->setWaistMin($this->get_value_if_exists($product_size_values, 'waist_min'));
+                    $productsize->setWaistMax($this->get_value_if_exists($product_size_values, 'waist_max'));
+                    $productsize->setChestMin($this->get_value_if_exists($product_size_values, 'chest_min'));
+                    $productsize->setChestMax($this->get_value_if_exists($product_size_values, 'chest_max'));
+                    $productsize->setNeckMin($this->get_value_if_exists($product_size_values, 'neck_min'));
+                    $productsize->setNeckMax($this->get_value_if_exists($product_size_values, 'neck_max'));
+                    $productsize->setSleeveMin($this->get_value_if_exists($product_size_values, 'sleeve_min'));
+                    $productsize->setSleeveMax($this->get_value_if_exists($product_size_values, 'sleeve_max'));
+                    $productsize->setThighMin($this->get_value_if_exists($product_size_values, 'thigh_min'));
+                    $productsize->setThighMax($this->get_value_if_exists($product_size_values, 'thigh_max'));
+                    $productsize->setHem($this->get_value_if_exists($product_size_values, 'hem'));
+                    $productsize->setLength($this->get_value_if_exists($product_size_values, 'length'));
                     $manager->persist($productsize);
                     $manager->flush();
                 }
@@ -111,10 +146,10 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                     $productid = $product_new->getId();
                     $productsize = $this->container
                             ->get('admin.helper.productsizes')
-                            ->findSizeByProductTitle($product_item_values['size_title'],$productid);
+                            ->findSizeByProductTitle($product_item_values['size_title'], $productid);
                     $productcolor = $this->container
                             ->get('admin.helper.productcolor')
-                            ->findColorByProductTitle($product_item_values['product_color_title'],$productid);
+                            ->findColorByProductTitle($product_item_values['product_color_title'], $productid);
                     $productitem = new ProductItem();
                     $productitem->setProduct($product_new);
                     $productitem->setProductColor($productcolor);
@@ -126,98 +161,99 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                 }
             }
         }
-        $this->copyAllProductImageFiles($source,$destination,$options=array('folderPermission'=>777,'filePermission'=>777));
+        $this->copyAllProductImageFiles($source, $destination, $options = array('folderPermission' => 777, 'filePermission' => 777));
+    }
+
+    private function get_value_if_exists($measurement_array, $measurement_point) {
+        if (array_key_exists($measurement_point, $measurement_array)) {
+            return $measurement_array[$measurement_point];
+        } else {
+            return;
+        }
     }
 
     public function deleteAllProductImageFiles($path) {
-     $debugStr = '';
-     if($handle = opendir($path)) {
-       while(false !== ($file = readdir($handle))) {
-               if($file != "." && $file != "..") {             
-               if(is_file($path."/".$file)) { 
-                    if(@unlink($path."/".$file)) {
-                    $debugStr .=$file;     
+        $debugStr = '';
+        if ($handle = opendir($path)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != "..") {
+                    if (is_file($path . "/" . $file)) {
+                        if (@unlink($path . "/" . $file)) {
+                            $debugStr .=$file;
+                        }
+                    } else {
+                        if ($handle2 = opendir($path . "/" . $file)) {
+                            while (false !== ($file2 = readdir($handle2))) {
+                                if ($file2 != "." && $file2 != "..") {
+                                    if (@unlink($path . "/" . $file . "/" . $file2)) {
+                                        $debugStr .=$file / $file2;
+                                    }
+                                }
+                            }
+                        }
+                        if (@rmdir($path . "/" . $file)) {
+                            $debugStr .=$file;
+                        }
                     }
-               } else { 
-                    if($handle2 = opendir($path."/".$file)) { 
-                         while(false !== ($file2 = readdir($handle2))) { 
-                              if($file2 != "." && $file2 != "..") {
-                                   if(@unlink($path."/".$file."/".$file2)) {
-                                   $debugStr .=$file/$file2;     
-                                   }
-                              } 
-                         } 
-                    } 
-                    if(@rmdir($path."/".$file)) {
-                    $debugStr .=$file;     
-                    } 
-               } 
-               } 
-          } 
-          closedir($handle);
-     }
-     return $debugStr;
-}	
-
-
-public function copyAllProductImageFiles($source,$dest,$options=array('folderPermission'=>777,'filePermission'=>777)) 
-    { 
-        $result=false;         
-        if (is_file($source)) { 
-            if ($dest[strlen($dest)-1]=='/') { 
-                if (!file_exists($dest)) { 
-                    cmfcDirectory::makeAll($dest,$options['folderPermission'],true); 
-                } 
-                $__dest=$dest."/".basename($source); 
-            } else { 
-                $__dest=$dest; 
-            } 
-            $result=@copy($source, $__dest); 
-            chmod($__dest,$options['filePermission']); 
-            
-        } elseif(is_dir($source)) { 
-            if ($dest[strlen($dest)-1]=='/') { 
-                if ($source[strlen($source)-1]=='/') { 
-                    //Copy only contents 
-                } else { 
-                    //Change parent itself and its contents 
-                    $dest=$dest.basename($source); 
-                    @mkdir($dest); 
-                    chmod($dest,$options['filePermission']); 
-                } 
-            } else { 
-                if ($source[strlen($source)-1]=='/') { 
-                    //Copy parent directory with new name and all its content 
-                    @mkdir($dest,$options['folderPermission']); 
-                    chmod($dest,$options['filePermission']); 
-                } else { 
-                    //Copy parent directory with new name and all its content 
-                    @mkdir($dest,$options['folderPermission']); 
-                    chmod($dest,$options['filePermission']); 
-                } 
+                }
             }
-            $dirHandle=opendir($source); 
-            while($file=readdir($dirHandle)) 
-            { 
-                if($file!="." && $file!="..") 
-                { 
-                     if(!is_dir($source."/".$file)) { 
-                        $__dest=$dest."/".$file; 
-                    } else { 
-                        $__dest=$dest."/".$file; 
+            closedir($handle);
+        }
+        return $debugStr;
+    }
+
+    public function copyAllProductImageFiles($source, $dest, $options = array('folderPermission' => 777, 'filePermission' => 777)) {
+        $result = false;
+        if (is_file($source)) {
+            if ($dest[strlen($dest) - 1] == '/') {
+                if (!file_exists($dest)) {
+                    cmfcDirectory::makeAll($dest, $options['folderPermission'], true);
+                }
+                $__dest = $dest . "/" . basename($source);
+            } else {
+                $__dest = $dest;
+            }
+            $result = @copy($source, $__dest);
+            chmod($__dest, $options['filePermission']);
+        } elseif (is_dir($source)) {
+            if ($dest[strlen($dest) - 1] == '/') {
+                if ($source[strlen($source) - 1] == '/') {
+                    //Copy only contents 
+                } else {
+                    //Change parent itself and its contents 
+                    $dest = $dest . basename($source);
+                    @mkdir($dest);
+                    chmod($dest, $options['filePermission']);
+                }
+            } else {
+                if ($source[strlen($source) - 1] == '/') {
+                    //Copy parent directory with new name and all its content 
+                    @mkdir($dest, $options['folderPermission']);
+                    chmod($dest, $options['filePermission']);
+                } else {
+                    //Copy parent directory with new name and all its content 
+                    @mkdir($dest, $options['folderPermission']);
+                    chmod($dest, $options['filePermission']);
+                }
+            }
+            $dirHandle = opendir($source);
+            while ($file = readdir($dirHandle)) {
+                if ($file != "." && $file != "..") {
+                    if (!is_dir($source . "/" . $file)) {
+                        $__dest = $dest . "/" . $file;
+                    } else {
+                        $__dest = $dest . "/" . $file;
                     }
-                    $result=  $this->copyAllProductImageFiles($source."/".$file, $__dest, $options); 
-                } 
-            } 
-            closedir($dirHandle);             
-        } else { 
-            $result=false; 
-        } 
-        return $result; 
-    } 
+                    $result = $this->copyAllProductImageFiles($source . "/" . $file, $__dest, $options);
+                }
+            }
+            closedir($dirHandle);
+        } else {
+            $result = false;
+        }
+        return $result;
+    }
 
-
-    
     /**
      * {@inheritDoc}
      */
