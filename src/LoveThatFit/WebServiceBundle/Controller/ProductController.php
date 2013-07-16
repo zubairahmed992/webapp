@@ -97,9 +97,7 @@ class ProductController extends Controller {
         $type = $request_array['type'];
         $gender = $request_array['gender'];
         
-        $id=4;
-        $type='clothing_type';
-        $gender='F';
+       
         $products = Null;
         if ($type == "brand") {
             $products = $this->getDoctrine()
