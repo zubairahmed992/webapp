@@ -47,9 +47,11 @@ class BrandHelper {
 //-------------------------------------------------------
 
     public function save($entity) {
-        $msg_array =null;
-        //$msg_array = $this->validateForCreate($entity);
+        //$msg_array =null;
+        //$msg_array = ;
 
+        $brandName=$entity->getName();
+        $msg_array=$this->validateForCreate($brandName);   
         if ($msg_array==null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));

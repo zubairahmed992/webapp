@@ -44,9 +44,10 @@ class ClothingTypeHelper {
 
     public function save($entity) {
         //$msg_array = null;
-        $msg_array = $this->validateForCreate($entity);
-
-        if ($msg_array == null) {
+        
+        $name=$entity->getName();
+        $msg_array = $this->validateForCreate($name);
+        if ($msg_array == null and $name!=null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $this->em->persist($entity);

@@ -51,6 +51,9 @@ class BrandController extends Controller {
         $form = $this->createForm(new BrandType('add'), $entity);
         $form->bind($request);
 
+       
+        
+        
         if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.brand')->save($entity);
