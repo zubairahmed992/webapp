@@ -1,215 +1,5 @@
 products:
  h&m:  
-   Skirt:
-     name: Black Skirt
-     description: Fabric is slightly stretchy
-     adjustment: 0
-     gender: f
-     product_color:
-          black:
-            title: black
-            image: 
-            pattern: 
-            default: true                   
-     product_sizes:
-         2:
-          title: 2
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 32.5
-          hip_max: 33.5
-          waist_min: 23
-          waist_max: 24
-          bust_min: 29.5
-          bust_max: 30.5
-         4:
-          title: 4
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 33
-          hip_max: 35
-          waist_min: 25
-          waist_max: 26
-          bust_min: 30.5
-          bust_max: 31.5          
-         6:
-          title: 6
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 35
-          hip_max: 36.5
-          waist_min: 26.75
-          waist_max: 
-          bust_min: 33 
-          bust_max: 
-         8:
-          inseam_min: 30.5
-          inseam_max: 31.5
-          inseam_max: 
-          hip_min: 37.75
-          hip_max: 
-          waist_min: 28.5
-          waist_max: 
-          bust_min: 34.5
-          bust_max: 
-         10:
-          title: 10
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 39.5
-          hip_max: 
-          waist_min: 30
-          waist_max: 
-          bust_min: 36.25
-          bust_max: 
-         12:
-          title: 12
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 41
-          hip_max: 
-          waist_min: 31.5
-          waist_max: 
-          bust_min: 37.75
-          bust_max: 
-         14:
-          title: 14 
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 42.5
-          hip_max: 
-          waist_min: 33
-          waist_max: 
-          bust_min: 39.5
-          bust_max: 
-         16:
-          title: 16
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 44
-          hip_max: 
-          waist_min: 34.5
-          waist_max: 
-          bust_min: 41
-          bust_max: 
-         18:
-          title: 18
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 46
-          hip_max: 
-          waist_min: 37
-          waist_max: 
-          bust_min: 43.25
-          bust_max: 
-         20:
-          title: 20
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 48
-          hip_max: 
-          waist_min: 39.5
-          waist_max: 
-          bust_min: 45.5
-          bust_max: 
-         22:
-          title: 22
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 50
-          hip_max: 
-          waist_min: 41.75
-          waist_max: 
-          bust_min: 48
-          bust_max: 
-         24:
-          title: 24
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 52
-          hip_max: 
-          waist_min: 44
-          waist_max: 
-          bust_min: 50.5
-          bust_max: 
-         26:
-          title: 26
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 54
-          hip_max: 
-          waist_min: 46.5
-          waist_max: 
-          bust_min: 52.75
-          bust_max: 
-         28:
-          title: 28
-          inseam_min: 30.5
-          inseam_max: 31.5
-          hip_min: 56
-          hip_max: 
-          waist_min: 48.75
-          waist_max: 
-          bust_min: 55
-          bust_max: 
-            
-     product_item:
-            2:  
-              size_title: 2
-              product_color_title: black
-              image:               
-            4:
-              size_title: 4
-              product_color_title: black
-              image: 
-            6:
-              size_title: 6
-              product_color_title: black
-              image: 
-            8:
-              size_title: 8
-              product_color_title: black
-              image: 
-            10:
-              size_title: 10
-              product_color_title: black
-              image: 
-            12:
-              size_title: 12
-              product_color_title: black
-              image: 
-            14:
-              size_title: 14
-              product_color_title: black
-              image:               
-            16:
-              size_title: 16
-              product_color_title: black
-              image:               
-            18:
-              size_title: 18
-              product_color_title: black
-              image:        
-            20:
-              size_title: 20
-              product_color_title: black
-              image:
-            22:
-              size_title: 22
-              product_color_title: black
-              image: 
-            24:
-              size_title: 24
-              product_color_title: black
-              image:               
-            26:
-              size_title: 26
-              product_color_title: black
-              image:               
-            28:
-              size_title: 28
-              product_color_title: black
-              image:                        
    capri:
      name: Black Capri
      description: Fabric is slightly stretchy
@@ -220,181 +10,152 @@ products:
             title: black
             image: 51dd662d4eedc.png
             pattern: 51dd662d4c844.png
+            gender: f
             default: true                   
      product_sizes:
          2:
           title: 2
-          inseam_min: 17.5
-          inseam_max: 18.5
-          outseam_min: 26
-          outseam_max: 27
-          hip_min: 31
-          hip_max: 32
-          waist_min: 28
-          waist_max: 29
-          thigh_min: 18
-          thigh_max: 19
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 31.5
+          hip_max: 32.75
+          waist_min: 22.87
+          waist_max: 24.375
+          bust_min: 28.5
+          bust_max: 30.75
          4:
           title: 4
-          inseam_min: 18
-          inseam_max: 19
-          outseam_min: 27
-          outseam_max: 28
-          hip_min: 31.25
-          hip_max: 31.25
-          waist_min: 30.25
-          waist_max: 31.25
-          chest_min: 30.25
-          chest_max: 31.25
-          thigh_min: 18
-          thigh_max: 19
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 32.75
+          hip_max: 35.375
+          waist_min: 24.375
+          waist_max: 26
+          bust_min: 30.75
+          bust_max: 31.25          
          6:
           title: 6
-          inseam_min: 18
-          inseam_max: 19
-          outseam_min: 26.75
-          outseam_max: 27.75
-          hip_min: 31
-          hip_max: 45
-          waist_min: 31.25
-          waist_max: 32.25
-          chest_min: 31.25
-          chest_max: 32.25
-          thigh_min: 20
-          thigh_max: 21
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 35.375
+          hip_max: 37
+          waist_min: 26
+          waist_max: 27.625
+          bust_min: 31.25 
+          bust_max: 33.75
          8:
           title: 8
-          inseam_min: 18.25
-          inseam_max: 19.25
-          outseam_min: 27.75
-          outseam_max: 28.75
-          hip_min: 34
-          hip_max: 35
-          waist_min: 32
-          waist_max: 33
-          chest_min: 32
-          chest_max: 33
-          thigh_min: 21
-          thigh_max: 22
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          inseam_max: 
+          hip_min: 37
+          hip_max: 38.625
+          waist_min: 27.625
+          waist_max: 29.25
+          bust_min: 33.75
+          bust_max: 35.375
          10:
           title: 10
-          inseam_min: 18.5
-          inseam_max: 19.5
-          outseam_min: 28
-          outseam_max: 29
-          hip_min: 37.5
-          hip_max: 38.5
-          waist_min: 33
-          waist_max: 34
-          chest_min: 33
-          chest_max: 35
-          thigh_min: 22
-          thigh_max: 23
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 38.625
+          hip_max: 40.25
+          waist_min: 29.25
+          waist_max: 30.75
+          bust_min: 35.375
+          bust_max: 37
          12:
           title: 12
-          inseam_min: 18.5
-          inseam_max: 19.5
-          outseam_min: 28
-          outseam_max: 29
-          hip_min: 37.75
-          hip_max: 38.75
-          waist_min: 35
-          waist_max: 36
-          chest_min: 35
-          chest_max: 36
-          thigh_min: 22
-          thigh_max: 23
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 40.25
+          hip_max: 41.75
+          waist_min: 30.75
+          waist_max: 32.25
+          bust_min: 37
+          bust_max: 38.625
          14:
           title: 14 
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 41.75
+          hip_max: 43.25
+          waist_min: 32.25
+          waist_max: 33.75
+          bust_min: 38.625
+          bust_max: 40.25
          16:
           title: 16
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 43.25
+          hip_max: 42
+          waist_min: 33.75
+          waist_max: 35.25
+          bust_min: 40.25
+          bust_max: 42.125
          18:
           title: 18
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          waist_min: 0
-          waist_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 42
+          hip_max: 47
+          waist_min: 35.25
+          waist_max: 37.75
+          bust_min: 42.125
+          bust_max: 44.375
          20:
           title: 20
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0          
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 47
+          hip_max: 49
+          waist_min: 37.75
+          waist_max: 40.625
+          bust_min: 44.375
+          bust_max: 46.75
+         22:
+          title: 22
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 49
+          hip_max: 51
+          waist_min: 40.625
+          waist_max: 42.875
+          bust_min: 46.75
+          bust_max: 49.25
+         24:
+          title: 24
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 51
+          hip_max: 53
+          waist_min: 42.875
+          waist_max: 42.25
+          bust_min: 49.25
+          bust_max: 51.625
+         26:
+          title: 26
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 53
+          hip_max: 55
+          waist_min: 42.25
+          waist_max: 47.525
+          bust_min: 51.625
+          bust_max: 53.875
+         28:
+          title: 28
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 55
+          hip_max: 57
+          waist_min: 47.525
+          waist_max: 49.875
+          bust_min: 53.875
+          bust_max: 56.125
+            
      product_item:
-            "00":  
-              size_title: "00"
-              product_color_title: black
-              image: 			  
-            0:  
-              size_title: 0
-              product_color_title: black
-              image: 
             2:  
               size_title: 2
               product_color_title: black
@@ -435,6 +196,22 @@ products:
               size_title: 20
               product_color_title: black
               image:
+            22:
+              size_title: 22
+              product_color_title: black
+              image: 
+            24:
+              size_title: 24
+              product_color_title: black
+              image:               
+            26:
+              size_title: 26
+              product_color_title: black
+              image:               
+            28:
+              size_title: 28
+              product_color_title: black
+              image:                        
    t-shirts:
      name: Blue T-Shirt
      description: Fabric is slightly stretchy 
@@ -447,330 +224,147 @@ products:
             pattern: 51dd6725967cb.png
             default: true          
      product_sizes:
-         "00":
-          title: "00"
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
-          shoulder_min: 0
-          shoulder_max: 0    		  
-         0:
-          title: 0
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
-          shoulder_min: 0
-          shoulder_max: 0    	 
          2:
           title: 2
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
-          shoulder_min: 0
-          shoulder_max: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 31.5
+          hip_max: 32.75
+          waist_min: 22.87
+          waist_max: 24.375
+          bust_min: 28.5
+          bust_max: 30.75
          4:
           title: 4
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 32
-          bust_max: 33
-          back_min: 12
-          back_max: 13
-          waist_min: 28
-          waist_max: 29
-          chest_min: 28
-          chest_max: 29
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 4.5
-          sleeve_max: 5.5
-          thigh_min: 18
-          thigh_max: 19
-          hem: 33
-          length: 20
-          shoulder_min: 11.5
-          shoulder_max: 12.5
-          length_back_min: 23
-          length_back_max: 24
-          length_armpit_min: 15
-          length_armpit_min: 16          
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 32.75
+          hip_max: 35.375
+          waist_min: 24.375
+          waist_max: 26
+          bust_min: 30.75
+          bust_max: 31.25          
          6:
           title: 6
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 34
-          bust_max: 35
-          back_min: 13
-          back_max: 14
-          waist_min: 30
-          waist_max: 31
-          chest_min: 30
-          chest_max: 31
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 5
-          sleeve_max: 6
-          thigh_min: 0
-          thigh_max: 0
-          hem: 35
-          length: 19.5
-          shoulder_min: 12
-          shoulder_max: 13
-          length_back_min: 22.5
-          length_back_max: 23.5
-          length_armpit_min: 14.5
-          length_armpit_min: 15.5
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 35.375
+          hip_max: 37
+          waist_min: 26
+          waist_max: 27.625
+          bust_min: 31.25 
+          bust_max: 33.75
          8:
           title: 8
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 35
-          bust_max: 36
-          back_min: 12.5
-          back_max: 13.5
-          waist_min: 31
-          waist_max: 32
-          chest_min: 31
-          chest_max: 32
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 5
-          sleeve_max: 6
-          thigh_min: 21
-          thigh_max: 22
-          hem: 36
-          length: 19.5
-          shoulder_min: 11.5
-          shoulder_max: 12.5
-          length_back_min: 22
-          length_back_max: 23
-          length_armpit_min: 15
-          length_armpit_min: 16
+          inseam_min: 30.5
+          inseam_max: 31.5
+          inseam_max: 
+          hip_min: 37
+          hip_max: 38.625
+          waist_min: 27.625
+          waist_max: 29.25
+          bust_min: 33.75
+          bust_max: 35.375
          10:
           title: 10
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 34
-          bust_max: 35
-          back_min: 13
-          back_max: 14
-          waist_min: 31.5
-          waist_max: 32.5
-          chest_min: 31.5
-          chest_max: 32.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 5
-          sleeve_max: 6
-          thigh_min: 22
-          thigh_max: 23
-          hem: 36
-          length: 20.75
-          shoulder_min: 18.5
-          shoulder_max: 19.5
-          length_back_min: 24
-          length_back_max: 25
-          length_armpit_min: 16.25
-          length_armpit_min: 17.25
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 38.625
+          hip_max: 40.25
+          waist_min: 29.25
+          waist_max: 30.75
+          bust_min: 35.375
+          bust_max: 37
          12:
           title: 12
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 36
-          bust_max: 37
-          back_min: 14
-          back_max: 15
-          waist_min: 33
-          waist_max: 34
-          chest_min: 33
-          chest_max: 34
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 5.25
-          sleeve_max: 6.25
-          thigh_min: 0
-          thigh_max: 0
-          hem: 37
-          length: 21.5
-          shoulder_min: 13.25
-          shoulder_max: 14.25
-          length_back_min: 25
-          length_back_max: 26
-          length_armpit_min: 16
-          length_armpit_min: 17
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 40.25
+          hip_max: 41.75
+          waist_min: 30.75
+          waist_max: 32.25
+          bust_min: 37
+          bust_max: 38.625
          14:
-          title: 14
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0		  
+          title: 14 
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 41.75
+          hip_max: 43.25
+          waist_min: 32.25
+          waist_max: 33.75
+          bust_min: 38.625
+          bust_max: 40.25
          16:
           title: 16
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0          
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 43.25
+          hip_max: 42
+          waist_min: 33.75
+          waist_max: 35.25
+          bust_min: 40.25
+          bust_max: 42.125
          18:
           title: 18
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 42
+          hip_max: 47
+          waist_min: 35.25
+          waist_max: 37.75
+          bust_min: 42.125
+          bust_max: 44.375
          20:
-          title: 20 
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0
+          title: 20
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 47
+          hip_max: 49
+          waist_min: 37.75
+          waist_max: 40.625
+          bust_min: 44.375
+          bust_max: 46.75
+         22:
+          title: 22
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 49
+          hip_max: 51
+          waist_min: 40.625
+          waist_max: 42.875
+          bust_min: 46.75
+          bust_max: 49.25
+         24:
+          title: 24
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 51
+          hip_max: 53
+          waist_min: 42.875
+          waist_max: 42.25
+          bust_min: 49.25
+          bust_max: 51.625
+         26:
+          title: 26
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 53
+          hip_max: 55
+          waist_min: 42.25
+          waist_max: 47.525
+          bust_min: 51.625
+          bust_max: 53.875
+         28:
+          title: 28
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 55
+          hip_max: 57
+          waist_min: 47.525
+          waist_max: 49.875
+          bust_min: 53.875
+          bust_max: 56.125
                     
      product_item:
             "00":
@@ -833,219 +427,148 @@ products:
             pattern: 51dd681958b19.png
             default: true          
      product_sizes:
-         "00":
-          title: "00"
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          length: 0
-          hem: 0
-         0:
-          title: 0
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 0       
          2:
           title: 2
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 34
-          bust_max: 35
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 29
-          shoulder_min: 7.5
-          shoulder_max: 8.5
-          length_armpit_min: 26.5
-          length_armpit_min: 27.5
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 31.5
+          hip_max: 32.75
+          waist_min: 22.87
+          waist_max: 24.375
+          bust_min: 28.5
+          bust_max: 30.75
          4:
           title: 4
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 36
-          bust_max: 36
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 29
-          shoulder_min: 8
-          shoulder_max: 9
-          length_armpit_min: 26.5
-          length_armpit_min: 27.5
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 32.75
+          hip_max: 35.375
+          waist_min: 24.375
+          waist_max: 26
+          bust_min: 30.75
+          bust_max: 31.25          
          6:
           title: 6
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 29
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 35.375
+          hip_max: 37
+          waist_min: 26
+          waist_max: 27.625
+          bust_min: 31.25 
+          bust_max: 33.75
          8:
           title: 8
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 29
+          inseam_min: 30.5
+          inseam_max: 31.5
+          inseam_max: 
+          hip_min: 37
+          hip_max: 38.625
+          waist_min: 27.625
+          waist_max: 29.25
+          bust_min: 33.75
+          bust_max: 35.375
          10:
           title: 10
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 29          
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 38.625
+          hip_max: 40.25
+          waist_min: 29.25
+          waist_max: 30.75
+          bust_min: 35.375
+          bust_max: 37
          12:
           title: 12
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 40
-          bust_max: 41
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
-          hem: 0
-          length: 30.5
-          shoulder_min: 8.5
-          shoulder_max: 9.5
-          length_armpit_min: 29
-          length_armpit_min: 30
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 40.25
+          hip_max: 41.75
+          waist_min: 30.75
+          waist_max: 32.25
+          bust_min: 37
+          bust_max: 38.625
+         14:
+          title: 14 
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 41.75
+          hip_max: 43.25
+          waist_min: 32.25
+          waist_max: 33.75
+          bust_min: 38.625
+          bust_max: 40.25
+         16:
+          title: 16
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 43.25
+          hip_max: 42
+          waist_min: 33.75
+          waist_max: 35.25
+          bust_min: 40.25
+          bust_max: 42.125
+         18:
+          title: 18
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 42
+          hip_max: 47
+          waist_min: 35.25
+          waist_max: 37.75
+          bust_min: 42.125
+          bust_max: 44.375
+         20:
+          title: 20
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 47
+          hip_max: 49
+          waist_min: 37.75
+          waist_max: 40.625
+          bust_min: 44.375
+          bust_max: 46.75
+         22:
+          title: 22
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 49
+          hip_max: 51
+          waist_min: 40.625
+          waist_max: 42.875
+          bust_min: 46.75
+          bust_max: 49.25
+         24:
+          title: 24
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 51
+          hip_max: 53
+          waist_min: 42.875
+          waist_max: 42.25
+          bust_min: 49.25
+          bust_max: 51.625
+         26:
+          title: 26
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 53
+          hip_max: 55
+          waist_min: 42.25
+          waist_max: 47.525
+          bust_min: 51.625
+          bust_max: 53.875
+         28:
+          title: 28
+          inseam_min: 30.5
+          inseam_max: 31.5
+          hip_min: 55
+          hip_max: 57
+          waist_min: 47.525
+          waist_max: 49.875
+          bust_min: 53.875
+          bust_max: 56.125
      product_item:
-            "00":
-              size_title: "00"
-              product_color_title: aqua
-              image: 
-            0:
-              size_title: 0
-              product_color_title: aqua
-              image: 
             2:
               size_title: 2
               product_color_title: aqua
@@ -1086,7 +609,205 @@ products:
               size_title: 20
               product_color_title: aqua
               image:
+            22:
+              size_title: 22
+              product_color_title: aqua
+              image: 
+            24:
+              size_title: 24
+              product_color_title: aqua
+              image: 
+            26:
+              size_title: 26
+              product_color_title: aqua
+              image: 
+            28:
+              size_title: 28
+              product_color_title: aqua
+              image:
  old navy:  
+   dress:
+     name: old navy dress
+     description: Silky Fabric 
+     adjustment: 0
+     gender: f
+     product_color:
+          blue:
+            title: blue
+            image: 51dd68bbcc323.png
+            pattern: 51dd68bbc9ac5.png
+            default: true                   
+     product_sizes:
+         "00":
+          title: "00"
+          bust_min: 29.5
+          bust_max: 31.5
+          waist_min: 22.5
+          waist_max: 23.5
+          hip_min: 33.5
+          hip_max: 34.5
+          hem: 0
+          length: 0
+         0:
+          title: 0
+          bust_min: 31.5
+          bust_max: 32.5
+          waist_min: 23.5
+          waist_max: 24.5
+          hip_min: 34.5
+          hip_max: 35.5
+          hem: 0
+          length: 0
+         2:
+          title: 2
+          bust_min: 32.5
+          bust_max: 33.5
+          waist_min: 24.5
+          waist_max: 25.5
+          hip_min: 35.5
+          hip_max: 36.5
+          hem: 0
+          length: 0
+         4:
+          title: 4
+          bust_min: 33.5
+          bust_max: 34.5
+          waist_min: 25.5
+          waist_max: 26.5
+          hip_min: 36.5
+          hip_max: 37.5
+          hem: 0
+          length: 0
+         6:
+          title: 6
+          bust_min: 34.5
+          bust_max: 35.5
+          waist_min: 26.5
+          waist_max: 27.5
+          hip_min: 37.5
+          hip_max: 38.5
+          hem: 0
+          length: 0
+         8:
+          title: 8
+          bust_min: 35.5
+          bust_max: 36.5
+          waist_min: 27.5
+          waist_max: 28.5
+          hip_min: 38.5
+          hip_max: 39.5
+          hem: 0
+          length: 0
+         10:
+          title: 10
+          bust_min: 36.5
+          bust_max: 37.75
+          waist_min: 28.5
+          waist_max: 29.5
+          hip_min: 39.75
+          hip_max: 40.75
+          hem: 0
+          length: 0
+         12:
+          title: 12
+          bust_min: 37.75
+          bust_max: 39.5
+          waist_min: 29.75
+          waist_max: 31.5
+          hip_min: 40.75
+          hip_max: 42.5
+          hem: 0
+          length: 0
+         14:
+          title: 14
+          bust_min: 39.5
+          bust_max: 41.5
+          waist_min: 31.5
+          waist_max: 32.5
+          hip_min: 42.5
+          hip_max: 44.5
+          hem: 0
+          length: 0
+         16:
+          title: 16
+          bust_min: 41.5
+          bust_max: 43.75
+          waist_min: 32.5
+          waist_max: 35.75
+          hip_min: 44.5
+          hip_max: 46.75
+          hem: 0
+          length: 0
+         18:
+          title: 18
+          bust_min: 43.75
+          bust_max: 46.25
+          waist_min: 35.75
+          waist_max: 38.25
+          hip_min: 46.75
+          hip_max: 49.25
+          hem: 0
+          length: 0
+         20:
+          title: 20
+          bust_min: 46.25
+          bust_max: 48.75
+          waist_min: 38.25
+          waist_max: 40.75
+          hip_min: 49.25
+          hip_max: 51.75
+          hem: 0
+          length: 0
+          
+     product_item:
+            "00":  
+              size_title: "00"
+              product_color_title: blue
+              image: 
+            0:  
+              size_title: 0
+              product_color_title: blue
+              image:        
+            2:  
+              size_title: 2
+              product_color_title: blue
+              image: 51dd68cc7e92b_fr.png       
+            4:
+              size_title: 4
+              product_color_title: blue
+              image: 51dd68d52ce37_fr.png
+            6:
+              size_title: 6
+              product_color_title: blue
+              image: 51dd68dec5a16_fr.png
+            8:
+              size_title: 8
+              product_color_title: blue
+              image: 51dd68e6a45f6_fr.png
+            10:  
+              size_title: 10
+              product_color_title: blue
+              image: 
+            12:
+              size_title: 12
+              product_color_title: blue
+              image: 
+            14:
+              size_title: 14
+              product_color_title: blue
+              image: 
+            16:
+              size_title: 16
+              product_color_title: blue
+              image:
+            18:  
+              size_title: 18
+              product_color_title: blue
+              image: 
+            20:
+              size_title: 20
+              product_color_title: blue
+              image:
    shorts:
      name: Blue shorts
      description: Fabric is slightly stretchy
@@ -1101,292 +822,124 @@ products:
      product_sizes:
          "00":
           title: "00"
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
+          bust_min: 29.5
+          bust_max: 31.5
+          waist_min: 22.5
+          waist_max: 23.5
+          hip_min: 33.5
+          hip_max: 34.5
           hem: 0
           length: 0
          0:
           title: 0
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
+          bust_min: 31.5
+          bust_max: 32.5
+          waist_min: 23.5
+          waist_max: 24.5
+          hip_min: 34.5
+          hip_max: 35.5
           hem: 0
           length: 0
          2:
           title: 2
-          inseam_min: 3
-          inseam_max: 4
-          outseam_min: 10.5
-          outseam_max: 11.5
-          hip_min: 36
-          hip_max: 37
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 29
-          waist_max: 30
-          chest_min: 29
-          chest_max: 30
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 22
-          thigh_max: 23
+          bust_min: 32.5
+          bust_max: 33.5
+          waist_min: 24.5
+          waist_max: 25.5
+          hip_min: 35.5
+          hip_max: 36.5
           hem: 0
           length: 0
          4:
           title: 4
-          inseam_min: 3
-          inseam_max: 4
-          outseam_min: 11
-          outseam_max: 12
-          hip_min: 37
-          hip_max: 38
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 30.5
-          waist_max: 31.5
-          chest_min: 30.5
-          chest_max: 31.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 22
-          thigh_max: 23
+          bust_min: 33.5
+          bust_max: 34.5
+          waist_min: 25.5
+          waist_max: 26.5
+          hip_min: 36.5
+          hip_max: 37.5
           hem: 0
           length: 0
          6:
           title: 6
-          inseam_min: 3.5
-          inseam_max: 4.5
-          outseam_min: 11.5
-          outseam_max: 12.5
-          hip_min: 38
-          hip_max: 39
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 32
-          waist_max: 33
-          chest_min: 32
-          chest_max: 33
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 23
-          thigh_max: 24
+          bust_min: 34.5
+          bust_max: 35.5
+          waist_min: 26.5
+          waist_max: 27.5
+          hip_min: 37.5
+          hip_max: 38.5
           hem: 0
           length: 0
          8:
           title: 8
-          inseam_min: 3.5
-          inseam_max: 3.5
-          outseam_min: 11.5
-          outseam_max: 12.5
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 33.5
-          waist_max: 34.5
-          chest_min: 33.5
-          chest_max: 34.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 24
-          thigh_max: 25
+          bust_min: 35.5
+          bust_max: 36.5
+          waist_min: 27.5
+          waist_max: 28.5
+          hip_min: 38.5
+          hip_max: 39.5
           hem: 0
-          length: 0         
+          length: 0
          10:
           title: 10
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 0
-          waist_max: 0
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
+          bust_min: 36.5
+          bust_max: 37.75
+          waist_min: 28.5
+          waist_max: 29.5
+          hip_min: 39.75
+          hip_max: 40.75
           hem: 0
           length: 0
          12:
           title: 12
-          inseam_min: 3.5
-          inseam_max: 3.5
-          outseam_min: 11.5
-          outseam_max: 12.5
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 33.5
-          waist_max: 34.5
-          chest_min: 33.5
-          chest_max: 34.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 24
-          thigh_max: 25
+          bust_min: 37.75
+          bust_max: 39.5
+          waist_min: 29.75
+          waist_max: 31.5
+          hip_min: 40.75
+          hip_max: 42.5
           hem: 0
-          length: 0		 		  
+          length: 0
          14:
           title: 14
-          inseam_min: 3.5
-          inseam_max: 3.5
-          outseam_min: 11.5
-          outseam_max: 12.5
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 33.5
-          waist_max: 34.5
-          chest_min: 33.5
-          chest_max: 34.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 24
-          thigh_max: 25
+          bust_min: 39.5
+          bust_max: 41.5
+          waist_min: 31.5
+          waist_max: 32.5
+          hip_min: 42.5
+          hip_max: 44.5
           hem: 0
-          length: 0		  
+          length: 0
          16:
           title: 16
-          inseam_min: 3.5
-          inseam_max: 3.5
-          outseam_min: 11.5
-          outseam_max: 12.5
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 33.5
-          waist_max: 34.5
-          chest_min: 33.5
-          chest_max: 34.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 24
-          thigh_max: 25
+          bust_min: 41.5
+          bust_max: 43.75
+          waist_min: 32.5
+          waist_max: 35.75
+          hip_min: 44.5
+          hip_max: 46.75
           hem: 0
-          length: 0		  
+          length: 0
          18:
           title: 18
-          inseam_min: 3.5
-          inseam_max: 3.5
-          outseam_min: 11.5
-          outseam_max: 12.5
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 33.5
-          waist_max: 34.5
-          chest_min: 33.5
-          chest_max: 34.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 24
-          thigh_max: 25
+          bust_min: 43.75
+          bust_max: 46.25
+          waist_min: 35.75
+          waist_max: 38.25
+          hip_min: 46.75
+          hip_max: 49.25
           hem: 0
-          length: 0		  		  
+          length: 0
          20:
           title: 20
-          inseam_min: 3.5
-          inseam_max: 3.5
-          outseam_min: 11.5
-          outseam_max: 12.5
-          hip_min: 0
-          hip_max: 0
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
-          waist_min: 33.5
-          waist_max: 34.5
-          chest_min: 33.5
-          chest_max: 34.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 24
-          thigh_max: 25
+          bust_min: 46.25
+          bust_max: 48.75
+          waist_min: 38.25
+          waist_max: 40.75
+          hip_min: 49.25
+          hip_max: 51.75
           hem: 0
-          length: 0	          
+          length: 0
           
      product_item:
             "00":  
@@ -1457,18 +1010,10 @@ products:
           outseam_max: 13.5
           hip_min: 38
           hip_max: 39
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 31
           waist_max: 32
           chest_min: 31
           chest_max: 32
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 23
           thigh_max: 24
           hem: 0
@@ -1481,18 +1026,10 @@ products:
           outseam_max: 13.5
           hip_min: 38
           hip_max: 39
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 32
           waist_max: 33
           chest_min: 32
           chest_max: 33
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 23
           thigh_max: 24
           hem: 0
@@ -1505,18 +1042,10 @@ products:
           outseam_max: 14
           hip_min: 40
           hip_max: 41
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 33
           waist_max: 34
           chest_min: 33
           chest_max: 34
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 24
           thigh_max: 25
           hem: 0
@@ -1529,18 +1058,10 @@ products:
           outseam_max: 14
           hip_min: 41
           hip_max: 42
-          bust_min: 0
-          bust_max: 0
-          back_min: 0
-          back_max: 0
           waist_min: 34
           waist_max: 35
           chest_min: 34
           chest_max: 35
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
           thigh_min: 24
           thigh_max: 25
           hem: 0
@@ -1574,126 +1095,127 @@ products:
             pattern: 51dd6a0df23d7.png
             default: true          
      product_sizes:
+         "00":
+          title: "00"
+          bust_min: 29.5
+          bust_max: 31.5
+          waist_min: 22.5
+          waist_max: 23.5
+          hip_min: 33.5
+          hip_max: 34.5
+          hem: 0
+          length: 0
          0:
           title: 0
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 31
-          bust_max: 31
-          back_min: 12.25
-          back_max: 13.25
-          waist_min: 30
-          waist_max: 31
-          chest_min: 30
-          chest_max: 31
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 7.5
-          sleeve_max: 8.5
-          thigh_min: 0
-          thigh_max: 0
-          hem: 39
-          length: 19.25
-          shoulder_min: 13.5
-          shoulder_max: 14.5
-          length_armpit_min: 17.25
-          length_armpit_min: 18.25
-          length_back_min: 25.75
-          length_back_max: 26.75
+          bust_min: 31.5
+          bust_max: 32.5
+          waist_min: 23.5
+          waist_max: 24.5
+          hip_min: 34.5
+          hip_max: 35.5
+          hem: 0
+          length: 0
          2:
           title: 2
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 32.25
-          bust_max: 33.25
-          back_min: 12.25
-          back_max: 13.25
-          waist_min: 31
-          waist_max: 32
-          chest_min: 31
-          chest_max: 32
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 7.5
-          sleeve_max: 8.5
-          thigh_min: 0
-          thigh_max: 0
-          hem: 39
-          length: 18.25
-          shoulder_min: 13.25
-          shoulder_max: 14.25
-          length_armpit_min: 17
-          length_armpit_min: 18
-          length_back_min: 25.75
-          length_back_max: 26.75
+          bust_min: 32.5
+          bust_max: 33.5
+          waist_min: 24.5
+          waist_max: 25.5
+          hip_min: 35.5
+          hip_max: 36.5
+          hem: 0
+          length: 0
+         4:
+          title: 4
+          bust_min: 33.5
+          bust_max: 34.5
+          waist_min: 25.5
+          waist_max: 26.5
+          hip_min: 36.5
+          hip_max: 37.5
+          hem: 0
+          length: 0
+         6:
+          title: 6
+          bust_min: 34.5
+          bust_max: 35.5
+          waist_min: 26.5
+          waist_max: 27.5
+          hip_min: 37.5
+          hip_max: 38.5
+          hem: 0
+          length: 0
          8:
           title: 8
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 34
-          bust_max: 35
-          back_min: 13.25
-          back_max: 14.25
-          waist_min: 33
-          waist_max: 34
-          chest_min: 33
-          chest_max: 34
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 6.75
-          sleeve_max: 7.75
-          thigh_min: 0
-          thigh_max: 0
-          hem: 40
-          length: 19.5
-          shoulder_min: 13
-          shoulder_max: 14
-          length_armpit_min: 18
-          length_armpit_min: 19
-          length_back_min: 26.5
-          length_back_max: 27.5
+          bust_min: 35.5
+          bust_max: 36.5
+          waist_min: 27.5
+          waist_max: 28.5
+          hip_min: 38.5
+          hip_max: 39.5
+          hem: 0
+          length: 0
+         10:
+          title: 10
+          bust_min: 36.5
+          bust_max: 37.75
+          waist_min: 28.5
+          waist_max: 29.5
+          hip_min: 39.75
+          hip_max: 40.75
+          hem: 0
+          length: 0
          12:
           title: 12
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
-          bust_min: 39.25
-          bust_max: 40.25
-          back_min: 14.25
-          back_max: 15.25
-          waist_min: 36
-          waist_max: 37
-          chest_min: 0
-          chest_max: 0
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 7.5
-          sleeve_max: 8.5
-          thigh_min: 0
-          thigh_max: 0
-          hem: 43.5
-          length: 19.75
-          shoulder_min: 14.75
-          shoulder_max: 15.75
-          length_armpit_min: 17.75
-          length_armpit_min: 18.75
-          length_back_min: 27.25
-          length_back_max: 28.25
+          bust_min: 37.75
+          bust_max: 39.5
+          waist_min: 29.75
+          waist_max: 31.5
+          hip_min: 40.75
+          hip_max: 42.5
+          hem: 0
+          length: 0
+         14:
+          title: 14
+          bust_min: 39.5
+          bust_max: 41.5
+          waist_min: 31.5
+          waist_max: 32.5
+          hip_min: 42.5
+          hip_max: 44.5
+          hem: 0
+          length: 0
+         16:
+          title: 16
+          bust_min: 41.5
+          bust_max: 43.75
+          waist_min: 32.5
+          waist_max: 35.75
+          hip_min: 44.5
+          hip_max: 46.75
+          hem: 0
+          length: 0
+         18:
+          title: 18
+          bust_min: 43.75
+          bust_max: 46.25
+          waist_min: 35.75
+          waist_max: 38.25
+          hip_min: 46.75
+          hip_max: 49.25
+          hem: 0
+          length: 0
+         20:
+          title: 20
+          bust_min: 46.25
+          bust_max: 48.75
+          waist_min: 38.25
+          waist_max: 40.75
+          hip_min: 49.25
+          hip_max: 51.75
+          hem: 0
+          length: 0
+
      product_item:
             0:
               size_title: 0
@@ -1703,14 +1225,42 @@ products:
               size_title: 2
               product_color_title: stripe
               image: 51dd6a4580f2c_fr.png
+            4:
+              size_title: 4
+              product_color_title: stripe
+              image: 
+            6:
+              size_title: 6
+              product_color_title: stripe
+              image: 
             8:
               size_title: 8
               product_color_title: stripe
               image: 51dd6a4ecb6dc_fr.png
+            10:
+              size_title: 10
+              product_color_title: stripe
+              image: 
             12:
               size_title: 12
               product_color_title: stripe
               image: 51dd6a5787e3d_fr.png
+            14:
+              size_title: 14
+              product_color_title: stripe
+              image: 
+            16:
+              size_title: 16
+              product_color_title: stripe
+              image: 
+            18:
+              size_title: 18
+              product_color_title: stripe
+              image: 
+            20:
+              size_title: 20
+              product_color_title: stripe
+              image: 
    shirts:
      name: Pink Razer Back Tee
      description: Built in Bra, back measurement lower then usual. Razer back
@@ -1725,12 +1275,6 @@ products:
      product_sizes:
          4:
           title: 4
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
           bust_min: 22
           bust_max: 23
           back_min: 10.5
@@ -1739,12 +1283,6 @@ products:
           waist_max: 23.5
           chest_min: 22.5
           chest_max: 23.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
           hem: 28
           length: 20
           shoulder_min: 8
@@ -1755,12 +1293,6 @@ products:
           length_back_max: 25.25     
          8:
           title: 8
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
           bust_min: 26
           bust_max: 27
           back_min: 12
@@ -1769,12 +1301,6 @@ products:
           waist_max: 26
           chest_min: 25
           chest_max: 26
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
           hem: 30
           length: 20
           shoulder_min: 9
@@ -1785,12 +1311,6 @@ products:
           length_back_max: 26
          12:
           title: 12
-          inseam_min: 0
-          inseam_max: 0
-          outseam_min: 0
-          outseam_max: 0
-          hip_min: 0
-          hip_max: 0
           bust_min: 29
           bust_max: 30
           back_min: 14
@@ -1799,12 +1319,6 @@ products:
           waist_max: 29.5
           chest_min: 28.5
           chest_max: 29.5
-          neck_min: 0
-          neck_max: 0
-          sleeve_min: 0
-          sleeve_max: 0
-          thigh_min: 0
-          thigh_max: 0
           hem: 35
           length: 20
           shoulder_min: 10
