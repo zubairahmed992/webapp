@@ -97,7 +97,9 @@ class ProductController extends Controller {
         $type = $request_array['type'];
         $gender = $request_array['gender'];
         
-
+        $id=4;
+        $type='clothing_type';
+        $gender='F';
         $products = Null;
         if ($type == "brand") {
             $products = $this->getDoctrine()
@@ -120,6 +122,7 @@ class ProductController extends Controller {
                     ->findLattestProductWebService($gender);
         }
         $data = array();
+       
         #-------Fetching The Path------------#
         if ($products) {
             /* if($products[0]['product_image'] )
@@ -137,8 +140,9 @@ class ProductController extends Controller {
           $product_helper =  $this->get('admin.helper.product');
           foreach($products as $ind_product)
           {
-              
-            $product_id = $ind_product['product_id'];
+            $product_id = $ind_product['id'];
+            if( $product_id)
+            {
             $p = $product_helper->find($product_id);
                 $data['data'][$product_id]['name'] = $ind_product['name'];
                 $data['data'][$product_id]['description'] = $ind_product['description'];
@@ -146,8 +150,9 @@ class ProductController extends Controller {
                 $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
               $item=$p->getDefaultItem();
                 $data['data'][$product_id]['fitting_room_image'] = $item->getImage(); 
-                
-               }   
+            }
+           
+                }   
            
             //$data[] = $products;
            
