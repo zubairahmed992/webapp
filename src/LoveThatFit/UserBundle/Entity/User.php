@@ -776,7 +776,7 @@ public function getOriginalImageAbsolutePath()
         $ext = pathinfo($this->avatar, PATHINFO_EXTENSION);
         return null === $this->avatar
             ? null
-            : $this->getUploadDir().'/'.$this->id. '_avatar'.'.'.$ext;    
+            : $this->getUploadDir().'/'.'avatar'.'.'.$ext;    
         
     }
     
