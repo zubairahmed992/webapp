@@ -97,7 +97,9 @@ class ProductController extends Controller {
         $type = $request_array['type'];
         $gender = $request_array['gender'];
         
-       
+      // $id=3;
+      // $type='brand';
+      // $gender='F';
         $products = Null;
         if ($type == "brand") {
             $products = $this->getDoctrine()
@@ -142,6 +144,7 @@ class ProductController extends Controller {
             if( $product_id)
             {
             $p = $product_helper->find($product_id);
+                $data['data'][$product_id]['id'] = $ind_product['id'];
                 $data['data'][$product_id]['name'] = $ind_product['name'];
                 $data['data'][$product_id]['description'] = $ind_product['description'];
                 $data['data'][$product_id]['target'] = $ind_product['target'];
@@ -150,8 +153,7 @@ class ProductController extends Controller {
               if($item){
                 $data['data'][$product_id]['fitting_room_image'] = $item->getImage(); }
             }
-           
-                }   
+           }   
            
             //$data[] = $products;
            
