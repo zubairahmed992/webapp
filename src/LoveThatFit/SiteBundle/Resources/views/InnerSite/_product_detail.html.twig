@@ -52,7 +52,7 @@ function loveItem(item_id)
             if(jqXHR.responseText.trim()== "success")
             {
             
-             $("#like_icon_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}">');
+             $("#like_icon_"+item_id).replaceWith(' <div id="un_like_icon'+item_id+'"><a href="javascript:void(0);"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a></div>');
             }   
             else
             {
@@ -140,7 +140,7 @@ function lovedItems(item_id)
                         <div class="featured_img">
 
                             
-                            <img width="63" height="108" src="{{asset(productColor.ImagePaths['small'])}}" class="prod_{{product.clothingType.target|lower}} ui-draggable">
+                            <img src="{{asset(productColor.ImagePaths['small'])}}" class="prod_{{product.clothingType.target|lower}} ui-draggable">
                             
                              <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
                            
