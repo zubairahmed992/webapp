@@ -50,9 +50,9 @@ class BrandHelper {
         //$msg_array =null;
         //$msg_array = ;
 
-        $brandName=$entity->getName();
-        $msg_array=$this->validateForCreate($brandName);   
-        if ($msg_array==null) {
+        $brandName = $entity->getName();
+        $msg_array = $this->validateForCreate($brandName);
+        if ($msg_array == null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
 
@@ -76,14 +76,14 @@ class BrandHelper {
 
         $msg_array = $this->validateForUpdate($entity);
 
-        if ($msg_array==null) {
+        if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
 
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
 
-            return array('message' => 'Brand '.$entity->getName().' succesfully updated!',
+            return array('message' => 'Brand ' . $entity->getName() . ' succesfully updated!',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -152,15 +152,13 @@ class BrandHelper {
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
-    
-    public function removeBrand()
-    {
+
+    public function removeBrand() {
         return $this->repo->removeBrand();
-        
     }
 
- //-------------------------------------------------------
-    
+    //-------------------------------------------------------
+
     public function getListWithPagination($page_number, $sort) {
         $yaml = new Parser();
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
@@ -199,8 +197,8 @@ class BrandHelper {
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
         $brand = $this->findOneByName($entity->getName());
-        
-        if ($brand && $brand->getId()!=$entity->getId()) {
+
+        if ($brand && $brand->getId() != $entity->getId()) {
             return array('message' => 'Brand Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -210,5 +208,4 @@ class BrandHelper {
         return;
     }
 
-    
 }

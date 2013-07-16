@@ -31,7 +31,7 @@ class BrandController extends Controller {
         }
         return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
                     'brand' => $entity
-                ));
+        ));
     }
 
 //------------------------------------------------------------------------------------------
@@ -51,9 +51,9 @@ class BrandController extends Controller {
         $form = $this->createForm(new BrandType('add'), $entity);
         $form->bind($request);
 
-       
-        
-        
+
+
+
         if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.brand')->save($entity);
@@ -65,11 +65,11 @@ class BrandController extends Controller {
         } else {
             $this->get('session')->setFlash('warning', 'The Brand can not be Created!');
         }
-        
+
         return $this->render('LoveThatFitAdminBundle:Brand:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
-                ));
+        ));
     }
 
 //------------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ class BrandController extends Controller {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
             return $this->redirect($this->generateUrl('admin_brands'));
         }
-        
+
         $form = $this->createForm(new BrandType('edit'), $entity);
         $form->bind($request);
 

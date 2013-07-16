@@ -43,11 +43,10 @@ class ClothingTypeHelper {
     }
 
     public function save($entity) {
-        //$msg_array = null;
-        
-        $name=$entity->getName();
+        //$msg_array = null;        
+        $name = $entity->getName();
         $msg_array = $this->validateForCreate($name);
-        if ($msg_array == null and $name!=null) {
+        if ($msg_array == null and $name != null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $this->em->persist($entity);
@@ -71,7 +70,7 @@ class ClothingTypeHelper {
         $msg_array = $this->validateForUpdate($entity);
 
         if ($msg_array == null) {
-            $entity->setUpdatedAt(new \DateTime('now'));            
+            $entity->setUpdatedAt(new \DateTime('now'));
             $this->em->persist($entity);
             $this->em->flush();
 
@@ -148,9 +147,9 @@ class ClothingTypeHelper {
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,
             'per_page_limit' => $limit,
-            'criteriaTop'=>$this->countStatistics('Top'),
-           'criteriaBottom'=>$this->countStatistics('Bottom'),
-           'criteriaDress'=>$this->countStatistics('Dress'),
+            'criteriaTop' => $this->countStatistics('Top'),
+            'criteriaBottom' => $this->countStatistics('Bottom'),
+            'criteriaDress' => $this->countStatistics('Dress'),
         );
     }
 
@@ -159,17 +158,16 @@ class ClothingTypeHelper {
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
-    
+
     public function findClothingTypeByName($name) {
         return $this->repo->findClothingTypeByName($name);
     }
-    
 
     //-------------------------------------------------------
     //Private Methods    
 //----------------------------------------------------------
     private function validateForCreate($name) {
-        if (count($this->findClothingTypeByName($name))>0) {
+        if (count($this->findClothingTypeByName($name)) > 0) {
             return array('message' => 'clothing types Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -182,7 +180,7 @@ class ClothingTypeHelper {
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
         $clothing_types = $this->findClothingTypeByName($entity->getName());
-        if ($clothing_types && $clothing_types->getId()!= $entity->getId()) {
+        if ($clothing_types && $clothing_types->getId() != $entity->getId()) {
             return array('message' => 'Clothing Type Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -190,13 +188,11 @@ class ClothingTypeHelper {
             );
         }
         return;
-    }    
-    
-    private function countStatistics($target)
-    {
-        
-	return $rec_count = count($this->repo->findStatisticsBy($target));        
     }
 
-    
+    private function countStatistics($target) {
+
+        return $rec_count = count($this->repo->findStatisticsBy($target));
+    }
+
 }

@@ -49,10 +49,9 @@ class ClothingTypeController extends Controller {
         $entity = $this->get('admin.helper.ClothingType')->createNew();
         $form = $this->createForm(new ClothingTypes('add'), $entity);
         $form->bind($request);
-        if ($form->isValid()) {
+        if ($entity->getName() != null and $form->isValid()) {
             $message_array = $this->get('admin.helper.ClothingType')->save($entity);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-
             if ($message_array['success']) {
                 return $this->redirect($this->generateUrl('admin_clothing_type_show', array('id' => $entity->getId())));
             }
