@@ -71,5 +71,21 @@ class ProductColorRepository extends EntityRepository {
             return null;
         }
     }
+    
+    #------------Fetching image url only ---------------------------------------------------------#
+    public function getSingleSizeItemImageUrlArray($id) {
+        $query = $this->getEntityManager()
+                        ->createQuery('
+            SELECT pi.image as image_url FROM LoveThatFitAdminBundle:ProductColor pc 
+            JOIN pc.product_items pi
+            JOIN pi.product_size ps
+            WHERE pc.id = :id'
+                        )->setParameter('id', $id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
 }

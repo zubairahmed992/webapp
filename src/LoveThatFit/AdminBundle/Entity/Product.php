@@ -435,8 +435,7 @@ class Product {
     
         return $sizeTitle;
     }
-    
-   
+  
 //----------------------------------------------------------
     /**
      * Set displayProductColor
@@ -545,5 +544,18 @@ class Product {
     public function  getdefalutImagePaths()
     {
         return $this->displayProductColor->getImagePaths();
-    }         
+    }
+    #--------Get Default Product Colors----------------#
+    public function getDefaultItem() {
+    
+        $productColor = $this->getDisplayProductColor();
+        
+       foreach($productColor->getProductItems() as $item)
+       {
+           return  $item;
+       }
+     return  ;
+    }
+    
+    
 }

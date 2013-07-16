@@ -598,13 +598,11 @@ public function userProfileAction()
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
     #----------------------------------------------------------------------------------------------------#   
-    private function genrateToken($email)
-    {
-      return   md5(time().$email);
+    private function genrateToken($email) {
+        return md5(time() . $email);
     }   
  #------------------------CHECK TOKEN-------------------------------------------------------------------#   
-   private function checkToken($email,$token)
-   {
+ private function checkToken($email, $token) {
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
