@@ -147,7 +147,8 @@ class ProductController extends Controller {
                 $data['data'][$product_id]['target'] = $ind_product['target'];
                 $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
               $item=$p->getDefaultItem();
-                $data['data'][$product_id]['fitting_room_image'] = $item->getImage(); 
+              if($item){
+                $data['data'][$product_id]['fitting_room_image'] = $item->getImage(); }
             }
            
                 }   
