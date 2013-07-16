@@ -1,8 +1,8 @@
 size_charts:
-  gap: 
-    female:
-      regular:
-        top:
+  Gap: 
+    f:
+      Regular:
+        Top:
           "00":
             chest: 31.5
             sleeve: 30.75
@@ -40,7 +40,7 @@ size_charts:
             chest: 46
             sleeve: 34.5         
 
-        bottom:
+        Bottom:
           "00":
             waist: 23.5
             hip: 34.5
@@ -90,7 +90,7 @@ size_charts:
             hip: 48.75
             thigh: 29.5 
 
-        dress:
+        Dress:
           "00":
             chest: 32.5
             waist: 24.5
@@ -128,8 +128,8 @@ size_charts:
             chest: 45.75
             waist: 37.75
 
-      petite:
-        top:
+      Petite:
+        Top:
           "00":
             chest: 31.5
             sleeve: 29.5
@@ -167,7 +167,7 @@ size_charts:
             chest: 46
             sleeve: 33        
 
-        bottom:
+        Bottom:
           "00":
             waist: 23.5
             hip: 34.5
@@ -217,7 +217,7 @@ size_charts:
             hip: 48.75
             thigh: 29.5 
 
-        dress:
+        Dress:
           "00":
             chest: 32.5
             waist: 24.5
@@ -255,8 +255,8 @@ size_charts:
             chest: 45.75
             waist: 37.75
 
-      tall:
-        top:
+      Tall:
+        Top:
           "00":
             chest: 31.5
             sleeve: 32.75
@@ -294,7 +294,7 @@ size_charts:
             chest: 46
             sleeve: 36.5        
 
-        bottom:
+        Bottom:
           "00":
             waist: 23.5
             hip: 34.5
@@ -344,7 +344,7 @@ size_charts:
             hip: 48.75
             thigh: 29.5 
 
-        dress:
+        Dress:
           "00":
             chest: 32.5
             waist: 24.5
@@ -382,10 +382,10 @@ size_charts:
             chest: 45.75
             waist: 37.75
         
-  j.crew: 
-    female:
-      regular:
-        top:
+  J.crew: 
+    f:
+      Regular:
+        Top:
           "00":
             bust: 31.5
             waist: 24
@@ -417,7 +417,7 @@ size_charts:
             bust: 42
             waist: 34.5      
 
-        bottom:
+        Bottom:
           "00":
             waist: 24
             hip: 34          
@@ -449,7 +449,7 @@ size_charts:
             waist: 34.5
             hip: 44.5
 
-        dress:
+        Dress:
           "00":
             bust: 31.5
             waist: 24
@@ -499,9 +499,9 @@ size_charts:
             waist: 37.5
             hip: 48.5 
 
-      petite:
+      Petite:
      
-        top:
+        Top:
           "00":
             bust: 30.5
             waist: 23
@@ -527,7 +527,7 @@ size_charts:
             bust: 38
             waist: 30.5
 
-        bottom:
+        Bottom:
           "00":
             waist: 23
             hip: 33         
@@ -553,7 +553,7 @@ size_charts:
             waist: 30.5
             hip: 40.5
 
-        dress:
+        Dress:
           "00":
             bust: 30.5
             waist: 23
@@ -591,9 +591,9 @@ size_charts:
             waist: 32
             hip: 42
       
-      tall:
+      Tall:
       
-        top:
+        Top:
           "00":
             bust: 31.5
             waist: 24
@@ -625,7 +625,7 @@ size_charts:
             bust: 42
             waist: 34.5             
 
-        bottom:
+        Bottom:
           "00":
             waist: 24
             hip: 34          
@@ -657,7 +657,7 @@ size_charts:
             waist: 34.5
             hip: 44.5    
 
-        dress:
+        Dress:
           "00":
             bust: 31.5
             waist: 24
