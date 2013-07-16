@@ -36,6 +36,13 @@ class ProductHelper {
         $this->repo = $em->getRepository($class);
     }
    
+#------------------------------------------------------
+public function find($id) {
+        return $this->repo->find($id);
+    }
+
+
+#---------------------------------------------------
     public function findProductByTitle($name) {
         return $this->repo->findProductByTitle($name);
     }

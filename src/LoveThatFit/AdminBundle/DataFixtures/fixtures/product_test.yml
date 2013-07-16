@@ -26,19 +26,19 @@ products:
           title: 4
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
-          hip_max: 
+          hip_min: 33
+          hip_max: 35
           waist_min: 25
-          waist_max: 
+          waist_max: 26
           bust_min: 30.5
           bust_max: 31.5          
          6:
           title: 6
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
-          hip_max: 
-          waist_min: 
+          hip_min: 35
+          hip_max: 36.5
+          waist_min: 26.75
           waist_max: 
           bust_min: 33 
           bust_max: 
@@ -46,9 +46,9 @@ products:
           inseam_min: 30.5
           inseam_max: 31.5
           inseam_max: 
-          hip_min: 
+          hip_min: 37.75
           hip_max: 
-          waist_min: 
+          waist_min: 28.5
           waist_max: 
           bust_min: 34.5
           bust_max: 
@@ -56,9 +56,9 @@ products:
           title: 10
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 39.5
           hip_max: 
-          waist_min: 
+          waist_min: 30
           waist_max: 
           bust_min: 36.25
           bust_max: 
@@ -66,9 +66,9 @@ products:
           title: 12
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 41
           hip_max: 
-          waist_min: 
+          waist_min: 31.5
           waist_max: 
           bust_min: 37.75
           bust_max: 
@@ -76,9 +76,9 @@ products:
           title: 14 
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 42.5
           hip_max: 
-          waist_min: 
+          waist_min: 33
           waist_max: 
           bust_min: 39.5
           bust_max: 
@@ -86,9 +86,9 @@ products:
           title: 16
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 44
           hip_max: 
-          waist_min: 
+          waist_min: 34.5
           waist_max: 
           bust_min: 41
           bust_max: 
@@ -96,9 +96,9 @@ products:
           title: 18
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 46
           hip_max: 
-          waist_min: 
+          waist_min: 37
           waist_max: 
           bust_min: 43.25
           bust_max: 
@@ -106,9 +106,9 @@ products:
           title: 20
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 48
           hip_max: 
-          waist_min: 
+          waist_min: 39.5
           waist_max: 
           bust_min: 45.5
           bust_max: 
@@ -116,9 +116,9 @@ products:
           title: 22
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 50
           hip_max: 
-          waist_min: 
+          waist_min: 41.75
           waist_max: 
           bust_min: 48
           bust_max: 
@@ -126,9 +126,9 @@ products:
           title: 24
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 52
           hip_max: 
-          waist_min: 
+          waist_min: 44
           waist_max: 
           bust_min: 50.5
           bust_max: 
@@ -136,9 +136,9 @@ products:
           title: 26
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 54
           hip_max: 
-          waist_min: 
+          waist_min: 46.5
           waist_max: 
           bust_min: 52.75
           bust_max: 
@@ -146,9 +146,9 @@ products:
           title: 28
           inseam_min: 30.5
           inseam_max: 31.5
-          hip_min: 
+          hip_min: 56
           hip_max: 
-          waist_min: 
+          waist_min: 48.75
           waist_max: 
           bust_min: 55
           bust_max: 
@@ -194,6 +194,22 @@ products:
               size_title: 20
               product_color_title: black
               image:
+            22:
+              size_title: 22
+              product_color_title: black
+              image: 
+            24:
+              size_title: 24
+              product_color_title: black
+              image:               
+            26:
+              size_title: 26
+              product_color_title: black
+              image:               
+            28:
+              size_title: 28
+              product_color_title: black
+              image:                        
    capri:
      name: Black Capri
      description: Fabric is slightly stretchy

@@ -96,7 +96,8 @@ class ProductController extends Controller {
         $id = $request_array['id'];
         $type = $request_array['type'];
         $gender = $request_array['gender'];
-     
+        
+
         $products = Null;
         if ($type == "brand") {
             $products = $this->getDoctrine()
@@ -131,9 +132,30 @@ class ProductController extends Controller {
               $data['path']=$images_path;
               } */
 
-
+           $product_color_array = array();
+           $count=1;
+          $product_helper =  $this->get('admin.helper.product');
+          foreach($products as $ind_product)
+          {
+              
+            $product_id = $ind_product['product_id'];
+            $p = $product_helper->find($product_id);
+                $data['data'][$product_id]['name'] = $ind_product['name'];
+                $data['data'][$product_id]['description'] = $ind_product['description'];
+                $data['data'][$product_id]['target'] = $ind_product['target'];
+                $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
+              $item=$p->getDefaultItem();
+                $data['data'][$product_id]['fitting_room_image'] = $item->getImage(); 
+                
+               }   
+           
+            //$data[] = $products;
+           
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+            $data['fitting_room_path'] = $fitting_room;
             $total_record = count($products);
-            $data['data'] = $products;
+
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
             $data['path'] = $baseurl;
             return new Response($this->json_view($total_record, $data));
@@ -141,7 +163,6 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'We can not find Product')));
         }
     }
-
 #--------------------Product Detail -------------------------------------------------------------#
     //------Proudct List By Product Detail----------------------///   
 
