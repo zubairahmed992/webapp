@@ -85,7 +85,7 @@ class SecurityController extends Controller {
 
         $defaultData = array('message' => 'Enter your email address');
         $form = $this->createFormBuilder($defaultData)
-                ->add('email', 'email', array('constraints' => array(new NotBlank())))
+                ->add('email', 'email')
                 ->getForm();
 
         if ($this->getRequest()->getMethod() == 'POST') {
@@ -122,9 +122,17 @@ class SecurityController extends Controller {
                                 "defaultData" => $msg,
                             ));
                 } else {
-                    $msg = "email address not found.";
+                    if($data['email']==null)
+                    {
+                    $msg = "Enter your email address";
                     return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(
                                 "defaultData" => $msg,));
+                    }else
+                    {
+                        $msg = "email address not found.";
+                    return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(
+                                "defaultData" => $msg,));
+                    }
                 }
             }
             return $this->render('LoveThatFitUserBundle:Security:forgotPasswordForm.html.twig', array(
