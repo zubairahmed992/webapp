@@ -252,8 +252,8 @@ ul.with_sep a {
 
 ul.with_sep li {
 	list-style:none;
-	/*background:url(../images/sep_small.png) 0 8px no-repeat;
-	padding-left:8px;*/
+	background:url(../images/sep_small.png) 0 8px no-repeat;
+	padding-left:8px;
 	padding-right:4px;
 	padding-top:2px;
 }
