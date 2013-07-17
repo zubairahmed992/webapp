@@ -148,7 +148,7 @@ function lovedItems(item_id)
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
                              <div class="like_icon1" style="">
                                  
-                                 <a href="{{path('ajax_my_closet_delete',{'id': productItem.id}) }}"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
+                                 <a href="{{path('ajax_my_closet_delete',{'id': productItem.id}) }}" title="Dislike"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
                                  
                              
                              </div>  
@@ -156,7 +156,7 @@ function lovedItems(item_id)
                             {%else%}
                              
                              <div id="like_icon_{{productItem.id}}">
-                              <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
+                              <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
                             </div>
                               <span id="ajax_product_love_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
                             {%endif%}
