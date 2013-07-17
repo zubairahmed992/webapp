@@ -89,7 +89,10 @@ user_profile_what_i_like_user_survey:
 user_profile_size_chart_size:
     pattern:  /profile/size_chart_size
     defaults: { _controller: LoveThatFitUserBundle:Profile:profileSizeChartSizes }   
-    
+
+user_product_history:
+    pattern:  /profile/user_product_history
+    defaults: { _controller: LoveThatFitUserBundle:Profile:userTryProducts}
     
 #---------------------------------------------- Login ------------------------------------------
 

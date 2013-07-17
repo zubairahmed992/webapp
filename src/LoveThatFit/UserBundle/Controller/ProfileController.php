@@ -299,6 +299,13 @@ class ProfileController extends Controller {
         return new Response(json_encode($measurement));
     }
 
+    
+    public function userTryProductsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findTryPropductHistory();
+        return $this->render('LoveThatFitUserBundle:Profile:user_product_history.html.twig',array('product'=>$entity));
+    }
 
 
 

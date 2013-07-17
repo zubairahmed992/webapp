@@ -61,6 +61,10 @@ ajax_product_by_brand:
 ajax_product_by_clothing_type:
     pattern:  /ajax/products/{gender}/type/{clothing_type_id}/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByClothingType, page_number: 0, limit: 0}
+
+ajax_product_history:
+    pattern:  /ajax/products
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsTryHistory}
     
 ajax_product_type:
     pattern:  /ajax/products/{gender}/type

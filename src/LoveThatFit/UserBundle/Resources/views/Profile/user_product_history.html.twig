@@ -1,0 +1,38 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% block profile_heading %}
+<h1>User Try Product History</h1>
+        {% endblock %}
+{% block profile_section %}
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">        
+        {{ app.session.flash('warning') }}
+        </div>   
+{% endif %}      
+{% if app.session.hasFlash('success') %}
+  <div class="success_alert">   
+    {{ app.session.flash('success') }}
+   </div>   
+{% endif %}
+
+
+<table width="786" border="0">
+  <tr>
+    <td>Product Name</td>
+    <td>Brand</td>    
+    <td>Size</td>
+    <td>Color</td>
+    <td></td>
+    
+  </tr>
+{%for p in product%}
+<tr>
+    <td>{{p.name}}</td>
+    <td>{{p.bname}}</td>
+    <td>{{p.title}}</td>
+     <td>{{p.colortitle}}</td>    
+     <td> </td>
+    <td></td>   
+  </tr>
+{%endfor%}
+  </table>
+{% endblock %}

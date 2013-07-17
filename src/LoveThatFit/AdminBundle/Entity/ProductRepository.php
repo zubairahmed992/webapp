@@ -529,4 +529,26 @@ class ProductRepository extends EntityRepository {
         }
     }
     
+    public function findTryPropductHistory()
+    {
+        
+            $query = $this->getEntityManager()
+                    ->createQuery('
+            SELECT distinct(p.name) as name,p,pi,uih,b.name as bname,ps.title as title,pc.title as colortitle,pi.image as productimage FROM LoveThatFitAdminBundle:Product p           
+            JOIN p.brand b            
+            JOIN p.product_items pi
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps
+            JOIN p.user_item_try_history uih            
+            WHERE p.disabled=0
+            ORDER BY uih.count DESC');
+       
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
 }
