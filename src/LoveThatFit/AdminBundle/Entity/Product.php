@@ -42,7 +42,7 @@ class Product {
 
     /**
      * @ORM\OneToOne(targetEntity="ProductColor") 
-     * @ORM\JoinColumn(name="display_product_color_id", referencedColumnName="id")      
+     * @ORM\JoinColumn(name="display_product_color_id", referencedColumnName="id", onDelete="CASCADE")      
      **/
      public $displayProductColor;
      
