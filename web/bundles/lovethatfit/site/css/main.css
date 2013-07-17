@@ -15,6 +15,17 @@
  src: url("../fonts/GOTHIC.TTF") /* TTF file for CSS3 browsers */
 }
 
+@font-face {
+ font-family: MyCustomFontb;
+ src: url("../fonts/GOTHICB.eot") /* EOT file for IE */
+}
+@font-face {
+ font-family: MyCustomFontb;
+ src: url("../fonts/GOTHICB.TTF") /* TTF file for CSS3 browsers */
+}
+
+
+
 
 /*--Bootstrap--*/
 .clearfix {
