@@ -500,4 +500,33 @@ class ProductRepository extends EntityRepository {
         }
     }
     
+    
+    public function findHotestPropductTryMost($gender, $page_number = 0, $limit = 20)
+    {
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                            ->createQuery('
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE p.gender = :gender AND p.disabled=0
+            ORDER BY uih.count DESC'
+                            )->setParameter('gender', $gender);
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE p.gender = :gender AND p.disabled=0
+            ORDER BY uih.count DESC'
+                    )->setParameter('gender', $gender)
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 }

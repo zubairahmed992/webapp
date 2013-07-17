@@ -1,7 +1,7 @@
 <nav>
     <ul>
         <li class="active"><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's New<span class="activemenu"></span></a></li>
-        <li><a href="{{path('ajax_product_latest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="activemenu"></span></a></li>
+        <li><a href="{{path('ajax_product_hotest',{'gender' : app.user.gender })}}"><span></span>What's Hot<span class="activemenu"></span></a></li>
         <li><a href="#"><span></span>Shop by Style<span class="mnu"></span></a>
             {% render 'LoveThatFitSiteBundle:InnerSite:clothingTypes' %}
             </li>

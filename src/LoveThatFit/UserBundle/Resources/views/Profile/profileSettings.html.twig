@@ -70,7 +70,7 @@ return true;
 {% endif %}
     
     <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
-    <p  id="sizeerror" style="color:#d14; size:10; display:none;">Uploaded Size is very large</p>
+    <p  id="sizeerror" style="color:#d14; size:10; display:none;">Image Size is very large</p>
     <br>
     <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }} onsubmit="return validate();">
    <!-- {{ form_errors(form) }}-->

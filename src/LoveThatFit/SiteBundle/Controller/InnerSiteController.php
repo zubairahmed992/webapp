@@ -38,6 +38,14 @@ class InnerSiteController extends Controller {
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
+    
+    
+    public function productsHotestAction($gender, $page_number = 0, $limit = 0)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
 
     //----------------------------------- by Brand ..............
     public function productsByBrandAction($gender, $brand_id, $page_number = 0, $limit = 0) {
