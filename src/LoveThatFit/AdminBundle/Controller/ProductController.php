@@ -410,15 +410,35 @@ class ProductController extends Controller {
             if (!$productColor) {
                 $this->get('session')->setFlash('warning', 'Unable to find Product.');  
             }
+            $defaultcolor=$this->getDefaultColorById($productColor);
+            if(!$defaultcolor)
+            {
+             $em->remove($productColor);
+             $em->flush();            
+             $this->get('session')->setFlash('success', 'Product Detail color has been Deleted.');
+             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+            }else
+            {            
+               $defaultcolor=null; 
+               $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
+               if (!$entity) {
+               $this->get('session')->setFlash('warning', 'Unable to find Product.');
+               }
+               $entity->setDisplayProductColor($defaultcolor);
+               $em->persist($entity);
+               $em->flush();
+               
+               $em->remove($productColor);
+             $em->flush();            
+             $this->get('session')->setFlash('success', 'Product Detail color has been Deleted.');
+               return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));           
+           }            
             
-            $em->remove($productColor);
-            $em->flush();            
-            $this->get('session')->setFlash('success', 'Product Detail color has been Deleted.');
-            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } catch (\Doctrine\DBAL\DBALException $e) {
             $this->get('session')->setFlash(
                     'warning', 'This Product Color  cannot be deleted!'
             );
+           // return $this->redirect($this->generateUrl('admin_products'));
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         }
     }
@@ -750,6 +770,20 @@ public function productStatsAction()
         return $entity;
     }
     //---------------------------------------------------------------------
+    private function getProductByColorId($id)
+    {
+      $em = $this->getDoctrine()->getManager();     
+      $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
+                 ->findProductByColorId($id);		
+        return $entity;
+    }
     
+    private function getDefaultColorById($product_color)
+    {
+      $em = $this->getDoctrine()->getManager();     
+      $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
+                 ->findDefaultProductByColorId($product_color);		
+        return $entity; 
+    }
 }
 

@@ -21,7 +21,6 @@
 <div>      
     <h1 style="float:left;">{{product.name }}</h1>
 
-
     <div class="clearfix"></div>   
 
 
@@ -32,9 +31,7 @@
         
         <div id="product_info">
             <div id="pro_detail">
-                <div class="edt_container">         
-                        
-                   
+                <div class="edt_container">
                     
                     <div>{{product.description }}</div>
                     
@@ -61,11 +58,11 @@
                         <div>{{product.adjustment }}</div>
                     </div>     
                         </div>
-                    
-                    <div >     
-                        
+                    {%if(product.displayProductColor!='')%}
+                    <div>
                     <img src="{{ asset(product.displayProductColor.WebPath) }}"/>
                     </div>       
+                    {%endif%}
                     
 
 

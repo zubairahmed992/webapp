@@ -257,7 +257,7 @@ class ProductItem
     {
         $generated_file_name=$this->getUploadRootDir(). '/' . $this->image;
         if (is_readable($generated_file_name )){
-                unlink($generated_file_name );    
+                @unlink($generated_file_name );    
             }
     
   }

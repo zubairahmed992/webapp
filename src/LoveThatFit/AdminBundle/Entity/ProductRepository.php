@@ -550,5 +550,19 @@ class ProductRepository extends EntityRepository {
         }
     }
     
+    public function findDefaultProductByColorId($product_color)
+    {
+        $query = $this->getEntityManager()
+                    ->createQuery('
+            SELECT p FROM LoveThatFitAdminBundle:Product p           
+            JOIN p.displayProductColor pc
+            where p.displayProductColor=:product_color
+            ')->setParameters(array('product_color' =>$product_color));       
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     
 }
