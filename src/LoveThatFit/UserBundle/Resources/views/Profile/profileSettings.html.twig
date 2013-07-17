@@ -35,6 +35,26 @@ return false;
 return true;
 }    
 </script>
+<script>
+        var maxfilesize = 2097152;//2MB;
+        $('#user_file').live("change", function () {
+            $("#msg").text("");
+            var tt = $(this).val();
+            var size = this.files[0].size;
+            $("#msg").append("Filesize: " + size + " bytes");
+            $("#msg").append("<br>Filesize: " + Math.ceil(size / 1024) + " Kb");
+            $("#msg").append("<br>Filesize: " + Math.ceil(size / 1024 / 1024) + " MB");
+
+            if (size > maxfilesize) {
+                document.getElementById('sizeerror').style.display="block";
+                return false;
+            }
+            else {
+               return true;
+            }
+        });
+    </script>
+
 
 <div>
     {% if app.session.hasFlash('warning') %}
@@ -50,6 +70,7 @@ return true;
 {% endif %}
     
     <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+    <p  id="sizeerror" style="color:#d14; size:10; display:none;">Uploaded Size is very large</p>
     <br>
     <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }} onsubmit="return validate();">
    <!-- {{ form_errors(form) }}-->
