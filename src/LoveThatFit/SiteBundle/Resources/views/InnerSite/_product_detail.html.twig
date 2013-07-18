@@ -5,12 +5,12 @@ function select_size(size_id,product_id,color_id)
 {
        var size= size_id.value;
        base_url=$('#ajax_product_base_url').text();
-       $('.featured_box .transp_list').removeClass("hide").addClass("disp_blk");
+       $('.featured_box'+product_id+' .transp_list').removeClass("hide").addClass("disp_blk");
         $.ajax({
             url:  base_url+ product_id+ "/" + color_id + "/" +size,
           
             success: function (data) {
-                $('.featured_box .transp_list').removeClass("disp_blk").addClass("hide");
+                $('.featured_box'+product_id+' .transp_list').removeClass("disp_blk").addClass("hide");
             // $('#prod_wrapper').append(data);  
               $('.featured_box'+product_id+' .dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass("hide");
