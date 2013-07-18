@@ -1380,7 +1380,10 @@ ul.prod_wrapper{
 
 .fbox{    
     overflow: hidden;
-    width:260px;  
+    width:260px;
+    padding: 10px 10px 0;
+    margin-left: -10px;
+    margin-top: -10px;
 }
 
 .prod_wrapper li{
@@ -2463,14 +2466,15 @@ padding-bottom: 0px;
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 262px;
-    height: 142px;
+    width: 280px;
+    height: 150px;
 }
 .pos_relative {
     position: relative;
     width:1px;
     height:1px;
     margin-top: -1px;
+    margin-left: -10px;
 }
 .prod_bottom {    
     max-height: 108px;
