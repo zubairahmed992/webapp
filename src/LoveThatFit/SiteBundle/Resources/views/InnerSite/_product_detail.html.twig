@@ -23,7 +23,7 @@ function pattern_select(color_id,product_id,size_id)
    //base_url=$('#base_url').text();
    base_url=$('#ajax_product_base_url').text();
       // size_id =$('#hidden_size_id').text();
-       $('.featured_box .transp_list').removeClass("hide").addClass("disp_blk");
+       $('.featured_box'+product_id+' .transp_list').removeClass("hide").addClass("disp_blk");
      
         $.ajax({
             //url: base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" +  color_id + "/" +size_id,
@@ -31,7 +31,7 @@ function pattern_select(color_id,product_id,size_id)
           
             success: function (data) {
               
-              $('.featured_box .transp_list').removeClass("disp_blk").addClass("hide");
+              $('.featured_box'+product_id+' .transp_list').removeClass("disp_blk").addClass("hide");
               $('.featured_box'+product_id+' .dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass("hide");
               set_drag_drop_ele();
