@@ -172,4 +172,18 @@ public function findByEmail($email)
         return $this->repo->findMaxUserId();
     }
 
+
+     #------------------------Chek Token ------------------------#
+
+     public function getToken($email) {
+    
+            $entity= $this->repo->findOneBy(array('email'=>$email));
+            if (count($entity) > 0) {
+            return $entity->getAuthTokenWebService();
+            }
+            
+             
+        
+    }
+
 }

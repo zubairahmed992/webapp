@@ -29,12 +29,12 @@ class UserController extends Controller {
          $decoded = json_decode($jsonInput,true);
          $email=$decoded['email'];
          $password=$decoded['password'];
-         
          $em = $this->getDoctrine()->getManager();
          $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
            
             if (count($entity) >0) {
-
+                 $user=$this->get('user.helper.user');
+                $authTokenWebService=$user->getToken($email);
                 $user_db_password = $entity->getPassword();
                 $salt_value_db = $entity->getSalt();
 
@@ -57,6 +57,7 @@ class UserController extends Controller {
                    $userinfo['last_name']=$last_name;
                    $userinfo['zipcode']=$zipcode;
                    $userinfo['gender']=$gender;
+                   $userinfo['authTokenWebServic']=$authTokenWebService;
                   
                    if(isset($birth_date)){
                    $userinfo['birth_date']= $birth_date->format('Y-m-d');
@@ -72,9 +73,12 @@ class UserController extends Controller {
                 $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
                 $measurement = $entity->getMeasurement();
                
-                   
+                if($measurement)
+                {
                 $userinfo['weight'] = $measurement->getWeight();
+                
                 $userinfo['height'] = $measurement->getHeight();
+               
                 $userinfo['waist'] = $measurement->getWaist();
                 $userinfo['hip'] = $measurement->getHip();
 
@@ -83,18 +87,34 @@ class UserController extends Controller {
                 $userinfo['neck'] = $measurement->getNeck();
                 $userinfo['inseam'] = $measurement->getInseam();
                 $userinfo['back'] = $measurement->getBack();
-                   if(!$userinfo['back'])
+                $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+                $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+                   
+           }
+           else
+           {
+                $userinfo['weight'] = 0;
+                $userinfo['height'] = 0;
+                $userinfo['hip'] = 0;
+                $userinfo['bust'] = 0;
+                $userinfo['chest'] = 0;
+                $userinfo['neck'] = 0;
+                $userinfo['inseam'] = 0;
+                $userinfo['back'] = 0;
+                $userinfo['iphone_shoulder_height'] = 0;
+                $userinfo['iphone_outseam'] = 0;
+                }    
+          if(!$userinfo['back'])
                    {
                        $userinfo['back']=15.5;
-                   }    
-                   $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+                   }   
             if (!$userinfo['iphone_shoulder_height']) {
-                $userinfo['iphone_shoulder_height'] = 150;
-            }
-            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
-            if (!$userinfo['iphone_outseam']) {
-                $userinfo['iphone_outseam'] = 400;
-            }
+                        $userinfo['iphone_shoulder_height'] = 150;
+                    }
+                 
+                    if (!$userinfo['iphone_outseam']) {
+                        $userinfo['iphone_outseam'] = 400;
+                    }
                      return new Response(json_encode($userinfo));
                 } else {
                      return new Response(json_encode(array('Message'=>'Invalid Password')));
