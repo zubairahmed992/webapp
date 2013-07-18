@@ -1465,6 +1465,85 @@ products:
                product_color_title: stripe
                image: 
    shirts:
+     Up All Night Tank: 
+      description: Built in Bra, back measurement lower then usual. Razer back
+      adjustment: 0
+      gender: f
+      product_color:
+           pink:
+             title: pink
+             image: 51dd6ab3e05fb.png
+             pattern: 51dd6ab3ddee5.png
+             default: true          
+      product_sizes:
+          4:
+           title: 4
+           bust_min: 22
+           bust_max: 23
+           back_min: 10.5
+           back_max: 11.5
+           waist_min: 22.5
+           waist_max: 23.5
+           chest_min: 22.5
+           chest_max: 23.5
+           hem: 28
+           length: 20
+           shoulder_min: 8
+           shoulder_max: 9
+           length_armpit_min: 17.5
+           length_armpit_min: 18.5
+           length_back_min: 24.25
+           length_back_max: 25.25     
+          8:
+           title: 8
+           bust_min: 26
+           bust_max: 27
+           back_min: 12
+           back_max: 13
+           waist_min: 25
+           waist_max: 26
+           chest_min: 25
+           chest_max: 26
+           hem: 30
+           length: 20
+           shoulder_min: 9
+           shoulder_max: 10
+           length_armpit_min: 18.5
+           length_armpit_min: 19.5
+           length_back_min: 25
+           length_back_max: 26
+          12:
+           title: 12
+           bust_min: 29
+           bust_max: 30
+           back_min: 14
+           back_max: 15
+           waist_min: 28.5
+           waist_max: 29.5
+           chest_min: 28.5
+           chest_max: 29.5
+           hem: 35
+           length: 20
+           shoulder_min: 10
+           shoulder_max: 11
+           length_armpit_min: 19
+           length_armpit_min: 20
+           length_back_min: 25
+           length_back_max: 26
+      product_item:            
+             4:
+               size_title: 4
+               product_color_title: pink
+               image: 51dd6abf4d62d_fr.png
+             8:
+               size_title: 8
+               product_color_title: pink
+               image: 51dd6ac7afce2_fr.png
+             12:
+               size_title: 12
+               product_color_title: pink
+               image: 51dd6ace7a22a_fr.png
+               
      Pink Razer Back Tee: 
       description: Built in Bra, back measurement lower then usual. Razer back
       adjustment: 0
