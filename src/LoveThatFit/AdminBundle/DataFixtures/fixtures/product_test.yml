@@ -9,8 +9,7 @@ products:
            black:
              title: black
              image: 51dd662d4eedc.png
-             pattern: 51dd662d4c844.png
-             gender: f
+             pattern: 51dd662d4c844.png        
              default: true                   
       product_sizes:
           2:
@@ -220,8 +219,7 @@ products:
            black:
              title: black
              image: 51dd662d4eedc.png
-             pattern: 51dd662d4c844.png
-             gender: f
+             pattern: 51dd662d4c844.png             
              default: true                   
       product_sizes:
           2:

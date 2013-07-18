@@ -112,7 +112,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         $manager->flush();
                     }
                 }
-                }
+               
 
                 foreach ($clothing_types_values['product_sizes'] as $product_sizes_key => $product_size_values) {
                     $productsize = new ProductSize();
@@ -163,6 +163,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                 }
             }
         }
+         }
         $this->copyAllProductImageFiles($source, $destination, $options = array('folderPermission' => 777, 'filePermission' => 777));
     }
 
