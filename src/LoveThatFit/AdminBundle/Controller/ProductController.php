@@ -770,13 +770,7 @@ public function productStatsAction()
         return $entity;
     }
     //---------------------------------------------------------------------
-    private function getProductByColorId($id)
-    {
-      $em = $this->getDoctrine()->getManager();     
-      $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
-                 ->findProductByColorId($id);		
-        return $entity;
-    }
+    
     
     private function getDefaultColorById($product_color)
     {
