@@ -281,3 +281,21 @@ return false;
 return true;
 }    
 //$( "#draggable5" ).draggable({ containment: "parent" });
+
+var maxfilesize = 2097152;//2MB;
+        $('#user_file').live("change", function () {
+            $("#msg").text("");
+            var tt = $(this).val();
+            var size = this.files[0].size;
+            $("#msg").append("Filesize: " + size + " bytes");
+            $("#msg").append("<br>Filesize: " + Math.ceil(size / 1024) + " Kb");
+            $("#msg").append("<br>Filesize: " + Math.ceil(size / 1024 / 1024) + " MB");
+
+            if (size > maxfilesize) {
+                document.getElementById('sizeerror').style.display="block";
+                return false;
+            }
+            else {
+               return true;
+            }
+        });

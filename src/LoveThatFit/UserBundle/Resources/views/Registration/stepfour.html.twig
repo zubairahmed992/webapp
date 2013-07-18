@@ -12,7 +12,9 @@
                 {{ form_rest(measurement_form) }}
             </form>
 </div>
-
+<script>
+        
+    </script>
 
 <section class="reg_blk">
     <!--<div class="reg_steps">
@@ -28,6 +30,7 @@
     <div class="action_cnt">
         <div class="steps step_4">
             <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+            <p  id="sizeerror" style="color:#d14; size:10; display:none;">Image Size is very large</p>
             <h2>Upload Photo</h2>
 
             <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">

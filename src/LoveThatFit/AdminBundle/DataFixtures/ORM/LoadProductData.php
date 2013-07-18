@@ -82,13 +82,14 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                 $clothing_type = $this->container
                         ->get('admin.helper.clothingtype')
                         ->findOneByName($clothing_type_key);
+                foreach ($clothing_type_values as $clothing_types_key => $clothing_types_values) {
                 $entity = new Product();
                 $entity->setBrand($brand);
                 $entity->setClothingType($clothing_type);
-                $entity->setName($clothing_type_values['name']);
-                $entity->setDescription($clothing_type_values['description']);
-                $entity->setAdjustment($clothing_type_values['adjustment']);
-                $entity->setGender(ucwords($clothing_type_values['gender']));
+                $entity->setName($clothing_types_key);
+                $entity->setDescription($clothing_types_values['description']);
+                $entity->setAdjustment($clothing_types_values['adjustment']);
+                $entity->setGender(ucwords($clothing_types_values['gender']));
                 $entity->setDisabled(false);
                 $entity->setCreatedAt(new \DateTime('now'));
                 $entity->setUpdatedAt(new \DateTime('now'));
@@ -96,8 +97,8 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                 $manager->flush();
                 $product_new = $this->container
                         ->get('admin.helper.product')
-                        ->findProductByTitle($clothing_type_values['name']);
-                foreach ($clothing_type_values['product_color'] as $product_color_key => $product_color_values) {
+                        ->findProductByTitle($clothing_types_key);
+                foreach ($clothing_types_values['product_color'] as $product_color_key => $product_color_values) {
                     $productcolor = new ProductColor();
                     $productcolor->setProduct($product_new);
                     $productcolor->setTitle($product_color_values['title']);
@@ -111,8 +112,9 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                         $manager->flush();
                     }
                 }
+                }
 
-                foreach ($clothing_type_values['product_sizes'] as $product_sizes_key => $product_size_values) {
+                foreach ($clothing_types_values['product_sizes'] as $product_sizes_key => $product_size_values) {
                     $productsize = new ProductSize();
                     $productsize->setProduct($product_new);
                     $productsize->setTitle($product_size_values['title']);
@@ -142,7 +144,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                     $manager->persist($productsize);
                     $manager->flush();
                 }
-                foreach ($clothing_type_values['product_item'] as $product_item_key => $product_item_values) {
+                foreach ($clothing_types_values['product_item'] as $product_item_key => $product_item_values) {
                     $productid = $product_new->getId();
                     $productsize = $this->container
                             ->get('admin.helper.productsizes')
