@@ -138,22 +138,21 @@ class ProductController extends Controller {
            $product_color_array = array();
            $count=1;
           $product_helper =  $this->get('admin.helper.product');
-          foreach($products as $ind_product)
-          {
-            $product_id = $ind_product['id'];
-            if( $product_id)
-            {
-            $p = $product_helper->find($product_id);
-                $data['data'][$product_id]['id'] = $ind_product['id'];
-                $data['data'][$product_id]['name'] = $ind_product['name'];
-                $data['data'][$product_id]['description'] = $ind_product['description'];
-                $data['data'][$product_id]['target'] = $ind_product['target'];
-                $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
-              $item=$p->getDefaultItem();
-              if($item){
-                $data['data'][$product_id]['fitting_room_image'] = $item->getImage(); }
-            }
-           }   
+          foreach ($products as $ind_product) {
+                $product_id = $ind_product['id'];
+                if ($product_id) {
+                    $p = $product_helper->find($product_id);
+                    $data['data'][$product_id]['id'] = $ind_product['id'];
+                    $data['data'][$product_id]['name'] = $ind_product['name'];
+                    $data['data'][$product_id]['description'] = $ind_product['description'];
+                    $data['data'][$product_id]['target'] = $ind_product['target'];
+                    $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
+                    $item = $p->getDefaultItem();
+                    if ($item) {
+                        $data['data'][$product_id]['fitting_room_image'] = $item->getImage();
+                    }
+                }
+            }   
            
             //$data[] = $products;
            

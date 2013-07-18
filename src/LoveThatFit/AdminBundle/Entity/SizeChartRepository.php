@@ -131,19 +131,16 @@ class SizeChartRepository extends EntityRepository {
         b.id=:brand_id AND
         sc.gender=:gender AND
         sc.target=:target AND
-        sc.bodytype=:bodytype
-"
-            )->setParameters(array('brand_id' => $brand_id, 'target' => $target, 'gender' => $gender,'bodytype'=>$bodytype)) ;     
+        sc.bodytype=:bodytype"
+                        )->setParameters(array('brand_id' => $brand_id, 'target' => $target, 'gender' => $gender, 'bodytype' => $bodytype));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-        
     }
-    
-    
-  //-------------------------------Web Service-----------------------------------------
+
+    //-------------------------------Web Service-----------------------------------------
         
         #--------------Web Service For Size with target Top -----------#
     
@@ -363,5 +360,38 @@ class SizeChartRepository extends EntityRepository {
         }
     }
     
+ //---Find Brand According to Size chart id  ---------------------------------------------------------------------
+ public function findBrandBySizeChartId($brand_id) {
+      
+     $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT b.id as brand FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b    
+     WHERE
+     b.id=sc.brand
+     AND sc.id=:target"
+                        )->setParameter('target',$brand_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
 
+ 
+ #---------Size Chart Id 
+ public function findSizeChartTitleById($size_id) {
+      
+     $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT sc.id as id FROM LoveThatFitAdminBundle:SizeChart sc
+     WHERE
+     sc.id=:target"
+                        )->setParameter('target',$size_id);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
 }

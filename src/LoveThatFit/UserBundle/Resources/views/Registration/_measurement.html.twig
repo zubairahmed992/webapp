@@ -80,18 +80,49 @@
 
                         </div>
                         
-                    {# ---------------  Top Brand & Size ------------------ #}
+                    {# ----------------------  Top Brand & Size ------------------ #}
+                     
+                        <script>
+                           
+                           $(document).ready(function(){
+                          
+                        {%if(top_brand_id is defined)%}     
+                             var top_brand_id={{top_brand_id}};
+                           $('#measurement_top_brand').val({{top_brand_id}}).change();
+                           {%endif%}
+                           {%if(top_size_chart_id is defined)%}
+                               var top_size_chart_id={{top_size_chart_id}};
+                           $('#measurement_top_size').val({{top_size_chart_id}}).change();
+                           {%endif%}     
+                           {# ---------------  Bottom Brand & Size ------------------ #}
+                           {%if(bottom_brand_id is defined)%}   
+                           $('#measurement_bottom_brand').val({{bottom_brand_id}}).change();
+                           {%endif%}
+                           {%if(bottom_size_chart_id is defined)%}
+                           $('#measurement_bottom_size').val({{bottom_size_chart_id}}).change();     
+                           {%endif%}    
+                          {# --------------- Dress Brand & Size ------------------ #}
+                           {%if(dress_brand_id is defined)%}     
+                           $('#measurement_dress_brand').val({{dress_brand_id}}).change();
+                           {%endif%}  
+                           {%if(dress_size_chart_id is defined)%}
+                           $('#measurement_dress_size').val({{dress_size_chart_id}}).change(); 
+                           {%endif%}    
+                       });
+                        
+                        </script>
+                   
                         <div class="shirts_mus manual_opn show_hide show_it" id="shirts_mus_opt">
-
+                          
                             {{form_errors(form.top_brand)}}  
                             {{form_widget(form.top_brand)}} 
 
-
                             {{form_errors(form.top_size)}}  
                             {{form_widget(form.top_size)}}                 
-
+                       
+                           
                         </div>
-
+                        
                         <div class="shuf_icon shirt_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
 
                     </div>

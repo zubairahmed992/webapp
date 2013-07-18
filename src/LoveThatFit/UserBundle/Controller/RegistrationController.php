@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\Measurement;
+use LoveThatFit\AdminBundle\Entity\SizeChart;
 use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 use LoveThatFit\UserBundle\Form\Type\MeasurementStepFourType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepFourType;
@@ -151,12 +152,14 @@ class RegistrationController extends Controller {
                 } else {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
                 }
-
-
+               
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                             'form' => $registrationMeasurementform->createView(),
                             'measurement' => $measurement,
-                            'entity' => $entity));
+                            'entity' => $entity,
+                           
+                    
+                    ));
             } else {
 
                 return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
@@ -245,11 +248,65 @@ class RegistrationController extends Controller {
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         }
+         #---Suresh Code---------#
+        $top_size_chart=$measurement->getTopFittingSizeChart();
+        $bottom_size_chart=$measurement->getBottomFittingSizeChart();
+        $dress_size_chart=$measurement->getDressFittingSizeChart();
+        #---Getting the Top Size Chart --------#
+        if ($top_size_chart) {
+            $em = $this->getDoctrine()->getManager();
+            $topSizeChartId=$top_size_chart->getId();
+            $top_brand=$top_size_chart->getBrand();
+            $top_brand_id=$top_brand->getId();
+            //$top_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($topSizeChartId);
+            //$top_brand_id=$top_brand_id[0]['brand'];
+            
+        }else{
+            $top_brand_id=Null;
+            $topSizeChartId=Null;
+        }    
+        
+     #---Getting The Bottom Size Chart--------#   
+        if($bottom_size_chart){
+            $bottomSizeChartId=$bottom_size_chart->getId();
+            $bottom_brand=$bottom_size_chart->getBrand();
+            $bottom_brand_id=$bottom_brand->getId();
+            //$em = $this->getDoctrine()->getManager();
+           // $bottom_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($BottomSizeChartId);
+            //$bottom_brand_id=$bottom_brand_id[0]['brand'];
+        }else{
+            $bottom_brand_id=Null;
+            $bottomSizeChartId=Null;
+        }
+        
+     
+    #---Getting The Dress Size Chart-----------#
+        if($dress_size_chart){
+            $dressSizeChartId=$dress_size_chart->getID();
+            $dress_brand=$dress_size_chart->getBrand();
+            $dress_brand_id=$dress_brand->getId();
+            //$em = $this->getDoctrine()->getManager();
+            //$dress_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($DressSizeChartId);
+            //$dress_brand_id=$dress_brand_id[0]['brand'];
+        }else{
+            $dress_brand_id=Null;
+            $dressSizeChartId=Null;
+        }
+       
+     #--End Of Suresh Code---------------------#
 
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
-                    'entity' => $entity));
+                    'entity' => $entity,
+                    'top_brand_id'=>$top_brand_id,
+                    'top_size_chart_id'=>$topSizeChartId,
+                    'bottom_brand_id'=>$bottom_brand_id,
+                    'bottom_size_chart_id'=>$bottomSizeChartId,
+                    'dress_brand_id'=>$dress_brand_id,
+                    'dress_size_chart_id'=>$dressSizeChartId,
+            ));
+  
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -403,12 +460,65 @@ public function fittingRoomImageEditAction() {
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
         }
-
+         #---Suresh Code---------#
+        $top_size_chart=$measurement->getTopFittingSizeChart();
+        $bottom_size_chart=$measurement->getBottomFittingSizeChart();
+        $dress_size_chart=$measurement->getDressFittingSizeChart();
+        
+       #---Getting the Top Size Chart --------#
+        if ($top_size_chart) {
+            $em = $this->getDoctrine()->getManager();
+            $topSizeChartId=$top_size_chart->getId();
+            $top_brand=$top_size_chart->getBrand();
+            $top_brand_id=$top_brand->getId();
+            //$top_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($topSizeChartId);
+            //$top_brand_id=$top_brand_id[0]['brand'];
+            
+        }else{
+            $top_brand_id=Null;
+            $topSizeChartId=Null;
+        }    
+        
+     #---Getting The Bottom Size Chart--------#   
+        if($bottom_size_chart){
+            $bottomSizeChartId=$bottom_size_chart->getId();
+            $bottom_brand=$bottom_size_chart->getBrand();
+            $bottom_brand_id=$bottom_brand->getId();
+            //$em = $this->getDoctrine()->getManager();
+           // $bottom_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($BottomSizeChartId);
+            //$bottom_brand_id=$bottom_brand_id[0]['brand'];
+        }else{
+            $bottom_brand_id=Null;
+            $bottomSizeChartId=Null;
+        }
+        
+     
+    #---Getting The Dress Size Chart-----------#
+        if($dress_size_chart){
+            $dressSizeChartId=$dress_size_chart->getID();
+            $dress_brand=$dress_size_chart->getBrand();
+            $dress_brand_id=$dress_brand->getId();
+            //$em = $this->getDoctrine()->getManager();
+            //$dress_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($DressSizeChartId);
+            //$dress_brand_id=$dress_brand_id[0]['brand'];
+        }else{
+            $dress_brand_id=Null;
+            $dressSizeChartId=Null;
+        }
+       
+     #--End Of Suresh Code---------------------#
 
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
-                    'entity' => $entity));
+                    'entity' => $entity,
+                    'top_brand_id'=>$top_brand_id,
+                    'top_size_chart_id'=>$topSizeChartId,
+                    'bottom_brand_id'=>$bottom_brand_id,
+                    'bottom_size_chart_id'=>$bottomSizeChartId,
+                    'dress_brand_id'=>$dress_brand_id,
+                    'dress_size_chart_id'=>$dressSizeChartId,
+            ));
     }
 
 //------------------------------------------------------------------------
