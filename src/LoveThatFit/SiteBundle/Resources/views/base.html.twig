@@ -74,7 +74,9 @@
             <footer class="footer">
                 <div class="ftr_logo"></div>
                 <div id="copyrights_txt">Copyright 2010-2013.  All rights reserved LoveThatFit</div>
-               
+               {% block bottom_left_nav %}
+                                {% include 'LoveThatFitSiteBundle::_bottomNavigation.html.twig'%}
+                {% endblock %} 
                     <!--/.footer--></footer>
                 <!--/.full_wrapper--></div>
             {% block bottom_random_content %}
