@@ -9,6 +9,7 @@ constants:
   
   pagination:
     limit: 20
+    default_page: first
   
   gender:
     men: m, 
