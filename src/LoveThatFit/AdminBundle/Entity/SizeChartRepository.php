@@ -360,25 +360,7 @@ class SizeChartRepository extends EntityRepository {
         }
     }
     
- //---Find Brand According to Size chart id  ---------------------------------------------------------------------
- public function findBrandBySizeChartId($brand_id) {
-      
-     $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT b.id as brand FROM LoveThatFitAdminBundle:SizeChart sc
-     JOIN sc.brand b    
-     WHERE
-     b.id=sc.brand
-     AND sc.id=:target"
-                        )->setParameter('target',$brand_id);
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
- }
 
- 
  #---------Size Chart Id 
  public function findSizeChartTitleById($size_id) {
       

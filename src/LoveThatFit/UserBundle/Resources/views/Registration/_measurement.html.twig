@@ -88,26 +88,29 @@
                           
                         {%if(top_brand_id is defined)%}     
                              var top_brand_id={{top_brand_id}};
-                           $('#measurement_top_brand').val({{top_brand_id}}).change();
+                           $('#measurement_top_brand').val({{top_brand_id}}).change().ajaxStop(function() {
+                             {%if(top_size_chart_id is defined)%}
+                            $('#measurement_top_size').val({{top_size_chart_id}}).change();
+                            {%endif%}
+                             });
                            {%endif%}
-                           {%if(top_size_chart_id is defined)%}
-                               var top_size_chart_id={{top_size_chart_id}};
-                           $('#measurement_top_size').val({{top_size_chart_id}}).change();
-                           {%endif%}     
                            {# ---------------  Bottom Brand & Size ------------------ #}
                            {%if(bottom_brand_id is defined)%}   
-                           $('#measurement_bottom_brand').val({{bottom_brand_id}}).change();
+                           $('#measurement_bottom_brand').val({{bottom_brand_id}}).change().ajaxStop(function() {
+                          {%if(bottom_size_chart_id is defined)%}     
+                          $('#measurement_bottom_size').val({{bottom_size_chart_id}}).change(); 
+                          {%endif%}
+                           });
                            {%endif%}
-                           {%if(bottom_size_chart_id is defined)%}
-                           $('#measurement_bottom_size').val({{bottom_size_chart_id}}).change();     
-                           {%endif%}    
                           {# --------------- Dress Brand & Size ------------------ #}
                            {%if(dress_brand_id is defined)%}     
-                           $('#measurement_dress_brand').val({{dress_brand_id}}).change();
-                           {%endif%}  
-                           {%if(dress_size_chart_id is defined)%}
+                           $('#measurement_dress_brand').val({{dress_brand_id}}).change().ajaxStop(function() {
+                           {%if(dress_size_chart_id is defined)%}    
                            $('#measurement_dress_size').val({{dress_size_chart_id}}).change(); 
-                           {%endif%}    
+                           {%endif%}
+                           });
+                           {%endif%}  
+                           
                        });
                         
                         </script>

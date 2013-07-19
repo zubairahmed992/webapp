@@ -258,44 +258,32 @@ class RegistrationController extends Controller {
             $topSizeChartId=$top_size_chart->getId();
             $top_brand=$top_size_chart->getBrand();
             $top_brand_id=$top_brand->getId();
-            //$top_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($topSizeChartId);
-            //$top_brand_id=$top_brand_id[0]['brand'];
-            
         }else{
             $top_brand_id=Null;
             $topSizeChartId=Null;
         }    
-        
      #---Getting The Bottom Size Chart--------#   
         if($bottom_size_chart){
             $bottomSizeChartId=$bottom_size_chart->getId();
             $bottom_brand=$bottom_size_chart->getBrand();
             $bottom_brand_id=$bottom_brand->getId();
-            //$em = $this->getDoctrine()->getManager();
-           // $bottom_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($BottomSizeChartId);
-            //$bottom_brand_id=$bottom_brand_id[0]['brand'];
         }else{
             $bottom_brand_id=Null;
             $bottomSizeChartId=Null;
         }
         
-     
     #---Getting The Dress Size Chart-----------#
         if($dress_size_chart){
             $dressSizeChartId=$dress_size_chart->getID();
             $dress_brand=$dress_size_chart->getBrand();
             $dress_brand_id=$dress_brand->getId();
-            //$em = $this->getDoctrine()->getManager();
-            //$dress_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($DressSizeChartId);
-            //$dress_brand_id=$dress_brand_id[0]['brand'];
         }else{
             $dress_brand_id=Null;
             $dressSizeChartId=Null;
         }
        
      #--End Of Suresh Code---------------------#
-
-        return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
+return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
@@ -315,9 +303,7 @@ class RegistrationController extends Controller {
     //------------------------ Render Fitting room image upload page
 
     public function stepFourEditAction() {
-
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
