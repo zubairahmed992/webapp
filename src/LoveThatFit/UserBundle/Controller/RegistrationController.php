@@ -80,7 +80,7 @@ class RegistrationController extends Controller {
                 $em->flush();
 
                 return $this->render('LoveThatFitUserBundle:Registration:message.html.twig', array(
-                            'message' => 'You password has been changed.'));
+                            'message' => 'Your password has been changed.'));
             } else {
 
                 return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
