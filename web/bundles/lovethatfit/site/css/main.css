@@ -215,6 +215,7 @@ body {
 	border-bottom-right-radius: 5px;
 	background:#000;
 	width:220px;
+        padding-bottom: 5px;
 	-webkit-box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
         -moz-box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
         box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.7);
@@ -226,14 +227,15 @@ body {
 }
 .footer nav ul li {
 	list-style:none;
-	display:inline-block;
-	padding-bottom:6px;
+	display:inline;
+	
 }
 .footer nav ul a,
 .footer nav ul a:visited {
 	color:#fff;
 	text-decoration:none;
 	font-size:12px;
+        
 }
 
 ul.with_bullet {
@@ -251,22 +253,33 @@ ul.with_bullet li:first-child {
 }
 
 ul.with_sep {
-	list-style:none;
+	     
+        
+        overflow: auto;
+        margin: 0 auto;
+        width: 100px;
+        
+        
 }
 
 ul.with_sep a {
 	text-decoration: none;
         color:#333;
-        font-size: 0.9em;
+        font-size: 0.9em;        
 }
-
 
 ul.with_sep li {
 	list-style:none;
 	background:url(../images/sep_small.png) 0 8px no-repeat;
-	padding-left:8px;
+	padding-left:6px;
 	padding-right:4px;
 	padding-top:2px;
+        float: left;
+        
+        
+        
+        
+        
 }
 ul.with_sep li:first-child {
 	background:none;
@@ -1760,7 +1773,7 @@ margin:0 auto;
 
 #fitting_tab{    
     position: absolute;
-    top:-30px;
+    top:-28px;
     left: 0;
     width:356px;
     text-align: center;
@@ -2571,7 +2584,7 @@ padding-bottom: 0px;
 }
 
 .how_it_works ol{
-    margin:0px 0px 0px 20px;
+    margin:0px 0px 0px 23px;
     padding:0px 0px 0px 0px;    
 }
 
@@ -2617,3 +2630,5 @@ padding-bottom: 0px;
 .popout_blk ol li{    
     list-style: number;
 }
+
+
