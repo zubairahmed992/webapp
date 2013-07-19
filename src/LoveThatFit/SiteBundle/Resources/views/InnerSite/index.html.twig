@@ -42,7 +42,10 @@
                 <div id="user_dummy_img_hldr">
                 {% if app.user.image != null %}
                     <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}">
+                {%else%}
+                    <div>Please Upload Your Image</div>
                 {% endif %}
+                    
                 </div>
             </div> 
             <div class="play_area_hldr hide">
