@@ -684,7 +684,7 @@ class User  implements UserInterface, \Serializable{
         }
         
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->avatar = $this->id .'_avatar.'. $ext;
+        $this->avatar = 'avatar.'. $ext;
         $this->file->move(
                 $this->getUploadRootDir(), $this->avatar
         );
