@@ -70,6 +70,7 @@ class SizeChartController extends Controller {
        $form = $this->getAddSizeChartForm($entity);   
        $form->bind($request); 
        $title = $entity->getTitle();
+      
        if($title==="00")
        {
            $title="00";
@@ -82,6 +83,8 @@ class SizeChartController extends Controller {
        $gender = $entity->getGender();       
        $target = $entity->getTarget();
        $bodytype=$entity->getBodytype();
+       if($gender!=null and $target!=null and $bodytype!=null)
+       {
        $sizechart=  $this->getBrandSize($brand,$title,$gender,$target,$bodytype);
        if($sizechart>0)
        {
@@ -99,11 +102,12 @@ class SizeChartController extends Controller {
             //return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', array(
               //      'form' => $form->createView(),'sizechart' => $entity)); 
        }
+       }
+       }else
+       {
        $this->get('session')->setFlash('warning','Please Enter Values Correctly.');
        return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
                     'form' => $form->createView()));
-      
-        
        }
     }
     
