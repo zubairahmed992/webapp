@@ -22,9 +22,12 @@ class SurveyController extends Controller {
     }    
     public function addNewQuestionAction(Request $request) {
         $question = new SurveyQuestion();
-        $form = $this->getQuestionForm($question);
+        $form = $this->getQuestionForm($question);        
         $form->bind($request);
-       if ($form->isValid()) {
+        $title=$question->getQuestion();
+       if($title!=null)
+       {
+        if ($form->isValid()) {
         $em = $this->getDoctrine()->getManager();
         $em->persist($question);
         $em->flush();
@@ -33,6 +36,17 @@ class SurveyController extends Controller {
        }else
        {
          $this->get('session')->setFlash('warning','Survey Question cantnot be created!');
+       return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
+                    'data' =>  $this->getQuestionsList(),
+                    'addNewForm' => $this->getAddNewQuestionForm()->createView(),
+                    'operation'=>null,
+                    'id'=>null,
+                    'count_question'=>count($this->getQuestionsList()),
+        ));
+       }
+       }else
+       {
+         $this->get('session')->setFlash('warning','Please Enter Values Correctly!');
        return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'data' =>  $this->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
@@ -64,12 +78,28 @@ public function addNewAnswerAction($question_id) {
                 ->add('answer', 'text')
                 ->getForm();
         $form->bind($request);
+        $title=$answer->getAnswer();
+        if($title!=null)
+        {
         if ($form->isValid()) {
         $em->persist($answer);
         $em->flush();
         $this->get('session')->setFlash('success','Answer has been created');
         return $this->redirect($this->generateUrl('admin_survey'));
         }else
+        {
+           $this->get('session')->setFlash('warning','Answer cannot be creatd');
+            return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
+                    'answerForm' => $form->createView(),
+                    'question_id' => $question_id,
+                    'data' => $this->getQuestionsList(),                    
+                    'addNewForm' => $this->getAddNewQuestionForm()->createView(),
+                    'operation'=>'AddAnwser',
+                    'count_question'=>count($this->getQuestionsList()),
+        ));
+        }
+        }
+        else
         {
            $this->get('session')->setFlash('warning','Answer cannot be creatd');
             return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
@@ -100,6 +130,9 @@ public function addNewAnswerAction($question_id) {
         $question = $this->getquestionById($question_id);
         $form = $this->getQuestionForm($question);
         $form->bind($request);
+         $title=$question->getQuestion();
+       if($title!=null)
+       {
         if($form->isValid())
         {
         $em->persist($question);
@@ -118,6 +151,19 @@ public function addNewAnswerAction($question_id) {
                     'count_question'=>count($this->getQuestionsList()),
         ));
         }
+       }
+       else
+        {   
+            $this->get('session')->setFlash('warning','Survey Question cannot be update');
+            return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
+                    'editForm' => $form->createView(),
+                    'id' => $question_id,                   
+                    'data' => $this->getQuestionsList(),
+                    'addNewForm' => $this->getAddNewQuestionForm()->createView(),
+                    'operation'=>'editQuestion',
+                    'count_question'=>count($this->getQuestionsList()),
+        ));
+        }       
     }
 
     public function editAnswerAction($answer_id) {       
@@ -142,6 +188,9 @@ public function addNewAnswerAction($question_id) {
                 ->add('answer', 'text',array('label'=>' '))
                 ->getForm();
         $form->bind($request);
+       $title=$answer->getAnswer();
+        if($title!=null)
+        {
         if($form->isValid())
         {
         $em->persist($answer);
@@ -160,6 +209,19 @@ public function addNewAnswerAction($question_id) {
                     'count_question'=>count($this->getQuestionsList()),            
         ));
         }
+        }else
+        {
+            $this->get('session')->setFlash('warning','Survey Answer cannot be update');
+            return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
+                    'editAnswerForm' => $form->createView(),
+                    'id' => $answer_id,                    
+                    'data' => $this->getQuestionsList(),
+                    'addNewForm' => $this->getAddNewQuestionForm()->createView(),
+                    'operation'=>'editAnswer',
+                    'count_question'=>count($this->getQuestionsList()),            
+        ));
+        }
+        
     }
 
     public function deleteQuestionAction(Request $request, $question_id) {
