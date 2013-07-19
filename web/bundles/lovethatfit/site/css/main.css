@@ -2430,8 +2430,8 @@ padding-bottom: 0px;
 }
 
 .f_list{
-    display: inline-block;   
-    width: 112px;
+    float:left;
+    width: 115px;
     text-align: center;
     line-height: 40px;
 }
