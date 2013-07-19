@@ -4,7 +4,7 @@
 <li><a href="{{ path('admin_size_charts') }}" >Size Chart</a> <span class="divider">/</span></li>
 <li class="active">Edit</li>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery-1.9.1.js') }}"></script>
-{%if(entity.gender=='F')%}
+{%if(entity.gender=='f')%}
 <script type="text/javascript">
    $(document).ready(function() {
                   $("#genderfemale").show();
@@ -23,7 +23,7 @@
         });
 </script>
 {%endif%}
-{%if(entity.gender=='M')%}
+{%if(entity.gender=='m')%}
 <script type="text/javascript">
    $(document).ready(function() {
                   $("#waist").show();                               
@@ -44,7 +44,7 @@
    $('#sizechart_gender').change(function() {	   
 	    var selectVal = $('#sizechart_gender').val();
             var selectValtarget = $('#sizechart_target').val(); 
-	    if(selectVal=='F')
+	    if(selectVal=='f')
                 {                 
                   $("#genderfemale").show();
                   $("#waist").show();
@@ -60,7 +60,7 @@
                   $("#sizechart_target option[value='Dress']").remove();
                   $("#sizechart_target").append('<option value="Dress">Dress</option>');
                 }
-                if(selectVal=='M')
+                if(selectVal=='m')
                 { 
                   $("#waist").show();
                   $("#neck").show();
@@ -79,7 +79,7 @@
 	 
             var selectVal = $('#sizechart_gender').val();
             var selectValtarget = $('#sizechart_target').val();              
-            if(selectValtarget=='Top' && selectVal=='F')
+            if(selectValtarget=='Top' && selectVal=='f')
                 {
                   $("#waist").show();
                   $("#bust").show();
@@ -92,7 +92,7 @@
                   $("#chest").hide();
                   $("#thigh").hide();
                 }
-            if(selectValtarget=='Bottom'&& selectVal=='F')
+            if(selectValtarget=='Bottom'&& selectVal=='f')
                 {
                   $("#waist").show();
                   $("#hip").show();
@@ -105,7 +105,7 @@
                   $("#chest").hide();
                   $("#thigh").show();
                 }                
-              if(selectValtarget=='Dress'&& selectVal=='F')
+              if(selectValtarget=='Dress'&& selectVal=='f')
                 {
                   $("#waist").show();
                   $("#bust").show();
@@ -118,7 +118,7 @@
                   $("#chest").hide();
                   $("#thigh").hide();
                 }  
-              if(selectValtarget=='Top' && selectVal=='M')
+              if(selectValtarget=='Top' && selectVal=='m')
                 {
                   $("#neck").show();
                   $("#sleeve").show();
@@ -131,7 +131,7 @@
                   $("#outseam").hide();
                   $("#thigh").hide();
                 }
-            if(selectValtarget=='Bottom'&& selectVal=='M')
+            if(selectValtarget=='Bottom'&& selectVal=='m')
                 {
                   $("#waist").show();
                   $("#inseam").show();
@@ -145,7 +145,7 @@
                   $("#thigh").hide();
                   $("#sizechart_target option[value='Dress']").remove();
                 }                
-              if(selectValtarget=='Dress'&& selectVal=='M')
+              if(selectValtarget=='Dress'&& selectVal=='m')
                 {
                   $("#waist").hide();
                   $("#bust").hide();
