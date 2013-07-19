@@ -329,6 +329,7 @@ class Algorithm {
 
     public function getFittingSize() {
         $productSizes = $this->product->getProductSizes();
+        
         foreach ($productSizes as $ps) {
             $this->product_measurement = $ps;
             $fits = $this->fit();
@@ -348,8 +349,8 @@ class Algorithm {
         if ($fits) {
             $recomendations = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
         } else {
-            $size_suggestion = $this->getGeneralSuggestion($this->feedback_array);
-            $recomendations ['tip'] = array("diff" => 0, "msg" => $size_suggestion, 'fit' => $fits);
+            $tip = $this->getGeneralSuggestion($this->feedback_array);
+            $recomendations ['tip'] = array("diff" => 0, "msg" => $tip, 'fit' => $fits);
         }
         return $recomendations;
     }

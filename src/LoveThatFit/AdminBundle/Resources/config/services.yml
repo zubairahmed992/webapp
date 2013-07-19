@@ -2,6 +2,9 @@ parameters:
 #    love_that_fit_admin.example.class: LoveThatFit\AdminBundle\Example
 
 services:    
+     admin.helper.utility:
+        class: LoveThatFit\AdminBundle\Entity\UtilityHelper
+        
      admin.helper.brand:
         class: LoveThatFit\AdminBundle\Entity\BrandHelper
         arguments:
