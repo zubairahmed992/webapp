@@ -385,7 +385,16 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $email = $request_array['email'];
-
+        $user=$this->get('user.helper.user');
+        $authTokenWebService=$request_array['authTokenWebService'];
+         if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
         if ($this->isDuplicateEmail(Null, $email)) {
 
             $user = $this->get('user.helper.user');
@@ -526,8 +535,8 @@ public function userProfileAction()
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
-           $user=$this->get('user.helper.user');
-          $authTokenWebService=$request_array['authTokenWebService'];
+         $user=$this->get('user.helper.user');
+         $authTokenWebService=$request_array['authTokenWebService'];
          if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
