@@ -303,18 +303,21 @@ class Algorithm {
     public function getFittingSize() {
         
         $productSizes = $this->product->getProductSizes();
-        
+        $current_size=$this->product_measurement;
+        $size_that_fits=null;
         foreach ($productSizes as $ps) {
             $this->product_measurement = $ps;
             $fits = $this->fit();
 
             if ($fits) {
-                return $ps;
+                $size_that_fits=$ps;
             }
         }
-        return false;
+        $this->product_measurement=$current_size;
+        return $size_that_fits;
     }
-
+    
+    
     //------------------------------------------------------------------------
 
     public function getRecomendations() {
@@ -323,46 +326,18 @@ class Algorithm {
         if ($fits) {
             $recomendations = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
         } else {
-             $tip = $this->getGeneralSuggestion($this->feedback_array);
-             $recomendations ['tip'] = array("diff" => 0, "msg" => $tip, 'fit' => $fits);
-            
-         /*   $size_that_fits = $this->getFittingSize();
+             
+            $size_that_fits = $this->getFittingSize();
 
             if ($size_that_fits) {
-                $recomendations ['tip'] = array("diff" => 0, "msg" => 'Try Size ' . $size_fits->getTitle() . '', 'fit' => true);
+                $recomendations ['tip'] = array("diff" => 0, "msg" => 'Try Size ' . $size_that_fits->getTitle() . '', 'fit' => true);
             } else {
                 $tip = $this->getGeneralSuggestion($this->feedback_array);
                 $recomendations ['tip'] = array("diff" => 0, "msg" => $tip, 'fit' => $fits);
             }
-           */ 
+            
         }
         return $recomendations;
-    }
-
-    public function _getRecomendations() {
-
-        $recomendations = $this->feedback_array;
-
-        $fits = $this->fit($this->feedback_array);
-
-        if ($fits == true) {
-            $recomendations = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
-        } else {
-
-            $current_feedback = $this->feedback_array;
-            $size_fits = $this->getFittingSize();
-            // just incase if we forgot
-            //$this->feedback_array = $current_feedback;
-
-           /* if ($size_fits) {
-                $recomendations ['tip'] = array("diff" => 0, "msg" => 'Try Size ' . $size_fits->getTitle() . '', 'fit' => true);
-            } else {
-                $size_suggestion = $this->getGeneralSuggestion($current_feedback);
-                $recomendations ['tip'] = array("diff" => 0, "msg" => 'Your Perfect matching size is not available. ' . $size_suggestion, 'fit' => false);
-            }
-*/
-            return $recomendations;
-        }
     }
 
 //------------------------------------------------------------------------
