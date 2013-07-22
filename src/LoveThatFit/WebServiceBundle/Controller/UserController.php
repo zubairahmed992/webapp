@@ -526,6 +526,7 @@ public function userProfileAction()
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
+           $user=$this->get('user.helper.user');
           $authTokenWebService=$request_array['authTokenWebService'];
          if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
