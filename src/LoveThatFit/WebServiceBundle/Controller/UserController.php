@@ -27,14 +27,16 @@ class UserController extends Controller {
         $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-         $email=$decoded['email'];
-         $password=$decoded['password'];
+      //   $email=$decoded['email'];
+        // $password=$decoded['password'];
+         $email='auth@gmail.com';
+         $password='123456';
          $em = $this->getDoctrine()->getManager();
          $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
-           
+        
             if (count($entity) >0) {
-                 $user=$this->get('user.helper.user');
-                $authTokenWebService=$user->getToken($email);
+             
+                $authTokenWebService=$entity->getAuthToken();
                 $user_db_password = $entity->getPassword();
                 $salt_value_db = $entity->getSalt();
 
@@ -184,7 +186,7 @@ public function userProfileAction()
         $password =$request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
-      
+       
         #-------------------Measurement data---------------------#
          if (isset($request_array['weight'])) {
                 $weight = $request_array['weight'];
