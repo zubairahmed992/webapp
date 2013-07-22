@@ -97,6 +97,8 @@ public function findByEmail($email)
         $last_name = $decoded['lastName'];
         $birth_date = $decoded['dob'];
         $zipcode = $decoded['zip'];
+       
+        
         if ($email) {
 
             $user = $this->repo->findOneBy(array('email' => $email));
@@ -121,6 +123,7 @@ public function findByEmail($email)
 
             return false;
         }
+        
     }
     
 #---------------------------------Web Service For Registration--------------------#
@@ -175,14 +178,14 @@ public function findByEmail($email)
 
      #------------------------Chek Token ------------------------#
 
-     public function getToken($email) {
+     public function authenticateToken($token) {
     
-            $entity= $this->repo->findOneBy(array('email'=>$email));
+            $entity= $this->repo->findOneBy(array('authToken'=>$token));
             if (count($entity) > 0) {
-            return $entity->getAuthTokenWebService();
+            return array('status'=>True,'Message'=>'Authentication Success');
+            }else{
+                return array('status'=>False,'Message'=>'Authentication Failure');
             }
-            
-             
         
     }
 

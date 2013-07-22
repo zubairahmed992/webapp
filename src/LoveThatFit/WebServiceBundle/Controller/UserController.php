@@ -135,9 +135,22 @@ class UserController extends Controller {
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
+         
          $user=$this->get('user.helper.user');
-         $entity=$user->editProfileServiceHelper($decoded);
-        
+         
+         $authTokenWebService=$decoded['authTokenWebService'];
+         if($authTokenWebService)
+         {
+         $tokenResponse=$user->authenticateToken($authTokenWebService);
+         if($tokenResponse['status']==False)
+         {    
+         return new Response(json_encode($tokenResponse));
+          
+         }
+         }else{
+             return new Response(json_encode(array('Message'=>'Please Enter the Authenticate Token')));
+         }
+    $entity=$user->editProfileServiceHelper($decoded);   
        // return new response(json_encode($entity));
     if($entity)
     {
@@ -147,6 +160,7 @@ class UserController extends Controller {
    {
      return new Response(json_encode(array('Message'=>'We can not find user')));
    }
+          
 }        
 #------------------------------End of Edit Profile---------------------------------------------------#
 #------------------------------User Profile----------------------------------------------------------#
