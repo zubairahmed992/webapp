@@ -301,23 +301,22 @@ class Algorithm {
     //------------------------------------------------------------------------    
 
     public function getFittingSize() {
-        
+
         $productSizes = $this->product->getProductSizes();
-        $current_size=$this->product_measurement;
-        $size_that_fits=null;
+        $current_size = $this->product_measurement;
+        $size_that_fits = null;
         foreach ($productSizes as $ps) {
             $this->product_measurement = $ps;
             $fits = $this->fit();
 
             if ($fits) {
-                $size_that_fits=$ps;
+                $size_that_fits = $ps;
             }
         }
-        $this->product_measurement=$current_size;
+        $this->product_measurement = $current_size;
         return $size_that_fits;
     }
-    
-    
+
     //------------------------------------------------------------------------
 
     public function getRecomendations() {
@@ -326,7 +325,7 @@ class Algorithm {
         if ($fits) {
             $recomendations = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
         } else {
-             
+
             $size_that_fits = $this->getFittingSize();
 
             if ($size_that_fits) {
@@ -335,7 +334,6 @@ class Algorithm {
                 $tip = $this->getGeneralSuggestion($this->feedback_array);
                 $recomendations ['tip'] = array("diff" => 0, "msg" => $tip, 'fit' => $fits);
             }
-            
         }
         return $recomendations;
     }
@@ -344,6 +342,37 @@ class Algorithm {
 
 
     private function getGeneralSuggestion($sug_array) {
+
+        if ($sug_array != null) {
+            $diff = 0;
+            $tight = 0;
+            $loose = 0;
+            foreach ($sug_array as $key => $value) {
+                if ($value["fit"] == false) {
+                    if ($value["diff"]) {
+                        $diff = $diff + $value["diff"];
+                        if ($value["diff"] < 0) {
+                            $tight = $tight + 1;
+                        }
+                    }
+                }
+            }
+
+            if ($tight > 0) {
+                return 'Please try bigger sizes.';
+            } else {
+                if ($diff > 0) {
+                    return 'Please try smaller sizes.';
+                } else {
+                    return 'Please try anoth size.';
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    private function _getGeneralSuggestion($sug_array) {
 
         if ($sug_array != null) {
             $diff = 0;
@@ -359,10 +388,9 @@ class Algorithm {
                 return 'Please try smaller sizes.';
             } elseif ($diff < 0) {
                 return 'Please try bigger sizes.';
-            }else{
-                return  'Please try anoth size.';
+            } else {
+                return 'Please try anoth size.';
             }
-            
         } else {
             return;
         }
