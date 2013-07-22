@@ -22,6 +22,7 @@ use LoveThatFit\SiteBundle\Algorithm;
 class ProductController extends Controller {
 #-----------------Brand List Related To Size Chart For Registration Step2---------------------------------------------------#
 
+ 
     public function brandListSizeChartAction() {
         $total_record = count($this->getBrandArray());
         $data = array();
@@ -36,6 +37,20 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
+        
+        #------------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
+        
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $size_chart = $size_chart_helper->sizeChartList($request_array);
         if ($size_chart) {
@@ -93,9 +108,12 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
+        
         $id = $request_array['id'];
         $type = $request_array['type'];
         $gender = $request_array['gender'];
+        
+        
         
       // $id=3;
       // $type='brand';
@@ -309,7 +327,7 @@ class ProductController extends Controller {
         }//End of If      
         else {
 
-            return new Response(json_encode(array('Message' => 'Can not find' )));
+            return new Response(json_encode(array('Message' => 'Can not find')));
         }
       
         

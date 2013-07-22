@@ -136,20 +136,19 @@ class UserController extends Controller {
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
          
-         $user=$this->get('user.helper.user');
-         
-         $authTokenWebService=$decoded['authTokenWebService'];
-         if($authTokenWebService)
-         {
-         $tokenResponse=$user->authenticateToken($authTokenWebService);
-         if($tokenResponse['status']==False)
-         {    
-         return new Response(json_encode($tokenResponse));
-          
-         }
-         }else{
-             return new Response(json_encode(array('Message'=>'Please Enter the Authenticate Token')));
-         }
+ #------------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
+
     $entity=$user->editProfileServiceHelper($decoded);   
        // return new response(json_encode($entity));
     if($entity)
@@ -385,9 +384,10 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $email = $request_array['email'];
-        $user=$this->get('user.helper.user');
-        $authTokenWebService=$request_array['authTokenWebService'];
-         if ($authTokenWebService) {
+       #---------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
@@ -395,6 +395,8 @@ public function userProfileAction()
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
+ #-------------------------------End Of Authentication Token--------------------------------#
+
         if ($this->isDuplicateEmail(Null, $email)) {
 
             $user = $this->get('user.helper.user');
@@ -452,9 +454,10 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         
-         $user=$this->get('user.helper.user');
-        $authTokenWebService=$request_array['authTokenWebService'];
-         if ($authTokenWebService) {
+        #---------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
@@ -462,6 +465,8 @@ public function userProfileAction()
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
+ #-------------------------------End Of Authentication Token--------------------------------#
+
         
         $email = $request_array['email'];
         $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
@@ -547,9 +552,10 @@ public function userProfileAction()
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
-         $user=$this->get('user.helper.user');
-         $authTokenWebService=$request_array['authTokenWebService'];
-         if ($authTokenWebService) {
+#---------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
@@ -557,7 +563,7 @@ public function userProfileAction()
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
-        
+ #-------------------------------End Of Authentication Token--------------------------------#
         if (isset($request_array['email'])) {
             $email = $request_array['email'];
         }
