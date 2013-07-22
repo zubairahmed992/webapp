@@ -27,14 +27,15 @@ class UserController extends Controller {
         $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-         $email=$decoded['email'];
-         $password=$decoded['password'];
+       $email=$decoded['email'];
+       $password=$decoded['password'];
+      
          $em = $this->getDoctrine()->getManager();
          $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
-           
+        
             if (count($entity) >0) {
-                 $user=$this->get('user.helper.user');
-                $authTokenWebService=$user->getToken($email);
+             
+                $authTokenWebService=$entity->getAuthToken();
                 $user_db_password = $entity->getPassword();
                 $salt_value_db = $entity->getSalt();
 
@@ -57,7 +58,7 @@ class UserController extends Controller {
                    $userinfo['last_name']=$last_name;
                    $userinfo['zipcode']=$zipcode;
                    $userinfo['gender']=$gender;
-                   $userinfo['authTokenWebServic']=$authTokenWebService;
+                   $userinfo['authTokenWebService']=$authTokenWebService;
                   
                    if(isset($birth_date)){
                    $userinfo['birth_date']= $birth_date->format('Y-m-d');
@@ -134,9 +135,22 @@ class UserController extends Controller {
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
+         
          $user=$this->get('user.helper.user');
-         $entity=$user->editProfileServiceHelper($decoded);
-        
+         
+         $authTokenWebService=$decoded['authTokenWebService'];
+         if($authTokenWebService)
+         {
+         $tokenResponse=$user->authenticateToken($authTokenWebService);
+         if($tokenResponse['status']==False)
+         {    
+         return new Response(json_encode($tokenResponse));
+          
+         }
+         }else{
+             return new Response(json_encode(array('Message'=>'Please Enter the Authenticate Token')));
+         }
+    $entity=$user->editProfileServiceHelper($decoded);   
        // return new response(json_encode($entity));
     if($entity)
     {
@@ -146,6 +160,7 @@ class UserController extends Controller {
    {
      return new Response(json_encode(array('Message'=>'We can not find user')));
    }
+          
 }        
 #------------------------------End of Edit Profile---------------------------------------------------#
 #------------------------------User Profile----------------------------------------------------------#
@@ -184,7 +199,7 @@ public function userProfileAction()
         $password =$request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
-      
+       
         #-------------------Measurement data---------------------#
          if (isset($request_array['weight'])) {
                 $weight = $request_array['weight'];
