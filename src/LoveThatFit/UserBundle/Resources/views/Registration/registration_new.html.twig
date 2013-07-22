@@ -1,0 +1,70 @@
+{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+
+{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+
+{% block action_block_content %}
+<section class="reg_blk">
+    <div class="action_cnt">
+        <div class="steps step_1">  
+            <h2>Let's Get Started!</h2>
+            <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
+
+            <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
+                <div class="form_vld_error">
+{{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
+                        </div>
+
+                    <div class="frm_ele">
+                       {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                       {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="frm_ele">
+                        {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
+                    </div>
+
+                    <div class="frm_ele">
+                        {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
+                        {{ form_errors(form.password.password) }}
+                        {{ form_errors(form.password.confirm) }}
+                    </div>
+                     <div class="frm_ele">
+                        {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
+                        {{ form_errors(form.zipcode) }}
+                    </div>
+
+                    <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
+                        <div class="frm_ele radio_buts">
+                            
+                            <div id="gender_label">Gender</div>
+                            {{ form_widget(form.gender) }} 
+                             
+                            {{ form_errors(form.gender) }}
+                        </div>
+                    </div>
+                    
+                    <div style="clear:both;"></div>
+                    {{ form_rest(form) }}
+                
+                    <input class="reg_next_step" type="submit" value="Register" />
+
+
+                    <div class="login_section">
+                        <p>Already Registered?</p>
+                        <div><a href="{{path('login')}}">Login Now!</a></div>
+                    </div>
+                </form>
+
+
+
+
+                            <!--/.sttp_1--></div>
+                        <!--/.action_cnt--></div>
+                    <!--/.action_blk--></section>
+
+{% endblock %}
+{% block how_it_works_content %}
+            {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
+{% endblock %}
+
+
