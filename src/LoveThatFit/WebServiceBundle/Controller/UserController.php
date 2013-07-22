@@ -128,7 +128,7 @@ class UserController extends Controller {
 
 #------------------------------Edit Profile----------------------------------------------------------#    
   
-#------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------#
     public function editProfileAction()
 {
          $request = $this->getRequest();
@@ -451,6 +451,18 @@ public function userProfileAction()
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
+        
+         $user=$this->get('user.helper.user');
+        $authTokenWebService=$request_array['authTokenWebService'];
+         if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+        
         $email = $request_array['email'];
         $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
         $iphone_outseam = $request_array['iphone_outseam'];
