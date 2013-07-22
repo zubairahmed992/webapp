@@ -351,7 +351,7 @@ public function userProfileAction()
                    
                    $userinfo['image']=$user->getImage();
                    $userinfo['avatar']=$user->getAvatar();
-                   $userinfo['authtoken_webservice']=$user->getAuthTokenWebService();
+                   $userinfo['authTokenWebService']=$user->getAuthToken();
                    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
                    $userinfo['path']=$baseurl;
     #-----------------------Measurement Info--------------------#
@@ -526,7 +526,16 @@ public function userProfileAction()
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
-         
+          $authTokenWebService=$request_array['authTokenWebService'];
+         if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+        
         if (isset($request_array['email'])) {
             $email = $request_array['email'];
         }
