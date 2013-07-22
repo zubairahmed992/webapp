@@ -255,13 +255,13 @@ public function userProfileAction()
             $encoder = $factory->getEncoder($user);
 
             $password = $encoder->encodePassword($password, $user->getSalt());
-            $authTokenWebService=$this->genrateToken($email);
+            //$authTokenWebService=$this->genrateToken($email);
             $user->setPassword($password);
             $user->setEmail($email);
             $user->setGender($gender);
             $user->setZipcode($zipcode);
-            $user->setAuthTokenWebService($authTokenWebService);
-             
+            //$user->setAuthTokenWebService($authTokenWebService);
+            $user->generateAuthenticationToken();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
