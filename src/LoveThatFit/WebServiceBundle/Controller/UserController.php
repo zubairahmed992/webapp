@@ -27,10 +27,9 @@ class UserController extends Controller {
         $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-      //   $email=$decoded['email'];
-        // $password=$decoded['password'];
-         $email='auth@gmail.com';
-         $password='123456';
+       $email=$decoded['email'];
+       $password=$decoded['password'];
+      
          $em = $this->getDoctrine()->getManager();
          $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
         
@@ -59,7 +58,7 @@ class UserController extends Controller {
                    $userinfo['last_name']=$last_name;
                    $userinfo['zipcode']=$zipcode;
                    $userinfo['gender']=$gender;
-                   $userinfo['authTokenWebServic']=$authTokenWebService;
+                   $userinfo['authTokenWebService']=$authTokenWebService;
                   
                    if(isset($birth_date)){
                    $userinfo['birth_date']= $birth_date->format('Y-m-d');
