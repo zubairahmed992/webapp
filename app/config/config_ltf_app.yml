@@ -12,7 +12,7 @@ constants:
     default_page: first
   
   gender:
-    men: m, 
+    men: m 
     women: f
   
   target: 

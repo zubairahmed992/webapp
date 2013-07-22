@@ -42,7 +42,34 @@ class UtilityHelper {
  
         return $pagination_count;
     }
-
-    //--------------------------------------------------------------------------------
+ #---------------------------------Returning The Gender--------------------------------#   
+ public function getGenders() {
+        return $this->conf["constants"]["gender"];
+ }
+ #---------------------------------Returning The Sizes--------------------------------#   
+ public function getSizeCharts() {
+        return $this->conf["constants"]["size_charts"];
+ }
+ #------------Target------------------------------------#
+ public function getTargets()
+ {
+       return $this->conf["constants"]["target"];
+ }
+ #---------------Body Type----------------------------#
+ public function getBodyTypes()
+ {
+    return $this->conf["constants"]["body_types"];
+ }
+#------------Size Titles--------------------------------#
+public function getSizeTitle(){
+   return $this->conf["constants"]["size_titles"]; 
+}
+#------------Size Numbers-------------------------------#
+public function getSizeNumbers()
+{
+    return $this->conf["constants"]["size_numbers"]; 
+    
+}
+//--------------------------------------------------------------------------------
 
 }

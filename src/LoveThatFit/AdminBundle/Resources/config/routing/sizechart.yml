@@ -32,3 +32,7 @@ admin_size_chart_update:
 admin_size_chart_delete:
     pattern: /admin/admin_size_charts/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:SizeChart:delete }
+
+admin_size_chart_test_utility_helper:
+    pattern: /admin/testHelper
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:testHelper }    
