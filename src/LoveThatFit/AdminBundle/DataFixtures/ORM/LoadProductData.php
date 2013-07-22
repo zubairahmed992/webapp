@@ -145,21 +145,23 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                     $manager->flush();
                 }
                 foreach ($clothing_types_values['product_item'] as $product_item_key => $product_item_values) {
+                    foreach ($product_item_values as $product_items_key => $product_items_values) {                    
                     $productid = $product_new->getId();
                     $productsize = $this->container
                             ->get('admin.helper.productsizes')
-                            ->findSizeByProductTitle($product_item_values['size_title'], $productid);
+                            ->findSizeByProductTitle($product_items_values['size_title'], $productid);
                     $productcolor = $this->container
                             ->get('admin.helper.productcolor')
-                            ->findColorByProductTitle($product_item_values['product_color_title'], $productid);
+                            ->findColorByProductTitle($product_items_values['product_color_title'], $productid);
                     $productitem = new ProductItem();
                     $productitem->setProduct($product_new);
                     $productitem->setProductColor($productcolor);
                     $productitem->setProductSize($productsize);
-                    $productitem->setLineNumber($product_item_values['size_title']);
-                    $productitem->setImage($product_item_values['image']);
+                    $productitem->setLineNumber($product_items_values['size_title']);
+                    $productitem->setImage($product_items_values['image']);
                     $manager->persist($productitem);
                     $manager->flush();
+                }
                 }
             }
         }
