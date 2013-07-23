@@ -2642,3 +2642,10 @@ padding-bottom: 0px;
 }
 
 
+.upload_pic_msg {
+    width:200px;
+    font-size: 15px;
+    margin: 0 auto 0;
+    text-align: center;
+    padding-top: 10px;
+}
