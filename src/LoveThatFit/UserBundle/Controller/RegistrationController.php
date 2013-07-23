@@ -421,11 +421,7 @@ public function fittingRoomImageEditAction() {
             throw $this->createNotFoundException('Unable to find User.');
         }
 
-        $data = substr($_POST['imageData'], strpos($_POST['imageData'], ",") + 1);
-        $decodedData = base64_decode($data);
-        $fp = fopen($entity->getAbsolutePath(), 'wb');
-        fwrite($fp, $decodedData);
-        fclose($fp);
+        $entity->writeImageFromCanvas($_POST['imageData']);
         $response = "true";
         return new Response($response);
     }

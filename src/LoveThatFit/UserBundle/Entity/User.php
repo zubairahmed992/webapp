@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
+
 use LoveThatFit\AdminBundle\ImageHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,46 +14,40 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="ltf_users")
  * @ORM\Entity(repositoryClass="LoveThatFit\UserBundle\Entity\UserRepository")
  */
+class User implements UserInterface, \Serializable {
 
-class User  implements UserInterface, \Serializable{
-
-    
     /**
      * Bidirectional (INVERSE SIDE)
      * 
      * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user", cascade={"ALL"}, orphanRemoval=true)
-     **/
+     * */
     private $measurement;
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SurveyUser", mappedBy="user")
      */
     protected $survey;
-    
-    
+
+
     // ...
 
     /**
      * @ORM\ManyToMany(targetEntity="LoveThatFit\AdminBundle\Entity\ProductItem", inversedBy="users")
      * @ORM\JoinTable(name="users_product_items")
-     **/
+     * */
     private $product_items;
 
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="User")
      */
     private $useritemtryhistory;
-    
+
 //---------------------------------------  implement the UserInterface
     public function __construct() {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->product_items = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
-    
-    
 
 //---------------------------------------------------------------------
 
@@ -95,7 +90,7 @@ class User  implements UserInterface, \Serializable{
      * @Assert\NotBlank(groups={"registration_step_one"}, message="Email cannot be blank")
      */
     private $email;
-    
+
     /**
      * @var string $zipcode
      *
@@ -103,8 +98,6 @@ class User  implements UserInterface, \Serializable{
      * @Assert\NotBlank(groups={"registration_step_one"}, message="Zip code cannot be blank")
      */
     private $zipcode;
-    
-    
 
     /**
      * @var boolean $isActive
@@ -170,18 +163,17 @@ class User  implements UserInterface, \Serializable{
      * @var string $image
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
-    * )
+     * )
      */
     private $image;
 
     /**
      * @var string $avatar
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
-    
+
      */
     private $avatar;
 
-    
     /**
      * @var dateTime $createdAt
      *
@@ -196,34 +188,34 @@ class User  implements UserInterface, \Serializable{
      */
     private $updatedAt;
 
-     /**
+    /**
      * @Assert\File()
      */
     public $file;
-    
 
-      /**
+    /**
      * @var string $authToken
      *
      * @ORM\Column(name="auth_token", type="string", length=50, nullable=true)
      * 
      */
     private $authToken;
-    
-      /**
+
+    /**
      * @var string $authTokenWebService
      *
      * @ORM\Column(name="auth_token_web_service", type="string", length=50, nullable=true)
      * 
      */
     private $authTokenWebService;
+
     /**
      * @var dateTime $authTokenCreatedAt
      *
      * @ORM\Column(name="auth_token_created_at", type="datetime", nullable=true)
      */
     private $authTokenCreatedAt;
-    
+
     /**
      * Get id
      *
@@ -233,7 +225,6 @@ class User  implements UserInterface, \Serializable{
         return $this->id;
     }
 
-  
     /**
      * Set salt
      *
@@ -321,10 +312,10 @@ class User  implements UserInterface, \Serializable{
         return $this->firstName;
     }
 
-     public function getFullName() {
-        return $this->firstName. " " . $this->lastName;
+    public function getFullName() {
+        return $this->firstName . " " . $this->lastName;
     }
-    
+
     /**
      * Set lastName
      *
@@ -427,7 +418,6 @@ class User  implements UserInterface, \Serializable{
         return $this->avatar;
     }
 
-    
     /**
      * Set createdAt
      *
@@ -470,7 +460,7 @@ class User  implements UserInterface, \Serializable{
         return $this->updatedAt;
     }
 
- /**
+    /**
      * Get authToken
      *
      * @return string 
@@ -479,7 +469,7 @@ class User  implements UserInterface, \Serializable{
         return $this->authToken;
     }
 
-/**
+    /**
      * Set authToken
      *
      * @param string $authToken
@@ -491,8 +481,7 @@ class User  implements UserInterface, \Serializable{
         return $this;
     }
 
-    
-      /**
+    /**
      * Set authTokenCreatedAt
      *
      * @param datetime $authTokenCreatedAt
@@ -504,9 +493,7 @@ class User  implements UserInterface, \Serializable{
         return $this;
     }
 
-
-
-/**
+    /**
      * Get authTokenCreatedAt
      *
      * @return datetime 
@@ -515,17 +502,13 @@ class User  implements UserInterface, \Serializable{
         return $this->authTokenCreatedAt;
     }
 
-    
-    
-    
 //----------------------- Old password field used for resetting password only
-    
-    public $old_password;
-    
-    public function getOldpassword() {
-       return $this->old_password;
-    }
 
+    public $old_password;
+
+    public function getOldpassword() {
+        return $this->old_password;
+    }
 
     /**
      * Get username
@@ -582,17 +565,15 @@ class User  implements UserInterface, \Serializable{
                 ) = unserialize($serialized);
     }
 
-    
     /**
      * Set measurement
      *
      * @param LoveThatFit\UserBundle\Entity\Measurement $measurement
      * @return User
      */
-    public function setMeasurement(\LoveThatFit\UserBundle\Entity\Measurement $measurement = null)
-    {
+    public function setMeasurement(\LoveThatFit\UserBundle\Entity\Measurement $measurement = null) {
         $this->measurement = $measurement;
-    
+
         return $this;
     }
 
@@ -601,90 +582,269 @@ class User  implements UserInterface, \Serializable{
      *
      * @return LoveThatFit\UserBundle\Entity\Measurement 
      */
-    public function getMeasurement()
-    {
+    public function getMeasurement() {
         return $this->measurement;
     }
-    //--------------------- Public methods --------------------------
-    
-    public function getAge(){
-    if($this->birthDate)
-    {
-        $birthDate = $this->birthDate->format('d/m/Y');
-        $birthDate = explode("/", $birthDate);
-        $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") ? ((date("Y")-$birthDate[2])-1):(date("Y")-$birthDate[2]));
-        return $age;   
-    }
-    else
-    {
-        return "";
-    }
-    }
-            
 
+    /**
+     * Add survey
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
+     * @return User
+     */
+    public function addSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey) {
+        $this->survey[] = $survey;
 
-    public function generateAuthenticationToken()
-    {
-        $this->authTokenCreatedAt= new \DateTime('now');
-        $this->authToken = md5($this->salt.$this->email.$this->authTokenCreatedAt->format('r'));
+        return $this;
+    }
+
+    /**
+     * Remove survey
+     *
+     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
+     */
+    public function removeSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey) {
+        $this->survey->removeElement($survey);
+    }
+
+    /**
+     * Get survey
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSurvey() {
+        return $this->survey;
+    }
+
+    /**
+     * Add product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     * @return User
+     */
+    public function addProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems) {
+        $this->product_items[] = $productItems;
+
+        return $this;
+    }
+
+    /**
+     * Remove product_items
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
+     */
+    public function removeProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems) {
+        $this->product_items->removeElement($productItems);
+    }
+
+    /**
+     * Get product_items
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProductItems() {
+        return $this->product_items;
+    }
+
+    /**
+     * Set zipcode
+     *
+     * @param string $zipcode
+     * @return User
+     */
+    public function setZipcode($zipcode) {
+        $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
+    /**
+     * Get zipcode
+     *
+     * @return string 
+     */
+    public function getZipcode() {
+        return $this->zipcode;
+    }
+
+    public function getMyClosetListArray($product_item_id) {
+        $productitem = $this->getProductItems();
+        foreach ($productitem as $ps) {
+            if ($ps->getId() == $product_item_id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add useritemtryhistory
+     *
+     * @param LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory
+     * @return User
+     */
+    public function addUseritemtryhistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory) {
+        $this->useritemtryhistory[] = $useritemtryhistory;
+
+        return $this;
+    }
+
+    /**
+     * Remove useritemtryhistory
+     *
+     * @param LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory
+     */
+    public function removeUseritemtryhistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory) {
+        $this->useritemtryhistory->removeElement($useritemtryhistory);
+    }
+
+    /**
+     * Get useritemtryhistory
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUseritemtryhistory() {
+        return $this->useritemtryhistory;
+    }
+
+    /**
+     * Set authTokenWebService
+     *
+     * @param string $authTokenWebService
+     * @return User
+     */
+    public function setAuthTokenWebService($authTokenWebService) {
+        $this->authTokenWebService = $authTokenWebService;
+
+        return $this;
+    }
+
+    /**
+     * Get authTokenWebService
+     *
+     * @return string 
+     */
+    public function getAuthTokenWebService() {
+        return $this->authTokenWebService;
+    }
+
+//--------------------- Public methods --------------------------
+
+    public function getAge() {
+        if ($this->birthDate) {
+            $birthDate = $this->birthDate->format('d/m/Y');
+            $birthDate = explode("/", $birthDate);
+            $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
+            return $age;
+        } else {
+            return "";
+        }
+    }
+
+    public function generateAuthenticationToken() {
+        $this->authTokenCreatedAt = new \DateTime('now');
+        $this->authToken = md5($this->salt . $this->email . $this->authTokenCreatedAt->format('r'));
         return $this->authToken;
     }
 
-    
-
     //-------------------------------------------------
     //-------------- Image Upload ---------------------
-    
-    
-    public function upload() {
-        
-        if (null === $this->file) {
-            return;
-        }
-        
-        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        
-        //$unique_number=uniqid();
-   
-        $this->image = $this->id .'_cropped.'. $ext;
-        $original_name = $this->id . '_original.'. $ext;        
-        $this->file->move(
-                $this->getUploadRootDir(), $this->image
-        );
-        
-        $this->file = null;             
-        copy($this->getAbsolutePath(),$this->getUploadRootDir().'/'.$original_name);
-        
+
+
+    /* public function upload() {
+
+      if (null === $this->file) {
+      return;
+      }
+
+      $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+      //$unique_number=uniqid();
+
+      $this->image = 'cropped.'. $ext;
+      $original_name = 'original.'. $ext;
+      $this->file->move(
+      $this->getUploadRootDir(), $this->image
+      );
+
+      $this->file = null;
+      copy($this->getAbsolutePath(),$this->getUploadRootDir().'/'.$original_name);
+
+      } */
+    public function writeImageFromCanvas($raw_data) {
+        $data = substr($raw_data, strpos($raw_data, ",") + 1);
+        $decodedData = base64_decode($data);
+        $fp = fopen($this->getAbsolutePath(), 'wb');
+        fwrite($fp, $decodedData);
+        fclose($fp);
     }
-    //----------------------------------------------------
-       public function uploadTempImage() {
-        
+
+//----------------------------------------------------
+    public function uploadTempImage() {
+
         if (null === $this->file) {
             return;
         }
-        
+
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        
-        $temp_name = $this->id . '_temp.'. $ext;        
+
+        $temp_name = 'temp.' . $ext;
         $this->file->move(
                 $this->getUploadRootDir(), $temp_name
         );
-        
-        $this->file = null;             
-        return $this->getUploadDir().'/'. $temp_name;
-        
+
+        $this->file = null;
+        return $this->getUploadDir() . '/' . $temp_name;
     }
-    
-    //------------------------- avatar upload ---------------------------
-   
-     public function uploadAvatar() {
-        
+
+    //----------------------------------------------------------
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
+    }
+
+//----------------------------------------------------------
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image . '?rand=' . uniqid();
+    }
+
+    //----------------------------------------------------------
+    public function getDirWebPath() {
+        return $this->getUploadDir() . '/';
+    }
+
+//----------------------------------------------------------
+    protected function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+//----------------------------------------------------------
+    protected function getUploadDir() {
+        return 'uploads/ltf/users/' . $this->id;
+    }
+
+    //------------------------------------------------------    
+    public function getOriginalImageAbsolutePath() {
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
+        return null === $this->image ? null : $this->getUploadRootDir() . '/original.' . $ext;
+    }
+
+//----------------------------------------------------------
+    public function getOriginalImageWebPath() {
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
+        return null === $this->image ? null : $this->getUploadDir() . '/original.' . $ext;
+    }
+
+    //-------------------------------------------------------------------
+    //------------------------- Avatar upload ---------------------------
+
+    public function uploadAvatar() {
+
         if (null === $this->file) {
             return;
         }
-        
+
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->avatar = 'avatar.'. $ext;
+        $this->avatar = 'avatar.' . $ext;
         $this->file->move(
                 $this->getUploadRootDir(), $this->avatar
         );
@@ -702,250 +862,36 @@ class User  implements UserInterface, \Serializable{
                 $source = imagecreatefrompng($filename); //create png image
                 break;
         }
-        $img_new = imagecreatetruecolor(220,250); 
+        $img_new = imagecreatetruecolor(220, 250);
         imagealphablending($img_new, false);
-        imagesavealpha($img_new,true);
+        imagesavealpha($img_new, true);
         $transparent = imagecolorallocatealpha($img_new, 255, 255, 255, 127);
-         imagefilledrectangle($img_new, 0, 0, 220, 255, $transparent);
-        imagecopyresampled($img_new, $source, 0, 0, 0, 0, 220,250, imagesx($source), imagesy($source));
-        $img_path=$this->getUploadRootDir().'/'. $this->avatar;       
+        imagefilledrectangle($img_new, 0, 0, 220, 255, $transparent);
+        imagecopyresampled($img_new, $source, 0, 0, 0, 0, 220, 250, imagesx($source), imagesy($source));
+        $img_path = $this->getUploadRootDir() . '/' . $this->avatar;
         switch ($image_type) {
-                    case IMAGETYPE_JPEG:
-                        imagejpeg($img_new,$img_path, 75);
-                        break;
-                    case IMAGETYPE_GIF:
-                        imagegif($img_new, $img_path);
-                        break;
-                    case IMAGETYPE_PNG:
-                        imagepng($img_new, $img_path);
-                        break;
-                }
-        $this->file = null;             
+            case IMAGETYPE_JPEG:
+                imagejpeg($img_new, $img_path, 75);
+                break;
+            case IMAGETYPE_GIF:
+                imagegif($img_new, $img_path);
+                break;
+            case IMAGETYPE_PNG:
+                imagepng($img_new, $img_path);
+                break;
+        }
+        $this->file = null;
     }
-    
+
     //----------------------------------------------------------
-  public function getAbsolutePath()
-    {
-        return null === $this->image
-            ? null
-            : $this->getUploadRootDir().'/'.$this->image;
-    }
-//----------------------------------------------------------
-    public function getWebPath()
-    {
-        return null === $this->image
-            ? null
-            : $this->getUploadDir().'/'.$this->image .'?rand='.uniqid();
-    }
-    //----------------------------------------------------------
-      public function getDirWebPath()
-    {
-        return $this->getUploadDir().'/';
-    }
-//----------------------------------------------------------
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-//----------------------------------------------------------
-    protected function getUploadDir()
-    {
-        return 'uploads/ltf/users/'.$this->id;
-    }
- //------------------------------------------------------    
-public function getOriginalImageAbsolutePath()
-    {
-        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
-        return null === $this->image
-            ? null
-            : $this->getUploadRootDir().'/original'.'.'.$ext;    
-    }
-   
-//----------------------------------------------------------
-    public function getOriginalImageWebPath()
-    {
-        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
-        return null === $this->image
-            ? null
-            : $this->getUploadDir().'/original'.'.'.$ext;    
-    }
-    
-    //----------------------------------------------------------
-    public function getAvatarWebPath()
-    {
+    public function getAvatarWebPath() {
         $ext = pathinfo($this->avatar, PATHINFO_EXTENSION);
-        return null === $this->avatar
-            ? null
-            : $this->getUploadDir().'/'.'avatar'.'.'.$ext;    
-        
+        return null === $this->avatar ? null : $this->getUploadDir() . '/' . 'avatar' . '.' . $ext;
     }
-    
+
 //------------------------------------------------------    
-public function getAbsoluteAvatarPath()
-    {
-        return null === $this->avatar
-            ? null
-            : $this->getUploadRootDir().'/'.$this->avatar;
-    }
-    
-    
-
-    /**
-     * Add survey
-     *
-     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
-     * @return User
-     */
-    public function addSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey)
-    {
-        $this->survey[] = $survey;
-    
-        return $this;
+    public function getAbsoluteAvatarPath() {
+        return null === $this->avatar ? null : $this->getUploadRootDir() . '/' . $this->avatar;
     }
 
-    /**
-     * Remove survey
-     *
-     * @param LoveThatFit\AdminBundle\Entity\SurveyUser $survey
-     */
-    public function removeSurvey(\LoveThatFit\AdminBundle\Entity\SurveyUser $survey)
-    {
-        $this->survey->removeElement($survey);
-    }
-
-    /**
-     * Get survey
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getSurvey()
-    {
-        return $this->survey;
-    }
-
-    /**
-     * Add product_items
-     *
-     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
-     * @return User
-     */
-    public function addProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
-    {
-        $this->product_items[] = $productItems;
-    
-        return $this;
-    }
-
-    /**
-     * Remove product_items
-     *
-     * @param LoveThatFit\AdminBundle\Entity\ProductItem $productItems
-     */
-    public function removeProductItem(\LoveThatFit\AdminBundle\Entity\ProductItem $productItems)
-    {
-        $this->product_items->removeElement($productItems);
-    }
-
-    /**
-     * Get product_items
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getProductItems()
-    {
-        return $this->product_items;
-    }
-
-    /**
-     * Set zipcode
-     *
-     * @param string $zipcode
-     * @return User
-     */
-    public function setZipcode($zipcode)
-    {
-        $this->zipcode = $zipcode;
-    
-        return $this;
-    }
-
-    /**
-     * Get zipcode
-     *
-     * @return string 
-     */
-    public function getZipcode()
-    {
-        return $this->zipcode;
-    }
-    
-    
-    public function getMyClosetListArray($product_item_id){
-        $productitem=$this->getProductItems();        
-        foreach($productitem as $ps){            
-            if($ps->getId()==$product_item_id)
-            {
-                return true;
-            }
-        }    
-        return false;
-    }
-
-    
-
-    /**
-     * Add useritemtryhistory
-     *
-     * @param LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory
-     * @return User
-     */
-    public function addUseritemtryhistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory)
-    {
-        $this->useritemtryhistory[] = $useritemtryhistory;
-    
-        return $this;
-    }
-
-    /**
-     * Remove useritemtryhistory
-     *
-     * @param LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory
-     */
-    public function removeUseritemtryhistory(\LoveThatFit\SiteBundle\Entity\UserItemTryHistory $useritemtryhistory)
-    {
-        $this->useritemtryhistory->removeElement($useritemtryhistory);
-    }
-
-    /**
-     * Get useritemtryhistory
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getUseritemtryhistory()
-    {
-        return $this->useritemtryhistory;
-    }
-
-    /**
-     * Set authTokenWebService
-     *
-     * @param string $authTokenWebService
-     * @return User
-     */
-    public function setAuthTokenWebService($authTokenWebService)
-    {
-        $this->authTokenWebService = $authTokenWebService;
-    
-        return $this;
-    }
-
-    /**
-     * Get authTokenWebService
-     *
-     * @return string 
-     */
-    public function getAuthTokenWebService()
-    {
-        return $this->authTokenWebService;
-    }
 }
