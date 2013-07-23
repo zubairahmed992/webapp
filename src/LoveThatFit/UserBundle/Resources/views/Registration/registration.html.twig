@@ -85,7 +85,7 @@ function formValidates()
                                         
                                         <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return formValidates()">
                                             <div class="frm_ele">            
-                                                <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
+                                                <input type="text" id="email" name="_username" placeholder="Email" />
                                             </div>
                                             <div class="frm_ele">
                                                 <input type="password" id="password" name="_password" placeholder="Password" />
@@ -95,7 +95,7 @@ function formValidates()
                                                              Enter Valid User name and password
                                                          </div>
                                                     </div>
-                                                    {% if error %}
+                                                    {% if error is defined and error%}
                                                     <div class="login_error" >          
                                                         <div id="error_content">
                                                         {{ error.message  | replace({"Bad credentials": "Invalid Log-in credentials"})}}
