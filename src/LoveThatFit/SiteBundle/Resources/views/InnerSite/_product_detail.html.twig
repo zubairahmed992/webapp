@@ -1,6 +1,13 @@
 
 <script language="javascript">
- // For Size Combox box
+    
+function apply_prod(size_id,product_id,color_id){
+    //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
+    
+    
+}
+
+// For Size Combox box
 function select_size(size_id,product_id,color_id)
 {
        var size= size_id.value;
@@ -15,6 +22,7 @@ function select_size(size_id,product_id,color_id)
               $('.featured_box'+product_id+' .dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass("hide");
               set_drag_drop_ele();
+              apply_prod(size_id,product_id,color_id);
             }
         });
 }
