@@ -106,7 +106,8 @@ admin:
 
 login:
     pattern:   /login
-    defaults:  { _controller: LoveThatFitUserBundle:Security:login }
+    defaults: { _controller: LoveThatFitUserBundle:Registration:registration }
+    #defaults:  { _controller: LoveThatFitUserBundle:Security:login }
 
 login_check:
     pattern:   /login_check
