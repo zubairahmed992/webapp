@@ -775,8 +775,14 @@ class User implements UserInterface, \Serializable {
         $data = substr($raw_data, strpos($raw_data, ",") + 1);
         $decodedData = base64_decode($data);
         $fp = fopen($this->getAbsolutePath(), 'wb');
-        fwrite($fp, $decodedData);
-        fclose($fp);
+        @fwrite($fp, $decodedData);
+        @fclose($fp);
+        
+        $this->copyTempToOriginalImage();
+    }
+    
+    private function copyTempToOriginalImage() {
+        @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
     }
 
 //----------------------------------------------------
@@ -797,6 +803,12 @@ class User implements UserInterface, \Serializable {
         return $this->getUploadDir() . '/' . $temp_name;
     }
 
+      //------------------------------------------------------    
+    public function getTempImageAbsolutePath() {
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
+        return null === $this->image ? null : $this->getUploadRootDir() . '/temp.' . $ext;
+    }
+    
     //----------------------------------------------------------
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
