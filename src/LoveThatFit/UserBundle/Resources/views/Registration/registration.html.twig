@@ -14,8 +14,8 @@
                     <a href="#">Login</a>
                 </div>
                 <div class="clr_bth"></div>
-               
-                
+
+
                 <div class="login_reg_box">
                     <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
                         <div class="form_vld_error">
@@ -62,19 +62,56 @@
                                                 <a href="{{path('login')}}">LOGIN NOW!</a>
                                             </div>
                                         </form>
-                 </div>
-                
-                
-                 <div class="login_reg_box">
-                   
-                 </div>
-                                </div>
+                                    </div>
+
+ <!--/Login form start-->
+                                    <div class="login_reg_box">
+
+                                        <h2>Log In</h2>
+                                        <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
+                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
+                                            <div class="frm_ele">            
+                                                <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
+                                            </div>
+                                            <div class="frm_ele">
+                                                <input type="password" id="password" name="_password" placeholder="Password" />
+                                                <div class="login_error" >
+                                                    <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Valid User name and password
+                                                         </div>
+                                                    </div>
+                                                    {% if error %}
+                                                    <div class="login_error" >          
+                                                        <div id="error_content">
+                                                        {{ error.message  | replace({"Bad credentials": "Invalid Log-in credentials"})}}
+                                                            </div>
+
+                                                        </div>
+                                                    {% endif %}
+                                                        <input type="hidden" name="_target_path" value="/inner_site/index" />
+                                                    </div>
+
+                                                    <div class="frm_ele">
+                                                        <input id="sbmt_bnt" type="submit" value="Login" class="reg_next_step" />
+                                                    </div>
+                                                </form>
+
+
+                                                <ul class="row with_sep">
+                                                    <li><a href="{{path('forgot_password_form')}}">forgot</a></li>
+
+                                                    <li><a href="{{path('registration')}}">create</a></li>
+                                                </ul>
+<!--/Login form End-->
+                                            </div>
+                                        </div>
 
 
 
-                                <!--/.sttp_1--></div>
-                            <!--/.action_cnt--></div>
-                        <!--/.action_blk--></section>
+                                        <!--/.sttp_1--></div>
+                                    <!--/.action_cnt--></div>
+                                <!--/.action_blk--></section>
 
 {% endblock %}
 {% block how_it_works_content %}
