@@ -1994,7 +1994,7 @@ margin:0px 0px 0px 0px;
 }
 
 .login_section {
-    padding:10px 0px 0px 0px;
+    padding:5px 0px 0px 0px;
 }
 
 .login_section p {
@@ -2006,9 +2006,10 @@ margin:0px 0px 0px 0px;
 
 .login_section a {
     text-decoration:none;   
-    padding:0px 15px;
+    padding:0px 10px;
     color:#AAB01D;
     font-weight:bold;
+    font-size: 0.9em;
 }
 
 .error_cls{    
@@ -2640,5 +2641,39 @@ padding-bottom: 0px;
     padding: 5px 0px 5px 5px;
     border-bottom: 1px dashed #efefef;
 }
+.login_reg_box{
+   background: url("../images/login_frame.png") no-repeat scroll 0 6px transparent;
+   width: 315px;
+   height: 179px;
+   padding-top: 10px;
+}
 
+.log_wrapper .login_tab a{
+    background: #e2e1e1;
+    text-decoration: none;
+    padding: 7px 8px 7px 8px;    
+    color: #535352;
+    font-size: 0.80em;
+    font-family: MyCustomFontb;
+    text-transform: uppercase;
+   
+}
+
+.login_tab{
+    float:left;
+}
+
+.login_tab .active{
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;
+    
+}
+
+.login_section span{
+    color: #635F5F;
+    font-size: 0.8em;
+    margin: 0 0 5px;
+    padding: 0 !important; 
+}
 
