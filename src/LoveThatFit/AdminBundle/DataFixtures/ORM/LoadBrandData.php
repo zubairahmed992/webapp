@@ -34,7 +34,7 @@ class LoadBrandData implements FixtureInterface {
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/brand.yml'));
         $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/brands');
-        $source = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/fixtures/brands');
+        $source = realpath(dirname(__FILE__) . '/../../../../../web/bundles/lovethatfit/miscellaneous/fixtures/brands');
         $this->deleteAllBrandFiles($destination);
         foreach ($fixtures['brands'] as $key => $value) {
             $image = $value;
