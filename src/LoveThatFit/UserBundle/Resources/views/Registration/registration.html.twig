@@ -1,7 +1,6 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
-
 {% block action_block_content %}
 <section class="reg_blk">
     <div class="action_cnt">
@@ -67,9 +66,24 @@
  <!--/Login form start-->
  <div class="login_reg_box" id="login_wrap" style="display: none;">
 
+        <script>
+function formValidates()
+{
+    var username=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+    if((username=='' || username=='email') && (password=='' || password=='password'))
+        {
+           document.getElementById('error_content1').style.display="block";
+           return false;
+        }else
+            {
+                return true;
+            }
+}
+    
+</script>                                
                                         
-                                        
-                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
+                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return formValidates()">
                                             <div class="frm_ele">            
                                                 <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
                                             </div>
