@@ -118,11 +118,15 @@
        $('#lg_btn').click(function(){
             $('#login_wrap').show();
             $('#reg_wrap').hide();
+            $('.login_tab a').removeClass("active");
+            $('#lg_btn').addClass("active");
        })
        
        $('#reg_btn').click(function(){
             $('#reg_wrap').show();
             $('#login_wrap').hide();
+             $('#lg_btn').removeClass("active");
+            $('#reg_btn').addClass("active");
        })
     
     })
