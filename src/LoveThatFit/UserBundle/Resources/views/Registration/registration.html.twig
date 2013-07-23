@@ -148,7 +148,24 @@ function formValidates()
 </script>
 
 {% endblock %}
+{% block feed_block %}
+<div class="twitter_wrap">
 
+    <div class="tt_feeds">
+        Feeds will show here.
+
+
+        <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
+            Tweets by @LoveThatFit</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
+    <div id="social_box">
+        <div><img src="{{ asset('bundles/lovethatfit/site/images/fb_icon.png') }}" width="33" height="34"></div>
+        <div><img src="{{ asset('bundles/lovethatfit/site/images/tt_icon.png') }}" width="33" height="34"></div>
+    </div>
+
+</div>
+{% endblock %}
 {% block how_it_works_content %}
             {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
 {% endblock %}
