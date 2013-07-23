@@ -39,14 +39,15 @@
                 <div id="top_dropable" class="hide"></div>
                 <div id="bottom_dropable" class="hide"></div>
                 
-                <div id="user_dummy_img_hldr">
                 {% if app.user.image != null %}
+                <div id="user_dummy_img_hldr">
                     <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}">
-                {%else%}
-                    <div>Please Upload Your Image</div>
-                {% endif %}
-                    
                 </div>
+                {%else%}
+                    <div class="upload_pic_msg">Please <a href="{{ path('fitting_room_image_edit') }}">Upload Your Photo</a> to try cloths on you.</div>
+                    <div id="user_dummy_img_hldr">
+                    </div>
+                {% endif %}
             </div> 
             <div class="play_area_hldr hide">
                 <div id="play_area" class="play_area">
