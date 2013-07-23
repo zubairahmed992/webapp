@@ -10,13 +10,13 @@
             <p>Try Clothes On. See Look, Fit &amp; Size. Social.</p>
             <div class="log_wrapper">
                 <div class="login_tab">
-                    <a href="#" class="active">Register</a>
-                    <a href="#">Login</a>
+                    <a href="#" class="active" id="reg_btn">Register</a>
+                    <a href="#" id="lg_btn">Login</a>
                 </div>
                 <div class="clr_bth"></div>
 
 
-                <div class="login_reg_box">
+                <div class="login_reg_box" id="reg_wrap">
                     <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
                         <div class="form_vld_error">
 {{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
@@ -65,10 +65,10 @@
                                     </div>
 
  <!--/Login form start-->
-                                    <div class="login_reg_box">
+ <div class="login_reg_box" id="login_wrap" style="display: none;">
 
-                                        <h2>Log In</h2>
-                                        <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
+                                        
+                                        
                                         <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
                                             <div class="frm_ele">            
                                                 <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
@@ -112,10 +112,29 @@
                                         <!--/.sttp_1--></div>
                                     <!--/.action_cnt--></div>
                                 <!--/.action_blk--></section>
+<script>
+    $(document).ready(function(){
+       
+       $('#lg_btn').click(function(){
+            $('#login_wrap').show();
+            $('#reg_wrap').hide();
+       })
+       
+       $('#reg_btn').click(function(){
+            $('#reg_wrap').show();
+            $('#login_wrap').hide();
+       })
+    
+    })
+    
+</script>
 
 {% endblock %}
+
 {% block how_it_works_content %}
             {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
 {% endblock %}
+
+
 
 
