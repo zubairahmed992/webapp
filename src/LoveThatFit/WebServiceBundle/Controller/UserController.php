@@ -623,14 +623,11 @@ public function userProfileAction()
             $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
             $file_name=$_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $newFilename = 'cropped'."." . $ext;
-            $newFilename_copy = 'original'.'.'.$ext;
-           
+            $newFilename = 'iphone'."." . $ext;
             $entity->setImage($newFilename);
-            if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsolutePath())) {
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
                 
-               move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getOriginalImageAbsolutePath());
-                $em->persist($entity);
+               $em->persist($entity);
                 $em->flush();
                 //  $image_path = $entity->getWebPath(); 
                 $userinfo = array();

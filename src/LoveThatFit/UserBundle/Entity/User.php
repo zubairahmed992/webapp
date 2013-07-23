@@ -173,6 +173,12 @@ class User implements UserInterface, \Serializable {
 
      */
     private $avatar;
+    
+    /**
+     * @var string $iphoneImage
+     * @ORM\Column(name="iphoneImage", type="string", length=255, nullable=true)
+    */
+    private $iphoneImage; 
 
     /**
      * @var dateTime $createdAt
@@ -906,4 +912,38 @@ class User implements UserInterface, \Serializable {
         return null === $this->avatar ? null : $this->getUploadRootDir() . '/' . $this->avatar;
     }
 
+     //----------------------------------------------------------
+    public function getIphoneWebPath() {
+        $ext = pathinfo($this->iphoneImage, PATHINFO_EXTENSION);
+        return null === $this->iphoneImage ? null : $this->getUploadDir() . '/' . 'iphone' . '.' . $ext;
+    }
+
+//------------------------------------------------------    
+    public function getAbsoluteIphonePath() {
+        return null === $this->iphoneImage ? null : $this->getUploadRootDir() . '/' . $this->iphoneImage;
+    }
+
+
+    /**
+     * Set iphoneImage
+     *
+     * @param string $iphoneImage
+     * @return User
+     */
+    public function setIphoneImage($iphoneImage)
+    {
+        $this->iphoneImage = $iphoneImage;
+    
+        return $this;
+    }
+
+    /**
+     * Get iphoneImage
+     *
+     * @return string 
+     */
+    public function getIphoneImage()
+    {
+        return $this->iphoneImage;
+    }
 }
