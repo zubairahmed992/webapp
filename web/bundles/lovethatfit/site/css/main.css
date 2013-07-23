@@ -2684,3 +2684,33 @@ padding-bottom: 0px;
     text-align: center;
     padding-top: 10px;
 }
+
+.twitter_wrap{
+    position:absolute;
+    background: #f0f0f0;
+    bottom: 0px;
+    right: 0px;
+    width: 665px;
+    height: 122px;
+    background: url("../images/twitter_wrap_bg.png") repeat-x scroll 0 0px transparent;   
+    
+}
+
+#social_box{
+    float: right;
+    width: 75px;
+    margin-right: 5px;
+    bottom:0px;
+}
+
+.tt_feeds{
+  float: left;
+  padding: 8px 0px 0px 30px;
+  font-size: 0.85em;
+}
+
+#social_box img:first-child{
+    float: left;
+    padding-right: 4px;
+    margin-top: 80px;
+}
