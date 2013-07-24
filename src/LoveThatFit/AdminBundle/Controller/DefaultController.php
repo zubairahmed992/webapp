@@ -35,7 +35,8 @@ class DefaultController extends Controller
                     'brandproduct'=>$ProductByBrand,
                     'totalusers'=>  $this->getAllUserList(),
                     'femaleUsers'=>$this->getUserByGender('f'),
-                    'maleUsers'=>$this->getUserByGender('m'),                   
+                    'maleUsers'=>$this->getUserByGender('m'),
+                    'users'=>$this->getUsersData(),
 		));
         
         
@@ -155,15 +156,23 @@ class DefaultController extends Controller
     
     private function getLastSixMonthSignUps()
     {
-        $em = $this->getDoctrine()->getManager();
-        $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
-         $entity = $this->getDoctrine()
+        $monthly_users_signups = $this->getDoctrine()
                 ->getRepository('LoveThatFitUserBundle:User')
                  ->findUserByMonth();
-		$rec_count = count($UserTypeObj->findUserByMonth());
-        return $rec_count;
+	
+        
+        
+        return $monthly_users_signups;
     }
     
+    private function getUsersData()
+    {
+        $users=array();
+        $six_months_signups=$this->getLastSixMonthSignUps();
+        $users['six_months_signups']=$six_months_signups[0]['total'];
+    return $users;
+        
+    }
     /*
     private function getUserByAgeGroup($startage,$endage)
     {
