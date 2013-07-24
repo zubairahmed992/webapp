@@ -619,26 +619,20 @@ public function userProfileAction()
         }
         if (count($entity) > 0) {
             $user_id = $entity->getId();
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-            $file_name=$_FILES["file"]["name"];
+            $file_name = $_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $newFilename = 'iphone'."." . $ext;
+            $newFilename = 'iphone' . "." . $ext;
             $entity->setIphoneImage($newFilename);
-          
-            if (!is_dir($entity->getAbsoluteIphonePath() )) {
-                    mkdir( $entity->getAbsoluteIphonePath(), 0700);
-                }
-                
-            if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
-                
-               $em->persist($entity);
+            if (!is_dir($entity->getUploadRootDir())) {
+                @mkdir($entity->getUploadRootDir(), 0700);
+            }
+     if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
+
+                $em->persist($entity);
                 $em->flush();
                 //  $image_path = $entity->getWebPath(); 
                 $userinfo = array();
                 $userimage = $entity->getIphoneImage();
-
-                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
                 $userinfo['image'] = $userimage;
                 $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
