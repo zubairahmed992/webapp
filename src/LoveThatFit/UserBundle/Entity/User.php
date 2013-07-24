@@ -757,7 +757,7 @@ class User implements UserInterface, \Serializable {
     //-------------- Image Upload ---------------------
 
 
-    /* public function upload() {
+     public function upload() {
 
       if (null === $this->file) {
       return;
@@ -776,7 +776,8 @@ class User implements UserInterface, \Serializable {
       $this->file = null;
       copy($this->getAbsolutePath(),$this->getUploadRootDir().'/'.$original_name);
 
-      } */
+      } 
+      
     public function writeImageFromCanvas($raw_data) {
         $data = substr($raw_data, strpos($raw_data, ",") + 1);
         $decodedData = base64_decode($data);
