@@ -206,14 +206,13 @@ class UserRepository extends EntityRepository
     
     
   public function findUserByMonth()
-  {
-     $query = $this->getEntityManager()
+  {//SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
+      $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
-     "
+     SELECT COUNT(u.id) as total FROM LoveThatFitUserBundle:User u"
         );
         try {                     
-            return $query->getResult();
+            return $query->getArrayResult();
             
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
