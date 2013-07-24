@@ -2715,6 +2715,117 @@ padding-bottom: 0px;
     margin-top: 80px;
 }
 
+
+
+
+.reg_active .login_tab{
+    float:left;
+}
+
+.reg_active .login_tab a{
+    background: #e2e1e1;
+    text-decoration: none;
+    padding: 7px 8px 7px 8px;    
+    color: #535352;
+    font-size: 0.80em;
+    font-family: MyCustomFontb;
+    text-transform: uppercase;    
+}
+
+.reg_active .login_tab .active{
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;    
+}
+
+.reg_active .login_reg_box{
+   background: url("../images/login_frame.png") no-repeat scroll 0 6px transparent;
+   width: 315px;
+   height: 179px;
+   padding-top: 10px;
+}
+
+.reg_active .login_section span{
+    color: #635F5F;
+    font-size: 0.8em;
+    margin: 0 0 5px;
+    padding: 0 !important; 
+}
+
+
+
+
+.log_active .login_tab{
+    float:left;
+}
+
+.log_active .login_tab a{
+    background: #e2e1e1;
+    text-decoration: none;
+    padding: 7px 8px 7px 8px;    
+    color: #535352;
+    font-size: 0.80em;
+    font-family: MyCustomFontb;
+    text-transform: uppercase;    
+}
+
+.log_active .login_tab .active{
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;    
+}
+
+.log_active .login_reg_box{
+   background: url("../images/login_frame.png") no-repeat scroll 0 6px transparent;
+   width: 315px;
+   height: 179px;
+   padding-top: 10px;
+}
+
+.log_active .login_section span{
+    color: #635F5F;
+    font-size: 0.8em;
+    margin: 0 0 5px;
+    padding: 0 !important; 
+}
+
+
+
+
+.reg_active .reg_wrapper {
+    display:block;
+}
+.reg_active .log_wrapper {
+    display:none;
+}
+.reg_active a#reg_btn {
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;     
+}
+.reg_active a#log_btn {
+    background: #e2e1e1!important;
+    color: #535352!important;
+    border-bottom: 0px solid #c4c934;     
+}
+
+.log_active .reg_wrapper {
+    display:none;
+}
+.log_active .log_wrapper {
+    display:block;
+}
+.log_active a#lg_btn {
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;     
+}
+.log_active a#reg_btn {
+    background: #e2e1e1!important;
+    color: #535352!important;
+    border-bottom: 0px solid #c4c934;     
+
+
 #new_home_bg{
    background: url("../images/new_bg.png") no-repeat scroll right top transparent;
    height: auto;
