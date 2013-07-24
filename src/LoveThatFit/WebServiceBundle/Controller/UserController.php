@@ -633,6 +633,7 @@ public function userProfileAction()
                 //  $image_path = $entity->getWebPath(); 
                 $userinfo = array();
                 $userimage = $entity->getIphoneImage();
+                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
                 $userinfo['image'] = $userimage;
                 $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));

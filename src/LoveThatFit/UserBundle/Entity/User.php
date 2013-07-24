@@ -832,12 +832,12 @@ class User implements UserInterface, \Serializable {
     }
 
 //----------------------------------------------------------
-    protected function getUploadRootDir() {
+    public function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
 //----------------------------------------------------------
-    protected function getUploadDir() {
+    public function getUploadDir() {
         return 'uploads/ltf/users/' . $this->id;
     }
 
