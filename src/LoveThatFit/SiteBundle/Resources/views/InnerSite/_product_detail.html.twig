@@ -4,7 +4,21 @@
 function apply_prod(size_id,product_id,color_id){
     //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
     
+    var apply_img_url = $('.featured_box'+product_id+' a.apply_img').attr('href');
     
+    var prod_type_top = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_top');
+    var prod_type_bottom = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_bottom');
+    var prod_type_dress = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_dress');
+    
+    if(prod_type_top) {
+        //alert(prod_type_top);
+    }
+    if(prod_type_bottom) {
+        //alert(prod_type_bottom);
+    }
+    if(prod_type_dress) {
+        ///alert(prod_type_dress);
+    }
 }
 
 // For Size Combox box
@@ -14,6 +28,7 @@ function select_size(size_id,product_id,color_id)
        base_url=$('#ajax_product_base_url').text();
        $('.featured_box'+product_id+' .transp_list').removeClass("hide").addClass("disp_blk");
         $.ajax({
+            
             url:  base_url+ product_id+ "/" + color_id + "/" +size,
           
             success: function (data) {
