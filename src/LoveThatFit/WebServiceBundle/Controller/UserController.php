@@ -624,14 +624,19 @@ public function userProfileAction()
             $file_name=$_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
             $newFilename = 'iphone'."." . $ext;
-            $entity->setImage($newFilename);
+            $entity->setIphoneImage($newFilename);
+          
+            if (!is_dir($entity->getAbsoluteIphonePath() )) {
+                    mkdir( $entity->getAbsoluteIphonePath(), 0700);
+                }
+                
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
                 
                $em->persist($entity);
                 $em->flush();
                 //  $image_path = $entity->getWebPath(); 
                 $userinfo = array();
-                $userimage = $entity->getImage();
+                $userimage = $entity->getIphoneImage();
 
                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
                 $userinfo['image'] = $userimage;
