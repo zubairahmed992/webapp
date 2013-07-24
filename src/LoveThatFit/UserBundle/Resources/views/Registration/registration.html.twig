@@ -2,7 +2,19 @@
 
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
 
+
+
+
 {% block action_block_content %}
+
+
+<style>
+        
+        .timeline-header{
+        display: none;    
+        }
+        </style>
+
 <section class="reg_blk">
     <div class="action_cnt">
         <div class="steps step_1">  
@@ -120,9 +132,13 @@
     $(document).ready(function(){
        
        $('#lg_btn').click(function(){
-           $(this).parent().removeClass('reg_active');
-          
-           
+           $(this).parent().parent().removeClass('reg_active');
+           $(this).parent().parent().addClass('log_active');           
+       })
+       
+       $('#reg_btn').click(function(){
+           $(this).parent().parent().removeClass('log_active');
+           $(this).parent().parent().addClass('reg_active');           
        })
        
       
@@ -135,10 +151,7 @@
 <div class="twitter_wrap">
 
     <div class="tt_feeds">
-        Feeds will show here.
-
-
-        <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
+               <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
             Tweets by @LoveThatFit</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </div>

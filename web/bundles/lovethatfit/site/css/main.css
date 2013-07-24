@@ -2824,7 +2824,7 @@ padding-bottom: 0px;
     background: #e2e1e1!important;
     color: #535352!important;
     border-bottom: 0px solid #c4c934;     
-
+}
 
 #new_home_bg{
    background: url("../images/new_bg.png") no-repeat scroll right top transparent;
@@ -2874,4 +2874,15 @@ padding-bottom: 0px;
         padding-top: 320px; 
         padding-left:30px;
         overflow: hidden;
-    }   
+    }
+    
+    .tt_feeds iframe{
+        width:600px;
+        float: left;
+        max-width: 600px;
+        height: 100px;
+    }
+  
+    .timeline-header{
+        display: none!important;
+    }
