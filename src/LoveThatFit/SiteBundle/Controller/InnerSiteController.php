@@ -25,6 +25,12 @@ class InnerSiteController extends Controller {
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig');
     }
 
+        //-------------------------------------------------------------------------
+
+    public function homeAction() {
+        return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig');
+    }
+
 ////////////////////////////////// Product Slider /////////////////////////////////////////////////////////////////
     public function productsAction($gender, $page_number = 0, $limit = 0) {
         $em = $this->getDoctrine()->getManager();

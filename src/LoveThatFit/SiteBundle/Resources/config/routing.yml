@@ -2,6 +2,10 @@ anonymous_user_home:
     pattern:  /home
     defaults: { _controller: LoveThatFitUserBundle:Registration:registration}
 
+inner_site_home:
+    pattern:  /inner_site/home
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:home}
+
 inner_site_index:
     pattern:  /inner_site/index
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index}
