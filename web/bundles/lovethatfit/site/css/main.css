@@ -193,7 +193,7 @@ body {
 	position:relative;
 }
 .left_column .logo {
-    padding: 40px 0 40px 0;
+    padding: 40px 0px 20px 0px;
     text-align: center;
 }
 .footer {
@@ -2691,8 +2691,8 @@ padding-bottom: 0px;
     bottom: 0px;
     right: 0px;
     width: 665px;
-    height: 122px;
-    background: url("../images/twitter_wrap_bg.png") repeat-x scroll 0 0px transparent;   
+    height: 140px;
+    background: url("../images/twitter_wrap_bg.png") repeat scroll 0 0px transparent;   
     
 }
 
@@ -2705,14 +2705,14 @@ padding-bottom: 0px;
 
 .tt_feeds{
   float: left;
-  padding: 8px 0px 0px 30px;
+  padding: 3px 0px 0px 30px;
   font-size: 0.85em;
 }
 
 #social_box img:first-child{
     float: left;
     padding-right: 4px;
-    margin-top: 80px;
+    margin-top: 98px;
 }
 
 
@@ -2742,7 +2742,7 @@ padding-bottom: 0px;
    background: url("../images/login_frame.png") no-repeat scroll 0 6px transparent;
    width: 315px;
    height: 179px;
-   padding-top: 10px;
+   padding-top: 20px;
 }
 
 .reg_active .login_section span{
@@ -2877,12 +2877,19 @@ padding-bottom: 0px;
     }
     
     .tt_feeds iframe{
-        width:600px;
+        width:550px;
         float: left;
         max-width: 600px;
-        height: 100px;
+        height: 130px;
     }
   
-    .timeline-header{
-        display: none!important;
-    }
+    .tt_feeds iframe.timeline-header {
+    border-width: 0 0 1px;
+    box-shadow: 0 0 0 -3px transparent;
+    padding: 62px!important;
+    transition: box-shadow 0.3s ease-out 0s;
+}
+
+.timeline{
+    background-color: none!important;
+}

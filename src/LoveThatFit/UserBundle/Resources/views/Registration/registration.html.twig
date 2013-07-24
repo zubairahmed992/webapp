@@ -8,13 +8,6 @@
 {% block action_block_content %}
 
 
-<style>
-        
-        .timeline-header{
-        display: none;    
-        }
-        </style>
-
 <section class="reg_blk">
     <div class="action_cnt">
         <div class="steps step_1">  
@@ -72,7 +65,7 @@
 
                                                 <div class="login_section">
                                                     <span>Already Registered?</span>
-                                                    <a href="{{path('login')}}">LOGIN NOW!</a>
+                                                    <a href="javascript:">LOGIN NOW!</a>
                                                 </div>
                                             </form>
                                         </div>
@@ -114,7 +107,7 @@
                                                 </form>
                                                 <ul class="row with_sep">
                                                     <li><a href="{{path('forgot_password_form')}}">forgot</a></li>
-                                                    <li><a href="{{path('registration')}}">create</a></li>
+                                                    <li id="crt_reg"><a href="javascript:">create</a></li>
                                                 </ul>
 
                                             </div>
@@ -129,18 +122,37 @@
 
 
 <script>
+    function active_login_blk(){
+        $(".main_log_box").removeClass('reg_active');
+        $(".main_log_box").addClass('log_active');
+    }
+    function active_reg_blk(){
+        $(".main_log_box").removeClass('log_active');
+        $(".main_log_box").addClass('reg_active');
+    }
     $(document).ready(function(){
        
        $('#lg_btn').click(function(){
-           $(this).parent().parent().removeClass('reg_active');
-           $(this).parent().parent().addClass('log_active');           
+            active_login_blk();        
        })
        
        $('#reg_btn').click(function(){
-           $(this).parent().parent().removeClass('log_active');
-           $(this).parent().parent().addClass('reg_active');           
+           active_reg_blk();
+       })
+              
+        $('.login_section a').click(function(){
+            active_login_blk();
        })
        
+        $('#crt_reg a').click(function(){
+            active_reg_blk();
+       })
+       
+       
+       
+       
+       
+      
       
     })
     
@@ -161,6 +173,57 @@
     </div>
 
 </div>
+
+<script>
+var hideTwitterAttempts = 0;
+function hideTwitterBoxElements() {
+    setTimeout( function() {
+        if ( $('[id*=twitter]').length ) {
+        $('[id*=twitter]').each( function(){
+            var ibody = $(this).contents().find( 'body' );
+
+            if ( ibody.find( '.timeline .stream .h-feed li.tweet' ).length ) {
+            ibody.find( '.customisable-border' ).css( 'border', 0 );
+            ibody.find( '.timeline' ).css( 'background', 'none' ); //theme: shell: background:
+            ibody.find( 'ol.h-feed' ).css( 'background-color', 'none' ); //theme: tweets: background:
+            ibody.find( 'ol.h-feed' ).css( 'border-radius', 'none' );
+            ibody.find( 'li.tweet' ).css( 'border-bottom', '1px dotted #FFFFFF' ); //theme: tweets: color:
+            ibody.find( 'li.tweet' ).css( 'color', '#666' ); //theme: tweets: color:
+            ibody.find( '.customisable:link' ).css( 'color', '#000' ); //theme: tweets: links:
+            ibody.find( '.footer' ).css( 'visibility', 'hidden' ); //hide reply, retweet, favorite images
+            ibody.find( '.footer' ).css( 'min-height', 0 ); //hide reply, retweet, favorite images
+            ibody.find( '.footer' ).css( 'height', 0 ); //hide reply, retweet, favorite images
+            ibody.find( '.avatar' ).css( 'height', 0 ); //hide avatar
+            ibody.find( '.timeline-header' ).css( 'padding', 0 ); //hide avatar
+            ibody.find( '.twitter-follow-button' ).css( 'visibility', 'hidden' ); //hide avatar
+            ibody.find( 'time' ).css( 'visibility', 'hidden' ); //hide avatar
+            ibody.find( '.tweet' ).css( 'padding-bottom', '5px' ); //hide avatar
+           
+            ibody.find( '.avatar' ).css( 'width', 0 ); //hide avatar
+            ibody.find( '.e-entry-title' ).css( 'font-size', '12px' ); //hide avatar
+            ibody.find( '.p-nickname' ).css( 'font-size', 0 ); //hide @name of tweet
+            ibody.find( '.p-nickname' ).css( 'visibility', 'hidden' ); //hide @name of tweet
+            ibody.find( '.e-entry-content' ).css( 'margin', '-25px 0px 0px 0px' ); //move tweet up (over @name of tweet)
+            ibody.find( '.dt-updated' ).css( 'color', '#000' ); //theme: tweets: links:
+            ibody.find( '.full-name' ).css( 'margin', '0px 0px 0px -35px' ); //move name of tweet to left (over avatar)
+            ibody.find( 'h1.summary' ).replaceWith( '<h1 class="summary"><a class="customisable-highlight" title="Tweets from fundSchedule" href="https://twitter.com/fundschedule" style="color: #FFFFFF; display:none;">fundSchedule</a></h1>' ); //replace Tweets text at top
+            ibody.find( '.p-name' ).css( 'color', '#000' ); //theme: tweets: links:
+            }
+            else {
+                $(this).hide();
+            }
+        });
+        }
+        hideTwitterAttempts++;
+        if ( hideTwitterAttempts < 3 ) {
+            hideTwitterBoxElements();
+        }
+    }, 1500);
+}
+
+// somewhere in your code after html page load
+hideTwitterBoxElements();
+</script>
 {% endblock %}
 {% block how_it_works_content %}
             {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
