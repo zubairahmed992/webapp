@@ -193,7 +193,7 @@ body {
 	position:relative;
 }
 .left_column .logo {
-    padding: 40px 0 40px 0;
+    padding: 40px 0px 20px 0px;
     text-align: center;
 }
 .footer {
@@ -2691,8 +2691,8 @@ padding-bottom: 0px;
     bottom: 0px;
     right: 0px;
     width: 665px;
-    height: 122px;
-    background: url("../images/twitter_wrap_bg.png") repeat-x scroll 0 0px transparent;   
+    height: 140px;
+    background: url("../images/twitter_wrap_bg.png") repeat scroll 0 0px transparent;   
     
 }
 
@@ -2705,14 +2705,125 @@ padding-bottom: 0px;
 
 .tt_feeds{
   float: left;
-  padding: 8px 0px 0px 30px;
+  padding: 3px 0px 0px 30px;
   font-size: 0.85em;
 }
 
 #social_box img:first-child{
     float: left;
     padding-right: 4px;
-    margin-top: 80px;
+    margin-top: 98px;
+}
+
+
+
+
+.reg_active .login_tab{
+    float:left;
+}
+
+.reg_active .login_tab a{
+    background: #e2e1e1;
+    text-decoration: none;
+    padding: 7px 8px 7px 8px;    
+    color: #535352;
+    font-size: 0.80em;
+    font-family: MyCustomFontb;
+    text-transform: uppercase;    
+}
+
+.reg_active .login_tab .active{
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;    
+}
+
+.reg_active .login_reg_box{
+   background: url("../images/login_frame.png") no-repeat scroll 0 6px transparent;
+   width: 315px;
+   height: 179px;
+   padding-top: 20px;
+}
+
+.reg_active .login_section span{
+    color: #635F5F;
+    font-size: 0.8em;
+    margin: 0 0 5px;
+    padding: 0 !important; 
+}
+
+
+
+
+.log_active .login_tab{
+    float:left;
+}
+
+.log_active .login_tab a{
+    background: #e2e1e1;
+    text-decoration: none;
+    padding: 7px 8px 7px 8px;    
+    color: #535352;
+    font-size: 0.80em;
+    font-family: MyCustomFontb;
+    text-transform: uppercase;    
+}
+
+.log_active .login_tab .active{
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;    
+}
+
+.log_active .login_reg_box{
+   background: url("../images/login_frame.png") no-repeat scroll 0 6px transparent;
+   width: 315px;
+   height: 179px;
+   padding-top: 10px;
+}
+
+.log_active .login_section span{
+    color: #635F5F;
+    font-size: 0.8em;
+    margin: 0 0 5px;
+    padding: 0 !important; 
+}
+
+
+
+
+.reg_active .reg_wrapper {
+    display:block;
+}
+.reg_active .log_wrapper {
+    display:none;
+}
+.reg_active a#reg_btn {
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;     
+}
+.reg_active a#log_btn {
+    background: #e2e1e1!important;
+    color: #535352!important;
+    border-bottom: 0px solid #c4c934;     
+}
+
+.log_active .reg_wrapper {
+    display:none;
+}
+.log_active .log_wrapper {
+    display:block;
+}
+.log_active a#lg_btn {
+    background: #c4c934!important;
+    color: #fff!important;
+    border-bottom: 2px solid #c4c934;     
+}
+.log_active a#reg_btn {
+    background: #e2e1e1!important;
+    color: #535352!important;
+    border-bottom: 0px solid #c4c934;     
 }
 
 #new_home_bg{
@@ -2763,4 +2874,22 @@ padding-bottom: 0px;
         padding-top: 320px; 
         padding-left:30px;
         overflow: hidden;
-    }   
+    }
+    
+    .tt_feeds iframe{
+        width:550px;
+        float: left;
+        max-width: 600px;
+        height: 130px;
+    }
+  
+    .tt_feeds iframe.timeline-header {
+    border-width: 0 0 1px;
+    box-shadow: 0 0 0 -3px transparent;
+    padding: 62px!important;
+    transition: box-shadow 0.3s ease-out 0s;
+}
+
+.timeline{
+    background-color: none!important;
+}

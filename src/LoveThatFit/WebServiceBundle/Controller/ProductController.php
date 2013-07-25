@@ -24,6 +24,7 @@ class ProductController extends Controller {
 
  
     public function brandListSizeChartAction() {
+       
         $total_record = count($this->getBrandArray());
         $data = array();
         $data['data'] = $this->getBrandArray();
@@ -38,18 +39,7 @@ class ProductController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         
-        #------------------------------Authentication of Token--------------------------------------------#
-         $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
-        if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
-            if ($tokenResponse['status'] == False) {
-                return new Response(json_encode($tokenResponse));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
-        }
- #-------------------------------End Of Authentication Token--------------------------------------#
+        
         
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $size_chart = $size_chart_helper->sizeChartList($request_array);
@@ -108,6 +98,19 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
+        
+         #------------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
         
         $id = $request_array['id'];
         $type = $request_array['type'];
@@ -194,7 +197,18 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-        
+         #------------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
         $product_id = $request_array['id'];
         $em = $this->getDoctrine()->getManager();
         
@@ -263,6 +277,21 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
+        
+         #------------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
+        
+        
         $user_id = $request_array['user_id'];
         $product_id = $request_array['product_id'];
         

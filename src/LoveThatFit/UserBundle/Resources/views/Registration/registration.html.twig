@@ -1,91 +1,86 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+
+
+
+
 {% block action_block_content %}
+
+
 <section class="reg_blk">
     <div class="action_cnt">
         <div class="steps step_1">  
             <h2>Let's Get Started!</h2>
             <p>Try Clothes On. See Look, Fit &amp; Size. Social.</p>
-            <div class="log_wrapper">
+            <div class="main_log_box reg_active">
+            
                 <div class="login_tab">
-                    <a href="#" class="active" id="reg_btn">Register</a>
+                    <a href="#" id="reg_btn">Register</a>
                     <a href="#" id="lg_btn">Login</a>
                 </div>
-                <div class="clr_bth"></div>
-
-
-                <div class="login_reg_box" id="reg_wrap">
-                    <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
-                        <div class="form_vld_error">
-{{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
-                            </div>
-
-                            <div class="frm_ele">
-                       {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
-                       {{ form_errors(form.email) }}
+                
+                <div class="reg_wrapper">
+                    <div class="clr_bth"></div>
+                    <div class="login_reg_box">
+                        <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
+                            <div class="form_vld_error">
+    {{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
                                 </div>
 
                                 <div class="frm_ele">
-                        {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
+                           {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                           {{ form_errors(form.email) }}
                                     </div>
 
                                     <div class="frm_ele">
-                        {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
-                        {{ form_errors(form.password.password) }}
-                        {{ form_errors(form.password.confirm) }}
+                            {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
                                         </div>
+
                                         <div class="frm_ele">
-                        {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
-                        {{ form_errors(form.zipcode) }}
+                            {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
+                            {{ form_errors(form.password.password) }}
+                            {{ form_errors(form.password.confirm) }}
                                             </div>
-
-                                            <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
-                                                <div class="frm_ele radio_buts">
-
-                                                    <div id="gender_label">Gender</div>
-                            {{ form_widget(form.gender) }} 
-
-                            {{ form_errors(form.gender) }}
+                                            <div class="frm_ele">
+                            {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
+                            {{ form_errors(form.zipcode) }}
                                                 </div>
-                                            </div>
 
-                                            <div style="clear:both;"></div>
-                    {{ form_rest(form) }}
+                                                <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
+                                                    <div class="frm_ele radio_buts">
 
-                                            <input class="reg_next_step" type="submit" value="Register" />
+                                                        <div id="gender_label">Gender</div>
+                                {{ form_widget(form.gender) }} 
+
+                                {{ form_errors(form.gender) }}
+                                                    </div>
+                                                </div>
+
+                                                <div style="clear:both;"></div>
+                        {{ form_rest(form) }}
+
+                                                <input class="reg_next_step" type="submit" value="Register" />
 
 
-                                            <div class="login_section">
-                                                <span>Already Registered?</span>
-                                                <a href="{{path('login')}}">LOGIN NOW!</a>
-                                            </div>
-                                        </form>
-                                    </div>
+                                                <div class="login_section">
+                                                    <span>Already Registered?</span>
+                                                    <a href="javascript:">LOGIN NOW!</a>
+                                                </div>
+                                            </form>
+                                        </div>
+               </div>
 
- <!--/Login form start-->
- <div class="login_reg_box" id="login_wrap" style="display: none;">
+                <!--/Login form start-->   
+                <div class="log_wrapper">
+                                    
+                                    <div class="clr_bth"></div>
 
-        <script>
-function formValidates()
-{
-    var username=document.getElementById('email').value;
-    var password=document.getElementById('password').value;
-    if((username=='' || username=='email') && (password=='' || password=='password'))
-        {
-           document.getElementById('error_content1').style.display="block";
-           return false;
-        }else
-            {
-                return true;
-            }
-}
-    
-</script>                                
-                                        
-                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return formValidates()">
+
+                                    <div class="login_reg_box">
+                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
                                             <div class="frm_ele">            
-                                                <input type="text" id="email" name="_username" placeholder="Email" />
+                                                <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
                                             </div>
                                             <div class="frm_ele">
                                                 <input type="password" id="password" name="_password" placeholder="Password" />
@@ -95,7 +90,7 @@ function formValidates()
                                                              Enter Valid User name and password
                                                          </div>
                                                     </div>
-                                                    {% if error is defined and error%}
+                                                    {% if error %}
                                                     <div class="login_error" >          
                                                         <div id="error_content">
                                                         {{ error.message  | replace({"Bad credentials": "Invalid Log-in credentials"})}}
@@ -110,39 +105,55 @@ function formValidates()
                                                         <input id="sbmt_bnt" type="submit" value="Login" class="reg_next_step" />
                                                     </div>
                                                 </form>
-
-
                                                 <ul class="row with_sep">
                                                     <li><a href="{{path('forgot_password_form')}}">forgot</a></li>
-
-                                                    <li><a href="{{path('registration')}}">create</a></li>
+                                                    <li id="crt_reg"><a href="javascript:">create</a></li>
                                                 </ul>
-<!--/Login form End-->
+
                                             </div>
-                                        </div>
 
-
+                         </div>
+                </div>
+                                        <!--/Login form End-->   
 
                                         <!--/.sttp_1--></div>
                                     <!--/.action_cnt--></div>
                                 <!--/.action_blk--></section>
+
+
 <script>
+    function active_login_blk(){
+        $(".main_log_box").removeClass('reg_active');
+        $(".main_log_box").addClass('log_active');
+    }
+    function active_reg_blk(){
+        $(".main_log_box").removeClass('log_active');
+        $(".main_log_box").addClass('reg_active');
+    }
     $(document).ready(function(){
        
        $('#lg_btn').click(function(){
-            $('#login_wrap').show();
-            $('#reg_wrap').hide();
-            $('.login_tab a').removeClass("active");
-            $('#lg_btn').addClass("active");
+            active_login_blk();        
        })
        
        $('#reg_btn').click(function(){
-            $('#reg_wrap').show();
-            $('#login_wrap').hide();
-             $('#lg_btn').removeClass("active");
-            $('#reg_btn').addClass("active");
+           active_reg_blk();
        })
-    
+              
+        $('.login_section a').click(function(){
+            active_login_blk();
+       })
+       
+        $('#crt_reg a').click(function(){
+            active_reg_blk();
+       })
+       
+       
+       
+       
+       
+      
+      
     })
     
 </script>
@@ -152,10 +163,7 @@ function formValidates()
 <div class="twitter_wrap">
 
     <div class="tt_feeds">
-        Feeds will show here.
-
-
-        <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
+               <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
             Tweets by @LoveThatFit</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </div>
@@ -165,11 +173,58 @@ function formValidates()
     </div>
 
 </div>
+
+<script>
+var hideTwitterAttempts = 0;
+function hideTwitterBoxElements() {
+    setTimeout( function() {
+        if ( $('[id*=twitter]').length ) {
+        $('[id*=twitter]').each( function(){
+            var ibody = $(this).contents().find( 'body' );
+
+            if ( ibody.find( '.timeline .stream .h-feed li.tweet' ).length ) {
+            ibody.find( '.customisable-border' ).css( 'border', 0 );
+            ibody.find( '.timeline' ).css( 'background', 'none' ); //theme: shell: background:
+            ibody.find( 'ol.h-feed' ).css( 'background-color', 'none' ); //theme: tweets: background:
+            ibody.find( 'ol.h-feed' ).css( 'border-radius', 'none' );
+            ibody.find( 'li.tweet' ).css( 'border-bottom', '1px dotted #FFFFFF' ); //theme: tweets: color:
+            ibody.find( 'li.tweet' ).css( 'color', '#666' ); //theme: tweets: color:
+            ibody.find( '.customisable:link' ).css( 'color', '#000' ); //theme: tweets: links:
+            ibody.find( '.footer' ).css( 'visibility', 'hidden' ); //hide reply, retweet, favorite images
+            ibody.find( '.footer' ).css( 'min-height', 0 ); //hide reply, retweet, favorite images
+            ibody.find( '.footer' ).css( 'height', 0 ); //hide reply, retweet, favorite images
+            ibody.find( '.avatar' ).css( 'height', 0 ); //hide avatar
+            ibody.find( '.timeline-header' ).css( 'padding', 0 ); //hide avatar
+            ibody.find( '.twitter-follow-button' ).css( 'visibility', 'hidden' ); //hide avatar
+            ibody.find( 'time' ).css( 'visibility', 'hidden' ); //hide avatar
+            ibody.find( '.tweet' ).css( 'padding-bottom', '5px' ); //hide avatar
+           
+            ibody.find( '.avatar' ).css( 'width', 0 ); //hide avatar
+            ibody.find( '.e-entry-title' ).css( 'font-size', '12px' ); //hide avatar
+            ibody.find( '.p-nickname' ).css( 'font-size', 0 ); //hide @name of tweet
+            ibody.find( '.p-nickname' ).css( 'visibility', 'hidden' ); //hide @name of tweet
+            ibody.find( '.e-entry-content' ).css( 'margin', '-25px 0px 0px 0px' ); //move tweet up (over @name of tweet)
+            ibody.find( '.dt-updated' ).css( 'color', '#000' ); //theme: tweets: links:
+            ibody.find( '.full-name' ).css( 'margin', '0px 0px 0px -35px' ); //move name of tweet to left (over avatar)
+            ibody.find( 'h1.summary' ).replaceWith( '<h1 class="summary"><a class="customisable-highlight" title="Tweets from fundSchedule" href="https://twitter.com/fundschedule" style="color: #FFFFFF; display:none;">fundSchedule</a></h1>' ); //replace Tweets text at top
+            ibody.find( '.p-name' ).css( 'color', '#000' ); //theme: tweets: links:
+            }
+            else {
+                $(this).hide();
+            }
+        });
+        }
+        hideTwitterAttempts++;
+        if ( hideTwitterAttempts < 3 ) {
+            hideTwitterBoxElements();
+        }
+    }, 1500);
+}
+
+// somewhere in your code after html page load
+hideTwitterBoxElements();
+</script>
 {% endblock %}
 {% block how_it_works_content %}
             {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
 {% endblock %}
-
-
-
-
