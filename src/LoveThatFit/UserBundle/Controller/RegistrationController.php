@@ -100,13 +100,7 @@ class RegistrationController extends Controller {
 //------------------------- Registration Process ------------------------------------------
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
 
-
-    public function registrationAction() {
-
-        //------------------   LOgin form
-        $request = $this->getRequest();
-        $session = $request->getSession();
-
+    private function getRegistrationSecurityContext($request, $session) {
         // get the login error if there is one
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(
@@ -117,13 +111,33 @@ class RegistrationController extends Controller {
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-//------------------------ Registration form
+        $referer=$request->headers->get('referer');
+        $url_bits = explode('/', $referer);
+        $referer = $url_bits[sizeof($url_bits)-1];
+
+        
+        return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'error' => $error,
+            'referer' => $referer,
+        );
+    }
+
+    public function registrationAction() {
+
+        //------------------   LOgin form
+        
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $security_context=$this->getRegistrationSecurityContext($request, $session);
+        
         $entity = $this->get('user.helper.user')->createNewUser();
         $form = $this->createForm(new RegistrationType(), $entity);
         return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                     'form' => $form->createView(),
-                    'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                    'error' => $error,
+                    'last_username' => $security_context['last_username'],
+                    'error' => $security_context['error'],
+            'referer' => $security_context['referer'],
+            
                 ));
     }
 
@@ -151,8 +165,16 @@ class RegistrationController extends Controller {
                 $entity->setPassword($password);
 
                 $em = $this->getDoctrine()->getManager();
-
+                $measurement = new Measurement();
+                $entity->setMeasurement($measurement);
+                
+                
                 $em->persist($entity);
+                $em->flush();
+
+                // Adding Measurement record for the user for the later usage
+                
+                /*$em->persist($entity);
                 $em->flush();
 
                 // Adding Measurement record for the user for the later usage
@@ -160,7 +182,7 @@ class RegistrationController extends Controller {
                 $measurement->setUser($entity);
                 $em->persist($measurement);
                 $em->flush();
-
+*/
                 //Login after registration, the rest of the steps are secured for logged In users access only
                 $this->getLoggedIn($entity);
 
@@ -182,9 +204,21 @@ class RegistrationController extends Controller {
                     ));
             } else {
 
+                                //--------------login form
+                $request = $this->getRequest();
+                $session = $request->getSession();
+                $security_context=$this->getRegistrationSecurityContext($request, $session);
+
+                //---------------------------
+
                 return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                             'form' => $form->createView(),
-                            'entity' => $entity));
+                            'entity' => $entity,
+                                        'last_username' => $security_context['last_username'],
+                    'error' => $security_context['error'],
+            'referer' => 'registration',
+
+                    ));
             }
         } catch (\Doctrine\DBAL\DBALException $e) {
 

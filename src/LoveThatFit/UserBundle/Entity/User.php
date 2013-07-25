@@ -579,7 +579,7 @@ class User implements UserInterface, \Serializable {
      */
     public function setMeasurement(\LoveThatFit\UserBundle\Entity\Measurement $measurement = null) {
         $this->measurement = $measurement;
-
+        $measurement->setUser($this);
         return $this;
     }
 
