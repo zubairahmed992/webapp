@@ -39,8 +39,6 @@ class ProductController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         
-        
-        
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $size_chart = $size_chart_helper->sizeChartList($request_array);
         if ($size_chart) {
@@ -99,7 +97,7 @@ class ProductController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         
-         #------------------------------Authentication of Token--------------------------------------------#
+ #------------------------------Authentication of Token---------------------------------------------#
          $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
@@ -227,7 +225,7 @@ class ProductController extends Controller {
         
         $product_color_array = array();
 
-        #-- FOR COLORS AND SIZE----------
+        #-- FOR COLORS AND SIZE----------#
         if ($count_rec > 0) {
 
             $product_colors = $product->getProductColors();
@@ -277,9 +275,10 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-        
-         #------------------------------Authentication of Token--------------------------------------------#
-         $user = $this->get('user.helper.user');
+
+
+#------------------------------Authentication of Token--------------------------------------------#
+        $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
