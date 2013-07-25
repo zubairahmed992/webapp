@@ -1,0 +1,48 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% block profile_heading %}
+<h1>Favorites</h1>
+        {% endblock %}
+{% block profile_section %}
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">        
+        {{ app.session.flash('warning') }}
+        </div>   
+{% endif %}      
+{% if app.session.hasFlash('success') %}
+  <div class="success_alert">   
+    {{ app.session.flash('success') }}
+   </div>   
+{% endif %}
+<div id="fav_lst">
+    <div class="fav_list_hd">Item</div>
+    <div class="fav_list_hd">Brand</div>    
+    <div class="fav_list_hd">Item Size</div>
+    <div class="fav_list_hd">Item color</div>
+    <div class="fav_list_hd">Item image</div>
+    <div class="fav_list_hd">Delete</div>
+</div>
+{%for p in product%}
+{%for pi in p.productItems%}
+<div id="favourite_list">
+<div id="fav_listing">
+<div class="f_list">{{p.name}}</div>
+<div class="f_list">{{p.brand.name}}</div>
+<div class="f_list">{{pi.productSize.title}}</div>
+<div class="f_list">{{pi.productColor.title}}</div>
+{%if(pi.WebPath!='')%}
+<div class="f_list"><img width="35" height="40" src="{{asset(pi.WebPath)}}" class="prod_dress ui-draggable"></div>
+{%else%}
+    <div class="f_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+{%endif%}
+    
+
+</div>
+    
+</div>
+
+
+
+
+{%endfor%}
+{%endfor%}
+{% endblock %}

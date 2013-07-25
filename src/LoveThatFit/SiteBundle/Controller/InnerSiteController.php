@@ -159,6 +159,16 @@ class InnerSiteController extends Controller {
         ));
     }
 
+    //----------------------------------------------------------------------------------    
+    public function productsMostLikedAction($page_number = 0, $limit = 0) {       
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostLikedProducts($page_number, $limit);
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_most_liked_products.html.twig', array('product' => $entity));
+    }
+
+//----------------------------------------------------------------------------------  
+    
+    
 //----------------------------------------------------------------------------------    
     public function productsByMyClosetAction($page_number = 0, $limit = 0) {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();

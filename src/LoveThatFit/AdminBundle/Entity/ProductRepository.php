@@ -567,4 +567,19 @@ class ProductRepository extends EntityRepository {
         }
     }
     
+    public function findMostLikedProduct() {
+            $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT p,pi,ps,pc FROM LoveThatFitAdminBundle:Product p
+     JOIN p.product_items pi
+     JOIN pi.product_color pc
+     JOIN pi.product_size ps
+     JOIN pi.users u");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 }
