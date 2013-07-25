@@ -2,6 +2,9 @@
 
 namespace LoveThatFit\UserBundle\Entity;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
 
 class UserRepository extends EntityRepository
 {
@@ -203,9 +206,33 @@ class UserRepository extends EntityRepository
             return null;
         }
     }
+ 
+      //----------------------------------------------------------------------------------------
+  
+    public function findUserByMonth()
+  {//SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
+    
+          
+    $rsm = new ResultSetMapping();
+    $em = $this->getEntityManager();
+  //  $query = $em->createNativeQuery("SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM ltf_users us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M')", $rsm);
+  
+    $rsm->addEntityResult('LoveThatFitUserBundle:User', 'us');
+    //$rsm->addFieldResult('us', 'created_at', 'created_at');
+    $rsm->addFieldResult('us', 'id', 'id');
+
+    $query = $this->getEntityManager()
+                        ->createNativeQuery("
+     SELECT COUNT(us.id) as total FROM ltf_users us", $rsm
+        );
+    return $query->getResult();
+         
+  }
+    //----------------------------------------------------------------------------------------
+ 
     
     
-  public function findUserByMonth()
+  public function _findUserByMonth()
   {//SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
       $query = $this->getEntityManager()
                         ->createQuery("
