@@ -77,12 +77,9 @@ class UserController extends Controller {
                 if($measurement)
                 {
                 $userinfo['weight'] = $measurement->getWeight();
-                
                 $userinfo['height'] = $measurement->getHeight();
-               
                 $userinfo['waist'] = $measurement->getWaist();
                 $userinfo['hip'] = $measurement->getHip();
-
                 $userinfo['bust'] = $measurement->getBust();
                 $userinfo['chest'] = $measurement->getChest();
                 $userinfo['neck'] = $measurement->getNeck();
@@ -105,11 +102,10 @@ class UserController extends Controller {
                 $userinfo['iphone_shoulder_height'] = 0;
                 $userinfo['iphone_outseam'] = 0;
                 }    
-          if(!$userinfo['back'])
-                   {
-                       $userinfo['back']=15.5;
-                   }   
-            if (!$userinfo['iphone_shoulder_height']) {
+                if (!$userinfo['back']) {
+                    $userinfo['back'] = 15.5;
+                }
+                if (!$userinfo['iphone_shoulder_height']) {
                         $userinfo['iphone_shoulder_height'] = 150;
                     }
                  
@@ -151,14 +147,11 @@ class UserController extends Controller {
 
     $entity=$user->editProfileServiceHelper($decoded);   
        // return new response(json_encode($entity));
-    if($entity)
-    {
-    return new Response(json_encode(array('Message'=>'Update Sucessfully')));
-    }
-    else 
-   {
-     return new Response(json_encode(array('Message'=>'We can not find user')));
-   }
+    if ($entity) {
+            return new Response(json_encode(array('Message' => 'Update Sucessfully')));
+        } else {
+            return new Response(json_encode(array('Message' => 'We can not find user')));
+        }
           
 }        
 #------------------------------End of Edit Profile---------------------------------------------------#

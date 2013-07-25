@@ -7,205 +7,211 @@
 
 {% block body %}
 <div class="p_listing">
-<h1>Dashboard</h1>
+    <h1>Dashboard</h1>
 {%if(totalproducts>0)%}
-<table width="100%" border="0" class="dashboard_tbl">
+    <table width="100%" border="0" class="dashboard_tbl">
         <tr>
        	    <td class="hd_bdr"><h4 style="float:left;">Products</h4></td>
         </tr>
-       
+
         <tr>
             <td class="mainhd">Total Products:{{totalproducts}}</td>
         </tr>
-        
-        
+
+
         <tr>
             <td>
                 <table width="100%">
                     <td width="49%">
                         <table width="100%">
                             <tr>
-            <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Brand</h4></td>
-        </tr>
-        
-        
-        <tr>
-            <td valign="top" class="mainhd">
-        
-                <table width="100%">
-                    <tr>
-                        <td>Brand Name</td>
-                        <td>Qty</td>
-                        <td>%</td>
-                        
-                    </tr>
+                                <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Brand</h4></td>
+                            </tr>
+
+
+                            <tr>
+                                <td valign="top" class="mainhd">
+
+                                    <table width="100%">
+                                        <tr>
+                                            <td>Brand Name</td>
+                                            <td>Qty</td>
+                                            <td>%</td>
+
+                                        </tr>
 
 {%for p in brandproduct%}
                     {%set percent=100*p.brand/totalproducts%}
-                
-                
-                <tr>
-                        <td>{{p.name}}</td>
-                        <td>{{p.brand}}</td>
-                        <td>{{percent|number_format}}%</td>
-                    </tr>              
-                    
-                    
+
+
+                                        <tr>
+                                            <td>{{p.name}}</td>
+                                            <td>{{p.brand}}</td>
+                                            <td>{{percent|number_format}}%</td>
+                                        </tr>              
+
+
         {%endfor%}  
-                     </table>
-                    
-                </td>
-            <td align="center"> <canvas id="piecanvas"  height="300" width="300"></canvas>
-                    <script>
-                        var pieData = [
-                            {%for p in brandproduct%}
-                            {
-                                value: {{p.brand}},
-                                color: "#E0E4CC",
-                                label: '{{p.name}} {"{{p.brand}}"}',
-                                labelColor: '#1F1B33'
-                            },
-                              {%endfor%}
-                        ];
-                        var myPie = new Chart(document.getElementById("piecanvas").getContext("2d")).Pie(pieData, {
-                            animationSteps: 100,
-                            animationEasing: 'easeInOutQuart'
-                        });
+                                    </table>
 
-                        </script></td>
-        
-        </tr>
-                        
+                                </td>
+                                <td align="center"> <canvas id="piecanvas"  height="300" width="300"></canvas>
+                                    <script>
+                                        var pieData = [
+                                            {%for p in brandproduct%}
+                                            {
+                                                value: {{p.brand}},
+                                                color: "#E0E4CC",
+                                                label: '{{p.name}} {"{{p.brand}}"}',
+                                                labelColor: '#1F1B33'
+                                            },
+                                              {%endfor%}
+                                        ];
+                                        var myPie = new Chart(document.getElementById("piecanvas").getContext("2d")).Pie(pieData, {
+                                            animationSteps: 100,
+                                            animationEasing: 'easeInOutQuart'
+                                        });
+
+                                        </script></td>
+
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                        <td></td>
+
+                        <td width="49%" align="right">
+
+
+                            <table width="100%">
+                                <tr>
+                                    <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Clothing Type</h4></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" class="mainhd">
+
+
+
+                                        <table width="100%">
+
+                                            <tr>
+                                                <td>Type</td>
+                                                <td>Qty</td>
+                                                <td>%</td>
+
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>Top</td>
+                                                <td>{{topProduct}}</td>
+                                                <td>{%set toppercent=100*topProduct/totalproducts%} {{toppercent|number_format}}%</td>
+
+                                            </tr> 
+
+                                            <tr>
+                                                <td>Bottom</td>
+                                                <td>{{bottomProduct}}</td>
+                                                <td>{%set bottompercent=100*bottomProduct/totalproducts%} {{bottompercent|number_format}}%</td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>Dress</td>
+                                                <td>{{dressProduct}}</td>
+                                                <td>{%set dresspercent=100*dressProduct/totalproducts%} {{dresspercent|number_format}}%</td>
+
+                                            </tr>
+
+
+                                        </table>                    
+
+
+                                    </td>
+                                    <td valign="top" align="center">
+                                        <canvas id="clothingtypecanvas"  height="300" width="300"></canvas>
+                                        <script>
+                                            var clothingtypepieData = [                               
+                                                {
+                                                    value: {{topProduct}},
+                                                    color: "#69D2E7",
+                                                    label: 'Top Products {"{{topProduct}}"}',
+                                                    labelColor: '#1F1B33'
+                                                },
+                                                {
+                                                    value: {{bottomProduct}},
+                                                    color: "#E0E4CC",
+                                                    label: 'Bottom Products {"{{bottomProduct}}"}',
+                                                    labelColor: '#1F1B33'
+                                                },
+                                                {
+                                                    value: {{dressProduct}},
+                                                    color: "#E0E4CC",
+                                                    label: 'Dress Products {"{{dressProduct}}"}',
+                                                    labelColor: '#1F1B33'
+                                                },
+                                            ];
+                                            var myPie = new Chart(document.getElementById("clothingtypecanvas").getContext("2d")).Pie(clothingtypepieData, {
+                                                animationSteps: 100,
+                                                animationEasing: 'easeInOutQuart'
+                                            });
+
+                                            </script></td>
+                                    </tr>
+
+                                </table>
+
+
+
+
+
+                            </td>
+
                         </table>
-                    
+
                     </td>
-                    
-                    <td></td>
-                    
-                    <td width="49%" align="right">
-                        
-                        
-                        <table width="100%">
-                            <tr>
-            <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Clothing Type</h4></td>
-        </tr>
-        <tr>
-                    <td valign="top" class="mainhd">
-                        
-                        
-                                                
-                     <table width="100%">
-                         
-                            <tr>
-                                <td>Type</td>
-                                <td>Qty</td>
-                                <td>%</td>
+                </tr>
 
-                            </tr>
-                            
-                            
-                            <tr>
-                                <td>Top</td>
-                                <td>{{topProduct}}</td>
-                                <td>{%set toppercent=100*topProduct/totalproducts%} {{toppercent|number_format}}%</td>
-
-                            </tr> 
-                            
-                             <tr>
-                                <td>Bottom</td>
-                                <td>{{bottomProduct}}</td>
-                                <td>{%set bottompercent=100*bottomProduct/totalproducts%} {{bottompercent|number_format}}%</td>
-
-                            </tr>
-                            
-                             <tr>
-                                <td>Dress</td>
-                                <td>{{dressProduct}}</td>
-                                <td>{%set dresspercent=100*dressProduct/totalproducts%} {{dresspercent|number_format}}%</td>
-
-                            </tr>
-                            
-                            
-                            </table>                    
-                    
-                    
-                    </td>
-                    <td valign="top" align="center">
-                        <canvas id="clothingtypecanvas"  height="300" width="300"></canvas>
-                        <script>
-                            var clothingtypepieData = [                               
-                                {
-                                    value: {{topProduct}},
-                                    color: "#69D2E7",
-                                    label: 'Top Products {"{{topProduct}}"}',
-                                    labelColor: '#1F1B33'
-                                },
-                                {
-                                    value: {{bottomProduct}},
-                                    color: "#E0E4CC",
-                                    label: 'Bottom Products {"{{bottomProduct}}"}',
-                                    labelColor: '#1F1B33'
-                                },
-                                {
-                                    value: {{dressProduct}},
-                                    color: "#E0E4CC",
-                                    label: 'Dress Products {"{{dressProduct}}"}',
-                                    labelColor: '#1F1B33'
-                                },
-                            ];
-                            var myPie = new Chart(document.getElementById("clothingtypecanvas").getContext("2d")).Pie(clothingtypepieData, {
-                                animationSteps: 100,
-                                animationEasing: 'easeInOutQuart'
-                            });
-
-                            </script></td>
-                    </tr>
-        
-                        </table>
-                    
-                    
-                    
-                    
-                    
-                    </td>
-                
-                </table>
-            
-            </td>
-        </tr>
-        
-        <tr>
+                <tr>
                     <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Users</h4></td>
                 </tr> 
-                
+
                 <tr>
-               <td valign="top" colspan="2" class="mainhd">
-                   
-                   
-                   
-                  <div> Total:  {{totalusers}}</div>
-                        <div>Female:  {{femaleUsers}}         Percent:{%set femalepercent=100*femaleUsers/totalusers%} {{femalepercent|number_format}}%</div>
-                        <div>Male:  {{maleUsers}}   Percent:{%set malepercent=100*maleUsers/totalusers%} {{malepercent|number_format}}%</div>                                           
+                    <td valign="top" colspan="2" class="mainhd">
+
+
+
+                        <div> Total:  {{users['total_count']}}</div>
+                        <div>Female:  {{users['total_woman']}}         Percent:{%set femalepercent=100*users['total_woman']/users['total_count']%} {{femalepercent|number_format}}%</div>
+                        <div>Male:  {{users['total_man']}}   Percent:{%set malepercent=100*users['total_man']/users['total_count']%} {{malepercent|number_format}}%</div>                                           
                     </td>
-            </tr>
-            
-            <tr>
-                    <td colspan="2" valign="top"><h4 style="float:left;">Last Six Month Signups</h4></td>
+                </tr>
+
+                <tr>
+                    <td valign="top"><h4 style="float:left;">Last Six Month Signups</h4>
+                        <br><br>
+{% for su in users['total_signups']%}
+{{ su['month']}} {{ su['total']}}<br>
+{% endfor %}
+                    </td>
                 </tr> 
-        
-                    <tr>
-                    <td colspan="2" valign="top">
 
-{{ users['six_months_signups']}}</td>
+                <tr>
+                    <td valign="top"><h4 style="float:left;">Users Age Groups</h4>
+                        <br><br>
+{% for agc in users['age_group_count']%}
+{{ agc['age']}} {{ agc['total']}}<br>
+{% endfor %}
+                    </td>
+                </tr> 
 
-                    
-                    </tr> 
 
-       
-        
-        
-        
-</table>   
+
+
+
+            </table>   
  {%endif%}
-</div>
+        </div>
 {% endblock %}
