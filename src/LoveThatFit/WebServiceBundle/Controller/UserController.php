@@ -228,26 +228,21 @@ public function userProfileAction()
                 $chest = $request_array['chest'];
             }
 
-            if(isset($request_array['sc_top_id']))
-            {
-                 $sc_top_id=$request_array['sc_top_id'];
-            }
-            else
-            {
-                 $sc_top_id=0;
-            }
-            if(isset($request_array['sc_bottom_id']))
-            {
-                 $sc_bottom_id=$request_array['sc_bottom_id'];
-            }
-             else {$sc_bottom_id=0;}
-            if(isset($request_array['sc_dress_id']))
-            {
-                 $sc_dress_id=$request_array['sc_dress_id'];
-            }
-            else{
-                 $sc_dress_id=0;
-            }
+            if (isset($request_array['sc_top_id'])) {
+            $sc_top_id = $request_array['sc_top_id'];
+        } else {
+            $sc_top_id = 0;
+        }
+            if (isset($request_array['sc_bottom_id'])) {
+            $sc_bottom_id = $request_array['sc_bottom_id'];
+        } else {
+            $sc_bottom_id = 0;
+        }
+        if (isset($request_array['sc_dress_id'])) {
+            $sc_dress_id = $request_array['sc_dress_id'];
+        } else {
+            $sc_dress_id = 0;
+        }
        
            #-----------------End of Measuremnt data-----------------------# 
             if ($this->isDuplicateEmail(Null, $email)) {
@@ -479,7 +474,7 @@ public function userProfileAction()
             $userinfo['last_name'] = $entity->getLastName();
             $userinfo['zipcode'] = $entity->getZipcode();
             $userinfo['gender'] = $entity->getGender();
-
+            $userinfo['authTokenWebService']=$entity->getAuthToken();
             if (isset($birth_date)) {
                 $userinfo['birth_date'] = $birth_date->format('Y-m-d');
             }
