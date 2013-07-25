@@ -198,6 +198,14 @@
                     </td>
                 </tr> 
 
+                <tr>
+                    <td valign="top"><h4 style="float:left;">Users Age Groups</h4>
+                        <br><br>
+{% for agc in users['age_group_count']%}
+{{ agc['age']}} {{ agc['total']}}<br>
+{% endfor %}
+                    </td>
+                </tr> 
 
 
 

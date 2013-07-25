@@ -155,7 +155,30 @@ class DefaultController extends Controller {
         $users['total_count'] = $this->getAllUserList();
         $users['total_woman'] = $this->getUserByGender('f');
         $users['total_man'] = $this->getUserByGender('m');
+        $users['age_group_count'] = $this->getUsersAgeGroupCount();
+
         return $users;
+    }
+
+    public function getUsersAgeGroupCount() {
+        $conn = $this->get('database_connection');
+        $users_age_group_counts = $conn->fetchAll(
+                "SELECT age, count(*) total FROM
+(SELECT CASE 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date) <= 10 THEN '1-10' 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 20 THEN '11-20' 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 30 THEN '21-30'
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 40 THEN '31-40' 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 50 THEN '41-50'
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 60 THEN '51-60'
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 70 THEN '61-70'
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 80 THEN '71-80'
+         ELSE '81+' 
+       END AS age
+    FROM  ltf_users u 
+          ) t group by age");
+
+        return $users_age_group_counts;
     }
 
     /*
