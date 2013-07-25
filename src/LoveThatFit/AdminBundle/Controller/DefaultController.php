@@ -165,15 +165,12 @@ class DefaultController extends Controller {
         $users_age_group_counts = $conn->fetchAll(
                 "SELECT age, count(*) total FROM
 (SELECT CASE 
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date) <= 10 THEN '1-10' 
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 20 THEN '11-20' 
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 30 THEN '21-30'
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 40 THEN '31-40' 
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 50 THEN '41-50'
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 60 THEN '51-60'
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 70 THEN '61-70'
-         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 80 THEN '71-80'
-         ELSE '81+' 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date) <= 10 THEN '1-15' 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 20 THEN '16-30' 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 30 THEN '31-45'
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 40 THEN '46-60' 
+         WHEN YEAR(CURDATE())-YEAR(u.birth_date)  <= 50 THEN '61-75'         
+         ELSE '76+' 
        END AS age
     FROM  ltf_users u 
           ) t group by age");

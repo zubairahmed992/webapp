@@ -2,7 +2,12 @@
 {% block breadcrumb %}
 <li class="active">Dashboard</li>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/Chart.js') }}"></script>
-
+<style>
+        userage{
+        }
+        usersignups{            
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -192,19 +197,64 @@
                 <tr>
                     <td valign="top"><h4 style="float:left;">Last Six Month Signups</h4>
                         <br><br>
-{% for su in users['total_signups']%}
-{{ su['month']}} {{ su['total']}}<br>
-{% endfor %}
+                        
+                      
+                       <canvas id="usersignups" height="300" width="300"></canvas>
+            <script>
+                        var usersignupsbarChartData = {
+                labels : [{% for su in users['total_signups']%} "{{ su['month']}}", {%endfor%}],
+                        datasets : [
+                {
+                fillColor : "rgba(151,187,205,0.5)",
+                        strokeColor : "rgba(151,187,205,1)",
+                        data : [{% for su in users['total_signups']%} {{ su['total']}}, {%endfor%}]
+                },                
+                ]
+
+                }
+                var myLine = new Chart(document.getElementById("usersignups").getContext("2d")).Bar(usersignupsbarChartData);</script>
+
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+
+ <br>
+
                     </td>
                 </tr> 
 
                 <tr>
                     <td valign="top"><h4 style="float:left;">Users Age Groups</h4>
                         <br><br>
-{% for agc in users['age_group_count']%}
-{{ agc['age']}} {{ agc['total']}}<br>
-{% endfor %}
-                    </td>
+                        
+                        <canvas id="userage" height="300" width="300"></canvas>
+            <script>
+                        var useragebarChartData = {
+                labels : [{% for agc in users['age_group_count']%} "{{ agc['age']}}", {%endfor%}],
+                        datasets : [
+                {
+                fillColor : "rgba(151,187,205,1)",
+                        strokeColor : "rgba(151,187,205,1)",
+                        data : [{% for agc in users['age_group_count']%} {{ agc['total']}}, {%endfor%}]
+                },                
+                ]
+
+                }
+                var myLine = new Chart(document.getElementById("userage").getContext("2d")).Bar(useragebarChartData);</script>
+                 </td>
                 </tr> 
 
 
