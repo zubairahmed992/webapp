@@ -2861,12 +2861,13 @@ padding-bottom: 0px;
     overflow: auto;
     }
 
-    .home_box .more_lnk{
+    .home_box .more_lnk a{
         position: relative;
         top: -12px;
         right: -123px;
         width: 22px;
         height:22px;
+        text-decoration:none;
         background: url("../images/m_icon.png") no-repeat scroll right top transparent; 
     }
     
