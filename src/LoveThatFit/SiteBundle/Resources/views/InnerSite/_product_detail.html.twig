@@ -73,47 +73,43 @@ function pattern_select(color_id,product_id,size_id)
 }
 function loveItem(item_id)
 {  
-   base_url=$('#ajax_product_love_url'+item_id).text();
- //base_url=$('#ajax_product_base_url').text();
-        var jqXHR = $.ajax({
-            //url: base_url+"/app_dev.php/ajax/user_product_item/create/"+ item_id,
-            url: base_url,
-          
-          success: function (XMLHttpRequest, textStatus, errorThrown) {
-            
-            if(jqXHR.responseText.trim()== "success")
-            {
-            
-             $("#like_icon_"+item_id).replaceWith(' <div id="un_like_icon'+item_id+'"><a href="javascript:void(0);"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a></div>');
-            }   
-            else
-            {
-               
-            alert('Sorry .. You are overlimit please delete some of your loved products ');
-            }
-           
+ base_url_love=$('#ajax_product_love_url'+item_id).html();
+alert(base_url_love);
+var jqXHR = $.ajax({
+ //url: base_url+"/app_dev.php/ajax/user_product_item/create/"+ item_id,
+
+  type: "POST",
+  url: base_url_love,
+ data:{varaible: item_id},
+success: function (XMLHttpRequest, textStatus, errorThrown) {
+if(jqXHR.responseText.trim()== "success")
+{
+$("#like_icon_"+item_id).html('');
+$('#ajax_product_love_url'+item_id).html('');
+
+$("#like_icon_"+item_id).replaceWith(' <div class="like_icon1_'+item_id+'"><a href="javascript:void(0);" onclick="lovedItems('+item_id+')" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a><span id="ajax_product_loved_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span> </div>');
+}else{
+ alert('Sorry .. You are overlimit please delete some of your loved products ');
+  }
          }
         });
 }
 
 function lovedItems(item_id)
 {  
-   base_url=$('#ajax_my_closet_delete'+item_id).text();
- //base_url=$('#ajax_product_base_url').text();
-        var jqXHR = $.ajax({
-            //url: base_url+"/app_dev.php/ajax/products/my_closet/delete/"+ item_id,
-            url: base_url,
-          
-          success: function (XMLHttpRequest, textStatus, errorThrown) {
-            
-            if(jqXHR.responseText.trim()== "success")
-            {
-            
-             $("#like_icon1_"+item_id).replaceWith(' <img src="{{asset('bundles/lovethatfit/site/images/like.png')}}">');
-            }               
-           
-         }
-        });
+  base_url_loved=$('#ajax_product_loved_url'+item_id).text();
+  alert(base_url_loved);
+  var jqXHR = $.ajax({
+  //url: base_url+"/app_dev.php/ajax/products/my_closet/delete/"+ item_id,
+   url: base_url_loved,
+  success: function (XMLHttpRequest, textStatus, errorThrown) {
+  if(jqXHR.responseText.trim()== "success")
+  {
+  $(".like_icon1_"+item_id).html('');  
+  $(".like_icon1_"+item_id).replaceWith(' <div id="like_icon_'+item_id+'"><a href="javascript:void(0);"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}" onclick=loveItem('+item_id+')></a><span id="ajax_product_love_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span></div>'); 
+  }               
+   }
+ });
 }
     </script>  
    
@@ -178,19 +174,16 @@ function lovedItems(item_id)
                            
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
-                             <div class="like_icon1" style="">
-                                 
-                                 <a href="{{path('ajax_my_closet_delete',{'id': productItem.id}) }}" title="Dislike"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
-                                 
-                             
-                             </div>  
-                            
+                            <div class="like_icon1_{{productItem.id}}" style="">
+<a href="javascript:void(0);" onclick="lovedItems({{productItem.id}})" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
+<span id="ajax_product_loved_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span>  
+</div>  
+
                             {%else%}
-                             
-                             <div id="like_icon_{{productItem.id}}">
-                              <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
-                            </div>
-                              <span id="ajax_product_love_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
+<div id="like_icon_{{productItem.id}}">
+<a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
+<span id="ajax_product_love_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
+</div>
                             {%endif%}
                                 
                                

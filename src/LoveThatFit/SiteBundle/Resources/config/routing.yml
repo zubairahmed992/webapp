@@ -37,6 +37,10 @@ ajax_product_base_url:
 ajax_user_product_item_create:
     pattern:  /ajax/user_product_item/create/{product_item_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:addToCloest}
+
+ajax_user_product_item_delete:
+    pattern:  /ajax/user_product_item/delete/{product_item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:deleteMyClosetAjax}       
     
 ajax_products_by_my_closet:
     pattern:  /ajax/products/my_closet
