@@ -4,11 +4,13 @@
 function apply_prod(size_id,product_id,color_id){
     //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
     
-    var apply_img_url = $('.featured_box'+product_id+' .featured_img a.apply_img').attr('href');
+    var apply_img_url = $('.dynamic_data'+product_id+' .featured_img a.apply_img').attr('href');
     
     var prod_type_top = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_top');
     var prod_type_bottom = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_bottom');
     var prod_type_dress = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_dress');
+    
+    //alert(apply_img_url);
     
     if(prod_type_top) {
         
