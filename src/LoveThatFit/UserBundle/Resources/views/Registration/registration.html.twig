@@ -76,9 +76,27 @@
                                     
                                     <div class="clr_bth"></div>
 
+       <script>
+function formValidates()
+{
+    var username=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+    if((username=='' || username=='email') && (password=='' || password=='password'))
+        {
+           document.getElementById('error_content1').style.display="block";
+           return false;
+        }else
+            {
+                return true;
+            }
+}
+    
+</script>                                
+                                        
+                                        
 
                                     <div class="login_reg_box">
-                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
+                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return formValidates()">
                                             <div class="frm_ele">            
                                                 <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
                                             </div>
