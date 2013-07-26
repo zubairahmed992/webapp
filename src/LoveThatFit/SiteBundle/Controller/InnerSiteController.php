@@ -203,6 +203,25 @@ class InnerSiteController extends Controller {
         return $this->getMyClosetList();
     }
 
+    
+    
+ #---Delete My Closet at For Ajax
+ //----------------------------------------------------------------------------------
+    public function deleteMyClosetAjaxAction($product_item_id) {
+  
+        $user = $this->get('security.context')->getToken()->getUser();
+        $product_item = $this->getProductItemById($product_item_id);
+        $em = $this->getDoctrine()->getManager();
+        $product_item->removeUser($user);
+        $user->removeProductItem($product_item);
+        $em->persist($product_item);
+        $em->persist($user);
+        $em->flush();
+       return new response('success');   
+        
+    }
+
+ #--End of Delete My Closet ForAjax   
     //-------------------------------------------------------------------
     public function ajaxAction() {
         return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');
