@@ -559,6 +559,7 @@ class User implements UserInterface, \Serializable {
     public function serialize() {
         return serialize(array(
                     $this->id,
+                    $this->email,
                 ));
     }
 
@@ -568,6 +569,7 @@ class User implements UserInterface, \Serializable {
     public function unserialize($serialized) {
         list (
                 $this->id,
+                $this->email,
                 ) = unserialize($serialized);
     }
 
