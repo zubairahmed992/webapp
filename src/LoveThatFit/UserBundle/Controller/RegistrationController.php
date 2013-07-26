@@ -115,6 +115,9 @@ class RegistrationController extends Controller {
         $url_bits = explode('/', $referer);
         $referer = $url_bits[sizeof($url_bits)-1];
 
+        if ($error){
+            $referer="login";
+        }
         
         return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error' => $error,
