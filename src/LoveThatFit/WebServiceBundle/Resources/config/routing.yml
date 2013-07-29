@@ -70,10 +70,19 @@ ws_size_chart:
 ws_default_fittng_alert:
    pattern:  /web_service/default_fitting_alerts
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:defaultProductFittingAlert}
+   
 ws_fittng_alert:
    pattern:  /web_service/fitting_alerts
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:getFeedBackJSON}
+   
+ws_love_item:
+   pattern:  /web_service/love_item
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:loveItem}
 
+ws_try_history:
+   pattern:  /web_service/user_try_history
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:userTryHistory}
+   
 
 
   
