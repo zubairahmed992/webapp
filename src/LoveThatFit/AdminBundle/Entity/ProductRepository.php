@@ -489,6 +489,25 @@ class ProductRepository extends EntityRepository {
 
         }
     }
+    
+     public function tryOnHistoryWebService($user_id) {
+
+       $query = $this->getEntityManager()
+                        ->createQuery("
+            SELECT pi.id as product_id ,p.name as product_name,b.name as brand_name,ps.title as size, pc.title as color ,pi.image as item_image
+            FROM LoveThatFitAdminBundle:ProductItem pi                         
+            JOIN pi.product p
+            join p.brand b
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps            
+            JOIN pi.user_item_try_history uih            
+            WHERE  p.displayProductColor!='' and uih.user = :id ORDER BY uih.count DESC")->setParameters(array('id' => $user_id));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 #---------------------------------End of Web Service----------------------------------#   
      public function findProductByTitle($name) {
         $record = $this->getEntityManager()
@@ -547,27 +566,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-#--- Try History For Web Service ---------------------------------------#
-    
-   public function tryOnHistoryWebService($user_id) {
 
-       $query = $this->getEntityManager()
-                        ->createQuery("
-            SELECT pi.id as product_id ,p.name as product_name,b.name as brand_name,ps.title as size, pc.title as color ,pi.image as item_image
-            FROM LoveThatFitAdminBundle:ProductItem pi                         
-            JOIN pi.product p
-            join p.brand b
-            JOIN pi.product_color pc
-            JOIN pi.product_size ps            
-            JOIN pi.user_item_try_history uih            
-            WHERE  p.displayProductColor!='' and uih.user = :id ORDER BY uih.count DESC")->setParameters(array('id' => $user_id));
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-#-----------------End -----------------------------------------------#   
     public function findDefaultProductByColorId($product_color)
     {
         $query = $this->getEntityManager()

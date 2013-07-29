@@ -195,7 +195,7 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-         #------------------------------Authentication of Token--------------------------------------------#
+       #------------------------------Authentication of Token---------------------------------------------#
          $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
@@ -208,9 +208,13 @@ class ProductController extends Controller {
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
         $product_id = $request_array['id'];
+        $user_id== $request_array['user_id'];
+       if(!$user_id)
+       {
+            return new Response(json_encode(array('Message' => 'User Missing')));
+       }    
         $em = $this->getDoctrine()->getManager();
         
-       
         $productdetail = array();
         $products = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
@@ -219,6 +223,13 @@ class ProductController extends Controller {
         $product = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->find($product_id);
+        
+        
+        
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+        
+        
         
         $count_rec = count($products);
         $productdetail['product'] = $products;
@@ -239,11 +250,16 @@ class ProductController extends Controller {
                         ->getSizeItemImageUrlArray($product_color_id);
 
                 $color_size_array = array();
-
+                $counter=1;
                 foreach ($color_sizes as $cs) {
                     $color_size_array [$cs['title']] = $cs;
+                    $like_status['like_status']=$user->getMyClosetListArray($cs['id']);
+                    array_push($color_size_array [$cs['title']],$like_status);
+                    $counter++;
                 }
+                
 
+     
                 $product_color_array[$product_color_value->gettitle()] = array(
                     'id' => $product_color_value->getId(),
                     'image' => $product_color_value->getImage(),
@@ -405,13 +421,11 @@ class ProductController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
 
-      
-
 
         $user_id = $request_array['user_id'];
         $product_item_id = $request_array['product_item_id'];
         
-       #------------------------------Authentication of Token--------------------------------------------#
+  #------------------------------Authentication of Token--------------------------------------------#
         $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {

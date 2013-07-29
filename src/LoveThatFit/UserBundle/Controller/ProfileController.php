@@ -131,8 +131,7 @@ class ProfileController extends Controller {
 
 //-------------------------------------------------------------------------
 
-
-    public function passwordResetUpdateAction(Request $request) {
+public function passwordResetUpdateAction(Request $request) {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
