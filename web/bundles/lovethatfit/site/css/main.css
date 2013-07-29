@@ -2635,6 +2635,7 @@ padding-bottom: 0px;
 .user_product_hd tr:first-child td{
     background:#efefef;
     padding: 5px 0px 5px 5px;
+    font-family: MyCustomFontb;
 }
 
 .user_product_hd td{   
