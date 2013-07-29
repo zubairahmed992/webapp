@@ -495,8 +495,11 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->tryOnHistoryWebService($user_id);
         $data=array();
+        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
         $data['data']=$entity;
+        $data['image_path']=$fitting_room;
         $count_rec=count($entity);
+        
         return new Response($this->json_view($count_rec,$data));
         }else{
            return new Response(json_encode(array('Message' => 'User Missing'))); 
