@@ -410,12 +410,23 @@ class ProductController extends Controller {
 
         $user_id = $request_array['user_id'];
         $product_item_id = $request_array['product_item_id'];
-        $like = trim($request_array['like']);
-        $unlike = trim($request_array['unlike']);
-       
+        
+       #------------------------------Authentication of Token--------------------------------------------#
+        $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
+        
 
         if ($user_id && $product_item_id) {
-            if ($like) {
+            if ($request_array['like']=='like') {
                 $em = $this->getDoctrine()->getManager();
                 $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
                 $entity = $this->getDoctrine()
@@ -461,13 +472,35 @@ class ProductController extends Controller {
 #--------------------------------------Try On History Service----------------------------------------------#
      public function userTryHistoryAction()
     {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+ #------------------------------Authentication of Token--------------------------------------------#
+        $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
+
+        $user_id = $request_array['user_id'];
+        if($user_id)
+        {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findTryPropductHistory();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->tryOnHistoryWebService($user_id);
         $data=array();
         $data['data']=$entity;
         $count_rec=count($entity);
-          
-       return new Response(json_encode($data));
+        return new Response($this->json_view($count_rec,$data));
+        }else{
+           return new Response(json_encode(array('Message' => 'User Missing'))); 
+        }
     }
    
 #---------------------------Render Json--------------------------------------------------------------------#
