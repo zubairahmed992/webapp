@@ -53,7 +53,7 @@ class ImageHelper {
         $this->entity->file = null;
     }
 //--------------------------------------------------------------------
-    public function uploadProductTempImage()
+    public function uploadProductColorImage()
     {
         if ($this->category=='product'){
         $ext = pathinfo($this->entity->getAbsoluteTempPath(), PATHINFO_EXTENSION);
@@ -141,12 +141,18 @@ class ImageHelper {
         $image_info = getimagesize($this->getAbsolutePath());
         $iw = $image_info[0] ;
         $ih = $image_info [1];
-
+        $n=null;
         foreach ($this->conf as $key => $value) {
             if ($key != 'original') {
+                if (array_key_exists ('width', $value) && array_key_exists ('height', $value) ) {
                 $percent = $iw > $ih ? $value['width'] / $iw : $value['height'] / $ih;
                 $n[$key]['width'] = round($iw * $percent);
                 $n[$key]['height'] = round($ih * $percent);
+            }else{
+                $n[$key]['width'] = $iw;
+                $n[$key]['height'] = $ih;
+            }
+        
             }
         }
         return $n;

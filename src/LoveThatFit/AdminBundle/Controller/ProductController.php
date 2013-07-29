@@ -387,7 +387,7 @@ class ProductController extends Controller {
         $productColor->setProduct($product);
         $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorImageForm->bind($request);
-         $temp=$productColor->uploadTemporaryImage();
+        $temp = $productColor->uploadTemporaryImage();
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath()."/".$productColor->getWebPath(). $temp['image_url'];
         $data=array('image_name' => $temp['image_name'],
                  'image_url' => $baseurl);

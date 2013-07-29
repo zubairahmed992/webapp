@@ -286,7 +286,7 @@ class ProductColor {
     public function saveImage() {
         if ($this->tempImage) {
             $ih = new ImageHelper('product', $this);
-            $ih->uploadProductTempImage(); // save & resize images 
+            $ih->uploadProductColorImage(); // save & resize images 
         }
     }
 
