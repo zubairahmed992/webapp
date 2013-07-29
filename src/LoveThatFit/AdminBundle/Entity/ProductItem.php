@@ -210,23 +210,27 @@ class ProductItem
     //---------------------------------------------------
     
      public function upload() {
-        
-        if (null === $this->file) {
+      
+            $ih = new ImageHelper('product_item', $this);
+            $ih->upload(); // save & resize images 
+            
+    /*
+         if (null === $this->file) {
             return;
         }
-        
+      
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
         
-        $this->image = uniqid() .'_fr.'. $ext;        
+        $this->image = uniqid() . $ext;        
         $this->file->move(
                 $this->getUploadRootDir(), $this->image
         );
         
         $this->file = null;          
-        
-        
+      */  
          
     }
+    
     
     //-------------------------------------------------------
     public function getAbsolutePath() {

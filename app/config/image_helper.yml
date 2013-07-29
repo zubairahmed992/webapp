@@ -41,6 +41,22 @@ image_category:
       prefix:   			
       dir:  'uploads/ltf/products/large'
   
+  product_item:
+
+    original:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room'
+
+    iphone:
+      prefix: 
+      dir:  'uploads/ltf/products/iphone_fitting'
+
+    web:
+      height: 40
+      width: 35
+      prefix:  
+      dir:  'uploads/ltf/products/web_fitting'
+
   user:
     original:
       prefix: 
