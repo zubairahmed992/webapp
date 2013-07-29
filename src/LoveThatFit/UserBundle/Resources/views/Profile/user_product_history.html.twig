@@ -24,15 +24,20 @@
     <td>Image</td>
     
   </tr>
-{%for p in product%}
+  {%for pi in productItem%}
 <tr>
-    <td>{{p.name}}</td>
-    <td>{{p.bname}}</td>
-    <td>{{p.title}}</td>
-     <td>{{p.colortitle}}</td>    
-     <td> </td>
+    <td>{{pi.product.name}}</td>
+    <td>{{pi.product.brand.name}}</td> 
+    <td>{{pi.productSize.title}}</td> 
+    <td>{{pi.productColor.title}}</td> 
+     <td> {%if(pi.WebPath!='')%}
+<div class="f_list"><img width="35" height="40" src="{{asset(pi.WebPath)}}" class="prod_dress ui-draggable"></div>
+{%else%}
+    <div class="f_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+{%endif%}</td>
    
   </tr>
+
 {%endfor%}
   </table>
 {% endblock %}

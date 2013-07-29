@@ -81,14 +81,26 @@ function formValidates()
 {
     var username=document.getElementById('email').value;
     var password=document.getElementById('password').value;
-    if((username=='' || username=='email') && (password=='' || password=='password'))
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(!filter.test(username))
+    {
+         document.getElementById('error_content1').style.display="block";
+           username.focus;
+           return false;
+    }
+    if((username=='' || username=='email'))
         {
            document.getElementById('error_content1').style.display="block";
+           username.focus;
            return false;
-        }else
+        }else if(password=='' || password=='password')
             {
-                return true;
-            }
+              document.getElementById('error_content1').style.display="block";
+              return false;                
+            }else
+                {
+                    return true;
+                }
 }
     
 </script>                                

@@ -510,7 +510,7 @@ class ProductRepository extends EntityRepository {
                             ->createQuery("
             SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''
+            WHERE p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''
             ORDER BY uih.count DESC"
                             )->setParameter('gender', $gender);
         } else {
@@ -518,7 +518,7 @@ class ProductRepository extends EntityRepository {
                     ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''
+            WHERE p.gender = :gender  AND p.disabled=0 AND p.displayProductColor!=''
             ORDER BY uih.count DESC "
                     )->setParameter('gender', $gender)
                     ->setFirstResult($limit * ($page_number - 1))
@@ -531,20 +531,16 @@ class ProductRepository extends EntityRepository {
         }
     }
     
-    public function findTryPropductHistory()
+    public function findTryPropductHistory($user_id , $page_number=0 , $limit=0)
     {
         
             $query = $this->getEntityManager()
                     ->createQuery("
-            SELECT distinct(p.name) as name,p,pi,uih,b.name as bname,ps.title as title,pc.title as colortitle,pi.image as productimage FROM LoveThatFitAdminBundle:Product p           
-            JOIN p.brand b            
-            JOIN p.product_items pi
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
             JOIN pi.product_color pc
-            JOIN pi.product_size ps
-            JOIN p.user_item_try_history uih            
-            WHERE p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''
-            ORDER BY uih.count DESC");
-       
+            JOIN pi.product_size ps            
+            JOIN pi.user_item_try_history uih            
+        WHERE uih.user = :id ORDER BY uih.count DESC"  )->setParameters(array('id' => $user_id)) ;                   
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

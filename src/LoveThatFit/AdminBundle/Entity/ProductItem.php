@@ -37,7 +37,7 @@ class ProductItem
     protected $product_color; 
  
     /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="product_items")
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="productitem")
      */
     private $user_item_try_history;
     /**

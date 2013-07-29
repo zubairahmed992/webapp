@@ -300,16 +300,13 @@ class ProfileController extends Controller {
     }
 
     
-    public function userTryProductsAction()
+    public function userTryProductsAction($page_number = 0, $limit = 0)
     {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findTryPropductHistory();
-        return $this->render('LoveThatFitUserBundle:Profile:user_product_history.html.twig',array('product'=>$entity));
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();        
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findTryPropductHistory($user_id, $page_number, $limit);
+        return $this->render('LoveThatFitUserBundle:Profile:user_product_history.html.twig',array('productItem'=>$entity));
     }
-
-
-
-
 
 
     private function getQuestionsList() {
