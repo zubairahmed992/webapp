@@ -404,9 +404,9 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-        
+
         #---------------------------Authentication of Token--------------------------------------------#
-         $user = $this->get('user.helper.user');
+        $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -416,41 +416,54 @@ class ProductController extends Controller {
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
- #-------------------------------End Of Authentication Token--------------------------------#
+        #-------------------------------End Of Authentication Token--------------------------------#
 
-        
+
         $user_id = $request_array['user_id'];
-        $product_item_id=$request_array['product_item_id'];
-       
-        if($user_id && $product_item_id)
-        {    
-        $em = $this->getDoctrine()->getManager();
-        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->countMyCloset($user_id);
-        $rec_count = count($productObj->countMyCloset($user_id));
-        
-        if ($rec_count >= 25) {
-            
-           return new Response(json_encode(array('Message' => 'Please delete some products (limit exceeds)')));
-        } else {
-           
-         
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+        $product_item_id = $request_array['product_item_id'];
+        $like = trim($request_array['like']);
+        $unlike = trim($request_array['unlike']);
 
-            $product_item = $this->getProductItemById($product_item_id);
-            $em = $this->getDoctrine()->getManager();
-            $product_item->addUser($user);
-            $user->addProductItem($product_item);
-            $em->persist($product_item);
-            $em->persist($user);
-            $em->flush();
-            return new Response(json_encode(array('Message' => 'success')));
-        }
-        }
-        else{
+        if ($user_id && $product_item_id) {
+            if ($like) {
+                $em = $this->getDoctrine()->getManager();
+                $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+                $entity = $this->getDoctrine()
+                        ->getRepository('LoveThatFitAdminBundle:Product')
+                        ->countMyCloset($user_id);
+                $rec_count = count($productObj->countMyCloset($user_id));
+
+                if ($rec_count >= 25) {
+
+                    return new Response(json_encode(array('Message' => 'Please delete some products (limit exceeds)')));
+                } else {
+
+
+                    $em = $this->getDoctrine()->getManager();
+                    $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+
+                    $product_item = $this->getProductItemById($product_item_id);
+                    $em = $this->getDoctrine()->getManager();
+                    $product_item->addUser($user);
+                    $user->addProductItem($product_item);
+                    $em->persist($product_item);
+                    $em->persist($user);
+                    $em->flush();
+                    return new Response(json_encode(array('Message' => 'Item has been successfully liked!')));
+                }
+            } else {
+
+                $em = $this->getDoctrine()->getManager();
+                $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+                $product_item = $this->getProductItemById($product_item_id);
+                $product_item->removeUser($user);
+                $user->removeProductItem($product_item);
+                $em->persist($product_item);
+                $em->persist($user);
+                $em->flush();
+                return new Response(json_encode(array('Message' => 'Item has been successfully unliked!')));
+            }
+        } else {
             return new Response(json_encode(array('Message' => 'User/Item Missing')));
         }
     }
