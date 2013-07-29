@@ -28,7 +28,11 @@ class InnerSiteController extends Controller {
         //-------------------------------------------------------------------------
 
     public function homeAction() {
-        return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig');
+        
+        $gender = $this->get('security.context')->getToken()->getUser()->getGender();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number = 0, $limit = 0);        
+        return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig',array('lastest'=>$entity));
     }
 
 ////////////////////////////////// Product Slider /////////////////////////////////////////////////////////////////
@@ -53,6 +57,13 @@ class InnerSiteController extends Controller {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
 
+    public function productRecomendedAction($gender, $page_number = 0, $limit = 0)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    
     //----------------------------------- by Brand ..............
     public function productsByBrandAction($gender, $brand_id, $page_number = 0, $limit = 0) {
         $em = $this->getDoctrine()->getManager();
@@ -175,6 +186,14 @@ class InnerSiteController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id, $page_number, $limit);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+    }
+    
+    public function productFriendsFavouritesAction($page_number = 0, $limit = 0)
+    {
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);        
     }
 
 //----------------------------------------------------------------------------------    
@@ -383,7 +402,8 @@ class InnerSiteController extends Controller {
                  ->findUserItemAllTryHistory($user,$product,$productItem);
 		$rec_count = count($useritemtryhistoryobj->findUserItemAllTryHistory($user,$product,$productItem));
         return $rec_count;
-   }
+   }   
+   
 }
 ?>
 
