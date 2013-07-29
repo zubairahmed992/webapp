@@ -78,6 +78,10 @@ ws_fittng_alert:
 ws_love_item:
    pattern:  /web_service/love_item
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:loveItem}
+
+ws_try_history:
+   pattern:  /web_service/user_try_history
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:userTryHistory}
    
 
 

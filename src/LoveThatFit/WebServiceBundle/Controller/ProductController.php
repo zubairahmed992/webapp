@@ -405,24 +405,14 @@ class ProductController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
 
-        #---------------------------Authentication of Token--------------------------------------------#
-        $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
-        if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
-            if ($tokenResponse['status'] == False) {
-                return new Response(json_encode($tokenResponse));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
-        }
-        #-------------------------------End Of Authentication Token--------------------------------#
+      
 
 
         $user_id = $request_array['user_id'];
         $product_item_id = $request_array['product_item_id'];
         $like = trim($request_array['like']);
         $unlike = trim($request_array['unlike']);
+       
 
         if ($user_id && $product_item_id) {
             if ($like) {
@@ -468,7 +458,17 @@ class ProductController extends Controller {
         }
     }
 #------------------------------------------------------------End of Love/Like------------------------------#   
- 
+#--------------------------------------Try On History Service----------------------------------------------#
+     public function userTryHistoryAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findTryPropductHistory();
+        $data=array();
+        $data['data']=$entity;
+        $count_rec=count($entity);
+          
+       return new Response(json_encode($data));
+    }
    
 #---------------------------Render Json--------------------------------------------------------------------#
 
