@@ -166,7 +166,7 @@ class RegistrationController extends Controller {
                 $encoder = $factory->getEncoder($entity);
                 $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
                 $entity->setPassword($password);
-
+                $entity->generateAuthenticationToken();
                 $em = $this->getDoctrine()->getManager();
                 $measurement = new Measurement();
                 $entity->setMeasurement($measurement);

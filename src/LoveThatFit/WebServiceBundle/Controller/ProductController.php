@@ -396,6 +396,67 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Missing User/Item')));
         }
     }
+    
+    
+#---------------------Like/Love Item-----------------------------------------------------------------------#
+ public function loveItemAction() {
+       $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        
+        #---------------------------Authentication of Token--------------------------------------------#
+         $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------#
+
+        
+        $user_id = $request_array['user_id'];
+        $product_item_id=$request_array['product_item_id'];
+       
+        if($user_id && $product_item_id)
+        {    
+        $em = $this->getDoctrine()->getManager();
+        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->countMyCloset($user_id);
+        $rec_count = count($productObj->countMyCloset($user_id));
+        
+        if ($rec_count >= 25) {
+            
+           return new Response(json_encode(array('Message' => 'Please delete some products (limit exceeds)')));
+        } else {
+           
+         
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+
+            $product_item = $this->getProductItemById($product_item_id);
+            $em = $this->getDoctrine()->getManager();
+            $product_item->addUser($user);
+            $user->addProductItem($product_item);
+            $em->persist($product_item);
+            $em->persist($user);
+            $em->flush();
+            return new Response(json_encode(array('Message' => 'success')));
+        }
+        }
+        else{
+            return new Response(json_encode(array('Message' => 'User/Item Missing')));
+        }
+    }
+#------------------------------------------------------------End of Love/Like------------------------------#   
+ 
+   
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
