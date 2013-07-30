@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
-
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -38,8 +38,11 @@ class UserHelper{
      */
     protected $class;
 
-    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class)
+    private $container;
+    
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, Container $container)
     {
+        $this->container = $container;
         $this->dispatcher = $dispatcher;
         $this->em = $em;
         $this->class = $class;
@@ -61,7 +64,7 @@ public function saveUser(User $user)
 {
     $this->em->persist($user);
     $this->em->flush();
-    //$this->dispatcher->dispatch('foo_bundle.post.comment_added', new CommentEvent($post, $comment));
+    
 }
 //-------------------------------------------------------
 
