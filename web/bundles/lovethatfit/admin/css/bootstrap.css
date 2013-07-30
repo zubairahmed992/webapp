@@ -6504,3 +6504,8 @@ padding:5px 0px 5px 0px;
     padding-top:20px;
     padding-bottom:20px;
 }
+
+#form_question{
+    float:left;
+    margin-right: 10px;
+}
