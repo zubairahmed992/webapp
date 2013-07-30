@@ -26,39 +26,12 @@ use Symfony\Component\Form\FormError;
 class ProductController extends Controller {
 
 //---------------------------------------------------------------------
-    public function indexAction($page_number = 1, $sort = 'id') {
-        $limit = 5;
-
-        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-
-        $products = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findAllProduct($page_number, $limit, $sort);
-
-        $rec_count = count($productObj->countAllRecord());
-        $cur_page = $page_number;
-
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-
-        return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', array(
-                    'products' => $products,
-                    'rec_count' => $rec_count,
-                    'no_of_pagination' => $no_of_paginations,
-                    'limit' => $cur_page,
-                    'per_page_limit' => $limit,
-                    'femaleProduct'=>  $this->countProductsByGender('f'),
-                    'maleProduct'=>  $this->countProductsByGender('m'),
-                    'topProduct'=>$this->countProductsByType('Top'),
-                    'bottomProduct'=>$this->countProductsByType('Bottom'),
-                    'dressProduct'=>$this->countProductsByType('Dress'),
-                ));
+    
+    public function indexAction($page_number, $sort = 'id') {
+        $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
+        return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
-
-
+    
 //---------------------------------------------------------------------
     private function getDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))

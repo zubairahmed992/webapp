@@ -40,6 +40,25 @@ class ProductRepository extends EntityRepository {
         }
     }
 
+    public function listAllProduct($page_number = 0, $limit = 0, $sort = 'id') {
+
+
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p   ORDER BY p.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p  ORDER BY p.' . $sort . ' ASC')
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+    
     /* --------------------------------------------------------- */
 
     public function findByGender($gender, $page_number = 0, $limit = 0) {
