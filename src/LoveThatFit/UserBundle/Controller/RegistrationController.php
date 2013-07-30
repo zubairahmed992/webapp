@@ -296,11 +296,13 @@ class RegistrationController extends Controller {
     }
 //-----------------------------------------------------------------------------
  public function measurementEditAction() {
- $size_chart_helper = $this->get('admin.helper.sizechart');
+        
+        $size_chart_helper = $this->get('admin.helper.sizechart');
         
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+         $measurement_helper = $this->get('measurement.helper.measurement');
         $measurement = $entity->getMeasurement();
 
         if ($entity->getGender() == 'm') {
@@ -309,51 +311,19 @@ class RegistrationController extends Controller {
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType( $size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
-         #---Suresh Code---------#
-        $top_size_chart=$measurement->getTopFittingSizeChart();
-        $bottom_size_chart=$measurement->getBottomFittingSizeChart();
-        $dress_size_chart=$measurement->getDressFittingSizeChart();
-        #---Getting the Top Size Chart --------#
-        if ($top_size_chart) {
-            $em = $this->getDoctrine()->getManager();
-            $topSizeChartId=$top_size_chart->getId();
-            $top_brand=$top_size_chart->getBrand();
-            $top_brand_id=$top_brand->getId();
-        }else{
-            $top_brand_id=Null;
-            $topSizeChartId=Null;
-        }    
-     #---Getting The Bottom Size Chart--------#   
-        if($bottom_size_chart){
-            $bottomSizeChartId=$bottom_size_chart->getId();
-            $bottom_brand=$bottom_size_chart->getBrand();
-            $bottom_brand_id=$bottom_brand->getId();
-        }else{
-            $bottom_brand_id=Null;
-            $bottomSizeChartId=Null;
-        }
         
-    #---Getting The Dress Size Chart-----------#
-        if($dress_size_chart){
-            $dressSizeChartId=$dress_size_chart->getID();
-            $dress_brand=$dress_size_chart->getBrand();
-            $dress_brand_id=$dress_brand->getId();
-        }else{
-            $dress_brand_id=Null;
-            $dressSizeChartId=Null;
-        }
-       
-     #--End Of Suresh Code---------------------#
+    $retaining_array=$measurement_helper->measurementRetain($measurement);
+        
 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
-                    'top_brand_id'=>$top_brand_id,
-                    'top_size_chart_id'=>$topSizeChartId,
-                    'bottom_brand_id'=>$bottom_brand_id,
-                    'bottom_size_chart_id'=>$bottomSizeChartId,
-                    'dress_brand_id'=>$dress_brand_id,
-                    'dress_size_chart_id'=>$dressSizeChartId,
+                    'top_brand_id'=>$retaining_array['top_brand_id'],
+                    'top_size_chart_id'=>$retaining_array['topSizeChartId'],
+                    'bottom_brand_id'=>$retaining_array['bottom_brand_id'],
+                    'bottom_size_chart_id'=>$retaining_array['bottomSizeChartId'],
+                    'dress_brand_id'=>$retaining_array['dress_brand_id'],
+                    'dress_size_chart_id'=>$retaining_array['dressSizeChartId'],
             ));
   
     }
@@ -493,64 +463,32 @@ public function fittingRoomImageEditAction() {
     public function renderThisAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-$size_chart_helper = $this->get('admin.helper.sizechart');
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+#-----------------------------Helper Initialize-------------------------------------------------------------#        
+        $size_chart_helper = $this->get('admin.helper.sizechart');
+        $user = $this->get('user.helper.user');
+        $measurement_helper = $this->get('measurement.helper.measurement');
+#----------------------------End Of Helper Intialization-----------------------------------------------------#        
+        $entity=$user->find($id);
         $measurement = $entity->getMeasurement();
 
+        
         if ($entity->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'),$size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'),$size_chart_helper->getBrandArray('Bottom'),$size_chart_helper->getBrandArray('Dress')), $measurement);
         }
-#----------------------Code For Value Retaing ------------------------------------------------------------------------#
-        $top_size_chart=$measurement->getTopFittingSizeChart();
-        $bottom_size_chart=$measurement->getBottomFittingSizeChart();
-        $dress_size_chart=$measurement->getDressFittingSizeChart();
         
-       #---Getting the Top Size Chart --------#
-        if ($top_size_chart) {
-            $em = $this->getDoctrine()->getManager();
-            $topSizeChartId=$top_size_chart->getId();
-            $top_brand=$top_size_chart->getBrand();
-            $top_brand_id=$top_brand->getId();
-        }else{
-            $top_brand_id=Null;
-            $topSizeChartId=Null;
-        }    
-        
-     #---Getting The Bottom Size Chart--------#   
-        if($bottom_size_chart){
-            $bottomSizeChartId=$bottom_size_chart->getId();
-            $bottom_brand=$bottom_size_chart->getBrand();
-            $bottom_brand_id=$bottom_brand->getId();
-        }else{
-            $bottom_brand_id=Null;
-            $bottomSizeChartId=Null;
-        }
-     
-    #---Getting The Dress Size Chart-----------#
-        if($dress_size_chart){
-            $dressSizeChartId=$dress_size_chart->getID();
-            $dress_brand=$dress_size_chart->getBrand();
-            $dress_brand_id=$dress_brand->getId();
-            }else{
-            $dress_brand_id=Null;
-            $dressSizeChartId=Null;
-        }
-       
-     #--End Of Suresh Code---------------------#
-
+        $retaining_array=$measurement_helper->measurementRetain($measurement);
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
-                    'top_brand_id'=>$top_brand_id,
-                    'top_size_chart_id'=>$topSizeChartId,
-                    'bottom_brand_id'=>$bottom_brand_id,
-                    'bottom_size_chart_id'=>$bottomSizeChartId,
-                    'dress_brand_id'=>$dress_brand_id,
-                    'dress_size_chart_id'=>$dressSizeChartId,
+                    'top_brand_id'=>$retaining_array['top_brand_id'],
+                    'top_size_chart_id'=>$retaining_array['topSizeChartId'],
+                    'bottom_brand_id'=>$retaining_array['bottom_brand_id'],
+                    'bottom_size_chart_id'=>$retaining_array['bottomSizeChartId'],
+                    'dress_brand_id'=>$retaining_array['dress_brand_id'],
+                    'dress_size_chart_id'=>$retaining_array['dressSizeChartId'],
             ));
     }
 

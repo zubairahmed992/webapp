@@ -24,13 +24,11 @@ class ProfileController extends Controller {
     public function aboutMeAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
+        $size_chart_helper = $this->get('admin.helper.sizechart');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $measurement = $entity->getMeasurement();
-
-
 
         if ($entity->getGender() == 'm') {
             $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
@@ -38,8 +36,7 @@ class ProfileController extends Controller {
             $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
         }
 
-        $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
-
+        $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'validation_groups' => array('profile_measurement'),
@@ -53,7 +50,9 @@ class ProfileController extends Controller {
     public function aboutMeUpdateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
+        
+        $size_chart_helper = $this->get('admin.helper.sizechart');
+        
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
@@ -72,7 +71,7 @@ class ProfileController extends Controller {
         $em->persist($measurement);
         $em->flush();
         $this->get('session')->setFlash('success', 'Your measurement information has been saved.');
-      $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+      $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
 
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
@@ -108,13 +107,14 @@ class ProfileController extends Controller {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
 
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+        $user_helper = $this->get('user.helper.user');
+        $entity=$user_helper->find($id);
+        
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
 
         if ($userForm->isValid()) {
+            
             $getAvatar = $entity->getAvatar();
             $entity->uploadAvatar();
             $em->persist($entity);
@@ -262,16 +262,16 @@ public function passwordResetUpdateAction(Request $request) {
     public function profileSizeChartSizesAction()
     {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
+        $size_chart_helper = $this->get('admin.helper.sizechart');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
         
         $measurement = $entity->getMeasurement(); 
        
         if ($entity->getGender() == 'm') {
-            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom')), $measurement);
+            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom')), $measurement);
         } else {
-            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
         $brandSizeChartForm->bind($this->getRequest());
         $request_array = $this->getRequest()->get('brand_size_chart');
@@ -329,23 +329,6 @@ public function passwordResetUpdateAction(Request $request) {
     private function addUserSurveyForm() {
         $builder = $this->createFormBuilder();
         return $builder->getForm();
-    }
-
-    //------------------------------------------------------------------------
-    //methods will be moved somewhere on refactoring ------------------------------
-    //------------------------------------------------------------------------
-
-    private function getBrandArray($target) {
-
-        $brands = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                ->getBrandsByTarget($target);
-
-        $brands_array = array();
-        foreach ($brands as $i) {
-            $brands_array[$i['id']] = $i['name'];
-        }
-        return $brands_array;
     }
 
 }
