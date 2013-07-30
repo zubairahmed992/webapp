@@ -1,0 +1,7 @@
+<div><h1>{{title}}</h1></div>
+{%for p in product_list%}
+{{p.name}}<br>
+{%if p.displayProductColor%}
+<img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}"/>
+{%endif%}
+{%endfor%}

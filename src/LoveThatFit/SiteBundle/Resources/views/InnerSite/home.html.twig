@@ -41,24 +41,22 @@
     </div>
    
 
-</div>
-    <div><h1>New Arrivals</h1></div>
+</div>    
     <div>
-    {% render 'LoveThatFitSiteBundle:InnerSite:productsLatest' with {'gender' : app.user.gender} %}
+    {{ include('LoveThatFitSiteBundle:InnerSite:_homeproducts.html.twig',{'product_list':latest,'title':'New Arrivals'})}}
    </div>
-    <div><h1>Friends Favourites</h1></div>
     <div>
-    {% render 'LoveThatFitSiteBundle:InnerSite:productFriendsFavourites' with {'gender' : app.user.gender} %}
-    </div>        
-    <div><h1>Current Tried On</h1></div>
-    <div>
-    {% render 'LoveThatFitSiteBundle:InnerSite:productsHotest' with {'gender' : app.user.gender} %}
-    </div>
-    <div><h1>LTF Recommendations</h1></div>
-    <div>
-    {% render 'LoveThatFitSiteBundle:InnerSite:productRecomended' with {'gender' : app.user.gender} %}
-    </div>
+    {{ include('LoveThatFitSiteBundle:InnerSite:_homeproducts.html.twig',{'product_list':favourite,'title':'Fiends Favourites'})}}
+   </div>
     
+    <div>
+    {{ include('LoveThatFitSiteBundle:InnerSite:_homeproducts.html.twig',{'product_list':hotest,'title':'Most Tried Products'})}}
+   </div>
+    
+    
+    <div>
+    {{ include('LoveThatFitSiteBundle:InnerSite:_homeproducts.html.twig',{'product_list':recomended,'title':'LtF Recommended'})}}
+   </div>
 </div>
 
 
