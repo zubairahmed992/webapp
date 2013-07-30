@@ -12,6 +12,19 @@ security:
             
       
     firewalls:
+        admin_area:
+            pattern:    ^/admin
+            anonymous: ~
+            form_login:
+                login_path:  /admin/login
+                check_path:  /admin/login_check
+                username_parameter: _username
+                password_parameter: _password
+                
+            logout:
+               path:   /admin/logout
+               target: /admin/login
+ 
         secured_area:
             pattern:    ^/
             anonymous: ~
@@ -24,7 +37,7 @@ security:
             logout:
                path:   /logout
                target: /login
-               success_handler: authentication_handler
+#               success_handler: authentication_handler
             #http_basic:
                 #realm: "Secured Demo Area"
 

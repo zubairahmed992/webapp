@@ -12,7 +12,7 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\UserBundle\Entity\User
             
-  authentication_handler:
-        class: LoveThatFit\UserBundle\Handler\AuthenticationHandler
-        arguments:
-            router: "@router"
+#  authentication_handler:
+#        class: LoveThatFit\UserBundle\Handler\AuthenticationHandler
+#        arguments:
+#            router: "@router"
