@@ -64,6 +64,119 @@ public function find($id)
 {
     return $this->repo->find($id);
 }
+
+#-------------------------Evaluate Size Chart ------------------------------------------------------------------------#
+//-------------------------------------------------------------------------------------
+    public function evaluateWithSizeChart($measurement) {
+
+        if (is_null($measurement)) {
+            return;
+        }
+
+        $bust_size = 0;
+        $hip_size = 0;
+
+        if ($measurement->top_size) {
+
+            $top_size = $this->repo->findOneById($measurement->top_size);
+
+            $measurement->setTopFittingSizeChart($top_size); // set the selected size chart to the measurement table to have association
+
+            if ($top_size) {
+
+                if ($measurement->getNeck() == null || $measurement->getNeck() == 0) {
+                    $measurement->setNeck($top_size->getNeck());
+                }
+                if ($measurement->getBust() == null || $measurement->getBust() == 0) {
+                    $measurement->setBust($top_size->getBust());
+                    $bust_size = $top_size->getBust();
+                }
+                if ($measurement->getChest() == null || $measurement->getChest() == 0) {
+                    $measurement->setChest($top_size->getChest());
+                }
+                if ($measurement->getSleeve() == null || $measurement->getSleeve() == 0) {
+                    $measurement->setSleeve($top_size->getSleeve());
+                }
+                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
+                    $measurement->setBack($top_size->getBack());
+                }
+            }
+        }
+
+        if ($measurement->bottom_size) {
+
+            $bottom_size = $this->repo->findOneById($measurement->bottom_size);
+
+            $measurement->setBottomFittingSizeChart($bottom_size); // set the selected size chart to the measurement table to have association
+
+            if ($bottom_size) {
+                if ($measurement->getWaist() == null || $measurement->getWaist() == 0) {
+                    $measurement->setWaist($bottom_size->getWaist());
+                }
+                if ($measurement->getHip() == null || $measurement->getHip() == 0) {
+                    $measurement->setHip($bottom_size->getHip());
+                    $hip_size = $bottom_size->getHip();
+                }
+                if ($measurement->getInseam() == null || $measurement->getInseam() == 0) {
+                    $measurement->setInseam($bottom_size->getInseam());
+                }
+                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
+                    $measurement->setBack($bottom_size->getBack());
+                }
+            }
+        }
+
+        if ($measurement->dress_size) {
+
+            $dress_size = $this->repo->findOneById($measurement->dress_size);
+
+            $measurement->setDressFittingSizeChart($dress_size); // set the selected size chart to the measurement table to have association
+
+            if ($dress_size) {
+
+                if ($measurement->getBust() == null || $measurement->getBust() == 0) {
+                    $measurement->setBust($dress_size->getBust());
+                } else {
+                    // If user already selected a brand & size for Top take average value
+                    if ($bust_size > 0 && $dress_size->getBust() > 0) {
+                        $measurement->setBust(($bust_size + $dress_size->getBust()) / 2);
+                    } else {//this condition will not be called as per current condition/ refactor                        
+                        $measurement->setBust($dress_size->getBust());
+                    }
+                }
+
+                if ($measurement->getHip() == null || $measurement->getHip() == 0) {
+                    $measurement->setHip($dress_size->getHip());
+                } else {
+                    // If user already selected a brand & size for bottom/pant
+                    if ($hip_size > 0 && $dress_size->getHip() > 0) {
+                        $dress_size->getHip(($hip_size + $dress_size->getHip()) / 2);
+                    } else {//this condition will not be called as per current condition/ refactor                                                
+                        $measurement->setHip($dress_size->getHip());
+                    }
+                }
+
+                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
+                    $measurement->setBack($dress_size->getBack());
+                }
+            }
+        }
+
+        return $measurement;
+    }
+    
+    //------------------------------------------------------------------------
+
+    public function getBrandArray($target) {
+
+        $brands = $this->repo->getBrandsByTarget($target);
+        $brands_array = array();
+        foreach ($brands as $i) {
+            $brands_array[$i['id']] = $i['name'];
+        }
+        return $brands_array;
+    }
+#---------------------------------------------------------------------------------------------------------------------#
 #-------------------------Web Service for size chart for registration step two-------------------------------------------------#
 public function sizeChartList($request_array)
 {

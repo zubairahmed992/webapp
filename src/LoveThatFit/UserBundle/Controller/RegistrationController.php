@@ -147,6 +147,7 @@ class RegistrationController extends Controller {
 //----------------------------------------------------------------
 
     public function registrationCreateAction() {
+        $size_chart_helper = $this->get('admin.helper.sizechart');
         try {
             $entity = new User();
             $form = $this->createForm(new RegistrationType(), $entity);
@@ -193,9 +194,9 @@ class RegistrationController extends Controller {
                 $this->get('mail_helper')->sendRegistrationEmail($entity);
 
                 if ($entity->getGender() == 'm') {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
                 } else {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
                 }
                
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
@@ -237,16 +238,16 @@ class RegistrationController extends Controller {
     public function measurementCreateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
+        $size_chart_helper = $this->get('admin.helper.sizechart');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
         $measurement = $entity->getMeasurement();
 
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
 
@@ -273,8 +274,9 @@ class RegistrationController extends Controller {
             }
         }
 
-        //--------------------------------
-        $measurement = $this->evaluateWithSizeChart($measurement);
+        #-------------Evalutae Size Chart From Size Chart Helper ----------------------#
+        $size_chart_helper = $this->get('admin.helper.sizechart');
+        $measurement = $size_chart_helper->evaluateWithSizeChart($measurement);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         $em->persist($measurement);
@@ -294,16 +296,18 @@ class RegistrationController extends Controller {
     }
 //-----------------------------------------------------------------------------
  public function measurementEditAction() {
-
+ $size_chart_helper = $this->get('admin.helper.sizechart');
+        
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
         $measurement = $entity->getMeasurement();
 
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+            
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType( $size_chart_helper->getBrandArray('Top'),  $size_chart_helper->getBrandArray('Bottom'),  $size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType( $size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
          #---Suresh Code---------#
         $top_size_chart=$measurement->getTopFittingSizeChart();
@@ -489,17 +493,17 @@ public function fittingRoomImageEditAction() {
     public function renderThisAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
+$size_chart_helper = $this->get('admin.helper.sizechart');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
         $measurement = $entity->getMeasurement();
-//return new Response(var_dump($this->getBrandArray('Top')));        
+
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'),$size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($this->getBrandArray('Top'), $this->getBrandArray('Bottom'), $this->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'),$size_chart_helper->getBrandArray('Bottom'),$size_chart_helper->getBrandArray('Dress')), $measurement);
         }
-         #---Suresh Code---------#
+#----------------------Code For Value Retaing ------------------------------------------------------------------------#
         $top_size_chart=$measurement->getTopFittingSizeChart();
         $bottom_size_chart=$measurement->getBottomFittingSizeChart();
         $dress_size_chart=$measurement->getDressFittingSizeChart();
@@ -510,9 +514,6 @@ public function fittingRoomImageEditAction() {
             $topSizeChartId=$top_size_chart->getId();
             $top_brand=$top_size_chart->getBrand();
             $top_brand_id=$top_brand->getId();
-            //$top_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($topSizeChartId);
-            //$top_brand_id=$top_brand_id[0]['brand'];
-            
         }else{
             $top_brand_id=Null;
             $topSizeChartId=Null;
@@ -523,24 +524,17 @@ public function fittingRoomImageEditAction() {
             $bottomSizeChartId=$bottom_size_chart->getId();
             $bottom_brand=$bottom_size_chart->getBrand();
             $bottom_brand_id=$bottom_brand->getId();
-            //$em = $this->getDoctrine()->getManager();
-           // $bottom_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($BottomSizeChartId);
-            //$bottom_brand_id=$bottom_brand_id[0]['brand'];
         }else{
             $bottom_brand_id=Null;
             $bottomSizeChartId=Null;
         }
-        
      
     #---Getting The Dress Size Chart-----------#
         if($dress_size_chart){
             $dressSizeChartId=$dress_size_chart->getID();
             $dress_brand=$dress_size_chart->getBrand();
             $dress_brand_id=$dress_brand->getId();
-            //$em = $this->getDoctrine()->getManager();
-            //$dress_brand_id = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findBrandBySizeChartId($DressSizeChartId);
-            //$dress_brand_id=$dress_brand_id[0]['brand'];
-        }else{
+            }else{
             $dress_brand_id=Null;
             $dressSizeChartId=Null;
         }
@@ -560,22 +554,6 @@ public function fittingRoomImageEditAction() {
             ));
     }
 
-//------------------------------------------------------------------------
-//methods will be moved somewhere on refactoring ------------------------------
-//------------------------------------------------------------------------
-
-    private function getBrandArray($target) {
-
-        $brands = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                ->getBrandsByTarget($target);
-
-        $brands_array = array();
-        foreach ($brands as $i) {
-            $brands_array[$i['id']] = $i['name'];
-        }
-        return $brands_array;
-    }
 
 //------------------------- Login after registration------------------------------
 
@@ -601,106 +579,6 @@ public function fittingRoomImageEditAction() {
         return $measurement;
     }
 
-//-------------------------------------------------------------------------------------
-    private function evaluateWithSizeChart($measurement) {
-
-        if (is_null($measurement)) {
-            return;
-        }
-
-        $bust_size = 0;
-        $hip_size = 0;
-
-        $em = $this->getDoctrine()->getManager();
-
-        if ($measurement->top_size) {
-
-            $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->top_size);
-
-            $measurement->setTopFittingSizeChart($top_size); // set the selected size chart to the measurement table to have association
-
-            if ($top_size) {
-
-                if ($measurement->getNeck() == null || $measurement->getNeck() == 0) {
-                    $measurement->setNeck($top_size->getNeck());
-                }
-                if ($measurement->getBust() == null || $measurement->getBust() == 0) {
-                    $measurement->setBust($top_size->getBust());
-                    $bust_size = $top_size->getBust();
-                }
-                if ($measurement->getChest() == null || $measurement->getChest() == 0) {
-                    $measurement->setChest($top_size->getChest());
-                }
-                if ($measurement->getSleeve() == null || $measurement->getSleeve() == 0) {
-                    $measurement->setSleeve($top_size->getSleeve());
-                }
-                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
-                    $measurement->setBack($top_size->getBack());
-                }
-            }
-        }
-
-        if ($measurement->bottom_size) {
-
-            $bottom_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->bottom_size);
-
-            $measurement->setBottomFittingSizeChart($bottom_size); // set the selected size chart to the measurement table to have association
-
-            if ($bottom_size) {
-                if ($measurement->getWaist() == null || $measurement->getWaist() == 0) {
-                    $measurement->setWaist($bottom_size->getWaist());
-                }
-                if ($measurement->getHip() == null || $measurement->getHip() == 0) {
-                    $measurement->setHip($bottom_size->getHip());
-                    $hip_size = $bottom_size->getHip();
-                }
-                if ($measurement->getInseam() == null || $measurement->getInseam() == 0) {
-                    $measurement->setInseam($bottom_size->getInseam());
-                }
-                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
-                    $measurement->setBack($bottom_size->getBack());
-                }
-            }
-        }
-
-        if ($measurement->dress_size) {
-
-            $dress_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($measurement->dress_size);
-
-            $measurement->setDressFittingSizeChart($dress_size); // set the selected size chart to the measurement table to have association
-
-            if ($dress_size) {
-
-                if ($measurement->getBust() == null || $measurement->getBust() == 0) {
-                    $measurement->setBust($dress_size->getBust());
-                } else {
-                    // If user already selected a brand & size for Top take average value
-                    if ($bust_size > 0 && $dress_size->getBust() > 0) {
-                        $measurement->setBust(($bust_size + $dress_size->getBust()) / 2);
-                    } else {//this condition will not be called as per current condition/ refactor                        
-                        $measurement->setBust($dress_size->getBust());
-                    }
-                }
-
-                if ($measurement->getHip() == null || $measurement->getHip() == 0) {
-                    $measurement->setHip($dress_size->getHip());
-                } else {
-                    // If user already selected a brand & size for bottom/pant
-                    if ($hip_size > 0 && $dress_size->getHip() > 0) {
-                        $dress_size->getHip(($hip_size + $dress_size->getHip()) / 2);
-                    } else {//this condition will not be called as per current condition/ refactor                                                
-                        $measurement->setHip($dress_size->getHip());
-                    }
-                }
-
-                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
-                    $measurement->setBack($dress_size->getBack());
-                }
-            }
-        }
-
-        return $measurement;
-    }
 
 }
 

@@ -208,7 +208,7 @@ class ProductController extends Controller {
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
         $product_id = $request_array['id'];
-        $user_id== $request_array['user_id'];
+        $user_id= $request_array['user_id'];
        if(!$user_id)
        {
             return new Response(json_encode(array('Message' => 'User Missing')));

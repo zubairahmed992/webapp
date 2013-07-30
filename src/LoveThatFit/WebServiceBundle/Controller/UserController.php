@@ -372,7 +372,7 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $email = $request_array['email'];
-       #---------------------------Authentication of Token--------------------------------------------#
+#---------------------------Authentication of Token--------------------------------------------#
          $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
