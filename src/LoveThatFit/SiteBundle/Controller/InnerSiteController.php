@@ -27,13 +27,22 @@ class InnerSiteController extends Controller {
 
         //-------------------------------------------------------------------------
 
-    public function homeAction() {
-        
-        $gender = $this->get('security.context')->getToken()->getUser()->getGender();
+    public function homeAction($page_number = 0, $limit = 0) {
+       $gender= $this->get('security.context')->getToken()->getUser()->getGender();       
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number = 0, $limit = 0);        
-        return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig',array('lastest'=>$entity));
+        $latest = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
+        $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        $favourite = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
+        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);        
+         return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
+            'latest'=>$latest,
+            'hotest'=>$hotest,
+            'favourite'=>$favourite,
+            'recomended'=>$recomended,            
+           ));
     }
+    
+    
 
 ////////////////////////////////// Product Slider /////////////////////////////////////////////////////////////////
     public function productsAction($gender, $page_number = 0, $limit = 0) {
@@ -82,7 +91,7 @@ class InnerSiteController extends Controller {
     private function renderProductTemplate($entity, $page_number, $limit) {
         return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
     }
-
+    
 ///////////////////////////////////////////////////////////////////////////////////////////////////
     //----------------------------------- Sample Clothing Type ..............
     public function productsClothingTypeAction($gender) {
@@ -195,6 +204,9 @@ class InnerSiteController extends Controller {
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductItemByUser($user_id, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);        
     }
+    
+    
+    
 
 //----------------------------------------------------------------------------------    
     public function countMyColosetAction() {
