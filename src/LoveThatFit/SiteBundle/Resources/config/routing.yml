@@ -61,6 +61,18 @@ ajax_my_closet_count:
 ajax_product_latest:
     pattern:  /ajax/products/{gender}/latest/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsLatest, page_number: 0, limit: 0}
+    
+ajax_product_recent_triedon:
+    pattern:  /ajax/products/{gender}/recent/triedon/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:recentProductTriedOn, page_number: 0, limit: 0}
+    
+ajax_product_most_favorite:
+    pattern:  /ajax/products/most/favorite/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:mostProductFavorite, page_number: 0, limit: 0}
+    
+ajax_product_ltf_recommended:
+    pattern:  /ajax/products/{gender}/ltf/recommended/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ltfProductRecommended, page_number: 0, limit: 0}    
 
 ajax_product_hotest:
     pattern:  /ajax/products/{gender}/hotest/{page_number}/{limit}
