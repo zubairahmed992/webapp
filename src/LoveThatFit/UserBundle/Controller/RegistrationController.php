@@ -153,6 +153,7 @@ class RegistrationController extends Controller {
 
     public function registrationCreateAction() {
         $size_chart_helper = $this->get('admin.helper.sizechart');
+        $user_helper=$this->get('user.helper.user');
         try {
             $entity = new User();
             $form = $this->createForm(new RegistrationType(), $entity);
@@ -165,9 +166,12 @@ class RegistrationController extends Controller {
 
             if ($form->isValid()) {
 
+                $entity = $user_helper->encodePassword($entity);
+                
+/*
                 $entity->setCreatedAt(new \DateTime('now'));
                 $entity->setUpdatedAt(new \DateTime('now'));
-
+                
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($entity);
                 $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
@@ -180,7 +184,8 @@ class RegistrationController extends Controller {
                 
                 $em->persist($entity);
                 $em->flush();
-
+*/
+                
                 // Adding Measurement record for the user for the later usage
                 
                 /*$em->persist($entity);
@@ -193,6 +198,8 @@ class RegistrationController extends Controller {
                 $em->flush();
 */
                 //Login after registration, the rest of the steps are secured for logged In users access only
+                
+                $measurement=$entity->getMeasurement();
                 $this->getLoggedIn($entity);
 
                 //send registration email ....            

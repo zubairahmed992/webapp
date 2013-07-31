@@ -68,6 +68,27 @@ public function saveUser(User $user)
 }
 //-------------------------------------------------------
 
+public function encodePassword(User $user)
+{
+        $user->setCreatedAt(new \DateTime('now'));
+        $user->setUpdatedAt(new \DateTime('now'));
+
+    $factory = $this->container->get('security.encoder_factory');
+    $encoder = $factory->getEncoder($user);
+    $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+    $user->setPassword($password);
+    $user->generateAuthenticationToken();
+    
+    $measurement = new Measurement();
+    $user->setMeasurement($measurement);
+    
+    $this->saveUser($user);
+    return $user;
+    
+}
+
+//-------------------------------------------------------
+
 public function find($id)
 {
     return $this->repo->find($id);
