@@ -7,8 +7,8 @@ inner_site_home:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:home}
 
 inner_site_index:
-    pattern:  /inner_site/index
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index}
+    pattern:  /inner_site/index/{type}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index, type: null}
 
 about_us:
     pattern:  /about_us
