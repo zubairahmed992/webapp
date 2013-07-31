@@ -298,6 +298,7 @@ class ProductRepository extends EntityRepository {
         }
     }
     
+    
     public function findProductByItemUser($page_number=0 , $limit=0) {
             $query = $this->getEntityManager()
                         ->createQuery("
@@ -584,6 +585,86 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
+    
+    
+    
+    
+    
+    public function findHotestPropductTryMostByUser($user_id,$gender, $page_number = 0, $limit = 20)
+    {
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                            ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE p.gender = :gender AND p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
+            ORDER BY uih.count DESC"
+                            )->setParameters(array('user_id' =>$user_id,'gender'=>$gender));
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE p.gender = :gender AND p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
+            ORDER BY uih.count DESC "
+                    )->setParameters(array('user_id' =>$user_id,'gender'=>$gender))
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findOneByName($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p     
+                             JOIN p.brand b   
+                             WHERE b.name = :name")
+                        ->setParameters(array('name' => $name));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findProductByEllieHM($brand,$gender,$page_number, $limit)
+    {      if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                            ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.brand b
+            WHERE b.name = :name
+            AND p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''"
+                            )->setParameters(array('name'=>$brand,'gender' => $gender));
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.brand b
+            WHERE b.name = :name
+            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
+                    )->setParameters(array('name'=>$brand,'gender' => $gender))
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }  
+    }
+    
+    
+    
+    
+    
+    
     
     public function findTryProductHistory($user_id , $page_number=0 , $limit=0)
     {

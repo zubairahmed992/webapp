@@ -73,6 +73,37 @@ class InnerSiteController extends Controller {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
     
+    public function recentProductTriedOnAction($gender, $page_number = 0, $limit = 0)
+    {
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMostByUser($user_id,$gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    
+    public function mostProductFavoriteAction($page_number = 0, $limit = 0)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    
+    public function ltfProductRecommendedAction($gender, $page_number = 0, $limit = 0)
+    {
+        $brand='Ellie';
+        $em = $this->getDoctrine()->getManager();
+        $count =count($em->getRepository('LoveThatFitAdminBundle:Product')->findOneByName($brand));
+        if($count>0)
+        {        
+          $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByEllieHM($brand,$gender,$page_number, $limit);
+        }else
+        {
+            $brand='H&M';
+            $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByEllieHM($brand,$gender,$page_number, $limit);
+        }
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    
     //----------------------------------- by Brand ..............
     public function productsByBrandAction($gender, $brand_id, $page_number = 0, $limit = 0) {
         $em = $this->getDoctrine()->getManager();
