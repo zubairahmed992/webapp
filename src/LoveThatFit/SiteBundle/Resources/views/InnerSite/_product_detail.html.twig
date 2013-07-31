@@ -1,6 +1,18 @@
 
 <script language="javascript">
-    
+
+function chk_applied_loaded(){
+    photo_width_a =  document.getElementById('applied_prod').width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_applied_loaded, 200);
+                return false;
+            }else {
+                $("#top_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                
+            }
+        }
+
 function apply_prod(size_id,product_id,color_id){
     //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
     
@@ -13,10 +25,25 @@ function apply_prod(size_id,product_id,color_id){
     //alert(apply_img_url);
     
     if(prod_type_top) {
-        $("#top_dropable").fadeOut("500").html("<img src='"+apply_img_url+"'/>").fadeIn("500").addClass("disp_blk");
+        
+        //$("#play_area").prepend('<div class="uploading_in_progress"></div>');
+        
+        $("#top_dropable").fadeOut("200", function (){
+            $("#top_dropable").html("<img id='applied_prod' src='"+apply_img_url+"'/>")
+            //$("#user_dummy_img_hldr").prepend('<div class="uploading_in_progress"></div>');
+            chk_applied_loaded();
+            
+            
+         //   fadeIn("500",function(){
+          //      $("#top_dropable").addClass("disp_blk");
+           // });
+        });
+        
+        
         
         var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
 //        var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            
             
             $.ajax({
                 url: my_curr_prod,
@@ -60,6 +87,7 @@ function select_size(size_id,product_id,color_id)
        var size= size_id.value;
        base_url=$('#ajax_product_base_url').text();
        $('.featured_box'+product_id+' .transp_list').removeClass("hide").addClass("disp_blk");
+       $("#user_dummy_img_hldr").prepend('<div class="uploading_in_progress"></div>');
         $.ajax({
             
             url:  base_url+ product_id+ "/" + color_id + "/" +size,
