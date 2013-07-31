@@ -2895,3 +2895,7 @@ padding-bottom: 0px;
 .timeline{
     background-color: none!important;
 }
+
+.main_log_box{
+    margin-left: 6px;
+}
