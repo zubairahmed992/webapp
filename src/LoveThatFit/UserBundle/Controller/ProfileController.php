@@ -107,7 +107,7 @@ class ProfileController extends Controller {
     public function accountSettingsUpdateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
+    $em = $this->getDoctrine()->getManager();
         $user_helper = $this->get('user.helper.user');
         $entity=$user_helper->find($id);
         
