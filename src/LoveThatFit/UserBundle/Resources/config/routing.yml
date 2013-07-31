@@ -132,13 +132,13 @@ forgot_password_update:
     pattern:   /forgot_password_update/{id}
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdate }
 
-password_reset_form:
-    pattern:   /password_reset_form
-    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordResetForm }
-
-password_update:
-    pattern:   /password_update/{id}
-    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordUpdate }
+#password_reset_form:
+#    pattern:   /password_reset_form
+#    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordResetForm }
+#
+#password_update:
+#    pattern:   /password_update/{id}
+#    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordUpdate }
 
 
 #----------------------------------------  Dev/Testing ------------------------------------------------  

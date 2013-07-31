@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 class RegistrationController extends Controller {
 
 //------------------------- Password reset ------------------------------------------------
-
+/*
     public function passwordResetFormAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -38,10 +38,15 @@ class RegistrationController extends Controller {
                     'invalid_message' => 'The password fields must match.',
                 ))
                 ->getForm();
+          
+         
+        //$form = $this->createForm(new UserPasswordChangeType(), $entity);
+        
         return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
                     'form' => $form->createView(), 'entity' => $entity));
     }
 
+    
     //---------------------------------------------------------------------------------
     public function passwordUpdateAction(Request $request, $id) {
 
@@ -95,7 +100,7 @@ class RegistrationController extends Controller {
                         'form' => $form->createView()));
         }
     }
-
+*/
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
 //------------------------- Registration Process ------------------------------------------
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
