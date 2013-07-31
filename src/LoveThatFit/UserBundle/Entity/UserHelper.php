@@ -70,22 +70,42 @@ public function saveUser(User $user)
 
 public function encodePassword(User $user)
 {
-        $user->setCreatedAt(new \DateTime('now'));
-        $user->setUpdatedAt(new \DateTime('now'));
-
     $factory = $this->container->get('security.encoder_factory');
     $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+    return $password;
+}
+#------------------------Returning Factory---------------------#
+public function factoryReturn()
+{
+    $factory = $this->container->get('security.encoder_factory');
+    return $factory;
+}
+
+#-----------------------Save User at Registeration  ------------------------------------------------------------------------------#
+public function registerUser(User $user){
+    
+    $user->setCreatedAt(new \DateTime('now'));
+    $user->setUpdatedAt(new \DateTime('now'));
+    $password=$this->encodePassword($user);
     $user->setPassword($password);
     $user->generateAuthenticationToken();
-    
     $measurement = new Measurement();
     $user->setMeasurement($measurement);
-    
     $this->saveUser($user);
     return $user;
-    
-}
+}  
+#-----------------------Get User Measurment ------------------------------------------#
+public function getMeasurement($user) {
+        $measurement = $user->getMeasurement();
+
+        if (!$measurement) {
+            $measurement = new Measurement();
+            $measurement->setUser($user);
+        }
+        return $measurement;
+    }
+
 
 //-------------------------------------------------------
 
@@ -149,6 +169,101 @@ public function findByEmail($email)
         }
         
     }
+#---------------------------------------------Login Web Service -----------------------------------#
+    public function loginWebService($entity,$password,$email){
+          //$request = $this->getRequest();
+                $authTokenWebService=$entity->getAuthToken();
+                $user_db_password = $entity->getPassword();
+                $salt_value_db = $entity->getSalt();
+
+                $factory = $this->factoryReturn();
+                $encoder = $factory->getEncoder($entity);
+                $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
+               
+                if ($user_db_password == $password_old_enc) {
+                    $user_id=$entity->getId();
+                    $first_name=$entity->getFirstName();
+                    $last_name=$entity->getLastName();
+                    $gender=$entity->getGender();
+                    $zipcode=$entity->getZipcode();
+                    $birth_date=$entity->getBirthDate();
+                    $image=$entity->getImage();
+                    $avatar=$entity->getAvatar();
+                    
+                   $userinfo=array();
+                   $userinfo['id']=$user_id;
+                   $userinfo['email']=$email;
+                   $userinfo['first_name']=$first_name;
+                   $userinfo['last_name']=$last_name;
+                   $userinfo['zipcode']=$zipcode;
+                   $userinfo['gender']=$gender;
+                   $userinfo['authTokenWebService']=$authTokenWebService;
+                  
+                   if(isset($birth_date)){
+                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
+                   
+                   $userinfo['image']=$image;
+                   $userinfo['avatar']=$avatar;
+                 
+                 
+                $entity = $this->repo->find($user_id);
+                $measurement = $entity->getMeasurement();
+               
+                if($measurement)
+                {
+                $userinfo['weight'] = $measurement->getWeight();
+                $userinfo['height'] = $measurement->getHeight();
+                $userinfo['waist'] = $measurement->getWaist();
+                $userinfo['hip'] = $measurement->getHip();
+                $userinfo['bust'] = $measurement->getBust();
+                $userinfo['chest'] = $measurement->getChest();
+                $userinfo['neck'] = $measurement->getNeck();
+                $userinfo['inseam'] = $measurement->getInseam();
+                $userinfo['back'] = $measurement->getBack();
+                $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+                $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+                   
+           }
+           else
+           {
+                $userinfo['weight'] = 0;
+                $userinfo['height'] = 0;
+                $userinfo['hip'] = 0;
+                $userinfo['bust'] = 0;
+                $userinfo['chest'] = 0;
+                $userinfo['neck'] = 0;
+                $userinfo['inseam'] = 0;
+                $userinfo['back'] = 0;
+                $userinfo['iphone_shoulder_height'] = 0;
+                $userinfo['iphone_outseam'] = 0;
+                }    
+                if (!$userinfo['back']) {
+                    $userinfo['back'] = 15.5;
+                }
+                if (!$userinfo['iphone_shoulder_height']) {
+                        $userinfo['iphone_shoulder_height'] = 150;
+                    }
+                 
+                    if (!$userinfo['iphone_outseam']) {
+                        $userinfo['iphone_outseam'] = 400;
+                    }
+                     return $userinfo;
+                } else {
+                     return array('Message'=>'Invalid Password');
+                }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
     
 #---------------------------------Web Service For Registration--------------------#
   public function registration($request_array)
@@ -184,7 +299,7 @@ public function findByEmail($email)
   }
   #----------------------------------------------------------------------------------------------#
 
-    private function isDuplicateEmail($id, $email) {
+    public function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
     }
     

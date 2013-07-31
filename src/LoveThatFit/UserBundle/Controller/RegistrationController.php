@@ -159,14 +159,14 @@ class RegistrationController extends Controller {
             $form = $this->createForm(new RegistrationType(), $entity);
             $form->bind($this->getRequest());
 
-            if ($this->isDuplicateEmail(Null, $entity->getEmail())) {
+            if ($user_helper->isDuplicateEmail(Null, $entity->getEmail())) {
                 $form->get('email')->addError(new FormError('This email address has already been taken.'));
             }
 
 
             if ($form->isValid()) {
 
-                $entity = $user_helper->encodePassword($entity);
+                $entity = $user_helper->registerUser($entity);
                 
 /*
                 $entity->setCreatedAt(new \DateTime('now'));
@@ -250,9 +250,10 @@ class RegistrationController extends Controller {
     public function measurementCreateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user_helper=$this->get('user.helper.user');
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        $entity = $user_helper->find($id);
 
         $measurement = $entity->getMeasurement();
 
@@ -310,10 +311,10 @@ class RegistrationController extends Controller {
  public function measurementEditAction() {
         
         $size_chart_helper = $this->get('admin.helper.sizechart');
-        
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user_helper=$this->get('user.helper.user');
+        $entity = $user_helper->find($id);
          $measurement_helper = $this->get('measurement.helper.measurement');
         $measurement = $entity->getMeasurement();
 
@@ -348,13 +349,14 @@ return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig'
     public function stepFourEditAction() {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        $user_helper=$this->get('user.helper.user');
+        $entity =$user_helper->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
 
-        $measurement = $this->getMeasurement($entity);
+        $measurement = $user_helper->getMeasurement($entity);
 
         $form = $this->createForm(new RegistrationStepFourType(), $entity);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
@@ -373,15 +375,15 @@ return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig'
 public function fittingRoomImageEditAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+$em = $this->getDoctrine()->getManager();
+        $user_helper=$this->get('user.helper.user');
+        $entity =$user_helper->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
 
-        $measurement = $this->getMeasurement($entity);
+        $measurement = $user_helper->getMeasurement($entity);
 
         $form = $this->createForm(new RegistrationStepFourType(), $entity);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
@@ -398,9 +400,9 @@ public function fittingRoomImageEditAction() {
 
 //--------------------------- update fitting room image, 
     public function stepFourCreateAction(Request $request, $id) {
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+$em = $this->getDoctrine()->getManager();
+        $user_helper=$this->get('user.helper.user');
+        $entity =$user_helper->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -434,11 +436,11 @@ public function fittingRoomImageEditAction() {
 //-------------Updates shoulder height & outseam, input via user move sliders on image, form submit via ajax
 
     public function stepFourMeasurementUpdateAction(Request $request, $id) {
+$em = $this->getDoctrine()->getManager();
+        $user_helper=$this->get('user.helper.user');
+        $entity =$user_helper->find($id);
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-        $measurement = $this->getMeasurement($user);
+        $measurement = $user_helper->getMeasurement($user);
 
         $form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $form->bind($request);
@@ -455,11 +457,11 @@ public function fittingRoomImageEditAction() {
 
     //--------------------------------- deals with image submitted from canvas, saves image
     public function stepFourImageUpdateAction() {
-
-        $em = $this->getDoctrine()->getManager();
+$em = $this->getDoctrine()->getManager();
         $id = $_POST['id'];
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+        $user_helper=$this->get('user.helper.user');
+        $entity =$user_helper->find($id);
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -513,13 +515,13 @@ public function fittingRoomImageEditAction() {
     }
 
 //-------------------------------------------------------------------------------------
-    private function isDuplicateEmail($id, $email) {
-        return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
-    }
+//    private function isDuplicateEmail($id, $email) {
+  //      return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
+   // }
 
 //------------------------------ Get Measurement Entity -----------------------
 
-    private function getMeasurement($user) {
+  /*  private function getMeasurement($user) {
         $measurement = $user->getMeasurement();
 
         if (!$measurement) {
@@ -528,7 +530,7 @@ public function fittingRoomImageEditAction() {
         }
         return $measurement;
     }
-
+*/
 
 }
 
