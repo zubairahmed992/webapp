@@ -692,20 +692,26 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-//-------------------------------------------------------------------------------------    
-    public function findMostLiked() {
+
+    
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Product Listing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public function findByGenderMostLiked($gender,$page_number=0, $limit=0) {
             $query = $this->getEntityManager()
                         ->createQuery("
      SELECT p,pi,ps,pc FROM LoveThatFitAdminBundle:Product p
      JOIN p.product_items pi
      JOIN pi.product_color pc
      JOIN pi.product_size ps
-     JOIN pi.users u");
+     JOIN pi.users u
+     where p.gender=:gender")->setParameters(array('gender' =>$gender));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
+
+    
     
 }

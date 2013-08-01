@@ -231,6 +231,39 @@ public function find($id) {
     //               Methods Product listing on index page
     #---------------------------------------------------
     
+    public function listByType($options) {
+        
+            switch ($options['list_type'])
+        {
+        case "latest":        
+        return $this->findByGenderLatest($options['gender']);
+        break;
+    
+        case "most_tried_on":        
+        return $this->findMostTriedOnByGender($options['gender']);
+        break;
+    
+        case "recently_tried_on":        
+        return $this->findRecentlyTriedOnByUser($options['user_id']);
+        break;
+    
+        case "most_faviourite":        
+        return $this->findMostLikedByGender($options['gender']);
+        break ;
+        
+        case "ltf_recommendation":        
+        return $this->findLTFRecomendedByGender($options['gender']);
+        break ;
+            
+        default:
+        return $this->findByGenderLatest($options['gender']);
+        break ;
+        }
+        
+   }
+    #---------------------------------------------------
+    
+    
     public function findByGenderLatest($gender, $page_number=0, $limit=0) {
         return $this->repo->findByGenderLatest($gender, $page_number, $limit);
    }
@@ -245,6 +278,16 @@ public function find($id) {
         return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
    }
     
+   #---------------------------------------------------
+    
+   public function findLTFRecomendedByGender($gender, $page_number=0, $limit=0) {
+        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
+   }
+   #---------------------------------------------------
+    
+   public function findMostLikedByGender($gender, $page_number=0, $limit=0) {
+        return $this->repo->findByGenderMostLiked($gender, $page_number, $limit);        
+   } 
     
     #---------------------------------------------------
     #---------WROK WILL BE DONE I FUTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!----#

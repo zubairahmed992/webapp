@@ -21,8 +21,10 @@ class InnerSiteController extends Controller {
 
     //-------------------------------------------------------------------------
 
-    public function indexAction() {
-        return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig');
+    public function indexAction($list_type) {
+        return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
+            'list_type'=>$list_type,
+           ));
     }
 
         //-------------------------------------------------------------------------
@@ -34,7 +36,7 @@ class InnerSiteController extends Controller {
         $latest = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
         $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
         $favourite = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
-        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByUser($user_id, $page_number, $limit);        
+        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
          return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
             'latest'=>$latest,
             'hotest'=>$hotest,
@@ -46,6 +48,16 @@ class InnerSiteController extends Controller {
     
 
 ////////////////////////////////// Product Slider /////////////////////////////////////////////////////////////////
+    
+      public function productsByTypeAction($list_type='latest', $page_number = 0, $limit = 0) {
+          $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+          $gender = $this->get('security.context')->getToken()->getUser()->getGender();
+          $options = array('gender'=>$gender, 'user_id'=>$user_id, 'list_type'=>$list_type, 'page_number' => $page_number, 'limit' => $limit);
+          $entity=$this->get('admin.helper.product')->listByType($options);        
+          return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    
+    //-------------------------------------------------------------------------
     public function productsAction($gender, $page_number = 0, $limit = 0) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGender($gender, $page_number, $limit);

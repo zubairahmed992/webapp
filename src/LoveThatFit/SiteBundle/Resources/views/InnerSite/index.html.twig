@@ -63,8 +63,8 @@
               </div>
           </div>
           <div id="slider_dis_canv">
-            
-            {% render 'LoveThatFitSiteBundle:InnerSite:productsLatest' with {'gender' : app.user.gender} %}
+            {{list_type}}
+            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
             <!--.prod_sliding_area--></div>
            
         <!---/#dis canv---></div>
