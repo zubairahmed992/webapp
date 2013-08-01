@@ -251,6 +251,9 @@ function hideTwitterBoxElements() {
             ibody.find( '.full-name' ).css( 'margin', '0px 0px 0px -35px' ); //move name of tweet to left (over avatar)
             ibody.find( 'h1.summary' ).replaceWith( '<h1 class="summary"><a class="customisable-highlight" title="Tweets from fundSchedule" href="https://twitter.com/fundschedule" style="color: #FFFFFF; display:none;">fundSchedule</a></h1>' ); //replace Tweets text at top
             ibody.find( '.p-name' ).css( 'color', '#000' ); //theme: tweets: links:
+            ibody.find( '.p-author' ).css( 'margin-bottom', '20px' ); //theme: tweets: links:
+            
+             
             }
             else {
                 $(this).hide();
