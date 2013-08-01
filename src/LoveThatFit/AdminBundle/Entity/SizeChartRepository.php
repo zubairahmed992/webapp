@@ -30,6 +30,38 @@ class SizeChartRepository extends EntityRepository {
         }
     }
 
+    public function listAllSizeChart($page_number = 0, $limit = 0, $sort = 'id') {
+
+
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc ORDER BY sc.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc ORDER BY sc.' . $sort . ' ASC')
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+    
+    
+    public function findOneByName($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc     
+                                WHERE sc.title=:sizetitle")
+                        ->setParameters(array('sizetitle' => $name));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
     //------------------------------------------------------------------------
     public function countAllSizeChartRecord() {
         $total_record = $this->getEntityManager()

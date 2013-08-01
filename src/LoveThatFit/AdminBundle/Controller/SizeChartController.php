@@ -10,49 +10,27 @@ use LoveThatFit\AdminBundle\Form\Type\SizeChartType;
 
 class SizeChartController extends Controller {
 //---------------------------------------------------------------------
-    public function indexAction($page_number=1 , $sort='id') {
-        $limit = 30;
-        $sizechartObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                 ->findAllSizeChart($page_number, $limit, $sort);
-		$rec_count = count($sizechartObj->countAllSizeChartRecord());
-		$cur_page = $page_number;
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-        return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig',
-		       array(	
-                           'sizechart'=>$entity,
-			   'rec_count' => $rec_count, 
-                           'no_of_pagination' => $no_of_paginations, 
-                           'limit' => $cur_page, 
-                           'per_page_limit' => $limit,
-                           'maleSizeChart'=>$this->getSizeChartByGender('m'),
-                           'femaleSizeChart'=>$this->getSizeChartByGender('f'),
-                           'topSizeChart'=>$this->getSizeChartByTarget('Top'),
-                           'bottomSizeChart'=>  $this->getSizeChartByTarget('Bottom'),
-                           'dressSizeChart'=>  $this->getSizeChartByTarget('Dress'),
-			));
-    }
-        
-        
-         
-   
     
-   public function showAction($id) {
-       $em = $this->getDoctrine()->getManager();
-       $entity = $this->getSizeChartById($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Size Chart.');        }
-        else{
+    public function indexAction($page_number, $sort = 'id') {
+        $size_with_pagination = $this->get('admin.helper.sizechart')->getListWithPagination($page_number, $sort);
+        return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', $size_with_pagination);
+    }
+    
+    
+    
+    public function showAction($id) {
+
+        $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
+        $entity = $specs['entity'];
+        if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+        }
         return $this->render('LoveThatFitAdminBundle:SizeChart:show.html.twig', array(
                     'sizechart' => $entity
                 ));
-        }
-    }
+    }    
+    
+   
             
 
 
@@ -112,31 +90,36 @@ class SizeChartController extends Controller {
     }
     
     
-    public function deleteAction($id)
-    {
-        try{
-            $em = $this->getDoctrine()->getManager();
-            $entity =  $this->getSizeChartById($id) ;
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find SizeChart.');
-            }
-            $em->remove($entity);
-            $em->flush();
-            $this->get('session')->setFlash('success','The Size Chart has been deleted!');
-       return $this->redirect($this->generateUrl('admin_size_charts'));
-        }catch (\Doctrine\DBAL\DBALException $e)
-        {
-             $this->get('session')->setFlash('warning','This Size Chart cannot be deleted!');
-             return $this->redirect($this->generateUrl('admin_size_charts'));          
+    //--------------------------Delete Size Chart-------------------
+    public function deleteAction($id) {
+        try {
+
+            $message_array = $this->get('admin.helper.sizechart')->delete($id);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+
+            return $this->redirect($this->generateUrl('admin_size_charts'));
+        } catch (\Doctrine\DBAL\DBALException $e) {
+
+            $this->get('session')->setFlash('warning', 'This Size cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
     
     
+    
+    
+    
+    
+    
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->getSizeChartById($id);
-        $form = $this->getAddSizeChartForm($entity);
+        $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
+        $entity = $specs['entity'];
+
+        if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+        }
+        $form = $this->createForm(new SizeChartType('edit'), $entity);
         return $this->render('LoveThatFitAdminBundle:SizeChart:edit.html.twig', array(
                     'form' => $form->createView(),                   
                     'entity' => $entity));
@@ -145,7 +128,7 @@ class SizeChartController extends Controller {
     
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+       $em = $this->getDoctrine()->getManager();
        $entity = $this->getSizeChartById($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Size Chart.');
@@ -171,7 +154,7 @@ class SizeChartController extends Controller {
    
     private function getAddSizeChartForm($entity) {
        
-        return $this->createForm(new SizeChartType(), $entity);
+        return $this->createForm(new SizeChartType('edit'), $entity);
     }
     
     private function getSizeChartById($id) {
@@ -199,27 +182,7 @@ class SizeChartController extends Controller {
         return $brand;
     }
     
-    private function getSizeChartByGender($gender)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $sizechartsObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                 ->findSizeChartByGender($gender);
-		$rec_count = count($sizechartsObj->findSizeChartByGender($gender));
-        return $rec_count;
-    }
     
-    private function getSizeChartByTarget($target)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $sizechartsObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                 ->findSizeChartByTarget($target);
-		$rec_count = count($sizechartsObj->findSizeChartByTarget($target));
-        return $rec_count;
-    }
     
     
 #--------------Testing of Utility Helper ---------------------#
