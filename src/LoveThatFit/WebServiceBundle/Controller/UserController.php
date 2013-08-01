@@ -84,239 +84,50 @@ class UserController extends Controller {
 public function userProfileAction()
 {
         $request = $this->getRequest();
-        $handle = fopen('php://input','r');
+        $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput,true);
-        $email=$decoded['email'];
-        
-        $user=$this->get('user.helper.user');
-        $entity=$user->findByEmail($email);
-        
-          if (count($entity) >0) {
-              $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$entity['id']."/";
-              $entity['path']=$baseurl; 
-              return new Response(json_encode($entity));
-         } 
-            
-            else {
-                     return new Response(json_encode(array('Message'=>'Invalid Email')));
-                }
-}
+        $decoded = json_decode($jsonInput, true);
+        $email = $decoded['email'];
+
+        $user = $this->get('user.helper.user');
+        $entity = $user->findByEmail($email);
+
+        if (count($entity) > 0) {
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $entity['id'] . "/";
+            $entity['path'] = $baseurl;
+            return new Response(json_encode($entity));
+        } else {
+            return new Response(json_encode(array('Message' => 'Invalid Email')));
+        }
+    }
 #------------------------------End Of User Profile---------------------------------------------------#
 #------------------------------------------Registration---------------------------------------------#
-    public function registrationCreateAction() {
-
+ public function registrationCreateAction() {
         $request = $this->getRequest();
-        $handle = fopen('php://input','r');
+        $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
-        $request_array = json_decode($jsonInput,true);
-        
-        
-        $email = $request_array['email'];
-        $password =$request_array['password'];
-        $gender = $request_array['gender'];
-        $zipcode = $request_array['zipcode'];
-       
-        #-------------------Measurement data---------------------#
-         if (isset($request_array['weight'])) {
-                $weight = $request_array['weight'];
-            }
-
-            if (isset($request_array['height'])) {
-                $height = $request_array['height'];
-            }
-
-            if (isset($request_array['waist'])) {
-                $waist = $request_array['waist'];
-            }
-
-            if (isset($request_array['hip'])) {
-                $hip = $request_array['hip'];
-            }
-
-            if (isset($request_array['bust'])) {
-                $bust = $request_array['bust'];
-            }
-
-
-            if (isset($request_array['neck'])) {
-                $neck = $request_array['neck'];
-            }
-
-            if (isset($request_array['inseam'])) {
-                $inseam = $request_array['inseam'];
-            }
-
-
-
-            if (isset($request_array['chest'])) {
-                $chest = $request_array['chest'];
-            }
-
-            if (isset($request_array['sc_top_id'])) {
-            $sc_top_id = $request_array['sc_top_id'];
-        } else {
-            $sc_top_id = 0;
-        }
-            if (isset($request_array['sc_bottom_id'])) {
-            $sc_bottom_id = $request_array['sc_bottom_id'];
-        } else {
-            $sc_bottom_id = 0;
-        }
-        if (isset($request_array['sc_dress_id'])) {
-            $sc_dress_id = $request_array['sc_dress_id'];
-        } else {
-            $sc_dress_id = 0;
-        }
-       
-           #-----------------End of Measuremnt data-----------------------# 
-            if ($this->isDuplicateEmail(Null, $email)) {
-                return new Response(json_encode(array('Message' => 'The Email already exists',)));
-            }
-            else{
-            $user = new User();
-
-            $user->setCreatedAt(new \DateTime('now'));
-            $user->setUpdatedAt(new \DateTime('now'));
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($user);
-
-            $password = $encoder->encodePassword($password, $user->getSalt());
-            //$authTokenWebService=$this->genrateToken($email);
-            $user->setPassword($password);
-            $user->setEmail($email);
-            $user->setGender($gender);
-            $user->setZipcode($zipcode);
-            //$user->setAuthTokenWebService($authTokenWebService);
-            $user->generateAuthenticationToken();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush(); 
-           
-           
-            
- #----------------------Set Data of Measuremnt -------------------------------#
-           $measurement = new Measurement();
-           $size_chart=new SizeChart();
-           if($sc_top_id){
-           $top_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($sc_top_id);
-           $measurement->setTopFittingSizeChart($top_size); //
-            }
-           if($sc_bottom_id){
-              $bottom_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($sc_bottom_id);
-               $measurement->setBottomFittingSizeChart($bottom_size); //
-               }     
-           if($sc_dress_id){
-           $dress_size = $em->getRepository('LoveThatFitAdminBundle:SizeChart')->findOneById($sc_dress_id);
-           $measurement->setDressFittingSizeChart($dress_size); //
-           }
-        
-           
-            $measurement->setUser($user);
-            $measurement->setUpdatedAt(new \DateTime('now'));
-
-
-            $measurement->setWeight($weight);
-
-            $measurement->setHeight($height);
-
-            if ($request_array['waist']) {
-                $measurement->setWaist($waist);
-          
-           }
-          if ($request_array['hip']) {
-             $measurement->setHip($hip);
-          }
-            if (isset($request_array['bust'])) {
-                $measurement->setBust($bust);
-            }
-           
-           
-            if (isset($request_array['inseam'])) {
-                $measurement->setInseam($inseam);
-            }
-           
-            if (isset($request_array['chest'])) {
-                $measurement->setChest($chest);
-            }
-           
-            if (isset($request_array['neck'])) {
-                $measurement->setNeck($neck);
-            }
-#---------------------------------------------------Getting Data-----------------------------#
-             $userinfo=array();
-   #--------------------User Info-------------------------------#
-            
-                    $birth_date=$user->getBirthDate();
-                    
-                   $userinfo['id']=$user->getId();
-                   $userinfo['email']=$user->getEmail();
-                   $userinfo['first_name']=$user->getFirstName();
-                   $userinfo['last_name']=$user->getLastName();
-                   $userinfo['zipcode']=$user->getZipcode();
-                   $userinfo['gender']=$user->getGender();
-                  
-                   if(isset($birth_date)){
-                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
-                   }
-                   
-                   $userinfo['image']=$user->getImage();
-                   $userinfo['avatar']=$user->getAvatar();
-                   $userinfo['authTokenWebService']=$user->getAuthToken();
-                   $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
-                   $userinfo['path']=$baseurl;
-    #-----------------------Measurement Info--------------------#
-            $userinfo['weight']=$measurement->getWeight();
-            $userinfo['height']=$measurement->getHeight();
-            $userinfo['waist']=$measurement->getWaist();
-            $userinfo['hip']=$measurement->getHip();
-            $userinfo['bust']=$measurement->getBust();
-            $userinfo['inseam']=$measurement->getInseam();
-            $userinfo['chest']=$measurement->getChest();
-            $userinfo['sleeve']=$measurement->getSleeve();
-            $userinfo['neck']=$measurement->getNeck();
-           $userinfo['back'] = $measurement->getBack();
-            if (!$userinfo['back']) {
-                $userinfo['back'] = 15.5;
-            }
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($measurement);
-            $em->flush();
-  #------------------------End of Seting measuremt----------#          
-            return new Response(json_encode($userinfo));
-            }
+        $request_array = json_decode($jsonInput, true);
+        $user = $this->get('user.helper.user');
+        $user_info = $user->RegistrationWebSerive($request_array);
+        return new response(json_encode($user_info));
     }
 
  #-------------------------Measurement Edit Web Service-----------------------------------------------------------------------------#       
  public function measurementEditAction() {
-
+$user = $this->get('user.helper.user');
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $email = $request_array['email'];
-#---------------------------Authentication of Token--------------------------------------------#
-         $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
-        if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
-            if ($tokenResponse['status'] == False) {
-                return new Response(json_encode($tokenResponse));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
-        }
- #-------------------------------End Of Authentication Token--------------------------------#
 
-        if ($user->isDuplicateEmail(Null, $email)) {
+        if ($user->isDuplicateEmail(Null,$email)) {
 
             $user = $this->get('user.helper.user');
             $userinfo = $user->findByEmail($email);
-            $id = $userinfo['id'];
-
-            $em = $this->getDoctrine()->getManager();
+            //$id = $userinfo['id'];
+            $msg=$user->measurementEditWebService($userinfo['id'],$request_array);
+            /*$em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
             $measurement = $entity->getMeasurement();
             if ($measurement) {
@@ -354,7 +165,8 @@ public function userProfileAction()
                 return new Response(json_encode(array('Message' => 'success')));
             } else {
                 return new Response(json_encode(array('Message' => 'Sorry We can not find measurment')));
-            }
+            }*/
+             return new Response(json_encode($msg));
         } else {
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
@@ -476,7 +288,7 @@ public function userProfileAction()
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
- #-------------------------------End Of Authentication Token--------------------------------#
+#-------------------------------End Of Authentication Token--------------------------------#
          
            $msg=$user->webServiceChangePassword($request_array);
          return new response(json_encode($msg));

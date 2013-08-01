@@ -71,6 +71,8 @@ public function saveUser(User $user)
 public function encodePassword(User $user)
 {
     $factory = $this->container->get('security.encoder_factory');
+    $sizeChartHelper=$this->container->get('admin.helper.sizechart');
+    $measurementHelper=$this->container->get('measurement.helper.measurement');
     $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
     return $password;
@@ -258,37 +260,226 @@ public function findByEmail($email)
     }
     
 #---------------------------------Web Service For Registration--------------------#
-  public function registration($request_array)
+  public function RegistrationWebSerive($request_array)
   {
-      
+
+        $sizeChartHelper = $this->container->get('admin.helper.sizechart');
         $email = $request_array['email'];
         $password = $request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
-        if ($this->isDuplicateEmail(Null, $email)) {
-            return false;
-        } else {
 
+        /* $email ='my_web14@gmail.com';
+          $password ='123456';
+          $gender = 'f';
+          $zipcode = '123'; */
+
+        #-------------------Measurement data---------------------#
+        if (isset($request_array['weight'])) {
+            $weight = $request_array['weight'];
+        }
+
+        if (isset($request_array['height'])) {
+            $height = $request_array['height'];
+        }
+
+        if (isset($request_array['waist'])) {
+            $waist = $request_array['waist'];
+        }
+
+        if (isset($request_array['hip'])) {
+            $hip = $request_array['hip'];
+        }
+
+        if (isset($request_array['bust'])) {
+            $bust = $request_array['bust'];
+        }
+
+
+        if (isset($request_array['neck'])) {
+            $neck = $request_array['neck'];
+        }
+
+        if (isset($request_array['inseam'])) {
+            $inseam = $request_array['inseam'];
+        }
+
+
+
+        if (isset($request_array['chest'])) {
+            $chest = $request_array['chest'];
+        }
+
+        if (isset($request_array['sc_top_id'])) {
+            $sc_top_id = $request_array['sc_top_id'];
+        } else {
+            $sc_top_id = 0;
+        }
+        if (isset($request_array['sc_bottom_id'])) {
+            $sc_bottom_id = $request_array['sc_bottom_id'];
+        } else {
+            $sc_bottom_id = 0;
+        }
+        if (isset($request_array['sc_dress_id'])) {
+            $sc_dress_id = $request_array['sc_dress_id'];
+        } else {
+            $sc_dress_id = 0;
+        }
+
+        #-----------------End of Measuremnt data-----------------------# 
+        if ($this->isDuplicateEmail(Null, $email)) {
+            return array('Message' => 'The Email already exists');
+        } else {
             $user = new User();
+
             $user->setCreatedAt(new \DateTime('now'));
             $user->setUpdatedAt(new \DateTime('now'));
-            //$factory = $this->get('security.encoder_factory');
-            //$encoder = $factory->getEncoder($user);
-            //  $password = $encoder->encodePassword($password, $user->getSalt());
+            $factory = $this->factoryReturn();
+            $encoder = $factory->getEncoder($user);
 
+            $password = $encoder->encodePassword($password, $user->getSalt());
             $user->setPassword($password);
             $user->setEmail($email);
             $user->setGender($gender);
             $user->setZipcode($zipcode);
-            $this->saveUser($user);
+            $user->generateAuthenticationToken();
+            //  $this->saveUser($user);
+            #----------------------Set Data of Measuremnt -------------------------------#
+            $measurement = new Measurement();
+            $size_chart = new SizeChart();
+            if ($sc_top_id) {
+                $top_size = $sizeChartHelper->findOneById($sc_top_id);
+                $measurement->setTopFittingSizeChart($top_size); //
+            }
+            if ($sc_bottom_id) {
+                $bottom_size = $sizeChartHelper->findOneById($sc_bottom_id);
+                $measurement->setBottomFittingSizeChart($bottom_size); //
+            }
+            if ($sc_dress_id) {
+                $dress_size = $sizeChartHelper->findOneById($sc_dress_id);
+                $measurement->setDressFittingSizeChart($dress_size); //
+            }
+
+
+            $measurement->setUser($user);
+            $measurement->setUpdatedAt(new \DateTime('now'));
+
+
+            $measurement->setWeight($weight);
+
+            $measurement->setHeight($height);
+
+            if (isset($request_array['waist'])) {
+                $measurement->setWaist($waist);
+            }
+            if (isset($request_array['hip'])) {
+                $measurement->setHip($hip);
+            }
+            if (isset($request_array['bust'])) {
+                $measurement->setBust($bust);
+            }
+
+
+            if (isset($request_array['inseam'])) {
+                $measurement->setInseam($inseam);
+            }
+
+            if (isset($request_array['chest'])) {
+                $measurement->setChest($chest);
+            }
+
+            if (isset($request_array['neck'])) {
+                $measurement->setNeck($neck);
+            }
+#---------------------------------------------------Getting Data-----------------------------#
             $userinfo = array();
+            #--------------------User Info-------------------------------#
+
+            $birth_date = $user->getBirthDate();
+
+            $userinfo['id'] = $user->getId();
             $userinfo['email'] = $user->getEmail();
-            $userinfo['gender'] = $user->getGender();
+            $userinfo['first_name'] = $user->getFirstName();
+            $userinfo['last_name'] = $user->getLastName();
             $userinfo['zipcode'] = $user->getZipcode();
+            $userinfo['gender'] = $user->getGender();
+
+            if (isset($birth_date)) {
+                $userinfo['birth_date'] = $birth_date->format('Y-m-d');
+            }
+
+            $userinfo['image'] = $user->getImage();
+            $userinfo['avatar'] = $user->getAvatar();
+            $userinfo['authTokenWebService'] = $user->getAuthToken();
+            //    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
+            //   $userinfo['path']=$baseurl;
+            #-----------------------Measurement Info--------------------#
+            $userinfo['weight'] = $measurement->getWeight();
+            $userinfo['height'] = $measurement->getHeight();
+            $userinfo['waist'] = $measurement->getWaist();
+            $userinfo['hip'] = $measurement->getHip();
+            $userinfo['bust'] = $measurement->getBust();
+            $userinfo['inseam'] = $measurement->getInseam();
+            $userinfo['chest'] = $measurement->getChest();
+            $userinfo['sleeve'] = $measurement->getSleeve();
+            $userinfo['neck'] = $measurement->getNeck();
+            $userinfo['back'] = $measurement->getBack();
+            if (!$userinfo['back']) {
+                $userinfo['back'] = 15.5;
+            }
+            
+            $user->setMeasurement($measurement);
+            $this->saveUser($user);
+            
+            #------------------------End of Seting measuremt----------#          
             return $userinfo;
         }
     }
+#------------------------------------------------Measurement Edit Service--------------------------------------------#
+public function measurementEditWebService($id,$request_array){
 
+        $entity = $this->repo->find($id);
+        $measurement = $entity->getMeasurement();
+        if ($measurement) {
+
+            $measurement->setUpdatedAt(new \DateTime('now'));
+
+            if (isset($request_array['weight'])) {
+                $measurement->setWeight($request_array['weight']);
+            }
+            if (isset($request_array['height'])) {
+                $measurement->setHeight($request_array['height']);
+            }
+            if (isset($request_array['waist'])) {
+                $measurement->setWaist($request_array['waist']);
+            }
+            if (isset($request_array['hip'])) {
+                $measurement->setHip($request_array['hip']);
+            }
+            if (isset($request_array['bust'])) {
+                $measurement->setBust($request_array['bust']);
+            }
+            if (isset($request_array['neck'])) {
+                $measurement->setNeck($request_array['neck']);
+            }
+            if (isset($request_array['inseam'])) {
+                $measurement->setInseam($request_array['inseam']);
+            }
+            if (isset($request_array['chest'])) {
+                $measurement->setChest($request_array['chest']);
+            }
+
+            $entity->setMeasurement($measurement);
+            $this->saveUser($entity);
+            //$em = $this->getDoctrine()->getManager();
+            //$em->persist($measurement);
+            //$em->flush();
+
+            return array('Message' => 'success');
+        } else {
+            return array('Message' => 'Sorry We can not find measurment');
+        }
+    }
     #---------------------Change Password Action-----------------------------------------------------#  
 
     public function webServiceChangePassword($request_array) {

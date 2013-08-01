@@ -64,6 +64,11 @@ public function find($id)
 {
     return $this->repo->find($id);
 }
+public function findOneById($id)
+{
+    return $this->repo->findOneById($id);
+    
+}
 
 #-------------------------Evaluate Size Chart ------------------------------------------------------------------------#
 //-------------------------------------------------------------------------------------
