@@ -39,7 +39,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-
+//-------------------------------------------------------------------------------------
     public function listAllProduct($page_number = 0, $limit = 0, $sort = 'id') {
 
 
@@ -236,7 +236,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-
+//-------------------------------------------------------------------------------------
     public function productListByClothingType($clothing_type_id, $gender) {
         $query = $this->getEntityManager()
                         ->createQuery("
@@ -256,7 +256,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-
+//-------------------------------------------------------------------------------------
     public function productListByBrandClothingType($brand_id, $clothing_type_id, $gender) {
         $query = $this->getEntityManager()
                         ->createQuery("
@@ -279,7 +279,7 @@ class ProductRepository extends EntityRepository {
         }
     }
 
-
+//-------------------------------------------------------------------------------------
 
  public function findProductItemByUser($user_id , $page_number=0 , $limit=0) {
             $query = $this->getEntityManager()
@@ -298,7 +298,7 @@ class ProductRepository extends EntityRepository {
         }
     }
     
-    
+//-------------------------------------------------------------------------------------    
     public function findProductByItemUser($page_number=0 , $limit=0) {
             $query = $this->getEntityManager()
                         ->createQuery("
@@ -314,7 +314,7 @@ class ProductRepository extends EntityRepository {
         }
     }
     
-    
+//-------------------------------------------------------------------------------------    
     public function countMyCloset($user_id)
     {
         $total_record= $this->getEntityManager()
@@ -333,7 +333,7 @@ class ProductRepository extends EntityRepository {
 		 }						
 	  } 
     
-    
+//-------------------------------------------------------------------------------------    
     public function findPrductByGender($gender)
     {
      $query = $this->getEntityManager()
@@ -348,7 +348,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    
+//-------------------------------------------------------------------------------------    
     public function findPrductByType($target)
     {
         $query = $this->getEntityManager()
@@ -363,7 +363,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    
+//-------------------------------------------------------------------------------------    
     public function findPrductByBrand()
     {
         $query = $this->getEntityManager()
@@ -377,7 +377,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    
+//-------------------------------------------------------------------------------------    
     public function findListAllProduct() {
      $query = $this->getEntityManager()
                     ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p');
@@ -387,7 +387,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    
+//-------------------------------------------------------------------------------------    
     public function findProductByItemId($product_item_id) {
      $query = $this->getEntityManager()
                         ->createQuery("
@@ -525,7 +525,7 @@ class ProductRepository extends EntityRepository {
 
         }
     }
-    
+//-------------------------------------------------------------------------------------    
      public function tryOnHistoryWebService($user_id) {
 
        $query = $this->getEntityManager()
@@ -557,8 +557,8 @@ class ProductRepository extends EntityRepository {
         }
     }
     
-    
-    public function findHotestPropductTryMost($gender, $page_number = 0, $limit = 20)
+//-------------------------------------------------------------------------------------    
+    public function findMostTriedOnByGender($gender, $page_number = 0, $limit = 20)
     {
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
@@ -587,27 +587,27 @@ class ProductRepository extends EntityRepository {
     }
     
     
+//-------------------------------------------------------------------------------------    
     
     
-    
-    public function findHotestPropductTryMostByUser($user_id,$gender, $page_number = 0, $limit = 20)
+    public function findRecentlyTriedOnByUser($user_id, $page_number = 0, $limit = 20)
     {
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
                             ->createQuery("
             SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.gender = :gender AND p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
+            WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
             ORDER BY uih.count DESC"
-                            )->setParameters(array('user_id' =>$user_id,'gender'=>$gender));
+                            )->setParameters(array('user_id' =>$user_id));
         } else {
             $query = $this->getEntityManager()
                     ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.gender = :gender AND p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
+            WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
             ORDER BY uih.count DESC "
-                    )->setParameters(array('user_id' =>$user_id,'gender'=>$gender))
+                    )->setParameters(array('user_id' =>$user_id))
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }
@@ -617,7 +617,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    
+//-------------------------------------------------------------------------------------    
     public function findOneByName($name) {
         $record = $this->getEntityManager()
                         ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p     
@@ -630,7 +630,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    
+//-------------------------------------------------------------------------------------    
     public function findProductByEllieHM($brand,$gender,$page_number, $limit)
     {      if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
@@ -659,12 +659,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }  
     }
-    
-    
-    
-    
-    
-    
+//-------------------------------------------------------------------------------------    
     
     public function findTryProductHistory($user_id , $page_number=0 , $limit=0)
     {
@@ -682,7 +677,7 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-
+//-------------------------------------------------------------------------------------
     public function findDefaultProductByColorId($product_color)
     {
         $query = $this->getEntityManager()
@@ -697,8 +692,8 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-    
-    public function findMostLikedProduct() {
+//-------------------------------------------------------------------------------------    
+    public function findMostLiked() {
             $query = $this->getEntityManager()
                         ->createQuery("
      SELECT p,pi,ps,pc FROM LoveThatFitAdminBundle:Product p

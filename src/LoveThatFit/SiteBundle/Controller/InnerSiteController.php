@@ -28,12 +28,13 @@ class InnerSiteController extends Controller {
         //-------------------------------------------------------------------------
 
     public function homeAction($page_number = 0, $limit = 0) {
-       $gender= $this->get('security.context')->getToken()->getUser()->getGender();       
+       $gender= $this->get('security.context')->getToken()->getUser()->getGender();
+       $user_id= $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $latest = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
-        $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
         $favourite = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
-        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);        
+        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByUser($user_id, $page_number, $limit);        
          return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
             'latest'=>$latest,
             'hotest'=>$hotest,
@@ -58,37 +59,37 @@ class InnerSiteController extends Controller {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
     
-    
+    //----------------------------------- 
     public function productsHotestAction($gender, $page_number = 0, $limit = 0)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
-
-    public function productRecomendedAction($gender, $page_number = 0, $limit = 0)
+//----------------------------------- 
+    public function productsRecomendedAction($gender, $page_number = 0, $limit = 0)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
-    
-    public function recentProductTriedOnAction($gender, $page_number = 0, $limit = 0)
+    //----------------------------------- 
+    public function productsRecentlyTriedOnByUserAction($page_number = 0, $limit = 0)
     {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMostByUser($user_id,$gender, $page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
-    
-    public function mostProductFavoriteAction($page_number = 0, $limit = 0)
+   //-----------------------------------  
+    public function productsMostFavoriteAction($page_number = 0, $limit = 0)
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
-    
-    public function ltfProductRecommendedAction($gender, $page_number = 0, $limit = 0)
+    //----------------------------------- 
+    public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0)
     {
         $brand='Ellie';
         $em = $this->getDoctrine()->getManager();

@@ -28,6 +28,7 @@ class ProductHelper {
      * @var string
      */
     protected $class;
+//-------------------------------------------------------
 
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class) {
         $this->dispatcher = $dispatcher;
@@ -36,6 +37,7 @@ class ProductHelper {
         $this->repo = $em->getRepository($class);
     }
     
+//-------------------------------------------------------
     public function createNew() {
         $class = $this->class;
         $product = new $class();
@@ -115,6 +117,7 @@ class ProductHelper {
             );
         }
     }
+//-------------------------------------------------------
     
     public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
@@ -208,7 +211,7 @@ public function find($id) {
         return $this->repo->findProductByTitle($name);
     }
     
-    
+#---------------------------------------------------    
     private function countProductsByGender($gender)
     {
         
@@ -216,7 +219,7 @@ public function find($id) {
         
     }
     
-    
+    #---------------------------------------------------
     
     private function countProductsByType($target)
     {
@@ -224,7 +227,26 @@ public function find($id) {
         return count($this->repo->findPrductByType($target));           
     }
     
+    #---------------------------------------------------
+    //               Methods Product listing on index page
+    #---------------------------------------------------
     
+    public function findByGenderLatest($gender, $page_number=0, $limit=0) {
+        return $this->repo->findByGenderLatest($gender, $page_number, $limit);
+   }
+    #---------------------------------------------------
+    
+    public function findRecentlyTriedOnByUser($user_id, $page_number=0, $limit=0) {
+        return $this->repo->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
+   }
+   #---------------------------------------------------
+    
+   public function findMostTriedOnByGender($gender, $page_number=0, $limit=0) {
+        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
+   }
+    
+    
+    #---------------------------------------------------
     #---------WROK WILL BE DONE I FUTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!----#
     public function getDefaultFittingAlerts($product_id)
     {       
