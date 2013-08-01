@@ -488,10 +488,10 @@ public function userProfileAction()
             $old_password = $request_array['old_password'];
         }
 
-
+        
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
-
+        
         if (count($entity) > 0) {
 
             $user_db_password = $entity->getPassword();
@@ -501,7 +501,7 @@ public function userProfileAction()
             $encoder = $factory->getEncoder($entity);
             $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
 
-            if ($password_old_enc == $user_db_password) {
+          if ($password_old_enc == $user_db_password) {
 
                 $entity->setUpdatedAt(new \DateTime('now'));
                 $password = $encoder->encodePassword($password, $salt_value_old);
@@ -509,10 +509,14 @@ public function userProfileAction()
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
+        
                 return new response(json_encode(array('Message' => 'Paasword has been updated')));
             } else {
                 return new response(json_encode(array('Message' => 'Invalid Password')));
             }
+        
+           
+            
         } else {
 
             return new response(json_encode(array('Message' => 'Invalid Email')));
@@ -558,11 +562,6 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-#-----------------------------test form-----------------------------------------#
-    public function imageFormAction() {
-     return $this->render('LoveThatFitWebServiceBundle::json.html.twig');
-    }
-# ------------------------------    
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
@@ -580,29 +579,6 @@ public function userProfileAction()
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
-    #----------------------------------------------------------------------------------------------------#   
-    private function genrateToken($email) {
-        return md5(time() . $email);
-    }   
- #------------------------CHECK TOKEN-------------------------------------------------------------------#   
- private function checkToken($email, $token) {
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
-
-        if (count($entity) > 0) {
-
-            $getAuthTokenWebService = $entity->getAuthTokenWebService();
-            if ($getAuthTokenWebService == $tken) {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return json_encode(array('Message' => 'User Not Found'));
-        }
-    }
-
 }
 
 // End of Class

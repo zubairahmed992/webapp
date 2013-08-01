@@ -252,15 +252,7 @@ public function findByEmail($email)
                 } else {
                      return array('Message'=>'Invalid Password');
                 }
-        
-        
-        
-        
-        
-        
-        
-        
-        
+            
         
         
     }
