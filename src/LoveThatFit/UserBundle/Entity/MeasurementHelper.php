@@ -58,6 +58,10 @@ class MeasurementHelper {
     public function findMaxUserId() {
         return $this->repo->findMaxUserId();
     }
+    public function saveMeasurement(Measurement $measurement) {
+        $this->em->persist($measurement);
+        $this->em->flush();
+    }
    #----------------------Code For Value Retaing ------------------------------------------------------------------------# 
     public function measurementRetain($measurement) {
         $retaining_array = array();
