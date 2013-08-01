@@ -291,7 +291,7 @@ public function findByEmail($email)
 
     #---------------------Change Password Action-----------------------------------------------------#  
 
-    public function webServiceChangePassword($entity) {
+    public function webServiceChangePassword($request_array) {
 
         if (isset($request_array['email'])) {
             $email = $request_array['email'];
@@ -313,7 +313,8 @@ public function findByEmail($email)
             $encoder = $factory->getEncoder($entity);
 
             $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
-            print_r($password_old_enc);
+            
+            
             if ($password_old_enc == $user_db_password) {
 
                 $entity->setUpdatedAt(new \DateTime('now'));
