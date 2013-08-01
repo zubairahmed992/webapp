@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 
+
 class UserHelper{
 
      /**
@@ -260,16 +261,16 @@ public function findByEmail($email)
     }
     
 #---------------------------------Web Service For Registration--------------------#
-  public function RegistrationWebSerive($request_array)
+  public function RegistrationWebSerive(Request $request, $request_array)
   {
-
+//$request = $this->getRequest();
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
         $email = $request_array['email'];
         $password = $request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
 
-        /* $email ='my_web14@gmail.com';
+        /* $email ='my_web115@gmail.com';
           $password ='123456';
           $gender = 'f';
           $zipcode = '123'; */
@@ -363,7 +364,8 @@ public function findByEmail($email)
 
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
-
+$weight=1;
+$height=2;
 
             $measurement->setWeight($weight);
 
@@ -411,8 +413,8 @@ public function findByEmail($email)
             $userinfo['image'] = $user->getImage();
             $userinfo['avatar'] = $user->getAvatar();
             $userinfo['authTokenWebService'] = $user->getAuthToken();
-            //    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
-            //   $userinfo['path']=$baseurl;
+             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
+             $userinfo['path']=$baseurl;
             #-----------------------Measurement Info--------------------#
             $userinfo['weight'] = $measurement->getWeight();
             $userinfo['height'] = $measurement->getHeight();
@@ -471,15 +473,88 @@ public function measurementEditWebService($id,$request_array){
 
             $entity->setMeasurement($measurement);
             $this->saveUser($entity);
-            //$em = $this->getDoctrine()->getManager();
-            //$em->persist($measurement);
-            //$em->flush();
-
             return array('Message' => 'success');
         } else {
             return array('Message' => 'Sorry We can not find measurment');
         }
     }
+ #-----------------------------------------------Edit Shoulder/Outseam--------------------------------------------
+ public function shoulderOutseamWebService($request,$request_array){
+        
+        $email = $request_array['email'];
+        $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
+        $iphone_outseam = $request_array['iphone_outseam'];
+        
+        
+        $entity = $this->repo->findOneBy(array('email' => $email));
+
+        if (count($entity) > 0) {
+
+            $user_id = $entity->getId();
+            $birth_date = $entity->getBirthDate();
+            $userinfo = array();
+            $userinfo['id'] = $user_id;
+            $userinfo['email'] = $email;
+            $userinfo['first_name'] = $entity->getFirstName();
+            $userinfo['last_name'] = $entity->getLastName();
+            $userinfo['zipcode'] = $entity->getZipcode();
+            $userinfo['gender'] = $entity->getGender();
+            $userinfo['authTokenWebService']=$entity->getAuthToken();
+            if (isset($birth_date)) {
+                $userinfo['birth_date'] = $birth_date->format('Y-m-d');
+            }
+
+            $userinfo['image'] = $entity->getImage();
+            $userinfo['avatar'] = $entity->getAvatar();
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
+            $userinfo['path'] = $baseurl;
+
+            $entity = $this->repo->find($user_id);
+            $measurement = $entity->getMeasurement();
+            if ($measurement) {
+                $measurement->setUpdatedAt(new \DateTime('now'));
+
+                if (isset($iphone_shoulder_height)) {
+                    $measurement->setIphoneShoulderHeight($iphone_shoulder_height);
+                }
+                if (isset($iphone_outseam)) {
+                    $measurement->setIphoneOutseam($iphone_outseam);
+                }
+
+            $entity->setMeasurement($measurement);
+            $this->saveUser($entity);
+            }
+
+
+
+            $userinfo['weight'] = $measurement->getWeight();
+            $userinfo['height'] = $measurement->getHeight();
+            $userinfo['waist'] = $measurement->getWaist();
+            $userinfo['hip'] = $measurement->getHip();
+
+            $userinfo['bust'] = $measurement->getBust();
+            $userinfo['chest'] = $measurement->getChest();
+            $userinfo['neck'] = $measurement->getNeck();
+            $userinfo['inseam'] = $measurement->getInseam();
+            $userinfo['back'] = $measurement->getBack();
+            if (!$userinfo['back']) {
+                $userinfo['back'] = 15.5;
+            }
+            $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+            if (!$userinfo['iphone_shoulder_height']) {
+                $userinfo['iphone_shoulder_height'] = 150;
+            }
+            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+            if (!$userinfo['iphone_outseam']) {
+                $userinfo['iphone_outseam'] = 400;
+            }
+
+            return $userinfo;
+        } else {
+            return array('Message' => 'Invalid Email');
+        }
+     
+ }
     #---------------------Change Password Action-----------------------------------------------------#  
 
     public function webServiceChangePassword($request_array) {

@@ -108,13 +108,13 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('user.helper.user');
-        $user_info = $user->RegistrationWebSerive($request_array);
+        $user_info = $user->RegistrationWebSerive($request,$request_array);
         return new response(json_encode($user_info));
     }
 
  #-------------------------Measurement Edit Web Service-----------------------------------------------------------------------------#       
  public function measurementEditAction() {
-$user = $this->get('user.helper.user');
+       $user = $this->get('user.helper.user');
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
@@ -138,7 +138,9 @@ $user = $this->get('user.helper.user');
             $user = $this->get('user.helper.user');
             $userinfo = $user->findByEmail($email);
             //$id = $userinfo['id'];
+            $msg=array();
             $msg=$user->measurementEditWebService($userinfo['id'],$request_array);
+            
             /*$em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
             $measurement = $entity->getMeasurement();
@@ -190,9 +192,9 @@ $user = $this->get('user.helper.user');
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-        
-        #---------------------------Authentication of Token--------------------------------------------#
-         $user = $this->get('user.helper.user');
+          $user = $this->get('user.helper.user');
+   #---------------------------Authentication of Token--------------------------------------------#
+       
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -203,9 +205,10 @@ $user = $this->get('user.helper.user');
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------#
-
+        $msg=$user->shoulderOutseamWebService($request,$request_array);
+        return new response(json_encode($msg));
         
-        $email = $request_array['email'];
+        /*$email = $request_array['email'];
         $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
         $iphone_outseam = $request_array['iphone_outseam'];
 
@@ -280,6 +283,8 @@ $user = $this->get('user.helper.user');
         } else {
             return new Response(json_encode(array('Message' => 'Invalid Email')));
         }
+         *
+         */
     }
 
     #--------------Change Password--------------------------------------------------------#
