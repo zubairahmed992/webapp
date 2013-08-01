@@ -265,30 +265,71 @@ public function findByEmail($email)
         $password = $request_array['password'];
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
-       if ($this->isDuplicateEmail(Null, $email)) {
-          return false;
-         }
-       else{
-                
+        if ($this->isDuplicateEmail(Null, $email)) {
+            return false;
+        } else {
+
             $user = new User();
-             $user->setCreatedAt(new \DateTime('now'));
+            $user->setCreatedAt(new \DateTime('now'));
             $user->setUpdatedAt(new \DateTime('now'));
-           //$factory = $this->get('security.encoder_factory');
-           //$encoder = $factory->getEncoder($user);
-          //  $password = $encoder->encodePassword($password, $user->getSalt());
+            //$factory = $this->get('security.encoder_factory');
+            //$encoder = $factory->getEncoder($user);
+            //  $password = $encoder->encodePassword($password, $user->getSalt());
 
             $user->setPassword($password);
             $user->setEmail($email);
             $user->setGender($gender);
             $user->setZipcode($zipcode);
             $this->saveUser($user);
-            $userinfo=array();
-            $userinfo['email']=$user->getEmail();
-            $userinfo['gender']=$user->getGender();
-            $userinfo['zipcode']=$user->getZipcode();
-           return $userinfo;
+            $userinfo = array();
+            $userinfo['email'] = $user->getEmail();
+            $userinfo['gender'] = $user->getGender();
+            $userinfo['zipcode'] = $user->getZipcode();
+            return $userinfo;
+        }
+    }
+
+    #---------------------Change Password Action-----------------------------------------------------#  
+
+    public function webServiceChangePassword($entity) {
+
+        if (isset($request_array['email'])) {
+            $email = $request_array['email'];
+        }
+        if (isset($request_array['password'])) {
+            $password = $request_array['password'];
+        }
+        if (isset($request_array['old_password'])) {
+            $old_password = $request_array['old_password'];
+        }
+        
+        $entity = $this->repo->findOneBy(array('email' => $email));
+        
+        if (count($entity) > 0) {
+
+            $user_db_password = $entity->getPassword();
+            $salt_value_old = $entity->getSalt();
+            $factory = $this->factoryReturn();
+            $encoder = $factory->getEncoder($entity);
+
+            $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
+            print_r($password_old_enc);
+            if ($password_old_enc == $user_db_password) {
+
+                $entity->setUpdatedAt(new \DateTime('now'));
+                $password = $encoder->encodePassword($password, $salt_value_old);
+                $entity->setPassword($password);
+                $this->saveUser($entity);
+
+
+                return array('Message' => 'Paasword has been updated');
+            } else {
+                return array('Message' => 'Invalid Password');
             }
-  }
+        } else {
+            return array('Message' => 'Invalid Email');
+        }
+    }
   #----------------------------------------------------------------------------------------------#
 
     public function isDuplicateEmail($id, $email) {

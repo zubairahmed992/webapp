@@ -24,28 +24,28 @@ class UserController extends Controller {
     public function loginAction() {
         
         $request = $this->getRequest();
-        $handle = fopen('php://input','r');
-         $jsonInput = fgets($handle);
-         $decoded = json_decode($jsonInput,true);
-        
-       $user_helper = $this->get('user.helper.user');
-       
-       $email=$decoded['email'];
-       $password=$decoded['password'];
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+
+        $user_helper = $this->get('user.helper.user');
+
+        $email = $decoded['email'];
+        $password = $decoded['password'];
         $em = $this->getDoctrine()->getManager();
-         $entity =$em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email'=>$email));
-        
-            if (count($entity) >0) {
-                $user_info=$user_helper->loginWebService($entity,$password,$email);
-                 if(isset($user_info['id']))
-                     {$user_id=$user_info['id'];
-                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$user_id."/";
-                $user_info['path']=$baseurl;}
-                return new response(json_encode($user_info));
-             
-       }else{
-           return new Response(json_encode(array('Message'=>'Invalid Email')));
-       }
+        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+
+        if (count($entity) > 0) {
+            $user_info = $user_helper->loginWebService($entity, $password, $email);
+            if (isset($user_info['id'])) {
+                $user_id = $user_info['id'];
+                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
+                $user_info['path'] = $baseurl;
+            }
+            return new response(json_encode($user_info));
+        } else {
+            return new Response(json_encode(array('Message' => 'Invalid Email')));
+        }
     }
 
 #------------------------------Edit Profile----------------------------------------------------------#    
@@ -57,9 +57,8 @@ class UserController extends Controller {
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-         
  #------------------------------Authentication of Token--------------------------------------------#
-         $user = $this->get('user.helper.user');
+        $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -69,7 +68,7 @@ class UserController extends Controller {
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
- #-------------------------------End Of Authentication Token--------------------------------------#
+#-------------------------------End Of Authentication Token--------------------------------------#
 
     $entity=$user->editProfileServiceHelper($decoded);   
        // return new response(json_encode($entity));
@@ -311,7 +310,7 @@ public function userProfileAction()
         }
  #-------------------------------End Of Authentication Token--------------------------------#
 
-        if ($this->isDuplicateEmail(Null, $email)) {
+        if ($user->isDuplicateEmail(Null, $email)) {
 
             $user = $this->get('user.helper.user');
             $userinfo = $user->findByEmail($email);
@@ -468,7 +467,7 @@ public function userProfileAction()
          $request_array  = json_decode($jsonInput,true);
 #---------------------------Authentication of Token--------------------------------------------#
          $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
+       $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -478,49 +477,9 @@ public function userProfileAction()
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------#
-        if (isset($request_array['email'])) {
-            $email = $request_array['email'];
-        }
-        if (isset($request_array['password'])) {
-            $password = $request_array['password'];
-        }
-        if (isset($request_array['old_password'])) {
-            $old_password = $request_array['old_password'];
-        }
-
-        
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
-        
-        if (count($entity) > 0) {
-
-            $user_db_password = $entity->getPassword();
-            $salt_value_old = $entity->getSalt();
-
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($entity);
-            $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
-
-          if ($password_old_enc == $user_db_password) {
-
-                $entity->setUpdatedAt(new \DateTime('now'));
-                $password = $encoder->encodePassword($password, $salt_value_old);
-                $entity->setPassword($password);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
-                $em->flush();
-        
-                return new response(json_encode(array('Message' => 'Paasword has been updated')));
-            } else {
-                return new response(json_encode(array('Message' => 'Invalid Password')));
-            }
-        
-           
-            
-        } else {
-
-            return new response(json_encode(array('Message' => 'Invalid Email')));
-        }
+         
+           $msg=$user->webServiceChangePassword($request_array);
+         return new response(json_encode($msg));
     }
 
  #---------------------------------------Image Upload---------------------------------------#   
