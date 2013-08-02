@@ -25,8 +25,9 @@ class ProfileController extends Controller {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $size_chart_helper = $this->get('admin.helper.sizechart');
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+        
+        $user_helper = $this->get('user.helper.user');
+        $entity = $user_helper->find($id);
 
         $measurement = $entity->getMeasurement();
 
@@ -87,10 +88,10 @@ class ProfileController extends Controller {
     public function accountSettingsAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+        
+        $user_helper = $this->get('user.helper.user');
+        $entity = $user_helper->find($id);
+        
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
 
@@ -106,7 +107,7 @@ class ProfileController extends Controller {
     public function accountSettingsUpdateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-
+    $em = $this->getDoctrine()->getManager();
         $user_helper = $this->get('user.helper.user');
         $entity=$user_helper->find($id);
         
@@ -134,6 +135,8 @@ class ProfileController extends Controller {
 public function passwordResetUpdateAction(Request $request) {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user_helper = $this->get('user.helper.user');
+         
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
 
@@ -161,9 +164,11 @@ public function passwordResetUpdateAction(Request $request) {
                 $password = $data->getPassword();
                 $salt_value = $entity->getSalt();
                 $entity->setUpdatedAt(new \DateTime('now'));
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-                $password = $encoder->encodePassword($password, $salt_value);
+                //$factory = $this->get('security.encoder_factory');
+                //$encoder = $factory->getEncoder($entity);
+                //$password = $encoder->encodePassword($password, $salt_value);
+                $password= $user_helper->encodePassword($entity);
+                 
                 $entity->setPassword($password);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
@@ -198,6 +203,8 @@ public function passwordResetUpdateAction(Request $request) {
     //----------------------------------------------------------------------------
     public function submitUserSurveyFormAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $surveyUser = $this->get('admin.helper.surveyuser');
+        
         $user = $this->get('security.context')->getToken()->getUser();
         $data = $request->request->all();
         $str = '';

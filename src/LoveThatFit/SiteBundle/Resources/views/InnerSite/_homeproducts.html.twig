@@ -1,7 +1,19 @@
-<div><h1>{{title}}</h1></div>
+<div>
+    {%if(title=='New Arrivals')%}
+    <a href="{{path('inner_site_index',{'list_type' : 'latest' })}}"><h1>{{title}}</h1></a></div>
+   {%endif%}
+{%if(title=='Fiends Favourites')%}
+    <a href="{{path('inner_site_index',{'list_type' : 'most_faviourite' })}}"><h1>{{title}}</h1></a></div>
+   {%endif%}
+        {%if(title=='Most Tried Products')%}
+    <a href="{{path('inner_site_index',{'list_type' : 'recently_tried_on' })}}"><h1>{{title}}</h1></a></div>
+   {%endif%}
+        {%if(title=='LtF Recommended')%}
+    <a href="{{path('inner_site_index',{'list_type' : 'ltf_recommendation' })}}"><h1>{{title}}</h1></a></div>
+   {%endif%}
 {%for p in product_list%}
 {{p.name}}<br>
-{%if p.displayProductColor%}
+{%if p.displayProductColor%}<br>
 <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}"/>
 {%endif%}
 {%endfor%}

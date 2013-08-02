@@ -5,6 +5,7 @@ namespace LoveThatFit\AdminBundle\Entity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\AdminBundle\Event\SizeChartEvent;
@@ -60,10 +61,78 @@ public function saveSizeChart(SizeChart $size_chart)
 }
 //-------------------------------------------------------
 
+public function update($entity) {
+        $msg_array = $this->validateForUpdate($entity);
+        if ($msg_array == null) {
+            $this->em->persist($entity);
+            $this->em->flush();
+            return array('message' => 'sizechart ' . $entity->getTitle() . ' succesfully updated!',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+            return $msg_array;
+        }
+    }
+
+public function delete($id) {
+
+        $entity = $this->repo->find($id);
+        $entity_name = $entity->getTitle();
+
+        if ($entity) {
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            return array('sizechart' => $entity,
+                'message' => 'The Size Chart ' . $entity_name . ' has been Deleted!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+
+            return array('sizechart' => $entity,
+                'message' => 'Sizechart not found!',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+    }
+
 public function find($id)
 {
     return $this->repo->find($id);
 }
+public function findOneById($id)
+{
+    return $this->repo->findOneById($id);
+    
+}
+
+public function findOneByName($name) {
+        return $this->repo->findOneByName($name);
+    }
+    
+   public function findWithSpecs($id) {
+        $entity = $this->repo->find($id);
+        if (!$entity) {
+            $entity = $this->createNew();
+            return array(
+                'entity' => $entity,
+                'message' => 'Size Chart not found.',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        } else {
+            return array(
+                'entity' => $entity,
+                'message' => 'Chart found!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        }
+    }  
 
 #-------------------------Evaluate Size Chart ------------------------------------------------------------------------#
 //-------------------------------------------------------------------------------------
@@ -328,8 +397,75 @@ public function sizeChartList($request_array)
         if($measurement)   
         {
             return   $measurement;
-        }
-        
-        
+        }        
 }
+
+//------------------------Pagination Function------------------------------------------------------
+    public function getListWithPagination($page_number, $sort) {
+        $yaml = new Parser();
+        $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+        $limit = $pagination_constants["constants"]["pagination"]["limit"];
+
+        $entity = $this->repo->findAllSizeChart($page_number, $limit, $sort);
+        $rec_count = count($this->repo->countAllSizeChartRecord());
+        $cur_page = $page_number;
+
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
+        }
+        return array('sizechart'=>$entity,
+			   'rec_count' => $rec_count, 
+                           'no_of_pagination' => $no_of_paginations, 
+                           'limit' => $cur_page, 
+                           'per_page_limit' => $limit,
+                           'maleSizeChart'=>$this->getSizeChartByGender('m'),
+                           'femaleSizeChart'=>$this->getSizeChartByGender('f'),
+                           'topSizeChart'=>$this->getSizeChartByTarget('Top'),
+                           'bottomSizeChart'=>  $this->getSizeChartByTarget('Bottom'),
+                           'dressSizeChart'=>  $this->getSizeChartByTarget('Dress'),
+        );
+    }
+    //-----------------------Get Size Chart By Gender----------------------------------------------------------------------------
+    
+    private function getSizeChartByGender($gender)
+    {
+        $rec_count =count($this->repo->findSizeChartByGender($gender));
+        return $rec_count;
+    }
+    //-----------------------------Get Size Chart By Target--------------------------------------------------------
+    private function getSizeChartByTarget($target)
+    {
+        $rec_count= count($this->repo->findSizeChartByTarget($target));
+        return $rec_count;
+    }
+    
+    
+    //----------------------------------------------------------
+    private function validateForCreate($name) {
+        if (count($this->findOneByName($name)) > 0) {
+            return array('message' => 'Brand Name already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+        return;
+    }
+
+//----------------------------------------------------------
+    private function validateForUpdate($entity) {
+        $sizechart = $this->findOneByName($entity->getTitle());
+
+        if ($sizechart && $sizechart->getId() != $entity->getId()) {
+            return array('message' => 'Size Chart already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+        return;
+    }
+
 }

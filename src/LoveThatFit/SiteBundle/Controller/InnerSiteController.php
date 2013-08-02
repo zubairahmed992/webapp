@@ -21,19 +21,22 @@ class InnerSiteController extends Controller {
 
     //-------------------------------------------------------------------------
 
-    public function indexAction() {
-        return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig');
+    public function indexAction($list_type) {
+        return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
+            'list_type'=>$list_type,
+           ));
     }
 
         //-------------------------------------------------------------------------
 
     public function homeAction($page_number = 0, $limit = 0) {
-       $gender= $this->get('security.context')->getToken()->getUser()->getGender();       
+       $gender= $this->get('security.context')->getToken()->getUser()->getGender();
+       $user_id= $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $latest = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
-        $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
         $favourite = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
-        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);        
+        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
          return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
             'latest'=>$latest,
             'hotest'=>$hotest,
@@ -45,6 +48,16 @@ class InnerSiteController extends Controller {
     
 
 ////////////////////////////////// Product Slider /////////////////////////////////////////////////////////////////
+    
+      public function productsByTypeAction($list_type='latest', $page_number = 0, $limit = 0) {
+          $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+          $gender = $this->get('security.context')->getToken()->getUser()->getGender();
+          $options = array('gender'=>$gender, 'user_id'=>$user_id, 'list_type'=>$list_type, 'page_number' => $page_number, 'limit' => $limit);
+          $entity=$this->get('admin.helper.product')->listByType($options);        
+          return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    
+    //-------------------------------------------------------------------------
     public function productsAction($gender, $page_number = 0, $limit = 0) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGender($gender, $page_number, $limit);
@@ -58,18 +71,49 @@ class InnerSiteController extends Controller {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
     
-    
+    //----------------------------------- 
     public function productsHotestAction($gender, $page_number = 0, $limit = 0)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
-
-    public function productRecomendedAction($gender, $page_number = 0, $limit = 0)
+//----------------------------------- 
+    public function productsRecomendedAction($gender, $page_number = 0, $limit = 0)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findHotestPropductTryMost($gender, $page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    //----------------------------------- 
+    public function productsRecentlyTriedOnByUserAction($page_number = 0, $limit = 0)
+    {
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+   //-----------------------------------  
+    public function productsMostFavoriteAction($page_number = 0, $limit = 0)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }
+    //----------------------------------- 
+    public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0)
+    {
+        $brand='Ellie';
+        $em = $this->getDoctrine()->getManager();
+        $count =count($em->getRepository('LoveThatFitAdminBundle:Product')->findOneByName($brand));
+        if($count>0)
+        {        
+          $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByEllieHM($brand,$gender,$page_number, $limit);
+        }else
+        {
+            $brand='H&M';
+            $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByEllieHM($brand,$gender,$page_number, $limit);
+        }
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
     

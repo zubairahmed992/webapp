@@ -7,8 +7,8 @@ inner_site_home:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:home}
 
 inner_site_index:
-    pattern:  /inner_site/index
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index}
+    pattern:  /inner_site/index/{list_type}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index, list_type: null}
 
 about_us:
     pattern:  /about_us
@@ -33,6 +33,10 @@ ajax_product_detail:
 ajax_product_base_url:
     pattern:  /ajax/product/
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productDetail, id: null, product_color_id: null, product_size_id: null}
+
+ajax_product_by_type:
+    pattern:  /ajax/product/by_type/{list_type}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByType}
     
 ajax_user_product_item_create:
     pattern:  /ajax/user_product_item/create/{product_item_id}
@@ -61,6 +65,18 @@ ajax_my_closet_count:
 ajax_product_latest:
     pattern:  /ajax/products/{gender}/latest/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsLatest, page_number: 0, limit: 0}
+    
+ajax_product_recently_tried_on:
+    pattern:  /ajax/products/{gender}/recently_tried_on/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsRecentlyTriedOnByUser, page_number: 0, limit: 0}
+    
+ajax_product_most_favorite:
+    pattern:  /ajax/products/most/favorite/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsMostFavorite, page_number: 0, limit: 0}
+    
+ajax_product_ltf_recommended:
+    pattern:  /ajax/products/{gender}/ltf/recommended/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsLTFRecommendation, page_number: 0, limit: 0}    
 
 ajax_product_hotest:
     pattern:  /ajax/products/{gender}/hotest/{page_number}/{limit}

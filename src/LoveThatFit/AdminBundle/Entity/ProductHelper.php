@@ -28,6 +28,7 @@ class ProductHelper {
      * @var string
      */
     protected $class;
+//-------------------------------------------------------
 
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class) {
         $this->dispatcher = $dispatcher;
@@ -36,6 +37,7 @@ class ProductHelper {
         $this->repo = $em->getRepository($class);
     }
     
+//-------------------------------------------------------
     public function createNew() {
         $class = $this->class;
         $product = new $class();
@@ -115,6 +117,7 @@ class ProductHelper {
             );
         }
     }
+//-------------------------------------------------------
     
     public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
@@ -208,7 +211,7 @@ public function find($id) {
         return $this->repo->findProductByTitle($name);
     }
     
-    
+#---------------------------------------------------    
     private function countProductsByGender($gender)
     {
         
@@ -216,7 +219,7 @@ public function find($id) {
         
     }
     
-    
+    #---------------------------------------------------
     
     private function countProductsByType($target)
     {
@@ -224,50 +227,98 @@ public function find($id) {
         return count($this->repo->findPrductByType($target));           
     }
     
+    #---------------------------------------------------
+    //               Methods Product listing on index page
+    #---------------------------------------------------
     
+    public function listByType($options) {
+        
+            switch ($options['list_type'])
+        {
+        case "latest":        
+        return $this->findByGenderLatest($options['gender']);
+        break;
+    
+        case "most_tried_on":        
+        return $this->findMostTriedOnByGender($options['gender']);
+        break;
+    
+        case "recently_tried_on":        
+        return $this->findRecentlyTriedOnByUser($options['user_id']);
+        break;
+    
+        case "most_faviourite":        
+        return $this->findMostLikedByGender($options['gender']);
+        break ;
+        
+        case "ltf_recommendation":        
+        return $this->findLTFRecomendedByGender($options['gender']);
+        break ;
+            
+        default:
+        return $this->findByGenderLatest($options['gender']);
+        break ;
+        }
+        
+   }
+    #---------------------------------------------------
+    
+    
+    public function findByGenderLatest($gender, $page_number=0, $limit=0) {
+        return $this->repo->findByGenderLatest($gender, $page_number, $limit);
+   }
+    #---------------------------------------------------
+    
+    public function findRecentlyTriedOnByUser($user_id, $page_number=0, $limit=0) {
+        return $this->repo->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
+   }
+   #---------------------------------------------------
+    
+   public function findMostTriedOnByGender($gender, $page_number=0, $limit=0) {
+        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
+   }
+    
+   #---------------------------------------------------
+    
+   public function findLTFRecomendedByGender($gender, $page_number=0, $limit=0) {
+        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
+   }
+   #---------------------------------------------------
+    
+   public function findMostLikedByGender($gender, $page_number=0, $limit=0) {
+        return $this->repo->findByGenderMostLiked($gender, $page_number, $limit);        
+   } 
+    
+    #---------------------------------------------------
     #---------WROK WILL BE DONE I FUTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!----#
     public function getDefaultFittingAlerts($product_id)
-    {
-        
+    {       
         // find product
-        $product = $this->repo->find($product_id);
-        
+        $product = $this->repo->find($product_id);        
       if($product){
         $product_color = $product->getDisplayProductColor();
-        $product_color_id = $product_color->getId();
-        
-         //get color size array, sizes that are available in this color 
-        
+        $product_color_id = $product_color->getId();        
+         //get color size array, sizes that are available in this color         
         $color_sizes_array = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductColor')
                 ->getSizeArray($product_color_id);
-        $size_id = null;
-        
-         // find size id is not in param gets the first size id for this color
-      
+        $size_id = null;        
+         // find size id is not in param gets the first size id for this color      
             $psize = array_shift($color_sizes_array);
             $size_id = $psize['id'];
        $product_size_id = $size_id;
         $product_size = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductSize')
                 ->find($product_size_id);
-
         //2) color & size can get an item
-
         if ($product_size && $product_color) {
             $product_item = $this->getDoctrine()
                     ->getRepository('LoveThatFitAdminBundle:ProductItem')
                     ->findByColorSize($product_color->getId(), $product_size->getId());
             
           return  $item_id=$product_item->getId();
-        }      
-        
+        }     
         }//End of If   
-        
-         
-        
-        
-        
     }         
  
 
