@@ -5,6 +5,7 @@ use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\SizeChartType;
 
 
@@ -36,57 +37,36 @@ class SizeChartController extends Controller {
 
     
      public function newAction() {
-       $entity = new SizeChart();
-       $form = $this->getAddSizeChartForm($entity);
+        $entity = $this->get('admin.helper.sizechart')->createNew();
+        $form = $this->createForm(new SizeChartType('add'), $entity);      
+      
        return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
                     'form' => $form->createView()));
     }
     
     public function createAction(Request $request)
     {
-       $entity = new SizeChart();
-       $form = $this->getAddSizeChartForm($entity);   
-       $form->bind($request); 
-       $title = $entity->getTitle();
-      
-       if($title==="00")
-       {
-           $title="00";
-       }
-      else if($title=="0"){
-         $title="0";
+       
+        $entity = $this->get('admin.helper.sizechart')->createNew();
+        $form = $this->createForm(new SizeChartType('add'), $entity);
+        $form->bind($request);
+        if ($form->isValid()) {
+
+            $message_array = $this->get('admin.helper.sizechart')->save($entity);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+
+            if ($message_array['success']) {
+                return $this->redirect($this->generateUrl('admin_size_chart_show', array('id' => $entity->getId())));
+            }
+        } else {
+            $this->get('session')->setFlash('warning', 'The Size chart can not be Created!');
+        }
+
+        return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
         
-       }    
-       $brand = $entity->getBrand()->getId();       
-       $gender = $entity->getGender();       
-       $target = $entity->getTarget();
-       $bodytype=$entity->getBodytype();
-       if($gender!=null and $target!=null and $bodytype!=null)
-       {
-       $sizechart=  $this->getBrandSize($brand,$title,$gender,$target,$bodytype);
-       if($sizechart>0)
-       {
-           $this->get('session')->setFlash('warning','The Size : ' .$title. ', Gender: ' .$gender. ', Brand: '.$this->getBrandById($brand)->getName().' , Target: ' .$target.  ' , Body Type: ' .$bodytype. ' already exits!');
-            return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
-                    'form' => $form->createView()));
-       }else
-       {
-       if ($form->isValid()) {
-           $em = $this->getDoctrine()->getManager();
-           $em->persist($entity);
-           $em->flush();
-           $this->get('session')->setFlash('success','The Size Chart has been Created!');
-           return $this->redirect($this->generateUrl('admin_size_charts'));
-            //return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', array(
-              //      'form' => $form->createView(),'sizechart' => $entity)); 
-       }
-       }
-       }else
-       {
-       $this->get('session')->setFlash('warning','Please Enter Values Correctly.');
-       return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
-                    'form' => $form->createView()));
-       }
     }
     
     
@@ -115,7 +95,6 @@ class SizeChartController extends Controller {
     {
         $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
         $entity = $specs['entity'];
-
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
@@ -128,60 +107,36 @@ class SizeChartController extends Controller {
     
     public function updateAction(Request $request, $id)
     {
-       $em = $this->getDoctrine()->getManager();
-       $entity = $this->getSizeChartById($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Size Chart.');
-        }
-        $form = $this->getAddSizeChartForm($entity);
+       $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
+       $entity = $specs['entity'];   
+       $form = $this->createForm(new SizeChartType('edit'), $entity);
         $form->bind($request);
-        if ($form->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-            $this->get('session')->setFlash('success','The Size Chart has been update!');
-            return $this->redirect($this->generateUrl('admin_size_charts', array('id' => $entity->getId())));
+      if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+            return $this->redirect($this->generateUrl('admin_size_charts'));
         } 
-        else {
-         //  $this->get('warning')->setFlash('warning','Unable to update Size Chart!');   
-             return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
-                    'form' => $form->createView()));
+        
+        if ($form->isValid()) {
+            $message_array = $this->get('admin.helper.sizechart')->update($entity);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+            if ($message_array['success'] == true) {
+                return $this->redirect($this->generateUrl('admin_size_chart_show', array('id' => $entity->getId())));
+            }
+        } else {
+            $this->get('session')->setFlash('warning', 'Unable to update Size Chart!');
         }
+        $deleteForm = $this->createForm(new DeleteType(), $entity);
+        return $this->render('LoveThatFitAdminBundle:SizeChart:edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity));
     }
 
 
     
     
    
-    private function getAddSizeChartForm($entity) {
-       
-        return $this->createForm(new SizeChartType('edit'), $entity);
-    }
-    
-    private function getSizeChartById($id) {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
-        $sizeChart = $repository->find($id);
-        return $sizeChart;
-    }
-    
-    private function getBrandSize($brand,$title,$gender,$target,$bodytype)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $sizechartsObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SizeChart');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                 ->findBrandSizeBy($brand,$title,$gender,$target,$bodytype);
-		$rec_count = count($sizechartsObj->findBrandSizeBy($brand,$title,$gender,$target,$bodytype));
-        return $rec_count;
-    }
-    
-    private function getBrandById($brand)
-    {
-      $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand');
-        $brand = $repository->find($brand);
-        return $brand;
-    }
-    
+   
     
     
     

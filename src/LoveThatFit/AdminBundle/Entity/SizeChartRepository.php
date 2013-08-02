@@ -50,11 +50,11 @@ class SizeChartRepository extends EntityRepository {
     }
     
     
-    public function findOneByName($name) {
+    public function findOneByName($title) {
         $record = $this->getEntityManager()
                         ->createQuery("SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc     
-                                WHERE sc.title=:sizetitle")
-                        ->setParameters(array('sizetitle' => $name));
+                                WHERE sc.title=:title")
+                        ->setParameters(array('title' => $title));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -79,11 +79,11 @@ class SizeChartRepository extends EntityRepository {
                         ->createQuery("SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc
      WHERE
      sc.brand=:brand
-     AND sc.title=:sizetitle
+     AND sc.title=:title
      AND sc.gender=:gender
      AND sc.target=:target
      AND sc.bodytype=:body_type"
-                        )->setParameters(array('brand' => $brand, 'sizetitle' =>$title, 'gender' => $gender, 'target' => $target,'body_type'=>$bodytype));
+                        )->setParameters(array('brand' => $brand, 'title' =>$title, 'gender' => $gender, 'target' => $target,'body_type'=>$bodytype));
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

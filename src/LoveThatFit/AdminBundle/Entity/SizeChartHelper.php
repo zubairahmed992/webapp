@@ -45,14 +45,40 @@ class SizeChartHelper{
         
     }
  //---------------------------------------------------------------------   
-    
     public function createNewSizeChart()
+{
+    $class = $this->class;
+    $sizechart = new $class();
+    return $sizechart;
+}
+    
+    public function createNew()
 {
     $class = $this->class;
     $size_chart = new $class();
     return $size_chart;
 }
 //-------------------------------------------------------
+
+public function save($entity) {
+        $title = $entity->getTitle();
+       $brand = $entity->getBrand()->getId();       
+       $gender = $entity->getGender();       
+       $target = $entity->getTarget();
+       $bodytype=$entity->getBodytype();       
+        $msg_array = $this->validateForCreate($brand,$title,$gender,$target,$bodytype);
+        if ($msg_array == null) {          
+            $this->em->persist($entity);
+            $this->em->flush();
+            return array('message' => 'Size Chart succesfully created.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+            return $msg_array;
+        }
+    }
 
 public function saveSizeChart(SizeChart $size_chart)
 {
@@ -62,7 +88,8 @@ public function saveSizeChart(SizeChart $size_chart)
 //-------------------------------------------------------
 
 public function update($entity) {
-        $msg_array = $this->validateForUpdate($entity);
+        $msg_array = '';
+        //$msg_array = $this->validateForUpdate($entity);
         if ($msg_array == null) {
             $this->em->persist($entity);
             $this->em->flush();
@@ -104,20 +131,11 @@ public function find($id)
 {
     return $this->repo->find($id);
 }
-public function findOneById($id)
-{
-    return $this->repo->findOneById($id);
-    
-}
 
-public function findOneByName($name) {
-        return $this->repo->findOneByName($name);
-    }
-    
-   public function findWithSpecs($id) {
+public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
         if (!$entity) {
-            $entity = $this->createNew();
+            $entity = $this->createNewSizeChart();
             return array(
                 'entity' => $entity,
                 'message' => 'Size Chart not found.',
@@ -134,6 +152,18 @@ public function findOneByName($name) {
         }
     }  
 
+
+public function findOneById($id)
+{
+    return $this->repo->findOneById($id);
+    
+}
+
+public function findOneByName($title) {
+        return $this->repo->findOneByName($title);
+    }
+    
+   
 #-------------------------Evaluate Size Chart ------------------------------------------------------------------------#
 //-------------------------------------------------------------------------------------
     public function evaluateWithSizeChart($measurement) {
@@ -443,22 +473,49 @@ public function sizeChartList($request_array)
     
     
     //----------------------------------------------------------
-    private function validateForCreate($name) {
-        if (count($this->findOneByName($name)) > 0) {
-            return array('message' => 'Brand Name already exists!',
+    private function validateForCreate($brand,$title,$gender,$target,$bodytype) {
+        if($title==="00")
+       {
+           $title="00";
+       }
+      else if($title=="0"){
+         $title="0";
+        
+       }   
+       if($gender!=null and $target!=null and $bodytype!=null)
+       {
+        $sizechart=  $this->getBrandSize($brand,$title,$gender,$target,$bodytype);
+       if($sizechart>0)
+       {        
+            return array('message' => 'Size Chart already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
             );
-        }
-        return;
+       }else
+       {
+            return;
+       }
+       }else
+       {
+           return array('message' => 'Please Enter Values Correctly',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+       }
+       
     }
 
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
-        $sizechart = $this->findOneByName($entity->getTitle());
-
-        if ($sizechart && $sizechart->getId() != $entity->getId()) {
+       $title = $entity->getTitle();
+       $brand = $entity->getBrand()->getId();       
+       $gender = $entity->getGender();       
+       $target = $entity->getTarget();
+       $bodytype=$entity->getBodytype();
+       $sizechart = $this->getBrandSize($brand,$title,$gender,$target,$bodytype);
+        if ($sizechart>0) {
             return array('message' => 'Size Chart already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -468,4 +525,9 @@ public function sizeChartList($request_array)
         return;
     }
 
+    private function getBrandSize($brand,$title,$gender,$target,$bodytype)
+    {
+        $rec_count= count($this->repo->findBrandSizeBy($brand,$title,$gender,$target,$bodytype));
+        return $rec_count;        
+    }
 }
