@@ -13,7 +13,7 @@ use LoveThatFit\AdminBundle\Entity\SizeChart;
 use LoveThatFit\AdminBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\UserBundle\Entity\User;
-
+use Symfony\Component\Yaml\Parser;
 
 class ProductHelper{
 
