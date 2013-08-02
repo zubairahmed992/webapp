@@ -39,5 +39,8 @@ class ProductColorHelper {
     public function findColorByProductTitle($title, $productid) {
         return $this->repo->findColorByProductTitle($title, $productid);
     }
-
+public function getSizeItemImageUrlArray($id){
+    
+    return $this->repo->getSizeItemImageUrlArray($id);
+}
 }

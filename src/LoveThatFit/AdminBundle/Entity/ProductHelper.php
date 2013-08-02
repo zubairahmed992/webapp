@@ -1,40 +1,54 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\productEvent;
+use LoveThatFit\AdminBundle\Event\ProductEvent;
+use LoveThatFit\UserBundle\Entity\Measurement;
+use LoveThatFit\AdminBundle\Entity\SizeChart;
+use LoveThatFit\AdminBundle\Entity\Product;
+use Symfony\Component\HttpFoundation\Request;
+use LoveThatFit\UserBundle\Entity\User;
+use Symfony\Component\Yaml\Parser;
 
-class ProductHelper {
+class ProductHelper{
 
+     /**
+     * Holds the Symfony2 event dispatcher service
+     */
     protected $dispatcher;
-
-    /**
+     /**
+     * Holds the Doctrine entity manager for database interaction
      * @var EntityManager 
      */
     protected $em;
 
     /**
+     * Entity-specific repo, useful for finding entities, for example
      * @var EntityRepository
      */
     protected $repo;
 
     /**
+     * The Fully-Qualified Class Name for our entity
      * @var string
      */
     protected $class;
-//-------------------------------------------------------
 
-    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class) {
+    private $container;
+    
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, Container $container)
+    {
+        $this->container = $container;
         $this->dispatcher = $dispatcher;
         $this->em = $em;
         $this->class = $class;
         $this->repo = $em->getRepository($class);
+        
     }
     
 //-------------------------------------------------------
@@ -320,6 +334,149 @@ public function find($id) {
         }     
         }//End of If   
     }         
+#-----------------------------Web Service-------------------------------------------------------------------------#
+    #---------Web Service for product listing -----------#
+ public function productListWebService($request,$request_array){
+        
+        $id = $request_array['id'];
+        $type = $request_array['type'];
+        $gender = $request_array['gender'];
+        
+        
+        
+       /*$id=6;
+       $type='brand';
+       $gender='F';*/
+        
+        $products = Null;
+        if ($type == "brand") {
+            $products = $this->repo->findProductByBrandWebService($id, $gender);
+        }
+        if ($type == "clothing_type") {
+            $products = $this->repo->findProductByClothingTypeWebService($id, $gender);
+        }
+        if ($type == "hot") {
+            $products = $this->repo->findhottestProductWebService($gender);
+        }
+        if ($type == "new") {
+            $products = $this->repo->findLattestProductWebService($gender);
+        }
+        $data = array();
+       
+        #-------Fetching The Path------------#
+        if ($products) {
+         
+         $product_color_array = array();
+          $count=1;
+          //$product_helper =  $this->get('admin.helper.product');
+          foreach ($products as $ind_product) {
+                $product_id = $ind_product['id'];
+                if ($product_id) {
+                    $p = $this->find($product_id);
+                    $data['data'][$product_id]['id'] = $ind_product['id'];
+                    $data['data'][$product_id]['name'] = $ind_product['name'];
+                    $data['data'][$product_id]['description'] = $ind_product['description'];
+                    $data['data'][$product_id]['target'] = $ind_product['target'];
+                    $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
+                    $item = $p->getDefaultItem();
+                    if ($item) {
+                        $data['data'][$product_id]['fitting_room_image'] = $item->getImage();
+                    }
+                }
+            }   
+           
+            //$data[] = $products;
+           
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+            $data['fitting_room_path'] = $fitting_room;
+            $total_record = count($products);
+
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+            $data['path'] = $baseurl;
+            return $data;
+        } else {
+            return array('Message' => 'We can not find Product');
+        }
+     
+ }
+ #--------------------Product Detail Web Service -----------------------------------------------------------#
+ public function productDetailWebService($request,$request_array){
+     
+      
+        $product_id = $request_array['id'];
+        $user_id= $request_array['user_id'];
+       
+       if(!$user_id)
+       {
+            return  array('Message' => 'User Missing');
+       }    
+        
+        $productdetail = array();
+        $products = $this->repo->productDetail($product_id);
+        
+        $product = $this->repo->find($product_id);
+        
+        $user_helper = $this->container->get('user.helper.user');
+        $product_color_helper = $this->container->get('admin.helper.productcolor');
+         
+        $user = $user_helper->find($user_id);
+        $user_re = new User();
+        
+        
+        $count_rec = count($products);
+        $productdetail['product'] = $products;
+        
+        $product_color_array = array();
+
+        #-- FOR COLORS AND SIZE----------#
+        if ($count_rec > 0) {
+
+            $product_colors = $product->getProductColors();
+            $product_size_id = null;
+            $size_id = null;
+            foreach ($product_colors as $product_color_value) {
+                $product_color_id = $product_color_value->getId();
+
+                $color_sizes = $product_color_helper->getSizeItemImageUrlArray($product_color_id);
+
+                $color_size_array = array();
+                $counter=1;
+                foreach ($color_sizes as $cs) {
+                    $color_size_array [$cs['title']] = $cs;
+                    $like_status['like_status']=$user_re->getMyClosetListArray($cs['id']);
+                    array_push($color_size_array [$cs['title']],$like_status);
+                    $counter++;
+                }
+                
+
+     
+                $product_color_array[$product_color_value->gettitle()] = array(
+                    'id' => $product_color_value->getId(),
+                    'image' => $product_color_value->getImage(),
+                    'pattern' => $product_color_value->getPattern(),
+                    'title' => $product_color_value->getTitle(),
+                    'sizes' => $color_size_array,
+                );
+            }
+            $productdetail['product_color'] = $product_color_array;
+            $data = array();
+            $data['data'] = $productdetail;
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+            $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/';
+
+            $data['product_color_path'] = $baseurl;
+            $data['fitting_room_path'] = $fitting_room;
+            $data['pattern_path'] = $pattern;
+
+            return  $data;
+        } else {
+            return array('Message' => 'Record Not Found');
+        }
+     
+     
+ }
  
 
 }

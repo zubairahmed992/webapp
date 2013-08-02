@@ -67,6 +67,7 @@ public function saveUser(User $user)
     $this->em->flush();
     
 }
+
 //-------------------------------------------------------
 
 public function encodePassword(User $user)
@@ -364,8 +365,6 @@ public function findByEmail($email)
 
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
-$weight=1;
-$height=2;
 
             $measurement->setWeight($weight);
 
