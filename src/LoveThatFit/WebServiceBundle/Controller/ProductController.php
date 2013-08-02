@@ -110,81 +110,10 @@ class ProductController extends Controller {
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
         
-        $id = $request_array['id'];
-        $type = $request_array['type'];
-        $gender = $request_array['gender'];
+        $product_helper =  $this->get('admin.helper.product');
+        $product_response=$product_helper->productListWebService($request,$request_array);
+        return new response(json_encode($product_response));
         
-      // $id=3;
-      // $type='brand';
-      // $gender='F';
-        
-        $products = Null;
-        if ($type == "brand") {
-            $products = $this->getDoctrine()
-                    ->getRepository('LoveThatFitAdminBundle:Product')
-                    ->findProductByBrandWebService($id, $gender);
-        }
-        if ($type == "clothing_type") {
-            $products = $this->getDoctrine()
-                    ->getRepository('LoveThatFitAdminBundle:Product')
-                    ->findProductByClothingTypeWebService($id, $gender);
-        }
-        if ($type == "hot") {
-            $products = $this->getDoctrine()
-                    ->getRepository('LoveThatFitAdminBundle:Product')
-                    ->findhottestProductWebService($gender);
-        }
-        if ($type == "new") {
-            $products = $this->getDoctrine()
-                    ->getRepository('LoveThatFitAdminBundle:Product')
-                    ->findLattestProductWebService($gender);
-        }
-        $data = array();
-       
-        #-------Fetching The Path------------#
-        if ($products) {
-            /* if($products[0]['product_image'] )
-              {
-              $product_id=$products[0]['id'];
-              $productimage_path = $this->getDoctrine()
-              ->getRepository('LoveThatFitAdminBundle:Product')
-              ->find($product_id);
-              $images_path= $productimage_path->getdefalutImagePaths();
-              $data['path']=$images_path;
-              } */
-
-           $product_color_array = array();
-           $count=1;
-          $product_helper =  $this->get('admin.helper.product');
-          foreach ($products as $ind_product) {
-                $product_id = $ind_product['id'];
-                if ($product_id) {
-                    $p = $product_helper->find($product_id);
-                    $data['data'][$product_id]['id'] = $ind_product['id'];
-                    $data['data'][$product_id]['name'] = $ind_product['name'];
-                    $data['data'][$product_id]['description'] = $ind_product['description'];
-                    $data['data'][$product_id]['target'] = $ind_product['target'];
-                    $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
-                    $item = $p->getDefaultItem();
-                    if ($item) {
-                        $data['data'][$product_id]['fitting_room_image'] = $item->getImage();
-                    }
-                }
-            }   
-           
-            //$data[] = $products;
-           
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
-            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
-            $data['fitting_room_path'] = $fitting_room;
-            $total_record = count($products);
-
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
-            $data['path'] = $baseurl;
-            return new Response($this->json_view($total_record, $data));
-        } else {
-            return new Response(json_encode(array('Message' => 'We can not find Product')));
-        }
     }
 #--------------------Product Detail -------------------------------------------------------------#
     //------Proudct List By Product Detail----------------------///   

@@ -320,6 +320,75 @@ public function find($id) {
         }     
         }//End of If   
     }         
+#-----------------------------Web Service-------------------------------------------------------------------------#
+    #---------Web Service for product listing -----------#
+ public function productListWebService($request,$request_array){
+        
+        $id = $request_array['id'];
+        $type = $request_array['type'];
+        $gender = $request_array['gender'];
+        
+        
+        
+       /*$id=6;
+       $type='brand';
+       $gender='F';*/
+        
+        $products = Null;
+        if ($type == "brand") {
+            $products = $this->repo->findProductByBrandWebService($id, $gender);
+        }
+        if ($type == "clothing_type") {
+            $products = $this->repo->findProductByClothingTypeWebService($id, $gender);
+        }
+        if ($type == "hot") {
+            $products = $this->repo->findhottestProductWebService($gender);
+        }
+        if ($type == "new") {
+            $products = $this->repo->findLattestProductWebService($gender);
+        }
+        $data = array();
+       
+        #-------Fetching The Path------------#
+        if ($products) {
+         
+         $product_color_array = array();
+          $count=1;
+          //$product_helper =  $this->get('admin.helper.product');
+          foreach ($products as $ind_product) {
+                $product_id = $ind_product['id'];
+                if ($product_id) {
+                    $p = $this->find($product_id);
+                    $data['data'][$product_id]['id'] = $ind_product['id'];
+                    $data['data'][$product_id]['name'] = $ind_product['name'];
+                    $data['data'][$product_id]['description'] = $ind_product['description'];
+                    $data['data'][$product_id]['target'] = $ind_product['target'];
+                    $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
+                    $item = $p->getDefaultItem();
+                    if ($item) {
+                        $data['data'][$product_id]['fitting_room_image'] = $item->getImage();
+                    }
+                }
+            }   
+           
+            //$data[] = $products;
+           
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+            $data['fitting_room_path'] = $fitting_room;
+            $total_record = count($products);
+
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+            $data['path'] = $baseurl;
+            return $data;
+        } else {
+            return array('Message' => 'We can not find Product');
+        }
+     
+     
+     
+     
+ }
  
 
 }
