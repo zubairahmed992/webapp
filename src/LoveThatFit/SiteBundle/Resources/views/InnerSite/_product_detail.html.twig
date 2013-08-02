@@ -1,15 +1,24 @@
 
 <script language="javascript">
 
-function chk_applied_loaded(){
-    photo_width_a =  document.getElementById('applied_prod').width;
+function chk_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
             if(photo_width_a == null){
                 //alert("not loaded yet");
-                setTimeout(chk_applied_loaded, 200);
+                setTimeout(chk_applied_loaded(prod_type_applied), 200);
                 return false;
             }else {
                 $("#top_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
-                
+                $("#applied_prod_top").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
             }
         }
 
@@ -17,7 +26,6 @@ function apply_prod(size_id,product_id,color_id){
     //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
     
     var apply_img_url = $('.dynamic_data'+product_id+' .featured_img a.apply_img').attr('href');
-    
     var prod_type_top = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_top');
     var prod_type_bottom = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_bottom');
     var prod_type_dress = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_dress');
@@ -29,15 +37,9 @@ function apply_prod(size_id,product_id,color_id){
         //$("#play_area").prepend('<div class="uploading_in_progress"></div>');
         
         $("#top_dropable").fadeOut("200", function (){
-            $("#top_dropable").html("<img id='applied_prod' src='"+apply_img_url+"'/>")
-            //$("#user_dummy_img_hldr").prepend('<div class="uploading_in_progress"></div>');
-            chk_applied_loaded();
-            
-            
-         //   fadeIn("500",function(){
-          //      $("#top_dropable").addClass("disp_blk");
-           // });
-        });
+            $("#top_dropable").html("<img id='applied_prod_top' src='"+apply_img_url+"'/>")
+            chk_applied_loaded('applied_prod_top');
+          });
         
         
         
