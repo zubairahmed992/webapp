@@ -132,33 +132,5 @@ class SizeChartController extends Controller {
                     'entity' => $entity));
     }
 
-
-    
-    
-   
-   
-    
-    
-    
-#--------------Testing of Utility Helper ---------------------#
-    public function testHelperAction() {
-        $utility_helper = $this->get('admin.helper.utility');
-        $genders = $utility_helper->getGenders();
-        #------Accessing the Single Gender----------------------#
-        $man=$genders['men'];
-        #-----------------SizeCharts-----------------------------#
-        $sizeCharts = $utility_helper->getSizeCharts(); 
-        #-----------------Target---------------------------------#
-        $targets = $utility_helper->getTargets(); 
-        #-------------Titles-------------------------------------#
-        $sizeTtiles=$utility_helper->getSizeTitle(); 
-        #-------------Size Numbers-------------------------------#
-        $sizeNumbers=$utility_helper->getSizeNumbers(); 
-        #------------BodyTypes-----------------------------------#
-        
-        $bodyTypes=$utility_helper->getBodyTypes(); 
-        
-        Return new Response(json_encode($bodyTypes));
-    } 
 }
 

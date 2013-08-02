@@ -5,10 +5,10 @@ namespace LoveThatFit\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * LoveThatFit\AdminBundle\Entity\SurveyQuestion
- *
- * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\SurveyQuestionRepository") 
+ * @ORM\Table()
+ * @ORM\HasLifecycleCallbacks()
  */
 class SurveyQuestion
 {    

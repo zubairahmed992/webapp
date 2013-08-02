@@ -65,7 +65,7 @@ services:
         arguments:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
-            class: LoveThatFit\AdminBundle\Entity\SurveyQuestion, LoveThatFit\AdminBundle\Entity\SurveyAnswer
+            class: LoveThatFit\AdminBundle\Entity\SurveyQuestion
      
 #    love_that_fit_admin.example:
 #        class: %love_that_fit_admin.example.class%

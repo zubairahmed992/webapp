@@ -142,20 +142,14 @@ public function findWithSpecs($id) {
         }
     }
 
-    public function findOneByName($name) {
-        return $this->repo->findOneByName($name);
-    }
-
-    public function removeQuestion() {
-        return $this->repo->removeQuestion();
-    }
+    
     
     public function getListWithPagination($page_number, $sort) {
         $yaml = new Parser();
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         $limit = $pagination_constants["constants"]["pagination"]["limit"];
 
-        $entity = $this->repo->listAllQuestion($page_number, $limit, $sort);
+        $entity = $this->repo->findlistAllQuestion($page_number, $limit, $sort);
         $rec_count = count($this->repo->countAllRecord());
         $cur_page = $page_number;
 
@@ -164,11 +158,16 @@ public function findWithSpecs($id) {
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
         }
-        return array('question' => $entity,
-            'rec_count' => $rec_count,
-            'no_of_pagination' => $no_of_paginations,
-            'limit' => $cur_page,
-            'per_page_limit' => $limit,
+        return array(
+                    'data' =>  $this->getQuestionsList(),
+                    'addNewForm' => $this->createNewQuestion(),
+                    'operation'=>null,
+                    'id'=>null,
+                    'count_question'=>count($this->getQuestionsList()),              
+                    'rec_count' => $rec_count,
+                    'no_of_pagination' => $no_of_paginations,
+                    'limit' => $cur_page,
+                    'per_page_limit' => $limit,
         );
     }
     
@@ -198,8 +197,7 @@ public function findWithSpecs($id) {
     }
     
     private function getQuestionsList() {
-       $question = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:SurveyQuestion')->findAll();
-       $rec_count = count($question);       
+       $question=$this->repo->findAll();              
        return $question;       
     }
     

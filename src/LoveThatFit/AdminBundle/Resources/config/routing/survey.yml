@@ -1,6 +1,6 @@
 admin_survey:
-    pattern:  /admin/survey/questions
-    defaults: { _controller: LoveThatFitAdminBundle:Survey:index }
+    pattern:  /admin/survey/questions/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Survey:index , page_number: 1, sort:id}
     
 admin_survey_add_new_question:
     pattern:  /admin/survey/add_new_question
