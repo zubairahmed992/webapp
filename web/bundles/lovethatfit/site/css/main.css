@@ -2899,3 +2899,10 @@ padding-bottom: 0px;
 .main_log_box{
     margin-left: 8px;
 }
+
+
+#error_reset {
+    color: #DD1144;
+    font-size: 0.75em;    
+   
+}
