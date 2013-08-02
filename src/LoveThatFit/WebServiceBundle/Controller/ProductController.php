@@ -124,8 +124,8 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-       #------------------------------Authentication of Token---------------------------------------------#
-         $user = $this->get('user.helper.user');
+       #------------------------------Authentication of Token--------------------------------------------#
+        $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -136,82 +136,10 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
-        $product_id = $request_array['id'];
-        $user_id= $request_array['user_id'];
-       if(!$user_id)
-       {
-            return new Response(json_encode(array('Message' => 'User Missing')));
-       }    
-        $em = $this->getDoctrine()->getManager();
+        $product_helper =  $this->get('admin.helper.product');
+        $product_response=$product_helper->productDetailWebService($request,$request_array);
         
-        $productdetail = array();
-        $products = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->productDetail($product_id);
-
-        $product = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->find($product_id);
-        
-        
-        
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-        
-        
-        
-        $count_rec = count($products);
-        $productdetail['product'] = $products;
-        
-        $product_color_array = array();
-
-        #-- FOR COLORS AND SIZE----------#
-        if ($count_rec > 0) {
-
-            $product_colors = $product->getProductColors();
-            $product_size_id = null;
-            $size_id = null;
-            foreach ($product_colors as $product_color_value) {
-                $product_color_id = $product_color_value->getId();
-
-                $color_sizes = $this->getDoctrine()
-                        ->getRepository('LoveThatFitAdminBundle:ProductColor')
-                        ->getSizeItemImageUrlArray($product_color_id);
-
-                $color_size_array = array();
-                $counter=1;
-                foreach ($color_sizes as $cs) {
-                    $color_size_array [$cs['title']] = $cs;
-                    $like_status['like_status']=$user->getMyClosetListArray($cs['id']);
-                    array_push($color_size_array [$cs['title']],$like_status);
-                    $counter++;
-                }
-                
-
-     
-                $product_color_array[$product_color_value->gettitle()] = array(
-                    'id' => $product_color_value->getId(),
-                    'image' => $product_color_value->getImage(),
-                    'pattern' => $product_color_value->getPattern(),
-                    'title' => $product_color_value->getTitle(),
-                    'sizes' => $color_size_array,
-                );
-            }
-            $productdetail['product_color'] = $product_color_array;
-            $data = array();
-            $data['data'] = $productdetail;
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
-            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
-            $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/';
-
-            $data['product_color_path'] = $baseurl;
-            $data['fitting_room_path'] = $fitting_room;
-            $data['pattern_path'] = $pattern;
-
-            return new Response($this->json_view($count_rec, $data));
-        } else {
-            return json_encode(array('Message' => 'Record Not Found'));
-        }
+       return new response(json_encode($product_response));
     }
 #------------------------------Default Fitting Room Alerts --------------------------------------------------#
 ////-------------------------------------------------------------------
