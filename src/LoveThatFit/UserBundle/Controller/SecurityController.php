@@ -65,16 +65,7 @@ class SecurityController extends Controller {
 
 //---------------------------------------------------------------------------------
     public function goSecureAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $userEntity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
-        $this->get('security.context')->setToken($token);
-
-        $user = $token->getUser();
-
-        //return new Response($session->get(SecurityContext::USERNAME));
-
+        $user=$this->get('user.helper.user')->getLoggedInById($id);
         return $this->redirect($this->generateUrl('inner_site_index'));
     }
 

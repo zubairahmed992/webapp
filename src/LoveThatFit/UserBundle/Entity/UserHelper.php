@@ -5,6 +5,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use LoveThatFit\UserBundle\Entity\User;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\UserBundle\Event\UserEvent;
@@ -67,6 +69,22 @@ public function saveUser(User $user)
     $this->em->flush();
     
 }
+//-------------------------------------------------------
+
+    public function getLoggedIn(User $userEntity) {
+        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
+        $this->container->get('security.context')->setToken($token);
+        return $token->getUser();
+    }
+
+//-------------------------------------------------------
+
+    public function getLoggedInById($id) {
+        $userEntity=$this->find($id);
+        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
+        $this->container->get('security.context')->setToken($token);
+        return $token->getUser();
+    }
 
 //-------------------------------------------------------
 
@@ -115,7 +133,7 @@ public function getMeasurement($user) {
 
 public function find($id)
 {
-    return $this->repo->find($id);
+    return $this->repo->findOneBy(array('id'=>$id));
 }
  #---------------------------START WEB SERVICES------- ----------------------------------------#
 public function findByEmail($email)

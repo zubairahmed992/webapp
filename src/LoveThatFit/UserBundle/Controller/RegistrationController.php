@@ -17,135 +17,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
-
 class RegistrationController extends Controller {
 
-//------------------------- Password reset ------------------------------------------------
-/*
-    public function passwordResetFormAction() {
-
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-        $defaultData = array('message' => 'Enter your email address');
-        $form = $this->createFormBuilder($defaultData)
-                ->add('password', 'repeated', array(
-                    'first_name' => 'password',
-                    'second_name' => 'confirm',
-                    'type' => 'password',
-                    'invalid_message' => 'The password fields must match.',
-                ))
-                ->getForm();
-          
-         
-        //$form = $this->createForm(new UserPasswordChangeType(), $entity);
-        
-        return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
-                    'form' => $form->createView(), 'entity' => $entity));
-    }
-
-    
-    //---------------------------------------------------------------------------------
-    public function passwordUpdateAction(Request $request, $id) {
-
-        $defaultData = array('message' => 'Update password');
-        $form = $this->createFormBuilder($defaultData)
-                ->add('password', 'repeated', array(
-                    'first_name' => 'password',
-                    'second_name' => 'confirm',
-                    'type' => 'password',
-                    'invalid_message' => 'The password fields must match.',
-                ))
-                ->getForm();
-
-        try {
-
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Authentication expired or link not found.');
-            }
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                $entity->setUpdatedAt(new \DateTime('now'));
-
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-
-                $password = $encoder->encodePassword($data['password'], $entity->getSalt());
-
-                $entity->setPassword($password);
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
-                $em->flush();
-
-                return $this->render('LoveThatFitUserBundle:Registration:message.html.twig', array(
-                            'message' => 'Your password has been changed.'));
-            } else {
-
-                return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
-                            'form' => $form->createView()));
-            }
-        } catch (\Doctrine\DBAL\DBALException $e) {
-
-            $form->addError(new FormError('Something went wrong.'));
-            return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
-                        'form' => $form->createView()));
-        }
-    }
-*/
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
-//------------------------- Registration Process ------------------------------------------
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
-
-    private function getRegistrationSecurityContext($request, $session) {
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                    SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-
-        $referer=$request->headers->get('referer');
-        $url_bits = explode('/', $referer);
-        $referer = $url_bits[sizeof($url_bits)-1];
-
-        if ($error){
-            $referer="login";
-        }
-        
-        return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error' => $error,
-            'referer' => $referer,
-        );
-    }
 
     public function registrationAction() {
+        $security_context = $this->getRegistrationSecurityContext($this->getRequest());
 
-        //------------------   LOgin form
-        
-        $request = $this->getRequest();
-        $session = $request->getSession();
-        $security_context=$this->getRegistrationSecurityContext($request, $session);
-        
         $entity = $this->get('user.helper.user')->createNewUser();
         $form = $this->createForm(new RegistrationType(), $entity);
+
         return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                     'form' => $form->createView(),
                     'last_username' => $security_context['last_username'],
                     'error' => $security_context['error'],
-            'referer' => $security_context['referer'],
-            
+                    'referer' => $security_context['referer'],
                 ));
     }
 
@@ -153,7 +38,7 @@ class RegistrationController extends Controller {
 
     public function registrationCreateAction() {
         $size_chart_helper = $this->get('admin.helper.sizechart');
-        $user_helper=$this->get('user.helper.user');
+        $user_helper = $this->get('user.helper.user');
         try {
             $entity = new User();
             $form = $this->createForm(new RegistrationType(), $entity);
@@ -163,45 +48,45 @@ class RegistrationController extends Controller {
                 $form->get('email')->addError(new FormError('This email address has already been taken.'));
             }
 
-
             if ($form->isValid()) {
-
                 $entity = $user_helper->registerUser($entity);
-                
-/*
-                $entity->setCreatedAt(new \DateTime('now'));
-                $entity->setUpdatedAt(new \DateTime('now'));
-                
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-                $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-                $entity->setPassword($password);
-                $entity->generateAuthenticationToken();
-                $em = $this->getDoctrine()->getManager();
-                $measurement = new Measurement();
-                $entity->setMeasurement($measurement);
-                
-                
-                $em->persist($entity);
-                $em->flush();
-*/
-                
-                // Adding Measurement record for the user for the later usage
-                
-                /*$em->persist($entity);
-                $em->flush();
+
+                /*
+                  $entity->setCreatedAt(new \DateTime('now'));
+                  $entity->setUpdatedAt(new \DateTime('now'));
+
+                  $factory = $this->get('security.encoder_factory');
+                  $encoder = $factory->getEncoder($entity);
+                  $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+                  $entity->setPassword($password);
+                  $entity->generateAuthenticationToken();
+                  $em = $this->getDoctrine()->getManager();
+                  $measurement = new Measurement();
+                  $entity->setMeasurement($measurement);
+
+
+                  $em->persist($entity);
+                  $em->flush();
+                 */
 
                 // Adding Measurement record for the user for the later usage
-                $measurement = new Measurement();
-                $measurement->setUser($entity);
-                $em->persist($measurement);
-                $em->flush();
-*/
+
+                /* $em->persist($entity);
+                  $em->flush();
+
+                  // Adding Measurement record for the user for the later usage
+                  $measurement = new Measurement();
+                  $measurement->setUser($entity);
+                  $em->persist($measurement);
+                  $em->flush();
+                 */
                 //Login after registration, the rest of the steps are secured for logged In users access only
-                
-                $measurement=$entity->getMeasurement();
-                $this->getLoggedIn($entity);
 
+                $measurement = $entity->getMeasurement();
+                
+                //$this->getLoggedIn($entity);
+                $this->get('user.helper.user')->getLoggedInById($entity);
+               
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($entity);
 
@@ -210,31 +95,22 @@ class RegistrationController extends Controller {
                 } else {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
                 }
-               
+
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                             'form' => $registrationMeasurementform->createView(),
                             'measurement' => $measurement,
                             'entity' => $entity,
-                           
-                    
-                    ));
+                        ));
             } else {
 
-                                //--------------login form
-                $request = $this->getRequest();
-                $session = $request->getSession();
-                $security_context=$this->getRegistrationSecurityContext($request, $session);
-
-                //---------------------------
-
+                $security_context = $this->getRegistrationSecurityContext($this->getRequest());
                 return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                             'form' => $form->createView(),
                             'entity' => $entity,
-                                        'last_username' => $security_context['last_username'],
-                    'error' => $security_context['error'],
-            'referer' => 'registration',
-
-                    ));
+                            'last_username' => $security_context['last_username'],
+                            'error' => $security_context['error'],
+                            'referer' => 'registration',
+                        ));
             }
         } catch (\Doctrine\DBAL\DBALException $e) {
 
@@ -250,7 +126,7 @@ class RegistrationController extends Controller {
     public function measurementCreateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $user_helper=$this->get('user.helper.user');
+        $user_helper = $this->get('user.helper.user');
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $em = $this->getDoctrine()->getManager();
         $entity = $user_helper->find($id);
@@ -307,38 +183,70 @@ class RegistrationController extends Controller {
                     'edit_type' => 'registration',
                 ));
     }
+    
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
+//------------------------- Private Methods ------------------------------------------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
+
+    private function getRegistrationSecurityContext($request) {
+        // get the login error if there is one
+        $session= $request->getSession();
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(
+                    SecurityContext::AUTHENTICATION_ERROR
+            );
+        } else {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+
+        $referer = $request->headers->get('referer');
+        $url_bits = explode('/', $referer);
+        $referer = $url_bits[sizeof($url_bits) - 1];
+
+        if ($error) {
+            $referer = "login";
+        }
+
+        return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'error' => $error,
+            'referer' => $referer,
+        );
+    }
+
+
+
 //-----------------------------------------------------------------------------
- public function measurementEditAction() {
-        
+    public function measurementEditAction() {
+
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $em = $this->getDoctrine()->getManager();
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $user_helper=$this->get('user.helper.user');
+        $user_helper = $this->get('user.helper.user');
         $entity = $user_helper->find($id);
-         $measurement_helper = $this->get('measurement.helper.measurement');
+        $measurement_helper = $this->get('measurement.helper.measurement');
         $measurement = $entity->getMeasurement();
 
         if ($entity->getGender() == 'm') {
-            
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType( $size_chart_helper->getBrandArray('Top'),  $size_chart_helper->getBrandArray('Bottom'),  $size_chart_helper->getBrandArray('Dress')), $measurement);
+
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType( $size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
-        
-    $retaining_array=$measurement_helper->measurementRetain($measurement);
-        
-return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
+
+        $retaining_array = $measurement_helper->measurementRetain($measurement);
+
+        return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
-                    'top_brand_id'=>$retaining_array['top_brand_id'],
-                    'top_size_chart_id'=>$retaining_array['topSizeChartId'],
-                    'bottom_brand_id'=>$retaining_array['bottom_brand_id'],
-                    'bottom_size_chart_id'=>$retaining_array['bottomSizeChartId'],
-                    'dress_brand_id'=>$retaining_array['dress_brand_id'],
-                    'dress_size_chart_id'=>$retaining_array['dressSizeChartId'],
-            ));
-  
+                    'top_brand_id' => $retaining_array['top_brand_id'],
+                    'top_size_chart_id' => $retaining_array['topSizeChartId'],
+                    'bottom_brand_id' => $retaining_array['bottom_brand_id'],
+                    'bottom_size_chart_id' => $retaining_array['bottomSizeChartId'],
+                    'dress_brand_id' => $retaining_array['dress_brand_id'],
+                    'dress_size_chart_id' => $retaining_array['dressSizeChartId'],
+                ));
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -349,8 +257,8 @@ return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig'
     public function stepFourEditAction() {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $user_helper=$this->get('user.helper.user');
-        $entity =$user_helper->find($id);
+        $user_helper = $this->get('user.helper.user');
+        $entity = $user_helper->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
@@ -370,14 +278,15 @@ return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig'
                     'edit_type' => 'registration',
                 ));
     }
-    
+
 #---------------------------Profile Edit Image ---------------#
-public function fittingRoomImageEditAction() {
+
+    public function fittingRoomImageEditAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-$em = $this->getDoctrine()->getManager();
-        $user_helper=$this->get('user.helper.user');
-        $entity =$user_helper->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $user_helper = $this->get('user.helper.user');
+        $entity = $user_helper->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
@@ -396,13 +305,13 @@ $em = $this->getDoctrine()->getManager();
                     'measurement' => $measurement,
                     'edit_type' => 'fitting_room',
                 ));
-    }    
+    }
 
 //--------------------------- update fitting room image, 
     public function stepFourCreateAction(Request $request, $id) {
-$em = $this->getDoctrine()->getManager();
-        $user_helper=$this->get('user.helper.user');
-        $entity =$user_helper->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $user_helper = $this->get('user.helper.user');
+        $entity = $user_helper->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -411,14 +320,14 @@ $em = $this->getDoctrine()->getManager();
         $form->bind($request);
 
         if ($form->isValid()) {
-            $image_path="";
-            if($entity->getImage()){
-                $image_path=$entity->uploadTempImage();
-            }else{
+            $image_path = "";
+            if ($entity->getImage()) {
+                $image_path = $entity->uploadTempImage();
+            } else {
                 $entity->upload();
                 $em->persist($entity);
                 $em->flush();
-                $image_path=$entity->getWebPath();
+                $image_path = $entity->getWebPath();
             }
             $response = new Response(json_encode(array(
                                 'entity' => $entity,
@@ -436,9 +345,9 @@ $em = $this->getDoctrine()->getManager();
 //-------------Updates shoulder height & outseam, input via user move sliders on image, form submit via ajax
 
     public function stepFourMeasurementUpdateAction(Request $request, $id) {
-$em = $this->getDoctrine()->getManager();
-        $user_helper=$this->get('user.helper.user');
-        $entity =$user_helper->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $user_helper = $this->get('user.helper.user');
+        $entity = $user_helper->find($id);
 
         $measurement = $user_helper->getMeasurement($user);
 
@@ -457,11 +366,11 @@ $em = $this->getDoctrine()->getManager();
 
     //--------------------------------- deals with image submitted from canvas, saves image
     public function stepFourImageUpdateAction() {
-$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $id = $_POST['id'];
-        $user_helper=$this->get('user.helper.user');
-        $entity =$user_helper->find($id);
-        
+        $user_helper = $this->get('user.helper.user');
+        $entity = $user_helper->find($id);
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -482,56 +391,152 @@ $em = $this->getDoctrine()->getManager();
         $user = $this->get('user.helper.user');
         $measurement_helper = $this->get('measurement.helper.measurement');
 #----------------------------End Of Helper Intialization-----------------------------------------------------#        
-        $entity=$user->find($id);
+        $entity = $user->find($id);
         $measurement = $entity->getMeasurement();
 
-        
+
         if ($entity->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'),$size_chart_helper->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'),$size_chart_helper->getBrandArray('Bottom'),$size_chart_helper->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
-        
-        $retaining_array=$measurement_helper->measurementRetain($measurement);
+
+        $retaining_array = $measurement_helper->measurementRetain($measurement);
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
-                    'top_brand_id'=>$retaining_array['top_brand_id'],
-                    'top_size_chart_id'=>$retaining_array['topSizeChartId'],
-                    'bottom_brand_id'=>$retaining_array['bottom_brand_id'],
-                    'bottom_size_chart_id'=>$retaining_array['bottomSizeChartId'],
-                    'dress_brand_id'=>$retaining_array['dress_brand_id'],
-                    'dress_size_chart_id'=>$retaining_array['dressSizeChartId'],
-            ));
+                    'top_brand_id' => $retaining_array['top_brand_id'],
+                    'top_size_chart_id' => $retaining_array['topSizeChartId'],
+                    'bottom_brand_id' => $retaining_array['bottom_brand_id'],
+                    'bottom_size_chart_id' => $retaining_array['bottomSizeChartId'],
+                    'dress_brand_id' => $retaining_array['dress_brand_id'],
+                    'dress_size_chart_id' => $retaining_array['dressSizeChartId'],
+                ));
     }
 
+}
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
 
 //------------------------- Login after registration------------------------------
 
-    private function getLoggedIn($userEntity) {
+   /* private function getLoggedIn($userEntity) {
         $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
         $this->get('security.context')->setToken($token);
     }
-
 //-------------------------------------------------------------------------------------
 //    private function isDuplicateEmail($id, $email) {
-  //      return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
-   // }
-
+    //      return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
+    // }
 //------------------------------ Get Measurement Entity -----------------------
 
-  /*  private function getMeasurement($user) {
-        $measurement = $user->getMeasurement();
+     private function getMeasurement($user) {
+      $measurement = $user->getMeasurement();
 
-        if (!$measurement) {
-            $measurement = new Measurement();
-            $measurement->setUser($user);
-        }
-        return $measurement;
-    }
-*/
+      if (!$measurement) {
+      $measurement = new Measurement();
+      $measurement->setUser($user);
+      }
+      return $measurement;
+      }
+   
 
-}
+//------------------------- Password reset ------------------------------------------------
+   
+       public function passwordResetFormAction() {
+
+      $id = $this->get('security.context')->getToken()->getUser()->getId();
+
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+      $defaultData = array('message' => 'Enter your email address');
+      $form = $this->createFormBuilder($defaultData)
+      ->add('password', 'repeated', array(
+      'first_name' => 'password',
+      'second_name' => 'confirm',
+      'type' => 'password',
+      'invalid_message' => 'The password fields must match.',
+      ))
+      ->getForm();
+
+
+      //$form = $this->createForm(new UserPasswordChangeType(), $entity);
+
+      return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
+      'form' => $form->createView(), 'entity' => $entity));
+      }
+
+
+      //---------------------------------------------------------------------------------
+      public function passwordUpdateAction(Request $request, $id) {
+
+      $defaultData = array('message' => 'Update password');
+      $form = $this->createFormBuilder($defaultData)
+      ->add('password', 'repeated', array(
+      'first_name' => 'password',
+      'second_name' => 'confirm',
+      'type' => 'password',
+      'invalid_message' => 'The password fields must match.',
+      ))
+      ->getForm();
+
+      try {
+
+      $em = $this->getDoctrine()->getManager();
+      $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
+
+      if (!$entity) {
+      throw $this->createNotFoundException('Authentication expired or link not found.');
+      }
+      $form->bind($request);
+
+      if ($form->isValid()) {
+      $data = $form->getData();
+
+      $entity->setUpdatedAt(new \DateTime('now'));
+
+      $factory = $this->get('security.encoder_factory');
+      $encoder = $factory->getEncoder($entity);
+
+      $password = $encoder->encodePassword($data['password'], $entity->getSalt());
+
+      $entity->setPassword($password);
+
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($entity);
+      $em->flush();
+
+      return $this->render('LoveThatFitUserBundle:Registration:message.html.twig', array(
+      'message' => 'Your password has been changed.'));
+      } else {
+
+      return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
+      'form' => $form->createView()));
+      }
+      } catch (\Doctrine\DBAL\DBALException $e) {
+
+      $form->addError(new FormError('Something went wrong.'));
+      return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
+      'form' => $form->createView()));
+      }
+      }
+     */
+
 
 ?>
