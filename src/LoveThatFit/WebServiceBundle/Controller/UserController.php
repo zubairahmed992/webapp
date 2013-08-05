@@ -32,9 +32,13 @@ class UserController extends Controller {
 
         $email = $decoded['email'];
         $password = $decoded['password'];
+         
+        /*$email ='my_web115115@gmail.com';
+         $password ='123456';*/
+       
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
-
+ 
         if (count($entity) > 0) {
             $user_info = $user_helper->loginWebService($entity, $password, $email);
             if (isset($user_info['id'])) {

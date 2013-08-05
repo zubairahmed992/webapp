@@ -43,26 +43,49 @@ class MeasurementHelper {
         $this->repo = $em->getRepository($class);
     }
 
-    //---------------------------------------------------------------------   
-//-------------------------------------------------------
-
+    #-------------------------------------------------------------------------
+    
     public function find($id) {
         return $this->repo->find($id);
     }
 
-    //-------------------------------------------------------
+    #-------------------------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
-
+#-------------------------------------------------------------------------
     public function findMaxUserId() {
         return $this->repo->findMaxUserId();
     }
+    #-------------------------------------------------------------------------
     public function saveMeasurement(Measurement $measurement) {
         $this->em->persist($measurement);
         $this->em->flush();
     }
-   #----------------------Code For Value Retaing ------------------------------------------------------------------------# 
+    #-------------------------------------------------------------------------
+
+    public function setMeasurementSizes(User $entity, $request_array) {
+        
+        $measurement = $entity->getMeasurement();
+        
+        if (array_key_exists('top_size', $request_array)) {
+            $measurement->top_size = $request_array['top_size'];
+        }
+        
+        if (array_key_exists('bottom_size', $request_array)) {
+            $measurement->bottom_size = $request_array['bottom_size'];
+        }        
+        
+        if ($entity->getGender() == 'f' && array_key_exists('dress_size', $request_array)) {
+            $measurement->dress_size = $request_array['dress_size'];
+        }
+
+        return $measurement;
+    }
+   
+
+
+#----------------------Code For Value Retaing ------------------------------------------------------------------------# 
     public function measurementRetain($measurement) {
         $retaining_array = array();
 

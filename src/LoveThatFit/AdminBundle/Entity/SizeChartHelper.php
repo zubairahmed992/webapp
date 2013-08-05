@@ -2,7 +2,6 @@
 
 namespace LoveThatFit\AdminBundle\Entity;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -11,14 +10,15 @@ use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\AdminBundle\Event\SizeChartEvent;
 
-class SizeChartHelper {
 
-    /**
+
+class SizeChartHelper{
+
+     /**
      * Holds the Symfony2 event dispatcher service
      */
     protected $dispatcher;
-
-    /**
+     /**
      * Holds the Doctrine entity manager for database interaction
      * @var EntityManager 
      */
@@ -35,34 +35,39 @@ class SizeChartHelper {
      * @var string
      */
     protected $class;
-    private $container;
 
-    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, Container $container) {
-        $this->container = $container;
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class)
+    {
         $this->dispatcher = $dispatcher;
         $this->em = $em;
         $this->class = $class;
         $this->repo = $em->getRepository($class);
+        
     }
-
-    //---------------------------------------------------------------------   
-    public function createNewSizeChart() {
-        $class = $this->class;
-        $sizechart = new $class();
-        return $sizechart;
-    }
-
-    public function createNew() {
-        $class = $this->class;
-        $size_chart = new $class();
-        return $size_chart;
-    }
-
+ //---------------------------------------------------------------------   
+    public function createNewSizeChart()
+{
+    $class = $this->class;
+    $sizechart = new $class();
+    return $sizechart;
+}
+    
+    public function createNew()
+{
+    $class = $this->class;
+    $size_chart = new $class();
+    return $size_chart;
+}
 //-------------------------------------------------------
 
-    public function save($entity) {
-        $msg_array = $this->validateForCreate($entity);
-        if ($msg_array == null) {
+public function save($entity) {
+        $title = $entity->getTitle();
+       $brand = $entity->getBrand()->getId();       
+       $gender = $entity->getGender();       
+       $target = $entity->getTarget();
+       $bodytype=$entity->getBodytype();       
+        $msg_array = $this->validateForCreate($brand,$title,$gender,$target,$bodytype);
+        if ($msg_array == null) {          
             $this->em->persist($entity);
             $this->em->flush();
             return array('message' => 'Size Chart succesfully created.',
@@ -75,14 +80,14 @@ class SizeChartHelper {
         }
     }
 
-    public function saveSizeChart(SizeChart $size_chart) {
-        $this->em->persist($size_chart);
-        $this->em->flush();
-    }
-
+public function saveSizeChart(SizeChart $size_chart)
+{
+    $this->em->persist($size_chart);
+    $this->em->flush();  
+}
 //-------------------------------------------------------
 
-    public function update($entity) {
+public function update($entity) {
         $msg_array = '';
         //$msg_array = $this->validateForUpdate($entity);
         if ($msg_array == null) {
@@ -98,7 +103,7 @@ class SizeChartHelper {
         }
     }
 
-    public function delete($id) {
+public function delete($id) {
 
         $entity = $this->repo->find($id);
         $entity_name = $entity->getTitle();
@@ -122,11 +127,12 @@ class SizeChartHelper {
         }
     }
 
-    public function find($id) {
-        return $this->repo->find($id);
-    }
+public function find($id)
+{
+    return $this->repo->find($id);
+}
 
-    public function findWithSpecs($id) {
+public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
         if (!$entity) {
             $entity = $this->createNewSizeChart();
@@ -144,19 +150,22 @@ class SizeChartHelper {
                 'success' => true,
             );
         }
-    }
+    }  
 
-    public function findOneById($id) {
-        return $this->repo->findOneById($id);
-    }
 
-    public function findOneByName($title) {
+public function findOneById($id)
+{
+    return $this->repo->findOneById($id);
+    
+}
+
+public function findOneByName($title) {
         return $this->repo->findOneByName($title);
     }
-
+    
+   
 #-------------------------Evaluate Size Chart ------------------------------------------------------------------------#
 //-------------------------------------------------------------------------------------
-
     public function evaluateWithSizeChart($measurement) {
 
         if (is_null($measurement)) {
@@ -254,7 +263,7 @@ class SizeChartHelper {
 
         return $measurement;
     }
-
+    
     //------------------------------------------------------------------------
 
     public function getBrandArray($target) {
@@ -266,67 +275,77 @@ class SizeChartHelper {
         }
         return $brands_array;
     }
-
 #---------------------------------------------------------------------------------------------------------------------#
 #-------------------------Web Service for size chart for registration step two-------------------------------------------------#
-
-    public function sizeChartList($request_array) {
-
-        $gender = $request_array['gender'];
-        $bodytype = $request_array['body_type'];
-        $target_top = $request_array['target_top'];
-        $top_size = $request_array['top_size'];
-        $target_bottom = $request_array['target_bottom'];
-        $bottom_size = $request_array['bottom_size'];
-        $target_dress = $request_array['target_dress'];
-        $dress_size = $request_array['dress_size'];
-
-        $neck = 0;
-        $bust = 0;
-        $chest = 0;
-        $waist = 0;
-        $sleeve = 0;
-        $inseam = 0;
-        $hip = 0;
-        $top_id = 0;
-        $bottom_id = 0;
-        $dress_id = 0;
-        $measurement = array();
-        if ($target_top) {
-            $sizechart_top = $this->repo->getSizeChartByBrandGenderBodyTypeTopSize($gender, $bodytype, $target_top, $top_size);
-            if ($sizechart_top) {
-                $bust = $sizechart_top[0]['top_bust'];
-                $neck = $sizechart_top[0]['top_neck'];
-                $chest = $sizechart_top[0]['top_chest'];
-                $waist = $sizechart_top[0]['top_waist'];
-                $top_id = $sizechart_top[0]['size_chart_id'];
+public function sizeChartList($request_array)
+{
+     
+        $gender=$request_array['gender'];
+        $bodytype=$request_array['body_type'];
+        $target_top=$request_array['target_top'];
+        $top_size=$request_array['top_size'];
+        $target_bottom=$request_array['target_bottom']; 
+        $bottom_size=$request_array['bottom_size'];    
+        $target_dress=$request_array['target_dress'];    
+        $dress_size=$request_array['dress_size'];     
+       
+         $neck=0;
+         $bust=0;
+         $chest=0;
+         $waist=0;
+         $sleeve=0;
+         $inseam=0;
+         $hip=0;
+         $top_id=0;
+         $bottom_id=0;
+         $dress_id=0;
+         $measurement= array();   
+         if($target_top)
+         {   
+          $sizechart_top = $this->repo->getSizeChartByBrandGenderBodyTypeTopSize($gender,$bodytype,$target_top,$top_size);
+          if($sizechart_top){
+          $bust=$sizechart_top[0]['top_bust'];
+          $neck=$sizechart_top[0]['top_neck'];
+          $chest=$sizechart_top[0]['top_chest'];
+          $waist=$sizechart_top[0]['top_waist'];
+          $top_id=$sizechart_top[0]['size_chart_id'];
+         
+          }
+          
+          
+         }
+         if($target_bottom)
+         {     
+         $sizechart_bottom = $this->repo->getSizeChartByBrandGenderBodyTypeBottomSize($gender,$bodytype,$target_bottom,$bottom_size);
+                if($sizechart_bottom)
+                { 
+                $waist=$sizechart_bottom[0]['bottom_waist'];
+                $hip=$sizechart_bottom[0]['bottom_hip'];
+                $inseam=$sizechart_bottom[0]['bottom_inseam'];
+                $bottom_id=$sizechart_bottom[0]['size_chart_id'];
+                
+                
+                }
+              
+         }
+         if($target_dress)
+         {     
+         $size_chart_dress = $this->repo->getSizeChartByBrandGenderBodyTypeDressSize($gender, $bodytype, $target_dress, $dress_size);
+            
+            $bust_dress=0;
+            $waist_dress=0;
+            $hip_dress=0;
+            $sleeve_dress=0;
+            if($size_chart_dress){
+                
+            $bust_dress = $sizechart_dress[0]['dress_bust'];
+            $waist_dress = $sizechart_dress[0]['dress_waist'];
+            $hip_dress = $sizechart_dress[0]['dress_hip'];
+            $sleeve_dress = $sizechart_dress[0]['dress_sleeve'];
+            $dress_id=$sizechart_dress[0]['size_chart_id'];
+            
             }
-        }
-        if ($target_bottom) {
-            $sizechart_bottom = $this->repo->getSizeChartByBrandGenderBodyTypeBottomSize($gender, $bodytype, $target_bottom, $bottom_size);
-            if ($sizechart_bottom) {
-                $waist = $sizechart_bottom[0]['bottom_waist'];
-                $hip = $sizechart_bottom[0]['bottom_hip'];
-                $inseam = $sizechart_bottom[0]['bottom_inseam'];
-                $bottom_id = $sizechart_bottom[0]['size_chart_id'];
-            }
-        }
-        if ($target_dress) {
-            $size_chart_dress = $this->repo->getSizeChartByBrandGenderBodyTypeDressSize($gender, $bodytype, $target_dress, $dress_size);
-
-            $bust_dress = 0;
-            $waist_dress = 0;
-            $hip_dress = 0;
-            $sleeve_dress = 0;
-            if ($size_chart_dress) {
-
-                $bust_dress = $sizechart_dress[0]['dress_bust'];
-                $waist_dress = $sizechart_dress[0]['dress_waist'];
-                $hip_dress = $sizechart_dress[0]['dress_hip'];
-                $sleeve_dress = $sizechart_dress[0]['dress_sleeve'];
-                $dress_id = $sizechart_dress[0]['size_chart_id'];
-            }
-
+            
             #-----------------BUST AVERAGE-----------------------------------------------#
             if ($bust_dress == 0 && $bust > 0) {
                 $bust = $bust;
@@ -370,39 +389,59 @@ class SizeChartHelper {
             if ($hip > 0 && $hip_dress > 0) {
                 $hip = ($hip + $hip_dress) / 2;
             }
+        }  
+    
+     
+        $measurement['neck']=$neck;
+        $measurement['bust']=$bust;
+        $measurement['chest']=$chest;
+        $measurement['waist']=$waist;
+        $measurement['hip']=$hip;
+        $measurement['sleeve']=$sleeve;
+        $measurement['inseam']=$inseam;
+        
+        
+        if($top_id)
+        {
+            $measurement['sc_top_id']=$top_id;  
+        }    
+        else
+        {
+            $measurement['sc_top_id']=0;
         }
-
-
-        $measurement['neck'] = $neck;
-        $measurement['bust'] = $bust;
-        $measurement['chest'] = $chest;
-        $measurement['waist'] = $waist;
-        $measurement['hip'] = $hip;
-        $measurement['sleeve'] = $sleeve;
-        $measurement['inseam'] = $inseam;
-
-
-        if ($top_id) {
-            $measurement['sc_top_id'] = $top_id;
-        } else {
-            $measurement['sc_top_id'] = 0;
+        if($bottom_id)
+        {
+            $measurement['sc_bottom_id']=$bottom_id; 
+        } 
+        else{
+            $measurement['sc_bottom_id']=0;
         }
-        if ($bottom_id) {
-            $measurement['sc_bottom_id'] = $bottom_id;
-        } else {
-            $measurement['sc_bottom_id'] = 0;
+        if($dress_id)
+        {
+          $measurement['sc_dress_id']=$dress_id;  
         }
-        if ($dress_id) {
-            $measurement['sc_dress_id'] = $dress_id;
-        } else {
-            $measurement['sc_dress_id'] = 0;
+        else {
+            $measurement['sc_dress_id']=0;
         }
+        
+        if($measurement)   
+        {
+            return   $measurement;
+        }        
+}
+#-------------------------------Web Service---------------------------------------#
+public function getBrandArraySizeChart() {
 
-        if ($measurement) {
-            return $measurement;
+        $brands = $this->repo->getBrandList();
+
+        $brands_array = array();
+
+        foreach ($brands as $i) {
+            array_push($brands_array, array('id' => $i['id'], 'brand_name' => $i['name']));
         }
+        return $brands_array;
     }
-
+#-----------------------------------------------------------------------------------#
 //------------------------Pagination Function------------------------------------------------------
     public function getListWithPagination($page_number, $sort) {
         $yaml = new Parser();
@@ -418,73 +457,77 @@ class SizeChartHelper {
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
         }
-        return array('sizechart' => $entity,
-            'rec_count' => $rec_count,
-            'no_of_pagination' => $no_of_paginations,
-            'limit' => $cur_page,
-            'per_page_limit' => $limit,
-            'maleSizeChart' => $this->getSizeChartByGender('m'),
-            'femaleSizeChart' => $this->getSizeChartByGender('f'),
-            'topSizeChart' => $this->getSizeChartByTarget('Top'),
-            'bottomSizeChart' => $this->getSizeChartByTarget('Bottom'),
-            'dressSizeChart' => $this->getSizeChartByTarget('Dress'),
+        return array('sizechart'=>$entity,
+			   'rec_count' => $rec_count, 
+                           'no_of_pagination' => $no_of_paginations, 
+                           'limit' => $cur_page, 
+                           'per_page_limit' => $limit,
+                           'maleSizeChart'=>$this->getSizeChartByGender('m'),
+                           'femaleSizeChart'=>$this->getSizeChartByGender('f'),
+                           'topSizeChart'=>$this->getSizeChartByTarget('Top'),
+                           'bottomSizeChart'=>  $this->getSizeChartByTarget('Bottom'),
+                           'dressSizeChart'=>  $this->getSizeChartByTarget('Dress'),
         );
     }
-
     //-----------------------Get Size Chart By Gender----------------------------------------------------------------------------
-
-    private function getSizeChartByGender($gender) {
-        $rec_count = count($this->repo->findSizeChartByGender($gender));
+    
+    private function getSizeChartByGender($gender)
+    {
+        $rec_count =count($this->repo->findSizeChartByGender($gender));
         return $rec_count;
     }
-
     //-----------------------------Get Size Chart By Target--------------------------------------------------------
-    private function getSizeChartByTarget($target) {
-        $rec_count = count($this->repo->findSizeChartByTarget($target));
+    private function getSizeChartByTarget($target)
+    {
+        $rec_count= count($this->repo->findSizeChartByTarget($target));
         return $rec_count;
     }
-
+    
+    
     //----------------------------------------------------------
-    private function validateForCreate($entity) {
-        $title = $entity->getTitle();
-        $brand = $entity->getBrand()->getId();
-        $gender = $entity->getGender();
-        $target = $entity->getTarget();
-        $bodytype = $entity->getBodytype();
-        if ($title === "00") {
-            $title = "00";
-        } else if ($title == "0") {
-            $title = "0";
-        }
-        if ($gender != null and $target != null and $bodytype != null) {
-            $sizechart = $this->getBrandSize($brand, $title, $gender, $target, $bodytype);
-            if ($sizechart > 0) {
-                return array('message' => 'Size Chart already exists!',
-                    'field' => 'name',
-                    'message_type' => 'warning',
-                    'success' => false,
-                );
-            } else {
-                return;
-            }
-        } else {
-            return array('message' => 'Please Enter Values Correctly',
+    private function validateForCreate($brand,$title,$gender,$target,$bodytype) {
+        if($title==="00")
+       {
+           $title="00";
+       }
+      else if($title=="0"){
+         $title="0";
+        
+       }   
+       if($gender!=null and $target!=null and $bodytype!=null)
+       {
+        $sizechart=  $this->getBrandSize($brand,$title,$gender,$target,$bodytype);
+       if($sizechart>0)
+       {        
+            return array('message' => 'Size Chart already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
             );
-        }
+       }else
+       {
+            return;
+       }
+       }else
+       {
+           return array('message' => 'Please Enter Values Correctly',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+       }
+       
     }
 
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
-        $title = $entity->getTitle();
-        $brand = $entity->getBrand()->getId();
-        $gender = $entity->getGender();
-        $target = $entity->getTarget();
-        $bodytype = $entity->getBodytype();
-        $sizechart = $this->getBrandSize($brand, $title, $gender, $target, $bodytype);
-        if ($sizechart > 0) {
+       $title = $entity->getTitle();
+       $brand = $entity->getBrand()->getId();       
+       $gender = $entity->getGender();       
+       $target = $entity->getTarget();
+       $bodytype=$entity->getBodytype();
+       $sizechart = $this->getBrandSize($brand,$title,$gender,$target,$bodytype);
+        if ($sizechart>0) {
             return array('message' => 'Size Chart already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -494,21 +537,30 @@ class SizeChartHelper {
         return;
     }
 
-    private function getBrandSize($brand, $title, $gender, $target, $bodytype) {
-        $rec_count = count($this->repo->findBrandSizeBy($brand, $title, $gender, $target, $bodytype));
-        return $rec_count;
+    private function getBrandSize($brand,$title,$gender,$target,$bodytype)
+    {
+        $rec_count= count($this->repo->findBrandSizeBy($brand,$title,$gender,$target,$bodytype));
+        return $rec_count;        
     }
-
-    private function getSizecChartMeasurement($entity) {
-        if ($entity->getTarget() == 'Top') {
-            
-        }
-        if ($entity->getTarget() == 'Bottom') {
-            
-        }
-        if ($entity->getTarget() == 'Dress') {
-            
-        }
-    }
-
+    
+    #--------------Testing of Utility Helper ---------------------#
+    public function testHelperAction() {
+        $utility_helper = $this->get('admin.helper.utility');
+        $genders = $utility_helper->getGenders();
+        #------Accessing the Single Gender----------------------#
+        $man=$genders['men'];
+        #-----------------SizeCharts-----------------------------#
+        $sizeCharts = $utility_helper->getSizeCharts(); 
+        #-----------------Target---------------------------------#
+        $targets = $utility_helper->getTargets(); 
+        #-------------Titles-------------------------------------#
+        $sizeTtiles=$utility_helper->getSizeTitle(); 
+        #-------------Size Numbers-------------------------------#
+        $sizeNumbers=$utility_helper->getSizeNumbers(); 
+        #------------BodyTypes-----------------------------------#
+        
+        $bodyTypes=$utility_helper->getBodyTypes(); 
+        
+        Return new Response(json_encode($bodyTypes));
+    } 
 }

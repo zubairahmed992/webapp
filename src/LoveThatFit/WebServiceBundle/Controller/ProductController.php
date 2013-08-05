@@ -25,9 +25,11 @@ class ProductController extends Controller {
  
     public function brandListSizeChartAction() {
        
-        $total_record = count($this->getBrandArray());
+        $size_chart_helper = $this->get('admin.helper.sizechart');
+        $brand_list = $size_chart_helper->getBrandArraySizeChart();
+        $total_record = count($brand_list);
         $data = array();
-        $data['data'] = $this->getBrandArray();
+        $data['data'] = $brand_list;
         return new Response($this->json_view($total_record, $data));
     }
 
@@ -174,7 +176,7 @@ class ProductController extends Controller {
                 ->find($product_id);
       
          $product_color = $product->getDisplayProductColor();
-          $product_color_id = $product_color->getId();
+         $product_color_id = $product_color->getId();
           
             //get color size array, sizes that are available in this color 
 
@@ -273,7 +275,8 @@ class ProductController extends Controller {
     
 #---------------------Like/Love Item-----------------------------------------------------------------------#
  public function loveItemAction() {
-       $request = $this->getRequest();
+     
+        $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
@@ -281,41 +284,38 @@ class ProductController extends Controller {
 
         $user_id = $request_array['user_id'];
         $product_item_id = $request_array['product_item_id'];
+       
         
   #------------------------------Authentication of Token--------------------------------------------#
-        $user = $this->get('user.helper.user');
+        $user_helper = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            $tokenResponse =  $user_helper->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
             }
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
+        $em = $this->getDoctrine()->getManager();
  #-------------------------------End Of Authentication Token--------------------------------------#
-        
-
-        if ($user_id && $product_item_id) {
+       if ($user_id && $product_item_id) {
+           
             if ($request_array['like']=='like') {
-                $em = $this->getDoctrine()->getManager();
+                
                 $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-                $entity = $this->getDoctrine()
-                        ->getRepository('LoveThatFitAdminBundle:Product')
-                        ->countMyCloset($user_id);
+                $product_helper =  $this->get('admin.helper.product');
+                $entity=$product_helper->countMyCloset($user_id);
+                 
                 $rec_count = count($productObj->countMyCloset($user_id));
 
                 if ($rec_count >= 25) {
 
                     return new Response(json_encode(array('Message' => 'Please delete some products (limit exceeds)')));
                 } else {
-
-
-                    $em = $this->getDoctrine()->getManager();
-                    $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-
+                    
+                    $user =  $user_helper->find($user_id);
                     $product_item = $this->getProductItemById($product_item_id);
-                    $em = $this->getDoctrine()->getManager();
                     $product_item->addUser($user);
                     $user->addProductItem($product_item);
                     $em->persist($product_item);
@@ -325,8 +325,7 @@ class ProductController extends Controller {
                 }
             } else {
 
-                $em = $this->getDoctrine()->getManager();
-                $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+                $user=$user_helper->find($user_id);
                 $product_item = $this->getProductItemById($product_item_id);
                 $product_item->removeUser($user);
                 $user->removeProductItem($product_item);
@@ -359,22 +358,11 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
-
         $user_id = $request_array['user_id'];
-        if($user_id)
-        {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->tryOnHistoryWebService($user_id);
-        $data=array();
-        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
-        $data['data']=$entity;
-        $data['image_path']=$fitting_room;
-        $count_rec=count($entity);
         
-        return new Response($this->json_view($count_rec,$data));
-        }else{
-           return new Response(json_encode(array('Message' => 'User Missing'))); 
-        }
+        $product_helper =  $this->get('admin.helper.product');
+        $msg=$product_helper->getUserTryHistoryWebService($request,$user_id);
+        return new Response(json_encode($msg));
     }
    
 #---------------------------Render Json--------------------------------------------------------------------#
@@ -387,22 +375,6 @@ class ProductController extends Controller {
         } else {
             return json_encode(array('Message' => 'Record Not Found'));
         }
-    }
-
-#---------------------------------------------------------------------------------------------------------#
-
-    private function getBrandArray() {
-
-        $brands = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                ->getBrandList();
-
-        $brands_array = array();
-
-        foreach ($brands as $i) {
-            array_push($brands_array, array('id' => $i['id'], 'brand_name' => $i['name']));
-        }
-        return $brands_array;
     }
 
 #---------------------------------------------------------------------------------------------------------#
