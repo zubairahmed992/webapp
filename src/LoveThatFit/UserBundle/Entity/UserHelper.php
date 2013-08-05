@@ -204,6 +204,9 @@ public function findByEmail($email)
         }
         
     }
+ #------------------------Returning Factory---------------------#
+
+
 #---------------------------------------------Login Web Service -----------------------------------#
     public function loginWebService($entity,$password,$email){
           //$request = $this->getRequest();
@@ -214,7 +217,8 @@ public function findByEmail($email)
                 $factory =$this->container->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($entity);
                 $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
-               
+              
+                
                 if ($user_db_password == $password_old_enc) {
                     $user_id=$entity->getId();
                     $first_name=$entity->getFirstName();
@@ -302,11 +306,11 @@ public function findByEmail($email)
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
 
-       /*$email ='my_web11510@gmail.com';
+        /* $email ='my_web115115@gmail.com';
          $password ='123456';
          $gender = 'f';
-         $zipcode = '123'; */
-        
+         $zipcode = '123'; 
+        */
         
   #-----------------End of Measuremnt data-----------------------# 
         if ($this->isDuplicateEmail(Null, $email)) {
@@ -314,14 +318,27 @@ public function findByEmail($email)
         } else {
             $user = new User();
 
-            $user->setEmail($email);
-            $user->setGender($gender);
-            $user->setZipcode($zipcode);
+            $user->setCreatedAt(new \DateTime('now'));
+            $user->setUpdatedAt(new \DateTime('now'));
+            $factory =$factory =$this->container->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($user);
 
-            $user = $this->registerUser($user);
+            $password = $encoder->encodePassword($password, $user->getSalt());
+            $user->setPassword($password);
+             $user->setEmail($email);
+             $user->setGender($gender);
+             $user->setZipcode($zipcode);
+            $user->generateAuthenticationToken();
+            //  $this->saveUser($user);
+
+    
+    
+         //  $user= $this->saveUser($user);
+            //$user = $this->registerUser($user);
 
             #----------------------Set Data of Measuremnt -------------------------------#
-            $measurement = $user->getMeasurement();
+           // $measurement = $user->getMeasurement();
+            $measurement = new Measurement();
             $size_chart = new SizeChart();
 
 
@@ -392,7 +409,9 @@ public function findByEmail($email)
             }
 
 
-       $this->container->get('measurement.helper.measurement')->saveMeasurement($measurement);
+//       $this->container->get('measurement.helper.measurement')->saveMeasurement($measurement);
+            $user->setMeasurement($measurement);
+            $this->saveUser($user);
 
             //       $this->saveUser($user);
 #---------------------------------------------------Getting Data-----------------------------#

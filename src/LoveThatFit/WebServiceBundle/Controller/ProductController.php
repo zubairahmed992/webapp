@@ -176,7 +176,7 @@ class ProductController extends Controller {
                 ->find($product_id);
       
          $product_color = $product->getDisplayProductColor();
-          $product_color_id = $product_color->getId();
+         $product_color_id = $product_color->getId();
           
             //get color size array, sizes that are available in this color 
 
@@ -275,7 +275,8 @@ class ProductController extends Controller {
     
 #---------------------Like/Love Item-----------------------------------------------------------------------#
  public function loveItemAction() {
-       $request = $this->getRequest();
+     
+        $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
@@ -283,6 +284,7 @@ class ProductController extends Controller {
 
         $user_id = $request_array['user_id'];
         $product_item_id = $request_array['product_item_id'];
+       
         
   #------------------------------Authentication of Token--------------------------------------------#
         $user_helper = $this->get('user.helper.user');
