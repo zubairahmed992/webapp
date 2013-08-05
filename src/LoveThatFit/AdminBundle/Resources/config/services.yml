@@ -17,6 +17,7 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\SizeChart
+            container: "@service_container"
   
     
             
@@ -67,6 +68,15 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\SurveyQuestion
+            
+     admin.helper.surveyanswer:
+        class: LoveThatFit\AdminBundle\Entity\SurveyAnswerHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\SurveyAnswer
+            
+     
      
 #    love_that_fit_admin.example:
 #        class: %love_that_fit_admin.example.class%

@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\surveyEvent;
+use LoveThatFit\AdminBundle\Event\surveyAnswerEvent;
 
-class SurveyHelper {
+class SurveyAnswerHelper {
 
     protected $dispatcher;
 
@@ -36,23 +36,23 @@ class SurveyHelper {
         $this->repo = $em->getRepository($class);
     }
 
-    public function createNewQuestion() {
+    public function createNewAnswer() {
         $class = $this->class;
-        $question = new $class();
-        return $question;
+        $answer = new $class();
+        return $answer;
     }
-
-    public function saveQuestion($entity) {
+    
+    public function saveAnswer($entity) {
         //$msg_array =null;
         //$msg_array = ;
 
-        $question = $entity->getQuestion();
-        $msg_array = $this->validateForCreate($question);
-        if ($msg_array == null) {
+        $answer = $entity->getAnswer();
+        $msg_array = $this->validateForCreate($answer);
+        if ($msg_array == null) {            
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
-            return array('message' => 'Question succesfully created.',
+            return array('message' => 'Answer succesfully created.',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -61,15 +61,16 @@ class SurveyHelper {
             return $msg_array;
         }
     }
-
-    public function updateQuestion($entity) {
+    
+    
+    public function updateAnswer($entity) {
 
         $msg_array = $this->validateForUpdate($entity);
 
-        if ($msg_array == null) {
+        if ($msg_array == null) {            
             $this->em->persist($entity);
             $this->em->flush();
-            return array('message' => 'Question ' . $entity->getQuestion() . ' succesfully updated!',
+            return array('message' => 'Question ' . $entity->getAnswer() . ' succesfully updated!',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -84,17 +85,17 @@ class SurveyHelper {
     public function delete($id) {
 
         $entity = $this->repo->find($id);
-        $entity_name = $entity->getQuestion();
+        $entity_name = $entity->getAnswer();
         if ($entity) {
             $this->em->remove($entity);
             $this->em->flush();
-            return array('question' => $entity,
+            return array('answer' => $entity,
                 'message' => 'The Question ' . $entity_name . ' has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );
         } else {
-            return array('question' => $entity,
+            return array('answer' => $entity,
                 'message' => 'question not found!',
                 'message_type' => 'warning',
                 'success' => false,
@@ -102,68 +103,48 @@ class SurveyHelper {
         }
     }
 
-    public function createNewAnswer() {
-        $class = $this->class;
-        $surveyanswer = new $class();
-        return $surveyanswer;
-    }
+    
 
+   
+    
 #------------------------------------------------------
 
-    public function find($id) {
-        return $this->repo->find($id);
+   public function find($id)
+{
+    return $this->repo->find($id);
+}
+
+public function findOneByName($answer) {
+        return $this->repo->findOneByName($answer);
     }
 
-    public function findWithSpecs($id) {
+
+public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
 
         if (!$entity) {
             $entity = $this->createNew();
             return array(
                 'entity' => $entity,
-                'message' => 'Question not found.',
+                'message' => 'Answer not found.',
                 'message_type' => 'warning',
                 'success' => false,
             );
         } else {
             return array(
                 'entity' => $entity,
-                'message' => 'Question found!',
+                'message' => 'Answer found!',
                 'message_type' => 'success',
                 'success' => true,
             );
         }
     }
 
-    public function getListWithPagination($page_number, $sort) {
-        $yaml = new Parser();
-        $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
-        $limit = $pagination_constants["constants"]["pagination"]["limit"];
-
-        $entity = $this->repo->findlistAllQuestion($page_number, $limit, $sort);
-        $rec_count = count($this->repo->countAllRecord());
-        $cur_page = $page_number;
-
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-        return array(
-            'data' => $entity(),
-            'operation' => null,
-            'id' => null,
-            'count_question' => $rec_count,
-            'rec_count' => $rec_count,
-            'no_of_pagination' => $no_of_paginations,
-            'limit' => $cur_page,
-            'per_page_limit' => $limit,
-        );
-    }
-
-    private function validateForCreate($name) {
-        if (count($this->findOneByName($name)) > 0) {
-            return array('message' => 'Question Name already exists!',
+    
+    
+    private function validateForCreate($answer) {
+        if (count($this->findOneByName($answer)) > 0) {
+            return array('message' => 'Answer Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
@@ -177,7 +158,7 @@ class SurveyHelper {
         $question = $this->findOneByName($entity->getName());
 
         if ($question && $question->getId() != $entity->getId()) {
-            return array('message' => 'Question Name already exists!',
+            return array('message' => 'Answer Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
@@ -185,22 +166,10 @@ class SurveyHelper {
         }
         return;
     }
-
-    public function getQuestionsList() {
-        $question = $this->repo->findAll();
-        return $question;
-    }
-
-     public function getquestionById($id) {
-        
-        $question=$this->repo->find($id);        
-        return $question;
-    }
     
-    private function getAddNewQuestionForm() {
-        $class = $this->class;
-        $question = new $class();
-        return $question;
+   public  function getAnswerById($id) {
+        $answer=$this->repo->find($id);
+        return $answer;
     }
 
 }
