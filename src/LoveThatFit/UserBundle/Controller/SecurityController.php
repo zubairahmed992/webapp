@@ -14,25 +14,20 @@ use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
 
 class SecurityController extends Controller {
 
+    
+        
+
+
+    
     public function loginAction() {
-        $request = $this->getRequest();
-        $session = $request->getSession();
-
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                    SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-
+        
+        $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+       
         return $this->render(
                         'LoveThatFitUserBundle:Security:login.html.twig', array(
-                    // last username entered by the user
-                    'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                    'error' => $error,
+                        'last_username' => $security_context['last_username'],
+                    'error' => $security_context['error'],
+                    
                         )
         );
     }
@@ -40,25 +35,12 @@ class SecurityController extends Controller {
 //-------------------------------------------------------------------------
 
     public function AdminloginAction() {
-        $request = $this->getRequest();
-        $session = $request->getSession();
-
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                    SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-
-
+        $security_context = $this->getRegistrationSecurityContext($this->getRequest());
         return $this->render(
                         'LoveThatFitUserBundle:Security:adminLogin.html.twig', array(
-                    // last username entered by the user
-                    'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                    'error' => $error,
+                    'last_username' => $security_context['last_username'],
+                    'error' => $security_context['error'],
+                    
                         )
         );
     }

@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\SecurityContext;
 use LoveThatFit\UserBundle\Entity\User;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
@@ -88,6 +89,25 @@ public function saveUser(User $user)
 
 //-------------------------------------------------------
 
+    public function getRegistrationSecurityContext($request) {
+        // get the login error if there is one
+        $session= $request->getSession();
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(
+                    SecurityContext::AUTHENTICATION_ERROR
+            );
+        } else {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+
+    
+        return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'error' => $error,
+        );
+    }
+    
+//-------------------------------------------------------
 public function encodePassword(User $user)
 {
     $factory = $this->container->get('security.encoder_factory');

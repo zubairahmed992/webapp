@@ -21,8 +21,17 @@ class RegistrationController extends Controller {
 
 
     public function registrationAction() {
-        $security_context = $this->getRegistrationSecurityContext($this->getRequest());
+        $request=$this->getRequest();
+        $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+       
+        $referer = $request->headers->get('referer');
+        $url_bits = explode('/', $referer);
+        $security_context['referer'] = $url_bits[sizeof($url_bits) - 1];
 
+        if (array_key_exists ('error', $security_context) and $security_context['error']) {
+            $security_context['referer']= "login";
+        }
+        
         $entity = $this->get('user.helper.user')->createNewUser();
         $form = $this->createForm(new RegistrationType(), $entity);
 
@@ -103,7 +112,7 @@ class RegistrationController extends Controller {
                         ));
             } else {
 
-                $security_context = $this->getRegistrationSecurityContext($this->getRequest());
+                $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
                 return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                             'form' => $form->createView(),
                             'entity' => $entity,
@@ -184,37 +193,7 @@ class RegistrationController extends Controller {
                 ));
     }
     
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
-//------------------------- Private Methods ------------------------------------------
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
-
-    private function getRegistrationSecurityContext($request) {
-        // get the login error if there is one
-        $session= $request->getSession();
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                    SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-
-        $referer = $request->headers->get('referer');
-        $url_bits = explode('/', $referer);
-        $referer = $url_bits[sizeof($url_bits) - 1];
-
-        if ($error) {
-            $referer = "login";
-        }
-
-        return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error' => $error,
-            'referer' => $referer,
-        );
-    }
-
-
+    
 
 //-----------------------------------------------------------------------------
     public function measurementEditAction() {
