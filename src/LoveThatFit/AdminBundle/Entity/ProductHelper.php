@@ -497,6 +497,12 @@ public function getUserTryHistoryWebService($request,$user_id){
            return array('Message' => 'User Missing'); 
         }
 }
+
+#-------------------------------------Count My Closet-------------------------------------------------#
+public function countMyCloset($user_id){
+    
+    return $this->repo->countMyCloset($user_id);
+}
  
 
 }

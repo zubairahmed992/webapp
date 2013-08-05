@@ -285,39 +285,35 @@ class ProductController extends Controller {
         $product_item_id = $request_array['product_item_id'];
         
   #------------------------------Authentication of Token--------------------------------------------#
-        $user = $this->get('user.helper.user');
+        $user_helper = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            $tokenResponse =  $user_helper->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
             }
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
+        $em = $this->getDoctrine()->getManager();
  #-------------------------------End Of Authentication Token--------------------------------------#
-        
-
-        if ($user_id && $product_item_id) {
+       if ($user_id && $product_item_id) {
+           
             if ($request_array['like']=='like') {
-                $em = $this->getDoctrine()->getManager();
+                
                 $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-                $entity = $this->getDoctrine()
-                        ->getRepository('LoveThatFitAdminBundle:Product')
-                        ->countMyCloset($user_id);
+                $product_helper =  $this->get('admin.helper.product');
+                $entity=$product_helper->countMyCloset($user_id);
+                 
                 $rec_count = count($productObj->countMyCloset($user_id));
 
                 if ($rec_count >= 25) {
 
                     return new Response(json_encode(array('Message' => 'Please delete some products (limit exceeds)')));
                 } else {
-
-
-                    $em = $this->getDoctrine()->getManager();
-                    $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-
+                    
+                    $user =  $user_helper->find($user_id);
                     $product_item = $this->getProductItemById($product_item_id);
-                    $em = $this->getDoctrine()->getManager();
                     $product_item->addUser($user);
                     $user->addProductItem($product_item);
                     $em->persist($product_item);
@@ -327,8 +323,7 @@ class ProductController extends Controller {
                 }
             } else {
 
-                $em = $this->getDoctrine()->getManager();
-                $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
+                $user=$user_helper->find($user_id);
                 $product_item = $this->getProductItemById($product_item_id);
                 $product_item->removeUser($user);
                 $user->removeProductItem($product_item);
@@ -381,9 +376,6 @@ class ProductController extends Controller {
     }
 
 #---------------------------------------------------------------------------------------------------------#
-
- 
-
 }
 
 // End of Class
