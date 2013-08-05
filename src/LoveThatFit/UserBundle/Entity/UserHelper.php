@@ -111,17 +111,9 @@ public function saveUser(User $user)
 public function encodePassword(User $user)
 {
     $factory = $this->container->get('security.encoder_factory');
-    $sizeChartHelper=$this->container->get('admin.helper.sizechart');
-    $measurementHelper=$this->container->get('measurement.helper.measurement');
     $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
     return $password;
-}
-#------------------------Returning Factory---------------------#
-public function factoryReturn()
-{
-    $factory = $this->container->get('security.encoder_factory');
-    return $factory;
 }
 
 #-----------------------Save User at Registeration  ------------------------------------------------------------------------------#
@@ -179,10 +171,11 @@ public function findByEmail($email)
 #-------------Edit/Update Profile for Web Services----------------#
     public function editProfileServiceHelper($decoded) {
         $email = $decoded['email'];
-        $first_name = $decoded['firstName'];
+      
+        /*$first_name = $decoded['firstName'];
         $last_name = $decoded['lastName'];
         $birth_date = $decoded['dob'];
-        $zipcode = $decoded['zip'];
+        $zipcode = $decoded['zip'];*/
        
         
         if ($email) {
@@ -191,17 +184,17 @@ public function findByEmail($email)
             $user->setCreatedAt(new \DateTime('now'));
             $user->setUpdatedAt(new \DateTime('now'));
 
-            if (isset($first_name)) {
-                $user->setFirstName($first_name);
+            if (isset($decoded['firstName'])) {
+                $user->setFirstName($decoded['firstName']);
             }
-            if (isset($last_name)) {
-                $user->setLastName($last_name);
+            if (isset($decoded['lastName'])) {
+                $user->setLastName($decoded['lastName']);
             }
-            if (isset($birth_date)) {
-                $user->setBirthDate(new \DateTime($birth_date));
+            if (isset($decoded['dob'])) {
+                $user->setBirthDate(new \DateTime($decoded['dob']));
             }
-            if (isset($zipcode)) {
-                $user->setZipcode($zipcode);
+            if (isset($decoded['zip'])) {
+                $user->setZipcode($decoded['zip']);
             }
             $this->saveUser($user);
             return true;
@@ -218,7 +211,7 @@ public function findByEmail($email)
                 $user_db_password = $entity->getPassword();
                 $salt_value_db = $entity->getSalt();
 
-                $factory = $this->factoryReturn();
+                $factory =$this->container->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($entity);
                 $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
                
@@ -309,84 +302,46 @@ public function findByEmail($email)
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
 
-        /* $email ='my_web115@gmail.com';
-          $password ='123456';
-          $gender = 'f';
-          $zipcode = '123'; */
-
-        #-------------------Measurement data---------------------#
-        if (isset($request_array['weight'])) {
-            $weight = $request_array['weight'];
-        }
-
-        if (isset($request_array['height'])) {
-            $height = $request_array['height'];
-        }
-
-        if (isset($request_array['waist'])) {
-            $waist = $request_array['waist'];
-        }
-
-        if (isset($request_array['hip'])) {
-            $hip = $request_array['hip'];
-        }
-
-        if (isset($request_array['bust'])) {
-            $bust = $request_array['bust'];
-        }
-
-
-        if (isset($request_array['neck'])) {
-            $neck = $request_array['neck'];
-        }
-
-        if (isset($request_array['inseam'])) {
-            $inseam = $request_array['inseam'];
-        }
-
-
-
-        if (isset($request_array['chest'])) {
-            $chest = $request_array['chest'];
-        }
-
-        if (isset($request_array['sc_top_id'])) {
-            $sc_top_id = $request_array['sc_top_id'];
-        } else {
-            $sc_top_id = 0;
-        }
-        if (isset($request_array['sc_bottom_id'])) {
-            $sc_bottom_id = $request_array['sc_bottom_id'];
-        } else {
-            $sc_bottom_id = 0;
-        }
-        if (isset($request_array['sc_dress_id'])) {
-            $sc_dress_id = $request_array['sc_dress_id'];
-        } else {
-            $sc_dress_id = 0;
-        }
-
-        #-----------------End of Measuremnt data-----------------------# 
+       /*$email ='my_web11510@gmail.com';
+         $password ='123456';
+         $gender = 'f';
+         $zipcode = '123'; */
+        
+        
+  #-----------------End of Measuremnt data-----------------------# 
         if ($this->isDuplicateEmail(Null, $email)) {
             return array('Message' => 'The Email already exists');
         } else {
             $user = new User();
 
-            $user->setCreatedAt(new \DateTime('now'));
-            $user->setUpdatedAt(new \DateTime('now'));
-            $factory = $this->factoryReturn();
-            $encoder = $factory->getEncoder($user);
-
-            $password = $encoder->encodePassword($password, $user->getSalt());
-            $user->setPassword($password);
             $user->setEmail($email);
             $user->setGender($gender);
             $user->setZipcode($zipcode);
-            $user->generateAuthenticationToken();
-            //  $this->saveUser($user);
+
+            $user = $this->registerUser($user);
+
             #----------------------Set Data of Measuremnt -------------------------------#
-            $measurement = new Measurement();
+            $measurement = $user->getMeasurement();
             $size_chart = new SizeChart();
+
+
+            if (isset($request_array['sc_top_id'])) {
+                $sc_top_id = $request_array['sc_top_id'];
+            } else {
+                $sc_top_id = 0;
+            }
+            if (isset($request_array['sc_bottom_id'])) {
+                $sc_bottom_id = $request_array['sc_bottom_id'];
+            } else {
+                $sc_bottom_id = 0;
+            }
+            if (isset($request_array['sc_dress_id'])) {
+                $sc_dress_id = $request_array['sc_dress_id'];
+            } else {
+                $sc_dress_id = 0;
+            }
+
+
             if ($sc_top_id) {
                 $top_size = $sizeChartHelper->findOneById($sc_top_id);
                 $measurement->setTopFittingSizeChart($top_size); //
@@ -401,35 +356,45 @@ public function findByEmail($email)
             }
 
 
+
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
 
-            $measurement->setWeight($weight);
+          
+            if (isset($request_array['weight'])) {
+                $measurement->setWeight($request_array['weight']);
+            }
 
-            $measurement->setHeight($height);
-
+            if (isset($request_array['height'])) {
+                $measurement->setHeight($request_array['height']);
+            }
             if (isset($request_array['waist'])) {
-                $measurement->setWaist($waist);
+                $measurement->setWaist($request_array['waist']);
             }
             if (isset($request_array['hip'])) {
-                $measurement->setHip($hip);
+                $measurement->setHip($request_array['hip']);
             }
             if (isset($request_array['bust'])) {
-                $measurement->setBust($bust);
+                $measurement->setBust($request_array['bust']);
             }
 
 
             if (isset($request_array['inseam'])) {
-                $measurement->setInseam($inseam);
+                $measurement->setInseam($request_array['inseam']);
             }
 
             if (isset($request_array['chest'])) {
-                $measurement->setChest($chest);
+                $measurement->setChest($request_array['chest']);
             }
 
             if (isset($request_array['neck'])) {
-                $measurement->setNeck($neck);
+                $measurement->setNeck($request_array['neck']);
             }
+
+
+       $this->container->get('measurement.helper.measurement')->saveMeasurement($measurement);
+
+            //       $this->saveUser($user);
 #---------------------------------------------------Getting Data-----------------------------#
             $userinfo = array();
             #--------------------User Info-------------------------------#
@@ -467,8 +432,7 @@ public function findByEmail($email)
                 $userinfo['back'] = 15.5;
             }
             
-            $user->setMeasurement($measurement);
-            $this->saveUser($user);
+         
             
             #------------------------End of Seting measuremt----------#          
             return $userinfo;
@@ -606,18 +570,22 @@ public function measurementEditWebService($id,$request_array){
             $old_password = $request_array['old_password'];
         }
         
+       /* $email='oldnavywomen0@ltf.com';
+        $password='123456';
+        $old_password='123456';*/
+
         $entity = $this->repo->findOneBy(array('email' => $email));
-        
+
         if (count($entity) > 0) {
 
             $user_db_password = $entity->getPassword();
             $salt_value_old = $entity->getSalt();
-            $factory = $this->factoryReturn();
+            $factory = $this->container->get('security.encoder_factory');
             $encoder = $factory->getEncoder($entity);
 
             $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
-            
-            
+
+
             if ($password_old_enc == $user_db_password) {
 
                 $entity->setUpdatedAt(new \DateTime('now'));
@@ -655,14 +623,13 @@ public function measurementEditWebService($id,$request_array){
      #------------------------Chek Token ------------------------#
 
      public function authenticateToken($token) {
-    
-            $entity= $this->repo->findOneBy(array('authToken'=>$token));
-            if (count($entity) > 0) {
-            return array('status'=>True,'Message'=>'Authentication Success');
-            }else{
-                return array('status'=>False,'Message'=>'Authentication Failure');
-            }
-        
+
+        $entity = $this->repo->findOneBy(array('authToken' => $token));
+        if (count($entity) > 0) {
+            return array('status' => True, 'Message' => 'Authentication Success');
+        } else {
+            return array('status' => False, 'Message' => 'Authentication Failure');
+        }
     }
 
 }

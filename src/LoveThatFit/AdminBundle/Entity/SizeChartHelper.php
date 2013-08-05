@@ -429,7 +429,19 @@ public function sizeChartList($request_array)
             return   $measurement;
         }        
 }
+#-------------------------------Web Service---------------------------------------#
+public function getBrandArraySizeChart() {
 
+        $brands = $this->repo->getBrandList();
+
+        $brands_array = array();
+
+        foreach ($brands as $i) {
+            array_push($brands_array, array('id' => $i['id'], 'brand_name' => $i['name']));
+        }
+        return $brands_array;
+    }
+#-----------------------------------------------------------------------------------#
 //------------------------Pagination Function------------------------------------------------------
     public function getListWithPagination($page_number, $sort) {
         $yaml = new Parser();

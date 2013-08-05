@@ -25,9 +25,11 @@ class ProductController extends Controller {
  
     public function brandListSizeChartAction() {
        
-        $total_record = count($this->getBrandArray());
+        $size_chart_helper = $this->get('admin.helper.sizechart');
+        $brand_list = $size_chart_helper->getBrandArraySizeChart();
+        $total_record = count($brand_list);
         $data = array();
-        $data['data'] = $this->getBrandArray();
+        $data['data'] = $brand_list;
         return new Response($this->json_view($total_record, $data));
     }
 
@@ -380,21 +382,8 @@ class ProductController extends Controller {
 
 #---------------------------------------------------------------------------------------------------------#
 
-    private function getBrandArray() {
+ 
 
-        $brands = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:SizeChart')
-                ->getBrandList();
-
-        $brands_array = array();
-
-        foreach ($brands as $i) {
-            array_push($brands_array, array('id' => $i['id'], 'brand_name' => $i['name']));
-        }
-        return $brands_array;
-    }
-
-#---------------------------------------------------------------------------------------------------------#
 }
 
 // End of Class
