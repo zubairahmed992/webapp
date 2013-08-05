@@ -474,9 +474,29 @@ public function find($id) {
         } else {
             return array('Message' => 'Record Not Found');
         }
-     
-     
- }
+}
+#--------------User Try History Web Service--------------------------------------------------#
+public function getUserTryHistoryWebService($request,$user_id){
+        if($user_id)
+        {
+        
+        $entity = $this->repo->tryOnHistoryWebService($user_id);
+        $data=array();
+        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+        $data['data']=$entity;
+        $data['image_path']=$fitting_room;
+        $count_rec=count($entity);
+        if($count_rec>0)
+        {
+            return $data;
+        }else{
+            return array('Message'=>'History not found.');
+        }
+        
+        }else{
+           return array('Message' => 'User Missing'); 
+        }
+}
  
 
 }

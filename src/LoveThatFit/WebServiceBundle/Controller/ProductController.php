@@ -359,22 +359,11 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
-
         $user_id = $request_array['user_id'];
-        if($user_id)
-        {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->tryOnHistoryWebService($user_id);
-        $data=array();
-        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
-        $data['data']=$entity;
-        $data['image_path']=$fitting_room;
-        $count_rec=count($entity);
         
-        return new Response($this->json_view($count_rec,$data));
-        }else{
-           return new Response(json_encode(array('Message' => 'User Missing'))); 
-        }
+        $product_helper =  $this->get('admin.helper.product');
+        $msg=$product_helper->getUserTryHistoryWebService($request,$user_id);
+        return new Response(json_encode($msg));
     }
    
 #---------------------------Render Json--------------------------------------------------------------------#
