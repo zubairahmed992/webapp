@@ -20,8 +20,8 @@ var mct2_Options =
 {
     sliderId: "mcts2",
     direction: "horizontal",
-    scrollInterval: 1400,
-    scrollDuration: 800,
+    scrollInterval: 1000,
+    scrollDuration: 600,
     hoverPause: true,
     autoAdvance: true,
     scrollByEachThumb: true,
@@ -38,8 +38,8 @@ var mct3_Options =
 {
     sliderId: "mcts3",
     direction: "horizontal",
-    scrollInterval: 1400,
-    scrollDuration: 800,
+    scrollInterval: 800,
+    scrollDuration: 600,
     hoverPause: true,
     autoAdvance: true,
     scrollByEachThumb: true,
@@ -55,8 +55,8 @@ var mct4_Options =
 {
     sliderId: "mcts4",
     direction: "horizontal",
-    scrollInterval: 1400,
-    scrollDuration: 800,
+    scrollInterval: 1600,
+    scrollDuration: 1000,
     hoverPause: true,
     autoAdvance: true,
     scrollByEachThumb: true,
