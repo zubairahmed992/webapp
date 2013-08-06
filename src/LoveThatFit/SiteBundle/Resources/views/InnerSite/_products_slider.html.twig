@@ -1,0 +1,9 @@
+
+<div id="mcts1">        
+{%for p in product_list%}
+{%if p.displayProductColor%}
+            <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" />
+    
+{%endif%}
+{%endfor%}
+             </div>
