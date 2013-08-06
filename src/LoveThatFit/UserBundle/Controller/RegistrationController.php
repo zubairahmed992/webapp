@@ -32,8 +32,8 @@ class RegistrationController extends Controller {
             $security_context['referer']= "login";
         }
         
-        $entity = $this->get('user.helper.user')->createNewUser();
-        $form = $this->createForm(new RegistrationType(), $entity);
+        $user = $this->get('user.helper.user')->createNewUser();
+        $form = $this->createForm(new RegistrationType(), $user);
 
         return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                     'form' => $form->createView(),
@@ -49,57 +49,24 @@ class RegistrationController extends Controller {
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $user_helper = $this->get('user.helper.user');
         try {
-            $entity = new User();
-            $form = $this->createForm(new RegistrationType(), $entity);
+            $user = new User();
+            $form = $this->createForm(new RegistrationType(), $user);
             $form->bind($this->getRequest());
 
-            if ($user_helper->isDuplicateEmail(Null, $entity->getEmail())) {
+            if ($user_helper->isDuplicateEmail(Null, $user->getEmail())) {
                 $form->get('email')->addError(new FormError('This email address has already been taken.'));
             }
 
             if ($form->isValid()) {
-                $entity = $user_helper->registerUser($entity);
-
-                /*
-                  $entity->setCreatedAt(new \DateTime('now'));
-                  $entity->setUpdatedAt(new \DateTime('now'));
-
-                  $factory = $this->get('security.encoder_factory');
-                  $encoder = $factory->getEncoder($entity);
-                  $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-                  $entity->setPassword($password);
-                  $entity->generateAuthenticationToken();
-                  $em = $this->getDoctrine()->getManager();
-                  $measurement = new Measurement();
-                  $entity->setMeasurement($measurement);
-
-
-                  $em->persist($entity);
-                  $em->flush();
-                 */
-
-                // Adding Measurement record for the user for the later usage
-
-                /* $em->persist($entity);
-                  $em->flush();
-
-                  // Adding Measurement record for the user for the later usage
-                  $measurement = new Measurement();
-                  $measurement->setUser($entity);
-                  $em->persist($measurement);
-                  $em->flush();
-                 */
-                //Login after registration, the rest of the steps are secured for logged In users access only
-
-                $measurement = $entity->getMeasurement();
+                $user = $user_helper->registerUser($user);
+                $measurement = $user->getMeasurement();
                 
-                //$this->getLoggedIn($entity);
-                $this->get('user.helper.user')->getLoggedInById($entity);
+                $this->get('user.helper.user')->getLoggedInById($user);
                
                 //send registration email ....            
-                $this->get('mail_helper')->sendRegistrationEmail($entity);
+                $this->get('mail_helper')->sendRegistrationEmail($user);
 
-                if ($entity->getGender() == 'm') {
+                if ($user->getGender() == 'm') {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
                 } else {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
@@ -108,14 +75,14 @@ class RegistrationController extends Controller {
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                             'form' => $registrationMeasurementform->createView(),
                             'measurement' => $measurement,
-                            'entity' => $entity,
+                            'entity' => $user,
                         ));
             } else {
 
                 $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
                 return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                             'form' => $form->createView(),
-                            'entity' => $entity,
+                            'entity' => $user,
                             'last_username' => $security_context['last_username'],
                             'error' => $security_context['error'],
                             'referer' => 'registration',
@@ -127,7 +94,7 @@ class RegistrationController extends Controller {
 
             return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                         'form' => $form->createView(),
-                        'entity' => $entity));
+                        'entity' => $user));
         }
     }
 
@@ -135,59 +102,31 @@ class RegistrationController extends Controller {
     public function measurementCreateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $user_helper = $this->get('user.helper.user');
         $size_chart_helper = $this->get('admin.helper.sizechart');
-        $em = $this->getDoctrine()->getManager();
-        $entity = $user_helper->find($id);
+        $user = $this->get('user.helper.user')->find($id);
+        $measurement = $user->getMeasurement();
 
-        $measurement = $entity->getMeasurement();
-
-        if ($entity->getGender() == 'm') {
+        if ($user->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
 
+        #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
         $request_array = $this->getRequest()->get('measurement');
-
-        if ($entity->getGender() == 'm') {
-
-            if (array_key_exists('top_size', $request_array)) {
-                $measurement->top_size = $request_array['top_size'];
-            }
-            if (array_key_exists('bottom_size', $request_array)) {
-                $measurement->bottom_size = $request_array['bottom_size'];
-            }
-        } else {
-
-            if (array_key_exists('top_size', $request_array)) {
-                $measurement->top_size = $request_array['top_size'];
-            }
-            if (array_key_exists('bottom_size', $request_array)) {
-                $measurement->bottom_size = $request_array['bottom_size'];
-            }
-            if (array_key_exists('dress_size', $request_array)) {
-                $measurement->dress_size = $request_array['dress_size'];
-            }
-        }
-
-        #-------------Evalutae Size Chart From Size Chart Helper ----------------------#
-        $size_chart_helper = $this->get('admin.helper.sizechart');
-        $measurement = $size_chart_helper->evaluateWithSizeChart($measurement);
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        $em->persist($measurement);
-        $em->flush();
-
+        $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
+        
+        $this->get('measurement.helper.measurement')->saveMeasurement($measurement);
+        
         // Rendering step four
-        $form = $this->createForm(new RegistrationStepFourType(), $entity);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
 
         return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                     'form' => $form->createView(),
                     'measurement_form' => $measurement_form->createView(),
-                    'entity' => $entity,
+                    'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => 'registration',
                 ));
@@ -199,26 +138,22 @@ class RegistrationController extends Controller {
     public function measurementEditAction() {
 
         $size_chart_helper = $this->get('admin.helper.sizechart');
-        $em = $this->getDoctrine()->getManager();
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $user_helper = $this->get('user.helper.user');
-        $entity = $user_helper->find($id);
-        $measurement_helper = $this->get('measurement.helper.measurement');
-        $measurement = $entity->getMeasurement();
+        $user = $this->get('user.helper.user')->find($id);
+        $measurement = $user->getMeasurement();
 
-        if ($entity->getGender() == 'm') {
-
+        if ($user->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
 
-        $retaining_array = $measurement_helper->measurementRetain($measurement);
+        $retaining_array = $this->get('measurement.helper.measurement')->measurementRetain($measurement);
 
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
-                    'entity' => $entity,
+                    'entity' => $user,
                     'top_brand_id' => $retaining_array['top_brand_id'],
                     'top_size_chart_id' => $retaining_array['topSizeChartId'],
                     'bottom_brand_id' => $retaining_array['bottom_brand_id'],

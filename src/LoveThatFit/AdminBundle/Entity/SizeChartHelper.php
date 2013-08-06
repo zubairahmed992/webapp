@@ -157,13 +157,45 @@ public function findOneById($id)
     return $this->repo->findOneById($id);
     
 }
+#-------------------------------------------------------------------------
 
 public function findOneByName($title) {
         return $this->repo->findOneByName($title);
     }
     
-   
+
+
+
+
 #-------------------------Evaluate Size Chart ------------------------------------------------------------------------#
+
+    public function calculateMeasurements($entity, $request_array) {
+    $measurement = $this->setMeasurementSizes($entity, $request_array);
+        return $this->evaluateWithSizeChart($measurement);
+    }
+#-------------------------------------------------------------------------
+
+    public function setMeasurementSizes($entity, $request_array) {
+        
+        $measurement = $entity->getMeasurement();
+        
+        if (array_key_exists('top_size', $request_array)) {
+            $measurement->top_size = $request_array['top_size'];
+        }
+        
+        if (array_key_exists('bottom_size', $request_array)) {
+            $measurement->bottom_size = $request_array['bottom_size'];
+        }        
+        
+        if ($entity->getGender() == 'f' && array_key_exists('dress_size', $request_array)) {
+            $measurement->dress_size = $request_array['dress_size'];
+        }
+
+        return $measurement;
+    }
+   
+    
+    
 //-------------------------------------------------------------------------------------
     public function evaluateWithSizeChart($measurement) {
 
@@ -173,7 +205,7 @@ public function findOneByName($title) {
 
         $bust_size = 0;
         $hip_size = 0;
-
+        
         if ($measurement->top_size) {
 
             $top_size = $this->repo->findOneById($measurement->top_size);
@@ -218,9 +250,7 @@ public function findOneByName($title) {
                 if ($measurement->getInseam() == null || $measurement->getInseam() == 0) {
                     $measurement->setInseam($bottom_size->getInseam());
                 }
-                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
-                    $measurement->setBack($bottom_size->getBack());
-                }
+                
             }
         }
 
@@ -259,6 +289,13 @@ public function findOneByName($title) {
                 }
             }
         }
+        
+        // Temporary hack for the back just to have the slider in step 4 in proper place if back not provided
+        // As currently we are not comparing back measurement in fitting algorithm
+        if ($measurement->getBack() == null || $measurement->getBack() == 0) {
+                    $measurement->setBack(14.5);
+                }
+        
 
         return $measurement;
     }
