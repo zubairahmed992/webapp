@@ -288,11 +288,11 @@ class ProductController extends Controller {
         $product_item_id=2;
         $request_array['like']='like';*/
        
-        
+        $authTokenWebService = $request_array['authTokenWebService'];
   #------------------------------Authentication of Token--------------------------------------------#
         $user_helper = $this->get('user.helper.user');
           if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            $tokenResponse = $user_helper->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
             }
