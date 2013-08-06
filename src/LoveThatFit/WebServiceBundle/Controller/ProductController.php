@@ -284,24 +284,27 @@ class ProductController extends Controller {
 
         $user_id = $request_array['user_id'];
         $product_item_id = $request_array['product_item_id'];
+     /*   $user_id=2;
+        $product_item_id=2;
+        $request_array['like']='like';*/
        
-        
+        $authTokenWebService = $request_array['authTokenWebService'];
   #------------------------------Authentication of Token--------------------------------------------#
         $user_helper = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
-        if ($authTokenWebService) {
-            $tokenResponse =  $user_helper->authenticateToken($authTokenWebService);
+          if ($authTokenWebService) {
+            $tokenResponse = $user_helper->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
             }
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
-        $em = $this->getDoctrine()->getManager();
+       $em = $this->getDoctrine()->getManager();
  #-------------------------------End Of Authentication Token--------------------------------------#
        if ($user_id && $product_item_id) {
            
-            if ($request_array['like']=='like') {
+            if ($request_array['like']==trim('like')) {
+                
                 
                 $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
                 $product_helper =  $this->get('admin.helper.product');

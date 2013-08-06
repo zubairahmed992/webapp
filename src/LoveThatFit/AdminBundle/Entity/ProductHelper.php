@@ -402,11 +402,10 @@ public function find($id) {
  }
  #--------------------Product Detail Web Service -----------------------------------------------------------#
  public function productDetailWebService($request,$request_array){
-     
-      
-        $product_id = $request_array['id'];
+       $product_id = $request_array['id'];
         $user_id= $request_array['user_id'];
-       
+       /*$user_id=43;
+       $product_id=20;*/
        if(!$user_id)
        {
             return  array('Message' => 'User Missing');
@@ -444,7 +443,7 @@ public function find($id) {
                 $counter=1;
                 foreach ($color_sizes as $cs) {
                     $color_size_array [$cs['title']] = $cs;
-                    $like_status['like_status']=$user_re->getMyClosetListArray($cs['id']);
+                    $like_status['like_status']=$user->getMyClosetListArray($cs['id']);
                     array_push($color_size_array [$cs['title']],$like_status);
                     $counter++;
                 }
