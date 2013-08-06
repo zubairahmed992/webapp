@@ -52,4 +52,17 @@ class SurveyAnswerRepository extends EntityRepository
             return null;
         }
     }
+    
+    public function findOneById($id) {
+        $query = $this->getEntityManager()
+                        ->createQuery("SELECT sa FROM LoveThatFitAdminBundle:SurveyAnswer sa     
+                                WHERE sa.id=:id")
+                        ->setParameters(array('id' => $id));
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }   
+    
 }

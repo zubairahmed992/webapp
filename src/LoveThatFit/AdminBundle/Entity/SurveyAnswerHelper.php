@@ -117,7 +117,12 @@ class SurveyAnswerHelper {
 public function findOneByName($answer) {
         return $this->repo->findOneByName($answer);
     }
-
+    
+public function findOneById($id)
+{
+    return $this->repo->findOneById($id);
+    
+}
 
 public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
