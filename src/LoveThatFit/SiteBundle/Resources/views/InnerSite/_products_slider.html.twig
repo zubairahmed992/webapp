@@ -2,7 +2,7 @@
 <div id="{{id}}">        
 {%for p in product_list%}
 {%if p.displayProductColor%}
-            <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" />
+            <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" width="145" height="195" />
     
 {%endif%}
 {%endfor%}

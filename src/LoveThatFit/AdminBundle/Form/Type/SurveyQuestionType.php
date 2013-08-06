@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SizeChartType extends AbstractType
+class SurveyQuestionType extends AbstractType
 {
     public function __construct($mode) {
         $this->mode = $mode;
