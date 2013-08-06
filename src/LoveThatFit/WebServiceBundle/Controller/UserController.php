@@ -33,9 +33,9 @@ class UserController extends Controller {
         $email = $decoded['email'];
         $password = $decoded['password'];
          
-        /*$email ='my_web115115@gmail.com';
-         $password ='123456';*/
-       
+       /* $email ='test@gmail.com';
+         $password ='123456';
+       */
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
  
@@ -63,7 +63,7 @@ class UserController extends Controller {
          $decoded = json_decode($jsonInput,true);
  #------------------------------Authentication of Token--------------------------------------------#
         $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
+        $authTokenWebService = $decoded['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -344,7 +344,7 @@ public function userProfileAction()
                 $userinfo = array();
                 $userimage = $entity->getIphoneImage();
                  $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-                $userinfo['image'] = $userimage;
+                $userinfo['iphoneImage'] = $userimage;
                 $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
             } else {

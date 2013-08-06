@@ -228,6 +228,7 @@ public function findByEmail($email)
                     $birth_date=$entity->getBirthDate();
                     $image=$entity->getImage();
                     $avatar=$entity->getAvatar();
+                    $iphoneImage=$entity->getIphoneImage();
                     
                    $userinfo=array();
                    $userinfo['id']=$user_id;
@@ -244,7 +245,7 @@ public function findByEmail($email)
                    
                    $userinfo['image']=$image;
                    $userinfo['avatar']=$avatar;
-                 
+                 $userinfo['iphoneImage']=$iphoneImage;
                  
                 $entity = $this->repo->find($user_id);
                 $measurement = $entity->getMeasurement();
@@ -426,6 +427,7 @@ public function findByEmail($email)
             $userinfo['last_name'] = $user->getLastName();
             $userinfo['zipcode'] = $user->getZipcode();
             $userinfo['gender'] = $user->getGender();
+            
 
             if (isset($birth_date)) {
                 $userinfo['birth_date'] = $birth_date->format('Y-m-d');
@@ -526,6 +528,7 @@ public function measurementEditWebService($id,$request_array){
 
             $userinfo['image'] = $entity->getImage();
             $userinfo['avatar'] = $entity->getAvatar();
+            $userinfo['iphoneImage']=$entity->getIphoneImage();
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
             $userinfo['path'] = $baseurl;
 
