@@ -291,6 +291,14 @@ class ProductController extends Controller {
         
   #------------------------------Authentication of Token--------------------------------------------#
         $user_helper = $this->get('user.helper.user');
+          if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
        $em = $this->getDoctrine()->getManager();
  #-------------------------------End Of Authentication Token--------------------------------------#
        if ($user_id && $product_item_id) {
