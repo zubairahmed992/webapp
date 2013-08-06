@@ -117,7 +117,7 @@ class RegistrationController extends Controller {
         $request_array = $this->getRequest()->get('measurement');
         $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
         
-        $this->get('measurement.helper.measurement')->saveMeasurement($measurement);
+        $this->get('user.helper.measurement')->saveMeasurement($measurement);
         
         // Rendering step four
         $form = $this->createForm(new RegistrationStepFourType(), $user);
@@ -148,7 +148,7 @@ class RegistrationController extends Controller {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
         }
 
-        $retaining_array = $this->get('measurement.helper.measurement')->measurementRetain($measurement);
+        $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
 
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
@@ -303,7 +303,7 @@ class RegistrationController extends Controller {
 #-----------------------------Helper Initialize-------------------------------------------------------------#        
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $user = $this->get('user.helper.user');
-        $measurement_helper = $this->get('measurement.helper.measurement');
+        $measurement_helper = $this->get('user.helper.measurement');
 #----------------------------End Of Helper Intialization-----------------------------------------------------#        
         $entity = $user->find($id);
         $measurement = $entity->getMeasurement();

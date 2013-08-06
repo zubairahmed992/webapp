@@ -13,7 +13,7 @@ services:
             class: LoveThatFit\UserBundle\Entity\User
             container: "@service_container"
   
-  measurement.helper.measurement:
+  user.helper.measurement:
          class: LoveThatFit\UserBundle\Entity\MeasurementHelper
          arguments:
              dispatcher: "@event_dispatcher"

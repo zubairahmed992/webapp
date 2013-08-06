@@ -409,7 +409,7 @@ public function findByEmail($email)
             }
 
 
-//       $this->container->get('measurement.helper.measurement')->saveMeasurement($measurement);
+//       $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
             $user->setMeasurement($measurement);
             $this->saveUser($user);
 
