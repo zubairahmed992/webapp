@@ -32,15 +32,25 @@ class InnerSiteController extends Controller {
     public function homeAction($page_number = 0, $limit = 0) {
        $gender= $this->get('security.context')->getToken()->getUser()->getGender();
        $user_id= $this->get('security.context')->getToken()->getUser()->getId();
-        $em = $this->getDoctrine()->getManager();
-        $latest = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
-        $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
-        //$favourite = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
-        $favourite = $this->get('admin.helper.product')->listByType(array('limit'=>3, 'list_type'=>'most_faviourite'));
-        $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
+        $latest = $this->get('admin.helper.product')->listByType(array('limit'=>5, 'list_type'=>'latest'));
+        if(count($this->get('admin.helper.product')->listByType(array('limit'=>3, 'list_type'=>'faviourite')))>0)
+        {
+            $favourite = $this->get('admin.helper.product')->listByType(array('limit'=>3, 'list_type'=>'faviourite'));
+        }else
+        {
+            $favourite = $this->get('admin.helper.product')->findByGenderRandom('F',3);
+        }
+        if(count($this->get('admin.helper.product')->listByType(array('limit'=>3, 'list_type'=>'tried')))>0)
+        {
+            $tried_on = $this->get('admin.helper.product')->listByType(array('limit'=>3, 'list_type'=>'tried'));
+        }else
+        {
+            $tried_on = $this->get('admin.helper.product')->findByGenderRandom('F',3);
+        }
+       $recomended = $this->get('admin.helper.product')->findByGenderBrandName($gender,'H&M' ,$page_number, $limit);        
          return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
             'latest'=>$latest,
-            'hotest'=>$hotest,
+            'tried_on'=>$tried_on,
             'favourite'=>$favourite,
             'recomended'=>$recomended,            
            ));

@@ -577,7 +577,7 @@ class ProductRepository extends EntityRepository {
     }
     
 //-------------------------------------------------------------------------------------    
-    public function findMostTriedOnByGender($gender, $page_number = 0, $limit = 20)
+    public function findMostTriedOnByGender($gender, $page_number = 0, $limit = 0)
     {
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
@@ -649,6 +649,36 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
+//-------------------------------------------------------------------------------------    
+    public function findByGenderBrandName($gender, $brand, $page_number=0, $limit=0)
+    {      if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                            ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.brand b
+            WHERE b.name = :name
+            AND p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''"
+                            )->setParameters(array('name'=>$brand,'gender' => $gender));
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.brand b
+            WHERE b.name = :name
+            AND p.gender = :gender AND p.disabled=0 AND p.disabled=0 AND p.displayProductColor!=''"
+                    )->setParameters(array('name'=>$brand,'gender' => $gender))
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }  
+    }    
+    
 //-------------------------------------------------------------------------------------    
     public function findProductByEllieHM($brand,$gender,$page_number, $limit)
     {      if ($page_number <= 0 || $limit <= 0) {
