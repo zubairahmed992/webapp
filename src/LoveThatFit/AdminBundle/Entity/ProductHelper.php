@@ -246,6 +246,8 @@ public function find($id) {
     
     public function listByType($options) {
         
+        $list="";
+        
         if (!array_key_exists ('gender', $options)){
             $options['gender']='F';
         }
@@ -256,9 +258,8 @@ public function find($id) {
         if(!array_key_exists ('list_type', $options)){
             $options['list_type']="latest";
         }
-        return $this->findByGenderRandom($options['gender'], $options['limit']);
-        $list=null;
         
+                
             switch ($options['list_type'])
         {
         case "latest":        
@@ -295,7 +296,7 @@ public function find($id) {
    
 #---------------------------------------------------    
     public function findByGenderRandom($gender, $limit){
-        return $this->repo->findPrductByGender($gender, $limit);           
+        return $this->repo->findByGenderRandom($gender, $limit);           
     }
 
 #---------------------------------------------------
@@ -317,7 +318,7 @@ public function find($id) {
    #---------------------------------------------------
     
    public function findLTFRecomendedByGender($gender='F', $page_number=0, $limit=0) {
-        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
+        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);                                    
    }
    #---------------------------------------------------
     
