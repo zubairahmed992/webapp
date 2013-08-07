@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -110,6 +110,25 @@ class ProductRepository extends EntityRepository {
                     ->setMaxResults($limit);
         }
 
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    #_-----------------------------------------------------------------
+    public function findByGenderRandom($gender, $limit) {
+        
+        $sql = "SELECT * FROM Product p WHERE p.gender = '".$gender."' AND p.disabled=0 AND p.display_Product_Color_Id IS NOT NULL ORDER BY RAND() LIMIT ".$limit;
+        
+        $rsm = new ResultSetMapping;
+        $rsm->addEntityResult('LoveThatFit\AdminBundle\Entity\Product', 'p');
+        $rsm->addFieldResult('p', 'id', 'id');
+        
+        $query = $this->getEntityManager()
+                    ->createNativeQuery($sql,$rsm)
+                    ->setParameter('gender', $gender);
+        
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

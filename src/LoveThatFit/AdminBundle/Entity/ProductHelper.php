@@ -228,10 +228,9 @@ public function find($id) {
 #---------------------------------------------------    
     private function countProductsByGender($gender)
     {
-        
-        return count($this->repo->findPrductByGender($gender));        
-        
+        return count($this->repo->findPrductByGender($gender));           
     }
+
     
     #---------------------------------------------------
     
@@ -247,38 +246,61 @@ public function find($id) {
     
     public function listByType($options) {
         
+        if (!array_key_exists ('gender', $options)){
+            $options['gender']='F';
+        }
+        
+        if(!array_key_exists ('limit', $options)){
+            $options['limit']=10;
+        }
+        if(!array_key_exists ('list_type', $options)){
+            $options['list_type']="latest";
+        }
+        return $this->findByGenderRandom($options['gender'], $options['limit']);
+        $list=null;
+        
             switch ($options['list_type'])
         {
         case "latest":        
-        return $this->findByGenderLatest($options['gender']);
+        $list = $this->findByGenderLatest($options['gender']);
         break;
     
         case "most_tried_on":        
-        return $this->findMostTriedOnByGender($options['gender']);
+        $list = $this->findMostTriedOnByGender($options['gender']);
         break;
     
         case "recently_tried_on":        
-        return $this->findRecentlyTriedOnByUser($options['user_id']);
+        $list = $this->findRecentlyTriedOnByUser($options['user_id']);
         break;
     
         case "most_faviourite":        
-        return $this->findMostLikedByGender($options['gender']);
+        $list = $this->findMostLikedByGender($options['gender']);
         break ;
         
         case "ltf_recommendation":        
-        return $this->findLTFRecomendedByGender($options['gender']);
+        $list = $this->findLTFRecomendedByGender($options['gender']);
         break ;
             
         default:
-        return $this->findByGenderLatest($options['gender']);
+        $list = $this->findByGenderLatest($options['gender']);
         break ;
         }
+        if ($list && count($list)>0){
+            $list = $this->findByGenderRandom($options['gender'], $options['limit']);
+        }
+        return $list;
         
    }
-    #---------------------------------------------------
+
+   
+#---------------------------------------------------    
+    public function findByGenderRandom($gender, $limit){
+        return $this->repo->findPrductByGender($gender, $limit);           
+    }
+
+#---------------------------------------------------
     
-    
-    public function findByGenderLatest($gender, $page_number=0, $limit=0) {
+    public function findByGenderLatest($gender='F', $page_number=0, $limit=0) {
         return $this->repo->findByGenderLatest($gender, $page_number, $limit);
    }
     #---------------------------------------------------
@@ -288,18 +310,18 @@ public function find($id) {
    }
    #---------------------------------------------------
     
-   public function findMostTriedOnByGender($gender, $page_number=0, $limit=0) {
+   public function findMostTriedOnByGender($gender='F', $page_number=0, $limit=0) {
         return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
    }
     
    #---------------------------------------------------
     
-   public function findLTFRecomendedByGender($gender, $page_number=0, $limit=0) {
+   public function findLTFRecomendedByGender($gender='F', $page_number=0, $limit=0) {
         return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
    }
    #---------------------------------------------------
     
-   public function findMostLikedByGender($gender, $page_number=0, $limit=0) {
+   public function findMostLikedByGender($gender='F', $page_number=0, $limit=0) {
         return $this->repo->findByGenderMostLiked($gender, $page_number, $limit);        
    } 
     

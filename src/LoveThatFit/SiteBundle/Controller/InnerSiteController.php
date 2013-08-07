@@ -36,6 +36,8 @@ class InnerSiteController extends Controller {
         $latest = $em->getRepository('LoveThatFitAdminBundle:Product')->findByGenderLatest($gender, $page_number, $limit);
         $hotest = $em->getRepository('LoveThatFitAdminBundle:Product')->findMostTriedOnByGender($gender, $page_number, $limit);
         $favourite = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
+        //$favourite = $this->get('admin.helper.product')->listByType(array('list_type'=>'most_faviourite'));
+        //$favourite = $this->get('admin.helper.product')->findByGenderRandom($gender, 4);
         $recomended = $em->getRepository('LoveThatFitAdminBundle:Product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
          return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
             'latest'=>$latest,
