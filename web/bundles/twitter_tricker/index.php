@@ -14,7 +14,7 @@
 <style>
 h1{padding:30px;color:#FFF;}
 #tweet_cont{padding:50px;}
-.tweet{color:#333; font-size: 0.9em; margin-bottom:30px; margin-top: 30px; margin-left: 10px;}
+.tweet{color:#333; font-size: 0.9em; margin-bottom:30px; margin-top: 15px; margin-left: 10px;}
 .tweet img{float:left;}
 .tweet_txt{padding-left: 65px;}
 #tweet_cont ul {margin:0;padding:0;list-style:none; }
@@ -23,7 +23,6 @@ h1{padding:30px;color:#FFF;}
 #tweet_cont ul .tweet  h4{margin:0px 0px 0px 0px; font-size:14px; margin:0;padding:0;font-family:arial; }
 #tweet_cont ul .tweet   small{padding-left:50px; font-size:13px; margin:0;padding:0;font-family:arial; font-weight:normal;}
 .clearboth {clear: both;}
-
 a {color:#3E76C2;text-decoration:none;}
 a:hover {text-decoration:underline;}
 </style>
@@ -33,7 +32,7 @@ a:hover {text-decoration:underline;}
 $(function(){
 	$('.tweets').vTicker({ 
 		speed: 500,
-		pause: 3000,
+		pause: 6000,
 		animation: 'fade',
 		mousePause: true,
 		showItems: 1,
