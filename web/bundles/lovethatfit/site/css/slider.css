@@ -4,14 +4,16 @@
     height:195px;
     margin: 0 auto;
     padding:0px 0px;
-    border:1px solid #dedcb4;
-  
-    box-shadow: 0px 1px 11px #CCCCCC;
-    
+    box-shadow: 0px 1px 11px #CCCCCC;    
     /* Do not alter the below settings */
     white-space:nowrap;
     position:relative;
     font-size:0px;
+}
+
+.mtcbox{    
+    border:1px solid #dedcb4!important;
+    width: 143px!important;
 }
 #mcts2
 {
@@ -19,8 +21,6 @@
     height:195px;
     margin: 0 auto;
     padding:0px 0px;
-    border:1px solid #dedcb4;
-  
     box-shadow: 0px 1px 11px #CCCCCC;
     
     /* Do not alter the below settings */
@@ -34,7 +34,7 @@
     height:195px;
     margin: 0 auto;
     padding:0px 0px;
-    border:1px solid #dedcb4;
+    
   
     box-shadow: 0px 1px 11px #CCCCCC;
     
@@ -49,8 +49,7 @@
     height:195px;
     margin: 0 auto;
     padding:0px 0px;
-    border:1px solid #dedcb4;
-  
+     
     box-shadow: 0px 1px 11px #CCCCCC;
     
     /* Do not alter the below settings */
@@ -66,40 +65,42 @@
 /*-------- div.item is each thumbnail's wrapper created by the javascript ------*/
 #mcts1 div.item 
 {
-    padding:2px;
+    padding: 30px 15px 30px 20px;
     margin-right:6px; /* this specifies the distance between each thumbnail */
-    background-color:White;
-    border:1px solid #ddd;
+   
     text-align:center;
     position:relative;
+    width: 138px;
+    
+    
+   
+    
 }
 
 #mcts2 div.item 
 {
-    padding:2px;
-    margin-right:6px; /* this specifies the distance between each thumbnail */
-    background-color:White;
-    border:1px solid #ddd;
+   
+    margin-right:6px; /* this specifies the distance between each thumbnail */   
     text-align:center;
     position:relative;
+    padding: 30px 15px 30px 20px;
 }
 
 #mcts3 div.item 
 {
     padding:2px;
-    margin-right:6px; /* this specifies the distance between each thumbnail */
-    background-color:White;
-    border:1px solid #ddd;
+    margin-right:2px; /* this specifies the distance between each thumbnail */
+    
     text-align:center;
     position:relative;
+    padding: 30px 15px 30px 20px;
 }
 
 #mcts4 div.item 
 {
-    padding:2px;
+    padding: 30px 15px 30px 20px;
     margin-right:6px; /* this specifies the distance between each thumbnail */
-    background-color:White;
-    border:1px solid #ddd;
+    
     text-align:center;
     position:relative;
 }
