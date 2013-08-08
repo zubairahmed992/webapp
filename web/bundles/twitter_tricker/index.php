@@ -10,15 +10,20 @@
 <!-- jQuery UI widget factory --> 
 <script src="jquery.js" type="text/javascript"></script>
 <script src="jquery.vticker-min.js" type="text/javascript"></script>  
+<link href="../lovethatfit/site/css/main.css" rel="stylesheet" type="text/css" />
 <style>
 h1{padding:30px;color:#FFF;}
-#tweet_cont{padding:50px ; }
+#tweet_cont{padding:50px;}
+.tweet{color:#333; font-size: 0.9em; margin-bottom:30px; margin-top: 30px; margin-left: 10px;}
+.tweet img{float:left;}
+.tweet_txt{padding-left: 65px;}
 #tweet_cont ul {margin:0;padding:0;list-style:none; }
 #tweet_cont ul .tweet {background: #fff; margin-bottom:3px;clear:both;text-align:left; padding:3px;width:590px; }
 #tweet_cont ul .tweet .avatar{float:left;width:48px;height:48px;margin:0px 5px 0px 0px; border:none;} 
 #tweet_cont ul .tweet  h4{margin:0px 0px 0px 0px; font-size:14px; margin:0;padding:0;font-family:arial; }
 #tweet_cont ul .tweet   small{padding-left:50px; font-size:13px; margin:0;padding:0;font-family:arial; font-weight:normal;}
 .clearboth {clear: both;}
+
 a {color:#3E76C2;text-decoration:none;}
 a:hover {text-decoration:underline;}
 </style>
@@ -33,7 +38,7 @@ $(function(){
 		mousePause: true,
 		showItems: 1,
 		direction: 'down',
-		height:74
+		height:85
 	});
 });
 </script>
@@ -68,13 +73,16 @@ $tweets = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.j
 
 <?php
 $count=1; 
+
 foreach($tweets as $ind_tweets){?>
 
 <li id="hide_<?php echo $count;?>">
 <div class="tweet">
 
 <img src="<?php echo $ind_tweets->user->profile_image_url;?> ">
-<?php echo $ind_tweets->text;?> 
+<div class="tweet_txt"><?php echo $ind_tweets->text;?></div>
+
+
 <div class="clearboth"></div>
 </div>
 </li>

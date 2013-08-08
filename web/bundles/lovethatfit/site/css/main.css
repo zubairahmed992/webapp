@@ -2708,6 +2708,14 @@ padding-bottom: 0px;
   font-size: 0.85em;
 }
 
+.tt_feeds .twitter-timeline{
+    display:none;
+}
+
+.tweet{
+    color:blue;
+}
+
 #social_box img:first-child{
     float: left;
     padding-right: 4px;
