@@ -12,7 +12,7 @@ class UserController extends Controller {
     //------------------------------------------------------------------------------------------
     public function indexAction($page_number=1 , $sort='id') {
        
-        $limit = 5;
+        $limit = 30;
         $usersObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitUserBundle:User')

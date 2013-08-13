@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\surveyEvent;
+use LoveThatFit\AdminBundle\Event\surveyquestionEvent;
 
-class SurveyHelper {
+class SurveyQuestionHelper {
 
     protected $dispatcher;
 

@@ -247,10 +247,10 @@ public function passwordResetUpdateAction(Request $request) {
     //--------------------------- What I like --------------------------
     public function whatILikeAction() {
         return $this->render('LoveThatFitUserBundle:Profile:whatILike.html.twig', array(
-                    'data' =>$this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' =>$this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'form' => $this->addUserSurveyForm()->createView(),
                     'userid' => $this->get('security.context')->getToken()->getUser(),
-                    'count_question' => count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question' => count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
                 ));
     }
 
@@ -268,7 +268,7 @@ public function passwordResetUpdateAction(Request $request) {
             $strs = explode(',', $str);
             foreach ($strs as $questionId) {
                 $userSurvey = new SurveyUser();
-                $question = $this->get('admin.helper.survey')->getquestionById($questionId);
+                $question = $this->get('admin.helper.surveyquestion')->getquestionById($questionId);
                 $answers = $this->get('admin.helper.surveyanswer')->getAnswerById($value);
             }
             $addanswer = $this->updateAnswerIfFound($question, $answers, $user);
