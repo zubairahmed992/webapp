@@ -799,10 +799,12 @@ a.but_short:visited {
 .uploading_in_progress {
     background: url("../images/uploading.gif") no-repeat scroll center center transparent;
     height: 72px;
-    position: relative;
+    position: absolute;
     text-align: center;
     width: 100%;
     z-index: 5000;
+    top:0;
+    left:0;
 }
 
 .int_fitting_room {
