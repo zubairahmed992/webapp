@@ -16,6 +16,10 @@ class HomeController extends Controller {
 public function aboutUsAction() {
         return $this->render('LoveThatFitSiteBundle:Home:about_us.html.twig');
     }
+    
+    public function faqsAction() {
+        return $this->render('LoveThatFitSiteBundle:Home:faqs.html.twig');
+    }
 
 public function contactUsAction() {
         return $this->render('LoveThatFitSiteBundle:Home:contact_us.html.twig');

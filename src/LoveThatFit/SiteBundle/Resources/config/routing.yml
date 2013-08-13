@@ -13,6 +13,11 @@ inner_site_index:
 about_us:
     pattern:  /about_us
     defaults: { _controller: LoveThatFitSiteBundle:Home:aboutUs}
+    
+     
+faqs:
+    pattern:  /faqs
+    defaults: { _controller: LoveThatFitSiteBundle:Home:faqs}
 
 contact_us:
     pattern:  /contact_us

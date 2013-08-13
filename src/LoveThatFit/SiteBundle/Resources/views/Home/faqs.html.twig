@@ -1,0 +1,25 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% block left_navigation %}
+{%if app.user %}
+    {% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation_external.html.twig'%}
+{% endif %}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+{% block product_slider %}
+
+<div class="page_container">
+    <div id="hd_image_about"></div>
+{% include 'LoveThatFitSiteBundle:Home:_faqs.html.twig'%}
+</div>
+
+
+{% endblock %}
+
+{% block fitting_room %}
+{% endblock %}
+
