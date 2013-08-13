@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\SurveyUserRepository")
- * @ORM\Table(name="surveyuser")
+ * @ORM\Table(name="SurveyUser")
  * @ORM\HasLifecycleCallbacks()
  */
 class SurveyUser
