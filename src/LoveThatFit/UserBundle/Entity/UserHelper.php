@@ -286,7 +286,7 @@ public function findByEmail($email)
                     }
                  
                     if (!$userinfo['iphone_outseam']) {
-                        $userinfo['iphone_outseam'] = 400;
+                        $userinfo['iphone_outseam'] = 260;
                     }
                      return $userinfo;
                 } else {

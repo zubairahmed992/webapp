@@ -205,9 +205,28 @@ function formValidates()
 
     <div class="tt_feeds">
       
-               <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
+      <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
             Tweets by @LoveThatFit</a>
-            <iframe src="{{ asset('bundles/twitter_tricker') }}" style="overflow: hidden;"></iframe>
+        {# <iframe src="{{ asset('bundles/twitter_tricker') }}" style="overflow: hidden;"></iframe>#}
+        
+        
+        <ul>
+
+ {% for twitter in twitters %}  
+<li id="hide">
+<div class="tweet">
+
+<img src="">
+<div class="tweet_txt">{{twitter.text}}</div>
+
+
+<div class="clearboth"></div>
+</div>
+</li>
+
+{%endfor%}
+</ul>
+        
             
    {#<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
        </script> #}
