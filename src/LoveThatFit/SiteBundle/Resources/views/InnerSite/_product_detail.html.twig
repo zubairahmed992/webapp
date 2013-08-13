@@ -22,6 +22,50 @@ function chk_applied_loaded(prod_type_applied){
             }
         }
 
+function chk_bottom_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_bottom_applied_loaded(prod_type_applied), 200);
+                return false;
+            }else {
+                $("#bottom_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#applied_prod_bottom").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+            }
+        }
+        
+        
+function chk_dress_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_dress_applied_loaded(prod_type_applied), 200);
+                return false;
+            }else {
+                $("#full_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#applied_prod_dress").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+            }
+        }
+
+
 function apply_prod(size_id,product_id,color_id){
     //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
     
@@ -56,7 +100,13 @@ function apply_prod(size_id,product_id,color_id){
             });  
     }
     if(prod_type_bottom) {
-        $("#bottom_dropable").fadeOut("500").html("<img src='"+apply_img_url+"'/>").fadeIn("500").addClass("disp_blk");
+        
+        $("#bottom_dropable").fadeOut("200", function (){
+            $("#bottom_dropable").html("<img id='applied_prod_bottom' src='"+apply_img_url+"'/>")
+            chk_bottom_applied_loaded('applied_prod_bottom');
+          });
+        
+        //$("#bottom_dropable").fadeOut("500").html("<img src='"+apply_img_url+"'/>").fadeIn("500").addClass("disp_blk");
         
         var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
             
@@ -69,7 +119,12 @@ function apply_prod(size_id,product_id,color_id){
             });
     }
     if(prod_type_dress) {
-        $("#full_dropable").fadeOut("500").html("<img src='"+apply_img_url+"'/>").fadeIn("500").addClass("disp_blk");
+        
+        $("#full_dropable").fadeOut("200", function (){
+            $("#full_dropable").html("<img id='applied_prod_dress' src='"+apply_img_url+"'/>")
+            chk_dress_applied_loaded('applied_prod_dress');
+          });
+        
         
         var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
             
