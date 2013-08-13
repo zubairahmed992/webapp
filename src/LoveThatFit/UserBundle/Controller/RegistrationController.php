@@ -34,10 +34,10 @@ class RegistrationController extends Controller {
         
         $user = $this->get('user.helper.user')->createNewUser();
         $form = $this->createForm(new RegistrationType(), $user);
-        $twitters = $this->twitter_latest();
-        
-        print_r($twitters);
-        return new response(json_encode($twitters));
+        //$twitters = $this->twitter_latest();
+        $twitters=array();
+        //print_r($twitters);
+        //return new response(json_encode($twitters));
         return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                     'form' => $form->createView(),
                     'last_username' => $security_context['last_username'],
@@ -62,10 +62,10 @@ class RegistrationController extends Controller {
             }
 
             if ($form->isValid()) {
-                $user = $user_helper->registerUser($user);
+                $u = $user_helper->registerUser($user);
+                $user = $user_helper->find($u->getId());
                 $measurement = $user->getMeasurement();
-                
-                $this->get('user.helper.user')->getLoggedInById($user);
+                $user_helper->getLoggedInById($user);
                
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($user);
@@ -297,7 +297,7 @@ class RegistrationController extends Controller {
     
     
    #----------------------Twitter Work-----------------------------------------------# 
-    
+    /*
     public function buildBaseString($baseURI, $method, $params) {
     $r = array();
     ksort($params);
@@ -360,7 +360,7 @@ $twitter_data = json_decode($json);
 
 return $twitter_data;
 }
-
+*/
 #---------------------------CAll Tweet--------------------------------------#
 
 

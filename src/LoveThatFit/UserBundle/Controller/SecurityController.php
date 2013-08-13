@@ -47,7 +47,8 @@ class SecurityController extends Controller {
 
 //---------------------------------------------------------------------------------
     public function goSecureAction($id) {
-        $user=$this->get('user.helper.user')->getLoggedInById($id);
+        $user=$this->get('user.helper.user')->find($id);
+        $user=$this->get('user.helper.user')->getLoggedIn($user);
         return $this->redirect($this->generateUrl('inner_site_index'));
     }
 
