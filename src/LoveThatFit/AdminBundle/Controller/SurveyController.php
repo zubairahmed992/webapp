@@ -13,11 +13,11 @@ class SurveyController extends Controller {
 //---------------------------------------------------------------------
     public function indexAction() {
         return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
-                    'data' =>$this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' =>$this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>null,
                     'id'=>null,
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
     }    
     public function addNewQuestionAction(Request $request) {
@@ -37,22 +37,22 @@ class SurveyController extends Controller {
        {
          $this->get('session')->setFlash('warning','Survey Question cantnot be created!');
        return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
-                    'data' =>  $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' =>  $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>null,
                     'id'=>null,
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
        }
        }else
        {
          $this->get('session')->setFlash('warning','Please Enter Values Correctly!');
        return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
-                    'data' =>  $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' =>  $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>null,
                     'id'=>null,
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
        }
     }
@@ -63,16 +63,16 @@ public function addNewAnswerAction($question_id) {
         return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'answerForm' => $form->createView(),
                     'question_id' => $question_id,
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),                    
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),                    
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'AddAnwser',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
     }
     public function addAnswerAction(Request $request, $question_id) {
         $em = $this->getDoctrine()->getManager();        
         $answer = new SurveyAnswer();
-        $question = $this->get('admin.helper.survey')->getquestionById($question_id);
+        $question = $this->get('admin.helper.surveyquestion')->getquestionById($question_id);
         $answers = $answer->setQuestion($question);
         $form = $this->createFormBuilder($answers)
                 ->add('answer', 'text')
@@ -92,10 +92,10 @@ public function addNewAnswerAction($question_id) {
             return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'answerForm' => $form->createView(),
                     'question_id' => $question_id,
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),                    
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),                    
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'AddAnwser',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
         }
         }
@@ -105,10 +105,10 @@ public function addNewAnswerAction($question_id) {
             return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'answerForm' => $form->createView(),
                     'question_id' => $question_id,
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),                    
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),                    
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'AddAnwser',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
         }
     }
@@ -118,16 +118,16 @@ public function addNewAnswerAction($question_id) {
         return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'editForm' => $form->createView(),
                     'id' => $question_id,                   
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editQuestion',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
     }
 
     public function editUpdatesQuestionsAction(Request $request, $question_id) {
         $em = $this->getDoctrine()->getManager();
-        $question =$this->get('admin.helper.survey')->getquestionById($question_id);
+        $question =$this->get('admin.helper.surveyquestion')->getquestionById($question_id);
         $form = $this->getQuestionForm($question);
         $form->bind($request);
          $title=$question->getQuestion();
@@ -145,10 +145,10 @@ public function addNewAnswerAction($question_id) {
             return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'editForm' => $form->createView(),
                     'id' => $question_id,                   
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editQuestion',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
         }
        }
@@ -158,31 +158,31 @@ public function addNewAnswerAction($question_id) {
             return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'editForm' => $form->createView(),
                     'id' => $question_id,                   
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editQuestion',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),
         ));
         }       
     }
     public function editAnswerAction($answer_id) {       
-        $answer = $this->get('admin.helper.surveyanswer')->getAnswerById($answer_id);
+        $answer = $this->get('admin.helper.surveyquestionanswer')->getAnswerById($answer_id);
         $form = $this->createFormBuilder($answer)
                 ->add('answer', 'text')
                 ->getForm();
         return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'editAnswerForm' => $form->createView(),
                     'id' => $answer_id,                    
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editAnswer',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),            
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),            
         ));
     }
 
     public function editUpdateAnswerAction(Request $request, $answer_id) {
         $em = $this->getDoctrine()->getManager();
-        $answer = $this->get('admin.helper.surveyanswer')->getAnswerById($answer_id);
+        $answer = $this->get('admin.helper.surveyquestionanswer')->getAnswerById($answer_id);
         $form = $this->createFormBuilder($answer)
                 ->add('answer', 'text',array('label'=>' '))
                 ->getForm();
@@ -202,10 +202,10 @@ public function addNewAnswerAction($question_id) {
             return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'editAnswerForm' => $form->createView(),
                     'id' => $answer_id,                    
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editAnswer',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),            
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),            
         ));
         }
         }else
@@ -214,10 +214,10 @@ public function addNewAnswerAction($question_id) {
             return $this->render('LoveThatFitAdminBundle:Survey:index.html.twig', array(
                     'editAnswerForm' => $form->createView(),
                     'id' => $answer_id,                    
-                    'data' => $this->get('admin.helper.survey')->getQuestionsList(),
+                    'data' => $this->get('admin.helper.surveyquestion')->getQuestionsList(),
                     'addNewForm' => $this->getAddNewQuestionForm()->createView(),
                     'operation'=>'editAnswer',
-                    'count_question'=>count($this->get('admin.helper.survey')->getQuestionsList()),            
+                    'count_question'=>count($this->get('admin.helper.surveyquestion')->getQuestionsList()),            
         ));
         }
         
@@ -226,7 +226,7 @@ public function addNewAnswerAction($question_id) {
     public function deleteQuestionAction(Request $request, $question_id) {
         try {
 
-            $message_array = $this->get('admin.helper.survey')->delete($question_id);
+            $message_array = $this->get('admin.helper.surveyquestion')->delete($question_id);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
 
             return $this->redirect($this->generateUrl('admin_survey'));
@@ -257,7 +257,7 @@ public function addNewAnswerAction($question_id) {
     }
 
     private function getQuestionFormById($question_id) {
-        $question = $this->get('admin.helper.survey')->getquestionById($question_id);
+        $question = $this->get('admin.helper.surveyquestion')->getquestionById($question_id);
         return $this->geteditQuestionForm($question);
     }
 

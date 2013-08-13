@@ -62,8 +62,8 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\SurveyUser
     
-     admin.helper.survey:
-        class: LoveThatFit\AdminBundle\Entity\SurveyHelper
+     admin.helper.surveyquestion:
+        class: LoveThatFit\AdminBundle\Entity\SurveyQuestionHelper
         arguments:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"

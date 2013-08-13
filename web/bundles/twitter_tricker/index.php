@@ -51,11 +51,17 @@ require_once("twitteroauth.php"); //Path to twitteroauth library
  
 $twitteruser = 'LoveThatFit';
 $notweets = 10;
-$consumerkey = "ei0sUDMZxUCLLGOYVB6GUg";
+/*$consumerkey = "ei0sUDMZxUCLLGOYVB6GUg";
 $consumersecret = "3MugBhG2PDafRMOshiS58ShVJ5gYrA2EWVdTRX0vvvI";
 $accesstoken = "67584638-ee2hjCDOgudYUoGudYOGfuBReTY8lkSyzlweSmtKK";
-$accesstokensecret = "gac1LgG0YoDjAWDd3AV9BmbYB0ofxlGEwCDZpj3UyU";
- 
+$accesstokensecret = "gac1LgG0YoDjAWDd3AV9BmbYB0ofxlGEwCDZpj3UyU";*/
+
+$consumerkey = "q7NoatcRqq6Rqua8EqQ";
+$consumersecret = "7tTUyQZm8ewz5qYXJLtndDcAut1PYYDnPb1LLoEw8";
+$accesstoken = "1667582922-O5JzsoBc7fmfUR2jYVHrnCWsIiOWDDO38uXwpQk";
+$accesstokensecret = "sa0TN4vVjQtU82o09VatP68oLISZjkXd3erZnGk";
+
+
 function getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret) {
   $connection = new TwitterOAuth($cons_key, $cons_secret, $oauth_token, $oauth_token_secret);
   return $connection;
