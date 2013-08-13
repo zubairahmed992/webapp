@@ -2167,8 +2167,8 @@ width:350px;
 
 #userimage{
 position: absolute;
-top:120px;
-right: 70px;
+top:70px;
+right: 60px;
 }
 
 .featured_content_selected{    
@@ -2432,7 +2432,9 @@ padding-bottom: 0px;
     float:left;
     width: 115px;
     text-align: center;
-    line-height: 40px;
+    padding: 10px 0px 10px 0px;
+    font-size: 0.95em;
+    
 }
 
 
