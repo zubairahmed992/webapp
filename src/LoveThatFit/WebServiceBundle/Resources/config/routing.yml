@@ -82,6 +82,10 @@ ws_love_item:
 ws_try_history:
    pattern:  /web_service/user_try_history
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:userTryHistory}
+
+checkEmail:
+   pattern:  /web_service/checkemail
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:emailCheck}   
    
 
 
