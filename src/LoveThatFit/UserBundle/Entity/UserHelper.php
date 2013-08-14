@@ -624,11 +624,23 @@ public function measurementEditWebService($id,$request_array){
             return array('Message' => 'Invalid Email');
         }
     }
+    
+    #-------------------------Web Service For Email Checking--------------------------------------#
+   public function emailCheck($email) {
+       
+       if ($this->isDuplicateEmail(Null, $email) == false) {
+            return array('Message' => 'Valid Email');
+        } else {
+            return array('Message' => 'The Email already exists');
+        }
+    }
   #----------------------------------------------------------------------------------------------#
 
     public function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
     }
+    
+    
     
     
     
