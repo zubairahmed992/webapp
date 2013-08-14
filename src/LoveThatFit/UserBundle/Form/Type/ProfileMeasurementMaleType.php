@@ -11,17 +11,17 @@ class ProfileMeasurementMaleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('height', 'number', array('precision' => 2));
-        $builder->add('neck', 'number', array('precision' => 2));
-        $builder->add('sleeve', 'number', array('precision' => 2));
-        $builder->add('chest', 'number', array('precision' => 2));
-        $builder->add('waist', 'number', array('precision' => 2));
-        $builder->add('hip', 'number', array('precision' => 2));        
-        $builder->add('inseam', 'number', array('precision' => 2));
-        $builder->add('outseam', 'number', array('precision' => 2));
-        $builder->add('shoulder_height', 'number', array('precision' => 2));
-        $builder->add('weight', 'number', array('precision' => 2));
-        $builder->add('back', 'number', array('precision' => 2));
+        $builder->add('height', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('neck', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('sleeve', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('chest', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('waist', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('hip', 'number', array('precision' => 2,'required'=>false));        
+        $builder->add('inseam', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('outseam', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('shoulder_height', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('weight', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('back', 'number', array('precision' => 2,'required'=>false));
         
         
     }
