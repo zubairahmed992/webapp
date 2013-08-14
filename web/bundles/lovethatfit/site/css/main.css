@@ -1686,8 +1686,14 @@ margin:0 auto;
    background:url(../images/about_header.png) center top no-repeat; 
    height: 239px;
    border-bottom: 8px solid #000000;
-   
-    
+ 
+}
+
+#hd_image_faqs{
+   background:url(../images/faqs_header.png) center top no-repeat; 
+   height: 239px;
+   border-bottom: 8px solid #000000;
+ 
 }
 
 #hd_image_contact{
