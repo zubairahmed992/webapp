@@ -76,7 +76,7 @@ ajax_product_recently_tried_on:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsRecentlyTriedOnByUser, page_number: 0, limit: 0}
     
 ajax_product_most_favorite:
-    pattern:  /ajax/products/most/favorite/{page_number}/{limit}
+    pattern:  /ajax/products/{gender}/most/favorite/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsMostFavorite, page_number: 0, limit: 0}
     
 ajax_product_ltf_recommended:

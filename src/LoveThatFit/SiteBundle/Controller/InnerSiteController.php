@@ -105,10 +105,10 @@ class InnerSiteController extends Controller {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
    //-----------------------------------  
-    public function productsMostFavoriteAction($page_number = 0, $limit = 0)
+    public function productsMostFavoriteAction($gender,$page_number = 0, $limit = 0)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($gender,$page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
     //----------------------------------- 
