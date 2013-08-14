@@ -56,8 +56,8 @@ $consumersecret = "3MugBhG2PDafRMOshiS58ShVJ5gYrA2EWVdTRX0vvvI";
 $accesstoken = "67584638-ee2hjCDOgudYUoGudYOGfuBReTY8lkSyzlweSmtKK";
 $accesstokensecret = "gac1LgG0YoDjAWDd3AV9BmbYB0ofxlGEwCDZpj3UyU";*/
 
-$consumerkey = "q7NoatcRqq6Rqua8EqQ";
-$consumersecret = "7tTUyQZm8ewz5qYXJLtndDcAut1PYYDnPb1LLoEw8";
+$consumerkey = "9GBx1IchmgsTC404I52w";
+$consumersecret = "HC6fR9dZYl8zqzHNx36eCvlWvJ0HCmPzMJr3Pqj88";
 $accesstoken = "1667582922-O5JzsoBc7fmfUR2jYVHrnCWsIiOWDDO38uXwpQk";
 $accesstokensecret = "sa0TN4vVjQtU82o09VatP68oLISZjkXd3erZnGk";
 

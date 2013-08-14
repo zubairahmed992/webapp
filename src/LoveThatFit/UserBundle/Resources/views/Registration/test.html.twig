@@ -1,119 +1,72 @@
-{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+{% block feed_block %}
 
-{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
-
-{% block action_block_content %}
-<section class="reg_blk">
-    <div class="action_cnt">
-        <div class="steps step_1 measurements">  
-            <h2>Brands &amp; Sizes</h2>
-
-            <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
+<script type="text/javascript" src="{{ asset('bundles/twitter_tricker/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/twitter_tricker/jquery.vticker-min.js') }}"></script>
 
 
-                <div>
-                    <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
-                    <input type="text" name="user_height" id="user_height" placeholder="Height">
-                </div>
-
-                <div class="sep"></div>
-
-                <div class="m_option">
-
-                    <div class="mlabel">Shirt</div>
-
-                    <div class="shirts_mus manual_opn" id="shirts_mus">
-                        <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
-                        <input type="text" name="user_height" id="user_height" placeholder="Height">
-                        <input type="text" name="user_height" id="user_height" placeholder="Height">
-                    </div>
-
-                    <div class="shirts_mus manual_opn" id="shirts_mus_opt">
-
-                        <select  name="sel_brands" id="sel_brands">
-                            <option value="gap">Gap</option>
-                            <option value="gap">Gap</option>
-                            <option value="gap">Gap</option>
-                        </select>
-
-                        <select  name="sel_size" id="sel_size">
-                            <option value="gap">Gap</option>
-                            <option value="gap">Gap</option>
-                            <option value="gap">Gap</option>
-                        </select>                   
-
-                    </div>
-
-                    <div class="shuf_icon shirt_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
-
-
-
-                    <div class="m_option">
-
-                        <div class="mlabel">Pant</div>
-
-                        <div class="pants_mus manual_opn" id="pants_mus">
-                            <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
-                            <input type="text" name="user_height" id="user_height" placeholder="Height">
-                            <input type="text" name="user_height" id="user_height" placeholder="Height">
-                        </div>
-
-
-                        <div class="pants_mus manual_opn" id="pants_mus_opt">
-
-                            <select  name="sel_brands" id="sel_brands">
-                                <option value="gap">Gap</option>
-                                <option value="gap">Gap</option>
-                                <option value="gap">Gap</option>
-                            </select>
-
-                            <select  name="sel_size" id="sel_size">
-                                <option value="gap">Gap</option>
-                                <option value="gap">Gap</option>
-                                <option value="gap">Gap</option>
-                            </select>
-
-                        </div>
-
-                        <div class="shuf_icon pant_shuf"><a href="#"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></a></div>
-
-
-                    </div>
-
-                    <div class="m_option">
-
-                        <div class="mlabel">Dress</div>
-
-                        <div class="dress_mus manual_opn" id="dress_mus">
-                            <input type="text" name="user_weight" id="user_weight" placeholder="Weight">
-                            <input type="text" name="user_height" id="user_height" placeholder="Height">
-                            <input type="text" name="user_height" id="user_height" placeholder="Height">
-                        </div>
-
-                        <div class="shuf_icon"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}"></div>
-
-
-                    </div>
-
-
-                    <input class="reg_next_step" type="submit" value="Next Step" />
-
-            </form>
+<style>
+h1{padding:30px;color:#FFF;}
+#tweet_cont{padding:50px;}
+.tweet{color:#333; font-size: 0.9em; margin-bottom:30px; margin-top: 15px; margin-left: 10px;}
+.tweet img{float:left;}
+.tweet_txt{padding-left: 65px;}
+#tweet_cont ul {margin:0;padding:0;list-style:none; }
+#tweet_cont ul .tweet {background: #fff; margin-bottom:3px;clear:both;text-align:left; padding:3px;width:590px; }
+#tweet_cont ul .tweet .avatar{float:left;width:48px;height:48px;margin:0px 5px 0px 0px; border:none;} 
+#tweet_cont ul .tweet  h4{margin:0px 0px 0px 0px; font-size:14px; margin:0;padding:0;font-family:arial; }
+#tweet_cont ul .tweet   small{padding-left:50px; font-size:13px; margin:0;padding:0;font-family:arial; font-weight:normal;}
+.clearboth {clear: both;}
+a {color:#3E76C2;text-decoration:none;}
+a:hover {text-decoration:underline;}
+</style>
 
 
 
 
-            <!--/.sttp_1--></div>
-        <!--/.action_cnt--></div>
-    <!--/.action_blk--></section>
+   <div id="twitter_icon_home2"></div> 
 
+    <div class="tt_feeds">
+      
+      <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
+            Tweets by @LoveThatFit</a>
+        {# <iframe src="{{ asset('bundles/twitter_tricker') }}" style="overflow: hidden;"></iframe>#}
+        
+        
 
+<script type="text/javascript"> 
+$(function(){
+	$('.tweets').vTicker({ 
+		speed: 500,
+		pause: 6000,
+		animation: 'fade',
+		mousePause: true,
+		showItems: 1,
+		direction: 'down',
+		height:50
+	});
+});
+</script>
 
+<div class="tweets" >
+        <ul>
+
+ {% for twitter in twitters %}  
+<li id="hide">
+<div class="tweet">
+
+<img src="{{twitter.user.profile_image_url}}">
+<div class="tweet_txt">{{twitter.text}}</div>
+<div class="clearboth"></div>
+</div>
+</li>
+
+{%endfor%}
+</ul>
+</div>      
+            
+   {#<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+       </script> #}
+    </div>
+    
 
 {% endblock %}
-{% block how_it_works_content %}
-            {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
-
-
-{% endblock %}
-

@@ -186,11 +186,6 @@ function formValidates()
         $('#crt_reg a').click(function(){
             active_reg_blk();
        })
-       
-       
-       
-       
-       
       
       
     })
@@ -199,6 +194,27 @@ function formValidates()
 
 {% endblock %}
 {% block feed_block %}
+
+
+<script type="text/javascript" src="{{ asset('bundles/twitter_tricker/jquery.vticker-min.js') }}"></script>
+
+<style>
+h1{padding:30px;color:#FFF;}
+#tweet_cont{padding:50px;}
+.tweet{color:#333; font-size: 0.9em; margin-bottom:30px; margin-top: 15px; margin-left: 10px;}
+.tweet img{float:left;}
+.tweet_txt{padding-left: 65px;}
+#tweet_cont ul {margin:0;padding:0;list-style:none; }
+#tweet_cont ul .tweet {background: #fff; margin-bottom:3px;clear:both;text-align:left; padding:3px;width:590px; }
+#tweet_cont ul .tweet .avatar{float:left;width:48px;height:48px;margin:0px 5px 0px 0px; border:none;} 
+#tweet_cont ul .tweet  h4{margin:0px 0px 0px 0px; font-size:14px; margin:0;padding:0;font-family:arial; }
+#tweet_cont ul .tweet   small{padding-left:50px; font-size:13px; margin:0;padding:0;font-family:arial; font-weight:normal;}
+.clearboth {clear: both;}
+a {color:#3E76C2;text-decoration:none;}
+a:hover {text-decoration:underline;}
+</style>
+
+
 
 <div class="twitter_wrap">
    <div id="twitter_icon_home2"></div> 
@@ -210,23 +226,37 @@ function formValidates()
         {# <iframe src="{{ asset('bundles/twitter_tricker') }}" style="overflow: hidden;"></iframe>#}
         
         
+
+<script type="text/javascript"> 
+$(function(){
+	$('.tweets').vTicker({ 
+		speed: 500,
+		pause: 6000,
+		animation: 'fade',
+		mousePause: true,
+		showItems: 1,
+		direction: 'down',
+		height:50
+	});
+});
+</script>
+
+<div class="tweets" >
         <ul>
 
  {% for twitter in twitters %}  
 <li id="hide">
 <div class="tweet">
 
-<img src="">
+<img src="{{twitter.user.profile_image_url}}">
 <div class="tweet_txt">{{twitter.text}}</div>
-
-
 <div class="clearboth"></div>
 </div>
 </li>
 
 {%endfor%}
 </ul>
-        
+</div>      
             
    {#<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
        </script> #}
