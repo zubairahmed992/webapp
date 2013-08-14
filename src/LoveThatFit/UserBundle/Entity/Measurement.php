@@ -54,22 +54,23 @@ class Measurement {
 
      * @var float $weight
      *
-     * @ORM\Column(name="weight", type="float", nullable=true)
+     * @ORM\Column(name="weight", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
      *      max = "350",
      *      minMessage = "You must Enter the your weight",
-     *      maxMessage = "You cannot weight more than 300 lbs"
+     *      maxMessage = "You cannot weight more than 300 lbs",
+     *      groups={"registration_step_two","profile_measurement"}
      * )     
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
-     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_female"}) 
      */
     private $weight=0;
     /**
      * @var float $height
      *
-     * @ORM\Column(name="height", type="float", nullable=true)
+     * @ORM\Column(name="height", type="float", nullable=true,options={"default" = 0})
      * 
      * 
      * @Assert\Range(
@@ -88,7 +89,7 @@ class Measurement {
     /**
      * @var float $waist
      *
-     * @ORM\Column(name="waist", type="float", nullable=true)
+     * @ORM\Column(name="waist", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -105,7 +106,7 @@ class Measurement {
     /**
      * @var float $hip
      *
-     * @ORM\Column(name="hip", type="float", nullable=true)
+     * @ORM\Column(name="hip", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -122,7 +123,7 @@ class Measurement {
     /**
      * @var float $bust
      *
-     * @ORM\Column(name="bust", type="float", nullable=true)
+     * @ORM\Column(name="bust", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -138,7 +139,7 @@ class Measurement {
        /**
      * @var float $chest
      *
-     * @ORM\Column(name="chest", type="float", nullable=true)
+     * @ORM\Column(name="chest", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -156,7 +157,7 @@ class Measurement {
     /**
      * @var float $arm
      *
-     * @ORM\Column(name="arm", type="float", nullable=true)\
+     * @ORM\Column(name="arm", type="float", nullable=true,options={"default" = 0})\
      *      
      * @Assert\Range(
      *      min = "0",
@@ -174,7 +175,7 @@ class Measurement {
     /**
      * @var float $inseam
      *
-     * @ORM\Column(name="inseam", type="float", nullable=true)
+     * @ORM\Column(name="inseam", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -191,7 +192,7 @@ class Measurement {
     /**
      * @var float $back
      *
-     * @ORM\Column(name="back", type="float", nullable=true)
+     * @ORM\Column(name="back", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -208,7 +209,7 @@ class Measurement {
     /**
      * @var float $shoulder_height
      *
-     * @ORM\Column(name="shoulder_height", type="float", nullable=true)
+     * @ORM\Column(name="shoulder_height", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -224,7 +225,7 @@ class Measurement {
     /**
      * @var float $outseam
      *
-     * @ORM\Column(name="outseam", type="float", nullable=true)
+     * @ORM\Column(name="outseam", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -239,7 +240,7 @@ class Measurement {
      /**
      * @var float $sleeve
      *
-     * @ORM\Column(name="sleeve", type="float", nullable=true)
+     * @ORM\Column(name="sleeve", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -255,7 +256,7 @@ class Measurement {
     /**
      * @var float $neck
      *
-     * @ORM\Column(name="neck", type="float", nullable=true)
+     * @ORM\Column(name="neck", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -271,7 +272,7 @@ class Measurement {
     /**
      * @var float $iphone_shoulder_height
      *
-     * @ORM\Column(name="iphone_shoulder_height", type="float", nullable=true)
+     * @ORM\Column(name="iphone_shoulder_height", type="float", nullable=true,options={"default" = 0})
      * 
      * @Assert\Range(
      *      min = "0",
@@ -324,9 +325,15 @@ class Measurement {
      * @return Measurement
      */
     public function setWeight($weight) {
-        $this->weight = $weight;
-
-        return $this;
+        if($weight!=null)
+        {
+           $this->weight = $weight;
+            return $this;
+        }else
+        {
+          return $this->weight =0;
+        
+        }
     }
 
     /**
@@ -335,7 +342,14 @@ class Measurement {
      * @return float 
      */
     public function getWeight() {
-        return $this->weight;
+        if($this->weight!=null)
+        {
+           return $this->weight;
+        }else
+        {
+          return $this->weight =0;        
+        }
+        
     }
 
     /**
@@ -345,9 +359,14 @@ class Measurement {
      * @return Measurement
      */
     public function setHeight($height) {
-        $this->height = $height;
-
-        return $this;
+        if($height!=null)
+        {
+           $this->height = $height;
+            return $this;
+        }else
+        {
+          return $this->height =0;        
+        }
     }
 
     /**
@@ -356,7 +375,15 @@ class Measurement {
      * @return float 
      */
     public function getHeight() {
-        return $this->height;
+        if($this->height!=null)
+        {
+          return $this->height;         
+        }else
+        {
+          return $this->height =0;
+        
+        }
+        
     }
 
     /**
@@ -366,9 +393,14 @@ class Measurement {
      * @return Measurement
      */
     public function setWaist($waist) {
-        $this->waist = $waist;
-
-        return $this;
+       if($waist!=null)
+        {
+           $this->waist = $waist;
+            return $this;
+        }else
+        {
+          return $this->waist =0;        
+        }
     }
 
     /**
@@ -377,7 +409,15 @@ class Measurement {
      * @return float 
      */
     public function getWaist() {
-        return $this->waist;
+        if($this->waist!=null)
+        {
+           return $this->waist;
+        }else
+        {
+          return $this->waist =0;        
+        }
+        
+        
     }
 
     /**
@@ -387,9 +427,15 @@ class Measurement {
      * @return Measurement
      */
     public function setHip($hip) {
-        $this->hip = $hip;
-
-        return $this;
+        if($hip!=null)
+        {
+           $this->hip = $hip;
+            return $this;
+        }else
+        {
+          return $this->hip =0;
+        
+        }     
     }
 
     /**
@@ -398,7 +444,13 @@ class Measurement {
      * @return float 
      */
     public function getHip() {
-        return $this->hip;
+        if($this->hip!=null)
+        {
+           return $this->hip;
+        }else
+        {
+          return $this->hip =0;        
+        }
     }
 
     /**
@@ -408,9 +460,15 @@ class Measurement {
      * @return Measurement
      */
     public function setBust($bust) {
-        $this->bust = $bust;
-
-        return $this;
+        if($bust!=null)
+        {
+           $this->bust = $bust;
+            return $this;
+        }else
+        {
+          return $this->bust =0;
+        
+        }       
     }
 
     /**
@@ -419,7 +477,13 @@ class Measurement {
      * @return float 
      */
     public function getBust() {
-        return $this->bust;
+        if($this->bust!=null)
+        {
+           return $this->bust;
+        }else
+        {
+          return $this->bust =0;        
+        }
     }
 
     /**
@@ -429,9 +493,15 @@ class Measurement {
      * @return Measurement
      */
     public function setArm($arm) {
-        $this->arm = $arm;
-
-        return $this;
+        if($arm!=null)
+        {
+           $this->arm = $arm;
+            return $this;
+        }else
+        {
+          return $this->arm =0;
+        
+        }       
     }
 
     /**
@@ -440,7 +510,13 @@ class Measurement {
      * @return float 
      */
     public function getArm() {
-        return $this->arm;
+        if($this->arm!=null)
+        {
+           return $this->arm;
+        }else
+        {
+          return $this->arm =0;        
+        }
     }
 
    
@@ -451,9 +527,15 @@ class Measurement {
      * @return Measurement
      */
     public function setInseam($inseam) {
-        $this->inseam = $inseam;
-
-        return $this;
+        if($inseam!=null)
+        {
+           $this->inseam = $inseam;
+            return $this;
+        }else
+        {
+          return $this->inseam =0;
+        
+        }       
     }
 
     /**
@@ -462,7 +544,13 @@ class Measurement {
      * @return float 
      */
     public function getInseam() {
-        return $this->inseam;
+        if($this->inseam!=null)
+        {
+           return $this->inseam;
+        }else
+        {
+          return $this->inseam =0;        
+        }
     }
 
     /**
@@ -472,9 +560,15 @@ class Measurement {
      * @return Measurement
      */
     public function setBack($back) {
-        $this->back = $back;
-
-        return $this;
+        if($back!=null)
+        {
+           $this->back = $back;
+            return $this;
+        }else
+        {
+          return $this->back =0;
+        
+        }      
     }
 
     /**
@@ -483,7 +577,13 @@ class Measurement {
      * @return float 
      */
     public function getBack() {
-        return $this->back;
+        if($this->back!=null)
+        {
+           return $this->back;
+        }else
+        {
+          return $this->back =0;        
+        }
     }
 
     /**
@@ -558,9 +658,15 @@ class Measurement {
      */
     public function setShoulderHeight($shoulderHeight)
     {
-        $this->shoulder_height = $shoulderHeight;
-    
-        return $this;
+        if($shoulderHeight!=null)
+        {
+           $this->shoulder_height = $shoulderHeight;
+            return $this;
+        }else
+        {
+          return $this->shoulder_height =0;        
+        }
+        
     }
 
     /**
@@ -570,7 +676,13 @@ class Measurement {
      */
     public function getShoulderHeight()
     {
-        return $this->shoulder_height;
+        if($this->shoulder_height!=null)
+        {
+           return $this->shoulder_height;
+        }else
+        {
+          return $this->shoulder_height =0;        
+        }
     }
 
    
@@ -603,9 +715,15 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setChest($chest)
     {
-        $this->chest = $chest;
-    
-        return $this;
+        if($chest!=null)
+        {
+           $this->chest = $chest;
+            return $this;
+        }else
+        {
+          return $this->chest =0;
+        
+        }        
     }
 
     /**
@@ -615,7 +733,13 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getChest()
     {
-        return $this->chest;
+        if($this->chest!=null)
+        {
+           return $this->chest;
+        }else
+        {
+          return $this->chest =0;        
+        }       
     }
 
     /**
@@ -626,9 +750,15 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setSleeve($sleeve)
     {
-        $this->sleeve = $sleeve;
-    
-        return $this;
+        if($sleeve!=null)
+        {
+           $this->sleeve = $sleeve;
+            return $this;
+        }else
+        {
+          return $this->sleeve =0;
+        
+        }
     }
 
     /**
@@ -638,7 +768,13 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getSleeve()
     {
-        return $this->sleeve;
+        if($this->sleeve!=null)
+        {
+           return $this->sleeve;
+        }else
+        {
+          return $this->sleeve =0;        
+        }
     }
 
     /**
@@ -649,9 +785,16 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setNeck($neck)
     {
-        $this->neck = $neck;
-    
-        return $this;
+        if($neck!=null)
+        {
+           $this->neck = $neck;
+            return $this;
+        }else
+        {
+          return $this->neck =0;
+        
+        }
+       
     }
 
     /**
@@ -661,7 +804,13 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getNeck()
     {
-        return $this->neck;
+        if($this->neck!=null)
+        {
+           return $this->neck;
+        }else
+        {
+          return $this->neck =0;        
+        }
     }
 
     /**
@@ -672,9 +821,14 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setOutseam($outseam)
     {
-        $this->outseam = $outseam;
-    
-        return $this;
+        if($outseam!=null)
+        {
+           $this->outseam = $outseam;
+            return $this;
+        }else
+        {
+          return $this->outseam =0;        
+        }        
     }
 
     /**
@@ -684,7 +838,13 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getOutseam()
     {
-        return $this->outseam;
+        if($this->outseam!=null)
+        {
+           return $this->outseam;
+        }else
+        {
+          return $this->outseam =0;        
+        }
     }
     public $top_brand;
     public $bottom_brand;
