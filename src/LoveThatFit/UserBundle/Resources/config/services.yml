@@ -19,6 +19,13 @@ services:
              dispatcher: "@event_dispatcher"
              em: "@doctrine.orm.entity_manager"
              class: LoveThatFit\UserBundle\Entity\Measurement            
+
+  twitter_helper:
+          class:  LoveThatFit\UserBundle\TwitterHelper
+       
+       
+         
+             
 #  authentication_handler:
 #        class: LoveThatFit\UserBundle\Handler\AuthenticationHandler
 #        arguments:

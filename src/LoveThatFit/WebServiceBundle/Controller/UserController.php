@@ -21,6 +21,23 @@ class UserController extends Controller {
 #--------------------------------Login ----------------------------------------------------------------#
   #---------------------Login Service---------------------------------------------------------#
    
+    
+    public function emailCheckAction(){
+        
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $email = $decoded['email'];
+        if ($email) {
+
+            $user_helper = $this->get('user.helper.user');
+            $checkEmail = $user_helper->emailCheck($email);
+            return new response(json_encode($checkEmail));
+        } else {
+            return new Response(json_encode(array('Message' => 'Email missing')));
+        }
+    }
     public function loginAction() {
         
         $request = $this->getRequest();
