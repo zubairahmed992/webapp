@@ -202,8 +202,9 @@ function formValidates()
 h1{padding:30px;color:#FFF;}
 #tweet_cont{padding:50px;}
 .tweet{color:#333; font-size: 0.9em; margin-bottom:30px; margin-top: 15px; margin-left: 10px;}
+.tweets{width:550px;}
 .tweet img{float:left;}
-.tweet_txt{padding-left: 65px;}
+.tweet_txt{padding-left: 65px; font-size: 1.1em;}
 #tweet_cont ul {margin:0;padding:0;list-style:none; }
 #tweet_cont ul .tweet {background: #fff; margin-bottom:3px;clear:both;text-align:left; padding:3px;width:590px; }
 #tweet_cont ul .tweet .avatar{float:left;width:48px;height:48px;margin:0px 5px 0px 0px; border:none;} 
@@ -236,12 +237,12 @@ $(function(){
 		mousePause: true,
 		showItems: 1,
 		direction: 'down',
-		height:50
+		height:70
 	});
 });
 </script>
 
-<div class="tweets" >
+<div class="tweets">
         <ul>
 
  {% for twitter in twitters %}  
