@@ -285,7 +285,7 @@ class InnerSiteController extends Controller {
         $em->persist($product_item);
         $em->persist($user);
         $em->flush();
-        $this->get('session')->setFlash('success', 'Product Item Successfuly Deleted.');
+        $this->get('session')->setFlash('success', 'Product Item Successfully Deleted.');
         return $this->getMyClosetList();
     }
 

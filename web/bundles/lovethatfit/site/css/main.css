@@ -269,7 +269,7 @@ ul.with_sep a {
 ul.with_sep li {
 	list-style:none;
 	background:url(../images/sep_small.png) 0 8px no-repeat;
-	padding-left:6px;
+	padding-left:4px;
 	padding-right:4px;
 	padding-top:2px;
         float: left;
@@ -930,8 +930,7 @@ input[type=email]{
 	padding-top:0;
 }
 .radio_buts div.radio_ele {
-   display:inline-block;
-   padding-top:2px;
+   display:inline-block;   
    padding-left: 4px;
    float:left;
 }
