@@ -105,10 +105,10 @@ class InnerSiteController extends Controller {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
    //-----------------------------------  
-    public function productsMostFavoriteAction($page_number = 0, $limit = 0)
+    public function productsMostFavoriteAction($gender,$page_number = 0, $limit = 0)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($page_number, $limit);
+        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findProductByItemUser($gender,$page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
     //----------------------------------- 
@@ -285,7 +285,7 @@ class InnerSiteController extends Controller {
         $em->persist($product_item);
         $em->persist($user);
         $em->flush();
-        $this->get('session')->setFlash('success', 'Product Item Successfuly Deleted.');
+        $this->get('session')->setFlash('success', 'Product Item Successfully Deleted.');
         return $this->getMyClosetList();
     }
 
