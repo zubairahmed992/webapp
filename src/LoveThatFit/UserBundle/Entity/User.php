@@ -788,6 +788,7 @@ class User implements UserInterface, \Serializable {
         @fclose($fp);
         
         $this->copyTempToOriginalImage();
+        return array("status"=>"true", "msg"=>"image has been saved");
     }
     
     private function copyTempToOriginalImage() {
