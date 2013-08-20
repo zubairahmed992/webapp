@@ -2666,11 +2666,13 @@ padding-bottom: 0px;
     color: #535352;
     font-size: 0.80em;
     font-family: MyCustomFontb;
-    text-transform: uppercase;   
+    text-transform: uppercase;    
 }
 
 .login_tab{
     float:left;
+    overflow: auto;
+    height: 30px;
 }
 
 .login_tab .active{
@@ -2699,7 +2701,7 @@ padding-bottom: 0px;
     background: #f0f0f0;
     bottom: 0px;
     right: 0px;
-    width: 665px;
+    width: 647px;
     height: 100px;
     border-top: 4px solid #C4C934;
     background: url("../images/twitter_wrap_bg.png") repeat scroll 0 0px transparent;   
@@ -2715,7 +2717,7 @@ padding-bottom: 0px;
 
 .tt_feeds{
   float: left;
-  padding: 9px 0px 0px 30px;
+  padding: 9px 0px 0px 15px;
   font-size: 0.85em;
 }
 
