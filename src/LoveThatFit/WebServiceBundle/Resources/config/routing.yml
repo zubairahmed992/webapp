@@ -86,6 +86,10 @@ ws_try_history:
 checkEmail:
    pattern:  /web_service/checkemail
    defaults: { _controller: LoveThatFitWebServiceBundle:User:emailCheck}   
+ 
+avatarUpload:
+   pattern:  /web_service/upload_avatar
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:avatarUpload}      
    
 
 

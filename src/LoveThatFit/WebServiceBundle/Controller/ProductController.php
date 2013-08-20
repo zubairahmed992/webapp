@@ -102,7 +102,7 @@ class ProductController extends Controller {
  #------------------------------Authentication of Token---------------------------------------------#
          $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
-        if ($authTokenWebService) {
+       if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
@@ -243,6 +243,7 @@ class ProductController extends Controller {
     }
  //-------------------------------------------------------------------
     public function getFeedBackJSONAction() {
+        
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);

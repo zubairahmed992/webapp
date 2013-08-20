@@ -30,7 +30,6 @@ class UserController extends Controller {
         $decoded = json_decode($jsonInput, true);
         $email = $decoded['email'];
         if ($email) {
-
             $user_helper = $this->get('user.helper.user');
             $checkEmail = $user_helper->emailCheck($email);
             return new response(json_encode($checkEmail));
@@ -371,6 +370,49 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
+    
+#----------------------Avatar Image Uploading -------------------------------------------------------------#
+public function avatarUploadAction() {
+     $request = $this->getRequest();
+
+        $email = $_POST['email'];
+         $user_helper = $this->get('user.helper.user');
+        $email = $user_helper ->findOneBy(array('email' => $email));
+        if ($email) {
+           // $em = $this->getDoctrine()->getManager();
+           // $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+            $entity = $user_helper ->findOneBy(array('email' => $email));
+        } else {
+            return new response(json_encode(array('Message' => 'Email Not Found')));
+        }
+        if (count($entity) > 0) {
+            $user_id = $entity->getId();
+            $file_name = $_FILES["file"]["name"];
+            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+            $newFilename = 'avatar' . "." . $ext;
+            $entity->setAvatar($newFilename);
+            if (!is_dir($entity->getUploadRootDir())) {
+                @mkdir($entity->getUploadRootDir(), 0700);
+            }
+     if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteAvatarPath())) {
+
+                $em->persist($entity);
+                $em->flush();
+                //  $image_path = $entity->getWebPath(); 
+                $userinfo = array();
+                $userimage = $entity->getAvatar();
+                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
+                $userinfo['avatarImage'] = $userimage;
+                $userinfo['path'] = $baseurl;
+                return new Response(json_encode($userinfo));
+            } else {
+                return new Response(json_encode(array('Message' => 'Image not uploaded')));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'We can not find user')));
+        }
+    }   
+#--------------------------------------------End Of Image Uploading----------------------------------------#    
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {

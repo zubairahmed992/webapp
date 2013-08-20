@@ -370,8 +370,6 @@ public function find($id) {
         $type = $request_array['type'];
         $gender = $request_array['gender'];
         
-        
-        
        /*$id=6;
        $type='brand';
        $gender='F';*/
