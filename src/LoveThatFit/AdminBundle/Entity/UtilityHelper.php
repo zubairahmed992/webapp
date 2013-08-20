@@ -9,12 +9,14 @@ class UtilityHelper {
     protected $conf;
     protected $pagination_limit;
     protected $pagination_default_page;
+    protected $device_boot_strap_config;
 
     public function __construct() {
         $conf_yml = new Parser();
         $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         $this->pagination_limit = $this->conf["constants"]["pagination"]["limit"];
         $this->pagination_default_page=$this->conf["constants"]["pagination"]["default_page"];
+        $this->device_bootstrap = $this->conf["constants"]["device_bootstrap"];
         
     }
 
@@ -25,6 +27,10 @@ class UtilityHelper {
 //--------------------------------------------------------------------------------
     public function getPaginationdefaultPage() {
         return $this->pagination_default_page;
+    }
+//--------------------------------------------------------------------------------
+    public function getDeviceBootstrap() {
+        return $this->device_bootstrap;
     }
 
     

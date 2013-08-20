@@ -266,19 +266,15 @@ class RegistrationController extends Controller {
 //-------------Updates shoulder height & outseam, input via user move sliders on image, form submit via ajax
 
     public function stepFourMeasurementUpdateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-        $user_helper = $this->get('user.helper.user');
-        $entity = $user_helper->find($id);
-
-        $measurement = $user_helper->getMeasurement($entity);
+        
+        $entity = $this->get('user.helper.user')->find($id);
+        $measurement = $entity->getMeasurement();
 
         $form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($measurement);
-            $em->flush();
+            $this->get('user.helper.measurement')->saveMeasurement($measurement);            
             return new Response('Measurement Updated');
         } else {
             return new Response('Measurement has not been updated!');
@@ -287,17 +283,14 @@ class RegistrationController extends Controller {
 
     //--------------------------------- deals with image submitted from canvas, saves image
     public function stepFourImageUpdateAction() {
-        $em = $this->getDoctrine()->getManager();
         $id = $_POST['id'];
-        $user_helper = $this->get('user.helper.user');
-        $entity = $user_helper->find($id);
+        $entity = $this->get('user.helper.user')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
 
-        $entity->writeImageFromCanvas($_POST['imageData']);
-        $response = "true";
+        $response = $entity->writeImageFromCanvas($_POST['imageData']);
         return new Response($response);
     }
 
