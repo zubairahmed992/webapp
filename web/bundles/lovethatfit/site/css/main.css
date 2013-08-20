@@ -674,6 +674,7 @@ header.reg .strip_rgt {
 }
 .short_inp input {
     width:52px !important;
+   
 }
 /*--Step 3--*/
 .slider_wrap {
@@ -711,11 +712,13 @@ header.reg .strip_rgt {
 	font-size:1.0em;	
 	color:#635f5f;		
 	text-align:left;
-	padding:0 0;
+	padding:0px 0px;
 	padding-left:4px;
 	float:left;
 	width:70px;
         margin-right: 12px;
+         
+         height: 23px;
       
 }
 #slider_result_photo {
@@ -2535,7 +2538,8 @@ padding-bottom: 0px;
 }
 
 #measurement_body_types input[type="radio"]{
-    float:left;    
+    float:left; 
+    border:0px;
 }
 
 #clothing_fit_label{    
