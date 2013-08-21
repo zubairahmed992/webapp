@@ -98,7 +98,10 @@
 
 
                 <script>
-
+ function htmlEncode( input ) {
+    return String(input).replace(/(&amp);/g, '&');
+        
+}
                             var pieData = [
                     {
                     value : {{maleProduct}},
@@ -135,7 +138,7 @@
 
                     value : {{p.brand}},
                             color : "#E0E4CC",
-                            label : '{{p.name}}',
+                            label : htmlEncode("{{p.name}}"),
                             labelColor : '#1F1B33'
                     },
                                                {%endfor%}

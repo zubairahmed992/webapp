@@ -1410,6 +1410,7 @@ window.Chart = function(context){
 	        // Convert the template into pure JavaScript
 	        str
 	          .replace(/[\r\t\n]/g, " ")
+                  .replace(/&amp;/g, '&')
 	          .split("<%").join("\t")
 	          .replace(/((^|%>)[^\t]*)'/g, "$1\r")
 	          .replace(/\t=(.*?)%>/g, "',$1,'")

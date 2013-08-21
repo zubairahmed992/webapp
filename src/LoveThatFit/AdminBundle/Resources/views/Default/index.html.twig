@@ -7,6 +7,8 @@
         }
         usersignups{            
         }
+         piecanvas{
+        }
     </style>
 {% endblock %}
 
@@ -61,13 +63,18 @@
 
                                 </td>
                                 <td align="center"> <canvas id="piecanvas"  height="300" width="300"></canvas>
+                                   
                                     <script>
-                                        var pieData = [
-                                            {%for p in brandproduct%}
+          function htmlEncode( input ) {
+    return String(input).replace(/(&amp);/g, '&');
+        
+}
+                                        var pieData = [                                            
+                                            {%for p in brandproduct%}                                                    
                                             {
                                                 value: {{p.brand}},
                                                 color: "#E0E4CC",
-                                                label: '{{p.name}} {"{{p.brand}}"}',
+                                                label: htmlEncode("{{p.name}}"),
                                                 labelColor: '#1F1B33'
                                             },
                                               {%endfor%}
@@ -142,19 +149,19 @@
                                                 {
                                                     value: {{topProduct}},
                                                     color: "#69D2E7",
-                                                    label: 'Top Products {"{{topProduct}}"}',
+                                                    label: 'Top Products',
                                                     labelColor: '#1F1B33'
                                                 },
                                                 {
                                                     value: {{bottomProduct}},
                                                     color: "#E0E4CC",
-                                                    label: 'Bottom Products {"{{bottomProduct}}"}',
+                                                    label: 'Bottom Products',
                                                     labelColor: '#1F1B33'
                                                 },
                                                 {
                                                     value: {{dressProduct}},
                                                     color: "#E0E4CC",
-                                                    label: 'Dress Products {"{{dressProduct}}"}',
+                                                    label: 'Dress Products',
                                                     labelColor: '#1F1B33'
                                                 },
                                             ];
