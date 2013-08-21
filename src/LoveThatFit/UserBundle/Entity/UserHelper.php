@@ -381,7 +381,7 @@ public function findByEmail($email)
           
             if (isset($request_array['weight'])) {
                 $measurement->setWeight($request_array['weight']);
-            }
+            
 
             if (isset($request_array['height'])) {
                 $measurement->setHeight($request_array['height']);

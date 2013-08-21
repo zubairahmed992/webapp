@@ -412,7 +412,19 @@ public function avatarUploadAction() {
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-#--------------------------------------------End Of Image Uploading----------------------------------------#    
+#--------------------------------------------End Of Image Uploading----------------------------------------#  
+#------------------------Constant Fetching Web Service-----------------------------------------------------#
+public function ConstantValuesAction(){
+    
+    $utility_helper = $this->get('admin.helper.utility');
+     $yaml = new Parser();
+     $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+       $limit = $pagination_constants["constants"]["pagination"]["limit"];
+
+        
+    
+}  
+    
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
@@ -429,6 +441,13 @@ public function avatarUploadAction() {
 
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
+    }
+    
+    
+    
+     public function addAction($a, $b)
+    {
+        return $a + $b;
     }
 }
 
