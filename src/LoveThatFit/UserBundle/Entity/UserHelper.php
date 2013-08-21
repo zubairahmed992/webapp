@@ -384,7 +384,7 @@ public function findByEmail($email)
             $measurement->setUpdatedAt(new \DateTime('now'));
             
        if (isset($request_array['weight'])) {
-                $measurement->setWeight($wight);}
+                $measurement->setWeight($request_array['weight']);}
             
 
             if (isset($request_array['height'])) {
