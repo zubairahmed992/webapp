@@ -230,9 +230,8 @@ class RegistrationController extends Controller {
 
 //--------------------------- update fitting room image, 
     public function stepFourCreateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-        $user_helper = $this->get('user.helper.user');
-        $entity = $user_helper->find($id);
+        
+        $entity = $this->get('user.helper.user')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -241,18 +240,9 @@ class RegistrationController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $image_path = "";
-            if ($entity->getImage()) {
-                $image_path = $entity->uploadTempImage();
-            } else {
-                $entity->upload();
-                $em->persist($entity);
-                $em->flush();
-                $image_path = $entity->getWebPath();
-            }
+            $image_path = $this->get('user.helper.user')->uploadFittingRoomImage($entity);         
             $response = new Response(json_encode(array(
                                 'entity' => $entity,
-                                //'imageurl' => $entity->getWebPath()
                                 'imageurl' => $image_path
                             )));
             $response->headers->set('Content-Type', 'application/json');
@@ -294,140 +284,8 @@ class RegistrationController extends Controller {
         return new Response($response);
     }
 
-//-------------------------------------------------------------------------------------
-
-    
-    
-    
- 
-
-
 
     
 }
-
-
-
-
-
-
-
-
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-
-//------------------------- Login after registration------------------------------
-
-   /* private function getLoggedIn($userEntity) {
-        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
-        $this->get('security.context')->setToken($token);
-    }
-//-------------------------------------------------------------------------------------
-//    private function isDuplicateEmail($id, $email) {
-    //      return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
-    // }
-//------------------------------ Get Measurement Entity -----------------------
-
-     private function getMeasurement($user) {
-      $measurement = $user->getMeasurement();
-
-      if (!$measurement) {
-      $measurement = new Measurement();
-      $measurement->setUser($user);
-      }
-      return $measurement;
-      }
-   
-
-//------------------------- Password reset ------------------------------------------------
-   
-       public function passwordResetFormAction() {
-
-      $id = $this->get('security.context')->getToken()->getUser()->getId();
-
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-      $defaultData = array('message' => 'Enter your email address');
-      $form = $this->createFormBuilder($defaultData)
-      ->add('password', 'repeated', array(
-      'first_name' => 'password',
-      'second_name' => 'confirm',
-      'type' => 'password',
-      'invalid_message' => 'The password fields must match.',
-      ))
-      ->getForm();
-
-
-      //$form = $this->createForm(new UserPasswordChangeType(), $entity);
-
-      return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
-      'form' => $form->createView(), 'entity' => $entity));
-      }
-
-
-      //---------------------------------------------------------------------------------
-      public function passwordUpdateAction(Request $request, $id) {
-
-      $defaultData = array('message' => 'Update password');
-      $form = $this->createFormBuilder($defaultData)
-      ->add('password', 'repeated', array(
-      'first_name' => 'password',
-      'second_name' => 'confirm',
-      'type' => 'password',
-      'invalid_message' => 'The password fields must match.',
-      ))
-      ->getForm();
-
-      try {
-
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
-      if (!$entity) {
-      throw $this->createNotFoundException('Authentication expired or link not found.');
-      }
-      $form->bind($request);
-
-      if ($form->isValid()) {
-      $data = $form->getData();
-
-      $entity->setUpdatedAt(new \DateTime('now'));
-
-      $factory = $this->get('security.encoder_factory');
-      $encoder = $factory->getEncoder($entity);
-
-      $password = $encoder->encodePassword($data['password'], $entity->getSalt());
-
-      $entity->setPassword($password);
-
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($entity);
-      $em->flush();
-
-      return $this->render('LoveThatFitUserBundle:Registration:message.html.twig', array(
-      'message' => 'Your password has been changed.'));
-      } else {
-
-      return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
-      'form' => $form->createView()));
-      }
-      } catch (\Doctrine\DBAL\DBALException $e) {
-
-      $form->addError(new FormError('Something went wrong.'));
-      return $this->render('LoveThatFitUserBundle:Registration:passwordResetForm.html.twig', array(
-      'form' => $form->createView()));
-      }
-      }
-     */
-
-#------------------------------Twiiter Work--------------------------------------------------------------#
-
 
 ?>

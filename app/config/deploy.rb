@@ -21,7 +21,7 @@ set  :keep_releases,  3
 set :shared_files,      ["app/config/parameters.yml"]
 set :shared_children,     [app_path + "/logs", web_path + "/uploads", "vendor"]
 set :use_composer, true
-set :update_vendors, true
+set :update_vendors, false
 
 set :use_sudo, false
 set :user, "walkah"

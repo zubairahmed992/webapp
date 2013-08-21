@@ -43,18 +43,17 @@ class UserController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-
         $user_helper = $this->get('user.helper.user');
 
         $email = $decoded['email'];
         $password = $decoded['password'];
          
-       /* $email ='test@gmail.com';
-         $password ='123456';
-       */
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
- 
+       /* $email ='oldnavywomen0@ltf.com';
+        $password ='123456';*/
+       
+        //$em = $this->getDoctrine()->getManager();
+        //$entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+         $entity= $user_helper->findOneBy($email);
         if (count($entity) > 0) {
             $user_info = $user_helper->loginWebService($entity, $password, $email);
             if (isset($user_info['id'])) {
@@ -67,7 +66,6 @@ class UserController extends Controller {
             return new Response(json_encode(array('Message' => 'Invalid Email')));
         }
     }
-
 #------------------------------Edit Profile----------------------------------------------------------#    
   
 #----------------------------------------------------------------------------------------------------#
@@ -412,7 +410,22 @@ public function avatarUploadAction() {
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-#--------------------------------------------End Of Image Uploading----------------------------------------#    
+#--------------------------------------------End Of Image Uploading----------------------------------------#  
+#------------------------Constant Fetching Web Service-----------------------------------------------------#
+    public function ConstantValuesAction() {
+        $utility_helper = $this->get('admin.helper.utility');
+        //$utility_help=$utility_helper->getDeviceBootstrap();
+      /*  $constant_values=array();
+        $constant_values['pixcel_per_inch']=$utility_help['resolution_scale']['pixcel_per_inch'];
+        $constant_values['inches']=$utility_help['resolution_scale']['inches'];
+        $constant_values['standard']=$utility_help['resolution_scale']['standard'];
+        $constant_values['iphone4s']=$utility_help['resolution_scale']['iphone4s'];
+        $constant_values['iphone5']=$utility_help['resolution_scale']['iphone5'];
+        $constant_values['ipad']=$utility_help['resolution_scale']['ipad'];
+        $constant_values['ipad_retina']=$utility_help['resolution_scale']['ipad_retina'];*/
+        return new response(json_encode($utility_helper->getDeviceBootstrap()));
+    }  
+    
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
@@ -430,6 +443,8 @@ public function avatarUploadAction() {
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
+    
+   
 }
 
 // End of Class
