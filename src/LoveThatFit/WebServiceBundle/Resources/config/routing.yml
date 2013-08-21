@@ -89,11 +89,10 @@ checkEmail:
  
 avatarUpload:
    pattern:  /web_service/upload_avatar
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:avatarUpload}   
-addmethod:
-  pattern:  /web_service/add_method
-  defaults: { _controller: LoveThatFitWebServiceBundle:User:add}   
-   
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:avatarUpload}  
+constantValue:
+   pattern:  /web_service/constant_values
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:ConstantValues}  
 
 
   

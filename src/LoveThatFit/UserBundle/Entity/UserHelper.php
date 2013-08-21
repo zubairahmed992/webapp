@@ -458,7 +458,9 @@ public function findByEmail($email)
             #------------------------End of Seting measuremt----------#          
             return $userinfo;
         }
-    }
+        }
+        
+        }
 #------------------------------------------------Measurement Edit Service--------------------------------------------#
 public function measurementEditWebService($id,$request_array){
 

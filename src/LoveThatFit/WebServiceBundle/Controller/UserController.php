@@ -414,16 +414,10 @@ public function avatarUploadAction() {
     }   
 #--------------------------------------------End Of Image Uploading----------------------------------------#  
 #------------------------Constant Fetching Web Service-----------------------------------------------------#
-public function ConstantValuesAction(){
-    
-    $utility_helper = $this->get('admin.helper.utility');
-     $yaml = new Parser();
-     $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
-       $limit = $pagination_constants["constants"]["pagination"]["limit"];
-
-        
-    
-}  
+    public function ConstantValuesAction() {
+        $utility_helper = $this->get('admin.helper.utility');
+        return new response(json_encode($utility_helper->getDeviceBootstrap()));
+    }  
     
 #---------------------------Render Json--------------------------------------------------------------------#
 
@@ -443,12 +437,7 @@ public function ConstantValuesAction(){
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
     
-    
-    
-     public function addAction($a, $b)
-    {
-        return $a + $b;
-    }
+   
 }
 
 // End of Class
