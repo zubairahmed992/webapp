@@ -220,7 +220,13 @@ public function findByEmail($email)
               
                 
                 if ($user_db_password == $password_old_enc) {
-                    $user_id=$entity->getId();
+                    
+                    $userinfo=array();
+                    $userinfo=$this->gettingUserInfo($entity);
+                 //   $userinfo['email']=$email;
+                    $userinfo['authTokenWebService']=$authTokenWebService;
+                   
+                    /* $user_id=$entity->getId();
                     $first_name=$entity->getFirstName();
                     $last_name=$entity->getLastName();
                     $gender=$entity->getGender();
@@ -245,11 +251,16 @@ public function findByEmail($email)
                    
                    $userinfo['image']=$image;
                    $userinfo['avatar']=$avatar;
-                 $userinfo['iphoneImage']=$iphoneImage;
+                 $userinfo['iphoneImage']=$iphoneImage;*/
                  
-                $entity = $this->repo->find($user_id);
-                $measurement = $entity->getMeasurement();
-               
+               // $entity = $this->repo->find($user_id);
+                  $entity = $this->repo->find($userinfo['id']);  
+                  $measurement = $entity->getMeasurement();
+                  $user_measurment=array();
+                  $user_measurment=$this->gettingMeasurement($measurement);
+                  
+                  $userinfo=array_merge ($userinfo, $user_measurment);
+             /*  
                 if($measurement)
                 {
                 $userinfo['weight'] = $measurement->getWeight();
@@ -288,6 +299,7 @@ public function findByEmail($email)
                     if (!$userinfo['iphone_outseam']) {
                         $userinfo['iphone_outseam'] = 260;
                     }
+                    */
                      return $userinfo;
                 } else {
                      return array('Message'=>'Invalid Password');
@@ -305,18 +317,18 @@ public function findByEmail($email)
         $gender = $request_array['gender'];
         $zipcode = $request_array['zipcode'];
 
-        /* $email ='my_web115115@gmail.com';
+        /*$email ='my_web11511r51as@gmail.com';
          $password ='123456';
          $gender = 'f';
-         $zipcode = '123'; 
-        */
+         $zipcode = '123'; */
+        
         
   #-----------------End of Measuremnt data-----------------------# 
         if ($this->isDuplicateEmail(Null, $email)) {
             return array('Message' => 'The Email already exists');
         } else {
+            
             $user = new User();
-
             $user->setCreatedAt(new \DateTime('now'));
             $user->setUpdatedAt(new \DateTime('now'));
             $factory =$factory =$this->container->get('security.encoder_factory');
@@ -328,11 +340,8 @@ public function findByEmail($email)
              $user->setGender($gender);
              $user->setZipcode($zipcode);
             $user->generateAuthenticationToken();
-            //  $this->saveUser($user);
-
-    
-    
-         //  $user= $this->saveUser($user);
+            // $this->saveUser($user);
+            //  $user= $this->saveUser($user);
             //$user = $this->registerUser($user);
 
             #----------------------Set Data of Measuremnt -------------------------------#
@@ -373,10 +382,9 @@ public function findByEmail($email)
 
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
-
-          
-            if (isset($request_array['weight'])) {
-                $measurement->setWeight($request_array['weight']);
+            
+       if (isset($request_array['weight'])) {
+                $measurement->setWeight($wight);}
             
 
             if (isset($request_array['height'])) {
@@ -411,11 +419,13 @@ public function findByEmail($email)
             $this->saveUser($user);
 
             //       $this->saveUser($user);
-#---------------------------------------------------Getting Data-----------------------------#
-            $userinfo = array();
+    #---------------------------------------------------Getting Data-----------------------------#
+             $userinfo=array();
+            
             #--------------------User Info-------------------------------#
-
-            $birth_date = $user->getBirthDate();
+            $userinfo=$this->gettingUserInfo($user);
+            
+            /*$birth_date = $user->getBirthDate();
 
             $userinfo['id'] = $user->getId();
             $userinfo['email'] = $user->getEmail();
@@ -430,12 +440,15 @@ public function findByEmail($email)
             }
 
             $userinfo['image'] = $user->getImage();
-            $userinfo['avatar'] = $user->getAvatar();
+            $userinfo['avatar'] = $user->getAvatar();*/
             $userinfo['authTokenWebService'] = $user->getAuthToken();
              $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
              $userinfo['path']=$baseurl;
+             $user_measurment=array();
+             $user_measurment=$this->gettingMeasurement($measurement);
+             $userinfo=array_merge ($userinfo, $user_measurment);
             #-----------------------Measurement Info--------------------#
-            $userinfo['weight'] = $measurement->getWeight();
+          /*  $userinfo['weight'] = $measurement->getWeight();
             $userinfo['height'] = $measurement->getHeight();
             $userinfo['waist'] = $measurement->getWaist();
             $userinfo['hip'] = $measurement->getHip();
@@ -447,13 +460,12 @@ public function findByEmail($email)
             $userinfo['back'] = $measurement->getBack();
             if (!$userinfo['back']) {
                 $userinfo['back'] = 15.5;
-            }
+            }*/
             
          
             
             #------------------------End of Seting measuremt----------#          
             return $userinfo;
-        }
         }
         
         }
@@ -666,5 +678,70 @@ public function measurementEditWebService($id,$request_array){
             return array('status' => False, 'Message' => 'Authentication Failure');
         }
     }
+    
+#-------- Getting the User Info ------------------------------------------------------------#
+  public function gettingUserInfo($entity){
+      
+                $birth_date=$entity->getBirthDate();
+                   $userinfo=array();
+                   $userinfo['id']=$entity->getId();
+                   $userinfo['first_name']=$entity->getFirstName();
+                   $userinfo['last_name']=$entity->getLastName();
+                   $userinfo['zipcode']=$entity->getZipcode();
+                   $userinfo['gender']=$entity->getGender();
+                   $userinfo['email'] = $entity->getEmail();
+                  
+                   if(isset($birth_date)){
+                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
+                   
+                   $userinfo['image']=$entity->getImage();
+                   $userinfo['avatar']=$entity->getAvatar();
+                   $userinfo['iphoneImage']=$entity->getIphoneImage();
+                   return $userinfo;
+  }
+ public function gettingMeasurement($measurement){
+        
+     $userinfo=array();
+          if($measurement)
+          {
+                $userinfo['weight'] = $measurement->getWeight();
+                $userinfo['height'] = $measurement->getHeight();
+                $userinfo['waist'] = $measurement->getWaist();
+                $userinfo['hip'] = $measurement->getHip();
+                $userinfo['bust'] = $measurement->getBust();
+                $userinfo['chest'] = $measurement->getChest();
+                $userinfo['neck'] = $measurement->getNeck();
+                $userinfo['inseam'] = $measurement->getInseam();
+                $userinfo['back'] = $measurement->getBack();
+                $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+                $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+                   
+           }
+           else
+           {
+                $userinfo['weight'] = 0;
+                $userinfo['height'] = 0;
+                $userinfo['hip'] = 0;
+                $userinfo['bust'] = 0;
+                $userinfo['chest'] = 0;
+                $userinfo['neck'] = 0;
+                $userinfo['inseam'] = 0;
+                $userinfo['back'] = 0;
+                $userinfo['iphone_shoulder_height'] = 0;
+                $userinfo['iphone_outseam'] = 0;
+                }    
+                if (!$userinfo['back']) {
+                    $userinfo['back'] = 15.5;
+                }
+                if (!$userinfo['iphone_shoulder_height']) {
+                        $userinfo['iphone_shoulder_height'] = 150;
+                    }
+                 
+                    if (!$userinfo['iphone_outseam']) {
+                        $userinfo['iphone_outseam'] = 260;
+                    }
+                return $userinfo;
+ }
 
 }
