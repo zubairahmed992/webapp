@@ -540,7 +540,7 @@ public function measurementEditWebService($id,$request_array){
             $userinfo['image'] = $entity->getImage();
             $userinfo['avatar'] = $entity->getAvatar();
             $userinfo['iphoneImage']=$entity->getIphoneImage();*/
-            
+            $userinfo['authTokenWebService'] = $entity->getAuthToken();
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";
             $userinfo['path'] = $baseurl;
 
