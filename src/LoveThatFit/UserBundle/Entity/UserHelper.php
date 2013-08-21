@@ -222,7 +222,7 @@ public function findByEmail($email)
                 if ($user_db_password == $password_old_enc) {
                     
                     $userinfo=array();
-                    $userinfo=$this->gettingUserInfo($entity);
+                    $userinfo=$this->fillUserArray($entity);
                  //   $userinfo['email']=$email;
                     $userinfo['authTokenWebService']=$authTokenWebService;
                    
@@ -257,7 +257,7 @@ public function findByEmail($email)
                   $entity = $this->repo->find($userinfo['id']);  
                   $measurement = $entity->getMeasurement();
                   $user_measurment=array();
-                  $user_measurment=$this->gettingMeasurement($measurement);
+                  $user_measurment=$this->fillMeasurementArray($measurement);
                   
                   $userinfo=array_merge ($userinfo, $user_measurment);
              /*  
@@ -423,7 +423,7 @@ public function findByEmail($email)
              $userinfo=array();
             
             #--------------------User Info-------------------------------#
-            $userinfo=$this->gettingUserInfo($user);
+            $userinfo=$this->fillUserArray($user);
             
             /*$birth_date = $user->getBirthDate();
 
@@ -445,7 +445,7 @@ public function findByEmail($email)
              $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
              $userinfo['path']=$baseurl;
              $user_measurment=array();
-             $user_measurment=$this->gettingMeasurement($measurement);
+             $user_measurment=$this->fillMeasurementArray($measurement);
              $userinfo=array_merge ($userinfo, $user_measurment);
             #-----------------------Measurement Info--------------------#
           /*  $userinfo['weight'] = $measurement->getWeight();
@@ -462,9 +462,7 @@ public function findByEmail($email)
                 $userinfo['back'] = 15.5;
             }*/
             
-         
-            
-            #------------------------End of Seting measuremt----------#          
+          #------------------------End of Seting measuremt----------#          
             return $userinfo;
         }
         
@@ -521,8 +519,11 @@ public function measurementEditWebService($id,$request_array){
         $entity = $this->repo->findOneBy(array('email' => $email));
 
         if (count($entity) > 0) {
+            
+              $userinfo=array();
+            $userinfo=$this->fillUserArray($entity);
 
-            $user_id = $entity->getId();
+            /*$user_id = $entity->getId();
             $birth_date = $entity->getBirthDate();
             $userinfo = array();
             $userinfo['id'] = $user_id;
@@ -538,11 +539,12 @@ public function measurementEditWebService($id,$request_array){
 
             $userinfo['image'] = $entity->getImage();
             $userinfo['avatar'] = $entity->getAvatar();
-            $userinfo['iphoneImage']=$entity->getIphoneImage();
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
+            $userinfo['iphoneImage']=$entity->getIphoneImage();*/
+            
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";
             $userinfo['path'] = $baseurl;
 
-            $entity = $this->repo->find($user_id);
+            $entity = $this->repo->find($userinfo['id']);
             $measurement = $entity->getMeasurement();
             if ($measurement) {
                 $measurement->setUpdatedAt(new \DateTime('now'));
@@ -558,9 +560,11 @@ public function measurementEditWebService($id,$request_array){
             $this->saveUser($entity);
             }
 
+              $user_measurment=array();
+             $user_measurment=$this->fillMeasurementArray($measurement);
+             $userinfo=array_merge ($userinfo, $user_measurment);
 
-
-            $userinfo['weight'] = $measurement->getWeight();
+            /*$userinfo['weight'] = $measurement->getWeight();
             $userinfo['height'] = $measurement->getHeight();
             $userinfo['waist'] = $measurement->getWaist();
             $userinfo['hip'] = $measurement->getHip();
@@ -580,7 +584,8 @@ public function measurementEditWebService($id,$request_array){
             $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
             if (!$userinfo['iphone_outseam']) {
                 $userinfo['iphone_outseam'] = 400;
-            }
+            }*/
+            
 
             return $userinfo;
         } else {
@@ -680,7 +685,7 @@ public function measurementEditWebService($id,$request_array){
     }
     
 #-------- Getting the User Info ------------------------------------------------------------#
-  public function gettingUserInfo($entity){
+  public function fillUserArray($entity){
       
                 $birth_date=$entity->getBirthDate();
                    $userinfo=array();
@@ -700,7 +705,7 @@ public function measurementEditWebService($id,$request_array){
                    $userinfo['iphoneImage']=$entity->getIphoneImage();
                    return $userinfo;
   }
- public function gettingMeasurement($measurement){
+ public function fillMeasurementArray($measurement){
         
      $userinfo=array();
           if($measurement)
