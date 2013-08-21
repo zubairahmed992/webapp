@@ -2177,7 +2177,7 @@ width:350px;
 #userimage{
 position: absolute;
 top:70px;
-right: 60px;
+right: 20px;
 }
 
 .featured_content_selected{    
@@ -2670,9 +2670,7 @@ padding-bottom: 0px;
 }
 
 .login_tab{
-    float:left;
-    overflow: auto;
-    height: 30px;
+    float:left; 
 }
 
 .login_tab .active{
