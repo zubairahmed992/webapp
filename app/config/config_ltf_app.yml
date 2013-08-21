@@ -6,7 +6,16 @@ services:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
-  
+  device_bootstrap:
+    resolution_scale:    
+      pixcel_per_inch: 16
+      inches: 72
+      standard: 1152
+      iphone4s: 690
+      iphone5:  840
+      ipad:  1024
+      ipad_retina:  2048
+      
   pagination:
     limit: 30
     default_page: first
