@@ -210,7 +210,7 @@ public function userProfileAction()
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-          $user = $this->get('user.helper.user');
+        $user = $this->get('user.helper.user');
    #---------------------------Authentication of Token--------------------------------------------#
        
         $authTokenWebService = $request_array['authTokenWebService'];
