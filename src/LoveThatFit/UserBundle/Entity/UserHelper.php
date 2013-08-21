@@ -744,4 +744,21 @@ public function measurementEditWebService($id,$request_array){
                 return $userinfo;
  }
 
+ 
+      #------------------------user Image upload ------------------------#
+
+     
+     public function uploadFittingRoomImage($entity) {
+        $image_path = "";
+    
+        if ($entity->getImage()) {
+            $image_path = $entity->uploadTempImage();
+        } else {
+            $entity->upload();
+            $this->saveUser($entity);
+            $image_path = $entity->getWebPath();
+        }
+        return $image_path;
+    }
+
 }
