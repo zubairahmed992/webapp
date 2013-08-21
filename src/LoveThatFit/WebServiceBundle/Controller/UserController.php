@@ -43,18 +43,17 @@ class UserController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-
         $user_helper = $this->get('user.helper.user');
 
         $email = $decoded['email'];
         $password = $decoded['password'];
          
-       /* $email ='test@gmail.com';
-         $password ='123456';
-       */
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
- 
+       /* $email ='oldnavywomen0@ltf.com';
+        $password ='123456';*/
+       
+        //$em = $this->getDoctrine()->getManager();
+        //$entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
+         $entity= $user_helper->findOneBy($email);
         if (count($entity) > 0) {
             $user_info = $user_helper->loginWebService($entity, $password, $email);
             if (isset($user_info['id'])) {
@@ -67,7 +66,6 @@ class UserController extends Controller {
             return new Response(json_encode(array('Message' => 'Invalid Email')));
         }
     }
-
 #------------------------------Edit Profile----------------------------------------------------------#    
   
 #----------------------------------------------------------------------------------------------------#

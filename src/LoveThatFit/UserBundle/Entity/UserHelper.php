@@ -292,8 +292,6 @@ public function findByEmail($email)
                 } else {
                      return array('Message'=>'Invalid Password');
                 }
-            
-        
         
     }
     
@@ -372,8 +370,6 @@ public function findByEmail($email)
                 $dress_size = $sizeChartHelper->findOneById($sc_dress_id);
                 $measurement->setDressFittingSizeChart($dress_size); //
             }
-
-
 
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
@@ -654,8 +650,11 @@ public function measurementEditWebService($id,$request_array){
     public function findMaxUserId() {
         return $this->repo->findMaxUserId();
     }
-
-
+#---------------------------------------------------------------#
+    public function findOneBy($email) {
+        return $this->repo->findOneBy(array('email' => $email));
+    }
+#----------------------------------------------------------------#
      #------------------------Chek Token ------------------------#
 
      public function authenticateToken($token) {
