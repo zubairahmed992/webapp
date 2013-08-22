@@ -52,8 +52,8 @@ class MailHelper {
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/registration.html.twig";
         $subject = 'LoveThatFit: Thank you for registering with us. ';
-        $name = $user->getUsername();
-        return $this->sendEmail($from, $to, $body, $subject, $user);
+        return 'emailing is currently disabled';
+        //return $this->sendEmail($from, $to, $body, $subject, $user);
         
     }
 
@@ -61,9 +61,9 @@ class MailHelper {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
         $body = "LoveThatFitAdminBundle::email/password_reset.html.twig";
-        // $body='To reset you LTF password please go to the following link'.$reset_link;
         $subject = 'LoveThatFit: Password Reset';
-        return $this->sendEmail($from, $to, $body, $subject, $user, $reset_link);
+        return 'emailing is currently disabled';
+        //return $this->sendEmail($from, $to, $body, $subject, $user, $reset_link);
         
     }
 
