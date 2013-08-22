@@ -5,6 +5,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use LoveThatFit\UserBundle\Entity\User;
@@ -775,5 +776,101 @@ public function measurementEditWebService($id,$request_array){
         }
         return $image_path;
     }
+    //---------------ADMIN USER Controller Refractor Methods----------------
+    //---------------Pagination List Method---------------------------------
+    public function getListWithPagination($page_number, $sort) {
+        $yaml = new Parser();
+        $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+        $limit = $pagination_constants["constants"]["pagination"]["limit"];
 
+        $entity = $this->repo->findAllUsers($page_number, $limit, $sort);
+        $rec_count = count($this->repo->countAllUserRecord());
+        $cur_page = $page_number;
+
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
+        }
+        return array('users'=>$entity,
+			   'rec_count' => $rec_count, 
+                           'no_of_pagination' => $no_of_paginations, 
+                           'limit' => $cur_page, 
+                           'per_page_limit' => $limit,                          
+                           'femaleUsers'=>$this->getUserByGender('f'),
+                           'maleUsers'=>$this->getUserByGender('m'),
+        );
+    }
+    
+    //--------------------------Get User BY Gender
+    
+    private function getUserByGender($gender)
+    {
+        $rec_count =count($this->repo->findUserByGender($gender));
+        return $rec_count;        
+    }
+
+    public function getUsersListById($id)
+    {
+        $entity=$this->repo->findOneBy(array('id'=>$id));        
+        return $entity;
+    }
+    
+    
+    public function findWithSpecs($id) {
+        $entity = $this->repo->findOneBy(array('id'=>$id));
+        if (!$entity) {
+            $entity = $this->createNewUser();
+            return array(
+                'entity' => $entity,
+                'message' => 'User not found.',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        } else {
+            return array(
+                'entity' => $entity,
+                'message' => 'User found!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        }
+    }
+
+    public function getUserBirthDate($age)
+    {
+               $agedate = new \DateTime();
+               $agedate->sub(new \DateInterval("P" .$age. "Y"));
+               return $agedate->format("Y-m-d");
+    }
+    
+    public function getUserByAge($beginDate,$endDate)
+    {        
+        $entity = $this->repo->findUserByAge($beginDate,$endDate);
+        return $entity;
+    }
+    
+    public function getUserSearchListByGender($gender)
+    {
+        $entity = $this->repo->findUserSearchListByGender($gender);
+        return $entity;        
+    }
+    
+    public function getUserSearchListByName($firstname,$lastname)
+    {
+        $entity = $this->repo->findUserSearchListByName($firstname,$lastname);
+        return $entity;         
+    }
+    
+    public function getUserSearchList($firstname,$lastname,$gender)
+    {
+        $entity = $this->repo->findUserSearchListBy($firstname,$lastname,$gender);
+        return $entity;              
+    }
+    
+    public function getUserSearchLists($firstname,$lastname,$gender,$beginDate,$endDate)
+    {
+        $entity = $this->repo->findUserSearchListsBy($firstname,$lastname,$gender,$beginDate,$endDate);
+        return $entity;
+    }
 }
