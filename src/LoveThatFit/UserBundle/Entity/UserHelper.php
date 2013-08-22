@@ -106,26 +106,7 @@ public function findUserByEmail($email)
     return $this->repo->findOneBy(array('email'=>$email));
 }
  #---------------------------START WEB SERVICES------- ----------------------------------------#
-public function findByEmail($email)
-{
-                  $entity= $this->repo->findOneBy(array('email'=>$email));
-                   $birth_date=$entity->getBirthDate();
-                   $userinfo=array();
-                   $userinfo['id']=$entity->getId();
-                   $userinfo['email']=$email;
-                   $userinfo['first_name']=$entity->getFirstName();
-                   $userinfo['last_name']=$entity->getLastName();
-                   $userinfo['zipcode']=$entity->getZipcode();
-                   $userinfo['gender']=$entity->getGender();
-                   if(isset($birth_date)){
-                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
-                   }
-                   
-                   $userinfo['image']=$entity->getImage();
-                   $userinfo['avatar']=$entity->getAvatar();
-                 
-    return  $userinfo;
-}   
+ 
  //-------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
@@ -324,32 +305,7 @@ public function measurementEditWebService($id,$request_array){
         if ($measurement) {
 
             $measurement->setUpdatedAt(new \DateTime('now'));
-
-            if (isset($request_array['weight'])) {
-                $measurement->setWeight($request_array['weight']);
-            }
-            if (isset($request_array['height'])) {
-                $measurement->setHeight($request_array['height']);
-            }
-            if (isset($request_array['waist'])) {
-                $measurement->setWaist($request_array['waist']);
-            }
-            if (isset($request_array['hip'])) {
-                $measurement->setHip($request_array['hip']);
-            }
-            if (isset($request_array['bust'])) {
-                $measurement->setBust($request_array['bust']);
-            }
-            if (isset($request_array['neck'])) {
-                $measurement->setNeck($request_array['neck']);
-            }
-            if (isset($request_array['inseam'])) {
-                $measurement->setInseam($request_array['inseam']);
-            }
-            if (isset($request_array['chest'])) {
-                $measurement->setChest($request_array['chest']);
-            }
-
+            $measurement=$this->setMeasurmentObjectWithArray($measurement, $request_array);
             $entity->setMeasurement($measurement);
             $this->saveUser($entity);
             return array('Message' => 'success');
@@ -363,14 +319,14 @@ public function measurementEditWebService($id,$request_array){
         $email = $request_array['email'];
         $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
         $iphone_outseam = $request_array['iphone_outseam'];
-        
-        
+
+
         $entity = $this->repo->findOneBy(array('email' => $email));
 
         if (count($entity) > 0) {
-            
-              $userinfo=array();
-            $userinfo=$this->fillUserArray($entity);
+
+            $userinfo = array();
+            $userinfo = $this->fillUserArray($entity);
             $userinfo['authTokenWebService'] = $entity->getAuthToken();
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";
             $userinfo['path'] = $baseurl;
@@ -387,19 +343,18 @@ public function measurementEditWebService($id,$request_array){
                     $measurement->setIphoneOutseam($iphone_outseam);
                 }
 
-            $entity->setMeasurement($measurement);
-            $this->saveUser($entity);
+                $entity->setMeasurement($measurement);
+                $this->saveUser($entity);
             }
 
-              $user_measurment=array();
-             $user_measurment=$this->fillMeasurementArray($measurement);
-             $userinfo=array_merge ($userinfo, $user_measurment);
-             return $userinfo;
+            $user_measurment = array();
+            $user_measurment = $this->fillMeasurementArray($measurement);
+            $userinfo = array_merge($userinfo, $user_measurment);
+            return $userinfo;
         } else {
             return array('Message' => 'Invalid Email');
         }
-     
- }
+    }
     #---------------------Change Password Action-----------------------------------------------------#  
 
     public function webServiceChangePassword($request_array) {
@@ -414,27 +369,28 @@ public function measurementEditWebService($id,$request_array){
         if (isset($request_array['old_password'])) {
             $old_password = $request_array['old_password'];
         }
-        
-       /* $email='oldnavywomen0@ltf.com';
-        $password='123456';
+           
+        /*$email='oldnavywomen0@ltf.com';
+        $password='12';
         $old_password='123456';*/
-
-        $entity = $this->repo->findOneBy(array('email' => $email));
-
-        if (count($entity) > 0) {
+    $entity = $this->repo->findOneBy(array('email' => $email));
+    if (count($entity) > 0) {
 
             $user_db_password = $entity->getPassword();
-            $salt_value_old = $entity->getSalt();
-            $factory = $this->container->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($entity);
-
-            $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
+            //$salt_value_old = $entity->getSalt();
+            //$factory = $this->container->get('security.encoder_factory');
+            //$encoder = $factory->getEncoder($entity);
+            $password_old_enc = $this->matchPassword($entity, $old_password);
+          //  $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
 
 
             if ($password_old_enc == $user_db_password) {
 
                 $entity->setUpdatedAt(new \DateTime('now'));
-                $password = $encoder->encodePassword($password, $salt_value_old);
+                $factory = $this->container->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($entity);
+                $password = $encoder->encodePassword($password,$entity->getSalt());
+                
                 $entity->setPassword($password);
                 $this->saveUser($entity);
 
@@ -546,7 +502,6 @@ public function measurementEditWebService($id,$request_array){
       if (array_key_exists('gender',$request_array)){ $user->setGender($request_array['gender']);}
       if (array_key_exists('zipcode',$request_array)){ $user->setZipcode($request_array['zipcode']);}
      return $user;    
-     
  }
 #-----------------Set  Size Chart in Measurment---------------------------------#
 private function setSizechartInMeasurment($measurement,$request_array){
@@ -612,6 +567,28 @@ private function setSizechartInMeasurment($measurement,$request_array){
         }
         return $image_path;
     }
+  
+  public function getArrayByEmail($email)
+{
+                  $entity= $this->repo->findOneBy(array('email'=>$email));
+                   $birth_date=$entity->getBirthDate();
+                   $userinfo=array();
+                   $userinfo['id']=$entity->getId();
+                   $userinfo['email']=$email;
+                   $userinfo['first_name']=$entity->getFirstName();
+                   $userinfo['last_name']=$entity->getLastName();
+                   $userinfo['zipcode']=$entity->getZipcode();
+                   $userinfo['gender']=$entity->getGender();
+                   if(isset($birth_date)){
+                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
+                   
+                   $userinfo['image']=$entity->getImage();
+                   $userinfo['avatar']=$entity->getAvatar();
+                 
+    return  $userinfo;
+}  
+
     //---------------ADMIN USER Controller Refractor Methods----------------
     //---------------Pagination List Method---------------------------------
     public function getListWithPagination($page_number, $sort) {
