@@ -127,6 +127,7 @@ textarea {
 }
 select {
 	padding:2px;
+        width: 82px;
 }
 select option {
 	padding-right:2px;
