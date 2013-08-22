@@ -10,44 +10,23 @@ use LoveThatFit\UserBundle\Entity\User;
 class UserController extends Controller {
 
     //------------------------------------------------------------------------------------------
-    public function indexAction($page_number=1 , $sort='id') {
-       
-        $limit = 30;
-        $usersObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                 ->findAllUsers($page_number, $limit, $sort);
-		$rec_count = count($usersObj->countAllUserRecord());
-		$cur_page = $page_number;
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-        return $this->render('LoveThatFitAdminBundle:User:index.html.twig',
-		       array(	
-                           'users'=>$entity,
-			   'rec_count' => $rec_count, 
-                           'no_of_pagination' => $no_of_paginations, 
-                           'limit' => $cur_page, 
-                           'per_page_limit' => $limit,
-                           'searchform'=>$this->userSearchFrom()->createView(),
-                           'femaleUsers'=>$this->getUserByGender('f'),
-                           'maleUsers'=>$this->getUserByGender('m'),
-			));
+    
+    public function indexAction($page_number, $sort = 'id') {
+        $size_with_pagination = $this->get('user.helper.user')->getListWithPagination($page_number, $sort);
+        return $this->render('LoveThatFitAdminBundle:User:index.html.twig',array('pagination'=>$size_with_pagination,'searchform'=>$this->userSearchFrom()->createView(),));
     }
     
+    
     public function showAction($id)
-    {
-       $em = $this->getDoctrine()->getManager();
-       $entity = $this->getUsersListById($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find user.');        }
-        else{
+    {       
+        $specs = $this->get('user.helper.user')->findWithSpecs($id);
+        $entity = $specs['entity'];
+        if ($specs['success'] == false) {
+            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+        }
         return $this->render('LoveThatFitAdminBundle:User:show.html.twig', array(
                     'user' => $entity                
                 ));
-        }
     }
     
     public function searchAction(Request $request)
@@ -59,29 +38,29 @@ class UserController extends Controller {
        $lastname = $data['form']['firstname'];
        if($data['form']['age']=='')
        {
-         $age='';         
+         $age='';     
        } else
        {
          $age=$data['form']['age'];
-         $endDate=$this->getUserBirthDate($age);
+         $endDate=$this->get('user.helper.user')->getUserBirthDate($age);
          $new_timestamp = strtotime('-12 months',strtotime($endDate));
          $beginDate=date("Y-m-d",$new_timestamp);
        }
        if($firstname=='' and $gender=='')
        {
-         $entity=$this->getUserByAge($beginDate,$endDate);
+         $entity=$this->get('user.helper.user')->getUserByAge($beginDate,$endDate);
        }
        if($firstname=='' and $age=='')
        {
-       $entity = $this->getUserSearchListByGender($gender);      
+       $entity = $this->get('user.helper.user')->getUserSearchListByGender($gender);      
        }
        if($gender=='' and $age=='')
        {
-           $entity = $this->getUserSearchListByName($firstname,$lastname);
+           $entity = $this->get('user.helper.user')->getUserSearchListByName($firstname,$lastname);
        }
        if($gender!='' and $firstname!='')
        {
-           $entity = $this->getUserSearchList($firstname,$lastname,$gender);
+           $entity = $this->get('user.helper.user')->getUserSearchList($firstname,$lastname,$gender);
        }
        if($gender!='' and $firstname!='' and $age!='')
        {
@@ -104,66 +83,6 @@ class UserController extends Controller {
     
 //------------------------------------------------------------------------------------------
     
-    private function getUsersListById($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
-        $entity = $repository->find($id);
-        return $entity;
-    }
-    private function getUserSearchListByGender($gender)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserSearchListByGender($gender);
-        return $entity;
-    }
-
- private function getUserBirthDate($age)
-    {
-               $agedate = new \DateTime();
-               $agedate->sub(new \DateInterval("P" .$age. "Y"));
-               return $agedate->format("Y-m-d");
-    }
-    
-    private function getUserSearchListByName($firstname,$lastname)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserSearchListByName($firstname,$lastname);
-        return $entity;
-    }
-    
-    private function getUserSearchList($firstname,$lastname,$gender)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserSearchListBy($firstname,$lastname,$gender);
-        return $entity;
-    }
-    
-    private function getUserSearchLists($firstname,$lastname,$gender,$beginDate,$endDate)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserSearchListsBy($firstname,$lastname,$gender,$beginDate,$endDate);
-        return $entity;
-    }
-    
-    private function getUserByAge($beginDate,$endDate)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserByAge($beginDate,$endDate);
-        return $entity;
-    }
-    
-   
     private function userSearchFrom()
     {
         $user=new User();
@@ -187,15 +106,6 @@ class UserController extends Controller {
                         ->getForm();
     }
     
-    private function getUserByGender($gender)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $UserTypeObj = $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User');
-         $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitUserBundle:User')
-                 ->findUserByGender($gender);
-		$rec_count = count($UserTypeObj->findUserByGender($gender));
-        return $rec_count;
-    }
+    
     
 }

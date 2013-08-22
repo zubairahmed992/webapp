@@ -69,8 +69,8 @@ class SecurityController extends Controller {
             if ($form->isValid()) {
 
                 $em = $this->getDoctrine()->getManager();
-                $_user = $em->getRepository('LoveThatFitUserBundle:User')->loadUserByEmail($data['email']);
-
+                $_user = $em->getRepository('LoveThatFitUserBundle:User')->findByEmail($data['email']);
+                
                 if ($_user) {
                     //updating authentication token 
                     $_user->generateAuthenticationToken();

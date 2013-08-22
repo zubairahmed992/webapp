@@ -8,9 +8,11 @@
     
      <div class="clearfix"></div> 
       <div>
-    Total Users:{{rec_count}}<br/>
-    Female:{{femaleUsers}}<br/>
-    Male:{{maleUsers}}<br/>
+       
+    Total Users:{{pagination.rec_count}}<br/>
+    Female:{{pagination.femaleUsers}}<br/>
+    Male:{{pagination.maleUsers}}<br/>
+    
     </div>
      <form action="{{ path('admin_users_search') }}" method="post" {{ form_enctype(searchform) }}>
  {{ form_errors(searchform) }}
@@ -33,7 +35,8 @@
             <div class="span1 hds"></div>  
             <div class="span1 hds"></div>
         </div>  
-          {% for us in users %}
+         
+          {% for us in pagination.users %}
         <div class="row-fluid show-grid">
             <div class="span1">{{us.id}}</div>
             <div class="span1">{{us.firstName}} {{us.lastName}}</div>
@@ -43,12 +46,12 @@
             <div class="span1">&nbsp; </div>         
             <div class="span1"><a href="{{ path('admin_user_detail_show', {'id': us.id}) }}" title="Show {{us.firstName}}"><i class="icon-eye-open"></i></a></div> 
             </div>                
-       
+               
 {% endfor %}
  </div>
  </div> 
  {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
-  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+  with {'rec_count':pagination.rec_count,'limit':pagination.limit,'per_page_limit':pagination.per_page_limit,'no_of_pagination':pagination.no_of_pagination
 ,'controller_name':'admin_users'}
  %}
     </div>

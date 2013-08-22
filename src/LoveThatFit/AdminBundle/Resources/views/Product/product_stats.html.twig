@@ -36,12 +36,7 @@
         fillColor : "rgba(220,220,220,0.5)",
                 strokeColor : "rgba(220,220,220,1)",
                 data : [{{maleProduct}},{{femaleProduct}}]
-        },
-        {
-        fillColor : "rgba(151,187,205,0.5)",
-                strokeColor : "rgba(151,187,205,1)",
-                data : [{{maleProduct}},{{femaleProduct}}]
-        }
+        },        
         ]
 
         }
@@ -58,12 +53,7 @@
             fillColor : "rgba(220,220,220,0.5)",
                     strokeColor : "rgba(220,220,220,1)",
                     data : [{{topProduct}},{{bottomProduct}},{{dressProduct}}]
-            },
-            {
-            fillColor : "rgba(151,187,205,0.5)",
-                    strokeColor : "rgba(151,187,205,1)",
-                    data : [{{topProduct}},{{bottomProduct}},{{dressProduct}}]
-            }
+            },            
             ]
 
             }
@@ -73,17 +63,16 @@
             <div>Brand Type Products Stats</div>   
             <canvas id="brandtypecanvas" height="300" width="300"></canvas>
             <script>
+                function htmlEncodes( input ) {
+    return String(input).replace(/(&amp);/g, '&');
+        
+}
                         var brandtypebarChartData = {
-                labels : [{%for p in brandproduct%} "{{p.name}}", {%endfor%}],
+                labels : [{%for p in brandproduct%} htmlEncodes("{{p.name}}"), {%endfor%}],
                         datasets : [
                 {
                 fillColor : "rgba(220,220,220,0.5)",
                         strokeColor : "rgba(220,220,220,1)",
-                        data : [{%for p in brandproduct%} {{p.brand}}, {%endfor%}]
-                },
-                {
-                fillColor : "rgba(151,187,205,0.5)",
-                        strokeColor : "rgba(151,187,205,1)",
                         data : [{%for p in brandproduct%} {{p.brand}}, {%endfor%}]
                 }
                 ]
