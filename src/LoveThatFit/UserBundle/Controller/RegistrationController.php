@@ -19,26 +19,24 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class RegistrationController extends Controller {
 
-
-    
     public function registrationAction() {
-        $request=$this->getRequest();
-        $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
-       
+        $request = $this->getRequest();
+        $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+
         $referer = $request->headers->get('referer');
         $url_bits = explode('/', $referer);
         $security_context['referer'] = $url_bits[sizeof($url_bits) - 1];
 
-        if (array_key_exists ('error', $security_context) and $security_context['error']) {
-            $security_context['referer']= "login";
+        if (array_key_exists('error', $security_context) and $security_context['error']) {
+            $security_context['referer'] = "login";
         }
-        
+
         $user = $this->get('user.helper.user')->createNewUser();
         $form = $this->createForm(new RegistrationType(), $user);
-        
+
         $twitter_helper = $this->get('twitter_helper');
 
-        $twitters=array();
+        $twitters = array();
         $twitters = $twitter_helper->twitter_latest();
 
         return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
@@ -46,7 +44,7 @@ class RegistrationController extends Controller {
                     'last_username' => $security_context['last_username'],
                     'error' => $security_context['error'],
                     'referer' => $security_context['referer'],
-                    'twitters'=>$twitters,
+                    'twitters' => $twitters,
                 ));
     }
 
@@ -69,7 +67,7 @@ class RegistrationController extends Controller {
                 $user = $user_helper->find($u->getId());
                 $measurement = $user->getMeasurement();
                 $user_helper->getLoggedInById($user);
-               
+
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($user);
 
@@ -85,21 +83,21 @@ class RegistrationController extends Controller {
                             'entity' => $user,
                         ));
             } else {
-                
-               
-                
+
+
+
                 $twitter_helper = $this->get('twitter_helper');
-                $twitters=array();
+                $twitters = array();
                 $twitters = $twitter_helper->twitter_latest();
-                
-                $security_context  = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+
+                $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
                 return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
                             'form' => $form->createView(),
                             'entity' => $user,
                             'last_username' => $security_context['last_username'],
                             'error' => $security_context['error'],
                             'referer' => 'registration',
-                            'twitters'=>$twitters,
+                            'twitters' => $twitters,
                         ));
             }
         } catch (\Doctrine\DBAL\DBALException $e) {
@@ -130,9 +128,9 @@ class RegistrationController extends Controller {
         #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
         $request_array = $this->getRequest()->get('measurement');
         $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
-        
+
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
-        
+
         // Rendering step four
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
@@ -145,7 +143,7 @@ class RegistrationController extends Controller {
                     'edit_type' => 'registration',
                 ));
     }
-    
+
 //-----------------------------------------------------------------------------
     public function measurementEditAction() {
 
@@ -183,7 +181,7 @@ class RegistrationController extends Controller {
     public function stepFourEditAction() {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
-                
+
         if (!$user) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -208,7 +206,7 @@ class RegistrationController extends Controller {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
-        
+
         if (!$user) {
             throw $this->createNotFoundException('Unable to find User.');
         }
@@ -230,7 +228,7 @@ class RegistrationController extends Controller {
 
 //--------------------------- update fitting room image, 
     public function stepFourCreateAction(Request $request, $id) {
-        
+
         $entity = $this->get('user.helper.user')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
@@ -238,25 +236,31 @@ class RegistrationController extends Controller {
 
         $form = $this->createForm(new RegistrationStepFourType(), $entity);
         $form->bind($request);
-
+        $response_array = "";
         if ($form->isValid()) {
-            $image_path = $this->get('user.helper.user')->uploadFittingRoomImage($entity);         
-            $response = new Response(json_encode(array(
-                                'entity' => $entity,
-                                'imageurl' => $image_path
-                            )));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            $image_path = $this->get('user.helper.user')->uploadFittingRoomImage($entity);
+            $response_array = array(
+                "entity" => $entity,
+                "imageurl" => $image_path,
+                "status" => "true",
+                "msg" => "image has been saved",
+            );
         } else {
-            $response = "Invalid image data";
-            return new Response($response);
+            $response_array = array(
+                "status" => "false",
+                "msg" => "invalid image data",
+            );
         }
+
+        $response = new Response(json_encode($response_array));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 //-------------Updates shoulder height & outseam, input via user move sliders on image, form submit via ajax
 
     public function stepFourMeasurementUpdateAction(Request $request, $id) {
-        
+
         $entity = $this->get('user.helper.user')->find($id);
         $measurement = $entity->getMeasurement();
 
@@ -264,7 +268,7 @@ class RegistrationController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $this->get('user.helper.measurement')->saveMeasurement($measurement);            
+            $this->get('user.helper.measurement')->saveMeasurement($measurement);
             return new Response('Measurement Updated');
         } else {
             return new Response('Measurement has not been updated!');
@@ -284,8 +288,6 @@ class RegistrationController extends Controller {
         return new Response($response);
     }
 
-
-    
 }
 
 ?>
