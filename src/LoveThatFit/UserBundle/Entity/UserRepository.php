@@ -8,11 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 class UserRepository extends EntityRepository
 {
+    /*
      public function loadUserByUsername($username) {
         return $this->findOneBy(array('username' => $username));
     }
-    
-    public function loadUserByEmail($email) {
+    */
+    public function findByEmail($email) {
         return $this->findOneBy(array('email' => $email));
     }
     
@@ -23,8 +24,7 @@ class UserRepository extends EntityRepository
    public function isDuplicateEmail($id, $email) {
         try {
 
-            $entityByEmail = $this->loadUserByEmail($email);
-            
+            $entityByEmail = $this->findOneBy(array('email' => $email));
             
             if(!($id) && !($entityByEmail)){
                 return false;
@@ -42,20 +42,18 @@ class UserRepository extends EntityRepository
             return $e;
         }
     }
-    
+   /* 
     public function isUserNameExist($username) {
         try {
             
             $entity = $this->loadUserByUsername($username);
             return $entity ? true : false;
-        
-            
         } catch (\Exception $e) {
             return $e;
         }
     }
     
-    
+    */
     public function findAllUsers($page_number = 0, $limit = 0, $sort = 'id') {
 
         if ($page_number <= 0 || $limit <= 0) {
@@ -209,7 +207,7 @@ class UserRepository extends EntityRepository
  
       //----------------------------------------------------------------------------------------
   
-    public function findUserByMonth()
+ /*   public function findUserByMonth()
   {//SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
     
           
@@ -245,7 +243,7 @@ class UserRepository extends EntityRepository
             return null;
         } 
   }
-    
+ 
   public function findUserAge()
   {
       $query = $this->getEntityManager()
@@ -279,7 +277,7 @@ class UserRepository extends EntityRepository
             return null;
         }
   }
-  
+ */    
   public function findOneByName($firstName) {
         $record = $this->getEntityManager()
                         ->createQuery("SELECT us FROM LoveThatFitUserBundle:User us   

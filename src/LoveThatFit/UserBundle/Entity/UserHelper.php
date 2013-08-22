@@ -71,6 +71,7 @@ public function saveUser(User $user)
     $this->em->flush();
     
 }
+//----------------------------------------------------------
 public function updateProfile(User $user){
     $user->uploadAvatar();
     $this->saveUser($user);
@@ -94,7 +95,7 @@ public function updateProfile(User $user){
     }
 
 //-------------------------------------------------------
-
+// only use in website for security context in login
     public function getRegistrationSecurityContext($request) {
         // get the login error if there is one
         $session= $request->getSession();
@@ -119,6 +120,19 @@ public function encodePassword(User $user)
     $factory = $this->container->get('security.encoder_factory');
     $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+    return $password;
+}
+
+//-------------------------------------------------------
+public function matchPassword(User $user, $password)
+{
+    $factory = $this->container->get('security.encoder_factory');
+    $encoder = $factory->getEncoder($user);
+    $password = $encoder->encodePassword($password, $user->getSalt());
+    if($user->getPassword()==$password){
+        //-----------------------
+        //------------
+    }
     return $password;
 }
 
@@ -194,7 +208,7 @@ public function findByEmail($email)
             $user = $this->repo->findOneBy(array('email' => $email));
             $user->setCreatedAt(new \DateTime('now'));
             $user->setUpdatedAt(new \DateTime('now'));
-
+//-------replace with set method
             if (isset($decoded['firstName'])) {
                 $user->setFirstName($decoded['firstName']);
             }
@@ -224,7 +238,7 @@ public function findByEmail($email)
                 $authTokenWebService=$entity->getAuthToken();
                 $user_db_password = $entity->getPassword();
                 $salt_value_db = $entity->getSalt();
-
+//-------replace with match password method 
                 $factory =$this->container->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($entity);
                 $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
@@ -607,7 +621,8 @@ public function measurementEditWebService($id,$request_array){
     #---------------------Change Password Action-----------------------------------------------------#  
 
     public function webServiceChangePassword($request_array) {
-
+//-------break functionality into further methods
+        
         if (isset($request_array['email'])) {
             $email = $request_array['email'];
         }
