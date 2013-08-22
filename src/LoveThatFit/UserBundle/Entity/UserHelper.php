@@ -54,7 +54,7 @@ class UserHelper{
         
     }
  //---------------------------------------------------------------------   
-    
+    #!!!!!!! User Created at and Update At  ----------------!!!#
     public function createNewUser()
 {
     $class = $this->class;
@@ -92,6 +92,54 @@ public function updateProfile(User $user){
         $this->container->get('security.context')->setToken($token);
         return $token->getUser();
     }
+#----------------------------All Find Method -------------------------------------------------------------#    
+ //-------------------------------------------------------
+
+public function find($id)
+{
+    return $this->repo->findOneBy(array('id'=>$id));
+}
+//---------------------------------------------------------
+public function findUserByEmail($email)
+{
+    return $this->repo->findOneBy(array('email'=>$email));
+}
+ #---------------------------START WEB SERVICES------- ----------------------------------------#
+public function findByEmail($email)
+{
+                  $entity= $this->repo->findOneBy(array('email'=>$email));
+                   $birth_date=$entity->getBirthDate();
+                   $userinfo=array();
+                   $userinfo['id']=$entity->getId();
+                   $userinfo['email']=$email;
+                   $userinfo['first_name']=$entity->getFirstName();
+                   $userinfo['last_name']=$entity->getLastName();
+                   $userinfo['zipcode']=$entity->getZipcode();
+                   $userinfo['gender']=$entity->getGender();
+                   if(isset($birth_date)){
+                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
+                   }
+                   
+                   $userinfo['image']=$entity->getImage();
+                   $userinfo['avatar']=$entity->getAvatar();
+                 
+    return  $userinfo;
+}   
+ //-------------------------------------------------------
+    public function findOneByName($name) {
+        return $this->repo->findOneByName($name);
+    }
+    
+    public function findMaxUserId() {
+        return $this->repo->findMaxUserId();
+    }
+#---------------------------------------------------------------#
+    public function findOneBy($email) {
+        return $this->repo->findOneBy(array('email' => $email));
+    }
+#----------------------------------------------------------------#
+    
+#--------------------------End Of ALL Find Methods---------------------------------------------------------#    
 
 //-------------------------------------------------------
 // only use in website for security context in login
@@ -128,10 +176,12 @@ public function matchPassword(User $user, $password)
     $factory = $this->container->get('security.encoder_factory');
     $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword($password, $user->getSalt());
-    if($user->getPassword()==$password){
+    
+     
+    /*if($user->getPassword()==$password){
         //-----------------------
         //------------
-    }
+    }*/
     return $password;
 }
 
@@ -160,38 +210,6 @@ public function getMeasurement($user) {
     }
 
 
-//-------------------------------------------------------
-
-public function find($id)
-{
-    return $this->repo->findOneBy(array('id'=>$id));
-}
-//---------------------------------------------------------
-public function findUserByEmail($email)
-{
-    return $this->repo->findOneBy(array('email'=>$email));
-}
- #---------------------------START WEB SERVICES------- ----------------------------------------#
-public function findByEmail($email)
-{
-                  $entity= $this->repo->findOneBy(array('email'=>$email));
-                   $birth_date=$entity->getBirthDate();
-                   $userinfo=array();
-                   $userinfo['id']=$entity->getId();
-                   $userinfo['email']=$email;
-                   $userinfo['first_name']=$entity->getFirstName();
-                   $userinfo['last_name']=$entity->getLastName();
-                   $userinfo['zipcode']=$entity->getZipcode();
-                   $userinfo['gender']=$entity->getGender();
-                   if(isset($birth_date)){
-                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
-                   }
-                   
-                   $userinfo['image']=$entity->getImage();
-                   $userinfo['avatar']=$entity->getAvatar();
-                 
-    return  $userinfo;
-}
 #-------------Edit/Update Profile for Web Services----------------#
     public function editProfileServiceHelper($decoded) {
         $email = $decoded['email'];
@@ -232,122 +250,35 @@ public function findByEmail($email)
 
 
 #---------------------------------------------Login Web Service -----------------------------------#
-    public function loginWebService($entity,$password,$email){
-          //$request = $this->getRequest();
-                $authTokenWebService=$entity->getAuthToken();
-                $user_db_password = $entity->getPassword();
-                $salt_value_db = $entity->getSalt();
-//-------replace with match password method 
-                $factory =$this->container->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-                $password_old_enc = $encoder->encodePassword($password, $salt_value_db);
-              
-                
-                if ($user_db_password == $password_old_enc) {
-                    
-                    $userinfo=array();
-                    $userinfo=$this->fillUserArray($entity);
-                 //   $userinfo['email']=$email;
-                    $userinfo['authTokenWebService']=$authTokenWebService;
-                   
-                    /* $user_id=$entity->getId();
-                    $first_name=$entity->getFirstName();
-                    $last_name=$entity->getLastName();
-                    $gender=$entity->getGender();
-                    $zipcode=$entity->getZipcode();
-                    $birth_date=$entity->getBirthDate();
-                    $image=$entity->getImage();
-                    $avatar=$entity->getAvatar();
-                    $iphoneImage=$entity->getIphoneImage();
-                    
-                   $userinfo=array();
-                   $userinfo['id']=$user_id;
-                   $userinfo['email']=$email;
-                   $userinfo['first_name']=$first_name;
-                   $userinfo['last_name']=$last_name;
-                   $userinfo['zipcode']=$zipcode;
-                   $userinfo['gender']=$gender;
-                   $userinfo['authTokenWebService']=$authTokenWebService;
-                  
-                   if(isset($birth_date)){
-                   $userinfo['birth_date']= $birth_date->format('Y-m-d');
-                   }
-                   
-                   $userinfo['image']=$image;
-                   $userinfo['avatar']=$avatar;
-                 $userinfo['iphoneImage']=$iphoneImage;*/
-                 
-               // $entity = $this->repo->find($user_id);
-                  $entity = $this->repo->find($userinfo['id']);  
-                  $measurement = $entity->getMeasurement();
-                  $user_measurment=array();
-                  $user_measurment=$this->fillMeasurementArray($measurement);
-                  
-                  $userinfo=array_merge ($userinfo, $user_measurment);
-             /*  
-                if($measurement)
-                {
-                $userinfo['weight'] = $measurement->getWeight();
-                $userinfo['height'] = $measurement->getHeight();
-                $userinfo['waist'] = $measurement->getWaist();
-                $userinfo['hip'] = $measurement->getHip();
-                $userinfo['bust'] = $measurement->getBust();
-                $userinfo['chest'] = $measurement->getChest();
-                $userinfo['neck'] = $measurement->getNeck();
-                $userinfo['inseam'] = $measurement->getInseam();
-                $userinfo['back'] = $measurement->getBack();
-                $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
-                $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
-                   
-           }
-           else
-           {
-                $userinfo['weight'] = 0;
-                $userinfo['height'] = 0;
-                $userinfo['hip'] = 0;
-                $userinfo['bust'] = 0;
-                $userinfo['chest'] = 0;
-                $userinfo['neck'] = 0;
-                $userinfo['inseam'] = 0;
-                $userinfo['back'] = 0;
-                $userinfo['iphone_shoulder_height'] = 0;
-                $userinfo['iphone_outseam'] = 0;
-                }    
-                if (!$userinfo['back']) {
-                    $userinfo['back'] = 15.5;
-                }
-                if (!$userinfo['iphone_shoulder_height']) {
-                        $userinfo['iphone_shoulder_height'] = 150;
-                    }
-                 
-                    if (!$userinfo['iphone_outseam']) {
-                        $userinfo['iphone_outseam'] = 260;
-                    }
-                    */
-                     return $userinfo;
-                } else {
-                     return array('Message'=>'Invalid Password');
-                }
-        
+    public function loginWebService($entity, $password, $email) {
+
+        $authTokenWebService = $entity->getAuthToken();
+        $user_db_password = $entity->getPassword();
+        $password_old_enc = $this->matchPassword($entity, $password);
+        if ($user_db_password == $password_old_enc) {
+
+            $userinfo = array();
+            $userinfo = $this->fillUserArray($entity);
+            $userinfo['authTokenWebService'] = $authTokenWebService;
+            $entity = $this->repo->find($userinfo['id']);
+            $measurement = $entity->getMeasurement();
+            $user_measurment = array();
+            $user_measurment = $this->fillMeasurementArray($measurement);
+            $userinfo = array_merge($userinfo, $user_measurment);
+
+            return $userinfo;
+        } else {
+            return array('Message' => 'Invalid Password');
+        }
     }
-    
+
 #---------------------------------Web Service For Registration--------------------#
   public function RegistrationWebSerive(Request $request, $request_array)
   {
-//$request = $this->getRequest();
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
         $email = $request_array['email'];
         $password = $request_array['password'];
-        $gender = $request_array['gender'];
-        $zipcode = $request_array['zipcode'];
-
-        /*$email ='my_web11511r51as@gmail.com';
-         $password ='123456';
-         $gender = 'f';
-         $zipcode = '123'; */
-        
-        
-  #-----------------End of Measuremnt data-----------------------# 
+       
         if ($this->isDuplicateEmail(Null, $email)) {
             return array('Message' => 'The Email already exists');
         } else {
@@ -357,137 +288,30 @@ public function findByEmail($email)
             $user->setUpdatedAt(new \DateTime('now'));
             $factory =$factory =$this->container->get('security.encoder_factory');
             $encoder = $factory->getEncoder($user);
-
             $password = $encoder->encodePassword($password, $user->getSalt());
             $user->setPassword($password);
-             $user->setEmail($email);
-             $user->setGender($gender);
-             $user->setZipcode($zipcode);
+            $user=$this->setObjectWithArray($user,$request_array);
             $user->generateAuthenticationToken();
-            // $this->saveUser($user);
-            //  $user= $this->saveUser($user);
-            //$user = $this->registerUser($user);
-
-            #----------------------Set Data of Measuremnt -------------------------------#
-           // $measurement = $user->getMeasurement();
+           
             $measurement = new Measurement();
-            $size_chart = new SizeChart();
-
-
-            if (isset($request_array['sc_top_id'])) {
-                $sc_top_id = $request_array['sc_top_id'];
-            } else {
-                $sc_top_id = 0;
-            }
-            if (isset($request_array['sc_bottom_id'])) {
-                $sc_bottom_id = $request_array['sc_bottom_id'];
-            } else {
-                $sc_bottom_id = 0;
-            }
-            if (isset($request_array['sc_dress_id'])) {
-                $sc_dress_id = $request_array['sc_dress_id'];
-            } else {
-                $sc_dress_id = 0;
-            }
-
-
-            if ($sc_top_id) {
-                $top_size = $sizeChartHelper->findOneById($sc_top_id);
-                $measurement->setTopFittingSizeChart($top_size); //
-            }
-            if ($sc_bottom_id) {
-                $bottom_size = $sizeChartHelper->findOneById($sc_bottom_id);
-                $measurement->setBottomFittingSizeChart($bottom_size); //
-            }
-            if ($sc_dress_id) {
-                $dress_size = $sizeChartHelper->findOneById($sc_dress_id);
-                $measurement->setDressFittingSizeChart($dress_size); //
-            }
-
+    
+    
+            $measurement=$this->setSizechartInMeasurment($measurement, $request_array);
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
-            
-       if (isset($request_array['weight'])) {
-                $measurement->setWeight($request_array['weight']);}
-            
-
-            if (isset($request_array['height'])) {
-                $measurement->setHeight($request_array['height']);
-            }
-            if (isset($request_array['waist'])) {
-                $measurement->setWaist($request_array['waist']);
-            }
-            if (isset($request_array['hip'])) {
-                $measurement->setHip($request_array['hip']);
-            }
-            if (isset($request_array['bust'])) {
-                $measurement->setBust($request_array['bust']);
-            }
-
-
-            if (isset($request_array['inseam'])) {
-                $measurement->setInseam($request_array['inseam']);
-            }
-
-            if (isset($request_array['chest'])) {
-                $measurement->setChest($request_array['chest']);
-            }
-
-            if (isset($request_array['neck'])) {
-                $measurement->setNeck($request_array['neck']);
-            }
-
-
-//       $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+            $measurement=$this->setMeasurmentObjectWithArray($measurement,$request_array);
             $user->setMeasurement($measurement);
             $this->saveUser($user);
-
-            //       $this->saveUser($user);
     #---------------------------------------------------Getting Data-----------------------------#
              $userinfo=array();
-            
-            #--------------------User Info-------------------------------#
-            $userinfo=$this->fillUserArray($user);
-            
-            /*$birth_date = $user->getBirthDate();
-
-            $userinfo['id'] = $user->getId();
-            $userinfo['email'] = $user->getEmail();
-            $userinfo['first_name'] = $user->getFirstName();
-            $userinfo['last_name'] = $user->getLastName();
-            $userinfo['zipcode'] = $user->getZipcode();
-            $userinfo['gender'] = $user->getGender();
-            
-
-            if (isset($birth_date)) {
-                $userinfo['birth_date'] = $birth_date->format('Y-m-d');
-            }
-
-            $userinfo['image'] = $user->getImage();
-            $userinfo['avatar'] = $user->getAvatar();*/
-            $userinfo['authTokenWebService'] = $user->getAuthToken();
+             $userinfo=$this->fillUserArray($user);
+             $userinfo['authTokenWebService'] = $user->getAuthToken();
              $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
              $userinfo['path']=$baseurl;
              $user_measurment=array();
              $user_measurment=$this->fillMeasurementArray($measurement);
              $userinfo=array_merge ($userinfo, $user_measurment);
-            #-----------------------Measurement Info--------------------#
-          /*  $userinfo['weight'] = $measurement->getWeight();
-            $userinfo['height'] = $measurement->getHeight();
-            $userinfo['waist'] = $measurement->getWaist();
-            $userinfo['hip'] = $measurement->getHip();
-            $userinfo['bust'] = $measurement->getBust();
-            $userinfo['inseam'] = $measurement->getInseam();
-            $userinfo['chest'] = $measurement->getChest();
-            $userinfo['sleeve'] = $measurement->getSleeve();
-            $userinfo['neck'] = $measurement->getNeck();
-            $userinfo['back'] = $measurement->getBack();
-            if (!$userinfo['back']) {
-                $userinfo['back'] = 15.5;
-            }*/
-            
-          #------------------------End of Seting measuremt----------#          
-            return $userinfo;
+             return $userinfo;
         }
         
         }
@@ -546,24 +370,6 @@ public function measurementEditWebService($id,$request_array){
             
               $userinfo=array();
             $userinfo=$this->fillUserArray($entity);
-
-            /*$user_id = $entity->getId();
-            $birth_date = $entity->getBirthDate();
-            $userinfo = array();
-            $userinfo['id'] = $user_id;
-            $userinfo['email'] = $email;
-            $userinfo['first_name'] = $entity->getFirstName();
-            $userinfo['last_name'] = $entity->getLastName();
-            $userinfo['zipcode'] = $entity->getZipcode();
-            $userinfo['gender'] = $entity->getGender();
-            $userinfo['authTokenWebService']=$entity->getAuthToken();
-            if (isset($birth_date)) {
-                $userinfo['birth_date'] = $birth_date->format('Y-m-d');
-            }
-
-            $userinfo['image'] = $entity->getImage();
-            $userinfo['avatar'] = $entity->getAvatar();
-            $userinfo['iphoneImage']=$entity->getIphoneImage();*/
             $userinfo['authTokenWebService'] = $entity->getAuthToken();
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";
             $userinfo['path'] = $baseurl;
@@ -587,31 +393,7 @@ public function measurementEditWebService($id,$request_array){
               $user_measurment=array();
              $user_measurment=$this->fillMeasurementArray($measurement);
              $userinfo=array_merge ($userinfo, $user_measurment);
-
-            /*$userinfo['weight'] = $measurement->getWeight();
-            $userinfo['height'] = $measurement->getHeight();
-            $userinfo['waist'] = $measurement->getWaist();
-            $userinfo['hip'] = $measurement->getHip();
-
-            $userinfo['bust'] = $measurement->getBust();
-            $userinfo['chest'] = $measurement->getChest();
-            $userinfo['neck'] = $measurement->getNeck();
-            $userinfo['inseam'] = $measurement->getInseam();
-            $userinfo['back'] = $measurement->getBack();
-            if (!$userinfo['back']) {
-                $userinfo['back'] = 15.5;
-            }
-            $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
-            if (!$userinfo['iphone_shoulder_height']) {
-                $userinfo['iphone_shoulder_height'] = 150;
-            }
-            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
-            if (!$userinfo['iphone_outseam']) {
-                $userinfo['iphone_outseam'] = 400;
-            }*/
-            
-
-            return $userinfo;
+             return $userinfo;
         } else {
             return array('Message' => 'Invalid Email');
         }
@@ -679,25 +461,7 @@ public function measurementEditWebService($id,$request_array){
     public function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
     }
-    
-    
-    
-    
-    
-    //-------------------------------------------------------
-    public function findOneByName($name) {
-        return $this->repo->findOneByName($name);
-    }
-    
-    public function findMaxUserId() {
-        return $this->repo->findMaxUserId();
-    }
-#---------------------------------------------------------------#
-    public function findOneBy($email) {
-        return $this->repo->findOneBy(array('email' => $email));
-    }
-#----------------------------------------------------------------#
-     #------------------------Chek Token ------------------------#
+      #------------------------Chek Token ------------------------#
 
      public function authenticateToken($token) {
 
@@ -773,9 +537,66 @@ public function measurementEditWebService($id,$request_array){
                     }
                 return $userinfo;
  }
-
+#------------------Set User Array----------------------------------------------#
  
-      #------------------------user Image upload ------------------------#
+ private function setObjectWithArray($user,$request_array){
+     
+      if (array_key_exists('email',$request_array)){ $user->setEmail($request_array['email']);}
+      if (array_key_exists('gender',$request_array)){ $user->setGender($request_array['gender']);}
+      if (array_key_exists('zipcode',$request_array)){ $user->setZipcode($request_array['zipcode']);}
+     return $user;    
+     
+ }
+#-----------------Set  Size Chart in Measurment---------------------------------#
+private function setSizechartInMeasurment($measurement,$request_array){
+    
+     $sizeChartHelper = $this->container->get('admin.helper.sizechart');
+     $size_chart = new SizeChart();
+        if (isset($request_array['sc_top_id'])) {
+            $sc_top_id = $request_array['sc_top_id'];
+        } else {
+            $sc_top_id = 0;
+        }
+        if (isset($request_array['sc_bottom_id'])) {
+            $sc_bottom_id = $request_array['sc_bottom_id'];
+        } else {
+            $sc_bottom_id = 0;
+        }
+        if (isset($request_array['sc_dress_id'])) {
+            $sc_dress_id = $request_array['sc_dress_id'];
+        } else {
+            $sc_dress_id = 0;
+        }
+   if ($sc_top_id) {
+            $top_size = $sizeChartHelper->findOneById($sc_top_id);
+            $measurement->setTopFittingSizeChart($top_size); //
+        }
+        if ($sc_bottom_id) {
+            $bottom_size = $sizeChartHelper->findOneById($sc_bottom_id);
+            $measurement->setBottomFittingSizeChart($bottom_size); //
+        }
+        if ($sc_dress_id) {
+            $dress_size = $sizeChartHelper->findOneById($sc_dress_id);
+            $measurement->setDressFittingSizeChart($dress_size); //
+        }
+        return $measurement;
+    
+}
+#--------------------------SEt Measurment Array With Object------------------------------#
+    private  function setMeasurmentObjectWithArray($measurement,$request_array){
+        
+         if (array_key_exists('weight',$request_array)){ $measurement->setWeight($request_array['weight']);}
+         if (array_key_exists('height',$request_array)){ $measurement->setHeight($request_array['height']);}
+         if (array_key_exists('waist',$request_array)){ $measurement->setWaist($request_array['waist']);}
+         if (array_key_exists('hip',$request_array)){ $measurement->setHip($request_array['hip']);}
+         if (array_key_exists('bust',$request_array)){ $measurement->setBust($request_array['bust']);}
+         if (array_key_exists('inseam',$request_array)){ $measurement->setInseam($request_array['inseam']);}
+         if (array_key_exists('chest',$request_array)){ $measurement->setChest($request_array['chest']);}
+         if (array_key_exists('neck',$request_array)){ $measurement->setNeck($request_array['neck']);}
+         return $measurement;
+          
+}
+    #------------------------user Image upload ------------------------#
 
      
      public function uploadFittingRoomImage($entity) {
