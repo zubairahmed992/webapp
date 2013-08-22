@@ -27,9 +27,7 @@ class ProfileController extends Controller {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $size_chart_helper = $this->get('admin.helper.sizechart');
         
-        $user_helper = $this->get('user.helper.user');
-        $entity = $user_helper->find($id);
-
+        $entity = $this->get('user.helper.user')->find($id);
         $measurement = $entity->getMeasurement();
 
         if ($entity->getGender() == 'm') {
@@ -52,15 +50,9 @@ class ProfileController extends Controller {
     public function aboutMeUpdateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        
-        $size_chart_helper = $this->get('admin.helper.sizechart');
-        
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+        $entity = $this->get('user.helper.user')->find($id);
         $measurement = $entity->getMeasurement();
 
-        // $measurementForm = $this->createForm(new ProfileMeasurementType(), $measurement);
         if ($entity->getGender() == 'm') {
             $measurementForm = $this->createForm(new ProfileMeasurementMaleType(), $measurement);
         }
@@ -70,17 +62,13 @@ class ProfileController extends Controller {
 
         $measurementForm->bind($this->getRequest());
         $measurement->setUpdatedAt(new \DateTime('now'));
-        $em->persist($measurement);
-        $em->flush();
-        $this->get('session')->setFlash('success', 'Your measurement information has been saved.');
-      $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
 
+        $this->get('user.helper.measurement')->saveMeasurement($measurement);
+        $this->get('session')->setFlash('success', 'Your measurement information has been saved.');
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
-                              'sizechartsizeform' => $brandSizeChartForm->createView(),
-  
                 ));
     }
 
@@ -89,9 +77,7 @@ class ProfileController extends Controller {
     public function accountSettingsAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        
-        $user_helper = $this->get('user.helper.user');
-        $entity = $user_helper->find($id);
+        $entity = $this->get('user.helper.user')->find($id);
         
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
@@ -108,19 +94,13 @@ class ProfileController extends Controller {
     public function accountSettingsUpdateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-    $em = $this->getDoctrine()->getManager();
-        $user_helper = $this->get('user.helper.user');
-        $entity=$user_helper->find($id);
+        $entity=$this->get('user.helper.user')->find($id);
         
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
 
         if ($userForm->isValid()) {
-            
-            $getAvatar = $entity->getAvatar();
-            $entity->uploadAvatar();
-            $em->persist($entity);
-            $em->flush();
+            $this->get('user.helper.user')->updateProfile($entity);
             $this->get('session')->setFlash('Success', 'Profile has been updated.');
         }
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);

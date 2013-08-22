@@ -70,6 +70,11 @@ public function saveUser(User $user)
     $this->em->flush();
     
 }
+public function updateProfile(User $user){
+    $user->uploadAvatar();
+    $this->saveUser($user);
+}
+        
 //-------------------------------------------------------
 
     public function getLoggedIn(User $userEntity) {
@@ -146,6 +151,11 @@ public function getMeasurement($user) {
 public function find($id)
 {
     return $this->repo->findOneBy(array('id'=>$id));
+}
+//---------------------------------------------------------
+public function findUserByEmail($email)
+{
+    return $this->repo->findOneBy(array('email'=>$email));
 }
  #---------------------------START WEB SERVICES------- ----------------------------------------#
 public function findByEmail($email)
