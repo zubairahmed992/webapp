@@ -91,7 +91,7 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
         $email = $decoded['email'];
-       /* $email='oldnavywomen0@ltf.com';
+       /* $email='oldnavywomen0@ltf.com';*/
         $user = $this->get('user.helper.user');
         $entity = $user->getArrayByEmail($email);
 
