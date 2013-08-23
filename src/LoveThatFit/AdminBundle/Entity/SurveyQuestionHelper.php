@@ -42,14 +42,10 @@ class SurveyQuestionHelper {
         return $question;
     }
 
-    public function saveQuestion($entity) {
-        //$msg_array =null;
-        //$msg_array = ;
-
-        $question = $entity->getQuestion();
+    public function saveQuestion($entity) {   
+        $question=$entity->getQuestion();
         $msg_array = $this->validateForCreate($question);
-        if ($msg_array == null) {
-            $entity->upload();
+        if ($msg_array == null) {           
             $this->em->persist($entity);
             $this->em->flush();
             return array('message' => 'Question succesfully created.',
@@ -60,12 +56,11 @@ class SurveyQuestionHelper {
         } else {
             return $msg_array;
         }
+        
     }
 
     public function updateQuestion($entity) {
-
         $msg_array = $this->validateForUpdate($entity);
-
         if ($msg_array == null) {
             $this->em->persist($entity);
             $this->em->flush();
@@ -114,11 +109,14 @@ class SurveyQuestionHelper {
         return $this->repo->find($id);
     }
 
+    public function findOneByName($title) {
+        return $this->repo->findOneByName($title);
+    }
+    
     public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
-
         if (!$entity) {
-            $entity = $this->createNew();
+            $entity = $this->createNewQuestion();
             return array(
                 'entity' => $entity,
                 'message' => 'Question not found.',
@@ -150,9 +148,7 @@ class SurveyQuestionHelper {
             $no_of_paginations = ceil($rec_count / $limit);
         }
         return array(
-            'data' => $entity(),
-            'operation' => null,
-            'id' => null,
+            'data' => $entity,            
             'count_question' => $rec_count,
             'rec_count' => $rec_count,
             'no_of_pagination' => $no_of_paginations,
@@ -161,28 +157,47 @@ class SurveyQuestionHelper {
         );
     }
 
-    private function validateForCreate($name) {
-        if (count($this->findOneByName($name)) > 0) {
-            return array('message' => 'Question Name already exists!',
+    private function validateForCreate($question) {
+        if($question==null){            
+            return array('message' => 'Enter values correctly!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
             );
+        }else
+        {
+        if (count($this->findOneByName($question)) > 0) {
+            return array('message' => 'Question already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }        
         }
         return;
     }
 
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
-        $question = $this->findOneByName($entity->getName());
-
-        if ($question && $question->getId() != $entity->getId()) {
-            return array('message' => 'Question Name already exists!',
+        $question=$entity->getQuestion();
+        $questions = $this->findOneByName($entity->getQuestion());
+        if($question==null)
+        {
+          return array('message' => 'Enter values correctly!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );  
+        }else
+        {
+          if ($questions and $questions->getId()!= $entity->getId()) {
+            return array('message' => 'Question already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
             );
-        }
+        }    
+        }        
         return;
     }
 
@@ -195,12 +210,7 @@ class SurveyQuestionHelper {
         
         $question=$this->repo->find($id);        
         return $question;
-    }
+    }    
     
-    private function getAddNewQuestionForm() {
-        $class = $this->class;
-        $question = new $class();
-        return $question;
-    }
 
 }

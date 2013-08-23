@@ -43,13 +43,9 @@ class SurveyAnswerHelper {
     }
     
     public function saveAnswer($entity) {
-        //$msg_array =null;
-        //$msg_array = ;
-
         $answer = $entity->getAnswer();
         $msg_array = $this->validateForCreate($answer);
-        if ($msg_array == null) {            
-            $entity->upload();
+        if ($msg_array == null) {                        
             $this->em->persist($entity);
             $this->em->flush();
             return array('message' => 'Answer succesfully created.',
@@ -66,7 +62,6 @@ class SurveyAnswerHelper {
     public function updateAnswer($entity) {
 
         $msg_array = $this->validateForUpdate($entity);
-
         if ($msg_array == null) {            
             $this->em->persist($entity);
             $this->em->flush();
@@ -148,29 +143,50 @@ public function findWithSpecs($id) {
     
     
     private function validateForCreate($answer) {
-        if (count($this->findOneByName($answer)) > 0) {
-            return array('message' => 'Answer Name already exists!',
+        if($answer==null){            
+            return array('message' => 'Enter values correctly!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
             );
+        }else
+        {
+        if (count($this->findOneByName($answer)) > 0) {
+            return array('message' => 'Answer already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }        
         }
-        return;
+        return;     
     }
 
 //----------------------------------------------------------
+    
     private function validateForUpdate($entity) {
-        $question = $this->findOneByName($entity->getName());
-
-        if ($question && $question->getId() != $entity->getId()) {
-            return array('message' => 'Answer Name already exists!',
+        $answer=$entity->getAnswer();
+        $answers = $this->findOneByName($entity->getAnswer());
+        if($answer==null)
+        {
+          return array('message' => 'Enter values correctly!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );  
+        }else
+        {
+          if ($answers and $answers->getId()!= $entity->getId()) {
+            return array('message' => 'answer already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
             );
-        }
+        }    
+        }        
         return;
     }
+    
     
    public  function getAnswerById($id) {
         $answer=$this->repo->find($id);

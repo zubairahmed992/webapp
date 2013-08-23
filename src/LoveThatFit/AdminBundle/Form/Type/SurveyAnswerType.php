@@ -13,8 +13,7 @@ class SurveyAnswerType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       $builder->add('question', 'text', array('label' =>' '));        
-       $builder->add('questionstatus', 'hidden', array('data' => '1',));       
+       $builder->add('answer', 'text', array('label' =>' '));        
     }
 
      public function getDefaultOptions(array $options)
@@ -22,7 +21,7 @@ class SurveyAnswerType extends AbstractType
              return array(
             'data_class' => 'LoveThatFit\AdminBundle\Entity\SurveyAnswer',
             'cascade_validation' => true,
-            'validation_groups' => array('survey_question'),
+            'validation_groups' => array('survey_answer'),
              );
       } 
  
@@ -30,7 +29,7 @@ class SurveyAnswerType extends AbstractType
     
     public function getName()
     {
-        return 'question';
+        return 'answer';
     }
 
     

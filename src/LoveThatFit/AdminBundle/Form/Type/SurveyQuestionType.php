@@ -13,8 +13,16 @@ class SurveyQuestionType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       $builder->add('question', 'text', array('label' =>' '));        
-       $builder->add('questionstatus', 'hidden', array('data' => '1',));       
+       if($this->mode=='edit')
+       {        
+       $builder->add('question', 'text', array('label' =>' '));  
+       $builder->add('questionstatus', 'checkbox',array('label' =>' ','required'  => false));    
+       }else
+       {   
+           $builder->add('question', 'text', array('label' =>' '));  
+           $builder->add('questionstatus', 'hidden', array('data' => '1',));
+       }
+          
     }
 
      public function getDefaultOptions(array $options)
