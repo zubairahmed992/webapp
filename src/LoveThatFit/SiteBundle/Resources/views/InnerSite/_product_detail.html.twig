@@ -1,4 +1,4 @@
-
+    
 <script language="javascript">
 
 function chk_applied_loaded(prod_type_applied){
@@ -176,6 +176,7 @@ function pattern_select(color_id,product_id,size_id)
               $('.featured_box'+product_id+' .dynamic_data'+product_id ).html(data).addClass("disp_blk");
               $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass("hide");
               set_drag_drop_ele();
+              apply_prod(size_id,product_id,color_id);
             }
         });
 

@@ -170,7 +170,7 @@ function call_settings(responseText, statusText, xhr, $form){
     $("#bottom_adj_marks").draggable({handle: "#bottom_moveable", axis: "y", containment: "parent",
     create: function() {
        prod_bottom_pos = $("#bottom_adj_marks").css("top");
-       $("#measurement_waist_height").attr('value', prod_bottom_pos);
+       $("#measurement_outseam").attr('value', prod_bottom_pos);
        $("#adj_popout_bottom").css("top", prod_bottom_pos);
     },
     start: function() {
@@ -178,12 +178,12 @@ function call_settings(responseText, statusText, xhr, $form){
     },
     drag: function() {
        prod_bottom_pos = $("#bottom_adj_marks").css("top");
-       $("#measurement_waist_height").attr('value', prod_bottom_pos);
+       $("#measurement_outseam").attr('value', prod_bottom_pos);
        $("#adj_popout_bottom").css("top", prod_bottom_pos);
     },
     stop: function() {
        prod_bottom_pos = $("#bottom_adj_marks").css("top");
-       $("#measurement_waist_height").attr('value', prod_bottom_pos);
+       $("#measurement_outseam").attr('value', prod_bottom_pos);
        $("#adj_popout_bottom").css("top", prod_bottom_pos);
     }
     });
