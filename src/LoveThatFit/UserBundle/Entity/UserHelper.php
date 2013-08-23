@@ -195,63 +195,42 @@ public function getMeasurement($user) {
 #-------------Edit/Update Profile for Web Services----------------#
     public function editProfileServiceHelper($decoded) {
         $email = $decoded['email'];
-      
-        /*$first_name = $decoded['firstName'];
-        $last_name = $decoded['lastName'];
-        $birth_date = $decoded['dob'];
-        $zipcode = $decoded['zip'];*/
-       
-        
-        if ($email) {
 
+        if ($email) {
             $user = $this->repo->findOneBy(array('email' => $email));
             $user->setCreatedAt(new \DateTime('now'));
             $user->setUpdatedAt(new \DateTime('now'));
-//-------replace with set method
-            if (isset($decoded['firstName'])) {
-                $user->setFirstName($decoded['firstName']);
-            }
-            if (isset($decoded['lastName'])) {
-                $user->setLastName($decoded['lastName']);
-            }
-            if (isset($decoded['dob'])) {
-                $user->setBirthDate(new \DateTime($decoded['dob']));
-            }
-            if (isset($decoded['zip'])) {
-                $user->setZipcode($decoded['zip']);
-            }
+            $user = $this->setObjectWithArray($user, $decoded);
             $this->saveUser($user);
             return true;
         } else {
-
-            return false;
-        }
-        
-    }
+              return false;
+       }
+}
  #------------------------Returning Factory---------------------#
 
 
 #---------------------------------------------Login Web Service -----------------------------------#
-    public function loginWebService($entity, $password, $email) {
+    public function loginWebService($request_array,$request) {
+        
+        $email = $request_array['email'];
+        $password = $request_array['password'];
+        /* $email ='abcdf@gmail.com';
+          $password ='123456'; */
 
-        $authTokenWebService = $entity->getAuthToken();
-        $user_db_password = $entity->getPassword();
-        $password_old_enc = $this->matchPassword($entity, $password);
-        if ($user_db_password == $password_old_enc) {
-
-            $userinfo = array();
-            $userinfo = $this->fillUserArray($entity);
-            $userinfo['authTokenWebService'] = $authTokenWebService;
-            $entity = $this->repo->find($userinfo['id']);
-            $measurement = $entity->getMeasurement();
-            $user_measurment = array();
-            $user_measurment = $this->fillMeasurementArray($measurement);
-            $userinfo = array_merge($userinfo, $user_measurment);
-
-            return $userinfo;
-        } else {
-            return array('Message' => 'Invalid Password');
-        }
+        $entity = $this->findOneBy($email);
+            if (count($entity) > 0) {
+                $user_db_password = $entity->getPassword();
+                $password_old_enc = $this->matchPassword($entity, $password);
+                if ($user_db_password == $password_old_enc) {
+                    $userinfo = $this->gettingUserDetailArray($entity,$request);
+                    return $userinfo;
+                } else {
+                    return array('Message' => 'Invalid Password');
+                }
+            } else {
+                return array('Message' => 'Invalid Email');
+            }
     }
 
 #---------------------------------Web Service For Registration--------------------#
@@ -285,14 +264,16 @@ public function getMeasurement($user) {
             $user->setMeasurement($measurement);
             $this->saveUser($user);
     #---------------------------------------------------Getting Data-----------------------------#
-             $userinfo=array();
+             $userinfo = $this->gettingUserDetailArray($user,$request);
+             
+             /*$userinfo=array();
              $userinfo=$this->fillUserArray($user);
              $userinfo['authTokenWebService'] = $user->getAuthToken();
              $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
              $userinfo['path']=$baseurl;
              $user_measurment=array();
              $user_measurment=$this->fillMeasurementArray($measurement);
-             $userinfo=array_merge ($userinfo, $user_measurment);
+             $userinfo=array_merge ($userinfo, $user_measurment);*/
              return $userinfo;
         }
         
@@ -382,19 +363,13 @@ public function measurementEditWebService($id,$request_array){
             //$encoder = $factory->getEncoder($entity);
             $password_old_enc = $this->matchPassword($entity, $old_password);
           //  $password_old_enc = $encoder->encodePassword($old_password, $salt_value_old);
-
-
-            if ($password_old_enc == $user_db_password) {
-
+         if ($password_old_enc == $user_db_password) {
                 $entity->setUpdatedAt(new \DateTime('now'));
                 $factory = $this->container->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($entity);
                 $password = $encoder->encodePassword($password,$entity->getSalt());
-                
                 $entity->setPassword($password);
                 $this->saveUser($entity);
-
-
                 return array('Message' => 'Paasword has been updated');
             } else {
                 return array('Message' => 'Invalid Password');
@@ -431,7 +406,7 @@ public function measurementEditWebService($id,$request_array){
     }
     
 #-------- Getting the User Info ------------------------------------------------------------#
-  public function fillUserArray($entity){
+  private function fillUserArray($entity){
       
                 $birth_date=$entity->getBirthDate();
                    $userinfo=array();
@@ -501,6 +476,10 @@ public function measurementEditWebService($id,$request_array){
       if (array_key_exists('email',$request_array)){ $user->setEmail($request_array['email']);}
       if (array_key_exists('gender',$request_array)){ $user->setGender($request_array['gender']);}
       if (array_key_exists('zipcode',$request_array)){ $user->setZipcode($request_array['zipcode']);}
+      if (array_key_exists('firstName',$request_array)){ $user->setFirstName($request_array['firstName']);}
+      if (array_key_exists('lastName',$request_array)){ $user->setLastName($request_array['lastName']);}
+      if (array_key_exists('dob',$request_array)){ $user->setBirthDate(new \DateTime($request_array['dob']));}
+      
      return $user;    
  }
 #-----------------Set  Size Chart in Measurment---------------------------------#
@@ -571,8 +550,10 @@ private function setSizechartInMeasurment($measurement,$request_array){
   public function getArrayByEmail($email)
 {
                   $entity= $this->repo->findOneBy(array('email'=>$email));
-                   $birth_date=$entity->getBirthDate();
+                   
                    $userinfo=array();
+                   $userinfo=$this->fillUserArray($entity);
+                   /*$birth_date=$entity->getBirthDate();
                    $userinfo['id']=$entity->getId();
                    $userinfo['email']=$email;
                    $userinfo['first_name']=$entity->getFirstName();
@@ -584,10 +565,27 @@ private function setSizechartInMeasurment($measurement,$request_array){
                    }
                    
                    $userinfo['image']=$entity->getImage();
-                   $userinfo['avatar']=$entity->getAvatar();
+                   $userinfo['avatar']=$entity->getAvatar();*/
                  
     return  $userinfo;
-}  
+}
+#--------------------------------User Detail Array -----------------------------------#
+    private function gettingUserDetailArray($entity,$request){
+           
+            $userinfo = array();
+            $userinfo = $this->fillUserArray($entity);
+            $entity = $this->repo->find($userinfo['id']);
+            $measurement = $entity->getMeasurement();
+            $user_measurment = array();
+            $user_measurment = $this->fillMeasurementArray($measurement);
+            $userinfo['path']=$request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/uploads/ltf/users/'.$userinfo['id']."/";
+             
+            $userinfo['authTokenWebService'] = $entity->getAuthToken();
+            $userinfo = array_merge($userinfo, $user_measurment);
+            return $userinfo;
+        
+    }
+#---------------------------------------------------End Of Detail Array----------------------------------------#
 
     //---------------ADMIN USER Controller Refractor Methods----------------
     //---------------Pagination List Method---------------------------------

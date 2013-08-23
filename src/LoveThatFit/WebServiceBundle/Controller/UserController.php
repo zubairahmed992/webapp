@@ -44,27 +44,9 @@ class UserController extends Controller {
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
         $user_helper = $this->get('user.helper.user');
-
-        $email = $decoded['email'];
-        $password = $decoded['password'];
-         
-       /*$email ='abcdf@gmail.com';
-        $password ='123456';*/
-       
-        //$em = $this->getDoctrine()->getManager();
-        //$entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
-         $entity= $user_helper->findOneBy($email);
-        if (count($entity) > 0) {
-            $user_info = $user_helper->loginWebService($entity, $password, $email);
-            if (isset($user_info['id'])) {
-                $user_id = $user_info['id'];
-                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-                $user_info['path'] = $baseurl;
-            }
-            return new response(json_encode($user_info));
-        } else {
-            return new Response(json_encode(array('Message' => 'Invalid Email')));
-        }
+        $user_info = $user_helper->loginWebService($decoded,$request);
+        return new response(json_encode($user_info));
+      
     }
 #------------------------------Edit Profile----------------------------------------------------------#    
   
@@ -75,9 +57,12 @@ class UserController extends Controller {
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
+      /*   $decoded=array();
+        $decoded=array('email'=>'oldnavywomen0@ltf.com','firstName'=>'test','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
+            'weight'=>4,'neck'=>4,'bust'=>5);*/
  #------------------------------Authentication of Token--------------------------------------------#
         $user = $this->get('user.helper.user');
-        $authTokenWebService = $decoded['authTokenWebService'];
+       $authTokenWebService = $decoded['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -86,7 +71,7 @@ class UserController extends Controller {
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
-#-------------------------------End Of Authentication Token--------------------------------------#
+#------------------------------End Of Authentication Token--------------------------------------#
 
     $entity=$user->editProfileServiceHelper($decoded);   
        // return new response(json_encode($entity));
@@ -106,7 +91,7 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
         $email = $decoded['email'];
-
+       /* $email='oldnavywomen0@ltf.com';
         $user = $this->get('user.helper.user');
         $entity = $user->getArrayByEmail($email);
 
@@ -128,10 +113,9 @@ public function userProfileAction()
         $user = $this->get('user.helper.user');
         
         #/!!!!!!!!!!!!!!!!!!!!!!!!!!!! TESTING CODE SHOUDL BE REMOVED #/
-      /*  $request_array=array();
-        $request_array=array('email'=>'abcdfdef@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
-            'weight'=>4,'neck'=>4,'bust'=>5);
-        */
+     /*  $request_array=array();
+        $request_array=array('email'=>'abcdfdefg@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
+            'weight'=>4,'neck'=>4,'bust'=>5);*/
         
         $user_info = $user->RegistrationWebSerive($request,$request_array);
         return new response(json_encode($user_info));
