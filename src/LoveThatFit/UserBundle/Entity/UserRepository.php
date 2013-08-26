@@ -1,59 +1,49 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
-class UserRepository extends EntityRepository
-{
-    /*
-     public function loadUserByUsername($username) {
-        return $this->findOneBy(array('username' => $username));
-    }
-    */
+class UserRepository extends EntityRepository {
+
     public function findByEmail($email) {
         return $this->findOneBy(array('email' => $email));
     }
-    
+
+    #--------------------------------------------------------------
+
     public function loadUserByAuthToken($auth_token) {
         return $this->findOneBy(array('authToken' => $auth_token));
     }
-    
-   public function isDuplicateEmail($id, $email) {
+
+    #--------------------------------------------------------------
+
+    public function isDuplicateEmail($id, $email) {
         try {
 
             $entityByEmail = $this->findOneBy(array('email' => $email));
-            
-            if(!($id) && !($entityByEmail)){
+
+            if (!($id) && !($entityByEmail)) {
                 return false;
-            }else{
-                 $entityById = $this->find($id);
-            
-            if ($entityByEmail) {
-                return ($entityByEmail->getEmail() == $entityById->getEmail()) ? false : true;
             } else {
-                return false;
+                $entityById = $this->find($id);
+
+                if ($entityByEmail) {
+                    return ($entityByEmail->getEmail() == $entityById->getEmail()) ? false : true;
+                } else {
+                    return false;
+                }
             }
-            }
-     
-            } catch (\Exception $e) {
-            return $e;
-        }
-    }
-   /* 
-    public function isUserNameExist($username) {
-        try {
-            
-            $entity = $this->loadUserByUsername($username);
-            return $entity ? true : false;
         } catch (\Exception $e) {
             return $e;
         }
     }
-    
-    */
+
+    #--------------------------------------------------------------
+
     public function findAllUsers($page_number = 0, $limit = 0, $sort = 'id') {
 
         if ($page_number <= 0 || $limit <= 0) {
@@ -71,9 +61,9 @@ class UserRepository extends EntityRepository
             return null;
         }
     }
-    
-    
-    
+
+    #--------------------------------------------------------------
+
     public function countAllUserRecord() {
         $total_record = $this->getEntityManager()
                 ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us');
@@ -83,226 +73,138 @@ class UserRepository extends EntityRepository
             return null;
         }
     }
-    
-    public function findUserSearchListByGender($gender)
-    {
-        $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT us FROM LoveThatFitUserBundle:User us 
-     WHERE
-        us.gender=:gender"
-            )->setParameter('gender', $gender); 
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-        
-    }
-    
-    public function findByName($firstname,$lastname)
-    {
-        $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT us FROM LoveThatFitUserBundle:User us 
-     WHERE
-        us.firstName LIKE :firstName
-        or
-        us.lastName LIKE :lastName         
-        "
-        )->setParameters(array('firstName'=>'%'.$firstname.'%','lastName'=>'%'.$lastname.'%')); 
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-        
-    }
-    
-    
-    public function findByGenderName($firstname,$lastname,$gender)
-    {
-        $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT us FROM LoveThatFitUserBundle:User us 
-     WHERE
-        us.firstName LIKE :firstName
-        or
-        us.lastName LIKE :lastName
-        or
-        us.gender=:gender        
-        "
-        )->setParameters(array('firstName'=>'%'.$firstname.'%','lastName'=>'%'.$lastname.'%','gender'=>$gender)); 
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-        
-    }
-    
-    public function findUserByAge($beginDate,$endDate)
-    {
-      $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT u FROM LoveThatFitUserBundle:User u 
-     where
-        u.birthDate BETWEEN :startDate
-        AND 
-        :endDate
-        "
-        )->setParameter('startDate',$beginDate)
-         ->setParameter('endDate',$endDate);
-        try {                     
-            return $query->getResult();
-            
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-        
-    }
-    
-    public function findByNameGenderBirthDateRange($firstname,$lastname,$gender,$beginDate,$endDate)
-    {
-      $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT us FROM LoveThatFitUserBundle:User us 
-     where
-        us.firstName LIKE :firstName
-        or
-        us.lastName LIKE :lastName
-        or
-        us.gender=:gender 
-        or
-        us.birthDate BETWEEN :startDate
-        AND 
-        :endDate
-        "
-        )->setParameters(array('firstName'=>'%'.$firstname.'%','lastName'=>'%'.$lastname.'%','gender'=>$gender,'startDate'=>$beginDate,'endDate'=>$endDate));
-        try {                     
-            return $query->getResult();
-            
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-        
-    }
-    
-    
-    public function findUserByGender($gender)
-    {
-        $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT us FROM LoveThatFitUserBundle:User us 
-     where
-        us.gender=:gender"
-        )->setParameter('gender',$gender);
-        try {                     
-            return $query->getResult();
-            
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
- 
-      //----------------------------------------------------------------------------------------
-  
- /*   public function findUserByMonth()
-  {//SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
-    
-          
-    $rsm = new ResultSetMapping();
-    $em = $this->getEntityManager();
-  //  $query = $em->createNativeQuery("SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM ltf_users us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M')", $rsm);
-  
-    $rsm->addEntityResult('LoveThatFitUserBundle:User', 'us');
-    //$rsm->addFieldResult('us', 'created_at', 'created_at');
-    $rsm->addFieldResult('us', 'id', 'id');
 
-    $query = $this->getEntityManager()
-                        ->createNativeQuery("
-     SELECT COUNT(us.id) as total FROM ltf_users us", $rsm
-        );
-    return $query->getResult();
-         
-  }
-    //----------------------------------------------------------------------------------------
- 
-    
-    
-  public function _findUserByMonth()
-  {//SELECT DATE_FORMAT(us.created_at, '%M') as month,COUNT(id) as total FROM LoveThatFitUserBundle:User us  GROUP BY DATE_FORMAT(us.created_at, '%Y%M') 
-      $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT COUNT(u.id) as total FROM LoveThatFitUserBundle:User u"
-        );
-        try {                     
-            return $query->getArrayResult();
-            
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        } 
-  }
- 
-  public function findUserAge()
-  {
-      $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT us.birthDate, CURDATE(),TIMESTAMPDIFF(YEAR,us.birthDate,CURDATE()) AS age FROM LoveThatFitUserBundle:User us 
-     "
-        );
-        try {                     
-            return $query->getResult();
-            
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-  }
-  
-  public function findUserByAgeGroup($startage,$endage)
-  {
-      $query = $this->getEntityManager()
+    #--------------------------------------------------------------
+
+    public function findUserSearchListByGender($gender) {
+        $query = $this->getEntityManager()
                         ->createQuery("
      SELECT us FROM LoveThatFitUserBundle:User us 
-     where 
-     TIMESTAMPDIFF(YEAR,us.birth_date,CURRENT_DATE()) BETWEEN
-     :startage
-     AND 
-     :endage"
-            )->setParameters(array('startage'=>$startage,'endage'=>$endage));
-        try {                     
+     WHERE us.gender=:gender"
+                        )->setParameter('gender', $gender);
+        try {
             return $query->getResult();
-            
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-  }
- */    
-  public function findOneByName($firstName) {
+    }
+
+    #--------------------------------------------------------------
+
+    public function findByName($firstname, $lastname) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     WHERE us.firstName LIKE :firstName OR
+        us.lastName LIKE :lastName"
+                        )->setParameters(array('firstName' => '%' . $firstname . '%',
+            'lastName' => '%' . $lastname . '%'));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    #--------------------------------------------------------------    
+
+    public function findByGenderName($firstname, $lastname, $gender) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     WHERE us.firstName LIKE :firstName OR
+        us.lastName LIKE :lastName OR
+        us.gender=:gender"
+                        )->setParameters(
+                array('firstName' => '%' . $firstname . '%',
+                    'lastName' => '%' . $lastname . '%',
+                    'gender' => $gender));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    #--------------------------------------------------------------
+
+    public function findUserByAge($beginDate, $endDate) {
+        $query = $this->getEntityManager()
+                ->createQuery("
+     SELECT u FROM LoveThatFitUserBundle:User u 
+     WHERE  u.birthDate BETWEEN :startDate AND :endDate"
+                )->setParameter('startDate', $beginDate)
+                ->setParameter('endDate', $endDate);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    #--------------------------------------------------------------
+
+    public function findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     WHERE us.firstName LIKE :firstName OR
+        us.lastName LIKE :lastName OR
+        us.gender=:gender  OR
+        us.birthDate BETWEEN :startDate AND :endDate"
+                        )->setParameters(
+                array('firstName' => '%' . $firstname . '%',
+                    'lastName' => '%' . $lastname . '%',
+                    'gender' => $gender,
+                    'startDate' => $beginDate,
+                    'endDate' => $endDate));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+#--------------------------------------------------------------    
+
+    public function findUserByGender($gender) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT us FROM LoveThatFitUserBundle:User us 
+     WHERE us.gender=:gender"
+                        )->setParameter('gender', $gender);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+  
+    #--------------------------------------------------------------
+    public function findOneByName($firstName) {
         $record = $this->getEntityManager()
-                        ->createQuery("SELECT us FROM LoveThatFitUserBundle:User us   
+                ->createQuery("SELECT us FROM LoveThatFitUserBundle:User us   
                                 WHERE us.firstName = :firstName")
-                        ->setParameters(array('firstName' =>$firstName));
+                ->setParameters(array('firstName' => $firstName));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
     }
-  
-  public function findMaxUserId()
-  {
-       $query = $this->getEntityManager()
+
+    #--------------------------------------------------------------
+
+    public function findMaxUserId() {
+        $query = $this->getEntityManager()
                 ->createQuery('SELECT max(us.id) as id FROM LoveThatFitUserBundle:User us');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-  }
-    
-   
+    }
+
 }
-
-
 
