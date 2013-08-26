@@ -100,7 +100,7 @@ class UserRepository extends EntityRepository
         
     }
     
-    public function findUserSearchListByName($firstname,$lastname)
+    public function findByName($firstname,$lastname)
     {
         $query = $this->getEntityManager()
                         ->createQuery("
@@ -120,7 +120,7 @@ class UserRepository extends EntityRepository
     }
     
     
-    public function findUserSearchListBy($firstname,$lastname,$gender)
+    public function findByGenderName($firstname,$lastname,$gender)
     {
         $query = $this->getEntityManager()
                         ->createQuery("
@@ -162,7 +162,7 @@ class UserRepository extends EntityRepository
         
     }
     
-    public function findUserSearchListsBy($firstname,$lastname,$gender,$beginDate,$endDate)
+    public function findByNameGenderBirthDateRange($firstname,$lastname,$gender,$beginDate,$endDate)
     {
       $query = $this->getEntityManager()
                         ->createQuery("

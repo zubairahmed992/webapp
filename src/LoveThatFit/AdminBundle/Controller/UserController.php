@@ -48,11 +48,11 @@ class UserController extends Controller {
        }
        if($firstname=='' and $gender=='')
        {
-         $entity=$this->get('user.helper.user')->getUserByAge($beginDate,$endDate);
+         $entity=$this->get('user.helper.user')->findByBirthDateRange($beginDate,$endDate);
        }
        if($firstname=='' and $age=='')
        {
-       $entity = $this->get('user.helper.user')->getUserSearchListByGender($gender);      
+       $entity = $this->get('user.helper.user')->findByGender($gender);      
        }
        if($gender=='' and $age=='')
        {
@@ -60,11 +60,11 @@ class UserController extends Controller {
        }
        if($gender!='' and $firstname!='')
        {
-           $entity = $this->get('user.helper.user')->getUserSearchList($firstname,$lastname,$gender);
+           $entity = $this->get('user.helper.user')->findByGenderName($firstname,$lastname,$gender);
        }
        if($gender!='' and $firstname!='' and $age!='')
        {
-           $entity = $this->getUserSearchLists($firstname,$lastname,$gender,$beginDate,$endDate);
+           $entity = $this->findByNameGenderBirthDateRange($firstname,$lastname,$gender,$beginDate,$endDate);
        }
        if (!$entity) {
            $this->get('session')->setFlash('warning','Unable to find User.');

@@ -123,16 +123,8 @@ class UserHelper {
 
     #---------------------------------------------------------------    
 
-    private function getUserByGender($gender) {
-        $rec_count = count($this->repo->findUserByGender($gender));
-        return $rec_count;
-    }
-
-#---------------------------------------------------------------
-
-    public function getUsersListById($id) {
-        $entity = $this->repo->findOneBy(array('id' => $id));
-        return $entity;
+    private function findByGender($gender) {
+        return  count($this->repo->findUserByGender($gender));        
     }
 
     #---------------------------------------------------------------
@@ -167,37 +159,26 @@ class UserHelper {
 
     #---------------------------------------------------------------
 
-    public function getUserByAge($beginDate, $endDate) {
-        $entity = $this->repo->findUserByAge($beginDate, $endDate);
-        return $entity;
+    public function findByBirthDateRange($beginDate, $endDate) {
+        return $this->repo->findUserByAge($beginDate, $endDate);        
     }
 
     #---------------------------------------------------------------
 
-    public function getUserSearchListByGender($gender) {
-        $entity = $this->repo->findUserSearchListByGender($gender);
-        return $entity;
+    public function findByName($firstname, $lastname) {
+        return $this->repo->findByName($firstname, $lastname);        
     }
 
     #---------------------------------------------------------------
 
-    public function getUserSearchListByName($firstname, $lastname) {
-        $entity = $this->repo->findUserSearchListByName($firstname, $lastname);
-        return $entity;
+    public function findByGenderName($firstname, $lastname, $gender) {
+        return $this->repo->findByGenderName($firstname, $lastname, $gender);        
     }
 
     #---------------------------------------------------------------
 
-    public function getUserSearchList($firstname, $lastname, $gender) {
-        $entity = $this->repo->findUserSearchListBy($firstname, $lastname, $gender);
-        return $entity;
-    }
-
-    #---------------------------------------------------------------
-
-    public function getUserSearchLists($firstname, $lastname, $gender, $beginDate, $endDate) {
-        $entity = $this->repo->findUserSearchListsBy($firstname, $lastname, $gender, $beginDate, $endDate);
-        return $entity;
+    public function findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate) {
+        return $this->repo->findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate);        
     }
 
     #---------------------------------------------------------------
@@ -648,8 +629,8 @@ class UserHelper {
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,
             'per_page_limit' => $limit,
-            'femaleUsers' => $this->getUserByGender('f'),
-            'maleUsers' => $this->getUserByGender('m'),
+            'femaleUsers' => $this->findByGender('f'),
+            'maleUsers' => $this->findByGender('m'),
         );
     }
 
