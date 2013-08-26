@@ -73,7 +73,7 @@ class UserController extends Controller {
         }
 #------------------------------End Of Authentication Token--------------------------------------#
 
-    $entity=$user->editProfileServiceHelper($decoded);   
+    $entity=$user->updateWithUserArray($decoded);   
        // return new response(json_encode($entity));
     if ($entity) {
             return new Response(json_encode(array('Message' => 'Update Sucessfully')));
@@ -117,7 +117,7 @@ public function userProfileAction()
         $request_array=array('email'=>'abcdfdefg@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
             'weight'=>4,'neck'=>4,'bust'=>5);*/
         
-        $user_info = $user->RegistrationWebSerive($request,$request_array);
+        $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));
     }
 
@@ -149,7 +149,7 @@ public function userProfileAction()
             $userinfo = $user->getArrayByEmail($email);
            
             $msg=array();
-            $msg=$user->measurementEditWebService($userinfo['id'],$request_array);
+            $msg=$user->updateMeasurementWithReqestArray($userinfo['id'],$request_array);
             
            
              return new Response(json_encode($msg));

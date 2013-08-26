@@ -312,8 +312,7 @@ class UserHelper {
     }
 
 #-------------Edit/Update Profile for Web Services----------------#
-    // change name updateWithReqestArray
-    public function editProfileServiceHelper($decoded) {// change name updateWithUserArray
+    public function updateWithUserArray($decoded) {
         $email = $decoded['email'];
         if ($email) {
             $user = $this->repo->findOneBy(array('email' => $email));            
@@ -347,8 +346,8 @@ class UserHelper {
 
 #---------------------------------Web Service For Registration--------------------#
 
-    public function RegistrationWebSerive(Request $request, $request_array) {
-// change name registerWithReqestArray// remaining~~~
+    public function registerWithReqestArray(Request $request, $request_array) {
+
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
         $email = $request_array['email'];
         $password = $request_array['password'];
@@ -375,8 +374,8 @@ class UserHelper {
 
 #------------------------------------------------Measurement Edit Service--------------------------------------------#
 
-    public function measurementEditWebService($id, $request_array) {
-// change name updateMeasurementWithReqestArray
+    public function updateMeasurementWithReqestArray($id, $request_array) {
+
         $entity = $this->repo->find($id);
         $measurement = $entity->getMeasurement();
         if ($measurement) {
@@ -393,8 +392,8 @@ class UserHelper {
 
     #-----------------------------------------------Edit Shoulder/Outseam--------------------------------------------
 
-    public function shoulderOutseamWebService($request, $request_array) {
-        // change name updateMarkingParamWithReqestArray
+    public function updateMarkingParamWithReqestArray($request, $request_array) {
+        
         $email = $request_array['email'];
         $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
         $iphone_outseam = $request_array['iphone_outseam'];
@@ -428,8 +427,8 @@ class UserHelper {
 
     #---------------------Change Password Action-----------------------------------------------------#  
 
-    public function webServiceChangePassword($request_array) {
-        // change name changePasswordWithReqestArray
+    public function changePasswordWithReqestArray($request_array) {
+        
 //-------break functionality into further methods
 
         if (isset($request_array['email'])) {
@@ -481,7 +480,7 @@ class UserHelper {
     }
 #------------------------------------------------------------------------------------
     public function fillMeasurementArray($measurement) {
-        // change name
+        
         $userinfo = array();
         if ($measurement) {
             $userinfo['weight'] = $measurement->getWeight();
