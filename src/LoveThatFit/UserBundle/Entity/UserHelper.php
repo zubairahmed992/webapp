@@ -123,10 +123,12 @@ class UserHelper {
 
     #---------------------------------------------------------------    
 
-    private function findByGender($gender) {
-        return  count($this->repo->findUserByGender($gender));        
+    public function findByGender($gender) {
+        return  $this->repo->findUserByGender($gender);        
     }
 
+    
+    
     #---------------------------------------------------------------
 
     public function findWithSpecs($id) {
@@ -181,6 +183,10 @@ class UserHelper {
         return $this->repo->findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate);        
     }
 
+    private function countByGender($gender) {
+        return  count($this->repo->findUserByGender($gender));        
+    }
+    
     #---------------------------------------------------------------
 // only use in website for security context in login
     public function getRegistrationSecurityContext($request) {        
@@ -629,8 +635,8 @@ class UserHelper {
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,
             'per_page_limit' => $limit,
-            'femaleUsers' => $this->findByGender('f'),
-            'maleUsers' => $this->findByGender('m'),
+            'femaleUsers' => $this->countByGender('f'),
+            'maleUsers' => $this->countByGender('m'),
         );
     }
 

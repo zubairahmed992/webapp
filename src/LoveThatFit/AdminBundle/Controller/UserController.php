@@ -56,7 +56,7 @@ class UserController extends Controller {
        }
        if($gender=='' and $age=='')
        {
-           $entity = $this->get('user.helper.user')->getUserSearchListByName($firstname,$lastname);
+           $entity = $this->get('user.helper.user')->findByName($firstname,$lastname);
        }
        if($gender!='' and $firstname!='')
        {
