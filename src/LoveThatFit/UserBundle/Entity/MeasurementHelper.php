@@ -59,6 +59,7 @@ class MeasurementHelper {
     }
     #-------------------------------------------------------------------------
     public function saveMeasurement(Measurement $measurement) {
+        $measurement->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($measurement);
         $this->em->flush();
     }

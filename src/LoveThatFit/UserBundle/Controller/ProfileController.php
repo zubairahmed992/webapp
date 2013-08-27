@@ -172,7 +172,32 @@ public function passwordResetUpdateAction(Request $request) {
     }
 
     
-    
+    public function _passwordResetUpdateAction(Request $request) {
+
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user=$this->get('user.helper.user')->find($id);
+        $userForm = $this->createForm(new UserPasswordReset(), $user);
+        $userForm->bind($request);
+        $data = $userForm->getData();
+        $oldPassword = $data->getOldpassword();
+        $newPassword = $data->getPassword();
+        
+        $response_array=$this->get('user.helper.user')->resetPassword($user, $data);
+        $user=$response_array['entity'];
+        return new Response(var_dump($response_array['header'].':  '.$response_array['message']));
+        $this->get('session')->setFlash($response_array['header'], $response_array['message']);
+        //$this->get('session')->setFlash('Success', 'Profile has been updated.');
+        $userForms = $this->createForm(new ProfileSettingsType(), $user);
+        $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
+
+        return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
+                    'form' => $userForms->createView(),
+                    'entity' => $user,
+                    'form_password_reset' => $passwordResetForm->createView()
+                ));
+    }
+
+
     
     //----------------------Profile Size Chart Sizes----------------Azeem----------
     

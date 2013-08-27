@@ -225,6 +225,33 @@ class UserHelper {
         }
         return false;
     }
+    
+//-------------------------------------------------------
+    public function resetPassword($user, $request_array) {
+        $oldPassword=$request_array->getOldpassword();
+        $oldEncodedPassword = $this->encodeThisPassword($user, $oldPassword);
+        $_user =  $this->find(1);
+        return array('status' => true, 'header' => 'tester', 'message' => $oldEncodedPassword.' >~~> '.$_user->getPassword(), 'entity' => $user);
+        if ($oldEncodedPassword == $user->getPassword()) {
+            $user->getPassword($this->encodeThisPassword($user, $newPassword));
+            $this->saveUser($user);
+            return array('status' => true, 'header' => 'Success', 'message' => 'Password has been successfully changed', 'entity' => $user);
+        } else {
+            return array('status' => false, 'header' => 'Warning', 'message' => 'Old password Invalid', 'entity' => $user);
+        }
+    }
+    //-------------------------------------------------------------------
+    public function _resetPassword($user, $oldPassword, $newPassword) {
+        $oldEncodedPassword = $this->encodeThisPassword($user, $oldPassword);
+        return array('status' => true, 'header' => 'tester', 'message' => $oldEncodedPassword.' ~> '.$user->getPassword(), 'entity' => $user);
+        if ($oldEncodedPassword == $user->getPassword()) {
+            $user->getPassword($this->encodeThisPassword($user, $newPassword));
+            $this->saveUser($user);
+            return array('status' => true, 'header' => 'Success', 'message' => 'Password has been successfully changed', 'entity' => $user);
+        } else {
+            return array('status' => false, 'header' => 'Warning', 'message' => 'Old password Invalid', 'entity' => $user);
+        }
+    }
 
     #-------------------------Web Service For Email Checking--------------------------------------#
 
