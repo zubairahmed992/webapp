@@ -177,7 +177,7 @@ public function userProfileAction()
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------#
-        $msg=$user->shoulderOutseamWebService($request,$request_array);
+        $msg=$user->updateMarkingParamWithReqestArray($request,$request_array);
         return new response(json_encode($msg));
         
        
@@ -203,7 +203,7 @@ public function userProfileAction()
         }
 #-------------------------------End Of Authentication Token--------------------------------#
          
-           $msg=$user->webServiceChangePassword($request_array);
+           $msg=$user->changePasswordWithReqestArray($request_array);
          return new response(json_encode($msg));
     }
 
