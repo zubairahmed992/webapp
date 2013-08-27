@@ -2,15 +2,9 @@
 
 namespace LoveThatFit\AdminBundle\Controller;
 
-use LoveThatFit\AdminBundle\Entity\SurveyQuestion;
-use LoveThatFit\AdminBundle\Entity\SurveyAnswer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use LoveThatFit\UserBundle\Entity\UserSurvey;
-use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Form\Type\SurveyQuestionType;
-use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\SurveyAnswerType;
 
 class SurveyController extends Controller {

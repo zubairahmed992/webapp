@@ -1,9 +1,7 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Controller;
-use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\SizeChartType;

@@ -3,11 +3,7 @@
 namespace LoveThatFit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use LoveThatFit\AdminBundle\Entity\Brand;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Yaml\Parser;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\BrandType;
 
