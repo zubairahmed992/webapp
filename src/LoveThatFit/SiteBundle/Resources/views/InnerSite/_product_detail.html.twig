@@ -181,10 +181,21 @@ function pattern_select(color_id,product_id,size_id)
         });
 
 }
+
 function loveItem(item_id)
 {  
+    
+    
 base_url_love=$('#ajax_product_love_url'+item_id).html();
 url_load= "../ajax/user_product_item/create/"+ item_id;
+var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+url_load= "../../ajax/user_product_item/create/"+ item_id;
+}
+
 var jqXHR = $.ajax({
  
   type: "POST",
@@ -206,7 +217,13 @@ function lovedItems(item_id)
 {  
   base_url_loved=$('#ajax_product_loved_url'+item_id).text();
   url_load= "../ajax/user_product_item/delete/"+ item_id;
-  
+  var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+ url_load= "../../ajax/user_product_item/delete/"+ item_id;
+}
   var jqXHR = $.ajax({
   //url: base_url+"/app_dev.php/ajax/products/my_closet/delete/"+ item_id,
    url: url_load,

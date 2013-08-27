@@ -249,13 +249,15 @@ public function userProfileAction()
     
 #----------------------Avatar Image Uploading -------------------------------------------------------------#
 public function avatarUploadAction() {
-     $request = $this->getRequest();
+    $request = $this->getRequest();
 
         $email = $_POST['email'];
          $user_helper = $this->get('user.helper.user');
-        $email = $user_helper ->findOneBy(array('email' => $email));
+        $email_chk = $user_helper ->findOneBy(array('email' => $email));
+        
+        
         if ($email) {
-           // $em = $this->getDoctrine()->getManager();
+           $em = $this->getDoctrine()->getManager();
            // $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
             $entity = $user_helper ->findOneBy(array('email' => $email));
         } else {
