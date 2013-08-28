@@ -230,7 +230,13 @@ class ProductItem
       */  
          
     }
+    //-------------------------------------------------------
     
+     
+    public function getImagePaths() {
+        $ih = new ImageHelper('product_item', $this);        
+        return $ih->getImagePaths();
+    }
     
     //-------------------------------------------------------
     public function getAbsolutePath() {

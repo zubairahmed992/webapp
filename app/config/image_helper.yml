@@ -18,7 +18,6 @@ image_category:
       dir:  'uploads/ltf/brands/logo'  
 
   product:
-
     original:
       prefix: 
       dir:  'uploads/ltf/products'
@@ -42,20 +41,16 @@ image_category:
       dir:  'uploads/ltf/products/large'
   
   product_item:
-
     original:
       prefix: 
       dir:  'uploads/ltf/products/fitting_room'
-
-    iphone:
-      prefix: 
-      dir:  'uploads/ltf/products/iphone_fitting'
-
-    web:
-      height: 40
-      width: 35
-      prefix:  
-      dir:  'uploads/ltf/products/web_fitting'
+      pixcel_per_inch: 16
+      inches: 72
+      standard: 1152
+      iphone4s: 690
+      iphone5:  840
+      ipad:  1024
+      ipad_retina:  2048
 
   user:
     original:
