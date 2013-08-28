@@ -36,11 +36,19 @@ class ProductColorHelper {
         $this->repo = $em->getRepository($class);
     }
 
+    public function find($id) {
+        return $this->repo->find($id);
+    }
     public function findColorByProductTitle($title, $productid) {
         return $this->repo->findColorByProductTitle($title, $productid);
     }
 public function getSizeItemImageUrlArray($id){
     
     return $this->repo->getSizeItemImageUrlArray($id);
+}
+
+public function getSizeArray($id){
+    
+    return $this->repo->getSizeArray($id);
 }
 }

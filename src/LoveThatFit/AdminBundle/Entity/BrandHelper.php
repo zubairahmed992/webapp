@@ -124,6 +124,10 @@ class BrandHelper {
     public function find($id) {
         return $this->repo->find($id);
     }
+   #-----------------------------------------------------
+  public function findAll(){
+  return $this->repo->findAll();      
+    }
 
     //-------------------------------------------------------
 

@@ -75,7 +75,14 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\SurveyAnswer
-            
+         
+     admin.helper.productitem:
+        class: LoveThatFit\AdminBundle\Entity\ProductItemHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\ProductItem       
+            container: "@service_container"
      
      
 #    love_that_fit_admin.example:

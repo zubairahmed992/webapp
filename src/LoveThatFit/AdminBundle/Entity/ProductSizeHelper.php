@@ -39,5 +39,9 @@ class ProductSizeHelper {
     public function findSizeByProductTitle($title, $productid) {
         return $this->repo->findSizeByProductTitle($title, $productid);
     }
+     public function find($id) {
+        return $this->repo->find($id);
+    }
+   
 
 }

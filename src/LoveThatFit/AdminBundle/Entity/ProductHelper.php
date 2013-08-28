@@ -239,7 +239,45 @@ public function find($id) {
         
         return count($this->repo->findPrductByType($target));           
     }
+#-------------------------------------------------------------------------------
+    public function findByGender($gender, $page_number, $limit){
+        
+      return $this->repo->findByGender($gender, $page_number, $limit);  
+    }
+ #------------------------------------------------------------------------------
+ public function findProductByEllieHM($brand,$gender,$page_number, $limit){
+     
+     return $this->repo->findProductByEllieHM($brand,$gender,$page_number, $limit);
+ } 
+public function findOneByName($brand){
+    return $this->repo->findOneByName($brand);
     
+}   
+#-----------------------------------------------------------------
+public function findProductByItemUser($gender,$page_number, $limit){
+    
+    return $this->repo->findProductByItemUser($gender,$page_number, $limit);
+}
+#---------------------------------------------------------------------------------
+public function findByGenderBrand($gender, $brand_id, $page_number, $limit){
+    return $this->repo->findByGenderBrand($gender, $brand_id, $page_number, $limit);
+    
+}
+#-------------------------------------------------------------------------------
+public function findByGenderClothingType($gender, $clothing_type_id, $page_number, $limit){
+    return $this->repo->findByGenderClothingType($gender, $clothing_type_id, $page_number, $limit);
+}
+#-------------------------------------------------------------------------------
+public function findSampleClothingTypeGender($gender){
+    return $this->repo->findSampleClothingTypeGender($gender);
+}
+#-------------------------------------------------------------------------------
+public function findMostLikedProducts($page_number, $limit){
+    return $this->repo->findMostLikedProducts($page_number, $limit);
+}
+public function findProductItemByUser($user_id, $page_number, $limit){
+    return $this->repo->findProductItemByUser($user_id, $page_number, $limit);
+}
     #---------------------------------------------------
     //               Methods Product listing on index page
     #---------------------------------------------------
@@ -529,5 +567,65 @@ public function countMyCloset($user_id){
     return $this->repo->countMyCloset($user_id);
 }
  
+#-----------------Product Detail For Site --------------------------------------------------------------#
+public function productDetail($id, $product_color_id, $product_size_id){
+    
+        
+        $product_color = null;
+        $product_size = null;
+        $product_item = null;
+// find product
+        $product = $this->repo->find($id);
+
+//Calling of Helper 
+        $user_helper = $this->container->get('user.helper.user');
+        $product_color_helper = $this->container->get('admin.helper.productcolor');
+        $product_item_helper = $this->container->get('admin.helper.productitem');
+        $product_size_helper = $this->container->get('admin.helper.productsizes');
+// find product color if get color id param
+        if ($product_color_id) {
+            $product_color = $product_color_helper->find($product_color_id);
+        } else {// find default product color if not params for color id
+            $product_color = $product->getDisplayProductColor();
+            $product_color_id = $product_color->getId();
+        }
+
+//get color size array, sizes that are available in this color 
+        $color_sizes_array = $product_color_helper->getSizeArray($product_color_id);
+        $size_id = null;
+// find size id is not in param gets the first size id for this color
+        if (!$product_size_id) {
+            $psize = array_shift($color_sizes_array);
+            $size_id = $psize['id'];
+        } else {
+// if gets the size id in params,  check if this size is available in this color, if not get the first one
+            foreach ($color_sizes_array as $csa) {
+                if ($csa['id'] == $product_size_id) {
+                    $size_id = $csa['id'];
+                }
+            }
+            if ($size_id == null) {
+// gets the first size id for this color
+                $psize = array_shift($color_sizes_array);
+                $size_id = $psize['id'];
+            }
+        }
+        $product_size_id = $size_id;
+        $product_size = $product_size_helper->find($product_size_id);
+
+//2) color & size can get an item
+        if ($product_size && $product_color) {
+            $product_item = $product_item_helper->findByColorSize($product_color->getId(), $product_size->getId());
+        }
+
+        if (!$product) {
+            throw $this->createNotFoundException('Unable to find Product.');
+        }
+        return array('product' => $product,
+            'product_color' => $product_color,
+            'product_size' => $product_size,
+            'product_item' => $product_item);
+    
+    }
 
 }
