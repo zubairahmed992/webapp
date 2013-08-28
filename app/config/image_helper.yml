@@ -44,14 +44,33 @@ image_category:
     original:
       prefix: 
       dir:  'uploads/ltf/products/fitting_room'
-      pixcel_per_inch: 16
       inches: 72
-      standard: 1152
-      iphone4s: 690
-      iphone5:  840
-      ipad:  1024
-      ipad_retina:  2048
-
+      available_height: 1152
+  
+    iphone4s:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/iphone4s'
+      inches: 72
+      available_height: 690  
+    
+    iphone5:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/iphone5'
+      inches: 72
+      available_height: 840
+    
+    ipad:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/ipad'
+      inches: 72
+      available_height: 1024    
+    
+    ipad_retuna:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/ipad_retuna'
+      inches: 72
+      available_height: 2048   
+  
   user:
     original:
       prefix: 

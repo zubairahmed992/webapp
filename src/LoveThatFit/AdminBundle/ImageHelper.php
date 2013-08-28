@@ -96,9 +96,15 @@ class ImageHelper {
                 break;
         }
 
-        //scal down dimentions of the image, nearest possible to the given standard dimentions
+        //scale down dimentions of the image, nearest possible to the given standard dimentions
+        /*if ($this->category=='product_item'){
+            $resize_dimention=$this->calculateResizeDimentions();
+        }else{
         $resize_dimention=$this->getResizeDimentions();
-
+        }
+         * 
+         */
+        $resize_dimention=$this->getResizeDimentions();
         foreach ($conf as $key => $value) {
             if ($key != 'original') {
                 $value = $this->validateConf($value);
@@ -146,6 +152,30 @@ class ImageHelper {
             if ($key != 'original') {
                 if (array_key_exists ('width', $value) && array_key_exists ('height', $value) ) {
                 $percent = $iw > $ih ? $value['width'] / $iw : $value['height'] / $ih;
+                $n[$key]['width'] = round($iw * $percent);
+                $n[$key]['height'] = round($ih * $percent);
+            }else{
+                $n[$key]['width'] = $iw;
+                $n[$key]['height'] = $ih;
+            }
+        
+            }
+        }
+        return $n;
+    }
+//---------------------------------------------------------------------
+
+    public function calculateResizeDimentions() {
+        
+        $image_info = getimagesize($this->getAbsolutePath());
+        $iw = $image_info[0] ;
+        $ih = $image_info [1];
+        $n=null;
+        $standard_height=$this->conf['original']['available_height'];
+        foreach ($this->conf as $key => $value) {
+            if ($key != 'original') {
+                if (array_key_exists ('available_height', $value) ) {
+                $percent = ($value['available_height'] / $standard_height) * 100;
                 $n[$key]['width'] = round($iw * $percent);
                 $n[$key]['height'] = round($ih * $percent);
             }else{

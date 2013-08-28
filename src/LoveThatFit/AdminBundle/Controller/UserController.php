@@ -4,11 +4,17 @@ namespace LoveThatFit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\UserBundle\Entity\User;
 
 class UserController extends Controller {
 
     //------------------------------------------------------------------------------------------
+    
+    public function tossAction() {
+        
+        return new Response ('toss');
+    }
     
     public function indexAction($page_number, $sort = 'id') {
         $size_with_pagination = $this->get('user.helper.user')->getListWithPagination($page_number, $sort);
