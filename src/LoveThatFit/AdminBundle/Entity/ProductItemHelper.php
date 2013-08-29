@@ -60,4 +60,10 @@ class ProductItemHelper {
     }
 
 
+    //-------------------------------------------------------
+
+    public function save($entity) {
+            $this->em->persist($entity);
+            $this->em->flush();
+    }
 }

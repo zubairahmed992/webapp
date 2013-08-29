@@ -6,14 +6,52 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\UserBundle\Entity\User;
+use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
+use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\ProductColor;
+use LoveThatFit\AdminBundle\Entity\ProductSize;
+use LoveThatFit\AdminBundle\Entity\ProductItem;
 
 class UserController extends Controller {
 
     //------------------------------------------------------------------------------------------
     
-    public function tossAction() {
-        
-        return new Response ('toss');
+    public function tossAction(Request $request, $id, $item_id) {
+
+
+        $entity = $this->get('admin.helper.product')->find($id);
+        if (!$entity) {
+          $this->get('session')->setFlash('warning', 'Unable to find Product.');  
+        }
+        $entity_item = $this->get('admin.helper.productitem')->find($item_id);
+        if (!$entity_item) {
+            throw $this->createNotFoundException('Unable to find Product Item.');
+        }
+
+        $itemform = $this->createForm(new ProductItemType(), $entity_item);
+        $itemform->bind($request);
+        if ($itemform->isValid()) {
+            $entity_item->upload();
+            //return new Response (var_dump($entity_item->upload())); //----- file upload method 
+            $this->get('admin.helper.productitem')->save($entity_item);
+            $this->get('session')->setFlash('success', 'Product item updated  Successfully');
+           return new Response ('toss');   
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'itemform' => $itemform->createView(),
+                  
+                ));
+            
+        } else {
+            
+            $this->get('session')->setFlash('warning', 'Unable to Product Detail Item');           
+             
+            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+                    'product' => $entity,
+                    'itemform' => $itemform->createView(),
+                    'item_id' => $item_id,
+                ));
+        }
     }
     
     public function indexAction($page_number, $sort = 'id') {

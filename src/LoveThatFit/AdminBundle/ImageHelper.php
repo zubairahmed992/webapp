@@ -97,14 +97,12 @@ class ImageHelper {
         }
 
         //scale down dimentions of the image, nearest possible to the given standard dimentions
-        /*if ($this->category=='product_item'){
+        if ($this->category=='product_item'){
             $resize_dimention=$this->calculateResizeDimentions();
         }else{
         $resize_dimention=$this->getResizeDimentions();
         }
-         * 
-         */
-        $resize_dimention=$this->getResizeDimentions();
+        
         foreach ($conf as $key => $value) {
             if ($key != 'original') {
                 $value = $this->validateConf($value);
@@ -175,9 +173,11 @@ class ImageHelper {
         foreach ($this->conf as $key => $value) {
             if ($key != 'original') {
                 if (array_key_exists ('available_height', $value) ) {
-                $percent = ($value['available_height'] / $standard_height) * 100;
+                $percent = ($value['available_height'] / $standard_height);
                 $n[$key]['width'] = round($iw * $percent);
                 $n[$key]['height'] = round($ih * $percent);
+                $n[$key]['ah'] = round($value['available_height']);
+                $n[$key]['sh'] = round($standard_height);
             }else{
                 $n[$key]['width'] = $iw;
                 $n[$key]['height'] = $ih;
