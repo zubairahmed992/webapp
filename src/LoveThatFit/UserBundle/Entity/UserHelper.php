@@ -554,6 +554,9 @@ class UserHelper {
         if (array_key_exists('dob', $request_array)) {
             $user->setBirthDate(new \DateTime($request_array['dob']));
         }
+       if (array_key_exists('deviceType', $request_array)) {
+            $user->setDeviceType($request_array['deviceType']);
+        } 
 
         return $user;
     }

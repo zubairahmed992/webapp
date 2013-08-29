@@ -551,8 +551,9 @@ class ProductRepository extends EntityRepository {
     public function favouriteByUser($user_id) {
         $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT p.id as product_id,pi.id as item_id,p.name as product_name,b.name as brand_name,ps.title,pi.image FROM LoveThatFitAdminBundle:Product p
+     SELECT p.id as product_id,pi.id as id,p.name as name,ct.target as target,b.name as description,ps.title,pc.image as product_image,pi.image as fitting_room_image FROM LoveThatFitAdminBundle:Product p
      JOIN p.product_items pi
+     JOIN p.clothing_type ct
      JOIN pi.product_color pc
      JOIN pi.product_size ps
      JOIN pi.users u

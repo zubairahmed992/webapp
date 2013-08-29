@@ -408,7 +408,9 @@ public function favouriteByUser($user_id,$request){
    
     if(count($this->repo->favouriteByUser($user_id))>0){
     $data['data']=$this->repo->favouriteByUser($user_id);
-    $data['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+    $data['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+    $data['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+            
     return $data;}else{
         return $data['message']="There is no Favourite list ";
     }

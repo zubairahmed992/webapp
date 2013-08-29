@@ -252,7 +252,7 @@ public function avatarUploadAction() {
     $request = $this->getRequest();
 
         $email = $_POST['email'];
-         $user_helper = $this->get('user.helper.user');
+        $user_helper = $this->get('user.helper.user');
         $email_chk = $user_helper ->findOneBy(array('email' => $email));
         
         
