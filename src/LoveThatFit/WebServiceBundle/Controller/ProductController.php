@@ -128,7 +128,7 @@ class ProductController extends Controller {
         $request_array = json_decode($jsonInput, true);
        #------------------------------Authentication of Token--------------------------------------------#
         $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
+       $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -367,6 +367,36 @@ class ProductController extends Controller {
         $product_helper =  $this->get('admin.helper.product');
         $msg=$product_helper->getUserTryHistoryWebService($request,$user_id);
         return new Response(json_encode($msg));
+    }
+#---------------------------User Favourite Item List Return SErvice-----------------#    
+    
+    public function favouriteByUserAction(){
+        
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user_id=$request_array['user_id'];
+        
+        #------------------------------Authentication of Token--------------------------------------------#
+        $user = $this->get('user.helper.user');
+        $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token--------------------------------------#
+ 
+        if($user_id){
+        $product_helper =  $this->get('admin.helper.product')->favouriteByUser($user_id,$request);
+        return new response(json_encode($product_helper));
+        }else{
+            return new Response(json_encode(array('Message'=>'User cant find')));
+        }
     }
    
 #---------------------------Render Json--------------------------------------------------------------------#

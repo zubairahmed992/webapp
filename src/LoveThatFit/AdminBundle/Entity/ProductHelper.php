@@ -278,6 +278,7 @@ public function findMostLikedProducts($page_number, $limit){
 public function findProductItemByUser($user_id, $page_number, $limit){
     return $this->repo->findProductItemByUser($user_id, $page_number, $limit);
 }
+
     #---------------------------------------------------
     //               Methods Product listing on index page
     #---------------------------------------------------
@@ -401,7 +402,19 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         }//End of If   
     }         
 #-----------------------------Web Service-------------------------------------------------------------------------#
-    #---------Web Service for product listing -----------#
+#------------------User Favourite List-----------------------------------------#
+public function favouriteByUser($user_id,$request){
+    
+   
+    if(count($this->repo->favouriteByUser($user_id))>0){
+    $data['data']=$this->repo->favouriteByUser($user_id);
+    $data['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+    return $data;}else{
+        return $data['message']="There is no Favourite list ";
+    }
+}    
+
+#---------Web Service for product listing -----------#
  public function productListWebService($request,$request_array){
         
         $id = $request_array['id'];
@@ -468,8 +481,8 @@ public function findProductItemByUser($user_id, $page_number, $limit){
  public function productDetailWebService($request,$request_array){
        $product_id = $request_array['id'];
         $user_id= $request_array['user_id'];
-       /*$user_id=43;
-       $product_id=20;*/
+       /*$user_id=1;
+       $product_id=3;*/
        if(!$user_id)
        {
             return  array('Message' => 'User Missing');

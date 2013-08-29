@@ -221,6 +221,13 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(name="auth_token_created_at", type="datetime", nullable=true)
      */
     private $authTokenCreatedAt;
+    
+     /**
+     * @var string $deviceType
+     *
+     * @ORM\Column(name="device_type", type="string", length=60)
+     */
+    private $deviceType;
 
     /**
      * Get id
@@ -949,5 +956,28 @@ class User implements UserInterface, \Serializable {
     public function getIphoneImage()
     {
         return $this->iphoneImage;
+    }
+
+    /**
+     * Set deviceType
+     *
+     * @param string $deviceType
+     * @return User
+     */
+    public function setDeviceType($deviceType)
+    {
+        $this->deviceType = $deviceType;
+    
+        return $this;
+    }
+
+    /**
+     * Get deviceType
+     *
+     * @return string 
+     */
+    public function getDeviceType()
+    {
+        return $this->deviceType;
     }
 }

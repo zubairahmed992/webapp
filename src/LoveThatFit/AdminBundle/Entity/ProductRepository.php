@@ -547,6 +547,25 @@ class ProductRepository extends EntityRepository {
 
         }
     }
+#-------------------User Favourite List Web Service-----------------------------#     
+    public function favouriteByUser($user_id) {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT p.id as product_id,pi.id as item_id,p.name as product_name,b.name as brand_name,ps.title,pi.image FROM LoveThatFitAdminBundle:Product p
+     JOIN p.product_items pi
+     JOIN pi.product_color pc
+     JOIN pi.product_size ps
+     JOIN pi.users u
+     JOIN p.brand b
+     WHERE
+     u.id = :id")->setParameters(array('id' => $user_id));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 //-------------------------------------------------------------------------------------    
      public function tryOnHistoryWebService($user_id) {
 
