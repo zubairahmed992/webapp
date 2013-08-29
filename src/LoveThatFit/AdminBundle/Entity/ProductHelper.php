@@ -411,7 +411,8 @@ public function favouriteByUser($user_id,$request){
     $data=$this->repo->favouriteByUser($user_id);
     $count=1;
     foreach($data as $ind){
-        $data_value['data'][$count]['id']=$ind['id'];
+        $data_value['data'][$count]['id']=$ind['product_id'];
+        $data_value['data'][$count]['item_id']=$ind['id'];
         $data_value['data'][$count]['name']=$ind['name'];
         $data_value['data'][$count]['target']=$ind['target'];
         $data_value['data'][$count]['product_image']=$ind['product_image'];
