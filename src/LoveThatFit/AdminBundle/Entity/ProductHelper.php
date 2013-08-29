@@ -405,15 +405,26 @@ public function findProductItemByUser($user_id, $page_number, $limit){
 #------------------User Favourite List-----------------------------------------#
 public function favouriteByUser($user_id,$request){
        
-    
- 
     if(count($this->repo->favouriteByUser($user_id))>0){
     $device_path=$this->getDeviceTypeByUser($user_id);   
-    $data=array();
-    $data['data']=$this->repo->favouriteByUser($user_id);
-    $data['data']['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path;
-    $data['data']['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
-    return $data;}else{
+   
+    $data=$this->repo->favouriteByUser($user_id);
+    $count=1;
+    foreach($data as $ind){
+        $data_value['data'][$count]['id']=$ind['id'];
+        $data_value['data'][$count]['name']=$ind['name'];
+        $data_value['data'][$count]['target']=$ind['target'];
+        $data_value['data'][$count]['product_image']=$ind['product_image'];
+        $data_value['data'][$count]['title']=$ind['title'];
+        $data_value['data'][$count]['fitting_room_image']=$ind['fitting_room_image'];
+        $data_value['data'][$count]['description']=$ind['description'];
+        
+    $count++;    
+    }
+    
+    $data_value['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path;
+    $data_value['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
+    return $data_value;}else{
         return $data['message']="There is no Favourite list ";
     }
 }    

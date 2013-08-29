@@ -389,7 +389,7 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
- 
+        //$user_id=1;
         if($user_id){
         $product_helper =  $this->get('admin.helper.product')->favouriteByUser($user_id,$request);
         return new response(json_encode($product_helper));
