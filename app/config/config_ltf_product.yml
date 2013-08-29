@@ -1,0 +1,1170 @@
+0:
+    Ellie:
+        Capri:
+            'Black Capri':
+                description: 'Fabric is slightly stretchy'
+                gender: F
+                adjustment: '0.00'
+'Black Capri':
+    product_color:
+        brown:
+            title: brown
+            image: brown_pant_4.png
+            pattern: 51f69c9c3bd09.png
+        gray:
+            title: gray
+            image: gray_pant_4.png
+            pattern: 51f69cbd9450f.png
+    product_sizes:
+        2:
+            title: '2'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 31.5
+            hip_max: 32.75
+            waist_min: 22.87
+            waist_max: 24.375
+            bust_min: 28.5
+            bust_max: 30.75
+        4:
+            title: '4'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 32.75
+            hip_max: 35.375
+            waist_min: 24.375
+            waist_max: 26
+            bust_min: 30.75
+            bust_max: 31.25
+        6:
+            title: '6'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 35.375
+            hip_max: 37
+            waist_min: 26
+            waist_max: 27.625
+            bust_min: 31.25
+            bust_max: 33.75
+        8:
+            title: '8'
+            inseam_min: 30.5
+            inseam_max: null
+            hip_min: 37
+            hip_max: 38.625
+            waist_min: 27.625
+            waist_max: 29.25
+            bust_min: 33.75
+            bust_max: 35.375
+        10:
+            title: '10'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 38.625
+            hip_max: 40.25
+            waist_min: 29.25
+            waist_max: 30.75
+            bust_min: 35.375
+            bust_max: 37
+        12:
+            title: '12'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 40.25
+            hip_max: 41.75
+            waist_min: 30.75
+            waist_max: 32.25
+            bust_min: 37
+            bust_max: 38.625
+        14:
+            title: '14'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 41.75
+            hip_max: 43.25
+            waist_min: 32.25
+            waist_max: 33.75
+            bust_min: 38.625
+            bust_max: 40.25
+        16:
+            title: '16'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 43.25
+            hip_max: 42
+            waist_min: 33.75
+            waist_max: 35.25
+            bust_min: 40.25
+            bust_max: 42.125
+        18:
+            title: '18'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 42
+            hip_max: 47
+            waist_min: 35.25
+            waist_max: 37.75
+            bust_min: 42.125
+            bust_max: 44.375
+        20:
+            title: '20'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 47
+            hip_max: 49
+            waist_min: 37.75
+            waist_max: 40.625
+            bust_min: 44.375
+            bust_max: 46.75
+        22:
+            title: '22'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 49
+            hip_max: 51
+            waist_min: 40.625
+            waist_max: 42.875
+            bust_min: 46.75
+            bust_max: 49.25
+        24:
+            title: '24'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 51
+            hip_max: 53
+            waist_min: 42.875
+            waist_max: 42.25
+            bust_min: 49.25
+            bust_max: 51.625
+        26:
+            title: '26'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 53
+            hip_max: 55
+            waist_min: 42.25
+            waist_max: 47.525
+            bust_min: 51.625
+            bust_max: 53.875
+        28:
+            title: '28'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 55
+            hip_max: 57
+            waist_min: 47.525
+            waist_max: 49.875
+            bust_min: 53.875
+            bust_max: 56.125
+    product_item:
+        brown:
+            2:
+                size_title: '2'
+                product_color_title: brown
+                image: gray_pant_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: brown
+                image: gray_pant_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: brown
+                image: gray_pant_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: brown
+                image: gray_pant_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: brown
+                image: gray_pant_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: brown
+                image: gray_pant_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: brown
+                image: gray_pant_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: brown
+                image: gray_pant_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: brown
+                image: gray_pant_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: brown
+                image: gray_pant_20_fr.png
+            22:
+                size_title: '22'
+                product_color_title: brown
+                image: gray_pant_22_fr.png
+            24:
+                size_title: '24'
+                product_color_title: brown
+                image: gray_pant_24_fr.png
+            26:
+                size_title: '26'
+                product_color_title: brown
+                image: gray_pant_26_fr.png
+            28:
+                size_title: '28'
+                product_color_title: brown
+                image: gray_pant_28_fr.png
+        gray:
+            2:
+                size_title: '2'
+                product_color_title: gray
+                image: gray_pant_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: gray
+                image: gray_pant_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: gray
+                image: gray_pant_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: gray
+                image: gray_pant_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: gray
+                image: gray_pant_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: gray
+                image: gray_pant_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: gray
+                image: gray_pant_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: gray
+                image: gray_pant_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: gray
+                image: gray_pant_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: gray
+                image: gray_pant_20_fr.png
+            22:
+                size_title: '22'
+                product_color_title: gray
+                image: gray_pant_22_fr.png
+            24:
+                size_title: '24'
+                product_color_title: gray
+                image: gray_pant_24_fr.png
+            26:
+                size_title: '26'
+                product_color_title: gray
+                image: gray_pant_26_fr.png
+            28:
+                size_title: '28'
+                product_color_title: gray
+                image: gray_pant_28_fr.png
+1:
+    'H&M':
+        T-shirts:
+            T-Shirts:
+                description: 'Fabric is slightly stretchy'
+                gender: M
+                adjustment: '0.00'
+T-Shirts:
+    product_color:
+        brown:
+            title: brown
+            image: stripline_shirt_4.png
+            pattern: 51f6931a194e6.png
+        gray:
+            title: gray
+            image: stripline_shirt_2.png
+            pattern: 51f693351f72d.png
+    product_sizes:
+        2:
+            title: '2'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 31.5
+            hip_max: 32.75
+            waist_min: 22.87
+            waist_max: 24.375
+            bust_min: 28.5
+            bust_max: 30.75
+        4:
+            title: '4'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 32.75
+            hip_max: 35.375
+            waist_min: 24.375
+            waist_max: 26
+            bust_min: 30.75
+            bust_max: 31.25
+        6:
+            title: '6'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 35.375
+            hip_max: 37
+            waist_min: 26
+            waist_max: 27.625
+            bust_min: 31.25
+            bust_max: 33.75
+        8:
+            title: '8'
+            inseam_min: 30.5
+            inseam_max: null
+            hip_min: 37
+            hip_max: 38.625
+            waist_min: 27.625
+            waist_max: 29.25
+            bust_min: 33.75
+            bust_max: 35.375
+        10:
+            title: '10'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 38.625
+            hip_max: 40.25
+            waist_min: 29.25
+            waist_max: 30.75
+            bust_min: 35.375
+            bust_max: 37
+        12:
+            title: '12'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 40.25
+            hip_max: 41.75
+            waist_min: 30.75
+            waist_max: 32.25
+            bust_min: 37
+            bust_max: 38.625
+        14:
+            title: '14'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 41.75
+            hip_max: 43.25
+            waist_min: 32.25
+            waist_max: 33.75
+            bust_min: 38.625
+            bust_max: 40.25
+        16:
+            title: '16'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 43.25
+            hip_max: 42
+            waist_min: 33.75
+            waist_max: 35.25
+            bust_min: 40.25
+            bust_max: 42.125
+        18:
+            title: '18'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 42
+            hip_max: 47
+            waist_min: 35.25
+            waist_max: 37.75
+            bust_min: 42.125
+            bust_max: 44.375
+        20:
+            title: '20'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 47
+            hip_max: 49
+            waist_min: 37.75
+            waist_max: 40.625
+            bust_min: 44.375
+            bust_max: 46.75
+        22:
+            title: '22'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 49
+            hip_max: 51
+            waist_min: 40.625
+            waist_max: 42.875
+            bust_min: 46.75
+            bust_max: 49.25
+        24:
+            title: '24'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 51
+            hip_max: 53
+            waist_min: 42.875
+            waist_max: 42.25
+            bust_min: 49.25
+            bust_max: 51.625
+        26:
+            title: '26'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 53
+            hip_max: 55
+            waist_min: 42.25
+            waist_max: 47.525
+            bust_min: 51.625
+            bust_max: 53.875
+        28:
+            title: '28'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 55
+            hip_max: 57
+            waist_min: 47.525
+            waist_max: 49.875
+            bust_min: 53.875
+            bust_max: 56.125
+    product_item:
+        brown:
+            2:
+                size_title: '2'
+                product_color_title: brown
+                image: stripline_shirt_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: brown
+                image: stripline_shirt_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: brown
+                image: stripline_shirt_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: brown
+                image: stripline_shirt_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: brown
+                image: stripline_shirt_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: brown
+                image: stripline_shirt_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: brown
+                image: stripline_shirt_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: brown
+                image: stripline_shirt_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: brown
+                image: stripline_shirt_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: brown
+                image: stripline_shirt_20_fr.png
+            22:
+                size_title: '22'
+                product_color_title: brown
+                image: stripline_shirt_22_fr.png
+            24:
+                size_title: '24'
+                product_color_title: brown
+                image: stripline_shirt_24_fr.png
+            26:
+                size_title: '26'
+                product_color_title: brown
+                image: stripline_shirt_26_fr.png
+            28:
+                size_title: '28'
+                product_color_title: brown
+                image: stripline_shirt_28_fr.png
+        gray:
+            2:
+                size_title: '2'
+                product_color_title: gray
+                image: stripline_shirt_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: gray
+                image: stripline_shirt_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: gray
+                image: stripline_shirt_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: gray
+                image: stripline_shirt_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: gray
+                image: stripline_shirt_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: gray
+                image: stripline_shirt_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: gray
+                image: stripline_shirt_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: gray
+                image: stripline_shirt_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: gray
+                image: stripline_shirt_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: gray
+                image: stripline_shirt_20_fr.png
+            22:
+                size_title: '22'
+                product_color_title: gray
+                image: stripline_shirt_22_fr.png
+            24:
+                size_title: '24'
+                product_color_title: gray
+                image: stripline_shirt_24_fr.png
+            26:
+                size_title: '26'
+                product_color_title: gray
+                image: stripline_shirt_26_fr.png
+            28:
+                size_title: '28'
+                product_color_title: gray
+                image: stripline_shirt_28_fr.png
+2:
+    'H&M':
+        Dress:
+            'Aqua Dress':
+                description: 'Fabric is slightly stretchy'
+                gender: F
+                adjustment: '0.00'
+'Aqua Dress':
+    product_color:
+        green:
+            title: green
+            image: green_dress_2.png
+            pattern: aqua.png
+        purple:
+            title: purple
+            image: 51f69d096af09.png
+            pattern: 51f69d09605bc.png
+        brown:
+            title: brown
+            image: 51f69d293bec6.png
+            pattern: 51f69d2939484.png
+    product_sizes:
+        2:
+            title: '2'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 31.5
+            hip_max: 32.75
+            waist_min: 22.87
+            waist_max: 24.375
+            bust_min: 28.5
+            bust_max: 30.75
+        4:
+            title: '4'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 32.75
+            hip_max: 35.375
+            waist_min: 24.375
+            waist_max: 26
+            bust_min: 30.75
+            bust_max: 31.25
+        6:
+            title: '6'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 35.375
+            hip_max: 37
+            waist_min: 26
+            waist_max: 27.625
+            bust_min: 31.25
+            bust_max: 33.75
+        8:
+            title: '8'
+            inseam_min: 30.5
+            inseam_max: null
+            hip_min: 37
+            hip_max: 38.625
+            waist_min: 27.625
+            waist_max: 29.25
+            bust_min: 33.75
+            bust_max: 35.375
+        10:
+            title: '10'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 38.625
+            hip_max: 40.25
+            waist_min: 29.25
+            waist_max: 30.75
+            bust_min: 35.375
+            bust_max: 37
+        12:
+            title: '12'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 40.25
+            hip_max: 41.75
+            waist_min: 30.75
+            waist_max: 32.25
+            bust_min: 37
+            bust_max: 38.625
+        14:
+            title: '14'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 41.75
+            hip_max: 43.25
+            waist_min: 32.25
+            waist_max: 33.75
+            bust_min: 38.625
+            bust_max: 40.25
+        16:
+            title: '16'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 41.75
+            hip_max: 43.25
+            waist_min: 32.25
+            waist_max: 33.75
+            bust_min: 38.625
+            bust_max: 40.25
+        18:
+            title: '18'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 42
+            hip_max: 47
+            waist_min: 35.25
+            waist_max: 37.75
+            bust_min: 42.125
+            bust_max: 44.375
+        20:
+            title: '20'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 47
+            hip_max: 49
+            waist_min: 37.75
+            waist_max: 40.625
+            bust_min: 44.375
+            bust_max: 46.75
+        22:
+            title: '22'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 49
+            hip_max: 51
+            waist_min: 40.625
+            waist_max: 42.875
+            bust_min: 46.75
+            bust_max: 49.25
+        24:
+            title: '24'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 51
+            hip_max: 53
+            waist_min: 42.875
+            waist_max: 42.25
+            bust_min: 49.25
+            bust_max: 51.625
+        26:
+            title: '26'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 53
+            hip_max: 55
+            waist_min: 42.25
+            waist_max: 47.525
+            bust_min: 51.625
+            bust_max: 53.875
+        28:
+            title: '28'
+            inseam_min: 30.5
+            inseam_max: 31.5
+            hip_min: 55
+            hip_max: 57
+            waist_min: 47.525
+            waist_max: 49.875
+            bust_min: 53.875
+            bust_max: 56.125
+    product_item:
+        green:
+            2:
+                size_title: '2'
+                product_color_title: green
+                image: purple_dress_brown_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: green
+                image: purple_dress_brown_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: green
+                image: purple_dress_brown_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: green
+                image: purple_dress_brown_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: green
+                image: purple_dress_brown_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: green
+                image: purple_dress_brown_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: green
+                image: purple_dress_brown_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: green
+                image: purple_dress_brown_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: green
+                image: purple_dress_brown_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: green
+                image: purple_dress_brown_20_fr.png
+            22:
+                size_title: '22'
+                product_color_title: green
+                image: purple_dress_brown_22_fr.png
+            24:
+                size_title: '24'
+                product_color_title: green
+                image: purple_dress_brown_24_fr.png
+            26:
+                size_title: '26'
+                product_color_title: green
+                image: purple_dress_brown_26_fr.png
+            28:
+                size_title: '28'
+                product_color_title: green
+                image: purple_dress_brown_28_fr.png
+        purple:
+            2:
+                size_title: '2'
+                product_color_title: purple
+                image: purple_dress_brown_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: purple
+                image: purple_dress_brown_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: purple
+                image: purple_dress_brown_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: purple
+                image: purple_dress_brown_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: purple
+                image: purple_dress_brown_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: purple
+                image: purple_dress_brown_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: purple
+                image: purple_dress_brown_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: purple
+                image: purple_dress_brown_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: purple
+                image: purple_dress_brown_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: purple
+                image: purple_dress_brown_20_fr.png
+            22:
+                size_title: '22'
+                product_color_title: purple
+                image: purple_dress_brown_22_fr.png
+            24:
+                size_title: '24'
+                product_color_title: purple
+                image: purple_dress_brown_24_fr.png
+            26:
+                size_title: '26'
+                product_color_title: purple
+                image: purple_dress_brown_26_fr.png
+            28:
+                size_title: '28'
+                product_color_title: purple
+                image: purple_dress_brown_28_fr.png
+        brown:
+            2:
+                size_title: '2'
+                product_color_title: brown
+                image: purple_dress_brown_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: brown
+                image: purple_dress_brown_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: brown
+                image: purple_dress_brown_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: brown
+                image: purple_dress_brown_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: brown
+                image: purple_dress_brown_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: brown
+                image: purple_dress_brown_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: brown
+                image: purple_dress_brown_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: brown
+                image: purple_dress_brown_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: brown
+                image: purple_dress_brown_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: brown
+                image: purple_dress_brown_20_fr.png
+            22:
+                size_title: '22'
+                product_color_title: brown
+                image: purple_dress_brown_22_fr.png
+            24:
+                size_title: '24'
+                product_color_title: brown
+                image: purple_dress_brown_24_fr.png
+            26:
+                size_title: '26'
+                product_color_title: brown
+                image: purple_dress_brown_26_fr.png
+            28:
+                size_title: '28'
+                product_color_title: brown
+                image: purple_dress_brown_28_fr.png
+3:
+    'H&M':
+        Shorts:
+            'Blue shorts':
+                description: 'Fabric is slightly stretchy'
+                gender: F
+                adjustment: '0.00'
+'Blue shorts':
+    product_color:
+        brown:
+            title: brown
+            image: brown_shot_4.png
+            pattern: 51f69c56b6521.png
+        pink:
+            title: pink
+            image: pink_shot_2.png
+            pattern: 51f69c614560f.png
+        purple:
+            title: purple
+            image: purple_shot_4.png
+            pattern: 51f69c6c36bc3.png
+    product_sizes:
+        '00':
+            title: '00'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 33.5
+            hip_max: 34.5
+            waist_min: 22.5
+            waist_max: 23.5
+            bust_min: 29.5
+            bust_max: 31.5
+        0:
+            title: '0'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 34.5
+            hip_max: 35.5
+            waist_min: 23.5
+            waist_max: 24.5
+            bust_min: 31.5
+            bust_max: 32.5
+        2:
+            title: '2'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 35.5
+            hip_max: 36.5
+            waist_min: 24.5
+            waist_max: 25.5
+            bust_min: 32.5
+            bust_max: 33.5
+        4:
+            title: '4'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 36.5
+            hip_max: 37.5
+            waist_min: 25.5
+            waist_max: 26.5
+            bust_min: 33.5
+            bust_max: 34.5
+        6:
+            title: '6'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 37.5
+            hip_max: 38.5
+            waist_min: 26.5
+            waist_max: 27.5
+            bust_min: 34.5
+            bust_max: 35.5
+        8:
+            title: '8'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 38.5
+            hip_max: 39.5
+            waist_min: 27.5
+            waist_max: 28.5
+            bust_min: 35.5
+            bust_max: 36.5
+        10:
+            title: '10'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 39.75
+            hip_max: 40.75
+            waist_min: 28.5
+            waist_max: 29.5
+            bust_min: 36.5
+            bust_max: 37.75
+        12:
+            title: '12'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 40.75
+            hip_max: 42.5
+            waist_min: 29.75
+            waist_max: 31.5
+            bust_min: 37.75
+            bust_max: 39.5
+        14:
+            title: '14'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 42.5
+            hip_max: 44.5
+            waist_min: 31.5
+            waist_max: 32.5
+            bust_min: 39.5
+            bust_max: 41.5
+        16:
+            title: '16'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 44.5
+            hip_max: 46.75
+            waist_min: 32.5
+            waist_max: 35.75
+            bust_min: 41.5
+            bust_max: 43.75
+        18:
+            title: '18'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 46.75
+            hip_max: 49.25
+            waist_min: 35.75
+            waist_max: 38.25
+            bust_min: 43.75
+            bust_max: 46.25
+        20:
+            title: '20'
+            inseam_min: null
+            inseam_max: null
+            hip_min: 49.25
+            hip_max: 51.75
+            waist_min: 38.25
+            waist_max: 40.75
+            bust_min: 46.25
+            bust_max: 48.75
+    product_item:
+        brown:
+            '00':
+                size_title: '00'
+                product_color_title: brown
+                image: purple_shot_2_fr.png
+            0:
+                size_title: '0'
+                product_color_title: brown
+                image: purple_shot_2_fr.png
+            2:
+                size_title: '2'
+                product_color_title: brown
+                image: purple_shot_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: brown
+                image: purple_shot_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: brown
+                image: purple_shot_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: brown
+                image: purple_shot_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: brown
+                image: purple_shot_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: brown
+                image: purple_shot_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: brown
+                image: purple_shot_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: brown
+                image: purple_shot_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: brown
+                image: purple_shot_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: brown
+                image: purple_shot_20_fr.png
+        pink:
+            '00':
+                size_title: '00'
+                product_color_title: pink
+                image: purple_shot_2_fr.png
+            0:
+                size_title: '0'
+                product_color_title: pink
+                image: purple_shot_2_fr.png
+            2:
+                size_title: '2'
+                product_color_title: pink
+                image: purple_shot_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: pink
+                image: purple_shot_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: pink
+                image: purple_shot_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: pink
+                image: purple_shot_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: pink
+                image: purple_shot_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: pink
+                image: purple_shot_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: pink
+                image: purple_shot_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: pink
+                image: purple_shot_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: pink
+                image: purple_shot_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: pink
+                image: purple_shot_20_fr.png
+        purple:
+            '00':
+                size_title: '00'
+                product_color_title: purple
+                image: purple_shot_2_fr.png
+            0:
+                size_title: '0'
+                product_color_title: purple
+                image: purple_shot_2_fr.png
+            2:
+                size_title: '2'
+                product_color_title: purple
+                image: purple_shot_2_fr.png
+            4:
+                size_title: '4'
+                product_color_title: purple
+                image: purple_shot_4_fr.png
+            6:
+                size_title: '6'
+                product_color_title: purple
+                image: purple_shot_6_fr.png
+            8:
+                size_title: '8'
+                product_color_title: purple
+                image: purple_shot_8_fr.png
+            10:
+                size_title: '10'
+                product_color_title: purple
+                image: purple_shot_10_fr.png
+            12:
+                size_title: '12'
+                product_color_title: purple
+                image: purple_shot_12_fr.png
+            14:
+                size_title: '14'
+                product_color_title: purple
+                image: purple_shot_14_fr.png
+            16:
+                size_title: '16'
+                product_color_title: purple
+                image: purple_shot_16_fr.png
+            18:
+                size_title: '18'
+                product_color_title: purple
+                image: purple_shot_18_fr.png
+            20:
+                size_title: '20'
+                product_color_title: purple
+                image: purple_shot_20_fr.png

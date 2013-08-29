@@ -159,5 +159,21 @@ param:limit, page_number,limit,sort
             return null;
         }
     }
+    
+    public function findClothingTypeByProduct($product)
+  {
+      $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT b FROM LoveThatFitAdminBundle:ClothingType b     
+     WHERE
+     b.id=:id     
+    "  )->setParameters(array('id' => $product)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
+    
 
 }

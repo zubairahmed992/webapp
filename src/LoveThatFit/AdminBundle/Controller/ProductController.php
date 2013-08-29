@@ -21,6 +21,9 @@ use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenDressType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 
 class ProductController extends Controller {
@@ -28,6 +31,7 @@ class ProductController extends Controller {
 //---------------------------------------------------------------------
     
     public function indexAction($page_number, $sort = 'id') {
+         $this->productSaveYaml();
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
@@ -752,5 +756,40 @@ public function productStatsAction()
                  ->findDefaultProductByColorId($product_color);		
         return $entity; 
     }
+    
+     private function productSaveYaml() {
+        $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
+                ->findAll();
+
+        $array = array();
+        foreach ($entity as $product) {
+            $brand = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand')
+                    ->findBrandByProduct($product->getBrand());
+            $clothing_type = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType')
+                    ->findClothingTypeByProduct($product->getClothingType());
+            foreach ($brand as $brands) {
+                foreach ($clothing_type as $clothingType) {
+                    array_push($array, array($brands->getName() => array($clothingType->getName() => array(
+                                $product->getName() => array('description' => $product->getDescription(), 'gender' => $product->getGender(), 'adjustment' => $product->getAdjustment())))));
+
+                    foreach ($product->getProductColors() as $productColor) {
+                        $array[$product->getName()]['product_color'][$productColor->getTitle()] = array('title' => $productColor->getTitle(), 'image' => $productColor->getImage(), 'pattern' => $productColor->getPattern());
+                        foreach ($product->getProductSizes() as $productSizes) {
+                            $array[$product->getName()]['product_sizes'][$productSizes->getTitle()] = array('title' => $productSizes->getTitle(), 'inseam_min' => $productSizes->getInseamMin(), 'inseam_max' => $productSizes->getInseamMax(), 'hip_min' => $productSizes->getHipMin(), 'hip_max' => $productSizes->getHipMax(), 'waist_min' => $productSizes->getWaistMin(), 'waist_max' => $productSizes->getWaistMax(), 'bust_min' => $productSizes->getBustMin(), 'bust_max' => $productSizes->getBustMax(),);
+
+                            foreach ($product->getProductItems() as $productItem) {
+
+                                $array[$product->getName()]['product_item'][$productColor->getTitle()][$productItem->getLineNumber()] = array('size_title' => $productItem->getLineNumber(), 'product_color_title' => $productColor->getTitle(), 'image' => $productItem->getImage());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $yaml = Yaml::dump($array, 40);
+        return @file_put_contents('../app/config/config_ltf_product.yml', $yaml);
+    }
+
+    
 }
 

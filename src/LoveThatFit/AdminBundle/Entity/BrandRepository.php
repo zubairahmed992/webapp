@@ -116,5 +116,22 @@ class BrandRepository extends EntityRepository {
             return null;
         }
     }
+    
+    
+   public function findBrandByProduct($product)
+  {
+      $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT b FROM LoveThatFitAdminBundle:Brand b     
+     WHERE
+     b.id=:id     
+    "  )->setParameters(array('id' => $product)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
+    
 
 }
