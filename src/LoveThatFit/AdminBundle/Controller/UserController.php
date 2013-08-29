@@ -16,42 +16,16 @@ class UserController extends Controller {
 
     //------------------------------------------------------------------------------------------
     
-    public function tossAction(Request $request, $id, $item_id) {
+    public function tossAction($id) {
 
 
-        $entity = $this->get('admin.helper.product')->find($id);
-        if (!$entity) {
-          $this->get('session')->setFlash('warning', 'Unable to find Product.');  
-        }
-        $entity_item = $this->get('admin.helper.productitem')->find($item_id);
+        $entity_item = $this->get('admin.helper.productitem')->find($id);
         if (!$entity_item) {
             throw $this->createNotFoundException('Unable to find Product Item.');
         }
+        $str=var_dump($entity_item->getImagePaths());
+        return new Response ($str);   
 
-        $itemform = $this->createForm(new ProductItemType(), $entity_item);
-        $itemform->bind($request);
-        if ($itemform->isValid()) {
-            $entity_item->upload();
-            //return new Response (var_dump($entity_item->upload())); //----- file upload method 
-            $this->get('admin.helper.productitem')->save($entity_item);
-            $this->get('session')->setFlash('success', 'Product item updated  Successfully');
-           return new Response ('toss');   
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity,
-                    'itemform' => $itemform->createView(),
-                  
-                ));
-            
-        } else {
-            
-            $this->get('session')->setFlash('warning', 'Unable to Product Detail Item');           
-             
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity,
-                    'itemform' => $itemform->createView(),
-                    'item_id' => $item_id,
-                ));
-        }
     }
     
     public function indexAction($page_number, $sort = 'id') {

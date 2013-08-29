@@ -11,5 +11,5 @@ admin_users_search:
     defaults: { _controller: LoveThatFitAdminBundle:User:search }
     
 toss:
-    pattern:  /toss/{id}/item/{item_id}/update
+    pattern:  /toss/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:toss }
