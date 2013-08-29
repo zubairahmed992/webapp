@@ -212,6 +212,7 @@ public function userProfileAction()
      $request = $this->getRequest();
 
         $email = $_POST['email'];
+        $deviceType=$_POST['deviceType'];
 
         if ($email) {
             $em = $this->getDoctrine()->getManager();
@@ -229,7 +230,7 @@ public function userProfileAction()
                 @mkdir($entity->getUploadRootDir(), 0700);
             }
      if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
-
+                $entity->setDeviceType($deviceType);
                 $em->persist($entity);
                 $em->flush();
                 //  $image_path = $entity->getWebPath(); 

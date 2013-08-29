@@ -404,13 +404,15 @@ public function findProductItemByUser($user_id, $page_number, $limit){
 #-----------------------------Web Service-------------------------------------------------------------------------#
 #------------------User Favourite List-----------------------------------------#
 public function favouriteByUser($user_id,$request){
+       
     
-   
+ 
     if(count($this->repo->favouriteByUser($user_id))>0){
+    $device_path=$this->getDeviceTypeByUser($user_id);   
+    $data=array();
     $data['data']=$this->repo->favouriteByUser($user_id);
-    $data['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
-    $data['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
-            
+    $data['data']['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path;
+    $data['data']['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
     return $data;}else{
         return $data['message']="There is no Favourite list ";
     }
@@ -641,6 +643,15 @@ public function productDetail($id, $product_color_id, $product_size_id){
             'product_size' => $product_size,
             'product_item' => $product_item);
     
+    }
+#------------------Method For Returning Device Type of Current User------------# 
+    public function getDeviceTypeByUser($user_id){
+        
+         $user_helper = $this->container->get('user.helper.user');
+         $user=$user_helper->find($user_id);
+         return $user_device_type=$user->getDeviceType();
+         //$product_item_helper = $this->container->get('admin.helper.productitem');
+         //return $product_item_helper->productItem($user_id);
     }
 
 }

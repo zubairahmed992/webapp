@@ -377,7 +377,7 @@ class ProductController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user_id=$request_array['user_id'];
-         #------------------------------Authentication of Token--------------------------------------------#
+       #------------------------------Authentication of Token--------------------------------------------#
         $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
        if ($authTokenWebService) {
