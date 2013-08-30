@@ -150,8 +150,6 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-
-
 #------------------------------Authentication of Token--------------------------------------------#
         $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
@@ -164,117 +162,17 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
-        
-        
         $msg=$this->get('admin.helper.product')->getDefaultFittingAlerts($request_array);
         return new Response(json_encode($msg));
-        
-      /*  $product_id = $request_array['product_id'];
-        
-       // find product
-         if($product_id){ 
-        $product = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->find($product_id);
-      
-         $product_color = $product->getDisplayProductColor();
-         $product_color_id = $product_color->getId();
-          
-            //get color size array, sizes that are available in this color 
-
-            $color_sizes_array = $this->getDoctrine()
-                    ->getRepository('LoveThatFitAdminBundle:ProductColor')
-                    ->getSizeArray($product_color_id);
-            $size_id = null;
-
-            // find size id is not in param gets the first size id for this color
-
-            $psize = array_shift($color_sizes_array);
-            $size_id = $psize['id'];
-            $product_size_id = $size_id;
-            $product_size = $this->getDoctrine()
-                    ->getRepository('LoveThatFitAdminBundle:ProductSize')
-                    ->find($product_size_id);
-
-         
-            //2) color & size can get an item
-
-            if ($product_size && $product_color) {
-                $product_item = $this->getDoctrine()
-                        ->getRepository('LoveThatFitAdminBundle:ProductItem')
-                        ->findByColorSize($product_color->getId(), $product_size->getId());
-               $product_item_id = $product_item->getId();
-        } 
-        
-       
-        if ($user_id && $product_item_id) {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-            $productItem = $this->getProductItemById($product_item_id);
-
-            if (!$user)
-                return new Response(json_encode(array('Message' => 'User not found')));
-
-            if (!$productItem)
-                return new Response(json_encode(array('Message' => 'Product not found')));
-
-            $fit = new Algorithm($user, $productItem);
-            $data = array();
-            $data['data'] = $fit->getFeedBackArray();
-           
-            return new Response(json_encode($data));
-        }
-        else {
-            return new Response(json_encode(array('Message' => 'Missing User/Item')));
-        }
-        
-        }//End of If      
-        else {
-
-            return new Response(json_encode(array('Message' => 'Can not find')));
-        }*/
-      
-        
-    }  
+   }  
     //-------------------------------------------------------------------
-   /* private function getProductItemById($id) {
+    private function getProductItemById($id) {
         $product_item = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductItem')
                 ->find($id);
         return $product_item;
-    }*/
- //-------------------------------------------------------------------
-    public function getFeedBackJSONAction() {
-        
-        /*$request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $request_array = json_decode($jsonInput, true);
-        $user_id = $request_array['user_id'];
-        $product_item_id = $request_array['product_item_id'];
-        if ($user_id && $product_item_id) {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('LoveThatFitUserBundle:User')->find($user_id);
-            $productItem = $this->getProductItemById($product_item_id);
-
-            if (!$user)
-                return new Response(json_encode(array('Message' => 'User not found')));
-
-            if (!$productItem)
-                return new Response(json_encode(array('Message' => 'Product not found')));
-
-            $fit = new Algorithm($user, $productItem);
-            $data = array();
-            $data['data'] = $fit->getFeedBackJson();
-            $total_record = count($data);
-            return new Response($this->json_view($total_record, $data));
-        }
-        else {
-
-            return new Response(json_encode(array('Message' => 'Missing User/Item')));
-        }*/
     }
-    
+ 
     
 #---------------------Like/Love Item-----------------------------------------------------------------------#
  public function loveItemAction() {
@@ -291,7 +189,7 @@ class ProductController extends Controller {
         $product_item_id=2;
         $request_array['like']='like';*/
        
-        $authTokenWebService = $request_array['authTokenWebService'];
+       $authTokenWebService = $request_array['authTokenWebService'];
   #------------------------------Authentication of Token--------------------------------------------#
         $user_helper = $this->get('user.helper.user');
           if ($authTokenWebService) {
@@ -302,47 +200,12 @@ class ProductController extends Controller {
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
-       $em = $this->getDoctrine()->getManager();
- #-------------------------------End Of Authentication Token--------------------------------------#
-       if ($user_id && $product_item_id) {
-           
-            if ($request_array['like']==trim('like')) {
-                
-                
-                $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-                $product_helper =  $this->get('admin.helper.product');
-                $entity=$product_helper->countMyCloset($user_id);
-                 
-                $rec_count = count($productObj->countMyCloset($user_id));
-
-                if ($rec_count >= 25) {
-
-                    return new Response(json_encode(array('Message' => 'Please delete some products (limit exceeds)')));
-                } else {
-                    
-                    $user =  $user_helper->find($user_id);
-                    $product_item = $this->getProductItemById($product_item_id);
-                    $product_item->addUser($user);
-                    $user->addProductItem($product_item);
-                    $em->persist($product_item);
-                    $em->persist($user);
-                    $em->flush();
-                    return new Response(json_encode(array('Message' => 'Item has been successfully liked!')));
-                }
-            } else {
-
-                $user=$user_helper->find($user_id);
-                $product_item = $this->getProductItemById($product_item_id);
-                $product_item->removeUser($user);
-                $user->removeProductItem($product_item);
-                $em->persist($product_item);
-                $em->persist($user);
-                $em->flush();
-                return new Response(json_encode(array('Message' => 'Item has been successfully unliked!')));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'User/Item Missing')));
-        }
+        
+     
+        $msg=$this->get('admin.helper.product')->loveItem($request_array);
+        return new Response(json_encode($msg));
+        
+      
     }
 #------------------------------------------------------------End of Love/Like------------------------------#   
 #--------------------------------------Try On History Service----------------------------------------------#

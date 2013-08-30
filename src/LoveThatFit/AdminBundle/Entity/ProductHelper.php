@@ -370,14 +370,62 @@ public function findProductItemByUser($user_id, $page_number, $limit){
    public function findMostLikedByGender($gender='F', $page_number=0, $limit=0) {
         return $this->repo->findByGenderMostLiked($gender, $page_number, $limit);        
    } 
+        
+#-----------------------------Web Service-------------------------------------------------------------------------#
+
+#--------------------------------For Love/Unlove Item---------------------------#
+public function loveItem($request_array){
     
-    #---------------------------------------------------
-    #---------WROK WILL BE DONE I FUTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!----#
-    public function getDefaultFittingAlerts($request_array)
-    {       
+    $user_id = $request_array['user_id'];
+    $product_item_id = $request_array['product_item_id'];
+    $user_helper = $this->container->get('user.helper.user');
+    $product_item_helper = $this->container->get('admin.helper.productitem');
+      
+       if ($user_id && $product_item_id) {
+        
+        if ($request_array['like']==trim('like')) {
+                
+                $entity=$this->countMyCloset($user_id);
+                $rec_count = count($entity);
+
+                if ($rec_count >= 25) {
+                        return array('Message' => 'Please delete some products (limit exceeds)');
+                } else {
+                    
+                    $user =  $user_helper->find($user_id);
+                    $product_item = $product_item_helper->getProductItemById($product_item_id);
+                    $product_item->addUser($user);
+                    $user->addProductItem($product_item);
+                    $product_item_helper->save($product_item);
+                    $user_helper->saveUser($user);
+                    //$em->persist($product_item);
+                    //$em->persist($user);
+                    //$em->flush();
+                    return array('Message' => 'Item has been successfully liked!');
+                }
+            } else {
+
+                $user=$user_helper->find($user_id);
+                $product_item = $product_item_helper->getProductItemById($product_item_id);
+                $product_item->removeUser($user);
+                $user->removeProductItem($product_item);
+                $product_item_helper->save($product_item);
+                $user_helper->saveUser($user);
+               // $em->flush();
+                return array('Message' => 'Item has been successfully unliked!');
+            }
+        } else {
+            return array('Message' => 'User/Item Missing');
+        }
+    
+    
+}
+#-------------------------------------------------------------------------------
+public function getDefaultFittingAlerts($request_array)
+{       
         $user_id = $request_array['user_id'];
         $product_id = $request_array['product_id'];
-         //Calling of Helper 
+        //Calling of Helper 
         $user_helper = $this->container->get('user.helper.user');
         $product_color_helper = $this->container->get('admin.helper.productcolor');
         $product_item_helper = $this->container->get('admin.helper.productitem');
@@ -429,12 +477,11 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         else {
             return json_encode(array('Message' => 'Can not find'));
         }
-    }         
-#-----------------------------Web Service-------------------------------------------------------------------------#
+    } 
 #------------------User Favourite List-----------------------------------------#
 public function favouriteByUser($user_id,$request){
-       
-    if(count($this->repo->favouriteByUser($user_id))>0){
+    
+        if(count($this->repo->favouriteByUser($user_id))>0){
     $device_path=$this->getDeviceTypeByUser($user_id);   
    
     $data=$this->repo->favouriteByUser($user_id);
