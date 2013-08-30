@@ -14,6 +14,7 @@ use LoveThatFit\AdminBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\Yaml\Parser;
+use LoveThatFit\SiteBundle\Algorithm;
 
 class ProductHelper{
 
@@ -369,43 +370,118 @@ public function findProductItemByUser($user_id, $page_number, $limit){
    public function findMostLikedByGender($gender='F', $page_number=0, $limit=0) {
         return $this->repo->findByGenderMostLiked($gender, $page_number, $limit);        
    } 
+        
+#-----------------------------Web Service-------------------------------------------------------------------------#
+
+#--------------------------------For Love/Unlove Item---------------------------#
+public function loveItem($request_array){
     
-    #---------------------------------------------------
-    #---------WROK WILL BE DONE I FUTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!----#
-    public function getDefaultFittingAlerts($product_id)
-    {       
+    $user_id = $request_array['user_id'];
+    $product_item_id = $request_array['product_item_id'];
+    $user_helper = $this->container->get('user.helper.user');
+    $product_item_helper = $this->container->get('admin.helper.productitem');
+      
+       if ($user_id && $product_item_id) {
+        
+        if ($request_array['like']==trim('like')) {
+                
+                $entity=$this->countMyCloset($user_id);
+                $rec_count = count($entity);
+
+                if ($rec_count >= 25) {
+                        return array('Message' => 'Please delete some products (limit exceeds)');
+                } else {
+                    
+                    $user =  $user_helper->find($user_id);
+                    $product_item = $product_item_helper->getProductItemById($product_item_id);
+                    $product_item->addUser($user);
+                    $user->addProductItem($product_item);
+                    $product_item_helper->save($product_item);
+                    $user_helper->saveUser($user);
+                    //$em->persist($product_item);
+                    //$em->persist($user);
+                    //$em->flush();
+                    return array('Message' => 'Item has been successfully liked!');
+                }
+            } else {
+
+                $user=$user_helper->find($user_id);
+                $product_item = $product_item_helper->getProductItemById($product_item_id);
+                $product_item->removeUser($user);
+                $user->removeProductItem($product_item);
+                $product_item_helper->save($product_item);
+                $user_helper->saveUser($user);
+               // $em->flush();
+                return array('Message' => 'Item has been successfully unliked!');
+            }
+        } else {
+            return array('Message' => 'User/Item Missing');
+        }
+    
+    
+}
+#-------------------------------------------------------------------------------
+public function getDefaultFittingAlerts($request_array)
+{       
+        $user_id = $request_array['user_id'];
+        $product_id = $request_array['product_id'];
+        //Calling of Helper 
+        $user_helper = $this->container->get('user.helper.user');
+        $product_color_helper = $this->container->get('admin.helper.productcolor');
+        $product_item_helper = $this->container->get('admin.helper.productitem');
+        $product_size_helper = $this->container->get('admin.helper.productsizes');
+
         // find product
-        $product = $this->repo->find($product_id);        
-      if($product){
-        $product_color = $product->getDisplayProductColor();
-        $product_color_id = $product_color->getId();        
-         //get color size array, sizes that are available in this color         
-        $color_sizes_array = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductColor')
-                ->getSizeArray($product_color_id);
-        $size_id = null;        
-         // find size id is not in param gets the first size id for this color      
+        if ($product_id) {
+            $product = $this->repo->find($product_id);
+            $product_color = $product->getDisplayProductColor();
+            $product_color_id = $product_color->getId();
+
+            //get color size array, sizes that are available in this color 
+            $color_sizes_array = $product_color_helper->getSizeArray($product_color_id);
+            $size_id = null;
+            // find size id is not in param gets the first size id for this color
             $psize = array_shift($color_sizes_array);
             $size_id = $psize['id'];
-       $product_size_id = $size_id;
-        $product_size = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductSize')
-                ->find($product_size_id);
-        //2) color & size can get an item
-        if ($product_size && $product_color) {
-            $product_item = $this->getDoctrine()
-                    ->getRepository('LoveThatFitAdminBundle:ProductItem')
-                    ->findByColorSize($product_color->getId(), $product_size->getId());
-            
-          return  $item_id=$product_item->getId();
-        }     
-        }//End of If   
-    }         
-#-----------------------------Web Service-------------------------------------------------------------------------#
+            $product_size_id = $size_id;
+            $product_size = $product_size_helper->find($product_size_id);
+
+            //2) color & size can get an item
+
+            if ($product_size && $product_color) {
+                $product_item = $product_item_helper->findByColorSize($product_color->getId(), $product_size->getId());
+                $product_item_id = $product_item->getId();
+            }
+
+            if ($user_id && $product_item_id) {
+
+                $user = $user_helper->find($user_id);
+                $productItem = $product_item_helper->getProductItemById($product_item_id);
+
+                if (!$user)
+                    return array('Message' => 'User not found');
+
+                if (!$productItem)
+                    return array('Message' => 'Product not found');
+
+                $fit = new Algorithm($user, $productItem);
+                $data = array();
+                $data['data'] = $fit->getFeedBackArray();
+
+                return ($data);
+            }
+            else {
+                return (array('Message' => 'Missing User/Item'));
+            }
+        }//End of If      
+        else {
+            return json_encode(array('Message' => 'Can not find'));
+        }
+    } 
 #------------------User Favourite List-----------------------------------------#
 public function favouriteByUser($user_id,$request){
-       
-    if(count($this->repo->favouriteByUser($user_id))>0){
+    
+        if(count($this->repo->favouriteByUser($user_id))>0){
     $device_path=$this->getDeviceTypeByUser($user_id);   
    
     $data=$this->repo->favouriteByUser($user_id);
