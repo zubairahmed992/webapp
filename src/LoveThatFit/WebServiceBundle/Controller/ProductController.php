@@ -166,8 +166,10 @@ class ProductController extends Controller {
  #-------------------------------End Of Authentication Token--------------------------------------#
         
         
-        $user_id = $request_array['user_id'];
-        $product_id = $request_array['product_id'];
+        $msg=$this->get('admin.helper.product')->getDefaultFittingAlerts($request_array);
+        return new Response(json_encode($msg));
+        
+      /*  $product_id = $request_array['product_id'];
         
        // find product
          if($product_id){ 
@@ -230,21 +232,21 @@ class ProductController extends Controller {
         else {
 
             return new Response(json_encode(array('Message' => 'Can not find')));
-        }
+        }*/
       
         
     }  
     //-------------------------------------------------------------------
-    private function getProductItemById($id) {
+   /* private function getProductItemById($id) {
         $product_item = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductItem')
                 ->find($id);
         return $product_item;
-    }
+    }*/
  //-------------------------------------------------------------------
     public function getFeedBackJSONAction() {
         
-        $request = $this->getRequest();
+        /*$request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
@@ -270,7 +272,7 @@ class ProductController extends Controller {
         else {
 
             return new Response(json_encode(array('Message' => 'Missing User/Item')));
-        }
+        }*/
     }
     
     
