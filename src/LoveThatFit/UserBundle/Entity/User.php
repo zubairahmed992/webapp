@@ -225,7 +225,7 @@ class User implements UserInterface, \Serializable {
      /**
      * @var string $deviceType
      *
-     * @ORM\Column(name="device_type", type="string", length=60)
+     * @ORM\Column(name="device_type", type="string", length=60, nullable=true)
      */
     private $deviceType;
 
