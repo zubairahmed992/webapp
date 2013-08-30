@@ -364,7 +364,7 @@ class Algorithm {
                 if ($diff > 0) {
                     return 'Please try smaller sizes.';
                 } else {
-                    return 'Please try anoth size.';
+                    return 'Please try another size.';
                 }
             }
         } else {
@@ -389,7 +389,7 @@ class Algorithm {
             } elseif ($diff < 0) {
                 return 'Please try bigger sizes.';
             } else {
-                return 'Please try anoth size.';
+                return 'Please try another size.';
             }
         } else {
             return;
