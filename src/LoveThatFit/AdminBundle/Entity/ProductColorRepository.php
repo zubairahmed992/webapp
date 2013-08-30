@@ -60,7 +60,7 @@ class ProductColorRepository extends EntityRepository {
     public function getSizeItemImageUrlArray($id) {
         $query = $this->getEntityManager()
                         ->createQuery('
-            SELECT ps.id as id, ps.title as title,pi.image as image_url FROM LoveThatFitAdminBundle:ProductColor pc 
+            SELECT pi.id as item_id,ps.id as id, ps.title as title,pi.image as image_url FROM LoveThatFitAdminBundle:ProductColor pc 
             JOIN pc.product_items pi
             JOIN pi.product_size ps
             WHERE pc.id = :id'

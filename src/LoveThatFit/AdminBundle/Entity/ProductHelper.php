@@ -497,7 +497,7 @@ public function favouriteByUser($user_id,$request){
  public function productDetailWebService($request,$request_array){
        $product_id = $request_array['id'];
         $user_id= $request_array['user_id'];
-       /*$user_id=1;
+      /*$user_id=1;
        $product_id=3;*/
        if(!$user_id)
        {
@@ -537,6 +537,7 @@ public function favouriteByUser($user_id,$request){
                 foreach ($color_sizes as $cs) {
                     $color_size_array [$cs['title']] = $cs;
                     $like_status['like_status']=$user->getMyClosetListArray($cs['id']);
+                   // $item_id['item_id']=$cs['item_id'];
                     array_push($color_size_array [$cs['title']],$like_status);
                     $counter++;
                 }
