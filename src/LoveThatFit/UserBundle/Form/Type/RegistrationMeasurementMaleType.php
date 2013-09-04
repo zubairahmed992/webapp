@@ -11,12 +11,16 @@ class RegistrationMeasurementMaleType extends AbstractType
 private $top_brands;
 private $bottom_brands;
 private $body_types;
+private $container;
 
-     public function __construct($top_brands, $bottom_brands)             
+     public function __construct($container)             
     {
-        $this->top_brands=$top_brands;
-        $this->bottom_brands=$bottom_brands;
+        $this->container= $container;
         $this->body_types=array('Regular'=>'Regular','Petite'=>'Petite'); 
+        $this->top_brands=$this->container->getBrandArray('Top');
+        $this->bottom_brands=$this->container->getBrandArray('Bottom');
+        
+        
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

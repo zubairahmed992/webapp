@@ -5,6 +5,7 @@ namespace LoveThatFit\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RegistrationMeasurementFemaleType extends AbstractType
 {
@@ -12,14 +13,17 @@ class RegistrationMeasurementFemaleType extends AbstractType
     private $bottom_brands;
     private $dress_brands;
     private $body_types;
+    private $container;
 
-     public function __construct($top_brands, $bottom_brands,$dress_brands)             
+     public function __construct($container)             
     {
-        $this->top_brands=$top_brands;
-        $this->bottom_brands=$bottom_brands;
-        $this->dress_brands=$dress_brands;
+        $this->container= $container;
         $this->body_types=array('Regular'=>'Regular','Petite'=>'Petite');
         
+        $this->top_brands=$this->container->getBrandArray('Top');
+        $this->bottom_brands=$this->container->getBrandArray('Bottom');
+        $this->dress_brands=$this->container->getBrandArray('Dress');
+     
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
