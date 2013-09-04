@@ -8,11 +8,16 @@ services:
 constants:
   device_bootstrap:
     resolution_scale:    
-      pixcel_per_inch: 16
-      inches: 72
-      standard: 1152
-      iphone4s: 690
-      iphone5:  840
+      web: 
+        pixel_per_inch: 16
+        pixel_height : 1152
+        inch_height: 72
+      iphone4s: 
+        pixel_per_inch: 14.5
+        pixel_height : 996
+      iphone5:  
+        pixel_per_inch: 18.125
+        pixel_height : 870
       ipad:  1024
       ipad_retina:  2048
       

@@ -24,6 +24,8 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Exception\ParseException;
+use LoveThatFit\AdminBundle\ImageHelper;
+use ZipArchive;
 
 
 class ProductController extends Controller {
@@ -789,7 +791,61 @@ public function productStatsAction()
         $yaml = Yaml::dump($array, 40);
         return @file_put_contents('../app/config/config_ltf_product.yml', $yaml);
     }
+#---------------------Product Download-----------------------------------------#
+  public function productDownloadsAction($id, Request $request){
+        
+        $entity = $this->get('admin.helper.product')->find($id);
+        //$ImageHelper = new ImageHelper('product',$entity);
+        $file_names = array();
+        $file_names = array("avatar.jpg");
+        $archive_file_name ='DEMOphpCreateZipTodownloadMultipleFiles1.zip';
+        $file_path='d://wamp/www/webapp/web/uploads/ltf/users/1/';
+       
+     
+      return new response($this->zipFilesAndDownload($file_names,$archive_file_name,$file_path));
+    }
+  #-------------Function for dowloading images in zip format--------------------#
+  public function zipFilesAndDownload($file_names,$archive_file_name,$file_path)
+{
+     
+      
+      $zip = new ZipArchive();
+    //create the file and throw the error if unsuccessful
+       if ($zip->open($archive_file_name, \ZIPARCHIVE::CREATE | \ZIPARCHIVE::OVERWRITE) === TRUE) {
+  //  if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
+         foreach($file_names as $files)
+    {
+         $zip->addFile($file_path.$files,$files);
+        //echo $file_path.$files,$files."<br>";
+    }
+    $zip->close();
+    }else{
+        return "can not open";
+    }
+    
+    $response = $this->render('LoveThatFitAdminBundle:Product:download.html.twig');
+    //then send the headers to foce download the zip file
+   $response->headers->set('Content-Type','application/zip');
+   $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($archive_file_name) . '"');        
+   $response->headers->set('Pragma', "no-cache");
+   $response->headers->set('Expires', "0");
+   $response->headers->set('Content-Transfer-Encoding', "binary");
+   $response->sendHeaders();
+   $response->setContent(readfile($archive_file_name));
+   return $response;
+    
+   
+    
 
+    /*//return $response;
+    //then send the headers to foce download the zip file
+  //  header("Content-type: application/zip"); 
+    header("Content-Disposition: attachment; filename=$archive_file_name"); 
+    header("Pragma: no-cache"); 
+    header("Expires: 0"); 
+    readfile("$archive_file_name");
+    exit;*/
+}   
     
 }
 

@@ -482,9 +482,8 @@ public function getDefaultFittingAlerts($request_array)
 public function favouriteByUser($user_id,$request){
     
         if(count($this->repo->favouriteByUser($user_id))>0){
-    $device_path=$this->getDeviceTypeByUser($user_id);   
-   
-    $data=$this->repo->favouriteByUser($user_id);
+      $device_path=$this->getDeviceTypeByUser($user_id);   
+      $data=$this->repo->favouriteByUser($user_id);
     $count=1;
     foreach($data as $ind){
         $data_value['data'][$count]['id']=$ind['product_id'];
@@ -499,7 +498,7 @@ public function favouriteByUser($user_id,$request){
     $count++;    
     }
     
-    $data_value['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path;
+    $data_value['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
     $data_value['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
     return $data_value;}else{
         return $data['message']="There is no Favourite list ";
@@ -628,11 +627,13 @@ public function favouriteByUser($user_id,$request){
                     'sizes' => $color_size_array,
                 );
             }
+            //Fetching the Device type 
+            $device_path=$this->getDeviceTypeByUser($user_id);   
             $productdetail['product_color'] = $product_color_array;
             $data = array();
             $data['data'] = $productdetail;
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
-            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
             $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/';
 
             $data['product_color_path'] = $baseurl;
@@ -650,8 +651,9 @@ public function getUserTryHistoryWebService($request,$user_id){
         {
         
         $entity = $this->repo->tryOnHistoryWebService($user_id);
+        $device_path=$this->getDeviceTypeByUser($user_id);   
         $data=array();
-        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
         $data['data']=$entity;
         $data['image_path']=$fitting_room;
         $count_rec=count($entity);
