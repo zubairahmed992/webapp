@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\Yaml\Parser;
 use LoveThatFit\SiteBundle\Algorithm;
+use ZipArchive;
+use Symfony\Component\HttpFoundation\Response;
+use LoveThatFit\AdminBundle\ImageHelper;
 
 class ProductHelper{
 
@@ -744,5 +747,56 @@ public function productDetail($id, $product_color_id, $product_size_id){
          //$product_item_helper = $this->container->get('admin.helper.productitem');
          //return $product_item_helper->productItem($user_id);
     }
+   #-------------Function for dowloading images in zip format--------------------#
+  public function zipFilesAndDownload($file_names,$archive_file_name)
+{
+      $zip = new ZipArchive();
+    //create the file and throw the error if unsuccessful
+       if ($zip->open($archive_file_name, \ZIPARCHIVE::CREATE | \ZIPARCHIVE::OVERWRITE) === TRUE) {
+  //  if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
+         foreach($file_names as $files)
+    {
+         $zip->addFile($files,$files);
+        //echo $file_path.$files,$files."<br>";
+    }
+    $zip->close();
+    }else{
+        return "can not open";
+    }
+    
+    $response =new Response();
+    //then send the headers to foce download the zip file
+   $response->headers->set('Content-Type','application/zip');
+   $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($archive_file_name) . '"');        
+   $response->headers->set('Pragma', "no-cache");
+   $response->headers->set('Expires', "0");
+   $response->headers->set('Content-Transfer-Encoding', "binary");
+   $response->sendHeaders();
+   $response->setContent(readfile($archive_file_name));
+   return $response;
+ 
+}
+#-------------------------ZIP DOWNLOADING -------------------------------------#
+public function zipDownload($id){
+    
+    $product = $this->repo->find($id);
+    $product_color_array=$this->getProductColorArray($id);
+    #-------Getting the Color images---------------------#
+     $color_images = array();
+    foreach($product_color_array as $ind_color_image){
+    // $color_images[]=$ind_color_image['product_color_images'];   
+    }
+   // $image_helper=new ImageHelper('product',$entity);
+    $color_images=$product->getProductImagePaths();
+    
+        $file_names = array($color_images);
+        $archive_file_name ='DEMOphpCreateZipTodownloadMultipleFiles1.zip';
+        $file_path='d://wamp/www/webapp/web/uploads/ltf/users/1/';
+     return $this->zipFilesAndDownload($color_images,$archive_file_name);
+}
+#------------------------------------------------------------------------------#
+private function getProductColorArray($product_id){
+    return $this->repo->getProductColorArray($product_id);
+}
 
 }

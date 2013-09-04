@@ -72,9 +72,9 @@ class RegistrationController extends Controller {
                 $this->get('mail_helper')->sendRegistrationEmail($user);
 
                 if ($user->getGender() == 'm') {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
                 } else {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper), $measurement);
                 }
 
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
@@ -119,9 +119,9 @@ class RegistrationController extends Controller {
         $measurement = $user->getMeasurement();
 
         if ($user->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
 
@@ -153,9 +153,9 @@ class RegistrationController extends Controller {
         $measurement = $user->getMeasurement();
 
         if ($user->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper), $measurement);
         }
 
         $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
