@@ -44,7 +44,8 @@ class SurveyAnswerHelper {
     
     public function saveAnswer($entity) {
         $answer = $entity->getAnswer();
-        $msg_array = $this->validateForCreate($answer);
+        $question=$entity->getQuestion();
+        $msg_array = $this->validateForCreate($question,$answer);
         if ($msg_array == null) {                        
             $this->em->persist($entity);
             $this->em->flush();
@@ -109,8 +110,8 @@ class SurveyAnswerHelper {
     return $this->repo->find($id);
 }
 
-public function findOneByName($answer) {
-        return $this->repo->findOneByName($answer);
+public function findOneByName($question,$answer) {
+        return $this->repo->findOneByName($question,$answer);
     }
     
 public function findOneById($id)
@@ -142,7 +143,7 @@ public function findWithSpecs($id) {
 
     
     
-    private function validateForCreate($answer) {
+    private function validateForCreate($question,$answer) {
         if($answer==null){            
             return array('message' => 'Enter values correctly!',
                 'field' => 'name',
@@ -151,7 +152,7 @@ public function findWithSpecs($id) {
             );
         }else
         {
-        if (count($this->findOneByName($answer)) > 0) {
+        if (count($this->findOneByName($question,$answer)) > 0) {
             return array('message' => 'Answer already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
@@ -166,7 +167,7 @@ public function findWithSpecs($id) {
     
     private function validateForUpdate($entity) {
         $answer=$entity->getAnswer();
-        $answers = $this->findOneByName($entity->getAnswer());
+        $answers = $this->findOneByName($entity->getAnswer(),$entity->getQuestion());
         if($answer==null)
         {
           return array('message' => 'Enter values correctly!',
