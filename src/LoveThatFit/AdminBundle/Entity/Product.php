@@ -482,7 +482,23 @@ class Product {
     {
         return $this->disabled;
     }
+
     //----------------------------------------------------------
+    public function getProductImagePaths() {
+
+        $ar=array();
+        foreach ($this->getProductColors() as $pc) {
+            array_push($ar,$pc->getWebPath());            
+        }
+        /*foreach ($this->getProductItems() as $pi) {
+            $pi->getImageWebPath();
+            $pi->getPatternImageWebPath();
+        }*/
+        return  $ar;
+        return null;
+    }
+    
+//----------------------------------------------------------
     public function getUserFittingSize($user) {
 
         $fitting_algo = new Algorithm($user, null);
