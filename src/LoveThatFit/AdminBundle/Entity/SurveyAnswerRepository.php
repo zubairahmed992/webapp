@@ -41,11 +41,13 @@ class SurveyAnswerRepository extends EntityRepository
         }
     }
     
-    public function findOneByName($answer) {
+    public function findOneByName($question,$answer) {
         $query = $this->getEntityManager()
                         ->createQuery("SELECT sa FROM LoveThatFitAdminBundle:SurveyAnswer sa     
-                                WHERE sa.answer=:answer")
-                        ->setParameters(array('answer' => $answer));
+                                WHERE sa.answer=:answer
+                                AND
+                                      sa.question=:question")
+                        ->setParameters(array('answer' => $answer,'question'=>$question));
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
