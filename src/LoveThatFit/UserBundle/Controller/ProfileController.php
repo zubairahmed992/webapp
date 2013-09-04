@@ -25,7 +25,6 @@ class ProfileController extends Controller {
     public function aboutMeAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $size_chart_helper = $this->get('admin.helper.sizechart');
         
         $entity = $this->get('user.helper.user')->find($id);
         $measurement = $entity->getMeasurement();
@@ -35,14 +34,12 @@ class ProfileController extends Controller {
         } else {
             $measurementForm = $this->createForm(new ProfileMeasurementFemaleType(), $measurement);
         }
-
-        $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
+        
         return $this->render('LoveThatFitUserBundle:Profile:aboutMe.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'validation_groups' => array('profile_measurement'),
                     'measurement' => $measurement,
                     'entity' => $entity,
-                    'sizechartsizeform' => $brandSizeChartForm->createView(),
                 ));
     }
 
@@ -198,46 +195,6 @@ public function passwordResetUpdateAction(Request $request) {
     }
 
 
-    
-    //----------------------Profile Size Chart Sizes----------------Azeem----------
-    
-    public function profileSizeChartSizesAction()
-    {
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $size_chart_helper = $this->get('admin.helper.sizechart');        
-        $entity = $this->get('user.helper.user')->find($id);        
-        $measurement = $entity->$this->get('user.helper.measurement')->getMeasurement();        
-        if ($entity->getGender() == 'm') {
-            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom')), $measurement);
-        } else {
-            $brandSizeChartForm = $this->createForm(new SizeChartMeasurementType($size_chart_helper->getBrandArray('Top'), $size_chart_helper->getBrandArray('Bottom'), $size_chart_helper->getBrandArray('Dress')), $measurement);
-        }
-        $brandSizeChartForm->bind($this->getRequest());
-        $request_array = $this->getRequest()->get('brand_size_chart');
-        if ($entity->getGender() == 'm') {
-
-            if (array_key_exists('top_size', $request_array)) {
-                 $measurement->top_size = $request_array['top_size'];                                
-            }
-            if (array_key_exists('bottom_size', $request_array)) {
-                $measurement->bottom_size = $request_array['bottom_size'];
-            }
-        } else {
-            if (array_key_exists('top_size', $request_array)) {
-                $measurement->top_size = $request_array['top_size'];
-            }
-            if (array_key_exists('bottom_size', $request_array)) {
-                $measurement->bottom_size = $request_array['bottom_size'];
-            }
-            if (array_key_exists('dress_size', $request_array)) {
-                $measurement->dress_size = $request_array['dress_size'];
-            }
-        }
-        
-        return new Response(json_encode($measurement));
-    }
-
-    
     public function userTryProductsAction($page_number = 0, $limit = 0)
     {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();

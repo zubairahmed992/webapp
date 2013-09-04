@@ -79,10 +79,6 @@ user_profile_what_i_like_user_survey:
     pattern:  /profile/user_profile_what_i_like_user_survey
     defaults: { _controller: LoveThatFitUserBundle:Profile:submitUserSurveyForm }
     
-user_profile_size_chart_size:
-    pattern:  /profile/size_chart_size
-    defaults: { _controller: LoveThatFitUserBundle:Profile:profileSizeChartSizes }   
-
 user_product_history:
     pattern:  /profile/user_product_history
     defaults: { _controller: LoveThatFitUserBundle:Profile:userTryProducts}
@@ -103,8 +99,7 @@ admin_logout:
 login:
     pattern:   /login
     defaults: { _controller: LoveThatFitUserBundle:Registration:registration }
-    #defaults:  { _controller: LoveThatFitUserBundle:Security:login }
-
+    
 login_check:
     pattern:   /login_check
 
@@ -124,15 +119,6 @@ forgot_password_reset_form:
 forgot_password_update:
     pattern:   /forgot_password_update/{id}
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdate }
-
-#password_reset_form:
-#    pattern:   /password_reset_form
-#    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordResetForm }
-#
-#password_update:
-#    pattern:   /password_update/{id}
-#    defaults:  { _controller: LoveThatFitUserBundle:Registration:passwordUpdate }
-
 
 #----------------------------------------  Dev/Testing ------------------------------------------------  
 go_secure:
