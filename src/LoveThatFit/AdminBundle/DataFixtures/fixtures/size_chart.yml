@@ -706,3 +706,218 @@ size_charts:
             bust: 46
             waist: 37.5
             hip: 48.5
+            
+  Anthropologie: 
+    f:
+      Regular:
+        Top:
+          0:
+            bust: 33
+            waist: 25
+            hip: 35
+          2:
+            bust: 34
+            waist: 26
+            hip: 36
+          4:
+            bust: 35
+            waist: 27
+            hip: 37
+          6:
+            bust: 36
+            waist: 28
+            hip: 38
+          8:
+            bust: 37
+            waist: 29
+            hip: 39
+          10:
+            bust: 38
+            waist: 30
+            hip: 40
+          12:
+            bust: 39.5
+            waist: 31.5
+            hip: 41.5
+          14:
+            bust: 41
+            waist: 33
+            hip: 43
+          16:
+            bust: 42.5
+            waist: 34.5      
+            hip: 44.5
+
+        Bottom:
+          0:            
+            waist: 25
+            hip: 35
+          2:            
+            waist: 26
+            hip: 36
+          4:            
+            waist: 27
+            hip: 37
+          6:            
+            waist: 28
+            hip: 38
+          8:            
+            waist: 29
+            hip: 39
+          10:            
+            waist: 30
+            hip: 40
+          12:            
+            waist: 31.5
+            hip: 41.5
+          14:            
+            waist: 33
+            hip: 43
+          16:            
+            waist: 34.5      
+            hip: 44.5
+
+        Dress:
+          0:
+            bust: 33
+            waist: 25
+            hip: 35
+          2:
+            bust: 34
+            waist: 26
+            hip: 36
+          4:
+            bust: 35
+            waist: 27
+            hip: 37
+          6:
+            bust: 36
+            waist: 28
+            hip: 38
+          8:
+            bust: 37
+            waist: 29
+            hip: 39
+          10:
+            bust: 38
+            waist: 30
+            hip: 40
+          12:
+            bust: 39.5
+            waist: 31.5
+            hip: 41.5
+          14:
+            bust: 41
+            waist: 33
+            hip: 43
+          16:
+            bust: 42.5
+            waist: 34.5      
+            hip: 44.5
+
+      Petite:     
+        Top:
+          "00":
+            bust: 31.5
+            waist: 23.5
+            hip: 33.5
+          0:
+            bust: 32.5
+            waist: 24.5
+            hip: 34.5
+          2:
+            bust: 33.5
+            waist: 25.5
+            hip: 35.5
+          4:
+            bust: 34.5
+            waist: 26.5
+            hip: 36.5
+          6:
+            bust: 35.5
+            waist: 27.5
+            hip: 37.5
+          8:
+            bust: 36.5
+            waist: 28.5
+            hip: 38.5
+          10:
+            bust: 37.5
+            waist: 29.5
+            hip: 39.5
+          12:
+            bust: 39
+            waist: 31
+            hip: 41
+          14:
+            bust: 40.5
+            waist: 32.5
+            hip: 42.5
+          
+        Bottom:
+          "00":            
+            waist: 23.5
+            hip: 33.5
+          0:            
+            waist: 24.5
+            hip: 34.5
+          2:            
+            waist: 25.5
+            hip: 35.5
+          4:            
+            waist: 26.5
+            hip: 36.5
+          6:            
+            waist: 27.5
+            hip: 37.5
+          8:            
+            waist: 28.5
+            hip: 38.5
+          10:            
+            waist: 29.5
+            hip: 39.5
+          12:            
+            waist: 31
+            hip: 41
+          14:            
+            waist: 32.5
+            hip: 42.5
+
+        Dress:
+          "00":
+            bust: 31.5
+            waist: 23.5
+            hip: 33.5
+          0:
+            bust: 32.5
+            waist: 24.5
+            hip: 34.5
+          2:
+            bust: 33.5
+            waist: 25.5
+            hip: 35.5
+          4:
+            bust: 34.5
+            waist: 26.5
+            hip: 36.5
+          6:
+            bust: 35.5
+            waist: 27.5
+            hip: 37.5
+          8:
+            bust: 36.5
+            waist: 28.5
+            hip: 38.5
+          10:
+            bust: 37.5
+            waist: 29.5
+            hip: 39.5
+          12:
+            bust: 39
+            waist: 31
+            hip: 41
+          14:
+            bust: 40.5
+            waist: 32.5
+            hip: 42.5
+      
