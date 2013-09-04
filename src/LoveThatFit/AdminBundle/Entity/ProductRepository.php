@@ -783,7 +783,20 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
-
-    
+#-----------------Image Downloading Functions----------------------------------#    
+    public function getProductColorArray($product_id){
+        
+     $query = $this->getEntityManager()
+                        ->createQuery("
+            SELECT p.id as product_id ,p.name as product_name,pc.image as product_color_images, pc.pattern as product_pattern_images
+            FROM LoveThatFitAdminBundle:ProductColor pc                         
+            JOIN pc.product p
+            WHERE  p.displayProductColor!='' and p.id = :id ")->setParameters(array('id' => $product_id));
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }   
+    }
     
 }

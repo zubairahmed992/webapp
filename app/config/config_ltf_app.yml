@@ -18,8 +18,12 @@ constants:
       iphone5:  
         pixel_per_inch: 18.125
         pixel_height : 870
-      ipad:  1024
-      ipad_retina:  2048
+      ipad:
+        pixel_per_inch: 18.125
+        pixel_height : 870
+      ipad_retina:
+        pixel_per_inch: 18.125
+        pixel_height : 870
       
   pagination:
     limit: 30
