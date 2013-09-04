@@ -169,6 +169,31 @@ class ImageHelper {
         $iw = $image_info[0] ;
         $ih = $image_info [1];
         $n=null;
+        $pixel_per_inch_original=$this->conf['original']['pixel_per_inch'];
+        
+        foreach ($this->conf as $key => $value) {
+            if ($key != 'original') {
+                if (array_key_exists ('pixel_per_inch', $value) ) {
+                $percent = ($value['pixel_per_inch'] / $pixel_per_inch_original);
+                $n[$key]['width'] = round($iw * $percent);
+                $n[$key]['height'] = round($ih * $percent);                
+            }else{
+                $n[$key]['width'] = $iw;
+                $n[$key]['height'] = $ih;
+            }
+        
+            }
+        }
+        return $n;
+    }
+
+    
+    public function _calculateResizeDimentions() {
+        
+        $image_info = getimagesize($this->getAbsolutePath());
+        $iw = $image_info[0] ;
+        $ih = $image_info [1];
+        $n=null;
         $standard_height=$this->conf['original']['available_height'];
         foreach ($this->conf as $key => $value) {
             if ($key != 'original') {

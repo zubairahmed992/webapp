@@ -44,18 +44,49 @@ image_category:
     original:
       prefix: 
       dir:  'uploads/ltf/products/fitting_room'
-      inches: 72
       available_height: 1152
-  
-    iphone4s:
+      pixel_per_inch: 25  
+    34px:
       prefix: 
-      dir:  'uploads/ltf/products/fitting_room/iphone4s'
-      available_height: 690  
+      dir:  'uploads/ltf/products/fitting_room/34'
+      pixel_per_inch: 34
+    30px:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/30'
+      pixel_per_inch: 30      
+    25px:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/25'
+      pixel_per_inch: 25    
+    17px:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/17'
+      pixel_per_inch: 17      
+    14px:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/14'
+      pixel_per_inch: 14            
+    11px:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/11'
+      pixel_per_inch: 11      
+    8px:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/8'
+      pixel_per_inch: 8            
+    6px:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/6'
+      pixel_per_inch: 6            
+#    iphone4s:
+#      prefix: 
+#      dir:  'uploads/ltf/products/fitting_room/iphone4s'
+#      available_height: 690  
     
-    iphone5:
-      prefix: 
-      dir:  'uploads/ltf/products/fitting_room/iphone5'
-      available_height: 840
+#    iphone5:
+#      prefix: 
+#      dir:  'uploads/ltf/products/fitting_room/iphone5'
+#      available_height: 840
     
  #   ipad:
  #     prefix: 
