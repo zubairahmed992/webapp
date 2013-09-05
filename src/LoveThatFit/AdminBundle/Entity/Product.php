@@ -487,17 +487,17 @@ class Product {
     public function getProductImagePaths() {
 
         $ar=array();
+        
         foreach ($this->getProductColors() as $pc) {
-            array_push($ar,$pc->getWebPath());            
+           $ar['path']=$pc->getUploadRootDir();    
+                     
         }
-        /*foreach ($this->getProductItems() as $pi) {
-            $pi->getImageWebPath();
-            $pi->getPatternImageWebPath();
-        }*/
+        
         return  $ar;
-        return null;
+        
     }
     
+   
 //----------------------------------------------------------
     public function getUserFittingSize($user) {
 
