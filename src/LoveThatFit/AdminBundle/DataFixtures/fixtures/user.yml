@@ -37,29 +37,30 @@ users:
     shoulder_height: 15.5
     sleeve: 31.5
 
-    
-  HM_women_two:
+  old_navy_women_two:
     id: 3
     first_name: women two
-    last_name:  HM
-    email: hmwomen2@ltf.com
+    last_name:  old navy
+    email: oldnavywomen2@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
     image: 'cropped.jpg'
     avater: 'avatar.jpg'
-    bust: 30
-    waist: 23.5
-    hip: 33
-    back: 16.5
-    shoulder_height: 16.5    
-    sleeve: 32.5
-    
-  HM_women_four:
+    weight: 120
+    height: 180
+    bust: 32
+    waist: 24
+    hip: 35
+    back: 15.5
+    shoulder_height: 15.5
+    sleeve: 31.5
+
+  old_navy_women_four:
     id: 4
     first_name: women four
-    last_name:  HM
-    email: hmwomen4@ltf.com
+    last_name:  old navy
+    email: oldnavywomen4@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
@@ -67,18 +68,18 @@ users:
     avater: 'avatar.jpg'
     weight: 120
     height: 180
-    bust: 31.5
-    waist: 25.25
-    hip: 34.5
-    back: 15.5
-    shoulder_height: 15.5
-    sleeve: 31.5
-  
-  HM_women_six:
+    bust: 31
+    waist: 23
+    hip: 34
+    back: 16.5
+    shoulder_height: 16.5    
+    sleeve: 32.5
+    
+  old_navy_women_six:
     id: 5
     first_name: women six
-    last_name:  HM
-    email: hmwomen6@ltf.com
+    last_name:  old navy
+    email: oldnavywomen6@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
@@ -86,35 +87,37 @@ users:
     avater: 'avatar.jpg'
     weight: 120
     height: 180
-    bust: 33
-    waist: 26.75
-    hip: 36.25
+    bust: 32
+    waist: 24
+    hip: 35
     back: 15.5
     shoulder_height: 15.5
     sleeve: 31.5
-    
-  HM_women_eight:
+
+  old_navy_women_eight:
     id: 6
     first_name: women eight
-    last_name:  HM
-    email: hmwomen8@ltf.com
+    last_name:  old navy
+    email: oldnavywomen8@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
     image: 'cropped.jpg'
     avater: 'avatar.jpg'
-    bust: 34.5
-    waist: 28.5
-    hip: 37.75
-    back: 16.5
-    shoulder_height: 16.5    
-    sleeve: 32.5
-    
-  HM_women_ten:
+    weight: 120
+    height: 180
+    bust: 32
+    waist: 24
+    hip: 35
+    back: 15.5
+    shoulder_height: 15.5
+    sleeve: 31.5
+
+  old_navy_women_ten:
     id: 7
     first_name: women ten
-    last_name:  HM
-    email: hmwomen10@ltf.com
+    last_name:  old navy
+    email: oldnavywomen10@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
@@ -122,18 +125,18 @@ users:
     avater: 'avatar.jpg'
     weight: 120
     height: 180
-    bust: 36.25
-    waist: 30
-    hip: 39.5
-    back: 15.5
-    shoulder_height: 15.5
-    sleeve: 31.5
-  
-  HM_women_twelve:
+    bust: 31
+    waist: 23
+    hip: 34
+    back: 16.5
+    shoulder_height: 16.5    
+    sleeve: 32.5
+    
+  old_navy_women_twelve:
     id: 8
     first_name: women twelve
-    last_name:  HM
-    email: hmwomen12@ltf.com
+    last_name:  old navy
+    email: oldnavywomen12@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
@@ -141,35 +144,37 @@ users:
     avater: 'avatar.jpg'
     weight: 120
     height: 180
-    bust: 37.75
-    waist: 31.5
-    hip: 41
+    bust: 32
+    waist: 24
+    hip: 35
     back: 15.5
     shoulder_height: 15.5
     sleeve: 31.5
-    
-  HM_women_fourteen:
+
+  old_navy_women_fourteen:
     id: 9
     first_name: women fourteen
-    last_name:  HM
-    email: hmwomen14@ltf.com
+    last_name:  old navy
+    email: oldnavywomen14@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
     image: 'cropped.jpg'
     avater: 'avatar.jpg'
-    bust: 39.5
-    waist: 33
-    hip: 42.5
-    back: 16.5
-    shoulder_height: 16.5    
-    sleeve: 32.5
-    
-  HM_women_sixteen:
+    weight: 120
+    height: 180
+    bust: 32
+    waist: 24
+    hip: 35
+    back: 15.5
+    shoulder_height: 15.5
+    sleeve: 31.5
+
+  old_navy_women_sixteen:
     id: 10
     first_name: women sixteen
-    last_name:  HM
-    email: hmwomen16@ltf.com
+    last_name:  old navy
+    email: oldnavywomen16@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
@@ -177,18 +182,18 @@ users:
     avater: 'avatar.jpg'
     weight: 120
     height: 180
-    bust: 41
-    waist: 34.5
-    hip: 44
+    bust: 32
+    waist: 24
+    hip: 35
     back: 15.5
     shoulder_height: 15.5
     sleeve: 31.5
-  
-  HM_women_eighteen:
+
+  old_navy_women_eighteen:
     id: 11
     first_name: women eighteen
-    last_name:  HM
-    email: hmwomen18@ltf.com
+    last_name:  old navy
+    email: oldnavywomen18@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
@@ -196,53 +201,56 @@ users:
     avater: 'avatar.jpg'
     weight: 120
     height: 180
-    bust: 33.25
-    waist: 37
-    hip: 46
-    back: 15.5
-    shoulder_height: 15.5
-    sleeve: 31.5
-    
-  HM_women_twenty:
+    bust: 31
+    waist: 23
+    hip: 34
+    back: 16.5
+    shoulder_height: 16.5    
+    sleeve: 32.5
+
+  old_navy_women_twenty:
     id: 12
     first_name: women twenty
-    last_name:  HM
-    email: hmwomen20@ltf.com
+    last_name:  old navy
+    email: oldnavywomen20@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
     image: 'cropped.jpg'
     avater: 'avatar.jpg'
-    bust: 45.5
-    waist: 39.5
-    hip: 48
+    weight: 120
+    height: 180
+    bust: 31
+    waist: 23
+    hip: 34
     back: 16.5
     shoulder_height: 16.5    
     sleeve: 32.5
-#----------------------------------------------------------------------    
-  gap_medium_women_ten:
+    
+  old_navy_women_twentytwo:
     id: 13
-    first_name: medium women ten
-    last_name:  gap
-    email: test3@ltf.com
+    first_name: women twenty two
+    last_name:  old navy
+    email: oldnavywomen22@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
     image: 'cropped.jpg'
     avater: 'avatar.jpg'
-    waist: 29.5  
-    hip: 40.5
-    bust: 37.5
-    chest: 37.5
-    back: 17
-    shoulder_height: 17    
-    sleeve: 33
-  
-  gap_small_women_four:
+    weight: 120
+    height: 180
+    bust: 32
+    waist: 24
+    hip: 35
+    back: 15.5
+    shoulder_height: 15.5
+    sleeve: 31.5
+
+  old_navy_women_twentyfour:
     id: 14
-    first_name: small women four
-    last_name:  gap
-    email: test@ltf.com
+    first_name: women twentyfour
+    last_name:  old navy
+    email: oldnavywomen24@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
@@ -250,122 +258,47 @@ users:
     avater: 'avatar.jpg'
     weight: 120
     height: 180
-    waist: 26.5
-    hip: 37.5
-    bust: 34.5
-    chest: 34.5    
+    bust: 32
+    waist: 24
+    hip: 35
     back: 15.5
     shoulder_height: 15.5
     sleeve: 31.5
-  
-  gap_small_women_six:
-    id: 15
-    first_name: small women six
-    last_name:  gap
-    email: test1@ltf.com
-    password: 123456
-    zipcode: 123456
-    gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
-    weight: 120
-    height: 180
-    waist: 26.5 
-    hip: 37.5
-    bust: 34.5
-    chest: 34.5    
-    back: 15.5
-    shoulder_height: 15.5
-    sleeve: 31.5
-    
-  gap_medium_women_eight:
+
+  old_navy_women_twentysix:
     id: 16
-    first_name: medium women eight
-    last_name:  gap
-    email: test2@ltf.com
+    first_name: women twenty six
+    last_name:  old navy
+    email: oldnavywomen26@ltf.com
     password: 123456
     zipcode: 123456
     gender: f
     image: 'cropped.jpg'
     avater: 'avatar.jpg'
-    waist: 28.5   
-    hip: 39.5
-    bust: 36.5
-    chest: 36.5    
+    weight: 120
+    height: 180
+    bust: 32
+    waist: 24
+    hip: 35
+    back: 15.5
+    shoulder_height: 15.5
+    sleeve: 31.5
+
+  old_navy_women_twentyeight:
+    id: 11
+    first_name: women twentyeight
+    last_name:  old navy
+    email: oldnavywomen28@ltf.com
+    password: 123456
+    zipcode: 123456
+    gender: f
+    image: 'cropped.jpg'
+    avater: 'avatar.jpg'
+    weight: 120
+    height: 180
+    bust: 31
+    waist: 23
+    hip: 34
     back: 16.5
     shoulder_height: 16.5    
     sleeve: 32.5
-    
-  gap_medium_women_ten:
-    id: 17
-    first_name: medium women ten
-    last_name:  gap
-    email: test3@ltf.com
-    password: 123456
-    zipcode: 123456
-    gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
-    waist: 29.5  
-    hip: 40.5
-    bust: 37.5
-    chest: 37.5
-    back: 17
-    shoulder_height: 17    
-    sleeve: 33
-    
-  gap_large_women_tweleve:
-    id: 18
-    first_name: large women tweleve
-    last_name:  gap
-    email: test4@ltf.com
-    password: 123456
-    zipcode: 123456
-    gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
-    waist: 30.75  
-    hip: 41.75
-    bust: 39
-    chest: 39
-    back: 18
-    shoulder_height: 18
-    sleeve: 33.25
-    
-  gap_large_women_fourteen:
-    id: 19
-    first_name: large women fourteen
-    last_name:  gap
-    email: test5@ltf.com
-    password: 123456 
-    zipcode: 123456
-    gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
-    waist: 32  
-    hip: 43
-    bust: 40.5
-    chest: 40.5    
-    back: 18
-    shoulder_height: 18    
-    sleeve: 33.5
-  
-  ellie_small_women_four:
-    id: 20
-    first_name: ellie small women four
-    last_name:  ellie
-    email: test6@ltf.com
-    password: 123456
-    zipcode: 123456
-    gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
-    weight: 120
-    height: 180
-    waist: 26.5
-    hip: 37.5
-    bust: 34.5
-    chest: 34.5    
-    back: 15.5
-    shoulder_height: 15.5
-    sleeve: 31.5
