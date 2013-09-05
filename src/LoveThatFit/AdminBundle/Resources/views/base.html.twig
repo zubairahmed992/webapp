@@ -11,6 +11,7 @@
     <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/css/admin.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
+    
    
     </head>
     <body>
@@ -80,7 +81,7 @@
     <footer>
       <p>&copy; Company 2012</p>
     </footer>
-        
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>    
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-transition.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-alert.js') }}"></script>
@@ -96,6 +97,22 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/bootstrap-typeahead.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/custom.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.form.js') }}"></script>
-            
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.bootstrap.wizard.js') }}"></script>
+<script type="text/javascript">
+$.noConflict();
+// Code that uses other library's $ can follow here.
+</script>
+    
+       <script type="text/javascript">
+	jQuery(document).ready(function() {
+	  	jQuery('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+			var $total = navigation.find('li').length;
+			var $current = index+1;
+			var $percent = ($current/$total) * 100;
+			jQuery('#rootwizard').find('.bar').css({width:$percent+'%'});
+		}});
+	});	
+	</script>
+
     </body>
 </html>

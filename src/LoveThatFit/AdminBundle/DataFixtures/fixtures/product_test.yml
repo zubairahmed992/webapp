@@ -9,12 +9,12 @@ products:
            brown:
              title: brown
              image: brown_pant_4.png
-             pattern: 51dbe437046ed.png        
+             pattern: 51a75b5fe7be0.png        
              default: true
            gray:
              title: gray
              image: gray_pant_4.png
-             pattern: 51dbe437046ed.png                     
+             pattern: 51a75b5fe7be0.png                     
       product_sizes:
           2:
            title: 2
@@ -281,12 +281,12 @@ products:
            brown:
              title: brown
              image: stripline_shirt_4.png
-             pattern: 51dbe437046ed.png        
+             pattern: 51a75b5fe7be0.png        
              default: true
            gray:
              title: gray
              image: stripline_shirt_2.png
-             pattern: 51dbe437046ed.png                     
+             pattern: 51a75b5fe7be0.png                     
       product_sizes:
           2:
            title: 2
@@ -558,11 +558,11 @@ products:
            purple:
              title: purple
              image: purple_dress_brown_4.png
-             pattern: 51dbe437046ed.png  
+             pattern: 51a75b5fe7be0.png  
            brown:
              title: brown
              image: green_dress_brown_2.png
-             pattern: 51dbe437046ed.png                     
+             pattern: 51a75b5fe7be0.png                     
       product_sizes:
           2:
            title: 2
@@ -887,16 +887,16 @@ products:
            brown:
              title: brown
              image: brown_shot_4.png
-             pattern: 51dbe437046ed.png        
+             pattern: 51a75b5fe7be0.png        
              default: true
            pink:
              title: pink
              image: pink_shot_2.png
-             pattern: 51dbe437046ed.png   
+             pattern: 51a75b5fe7be0.png   
            purple:
              title: purple
              image: purple_shot_4.png
-             pattern: 51dbe437046ed.png                     
+             pattern: 51a75b5fe7be0.png                     
       product_sizes:
           "00":
             title: "00"
