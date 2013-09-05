@@ -792,10 +792,7 @@ public function productStatsAction()
         return @file_put_contents('../app/config/config_ltf_product.yml', $yaml);
     }
 #---------------------Product Download-----------------------------------------#
-  public function productDownloadsAction($id){
-  return new Response($this->get('admin.helper.product')->zipDownload($id));
-    }
-  
+ 
     
 }
 
