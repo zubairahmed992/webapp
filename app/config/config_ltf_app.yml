@@ -9,14 +9,14 @@ constants:
   device_bootstrap:
     resolution_scale:    
       web: 
-        pixel_per_inch: 16
+        pixel_per_inch: 6
         pixel_height : 1152
         inch_height: 72
       iphone4s: 
-        pixel_per_inch: 14.5
+        pixel_per_inch: 14
         pixel_height : 696
       iphone5:  
-        pixel_per_inch: 18.125
+        pixel_per_inch: 17
         pixel_height : 870
       ipad:
         pixel_per_inch: 18.125
