@@ -186,6 +186,10 @@ class UserHelper {
     private function countByGender($gender) {
         return  count($this->repo->findUserByGender($gender));        
     }
+   #---------------------------------------------------------------------------#
+    public function findByAuthToken($auth_token){
+        return $this->repo->loadUserByAuthToken($auth_token);
+    }
     
     #---------------------------------------------------------------
 // only use in website for security context in login
@@ -490,6 +494,7 @@ class UserHelper {
         $userinfo['image'] = $entity->getImage();
         $userinfo['avatar'] = $entity->getAvatar();
         $userinfo['iphoneImage'] = $entity->getIphoneImage();
+        $userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();
         return $userinfo;
     }
 #------------------------------------------------------------------------------------

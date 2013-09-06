@@ -102,7 +102,7 @@ class ProductController extends Controller {
  #------------------------------Authentication of Token---------------------------------------------#
          $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
-       if ($authTokenWebService) {
+      if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
@@ -111,7 +111,7 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
-        
+      //  $request_array=array('authTokenWebService'=>'f7737d3dd7293d035cf48a6b2353505e');
         $product_helper =  $this->get('admin.helper.product');
         $product_response=$product_helper->productListWebService($request,$request_array);
         return new response(json_encode($product_response));

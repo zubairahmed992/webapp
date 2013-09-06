@@ -514,7 +514,12 @@ public function favouriteByUser($user_id,$request){
         $id = $request_array['id'];
         $type = $request_array['type'];
         $gender = $request_array['gender'];
-        
+     
+        if($request_array['authTokenWebService']){
+           
+        $user=$this->container->get('user.helper.user')->findByAuthToken($request_array['authTokenWebService']);
+        $device_path=$this->getDeviceTypeByUser($user->getId());   
+        }
        /*$id=6;
        $type='brand';
        $gender='F';*/
@@ -559,7 +564,7 @@ public function favouriteByUser($user_id,$request){
             //$data[] = $products;
            
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/';
-            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/';
+            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
             $data['fitting_room_path'] = $fitting_room;
             $total_record = count($products);
 
