@@ -1,6 +1,31 @@
 
 $(document).ready(function() { 
- 
+
+function rotate_me_to(req_deg){
+    
+    //req_deg_value = $('#uploaded_photo img').css('rotate');
+    
+    //alert(req_deg_value);
+    $('#uploaded_photo img').css({
+     '-moz-transform':'rotate(' + req_deg + ')',
+     '-webkit-transform':'rotate(' + req_deg + ')',
+     '-o-transform':'rotate(' + req_deg + ')',
+     '-ms-transform':'rotate(' + req_deg + ')',
+     'transform':'rotate(' + req_deg + ')'
+    });
+}
+
+$('.img_cw').click(function(){
+    rotate_me_to("90deg");
+});
+
+$('.img_acw').click(function(){
+    rotate_me_to("-90deg");
+});
+    
+
+
+
   var user_height = $("#user_height_frm_3").attr("value");
   var user_back = $("#user_back_frm_3").attr("value");
 
@@ -244,6 +269,7 @@ function shift_to_canvas (){
     var y = img_hldr.offsetTop;
     var width = img.width;
     var height = img.height;
+    var rotate_deg = 
     var imageObj = new Image();
 
     imageObj.onload = function() {

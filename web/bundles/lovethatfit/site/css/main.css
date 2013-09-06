@@ -2938,3 +2938,14 @@ padding-bottom: 0px;
 .ans{    
     padding-bottom: 20px;    
 }
+
+
+
+div.play_area_hldr div.action_buts_bar {
+    position:absolute;
+    left:498px;
+    top:10px;
+    background: #ffcc00;
+    width:366px;
+    height:40px;
+}
