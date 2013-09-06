@@ -213,6 +213,7 @@ public function userProfileAction()
 
         $email = $_POST['email'];
         $deviceType=$_POST['deviceType'];
+        $heightPerInch=$_POST['heightPerInch'];
 
         if ($email) {
             $em = $this->getDoctrine()->getManager();
@@ -231,14 +232,17 @@ public function userProfileAction()
             }
      if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
                 $entity->setDeviceType($deviceType);
-                $em->persist($entity);
-                $em->flush();
+                $entity->setDeviceUserPerInchPixelHeight($heightPerInch);
+
+                 $em->persist($entity);
+                 $em->flush();
                 //  $image_path = $entity->getWebPath(); 
-                $userinfo = array();
-                $userimage = $entity->getIphoneImage();
+                 $userinfo = array();
+                 $userimage = $entity->getIphoneImage();
                  $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-                $userinfo['iphoneImage'] = $userimage;
-                $userinfo['path'] = $baseurl;
+                 $userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();
+                 $userinfo['iphoneImage'] = $userimage;
+                 $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
             } else {
                 return new response(json_encode(array('Message' => 'Image not uploaded')));
