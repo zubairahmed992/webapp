@@ -33,7 +33,7 @@ class ProductController extends Controller {
 //---------------------------------------------------------------------
     
     public function indexAction($page_number, $sort = 'id') {
-         $this->productSaveYaml();
+         //$this->productSaveYaml();
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
