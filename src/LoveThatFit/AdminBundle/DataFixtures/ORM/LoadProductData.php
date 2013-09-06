@@ -166,7 +166,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
             }
         }
          }
-        $this->copyAllProductImageFiles($source, $destination, $options = array('folderPermission' => 777, 'filePermission' => 777));
+        $this->copyAllProductImageFiles($source, $destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));
     }
 
     private function get_value_if_exists($measurement_array, $measurement_point) {
@@ -207,7 +207,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         return $debugStr;
     }
 
-    public function copyAllProductImageFiles($source, $dest, $options = array('folderPermission' => 777, 'filePermission' => 777)) {
+    public function copyAllProductImageFiles($source, $dest, $options = array('folderPermission' => 0755, 'filePermission' => 0755)) {
         $result = false;
         if (is_file($source)) {
             if ($dest[strlen($dest) - 1] == '/') {
