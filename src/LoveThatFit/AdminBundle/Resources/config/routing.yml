@@ -35,3 +35,8 @@ admin_sizechart_routes:
 admin_user_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/user.yml"
     prefix:   /
+
+    #-------------- Product Wizard Route By Azeem ------------------------
+admin_product_wizard_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/productwizard.yml"
+    prefix:   /

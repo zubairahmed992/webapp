@@ -54,64 +54,7 @@ class ProductController extends Controller {
             $this->get('session')->setFlash('warning','Unable to find Brand.');            
         }
         return $brand;
-    }
-
-    
-    //----------------------------------Product Wizards Steps-----------------------------
-    
-    public function productEntryWizardNewAction()
-    {
-        $productForm = $this->createForm(new ProductDetailType());
-        return $this->render('LoveThatFitAdminBundle:Product:product_wizarad_detail_new.html.twig', array(
-                    'form' => $productForm->createView(),
-                )); 
-        
-    }
-    
-    public function productEntryWizardCreateAction(Request $request)
-    {
-        $data = $request->request->all();
-        $ClothingType=$data['product']['ClothingType'];       
-        $entity = new Product();      
-        $form = $this->createForm(new ProductDetailType(), $entity);
-        $form->bind($request);
-       $gender=$entity->getGender();
-       $clothing_type= $entity->getClothingType()->getTarget();
-       if($gender=='M' and $clothing_type=='Dress')
-       {
-           $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));           
-         $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
-            return $this->render('LoveThatFitAdminBundle:Product:product_wizarad_detail_new.html.twig', array(
-                    'form' => $form->createView(),
-                ));      
-       }    
-        if ($form->isValid()) {            
-            $em = $this->getDoctrine()->getManager();            
-            $entity->setCreatedAt(new \DateTime('now'));
-            $entity->setUpdatedAt(new \DateTime('now'));
-            $em->persist($entity);
-            $em->flush();
-            $product_id=getId();
-            $product = $this->getProduct($product_id);            
-            $this->get('session')->setFlash('success', 'Product Detail has been created.');
-            return $this->redirect($this->generateUrl('product_wizarad_detail_new', array('product' => $product)));
-        }else
-        {
-            $this->get('session')->setFlash('warning', 'Product Detail cannot be created.');
-            return $this->render('LoveThatFitAdminBundle:Product:product_wizarad_detail_new.html.twig', array(
-                    'form' => $form->createView(),
-                ));
-        }
-    }
-    
-    
-    public function productEntryWizardColors()
-    {
-        
-    }
-    
-    
-    
+    }    
       
     /******************************************************************************
      ************************** PRODUCT DETAIL **********************************

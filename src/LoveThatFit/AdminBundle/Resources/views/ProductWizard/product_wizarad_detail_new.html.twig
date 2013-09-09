@@ -1,5 +1,6 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
+
 {% endblock %}
 {% block h1 %}Product{% endblock %}
 {% block title %}Product{% endblock %}
@@ -12,10 +13,10 @@
             <div class="navbar-inner">
                 <div class="container">
                     <ul>
-                        <li><a href="#tab1" data-toggle="tab">Add Product</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Product Color</a></li>
-                        <li><a href="#tab3" data-toggle="tab">Product Sizes</a></li>
-                        <li><a href="#tab4" data-toggle="tab">Product Item</a></li>						
+                        <li><a href="#tab1" data-toggle="tab">Step1</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Step2</a></li>
+                        <li><a href="#tab3" data-toggle="tab">Step3</a></li>
+                        <li><a href="#tab4" data-toggle="tab">Sterp4</a></li>						
                     </ul>
                 </div>
             </div>
@@ -25,7 +26,7 @@
         </div>
         <div class="tab-content">
             <div class="tab-pane" id="tab1">
-                <form action="{{path('admin_product_entry_wizard_detail_create')}}" method="post" {{ form_enctype(form) }}>
+                <form class="ajax" id="productwizard" action="{{path('admin_product_wizard_detail_create')}}" method="post" {{ form_enctype(form) }}>
  {{ form_errors(form) }}
                         <div id="detail_wrapper">      
                             <div id="p_hd">Product Detail</div>                
@@ -72,6 +73,7 @@
                                             <div class="span3">
 				{{ form_rest(form) }}
                                                     <div style="margin:0px 0px 0px 0px;">                                     
+                                                        <button class="btn btn-primary" type="submit">Save</button>
                                                     </div>                                    
                                                 </div>
                                             </div>
