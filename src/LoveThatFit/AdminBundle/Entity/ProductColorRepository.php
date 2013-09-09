@@ -34,7 +34,7 @@ class ProductColorRepository extends EntityRepository {
             SELECT ps.id as id, ps.title as title FROM LoveThatFitAdminBundle:ProductColor pc 
             JOIN pc.product_items pi
             JOIN pi.product_size ps
-            WHERE pc.id = :id'
+            WHERE pc.id = :id ORDER BY ps.title'
                         )->setParameter('id', $id);
 
         try {
