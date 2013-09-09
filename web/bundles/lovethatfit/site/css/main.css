@@ -2948,4 +2948,5 @@ div.play_area_hldr div.action_buts_bar {
     background: #ffcc00;
     width:366px;
     height:40px;
+    display:none;
 }
