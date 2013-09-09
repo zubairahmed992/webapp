@@ -269,7 +269,7 @@ function shift_to_canvas (){
     var y = img_hldr.offsetTop;
     var width = img.width;
     var height = img.height;
-    var rotate_deg = 
+    var rotate_deg = 90;
     var imageObj = new Image();
 
     imageObj.onload = function() {
