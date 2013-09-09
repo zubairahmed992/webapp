@@ -722,7 +722,7 @@ public function productDetail($id, $product_color_id, $product_size_id){
             }
             if ($size_id == null) {
 // gets the first size id for this color
-                $psize = array_shift($color_sizes_array);
+                $psize =sort(array_shift($color_sizes_array));
                 $size_id = $psize['id'];
             }
         }
