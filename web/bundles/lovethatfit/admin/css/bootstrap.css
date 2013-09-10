@@ -6204,7 +6204,9 @@ a.badge:hover {
 
 .det_container{	}
 
-.edt_container{	}
+.edt_container{	
+overflow:auto;
+}
 
 .fld_hds{	
 	float:left;
@@ -6459,8 +6461,7 @@ padding:5px 0px 5px 0px;
 .minlable{
     display: inline;
     position:absolute;
-    margin-top: -22px
-    
+    margin-top: -22px    
 }
 
 #pro_color form label{    
