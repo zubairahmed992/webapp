@@ -157,8 +157,12 @@
                                 </div>  
          {%endif%}
                                 <div id='frm_age'>
-                                    <label>Age</label>   {%if(app.user.age=="" or app.user.age=="0")%}
-                                    Enter Your Age (Account Settings Tab)
+                                    <label>Age</label>  
+                   {%if(app.user.age=="" or app.user.age=="0")%}
+                                   
+                                    Your Age will appear after you specify Birthdate on <a href="{{path('user_profile_settings')}}">Account Settings</a>          
+                                    
+                                    
                             {%else%}
                                  {{app.user.age}}
                             {%endif%}
