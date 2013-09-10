@@ -189,10 +189,14 @@ class Brand {
     }
 //---------------------------------------------------
     protected function getUploadDir()
-    {
+    {# the path will be changed to 'uploads/ltf/brands/web'
         return 'uploads/ltf/brands';
     }
     //---------------------------------------------------
+       public function getImagePaths() {
+        $ih = new ImageHelper('brand', $this);        
+        return $ih->getImagePaths();
+    }
     
  /**
  * @ORM\PostRemove

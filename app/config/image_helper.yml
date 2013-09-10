@@ -1,51 +1,44 @@
 image_category:
 
-  brand:
+  brand:    
     original:
       prefix: 
-      dir:  'uploads/ltf/brands'
-    icon:
-      height: 40
-      width: 35
-      prefix:  
-      dir:  'uploads/ltf/brands/icon'
-    
-    logo:
+      dir:  'uploads/ltf/brands'  
+
+    web:
       height: 80
       width: 205
       prefix:  
-      dir:  'uploads/ltf/brands/logo'  
+      dir:  'uploads/ltf/brands/web'  
+
+    iphone:
+      width: 100
+      height: 106      
+      prefix:  
+      dir:  'uploads/ltf/brands/iphone'  
 
   product:
     original:
       prefix: 
       dir:  'uploads/ltf/products'
-
-    icon:
-      height: 40
-      width: 35
-      prefix:  
-      dir:  'uploads/ltf/products/list'
-
-    small:
-      height: 110
-      width: 85
-      prefix:  
-      dir:  'uploads/ltf/products/small'
-
-    large:
-      height: 240
-      width: 200
+      
+    web:
+      height: 108
+      width: 100
       prefix:   			
-      dir:  'uploads/ltf/products/large'
+      dir:  'uploads/ltf/products/display/web'
+
+    iphone:
+      width: 156
+      height: 154
+      prefix:  
+      dir:  'uploads/ltf/products/display/iphone'  
   
   product_item:
     original:
       prefix: 
       dir:  'uploads/ltf/products/fitting_room'
-      available_height: 1152
-      pixel_per_inch: 17  
-    
+      pixel_per_inch: 6      
     web:
       prefix: 
       dir:  'uploads/ltf/products/fitting_room/web'
@@ -63,42 +56,24 @@ image_category:
       dir:  'uploads/ltf/products/fitting_room/iphone5'
       available_height: 840
       pixel_per_inch: 17      
-      
-#    34px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/34'
-#      pixel_per_inch: 34
-#    30px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/30'
-#      pixel_per_inch: 30      
-#    25px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/25'
-#      pixel_per_inch: 25    
-#    17px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/17'
-#      pixel_per_inch: 17      
-#    14px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/14'
-#      pixel_per_inch: 14            
-#    11px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/11'
-#      pixel_per_inch: 11      
-#    8px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/8'
-#      pixel_per_inch: 8            
-#    6px:
-#      prefix: 
-#      dir:  'uploads/ltf/products/fitting_room/6'
-#      pixel_per_inch: 6            
-#
 
-  
+  product_pattern:      
+    original:
+      prefix:  
+      dir:  'uploads/ltf/products/pattern'  
+
+    web:
+      width: 16
+      height: 16
+      prefix:  
+      dir:  'uploads/ltf/products/pattern/web'  
+    
+    iphone:
+      width: 50
+      height: 50
+      prefix:  
+      dir:  'uploads/ltf/products/pattern/iphone'  
+      
   user:
     original:
       prefix: 

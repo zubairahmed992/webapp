@@ -260,6 +260,7 @@ class ProductItem
     }
 //-------------------------------------------------------
     protected function getUploadDir() {
+        # will be changed to uploads/ltf/products/fitting_room/web
        return 'uploads/ltf/products/fitting_room';            
     }
 
