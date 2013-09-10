@@ -33,7 +33,7 @@ class ProductController extends Controller {
 //---------------------------------------------------------------------
     
     public function indexAction($page_number, $sort = 'id') {
-      $this->productSaveYaml();
+        $this->productSaveYaml();
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
@@ -799,7 +799,13 @@ public function productStatsAction()
             $clothing_type_array = $this->findClothingType($product->getClothingType()->getId());
             $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()] = array('description' => $product->getDescription(), 'gender' => $product->getGender(), 'adjustment' => $product->getAdjustment());
             foreach ($product->getProductColors() as $productColor) {
- $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()] ['product_color'][$productColor->getTitle()] = array('title' => $productColor->getTitle(), 'image' => $productColor->getImage(), 'pattern' => $productColor->getPattern());
+                
+                if ($product->getDisplayProductColor()->getId() == $productColor->getId()) {
+                   $default = true;
+                } else{
+                    $default = false;
+                }
+ $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()] ['product_color'][$productColor->getTitle()] = array('title' => $productColor->getTitle(), 'image' => $productColor->getImage(), 'pattern' => $productColor->getPattern(),'default'=>$default);
             foreach ($product->getProductSizes() as $productSizes) {
         $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()]['product_sizes'][$productSizes->getTitle()] = array('title' => $productSizes->getTitle(), 'inseam_min' => $productSizes->getInseamMin(), 'inseam_max' => $productSizes->getInseamMax(), 'hip_min' => $productSizes->getHipMin(), 'hip_max' => $productSizes->getHipMax(), 'waist_min' => $productSizes->getWaistMin(), 'waist_max' => $productSizes->getWaistMax(), 'bust_min' => $productSizes->getBustMin(), 'bust_max' => $productSizes->getBustMax(),);  
             foreach ($product->getProductItems() as $productItem) {
@@ -809,7 +815,7 @@ public function productStatsAction()
                 
             }
         }
-        //return $products;
+       // return $products;
         $yaml = Yaml::dump($products, 40);
         return @file_put_contents('../app/config/config_ltf_product.yml', $yaml);
     }
