@@ -138,14 +138,21 @@ return true;
    
 {% endif %}   
     <h5>Change Password</h5>
-  <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }}>
+  <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }} onsubmit="return formPasswordValidates()">
     {{ form_errors(form_password_reset) }}
             
            <div class="frm_ele">
                <label>New Password</label>
                 {{ form_errors(form_password_reset.password) }}                
                 {{ form_widget(form_password_reset.password.password) }}
-           </div>
+          
+               <div class="login_error"  style="width:700px;">
+                   <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                            Password containing at least 8 characters, 1 number, 1 upper and 1 lowercase
+                        </div>
+                   </div>
+               </div>
           
            <div class="frm_ele">
              <label>Confirm Password</label>                
@@ -165,7 +172,19 @@ return true;
 
           </form>
 </div>
+      <script>
+     function formPasswordValidates(){
+       
+ var password=document.getElementById('user_password_password').value;
+var password_filter=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+ if(!password_filter.test(password))
+    {
+         document.getElementById('error_content1').style.display="block";
+           return false;
+    }
+
+     }
+</script>
 
 {% endblock %}
-    
-    
+       
