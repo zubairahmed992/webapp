@@ -1,6 +1,18 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-
+<script>
+   function submitForm() {
+    $.ajax(
+            {
+        type:'POST',
+        url: $('#admin_product_wizard_detail_create').text(),
+        data:$('#productwizard').serialize(),        
+        success: function(response) {
+        $('#successvalue').show();
+    }});
+    return false;
+}            
+    </script>
 {% endblock %}
 {% block h1 %}Product{% endblock %}
 {% block title %}Product{% endblock %}
@@ -26,8 +38,11 @@
         </div>
         <div class="tab-content">
             <div class="tab-pane" id="tab1">
-                <form class="ajax" id="productwizard" action="{{path('admin_product_wizard_detail_create')}}" method="post" {{ form_enctype(form) }}>
+                <div class="form_result" id="successvalue" style="display:none;">Product Detail has been created </div>
+                <span id="admin_product_wizard_detail_create" style="display:none;">{{path('admin_product_wizard_detail_create')}}</span>
+                <form id="productwizard" onsubmit="return submitForm();">
  {{ form_errors(form) }}
+                
                         <div id="detail_wrapper">      
                             <div id="p_hd">Product Detail</div>                
                             <div class="clearfix"></div>
@@ -287,6 +302,7 @@
                 <a href="{{path("admin_product_detail_color_delete",{"id":1, "color_id":1})}}"  class="btn btn-primary">Delete</a>
 
             </div>
+    
         </div>  
 {% endblock %}
 
