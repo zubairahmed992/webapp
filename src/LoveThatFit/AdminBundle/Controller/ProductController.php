@@ -244,14 +244,9 @@ class ProductController extends Controller {
         $colorform = $this->createForm(new ProductColorType(), $productColor);        
         $colorform->bind($request);   
         if ($colorform->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             
-            $productColor->savePattern(); //----- file upload method 
-            $productColor->saveImage(); //----- file move from temp to permanent folder
-                        
-            $em->persist($productColor);
-            $em->flush();
-                       
+            $this->get('admin.helper.productcolor')->uploadSave($productColor);
+            
            if($productColor->displayProductColor or $product->displayProductColor== NULL)
             {
                $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
@@ -306,13 +301,8 @@ class ProductController extends Controller {
         $colorForm->bind($request);
                 
         if ($colorForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-        
-            $productColor->savePattern(); //----- file upload method 
-            $productColor->saveImage(); //----- file move from temp to permanent folder
-            //return new Response($productColor->savePattern() . "  -  " . $productColor->saveImage());
-            $em->persist($productColor);
-            $em->flush();
+            
+            $this->get('admin.helper.productcolor')->uploadSave($productColor);
            
             if($productColor->displayProductColor or $product->displayProductColor== NULL)
             {
