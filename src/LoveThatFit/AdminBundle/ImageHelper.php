@@ -59,22 +59,26 @@ class ImageHelper {
     public function uploadProductColorImage()
     {
         if ($this->category=='product'){
-        $ext = pathinfo($this->entity->getAbsoluteTempPath(), PATHINFO_EXTENSION);
+        $temp_file_path=$this->entity->getAbsoluteTempPath();
+        $ext = pathinfo($temp_file_path, PATHINFO_EXTENSION);
         
         $new_name = uniqid() .'.'. $ext;
         $previous_image=$this->image;
         
-        $dest=$this->getUploadRootDir().'/'. $new_name;
-        @rename($this->entity->getAbsoluteTempPath(),$dest);
+        if (!is_dir($this->getUploadRootDir())) {
+                    mkdir($this->getUploadRootDir(), 0700);
+                }
+                
+        $destination_path=$this->getUploadRootDir().'/'. $new_name;
+        @rename($temp_file_path,$destination_path);
         
-        $this->image=$new_name;
+        $this->image = $new_name;
         $this->entity->setImage($this->image);        
         $this->resize_image();        
         
         if ($this->entity->getId())
             $this->deleteImages($previous_image); 
-        
-        $this->entity->file = null;
+            $this->entity->file = null;
         }
     }
     
@@ -86,14 +90,14 @@ class ImageHelper {
             $old_file_name = $this->entity->getAbsolutePatternPath();
             $temp_file_name = $this->entity->getAbsolutePatternTempPath();
             
-            $ext = pathinfo($this->entity->getAbsolutePatternTempPath(), PATHINFO_EXTENSION);
+            $ext = pathinfo($temp_file_name, PATHINFO_EXTENSION);
             $this->image = uniqid() . '.' . $ext;
             
-              if (!is_dir($this->entity->getUploadRootDir() . '/pattern')) {
-                    mkdir($this->entity->getUploadRootDir() . '/pattern', 0700);
+              if (!is_dir($this->getUploadRootDir())) {
+                    mkdir($this->getUploadRootDir(), 0700);
                 }
                 
-            $dest = $this->entity->getUploadRootDir() . '/pattern/' . $this->image;
+            $dest = $this->getUploadRootDir() .'/'. $this->image;
 
             @rename($temp_file_name, $dest);
             $this->entity->setPattern($this->image);        
@@ -267,8 +271,7 @@ class ImageHelper {
     {
         if ($key == 'original') {
                 return $value['dir'] . '/' . $this->stripFileName($filename) . '.' . $this->stripImageExtention($filename);
-            }else{
-                //return $value['dir'] . '/' . $this->stripFileName($filename) . $value['prefix'] . $key . '.' . $this->stripImageExtention($filename);
+            }else{                
                 return $value['dir'] . '/' . $this->stripFileName($filename) . '.' . $this->stripImageExtention($filename);
             }         
     }

@@ -246,22 +246,14 @@ class ProductItem
     public function getWebPath() {
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
-//-------------------------------------------------------
-    public function getWebFittingRoomImageWebPath() {
-        return null === $this->image ? null : 'uploads/ltf/products/web_fitting/' . $this->image;
-    }
-//-------------------------------------------------------
-    public function getIphoneFittingRoomImageWebPath() {
-        return null === $this->image ? null : 'uploads/ltf/products/iphone_fitting/' . $this->image;
-    }    
+
 //-------------------------------------------------------
     protected function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 //-------------------------------------------------------
-    protected function getUploadDir() {
-        # will be changed to uploads/ltf/products/fitting_room/web
-       return 'uploads/ltf/products/fitting_room';            
+    protected function getUploadDir() {        
+       return 'uploads/ltf/products/fitting_room/web';            
     }
 
     

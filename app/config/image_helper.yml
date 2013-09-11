@@ -20,7 +20,7 @@ image_category:
   product:
     original:
       prefix: 
-      dir:  'uploads/ltf/products'
+      dir:  'uploads/ltf/products/display'
       
     web:
       height: 108
@@ -29,11 +29,28 @@ image_category:
       dir:  'uploads/ltf/products/display/web'
 
     iphone:
-      width: 156
-      height: 154
+      width: 78
+      height: 77
       prefix:  
       dir:  'uploads/ltf/products/display/iphone'  
   
+  product_pattern:      
+    original:
+      prefix:  
+      dir:  'uploads/ltf/products/pattern'  
+
+    web:
+      width: 16
+      height: 16
+      prefix:  
+      dir:  'uploads/ltf/products/pattern/web'  
+    
+    iphone:
+      width: 50
+      height: 50
+      prefix:  
+      dir:  'uploads/ltf/products/pattern/iphone'  
+
   product_item:
     original:
       prefix: 
@@ -56,23 +73,6 @@ image_category:
       dir:  'uploads/ltf/products/fitting_room/iphone5'
       available_height: 840
       pixel_per_inch: 17      
-
-  product_pattern:      
-    original:
-      prefix:  
-      dir:  'uploads/ltf/products/pattern'  
-
-    web:
-      width: 16
-      height: 16
-      prefix:  
-      dir:  'uploads/ltf/products/pattern/web'  
-    
-    iphone:
-      width: 50
-      height: 50
-      prefix:  
-      dir:  'uploads/ltf/products/pattern/iphone'  
       
   user:
     original:

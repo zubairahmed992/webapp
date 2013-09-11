@@ -68,10 +68,15 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-
+        $dirname = 'products';
+        $filename = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf').'/'.$dirname;
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product_test.yml'));
-        $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/products');
+        $destination = $filename;
+        if(!file_exists($filename));
+      {
+        @mkdir($filename,0777);  
+      }
         $source = realpath(dirname(__FILE__) . '/../../../../../web/bundles/lovethatfit/miscellaneous/fixtures/products');
         $this->deleteAllProductImageFiles($destination);
         foreach ($fixtures['products'] as $product_key => $product_values) {
@@ -166,7 +171,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
             }
         }
          }
-        $this->copyAllProductImageFiles($source, $destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));
+        $this->copyAllProductImageFiles($source, $destination, $options = array('folderPermission' => 0777, 'filePermission' => 0777));
     }
 
     private function get_value_if_exists($measurement_array, $measurement_point) {
@@ -179,35 +184,35 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
 
     public function deleteAllProductImageFiles($path) {
         $debugStr = '';
-        if ($handle = opendir($path)) {
-            while (false !== ($file = readdir($handle))) {
+        if ($handle = @opendir($path)) {
+            while (false !== ($file = @readdir($handle))) {
                 if ($file != "." && $file != "..") {
-                    if (is_file($path . "/" . $file)) {
-                        if (@unlink($path . "/" . $file)) {
+                    if (is_file($path."/".$file)) {
+                        if (@unlink($path."/".$file)) {
                             $debugStr .=$file;
                         }
                     } else {
-                        if ($handle2 = opendir($path . "/" . $file)) {
-                            while (false !== ($file2 = readdir($handle2))) {
+                        if ($handle2=@opendir($path."/".$file)) {
+                            while (false !== ($file2 = @readdir($handle2))) {
                                 if ($file2 != "." && $file2 != "..") {
-                                    if (@unlink($path . "/" . $file . "/" . $file2)) {
-                                        $debugStr .=$file / $file2;
+                                    if (@unlink($path."/".$file."/".$file2)) {
+                                        $debugStr .=@($file / $file2);
                                     }
                                 }
                             }
                         }
-                        if (@rmdir($path . "/" . $file)) {
-                            $debugStr .=$file;
+                        if (@rmdir($path."/".$file)) {
+                            $debugStr.=$file;
                         }
                     }
                 }
             }
-            closedir($handle);
+            @closedir($handle);
         }
         return $debugStr;
     }
 
-    public function copyAllProductImageFiles($source, $dest, $options = array('folderPermission' => 0755, 'filePermission' => 0755)) {
+    public function copyAllProductImageFiles($source, $dest, $options = array('folderPermission' => 0777, 'filePermission' => 0777)) {
         $result = false;
         if (is_file($source)) {
             if ($dest[strlen($dest) - 1] == '/') {

@@ -54,8 +54,8 @@ class ProductColorHelper {
 
     public function uploadSave($entity) {
 
-        $entity->savePattern(); //----- file upload method 
         $entity->saveImage(); //----- file move from temp to permanent folder
+        $entity->savePattern(); //----- file upload method 
         $this->save($entity);
 
         return array('message' => 'Product Color succesfully created.',
