@@ -51,6 +51,14 @@
                                             <div class="frm_ele">
                             {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
                             {{ form_errors(form.zipcode) }}
+                                                    
+                             <div class="login_error" >
+                                                    <div id="error_content3" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                          Zipcode must have 5 numbers .
+                                                         </div>
+                                                    </div>
+                                                    
                                                 </div>
 
                                                 <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
@@ -88,12 +96,20 @@
 //[a-zA-Z0-9]{8,}         //should contain at least 8 from the mentioned characters
  function formRegistrationValidates(){
  var password=document.getElementById('user_password_password').value;
-var password_filter=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
- if(!password_filter.test(password))
-    {
-         document.getElementById('error_content2').style.display="block";
-           return false;
+ var zipcode=document.getElementById('user_zipcode').value;
+ var password_filter=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+ if(!password_filter.test(password)) {
+    document.getElementById('error_content2').style.display="block";
+    return false;
     }
+    if(/\D/.test(zipcode)){
+    document.getElementById('error_content3').style.display="block";
+    return false;
+    }   
+    if(zipcode.length<5){
+    document.getElementById('error_content3').style.display="block";
+    return false;
+    }    
 }
 function formValidates()
 {
