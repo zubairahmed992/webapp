@@ -245,27 +245,14 @@ class ProductColor {
         return $size_titles;
     }
 
-   
-
-    //---------------------------------------------------------------    
-    //-------------- Image Upload ---------------------
-    //---------------------------------------
-
+//-------------------- Product Display image -------------------------------------------    
+    
     public function upload() {
         $ih = new ImageHelper('product', $this);
         $ih->uploadProductColorImage(); // save & resize images 
     }
-
-     //------------------------------------------------------------
-    public function savePattern() {
-        if ($this->tempPattern) {
-            $ih = new ImageHelper('product_pattern', $this);
-            $ih->uploadProductPatternImage();
-        }
-    }
-    
    
-    //------------------------------------------------------------
+//------------------------------------------------------------
     public function saveImage() {
         if ($this->tempImage) {
             $ih = new ImageHelper('product', $this);
@@ -273,61 +260,76 @@ class ProductColor {
         }
     }
 
-    //------------------------------------------------------------
+//-------------------------------------------------------1
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/web/' . $this->image;
+    }
+    
+//-------------------------------------------------------2
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/web/' . $this->image;
+    }
+
+//-------------------------------------------------------3
+    public function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+//-------------------------------------------------------4
+    protected function getUploadDir() {        
+        return 'uploads/ltf/products/display';
+    }
+
+//--------------------------------------------------------5
 
     public function getImagePaths() {
         $ih = new ImageHelper('product', $this);
         return $ih->getImagePaths();
     }
-
-//-------------------------------------------------------
-    public function getAbsolutePath() {
-        return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
-    }
-
-//-------------------------------------------------------
-    public function getWebPath() {
-        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
-    }
-
-//-------------------------------------------------------
-    public function getUploadRootDir() {
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
-    }
-
-//-------------------------------------------------------
-    protected function getUploadDir() {
-        # will be changed to uploads/ltf/products/display/web
-        return 'uploads/ltf/products';
-    }
-    
-//-------------------------------------------------------
-//-------------------------------------------------------
+ //-------------------------------------------------------6
 
     public function getAbsoluteTempPath() {
         return null === $this->tempImage ? null : $this->getUploadRootDir() . '/temp/' . $this->tempImage;
     }
+   
+    
+//-------------------- Pattern image -------------------------------------------        
 
-    //-------------------------------------------------------
-    public function getAbsolutePatternTempPath() {
-        return null === $this->tempPattern ? null : $this->getUploadRootDir() . '/temp/' . $this->tempPattern;
+    public function savePattern() {
+        if ($this->tempPattern) {
+            $ih = new ImageHelper('product_pattern', $this);
+            $ih->uploadProductPatternImage();
+        }
+    }
+//-------------------------------------------------------1
+    public function getPatternWebPath() {        
+        return null === $this->pattern ? null : $this->getPatternUploadDir()  . '/web/' .  $this->pattern;
     }
 
-//-------------------------------------------------------
+//-------------------------------------------------------2
     public function getAbsolutePatternPath() {
-        return null === $this->pattern ? null : $this->getUploadRootDir() . '/pattern/' . $this->pattern;
+        return null === $this->pattern ? null : $this->getPatternUploadRootDir()  . '/web/' . $this->pattern;
     }
 
-//-------------------------------------------------------
-    public function getPatternWebPath() {
-        # will be changed to uploads/ltf/products/pattern/web
-        return null === $this->pattern ? null : $this->getUploadDir() . '/pattern/' . $this->pattern;
+//-------------------------------------------------------3
+    public function getPatternUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getPatternUploadDir();
     }
-  //------------------------------------------------------------
+    
+//-------------------------------------------------------4
+    protected function getPatternUploadDir() {        
+        return 'uploads/ltf/products/pattern';
+    }
+
+//-------------------------------------------------------5
 
     public function getPatternPaths() {
         $ih = new ImageHelper('product_pattern', $this);
         return $ih->getImagePaths();
+    }
+//-------------------------------------------------------6
+    public function getAbsolutePatternTempPath() {
+        return null === $this->tempPattern ? null : $this->getUploadDir() . '/temp/' . $this->tempPattern;
     }
 
 //------------------------------------------------

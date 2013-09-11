@@ -190,7 +190,7 @@ class Brand {
 //---------------------------------------------------
     protected function getUploadDir()
     {# the path will be changed to 'uploads/ltf/brands/web'
-        return 'uploads/ltf/brands';
+        return 'uploads/ltf/brands/web';
     }
     //---------------------------------------------------
        public function getImagePaths() {
