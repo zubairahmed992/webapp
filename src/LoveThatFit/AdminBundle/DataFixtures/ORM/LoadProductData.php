@@ -68,10 +68,15 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-
+        $dirname = 'products';
+        $filename = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf').'/'.$dirname;
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product_test.yml'));
-        $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/products');
+        $destination = $filename;
+        if(!file_exists($filename));
+      {
+        @mkdir($filename,0777);  
+      }
         $source = realpath(dirname(__FILE__) . '/../../../../../web/bundles/lovethatfit/miscellaneous/fixtures/products');
         $this->deleteAllProductImageFiles($destination);
         foreach ($fixtures['products'] as $product_key => $product_values) {
