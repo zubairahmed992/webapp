@@ -84,7 +84,7 @@ class LoadBrandData implements FixtureInterface {
                             while (false !== ($file2 = readdir($handle2))) {
                                 if ($file2 != "." && $file2 != "..") {
                                     if (@unlink($path . "/" . $file . "/" . $file2)) {
-                                        $debugStr .=$file / $file2;
+                                        $debugStr .=@($file / $file2);
                                     }
                                 }
                             }
