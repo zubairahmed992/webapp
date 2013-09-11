@@ -33,7 +33,7 @@ class ProductController extends Controller {
 //---------------------------------------------------------------------
     
     public function indexAction($page_number, $sort = 'id') {
-         //$this->productSaveYaml();
+        $this->productSaveYaml();
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
@@ -244,14 +244,9 @@ class ProductController extends Controller {
         $colorform = $this->createForm(new ProductColorType(), $productColor);        
         $colorform->bind($request);   
         if ($colorform->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             
-            $productColor->savePattern(); //----- file upload method 
-            $productColor->saveImage(); //----- file move from temp to permanent folder
-                        
-            $em->persist($productColor);
-            $em->flush();
-                       
+            $this->get('admin.helper.productcolor')->uploadSave($productColor);
+            
            if($productColor->displayProductColor or $product->displayProductColor== NULL)
             {
                $this->createDisplayDefaultColor($product,$productColor); //--add  product  default color 
@@ -306,13 +301,8 @@ class ProductController extends Controller {
         $colorForm->bind($request);
                 
         if ($colorForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-        
-            $productColor->savePattern(); //----- file upload method 
-            $productColor->saveImage(); //----- file move from temp to permanent folder
-            //return new Response($productColor->savePattern() . "  -  " . $productColor->saveImage());
-            $em->persist($productColor);
-            $em->flush();
+            
+            $this->get('admin.helper.productcolor')->uploadSave($productColor);
            
             if($productColor->displayProductColor or $product->displayProductColor== NULL)
             {
@@ -752,7 +742,7 @@ public function productStatsAction()
         return $entity; 
     }
     
-     private function productSaveYaml() {
+     private function _productSaveYaml() {
         $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
                 ->findAll();
 
@@ -764,6 +754,7 @@ public function productStatsAction()
                     ->findClothingTypeByProduct($product->getClothingType());
             foreach ($brand as $brands) {
                 foreach ($clothing_type as $clothingType) {
+                  
                     array_push($array, array($brands->getName() => array($clothingType->getName() => array(
                                 $product->getName() => array('description' => $product->getDescription(), 'gender' => $product->getGender(), 'adjustment' => $product->getAdjustment())))));
 
@@ -781,8 +772,50 @@ public function productStatsAction()
                 }
             }
         }
+        return $array;
         $yaml = Yaml::dump($array, 40);
         return @file_put_contents('../app/config/config_ltf_product.yml', $yaml);
+    }
+    
+    private function productSaveYaml() {
+        $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
+                ->findAll();
+
+        $array = array();
+        $products=array();
+        
+        foreach ($entity as $product) {
+            $brand_array = $this->findBrand($product->getBrand()->getId());
+            $clothing_type_array = $this->findClothingType($product->getClothingType()->getId());
+            $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()] = array('description' => $product->getDescription(), 'gender' => $product->getGender(), 'adjustment' => $product->getAdjustment());
+            foreach ($product->getProductColors() as $productColor) {
+                
+                if ($product->getDisplayProductColor()->getId() == $productColor->getId()) {
+                   $default = true;
+                } else{
+                    $default = false;
+                }
+ $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()] ['product_color'][$productColor->getTitle()] = array('title' => $productColor->getTitle(), 'image' => $productColor->getImage(), 'pattern' => $productColor->getPattern(),'default'=>$default);
+            foreach ($product->getProductSizes() as $productSizes) {
+        $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()]['product_sizes'][$productSizes->getTitle()] = array('title' => $productSizes->getTitle(), 'inseam_min' => $productSizes->getInseamMin(), 'inseam_max' => $productSizes->getInseamMax(), 'hip_min' => $productSizes->getHipMin(), 'hip_max' => $productSizes->getHipMax(), 'waist_min' => $productSizes->getWaistMin(), 'waist_max' => $productSizes->getWaistMax(), 'bust_min' => $productSizes->getBustMin(), 'bust_max' => $productSizes->getBustMax(),);  
+            foreach ($product->getProductItems() as $productItem) {
+             $products['products'][$brand_array->getName()][$clothing_type_array->getName()][$product->getName()]['product_item'][$productColor->getTitle()][$productItem->getLineNumber()] = array('size_title' => $productItem->getLineNumber(), 'product_color_title' => $productColor->getTitle(), 'image' => $productItem->getImage());
+                            }
+            } 
+                
+            }
+        }
+       // return $products;
+        $yaml = Yaml::dump($products, 40);
+        return @file_put_contents('../app/config/config_ltf_product.yml', $yaml);
+    }
+   #----------------------------------------------------------------------------# 
+    public function findBrand($id){
+         return $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
+    }
+   #---------------------------------------------------------------------------# 
+    public function findClothingType($id){
+         return $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ClothingType')->find($id);
     }
 #---------------------Product Download-----------------------------------------#
  

@@ -39,16 +39,34 @@ class ProductColorHelper {
     public function find($id) {
         return $this->repo->find($id);
     }
+
     public function findColorByProductTitle($title, $productid) {
         return $this->repo->findColorByProductTitle($title, $productid);
     }
-public function getSizeItemImageUrlArray($id){
-    
-    return $this->repo->getSizeItemImageUrlArray($id);
-}
 
-public function getSizeArray($id){
-    
-    return $this->repo->getSizeArray($id);
-}
+    public function getSizeItemImageUrlArray($id) {
+        return $this->repo->getSizeItemImageUrlArray($id);
+    }
+
+    public function getSizeArray($id) {
+        return $this->repo->getSizeArray($id);
+    }
+
+    public function uploadSave($entity) {
+
+        $entity->savePattern(); //----- file upload method 
+        $entity->saveImage(); //----- file move from temp to permanent folder
+        $this->save($entity);
+
+        return array('message' => 'Product Color succesfully created.',
+            'message_type' => 'success',
+            'status' => true,
+        );
+    }
+
+    public function save($entity) {
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
+
 }

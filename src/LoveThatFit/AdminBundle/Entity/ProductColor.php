@@ -253,35 +253,18 @@ class ProductColor {
 
     public function upload() {
         $ih = new ImageHelper('product', $this);
-        $ih->upload();
+        $ih->uploadProductColorImage(); // save & resize images 
     }
 
-    //------------------------------------------------------------
+     //------------------------------------------------------------
     public function savePattern() {
-
-        // delete previous images remains to test
         if ($this->tempPattern) {
-            $old_file_name = $this->getAbsolutePatternPath();
-            $temp_file_name = $this->getAbsolutePatternTempPath();
-
-            $ext = pathinfo($this->getAbsolutePatternTempPath(), PATHINFO_EXTENSION);
-            $this->pattern= uniqid() . '.' . $ext;
-           
-            if (!is_dir($this->getUploadRootDir() . '/pattern')) {
-                    mkdir($this->getUploadRootDir() . '/pattern', 0700);
-                }
-            $dest = $this->getUploadRootDir() . '/pattern/' . $this->pattern;
-
-            rename($temp_file_name, $dest);
-            
-            if ($this->getId()) {
-                if (is_readable($old_file_name)) {
-                    @unlink($old_file_name);
-                }
-            }
+            $ih = new ImageHelper('product_pattern', $this);
+            $ih->uploadProductPatternImage();
         }
     }
-
+    
+   
     //------------------------------------------------------------
     public function saveImage() {
         if ($this->tempImage) {
@@ -314,6 +297,7 @@ class ProductColor {
 
 //-------------------------------------------------------
     protected function getUploadDir() {
+        # will be changed to uploads/ltf/products/display/web
         return 'uploads/ltf/products';
     }
     
@@ -336,7 +320,14 @@ class ProductColor {
 
 //-------------------------------------------------------
     public function getPatternWebPath() {
+        # will be changed to uploads/ltf/products/pattern/web
         return null === $this->pattern ? null : $this->getUploadDir() . '/pattern/' . $this->pattern;
+    }
+  //------------------------------------------------------------
+
+    public function getPatternPaths() {
+        $ih = new ImageHelper('product_pattern', $this);
+        return $ih->getImagePaths();
     }
 
 //------------------------------------------------

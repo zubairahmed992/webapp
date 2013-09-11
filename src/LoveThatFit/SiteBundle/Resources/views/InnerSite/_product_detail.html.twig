@@ -294,7 +294,7 @@ if(jqXHR.responseText.trim()== "success")
                         <div class="featured_img">
 
                             
-                            <img src="{{asset(productColor.ImagePaths['small'])}}" class="prod_{{product.clothingType.target|lower}} ui-draggable">
+                            <img src="{{asset(productColor.ImagePaths['web'])}}" class="prod_{{product.clothingType.target|lower}} ui-draggable">
                             
                              <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
                            
@@ -316,10 +316,6 @@ if(jqXHR.responseText.trim()== "success")
                                 <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}
                         </div>
-                        
-                        
-
-
 
                         <div style="clear:both;"></div>
                         <!--<div id="pro_more_det"><!--START PRODUCT MORE DETAIL
@@ -329,8 +325,3 @@ if(jqXHR.responseText.trim()== "success")
 
                             <span></span>
                             <!--/prod_node--></div>
-
-
-
-
-    

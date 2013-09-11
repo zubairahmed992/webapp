@@ -23,7 +23,13 @@ public function aboutUsAction() {
 
 public function contactUsAction() {
         return $this->render('LoveThatFitSiteBundle:Home:contact_us.html.twig');
-    }    
+}   
+public function whatWeDoAction(){
+    return $this->render('LoveThatFitSiteBundle:Home:_commingSoon.html.twig');
+} 
+public function commingSoonAction(){
+    return $this->render('LoveThatFitSiteBundle:Home:_commingSoon.html.twig');
+} 
     
 public function emailRegistrationAction($id) {
     

@@ -62,7 +62,7 @@ class ProductController extends Controller {
                 ->findAllBrandWebService();
 
         $total_record = count($brand);
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/';
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
         $data = array();
         $data['data'] = $brand;
         $data['path'] = $baseurl;
@@ -82,7 +82,7 @@ class ProductController extends Controller {
 
         $total_record = count($brand);
 
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/';
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
         $data = array();
 
         $data['data'] = array_merge($brand, $clothing_types);

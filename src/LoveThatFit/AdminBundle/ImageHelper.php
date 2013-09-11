@@ -21,6 +21,9 @@ class ImageHelper {
         $this->entity = $entity;        
         $this->conf = $conf['image_category'][$category];        
         $this->image=$entity->getImage();
+        if ($category=='product_pattern'){
+            $this->image=$entity->getPattern();
+        }
         
     }
     //--------------------------------------------------------------------
@@ -62,7 +65,7 @@ class ImageHelper {
         $previous_image=$this->image;
         
         $dest=$this->getUploadRootDir().'/'. $new_name;
-        rename($this->entity->getAbsoluteTempPath(),$dest);
+        @rename($this->entity->getAbsoluteTempPath(),$dest);
         
         $this->image=$new_name;
         $this->entity->setImage($this->image);        
@@ -74,12 +77,43 @@ class ImageHelper {
         $this->entity->file = null;
         }
     }
+    
+    //-------------------------------------------------------------------
+    
+       public function uploadProductPatternImage()
+    {
+         if ($this->category=='product_pattern'){
+            $old_file_name = $this->entity->getAbsolutePatternPath();
+            $temp_file_name = $this->entity->getAbsolutePatternTempPath();
+            
+            $ext = pathinfo($this->entity->getAbsolutePatternTempPath(), PATHINFO_EXTENSION);
+            $this->image = uniqid() . '.' . $ext;
+            
+              if (!is_dir($this->entity->getUploadRootDir() . '/pattern')) {
+                    mkdir($this->entity->getUploadRootDir() . '/pattern', 0700);
+                }
+                
+            $dest = $this->entity->getUploadRootDir() . '/pattern/' . $this->image;
+
+            @rename($temp_file_name, $dest);
+            $this->entity->setPattern($this->image);        
+            $this->resize_image();        
+            if ($this->entity->getId()) {
+                if (is_readable($old_file_name)) {
+                    @unlink($old_file_name);
+                }
+            }
+         }
+    }
+
+
+    
     //--------------------------------------------------------------------
 
     private function resize_image() {
 
         $filename = $this->getAbsolutePath();
-        $image_info = getimagesize($filename);
+        $image_info = @getimagesize($filename);
         $image_type = $image_info[2];
         
         $conf = $this->getImageConfiguration(); //read yml to conf variable
@@ -118,7 +152,7 @@ class ImageHelper {
                 imagecopyresampled($img_new, $source, 0, 0, 0, 0, $resize_dimention[$key]['width'], $resize_dimention[$key]['height'], imagesx($source), imagesy($source));
 
                 if (!is_dir($value['dir'])) {
-                    mkdir($value['dir'], 0700);
+                    @mkdir($value['dir'], 0700);
                 }
 
                 switch ($image_type) {
@@ -142,7 +176,7 @@ class ImageHelper {
 
     public function getResizeDimentions() {
         
-        $image_info = getimagesize($this->getAbsolutePath());
+        $image_info = @getimagesize($this->getAbsolutePath());
         $iw = $image_info[0] ;
         $ih = $image_info [1];
         $n=null;
@@ -165,7 +199,7 @@ class ImageHelper {
 
     public function calculateResizeDimentions() {
         
-        $image_info = getimagesize($this->getAbsolutePath());
+        $image_info = @getimagesize($this->getAbsolutePath());
         $iw = $image_info[0] ;
         $ih = $image_info [1];
         $n=null;
