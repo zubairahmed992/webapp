@@ -22,6 +22,14 @@ faqs:
 contact_us:
     pattern:  /contact_us
     defaults: { _controller: LoveThatFitSiteBundle:Home:contactUs}
+
+what_we_do:
+    pattern:  /what_we_do
+    defaults: { _controller: LoveThatFitSiteBundle:Home:whatWeDo}    
+
+comming_soon:
+    pattern:  /comming_soon
+    defaults: { _controller: LoveThatFitSiteBundle:Home:commingSoon}        
     
 ajax_brand_list:
     pattern:  /ajax/brands
