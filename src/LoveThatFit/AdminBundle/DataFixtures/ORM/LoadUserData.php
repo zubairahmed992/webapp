@@ -33,10 +33,15 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-         
+        $dirname = 'users';
+        $filename = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf').'/'.$dirname;         
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/user.yml'));
-        $destination = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf/users');              
+        $destination = $filename;     
+        if(!file_exists($filename));
+      {
+        @mkdir($filename,0777);  
+      }
         $source = realpath(dirname(__FILE__) . '/../../../../../web/bundles/lovethatfit/miscellaneous/fixtures/users');
         $this->deleteAllUserFiles($destination);
         foreach ($fixtures['users'] as $user_key => $user_values) {             
