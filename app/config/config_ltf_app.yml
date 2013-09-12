@@ -43,11 +43,11 @@ constants:
      ({xxs, xs, s, m, l, xl, xxl})
   
   size_numbers:
-     ({00, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20})
+     ({0, 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20})
   
   size_charts:
-    xxs: 00
-    xs: 0
+    xxs: 0
+    xs: 1
     xs: 2
     s: 4
     s: 6
@@ -55,9 +55,13 @@ constants:
     m: 10
     l: 12
     l: 14
-    xl: 18
+    xl: 16
     xl: 18
     xxl: 20
+    xxl: 22
+    xxl: 24
+    xxl: 26
+    xxl: 28
   
 Twitter:  
 consumer_key: 9GBx1IchmgsTC404I52w
