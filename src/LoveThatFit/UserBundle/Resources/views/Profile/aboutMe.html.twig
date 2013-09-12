@@ -45,19 +45,38 @@
 {% endif %}
         <br/>
 
-
+<style>
+        #measurement_height{
+            width:60px;
+            }
+            
+            #height_in_feet{
+                width:60px;              
+                
+                }
+                
+                #height_in_inches{
+                width:60px;
+                
+                }
+            </style>
         <form action="{{ path('user_profile_about_me_update')}}" method="post" {{ form_enctype(form) }}>
+            
+            
             <div id='frm_height'>
         {{ form_label(form.height) }}
-        {{ form_widget(form.height) }} &nbsp;in
+                    <span style="margin-top:-20px; display:inline-block; font-size: 0.85em; position:absolute;">in</span>
+        {{ form_widget(form.height) }} &nbsp;&nbsp;<img src="{{asset("bundles/lovethatfit/site/images/reverse_tab.png")}}">&nbsp;&nbsp;
                    
-        
+         <span style="margin-top:-20px; display:inline-block; position:absolute; font-size: 0.85em;">feet</span>
         <select name="height_in_feet" id="height_in_feet">
         <option value="4">4</option>
         <option value="5">5</option>
         <option value="6">6</option>
         <option value="7">7</option>
         </select>
+         
+         <span style="margin-top:-20px; display:inline-block; position:absolute; font-size: 0.85em;">in</span>
         <select name="height_in_inches" id="height_in_inches">
          <option value="0">0</option>    
         <option value="1">1</option>
@@ -74,7 +93,7 @@
         <option value="12">12</option>
         
         </select>
-         feet
+        
         <div class="form_vld_error">{{ form_errors(form.height) }}</div>
                 </div>
 
