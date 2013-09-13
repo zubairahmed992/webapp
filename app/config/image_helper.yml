@@ -32,7 +32,13 @@ image_category:
       width: 78
       height: 77
       prefix:  
-      dir:  'uploads/ltf/products/display/iphone'  
+      dir:  'uploads/ltf/products/display/iphone' 
+    
+    iphone_list:
+      width: 145
+      height: 117
+      prefix:  
+      dir:  'uploads/ltf/products/display/iphone_list' 
   
   product_pattern:      
     original:
