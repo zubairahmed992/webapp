@@ -1,1 +1,20 @@
+
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% block left_navigation %}
+{%if app.user %}
+    {% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation_external.html.twig'%}
+{% endif %}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+{% block message_block %}
+
 <div id="nopage">Coming Soon</div>
+
+{% endblock %}
+
+

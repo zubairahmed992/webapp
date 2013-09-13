@@ -2959,13 +2959,7 @@ div.play_area_hldr div.action_buts_bar {
   text-align:center; 
   width:500px; margin:0 auto; 
   font-family:Arial, Helvetica, sans-serif; 
-  color:#666666; 
-  
+ color:#666666; 
  }
  
-  #feet_box_wrapper{
-     display:none;
-     float:left;
-     width:161px;
-     margin-right:2px;
- }
+ 

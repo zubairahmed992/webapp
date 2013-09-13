@@ -19,6 +19,7 @@
     </head>
  
     <body>
+        
       <div class="full_wrapper">
         <div class="holder">
             {%if app.user %}
@@ -63,8 +64,8 @@
                 {% block fitting_room %}
                 {% endblock %}
                     
-               
-                    
+                    {% block message_block %}
+                    {% endblock %}
                     
             <!--/.site_container--></section>
                 
