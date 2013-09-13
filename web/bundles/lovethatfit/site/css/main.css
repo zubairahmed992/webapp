@@ -2962,4 +2962,11 @@ div.play_area_hldr div.action_buts_bar {
  color:#666666; 
  }
  
+ #feet_box_wrapper{
+     display:none;
+     float:left;
+     width:161px;
+     margin-right:2px;
+ }
+ 
  
