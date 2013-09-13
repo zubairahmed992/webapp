@@ -21,21 +21,31 @@
                 {{ form_errors(form) }}
                     
                     <div>
-                        {{ form_errors(form.height) }}
-                        <span class="boxlable" id="height_box">Height (inch)</span>                       
-                        {{ form_widget(form.height) }}
                         
+                        
+                        {{ form_errors(form.height) }}
+                        <div id="height_wrapper">
+                        <span class="boxlable" id="height_box">Height (inch)</span>  
+                        <span class="boxlable" id="height_box" style="margin-left:128px;"><a onclick="showfeet()" href="javascript:void(0);">In Feet?</a></span>
+  </div>                        
+{{ form_widget(form.height) }}
+                       
                         
                         
                        <!-- Code for select Boxes --->
-                        
- <select name="height_in_feet" id="height_in_feet">
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        </select>
-        <select name="height_in_inches" id="height_in_inches">
+                       
+                       <div id="feet_box_wrapper">
+                    <span class="boxlable" id="height_box">Feet</span>    
+                    <select name="height_in_feet" id="height_in_feet" style="width:78px;">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    </select>
+                    
+                    <span class="boxlable" id="height_box" style="left:81px;">in</span>
+                    <span class="boxlable" id="height_box" style="margin-left:128px;"><a onclick="hidefeet()" href="javascript:void(0);">In Inch?</a></span>
+                    <select name="height_in_inches" id="height_in_inches" style="width:78px;">
          <option value="0">0</option>    
         <option value="1">1</option>
         <option value="2">2</option>
@@ -51,6 +61,7 @@
         <option value="12">12</option>
         
         </select>
+                       </div>
                        
                         
                         
@@ -436,6 +447,23 @@ $('#height_in_inches').change(function() {
                                                             });			
                                              }
 
+            }
+            
+            function showfeet(){
+            
+                 $('#height_wrapper').hide();
+                 $('#measurement_height').hide();
+                    $('#feet_box_wrapper').show();          
+            
+            }
+            
+            function hidefeet(){
+            
+                    $('#feet_box_wrapper').hide();          
+                    $('#height_wrapper').show();
+                    $('#measurement_height').show();
+                          
+            
             }
 
             ///////////////////////////////////////////
