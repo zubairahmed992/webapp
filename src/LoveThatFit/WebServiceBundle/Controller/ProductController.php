@@ -111,7 +111,7 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
-      //  $request_array=array('authTokenWebService'=>'f7737d3dd7293d035cf48a6b2353505e');
+     //   $request_array=array('authTokenWebService'=>'f9d797d8a61c8ee1de994f69c29460ee');
         $product_helper =  $this->get('admin.helper.product');
         $product_response=$product_helper->productListWebService($request,$request_array);
         return new response(json_encode($product_response));
