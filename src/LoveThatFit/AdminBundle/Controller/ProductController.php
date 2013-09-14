@@ -431,7 +431,7 @@ class ProductController extends Controller {
         {
         $sizeForm = $this->createForm(new ProductSizeWomenBottomType(),$this->getProductSize($size_id));   
         }
-        if($product->getClothingType()->getTarget()=="Dress" and $product->getGender()=='F')
+        if($product->getClothingType()->getTarget()=="Dress" or $product->getClothingType()->getTarget()=="dress" and $product->getGender()=='F')
         {
         $sizeForm = $this->createForm(new ProductSizeWomenDressType(),$this->getProductSize($size_id));       
         }
@@ -473,7 +473,7 @@ class ProductController extends Controller {
         {
         $sizeForm = $this->createForm(new ProductSizeWomenBottomType(),$this->getProductSize($size_id));   
         }
-        if($product->getClothingType()->getTarget()=="Dress" and $product->getGender()=='F')
+        if($product->getClothingType()->getTarget()=="Dress" or $product->getClothingType()->getTarget()=="dress" and $product->getGender()=='F')
         {
         $sizeForm = $this->createForm(new ProductSizeWomenDressType(),$this->getProductSize($size_id));       
         }
