@@ -568,7 +568,7 @@ public function favouriteByUser($user_id,$request){
             $data['fitting_room_path'] = $fitting_room;
             $total_record = count($products);
 
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone_list/';
             $data['path'] = $baseurl;
             return $data;
         } else {
