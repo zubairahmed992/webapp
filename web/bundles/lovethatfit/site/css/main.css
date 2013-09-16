@@ -726,6 +726,7 @@ header.reg .strip_rgt {
     color:#8ec73e;
     text-shadow: 0 0 1px #444;
     margin-bottom: 1px;
+    display:none;
 }
 .step_3_hgh .site_container {
 	min-height:600px !important;
@@ -791,9 +792,10 @@ a.but_short:visited {
 
 .zoom_in .slider_wrap {
     width: 302px;
+    height:26px;
 }
 .zoom_in .main_slider {
-    width: 194px;
+    width: 280px;
 }
 
 
