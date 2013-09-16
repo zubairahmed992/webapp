@@ -242,6 +242,7 @@ class ProductColor {
             $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getTitle();
             //changed due to issue in size selection
         }
+        sort($size_titles);
         return $size_titles;
     }
 
