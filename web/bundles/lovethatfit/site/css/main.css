@@ -707,6 +707,7 @@ header.reg .strip_rgt {
 	margin-left:-5px;
 	z-index:200;
 	background:#635f5f;
+        display:none;
 	
 }
 .slider_result {
@@ -822,7 +823,7 @@ a.but_short:visited {
 	width:320px;
 	position:relative;
 	height:45px;
-        padding-bottom: 10px;
+       
 }
 .input_file_hldr input.input_file {
     cursor: pointer;
@@ -2596,12 +2597,12 @@ padding-bottom: 0px;
 }
 
 .how_it_works ol{
-    margin:0px 0px 0px 23px;
+    margin:0px 0px 0px 20px;
     padding:0px 0px 0px 0px;    
 }
 
 .how_it_works ol li{    
-    font-size: 0.80em;
+    font-size: 0.78em;
     padding-bottom: 10px;      
 }
 
