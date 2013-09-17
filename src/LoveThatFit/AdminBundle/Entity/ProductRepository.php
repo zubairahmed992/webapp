@@ -119,7 +119,7 @@ class ProductRepository extends EntityRepository {
     #_-----------------------------------------------------------------
     public function findByGenderRandom($gender, $limit) {
         
-        $sql = "SELECT * FROM Product p WHERE p.gender = '".$gender."' AND p.disabled=0 AND p.display_Product_Color_Id IS NOT NULL ORDER BY RAND() LIMIT ".$limit;
+        $sql = "SELECT * FROM product p WHERE p.gender = '".$gender."' AND p.disabled=0 AND p.display_Product_Color_Id IS NOT NULL ORDER BY RAND() LIMIT ".$limit;
         
         $rsm = new ResultSetMapping;
         $rsm->addEntityResult('LoveThatFit\AdminBundle\Entity\Product', 'p');
