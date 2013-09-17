@@ -1,5 +1,7 @@
 {% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+
 {% block profile_heading %}
+
 <h1>User Product Trial  History</h1>
         {% endblock %}
 {% block profile_section %}
@@ -40,4 +42,9 @@
 
 {%endfor%}
   </table>
+{% include 'LoveThatFitUserBundle:Profile:_pagination.html.twig'
+  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'user_product_history'}
+   %} 
+        
 {% endblock %}

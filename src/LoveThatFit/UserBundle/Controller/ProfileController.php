@@ -195,12 +195,11 @@ public function passwordResetUpdateAction(Request $request) {
     }
 
 
-    public function userTryProductsAction($page_number = 0, $limit = 0)
+    public function userTryProductsAction($page_number)
     {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
-        $em = $this->getDoctrine()->getManager();        
-        $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->findTryProductHistory($user_id, $page_number, $limit);
-        return $this->render('LoveThatFitUserBundle:Profile:user_product_history.html.twig',array('productItem'=>$entity));
+        $user_try_history= $this->get('admin.helper.product')->userTryProducts($user_id,$page_number);
+        return $this->render('LoveThatFitUserBundle:Profile:user_product_history.html.twig',$user_try_history);
     }
 
     

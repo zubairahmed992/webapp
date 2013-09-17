@@ -1,0 +1,59 @@
+{% if rec_count>limit %}
+
+{% if limit!=0 or no_of_pagination!=0 %}
+
+{% set first_btn = true %}
+{% set previous_btn = true %}
+{% set back=0 %}
+{% set next_btn=true %}
+{% set last_btn=true %}
+
+{#------------------- Previous button --------------------------------- #}
+<div class="pager">  
+    <ul>
+      {% if previous_btn and limit > 1 %}
+       {% set  back = limit - 1 %}
+            <li>
+                <a href="{{  path(controller_name,{'page_number':back})}}"><<</a></li>
+       {% elseif previous_btn %}
+            <li class='disabled'>
+                <a href="#_" ><< </a>
+            </li>
+      {% endif %}     
+            
+            
+{#------------------- Pagination buttons --------------------------------- #}            
+     {% for y in range(1,no_of_pagination) %}
+      {% if limit==y %}  
+            <li class="disabled">
+                <a href="{{  path(controller_name,{'page_number':y}) }}">{{y}}</a></li> 
+       {% else %}   
+            <li>
+                <a href="{{  path(controller_name)~'/'~ y }}">{{y}}</a>
+            </li>
+        {% endif %}  
+        {% endfor %}
+            
+            
+{#------------------- Next button --------------------------------- #}            
+            
+            
+            
+
+       {% if next_btn and limit < no_of_pagination %} 
+                {% set nex = limit + 1%}
+                <li>
+                    <a href="{{  path(controller_name,{'page_number':nex})}}" > >></a>
+                </li>
+                {% elseif next_btn %}
+                <li class='disabled'>
+                    <a href="#_" >      
+                        >>
+                    </a>
+                </li>
+                {% endif %}   
+
+            </ul>
+    </div>
+  {% endif %}
+ {% endif %}
