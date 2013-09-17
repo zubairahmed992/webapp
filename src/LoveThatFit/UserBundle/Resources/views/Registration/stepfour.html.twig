@@ -80,11 +80,16 @@
         <h2>How It Works</h2>
         <ol>
             <li>Take a Full Body picture of yourself in your bathing suit using any camera, smartphone or webcam.</li>
-            <li>Stand straight with arms relaxed by sides and feet facing forward and shoulder width apart. <a href="{{ asset('bundles/lovethatfit/site/images/pic.png') }}" target="_parent">See here</a> </li>
+            <li>Stand straight with arms relaxed by sides and feet facing forward and shoulder width apart. <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
             <li>Upload photo and zoom in &amp; out until the crown of your head is touching the top line and the bottom line runs right over the top of your feet.</li>
             <li>Adjust sliders so they are just above your shoulders with head centered and bottom one where you like your pants to sit.</li>
             <li>Save and Continue.</li>
         </ol>
+        <div id="stella_box">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic.png') }}">
+            <span id="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('stella_box').style.display='none'">x</a></span>
+        
+        </div>
     </div>
         <!--/.action_blk--></section>
 {% endblock %}
