@@ -2975,8 +2975,8 @@ div.play_area_hldr div.action_buts_bar {
  #stella_box{     
      display:none; 
      position: absolute; 
-     left: 400px; 
-     top: -90px; 
+     left: 270px; 
+     top: -120px; 
      background: #fff; 
      padding: 15px 35px 15px 35px; 
      border:1px solid #ddd; 
