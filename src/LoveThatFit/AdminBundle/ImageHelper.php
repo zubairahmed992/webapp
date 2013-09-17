@@ -50,8 +50,15 @@ class ImageHelper {
         
         $this->resize_image();
         //if record is being updated, then delete previous images
-        if ($this->entity->getId())
+        if ($this->entity->getId()){
             $this->deleteImages($previous_image); 
+        }
+        
+         //original image is being deleted
+        $root_image_path = $this->getUploadRootDir().'/'.$this->image;
+         if (is_readable($root_image_path)) {
+                    @unlink($root_image_path);
+                }
         
         $this->entity->file = null;
     }
@@ -80,6 +87,10 @@ class ImageHelper {
             $this->deleteImages($previous_image); 
             $this->entity->file = null;
         }
+        //original image is being deleted
+         if (is_readable($destination_path)) {
+                    @unlink($destination_path);
+                }
     }
     
     //-------------------------------------------------------------------
@@ -107,6 +118,10 @@ class ImageHelper {
                     @unlink($old_file_name);
                 }
             }
+            //original image is being deleted
+               if (is_readable($dest)) {
+                    @unlink($dest);
+                }
          }
     }
 
@@ -225,32 +240,6 @@ class ImageHelper {
         return $n;
     }
 
-    
-    public function _calculateResizeDimentions() {
-        
-        $image_info = getimagesize($this->getAbsolutePath());
-        $iw = $image_info[0] ;
-        $ih = $image_info [1];
-        $n=null;
-        $standard_height=$this->conf['original']['available_height'];
-        foreach ($this->conf as $key => $value) {
-            if ($key != 'original') {
-                if (array_key_exists ('available_height', $value) ) {
-                $percent = ($value['available_height'] / $standard_height);
-                $n[$key]['width'] = round($iw * $percent);
-                $n[$key]['height'] = round($ih * $percent);
-                $n[$key]['ah'] = round($value['available_height']);
-                $n[$key]['sh'] = round($standard_height);
-            }else{
-                $n[$key]['width'] = $iw;
-                $n[$key]['height'] = $ih;
-            }
-        
-            }
-        }
-        return $n;
-    }
-    
     //------------------------------------------------------------------
     public function getImagePaths() {
         $n[] = null;
