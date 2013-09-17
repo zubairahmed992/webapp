@@ -600,7 +600,7 @@ header.reg .strip_rgt {
 }
 .reg_blk .frm_ele {
 	/*padding-bottom:9px;*/
-        margin-top:10px;
+        margin-top:5px;
         text-align: center;
 }
 .reg_blk .btm_buttons {
@@ -681,7 +681,7 @@ header.reg .strip_rgt {
 .slider_wrap {
 	width:208px;
 	background:#fff;
-	margin-bottom:15px;
+	margin-bottom:10px;
 	padding:2px 6px 2px 6px;
 	float:left;
 	-webkit-box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
