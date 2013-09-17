@@ -7,8 +7,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 31
@@ -26,8 +26,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -45,8 +45,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -64,8 +64,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 31
@@ -83,8 +83,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -102,8 +102,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -121,8 +121,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 31
@@ -140,8 +140,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -159,8 +159,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -178,8 +178,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -197,8 +197,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 31
@@ -216,8 +216,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 31
@@ -235,8 +235,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -254,8 +254,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -273,8 +273,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 32
@@ -292,8 +292,8 @@ users:
     password: 123456
     zipcode: 123456
     gender: f
-    image: 'cropped.jpg'
-    avater: 'avatar.jpg'
+    image: 'cropped.png'
+    avater: 'avatar.png'
     weight: 120
     height: 180
     bust: 31
