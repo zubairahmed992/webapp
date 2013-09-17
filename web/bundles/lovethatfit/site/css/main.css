@@ -2992,4 +2992,37 @@ div.play_area_hldr div.action_buts_bar {
      padding:0px 7px 0px 7px;
  }
  
+ .pager ul{
+     padding:0px;
+     margin:0px; 
+     text-align: center;
+     
+ }
+ 
+ .pager ul li{
+     list-style: none;
+     display: inline;
+     font-size: 0.9em;     
+ }
+ 
+ .pager ul li a{
+     text-decoration: none;
+     color: #444;     
+ }
+ 
+ .nom{
+    background: none repeat scroll 0 0 #C4C933;
+    border: 1px solid #333333;
+    padding: 0 6px;
+    margin:0px 1px 0px 1px;
+    font-weight: bold;
+ }
+ 
+  .nomi{
+    background: none repeat scroll 0 0 #efefef;
+    border: 1px solid #999;
+    padding: 0 6px;
+    margin:0px 1px 0px 1px;
+ }
+ 
  

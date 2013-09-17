@@ -26,10 +26,10 @@
      {% for y in range(1,no_of_pagination) %}
       {% if limit==y %}  
             <li class="disabled">
-                <a href="{{  path(controller_name,{'page_number':y}) }}">{{y}}</a></li> 
+                <a href="{{  path(controller_name,{'page_number':y}) }}" class="nom">{{y}}</a></li> 
        {% else %}   
             <li>
-                <a href="{{  path(controller_name)~'/'~ y }}">{{y}}</a>
+                <a href="{{  path(controller_name)~'/'~ y }}" class="nomi">{{y}}</a>
             </li>
         {% endif %}  
         {% endfor %}
