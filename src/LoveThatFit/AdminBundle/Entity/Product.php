@@ -514,8 +514,6 @@ class Product {
     
      //----------------------------------------------------------
     public function getRandomItem() {
-
-       $i=$this->getProductItems();
       return $this->getProductItems()->getIterator()->current(); 
     }
     
