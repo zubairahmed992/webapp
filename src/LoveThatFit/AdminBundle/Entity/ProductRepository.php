@@ -569,22 +569,25 @@ class ProductRepository extends EntityRepository {
 
 //-------------------------------------------------------------------------------------    
      public function tryOnHistoryWebService($user_id) {
-
-       $query = $this->getEntityManager()
-                        ->createQuery("
-            SELECT pi.id as product_id ,p.name as product_name,b.name as brand_name,ps.title as size, pc.title as color ,pi.image as item_image
-            FROM LoveThatFitAdminBundle:ProductItem pi                         
-            JOIN pi.product p
-            join p.brand b
-            JOIN pi.product_color pc
-            JOIN pi.product_size ps            
-            JOIN pi.user_item_try_history uih            
-            WHERE  p.displayProductColor!='' and uih.user = :id ORDER BY uih.count DESC")->setParameters(array('id' => $user_id));
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+         
+         
+           return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('pi.id as product_id ,p.name as product_name,b.name as brand_name,ps.title as size, pc.title as color ,pi.image as item_image')
+                        ->from('LoveThatFitAdminBundle:ProductItem ', 'pi')
+                        ->innerJoin('pi.product','p')
+                        ->innerJoin('p.brand', 'b')
+                        ->innerJoin('pi.product_color', 'pc')
+                        ->innerJoin('pi.product_size', 'ps')
+                        ->innerJoin('pi.user_item_try_history', 'uih')
+                        ->where('uih.user = :id')
+                        ->andWhere("p.displayProductColor!=''")
+                        
+                        ->orderBy('uih.count','DESC')
+                        ->setMaxResults(20)
+                        ->setParameter('id', $user_id)
+                        ->getQuery()
+                        ->getResult(); 
     }
 #---------------------------------End of Web Service----------------------------------#   
      public function findProductByTitle($name) {
@@ -733,9 +736,9 @@ class ProductRepository extends EntityRepository {
     }
 //-------------------------------------------------------------------------------------    
     
-    public function findTryProductHistory($user_id , $page_number=0 , $limit=0)
+    public function findTryProductHistory($user_id , $page_number , $limit)
     {
-        
+              if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
                     ->createQuery("
             SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
@@ -743,11 +746,25 @@ class ProductRepository extends EntityRepository {
             JOIN pi.product_size ps            
             JOIN pi.user_item_try_history uih            
         WHERE uih.user = :id ORDER BY uih.count DESC"  )->setParameters(array('id' => $user_id)) ;                   
-        try {
+        
+        }else{
+            
+             $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps            
+            JOIN pi.user_item_try_history uih            
+        WHERE uih.user = :id ORDER BY uih.count DESC"  )->setParameters(array('id' => $user_id)) 
+                ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        
+        }
+    try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
-        }
+        }      
     }
 //-------------------------------------------------------------------------------------
     public function findDefaultProductByColorId($product_color)

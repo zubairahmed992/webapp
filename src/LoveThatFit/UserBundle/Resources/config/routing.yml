@@ -80,8 +80,8 @@ user_profile_what_i_like_user_survey:
     defaults: { _controller: LoveThatFitUserBundle:Profile:submitUserSurveyForm }
     
 user_product_history:
-    pattern:  /profile/user_product_history
-    defaults: { _controller: LoveThatFitUserBundle:Profile:userTryProducts}
+    pattern:  /profile/user_product_history/{page_number}
+    defaults: { _controller: LoveThatFitUserBundle:Profile:userTryProducts,page_number: 1}
     
 #---------------------------------------------- Login ------------------------------------------
 
