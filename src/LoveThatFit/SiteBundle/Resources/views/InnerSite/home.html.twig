@@ -43,20 +43,20 @@ continuous: true
 <div id="boxes_wrapper">
 
     <div class="home_box">
-        <h1>New<br><br> Arrivals</h1>
+        <h1>New<br>Arrivals</h1>
         <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':latest,'id':'1',})}}</div>
         
         <div class="more_lnk"><a href="{{path('inner_site_index',{'list_type' : 'latest' })}}">&nbsp;</a></div>
     </div>
     
     <div class="home_box">
-        <h1>FRIENDS<br><br>FAVOURITES</h1>
+        <h1>FRIENDS<br>FAVOURITES</h1>
         <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':favourite,'id':'2'})}}</div>
         <div class="more_lnk"><a href="{{path('inner_site_index',{'list_type' : 'most_faviourite' })}}">&nbsp;</a></div>
     </div>
     
     <div class="home_box">
-        <h1>CURRENT<br><br>TRIED ON</h1>
+        <h1>CURRENT<br>TRIED ON</h1>
         <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':tried_on,'id':'3'})}}</div>
         <div class="more_lnk"><a href="{{path('inner_site_index',{'list_type' : 'recently_tried_on' })}}">&nbsp;</a></div>
     </div>

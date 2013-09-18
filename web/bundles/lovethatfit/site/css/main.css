@@ -2874,7 +2874,7 @@ padding-bottom: 0px;
 
 .home_box :last-child{
     width: 145px;
-    float:left;
+    
     position: relative;
     margin-right: 0px!important;
 }
@@ -2888,8 +2888,7 @@ padding-bottom: 0px;
     margin-bottom: 10px;    
 }
 
-.home_box .slid{
-    padding-bottom: 15px;
+.home_box .slid{    
     border-bottom: 3px solid #c4c833; 
     overflow: hidden;
     }
@@ -2900,6 +2899,7 @@ padding-bottom: 0px;
         right: -123px;
         width: 22px;
         height:22px;
+        display:block;
         text-decoration:none;
         background: url("../images/m_icon.png") no-repeat scroll right top transparent; 
     }
@@ -3068,4 +3068,65 @@ div.play_area_hldr div.action_buts_bar {
     display: block;
     padding-top:4px;
     color:#666;
+}
+
+#slider1{    
+    overflow:hidden;
+    height: 145px!important;
+}
+
+#slider1 ul{     
+}
+
+#slider1 ul li{ 
+    list-style: none;
+    width:145px;        
+    text-align:center;
+    float:left;    
+}
+
+#slider1 ul li img{ 
+    width: auto;
+    
+}
+
+
+#slider2{    
+    overflow:hidden;
+    height: 145px!important;
+}
+
+#slider2 ul{     
+}
+
+#slider2 ul li{ 
+    list-style: none;
+    width:145px;        
+    text-align:center;
+    float:left;    
+}
+
+#slider2 ul li img{ 
+    width: auto;
+    
+}
+
+#slider3{    
+    overflow:hidden;
+    height: 145px!important;
+}
+
+#slider3 ul{     
+}
+
+#slider3 ul li{ 
+    list-style: none;
+    width:145px;        
+    text-align:center;
+    float:left;    
+}
+
+#slider3 ul li img{ 
+    width: auto;
+    
 }

@@ -9,14 +9,14 @@
 		padding:0;
 		list-style:none;
 		}
-	#slider2{margin-top:1em;}
+	#slider2{margin-top:0em;}
 	#slider li, #slider2 li{ 
 		/* 
 			define width and height of list item (slide)
 			entire slider area will adjust according to the parameters provided here
 		*/ 
 		width:145px;
-		height:241px;
+		height:145px;
 		overflow:hidden; 
 		}	
 	
