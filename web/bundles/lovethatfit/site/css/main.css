@@ -1027,9 +1027,22 @@ input[type=email]{
 	z-index:6000;
 	display:none;
 	position:absolute;
-	left:-400px;
+	left:0px;
 	top:130px;
+        background: #ffcc00;
+        border:1px solid #efefef;
 }
+
+#cnv_img_save {
+	z-index:6000;
+	display:block;
+	position:absolute;
+	left:200px;
+	top:130px;
+        background: #ffcc00;
+        border:1px solid #efefef;
+}
+
 .z oom_in {
 	display:none;
 }
@@ -3025,4 +3038,29 @@ div.play_area_hldr div.action_buts_bar {
     margin:0px 1px 0px 1px;
  }
  
- 
+ div.play_area_hldr div.action_buts_bar {
+    position:absolute;
+    left:498px;
+    top:10px;
+    width:366px;
+    height:40px;
+    display:none;
+}
+
+.action_buts_bar .img_acw {
+    width:24px;
+    height:25px;
+    float:right;
+    background: url("../images/anticlock_rotation_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+}
+.action_buts_bar .img_cw {
+    width:24px;
+    height:25px;
+    float:right;
+    background: url("../images/clockwise_rotation_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+}
+.action_buts_bar .rotate_label {
+    float:right;
+}
