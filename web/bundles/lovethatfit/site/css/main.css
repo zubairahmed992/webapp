@@ -2961,10 +2961,9 @@ padding-bottom: 0px;
 div.play_area_hldr div.action_buts_bar {
     position:absolute;
     left:498px;
-    top:10px;
-    background: #ffcc00;
+    top:22px;
     width:366px;
-    height:40px;
+    height:30px;
     display:none;
 }
 
@@ -3041,9 +3040,9 @@ div.play_area_hldr div.action_buts_bar {
  div.play_area_hldr div.action_buts_bar {
     position:absolute;
     left:498px;
-    top:10px;
+    top:22pxpx;
     width:366px;
-    height:40px;
+    height:30px;
     display:none;
 }
 
@@ -3063,4 +3062,8 @@ div.play_area_hldr div.action_buts_bar {
 }
 .action_buts_bar .rotate_label {
     float:right;
+    font-size: 13px;
+    display: block;
+    padding-top:4px;
+    color:#666;
 }
