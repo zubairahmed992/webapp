@@ -1,29 +1,136 @@
 
 $(document).ready(function() { 
 
-function rotate_me_to(req_deg){
+var req_deg = 0;
+function rotate_me_to(rotate_side){
     
-    //req_deg_value = $('#uploaded_photo img').css('rotate');
-    
-    //alert(req_deg_value);
-    $('#uploaded_photo img').css({
-     '-moz-transform':'rotate(' + req_deg + ')',
-     '-webkit-transform':'rotate(' + req_deg + ')',
-     '-o-transform':'rotate(' + req_deg + ')',
-     '-ms-transform':'rotate(' + req_deg + ')',
-     'transform':'rotate(' + req_deg + ')'
+if(rotate_side == "cw" || rotate_side == "acw"){
+
+if(rotate_side == "cw"){
+    req_deg += 90; 
+ }
+ if(rotate_side == "acw"){
+    req_deg -= 90; 
+ }
+    $('#img_to_upload').css({
+     '-moz-transform':'rotate(' + req_deg + 'deg)',
+     '-webkit-transform':'rotate(' + req_deg + 'deg)',
+     '-o-transform':'rotate(' + req_deg + 'deg)',
+     '-ms-transform':'rotate(' + req_deg + 'deg)',
+     'transform':'rotate(' + req_deg + 'deg)'
     });
+    $('#uploaded_photo').css({left: 364/2 - $('#img_to_upload').width()/2,top: 505/2 - $('#img_to_upload').height()/2});
+}
+if(rotate_side == "just_shift"){
+    //alert("This is the degree you know:" + req_deg);
+
+   var my_x = $('#uploaded_photo').css("left");
+   var my_y = $('#uploaded_photo').css("top");
+   var my_w = $('#img_to_upload').css("width");
+   var my_h = $('#img_to_upload').css("height");
+  
+   var final_my_x = my_x.slice(0,-2);
+   var final_my_y = my_y.slice(0,-2);
+   var final_my_w = my_w.slice(0,-2);
+   var final_my_h = my_h.slice(0,-2);
+   
+   parseInt(final_my_x);
+   parseInt(final_my_y);
+   parseInt(final_my_w);
+   parseInt(final_my_h);
+   
+   var calculated_x = final_my_x + final_my_x/2;
+   var calculated_y = final_my_y + final_my_y/2;
+   
+  // alert(calculated_x +" | "+ final_my_x + final_my_x/2);
+   
+   
+//final_my_x = 182 - final_my_x - (final_my_w/2);
+//final_my_y = 252 - final_my_y - (final_my_h/2);
+
+shift_to_canvas(req_deg,calculated_x,calculated_y);
+
+}
+
+
+else{    
+
+// alert(req_deg);
+//$('#uploaded_photo').css({
+  //   '-moz-transform':'rotate(' + req_deg + 'deg)',
+    // '-webkit-transform':'rotate(' + req_deg + 'deg)',
+     //'-o-transform':'rotate(' + req_deg + 'deg)',
+     //'-ms-transform':'rotate(' + req_deg + 'deg)',
+     //'transform':'rotate(' + req_deg + 'deg)'
+    //});
+    //set_rotate_picture();
+ 
+
+   
+  // alert(my_x.slice(0,-2));
+   
+  
+   //$('#uploaded_photo').css({left: '-=' + $('#img_to_upload').width()/2,top: '-=' + $('#img_to_upload').height()/2});
+     
+    //set_rotate_picture();
+    
+   // var obj_to_chk = $('#img_to_upload');
+    
+    //var chk_alert = getRotationDegrees(obj_to_chk);
+    
+   
+   //alert(chk_alert);
+   /* 
+ function getRotationDegrees(obj_to_chk) {   
+     
+    var matrix = obj_to_chk.css("-webkit-transform") ||
+    obj_to_chk.css("-moz-transform")    ||
+    obj_to_chk.css("-ms-transform")     ||
+    obj_to_chk.css("-o-transform")      ||
+    obj_to_chk.css("transform");
+
+if(matrix !== 'none') {
+        var values = matrix.split('(')[1].split(')')[0].split(',');
+        var val_one = values[0];
+        var val_two = values[1];
+        var angle = Math.round(Math.atan2(val_one, val_two) * (180/Math.PI));
+      
+    } else { var angle = 0; }
+    return (angle < 0) ? angle +=360 : angle;
+    
+ }
+   
+   getRotationDegrees(obj_to_chk);
+   
+   */
+   
+   
+   
+   // if($('#img_to_upload').css({'-moz-transform':'rotate(' + req_deg + ')'}) == '90deg')
+   //     {
+   //         alert("90");
+   //     }
+   
+   
+   //shift_to_canvas_2(req_deg);
+   
+   //$('#uploaded_photo').css({left: (364/2) - $('#img_to_upload').width()/2,top:(505/2) - $('#img_to_upload').height()/2});
+    //$('#uploaded_photo').css({left: '-='+$('#img_to_upload').width()/2,top:'-='+$('#img_to_upload').height()/2});
+    
+    }
 }
 
 $('.img_cw').click(function(){
-    rotate_me_to("90deg");
+    rotate_me_to("cw");
 });
 
 $('.img_acw').click(function(){
-    rotate_me_to("-90deg");
+    rotate_me_to("acw");
 });
-    
-
+$('.reg_next_step2').click(function(){
+   rotate_me_to("just_shift");
+   $(".action_buts_bar").hide();
+});
 
 
   var user_height = $("#user_height_frm_3").attr("value");
@@ -160,6 +267,7 @@ function call_settings(responseText, statusText, xhr, $form){
         $("#play_area").prepend('<div class="uploading_in_progress"></div>');
         $(".input_file_hldr").css("display","none");
         $(".upload_again_hldr").css("display","block");
+        $(".action_buts_bar").fadeIn(500);
         $("#frmUserImage").ajaxForm(
         {
             target: '#uploaded_photo',
@@ -260,22 +368,46 @@ function next_button_click()
 }
 
 
-function shift_to_canvas (){
+function shift_to_canvas (rotate_deg, x1, y1){
     var canvas = document.getElementById('cnv_img_crop');
     var context = canvas.getContext('2d');
     var img = document.getElementById('img_to_upload');
     var img_hldr = document.getElementById('uploaded_photo');
     var x = img_hldr.offsetLeft;
     var y = img_hldr.offsetTop;
+    
+    
     var width = img.width;
     var height = img.height;
-    var rotate_deg = 90;
     var imageObj = new Image();
-
+//alert("X: " + x);
     imageObj.onload = function() {
+        
         context.clearRect(0,0,364,505);
-        context.drawImage(imageObj, x, y, width, height);
+        context.save();
+        context.translate(x + 1 + width/2, y + 1 + height/2);
+        
+        context.rotate(0);
+        context.rotate(rotate_deg * 0.0174532925);
+        //context.translate(-(182-(width/2)), -(252-(height/2)));
+        
+        context.translate(-width/2, -height/2);
+        //context.translate(0, 0);
+        
+        
+        
+        
+        //alert(plus_x+" --- "+plus_y);
+        
+        //context.translate(-plus_x, -plus_y);
+        
+        //context.translate(0,0);
+        context.drawImage(imageObj, 0, 0, width, height);
+        context.restore();
+        
+ 
         setTimeout('post_content_of_canvas()','600');
+        setTimeout('go_to_index()','200');
     };
     imageObj.src = img.src;
 	  
