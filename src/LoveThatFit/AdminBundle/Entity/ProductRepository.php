@@ -604,23 +604,39 @@ class ProductRepository extends EntityRepository {
     
 //-------------------------------------------------------------------------------------    
     public function findMostTriedOnByGender($gender, $page_number = 0, $limit = 0)
-    {
+    {        
+        $query = $this->getEntityManager()
+        ->createQuery("SELECT p.id as id,count(ut.product) as countproducts
+        FROM LoveThatFitAdminBundle:Product p
+        JOIN p.user_item_try_history ut
+        WHERE p.gender = :gender 
+        AND 
+        p.disabled=0 
+        AND 
+        p.displayProductColor!='' 
+        GROUP BY p.id ORDER BY countproducts DESC
+            ")->setParameter('gender', $gender);        
+        $ids = $query->getResult();                         
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
                             ->createQuery("
             SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.gender = :gender AND p.disabled=0 AND p.displayProductColor!=''
-            ORDER BY uih.count DESC"
-                            )->setParameter('gender', $gender);
+            WHERE p.gender = :gender AND 
+            p.disabled=0 AND 
+            p.displayProductColor!='' AND
+            p.id in (:ids)
+            ")->setParameters(array('gender'=> $gender, 'ids' => $ids));
         } else {
             $query = $this->getEntityManager()
                     ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.gender = :gender  AND p.disabled=0 AND p.displayProductColor!=''
-            ORDER BY uih.count DESC "
-                    )->setParameter('gender', $gender)
+            WHERE p.gender = :gender  AND 
+            p.disabled=0 AND 
+            p.displayProductColor!='' AND
+            p.id in (:ids)
+            ")->setParameters(array('gender'=> $gender, 'ids' =>$ids))
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }
