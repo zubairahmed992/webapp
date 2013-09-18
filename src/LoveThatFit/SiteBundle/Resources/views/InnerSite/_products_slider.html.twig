@@ -1,9 +1,14 @@
 
-<div id="{{id}}" class="mtcbox">        
+<div id="slider{{id}}" class="">
+<ul>	
 {%for p in product_list%}
 {%if p.displayProductColor%}
-            <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" />
-    
+
+ <li>
+     <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}" />
+</li>
 {%endif%}
 {%endfor%}
-             </div>
+  
+    </ul>
+ </div>       

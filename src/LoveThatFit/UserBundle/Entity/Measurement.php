@@ -697,7 +697,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getBMI()
     {
         if ($this->height && $this->height > 0){
-            return (($this->weight / ($this->height * $this->height)) * 703);
+            return round((($this->weight / ($this->height * $this->height)) * 703),2);
         }
         else{
             return 0;

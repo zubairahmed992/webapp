@@ -348,12 +348,22 @@ class UserHelper {
     public function loginWebService($request_array, $request) {
         $email = $request_array['email'];
         $password = $request_array['password'];
-        /* $email ='abcdf@gmail.com';
-          $password ='123456'; */
+        $deviceType=$request_array['deviceType'];
+        /*$email ='oldnavywomen0@ltf.com';
+        $password ='123456'; 
+        $deviceType="iphone4s";*/
         $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
+                $device_type=array();
+                 $pre_device_type=$entity->getDeviceType();
             if ($this->matchPassword($entity, $password)) {
-                return $this->gettingUserDetailArray($entity, $request);                
+               
+                 $device_type['preDeviceType']=$pre_device_type;
+                 $entity->setDeviceType($deviceType);
+                 $this->saveUser($entity);
+                 
+                 $user_info=$this->gettingUserDetailArray($entity, $request);
+                return array_merge($user_info,$device_type);                
             } else {
                 return array('Message' => 'Invalid Password');
             }
@@ -495,6 +505,8 @@ class UserHelper {
         $userinfo['avatar'] = $entity->getAvatar();
         $userinfo['iphoneImage'] = $entity->getIphoneImage();
         $userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();
+        $userinfo['postDeviceType']= $entity->getDeviceType();
+        $userinfo['preDeviceType']= $entity->getDeviceType();
         return $userinfo;
     }
 #------------------------------------------------------------------------------------

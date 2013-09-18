@@ -12,32 +12,58 @@
 
 
 {% block fitting_room %}
+
+<script type="text/javascript" src="{{ asset('bundles/easy_slider/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/easy_slider/js/easySlider1.7.js')}}"></script>
+<script type="text/javascript">
+$(document).ready(function(){	
+$("#slider1").easySlider({
+auto: true, 
+continuous: true
+});
+$("#slider2").easySlider({
+auto: true, 
+continuous: true
+});
+$("#slider3").easySlider({
+auto: true, 
+continuous: true
+});
+$("#slider4").easySlider({
+auto: true, 
+continuous: true
+});
+});	
+</script>
+<link href="{{ asset('bundles/easy_slider/css/screen.css')}}" rel="stylesheet" type="text/css" media="screen" />
+
+
 <div id="new_home_bg">
 
 <div id="boxes_wrapper">
 
     <div class="home_box">
         <h1>New<br><br> Arrivals</h1>
-        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':latest,'id':'mcts1'})}}</div>
+        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':latest,'id':'1',})}}</div>
         
         <div class="more_lnk"><a href="{{path('inner_site_index',{'list_type' : 'latest' })}}">&nbsp;</a></div>
     </div>
     
     <div class="home_box">
         <h1>FRIENDS<br><br>FAVOURITES</h1>
-        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':favourite,'id':'mcts2'})}}</div>
+        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':favourite,'id':'2'})}}</div>
         <div class="more_lnk"><a href="{{path('inner_site_index',{'list_type' : 'most_faviourite' })}}">&nbsp;</a></div>
     </div>
     
     <div class="home_box">
         <h1>CURRENT<br><br>TRIED ON</h1>
-        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':tried_on,'id':'mcts3'})}}</div>
+        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':tried_on,'id':'3'})}}</div>
         <div class="more_lnk"><a href="{{path('inner_site_index',{'list_type' : 'recently_tried_on' })}}">&nbsp;</a></div>
     </div>
     
     <div class="home_box">
         <h1>LTF<br>RECOMMENDATIONS</h1>
-        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':recomended,'id':'mcts4'})}}</div>
+        <div class="slid">{{ include('LoveThatFitSiteBundle:InnerSite:_products_slider.html.twig',{'product_list':recomended,'id':'4'})}}</div>
         <div class="more_lnk"><a href="{{path('inner_site_index',{'list_type' : 'ltf_recommendation' })}}">&nbsp;</a></div>
     </div>
    
