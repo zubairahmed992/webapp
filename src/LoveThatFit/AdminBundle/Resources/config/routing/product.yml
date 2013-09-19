@@ -33,6 +33,10 @@ admin_product_stats:
    pattern:  /admin/product/stats
    defaults: { _controller: LoveThatFitAdminBundle:Product:productStats }
 
+admin_product_detail_download:
+   pattern:  /admin/productdetail/{id}/download
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailDownload }
+
 #--------------------------- Product Color --------------       
 
 admin_product_detail_color_image_upload:
