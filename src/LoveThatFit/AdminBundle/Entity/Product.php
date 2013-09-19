@@ -570,6 +570,28 @@ class Product {
        }
      return  ;
     }
+#-----------------Get images path for image downloading------------------------#
+    public function getColorImagesPaths(){
+        $productColors=$this->getProductColors();
+       
+        $imagesPath=array();
+        foreach ($productColors as $color) {
+        $imagesPath[]=$color->getImagePaths();
+         $imagesPath[]= $color->getPatternPaths();
+        }
+        return $imagesPath;
+    }
+    public function getItemImagesPaths(){
+        $productItems=$this->getProductItems();
+        $imagesPath=array();
+        foreach($productItems as $item){
+            $imagesPath[]=$item->getImagePaths();
+        }
+        
+        return $imagesPath;
+    }  
+        
+    
     
     
 }

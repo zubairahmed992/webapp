@@ -774,6 +774,53 @@ public function productDetail($id, $product_color_id, $product_size_id){
         );
        
     }
+#------------------------------------------------------------------------------#
+ #-----------------------------------------Zip Downloading------------------#
+    public function zipDownload($id){
+    
+    $product = $this->repo->find($id);
+    $images=$product->getColorImagesPaths();
+    $itemImages=$product->getItemImagesPaths();
+    $archive_file_name =$product->getName().$product->getId().'.zip';
+    //print_r($images);
+   //return new response('test');
+   $this->zipFilesAndDownload($images,$archive_file_name,$itemImages);
+}
+#------------------------------------------------------------------------------#
+// #-------------Function for dowloading images in zip format--------------------#
+ public function zipFilesAndDownload($file_names,$archive_file_name,$itemImages)
+    {
+        $zip = new ZipArchive();
+        
+        if ($zip->open($archive_file_name, \ZIPARCHIVE::CREATE | \ZIPARCHIVE::OVERWRITE) === TRUE) {
+        foreach ($file_names as $files) {
+     // $zip->addFile("uploads/ltf/products/display/web/5232f56d0291a.png","uploads/ltf/products/display/web/5232f56d0291a.png");
+        $zip->addFile($files['web'], $files['web']);
+        $zip->addFile($files['iphone'], $files['iphone']);
+        }  
+        foreach ($itemImages as $itemfiles) {
+     
+      $zip->addFile($itemfiles['web'],$itemfiles['web']);
+      $zip->addFile($itemfiles['iphone4s'], $itemfiles['iphone4s']);
+       $zip->addFile($itemfiles['iphone5'], $itemfiles['iphone5']);
+       }
+        $zip->close();
+        } else {
+            return "can not open";
+        }
+
+        $response =new Response();
+    //then send the headers to foce download the zip file
+   $response->headers->set('Content-Type','application/zip');
+   $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($archive_file_name) . '"');        
+   $response->headers->set('Pragma', "no-cache");
+   $response->headers->set('Expires', "0");
+   $response->headers->set('Content-Transfer-Encoding', "binary");
+   $response->sendHeaders();
+   $response->setContent(readfile($archive_file_name));
+   return $response;
+ 
+}
     
 
 }

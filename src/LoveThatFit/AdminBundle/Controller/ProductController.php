@@ -745,5 +745,8 @@ class ProductController extends Controller {
     }
 
 #---------------------Product Download-----------------------------------------#
+    public function productDetailDownloadAction($id){
+     return new Response($this->get('admin.helper.product')->zipDownload($id));
+    }
 }
 
