@@ -3130,3 +3130,10 @@ div.play_area_hldr div.action_buts_bar {
     width: auto;
     
 }
+
+.comingsoon{    
+    height:85px; 
+    text-align: center; 
+    padding-top: 60px; 
+    color:#999;
+}
