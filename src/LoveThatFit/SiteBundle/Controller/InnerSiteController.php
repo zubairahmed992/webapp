@@ -88,15 +88,8 @@ public function indexAction($list_type) {
     }
 #------------------------------------------------------------------------------- 
     public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
-        $brand = 'Ellie';
-        $count = count($this->get('admin.helper.product')->findOneByName($brand));
-        if ($count > 0) {
-            $entity = $this->get('admin.helper.product')->findProductByEllieHM($brand, $gender, $page_number, $limit);
-        } else {
-            $brand = 'H&M';
-            $entity = $this->get('admin.helper.product')->findProductByEllieHM($brand, $gender, $page_number, $limit);
-        }
-        return $this->renderProductTemplate($entity, $page_number, $limit);
+        $entity = null;
+        return $this->renderProductTemplate($entity, $page_number, $limit, 'Comming Soon');
     }
 #----------------------------------- by Brand-----------------------------------
     public function productsByBrandAction($gender, $brand_id, $page_number = 0, $limit = 0) {
@@ -109,8 +102,12 @@ public function indexAction($list_type) {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
 #------------------------------------------- render method ---------------------
-    private function renderProductTemplate($entity, $page_number, $limit) {
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
+    private function renderProductTemplate($entity, $page_number, $limit, $status=null) {
+        if ($status){
+            return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('functionality_status' => $status));
+        }else{
+            return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
+        }
     }
 #----------------------------------- Sample Clothing Type-----------------------
     public function productsClothingTypeAction($gender) {

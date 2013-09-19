@@ -616,7 +616,8 @@ class ProductRepository extends EntityRepository {
         p.displayProductColor!='' 
         GROUP BY p.id ORDER BY countproducts DESC
             ")->setParameter('gender', $gender);        
-        $ids = $query->getResult();                         
+        $ids = $query->getResult();    
+        if($ids){
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
                             ->createQuery("
@@ -644,6 +645,9 @@ class ProductRepository extends EntityRepository {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
+        }
+        }else{
+               return null;
         }
     }
     
