@@ -253,15 +253,11 @@ public function find($id) {
      
      return $this->repo->findProductByEllieHM($brand,$gender,$page_number, $limit);
  } 
-public function findOneByName($brand){
+
+#---------------------------------------------------------------------------------
+ public function findOneByName($brand){
     return $this->repo->findOneByName($brand);
-    
 }   
-#-----------------------------------------------------------------
-public function findProductByItemUser($gender,$page_number, $limit){
-    
-    return $this->repo->findProductByItemUser($gender,$page_number, $limit);
-}
 #---------------------------------------------------------------------------------
 public function findByGenderBrand($gender, $brand_id, $page_number, $limit){
     return $this->repo->findByGenderBrand($gender, $brand_id, $page_number, $limit);
@@ -309,7 +305,7 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         $list = $this->findByGenderLatest($options['gender']);
         break;
     
-        case "tried":        
+        case "most_tried_on":        
         $list = $this->findMostTriedOnByGender($options['gender']);
         break;
     
@@ -317,7 +313,7 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         $list = $this->findRecentlyTriedOnByUser($options['user_id']);
         break;
     
-        case "faviourite":        
+        case "most_faviourite":        
         $list = $this->findMostLikedByGender($options['gender']);
         break ;
         
