@@ -205,8 +205,9 @@
                     <td valign="top"><h4 style="float:left;">Last Months Signups</h4>
                         <br><br>
                         
-                      
+                        <div style="float:left"><b>{{totalusers}}</b></div>                    
                        <canvas id="usersignups" height="300" width="300"></canvas>
+                       <div style="float:left;margin-top:330px;margin-left:50px"><b>{{noofmonths}}</b></div>
             <script>
                         var usersignupsbarChartData = {
                 labels : [{% for su in users['total_signups']%} "{{ su['month']}}", {%endfor%}],
@@ -221,7 +222,7 @@
                 }
                 var myLine = new Chart(document.getElementById("usersignups").getContext("2d")).Bar(usersignupsbarChartData);</script>
 
-                        
+                 
                         
                         
                         
@@ -246,8 +247,9 @@
                 <tr>
                     <td valign="top"><h4 style="float:left;">Users Age Groups</h4>
                         <br><br>
-                        
+                        <div style="float:left"><b>{{totalusers}}</b></div>  
                         <canvas id="userage" height="300" width="300"></canvas>
+                        <div style="float:left;margin-top:330px;margin-left:50px"><b>{{ageinyears}}</b></div>
             <script>
                         var useragebarChartData = {
                 labels : [{% for agc in users['age_group_count']%} "{{ agc['age']}}", {%endfor%}],
@@ -258,7 +260,6 @@
                         data : [{% for agc in users['age_group_count']%} {{ agc['total']}}, {%endfor%}]
                 },                
                 ]
-
                 }
                 var myLine = new Chart(document.getElementById("userage").getContext("2d")).Bar(useragebarChartData);</script>
                  </td>

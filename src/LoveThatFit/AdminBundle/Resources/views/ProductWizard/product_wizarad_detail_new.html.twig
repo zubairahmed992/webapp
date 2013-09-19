@@ -38,7 +38,8 @@
         </div>
         <div class="tab-content">
             <div class="tab-pane" id="tab1">
-                <div class="form_result" id="successvalue" style="display:none;">Product Detail has been created </div>
+                
+                <div class="form_result" id="successvalue" style="display:none;"> </div>
                 <span id="admin_product_wizard_detail_create" style="display:none;">{{path('admin_product_wizard_detail_create')}}</span>
                 <form id="productwizard" onsubmit="return submitForm();">
  {{ form_errors(form) }}
@@ -98,74 +99,18 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane" id="tab2">
-                        Color
-                        <div style="float:right; margin-top: -1px; margin-right: 5px;"><a href="#myModal33" role="button" data-toggle="modal" class="btn">Add New</a></div>
-                        <table width="100" border="0">
-                            <tr>
-                                <td>Green</td>
-                                <td><a href="#myModal2" role="button" data-toggle="modal" class="btn">Edit</a></td>
-                                <td><a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a></td>
-                            </tr>
-                        </table>
+                    <div class="tab-pane" id="tab2">                     
+                        Color                        
+                        {% include 'LoveThatFitAdminBundle:ProductWizard:_productColors.html.twig'%}
                     </div>
                     <div class="tab-pane" id="tab3">
-                        <div id="pro_sizes_wrapper">
-                            <h2> Product Sizes</h2>
-                            <table width="100%" border="0">
-                                <tr>
-                                    <td><b>Title</b></td>
-                                    <td><b>Waist</b></td>
-                                    <td><b>Hip</b></td>
-                                    <td><b>Inseam</b></td>
-                                    <td><b>Outseam</b></td>
-                                    <td><b>Hem</b></td>
-                                    <td><b>Length</b></td>
-                                    <td><b>Thigh</b></td>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td>22.87&nbsp;- &nbsp;24.375</td>
-                                    <td>31.5&nbsp;- &nbsp;32.75</td>
-                                    <td>30.5&nbsp;- &nbsp;31.5</td>
-                                    <td>&nbsp;- &nbsp;</td>
-                                    <td>&nbsp;- &nbsp;</td>
-                                    <td>&nbsp;- &nbsp;</td>
-                                    <td>&nbsp;- &nbsp;</td>
-                                    <td><a href="#myModal22" role="button" data-toggle="modal" class="btn">Edit</a></td>
-                                    <td><a href="#myModal32" role="button" data-toggle="modal" class="btn">Delete</a></td>
-                                </tr>
-                            </table>                 
-                        </div>
+                        {% include 'LoveThatFitAdminBundle:ProductWizard:_productSizes.html.twig'%}
 
                     </div>
                     <div class="tab-pane" id="tab4">
                         Product item
 
-                        <table width="100%" border="0">
-                            <tr>
-                                <td><b>Line Number</b></td>
-                                <td><b>Size</b></td>
-                                <td><b>Color</b></td>
-                                <td><b>Fitting Room</b></td>
-                                <td></td>
-                                <td></td>    
-                            </tr>
-
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>Image</td>
-                                <td><a href="#myModal42" role="button" data-toggle="modal" class="btn">Edit</a></td>
-                                <td><a href="#myModal52" role="button" data-toggle="modal" class="btn">Delete</a></td>
-
-                            </tr>
-
-                        </table>
+                        {% include 'LoveThatFitAdminBundle:ProductWizard:_productItems.html.twig' %}
 
                     </div>
                     <ul class="pager wizard">

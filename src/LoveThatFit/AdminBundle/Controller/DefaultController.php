@@ -13,7 +13,9 @@ class DefaultController extends Controller {
             $months = date('M', strtotime("-$i months", $first));
             // $result=$this->getLastSixMonthSignUps($months);
         }
-
+        $months='Month Name';
+        $totalusers='Users';
+        $agegopus="Age in years";
 
         $ProductByBrand = $this->getProductByBrand();
         return $this->render('LoveThatFitAdminBundle:Default:index.html.twig', array(
@@ -29,7 +31,10 @@ class DefaultController extends Controller {
                     'bottomProduct' => $this->countProductsByType('Bottom'),
                     'dressProduct' => $this->countProductsByType('Dress'),
                     'brandproduct' => $ProductByBrand,
-                    'users' => $this->getUsersData(),
+                    'users' => $this->getUsersData(),   
+                    'noofmonths'=>$months,
+                    'totalusers'=>$totalusers,
+                    'ageinyears'=>$agegopus,
                 ));
     }
 
