@@ -49,11 +49,16 @@ public function indexAction($list_type) {
     }
 #------------------------------Product Slider-----------------------------------
     public function productsByTypeAction($list_type='latest', $page_number = 0, $limit = 0) {
-          $user_id = $this->get('security.context')->getToken()->getUser()->getId();
-          $gender = $this->get('security.context')->getToken()->getUser()->getGender();
-          $options = array('gender'=>$gender, 'user_id'=>$user_id, 'list_type'=>$list_type, 'page_number' => $page_number, 'limit' => $limit);
-          $entity=$this->get('admin.helper.product')->listByType($options);        
-          return $this->renderProductTemplate($entity, $page_number, $limit);
+        if ($list_type == 'ltf_recommendation') {
+            $entity = null;
+            return $this->renderProductTemplate($entity, $page_number, $limit, 'Comming Soon');
+        } else {
+            $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+            $gender = $this->get('security.context')->getToken()->getUser()->getGender();
+            $options = array('gender' => $gender, 'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);
+            $entity = $this->get('admin.helper.product')->listByType($options);
+            return $this->renderProductTemplate($entity, $page_number, $limit);
+        }
     }
 #-------------------------------------------------------------------------------
     public function productsAction($gender, $page_number = 0, $limit = 0) {
@@ -83,7 +88,7 @@ public function indexAction($list_type) {
     }
 #-------------------------------------------------------------------------------  
     public function productsMostFavoriteAction($gender, $page_number = 0, $limit = 0) {
-        $entity = $this->get('admin.helper.product')->findProductByItemUser($gender, $page_number, $limit);
+        $entity = $this->get('admin.helper.product')->findMostLikedByGender($gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
 #------------------------------------------------------------------------------- 
