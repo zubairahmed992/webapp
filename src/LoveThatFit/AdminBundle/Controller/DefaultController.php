@@ -13,7 +13,7 @@ class DefaultController extends Controller {
             $months = date('M', strtotime("-$i months", $first));
             // $result=$this->getLastSixMonthSignUps($months);
         }
-        $months='Month Name';
+        $months='Months';
         $totalusers='Users';
         $agegopus="Age in years";
 

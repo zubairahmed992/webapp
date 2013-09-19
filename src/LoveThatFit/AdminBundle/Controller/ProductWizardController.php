@@ -57,7 +57,7 @@ class ProductWizardController extends Controller {
        {
            $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));           
          $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
-            return $this->render('LoveThatFitAdminBundle:ProductWizard:product_wizarad_detail_new.html.twig', array(
+            return $this->render('LoveThatFitAdminBundle:ProductWizard:_productColors.html.twig', array('product'=>$entity,
                     'form' => $form->createView(),
                 ));      
        }    
@@ -68,7 +68,7 @@ class ProductWizardController extends Controller {
             $em->persist($entity);
             $em->flush();                    
             $this->get('session')->setFlash('success', 'Product Detail has been created.');
-           return $this->render('LoveThatFitAdminBundle:ProductWizard:product_wizarad_detail_new.html.twig', array(
+           return $this->render('LoveThatFitAdminBundle:ProductWizard:_product_entry_detail.html.twig', array('product'=>$entity,
                     'form' => $form->createView(),
                 ));
         }else
