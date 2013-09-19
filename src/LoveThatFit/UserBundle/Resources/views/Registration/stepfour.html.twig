@@ -38,6 +38,8 @@
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
+                <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
+                <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
      {{ form_errors(form) }}
                 <div class="input_file_hldr">
