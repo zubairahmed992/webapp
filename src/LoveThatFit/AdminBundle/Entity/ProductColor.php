@@ -233,7 +233,12 @@ class ProductColor {
 
 //---------------------------------------------------------------    
 
-
+    
+    public function getRandomItem() {
+      return $this->getProductItems()->getIterator()->current(); 
+    }
+    
+//---------------------------------------------------------------
     public function getSizeTitleArray() {
         $items = $this->product_items;
         $size_titles = array();

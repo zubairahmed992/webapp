@@ -516,7 +516,10 @@ class Product {
     public function getRandomItem() {
       return $this->getProductItems()->getIterator()->current(); 
     }
-    
+     //----------------------------------------------------------
+    public function getDefaultColorRandomItem() {
+      return $this->displayProductColor()->getIterator()->current(); 
+      }
 
     /**
      * Add user_item_try_history
