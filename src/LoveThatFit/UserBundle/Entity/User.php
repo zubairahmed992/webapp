@@ -74,7 +74,7 @@ class User implements UserInterface, \Serializable {
      *      @Assert\Length(
      *      min = "6",
      *      max = "50",
-     *      minMessage = "Password must contain at least 8 characters; one number, one uppercase letter &amp; one lowercase letter.",
+     *      minMessage = "Password must contain at least 8 characters, including one number, one upper-case and one lower-case alphabet.",
      *      maxMessage = "Password cannot be longer than than {{ limit }} characters long",
      *      groups={"registration_step_one"}
      * )
