@@ -88,7 +88,8 @@ public function indexAction($list_type) {
     }
 #-------------------------------------------------------------------------------  
     public function productsMostFavoriteAction($gender, $page_number = 0, $limit = 0) {
-        $entity = $this->get('admin.helper.product')->findMostLikedByGender($gender, $page_number, $limit);
+        $user_id= $this->get('security.context')->getToken()->getUser()->getId();
+        $entity = $this->get('admin.helper.product')->findProductItemByUser($user_id,$gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
 #------------------------------------------------------------------------------- 
