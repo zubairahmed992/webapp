@@ -3,12 +3,12 @@
 
 {% block left_navigation %}
 {%if app.user %}
-    {% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation_external.html.twig'%}
+    {% include 'LoveThatFitUserBundle:Profile:_left_navigation.html.twig'%}
 {% endif %}
 
 {% endblock %}
 
-{% block left_col_btm %}
+{% block left_col_btm %} 
 {% endblock %}
 
 {% block message_block %}
