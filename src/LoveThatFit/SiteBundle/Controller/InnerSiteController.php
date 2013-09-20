@@ -29,17 +29,19 @@ public function indexAction($list_type) {
        $gender= $this->get('security.context')->getToken()->getUser()->getGender();
        $user_id= $this->get('security.context')->getToken()->getUser()->getId();
        $latest = $this->get('admin.helper.product')->listByType(array('limit'=>5, 'list_type'=>'latest'));
-        if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'faviourite'))) > 0) {
-            $favourite = $this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'faviourite'));
+        if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_faviourite'))) > 0) {
+            $favourite = $this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_faviourite'));
         } else {
             $favourite = $this->get('admin.helper.product')->findByGenderRandom('F', 3);
         }
-        if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'tried'))) > 0) {
-            $tried_on = $this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'tried'));
+        if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_tried_on'))) > 0) {
+            $tried_on =$this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_tried_on'));
         } else {
-            $tried_on = $this->get('admin.helper.product')->findByGenderRandom('F', 3);
+            $tried_on =$this->get('admin.helper.product')->findByGenderRandom('F', 3);
         }
        $recomended = $this->get('admin.helper.product')->findByGenderBrandName($gender,'H&M' ,$page_number, $limit);        
+      // var_dump($favourite);
+    //   return new response($favourite);
        return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
             'latest'=>$latest,
             'tried_on'=>$tried_on,
