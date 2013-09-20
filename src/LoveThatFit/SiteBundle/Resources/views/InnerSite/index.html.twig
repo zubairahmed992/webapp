@@ -41,7 +41,7 @@
                 
                 {% if app.user.image != null %}
                 <div id="user_dummy_img_hldr">
-                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}">
+                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123">
                 </div>
                 {%else%}
                     <div class="upload_pic_msg">Please <a href="{{ path('fitting_room_image_edit') }}">Upload Your Photo</a> to try cloths on you.</div>
