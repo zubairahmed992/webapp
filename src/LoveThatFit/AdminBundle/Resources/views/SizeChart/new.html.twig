@@ -9,7 +9,7 @@
    $('#sizechart_gender').change(function() {	   
 	    var selectVal = $('#sizechart_gender').val();
             var selectValtarget = $('#sizechart_target').val(); 
-	    if(selectVal=='F')
+	    if(selectVal=='F' || selectVal=='f')
                 {                 
                   $("#genderfemale").show();
                   $("#waist").show();
@@ -20,12 +20,12 @@
                   $("#back").show();
                   $("#thigh").show();
                   $("#chest").hide();
-                  $("#outseam").hide();                  
+                  $("#outseam").show();                  
                   $("#neck").hide();                  
                   $("#sizechart_target option[value='Dress']").remove();
                   $("#sizechart_target").append('<option value="Dress">Dress</option>');
                 }
-                if(selectVal=='M')
+                if(selectVal=='M' || selectVal=='m')
                 { 
                   $("#waist").show();
                   $("#neck").show();
@@ -35,7 +35,7 @@
                   $("#back").show();      
                   $("#bust").hide();
                   $("#hip").hide();
-                  $("#outseam").hide();
+                  $("#outseam").show();
                   $("#thigh").hide();
                   $("#sizechart_target option[value='Dress']").remove();
                 }
@@ -44,7 +44,7 @@
 	 
             var selectVal = $('#sizechart_gender').val();
             var selectValtarget = $('#sizechart_target').val();              
-            if(selectValtarget=='Top' && selectVal=='F')
+            if(selectValtarget=='Top' && selectVal=='F' ||  selectVal=='f' )
                 {
                   $("#waist").show();
                   $("#bust").show();
@@ -57,7 +57,7 @@
                   $("#chest").hide();
                   $("#thigh").hide();
                 }
-            if(selectValtarget=='Bottom'&& selectVal=='F')
+            if(selectValtarget=='Bottom' && selectVal=='F'  || selectVal=='f')
                 {
                   $("#waist").show();
                   $("#hip").show();
@@ -67,11 +67,11 @@
                   $("#bust").hide();
                   $("#sleeve").hide();                  
                   $("#neck").hide();
-                  $("#outseam").hide();
+                  $("#outseam").show();
                   $("#chest").hide();
                   
                 }                
-              if(selectValtarget=='Dress'&& selectVal=='F')
+              if(selectValtarget=='Dress'&& selectVal=='F' || selectVal=='f')
                 {
                   $("#waist").show();
                   $("#bust").show();
@@ -84,7 +84,7 @@
                   $("#chest").hide();
                   $("#thigh").hide();
                 }  
-              if(selectValtarget=='Top' && selectVal=='M')
+              if(selectValtarget=='Top' && selectVal=='M' || selectVal=='m')
                 {
                   $("#neck").show();
                   $("#sleeve").show();
@@ -97,7 +97,7 @@
                   $("#outseam").hide();
                   $("#thigh").hide();
                 }
-            if(selectValtarget=='Bottom'&& selectVal=='M')
+            if(selectValtarget=='Bottom'&& selectVal=='M' || selectVal=='m')
                 {
                   $("#waist").show();
                   $("#inseam").show();
@@ -106,12 +106,12 @@
                   $("#bust").hide();
                   $("#sleeve").hide();                  
                   $("#neck").hide();
-                  $("#outseam").hide();
+                  $("#outseam").show();
                   $("#chest").hide();
                   $("#thigh").hide();
                   $("#sizechart_target option[value='Dress']").remove();
                 }                
-              if(selectValtarget=='Dress'&& selectVal=='M')
+              if(selectValtarget=='Dress'&& selectVal=='M' || selectVal=='m')
                 {
                   $("#waist").hide();
                   $("#bust").hide();
