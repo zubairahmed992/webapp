@@ -2958,13 +2958,13 @@ padding-bottom: 0px;
 
 
 
-div.play_area_hldr div.action_buts_bar {
-    position:absolute;
-    left:498px;
-    top:22px;
-    width:366px;
-    height:30px;
+div.play_area_hldr div.action_buts_bar {   
+   
+    margin: 0 auto;
+   
+    width: 65px;
     display:none;
+    position: relative;
 }
 
 #nopage{
@@ -3040,34 +3040,34 @@ div.play_area_hldr div.action_buts_bar {
  }
  
  div.play_area_hldr div.action_buts_bar {
-    position:absolute;
-    left:498px;
-    top:22pxpx;
-    width:366px;
-    height:30px;
+    
+    
+   
     display:none;
 }
 
 .action_buts_bar .img_acw {
     width:24px;
     height:25px;
-    float:right;
+    float:left;
     background: url("../images/anticlock_rotation_icon.png") no-repeat scroll 0 0 transparent;
     margin-left: 4px;
 }
 .action_buts_bar .img_cw {
     width:24px;
     height:25px;
-    float:right;
+    float:left;
     background: url("../images/clockwise_rotation_icon.png") no-repeat scroll 0 0 transparent;
     margin-left: 4px;
 }
-.action_buts_bar .rotate_label {
-    float:right;
+.action_buts_bar .rotate_label {    
     font-size: 13px;
-    display: block;
-    padding-top:4px;
+    display: block;   
     color:#666;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    text-align: center;
 }
 
 #slider1{    
@@ -3136,4 +3136,57 @@ div.play_area_hldr div.action_buts_bar {
     text-align: center; 
     padding-top: 60px; 
     color:#999;
+}
+
+#rotate_move_box{
+    width:90px;
+    background: url("../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
+    position: absolute;
+    top: 50px;
+    left:864px;
+    height: 190px;
+    padding: 0px 0px 20px 10px;
+}
+
+
+.action_buts_bar .top_move {
+    width:24px;
+    height:24px;    
+    background: url("../images/move_top_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:22px;
+    left: 15px;
+}
+.action_buts_bar .left_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_left_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:46px;
+    left: 0px;
+}
+
+.action_buts_bar .right_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_right_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:46px;
+    left: 30px;
+}
+
+.action_buts_bar .bottom_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_bottom_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:70px;
+    left: 15px;
 }
