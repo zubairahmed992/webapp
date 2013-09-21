@@ -165,6 +165,11 @@ user_back = user_back * 8 / 4 * 3;
  
  
        //Slider Scale Photo
+       
+       //set_zoom_slider();
+
+function set_zoom_slider() {
+  
   var photo_width = $("#img_to_upload").width();
   var photo_height = $("#img_to_upload").height();
   var used = 0;
@@ -198,6 +203,10 @@ user_back = user_back * 8 / 4 * 3;
   }	
   });
     
+
+}
+    
+    
 $( "#slider_result_photo" ).change(function (){
   
   $("#slider_scale_photo").slider("value", $( "#slider_result_photo" ).attr("value") );
@@ -216,7 +225,51 @@ function chk_overall(){
             }
         }
 
+
+//---------- Image reload and edit postion --------//
+
+
+function load_set_pre_img(){
+
+$("body").addClass("remove_bg");
+$('#uploaded_photo').html("<img id='img_to_upload' src='"+croped_img_path+"' class='preview pre_uploaded' width='364' height='505'>");
+$("#play_area").removeClass("hide");
+$(".int_fitting_room").addClass("hide");
+$(".upload_again_hldr").css("display","block");
+$(".action_buts_bar").fadeIn(500);
+$("#dummy_mark").addClass("put_me_top");
+set_zoom_slider();
+set_things();
+}
+
+
+//////////////////////////////////////////////////////
+
+
+var croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
+
+//alert(croped_img_path);
+
+if(croped_img_path){
+    
+    
+    load_set_pre_img();
+
+ 
+    
+    
+    //$( "#foo" ).trigger( "click" );
+//    $("#user_file").trigger( "click" );
+   // alert("Editing");
+    //load_set_pre_img();
+}else{
+    alert("New");
+}
+
+
 function call_settings(responseText, statusText, xhr, $form){
+    
+    //alert("ResponseText:" + responseText);
       //var wwwe = document.getElementById('img_to_upload').width;
         //var hhhe = document.getElementById('img_to_upload').height;
         
@@ -262,6 +315,10 @@ function call_settings(responseText, statusText, xhr, $form){
 
     $('#user_file').live('change', function()
     { 
+        $('#uploaded_photo').html("");
+        
+        set_zoom_slider();
+        
         $("body").addClass("remove_bg");
         var photo_file_name = $("#user_file").val();
         $("#inp_txt_file_name").val(photo_file_name);
