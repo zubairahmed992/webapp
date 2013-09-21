@@ -327,7 +327,7 @@ if(croped_img_path){
    // alert("Editing");
     //load_set_pre_img();
 }else{
-    alert("New");
+    //alert("New");
 }
 
 
