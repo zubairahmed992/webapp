@@ -281,6 +281,7 @@ set_zoom_slider_edit();
 set_things();
 $(".zoom_in").hide();
 $(".zoom_edit").fadeIn(500, function(){$(".zoom_edit").removeClass("hide");})
+$(".input_file_hldr").hide();
 }
 
 
