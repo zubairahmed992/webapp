@@ -355,14 +355,14 @@ function next_button_click()
     var hd_flag=document.getElementById("hdn_skip_flag").value;
     
     if (hd_flag=='skip'){
-        go_to_index();
+        //go_to_index();
     }else{
         $(".step_4 .reg_next_step").attr("value","Uploading...");
         shift_to_canvas ();
         
         var act= $("#frmUserMeasurement").attr('action');
         $("#frmUserMeasurement").ajaxSubmit({url: act, type: 'post'})
-        setTimeout(go_to_index,'3000');
+        setTimeout(go_to_index,'6000');
     }
     
 }
@@ -407,7 +407,6 @@ function shift_to_canvas (rotate_deg, x1, y1){
         
  
         setTimeout('post_content_of_canvas()','600');
-        setTimeout('go_to_index()','200');
     };
     imageObj.src = img.src;
 	  
