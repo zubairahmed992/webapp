@@ -798,6 +798,20 @@ a.but_short:visited {
     width: 280px;
 }
 
+.zoom_edit label {
+    width:100px;
+    padding:0 0 2px 8px;
+}
+
+.zoom_edit .slider_wrap {
+    width: 302px;
+    height:26px;
+}
+.zoom_edit .main_slider {
+    width: 280px;
+}
+
+
 
 .step_4 .btm_buttons {
     bottom: -36px;
