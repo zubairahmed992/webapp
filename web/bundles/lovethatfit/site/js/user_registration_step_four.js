@@ -1,6 +1,28 @@
 
 $(document).ready(function() { 
 
+$(".left_move").click(function(){
+    $("#uploaded_photo").css({left: '-=' + 1});
+});
+$(".top_move").click(function(){
+    $("#uploaded_photo").css({top: '-=' + 1});
+});
+$(".bottom_move").click(function(){
+    $("#uploaded_photo").css({top: '+=' + 1});
+});
+$(".right_move").click(function(){
+    $("#uploaded_photo").css({left: '+=' + 1});
+});
+
+function move_left(){
+    
+}
+
+
+
+
+
+
 var req_deg = 0;
 function rotate_me_to(rotate_side){
     
