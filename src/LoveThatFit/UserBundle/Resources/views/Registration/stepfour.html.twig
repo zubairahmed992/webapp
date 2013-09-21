@@ -60,6 +60,19 @@
                             <div id="slider_scale_photo" class="main_slider"></div>
                             
                             <!--/.slider_wrap--></div></div>
+                    
+               
+                    
+                    <div class="frm_ele zoom_edit hide">
+                        <label>Zoom In/Out</label>
+                        <div class="slider_wrap">
+                            <input id="slider_result_photo_edit" class="slider_result short_inp hide" type="number" value="100" />
+                            <div id="slider_scale_photo_edit" class="main_slider"></div>
+                            
+                            <!--/.slider_wrap--></div></div>
+        
+                    
+                    
                     <div class="clr_bth"></div>
                         <canvas id="cnv_img_crop" width="364" height="505" class="cnv_img_crop_style"></canvas>
 
@@ -99,6 +112,25 @@
 {% block reg_fitting_room %}
         <section>
     
+            <style>
+                    #load_current_pic {
+                        position: absolute;
+                        top:100px;
+                        left: 550px;
+                        background: #fff;
+                        padding:22px;
+                        border:1px solid #444;
+                    }
+                    #load_current_pic a,
+                    #load_current_pic a:visited {
+                        color:darkgreen;
+                        font-size: 20px;
+                    }
+            </style>
+            
+            <div id="load_current_pic" class="hide">
+                <a id="load_current_pic_clicked" href="#">Load Current Photo</a>
+            </div>
                     <div class="play_area_hldr">
                         
                         

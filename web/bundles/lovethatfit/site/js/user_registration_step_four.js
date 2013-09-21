@@ -168,8 +168,7 @@ user_back = user_back * 8 / 4 * 3;
        
        //set_zoom_slider();
 
-function set_zoom_slider() {
-  
+
   var photo_width = $("#img_to_upload").width();
   var photo_height = $("#img_to_upload").height();
   var used = 0;
@@ -204,7 +203,42 @@ function set_zoom_slider() {
   });
     
 
+function set_zoom_slider_edit(){
+    
+  var photo_width_edit = 364;
+  var photo_height_edit = 505;
+  var used_edit = 0;
+    
+    $("#slider_scale_photo_edit").slider({ animate: true, range: "min", value: 100, min: 1, max: 200, step: 0.01, 
+  slide: function( event, ui ) {
+	  $( "#slider_result_photo_edit" ).attr('value' , ui.value);
+	  
+	   if(used_edit == 0)
+	   {
+		photo_width_edit = $("#img_to_upload").width();
+		used_edit = 1;
+	   }
+	  
+	  $("#img_to_upload").width(photo_width_edit / 100 * ui.value);
+	  $("#img_to_upload").height(photo_height_edit / 100 * ui.value);
+  },
+  change: function(event, ui) {
+       $( "#slider_result_photo_edit" ).attr('value' , ui.value);
+	  
+	   if(used_edit == 0)
+	   {
+		   photo_width_edit = $("#img_to_upload").width();
+		   used_edit = 1;
+	   }
+	  
+	  $("#img_to_upload").width(photo_width_edit / 100 * ui.value);
+	  $("#img_to_upload").height(photo_height_edit / 100 * ui.value);
+  //$('#hdn_photo').attr('value', ui.value);
+  $( "#slider_result_photo_edit" ).attr('value' , ui.value);
+  }	
+  });
 }
+
     
     
 $( "#slider_result_photo" ).change(function (){
@@ -226,6 +260,11 @@ function chk_overall(){
         }
 
 
+$("#load_current_pic_clicked").click(function(){
+    load_set_pre_img();
+});
+
+
 //---------- Image reload and edit postion --------//
 
 
@@ -238,8 +277,10 @@ $(".int_fitting_room").addClass("hide");
 $(".upload_again_hldr").css("display","block");
 $(".action_buts_bar").fadeIn(500);
 $("#dummy_mark").addClass("put_me_top");
-set_zoom_slider();
+set_zoom_slider_edit();
 set_things();
+$(".zoom_in").hide();
+$(".zoom_edit").fadeIn(500, function(){$(".zoom_edit").removeClass("hide");})
 }
 
 
@@ -253,9 +294,9 @@ var croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 if(croped_img_path){
     
     
-    load_set_pre_img();
+    //load_set_pre_img();
 
- 
+    $("#load_current_pic").removeClass("hide");
     
     
     //$( "#foo" ).trigger( "click" );
@@ -265,6 +306,8 @@ if(croped_img_path){
 }else{
     alert("New");
 }
+
+
 
 
 function call_settings(responseText, statusText, xhr, $form){
@@ -305,7 +348,9 @@ function call_settings(responseText, statusText, xhr, $form){
         
         $(".reg_next_step2").css("display","block");
         $(".uploading_in_progress").fadeOut(300).remove();
+        
         $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
+        
         $(".step_4_tip").fadeIn(50);
         $(".reg_next_step2").attr("value","Save Photo");
         document.getElementById("hdn_skip_flag").value="process";
@@ -315,9 +360,6 @@ function call_settings(responseText, statusText, xhr, $form){
 
     $('#user_file').live('change', function()
     { 
-        $('#uploaded_photo').html("");
-        
-        set_zoom_slider();
         
         $("body").addClass("remove_bg");
         var photo_file_name = $("#user_file").val();
