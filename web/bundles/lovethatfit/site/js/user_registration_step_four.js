@@ -19,7 +19,7 @@ if(rotate_side == "cw"){
      '-ms-transform':'rotate(' + req_deg + 'deg)',
      'transform':'rotate(' + req_deg + 'deg)'
     });
-    $('#uploaded_photo').css({left: 364/2 - $('#img_to_upload').width()/2,top: 505/2 - $('#img_to_upload').height()/2});
+    //$('#uploaded_photo').css({left: 364/2 - $('#img_to_upload').width()/2,top: 505/2 - $('#img_to_upload').height()/2});
 }
 if(rotate_side == "just_shift"){
     //alert("This is the degree you know:" + req_deg);
