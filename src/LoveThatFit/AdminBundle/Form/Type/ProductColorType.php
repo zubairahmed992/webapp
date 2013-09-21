@@ -11,8 +11,7 @@ class ProductColorType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $sizes = array('xxs:0'=>'xxs:0','xs:1'=>'xs:1', 'xs:2'=>'xs:2', 's:4'=>'s:4', 's:6'=>'s:6', 'm:8'=>'m:8', '
-m:10'=>'m:10', 'l:12'=>'l:12', 'l:14'=>'l:14', 'xl:16'=>'xl:16', 'xl:18'=>'xl:18', 'xxl:20'=>'xxl:20', 'xxl:22'=>'xxl:22', 'xxl:24'=>'xxl:24', 'xxl:26'=>'xxl:26', 'xxl:28'=>'xxl:28');
+        $sizes = array('0'=>'0 (XXS)', '1'=>'1 (XS)', '2'=>'2 (XS)', '4'=>'4 (S)', '6'=>'6 (S)', '8'=>'8 (M)', '10'=>'10 (M)', '12'=>'12 (L)','14'=>'14 (L)','16'=>'16 (XL)','18'=>'18 (XL)','20'=>'20 (XXL)');
         $displayProductColor=array('Yes'=>'Yes');
         $builder->add('title');
         $builder->add('tempImage','hidden');

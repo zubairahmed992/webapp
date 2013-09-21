@@ -22,8 +22,8 @@ products:
                         pattern: 52330d6e87fb7.png
                         default: false
                 product_sizes:
-                    "xs:2":
-                        title: 'xs:2'
+                    2:
+                        title: '2'
                         inseam_min: null
                         inseam_max: null
                         hip_min: 34
@@ -32,8 +32,8 @@ products:
                         waist_max: 34
                         bust_min: 29
                         bust_max: 32
-                    "s:4":
-                        title: 's:4'
+                    4:
+                        title: '4'
                         inseam_min: null
                         inseam_max: null
                         hip_min: 40
@@ -42,8 +42,8 @@ products:
                         waist_max: 38
                         bust_min: 34
                         bust_max: 35
-                    "m:8":
-                        title: 'm:8'
+                    8:
+                        title: '8'
                         inseam_min: null
                         inseam_max: null
                         hip_min: 44
@@ -52,8 +52,8 @@ products:
                         waist_max: 42
                         bust_min: 36
                         bust_max: 38
-                    "l:12":
-                        title: 'l:12'
+                    12:
+                        title: '12'
                         inseam_min: null
                         inseam_max: null
                         hip_min: 46
@@ -64,54 +64,54 @@ products:
                         bust_max: 40
                 product_item:
                     'Grey Maxi':
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'Grey Maxi'
                             image: 5236f41945ade.png
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'Grey Maxi'
                             image: 5236f420ad1fd.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'Grey Maxi'
                             image: 5236f427c9ea0.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'Grey Maxi'
                             image: 5236f42fa85dd.png
                     'Black Maxi':
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'Black Maxi'
                             image: 5236eee84e33b.png
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'Black Maxi'
                             image: 5236eef6c71ff.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'Black Maxi'
                             image: 5236eefd7407d.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'Black Maxi'
                             image: 5236ef178ddb7.png
                     'Brown Maxi':
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'Brown Maxi'
                             image: 5236fb25c29e9.png
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'Brown Maxi'
                             image: 5236fb3e6f417.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'Brown Maxi'
                             image: 5236fb46e2de2.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'Brown Maxi'
                             image: 5236fb4e06181.png
             'Silk Pocket Shirt':
@@ -135,8 +135,8 @@ products:
                         pattern: 52331bf7e9247.png
                         default: false
                 product_sizes:
-                    "xs:2":
-                        title: 'xs:2'
+                    2:
+                        title: '2'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -145,8 +145,8 @@ products:
                         waist_max: 40.5
                         bust_min: 35
                         bust_max: 36.5
-                    "m:8":
-                        title: 'm:8'
+                    8:
+                        title: '8'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -155,8 +155,8 @@ products:
                         waist_max: 44
                         bust_min: 39
                         bust_max: 42.5
-                    "l:12":
-                        title: 'l:12'
+                    12:
+                        title: '12'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -165,8 +165,8 @@ products:
                         waist_max: 46.5
                         bust_min: 43
                         bust_max: 45
-                    "s:4":
-                        title: 's:4'
+                    4:
+                        title: '4'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -175,8 +175,8 @@ products:
                         waist_max: 43
                         bust_min: 37.5
                         bust_max: 38.5
-                    "xl:16":
-                        title: 'xl:16'
+                    16:
+                        title: '16'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -187,62 +187,62 @@ products:
                         bust_max: 48.5
                 product_item:
                     'Silk Pocket Shirt':
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'Silk Pocket Shirt'
                             image: 5236f88dc68d7.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'Silk Pocket Shirt'
                             image: 5236f888c1148.png
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'Silk Pocket Shirt'
                             image: 5236f88296d55.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'Silk Pocket Shirt'
                             image: 5236f8779a70a.png
                     'yellow orange':
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'yellow orange'
                             image: 5236f260ec752.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'yellow orange'
                             image: 5236f278835e6.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'yellow orange'
                             image: 5236f2862b76b.png
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'yellow orange'
                             image: 5236f26e3163a.png
-                        "l:14":
-                            size_title: 'l:14'
+                        16:
+                            size_title: '16'
                             product_color_title: 'yellow orange'
                             image: 5236f29193efa.png
                     'shirt dress':
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'shirt dress'
                             image: 5236f5dc5b372.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'shirt dress'
                             image: 5236f5ed564a6.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'shirt dress'
                             image: 5236f5f4ee554.png
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'shirt dress'
                             image: 5236f5e279e84.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'shirt dress'
                             image: 5236f5fecc00b.png
         shirts:
@@ -267,8 +267,8 @@ products:
                         pattern: 523317f74d030.png
                         default: false
                 product_sizes:
-                    "s:4":
-                        title: 's:4'
+                    4:
+                        title: '4'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -277,8 +277,8 @@ products:
                         waist_max: 32
                         bust_min: 33
                         bust_max: 35
-                    "m:8":
-                        title: 'm:8'
+                    8:
+                        title: '8'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -287,8 +287,8 @@ products:
                         waist_max: 35
                         bust_min: 34
                         bust_max: 36
-                    "l:12":
-                        title: 'l:12'
+                    12:
+                        title: '12'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -297,8 +297,8 @@ products:
                         waist_max: 37.5
                         bust_min: 38
                         bust_max: 40
-                    "m:10":
-                        title: 'm:10'
+                    10:
+                        title: '10'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -307,8 +307,8 @@ products:
                         waist_max: 35
                         bust_min: 34
                         bust_max: 36
-                    "s:6":
-                        title: 's:6'
+                    6:
+                        title: '6'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -317,8 +317,8 @@ products:
                         waist_max: 32
                         bust_min: 33
                         bust_max: 35
-                    "l:14":
-                        title: 'l:14'
+                    14:
+                        title: '14'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -327,8 +327,8 @@ products:
                         waist_max: 37.5
                         bust_min: 38
                         bust_max: 40
-                    "xl:16":
-                        title: 'xl:16'
+                    16:
+                        title: '16'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -337,8 +337,8 @@ products:
                         waist_max: 41.5
                         bust_min: 39
                         bust_max: 41
-                    "xl:18":
-                        title: 'xl:18'
+                    18:
+                        title: '18'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -347,8 +347,8 @@ products:
                         waist_max: 41.5
                         bust_min: 39.5
                         bust_max: 41.5
-                    "xs:2":
-                        title: 'xs:2'
+                    2:
+                        title: '2'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -359,54 +359,54 @@ products:
                         bust_max: null
                 product_item:
                     pink:
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: pink
                             image: 5236fdb0f1255.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: pink
                             image: 5236fdb99b238.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: pink
                             image: 5236fdce01319.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: pink
                             image: 5236fdda4a56e.png
                     orange:
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: orange
                             image: 5236f4df6ebbe.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: orange
                             image: 5236f4e9161b1.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: orange
                             image: 5236f4f0288f5.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: orange
                             image: 5236f4d49d0cf.png
                     Red:
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: Red
                             image: 5236fe995e352.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: Red
                             image: 5236fea1302de.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: Red
                             image: 5236feae1b244.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: Red
                             image: 5236fe8e03c0b.png
             'Pink Sweater':
@@ -430,8 +430,8 @@ products:
                         pattern: 52331da4db66f.png
                         default: false
                 product_sizes:
-                    "s:4":
-                        title: 's:4'
+                    4:
+                        title: '4'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -440,8 +440,8 @@ products:
                         waist_max: 34.5
                         bust_min: 32
                         bust_max: 36
-                    "l:12":
-                        title: 'l:12'
+                    12:
+                        title: '12'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -450,8 +450,8 @@ products:
                         waist_max: 40
                         bust_min: 36
                         bust_max: 40
-                    "m:8":
-                        title: 'm:8'
+                    8:
+                        title: '8'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -460,8 +460,8 @@ products:
                         waist_max: 36.5
                         bust_min: 36.5
                         bust_max: 37.5
-                    "xl:16":
-                        title: 'xl:16'
+                    16:
+                        title: '16'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -472,54 +472,54 @@ products:
                         bust_max: 43
                 product_item:
                     'Pink Sweater':
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'Pink Sweater'
                             image: 5236fb277f819.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'Pink Sweater'
                             image: 5236fbad6f5ab.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'Pink Sweater'
                             image: 5236fb30e1169.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'Pink Sweater'
                             image: 5236fb59148aa.png
                     'med pink sweater':
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'med pink sweater'
                             image: 5236f547b1c3c.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'med pink sweater'
                             image: 5236f557ad3f3.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'med pink sweater'
                             image: 5236f55160117.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'med pink sweater'
                             image: 5236f562f22dc.png
                     'yellow cammel':
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'yellow cammel'
                             image: 5236f079056e5.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'yellow cammel'
                             image: 5236f08dc0e6a.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'yellow cammel'
                             image: 5236f084b195b.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'yellow cammel'
                             image: 5236f0abd02fe.png
             'Button-up Tailored Shirt':
@@ -543,8 +543,8 @@ products:
                         pattern: 52331cd0af224.png
                         default: false
                 product_sizes:
-                    "s:4":
-                        title: 's:4'
+                    4:
+                        title: '4'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -553,8 +553,8 @@ products:
                         waist_max: 36.5
                         bust_min: 37.5
                         bust_max: 38.5
-                    "m:8":
-                        title: 'm:8'
+                    8:
+                        title: '8'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -563,8 +563,8 @@ products:
                         waist_max: 38.5
                         bust_min: 39
                         bust_max: 40.5
-                    "l:12":
-                        title: 'l:12'
+                    12:
+                        title: '12'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -573,8 +573,8 @@ products:
                         waist_max: 42
                         bust_min: 41
                         bust_max: 44
-                    "s:6":
-                        title: 's:6'
+                    6:
+                        title: '6'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -583,8 +583,8 @@ products:
                         waist_max: 36.5
                         bust_min: 37.5
                         bust_max: 38.5
-                    "xl:16":
-                        title: 'xl:16'
+                    16:
+                        title: '16'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -593,8 +593,8 @@ products:
                         waist_max: 46.5
                         bust_min: 45
                         bust_max: 48.5
-                    "xs:2":
-                        title: 'xs:2'
+                    2:
+                        title: '2'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -605,62 +605,62 @@ products:
                         bust_max: null
                 product_item:
                     'Grey BlueButton-up Tailored Shirt':
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'Grey BlueButton-up Tailored Shirt'
                             image: 5236f997b94fe.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'Grey BlueButton-up Tailored Shirt'
                             image: 5236f99e48939.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'Grey BlueButton-up Tailored Shirt'
                             image: 5236f9a645855.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'Grey BlueButton-up Tailored Shirt'
                             image: 5236f9acb48ae.png
                     'med tailored shirt':
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'med tailored shirt'
                             image: 5236f595c4c8b.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'med tailored shirt'
                             image: 5236f59d84dde.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'med tailored shirt'
                             image: 5236f5a3c798c.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'med tailored shirt'
                             image: 5236f5ae125e6.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'med tailored shirt'
                             image: 5236f5903cb8a.png
                     'magenta blue':
-                        "s:4":
-                            size_title: 's:4'
+                        4:
+                            size_title: '4'
                             product_color_title: 'magenta blue'
                             image: 5236f20cb432e.png
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'magenta blue'
                             image: 5236f2162369d.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'magenta blue'
                             image: 5236f21fdc985.png
-                        "xl:16":
-                            size_title: 'xl:16'
+                        16:
+                            size_title: '16'
                             product_color_title: 'magenta blue'
                             image: 5236f22df390e.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'magenta blue'
                             image: 5236f1e110701.png
         pants:
@@ -685,8 +685,8 @@ products:
                         pattern: 5233137ad5e38.png
                         default: false
                 product_sizes:
-                    "m:8":
-                        title: 'm:8'
+                    8:
+                        title: '8'
                         inseam_min: 26.5
                         inseam_max: 28
                         hip_min: 39
@@ -695,8 +695,8 @@ products:
                         waist_max: 36.5
                         bust_min: null
                         bust_max: null
-                    "xxs:0":
-                        title: 'xxs:0'
+                    0:
+                        title: '0'
                         inseam_min: 26
                         inseam_max: 28
                         hip_min: 34
@@ -705,8 +705,8 @@ products:
                         waist_max: 32
                         bust_min: null
                         bust_max: null
-                    "xs:2":
-                        title: 'xs:2'
+                    2:
+                        title: '2'
                         inseam_min: 26
                         inseam_max: 27
                         hip_min: 36.5
@@ -715,8 +715,8 @@ products:
                         waist_max: 33
                         bust_min: null
                         bust_max: null
-                    "s:6":
-                        title: 's:6'
+                    6:
+                        title: '6'
                         inseam_min: 26
                         inseam_max: 28
                         hip_min: 37.5
@@ -725,8 +725,8 @@ products:
                         waist_max: 35
                         bust_min: null
                         bust_max: null
-                    "m:10":
-                        title: 'm:10'
+                    10:
+                        title: '10'
                         inseam_min: 27
                         inseam_max: 29
                         hip_min: 41.5
@@ -735,8 +735,8 @@ products:
                         waist_max: 38
                         bust_min: null
                         bust_max: null
-                    "l:12":
-                        title: 'l:12'
+                    12:
+                        title: '12'
                         inseam_min: null
                         inseam_max: null
                         hip_min: null
@@ -747,61 +747,61 @@ products:
                         bust_max: null
                 product_item:
                     'Red  Pant':
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: 'Red  Pant'
                             image: 5236f76f9e9f3.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: 'Red  Pant'
                             image: 5236f75ddec9f.png
-                        "s:6":
-                            size_title: 's:6'
+                        6:
+                            size_title: '6'
                             product_color_title: 'Red  Pant'
                             image: 5236f765a212b.png
-                        "m:10":
-                            size_title: 'm:10'
+                        10:
+                            size_title: '10'
                             product_color_title: 'Red  Pant'
                             image: 5236f77f7d0d3.png
-                        "l:12":
-                            size_title: 'l:12'
+                        12:
+                            size_title: '12'
                             product_color_title: 'Red  Pant'
                             image: 5236f789bacb0.png
                     Pink:
-                        "m:8":
-                            size_title: 'm:8'
+                        8:
+                            size_title: '8'
                             product_color_title: Pink
                             image: 5236f65df281c.png
-                        "xxs:0":
-                            size_title: 'xxs:0'
+                        0:
+                            size_title: '0'
                             product_color_title: Pink
                             image: 5236f62c2de4c.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: Pink
                             image: 5236f6358e89a.png
-                        "s:6":
-                            size_title: 's:6'
+                        6:
+                            size_title: '6'
                             product_color_title: Pink
                             image: 5236f644726d0.png
-                        "m:10":
-                            size_title: 'm:10'
+                        10:
+                            size_title: '10'
                             product_color_title: Pink
                             image: 5236f652e45f2.png
                     orange:
-                        "xxs:0":
-                            size_title: 'xxs:0'
+                        0:
+                            size_title: '0'
                             product_color_title: orange
                             image: 5236ec67809f6.png
-                        "xs:2":
-                            size_title: 'xs:2'
+                        2:
+                            size_title: '2'
                             product_color_title: orange
                             image: 5236ec78532d8.png
-                        "s:6":
-                            size_title: 's:6'
+                        6:
+                            size_title: '6'
                             product_color_title: orange
                             image: 5236ec84b82f6.png
-                        "m:10":
-                            size_title: 'm:10'
+                        10:
+                            size_title: '10'
                             product_color_title: orange
                             image: 5236ec911a312.png
