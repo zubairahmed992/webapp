@@ -248,8 +248,69 @@ class ProductColor {
             //changed due to issue in size selection
         }
         asort($size_titles);
-        return $size_titles;
+        //$new_titles =$size_titles;
+        $new_titles = $this->setSizeTitles($size_titles);
+        return $new_titles;
     }
+public function setSizeTitles($sizes)
+{ $new_sizes=array();
+    $new_key='';
+    foreach ($sizes as $key => $value) {
+        switch ($value){
+            case "0":
+                $new_key="XXS : ".$value;
+                break;
+            case "1":
+                $new_key="XS : ".$value;
+                break;
+            case "2":
+                $new_key="XS : ".$value;
+                break;
+            case "4":
+                $new_key="S : ".$value;
+                break;
+            case "6":
+                $new_key="S : ".$value;
+                break;
+            case "8":
+                $new_key="M : ".$value;
+                break;
+            case "10":
+                $new_key="M : ".$value;
+                break;
+            case "12":
+                $new_key="L : ".$value;
+                break;
+            case "14":
+                $new_key="L : ".$value;
+                break;
+            case "16":
+                $new_key="XL : ".$value;
+                break;
+            case "18":
+                $new_key="XL : ".$value;
+                break;
+            case "20":
+                $new_key="XXL : ".$value;
+                break;
+            case "22":
+                $new_key="XXL : ".$value;
+                break;
+            case "24":
+                $new_key="XXL : ".$value;
+                break;
+            case "26":
+                $new_key="XXL : ".$value;
+                break;
+            case "28":
+                $new_key="XXL : ".$value;
+                break;
+        }
+    
+        $new_sizes[$key]=$new_key;
+    }
+    return $new_sizes;
+}
 
 //-------------------- Product Display image -------------------------------------------    
     
