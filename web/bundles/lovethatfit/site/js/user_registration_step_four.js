@@ -19,6 +19,9 @@ if(rotate_side == "cw"){
      '-ms-transform':'rotate(' + req_deg + 'deg)',
      'transform':'rotate(' + req_deg + 'deg)'
     });
+    
+    $('#uploaded_photo').css({left: $('#play_area').width()/2 - $('#img_to_upload').width()/2, top:$('#play_area').height()/2 - $('#img_to_upload').height()/2});
+    
     //$('#uploaded_photo').css({left: 364/2 - $('#img_to_upload').width()/2,top: 505/2 - $('#img_to_upload').height()/2});
 }
 if(rotate_side == "just_shift"){
@@ -362,7 +365,7 @@ function next_button_click()
         
         var act= $("#frmUserMeasurement").attr('action');
         $("#frmUserMeasurement").ajaxSubmit({url: act, type: 'post'})
-        setTimeout(go_to_index,'6000');
+        setTimeout(go_to_index,'3000');
     }
     
 }
