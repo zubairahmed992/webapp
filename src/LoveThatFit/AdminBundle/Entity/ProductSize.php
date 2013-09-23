@@ -1121,4 +1121,9 @@ class ProductSize
     {
         return $this->thigh_max;
     }
+
+    public function getNumericSize()
+    {
+        return (int) $this->title;
+    }
 }
