@@ -303,7 +303,7 @@ set_zoom_slider_edit();
 set_things();
 $(".zoom_in").hide();
 $(".zoom_edit").fadeIn(500, function(){$(".zoom_edit").removeClass("hide");})
-$(".input_file_hldr").hide();
+//$(".input_file_hldr").hide();
 }
 
 
@@ -314,12 +314,12 @@ var croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 //alert(croped_img_path);
 
-if(croped_img_path){
+if(croped_img_path != '/webapp/web/'){
     
     
     //load_set_pre_img();
-
-    $("#load_current_pic").removeClass("hide");
+    load_set_pre_img();
+    //$("#load_current_pic").removeClass("hide");
     
     
     //$( "#foo" ).trigger( "click" );
@@ -327,7 +327,7 @@ if(croped_img_path){
    // alert("Editing");
     //load_set_pre_img();
 }else{
-    //alert("New");
+    $("#load_current_pic").addClass("hide");
 }
 
 
@@ -339,9 +339,13 @@ function call_settings(responseText, statusText, xhr, $form){
       //var wwwe = document.getElementById('img_to_upload').width;
         //var hhhe = document.getElementById('img_to_upload').height;
         
+        $(".zoom_edit").hide();
+        
    var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
         $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
-    
+        
+        
+        
         var uploaded_img_src = document.getElementById('img_to_upload');
         var uploaded_img_obj = new Image();
 	 
@@ -477,18 +481,17 @@ function go_to_index(){
     
 function next_button_click()
 {
-    var hd_flag=document.getElementById("hdn_skip_flag").value;
+    //var hd_flag=document.getElementById("hdn_skip_flag").value;
     
-    if (hd_flag=='skip'){
-        //go_to_index();
-    }else{
-        $(".step_4 .reg_next_step").attr("value","Uploading...");
+    
+        $(".reg_next_step2").attr("value","Uploading...");
+        //alert(req_deg);
         shift_to_canvas ();
         
         var act= $("#frmUserMeasurement").attr('action');
         $("#frmUserMeasurement").ajaxSubmit({url: act, type: 'post'})
-        setTimeout(go_to_index,'3000');
-    }
+        setTimeout(go_to_index,'6000');
+    
     
 }
 
@@ -531,7 +534,7 @@ function shift_to_canvas (rotate_deg, x1, y1){
         context.restore();
         
  
-        setTimeout('post_content_of_canvas()','600');
+        post_content_of_canvas();
     };
     imageObj.src = img.src;
 	  
