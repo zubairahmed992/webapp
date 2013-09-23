@@ -1,4 +1,3 @@
-
 <script language="javascript">
 
 // For Size Combox box
@@ -87,26 +86,18 @@ function lovedItems(item_id)
         });
 }
     </script>  
-   
-
-                <div class="featured_box_{{product.id}}">  
-                   
+                <div class="featured_box_{{product.id}}">
                     <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>
                     <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>
                     <span></span>
                     <span class="hidden_color_id" style="display:none;">{{productColor.id}}</span>
                     <span id="hidden_size_{{productSize.id}}" style="display:none;">{{productSize.id}}</span>
                     <span id="hidden_item_{{productItem.id}}" style="display:none;">{{productItem.id}}</span>
-    
-    
                     <div class="featured_content_selected">
                         <h3 class="selected">{{product.name}}</h3>
                         <div style="clear:both;"></div>
-                        <div class="featured_sizes">
-
-                            
+                        <div class="featured_sizes">                            
                   <select name="cloth_sizes" id="cloth_sizes"   class="cloth_sizes" onchange="select_size(this,{{product.id}},{{productColor.id}})">
-                                <option value="">Size</option>
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
                                 {% if(productSize.id==key)   %}
                                 <option value='{{key}}' selected="">{{pcsa}}</option>
@@ -118,22 +109,16 @@ function lovedItems(item_id)
                                  <select name="cloth_quantity" class="sle_clth">
                                     <option>1</option>
                                 </select>
-
                             </div>
-
                             <div class="pro_color">
-
-                                <span>                         
-
-                           {%for apc in product.productColors%}
-                                    
+                                <span>
+                           {%for apc in product.productColors%}                                    
               <span id="color_id_pattern" style="display:none;">{{apc.id}}</span>         
               <a href="javascript:void(0)"  id="a_color_id" onclick="pattern_select({{apc.id}},{{product.id}},{{productSize.id}})">
               <img width="24" height="24" src="{{asset(apc.PatternWebPath)}}" >
               </a>
                {%endfor%}
-
-                                </span>
+               </span>
                             </div>
 
                             <div id="add_cart"><a href="#">Add to Cart</a></div>
@@ -149,40 +134,20 @@ function lovedItems(item_id)
                            
                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
-                             <div class="like_icon1" style="">
-                                 
-                                 <a href="{{path('ajax_my_closet_delete',{'id': productItem.id}) }}" title="Dislike"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
-                                 
-                             
-                             </div>  
-                            
-                            {%else%}
-                             
+                             <div class="like_icon1" style="">                                 
+                                 <a href="{{path('ajax_my_closet_delete',{'id': productItem.id}) }}" title="Dislike"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>                                 
+                             </div>                           
+                            {%else%}                             
                              <div id="like_icon_{{productItem.id}}">
                               <a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
                             </div>
                               <span id="ajax_product_love_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
                             {%endif%}
-                                
-                               
                                 <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
                             {% endif %}
                         </div>
-                        
-                        
-
-
-
                         <div style="clear:both;"></div>
                         <!--<div id="pro_more_det"><!--START PRODUCT MORE DETAIL
-
-
                             </div> END PRODUCT MORE DETAIL-->   
-
                             <span></span>
                             <!--/prod_node--></div>
-
-
-
-
-    
