@@ -6285,6 +6285,10 @@ overflow:auto;
 	margin-top:62px;	
 }
 
+.btn_wrapper2{		
+        
+}
+
 .edt_container .row-fluid{
 border:0px;	
 }
@@ -6509,4 +6513,39 @@ padding:5px 0px 5px 0px;
 #form_question{
     float:left;
     margin-right: 10px;
+}
+
+#chart_figures{
+    width:360px;
+    margin: 0 auto;
+    overflow:auto;
+    border:1px solid #ccc;
+    padding: 10px;
+        
+}
+
+.btn_wrapper2 #chart_figures{
+    margin-bottom: 10px;
+    margin-top: -50px;
+}
+
+.btn_wrapper2 #chart_figures span{
+    font-weight: bold;
+    display: inline-block;
+    width: 140px;
+    font-size: 0.9em;
+}
+
+.facts{
+    width:190px;
+    float: left;
+}
+
+.facts:last-child{
+    width:170px;
+    float: left;
+}
+
+.btn_wrapper2 .btn{	
+	float:right;
 }
