@@ -36,7 +36,9 @@ admin_product_stats:
 admin_product_detail_download:
    pattern:  /admin/productdetail/{id}/download
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailDownload }
-
+admin_product_detail_zipdownlaod:     
+    pattern:  /admin/product/zip_download
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailZipDownload}
 #--------------------------- Product Color --------------       
 
 admin_product_detail_color_image_upload:

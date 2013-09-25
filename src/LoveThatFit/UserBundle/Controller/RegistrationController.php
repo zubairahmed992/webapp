@@ -127,6 +127,7 @@ class RegistrationController extends Controller {
 
         #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
         $request_array = $this->getRequest()->get('measurement');
+      
         $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
 
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
@@ -159,7 +160,30 @@ class RegistrationController extends Controller {
         }
 
         $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
+            
+        
+        #--------------Retaining Boody Type-------------------------------------#
+        
+        
+        if ($retaining_array['topSizeChartId']) {
+            $top_body_type = $size_chart_helper->find($retaining_array['topSizeChartId'])->getBodytype();
+        } else {
+            $top_body_type = Null;
+        }
 
+        if ($retaining_array['bottomSizeChartId']) {
+            $bottom_body_type = $size_chart_helper->find($retaining_array['bottomSizeChartId'])->getBodytype();
+        } else {
+            $bottom_body_type = Null;
+        }
+        
+        if ($retaining_array['dressSizeChartId']) {
+            $dress_body_type = $size_chart_helper->find($retaining_array['dressSizeChartId'])->getBodytype();
+        } else {
+            $dress_body_type = Null;
+        }
+       //return new response($retaining_array['topSizeChartId'].$top_body_type."=".$retaining_array['bottomSizeChartId'].$bottom_body_type);
+        #-----------End of Retaining BodyType----------------------------------#
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
                     'measurement' => $measurement,
@@ -170,6 +194,9 @@ class RegistrationController extends Controller {
                     'bottom_size_chart_id' => $retaining_array['bottomSizeChartId'],
                     'dress_brand_id' => $retaining_array['dress_brand_id'],
                     'dress_size_chart_id' => $retaining_array['dressSizeChartId'],
+                    'top_body_type'=>$top_body_type,
+                    'bottom_body_type'=>$bottom_body_type,
+                    'dress_body_type'=>$dress_body_type,
                 ));
     }
 
@@ -181,12 +208,11 @@ class RegistrationController extends Controller {
     public function stepFourEditAction() {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
-
         if (!$user) {
             throw $this->createNotFoundException('Unable to find User.');
         }
         $measurement = $user->getMeasurement();
-
+        
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
 

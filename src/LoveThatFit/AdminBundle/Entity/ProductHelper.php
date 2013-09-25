@@ -787,6 +787,21 @@ public function productDetail($id, $product_color_id, $product_size_id){
    $this->zipFilesAndDownload($images,$archive_file_name,$itemImages);
 }
 #------------------------------------------------------------------------------#
+public function zipMultipleDownload($data){
+
+    //foreach($data as $product_ind){
+    $product = $this->repo->find(3);
+    $images=$product->getColorImagesPaths();
+    $itemImages=$product->getItemImagesPaths();
+    $archive_file_name =$product->getName().$product->getId().'.zip';
+    //print_r($itemImages);
+   //return new response('test');
+   
+ // } 
+   $this->zipFilesAndDownload($images,$archive_file_name,$itemImages);
+//return json_encode($itemImages);
+   
+}
 // #-------------Function for dowloading images in zip format--------------------#
  public function zipFilesAndDownload($file_names,$archive_file_name,$itemImages)
     {
@@ -821,6 +836,8 @@ public function productDetail($id, $product_color_id, $product_size_id){
    return $response;
  
 }
+#------------------------------------------------------------------------------#
+
     
 
 }

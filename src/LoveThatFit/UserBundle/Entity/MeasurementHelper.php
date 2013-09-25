@@ -79,6 +79,7 @@ class MeasurementHelper {
             $retaining_array['topSizeChartId'] = $top_size_chart->getId();
             $top_brand = $top_size_chart->getBrand();
             $retaining_array['top_brand_id'] = $top_brand->getId();
+            
         } else {
             $retaining_array['top_brand_id'] = Null;
             $retaining_array['topSizeChartId'] = Null;

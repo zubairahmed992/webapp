@@ -1,6 +1,18 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-
+<script>
+   function submitForm() {
+    $.ajax(
+            {
+        type:'POST',
+        url: $('#admin_product_wizard_detail_create').text(),
+        data:$('#productwizard').serialize(),        
+        success: function(response) {
+        $('#tab2').show();
+    }});
+    return false;
+}            
+    </script>
 {% endblock %}
 {% block h1 %}Product{% endblock %}
 {% block title %}Product{% endblock %}
@@ -16,7 +28,7 @@
                         <li><a href="#tab1" data-toggle="tab">Step1</a></li>
                         <li><a href="#tab2" data-toggle="tab">Step2</a></li>
                         <li><a href="#tab3" data-toggle="tab">Step3</a></li>
-                        <li><a href="#tab4" data-toggle="tab">Sterp4</a></li>						
+                        <li><a href="#tab4" data-toggle="tab">Step4</a></li>						
                     </ul>
                 </div>
             </div>
@@ -25,156 +37,85 @@
             <div class="bar"></div>
         </div>
         <div class="tab-content">
-            <div class="tab-pane" id="tab1">
-                {% include 'LoveThatFitAdminBundle:ProductWizard:_product_entry.html.twig'%}                
-                    </div>
-                    <div class="tab-pane" id="tab2">                                                             
-                        {% include 'LoveThatFitAdminBundle:ProductWizard:_product_entry_detail.html.twig'%}
-                    </div>
-                    <div class="tab-pane" id="tab3">
-                        {% include 'LoveThatFitAdminBundle:ProductWizard:_productSizes.html.twig'%}
+            <div class="tab-pane" id="tab1">                
+               <span id="admin_product_wizard_detail_create" style="display:none;">{{path('admin_product_wizard_detail_create')}}</span>
+<form id="productwizard" onsubmit="return submitForm();">
+ {{ form_errors(form) }}
+                
+                        <div id="detail_wrapper">      
+                            <div id="p_hd">Product Detail</div>                
+                            <div class="clearfix"></div>
+                            <div id="product_content">
+                                <div id="pro_detail">
+                                    <div class="edt_container">         
+                                        <div class="row-fluid show-grid">
+                                            <div class="span3">Name</div>
+                                            <div class="span3">{{ form_widget(form.name) }}{{ form_errors(form.name) }}</div>
+                                        </div>
+                                        <div class="row-fluid show-grid">    
+                                            <div class="span3">Description</div>
+                                            <div class="span3">{{ form_widget(form.description) }}{{ form_errors(form.description) }}</div>
+                                        </div> 
 
+                                        <div class="row-fluid show-grid">    
+                                            <div class="span3">Gender</div>
+                                            <div class="span3">{{ form_widget(form.gender) }}{{ form_errors(form.gender) }}</div>
+                                        </div>      
+                                        <div class="row-fluid show-grid">
+                                            <div class="span3">Brand</div>
+                                            <div class="span3">{{ form_widget(form.Brand) }}{{ form_errors(form.Brand) }}</div>
+                                        </div>  
+                                        <div class="row-fluid show-grid">
+                                            <div class="span3">Clothing Type</div>
+                                            <div class="span3">{{ form_widget(form.ClothingType) }}{{ form_errors(form.ClothingType) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="row-fluid show-grid">
+                                            <div class="span3">Adjustment</div>
+                                            <div class="span3">{{ form_widget(form.adjustment) }}{{ form_errors(form.adjustment) }}</div>
+                                        </div>
+                                        <div class="row-fluid show-grid">
+                                            <div class="span3">Disabled</div>
+                                            <div class="span3">{{ form_widget(form.disabled) }}{{ form_errors(form.disabled) }}</div>
+                                        </div> 
+
+                                        <div class="row-fluid show-grid">
+                                            <div class="span3">&nbsp;</div>
+                                            <div class="span3">&nbsp;</div>
+                                            <div class="span3">&nbsp;</div>
+                                            <div class="span3">
+				{{ form_rest(form) }}
+                                                    <div style="margin:0px 0px 0px 0px;">                                     
+                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                    </div>                                    
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>      
+                                </div><!-- End pro_detail -->      
+                            </div>
+                        </form>             
+                    </div>
+                    <div class="tab-pane" id="tab2">                          
+                        {%if product is defined%}
+                            {{ include('LoveThatFitAdminBundle:ProductWizard:_product_entry_detail.html.twig',{'product':product})}}
+                        {%endif%}
+                        </div>
+                    <div class="tab-pane" id="tab3">
+                        
+                        {% include 'LoveThatFitAdminBundle:ProductWizard:_productSizes.html.twig'%}
                     </div>
                     <div class="tab-pane" id="tab4">
                         Product item
                         {% include 'LoveThatFitAdminBundle:ProductWizard:_productItems.html.twig' %}
-
-                    </div>
-                    <ul class="pager wizard">
+                    </div>                    
+                </div>	
+            <ul class="pager wizard">
                         <li class="previous"><a href="javascript:;">Previous</a></li>
                         <li class="next"><a href="javascript:void(0);">Next</a></li>
                     </ul>
-                </div>	
             </div> 
         </div>   
-
-        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Delete Product</h3>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to Delete this Product Color?</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <a href="{{path("admin_product_detail_color_delete",{"id":1, "color_id":1})}}"  class="btn btn-primary">Delete</a>
-
-            </div>
-        </div>  
-
-
-        <div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal1-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel1">Edit/Update Product</h3>
-            </div>
-            <div class="modal-body">
-                <p>Product Edit Form</p>
-            </div>
-            <div class="modal1-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            </div>
-        </div>  
-
-        <div id="myModal22" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal1-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel1">Edit/Update Product Size</h3>
-            </div>
-            <div class="modal-body">
-                <p>Product Size Edit Form</p>
-            </div>
-            <div class="modal1-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            </div>
-        </div>  
-        <div id="myModal33" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal1-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel1">Add New Product Color</h3>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <table width="729" border="0">
-                        <tr>
-                            <td width="147">Upload Image</td>
-                            <td width="572"><input type="file" name="uploadimage" /></td>
-                        </tr>
-                        <tr>
-                            <td>Upload Pattern Image</td>
-                            <td><input type="file" name="patternimage" /></td>
-                        </tr>
-
-                        <tr>
-                            <td>Title</td>
-                            <td><input type="text" name="title" /></td>
-                        </tr>
-
-
-                        <tr>
-                            <td>Avaliable Sizes</td>
-                            <td>
-                                <div style="display:inline !important;margin-bottom:0px !important"><input type="checkbox" value="00" name="product_color[sizes][]" id="product_color_sizes_0"><label for="product_color_sizes_0">00/XXS</label><input type="checkbox" value="0" name="product_color[sizes][]" id="product_color_sizes_1"><label for="product_color_sizes_1">0/XS</label><input type="checkbox" value="2" name="product_color[sizes][]" id="product_color_sizes_2"><label for="product_color_sizes_2">2/XS</label><input type="checkbox" value="4" name="product_color[sizes][]" id="product_color_sizes_3"><label for="product_color_sizes_3">4/S</label><input type="checkbox" value="6" name="product_color[sizes][]" id="product_color_sizes_4"><label for="product_color_sizes_4">6/S</label><input type="checkbox" value="8" name="product_color[sizes][]" id="product_color_sizes_5"><label for="product_color_sizes_5">8/M</label><input type="checkbox" value="10" name="product_color[sizes][]" id="product_color_sizes_6"><label for="product_color_sizes_6">10/M</label><input type="checkbox" value="12" name="product_color[sizes][]" id="product_color_sizes_7"><label for="product_color_sizes_7">12/L</label><input type="checkbox" value="14" name="product_color[sizes][]" id="product_color_sizes_8"><label for="product_color_sizes_8">14/L</label><input type="checkbox" value="16" name="product_color[sizes][]" id="product_color_sizes_9"><label for="product_color_sizes_9">16/XL</label><input type="checkbox" value="18" name="product_color[sizes][]" id="product_color_sizes_10"><label for="product_color_sizes_10">18/XL</label><input type="checkbox" value="20" name="product_color[sizes][]" id="product_color_sizes_11"><label for="product_color_sizes_11">20/XXL</label></div></td>
-                        </tr>
-
-                        <tr>
-                            <td>Make It Default Color</td>
-                            <td><input type="checkbox" value="1" name="product_color[displayProductColor][]" id="product_color_displayProductColor_0"></td>
-                        </tr>  
-                    </table>
-
-
-                </form>
-            </div>
-            <div class="modal1-footer">
-                <input type="submit" value="Save" class="btn"/>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            </div>
-        </div>  
-
-        <div id="myModal32" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Delete Product Size</h3>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to Delete this Product Size?</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <a href="{{path("admin_product_detail_color_delete",{"id":1, "color_id":1})}}"  class="btn btn-primary">Delete</a>
-
-            </div>
-        </div>  
-        <div id="myModal42" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal1-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel1">Edit/Update Product Item</h3>
-            </div>
-            <div class="modal-body">
-                <p>Product Size Item</p>
-            </div>
-            <div class="modal1-footer">
-                <input type="submit" value="Save" class="btn"/>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            </div>
-        </div> 
-
-        <div id="myModal52" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Delete Product Size</h3>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to Delete this Product Size?</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <a href="{{path("admin_product_detail_color_delete",{"id":1, "color_id":1})}}"  class="btn btn-primary">Delete</a>
-
-            </div>
-    
-        </div>  
 {% endblock %}
 
