@@ -689,6 +689,7 @@ header.reg .strip_rgt {
         box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
 	margin-left:8px;
 	position:relative;
+        border:1px solid #ccc;
 }
 .main_slider {
 	width:120px;
@@ -805,7 +806,7 @@ a.but_short:visited {
 
 .zoom_edit .slider_wrap {
     width: 302px;
-    height:26px;
+    height:21px;
 }
 .zoom_edit .main_slider {
     width: 280px;
@@ -843,14 +844,16 @@ a.but_short:visited {
 }
 .input_file_hldr input.input_file {
     cursor: pointer;
-    height: 32px;
+    height: 22px;
     opacity: 0;
     position: absolute;
     right: 20px;
     text-align: right;
-    top: 6px;
+    top: 10px;
     width: 280px;
     z-index: 200;
+    border:0px!important;
+    background:none;
 }
 .input_file_hldr input.input_text {
 	border: medium none;
@@ -1206,13 +1209,14 @@ input[type=email]{
 .left_column nav ul{
 	padding:0px 0px 0px 0px;
 	margin:0px 0px 0px 0px;	
-	position:relative;
+	
 }
 
 .left_column nav ul li{
 	list-style:none;
 	margin-bottom:10px;
 	margin-left:5px;
+        
 	
 }
 
@@ -2599,7 +2603,7 @@ padding-bottom: 0px;
     
     background: none repeat scroll 0 0 #FFFFFF;
     border-radius: 20px 15px 15px 20px;
-    box-shadow: -5px 1px 20px 2px #CCCCCC;
+    box-shadow: 4px 1px 20px 2px #CCCCCC;
     color: #484748;
     font-family: arial;
     font-size: 12px;
@@ -2609,12 +2613,12 @@ padding-bottom: 0px;
     display: none;
 }
 #adj_popout_top {
-    margin-top: 102px;
+    margin-top: 65px;
     top: 47px;
     left: 400px;
 }
 #adj_popout_bottom {
-    margin-top: 255px;
+    margin-top: 218px;
     top: 15px;
     left: 400px;
 }
@@ -2704,7 +2708,8 @@ padding-bottom: 0px;
 }
 
 .login_tab{
-    float:left; 
+    
+    
 }
 
 .login_tab .active{
@@ -2778,7 +2783,8 @@ padding-bottom: 0px;
     color: #535352;
     font-size: 0.80em;
     font-family: MyCustomFontb;
-    text-transform: uppercase;    
+    text-transform: uppercase; 
+    
 }
 
 .reg_active .login_tab .active{
