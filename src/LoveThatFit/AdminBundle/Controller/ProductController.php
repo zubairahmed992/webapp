@@ -748,5 +748,13 @@ class ProductController extends Controller {
     public function productDetailDownloadAction($id){
      return new Response($this->get('admin.helper.product')->zipDownload($id));
     }
+#--------------------Multiple Iamge Download as Zip----------------------------#
+    public function productDetailZipDownloadAction(Request $request)
+    {
+      
+       $data = $request->request->all();
+       return new Response($this->get('admin.helper.product')->zipMultipleDownload($data));
+       
+    }
 }
 
