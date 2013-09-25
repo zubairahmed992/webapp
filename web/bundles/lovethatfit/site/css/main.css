@@ -1800,10 +1800,10 @@ margin:0 auto;
 
 .arrow_img_alerts {
     border-bottom: 13px solid transparent;
-    border-right: 11px solid #FFFFFF;
-    border-top: 13px solid transparent;
+    border-left: 11px solid #FFFFFF;
+    border-top:13px solid transparent;
     height: 1px;
-    left: -7px;
+    left: 159px;
     position: absolute;
     top: 8px;
     width: 0;   
@@ -2611,10 +2611,12 @@ padding-bottom: 0px;
 #adj_popout_top {
     margin-top: 102px;
     top: 47px;
+    left: 400px;
 }
 #adj_popout_bottom {
-    margin-top: 246px;
+    margin-top: 255px;
     top: 15px;
+    left: 400px;
 }
 
 .how_it_works h2{
