@@ -1,48 +1,64 @@
+{%if product is defined%}
 <div>
+    <h3 style="float:left;">{{product.name }}</h3>
     <div class="clearfix"></div>   
 
 
     <div id="detail_wrapper">      
-        <div id="p_hd">Product Detail</div>
-
-        
+        <div id="p_hd">Product Detail</div>     
         
         <div id="product_info">
             <div id="pro_detail">
                 <div class="edt_container">
-                    <div>Cap Sleeved Maxi</div>
-                    <div></div>
+                    
+                    <div>{{product.description }}</div>
                     
                     
                     <div id="product_info_left">
                     <div class="product_fld">
                         <div class="p_hd">Gender</div>
-                        <div>Female</div>
+                        <div>{{product.gender }}</div>
 
                     </div>          
                     <div class="product_fld">
                         <div class="p_hd">Brand</div>
-                        <div>Love That Fi</div>
+                        <div>{{product.brand.name }}</div>
 
                     </div>          
                     <div class="product_fld">    
                         <div class="p_hd">Clothing Type</div>
-                        <div>Dress</div>                        
+                        <div>{{product.clothingType.name }}</div>                        
                     </div>
                     
                     
                      <div class="product_fld">
                         <div class="p_hd">Adjustment</div>
-                        <div>10.00</div>
+                        <div>{{product.adjustment }}</div>
                     </div>     
                         </div>
+                    {%if(product.displayProductColor!='')%}
+                    <div style="margin-left: 500px;">
+                        <img style="width: 50px; height: 100px;" src="{{ asset(product.displayProductColor.WebPath) }}" width="100" height="200"/>
+                    </div>       
+                    {%endif%}
                     
+
+
+                    <div class="btn_wrapper" style="margin-top: 0px;">     
+                        <a href="{{ path('admin_products') }}" class="btn">back</a>
+                        <a href="{{ path('admin_product_detail_edit', {'id': product.Id}) }}" class="btn">Edit</a>      
+                        <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
+                    </div>       
+
                 </div> 
             </div>      
         </div><!-- End pro_detail --> 
         
         <!-- Start OF Product Color Display --> 
-                        {% include 'LoveThatFitAdminBundle:ProductWizard:_productListSizes.html.twig'%}
+        {%if product is defined%}
+                            {{ include('LoveThatFitAdminBundle:ProductWizard:_productListSizes.html.twig',{'product':product})}}
+                    {%endif%}
+                        
         <!-- End OF Product Color Display -->  
      
 
@@ -52,3 +68,9 @@
 
 
 </div>
+{%endif%}
+
+
+
+
+

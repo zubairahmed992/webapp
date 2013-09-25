@@ -4,71 +4,63 @@ admin_product_wizard:
     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:index , page_number: 1, sort:id}       
 admin_product_wizard_detail_new:
      pattern:  /admin/product/wizard/new
-     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardNew}
-admin_product_wizard_detail_create:     
-    pattern:  /admin/product/wizard_create
-    defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardCreate}
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardNew }
+admin_product_wizard_detail_create:
+    pattern:  /admin/product/wizard/create
+    defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardCreate }
+admin_product_wizard_detail_show:     
+    pattern:  /admin/product/{id}/wizard/show
+    defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardShow }    
 
-    
-    
-admin_product_entry_wizard_detail_new:
-     pattern:  /admin/products/entry_wizard/new
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardNew }
-admin_product_entry_wizard_detail_create:
-     pattern:  /admin/products/entry_wizard/create
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardCreate }
-admin_product_entry_wizard_detail_edit:
-     pattern:  /admin/products/{id}/entry_wizard/edit
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardEdit }
-admin_product_entry_wizard_detail_update:
-     pattern:  /admin/products/{id}/entry_wizard/update
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardUpdate }
-
+admin_product_entry_wizard_color_image_upload:
+   pattern:  /admin/product/{id}/color/image_upload
+   defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productColorTemporaryImageUpload,_format: json}
+   
 admin_product_entry_wizard_colors:
      pattern:  /admin/products/{id}/entry_wizard/colors
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardColors }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardColors }
 admin_product_entry_wizard_color_new:
-     pattern:  /admin/products/{id}/entry_wizard/color/new
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardColorNew }
-admin_product_entry_wizard_color_create:
-     pattern:  /admin/products/{id}/entry_wizard/color/create
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardColorCreate }
+     pattern:  /admin/product/{id}/entry_wizard/color/new
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardColorNew }
+admin_product_wizard_color_create:
+     pattern:  /admin/products/{id}/wizard/color/create
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardColorCreate }
 admin_product_entry_wizard_color_edit:
      pattern:  /admin/products/{id}/entry_wizard/color/{color_id}/edit
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardColorEdit }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardColorEdit }
 admin_product_entry_wizard_color_update:
      pattern:  /admin/products/{id}/entry_wizard/color/{color_id}/update
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardColorUpdate }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardColorUpdate }
 
 
 admin_product_entry_wizard_sizes:
      pattern:  /admin/products/{id}/entry_wizard/sizes
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardSizes }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardSizes }
 admin_product_entry_wizard_size_new:
      pattern:  /admin/products/{id}/entry_wizard/size/new
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardSizeNew }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardSizeNew }
 admin_product_entry_wizard_size_create:
      pattern:  /admin/products/{id}/entry_wizard/size/create
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardSizeCreate }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardSizeCreate }
 admin_product_entry_wizard_size_edit:
      pattern:  /admin/products/{id}/entry_wizard/size/{size_id}/edit
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardSizeEdit }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardSizeEdit }
 admin_product_entry_wizard_size_update:
      pattern:  /admin/products/{id}/entry_wizard/size/{size_id}/update
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardSizeUpdate }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardSizeUpdate }
 
 admin_product_entry_wizard_items:
      pattern:  /admin/products/{id}/entry_wizard/items
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardItems }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardItems }
 admin_product_entry_wizard_item_new:
      pattern:  /admin/products/{id}/entry_wizard/item/{color_id}/{size_id}/new
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardItemNew }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardItemNew }
 admin_product_entry_wizard_item_create:
      pattern:  /admin/products/{id}/entry_wizard/item/{color_id}/{size_id}/create
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardItemCreate }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardItemCreate }
 admin_product_entry_wizard_item_edit:
      pattern:  /admin/products/{id}/entry_wizard/item/{item_id}/edit
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardItemEdit }
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardItemEdit }
 admin_product_entry_wizard_item_update:
      pattern:  /admin/products/{id}/entry_wizard/item/{item_id}/update
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productEntryWizardItemUpdate }    
+     defaults: { _controller: LoveThatFitAdminBundle:ProductWizard:productEntryWizardItemUpdate }    
