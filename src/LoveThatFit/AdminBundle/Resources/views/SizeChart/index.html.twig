@@ -8,17 +8,28 @@
 {% block body %}
   
 <div class="p_listing">     
-    <h1 style="float:left;">Size Chart</h1>
- <div class="btn_wrapper">
-     Total SizCharts:{{rec_count}}<br>
-     Female SizeCharts:{{femaleSizeChart}}<br>
-     Male SizeCharts:{{maleSizeChart}}<br>
-     Top SizeCharts:{{topSizeChart}}<br>
-     Bottom SizeCharts:{{bottomSizeChart}}<br>
-     Dress SizeCharts:{{dressSizeChart}}<br>
+    <h1>Size Chart</h1>
+ <div class="btn_wrapper2">
      
+     <div id="chart_figures">
+         <div class="facts">
+                    <div><span>Total SizCharts:</span>{{rec_count}}</div>
+                    <div><span>Female SizeCharts:</span>{{femaleSizeChart}}</div>
+                    <div><span>Male SizeCharts:</span>{{maleSizeChart}}</div>
+     </div>
+    
+     
+     <div class="facts">
+                <div><span>Top SizeCharts:</span>{{topSizeChart}}</div>
+                <div><span>Bottom SizeCharts:</span>{{bottomSizeChart}}</div>
+                <div><span>Dress SizeCharts:</span>{{dressSizeChart}}</div>
+     </div>
+     </div>
+    
      <a href="{{ path('admin_size_chart_new') }}" class="btn">Add New</a>
+     
       </div>
+    
      <div class="clearfix"></div> 
      
     <div class="bs-docs-grid">              
