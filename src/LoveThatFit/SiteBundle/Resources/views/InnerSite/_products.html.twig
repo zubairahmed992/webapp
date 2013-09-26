@@ -20,7 +20,7 @@
 {% if(row_count>0)%}    
 {% for p in products %}
     <li>
-        {%  set randon_item = p.displayProductColor.getRandomItem%}
+        {%  set randon_item = p.displayProductColor.getSmallestAvailableItem%}
         {% if(randon_item and randon_item!=null)%}
             <span id="apply_image_url" style="display:none;">{{asset(randon_item.WebPath)}}
         </span>    
