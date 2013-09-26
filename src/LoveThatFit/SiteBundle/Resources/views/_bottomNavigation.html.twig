@@ -1,9 +1,9 @@
-<nav class="row">
-    <ul class="with_bullet">
+<nav class="new_nav">
+    <ul>
         <li><a href="{{path('about_us')}}">about</a></li>
-        <li><a href="{{path('contact_us')}}">contact</a></li>
+        <li class="lastli"><a href="{{path('contact_us')}}">contact</a></li>
         {%if not app.user %}
-            <li><a href="{{path('registration')}}">register</a></li>
+            <li class="lastli"><a href="{{path('registration')}}">register</a></li>
         {% endif %}        
     </ul>
 </nav>

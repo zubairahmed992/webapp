@@ -3212,3 +3212,25 @@ div.play_area_hldr div.action_buts_bar {
     top:70px;
     left: 15px;
 }
+
+.new_nav ul{    
+    margin:0px;
+    padding: 0px;
+    overflow: auto;
+    display: block!important;
+    visibility: visible!important;
+}
+
+.new_nav ul li{
+    display:inline!important;
+    overflow: auto;    
+}
+
+.new_nav ul .lastli{      
+	background:url(../images/white_bullet_small.png) 1px 12px no-repeat!important;
+	padding-left:8px!important;
+	padding-top:2px!important;
+     
+}
+
+
