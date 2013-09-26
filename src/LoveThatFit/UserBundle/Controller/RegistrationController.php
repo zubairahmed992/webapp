@@ -20,6 +20,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 class RegistrationController extends Controller {
 
     public function registrationAction() {
+        
         $request = $this->getRequest();
         $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
 
@@ -27,10 +28,16 @@ class RegistrationController extends Controller {
         $url_bits = explode('/', $referer);
         $security_context['referer'] = $url_bits[sizeof($url_bits) - 1];
 
+        $routeName = $request->get('_route');
+
+
         if (array_key_exists('error', $security_context) and $security_context['error']) {
             $security_context['referer'] = "login";
         }
-
+        if($routeName=='login'){
+               $security_context['referer'] = "login"; 
+        }
+ 
         $user = $this->get('user.helper.user')->createNewUser();
         $form = $this->createForm(new RegistrationType(), $user);
 
