@@ -707,8 +707,10 @@ public function productDetail($id, $product_color_id, $product_size_id){
         $size_id = null;
 // find size id is not in param gets the first size id for this color
         if (!$product_size_id) {
-            $psize = array_shift($color_sizes_array);
-            $size_id = $psize['id'];
+            //$psize = array_shift($color_sizes_array);
+            //$size_id = $psize['id'];
+            $size_id = $product_color->getSmallestAvailableSizeId();
+            
         } else {
 // if gets the size id in params,  check if this size is available in this color, if not get the first one
             foreach ($color_sizes_array as $csa) {
@@ -718,8 +720,10 @@ public function productDetail($id, $product_color_id, $product_size_id){
             }
             if ($size_id == null) {
 // gets the first size id for this color
-                $psize =array_shift($color_sizes_array);
-                $size_id = $psize['id'];
+                //$psize =array_shift($color_sizes_array);
+                //$size_id = $psize['id'];
+            $size_id = $product_color->getSmallestAvailableSizeId();
+                
             }
         }
         $product_size_id = $size_id;
