@@ -26,16 +26,32 @@
     </script>
     <span id="admin_product_zip" style="display:none;">{{path('admin_product_detail_zipdownlaod')}}</span>
 <div class="p_listing">     
-    <h1 style="float:left;">Products</h1>
- <div class="btn_wrapper">
-     <div align="left">
-     Total Products:{{rec_count}}<br/>
-     Female Product:{{femaleProduct}}<br/>
-     Male Products:{{maleProduct}}<br/>    
+    <h1>Products</h1>
+ 
+    
+    
+    <div class="btn_wrapper2">
      
+        <div id="chart_figures" class="product_chart_figures">
+         <div class="facts">
+                    <div><span>Total Products:</span>{{rec_count}}</div>
+                    <div><span>Female Product:</span>{{femaleProduct}}</div>
+                    <div><span>Male Products:</span>{{maleProduct}}</div>
+     </div>   
+     
+    
      </div>
-    <a href="{{ path('admin_product_stats') }}" class="btn">Product Stats</a>  <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
+    
+     <a href="{{ path('admin_product_stats') }}" class="btn">Product Stats</a>  <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
+     
       </div>
+    
+    
+    
+    
+    
+    
+    
      <div class="clearfix"></div> 
      
     <div class="bs-docs-grid">              

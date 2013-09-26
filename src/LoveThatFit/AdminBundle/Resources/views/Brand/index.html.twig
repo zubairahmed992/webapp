@@ -8,11 +8,22 @@
 {% block body %}
   
 <div class="p_listing">     
-    <h1 style="float:left;">Brands</h1>
- <div class="btn_wrapper">
-    Total Brands: {{rec_count}}
+    <h1>Brands</h1>
+    
+ 
+    
+    <div class="btn_wrapper2">
+     
+     <div id="chart_figures" class="brand_chart_figures">
+         <div class="facts">
+                    <div><span>Total Brands:</span>{{rec_count}}</div>                   
+     </div>
+     </div>
+    
      <a href="{{ path('admin_brand_new') }}" class="btn">Add New</a>
+     
       </div>
+    
      <div class="clearfix"></div> 
      
     <div class="bs-docs-grid">              

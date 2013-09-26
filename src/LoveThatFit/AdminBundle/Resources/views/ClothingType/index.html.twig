@@ -8,16 +8,28 @@
 {% block body %}
   
 <div class="p_listing">     
-    <h1 style="float:left;">Clothing Types</h1>
- <div class="btn_wrapper">
- <div align="left">
-     Total:  {{rec_count}}
-     Top:   {{criteriaTop}}
-     Bottom:{{criteriaBottom}}
-     Dress:{{criteriaDress}}
-  </div>
-     <a href="{{ path('admin_clothing_type_new') }}" class="btn">Add New</a>
+    <h1>Clothing Types</h1>
+ 
+    
+    
+    <div class="btn_wrapper2">     
+        <div id="chart_figures" class="clothing_chart_figures">
+         <div class="facts">
+                    <div><span>Total:</span>{{rec_count}}</div>
+                    <div><span>Top:</span>{{criteriaTop}}</div>
+                    <div><span>Bottom:</span>{{criteriaBottom}}</div>
+                    <div><span>Dress:</span>{{criteriaDress}}</div>
+     </div>
+     </div>    
+     <a href="{{ path('admin_clothing_type_new') }}" class="btn">Add New</a>     
       </div>
+    
+    
+    
+    
+    
+    
+    
      <div class="clearfix"></div> 
     
     <div class="bs-docs-grid">              
