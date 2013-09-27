@@ -194,13 +194,19 @@ class ProductController extends Controller {
 
     public function productDetailShowAction($id) {
         $product = $this->getProduct($id);
-
+        $product_limit = count($this->get('admin.helper.product')->getRecordsCountWithCurrentProductLimit($id));
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($product_limit));
+        if($page_number==0){
+            $page_number=1;
+        }
+       
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $product
+                    'product' => $product,
+                    'page_number'=>$page_number,
         ));
     }
 

@@ -841,7 +841,11 @@ public function zipMultipleDownload($data){
  
 }
 #------------------------------------------------------------------------------#
-
+#----------------Get Count All Record With Current Product Limit---------------#
+public function getRecordsCountWithCurrentProductLimit($product_id){
+    
+    return $this->repo->getRecordsCountWithCurrentProductLimit($product_id);
+}
     
 
 }

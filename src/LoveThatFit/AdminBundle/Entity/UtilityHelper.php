@@ -32,7 +32,11 @@ class UtilityHelper {
     public function getDeviceBootstrap() {
         return $this->device_bootstrap;
     }
-
+#-------------------------------------------------------------------------------
+    public function getPageNumber($count){
+       return $count/$this->getPaginationLimit();
+        
+    }
     
 //--------------------------------------------------------------------------------
 

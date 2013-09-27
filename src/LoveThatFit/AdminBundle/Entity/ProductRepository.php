@@ -818,5 +818,13 @@ class ProductRepository extends EntityRepository {
             return null;
         }   
     }
+#------------------------------------------------------------------------------#
+    public function getRecordsCountWithCurrentProductLimit($product_id){
+        
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p')
+                    ->setMaxResults($product_id);
+                    return $query->getResult();
+        } 
     
 }
