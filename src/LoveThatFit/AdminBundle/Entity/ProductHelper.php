@@ -828,7 +828,7 @@ public function zipMultipleDownload($data){
             return "can not open";
         }
 
-        $response =new Response();
+    $response =new Response();
     //then send the headers to foce download the zip file
    $response->headers->set('Content-Type','application/zip');
    $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($archive_file_name) . '"');        
@@ -840,6 +840,7 @@ public function zipMultipleDownload($data){
    return $response;
  
 }
+
 #------------------------------------------------------------------------------#
 #----------------Get Count All Record With Current Product Limit---------------#
 public function getRecordsCountWithCurrentProductLimit($product_id){

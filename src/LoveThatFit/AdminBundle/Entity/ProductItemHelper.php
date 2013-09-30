@@ -8,6 +8,7 @@ use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\AdminBundle\Event\productcolorEvent;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 
@@ -66,4 +67,22 @@ class ProductItemHelper {
             $this->em->persist($entity);
             $this->em->flush();
     }
+    
+    #-------Raw image download functionlity-----------------------------------------#
+public function rawImageDownload($item_id){
+    
+   $entity_item = $this->repo->find($item_id);
+   $path=$entity_item->getRawImageAbsolutePath();
+    $response =new Response();
+   
+  // $response->headers->set('Content-Type','image/jpeg');
+   $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($path));        
+   $response->headers->set('Pragma', "no-cache");
+   $response->headers->set('Expires', "0");
+   $response->headers->set('Content-Transfer-Encoding', "binary");
+   $response->sendHeaders();
+   $response->setContent(readfile($path));
+   return $response;
+    
+}
 }

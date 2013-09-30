@@ -596,28 +596,7 @@ class ProductController extends Controller {
   }
 #-------------Product Raw Item Downloading ------------------------------------#
 public function productDetailItemRawImageDownloadAction(Request $request, $id, $item_id){
-    
-     $em = $this->getDoctrine()->getManager();
-        $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find($item_id);
-        if (!$entity_item) {
-            throw $this->createNotFoundException('Unable to find Product Item.');
-        }
-    $image_name=$entity_item->getRawImage();
-    $path=$entity_item->getRawImageAbsolutePath();
-    
-    $response =new Response();
-    //then send the headers to foce download the zip file
-  // $response->headers->set('Content-Type','image/jpeg');
-   $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($path));        
-   $response->headers->set('Pragma', "no-cache");
-   $response->headers->set('Expires', "0");
-   $response->headers->set('Content-Transfer-Encoding', "binary");
-   $response->sendHeaders();
-   $response->setContent(readfile($path));
-   return $response;
-   
-   
-    
+    return new response($this->get('admin.helper.productitem')->rawImageDownload($item_id));
 }
 //        
     //------------------------- Private methods ------------------------- 
