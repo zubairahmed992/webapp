@@ -217,25 +217,29 @@ class ProductItem
     //---------------------------------------------------
     
      public function upload() {
-      
             $ih = new ImageHelper('product_item', $this);
             $ih->upload(); // save & resize images 
-            
-    /*
+    }
+    //---------------------------------------------------
+    
+     public function uploadRawImage() {
          if (null === $this->file) {
             return;
         }
-      
+        if ($this->raw_image){
+            $old_image_path = $this->getRawImageWebPath();
+        }
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        
-        $this->image = uniqid() . $ext;        
+        $this->raw_image = uniqid() . $ext;        
         $this->file->move(
-                $this->getUploadRootDir(), $this->image
+                $this->getUploadRootDir(), $this->raw_image
         );
         
+        if (is_readable($old_image_path)) {
+           @unlink($old_image_path);
+       }
         $this->file = null;          
-      */  
-         
+    
     }
     //-------------------------------------------------------
     
@@ -253,29 +257,37 @@ class ProductItem
     public function getWebPath() {
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
-
- //-------------------------------------------------------
-    public function getAbsoluteRawImagePath() {
-        return null === $this->raw_image ? null : $this->getUploadRootDir() . '/' . $this->raw_image;
-    }
-//-------------------------------------------------------
-    public function getRawImageWebPath() {
-        return null === $this->raw_image ? null : $this->getUploadDir() . '/' . $this->raw_image;
-    }
-    
-    
 //-------------------------------------------------------
     protected function getUploadRootDir() {
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+        return $this->getRootDir() . $this->getUploadDir();
     }
+//-------------------------------------------------------
+    protected function getRootDir() {
+        return __DIR__ . '/../../../../web/';
+    }
+
 //-------------------------------------------------------
     protected function getUploadDir() {        
        return 'uploads/ltf/products/fitting_room/web';            
     }
 
+ //-------------------------------------------------------
+    public function getRawImageAbsolutePath() {
+        return null === $this->raw_image ? null : $this->getRootDir() . $this->getRawImageUploadDir() . '/' . $this->raw_image;
+    }
+//-------------------------------------------------------
+    public function getRawImageWebPath() {
+        return null === $this->raw_image ? null : $this->getRawImageUploadDir() . '/' . $this->raw_image;
+    }
     
+//-------------------------------------------------------
+    protected function getRawImageUploadDir() {        
+       return 'uploads/ltf/products/fitting_room/raw';            
+    }
+
+    //-------------------------------------------------------
     
-      /**
+/**
  * @ORM\PostRemove
  */
     
@@ -369,8 +381,7 @@ class ProductItem
      */
     public function setRawImage($rawImage)
     {
-        $this->raw_image = $rawImage;
-    
+        $this->raw_image = $rawImage;    
         return $this;
     }
 
