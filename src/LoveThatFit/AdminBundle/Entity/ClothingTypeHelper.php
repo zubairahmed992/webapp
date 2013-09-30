@@ -200,4 +200,10 @@ class ClothingTypeHelper {
         return $rec_count = count($this->repo->findStatisticsBy($target));
     }
 
+#-------------------------getRecordsCountWithCurrentBrandLimit------------------#
+    public function getRecordsCountWithCurrentClothingTYpeLimit($clothing_type){
+         return $this->repo->getRecordsCountWithCurrentClothingTYpeLimit($clothing_type); 
+    }
+
+    
 }

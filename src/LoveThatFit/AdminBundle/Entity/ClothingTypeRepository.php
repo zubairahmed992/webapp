@@ -174,6 +174,13 @@ param:limit, page_number,limit,sort
             return null;
         }
   }
-    
+#------------------------------------------------------------------------------#  
+  public function getRecordsCountWithCurrentClothingTYpeLimit($clothing_type){
+     $query = $this->getEntityManager()
+                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c')
+                    ->setMaxResults($clothing_type);
+                    return $query->getResult();  
+      
+  }  
 
 }

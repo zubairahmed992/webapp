@@ -22,12 +22,17 @@ class ClothingTypeController extends Controller {
 
         $specs = $this->get('admin.helper.clothingtype')->findWithSpecs($id);
         $entity = $specs['entity'];
+        $clothing_type_limit = count($this->get('admin.helper.clothingtype')->getRecordsCountWithCurrentClothingTYpeLimit($id));
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($clothing_type_limit));
+        if($page_number==0){
+            $page_number=1;
+        }
 
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
         return $this->render('LoveThatFitAdminBundle:ClothingType:show.html.twig', array(
-                    'clothing_type' => $entity
+                    'clothing_type' => $entity,'page_number'=>$page_number,
         ));
     }
 
