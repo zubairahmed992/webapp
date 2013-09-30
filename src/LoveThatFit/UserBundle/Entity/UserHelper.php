@@ -182,6 +182,11 @@ class UserHelper {
     public function findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate) {
         return $this->repo->findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate);        
     }
+    
+    public function getRecordsCountWithCurrentUserLimit($user_id){
+    
+    return $this->repo->getRecordsCountWithCurrentUserLimit($user_id);
+}
 
     private function countByGender($gender) {
         return  count($this->repo->findUserByGender($gender));        

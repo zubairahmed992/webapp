@@ -205,6 +205,15 @@ class UserRepository extends EntityRepository {
             return null;
         }
     }
+    
+    
+    public function getRecordsCountWithCurrentUserLimit($user_id){
+        
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us')
+                    ->setMaxResults($user_id);
+                    return $query->getResult();
+        } 
 
 }
 

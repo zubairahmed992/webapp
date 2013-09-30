@@ -38,11 +38,17 @@ class UserController extends Controller {
     {       
         $specs = $this->get('user.helper.user')->findWithSpecs($id);
         $entity = $specs['entity'];
+        $user_limit = count($this->get('user.helper.user')->getRecordsCountWithCurrentUserLimit($id));
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($user_limit));
+        if($page_number==0){
+       $page_number=1;
+     }
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
         return $this->render('LoveThatFitAdminBundle:User:show.html.twig', array(
-                    'user' => $entity                
+                    'user' => $entity,
+                    'page_number'=>$page_number,
                 ));
     }
     
