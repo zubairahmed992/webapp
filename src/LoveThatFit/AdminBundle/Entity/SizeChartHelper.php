@@ -505,6 +505,14 @@ public function getBrandArraySizeChart() {
                            'dressSizeChart'=>  $this->getSizeChartByTarget('Dress'),
         );
     }
+    
+    public function getRecordsCountWithCurrentSizeChartLimit($sizechart_id){
+    
+    return $this->repo->getRecordsCountWithCurrentSizeChartLimit($sizechart_id);
+}
+     
+
+    
     //-----------------------Get Size Chart By Gender----------------------------------------------------------------------------
     
     private function getSizeChartByGender($gender)

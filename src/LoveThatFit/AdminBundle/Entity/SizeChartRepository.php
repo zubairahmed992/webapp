@@ -345,6 +345,16 @@ class SizeChartRepository extends EntityRepository {
             return null;
         }
     }
+    
+    
+     public function getRecordsCountWithCurrentSizeChartLimit($sizechart_id){
+        
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc')
+                    ->setMaxResults($sizechart_id);
+                    return $query->getResult();
+        } 
+
 
     //------------------------------------------------------------------------
     public function findSizeByDresses($target) {

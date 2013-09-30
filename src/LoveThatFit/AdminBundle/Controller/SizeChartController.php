@@ -21,11 +21,18 @@ class SizeChartController extends Controller {
 
         $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
         $entity = $specs['entity'];
+        $sizechart_limit = count($this->get('admin.helper.sizechart')->getRecordsCountWithCurrentSizeChartLimit($id));
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($sizechart_limit));
+        if($page_number==0){
+       $page_number=1;
+     }
+
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
         return $this->render('LoveThatFitAdminBundle:SizeChart:show.html.twig', array(
-                    'sizechart' => $entity
+                    'sizechart' => $entity,
+                    'page_number'=>$page_number,
                 ));
     }    
     
