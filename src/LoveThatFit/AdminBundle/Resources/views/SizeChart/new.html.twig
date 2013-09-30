@@ -1,131 +1,95 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
-<li><a href="{{ path('admin_size_charts') }}" >Brands</a> <span class="divider">/</span></li>
+<li><a href="{{ path('admin_size_charts') }}" >Size Chart</a> <span class="divider">/</span></li>
 <li class="active">New</li>
  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery-1.9.1.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function() {
-   $('#sizechart_gender').change(function() {	   
-	    var selectVal = $('#sizechart_gender').val();
-            var selectValtarget = $('#sizechart_target').val(); 
-	    if(selectVal=='F' || selectVal=='f')
-                {                 
-                  $("#genderfemale").show();
-                  $("#waist").show();
-                  $("#bust").show();                  
-                  $("#sleeve").show();
-                  $("#hip").show();                  
-                  $("#inseam").show();
-                  $("#back").show();
-                  $("#thigh").show();
-                  $("#chest").hide();
-                  $("#outseam").show();                  
-                  $("#neck").hide();                  
-                  $("#sizechart_target option[value='Dress']").remove();
-                  $("#sizechart_target").append('<option value="Dress">Dress</option>');
-                }
-                if(selectVal=='M' || selectVal=='m')
-                { 
-                  $("#waist").show();
-                  $("#neck").show();
-                  $("#sleeve").show();
-                  $("#chest").show();
-                  $("#inseam").show();
-                  $("#back").show();      
-                  $("#bust").hide();
-                  $("#hip").hide();
-                  $("#outseam").show();
-                  $("#thigh").hide();
-                  $("#sizechart_target option[value='Dress']").remove();
-                }
-	});        
-        $('#sizechart_target').change(function() {
+       $('#sizechart_target').change(function() {
 	 
-            var selectVal = $('#sizechart_gender').val();
-            var selectValtarget = $('#sizechart_target').val();              
-            if(selectValtarget=='Top' && selectVal=='F' ||  selectVal=='f' )
+            var selectVals = $('#sizechart_gender').val();
+            var selectValtargets = $('#sizechart_target').val();              
+            if((selectValtargets=='Top') && (selectVals=='F'  || selectVals=='f') )
                 {
-                  $("#waist").show();
-                  $("#bust").show();
-                  $("#sleeve").show();
+                  $("#neck").show();
                   $("#back").show();
+                  $("#bust").show();
+                  $("#waist").show();                  
                   $("#hip").show();
-                  $("#inseam").hide();
-                  $("#neck").hide();
+                  $("#sleeve").hide();
+                  $("#inseam").hide();                  
                   $("#outseam").hide();
                   $("#chest").hide();
-                  $("#thigh").hide();
+                  $("#thigh").hide();                  
                 }
-            if(selectValtarget=='Bottom' && selectVal=='F'  || selectVal=='f')
+            if((selectValtargets=='Bottom') && (selectVals=='F'  || selectVals=='f'))
                 {
                   $("#waist").show();
                   $("#hip").show();
-                  $("#inseam").show();
-                  $("#back").show();
                   $("#thigh").show();
+                  $("#outseam").show();
+                  $("#inseam").show();                  
+                  $("#neck").hide();
+                  $("#back").hide();
                   $("#bust").hide();
                   $("#sleeve").hide();                  
-                  $("#neck").hide();
-                  $("#outseam").show();
-                  $("#chest").hide();
-                  
+                  $("#chest").hide();                  
                 }                
-              if(selectValtarget=='Dress'&& selectVal=='F' || selectVal=='f')
+              if((selectValtargets=='Dress')&& (selectVals=='F' || selectVals=='f'))
                 {
-                  $("#waist").show();
-                  $("#bust").show();
-                  $("#hip").show();
+                  $("#neck").show();  
                   $("#back").show();
-                  $("#sleeve").hide();
-                  $("#inseam").hide();
-                  $("#neck").hide();
-                  $("#outseam").hide();
-                  $("#chest").hide();
+                  $("#bust").show();
+                  $("#sleeve").show();  
+                  $("#waist").show();
+                  $("#hip").show();
                   $("#thigh").hide();
+                  $("#outseam").hide();
+                  $("#inseam").hide();                  
+                  $("#chest").hide();                                  
                 }  
-              if(selectValtarget=='Top' && selectVal=='M' || selectVal=='m')
+              if((selectValtargets=='Top') && (selectVals=='M' || selectVals=='m'))
                 {
                   $("#neck").show();
                   $("#sleeve").show();
                   $("#chest").show();
                   $("#back").show();
-                  $("#waist").hide();
+                  $("#waist").show();
                   $("#bust").hide();
                   $("#hip").hide();
                   $("#inseam").hide();
                   $("#outseam").hide();
-                  $("#thigh").hide();
+                  $("#thigh").hide();                  
                 }
-            if(selectValtarget=='Bottom'&& selectVal=='M' || selectVal=='m')
+            if((selectValtargets=='Bottom')&& (selectVals=='M' || selectVals=='m'))
                 {
                   $("#waist").show();
                   $("#inseam").show();
-                  $("#back").show();
-                  $("#hip").hide();                  
+                  $("#outseam").show();
+                  $("#hip").show();    
+                  $("#thigh").show();
+                  $("#back").hide();                                
                   $("#bust").hide();
                   $("#sleeve").hide();                  
-                  $("#neck").hide();
-                  $("#outseam").show();
-                  $("#chest").hide();
-                  $("#thigh").hide();
-                  $("#sizechart_target option[value='Dress']").remove();
+                  $("#neck").hide();                  
+                  $("#chest").hide();                                    
                 }                
-              if(selectValtarget=='Dress'&& selectVal=='M' || selectVal=='m')
+              if((selectValtargets=='Dress')&& (selectVals=='M' || selectVals=='m'))
                 {
-                  $("#waist").hide();
-                  $("#bust").hide();
-                  $("#hip").hide();
-                  $("#sleeve").hide();
+                 $("#waist").hide();
                   $("#inseam").hide();
-                  $("#neck").hide();
                   $("#outseam").hide();
-                  $("#chest").hide();
-                  $("#back").hide();
+                  $("#hip").hide();    
                   $("#thigh").hide();
-                  $("#sizechart_target option[value='Dress']").remove();
+                  $("#back").hide();                                
+                  $("#bust").hide();
+                  $("#sleeve").hide();                  
+                  $("#neck").hide();                  
+                  $("#chest").hide();      
                 }    
-	});
+	});      
+        
         });
 </script>
 
@@ -155,29 +119,46 @@
                         <div id="pro_detail">
                             <div id="genderfemale">                                
                             <div class="edt_container">         
-                                <div class="row-fluid show-grid">
-                                  <div class="span3">Title</div>
-                                  <div class="span3">{{ form_widget(form.title) }}{{ form_errors(form.title) }}</div>
-                                </div> 
-                                <div class="row-fluid show-grid">
-                                  <div class="span3">Gender</div>
-                                  <div class="span3">{{ form_widget(form.gender) }}{{ form_errors(form.gender) }}</div>
-                                </div>
-                                <div class="row-fluid show-grid">
-                                  <div class="span3">Body Type</div>
-                                  <div class="span3">{{ form_widget(form.bodytype) }}{{ form_errors(form.bodytype) }}</div>
-                                </div>
-                               <div class="row-fluid show-grid">
-                                 <div class="span3">Target</div>
-                                 <div class="span3">{{ form_widget(form.target) }}{{ form_errors(form.target) }}</div>
-                               </div>
-                                    
-                                    
-                                    
+                                
                                 <div class="row-fluid show-grid">
                                   <div class="span3">Brand</div>
                                   <div class="span3">{{ form_widget(form.Brand) }}{{ form_errors(form.Brand) }}</div>
                                 </div>
+                                <div class="row-fluid show-grid">
+                                 <div class="span3">Target</div>
+                                 <div class="span3">{{ form_widget(form.target) }}{{ form_errors(form.target) }}</div>
+                               </div>
+                                <div class="row-fluid show-grid">
+                                  <div class="span3">Body Type</div>
+                                  <div class="span3">{{ form_widget(form.bodytype) }}{{ form_errors(form.bodytype) }}</div>
+                                </div>
+                                <div class="row-fluid show-grid">
+                                  <div class="span3">Gender</div>
+                                  <div class="span3">{{ form_widget(form.gender) }}{{ form_errors(form.gender) }}</div>
+                                </div>                                
+                                <div class="row-fluid show-grid">
+                                  <div class="span3">Title</div>
+                                  <div class="span3">{{ form_widget(form.title) }}{{ form_errors(form.title) }}</div>
+                                </div>                        
+                                                                  
+                                <div class="row-fluid show-grid" id="neck">
+                                  <div class="span3">Neck</div>
+                                  <div class="span3">{{ form_widget(form.neck) }}{{ form_errors(form.neck) }}</div>
+                                </div>    
+                                    
+                                <div class="row-fluid show-grid" id="back">
+                                  <div class="span3">Back</div>
+                                  <div class="span3">{{ form_widget(form.back) }}{{ form_errors(form.back) }}</div>
+                                </div>
+                                <div class="row-fluid show-grid" id="bust">
+                                  <div class="span3">Bust</div>
+                                  <div class="span3">{{ form_widget(form.bust) }}{{ form_errors(form.bust) }}</div>
+                                </div>
+                                <div class="row-fluid show-grid" id="sleeve">
+                                  <div class="span3">Sleeve</div>
+                                  <div class="span3">{{ form_widget(form.sleeve) }}{{ form_errors(form.sleeve) }}</div>
+                                </div>
+                                
                                 <div class="row-fluid show-grid" id="waist">
                                   <div class="span3">Waist</div>
                                   <div class="span3">{{ form_widget(form.waist) }}{{ form_errors(form.waist) }}</div>
@@ -185,51 +166,30 @@
                                     <div class="row-fluid show-grid" id="hip">
                                   <div class="span3">Hip</div>
                                   <div class="span3">{{ form_widget(form.hip) }}{{ form_errors(form.hip) }}</div>
-                                </div>
-                                    <div class="row-fluid show-grid" id="bust">
-                                  <div class="span3">Bust</div>
-                                  <div class="span3">{{ form_widget(form.bust) }}{{ form_errors(form.bust) }}</div>
-                                </div>
-                                    
-                                    <div class="row-fluid show-grid" id="chest">
-                                  <div class="span3">Chest</div>
-                                  <div class="span3">{{ form_widget(form.chest) }}{{ form_errors(form.chest) }}</div>
-                                </div>
-                                    
-                                    <div class="row-fluid show-grid" id="thigh">
+                                </div>                                   
+                               
+                                <div class="row-fluid show-grid" id="thigh">
                                   <div class="span3">Thigh</div>
                                   <div class="span3">{{ form_widget(form.thigh) }}{{ form_errors(form.thigh) }}</div>
                                 </div>
-                                    
-                                    <div class="row-fluid show-grid" id="inseam">
-                                  <div class="span3">Inseam</div>
-                                  <div class="span3">{{ form_widget(form.inseam) }}{{ form_errors(form.inseam) }}</div>
-                                </div>
-                                    
-                                    <div class="row-fluid show-grid" id="outseam">
+                                
+                                 <div class="row-fluid show-grid" id="outseam">
                                   <div class="span3">Out Seam</div>
                                   <div class="span3">{{ form_widget(form.outseam) }}{{ form_errors(form.outseam) }}</div>
                                 </div>   
-                                    
-                                    <div class="row-fluid show-grid" id="neck">
-                                  <div class="span3">Neck</div>
-                                  <div class="span3">{{ form_widget(form.neck) }}{{ form_errors(form.neck) }}</div>
-                                </div>
-                                    
-                                    <div class="row-fluid show-grid" id="sleeve">
-                                  <div class="span3">Sleeve</div>
-                                  <div class="span3">{{ form_widget(form.sleeve) }}{{ form_errors(form.sleeve) }}</div>
-                                </div>
-                               
-                               <div class="row-fluid show-grid">
-                                  <div class="span3">Back</div>
-                                  <div class="span3">{{ form_widget(form.back) }}{{ form_errors(form.back) }}</div>
-                                </div>     
-                                    
-                              
-                                  
                                 
-                                    <div class="span3">
+                                   <div class="row-fluid show-grid" id="inseam">
+                                  <div class="span3">Inseam</div>
+                                  <div class="span3">{{ form_widget(form.inseam) }}{{ form_errors(form.inseam) }}</div>
+                                </div>
+                                
+                                 <div class="row-fluid show-grid" id="chest">
+                                  <div class="span3">Chest</div>
+                                  <div class="span3">{{ form_widget(form.chest) }}{{ form_errors(form.chest) }}</div>
+                                </div>
+                                
+                               
+                                <div class="span3">
 				{{ form_rest(form) }}
                                             <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>
                                     </div>                                    

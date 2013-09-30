@@ -50,21 +50,26 @@ class SizeChartController extends Controller {
     }
     
     public function createAction(Request $request)
-    {
-       
+    {       
         $entity = $this->get('admin.helper.sizechart')->createNew();
         $form = $this->createForm(new SizeChartType('add'), $entity);
         $form->bind($request);
+        if($entity->getTarget()=='Dress' and $entity->getGender()=='m' )
+        {
+            $this->get('session')->setFlash('warning', 'Dresses can not be selected  for Male');
+        }else
+        {
         if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.sizechart')->save($entity);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-
+         
             if ($message_array['success']) {
                 return $this->redirect($this->generateUrl('admin_size_chart_show', array('id' => $entity->getId())));
             }
         } else {
             $this->get('session')->setFlash('warning', 'The Size chart can not be Created!');
+        }
         }
 
         return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
@@ -119,8 +124,12 @@ class SizeChartController extends Controller {
       if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
             return $this->redirect($this->generateUrl('admin_size_charts'));
-        } 
-        
+        }
+        if($entity->getTarget()=='Dress' and $entity->getGender()=='m' )
+        {
+            $this->get('session')->setFlash('warning', 'Dresses can not be selected  for Male');
+        }else
+        {        
         if ($form->isValid()) {
             $message_array = $this->get('admin.helper.sizechart')->update($entity);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
@@ -129,8 +138,9 @@ class SizeChartController extends Controller {
             }
         } else {
             $this->get('session')->setFlash('warning', 'Unable to update Size Chart!');
+        }   
         }
-        $deleteForm = $this->createForm(new DeleteType(), $entity);
+        $deleteForm = $this->createForm(new DeleteType(), $entity);        
         return $this->render('LoveThatFitAdminBundle:SizeChart:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
