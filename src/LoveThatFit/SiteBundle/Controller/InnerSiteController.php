@@ -173,7 +173,7 @@ public function indexAction($list_type) {
         $em->persist($product_item);
         $em->persist($user);
         $em->flush();
-        $this->get('session')->setFlash('success', 'Product Item Successfully Deleted.');
+        $this->get('session')->setFlash('success', 'Product Item Successfully Removed.');
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
         $entity =$this->get('admin.helper.product')->findProductItemByUser($user_id, $page_number = 0, $limit = 0);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
