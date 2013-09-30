@@ -77,6 +77,7 @@ return true;
                     </div>
 
                     <div class="span2">
+                         <a href="#rawimage{{pi.id}}" role="button" data-toggle="modal" class="btn">Upload Raw Image</a>
                         <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a>
                        <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
                         
@@ -86,7 +87,7 @@ return true;
 
                 </div>
                 
-                <div id="myModal2{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="myModal2{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Delete Product</h3>
@@ -101,6 +102,32 @@ return true;
     </div>
 </div>   
 
+                
+                
+     <div id="rawimage{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Upload Item Orginal Image</h3>
+    </div>
+    <div class="modal-body">
+        <p>Image:</p>
+        <p><input type="file" name="raw_image" id="raw_image"></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <input type="submit" value="Upload" class="btn" data-dismiss="modal" aria-hidden="true"></button>
+       
+</form>
+    </div>
+</div>              
+                
+                
+                
+                
+                
+                
                              {% endif %}
                              {%endfor%}
         </table>   

@@ -82,7 +82,14 @@ class ProductItem
      * @Assert\File(maxSize="6000000")
      */
     public $file;
-
+    
+     /**
+     * @var string $raw_image
+     *
+     * @ORM\Column(name="raw_image", type="string", nullable=true)
+     */
+    private $raw_image;
+    
     /**
      * Get id
      *
@@ -247,6 +254,16 @@ class ProductItem
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
 
+ //-------------------------------------------------------
+    public function getAbsoluteRawImagePath() {
+        return null === $this->raw_image ? null : $this->getUploadRootDir() . '/' . $this->raw_image;
+    }
+//-------------------------------------------------------
+    public function getRawImageWebPath() {
+        return null === $this->raw_image ? null : $this->getUploadDir() . '/' . $this->raw_image;
+    }
+    
+    
 //-------------------------------------------------------
     protected function getUploadRootDir() {
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
@@ -342,5 +359,28 @@ class ProductItem
     public function getUserItemTryHistory()
     {
         return $this->user_item_try_history;
+    }
+
+    /**
+     * Set raw_image
+     *
+     * @param string $rawImage
+     * @return ProductItem
+     */
+    public function setRawImage($rawImage)
+    {
+        $this->raw_image = $rawImage;
+    
+        return $this;
+    }
+
+    /**
+     * Get raw_image
+     *
+     * @return string 
+     */
+    public function getRawImage()
+    {
+        return $this->raw_image;
     }
 }
