@@ -4,40 +4,40 @@ size_charts:
       Regular:
         Top:
           "00":
-            chest: 31.5
+            bust: 31.5
             sleeve: 30.75
           0:
-            chest: 32.5
+            bust: 32.5
             sleeve: 31
           2:
-            chest: 33.5
+            bust: 33.5
             sleeve: 31.25
           4:
-            chest: 34.5
+            bust: 34.5
             sleeve: 31.5
           6:
-            chest: 35.5
+            bust: 35.5
             sleeve: 32
           8:
-            chest: 36.5
+            bust: 36.5
             sleeve: 32.5
           10:
-            chest: 37.5
+            bust: 37.5
             sleeve: 33
           12:
-            chest: 39
+            bust: 39
             sleeve: 33.25
           14:
-            chest: 40.5
+            bust: 40.5
             sleeve: 33.5
           16:
-            chest: 42
+            bust: 42
             sleeve: 33.75
           18:
-            chest: 44
+            bust: 44
             sleeve: 34
           20:
-            chest: 46
+            bust: 46
             sleeve: 34.5         
 
         Bottom:
@@ -92,79 +92,79 @@ size_charts:
 
         Dress:
           "00":
-            chest: 32.5
+            bust: 32.5
             waist: 24.5
           0:
-            chest: 33
+            bust: 33
             waist: 25
           2:
-            chest: 33.5
+            bust: 33.5
             waist: 25.5
           4:
-            chest: 34.5
+            bust: 34.5
             waist: 26.5
           6:
-            chest: 35.5
+            bust: 35.5
             waist: 27.5
           8:
-            chest: 36.5
+            bust: 36.5
             waist: 28.5
           10:
-            chest: 37.5
+            bust: 37.5
             waist: 29.5
           12:
-            chest: 39
+            bust: 39
             waist: 31
           14:
-            chest: 40.5
+            bust: 40.5
             waist: 32.5
           16:
-            chest: 42.25
+            bust: 42.25
             waist: 34.25
           18:
-            chest: 44
+            bust: 44
             waist: 36
           20:
-            chest: 45.75
+            bust: 45.75
             waist: 37.75
 
       Petite:
         Top:
           "00":
-            chest: 31.5
+            bust: 31.5
             sleeve: 29.5
           0:
-            chest: 31.5
+            bust: 31.5
             sleeve: 30.75
           2:
-            chest: 31.5
+            bust: 31.5
             sleeve: 30.75
           4:
-            chest: 34.5
+            bust: 34.5
             sleeve: 30
           6:
-            chest: 35.5
+            bust: 35.5
             sleeve: 30.5
           8:
-            chest: 36.5
+            bust: 36.5
             sleeve: 31
           10:
-            chest: 37.5
+            bust: 37.5
             sleeve: 31.5
           12:
-            chest: 39
+            bust: 39
             sleeve: 31.75
           14:
-            chest: 40.5
+            bust: 40.5
             sleeve: 32
           16:
-            chest: 42
+            bust: 42
             sleeve: 32.25
           18:
-            chest: 44
+            bust: 44
             sleeve: 32.5
           20:
-            chest: 46
+            bust: 46
             sleeve: 33        
 
         Bottom:
@@ -219,79 +219,79 @@ size_charts:
 
         Dress:
           "00":
-            chest: 32.5
+            bust: 32.5
             waist: 24.5
           0:
-            chest: 33
+            bust: 33
             waist: 25
           2:
-            chest: 33.5
+            bust: 33.5
             waist: 25.5
           4:
-            chest: 34.5
+            bust: 34.5
             waist: 26.5
           6:
-            chest: 35.5
+            bust: 35.5
             waist: 27.5
           8:
-            chest: 36.5
+            bust: 36.5
             waist: 28.5
           10:
-            chest: 37.5
+            bust: 37.5
             waist: 29.5
           12:
-            chest: 39
+            bust: 39
             waist: 31
           14:
-            chest: 40.5
+            bust: 40.5
             waist: 32.5
           16:
-            chest: 42.25
+            bust: 42.25
             waist: 34.25
           18:
-            chest: 44
+            bust: 44
             waist: 36
           20:
-            chest: 45.75
+            bust: 45.75
             waist: 37.75
 
       Tall:
         Top:
           "00":
-            chest: 31.5
+            bust: 31.5
             sleeve: 32.75
           0:
-            chest: 32.5
+            bust: 32.5
             sleeve: 33
           2:
-            chest: 33.5
+            bust: 33.5
             sleeve: 33.25
           4:
-            chest: 34.5
+            bust: 34.5
             sleeve: 33.5
           6:
-            chest: 35.5
+            bust: 35.5
             sleeve: 34
           8:
-            chest: 36.5
+            bust: 36.5
             sleeve: 34.5
           10:
-            chest: 37.5
+            bust: 37.5
             sleeve: 35
           12:
-            chest: 39
+            bust: 39
             sleeve: 35.25
           14:
-            chest: 40.5
+            bust: 40.5
             sleeve: 35.5
           16:
-            chest: 42
+            bust: 42
             sleeve: 35.75
           18:
-            chest: 44
+            bust: 44
             sleeve: 36
           20:
-            chest: 46
+            bust: 46
             sleeve: 36.5        
 
         Bottom:
@@ -346,40 +346,40 @@ size_charts:
 
         Dress:
           "00":
-            chest: 32.5
+            bust: 32.5
             waist: 24.5
           0:
-            chest: 33
+            bust: 33
             waist: 25
           2:
-            chest: 33.5
+            bust: 33.5
             waist: 25.5
           4:
-            chest: 34.5
+            bust: 34.5
             waist: 26.5
           6:
-            chest: 35.5
+            bust: 35.5
             waist: 27.5
           8:
-            chest: 36.5
+            bust: 36.5
             waist: 28.5
           10:
-            chest: 37.5
+            bust: 37.5
             waist: 29.5
           12:
-            chest: 39
+            bust: 39
             waist: 31
           14:
-            chest: 40.5
+            bust: 40.5
             waist: 32.5
           16:
-            chest: 42.25
+            bust: 42.25
             waist: 34.25
           18:
-            chest: 44
+            bust: 44
             waist: 36
           20:
-            chest: 45.75
+            bust: 45.75
             waist: 37.75
         
   J.crew: 
@@ -920,4 +920,3 @@ size_charts:
             bust: 40.5
             waist: 32.5
             hip: 42.5
-      
