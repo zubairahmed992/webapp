@@ -105,7 +105,7 @@ return true;
                 
                 
      <div id="rawimage{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}">
+   <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_item_raw_image_edit',{"id":product.id, "item_id":pi.id}) }}">
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -114,20 +114,16 @@ return true;
     <div class="modal-body">
         <p>Image:</p>
         <p><input type="file" name="raw_image" id="raw_image"></p>
+        <input type="hidden" name="item_id" id="item_id" value="{{pi.id}}">
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <input type="submit" value="Upload" class="btn" data-dismiss="modal" aria-hidden="true"></button>
+        <input type="submit" value="Upload" class="btn"  aria-hidden="true">
        
 </form>
     </div>
 </div>              
-                
-                
-                
-                
-                
-                
+             
                              {% endif %}
                              {%endfor%}
         </table>   

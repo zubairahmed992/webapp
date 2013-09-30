@@ -66,8 +66,12 @@
                     
 
 
-                    <div class="btn_wrapper" style="margin-top: 0px;">     
+                    <div class="btn_wrapper" style="margin-top: 0px;">  
+                        {% if(page_number is defined )%}
                         <a href="{{ path('admin_products',{'page_number':page_number}) }}" class="btn">back</a>
+                        {%else%}
+                        <a href="{{ path('admin_products') }}" class="btn">back</a>
+                        {%endif%}
                         <a href="{{ path('admin_product_detail_edit', {'id': product.Id}) }}" class="btn">Edit</a>      
                         <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
                     </div>       

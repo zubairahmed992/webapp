@@ -85,7 +85,11 @@ admin_product_detail_item_edit:
 admin_product_detail_item_update:
    pattern:  /admin/productdetail/{id}/item/{item_id}/update
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemUpdate } 
+
 admin_product_detail_item_delete:
    pattern:  /admin/productdetail/{id}/delete/{item_id}/edit
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemDelete }   
+admin_product_detail_item_raw_image_edit:
+   pattern:  /admin/productdetail/{id}/raw_image/{item_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageEdit }   
    

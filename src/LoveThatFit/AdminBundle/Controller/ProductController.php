@@ -26,6 +26,8 @@ use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Exception\ParseException;
 use LoveThatFit\AdminBundle\ImageHelper;
 use ZipArchive;
+use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
+
 
 class ProductController extends Controller {
 
@@ -342,6 +344,7 @@ class ProductController extends Controller {
         $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorImageForm->bind($request);
         $temp = $productColor->uploadTemporaryImage();
+        
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . "/" . $productColor->getWebPath() . $temp['image_url'];
         $data = array('image_name' => $temp['image_name'],
             'image_url' => $baseurl);
@@ -499,10 +502,13 @@ class ProductController extends Controller {
         }
 
         $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
+        
+        $itemrawimageform = $this->createForm(new ProductItemRawImageType(), $this->getProductItem($item_id));
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $entity,
                     'itemform' => $itemform->createView(),
+                    'itemrawimagefrom'=> $itemrawimageform->createView(),   
                     'item_id' => $item_id,
         ));
     }
@@ -560,12 +566,34 @@ class ProductController extends Controller {
 
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
         $product = $repository->find($item_id);
-
+        
         $em->remove($product);
         $em->flush();
         $this->get('session')->setFlash('success', 'Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
+ #----------------------Method for raw image edit -----------------------------#
+  public function productDetailItemRawImageEditAction(Request $request, $id, $item_id){
+      
+     
+      $entity = $this->getProduct($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find($item_id);
+        if (!$entity_item) {
+            throw $this->createNotFoundException('Unable to find Product Item.');
+        }
+        
+        $itemrawimageform = $this->createForm(new ProductItemRawImageType(),$entity_item);
+        $itemrawimageform->bind($request);
+        $entity_item->uploadRawImage(); //----- file upload method 
+        $em->persist($entity_item);
+         $em->flush();
+          $this->get('session')->setFlash('success', 'Product item updated  Successfully');
+  }
 
 //        
     //------------------------- Private methods ------------------------- 
