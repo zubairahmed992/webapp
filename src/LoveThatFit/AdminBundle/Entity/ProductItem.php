@@ -226,13 +226,14 @@ class ProductItem
          if (null === $this->file) {
             return;
         }
+        $old_image_path=Null;
         if ($this->raw_image){
             $old_image_path = $this->getRawImageWebPath();
         }
         $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $this->raw_image = uniqid() . $ext;        
+        $this->raw_image = uniqid() .".". $ext;        
         $this->file->move(
-                $this->getUploadRootDir(), $this->raw_image
+                $this->getUploadRawImageRootDir(), $this->raw_image
         );
         
         if (is_readable($old_image_path)) {
@@ -249,38 +250,42 @@ class ProductItem
         return $ih->getImagePaths();
     }
     
-    //-------------------------------------------------------
+    //-------------------------------------------------------1
     public function getAbsolutePath() {
         return null === $this->image ? null : $this->getUploadRootDir() . '/' . $this->image;
     }
-//-------------------------------------------------------
+//-------------------------------------------------------2
     public function getWebPath() {
         return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
-//-------------------------------------------------------
+//-------------------------------------------------------3
     protected function getUploadRootDir() {
         return $this->getRootDir() . $this->getUploadDir();
     }
-//-------------------------------------------------------
+//-------------------------------------------------------4
     protected function getRootDir() {
         return __DIR__ . '/../../../../web/';
     }
 
-//-------------------------------------------------------
+//-------------------------------------------------------5
     protected function getUploadDir() {        
        return 'uploads/ltf/products/fitting_room/web';            
     }
 
- //-------------------------------------------------------
+ //-------------------------------------------------------1
     public function getRawImageAbsolutePath() {
         return null === $this->raw_image ? null : $this->getRootDir() . $this->getRawImageUploadDir() . '/' . $this->raw_image;
     }
-//-------------------------------------------------------
+//-------------------------------------------------------2
     public function getRawImageWebPath() {
         return null === $this->raw_image ? null : $this->getRawImageUploadDir() . '/' . $this->raw_image;
     }
+//-------------------------------------------------------3
+    protected function getUploadRawImageRootDir() {
+        return $this->getRootDir() . $this->getRawImageUploadDir();
+    }
     
-//-------------------------------------------------------
+//-------------------------------------------------------5
     protected function getRawImageUploadDir() {        
        return 'uploads/ltf/products/fitting_room/raw';            
     }

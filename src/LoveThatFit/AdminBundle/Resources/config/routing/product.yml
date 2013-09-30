@@ -92,4 +92,9 @@ admin_product_detail_item_delete:
 admin_product_detail_item_raw_image_edit:
    pattern:  /admin/productdetail/{id}/raw_image/{item_id}/edit
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageEdit }   
+
+admin_product_detail_item_raw_image_download:
+   pattern:  /admin/productdetail/{id}/raw_image/{item_id}/download
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageDownload }   
+   
    

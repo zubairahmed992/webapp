@@ -502,14 +502,12 @@ class ProductController extends Controller {
         }
 
         $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
-        
         $itemrawimageform = $this->createForm(new ProductItemRawImageType(), $this->getProductItem($item_id));
-
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $entity,
                     'itemform' => $itemform->createView(),
-                    'itemrawimagefrom'=> $itemrawimageform->createView(),   
                     'item_id' => $item_id,
+                    'itemrawimageform'=>$itemrawimageform->createView(),
         ));
     }
 
@@ -592,9 +590,35 @@ class ProductController extends Controller {
         $entity_item->uploadRawImage(); //----- file upload method 
         $em->persist($entity_item);
          $em->flush();
-          $this->get('session')->setFlash('success', 'Product item updated  Successfully');
+       $this->get('session')->setFlash('success', 'Product item updated  Successfully');
+      
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id))); 
   }
-
+#-------------Product Raw Item Downloading ------------------------------------#
+public function productDetailItemRawImageDownloadAction(Request $request, $id, $item_id){
+    
+     $em = $this->getDoctrine()->getManager();
+        $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find($item_id);
+        if (!$entity_item) {
+            throw $this->createNotFoundException('Unable to find Product Item.');
+        }
+    $image_name=$entity_item->getRawImage();
+    $path=$entity_item->getRawImageAbsolutePath();
+    
+    $response =new Response();
+    //then send the headers to foce download the zip file
+  // $response->headers->set('Content-Type','image/jpeg');
+   $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($path));        
+   $response->headers->set('Pragma', "no-cache");
+   $response->headers->set('Expires', "0");
+   $response->headers->set('Content-Transfer-Encoding', "binary");
+   $response->sendHeaders();
+   $response->setContent(readfile($path));
+   return $response;
+   
+   
+    
+}
 //        
     //------------------------- Private methods ------------------------- 
 //------------------------------------------------------------------------
