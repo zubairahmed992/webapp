@@ -21,12 +21,17 @@ class BrandController extends Controller {
 
         $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
         $entity = $specs['entity'];
-
+        $brand_limit = count($this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id));
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit));
+        if($page_number==0){
+       $page_number=1;
+     }
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
         return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
-                    'brand' => $entity
+                    'brand' => $entity,
+                    'page_number'=>$page_number,
         ));
     }
 

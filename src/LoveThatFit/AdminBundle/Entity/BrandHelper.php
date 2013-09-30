@@ -185,6 +185,14 @@ class BrandHelper {
         );
     }
 
+    public function getRecordsCountWithCurrentBrandLimit($brand_id){
+    
+    return $this->repo->getRecordsCountWithCurrentBrandLimit($brand_id);
+}
+    
+    
+    
+    
 //Private Methods    
 //----------------------------------------------------------
     private function validateForCreate($name) {

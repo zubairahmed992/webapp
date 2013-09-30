@@ -15,7 +15,7 @@
 <div>      
     <h1 style="float:left;">Size Chart Details</h1>
      <div class="btn_wrapper">     
-      <a href="{{ path('admin_size_charts') }}" class="btn">back</a>
+      <a href="{{ path('admin_size_charts',{'page_number':page_number}) }}" class="btn">back</a>
       <a href="{{ path('admin_size_chart_edit', {'id': sizechart.Id}) }}" class="btn">Edit</a>      
       <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a> 
       

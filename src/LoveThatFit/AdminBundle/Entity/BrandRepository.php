@@ -132,6 +132,14 @@ class BrandRepository extends EntityRepository {
             return null;
         }
   }
-    
+  
+  public function getRecordsCountWithCurrentBrandLimit($brand_id){
+        
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b')
+                    ->setMaxResults($brand_id);
+                    return $query->getResult();
+        } 
+  
 
 }
