@@ -40,14 +40,16 @@
                <div> 
                             
                    <div class="featured_img" style="float:left; margin-left: 70px;">                    
-                    {%if p.displayProductColor%}                    
+                    {%if p.displayProductColor %}      
+                    {% if(randon_item and randon_item!=null)%}            
                     <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}"/>
                     <a class="apply_img hide" href="{{asset(randon_item.WebPath)}}">{{asset(randon_item.WebPath)}}</a>
                       <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : p.getRandomItem.id})}}'>feedback</a></span>
-                    {% if(randon_item and randon_item!=null)%}
+                    
                         <a class="apply_img hide" href="{{asset(randon_item.WebPath)}}">{{asset(randon_item.WebPath)}}</a>    
                     {%endif%}
                     {%endif%} 
+                        
                 </div>
                     
                    <div class="pro_detail" style="float:right;"><a class="prod_details_arrow" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></a></div>     
