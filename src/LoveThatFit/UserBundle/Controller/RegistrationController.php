@@ -62,6 +62,10 @@ class RegistrationController extends Controller {
         $user_helper = $this->get('user.helper.user');
         try {
             $user = new User();
+           
+            #---------Start of CRF Protection----------------------------------#
+            if ($this->getRequest()->getMethod() == 'POST') {
+           
             $form = $this->createForm(new RegistrationType(), $user);
             $form->bind($this->getRequest());
 
@@ -107,7 +111,12 @@ class RegistrationController extends Controller {
                             'twitters' => $twitters,
                         ));
             }
-        } catch (\Doctrine\DBAL\DBALException $e) {
+            
+            
+            }//End of CRF Protection
+            
+            
+            } catch (\Doctrine\DBAL\DBALException $e) {
 
             $form->addError(new FormError('Some thing went wrong'));
 
@@ -124,7 +133,9 @@ class RegistrationController extends Controller {
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
-
+    
+#---------Start OF CRF Protection--------------------------------------#
+ if ($this->getRequest()->getMethod() == 'POST') {
         if ($user->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
         } else {
@@ -150,7 +161,7 @@ class RegistrationController extends Controller {
                     'measurement' => $measurement,
                     'edit_type' => 'registration',
                 ));
-    }
+    }}
 
 //-----------------------------------------------------------------------------
     public function measurementEditAction() {
