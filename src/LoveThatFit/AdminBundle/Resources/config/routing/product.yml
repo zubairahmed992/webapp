@@ -95,6 +95,8 @@ admin_product_detail_item_raw_image_edit:
 
 admin_product_detail_item_raw_image_download:
    pattern:  /admin/productdetail/{id}/raw_image/{item_id}/download
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageDownload }   
-   
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageDownload } 
+admin_product_detail_item_raw_image_delete:   
+   pattern:  /admin/productdetail/{id}/delete/{item_id}/raw_image_delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageDelete }   
    

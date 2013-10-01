@@ -598,6 +598,24 @@ class ProductController extends Controller {
 public function productDetailItemRawImageDownloadAction(Request $request, $id, $item_id){
     return new response($this->get('admin.helper.productitem')->rawImageDownload($item_id));
 }
+#--------------Raw image Deleteing --------------------------------------------#
+public function productDetailItemRawImageDeleteAction(Request $request, $id, $item_id) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
+        $product = $repository->find($item_id);
+        
+         $old_image_path = $product->getRawImageWebPath();
+         if (is_readable($old_image_path)) {
+           @unlink($old_image_path);
+       }
+       
+        $product->setRawImage('');
+        $em->persist($product);
+        $em->flush();
+        $this->get('session')->setFlash('success', 'Raw Image Successfully Deleted');
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+}
 //        
     //------------------------- Private methods ------------------------- 
 //------------------------------------------------------------------------

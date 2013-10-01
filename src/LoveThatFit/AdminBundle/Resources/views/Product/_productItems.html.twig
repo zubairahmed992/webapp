@@ -1,4 +1,28 @@
 <script>
+function rawImageValidation(){
+   var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
+
+var image_file = document.getElementById('raw_image_id').value;
+var image_length = document.getElementById('raw_image_id').length;
+
+var pos = image_file.lastIndexOf('.') + 1;
+var ext = image_file.substring(pos, image_length);
+if(image_file!="")
+{
+var final_ext = ext.toLowerCase();
+for (i = 0; i < extensions.length; i++)
+{
+if(extensions[i] == final_ext)
+{
+return true;
+}
+}
+alert("Please Upload Valid Format ..JPEG/PNG/GIF");
+return false;
+
+}
+return true;
+}
 function validate()
 {
 var extensions = new Array("jpg","jpeg","gif","png","bmp","png");
@@ -58,6 +82,9 @@ return true;
                     <div class="span2"> <input type="submit" value="SAVE" class="btn"/>
                      <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">Cancel</a>
                       <a href="#rawimage{{pi.id}}" role="button" data-toggle="modal" class="btn">Upload Raw Image</a>
+                      {%if(pi.rawImage )%}
+                      <a href="#rawimagedelete{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete Raw Image</a>
+                      {% endif %}
                     </div>
                 </div>
                 
@@ -65,7 +92,7 @@ return true;
         </form>
       
      <div id="rawimage{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_item_raw_image_edit',{"id":product.id, "item_id":pi.id}) }}">
+         <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_item_raw_image_edit',{"id":product.id, "item_id":pi.id}) }}" onsubmit="return rawImageValidation();">
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -73,7 +100,7 @@ return true;
     </div>
     <div class="modal-body">
         <p>Image:</p>
-        <div class="span2">{{ form_widget(itemrawimageform.file) }}{{ form_errors(itemrawimageform.file) }}</div>
+        <div class="span2">{{ form_widget(itemrawimageform.file,{ 'id': 'raw_image_id' }) }}{{ form_errors(itemrawimageform.file) }}</div>
        {{ form_rest(itemrawimageform) }}
        
     </div>
@@ -84,6 +111,28 @@ return true;
 </form>
     </div>
 </div>    
+      
+      
+  
+   <div id="rawimagedelete{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Product Raw Image </h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to Delete this Product <b>{{product.name }} Raw Image </b>?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="{{path("admin_product_detail_item_raw_image_delete",{"id":product.id, "item_id":pi.id})}}"  class="btn btn-primary">Delete</a>
+
+    </div>
+</div>   
+
+      
+      
+      
+      
          {% else %}
 
                 <div class="row-fluid show-grid p_title">
