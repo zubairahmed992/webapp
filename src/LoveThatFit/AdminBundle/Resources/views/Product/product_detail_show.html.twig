@@ -33,31 +33,36 @@
             <div id="pro_detail">
                 <div class="edt_container">
                     
-                    <div>{{product.description }}</div>
+                    
                     
                     
                     <div id="product_info_left">
+                        <div class="product_fld">
+                        <div class="p_hd">Brand</div>
+                        <div>{{product.brand.name }}</div>
+
+                    </div>
+                    
+                     <div class="product_fld">    
+                        <div class="p_hd">Clothing Type</div>
+                        <div>{{product.clothingType.name }}</div>                        
+                    </div>
+                            
                     <div class="product_fld">
                         <div class="p_hd">Gender</div>
                         <div>{{product.gender }}</div>
 
-                    </div>          
-                    <div class="product_fld">
-                        <div class="p_hd">Brand</div>
-                        <div>{{product.brand.name }}</div>
-
-                    </div>          
-                    <div class="product_fld">    
-                        <div class="p_hd">Clothing Type</div>
-                        <div>{{product.clothingType.name }}</div>                        
-                    </div>
-                    
-                    
+                    </div>                    
                      <div class="product_fld">
                         <div class="p_hd">Adjustment</div>
                         <div>{{product.adjustment }}</div>
-                    </div>     
+                    </div> 
+                            
+                            <div class="product_fld">
+                        <div>{{product.description }}</div>    
+                            </div>       
                         </div>
+                    
                     {%if(product.displayProductColor!='')%}
                     <div style="margin-left: 500px;">
                         <img style="width: 50px; height: 100px;" src="{{ asset(product.displayProductColor.WebPath) }}" width="100" height="200"/>
