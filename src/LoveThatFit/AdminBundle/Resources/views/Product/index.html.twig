@@ -6,24 +6,7 @@
 
 
 {% block body %}
-  <script>
-   function DownloadZip() {
-     
-        var searchIDs = $("#image_id:checked").map(function(){
-      return $(this).val();
-    }).get(); 
-    
-    $.ajax(
-            {
-        type:'POST',
-        url: $('#admin_product_zip').text(),
-        data: {searchIDs:searchIDs},        
-        success: function(response) {
-     
-    }});
-    return false;
-}            
-    </script>
+ 
     <span id="admin_product_zip" style="display:none;">{{path('admin_product_detail_zipdownlaod')}}</span>
 <div class="p_listing">     
     <h1>Products</h1>
@@ -72,7 +55,7 @@
           {% for p in products %}
 
         <div class="row-fluid show-grid product_main">
-            <div class="span1"><input type="checkbox" id="image_id" name="image_id" value="{{p.Id}}">{{p.Id}}</div>
+            <div class="span1">{{p.Id}}</div>
             <div class="span1">{{p.Brand.Name}}</div>
             <div class="span1">{{p.ClothingType.Name}}</div>
             <div class="span1">{{p.Gender}}</div>
@@ -112,15 +95,13 @@
 
 {% endfor %}
 
- <input type="button" class="btn" value="Download" onclick="DownloadZip()">          
-
  </div> 
 
     </div>
-   
+  
  {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
   with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
-,'controller_name':'admin_products'}
+,'controller_name':'admin_products','sort':sort}
  %}        
    
 </div>

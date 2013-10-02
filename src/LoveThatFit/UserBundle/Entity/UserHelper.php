@@ -689,6 +689,7 @@ class UserHelper {
             'per_page_limit' => $limit,
             'femaleUsers' => $this->countByGender('f'),
             'maleUsers' => $this->countByGender('m'),
+            'sort'=>$sort
         );
     }
 

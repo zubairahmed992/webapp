@@ -187,7 +187,8 @@ class ProductHelper{
             'maleProduct'=>  $this->countProductsByGender('m'),
             'topProduct'=>$this->countProductsByType('Top'),
             'bottomProduct'=>$this->countProductsByType('Bottom'),
-            'dressProduct'=>$this->countProductsByType('Dress')
+            'dressProduct'=>$this->countProductsByType('Dress'),
+            'sort'=>$sort,
         );
     }
 

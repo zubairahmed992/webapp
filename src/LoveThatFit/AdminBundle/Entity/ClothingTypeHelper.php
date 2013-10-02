@@ -150,6 +150,7 @@ class ClothingTypeHelper {
             'criteriaTop' => $this->countStatistics('Top'),
             'criteriaBottom' => $this->countStatistics('Bottom'),
             'criteriaDress' => $this->countStatistics('Dress'),
+             'sort'=>$sort,
         );
     }
 

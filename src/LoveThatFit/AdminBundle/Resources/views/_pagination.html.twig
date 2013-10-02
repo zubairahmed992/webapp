@@ -14,7 +14,7 @@
       {% if previous_btn and limit > 1 %}
        {% set  back = limit - 1 %}
             <li>
-                <a href="{{  path(controller_name,{'page_number':back})}}"><<</a></li>
+                <a href="{{path(controller_name,{'page_number':back,'sort':sort})}}"><<</a></li>
        {% elseif previous_btn %}
             <li class='disabled'>
                 <a href="#_" ><< </a>
@@ -29,7 +29,7 @@
                 <a href="{{  path(controller_name,{'page_number':y}) }}">{{y}}</a></li> 
        {% else %}   
             <li>
-                <a href="{{  path(controller_name)~'/'~ y }}">{{y}}</a>
+                <a href="{{  path(controller_name)~'/'~ y~'/'~sort }}">{{y}}</a>
             </li>
         {% endif %}  
         {% endfor %}
@@ -43,7 +43,7 @@
        {% if next_btn and limit < no_of_pagination %} 
                 {% set nex = limit + 1%}
                 <li>
-                    <a href="{{  path(controller_name,{'page_number':nex})}}" > >></a>
+                    <a href="{{  path(controller_name,{'page_number':nex,'sort':sort})}}" > >></a>
                 </li>
                 {% elseif next_btn %}
                 <li class='disabled'>

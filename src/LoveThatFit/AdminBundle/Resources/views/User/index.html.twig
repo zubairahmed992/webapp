@@ -50,9 +50,10 @@
 {% endfor %}
  </div>
  </div> 
+ 
  {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
   with {'rec_count':pagination.rec_count,'limit':pagination.limit,'per_page_limit':pagination.per_page_limit,'no_of_pagination':pagination.no_of_pagination
-,'controller_name':'admin_users'}
+,'controller_name':'admin_users','sort':pagination.sort}
  %}
     </div>
 {% endblock %}

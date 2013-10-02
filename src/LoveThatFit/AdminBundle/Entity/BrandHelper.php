@@ -182,6 +182,7 @@ class BrandHelper {
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,
             'per_page_limit' => $limit,
+            'sort'=>$sort,
         );
     }
 

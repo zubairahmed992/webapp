@@ -503,6 +503,7 @@ public function getBrandArraySizeChart() {
                            'topSizeChart'=>$this->getSizeChartByTarget('Top'),
                            'bottomSizeChart'=>  $this->getSizeChartByTarget('Bottom'),
                            'dressSizeChart'=>  $this->getSizeChartByTarget('Dress'),
+                           'sort'=>$sort,
         );
     }
     

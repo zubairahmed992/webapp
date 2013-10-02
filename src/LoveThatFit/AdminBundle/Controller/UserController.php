@@ -30,7 +30,7 @@ class UserController extends Controller {
     
     public function indexAction($page_number, $sort = 'id') {
         $size_with_pagination = $this->get('user.helper.user')->getListWithPagination($page_number, $sort);
-        return $this->render('LoveThatFitAdminBundle:User:index.html.twig',array('pagination'=>$size_with_pagination,'searchform'=>$this->userSearchFrom()->createView(),));
+        return $this->render('LoveThatFitAdminBundle:User:index.html.twig',array('pagination'=>$size_with_pagination,'searchform'=>$this->userSearchFrom()->createView()));
     }
     
     
