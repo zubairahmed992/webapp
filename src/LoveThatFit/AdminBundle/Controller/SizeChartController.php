@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\SizeChartType;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class SizeChartController extends Controller {
@@ -21,8 +22,11 @@ class SizeChartController extends Controller {
 
         $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
         $entity = $specs['entity'];
-        $sizechart_limit = count($this->get('admin.helper.sizechart')->getRecordsCountWithCurrentSizeChartLimit($id));
-        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($sizechart_limit));
+        
+        $sizechart_limit = $this->get('admin.helper.sizechart')->getRecordsCountWithCurrentSizeChartLimit($id);
+     
+      
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber( $sizechart_limit[0]['id']));
         if($page_number==0){
        $page_number=1;
      }

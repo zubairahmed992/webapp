@@ -350,9 +350,13 @@ class SizeChartRepository extends EntityRepository {
      public function getRecordsCountWithCurrentSizeChartLimit($sizechart_id){
         
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc')
-                    ->setMaxResults($sizechart_id);
-                    return $query->getResult();
+                    ->createQuery("SELECT count(sc.id) as id  FROM LoveThatFitAdminBundle:SizeChart sc WHERE sc.id <=:size_chart_id")
+                   ->setParameters(array('size_chart_id' => $sizechart_id));
+                     try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
         } 
 
 
