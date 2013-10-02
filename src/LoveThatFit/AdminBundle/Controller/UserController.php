@@ -38,8 +38,8 @@ class UserController extends Controller {
     {       
         $specs = $this->get('user.helper.user')->findWithSpecs($id);
         $entity = $specs['entity'];
-        $user_limit = count($this->get('user.helper.user')->getRecordsCountWithCurrentUserLimit($id));
-        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($user_limit));
+        $user_limit = $this->get('user.helper.user')->getRecordsCountWithCurrentUserLimit($id);
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($user_limit[0]['id']));
         if($page_number==0){
        $page_number=1;
      }

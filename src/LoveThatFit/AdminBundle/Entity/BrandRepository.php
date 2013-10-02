@@ -136,9 +136,13 @@ class BrandRepository extends EntityRepository {
   public function getRecordsCountWithCurrentBrandLimit($brand_id){
         
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT b FROM LoveThatFitAdminBundle:Brand b')
-                    ->setMaxResults($brand_id);
-                    return $query->getResult();
+                    ->createQuery("SELECT count(b.id) as id FROM LoveThatFitAdminBundle:Brand b WHERE b.id <=:brand_id")
+                   ->setParameters(array('brand_id' => $brand_id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
         } 
   
 

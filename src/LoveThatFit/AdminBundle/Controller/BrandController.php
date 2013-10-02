@@ -21,8 +21,8 @@ class BrandController extends Controller {
 
         $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
         $entity = $specs['entity'];
-        $brand_limit = count($this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id));
-        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit));
+        $brand_limit =$this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id);
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit[0]['id']));
         if($page_number==0){
        $page_number=1;
      }

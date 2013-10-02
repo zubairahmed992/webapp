@@ -22,8 +22,8 @@ class ClothingTypeController extends Controller {
 
         $specs = $this->get('admin.helper.clothingtype')->findWithSpecs($id);
         $entity = $specs['entity'];
-        $clothing_type_limit = count($this->get('admin.helper.clothingtype')->getRecordsCountWithCurrentClothingTYpeLimit($id));
-        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($clothing_type_limit));
+        $clothing_type_limit =$this->get('admin.helper.clothingtype')->getRecordsCountWithCurrentClothingTYpeLimit($id);
+        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($clothing_type_limit[0]['id']));
         if($page_number==0){
             $page_number=1;
         }

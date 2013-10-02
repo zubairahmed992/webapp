@@ -822,9 +822,13 @@ class ProductRepository extends EntityRepository {
     public function getRecordsCountWithCurrentProductLimit($product_id){
         
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT p FROM LoveThatFitAdminBundle:Product p')
-                    ->setMaxResults($product_id);
-                    return $query->getResult();
+                    ->createQuery("SELECT count(p.id) as id FROM LoveThatFitAdminBundle:Product p  WHERE p.id<=:product_id")
+                     ->setParameters(array('product_id' => $product_id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
         } 
     
 }

@@ -210,9 +210,13 @@ class UserRepository extends EntityRepository {
     public function getRecordsCountWithCurrentUserLimit($user_id){
         
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT us FROM LoveThatFitUserBundle:User us')
-                    ->setMaxResults($user_id);
-                    return $query->getResult();
+                    ->createQuery("SELECT count(us.id)as id  FROM LoveThatFitUserBundle:User us WHERE us.id<=:user_id")
+                   ->setParameters(array('user_id' => $user_id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
         } 
 
 }

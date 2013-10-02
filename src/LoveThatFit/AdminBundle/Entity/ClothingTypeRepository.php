@@ -177,10 +177,13 @@ param:limit, page_number,limit,sort
 #------------------------------------------------------------------------------#  
   public function getRecordsCountWithCurrentClothingTYpeLimit($clothing_type){
      $query = $this->getEntityManager()
-                    ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c')
-                    ->setMaxResults($clothing_type);
-                    return $query->getResult();  
-      
+                    ->createQuery("SELECT count(c.id) as id  FROM LoveThatFitAdminBundle:ClothingType c WHERE c.id <=:clothing_type")
+                   ->setParameters(array('clothing_type' => $clothing_type));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
   }  
 
 }
