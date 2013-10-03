@@ -309,8 +309,56 @@ public function avatarUploadAction() {
         $constant_values['ipad']=$utility_help['resolution_scale']['ipad'];
         $constant_values['ipad_retina']=$utility_help['resolution_scale']['ipad_retina'];*/
         return new response(json_encode($utility_helper->getDeviceBootstrap()));
-    }  
-    
+    }
+#------------------------Password Forget Services------------------------------#
+ public function forgetPasswordAction(){
+       
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $email = $decoded['email'];
+        
+        if($this->get('user.helper.user')->emailCheckForgetPassowrd($email)){
+            $userData=$this->get('user.helper.user')->updateTokenSendEmail($request,$email);
+           $baseurl = $this->getRequest()->getHost();
+           $link = $baseurl . "/" . $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $userData->getAuthToken()));
+          $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmail($userData, $link);
+          $msg = "";
+          if ($defaultData[0]) {
+            $msg = " Email has been sent with reset password link to " . $userData->getEmail();
+            } else {
+            $msg = " Email not sent due to some problem, please try again later.";
+           }
+            return new response(json_encode(array("Message"=>$msg)));
+        }else{
+       return new response(array("Message"=>"This Email doesn't exist"));
+        }
+     
+ }
+#-----------------------------Check Token -----------------------------#
+ public function  checkTokenforgetPasswordAction(){
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $authToken = $decoded['auth_token'];
+        $updatePassword=$this->get('user.helper.user')->checkTokenforgetPassword($authToken);
+        return new response(json_encode($updatePassword));
+ }
+ 
+#----------------------------Update Forget Password----------------------------# 
+ public function updateForgetPasswordAction(){
+      $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $password = $decoded['password'];
+        $email = $decoded['email'];
+         $updatePassword=$this->get('user.helper.user')->updateForgetPassword($email,$password);
+        return new response(json_encode($updatePassword));
+     
+ }
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
