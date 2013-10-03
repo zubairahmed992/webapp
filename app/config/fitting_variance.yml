@@ -1,0 +1,72 @@
+# clothing type with their variances in measurements to compare:
+  
+#is there any difference of variances in male/female
+top:
+  blouse: 
+    sleeve: 0.5 
+    length: 0.5 
+    bust: 1
+    waist: 1
+    hem: 1
+  derss_shirt: 
+    shoulder: 0.5 
+    bust: 0.5
+    waist: 0.5
+    hem: 0.5
+  polo:
+    bust: 0.5
+    waist: 0.5
+    hem: 0.5
+  sweater:
+    bust: 1
+    waist: 1
+    hip: 1
+    hem: 1
+  tee:
+    shoulder: 0.5 
+    bust: 0.5
+    waist: 0.5
+    hem: 0.5
+  tunic:
+    bust: 2
+    waist: 2
+    hip: 2
+    hem: 2
+bottom:
+  pants:
+    ultra_low:
+      hip: 0.5
+    low:
+      waist: 0.5
+      hip: 0.5
+    mid:
+      waist: 0.5
+      hip: 0.5
+    high:
+      waist: 0.5
+dress:
+  aline:
+    bust: 0.5
+    waist: 0.5
+  ampire:
+    bust: 0.5
+    waist: 0.5
+    #hip measurement depends upon if it flares or not
+  maxi:
+    bust: 0.5
+    waist: 0.5
+    hip: 2 
+    #hip not important
+  sheath:
+    bust: 0.5
+    waist: 0.5
+    hip: 2 
+    
+  wrap:
+    bust: 0.5
+    waist: 0.5
+    hip: 2 
+    
+
+  
+    
