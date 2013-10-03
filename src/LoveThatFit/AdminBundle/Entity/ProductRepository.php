@@ -830,5 +830,25 @@ class ProductRepository extends EntityRepository {
                 return null;
                 }
         } 
+ #-----------------------------------------------------------------------------#
+        #---------Searching Quries-------------------------------#
+  public function searchProduct($brand_id,$genders){
+      
+              
+      return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->innerJoin('p.brand', 'b')
+                        ->Where('b.id=:brand_id')
+                        ->andWhere('p.gender=:gender')
+                        ->groupBy('p.id')
+                        ->setParameters(array( 'brand_id' => $brand_id,'gender'=>$genders))
+                        ->getQuery()
+                        ->getResult(); 
+      
+  }
     
 }

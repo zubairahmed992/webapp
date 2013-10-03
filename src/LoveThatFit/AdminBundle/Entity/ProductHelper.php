@@ -849,5 +849,10 @@ public function getRecordsCountWithCurrentProductLimit($product_id){
     return $this->repo->getRecordsCountWithCurrentProductLimit($product_id);
 }
     
+#----------------Getting Record for Searching--------------------------------#
+public function searchProduct($brand_id,$genders){
+    return $this->repo->searchProduct($brand_id,$genders);
+}
+
 
 }

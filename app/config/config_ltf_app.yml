@@ -34,8 +34,10 @@ constants:
     women: f
   
   target: 
-     ({top, bottom, dress})
-  
+     top: top
+     bottom: bottom
+     dress: dress
+     
   body_types:
      ({regular, petite, tall})
   

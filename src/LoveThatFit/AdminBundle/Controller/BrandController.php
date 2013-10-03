@@ -141,5 +141,5 @@ class BrandController extends Controller {
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
-
+  
 }

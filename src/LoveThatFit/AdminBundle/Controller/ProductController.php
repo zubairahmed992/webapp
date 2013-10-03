@@ -806,10 +806,31 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
 #--------------------Multiple Iamge Download as Zip----------------------------#
     public function productDetailZipDownloadAction(Request $request)
     {
-      
        $data = $request->request->all();
        return new Response($this->get('admin.helper.product')->zipMultipleDownload($data));
-       
     }
+    
+  #-----------------------------------------------------------------------------#
+    #---------------Start Searching For Products------------------------------#
+   public function productSeachFormAction(){
+      $brandList=$this->get('admin.helper.brand')->findAll();
+      $genders=$this->get('admin.helper.utility')->getGenders();
+      $target=$this->get('admin.helper.utility')->getTargets();
+      $bodyType=$this->get('admin.helper.utility')->getBodyTypes();
+      $category=$this->get('admin.helper.clothing_type')->findAll();
+      return $this->render('LoveThatFitAdminBundle:Product:searchForm.html.twig',array('brandList'=>$brandList,'genders'=>$genders,'target'=>$target,'bodyType'=>$bodyType,'category'=>$category));
+   }
+#-------------------Searching Resulting----------------------------------------#
+ public function productSeachResultAction(Request $request){
+  $data = $request->request->all();
+  $brand_id=$data['brand'];
+  $category_id=$data['category'];
+  $genders=$data['genders'];
+  $target=$data['target'];
+ 
+  $productResult=$this->get('admin.helper.product')->searchProduct($brand_id,$genders);
+  $countRecord=count($productResult);
+ return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig',array('productResult'=>$productResult,'countRecord'=>$countRecord));    
+ }
 }
 
