@@ -633,6 +633,43 @@ class ProductRepository extends EntityRepository {
                return null;
         }
     }
+    //-------------------------------------------------------------------------------------    
+    public function findMostFavoriteByGender($gender, $page_number = 0, $limit = 0)
+    {        
+        $query = $this->getEntityManager()
+        ->createQuery("SELECT p.id as id, count(p.id) as likedproducts
+        FROM LoveThatFitAdminBundle:Product p
+        JOIN p.product_items pi
+        JOIN pi.users upi
+        WHERE p.gender = :gender 
+        AND 
+        p.disabled=0 
+        
+        GROUP BY p.id ORDER BY likedproducts DESC
+            ")->setParameter('gender', $gender);        
+        $ids = $query->getResult();    
+        
+        if($ids){
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                            ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE p.gender = :gender AND 
+            p.disabled=0 AND 
+            p.displayProductColor!='' AND
+            p.id in (:ids)
+            ")->setParameters(array('gender'=> $gender, 'ids' => $ids));
+        } 
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+        }else{
+               return null;
+        }
+    }
     
     
 //-------------------------------------------------------------------------------------    
@@ -788,7 +825,7 @@ class ProductRepository extends EntityRepository {
     
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Product Listing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public function findByGenderMostLiked($gender,$page_number=0, $limit=0) {
+  /*  public function findByGenderMostLiked($gender,$page_number=0, $limit=0) {
             $query = $this->getEntityManager()
                         ->createQuery("
      SELECT p,pi,ps,pc FROM LoveThatFitAdminBundle:Product p
@@ -802,7 +839,7 @@ class ProductRepository extends EntityRepository {
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-    }
+    }*/
 #-----------------Image Downloading Functions----------------------------------#    
     public function getProductColorArray($product_id){
         

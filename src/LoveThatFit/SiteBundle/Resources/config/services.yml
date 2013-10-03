@@ -2,6 +2,11 @@ parameters:
 #    love_that_fit_site.example.class: LoveThatFit\SiteBundle\Example
 
 services:
+  ajax.listener:
+       class: LoveThatFit\SiteBundle\Component\Event\AjaxAuthenticationListener
+       tags:
+         - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }  
+  
   site.helper.usertryitemhistory:
         class: LoveThatFit\SiteBundle\Entity\UserItemTryHistoryHelper
         arguments:

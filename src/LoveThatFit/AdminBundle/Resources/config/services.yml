@@ -2,6 +2,11 @@ parameters:
 #    love_that_fit_admin.example.class: LoveThatFit\AdminBundle\Example
 
 services:    
+     kernel.listener.accessDenied:
+        class: LoveThatFit\AdminBundle\Component\Event\AccessDeniedListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.exception, method: onAccessDeniedException }
+          
      admin.helper.utility:
         class: LoveThatFit\AdminBundle\Entity\UtilityHelper
         
@@ -83,8 +88,9 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ProductItem       
             container: "@service_container"
+    
      
-     
+         
 #    love_that_fit_admin.example:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

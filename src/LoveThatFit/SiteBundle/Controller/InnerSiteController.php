@@ -51,7 +51,7 @@ public function indexAction($list_type) {
     }
 #------------------------------Product Slider-----------------------------------
     public function productsByTypeAction($list_type='latest', $page_number = 0, $limit = 0) {
-        if ($list_type == 'ltf_recommendation') {
+        if ($list_type == 'ltf_recommendation' || $list_type == 'most_faviourite') {
             $entity = null;
             return $this->renderProductTemplate($entity, $page_number, $limit, 'Comming Soon');
         } else {
@@ -93,7 +93,12 @@ public function indexAction($list_type) {
         $user_id= $this->get('security.context')->getToken()->getUser()->getId();
         $entity = $this->get('admin.helper.product')->findProductItemByUser($user_id,$gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
-    }
+    
+        //$user= $this->get('security.context')->getToken()->getUser();
+        //$entity = $this->get('admin.helper.product')->findMostFavoriteProducts($user->getGender(), $page_number, $limit);
+        //return $this->renderProductTemplate($entity, $page_number, $limit);
+    }    
+    
 #------------------------------------------------------------------------------- 
     public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
         $entity = null;
@@ -138,10 +143,12 @@ public function indexAction($list_type) {
         ));
   }
 #-------------------------------------------------------------------------------
-    public function productsMostLikedAction($page_number = 0, $limit = 0) {       
+/*    public function productsMostLikedAction($page_number = 0, $limit = 0) {       
         $entity =  $this->get('admin.helper.product')->findMostLikedProducts($page_number, $limit);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_most_liked_products.html.twig', array('product' => $entity));
     }
+ * 
+ */
 #-------------------------------------------------------------------------------
     public function productsByMyClosetAction($page_number = 0, $limit = 0) {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();

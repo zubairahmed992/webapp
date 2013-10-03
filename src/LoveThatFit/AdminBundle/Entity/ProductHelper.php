@@ -273,9 +273,13 @@ public function findSampleClothingTypeGender($gender){
     return $this->repo->findSampleClothingTypeGender($gender);
 }
 #-------------------------------------------------------------------------------
-public function findMostLikedProducts($page_number, $limit){
-    return $this->repo->findMostLikedProducts($page_number, $limit);
+public function findMostFavoriteProducts($gender, $page_number=0, $limit=0){
+    return $this->repo->findMostFavoriteByGender($gender, $page_number, $limit);
 }
+#-------------------------------------------------------------------------------
+//public function findMostLikedProducts($page_number, $limit){
+ //   return $this->repo->findMostLikedProducts($page_number, $limit);
+//}
 public function findProductItemByUser($user_id, $page_number, $limit){
     return $this->repo->findProductItemByUser($user_id, $page_number, $limit);
 }
@@ -315,7 +319,8 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         break;
     
         case "most_faviourite":        
-        $list = $this->findMostLikedByGender($options['gender']);
+        $list = $this->findMostFavoriteProducts($options['gender']);
+        
         break ;
         
         
@@ -367,9 +372,9 @@ public function findProductItemByUser($user_id, $page_number, $limit){
    }
    #---------------------------------------------------
     
-   public function findMostLikedByGender($gender='F', $page_number=0, $limit=0) {
-        return $this->repo->findByGenderMostLiked($gender, $page_number, $limit);        
-   } 
+   //public function findMostLikedByGender($gender='F', $page_number=0, $limit=0) {
+    //    return $this->repo->findByGenderMostLiked($gender, $page_number, $limit);        
+   //} 
         
 #-----------------------------Web Service-------------------------------------------------------------------------#
 
