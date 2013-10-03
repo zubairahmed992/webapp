@@ -1,0 +1,34 @@
+{%if(countRecord>0)%}
+<table style="border:1px solid #999999;" align="center" width="50%" id="searchResult">
+    <th> Search Result:</th>   
+    <tr style="background-color: grey;">
+        <td>Product Name</td>
+        <td>Description</td>
+        <td>Target</td>
+        <td>Image</td>
+    </tr>
+    
+    
+ {% for pr in productResult %}
+    <tr>
+            <td>
+            {{pr.name}}
+            </td> 
+            <td>
+            {{pr.description}}
+            </td> 
+            <td>
+            {{pr.target}}
+            </td> 
+            <td>
+              {{pr.product_image}}
+                
+            </td> 
+</tr>
+{%endfor%}        
+
+ 
+ </table>
+{%else%}
+<div align="center">Record Not Found..</div>
+{%endif%}

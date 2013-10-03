@@ -1,0 +1,81 @@
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script>
+ function SearchForm(){
+var brand=$('#brand').val();
+
+var category = []
+   $("#category:checked").each(function() {
+       category.push($(this).val());
+   });
+
+var genders = []
+   $("#genders:checked").each(function() {
+       genders.push($(this).val());
+   });
+
+var target = []
+   $("#target:checked").each(function() {
+       target.push($(this).val());
+   });
+
+$.ajax({
+        type:'POST',
+        url: $('#url').text(),
+        data: {brand: brand, category: category,genders:genders,target:target},  
+        success: function(response) {
+       console.log(response);
+       $('#searchResult').empty('');
+       $('#searchResult').append(response);
+       
+    }});
+    return false;
+}
+
+
+
+ </script>
+ <span id="url" style="display:none;">{{path('admin_product_search_result')}}</span>
+<table style="border:1px solid #999999;" align="center" width="25%" id="searchForm">
+    <th> Search Product:</th>   
+    <tr>
+        <td>Brand:</td>
+        <td><select name="brand" id="brand">
+ {% for b in brandList %}
+        <option value="{{b.id}}">{{b.name}}</option> 
+{%endfor%}        
+
+</select>
+            </td>
+    </tr>
+  <tr>
+      <td>Genders:</td>
+      <td>{% for g in genders %}
+          <input type="checkbox" name="genders" id="genders" value="{{g}}" >{{g}}
+{%endfor%}  
+      </td>
+  </tr>
+  
+ <tr>
+      <td>Target:</td>
+      <td>
+       {% for t in target %}
+      <input type="checkbox" name="target" id="target" value="{{t}}">{{t}}
+      {%endfor%}  
+      </td>
+  </tr>
+  <tr>
+<td>Category:</td>
+<td>
+ {% for c in category %}
+ <input type="checkbox" name="category" id="category" value="{{c.id}}">{{c.name}}
+{%endfor%}        
+</td>
+  </tr>
+  <tr>
+      <td>Search</td>
+      <td><input type="button" value="Search" onclick="SearchForm()"></td>
+  </tr> 
+
+</table>
+ <div id="searchResult"></div>
+ 

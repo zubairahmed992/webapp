@@ -100,3 +100,10 @@ admin_product_detail_item_raw_image_delete:
    pattern:  /admin/productdetail/{id}/delete/{item_id}/raw_image_delete
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageDelete }   
    
+#--------------------------- Product Search -----------------------------------#  
+admin_product_search_from:
+     pattern:  /admin/product/searchForm
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachForm}
+admin_product_search_result:
+     pattern:  /admin/product/searchResult
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachResult}     
