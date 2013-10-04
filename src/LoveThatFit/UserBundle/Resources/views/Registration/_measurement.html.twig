@@ -17,7 +17,7 @@
         <div class="steps step_3 measurements">
             <h2>Brands &amp; Sizes</h2>
             <div id="inst">Put all values in inches.</div>
-            <form action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+            <form id="RegistrationMeasurement" action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
                 {{ form_errors(form) }}
                     
                     <div>
@@ -27,7 +27,20 @@
                         <div id="height_wrapper">
                         <span class="boxlable" id="height_box">Height (inch)</span>  
                         <span class="boxlable" id="height_box" style="margin-left:115px;"><a onclick="showfeet()" href="javascript:void(0);" style="color: #929707; font-weight: bold;">In Feet?</a></span>
-  </div>                        
+  </div>
+                        <div class="login_error" >
+                                                    <div id="error_content0" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Height can not be null.
+                                                         </div>
+                                
+                                <div id="error_content10" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Height must be greater than zero.
+                                                         </div>
+                                                    </div>
+                        
+                        
 {{ form_widget(form.height) }}
                        
                         
@@ -75,6 +88,18 @@
                         <span class="boxlable" id="weight_box">Weight (lbs)</span>  
                         {{ form_widget(form.weight) }}
                     </div> 
+                    
+                    <div class="login_error" >
+                                                    <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Weight can not be null.
+                                                         </div>
+                            <div id="error_content11" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             weight must be greater than zero.
+                                                         </div>
+                                                    </div>
+                                                    </div>
 
 
                     <div class="m_option">   
@@ -270,6 +295,13 @@ $('#height_in_inches').change(function() {
                        
                            
                         </div>
+                        <div class="login_error" >
+                                                    <div id="error_content2" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Please select your top measurement.
+                                                         </div>
+                                                    </div>
+                        
                         
                         <div class="shuf_icon shirt_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
 
@@ -293,6 +325,13 @@ $('#height_in_inches').change(function() {
                             {{ form_widget(form.outseam) }}       
 
                         </div>
+                        
+                        <div class="login_error" >
+                                                    <div id="error_content3" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Please select your bottom measurement.
+                                                         </div>
+                                                    </div>
 
                         <div class="pants_mus manual_opn show_hide show_it" id="pants_mus_opt">
 
@@ -336,6 +375,12 @@ $('#height_in_inches').change(function() {
                             {{form_errors(form.dress_size)}}  
                             {{form_widget(form.dress_size)}}  
                         </div>
+                        <div class="login_error" >
+                                                    <div id="error_content4" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Please select your dress measurement.
+                                                         </div>
+                                                    </div>
 
                         <div class="shuf_icon"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
 
@@ -509,5 +554,59 @@ $('#height_in_inches').change(function() {
 
 
                 </script> 
+        <script>
+  $( "#RegistrationMeasurement" ).submit(function( event ) {
+  var height=document.getElementById('measurement_height').value;
+  var weight=document.getElementById('measurement_weight').value;
+  var bottommeasurement=document.getElementById('measurement_bottom_size').value;    
+  var shirtmeasurement=document.getElementById('measurement_top_size').value;  
+  var dressmeasurement=document.getElementById('measurement_dress_size').value;
+  var slevee=document.getElementById('measurement_sleeve').value;
+  var Bust=document.getElementById('measurement_bust').value;
+  var Back=document.getElementById('measurement_back').value;  
+  var waist=document.getElementById('measurement_waist').value;
+  var outseam=document.getElementById('measurement_outseam').value;
+  var hip=document.getElementById('measurement_hip').value;  
+  if(height=='')
+      {
+          document.getElementById('error_content0').style.display="block";
+          return false;
+      }
+  if(height==0)
+      {
+          document.getElementById('error_content10').style.display="block";
+          return false;
+      }    
+  if(weight=='')
+      {
+          document.getElementById('error_content1').style.display="block";
+          return false;
+      }   
+  if(weight==0)
+      {
+          document.getElementById('error_content11').style.display="block";
+          return false;
+      }  
+  if((shirtmeasurement=='') && (slevee==0 && Bust==0 && Back==0))
+      {
+          document.getElementById('error_content2').style.display="block";
+          return false;
+      }
+   if((bottommeasurement=='') && (waist==0 && outseam==0))
+      {
+          document.getElementById('error_content3').style.display="block";
+          return false;
+      }
+   if((dressmeasurement=='') && hip==0)
+      {
+          document.getElementById('error_content4').style.display="block";
+          return false;
+      }   
+        
+  
+}); 
+       </script>
+                
+                
 {% endblock %} 
 
