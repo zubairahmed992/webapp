@@ -59,6 +59,19 @@ ws_image_upload:
    pattern:  /web_service/image_upload
    defaults: { _controller: LoveThatFitWebServiceBundle:User:imageUpload}
    
+ws_forget_password:
+    pattern:  /web_service/forget_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:forgetPassword }
+
+ws_check_token__forget_password:
+    pattern:  /web_service/check_token_forget_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:checkTokenforgetPassword }
+ws_update__forget_password:
+    pattern:  /web_service/check_update_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:updateForgetPassword }    
+    
+    
+   
 ws_brand_list_size_chart:
    pattern:  /web_service/brand_list_size_chart
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:brandListSizeChart}

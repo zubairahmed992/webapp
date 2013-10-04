@@ -271,11 +271,43 @@ class UserHelper {
             return array('Message' => 'The Email already exists');
         }
     }
-    #----------------------------------------------------------------------------------------------#
-
+   #----------------------------------Forget Password Checking-----------------# 
+    public function emailCheckForgetPassowrd($email) {
+        if ($this->isDuplicateEmail(Null, $email) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    #--------------------------------------------------------------------------#
     public function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
     }
+   #--------------Forget Password Webservices ---------------------------------# 
+    public function updateTokenSendEmail($request,$email){
+        $_user=$this->repo->findByEmail($email);
+        $uniq_id=  uniqid();
+        $_user->setAuthToken($uniq_id);
+        $this->saveUser($_user) ;
+        return $_user;
+    }
+  #---------------Update Authenicated Token------------------------------------#  
+  public function checkTokenforgetPassword($auth_token){
+   $user=$this->authenticateToken($auth_token);   
+   return $user;
+  }
+#--------------------------Update Forget Password------------------------------#
+public function updateForgetPassword($email,$password){
+     $entity = $this->repo->findOneBy(array('email' => $email));// this to replace with renamed method
+        if (count($entity) > 0) {
+                $password = $this->encodeThisPassword($entity, $password);
+                $entity->setPassword($password);
+                $this->saveUser($entity);
+                return array('Message' => 'Paasword has been updated');
+        } else {
+            return array('Message' => 'Invalid Email');
+        }
+}  
     #------------------------Chek Token ------------------------#
 
     public function authenticateToken($token) {
