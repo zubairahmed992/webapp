@@ -837,10 +837,18 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
   }
   
   $target=$data['target'];
- 
-  $productResult=$this->get('admin.helper.product')->searchProduct($brand_id,$male,$female);
+  $productResult=$this->get('admin.helper.product')->searchProduct($brand_id,$male,$female,$target);
   $countRecord=count($productResult);
  return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig',array('productResult'=>$productResult,'countRecord'=>$countRecord));    
+ }
+#------------------------------------------------------------------------------#
+ public function productSeachCategoryAction(Request $request){
+     
+     $target_array = $request->request->all();
+   $result= $this->get('admin.helper.product')->searchCategory($target_array);
+   print_r($result);
+     return new response(json_encode($result));
+     
  }
 }
 

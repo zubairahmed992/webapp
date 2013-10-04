@@ -869,7 +869,7 @@ class ProductRepository extends EntityRepository {
         } 
  #-----------------------------------------------------------------------------#
         #---------Searching Quries-------------------------------#
-  public function searchProduct($brand_id,$male,$female){
+  public function searchProduct($brand_id,$male,$female,$target){
       
               
       return $this->getEntityManager()
@@ -880,13 +880,25 @@ class ProductRepository extends EntityRepository {
                         ->innerJoin('p.clothing_type', 'ct')
                         ->innerJoin('p.brand', 'b')
                         ->Where('b.id=:brand_id')
-                        ->andWhere('p.gender=:female')
+                        ->orWhere('p.gender=:female')
                         ->orWhere('p.gender=:male')
                         ->groupBy('p.id')
-                        ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))
+                        ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male),array($target))
                         ->getQuery()
                         ->getResult(); 
       
   }
+#------------------Search Categfory ------------------------------------------#
+ public function searchCategory($target){
     
+      $query = $this->getEntityManager()
+                    ->createQuery("SELECT ct.name as name, ct.target as target FROM LoveThatFitAdminBundle:ClothingType ct WHERE ct.target IN (:target)")
+                     ->setParameter('target',$target['target']);
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+     
+ }
 }

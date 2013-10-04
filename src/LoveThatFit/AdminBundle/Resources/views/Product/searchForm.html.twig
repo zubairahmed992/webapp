@@ -31,10 +31,30 @@ $.ajax({
     return false;
 }
 
+function getTargetCategory(){
+var target = []
+   $("#target:checked").each(function() {
+       target.push($(this).val());
+   });
+    if(target){
+       $.ajax({
+       type:'POST',
+       url: $('#url_target').text(),
+       data: {target:target},  
+       success: function(response) {
+       console.log(response);
+      
+       
+    }});
+    return false; 
 
+
+   }
+}
 
  </script>
  <span id="url" style="display:none;">{{path('admin_product_search_result')}}</span>
+ <span id="url_target" style="display:none;">{{path('admin_product_search_category_with_target')}}</span>
 <table style="border:1px solid #999999;" align="center" width="25%" id="searchForm">
     <th> Search Product:</th>   
     <tr>
@@ -59,7 +79,7 @@ $.ajax({
       <td>Target:</td>
       <td>
        {% for t in target %}
-      <input type="checkbox" name="target" id="target" value="{{t}}">{{t}}
+ <input type="checkbox" name="target" id="target" value="{{t|capitalize }}" onclick="getTargetCategory()">{{t|capitalize }}
       {%endfor%}  
       </td>
   </tr>

@@ -343,8 +343,13 @@ public function avatarUploadAction() {
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
         $authToken = $decoded['auth_token'];
+        
+        if($authToken){
         $updatePassword=$this->get('user.helper.user')->checkTokenforgetPassword($authToken);
         return new response(json_encode($updatePassword));
+ }else{
+ return new response(json_encode(array("Message"=>"Authenticated Token Missing")));
+ }
  }
  
 #----------------------------Update Forget Password----------------------------# 
@@ -355,7 +360,7 @@ public function avatarUploadAction() {
         $decoded = json_decode($jsonInput, true);
         $password = $decoded['password'];
         $email = $decoded['email'];
-         $updatePassword=$this->get('user.helper.user')->updateForgetPassword($email,$password);
+        $updatePassword=$this->get('user.helper.user')->updateForgetPassword($email,$password);
         return new response(json_encode($updatePassword));
      
  }

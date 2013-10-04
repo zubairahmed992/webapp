@@ -293,7 +293,14 @@ class UserHelper {
     }
   #---------------Update Authenicated Token------------------------------------#  
   public function checkTokenforgetPassword($auth_token){
-   $user=$this->authenticateToken($auth_token);   
+  $entity = $this->repo->findOneBy(array('authToken' => $auth_token));
+        if (count($entity) > 0) {
+            $user=array();
+            $user['email']=$entity->getEmail();
+            return $user;
+        } else {
+            return array('status' => False, 'Message' => 'Authentication Failure');
+        };   
    return $user;
   }
 #--------------------------Update Forget Password------------------------------#
