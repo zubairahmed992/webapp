@@ -4,13 +4,15 @@
     <tr style="background-color: grey;">
         <td>Product Name</td>
         <td>Description</td>
+        <td>Brand Name</td>
         <td>Target</td>
+        <td>Gender</td>
         <td>Image</td>
     </tr>
     
     
  {% for pr in productResult %}
-    <tr>
+    <tr  width: height: 50px;>
             <td>
             {{pr.name}}
             </td> 
@@ -18,10 +20,20 @@
             {{pr.description}}
             </td> 
             <td>
+                {{pr.brand_name}}
+            </td>
+            <td>
             {{pr.target}}
             </td> 
             <td>
-              {{pr.product_image}}
+                {{pr.gender}}
+            </td>
+            <td>
+                {%if(pr.product_image is defined)%}
+               
+                    <img src="{{asset('uploads/ltf/products/display/web/')}}{{pr.product_image}}" width="50px;" height="50px;">
+               {%endif%}
+              
                 
             </td> 
 </tr>

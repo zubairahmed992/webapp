@@ -826,9 +826,19 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
   $brand_id=$data['brand'];
   $category_id=$data['category'];
   $genders=$data['genders'];
+ // $male=$genders['m'];
+  if(isset($genders['0'])){
+  $male=$genders['0'];}else{
+      $male=null;
+  }
+  if (isset($genders['1'])){
+  $female=$genders['1'];}else{
+      $female=null;
+  }
+  
   $target=$data['target'];
  
-  $productResult=$this->get('admin.helper.product')->searchProduct($brand_id,$genders);
+  $productResult=$this->get('admin.helper.product')->searchProduct($brand_id,$male,$female);
   $countRecord=count($productResult);
  return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig',array('productResult'=>$productResult,'countRecord'=>$countRecord));    
  }
