@@ -332,7 +332,7 @@ public function avatarUploadAction() {
            }
             return new response(json_encode(array("Message"=>$msg)));
         }else{
-       return new response(array("Message"=>"This Email doesn't exist"));
+       return new response(json_encode(array("Message"=>"This Email doesn't exist")));
         }
      
  }
