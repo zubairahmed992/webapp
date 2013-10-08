@@ -73,7 +73,7 @@ class LoadSizeChart extends AbstractFixture implements OrderedFixtureInterface, 
                             $entity->setWaist($size_values['waist']);
                         }
                         if (array_key_exists('hip', $size_values)) {
-                            $entity->getHip($size_values['hip']);
+                            $entity->setHip($size_values['hip']);
                         }
                         if (array_key_exists('inseam', $size_values)) {
                             $entity->setInseam($size_values['inseam']);
