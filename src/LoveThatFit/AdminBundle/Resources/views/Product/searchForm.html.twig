@@ -4,7 +4,7 @@
 var brand=$('#brand').val();
 
 var category = []
-   $("#category:checked").each(function() {
+   $("#category_select:checked").each(function() {
        category.push($(this).val());
    });
 
@@ -32,6 +32,12 @@ $.ajax({
 }
 
 function getTargetCategory(){
+
+var category = []
+
+   $("#category:not(:checked)").each(function() {
+       category.push($(this).val());
+   });
 var target = []
    $("#target:checked").each(function() {
        target.push($(this).val());
@@ -41,17 +47,47 @@ var target = []
        type:'POST',
        url: $('#url_target').text(),
        data: {target:target},  
-       success: function(response) {
-       console.log(response);
-      
+       dataType: 'json',
+       success: function(ar) {
+           
+     $('#category_empty').empty('');
+     
+     if(ar.length>0){
+    
+     var playlist=[];
+     playlist.push.apply(playlist, ar);
+     for(i=0;i<playlist.length;i++){
        
-    }});
+     if(inArray(playlist[i]['id'],category)=="test"){
+     
+       $('<input />', { type: 'checkbox', id: 'category_select', value: playlist[i]['name'] }).appendTo('#category_empty');
+         $('<label />', { 'for': 'playlist', text:playlist[i]['name'] }).appendTo('#category_empty');
+    }else{
+       $("#category").attr("disabled", true);
+       alert(playlist[i]['id']);
+       
+    }
+    }
+    
+    }else{
+ $('#category_empty').empty('');
+  $('#all_category').show();
+
+}}});
     return false; 
 
 
    }
 }
-
+function inArray(needle, haystack) {
+    var length = haystack.length;
+    
+    for(var i = 0; i < length; i++) {
+        if(haystack[i] == needle) 
+        return "test";
+    }
+   
+}
  </script>
  <span id="url" style="display:none;">{{path('admin_product_search_result')}}</span>
  <span id="url_target" style="display:none;">{{path('admin_product_search_category_with_target')}}</span>
@@ -70,14 +106,14 @@ var target = []
   <tr>
       <td>Genders:</td>
       <td>{% for g in genders %}
-          <input type="checkbox" name="genders" id="genders" value="{{g}}" >{{g}}
+          <input type="checkbox" name="genders" id="genders" value="{{g|capitalize}}" >{{g|capitalize}}
 {%endfor%}  
       </td>
   </tr>
   
  <tr>
       <td>Target:</td>
-      <td>
+      <td >
        {% for t in target %}
  <input type="checkbox" name="target" id="target" value="{{t|capitalize }}" onclick="getTargetCategory()">{{t|capitalize }}
       {%endfor%}  
@@ -85,9 +121,14 @@ var target = []
   </tr>
   <tr>
 <td>Category:</td>
-<td>
+<td id="all_category" style="display:none;">
  {% for c in category %}
  <input type="checkbox" name="category" id="category" value="{{c.id}}">{{c.name}}
+{%endfor%}        
+</td>
+<td id="category_empty">
+ {% for c in category %}
+ <input type="checkbox" name="category_select" id="category_select" value="{{c.id}}">{{c.name}}
 {%endfor%}        
 </td>
   </tr>

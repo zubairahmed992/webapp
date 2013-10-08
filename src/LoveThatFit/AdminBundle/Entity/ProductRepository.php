@@ -869,9 +869,8 @@ class ProductRepository extends EntityRepository {
         } 
  #-----------------------------------------------------------------------------#
         #---------Searching Quries-------------------------------#
-  public function searchProduct($brand_id,$male,$female,$target){
+  public function searchProduct($brand_id,$male,$female,$target,$category_id){
       
-              
       return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('p.id,p.name,b.name as brand_name,p.description,p.gender,ct.target as target ,pc.image as product_image')
@@ -880,10 +879,14 @@ class ProductRepository extends EntityRepository {
                         ->innerJoin('p.clothing_type', 'ct')
                         ->innerJoin('p.brand', 'b')
                         ->Where('b.id=:brand_id')
-                        ->orWhere('p.gender=:female')
+                        ->andWhere('p.gender=:female')
                         ->orWhere('p.gender=:male')
+                        ->andWhere('ct.name IN(:category_id)')
+                        ->orWhere('ct.target IN(:target)')
                         ->groupBy('p.id')
-                        ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male),array($target))
+                        ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))
+                        ->setParameter('category_id',$category_id)
+                        ->setParameter('target',$target)
                         ->getQuery()
                         ->getResult(); 
       
@@ -892,7 +895,7 @@ class ProductRepository extends EntityRepository {
  public function searchCategory($target){
     
       $query = $this->getEntityManager()
-                    ->createQuery("SELECT ct.name as name, ct.target as target FROM LoveThatFitAdminBundle:ClothingType ct WHERE ct.target IN (:target)")
+                    ->createQuery("SELECT ct.id as id,ct.name as name, ct.target as target FROM LoveThatFitAdminBundle:ClothingType ct WHERE ct.target IN (:target)")
                      ->setParameter('target',$target['target']);
                      try {
                      return $query->getResult();
