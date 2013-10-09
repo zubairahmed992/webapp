@@ -28,20 +28,12 @@
                         <span class="boxlable" id="height_box">Height (inch)</span>  
                         <span class="boxlable" id="height_box" style="margin-left:115px;"><a onclick="showfeet()" href="javascript:void(0);" style="color: #929707; font-weight: bold;">In Feet?</a></span>
   </div>
-                        <div class="login_error" >
-                                                    <div id="error_content0" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Height can not be null.
-                                                         </div>
-                                
-                                <div id="error_content10" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Height must be greater than zero.
-                                                         </div>
-                                                    </div>
+                        
                         
                         
 {{ form_widget(form.height) }}
+                       
+      
                        
                         
                         
@@ -89,17 +81,18 @@
                         {{ form_widget(form.weight) }}
                     </div> 
                     
-                    <div class="login_error" >
-                                                    <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Weight can not be null.
-                                                         </div>
-                            <div id="error_content11" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             weight must be greater than zero.
-                                                         </div>
-                                                    </div>
-                                                    </div>
+                    
+          <span>
+            <span id="error_content0" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">Height can not be null.</span>
+            <span id="error_content10" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">Height must be greater than zero.</span>
+          </span>
+                    
+           <span>
+               <span id="error_content1" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">Weight can not be null.</span>
+               <span id="error_content11" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">weight must be greater than zero.</span>
+            </span>
+                    
+                    
 
 
                     <div class="m_option">   
@@ -144,6 +137,10 @@
                             {{ form_widget(form.body_types) }}
                         </div>
                     </div>
+                    
+                    
+                    
+          
 
                     <div class="sep"></div>
 
@@ -295,19 +292,16 @@ $('#height_in_inches').change(function() {
                        
                            
                         </div>
-                        <div class="login_error" >
-                                                    <div id="error_content2" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Please select your top measurement.
-                                                         </div>
-                                                    </div>
+                        
                         
                         
                         <div class="shuf_icon shirt_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
 
                     </div>
                     
-                    
+            <span>
+               <span id="error_content2" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; left:55px;">Please select your top measurement.</span>
+            </span>
                     
                     {# ---------------  Bottom Brand & Size ------------------ #}
 
@@ -326,12 +320,7 @@ $('#height_in_inches').change(function() {
 
                         </div>
                         
-                        <div class="login_error" >
-                                                    <div id="error_content3" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Please select your bottom measurement.
-                                                         </div>
-                                                    </div>
+                        
 
                         <div class="pants_mus manual_opn show_hide show_it" id="pants_mus_opt">
 
@@ -349,6 +338,9 @@ $('#height_in_inches').change(function() {
 
 
                     </div><!-- m option close  !-->
+            <span>
+               <span id="error_content3" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; left:55px;">Please select your bottom measurement.</span>
+            </span>
 
 
               {% if( entity.gender=='f') %}
@@ -375,16 +367,16 @@ $('#height_in_inches').change(function() {
                             {{form_errors(form.dress_size)}}  
                             {{form_widget(form.dress_size)}}  
                         </div>
-                        <div class="login_error" >
-                                                    <div id="error_content4" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Please select your dress measurement.
-                                                         </div>
-                                                    </div>
+                       
 
                         <div class="shuf_icon"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
 
                         </div>
+                    
+                     <span>
+               <span id="error_content4" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; left:55px;">Please select your dress measurement.</span>
+            </span>
+           
       {% endif %}              
 
                                 <!-- END WEIGHT !-->   
@@ -406,6 +398,7 @@ $('#height_in_inches').change(function() {
                     <!--/.action_blk--></section>
  {{ form_rest(form) }}
             </form>
+         
 
 {% endblock %}
 
