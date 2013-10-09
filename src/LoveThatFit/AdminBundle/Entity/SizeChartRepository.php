@@ -422,4 +422,46 @@ class SizeChartRepository extends EntityRepository {
             return null;
         }
  }
+#--------------------Searching Size Chart-------------------------------------#
+ public function searchSizeChart($brand_id,$male,$female,$bodyType,$target,$start,$per_page){
+     
+      return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('sc.id as size_id,b.name as brand_name,sc.gender,sc.title,sc.target,sc.bodytype,sc.waist,sc.hip,sc.bust,sc.chest,sc.inseam,sc.outseam,sc.neck,sc.sleeve,sc.back,sc.thigh')
+                        ->from('LoveThatFitAdminBundle:SizeChart', 'sc')
+                        ->innerJoin('sc.brand', 'b')
+                        ->Where('b.id=:brand_id')
+                        ->andWhere('sc.gender=:female')
+                        ->orWhere('sc.gender=:male')
+                        ->andWhere('sc.target IN(:target)')
+                        ->andWhere('sc.bodytype IN(:bodytype)')
+                       ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))
+                        ->setParameter('target',$target)
+                        ->setParameter('bodytype',$bodyType)
+                        ->setFirstResult($start)
+                        ->setMaxResults($per_page)
+                        ->getQuery()
+                        ->getResult(); 
+ }
+ 
+#-------------Counting Of Size Chart-----------------------------------------#
+ public function countSearchSizeChart($brand_id,$male,$female,$bodyType,$target){
+     
+      return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('b.name as brand_name,sc.gender,sc.title,sc.target,sc.bodytype,sc.waist,sc.hip,sc.bust,sc.chest,sc.inseam,sc.outseam,sc.neck,sc.sleeve,sc.back,sc.thigh')
+                        ->from('LoveThatFitAdminBundle:SizeChart', 'sc')
+                        ->innerJoin('sc.brand', 'b')
+                        ->Where('b.id=:brand_id')
+                        ->andWhere('sc.gender=:female')
+                        ->orWhere('sc.gender=:male')
+                        ->andWhere('sc.target IN(:target)')
+                        ->andWhere('sc.bodytype IN(:bodytype)')
+                       ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))
+                        ->setParameter('target',$target)
+                        ->setParameter('bodytype',$bodyType)
+                        ->getQuery()
+                        ->getResult(); 
+ }
+ 
 }

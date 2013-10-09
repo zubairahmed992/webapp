@@ -70,6 +70,11 @@ class UtilityHelper {
  {
     return $this->conf["constants"]["body_types"];
  }
+ #----------------Body Type For Searching---------#
+ public function getBodyTypesSearching()
+ {
+    return $this->conf["constants"]["body_types_search"];
+ }
 #------------Size Titles--------------------------------#
 public function getSizeTitle(){
    return $this->conf["constants"]["size_titles"]; 
