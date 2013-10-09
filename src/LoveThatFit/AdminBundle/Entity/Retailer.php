@@ -30,19 +30,6 @@ class Retailer
      */
     private $title;
 
-   /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
-    
-    /**
-     * @var string $salt
-     *
-     * @ORM\Column(name="salt", type="string", length=32, nullable=true)
-     */
-    private $salt;
     
     /**
      * @var dateTime $createdAt
@@ -58,18 +45,6 @@ class Retailer
      */
     private $updatedAt;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    private $password;    
-
-//---------------------------------------  implement the UserInterface
-    public function __construct() {        
-        $this->salt = md5(uniqid(null, true));        
-    }
-    
     
     /**
      * Get id
@@ -104,75 +79,6 @@ class Retailer
         return $this->title;
     }
     
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return Retailers
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return Retailers
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    
-        return $this;
-    }
-
-    /**
-     * Get email 
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     * @return Retailer
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-    
-        return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
     /**
      * Set createdAt
      *

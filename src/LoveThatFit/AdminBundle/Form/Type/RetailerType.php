@@ -12,9 +12,8 @@ class RetailerType extends AbstractType {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('title', 'text');
-        $builder->add('email', 'text');
-        $builder->add('password', 'text');
+        $builder->add('title', 'text');    
+        
     }
 
     public function getDefaultOptions(array $options) {

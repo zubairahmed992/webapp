@@ -64,11 +64,6 @@ class RetailerController extends Controller {
         $entity = $this->get('admin.helper.retailer')->createNew();
         $form = $this->createForm(new RetailerType('add'), $entity);
         $form->bind($request);
-       if ($this->get('admin.helper.retailer')->isDuplicateEmail(Null, $entity->getEmail())) {
-               
-           $this->get('session')->setFlash('warning', 'This email address has already been taken!');  
-           //$form->get('email')->addError(new FormError('This email address has already been taken.'));
-            }  else {
              if ($form->isValid()) {            
               $message_array = $this->get('admin.helper.retailer')->save($entity);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
@@ -83,7 +78,7 @@ class RetailerController extends Controller {
         } else {
             $this->get('session')->setFlash('warning', 'The Retailer can not be Created!');
         }
-            }
+         
         
 
         return $this->render('LoveThatFitAdminBundle:Retailer:new.html.twig', array(
