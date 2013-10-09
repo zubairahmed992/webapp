@@ -586,7 +586,42 @@ public function getBrandArraySizeChart() {
     {
         $rec_count= count($this->repo->findBrandSizeBy($brand,$title,$gender,$target,$bodytype));
         return $rec_count;        
-    }   
-   
+    }  
+#----------------------------Searching -----------------------------------#
+public function searchSizeChartPagination($brand_id,$male,$female,$bodyType,$target,$page){
+    
+$cur_page = $page;
+$page -= 1;
+$per_page = 10; // Per page records
+$previous_btn = true;
+$next_btn = true;
+$first_btn = true;
+$last_btn = true;
+$start = $page * $per_page;
+$searchResult=$this->repo->searchSizeChart($brand_id,$male,$female,$bodyType,$target,$start,$per_page);
+ //return new response(json_encode($searchResult));
+$countRecord=count($searchResult);
+$countSearchSizeChart=count($this->repo->countSearchSizeChart($brand_id,$male,$female,$bodyType,$target,$start,$per_page));
 
+$no_of_paginations = ceil($countSearchSizeChart /$per_page);
+  if ($cur_page >= 7) {
+    $start_loop = $cur_page - 3;
+    if ($no_of_paginations > $cur_page + 3)
+        $end_loop = $cur_page + 3;
+    else if ($cur_page <= $no_of_paginations && $cur_page > $no_of_paginations - 6) {
+        $start_loop = $no_of_paginations - 6;
+        $end_loop = $no_of_paginations;
+    } else {
+        $end_loop = $no_of_paginations;
+    }
+} else {
+    $start_loop = 1;
+    if ($no_of_paginations > 7)
+        $end_loop = 7;
+    else
+        $end_loop = $no_of_paginations;
+}
+return array('searchResult'=>$searchResult,'countRecord'=>$countRecord,'first_btn'=>$first_btn,'cur_page'=>$cur_page,'previous_btn'=>$previous_btn,'last_btn'=>$last_btn,'start_loop'=>$start_loop,'end_loop'=>$end_loop,'next_btn'=>$next_btn,'no_of_paginations'=>$no_of_paginations);    
+    
+}
 }

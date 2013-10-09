@@ -1,0 +1,54 @@
+{%if(countRecord>0)%}
+       <div class="data"><ul>
+     {% for pr in searchResult %}
+     <li>{{pr.size_id}} {{pr.brand_name}}  {{pr.title}}  {{pr.gender}} {{pr.target}}  {{pr.bodytype}} {{pr.waist}}
+     {{pr.hip}} {{pr.bust}} {{pr.chest}} {{pr.inseam}} {{pr.outseam}} {{pr.neck}}  
+    {{pr.sleeve}} {{pr.back}}  {{pr.thigh}}
+         
+     </li>
+    
+     {%endfor%}   
+     </ul>       
+  <div class="pagination">
+  <ul>
+{% if (first_btn and cur_page > 1) %}
+<li p='1' class='active'>First</li>
+{% elseif (first_btn) %}
+ <li p='1' class='inactive'>First</li>
+{%endif%}
+{% if(previous_btn and cur_page > 1) %}
+{% set pre = cur_page - 1%}
+<li p='{{pre}}' class='active'>Previous</li>
+{% elseif (previous_btn) %}
+<li class='inactive'>Previous</li>
+{%endif%} 
+{% for i in range(start_loop, end_loop) %}
+{%if (cur_page == i)%}
+<li p="{{i}}" style="color:#fff;background-color:#006699;" class="active">{{i}}</li>
+{%else%}
+ <li p="{{i}}" class="active">{{i}}</li>
+{%endif%}
+{% endfor %}
+
+{% if (next_btn and cur_page < no_of_paginations) %}
+    {% set nex = cur_page + 1%}
+   <li p={{nex}} class='active'>Next</li>
+ {% elseif (next_btn) %}
+   <li class='inactive'>Next</li>
+{% endif%}
+{% if (last_btn and cur_page < no_of_paginations) %}
+   <li p='{{no_of_paginations}}' class='active'>Last</li>
+{% elseif (last_btn)%}
+ <li p='{{no_of_paginations}}' class='inactive'>Last</li>
+{%endif%}
+<span class='total' a='{{no_of_paginations}}'>Page <b> {{cur_page}}</b> of <b>{{no_of_paginations}}</b></span>
+{%else%}
+<div align="center">Record Not Found..</div>
+{%endif%}
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+
+admin_retailers:
+    pattern:  /admin/retailers/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:index ,page_number: 1, sort:id }
+
+admin_retailer_show:
+    pattern:  /admin/retailer/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:show }
+
+admin_retailer_new:
+    pattern:  /admin/retailer/new
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:new }
+
+admin_retailer_create:
+    pattern:  /admin/retailer/create
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:create }
+    requirements: 
+      _method: post 
+      
+admin_retailer_edit:
+    pattern:  /admin/retailer/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:edit }
+    requirements:
+        _method:  GET
+
+admin_retailer_update:
+    pattern:  /admin/retailer/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:update }
+    requirements:
+        _method:  POST
+        
+admin_retailer_delete:
+    pattern:  /admin/retailer/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:delete }
+    

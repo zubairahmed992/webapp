@@ -40,3 +40,8 @@ admin_user_routes:
 admin_product_wizard_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/productwizard.yml"
     prefix:   /
+    
+    #-------------- Retailer User Route By Azeem ------------------------
+admin_retailer_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/retailer.yml"
+    prefix:   /
