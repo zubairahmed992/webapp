@@ -3470,18 +3470,18 @@ input[type="button"].btn-block {
 }
 
 .btn-danger {
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  color: #000;
+ 
   background-color: #da4f49;
   *background-color: #bd362f;
-  background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));
-  background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);
-  background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);
-  background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
+  background-image: -moz-linear-gradient(top, #e8ea63, #c0c342);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(e8ea63), to(#c0c342));
+  background-image: -webkit-linear-gradient(top, #e8ea63, #c0c342);
+  background-image: -o-linear-gradient(top, #e8ea63, #c0c342);
+  background-image: linear-gradient(to bottom, #e8ea63, #c0c342);
   background-repeat: repeat-x;
-  border-color: #bd362f #bd362f #802420;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-color: #c0c342;
+ 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
@@ -3491,9 +3491,9 @@ input[type="button"].btn-block {
 .btn-danger.active,
 .btn-danger.disabled,
 .btn-danger[disabled] {
-  color: #ffffff;
-  background-color: #bd362f;
-  *background-color: #a9302a;
+  color: #000;
+  background-color: #c0c342;
+  *background-color: #c0c342;
 }
 
 .btn-danger:active,
@@ -6568,4 +6568,46 @@ padding:5px 0px 5px 0px;
 
 .clothing_chart_figures{
     width:160px!important;
+}
+
+#adv_srch_wrap{
+    margin-top: 10px;
+}
+
+.adv_srch_hd{    
+background:#F5F5F5;
+padding: 5px;
+}
+
+.frm_wrap{
+   height: auto;
+   clear:both;
+}
+
+.frm_ele{    
+    padding: 10px 0px;
+    overflow:auto;
+}
+
+.adv_radio{
+    margin: 0px;
+    padding: 0px;
+}
+
+.adv_radio :last-child{
+    margin-left: 15px;
+    margin-right: 2px;
+  
+}
+
+.adv_radio input{
+    display: inline-block;
+    float:left;
+    padding-right: 3px!important;
+    
+}
+
+.adv_gdr{
+   display: inline; 
+   float: left;
 }

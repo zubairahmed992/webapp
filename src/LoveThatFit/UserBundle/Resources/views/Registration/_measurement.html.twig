@@ -559,44 +559,96 @@ $('#height_in_inches').change(function() {
   var Back=document.getElementById('measurement_back').value;  
   var waist=document.getElementById('measurement_waist').value;
   var outseam=document.getElementById('measurement_outseam').value;
-  var hip=document.getElementById('measurement_hip').value;  
+  var hip=document.getElementById('measurement_hip').value;
+  if((height=='' && weight=='' && shirtmeasurement=='' && slevee=='' && Bust=='' && Back==''&& bottommeasurement=='' && waist=='' && outseam=='' && dressmeasurement=='' && hip==''))
+          {
+             
+             document.getElementById('error_content10').style.display="none"             
+             document.getElementById('error_content11').style.display="none";
+             document.getElementById('error_content2').style.display="block";
+             document.getElementById('error_content3').style.display="block";
+             document.getElementById('error_content4').style.display="block";
+             document.getElementById('error_content0').style.display="block";
+             document.getElementById('error_content1').style.display="block";
+             return false;
+          }      
+  if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0 || Bust==0 || Back==0) && (bottommeasurement=='' || waist==0 || outseam==0) && (dressmeasurement=='' || hip==0))
+          {
+             document.getElementById('error_content0').style.display="none";
+             document.getElementById('error_content10').style.display="block"
+             document.getElementById('error_content1').style.display="none";
+             document.getElementById('error_content11').style.display="block";
+             document.getElementById('error_content2').style.display="block";
+             document.getElementById('error_content3').style.display="block";
+             document.getElementById('error_content4').style.display="block";
+             return false;
+          }
   if(height=='')
       {
           document.getElementById('error_content0').style.display="block";
+          document.getElementById('error_content10').style.display="none";
           return false;
       }
   if(height==0)
       {
           document.getElementById('error_content10').style.display="block";
+          document.getElementById('error_content0').style.display="none";
           return false;
-      }    
+      }  
   if(weight=='')
       {
+          document.getElementById('error_content0').style.display="none";
+          document.getElementById('error_content10').style.display="none"
           document.getElementById('error_content1').style.display="block";
           return false;
       }   
   if(weight==0)
       {
+          document.getElementById('error_content0').style.display="none";
+          document.getElementById('error_content10').style.display="none"
+          document.getElementById('error_content1').style.display="none";
           document.getElementById('error_content11').style.display="block";
           return false;
       }  
-  if((shirtmeasurement=='') && (slevee==0 && Bust==0 && Back==0))
+  
+  if((shirtmeasurement=='') && (slevee==0 || Bust==0 || Back==0))
       {
+          document.getElementById('error_content0').style.display="none";
+          document.getElementById('error_content10').style.display="none"
+          document.getElementById('error_content1').style.display="none";
+          document.getElementById('error_content11').style.display="none";
           document.getElementById('error_content2').style.display="block";
           return false;
       }
-   if((bottommeasurement=='') && (waist==0 && outseam==0))
+   if((bottommeasurement=='') && (waist==0 || outseam==0))
       {
+          document.getElementById('error_content0').style.display="none";
+          document.getElementById('error_content10').style.display="none"
+          document.getElementById('error_content1').style.display="none";
+          document.getElementById('error_content11').style.display="none";
+          document.getElementById('error_content2').style.display="none";
           document.getElementById('error_content3').style.display="block";
           return false;
       }
    if((dressmeasurement=='') && hip==0)
       {
+          document.getElementById('error_content0').style.display="none";
+          document.getElementById('error_content10').style.display="none"
+          document.getElementById('error_content1').style.display="none";
+          document.getElementById('error_content11').style.display="none";
+          document.getElementById('error_content2').style.display="none";
+          document.getElementById('error_content3').style.display="none";
           document.getElementById('error_content4').style.display="block";
           return false;
-      }   
-        
+      }
+      
   
+          
+    
+  
+  
+      
+        
 }); 
        </script>
                 
