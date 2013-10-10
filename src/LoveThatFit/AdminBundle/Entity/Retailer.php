@@ -7,13 +7,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use LoveThatFit\SiteBundle\Algorithm;
 /**
- * Retailers
+ * 
  *
- * @ORM\Table(name="ltf_retailers")
+ * @ORM\Table(name="ltf_retailer")
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\RetailerRepository")
  */
 class Retailer
 {
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RetailerUser", mappedBy="ltf_retailer", orphanRemoval=true)
+     */
+    
+    protected $retailer_users;
+   
+    
     /**
      * @var integer
      *
@@ -123,5 +131,45 @@ class Retailer
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->retailer_users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add retailer_users
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\RetailerUser $retailerUsers
+     * @return Retailer
+     */
+    public function addRetailerUser(\LoveThatFit\AdminBundle\Entity\RetailerUser $retailerUsers)
+    {
+        $this->retailer_users[] = $retailerUsers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove retailer_users
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\RetailerUser $retailerUsers
+     */
+    public function removeRetailerUser(\LoveThatFit\AdminBundle\Entity\RetailerUser $retailerUsers)
+    {
+        $this->retailer_users->removeElement($retailerUsers);
+    }
+
+    /**
+     * Get retailer_users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetailerUsers()
+    {
+        return $this->retailer_users;
     }
 }
