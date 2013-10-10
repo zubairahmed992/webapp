@@ -1,49 +1,125 @@
-{%if(countRecord>0)%}
-<table style="border:1px solid #999999;" align="center" width="50%" id="searchResult">
-    <th> Search Result:</th>   
-    <tr style="background-color: grey;">
-        <td>Product Name</td>
-        <td>Description</td>
-        <td>Brand Name</td>
-        <td>Target</td>
-        <td>Gender</td>
-        <td>Image</td>
-         <td>Detail</td>
-    </tr>
-    
-    
- {% for pr in productResult %}
-    <tr  width: height: 50px;>
-            <td>
-            {{pr.name}}
-            </td> 
-            <td>
-            {{pr.description}}
-            </td> 
-            <td>
-                {{pr.brand_name}}
-            </td>
-            <td>
-            {{pr.target}}
-            </td> 
-            <td>
-                {{pr.gender}}
-            </td>
-            <td>
-                {%if(pr.product_image is defined)%}
-               
-                    <img src="{{asset('uploads/ltf/products/display/web/')}}{{pr.product_image}}" width="50px;" height="50px;">
-               {%endif%}
-                
-            </td> 
-            <td>
-             <a href="{{ path('admin_product_detail_show', {'id': pr.id}) }}" title="Show {{pr.name}}">Detail</a>
-            </td> 
-</tr>
-{%endfor%}        
+<style type="text/css">
+           
+             .pagination ul li.inactive,
+             .pagination ul li.inactive:hover{
+                background-color:#ededed;
+                color:#bababa;
+                border:1px solid #bababa;
+                cursor: default;
+            }
+           
+           .pagination{
+                width: 800px;
+                height: 25px;
+            }
+           .pagination ul li{
+                list-style: none;
+                float: left;
+              
+                padding: 2px 6px 2px 6px;
+                margin: 0 3px 0 3px;
+                font-family: arial;
+                font-size: 14px;
+                color: #006699;
+                font-weight: bold;
+                background-color: #f2f2f2;
+            }
+            .pagination ul li:hover{
+                color: #fff;
+                background-color: #006699;
+                cursor: pointer;
+            }
+			.total
+			{
+			float:right;font-family:arial;color:#999;
+			}
 
- 
- </table>
-{%else%}
-<div align="center">Record Not Found..</div>
+        </style>
+{%if(countRecord>0)%}
+<div class="row-fluid show-grid product_main">
+            <div class="span1 hds">Search Result</div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'brand' }}">Brand</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>                        
+            
+            <div class="span1 hds"></div>  
+            <div class="span1 hds"></div>  
+            <div class="span1 hds">View - Edit - Delete</div>  
+            
+</div>  
+
+  {% for p in productResult %}
+
+        <div class="row-fluid show-grid product_main">
+            <div class="span1"></div>
+            <div class="span1">{{p.id}}</div>
+            <div class="span1">{{p.brand_name}}</div>
+            <div class="span1">{{p.clothing_name}}</div>
+            <div class="span1">{{p.gender}}</div>
+            <div class="span1">{{p.name}}</div>
+            
+            <div class="span1"> {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}</div>
+            <div class="span1">
+                {%if(p.product_image is defined)%}
+               <img src="{{asset('uploads/ltf/products/display/web/')}}{{p.product_image}}" width="50px;" height="50px;">
+               {%else%}
+               Image not found..
+                {%endif%}
+            </div>
+            
+         <div class="span1">           
+         <a href="{{ path('admin_product_detail_show', {'id': p.id}) }}" title="Show {{p.name}}"><i class="icon-eye-open"></i></a>
+         <a href="{{ path('admin_product_detail_edit', {'id': p.id}) }}" title="Edit {{p.name}}"><i class="icon-edit"></i></a>
+         <a href="#myModaldetail{{p.id}}" title="Delete {{p.name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+         <a href="{{ path('admin_product_detail_download', {'id': p.id}) }}" title="Download">Download </i></a>
+         </div>
+         </div>   
+   {%endfor%}  
+ <div class="pagination">
+  <ul>
+{% if (first_btn and cur_page > 1) %}
+<li p='1' class='active'>First</li>
+{% elseif (first_btn) %}
+ <li p='1' class='inactive'>First</li>
 {%endif%}
+{% if(previous_btn and cur_page > 1) %}
+{% set pre = cur_page - 1%}
+<li p='{{pre}}' class='active'>Previous</li>
+{% elseif (previous_btn) %}
+<li class='inactive'>Previous</li>
+{%endif%} 
+{% for i in range(start_loop, end_loop) %}
+{%if (cur_page == i)%}
+<li p="{{i}}" style="color:#fff;background-color:#006699;" class="active">{{i}}</li>
+{%else%}
+ <li p="{{i}}" class="active">{{i}}</li>
+{%endif%}
+{% endfor %}
+
+{% if (next_btn and cur_page < no_of_paginations) %}
+    {% set nex = cur_page + 1%}
+   <li p={{nex}} class='active'>Next</li>
+ {% elseif (next_btn) %}
+   <li class='inactive'>Next</li>
+{% endif%}
+{% if (last_btn and cur_page < no_of_paginations) %}
+   <li p='{{no_of_paginations}}' class='active'>Last</li>
+{% elseif (last_btn)%}
+ <li p='{{no_of_paginations}}' class='inactive'>Last</li>
+{%endif%}
+<span class='total' a='{{no_of_paginations}}'>Page <b> {{cur_page}}</b> of <b>{{no_of_paginations}}</b></span>
+</div> 
+    <button type="button"  id="back_to_listing" onclick="backToListing()" class="btn btn-danger" data-toggle="collapse" data-target="#demo">
+        Back To listing
+        </button>
+     
+ {%else%}
+<div class="row-fluid show-grid product_main" align='center'>Record Not Found..
+<button type="button"  id="back_to_listing" onclick="backToListing()" class="btn btn-danger" data-toggle="collapse" data-target="#demo">
+Back To Searching
+</button>
+     
+</div>
+{%endif%}  

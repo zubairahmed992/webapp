@@ -178,6 +178,15 @@ class ProductHelper{
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
         }
+         
+      #---------------------Start Searching---------------------#
+      $brandList=$this->container->get('admin.helper.brand')->findAll();
+      $genders=$this->container->get('admin.helper.utility')->getGenders();
+      $target=$this->container->get('admin.helper.utility')->getTargets();
+      $bodyType=$this->container->get('admin.helper.utility')->getBodyTypes();
+      $category=$this->container->get('admin.helper.clothing_type')->findAll();
+      #-------------End Of Searching------------------------------#
+     
         return array('products' => $entity,
             'rec_count' => $rec_count,
             'no_of_pagination' => $no_of_paginations,
@@ -189,6 +198,11 @@ class ProductHelper{
             'bottomProduct'=>$this->countProductsByType('Bottom'),
             'dressProduct'=>$this->countProductsByType('Dress'),
             'sort'=>$sort,
+            'brandList'=>$brandList,
+            'genders'=>$genders,
+            'target'=>$target,
+            'bodyType'=>$bodyType,
+            'category'=>$category,
         );
     }
 
@@ -855,8 +869,69 @@ public function getRecordsCountWithCurrentProductLimit($product_id){
 }
     
 #----------------Getting Record for Searching--------------------------------#
-public function searchProduct($brand_id,$male,$female,$target,$category_id){
-    return $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id);
+public function searchProduct($data){
+        
+  $brand_id=$data['brand'];
+  if(isset($data['category'])){
+      $category_id=$data['category'];
+  }else{
+      
+      $category_id=null;
+  }
+  
+  $genders=$data['genders'];
+ 
+  if(isset($genders['0'])){
+  $male=$genders['0'];}else{
+      $male=null;
+  }
+  if (isset($genders['1'])){
+  $female=$genders['1'];}else{
+      $female=null;
+  }
+  if(isset($data['target'])){
+ $target=$data['target'];}
+ else{
+     $target=null;
+ }
+ $page=$data['page']; 
+
+ #--------Pagination Started-------------------#
+ $cur_page = $page;
+$page -= 1;
+$per_page = 10; // Per page records
+$previous_btn = true;
+$next_btn = true;
+$first_btn = true;
+$last_btn = true;
+$start = $page * $per_page;
+
+  
+        $entity = $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page);
+        $countSearchProduct = count($this->repo->countSearchProduct($brand_id,$male,$female,$target,$category_id));
+        $countRecord=count($entity);
+       
+     $no_of_paginations = ceil($countSearchProduct /$per_page);
+  if ($cur_page >= 7) {
+    $start_loop = $cur_page - 3;
+    if ($no_of_paginations > $cur_page + 3)
+        $end_loop = $cur_page + 3;
+    else if ($cur_page <= $no_of_paginations && $cur_page > $no_of_paginations - 6) {
+        $start_loop = $no_of_paginations - 6;
+        $end_loop = $no_of_paginations;
+    } else {
+        $end_loop = $no_of_paginations;
+    }
+} else {
+    $start_loop = 1;
+    if ($no_of_paginations > 7)
+        $end_loop = 7;
+    else
+        $end_loop = $no_of_paginations;
+}
+return array('productResult'=>$entity,'countRecord'=>$countRecord,'first_btn'=>$first_btn,'cur_page'=>$cur_page,'previous_btn'=>$previous_btn,'last_btn'=>$last_btn,'start_loop'=>$start_loop,'end_loop'=>$end_loop,'next_btn'=>$next_btn,'no_of_paginations'=>$no_of_paginations);    
+        
+   // return $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id);
 }
 public function searchCategory($target){
     return $this->repo->searchCategory($target);
