@@ -7,8 +7,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use LoveThatFit\SiteBundle\Algorithm;
 /**
- * 
  *
+ * 
  * @ORM\Table(name="ltf_retailer")
  * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\RetailerRepository")
  */
