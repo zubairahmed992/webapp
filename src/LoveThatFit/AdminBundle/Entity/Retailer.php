@@ -20,6 +20,12 @@ class Retailer
      */
     
     protected $retailer_users;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Brand", inversedBy="retailers")
+     * @ORM\JoinTable(name="retailer_brand")
+     * */
+    private $brands;
    
     
     /**
@@ -137,6 +143,7 @@ class Retailer
      */
     public function __construct()
     {
+        $this->brands = new \Doctrine\Common\Collections\ArrayCollection();
         $this->retailer_users = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -171,5 +178,38 @@ class Retailer
     public function getRetailerUsers()
     {
         return $this->retailer_users;
+    }
+
+    /**
+     * Add brands
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Brand $brands
+     * @return Retailer
+     */
+    public function addBrand(\LoveThatFit\AdminBundle\Entity\Brand $brands)
+    {
+        $this->brands[] = $brands;
+    
+        return $this;
+    }
+
+    /**
+     * Remove brands
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Brand $brands
+     */
+    public function removeBrand(\LoveThatFit\AdminBundle\Entity\Brand $brands)
+    {
+        $this->brands->removeElement($brands);
+    }
+
+    /**
+     * Get brands
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBrands()
+    {
+        return $this->brands;
     }
 }

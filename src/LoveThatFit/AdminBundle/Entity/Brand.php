@@ -20,6 +20,12 @@ class Brand {
      * @ORM\OneToMany(targetEntity="SizeChart", mappedBy="brand")
      */
     protected $sizechart;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Retailer", mappedBy="brands")
+     **/
+    private $retailers;
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -212,6 +218,7 @@ public function deleteImages()
      */
     public function __construct()
     {
+        $this->retailers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sizechart = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -274,5 +281,38 @@ public function deleteImages()
     public function removeSizechart(\LoveThatFit\AdminBundle\Entity\SizeChart $sizechart)
     {
         $this->sizechart->removeElement($sizechart);
+    }
+
+    /**
+     * Add retailers
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Retailer $retailers
+     * @return Brand
+     */
+    public function addRetailer(\LoveThatFit\AdminBundle\Entity\Retailer $retailers)
+    {
+        $this->retailers[] = $retailers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove retailers
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Retailer $retailers
+     */
+    public function removeRetailer(\LoveThatFit\AdminBundle\Entity\Retailer $retailers)
+    {
+        $this->retailers->removeElement($retailers);
+    }
+
+    /**
+     * Get retailers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetailers()
+    {
+        return $this->retailers;
     }
 }
