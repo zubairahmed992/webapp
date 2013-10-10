@@ -105,8 +105,8 @@ admin_product_search_from:
      pattern:  /admin/product/searchForm
      defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachForm}
 admin_product_search_result:
-     pattern:  /admin/product/searchResult
-     defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachResult}
+     pattern:  /admin/product/searchResult/{page_number}/{sort}
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachResult,page_number: 1, sort:id}
 admin_product_search_category_with_target:
      pattern:  /admin/product/searchCategory
      defaults: { _controller: LoveThatFitAdminBundle:Product:productSeachCategory}          

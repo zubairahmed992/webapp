@@ -869,11 +869,37 @@ class ProductRepository extends EntityRepository {
         } 
  #-----------------------------------------------------------------------------#
         #---------Searching Quries-------------------------------#
-  public function searchProduct($brand_id,$male,$female,$target,$category_id){
-      
+  public function searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page){
+       
       return $this->getEntityManager()
                         ->createQueryBuilder()
-                        ->select('p.id,p.name,b.name as brand_name,p.description,p.gender,ct.target as target ,pc.image as product_image')
+                        ->select('p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->innerJoin('p.brand', 'b')
+                        ->Where('b.id=:brand_id')
+                        ->andWhere('p.gender=:female')
+                        ->orWhere('p.gender=:male')
+                        ->andWhere('ct.name IN(:category_id)')
+                        ->orWhere('ct.target IN(:target)')
+                        ->groupBy('p.id')
+                        ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))
+                        ->setParameter('category_id',$category_id)
+                        ->setParameter('target',$target)
+                        ->setFirstResult($start)
+                        ->setMaxResults($per_page)
+                        ->getQuery()
+                        ->getResult(); 
+      
+  }
+  
+#------------Count Search Record---------------------------#
+ public function countSearchProduct($brand_id,$male,$female,$target,$category_id){
+       
+      return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image')
                         ->from('LoveThatFitAdminBundle:Product', 'p')
                         ->innerJoin('p.product_colors', 'pc')
                         ->innerJoin('p.clothing_type', 'ct')
@@ -891,6 +917,7 @@ class ProductRepository extends EntityRepository {
                         ->getResult(); 
       
   }
+  
 #------------------Search Categfory ------------------------------------------#
  public function searchCategory($target){
     

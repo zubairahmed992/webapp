@@ -35,8 +35,9 @@ class ProductController extends Controller {
 
     public function indexAction($page_number, $sort = 'id') {
         //$this->productSaveYaml();
+      
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
-        return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
+ return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
 
 //---------------------------------------------------------------------
@@ -811,44 +812,26 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
     }
     
   #-----------------------------------------------------------------------------#
-    #---------------Start Searching For Products------------------------------#
-   public function productSeachFormAction(){
-      $brandList=$this->get('admin.helper.brand')->findAll();
-      $genders=$this->get('admin.helper.utility')->getGenders();
-      $target=$this->get('admin.helper.utility')->getTargets();
-      $bodyType=$this->get('admin.helper.utility')->getBodyTypes();
-      $category=$this->get('admin.helper.clothing_type')->findAll();
-      return $this->render('LoveThatFitAdminBundle:Product:searchForm.html.twig',array('brandList'=>$brandList,'genders'=>$genders,'target'=>$target,'bodyType'=>$bodyType,'category'=>$category));
-   }
+  
 #-------------------Searching Resulting----------------------------------------#
  public function productSeachResultAction(Request $request){
   $data = $request->request->all();
-  $brand_id=$data['brand'];
-  $category_id=$data['category'];
-  $genders=$data['genders'];
- // $male=$genders['m'];
-  if(isset($genders['0'])){
-  $male=$genders['0'];}else{
-      $male=null;
-  }
-  if (isset($genders['1'])){
-  $female=$genders['1'];}else{
-      $female=null;
-  }
   
- 
-  $target=$data['target'];
-  $productResult=$this->get('admin.helper.product')->searchProduct($brand_id,$male,$female,$target,$category_id);
- //return new response(json_encode($category_id));
-  $countRecord=count($productResult);
- return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig',array('productResult'=>$productResult,'countRecord'=>$countRecord));    
+  $productResult=$this->get('admin.helper.product')->searchProduct($data);
+ //return new response(json_encode($productResult));
+  
+ return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig',$productResult);    
  }
 #------------------------------------------------------------------------------#
  public function productSeachCategoryAction(Request $request){
      
     $target_array = $request->request->all();
+    if($target_array){
     $result= $this->get('admin.helper.product')->searchCategory($target_array);
     return new response(json_encode($result));
+    }else{
+       return new response(json_encode("null"));
+    }
      
  }
 }
