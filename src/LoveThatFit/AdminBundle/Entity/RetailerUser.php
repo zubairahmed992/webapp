@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="ltf_retailer_user")
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\RetailerUserRepository")
  */
 class RetailerUser implements UserInterface, \Serializable {
 
@@ -28,10 +29,13 @@ class RetailerUser implements UserInterface, \Serializable {
      */
     private $id;
 
-    /**
+    
+     /**
+      * @var string $username
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
+
 
     /**
      * @var string $email
@@ -41,6 +45,15 @@ class RetailerUser implements UserInterface, \Serializable {
      * @Assert\NotBlank(groups={"registration_step_one"}, message="Email cannot be blank")
      */
     private $email;
+    
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=60, unique=true, nullable=false)
+     * @Assert\Email(groups={"registration_step_one"}, message="Please provide a valid name")
+     * @Assert\NotBlank(groups={"registration_step_one"}, message="Email cannot be blank")
+     */
+    private $name;
 
     /**
      * @var string $salt
@@ -342,5 +355,28 @@ class RetailerUser implements UserInterface, \Serializable {
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return RetailerUser
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

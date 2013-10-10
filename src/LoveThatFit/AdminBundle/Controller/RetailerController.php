@@ -6,9 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\RetailerType;
+use LoveThatFit\AdminBundle\Form\Type\RetailerUserType;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use LoveThatFit\AdminBundle\Entity\Retailer;
+use LoveThatFit\AdminBundle\Entity\RetailerUser;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -45,6 +47,7 @@ class RetailerController extends Controller {
         return $this->render('LoveThatFitAdminBundle:Retailer:show.html.twig', array(
                     'retailer' => $entity,
                     'page_number'=>$page_number,
+                    'retaileruser'=>$this->getRetailerUserByRetailer($entity)
         ));
     }
 
@@ -103,7 +106,11 @@ class RetailerController extends Controller {
         return $this->render('LoveThatFitAdminBundle:Retailer:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
-                    'entity' => $entity));
+                    'entity' => $entity,
+                    'brands'=>  $this->getBrandList(),
+                    'retailerUserForm'=>$this->createRetailerUser($specs)
+                )
+                );
     }
 
     //------------------------------------------------------------------------------------------
@@ -122,7 +129,8 @@ class RetailerController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-
+            
+            $retailer=$this->get('admin.helper.retailer')->find($id);
             $message_array = $this->get('admin.helper.retailer')->update($entity);
 
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
@@ -137,7 +145,81 @@ class RetailerController extends Controller {
         return $this->render('LoveThatFitAdminBundle:Retailer:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
-                    'entity' => $entity));
+                    'entity' => $entity,
+                    'retailerUserForm'=>$this->createRetailerUser($retailer)
+                ));
+    }
+    
+    public function newRetailerUserAction($id)
+    {
+        $entity = $this->getRetailer($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
+        }
+        $retailerUser = $this->get('admin.helper.retailer.user')->createNew();
+        $form = $this->createForm(new RetailerUserType('add'),$retailerUser);
+        $deleteForm = $this->createForm(new DeleteType(), $entity);
+        return $this->render('LoveThatFitAdminBundle:Retailer:retailer_user.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,                    
+                )
+                );
+    }
+    
+   
+    
+    public function createRetailerUserAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $retailer = $this->getRetailer($id);
+        $retailerUser = new RetailerUser(); 
+        $form = $this->createForm(new RetailerUserType('add'),$retailerUser);
+        $form->bind($request);
+        if ($form->isValid()) {
+            $retailerUser->setRetailer($retailer);            
+            $retailerUser->setCreatedAt(new \DateTime('now'));
+            $retailerUser->setUpdatedAt(new \DateTime('now'));
+            $em->persist($retailerUser);
+            $em->flush();
+            $this->get('session')->setFlash('success', 'Retailer User has been created.');
+            return $this->redirect($this->generateUrl('admin_retailers'));
+        } else {
+           return $this->render('LoveThatFitAdminBundle:Retailer:retailer_user.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $retailer,                    
+                )
+                );
+        }
+    }
+    
+    
+     public function editRetailerUserAction($id)
+    {
+        $specs = $this->get('admin.helper.retailer.user')->findWithSpecs($id);
+        $entity = $specs['entity'];
+        $form = $this->createForm(new RetailerUserType('edit'), $entity);      
+        return $this->render('LoveThatFitAdminBundle:Retailer:retaile_user_edit.html.twig', array(
+                    'form' => $form->createView(),                   
+                    'entity' => $entity,
+                )
+                );
+    }
+    
+    public function updateRetailerUserAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('LoveThatFitAdminBundle:RetailerUser')->find($id);
+        $form = $this->createForm(new RetailerUserType('edit'), $entity);
+        $form->bind($request);
+        if ($form->isValid()) {
+            $entity->setCreatedAt(new \DateTime('now'));
+            $entity->setUpdatedAt(new \DateTime('now'));
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->setFlash('success', 'Product Detail has been Update.');
+            return $this->redirect($this->generateUrl('admin_retailers'));
+        }
     }
 
 //------------------------------------------------------------------------------------------
@@ -161,6 +243,43 @@ class RetailerController extends Controller {
         return $this->encodeThisPassword($retailer, $retailer->getPassword());
     }
 
+  
+
+    //---------------------------Brand List-------------------
+    private function getBrandList()
+    {
+        $brand=$this->get('admin.helper.brand')->getBrnadList();
+        return $brand;
+        
+    }
+    
+    private function getRetailer($id)
+    {
+        return $this->getDoctrine()
+                        ->getRepository('LoveThatFitAdminBundle:Retailer')
+                        ->find($id);
+    }
+    
+    private function addRetailerBrand($retailer, $brand) {        
+        $retailerBrand = new Retailer();        
+        $retailerBrand->setQuestion($question);
+        $userSurvey->setAnswer($answers);
+        $userSurvey->setUser($user);
+        $userSurvey->setSurvey('Question Answer Survey');
+        $this->em->persist($userSurvey);
+            $this->em->flush();
+            return array('message' => 'Success! Answers Added Successfully.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );        
+    }
+    private function getRetailerUserByRetailer($retailer)
+    {
+        $retaielerUser=$this->get('admin.helper.retailer.user')->getRetaielerUserByRetailer($retailer);
+        return $retaielerUser;
+    }
+    
 //-------------------------------------------------------
     private function encodeThisPassword(Retailer $retailer, $password) {
         $factory = $this->container->get('security.encoder_factory');

@@ -6,11 +6,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
-use \Symfony\Component\EventDispatcher\EventDispatcher;
-use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\BrandEvent;
+use LoveThatFit\AdminBundle\Entity\RetailerUser;
 
-class BrandHelper {
+class RetailerUserHelper {
 
     protected $dispatcher;
 
@@ -28,6 +26,7 @@ class BrandHelper {
      * @var string
      */
     protected $class;
+    private $container;
 
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class) {
         $this->dispatcher = $dispatcher;
@@ -47,20 +46,17 @@ class BrandHelper {
 //-------------------------------------------------------
 
     public function save($entity) {
-        //$msg_array =null;
+        $msg_array =null;
         //$msg_array = ;
 
-        $brandName = $entity->getName();
-        $msg_array = $this->validateForCreate($brandName);
-        if ($msg_array == null) {
+        //$retailerTitle = $entity->getTitle();        
+        //$msg_array = $this->validateForCreate($retailerTitle);
+        if ($msg_array == null) {      
             $entity->setCreatedAt(new \DateTime('now'));
-            $entity->setUpdatedAt(new \DateTime('now'));
-
-            $entity->upload();
+            $entity->setUpdatedAt(new \DateTime('now'));             
             $this->em->persist($entity);
             $this->em->flush();
-
-            return array('message' => 'Brand succesfully created.',
+            return array('message' => 'Retailer succesfully created.',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -76,14 +72,11 @@ class BrandHelper {
 
         $msg_array = $this->validateForUpdate($entity);
 
-        if ($msg_array == null) {
-            $entity->setUpdatedAt(new \DateTime('now'));
-
-            $entity->upload();
+        if ($msg_array == null) {            
             $this->em->persist($entity);
             $this->em->flush();
 
-            return array('message' => 'Brand ' . $entity->getName() . ' succesfully updated!',
+            return array('message' => 'Retailer ' . $entity->getTitle() . ' succesfully updated!',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -98,21 +91,20 @@ class BrandHelper {
     public function delete($id) {
 
         $entity = $this->repo->find($id);
-        $entity_name = $entity->getName();
-
+        $entity_name = $entity->getTitle();
         if ($entity) {
             $this->em->remove($entity);
             $this->em->flush();
 
-            return array('brands' => $entity,
-                'message' => 'The Brand ' . $entity_name . ' has been Deleted!',
+            return array('retailer' => $entity,
+                'message' => 'The Retailer ' . $entity_name . ' has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );
         } else {
 
-            return array('brands' => $entity,
-                'message' => 'Brand not found!',
+            return array('retailers' => $entity,
+                'message' => 'Retailer not found!',
                 'message_type' => 'warning',
                 'success' => false,
             );
@@ -138,14 +130,14 @@ class BrandHelper {
             $entity = $this->createNew();
             return array(
                 'entity' => $entity,
-                'message' => 'Brand not found.',
+                'message' => 'Retailer not found.',
                 'message_type' => 'warning',
                 'success' => false,
             );
         } else {
             return array(
                 'entity' => $entity,
-                'message' => 'Brand found!',
+                'message' => 'Retailer found!',
                 'message_type' => 'success',
                 'success' => true,
             );
@@ -158,7 +150,10 @@ class BrandHelper {
     }
 
     public function removeBrand() {
-        return $this->repo->removeBrand();
+        return $this->repo->removeRetailer();
+    }
+    public function findOneBy($email) {
+        return $this->repo->findOneBy(array('email' => $email));
     }
 
     //-------------------------------------------------------
@@ -168,7 +163,7 @@ class BrandHelper {
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         $limit = $pagination_constants["constants"]["pagination"]["limit"];
 
-        $entity = $this->repo->listAllBrand($page_number, $limit, $sort);
+        $entity = $this->repo->listAllRetailer($page_number, $limit, $sort);
         $rec_count = count($this->repo->countAllRecord());
         $cur_page = $page_number;
 
@@ -177,7 +172,7 @@ class BrandHelper {
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
         }
-        return array('brands' => $entity,
+        return array('retailers' => $entity,
             'rec_count' => $rec_count,
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,
@@ -186,22 +181,24 @@ class BrandHelper {
         );
     }
 
-    public function getRecordsCountWithCurrentBrandLimit($brand_id){
+    public function getRecordsCountWithCurrentRetailerLimit($retailer_id){
     
-    return $this->repo->getRecordsCountWithCurrentBrandLimit($brand_id);
+    return $this->repo->getRecordsCountWithCurrentRetailerLimit($retailer_id);
+}
+
+public function getRetaielerUserByRetailer($retailer)
+{
+    return $this->repo->getRetaielerUserByRetailer($retailer);
 }
     
- public function getBrnadList()
- {
-     return $this->repo->getBrnadList();
- }
+    
     
     
 //Private Methods    
 //----------------------------------------------------------
     private function validateForCreate($name) {
         if (count($this->findOneByName($name)) > 0) {
-            return array('message' => 'Brand Name already exists!',
+            return array('message' => 'Retailer Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
@@ -212,10 +209,10 @@ class BrandHelper {
 
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
-        $brand = $this->findOneByName($entity->getName());
+        $brand = $this->findOneByName($entity->getTitle());
 
         if ($brand && $brand->getId() != $entity->getId()) {
-            return array('message' => 'Brand Name already exists!',
+            return array('message' => 'Retailer Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
@@ -223,5 +220,41 @@ class BrandHelper {
         }
         return;
     }
+    
+    //------------- Password encoding ------------------------------------------
+    public function encodePassword(Retailer $retailer) {
+        return $this->encodeThisPassword($retailer, $retailer->getPassword());
+    }
 
+//-------------------------------------------------------
+    private function encodeThisPassword(Retailer $retailer, $password) {
+        $factory = $this->container->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($retailer);
+        $password = $encoder->encodePassword($password, $retailer->getSalt());
+        return $password;
+    }
+
+//-------------------------------------------------------
+    public function matchPassword(Retailer $retailer, $password) {
+        $password = $this->encodeThisPassword($retailer, $password);
+        if ($retailer->getPassword() == $password) {
+            return true;
+        }
+        return false;
+    }
+    
+    
+    
+    public function emailCheck($email) {
+        if ($this->isDuplicateEmail(Null, $email) == false) {
+            return array('Message' => 'Valid Email');
+        } else {
+            return array('Message' => 'The Email already exists');
+        }
+    }
+   #--------------------------------------------------------------------------#
+    public function isDuplicateEmail($id, $email) {
+        return $this->repo->isDuplicateEmail($id, $email);
+    }
+    
 }

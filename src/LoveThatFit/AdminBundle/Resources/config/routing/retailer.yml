@@ -33,3 +33,24 @@ admin_retailer_delete:
     pattern:  /admin/retailer/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Retailer:delete }
     
+admin_new_retailer_user:
+    pattern:  /admin/retailer/{id}/user/new
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:newRetailerUser }
+    
+admin_create_retailer_user:
+    pattern:  /admin/retailer/{id}/user/create
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:createRetailerUser }
+    requirements: 
+      _method: post
+      
+admin_retailer_user_edit:      
+    pattern:  /admin/retailer/{id}/user/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:editRetailerUser }
+      
+admin_retailer_user_update:
+    pattern:  /admin/retailer/{id}/user/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:updateRetailerUser }
+    requirements:
+        _method:  POST
+
+    

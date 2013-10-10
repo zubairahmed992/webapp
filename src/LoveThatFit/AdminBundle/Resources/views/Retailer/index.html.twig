@@ -8,24 +8,16 @@
 {% block body %}
   
 <div class="p_listing">     
-    <h1>Retailers</h1>
-    
- 
-    
-    <div class="btn_wrapper2">
-     
+    <h1>Retailers</h1>    
+    <div class="btn_wrapper2">     
      <div id="chart_figures" class="brand_chart_figures">
          <div class="facts">
                     <div><span>Total no of Retailers:</span>{{rec_count}}</div>                   
      </div>
-     </div>
-    
-     <a href="{{ path('admin_retailer_new') }}" class="btn">Add New</a>
-     
-      </div>
-    
-     <div class="clearfix"></div> 
-     
+     </div>    
+     <a href="{{ path('admin_retailer_new') }}" class="btn">Add New</a>     
+      </div>    
+     <div class="clearfix"></div>      
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">
@@ -48,8 +40,9 @@
             <div class="span1"></div> 
             <div class="span1">
             <div>
-                    
+                    <a href="{{ path('admin_retailer_show', {'id': r.id}) }}" title="Edit {{r.title}}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_retailer_edit', {'id': r.id}) }}" title="Edit {{r.title}}"><i class="icon-edit"></i></a>
+                    <a href="{{ path('admin_new_retailer_user', {'id': r.id}) }}" title="Add user To {{r.title}}"><i class="icon-edit"></i></a>
                     <a href="#myModal{{r.id}}" role="button" data-toggle="modal" title="Delete {{r.title}}"><i class="icon-remove"></i></a>
                 </div> 
             </div>

@@ -88,12 +88,20 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ProductItem       
             container: "@service_container"
+            
      admin.helper.retailer:
         class: LoveThatFit\AdminBundle\Entity\RetailerHelper
         arguments:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Retailer
+            
+     admin.helper.retailer.user:
+        class: LoveThatFit\AdminBundle\Entity\RetailerUserHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\RetailerUser
     
      
          

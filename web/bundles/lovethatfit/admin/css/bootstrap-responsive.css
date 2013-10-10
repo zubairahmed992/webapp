@@ -1152,6 +1152,14 @@
     width: 25%;
 }
 
+#detail_wrapper .row-fluid .span8 .name_list {
+    max-height: none!important;    
+    overflow: hidden;   
+    width: 25%;
+    border-bottom: 0px!important;
+    
+}
+
   #detail_wrapper .row-fluid .span3:not(.hds) {
     width: 25%;   
     min-height:55px;
