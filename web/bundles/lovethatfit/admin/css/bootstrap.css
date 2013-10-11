@@ -6611,3 +6611,7 @@ padding: 5px;
    display: inline; 
    float: left;
 }
+
+.mng_brnd_btn{
+    float:right;
+}

@@ -76,7 +76,7 @@ class RetailerUserHelper {
             $this->em->persist($entity);
             $this->em->flush();
 
-            return array('message' => 'Retailer ' . $entity->getTitle() . ' succesfully updated!',
+            return array('message' => 'Retailer ' . $entity->getName() . ' succesfully updated!',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -91,7 +91,7 @@ class RetailerUserHelper {
     public function delete($id) {
 
         $entity = $this->repo->find($id);
-        $entity_name = $entity->getTitle();
+        $entity_name = $entity->getName();
         if ($entity) {
             $this->em->remove($entity);
             $this->em->flush();
@@ -209,7 +209,7 @@ public function getRetaielerUserByRetailer($retailer)
 
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
-        $brand = $this->findOneByName($entity->getTitle());
+        $brand = $this->findOneByName($entity->getName());
 
         if ($brand && $brand->getId() != $entity->getId()) {
             return array('message' => 'Retailer Name already exists!',

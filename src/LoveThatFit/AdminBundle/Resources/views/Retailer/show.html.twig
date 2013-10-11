@@ -13,7 +13,7 @@
 {% block body %}
 
 <div>      
-    <h1 style="float:left;">Retailer's Details</h1>
+    <h1 style="float:left;">{{retailer.title}}</h1>
      <div class="btn_wrapper">     
       <a href="{{ path('admin_retailers',{'page_number':page_number}) }}" class="btn">back</a>
       {%if retailer.id %}
@@ -23,27 +23,65 @@
       </div>
       <div class="clearfix"></div>
             <div id="detail_wrapper">      
-                <div id="p_hd">Retailer Detail</div>             
-                   
+                <div id="p_hd">Retailer Detail</div>
                     <div id="product_content">
                         <div id="pro_detail">
                             <div class="edt_container">         
                                 <div class="row-fluid show-grid edt_span">
                                     
                                      <div class="span8">
-                                    <div class="span3">Name</div>
-                                    <div class="span3">{{retailer.title }}</div>
-                                    </div>
-                                   <div class="span8">
-                                    <div class="span3">Retailer's Users</div>
-                                    <div class="span3">&nbsp;</div>
-                                    </div>
-                                        
+                                         <div class="span4"><b>Name</b>
+                                        <span class="mng_brnd_btn">{{retailer.title }}</span>
+                                    </div>                                   
+                                    </div>                                    
                                     <div class="span8">
-                                    <div class="span3 name_list">
+                                    <div style="background:#efefef; padding-left: 10px;">
+                                        <b>Brands</b>
+                                        <span class="mng_brnd_btn"><a href="{{ path('admin_retailer_manage_brand', {'id': retailer.id}) }}" class="btn">Manage Brands</a></span>
+                                    </div>
+                                    </div>
+                                    <div class="span8" >
+                                      <div class="span5 name_list" style="width:70%; line-height: 30px;">
+                                     {%for b in brands%}                                         
+                                   <div style="margin-left:20px; float: left; min-width: 150px;">
+                                      
+                                      <span class="pf_answer"> {{b.name}}</span>  
+                                    </div>
+                                    {%endfor%}                                    
+                                    </div>
+                                        </div>
+                                            <div style="clear:both" >&nbsp</div>                                    
+                                    <div class="span8">                                        
+                                      <div style="background:#efefef; padding-left: 10px;">
+                                          <b>Users</b>
+                                         <span class="mng_brnd_btn"><a href="{{ path('admin_new_retailer_user', {'id': retailer.id}) }}" class="btn" class="mng_brnd_btn">Add New User</a></span>
+                                     </div>                                    
+                                    </div>                                        
+                                    <div class="span6">
+                                        <div class="row-fluid show-grid">                                 
                                         {%for r in retaileruser%}
-                                         {{r.name}}  <a href="{{ path('admin_retailer_user_edit', {'id': r.id}) }}">edit</a> <a href="">Delete<a><br/>
-                                        {%endfor%}</div>                                    
+                                         <div class="span6" style="border-bottom:1px solid #ccc; line-height: 54px;">{{r.name}}</div> 
+                                         <div class="span2" style="border-bottom:1px solid #ccc;"><a class="btn" href="{{ path('admin_retailer_edit_user', {'id': r.id}) }}">edit</a>
+                                         <a class="btn" href="#myModal{{r.id}}" role="button" data-toggle="modal" title="Delete {{r.name}}"">Delete</a>
+                                         </div>                                         
+                                         
+                                         <div id="myModal{{r.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Retailer User</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Retailer <b>{{retailer.title }}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_retailer_user_delete', {'id': r.id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>                        
+            </div>  
+                                        {%endfor%}                                        
+                                          </div>
                                     </div>
                                     
                                 </div>  
@@ -59,21 +97,7 @@
                     </div> <!-- End detail_wrapper -->
                 </form>  
 <!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Retailer</h3>
-  </div>
-  <div class="modal-body">
-      <p>Are you sure you want to Delete this Retailer <b>{{retailer.title }}</b>?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_retailer_delete', {'id': retailer.Id}) }}"  class="btn btn-primary">Delete</a>
     
-  </div>
-</div>                        
-            </div>      
 
 {% endblock %}
 
