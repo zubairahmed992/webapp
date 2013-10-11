@@ -109,12 +109,19 @@ function backToListing(){
 }
 
 $(document).ready(function(){
+     var genders=$('#genders').val();
+                    
+                    if(genders=='M'){
+                        
+                        $('#genders').prop('checked', true);
+                    }
 
  //SearchForm(1);  // For first time page load default results
                 $('.pagination li.active').live('click',function(){
                     var page = $(this).attr('p');
                     SearchForm(page);
                     
+                   
                 });           
                 });
                 
@@ -169,7 +176,8 @@ $(document).ready(function(){
             <div class="adv_srch_hd">Gender</div>           
             <div class="frm_ele">
            {% for g in genders %}
-          <span class="adv_radio"><input type="checkbox" name="genders" id="genders" value="{{g|capitalize}}" ></span>
+          <span class="adv_radio">
+         <input type="checkbox" name="genders" id="genders" value="{{g|capitalize}}" ></span>
           <span class="adv_gdr">{{g|capitalize}}</span>
           {%endfor%}
            </div>
