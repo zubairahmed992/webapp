@@ -870,7 +870,7 @@ class ProductRepository extends EntityRepository {
  #-----------------------------------------------------------------------------#
         #---------Searching Quries-------------------------------#
   public function searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page){
-       
+
       return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image')
@@ -879,12 +879,12 @@ class ProductRepository extends EntityRepository {
                         ->innerJoin('p.clothing_type', 'ct')
                         ->innerJoin('p.brand', 'b')
                         ->Where('b.id=:brand_id')
-                        ->andWhere('p.gender=:female')
+                        ->orWhere('p.gender=:female')
                         ->orWhere('p.gender=:male')
-                        ->andWhere('ct.name IN(:category_id)')
+                        ->orWhere('ct.name IN(:category_id)')
                         ->orWhere('ct.target IN(:target)')
                         ->groupBy('p.id')
-                        ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))
+                        ->setParameters(array('brand_id' => $brand_id,'female'=>$female,'male'=>$male))
                         ->setParameter('category_id',$category_id)
                         ->setParameter('target',$target)
                         ->setFirstResult($start)
@@ -892,7 +892,11 @@ class ProductRepository extends EntityRepository {
                         ->getQuery()
                         ->getResult(); 
       
+             
+     
+      
   }
+  
   
 #------------Count Search Record---------------------------#
  public function countSearchProduct($brand_id,$male,$female,$target,$category_id){
@@ -904,10 +908,10 @@ class ProductRepository extends EntityRepository {
                         ->innerJoin('p.product_colors', 'pc')
                         ->innerJoin('p.clothing_type', 'ct')
                         ->innerJoin('p.brand', 'b')
-                        ->Where('b.id=:brand_id')
-                        ->andWhere('p.gender=:female')
+                         ->Where('b.id=:brand_id')
+                        ->orWhere('p.gender=:female')
                         ->orWhere('p.gender=:male')
-                        ->andWhere('ct.name IN(:category_id)')
+                        ->orWhere('ct.name IN(:category_id)')
                         ->orWhere('ct.target IN(:target)')
                         ->groupBy('p.id')
                         ->setParameters(array( 'brand_id' => $brand_id,'female'=>$female,'male'=>$male))

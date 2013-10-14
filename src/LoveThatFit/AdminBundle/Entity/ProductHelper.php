@@ -871,29 +871,41 @@ public function getRecordsCountWithCurrentProductLimit($product_id){
 #----------------Getting Record for Searching--------------------------------#
 public function searchProduct($data){
         
-  $brand_id=$data['brand'];
-  if(isset($data['category'])){
-      $category_id=$data['category'];
-  }else{
-      
-      $category_id=null;
-  }
-  
-  $genders=$data['genders'];
- 
-  if(isset($genders['0'])){
-  $male=$genders['0'];}else{
-      $male=null;
-  }
-  if (isset($genders['1'])){
-  $female=$genders['1'];}else{
-      $female=null;
-  }
-  if(isset($data['target'])){
- $target=$data['target'];}
- else{
-     $target=null;
- }
+    if (isset($data['brand'])) {
+            $brand_id = $data['brand'];
+        } else {
+            $brand_id = null;
+        }
+
+        if (isset($data['category'])) {
+            $category_id = $data['category'];
+        } else {
+
+            $category_id = null;
+        }
+        if (isset($data['genders'])) {
+
+            $genders = $data['genders'];
+        } else {
+            $genders = null;
+        }
+
+
+        if (isset($genders['0'])) {
+            $male = $genders['0'];
+        } else {
+            $male = null;
+        }
+        if (isset($genders['1'])) {
+            $female = $genders['1'];
+        } else {
+            $female = null;
+        }
+        if (isset($data['target'])) {
+            $target = $data['target'];
+        } else {
+            $target = null;
+        }
  $page=$data['page']; 
 
  #--------Pagination Started-------------------#
@@ -908,6 +920,7 @@ $start = $page * $per_page;
 
   
         $entity = $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page);
+        
         $countSearchProduct = count($this->repo->countSearchProduct($brand_id,$male,$female,$target,$category_id));
         $countRecord=count($entity);
        
