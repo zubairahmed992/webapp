@@ -906,7 +906,7 @@ public function searchProduct($data){
         } else {
             $target = null;
         }
- $page=$data['page']; 
+ $page=1;//$data['page']; 
 
  #--------Pagination Started-------------------#
  $cur_page = $page;
@@ -920,6 +920,7 @@ $start = $page * $per_page;
 
   
         $entity = $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page);
+        
         
         $countSearchProduct = count($this->repo->countSearchProduct($brand_id,$male,$female,$target,$category_id));
         $countRecord=count($entity);

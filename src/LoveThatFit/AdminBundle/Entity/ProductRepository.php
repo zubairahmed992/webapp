@@ -871,7 +871,9 @@ class ProductRepository extends EntityRepository {
         #---------Searching Quries-------------------------------#
   public function searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page){
 
-      return $this->getEntityManager()
+      
+      
+     /* $query= $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image')
                         ->from('LoveThatFitAdminBundle:Product', 'p')
@@ -881,20 +883,47 @@ class ProductRepository extends EntityRepository {
                         ->Where('b.id=:brand_id')
                         ->orWhere('p.gender=:female')
                         ->orWhere('p.gender=:male')
+                        ->setParameters(array('brand_id' => $brand_id,'female'=>$female,'male'=>$male))
+                                  
                         ->orWhere('ct.name IN(:category_id)')
                         ->orWhere('ct.target IN(:target)')
                         ->groupBy('p.id')
-                        ->setParameters(array('brand_id' => $brand_id,'female'=>$female,'male'=>$male))
                         ->setParameter('category_id',$category_id)
                         ->setParameter('target',$target)
                         ->setFirstResult($start)
                         ->setMaxResults($per_page)
-                        ->getQuery()
-                        ->getResult(); 
-      
+                        ->getQuery();
+             return $query->getResult();            
+*/
+  
+      $str = "SELECT p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image  FROM LoveThatFitAdminBundle:Product p Join p.product_colors pc Join p.clothing_type ct Join p.brand b";
              
-     
-      
+             if($brand_id){
+                 $str=$str." WHERE b.id = ". $brand_id;
+               
+             }
+             if($male || $female){
+                 $str=$str." AND ";
+                if($male && $female){
+                    $str=$str."(p.gender= '".$male."' OR p.gender='".$female."') ";
+                }elseif($male){
+                    $str=$str."p.gender='".$male."'";
+                }elseif($female){
+                    $str=$str."p.gender='".$female."'";
+                }
+               
+             }
+             if($target){
+                 $str=$str." AND ct.target IN ('".implode("','", $target)."') ";
+             }
+             if($category_id){                 
+                 $str=$str." AND ct.id IN (".implode(", ", $category_id).") ";                 
+             }
+                 $str=$str." group by p.id";
+      $query = $this->getEntityManager()
+                        ->createQuery($str);              
+                     return $query->getResult();
+              
   }
   
   

@@ -75,7 +75,7 @@ var target = []
      if(inArray(playlist[i]['id'],category)=="test"){
          $('#all_category').hide();
     $('#category_empty').addClass('frm_ele');
-     $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['name'] }).appendTo('#category_empty');
+     $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#category_empty');
       $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#category_empty');
     }else{
        $("#category").attr("disabled", true);
