@@ -42,6 +42,8 @@ class ProductController extends Controller {
         $request_array = json_decode($jsonInput, true);
         
         $size_chart_helper = $this->get('admin.helper.sizechart');
+           
+  //$request_array=array('gender'=>'f','body_type'=>'Petite','target_top'=>1,'top_size'=>1,'target_bottom'=>2,'bottom_size'=>2,'target_dress'=>3,'dress_size'=>3);
         $size_chart = $size_chart_helper->sizeChartList($request_array);
         if ($size_chart) {
             $size_chart_data = array();

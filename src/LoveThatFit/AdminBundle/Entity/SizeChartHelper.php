@@ -345,9 +345,7 @@ public function sizeChartList($request_array)
           $chest=$sizechart_top[0]['top_chest'];
           $waist=$sizechart_top[0]['top_waist'];
           $top_id=$sizechart_top[0]['size_chart_id'];
-         
-          }
-          
+         }
           
          }
          if($target_bottom)
@@ -359,10 +357,7 @@ public function sizeChartList($request_array)
                 $hip=$sizechart_bottom[0]['bottom_hip'];
                 $inseam=$sizechart_bottom[0]['bottom_inseam'];
                 $bottom_id=$sizechart_bottom[0]['size_chart_id'];
-                
-                
                 }
-              
          }
          if($target_dress)
          {     
@@ -374,11 +369,11 @@ public function sizeChartList($request_array)
             $sleeve_dress=0;
             if($size_chart_dress){
                 
-            $bust_dress = $sizechart_dress[0]['dress_bust'];
-            $waist_dress = $sizechart_dress[0]['dress_waist'];
-            $hip_dress = $sizechart_dress[0]['dress_hip'];
-            $sleeve_dress = $sizechart_dress[0]['dress_sleeve'];
-            $dress_id=$sizechart_dress[0]['size_chart_id'];
+            $bust_dress = $size_chart_dress[0]['dress_bust'];
+            $waist_dress = $size_chart_dress[0]['dress_waist'];
+            $hip_dress = $size_chart_dress[0]['dress_hip'];
+            $sleeve_dress = $size_chart_dress[0]['dress_sleeve'];
+            $dress_id=$size_chart_dress[0]['size_chart_id'];
             
             }
             

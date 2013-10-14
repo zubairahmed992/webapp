@@ -113,9 +113,9 @@ public function userProfileAction()
         $user = $this->get('user.helper.user');
         
         #/!!!!!!!!!!!!!!!!!!!!!!!!!!!! TESTING CODE SHOUDL BE REMOVED #/
-     /*  $request_array=array();
-        $request_array=array('email'=>'abcdfdefg@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
-            'weight'=>4,'neck'=>4,'bust'=>5);*/
+      $request_array=array();
+      /*  $request_array=array('email'=>'test_service1@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
+            'weight'=>4,'neck'=>4,'bust'=>5,'body_type'=>'Petite');*/
         
         $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));
