@@ -29,13 +29,13 @@ var target = []
    $("#target:checked").each(function() {
        target.push($(this).val());
    });
-
+    $('#loading-indicator').show();
 $.ajax({
         type:'POST',
         url: $('#url').text(),
         data: {brand: brand, category: category,genders:genders,target:target,page:page},  
         success: function(response) {
-       console.log(response);
+       $('#loading-indicator').hide();
        $('#all_data').hide();
        $('#all_data_search').empty('');
        $('#all_data_search').show();
@@ -129,9 +129,21 @@ $(document).ready(function(){
                 });           
                 });
                 
+
+
+
  </script>
+ <style>
+ #loading-indicator {
+  position: absolute;
+  left: 500px;
+  top: 200px;
+}
+     </style> 
    
-    <span id="admin_product_zip" style="display:none;">{{path('admin_product_detail_zipdownlaod')}}</span>
+ 
+     
+  <span id="admin_product_zip" style="display:none;">{{path('admin_product_detail_zipdownlaod')}}</span>
 <div class="p_listing">     
     <h1>Products</h1>
     
@@ -160,7 +172,7 @@ $(document).ready(function(){
         Search
         </button>
     </div>
-
+    <img src="{{asset('bundles/lovethatfit/site/images/loading.gif')}}" id="loading-indicator"  style="display:none;" /> 
     <div id="demo" class="collapse">    
         <div id="adv_srch_wrap"><!--Main wrap -->
     <span id="url" style="display:none;">{{path('admin_product_search_result')}}</span>
@@ -294,6 +306,7 @@ $(document).ready(function(){
 {% endfor %}
 
  </div>
+  
      
       <div class="bs-docs-grid" id="all_data_search"> 
           <div class="pagination"></div>
