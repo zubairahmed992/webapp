@@ -113,7 +113,7 @@ class RetailerHelper {
 
 //-------------------------------------------------------
 
-    public function find($id) {
+ public function find($id) {
         return $this->repo->find($id);
     }
    #-----------------------------------------------------
@@ -186,7 +186,10 @@ class RetailerHelper {
     return $this->repo->getRecordsCountWithCurrentRetailerLimit($retailer_id);
 }
     
-    
+    public function getBrandByRetailer($retailer)
+   {
+       return $this->repo->getBrandByRetailer($retailer);
+   }
     
     
 //Private Methods    

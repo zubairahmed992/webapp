@@ -196,6 +196,11 @@ class BrandHelper {
      return $this->repo->getBrnadList();
  }
     
+ public function getBrnadArray()
+ {
+     return $this->repo->getBrnadArray();     
+ }
+    
     
 //Private Methods    
 //----------------------------------------------------------

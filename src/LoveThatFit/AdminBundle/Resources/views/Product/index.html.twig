@@ -73,8 +73,9 @@ var target = []
      for(i=0;i<playlist.length;i++){
        
      if(inArray(playlist[i]['id'],category)=="test"){
-    
-     $('<input />', { type: 'checkbox', id: 'category_select', value: playlist[i]['name'] }).appendTo('#category_empty');
+         $('#all_category').hide();
+    $('#category_empty').addClass('frm_ele');
+     $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['name'] }).appendTo('#category_empty');
       $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#category_empty');
     }else{
        $("#category").attr("disabled", true);
@@ -85,6 +86,8 @@ var target = []
     
     }else{
  $('#category_empty').text('');
+ $('#category_empty').removeClass('frm_ele');
+ 
   $('#all_category').show();
 
 }}});
@@ -94,6 +97,7 @@ var target = []
    }
 }
 function inArray(needle, haystack) {
+
     var length = haystack.length;
     
     for(var i = 0; i < length; i++) {
@@ -200,7 +204,13 @@ $(document).ready(function(){
             <div class="adv_srch_hd">Categories</div>           
              <span id="all_category" style="display:none;">
             {% for c in category %}
-            <input type="checkbox" name="category" id="category" value="{{c.id}}">{{c.name}}
+                     
+                      <span class="adv_radio" id="category_empty_span">
+                          <input type="checkbox" name="category" id="category" value="{{c.id}}"></span>
+                           <span class="adv_gdr" id="category_empty_label">
+{{c.name}}
+            
+                      </span>
             {%endfor%}        
              </span>
             <div class="frm_ele" id="category_empty">

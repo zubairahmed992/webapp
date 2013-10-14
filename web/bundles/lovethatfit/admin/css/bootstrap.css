@@ -6608,18 +6608,3 @@ padding:5px 0px 5px 0px;
    margin:0px 15px 0px 5px;
 }
 
-#all_category{
-    display: block; 
-    margin:0px 15px 0px 0px;
-    padding-top: 10px;
-    
-}
-
-.check_box_category{
-    width: 10px!important;
-    margin:0px!important;
-}
-
-#category_empty{
-    padding-top: 10px;
-}

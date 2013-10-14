@@ -24,7 +24,7 @@
       </div>
       <div class="clearfix"></div>   
       {%if entity.id %}
-    <form action="{{ path('admin_retailer_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
+    <form action="{{ path('admin_retailer_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
  {{ form_errors(form) }}
 
             <div id="detail_wrapper">      
@@ -35,10 +35,7 @@
                                     <div class="span3">Title</div>
                                     <div class="span3">{{ form_widget(form.title) }}{{ form_errors(form.title) }}</div>                                   
                                 </div>
-                                    {%for b in brands%}                                    
-                                    <input type="checkbox" name="{{b.name}}" value="{{b.id}}">
-                                    <div class="pf_answer"> {{b.name}}<br>                                     
-                                    {%endfor%}
+                                    
                         {{ form_rest(form) }}
                                     <div class="span3">				
                                             <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>                                     

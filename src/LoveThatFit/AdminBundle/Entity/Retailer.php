@@ -16,7 +16,7 @@ class Retailer
 {
     
     /**
-     * @ORM\OneToMany(targetEntity="RetailerUser", mappedBy="ltf_retailer", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="RetailerUser", mappedBy="retailer", orphanRemoval=true)
      */
     
     protected $retailer_users;
