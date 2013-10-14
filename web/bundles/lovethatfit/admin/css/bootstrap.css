@@ -6572,11 +6572,13 @@ padding:5px 0px 5px 0px;
 
 #adv_srch_wrap{
     margin-top: 10px;
+    border:1px solid #ccc;
+    padding:10px;
 }
 
 .adv_srch_hd{    
-background:#F5F5F5;
-padding: 5px;
+    background:#F5F5F5;
+    padding: 5px;
 }
 
 .frm_wrap{
@@ -6590,24 +6592,34 @@ padding: 5px;
 }
 
 .adv_radio{
-    margin: 0px;
-    padding: 0px;
-}
-
-.adv_radio :last-child{
-    margin-left: 15px;
-    margin-right: 2px;
-  
+    display: float;    
+    margin: 0px 15px 0px 5px;  
 }
 
 .adv_radio input{
     display: inline-block;
     float:left;
-    padding-right: 3px!important;
-    
+    padding-right: 3px!important;    
 }
 
 .adv_gdr{
    display: inline; 
    float: left;
+   margin:0px 15px 0px 5px;
+}
+
+#all_category{
+    display: block; 
+    margin:0px 15px 0px 0px;
+    padding-top: 10px;
+    
+}
+
+.check_box_category{
+    width: 10px!important;
+    margin:0px!important;
+}
+
+#category_empty{
+    padding-top: 10px;
 }
