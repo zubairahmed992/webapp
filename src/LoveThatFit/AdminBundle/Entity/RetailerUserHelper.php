@@ -7,6 +7,10 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
 use LoveThatFit\AdminBundle\Entity\RetailerUser;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\SecurityContext;
+use \Symfony\Component\EventDispatcher\EventDispatcher;
+use \Symfony\Component\EventDispatcher\Event;
 
 class RetailerUserHelper {
 
@@ -26,6 +30,7 @@ class RetailerUserHelper {
      * @var string
      */
     protected $class;
+    
     private $container;
 
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class) {

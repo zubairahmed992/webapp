@@ -10,6 +10,11 @@ security:
             iterations: 1
             encode_as_base64: false
             
+      LoveThatFit\AdminBundle\Entity\RetailerUser:
+            algorithm:   sha1
+            iterations: 1
+            encode_as_base64: false      
+            
       
     firewalls:
         admin_area:
@@ -36,7 +41,8 @@ security:
                 
             logout:
                path:   /logout
-               target: /login
+               target: /login       
+               
 #               success_handler: authentication_handler
             #http_basic:
                 #realm: "Secured Demo Area"

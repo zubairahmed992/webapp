@@ -200,7 +200,19 @@ class BrandHelper {
  {
      return $this->repo->getBrnadArray();     
  }
-    
+  
+ public function getBrandArray()
+ {
+     $brands = array();
+     $brand_array= $this->repo->getBrnadArray();  
+     foreach($brand_array as $key=>$brand)
+     {
+         $brands[$brand['id']] = $brand['name'];
+        //$brands[$brand->getId()] = $brand->getName();
+     }
+     return $brands;
+ }
+ 
     
 //Private Methods    
 //----------------------------------------------------------

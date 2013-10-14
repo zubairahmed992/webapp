@@ -5,15 +5,18 @@ namespace LoveThatFit\AdminBundle\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\RetailerType;
 use LoveThatFit\AdminBundle\Form\Type\RetailerUserType;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\SecurityContext;
 use LoveThatFit\AdminBundle\Entity\Retailer;
 use LoveThatFit\AdminBundle\Entity\RetailerUser;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\SecurityContext;
+use \Symfony\Component\EventDispatcher\EventDispatcher;
+use \Symfony\Component\EventDispatcher\Event;
 
 class RetailerController extends Controller {
 
@@ -50,7 +53,7 @@ class RetailerController extends Controller {
                     'retailer' => $entity,
                     'page_number' => $page_number,
                     'retaileruser' => $this->getRetailerUserByRetailer($entity),
-                    'brands' => $this->getbrandbyRetailer($entity->getId()),
+                    'brands' => $this->get('admin.helper.retailer')->getBrandByRetailer($entity->getId()),
         ));
     }
 
@@ -65,8 +68,7 @@ class RetailerController extends Controller {
     }
 
     //------------------------------------------------------------------------------------------
-    public function createAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
+    public function createAction(Request $request) {       
         $entity = $this->get('admin.helper.retailer')->createNew();
         $form = $this->createForm(new RetailerType('add'), $entity);
         $form->bind($request);
@@ -178,6 +180,8 @@ class RetailerController extends Controller {
         $form = $this->createForm(new RetailerUserType('add'), $retailerUser);
         $form->bind($request);
         if ($form->isValid()) {
+            $password = $this->encodePassword($retailerUser);
+            $retailerUser->setPassword($password);
             $retailerUser->setRetailer($retailer);
             $retailerUser->setCreatedAt(new \DateTime('now'));
             $retailerUser->setUpdatedAt(new \DateTime('now'));
@@ -218,6 +222,8 @@ class RetailerController extends Controller {
         $form->bind($request);
         if ($form->isValid()) {
             $entity->setUpdatedAt(new \DateTime('now'));
+            $password = $this->encodePassword($entity);
+            $entity->setPassword($password);
             $em->persist($entity);
             $em->flush();
         }
@@ -231,10 +237,12 @@ class RetailerController extends Controller {
         $entity = $this->getRetailer($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
-        }
+        }        
+        $brand_form = $this->addRetailerBrandForm();
+        $brand_form->get('brands')->setData($entity->getBrandArray());
         return $this->render('LoveThatFitAdminBundle:Retailer:retailer_manage_brands.html.twig', array(
                     'retailerid' => $entity,
-                    'form' => $this->addRetailerBrandForm()->createView(),
+                    'form' => $brand_form->createView(),
                     'brand' => $this->getBrandList(),
                     'retailerBrand' => $this->getRetailerUserByRetailer($entity->getId()),
         ));
@@ -248,9 +256,9 @@ class RetailerController extends Controller {
         if (!$retailer) {
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
         }
-        $data = $request->request->all();
-        return new \Symfony\Component\HttpFoundation\Response(var_dump($data['']));
-        foreach ($data as $key => $value){
+       $data = $request->request->all();
+       $brands = $data['form']['brands'];     
+        foreach ($brands as $key=>$value){
             $brand = $this->get('admin.helper.brand')->find($value);
             $brand->addRetailer($retailer);
             $retailer->addBrand($brand);
@@ -291,8 +299,8 @@ class RetailerController extends Controller {
     }
 
     //------------- Password encoding ------------------------------------------
-    public function encodePassword(Retailer $retailer) {
-        return $this->encodeThisPassword($retailer, $retailer->getPassword());
+    public function encodePassword(RetailerUser $retailerUser) {
+        return $this->encodeThisPassword($retailerUser, $retailerUser->getPassword());
     }
 
     //---------------------------Brand List-------------------
@@ -317,37 +325,27 @@ class RetailerController extends Controller {
     }
 
 //-------------------------------------------------------
-    private function encodeThisPassword(Retailer $retailer, $password) {
+    private function encodeThisPassword(RetailerUser $retailerUser, $password) {
         $factory = $this->container->get('security.encoder_factory');
-        $encoder = $factory->getEncoder($retailer);
-        $password = $encoder->encodePassword($password, $retailer->getSalt());
+        $encoder = $factory->getEncoder($retailerUser);
+        $password = $encoder->encodePassword($password, $retailerUser->getSalt());
         return $password;
     }
 
 //------------------------------------------------------------------------------------------
 
-    private function addRetailerBrandForm() {
+    private function addRetailerBrandForm() {        
         $builder = $this->createFormBuilder();
-        return $builder->getForm();
-    }
-
-    private function _addRetailerBrandForm() {
-        $builder = $this->createFormBuilder();
-        $brands= $this->get('admin.helper.brand')->getBrnadArray();
+        //$brands= $this->get('admin.helper.brand')->getBrnadArray();
                     $builder->add(
                 'brands', 'choice', 
-                array('choices'=>$brands,
+                array('choices'=>$this->get('admin.helper.brand')->getBrandArray(),
                        'multiple'  => true,
                        'expanded'  => true, 
-                ));
-        
+                ));        
         return $builder->getForm();
-    }
-    
+    }    
 //------------------------------------------------------------------------------------------
 
-    private function getbrandbyRetailer($retailer) {
-        return $this->get('admin.helper.retailer')->getBrandByRetailer($retailer);
-    }
 
 }

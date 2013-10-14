@@ -212,4 +212,17 @@ class Retailer
     {
         return $this->brands;
     }
+    
+   
+    public function getBrandArray()
+    {
+        $brands = $this->brands;
+        $brand_array=array();
+       foreach ($brands as $b) {
+            //$brand_array[$b->getId()] = $b->getName();            
+           $brand_array[$b->getName()] = $b->getId();            
+        }
+        //asort($brand_array);
+        return $brand_array;        
+    }
 }

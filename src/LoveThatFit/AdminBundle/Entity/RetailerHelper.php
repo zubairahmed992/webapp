@@ -180,6 +180,13 @@ class RetailerHelper {
             'sort'=>$sort,
         );
     }
+    
+    public function getRetailerBrandByRetailerAndBrand($retailer,$brand)
+    {
+       return $this->repo->getRetailerBrandByRetailerAndBrand($retailer,$brand); 
+    }
+    
+    
 
     public function getRecordsCountWithCurrentRetailerLimit($retailer_id){
     
@@ -191,10 +198,35 @@ class RetailerHelper {
        return $this->repo->getBrandByRetailer($retailer);
    }
     
+   public function updateRetailerBrandIfFound($retailer, $brand)
+   {
+       $result=$this->repo->getBrandByRetailerBrand($retailer, $brand);
+       $count_result = count($result);
+        if ($count_result > 0) {
+
+            return $this->updateRetailerBrand($retailer, $brand);
+        } else {
+            return $this->addRetailerBrand($retailer, $brand);
+        }     
+   }
     
+   
+   
+   
+   
+   
+   
+   
+   
 //Private Methods    
 //----------------------------------------------------------
-    private function validateForCreate($name) {
+  
+   
+   
+   
+   
+   
+   private function validateForCreate($name) {
         if (count($this->findOneByName($name)) > 0) {
             return array('message' => 'Retailer Name already exists!',
                 'field' => 'name',
