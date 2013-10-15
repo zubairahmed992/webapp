@@ -190,6 +190,12 @@ class BrandHelper {
     
     return $this->repo->getRecordsCountWithCurrentBrandLimit($brand_id);
 }
+
+
+public function getRetailerBrandById($id)
+{
+    return $this->repo->getRetailerBrandById($id);
+}
     
  public function getBrnadList()
  {

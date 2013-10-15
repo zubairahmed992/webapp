@@ -144,6 +144,20 @@ class BrandRepository extends EntityRepository {
                 return null;
                 }
         } 
+        
+ public function getRetailerBrandById($id)
+ {
+    $query = $this->getEntityManager()
+                    ->createQuery("SELECT r,b FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.retailers r   
+                    WHERE r.id =:retailer")
+                   ->setParameters(array('retailer' => $id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                } 
+ }
   
  public function getBrnadList()
  {

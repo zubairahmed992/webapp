@@ -193,10 +193,16 @@ class RetailerHelper {
     return $this->repo->getRecordsCountWithCurrentRetailerLimit($retailer_id);
 }
     
+    public function getRetailerBrandById($retailer)
+   {
+       return $this->repo->getRetailerBrandById($retailer);
+   }
+   
     public function getBrandByRetailer($retailer)
    {
        return $this->repo->getBrandByRetailer($retailer);
    }
+   
     
    public function updateRetailerBrandIfFound($retailer, $brand)
    {

@@ -144,7 +144,19 @@ class RetailerRepository extends EntityRepository
    }
    
    
-   
+   public function getRetailerBrandById($retailer)
+   {
+       $query = $this->getEntityManager()
+                    ->createQuery("SELECT r,b FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.retailers r   
+                    WHERE r.id =:retailer")
+                   ->setParameters(array('retailer' => $retailer));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+   }
 
    
     public function isDuplicateEmail($id, $email) {

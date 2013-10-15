@@ -256,7 +256,17 @@ class RetailerController extends Controller {
         if (!$retailer) {
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
         }
+        foreach($retailer->getBrands() as $brand)
+        {
+           $brand->removeRetailer($retailer);
+           $retailer->removeBrand($brand);
+           $em->persist($brand);
+           $em->persist($retailer);
+           $em->flush();            
+        }
        $data = $request->request->all();
+       if($data['form']['brands'])
+       {
        $brands = $data['form']['brands'];     
         foreach ($brands as $key=>$value){
             $brand = $this->get('admin.helper.brand')->find($value);
@@ -267,6 +277,7 @@ class RetailerController extends Controller {
             $em->flush();
         }
         $this->get('session')->setFlash('success', 'Retailer Brand has been created.');
+       }
         return $this->redirect($this->generateUrl('admin_retailer_show', array('id' => $retailer->getId())));
     }
 
