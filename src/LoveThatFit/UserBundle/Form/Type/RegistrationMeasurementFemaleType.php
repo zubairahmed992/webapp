@@ -14,21 +14,26 @@ class RegistrationMeasurementFemaleType extends AbstractType
     private $dress_brands;
     private $body_types;
     private $container;
+    private $body_shape;
+    private $bra_size;
 
-     public function __construct($container)             
+     public function __construct($container,$body_shape,$bra_size,$body_types)             
     {
         $this->container= $container;
-        $this->body_types=array('Regular'=>'Regular','Petite'=>'Petite');
+        $this->body_types=$body_types;
         
         $this->top_brands=$this->container->getBrandArray('Top');
         $this->bottom_brands=$this->container->getBrandArray('Bottom');
         $this->dress_brands=$this->container->getBrandArray('Dress');
+        $this->body_shape=$body_shape;
+        $this->bra_size=$bra_size;
      
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => true,'data'=>'Regular'));
+    {   $builder->add('body_shape', 'choice', array('choices' => $this->body_shape, 'required' => false,'empty_value' => 'Body Shape',));
+        $builder->add('bra_size', 'choice', array('choices' => $this->bra_size, 'required' => false,'empty_value' => 'Bra Size',));
+        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => true));
         $builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false,'empty_value' => 'Brand',));
         $builder->add('bottom_brand', 'choice', array('choices' => $this->bottom_brands, 'required' => false,'empty_value' => 'Brand',));
         $builder->add('dress_brand', 'choice', array('choices' => $this->dress_brands, 'required' => false,'empty_value' => 'Brand',));

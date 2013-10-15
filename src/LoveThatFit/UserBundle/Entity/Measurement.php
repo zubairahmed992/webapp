@@ -296,6 +296,30 @@ class Measurement {
      * )
      */
     private $iphone_outseam=0;
+    /**
+     * @var string $braSize
+     *
+     * @ORM\Column(name="bra_size", type="string", length=50, nullable=true)
+     * 
+     */
+    private $braSize;
+    
+    /**
+     * @var string $bodyTypes
+     *
+     * @ORM\Column(name="body_types", type="string", length=50, nullable=true)
+     * 
+     */
+    private $bodyTypes;
+    
+    /**
+     * @var string $bodyShape
+     *
+     * @ORM\Column(name="body_shape", type="string", length=50, nullable=true)
+     * 
+     */
+    private $bodyShape;
+    
     
     /**
      * @var \DateTime $created_at
@@ -852,7 +876,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public $top_size;
     public $bottom_size;
     public $dress_size;
-    public $body_types;
+    //public $body_types;
 
    
 
@@ -992,5 +1016,97 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getIphoneShoulderHeight()
     {
         return $this->iphone_shoulder_height;
+    }
+
+    /**
+     * Set braSize
+     *
+     * @param string $braSize
+     * @return Measurement
+     */
+    public function setBraSize($braSize)
+    {
+        $this->braSize = $braSize;
+    
+        return $this;
+    }
+
+    /**
+     * Get braSize
+     *
+     * @return string 
+     */
+    public function getBraSize()
+    {
+        return $this->braSize;
+    }
+
+    /**
+     * Set bodyType
+     *
+     * @param string $bodyType
+     * @return Measurement
+     */
+    public function setBodyType($bodyType)
+    {
+        $this->bodyType = $bodyType;
+    
+        return $this;
+    }
+
+    /**
+     * Get bodyType
+     *
+     * @return string 
+     */
+    public function getBodyType()
+    {
+        return $this->bodyType;
+    }
+
+    /**
+     * Set bodyShape
+     *
+     * @param string $bodyShape
+     * @return Measurement
+     */
+    public function setBodyShape($bodyShape)
+    {
+        $this->bodyShape = $bodyShape;
+    
+        return $this;
+    }
+
+    /**
+     * Get bodyShape
+     *
+     * @return string 
+     */
+    public function getBodyShape()
+    {
+        return $this->bodyShape;
+    }
+
+    /**
+     * Set bodyTypes
+     *
+     * @param string $bodyTypes
+     * @return Measurement
+     */
+    public function setBodyTypes($bodyTypes)
+    {
+        $this->bodyTypes = $bodyTypes;
+    
+        return $this;
+    }
+
+    /**
+     * Get bodyTypes
+     *
+     * @return string 
+     */
+    public function getBodyTypes()
+    {
+        return $this->bodyTypes;
     }
 }

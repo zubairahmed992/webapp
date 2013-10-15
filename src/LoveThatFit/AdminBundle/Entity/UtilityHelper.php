@@ -145,6 +145,14 @@ public function setSizeTitles($sizes)
     }
     return $new_sizes;
 }
-
-
+#-----------------Reading Body Shape ------------------------------------------#
+public function getBodyShape(){
+    
+     return $this->conf["constants"]["body_shape"];
+}
+#--------------Reading Bra Sizes--------------------------------------#
+public function getBraSize(){
+    return $this->conf["constants"]["bra_size"];
+    
+}
 }

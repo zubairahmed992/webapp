@@ -85,7 +85,7 @@ class RegistrationController extends Controller {
                 if ($user->getGender() == 'm') {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
                 } else {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper), $measurement);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraSize(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
                 }
 
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
@@ -139,7 +139,7 @@ class RegistrationController extends Controller {
         if ($user->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraSize(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
 
@@ -170,37 +170,18 @@ class RegistrationController extends Controller {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
+        
 
         if ($user->getGender() == 'm') {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
         } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraSize(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
+            $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());
+            
         }
 
         $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
             
-        
-        #--------------Retaining Boody Type-------------------------------------#
-        
-        
-        if ($retaining_array['topSizeChartId']) {
-            $top_body_type = $size_chart_helper->find($retaining_array['topSizeChartId'])->getBodytype();
-        } else {
-            $top_body_type = Null;
-        }
-
-        if ($retaining_array['bottomSizeChartId']) {
-            $bottom_body_type = $size_chart_helper->find($retaining_array['bottomSizeChartId'])->getBodytype();
-        } else {
-            $bottom_body_type = Null;
-        }
-        
-        if ($retaining_array['dressSizeChartId']) {
-            $dress_body_type = $size_chart_helper->find($retaining_array['dressSizeChartId'])->getBodytype();
-        } else {
-            $dress_body_type = Null;
-        }
-       //return new response($retaining_array['topSizeChartId'].$top_body_type."=".$retaining_array['bottomSizeChartId'].$bottom_body_type);
         #-----------End of Retaining BodyType----------------------------------#
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
@@ -212,9 +193,7 @@ class RegistrationController extends Controller {
                     'bottom_size_chart_id' => $retaining_array['bottomSizeChartId'],
                     'dress_brand_id' => $retaining_array['dress_brand_id'],
                     'dress_size_chart_id' => $retaining_array['dressSizeChartId'],
-                    'top_body_type'=>$top_body_type,
-                    'bottom_body_type'=>$bottom_body_type,
-                    'dress_body_type'=>$dress_body_type,
+                   
                 ));
     }
 

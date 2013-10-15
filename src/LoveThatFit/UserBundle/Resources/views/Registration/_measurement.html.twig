@@ -99,49 +99,22 @@
                         <div class="mlabel" style="width:100px;">Clothing Fit</div>
                         <div>
                               
-                            {% if (top_body_type is defined) or (bottom_body_type is defined) or (dress_body_type is defined)%}
-                           
-                            {%if (top_body_type=="Regular") or (bottom_body_type=="Regular") or (dress_body_type=="Regular") %}   
-                            
-                            <script>  
-                                     $(document).ready(function(){
-                              
-                              var bodytype = "measurement_body_types_0";
-                            document.getElementById(bodytype).checked = true;
-                            // $("#measurement_body_types_1").is(":checked");
-                           //  $("#measurement_body_types_1 :radio:checked");
-                          // $("#measurement_body_types_1").attr("checked",true);
-                           // $("#measurement_body_types_0").checkboxradio("refresh");
-                           });
-                            </script>
-                           
-                            {%endif%}
-                           {%if (top_body_type=="Petite") or (bottom_body_type=="Petite") or (dress_body_type=="Petite") %}   
-                             <script>
-                                  $(document).ready(function(){
-                              
-                              var bodytype = "measurement_body_types_1";
-                            document.getElementById(bodytype).checked = true;
-                            // $("#measurement_body_types_1").is(":checked");
-                           //  $("#measurement_body_types_1 :radio:checked");
-                          // $("#measurement_body_types_1").attr("checked",true);
-                           // $("#measurement_body_types_0").checkboxradio("refresh");
-                           });
-                            </script>
-                            {%endif %}
-                            {%endif %}
-                            
-                            
-                           
                             <span id="gender" style="display: none;">{{entity.gender}}</span>
                             {{ form_widget(form.body_types) }}
                         </div>
                     </div>
                     
                     
-                    
+                     <!-- START CODE FOR BODY SHAPE AND BRA SIZE --->    
           
-
+                    <div class="body_shape" id="body_shape">
+                    <div class="mlabel">Body Shape</div>
+                    {{ form_widget(form.body_shape) }}
+                   
+                    <div class="mlabel">Bra Size</div>
+                    {{ form_widget(form.bra_size) }}
+                    </div>
+            <!-- END  CODE FOR BODY SHAPE AND BRA SIZE --->    
                     <div class="sep"></div>
 
                     <div class="m_option">

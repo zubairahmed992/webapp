@@ -39,13 +39,18 @@ constants:
      dress: dress
      
   body_types:
-     ({regular, petite, tall})
+     ({regular, petite})
  
   body_types_search:
       regular: regular
       petite: petite
-      tall: tall
-  
+     
+ 
+  body_shape:
+    pear: pear
+    hourglass: hourglass
+    apple: apple
+    
   size_titles:
      ({xxs, xs, s, m, l, xl, xxl})
   
@@ -69,7 +74,43 @@ constants:
     xxl: 24
     xxl: 26
     xxl: 28
-  
+ 
+  bra_size:
+    28a: 28a 
+    28b: 28b
+    28c: 28c
+    28d: 28d
+    28dd: 28dd
+    30a: 30a
+    30b: 30b
+    30c: 30c
+    30d: 30d
+    30dd: 30dd
+    32a: 32a
+    32b: 32b
+    32c: 32c
+    32d: 32d
+    32dd: 32dd
+    34a: 34a
+    34b: 34b
+    34c: 34c
+    34d: 34d
+    34dd: 34dd
+    36a: 36a
+    36b: 36b
+    36c: 36c
+    38a: 38a
+    38b: 38b
+    38c: 38c
+    38d: 38d
+    38dd: 38dd
+    40a: 40a
+    40b: 40b
+    40c: 40c
+    40d: 40d
+    40dd: 40dd
+
+
 Twitter:  
 consumer_key: 9GBx1IchmgsTC404I52w
 consumer_secret: HC6fR9dZYl8zqzHNx36eCvlWvJ0HCmPzMJr3Pqj88
