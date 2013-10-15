@@ -265,14 +265,17 @@ class UserHelper {
     #-------------------------Web Service For Email Checking--------------------------------------#
 
     public function emailCheck($email) {
-        if ($this->isDuplicateEmail(Null, $email) == false) {
-            return array('Message' => 'Valid Email');
-        } else {
-            return array('Message' => 'The Email already exists');
+        $entity = $this->repo->findOneBy(array('email' => $email));
+        if(count($entity)>0){
+           return array('Message' => 'The Email already exists');  
+        }else{
+             return array('Message' => 'Valid Email');
         }
+        
     }
    #----------------------------------Forget Password Checking-----------------# 
     public function emailCheckForgetPassowrd($email) {
+        
         if ($this->isDuplicateEmail(Null, $email) == true) {
             return true;
         } else {
