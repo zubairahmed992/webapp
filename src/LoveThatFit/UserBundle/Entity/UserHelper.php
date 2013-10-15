@@ -569,6 +569,9 @@ public function updateForgetPassword($email,$password){
             $userinfo['back'] = $measurement->getBack();
             $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
             $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+            $userinfo['bodyType'] = $measurement->getBodyTypes();
+            $userinfo['bodyShape'] = $measurement->getBodyShape();
+            $userinfo['braSize'] = $measurement->getBraSize();
         } else {
             $userinfo['weight'] = 0;
             $userinfo['height'] = 0;
@@ -580,6 +583,9 @@ public function updateForgetPassword($email,$password){
             $userinfo['back'] = 0;
             $userinfo['iphone_shoulder_height'] = 0;
             $userinfo['iphone_outseam'] = 0;
+            $userinfo['bodyType'] = 0;
+            $userinfo['bodyShape'] = 0;
+            $userinfo['braSize'] = 0;
         }
         if (!$userinfo['back']) {
             $userinfo['back'] = 15.5;
@@ -688,6 +694,15 @@ public function updateForgetPassword($email,$password){
         }
         if (array_key_exists('neck', $request_array)) {
             $measurement->setNeck($request_array['neck']);
+        }
+        if (array_key_exists('bodyType', $request_array)) {
+            $measurement->setBodyTypes($request_array['bodyType']);
+        }
+        if (array_key_exists('bodyShape', $request_array)) {
+            $measurement->setBodyShape($request_array['bodyShape']);
+        }
+        if (array_key_exists('braSize', $request_array)) {
+            $measurement->setBraSize($request_array['braSize']);
         }
         return $measurement;
     }
