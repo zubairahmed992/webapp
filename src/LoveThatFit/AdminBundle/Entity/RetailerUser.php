@@ -292,7 +292,7 @@ class RetailerUser implements UserInterface, \Serializable {
      * @inheritDoc
      */
     public function getRoles() {
-        return array('ROLE_USER');
+        return array('ROLE_RETAILER');
     }
 
     /**

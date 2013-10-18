@@ -17,20 +17,35 @@ security:
             
       
     firewalls:
-        admin_area:
+        main_admin:
+            provider: in_memory
             pattern:    ^/admin
             anonymous: ~
             form_login:
                 login_path:  /admin/login
                 check_path:  /admin/login_check
                 username_parameter: _username
-                password_parameter: _password
-                
+                password_parameter: _password                
             logout:
                path:   /admin/logout
                target: /admin/login
- 
+
+        retailer_admin:
+            provider: retailer_db
+            pattern:    ^/retailer
+            anonymous: ~
+            form_login:
+                login_path:  /retailer/login
+                check_path:  /retailer/login_check
+                username_parameter: _username
+                password_parameter: _password
+                
+            logout:
+               path:   /retailer/logout
+               target: /retailer/login
+        
         secured_area:
+            provider: user_db
             pattern:    ^/
             anonymous: ~
             form_login:
@@ -61,11 +76,13 @@ security:
         - { path: /inner_site, roles: ROLE_USER }
         - { path: /ajax, roles: ROLE_USER }
         
+        - { path: ^/retailer/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /retailer/, roles: ROLE_RETAILER }
+        - { path: /retailer, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        
+        
 
     providers:
-        chain_provider:
-            chain:
-                providers: [in_memory, user_db]
         in_memory:
             memory:
                 users:
@@ -73,6 +90,9 @@ security:
                     admin: { password: d033e22ae348aeb5660fc2140aec35850c4da997, roles: 'ROLE_ADMIN' }
         user_db:                      
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
+        
+        retailer_db:                      
+            entity: { class: LoveThatFit\AdminBundle\Entity\RetailerUser, property: username }
             
             
 
