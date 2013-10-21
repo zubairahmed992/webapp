@@ -1,18 +1,18 @@
 <?php
-
 namespace LoveThatFit\RetailerAdminBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
+
 class DefaultController extends Controller
 {
     public function indexAction()
-    {
-        return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig');
+    {        
+        $id = $this->get('security.context')->getToken()->getUser()->getId();        
+        return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($id),));
     }
     
     public function retailerloginAction() {
@@ -25,4 +25,8 @@ class DefaultController extends Controller
                         )
         );
     }
+    
+    
+    
+    
 }

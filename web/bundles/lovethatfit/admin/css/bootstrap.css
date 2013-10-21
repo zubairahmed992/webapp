@@ -6629,3 +6629,14 @@ padding:5px 0px 5px 0px;
     float:right;
 }
 
+.retailer_brnd_logo{
+    border:1px solid #ccc;
+    padding: 20px;
+    width: 150px;
+    text-align: center;
+    float:left;
+    margin:0px 10px 0px 0px;
+    min-height: 100px;
+    max-height: 100px;
+    vertical-align: middle;
+}
