@@ -94,8 +94,7 @@ admin_login_check:
 
 admin_logout:
     pattern:   /admin/logout
-
-
+    
 login:
     pattern:   /login
     defaults: { _controller: LoveThatFitUserBundle:Registration:registration }

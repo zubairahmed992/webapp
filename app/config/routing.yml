@@ -1,3 +1,7 @@
+love_that_fit_retailer_admin:
+    resource: "@LoveThatFitRetailerAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
 love_that_fit_web_service:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing.yml"
     prefix:   /

@@ -1,0 +1,28 @@
+<?php
+
+namespace LoveThatFit\RetailerAdminBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
+class DefaultController extends Controller
+{
+    public function indexAction()
+    {
+        return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig');
+    }
+    
+    public function retailerloginAction() {
+        $security_context = $this->get('admin.helper.retailer.user')->getRegistrationSecurityContext($this->getRequest());
+        return $this->render(
+                        'LoveThatFitRetailerAdminBundle:Default:retailerLogin.html.twig', array(
+                    'last_username' => $security_context['last_username'],
+                    'error' => $security_context['error'],
+                    
+                        )
+        );
+    }
+}

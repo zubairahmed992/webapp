@@ -1,0 +1,13 @@
+retailer_login:
+    pattern:   /retailer/login
+    defaults:  { _controller: LoveThatFitRetailerAdminBundle:Default:retailerlogin }
+
+retailer_login_check:
+    pattern:   /retailer/login_check
+
+retailer_logout:
+    pattern:   /retailer/logout
+    
+retailer_admin_dashboard:
+    pattern:  /retailer/dashboard
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:Default:index }

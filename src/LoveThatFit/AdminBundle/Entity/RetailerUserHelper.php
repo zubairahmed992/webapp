@@ -3,6 +3,8 @@
 namespace LoveThatFit\AdminBundle\Entity;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
@@ -257,4 +259,29 @@ public function getRetaielerUserByRetailer($retailer)
         return $this->repo->isDuplicateEmail($id, $email);
     }
     
+    
+    public function getRegistrationSecurityContext($request) {        
+        $session = $request->getSession();
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(
+                    SecurityContext::AUTHENTICATION_ERROR
+            );
+        } else {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+        return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'error' => $error,
+        );
+    }
+    
+    
+    public function authenticateToken($token) {
+        $entity = $this->repo->findOneBy(array('authToken' => $token));
+        if (count($entity) > 0) {
+            return array('status' => True, 'Message' => 'Authentication Success');
+        } else {
+            return array('status' => False, 'Message' => 'Authentication Failure');
+        }
+    }
 }
