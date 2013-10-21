@@ -11,3 +11,7 @@ retailer_logout:
 retailer_admin_dashboard:
     pattern:  /retailer/dashboard
     defaults: { _controller: LoveThatFitRetailerAdminBundle:Default:index }
+
+retailer_admin_product:
+    pattern:  /retailer/product/{id}
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:Default:retailerProduct }

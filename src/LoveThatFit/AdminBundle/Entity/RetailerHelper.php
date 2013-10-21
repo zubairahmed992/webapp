@@ -208,6 +208,10 @@ class RetailerHelper {
        return $this->repo->getRetailerBrand($id);
    }
    
+   public function findProductByBrand($brand_id)
+   {
+       return $this->repo->findProductByBrand($brand_id);
+   }
     
    public function updateRetailerBrandIfFound($retailer, $brand)
    {

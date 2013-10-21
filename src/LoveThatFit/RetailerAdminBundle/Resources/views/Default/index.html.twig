@@ -6,7 +6,7 @@
 <div class="p_listing">
     <h1>Retailer Dashboard</h1>
     {% for b in brands %}    
-            <a href="#" class="retailer_brnd_logo"><img src="{{ asset(b.WebPath) }}"/></a> 
+            <a href="{{ path('retailer_admin_product', {'id': b.Id}) }}" class="retailer_brnd_logo"><img src="{{ asset(b.WebPath) }}"/></a> 
     {%endfor%}                
  </div>
     {% endblock %}

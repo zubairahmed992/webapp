@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -127,6 +127,21 @@ class RetailerRepository extends EntityRepository
                 return null;
                 }
    }
+   
+   public function findProductByBrand($brand_id)
+   {
+       $query = $this->getEntityManager()
+                    ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p
+                    JOIN p.brand b   
+                    WHERE b.id =:brand_id")
+                   ->setParameters(array('brand_id' => $brand_id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+   }
+   
 
    
    public function getBrandByRetailer($retailer)
