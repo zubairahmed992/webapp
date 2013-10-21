@@ -15,3 +15,7 @@ retailer_admin_dashboard:
 retailer_admin_product:
     pattern:  /retailer/product/{id}
     defaults: { _controller: LoveThatFitRetailerAdminBundle:Default:retailerProduct }
+    
+retailer_product:
+    pattern:  /retailer/products/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:index , page_number: 1, sort:id}
