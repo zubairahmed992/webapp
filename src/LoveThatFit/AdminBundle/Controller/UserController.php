@@ -87,7 +87,7 @@ class UserController extends Controller {
        }
        if($gender!='' and $firstname!='' and $age!='')
        {
-           $entity = $this->findByNameGenderBirthDateRange($firstname,$lastname,$gender,$beginDate,$endDate);
+           $entity = $this->get('user.helper.user')->findByNameGenderBirthDateRange($firstname,$lastname,$gender,$beginDate,$endDate);
        }
        if (!$entity) {
            $this->get('session')->setFlash('warning','Unable to find User.');
