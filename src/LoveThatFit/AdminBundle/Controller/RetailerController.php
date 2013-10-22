@@ -282,8 +282,13 @@ class RetailerController extends Controller {
            $em->persist($retailer);
            $em->flush();            
         }
-       $data = $request->request->all();
-       if($data['form']['brands'])
+       $data = $request->request->all();       
+       if(!isset($data['form']['brands']))
+       {
+           $this->get('session')->setFlash('warning', 'No brand selected for Retailer.');
+           return $this->redirect($this->generateUrl('admin_retailer_show', array('id' => $retailer->getId())));
+       }
+       else
        {
        $brands = $data['form']['brands'];     
         foreach ($brands as $key=>$value){
