@@ -178,7 +178,24 @@ class RetailerController extends Controller {
         $retailer = $this->getRetailer($id);
         $retailerUser = new RetailerUser();
         $form = $this->createForm(new RetailerUserType('add'), $retailerUser);
-        $form->bind($request);
+        $form->bind($request);        
+         if (count($this->get('admin.helper.retailer.user')->findOneByName($retailerUser->getUsername())) > 0)
+         {
+             $this->get('session')->setFlash('warning', 'Retailer User has already exists.');
+            return $this->render('LoveThatFitAdminBundle:Retailer:retailer_user.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $retailer,
+                            )
+            ); 
+         }if(count($this->get('admin.helper.retailer.user')->findOneBy($retailerUser->getEmail())) > 0){
+             $this->get('session')->setFlash('warning', 'Retailer User Email already exists.');
+            return $this->render('LoveThatFitAdminBundle:Retailer:retailer_user.html.twig', array(
+                        'form' => $form->createView(),
+                        'entity' => $retailer,
+                            )
+            ); 
+         }else
+         {
         if ($form->isValid()) {
             $password = $this->encodePassword($retailerUser);
             $retailerUser->setPassword($password);
@@ -196,6 +213,7 @@ class RetailerController extends Controller {
                             )
             );
         }
+      }
     }
 
 //------------------------------------------------------------------------------------------

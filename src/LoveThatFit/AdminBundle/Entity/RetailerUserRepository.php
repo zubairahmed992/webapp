@@ -25,4 +25,29 @@ class RetailerUserRepository extends EntityRepository
                 return null;
                 }
     }
+    
+    public function findOneByName($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT ru FROM LoveThatFitAdminBundle:RetailerUser ru                                 
+                             WHERE ru.username = :name")
+                        ->setParameters(array('name' => $name));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+   public function isDuplicateEmail($id, $email)
+   {
+       $record = $this->getEntityManager()
+                        ->createQuery("SELECT ru FROM LoveThatFitAdminBundle:RetailerUser ru                                 
+                             WHERE ru.email = :email")
+                        ->setParameters(array('email' => $email));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+   }
 }
