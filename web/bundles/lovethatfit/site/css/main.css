@@ -236,7 +236,6 @@ body {
 	font-size:12px;
         
 }
-
 ul.with_bullet {
 	list-style:none;
 }
@@ -624,6 +623,13 @@ header.reg .strip_rgt {
 	border:none;
         padding:5px 15px;
 }
+.next_step2 {
+    background: #929707;
+	font-size:1em;
+	color:#fff;
+	border:none;
+        padding:5px 15px;
+}
 
 .reg_next_step2 {
 	background: #929707;
@@ -777,6 +783,72 @@ a.but_short:visited {
 	margin-left:-5px;
 	text-align:center;
 }
+
+
+
+
+
+/*/// Step 3 in two steps ///*/
+
+#fitting_step{
+    position:absolute; 
+    top:16px; 
+    left: 499px; 
+    width: 364px;    
+}
+
+#fitting_step div{    
+    width: 182px;    
+    float:left;
+    text-align: center;
+    padding: 5px 0px;
+    background:url(../images/step_bg.png) repeat-x;
+    height: 30px;
+    text-decoration: none;
+    color: #9ba304;
+}
+
+#fitting_step div{    
+    position:relative; 
+}
+
+#fitting_step div span{    
+    width: 182px; 
+    background:url(../images/step_deactive.png) repeat-x;
+    height: 5px; 
+    position: absolute;
+    top: 31px;
+    left:0px;
+}
+
+#fitting_step #active{    
+    width: 182px; 
+    background:url(../images/step_bg_active.png) repeat-y;
+    color: #666;
+    font-weight: bold;
+}
+
+#fitting_step #active span{    
+    width: 182px; 
+    background:url(../images/step_active.png) no-repeat;
+    height: 5px; 
+    position: absolute;
+    top: 33px;
+    left:0px;
+    z-index: 10;
+}
+
+#fitting_step #active #shd{   
+    box-shadow: -2px 0 0 #bababa;
+    width: 182px;
+    height: 30px;
+    position: absolute;
+    top:2px;
+    left: 0px;
+    background: none;    
+}
+
+
 
 /*--Step 4--*/
 /*.step_4_hgh .site_container {
@@ -1914,6 +1986,7 @@ margin:0 auto;
 }
 #adj_belt_hldr {
     width:100%;
+    display:none; /*----Hiding in step 1----*/
 }
 #bottom_adj_marks {
     background: url(../images/belt.png) center 0 no-repeat;
@@ -1936,6 +2009,7 @@ margin:0 auto;
     height:120px;
     position: absolute;
     bottom: -40px;
+    display:none; /*----Hiding in step 1----*/
 }
 
 .pro_cart {
@@ -2066,6 +2140,14 @@ text-align: left;
     position: absolute;
     right:10px;
     top:525px;
+    display:none;
+}
+
+.next_btn_4 {
+    position: absolute;
+    right:10px;
+    top:525px;
+    display:block;
 }
 
 /*---Behlool 3/4/2013---*/
@@ -2595,6 +2677,8 @@ padding-bottom: 0px;
 
 #adj_top_hldr {
     height:70px;
+    top:0px;
+    display:none; /*----Hiding in step 1----*/
 }
 
 .adj_popout_msg {

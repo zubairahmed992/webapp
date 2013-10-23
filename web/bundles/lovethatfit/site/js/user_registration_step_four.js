@@ -14,12 +14,25 @@ $(".right_move").click(function(){
     $("#uploaded_photo").css({left: '+=' + 1});
 });
 
-function move_left(){
+
+/////Step3 > step 1//////
+
+$(".next_step2").click(function(){
+    $(".rotate_buts").fadeOut(500);
+    $(".top_move").fadeOut(500);
+    $(".bottom_move").fadeOut(500);
+    $(".next_btn_4").fadeOut(200, function(){$(".save_btn_4").fadeIn(200);});
+    $("#adj_popout_top").fadeIn(500);
+    $("#adj_popout_bottom").fadeIn(500);
+    $("#adj_top_hldr").fadeIn(500);
+    $("#adj_belt_hldr").fadeIn(500);
+    $("#uploaded_photo").addClass("uploaded_photo");
     
-}
+    
+    
+});
 
-
-
+/////Step3 > step 1//////
 
 
 
@@ -165,12 +178,12 @@ set_markings();
 
 
 function set_markings(){
-user_height = user_height * 8 / 4 * 3;  
+user_height = user_height * 8 / 4 * 3;
 user_back = user_back * 8 / 4 * 3;
   //var left_hand
   //alert(user_back);
   var hands_inside = 20;
-  
+  inch_ratio = 6;
   $("#user_body_marks").css({height: user_height, width: user_back + 194 - hands_inside});
   $("#top_mid_body").css({width: user_back});
   $("#adj_top_hldr").css({width: user_back + 194 - hands_inside, height: $("#top_adj_marks").height() + 30});
@@ -178,11 +191,50 @@ user_back = user_back * 8 / 4 * 3;
 
   $("#right_hand").css({height:user_height / 2.2});
   $("#left_hand").css({height:user_height / 2.2});
+
+  get_db_shoulder_hgt = $("#measurement_shoulder_height").attr('value');
   
+  if(get_db_shoulder_hgt == 0){
+     get_db_shoulder_hgt = user_height/7.27 - 10;
+  }else{
+      get_db_shoulder_hgt = $("#measurement_shoulder_height").attr('value') * inch_ratio;
+  }
+  
+  initial_top_pos = user_height - get_db_shoulder_hgt;
+  
+  //curr_top_hldr_pos = $("#adj_top_hldr").css('top');
+  
+  //curr_top_hldr_pos = curr_top_hldr_pos.slice(0,-2);
+    
+  //final_top_pos = (initial_top_pos - curr_top_hldr_pos) - 16;
+  
+  //final_btm_pos = final_btm_pos.slice(0,-2);   
+    
+  //alert(final_top_pos);
+  
+  $("#top_adj_marks").css("top", initial_top_pos - 10);
+
+
+
+
     
   $("#adj_belt_hldr").css({position: 'absolute', top: user_height / 2.2 - 40, height: $("#bottom_adj_marks").height() + 80});
-  $("#bottom_adj_marks").css({top: 15});
   
+  get_db_outseam = $("#measurement_outseam").attr('value') * inch_ratio;
+  
+  initial_btm_pos = user_height - get_db_outseam;
+  
+  curr_belt_hldr_pos = $("#adj_belt_hldr").css('top');
+  
+  curr_belt_hldr_pos = curr_belt_hldr_pos.slice(0,-2);
+    
+  final_btm_pos = (initial_btm_pos - curr_belt_hldr_pos) - 16;
+  
+  //final_btm_pos = final_btm_pos.slice(0,-2);   
+    
+  
+  $("#bottom_adj_marks").css("top", final_btm_pos);
+
 }
  
  
@@ -298,7 +350,7 @@ $("#play_area").removeClass("hide");
 $(".int_fitting_room").addClass("hide");
 $(".upload_again_hldr").css("display","block");
 $(".action_buts_bar").fadeIn(500);
-$("#dummy_mark").addClass("put_me_top");
+//$("#dummy_mark").addClass("put_me_top");
 set_zoom_slider_edit();
 set_things();
 $(".zoom_in").hide();
@@ -409,44 +461,130 @@ function call_settings(responseText, statusText, xhr, $form){
     //--Gragable Top--//
     $("#top_adj_marks").draggable({handle: "#top_moveable", axis: "y", containment: "#adj_top_hldr", scroll: false,
     create: function() {
-        prod_top_pos = $("#top_adj_marks").css("top");
-        $("#measurement_shoulder_height").attr('value', prod_top_pos);
-        $("#adj_popout_top").css("top", prod_top_pos);
-    },
-    start: function() {
-        $("#dummy_mark").addClass("put_me_top");
-    },
-    drag: function() {
-        prod_top_pos = $("#top_adj_marks").css("top");
-        $("#measurement_shoulder_height").attr('value', prod_top_pos);
-        $("#adj_popout_top").css("top", prod_top_pos);
-    },
-    stop: function() {
-        prod_top_pos = $("#top_adj_marks").css("top");
-        $("#measurement_shoulder_height").attr('value', prod_top_pos);
-        $("#adj_popout_top").css("top", prod_top_pos);
-    }
-    });
-    
-    //--Gragable Bottom--//
-    $("#bottom_adj_marks").draggable({handle: "#bottom_moveable", axis: "y", containment: "parent",
-    create: function() {
-       prod_bottom_pos = $("#bottom_adj_marks").css("top");
-       $("#measurement_outseam").attr('value', prod_bottom_pos);
-       $("#adj_popout_bottom").css("top", prod_bottom_pos);
+//        prod_top_pos = $("#top_adj_marks").css("top");
+//        $("#measurement_shoulder_height").attr('value', prod_top_pos);
+//        $("#adj_popout_top").css("top", prod_top_pos);
     },
     start: function() {
         //$("#dummy_mark").addClass("put_me_top");
     },
     drag: function() {
+        //prod_top_pos = $("#top_adj_marks").css("top");
+        //$("#measurement_shoulder_height").attr('value', prod_top_pos);
+        //$("#adj_popout_top").css("top", prod_top_pos);
+    },
+    stop: function() {
+    //curr_top_hldr = $("#adj_top_hldr").css('top');
+    curr_top_adj_mark = $("#top_adj_marks").css('top');
+    curr_top_moveable = $("#top_moveable").css('top');
+    
+    //curr_top_hldr = parseInt(curr_top_hldr.slice(0,-2));
+    curr_top_adj_mark = parseInt(curr_top_adj_mark.slice(0,-2));
+    curr_top_moveable = parseInt(curr_top_moveable.slice(0,-2));
+    
+    total_top_pos = curr_top_adj_mark + curr_top_moveable - 6;
+    
+    total_top_pos = total_top_pos/inch_ratio;
+    
+       
+    total_top_pos = $("#user_height_frm_3").attr("value") - total_top_pos;
+    
+    
+    
+    $("#measurement_shoulder_height").attr('value', total_top_pos);
+    }
+    });
+    
+    //--Gragable Bottom--//
+    
+    
+    
+    
+    
+    //alert(current_bar_position);
+    //alert(total_user_height);
+    $("#bottom_adj_marks").draggable({handle: "#bottom_moveable", axis: "y", containment: "parent",
+    create: function() {
+              
+
+//    curr_btm_hldr = $("#adj_belt_hldr").css('top');
+//    curr_btm_adj_mark = $("#bottom_adj_marks").css('top');
+//    curr_btm_moveable = $("#bottom_moveable").css('top');
+//    
+//    curr_btm_hldr = parseInt(curr_btm_hldr.slice(0,-2));
+//    curr_btm_adj_mark = parseInt(curr_btm_adj_mark.slice(0,-2));
+//    curr_btm_moveable = parseInt(curr_btm_moveable.slice(0,-2));
+//    
+//    total_btm_pos = curr_btm_hldr + curr_btm_adj_mark + curr_btm_moveable + 4;
+//    
+//    total_btm_pos = total_btm_pos/inch_ratio;
+//    
+//    total_btm_pos = $("#user_height_frm_3").attr("value") - total_btm_pos;
+    
+    //$("#measurement_outseam").attr('value', total_btm_pos);   
+       
+       
+       
+       
+       //prod_bottom_pos = $("#measurement_outseam").attr('value') * inch_ratio;
+       //$("#measurement_outseam").attr('value', prod_bottom_pos);
+       
+       //alert(prod_bottom_pos);
+       //$("#adj_popout_bottom").css("top", 74);
+       //$("#bottom_adj_marks").css("top", prod_bottom_pos);
+       
+    },
+    start: function() {
+        //$("#dummy_mark").addClass("put_me_top");
+    },
+    drag: function() {
+       //prod_bottom_pos = $("#measurement_outseam").attr('value') * inch_ratio;
+       
        prod_bottom_pos = $("#bottom_adj_marks").css("top");
-       $("#measurement_outseam").attr('value', prod_bottom_pos);
+       
+       //user_height_actual = $("#user_height_frm_3").attr("value")
+       
+       //$("#measurement_outseam").attr('value', ((user_height_actual / 2.2) + prod_bottom_pos) / inch_ratio);
+       
+       //alert(chk_to_me);
+       
+       
        $("#adj_popout_bottom").css("top", prod_bottom_pos);
     },
     stop: function() {
-       prod_bottom_pos = $("#bottom_adj_marks").css("top");
-       $("#measurement_outseam").attr('value', prod_bottom_pos);
-       $("#adj_popout_bottom").css("top", prod_bottom_pos);
+       
+       //prod_bottom_pos = $("#bottom_adj_marks").css("top");
+       
+      // $("#measurement_outseam").attr('value', prod_bottom_pos);
+       
+       
+       
+       //alert(chk_to_me);
+       
+    //   $("#adj_popout_bottom").css("top", prod_bottom_pos);
+    
+    curr_btm_hldr = $("#adj_belt_hldr").css('top');
+    curr_btm_adj_mark = $("#bottom_adj_marks").css('top');
+    curr_btm_moveable = $("#bottom_moveable").css('top');
+    
+    curr_btm_hldr = parseInt(curr_btm_hldr.slice(0,-2));
+    curr_btm_adj_mark = parseInt(curr_btm_adj_mark.slice(0,-2));
+    curr_btm_moveable = parseInt(curr_btm_moveable.slice(0,-2));
+    
+    total_btm_pos = curr_btm_hldr + curr_btm_adj_mark + curr_btm_moveable + 4;
+    
+    total_btm_pos = total_btm_pos/inch_ratio;
+    
+    total_btm_pos = $("#user_height_frm_3").attr("value") - total_btm_pos;
+    
+    $("#measurement_outseam").attr('value', total_btm_pos);
+    
+    
+    //curr_bottom_adj_mark = $("#bottom_adj_marks").css('top');
+    //final_bottom_adj_mark = curr_bottom_adj_mark.slice(0,-2);
+    //current_bar_position = (total_user_height / 2.2) - (final_bottom_adj_mark + 40);
+
+       
     }
     });
     

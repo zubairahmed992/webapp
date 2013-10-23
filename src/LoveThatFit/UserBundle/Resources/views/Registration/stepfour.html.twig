@@ -137,7 +137,7 @@
                         
                       <div id="rotate_move_box">
                       
-                     <div class="action_buts_bar">
+                     <div class="action_buts_bar rotate_buts">
                          <span class="rotate_label">Rotate</span>       
                             <a href="#" class="but_rotate img_acw"></a>   
                             <a href="#" class="but_rotate img_cw"></a>                            
@@ -184,7 +184,13 @@
                             <!--- Tootip wrapper End  !-->
                         </div>
                             
-                        <div class="int_fitting_room"></div>                                
+                        <div class="int_fitting_room"></div>
+                        
+                        <div id="fitting_step">
+                            <div id="active">Step 1<span></span></div>
+                            <div >Step 2<span></span><span id="shd"></span></div>                         
+                        </div>
+                        
                         <div id="play_area" class="play_area hide">
                             
                             
@@ -210,14 +216,19 @@
                             </div>
                             
                             
-                            <div id="uploaded_photo" class="full_opacity"></div>
+                            <div id="uploaded_photo" class="uploaded_photo full_opacity"></div>
                         </div>
                         <!--/.play_area_hldr--></div>
             
+            <div class="next_btn_4">
+                <div class="frm_ele">
+                    <input class="next_step2" type="button" value="Next Step" />
+                </div>
+           </div>
             
             <div class="btm_buttons row save_btn_4">
                         <div class="frm_ele">
-                            <input onClick="next_button_click(); return false;" class="reg_next_step2" type="button" value="Skip Step" />
+                            <input onClick="next_button_click(); return false;" class="reg_next_step2" type="button" value="" />
                         </div>
                        
                     </div>
