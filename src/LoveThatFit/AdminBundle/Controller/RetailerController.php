@@ -2,21 +2,13 @@
 
 namespace LoveThatFit\AdminBundle\Controller;
 
-use Symfony\Component\Form\FormError;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\RetailerType;
 use LoveThatFit\AdminBundle\Form\Type\RetailerUserType;
-use LoveThatFit\AdminBundle\Entity\Retailer;
 use LoveThatFit\AdminBundle\Entity\RetailerUser;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\SecurityContext;
-use \Symfony\Component\EventDispatcher\EventDispatcher;
-use \Symfony\Component\EventDispatcher\Event;
 
 class RetailerController extends Controller {
 

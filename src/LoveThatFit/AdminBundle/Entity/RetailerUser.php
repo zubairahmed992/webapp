@@ -379,4 +379,11 @@ class RetailerUser implements UserInterface, \Serializable {
     {
         return $this->name;
     }
+    
+    public $old_password;
+
+    public function getOldpassword() {
+        return $this->old_password;
+    }
+    
 }

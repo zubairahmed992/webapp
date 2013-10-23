@@ -27,11 +27,11 @@
               Logged in as <a href="#" class="navbar-link">{{ app.user.username }}</a>
             </p>
             <!-- Top Navigation Start -->
-            <ul class="nav">
-                
+            <ul class="nav">                
               <li><a href="{{ path('retailer_admin_dashboard') }}">Dashboard</a></li>                           
               <li><a href="{{ path('retailer_product') }}">Products</a></li>              
               <li><a href="">SizeCharts</a></li>
+              <li><a href="{{ path('retailer_password_reset') }}">Account Setting</a></li>
               <li><a href="{{ path('retailer_logout') }}">Logout</a></li>        
             </ul>
              <!-- Top Navigation End -->

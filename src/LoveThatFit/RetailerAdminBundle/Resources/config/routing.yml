@@ -19,3 +19,11 @@ retailer_admin_product:
 retailer_product:
     pattern:  /retailer/products/{page_number}/{sort}
     defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:index , page_number: 1, sort:id}
+
+retailer_password_reset:
+    pattern:  /retailer/password/reset
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:Default:resetRetailerPassword }
+
+retailer_password_reset_update:
+    pattern:  /retailer/password/reset/update
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:Default:retailerPasswordUpdate } 
