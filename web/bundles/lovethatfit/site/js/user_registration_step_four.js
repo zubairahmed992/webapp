@@ -27,7 +27,7 @@ $(".next_step2").click(function(){
     $("#adj_top_hldr").fadeIn(500);
     $("#adj_belt_hldr").fadeIn(500);
     $("#uploaded_photo").addClass("uploaded_photo");
-    
+    $("#dummy_mark").addClass("put_me_top");
     
     
 });
@@ -184,6 +184,7 @@ user_back = user_back * 8 / 4 * 3;
   //alert(user_back);
   var hands_inside = 20;
   inch_ratio = 6;
+  $(".height_bottom_mark").css("top", user_height + 17);
   $("#user_body_marks").css({height: user_height, width: user_back + 194 - hands_inside});
   $("#top_mid_body").css({width: user_back});
   $("#adj_top_hldr").css({width: user_back + 194 - hands_inside, height: $("#top_adj_marks").height() + 30});

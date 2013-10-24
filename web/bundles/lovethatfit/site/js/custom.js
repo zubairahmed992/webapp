@@ -171,7 +171,7 @@ $(document).ready(function(){
     //$("#top_layer").draggable();
     $("#uploaded_photo").draggable({
         start: function() {
-            $("#dummy_mark").addClass("put_me_top");
+            //$("#dummy_mark").addClass("put_me_top");
         },
         drag: function() {
 
@@ -194,8 +194,8 @@ $(document).ready(function(){
     //$("#uploaded_photo").mouseup(function (){$("#dummy_mark").removeClass("put_me_top");});
     $(".play_area").click(function (){
         //$("#dummy_mark").removeClass("put_me_top");
-       // $("#adj_popout_top").removeClass("disp_blk");
-       // $("#adj_popout_bottom").removeClass("disp_blk");
+        //$("#adj_popout_top").removeClass("disp_blk");
+        //$("#adj_popout_bottom").removeClass("disp_blk");
     });
     
     
