@@ -351,10 +351,13 @@ $(".int_fitting_room").addClass("hide");
 $(".upload_again_hldr").css("display","block");
 $(".action_buts_bar").fadeIn(500);
 //$("#dummy_mark").addClass("put_me_top");
+
 set_zoom_slider_edit();
 set_things();
 $(".zoom_in").hide();
 $(".zoom_edit").fadeIn(500, function(){$(".zoom_edit").removeClass("hide");})
+ 
+
 //$(".input_file_hldr").hide();
 }
 
@@ -380,6 +383,9 @@ if(croped_img_path != '/webapp/web/'){
     //load_set_pre_img();
 }else{
     $("#load_current_pic").addClass("hide");
+    $("#fitting_step").addClass("hide");
+    $("#rotate_move_box").addClass("hide");
+    $(".next_btn_4").css("display","none");
 }
 
 
@@ -449,6 +455,9 @@ function call_settings(responseText, statusText, xhr, $form){
         $(".input_file_hldr").css("display","none");
         $(".upload_again_hldr").css("display","block");
         $(".action_buts_bar").fadeIn(500);
+        $("#fitting_step").removeClass("hide");
+        $("#rotate_move_box").removeClass("hide");
+        $(".next_btn_4").css("display","block");
         $("#frmUserImage").ajaxForm(
         {
             target: '#uploaded_photo',
