@@ -506,7 +506,7 @@ header.reg .strip_rgt {
 	width:330px;
 	height:auto;
 	position:relative;
-	min-height:403px;
+	min-height:502px;
 	margin-bottom:30px;
         margin: auto;
 }
@@ -2403,7 +2403,7 @@ padding-bottom: 0px;
 
 .m_option{
    clear:both;
-   margin: 2px 0px 5px;  
+   margin: 2px 0px 8px;  
    position: relative;
    display: table;
    width: 330px;   
