@@ -110,7 +110,12 @@ constantValue:
 
 userFavouriteList:
    pattern:  /web_service/user_favourite_list
-   defaults: { _controller: LoveThatFitWebServiceBundle:Product:favouriteByUser}  
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:favouriteByUser}
+ 
+test_product:
+   pattern:  /web_service/product_specification
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:test_product_specification}
+   
 
 
   

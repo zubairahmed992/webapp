@@ -278,6 +278,16 @@ class ProductController extends Controller {
     }
 
 #---------------------------------------------------------------------------------------------------------#
+
+ #------------Testing of product specification helper .REmoved!!!
+   public function test_product_specificationAction(){
+       
+       $product_helper =  $this->get('admin.helper.product.specification')->getFabricContent();
+        return new response(json_encode($product_helper));
+   }
+ 
+    
+    
 }
 
 // End of Class

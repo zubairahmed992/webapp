@@ -23,20 +23,22 @@ class DefaultController extends Controller
     public function indexAction()
     {        
         $id = $this->get('security.context')->getToken()->getUser()->getId();        
-        return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($id),));
+        $retailer=$this->get('admin.helper.retailer')->find($id);
+        return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($id),'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)));
     }
     
     public function retailerProductAction($id)
     {
       $retailer = $this->get('security.context')->getToken()->getUser()->getId();   
+      $retailerid=$this->get('admin.helper.retailer')->find($retailer);
       $proudct = $this->get('admin.helper.retailer')->findProductByBrand($id);
       if (!$proudct) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
-            return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($retailer),));
+            return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($retailer),'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailerid)));
         }      
       else
       {
-             return $this->render('LoveThatFitRetailerAdminBundle:Default:product.html.twig',array('product' =>$proudct,));
+             return $this->render('LoveThatFitRetailerAdminBundle:Default:product.html.twig',array('product' =>$proudct,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailerid)));
       }      
     }
     
@@ -58,9 +60,11 @@ class DefaultController extends Controller
         $retailerid = $this->get('security.context')->getToken()->getUser()->getId();
         $entity = $this->get('admin.helper.retailer.user')->find($retailerid);        
         $passwordResetForm = $this->createForm(new RetailerPasswordReset(), $entity);
+        $retailer=$this->get('admin.helper.retailer')->find($retailerid);
         return $this->render('LoveThatFitRetailerAdminBundle:Default:reset_password.html.twig', array(                   
                     'entity' => $entity,
-                    'form_password_reset' => $passwordResetForm->createView()
+                    'form_password_reset' => $passwordResetForm->createView(),
+                    'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)
                 ));        
     }
     
@@ -132,6 +136,8 @@ class DefaultController extends Controller
         return $password;
     }
 
+    
+    
 //------------------------------------------------------------------------------------------
 
     
