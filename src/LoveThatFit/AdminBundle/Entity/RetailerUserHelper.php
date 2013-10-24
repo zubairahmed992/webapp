@@ -157,6 +157,12 @@ class RetailerUserHelper {
     public function findOneBy($email) {
         return $this->repo->findOneBy(array('email' => $email));
     }
+    
+    public function getRetailerNameByRetailerUser($retailer)
+    {
+        return $this->repo->getRetailerNameByRetailerUser($retailer);
+    }
+    
 
     //-------------------------------------------------------
 

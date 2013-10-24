@@ -1,10 +1,10 @@
 {% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-<li class="active">Retailer Dashboard </li>
+<li class="active">{%for r in retailer%} {{r.title}} {%endfor%} Dashboard </li>
 {% endblock %}
 {% block body %}
 <div class="p_listing">
-    <h1>Retailer Dashboard</h1>
+    <h1>{%for r in retailer%} {{r.title}} {%endfor%} Dashboard</h1>
     {% for b in brands %}    
             <a href="{{ path('retailer_admin_product', {'id': b.Id}) }}" class="retailer_brnd_logo"><img src="{{ asset(b.WebPath) }}"/></a> 
     {%endfor%}                

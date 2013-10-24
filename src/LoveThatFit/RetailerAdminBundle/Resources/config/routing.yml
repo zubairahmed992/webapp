@@ -27,3 +27,12 @@ retailer_password_reset:
 retailer_password_reset_update:
     pattern:  /retailer/password/reset/update
     defaults: { _controller: LoveThatFitRetailerAdminBundle:Default:retailerPasswordUpdate } 
+
+admin_retailer_product_new:    
+    pattern:  /retailer/product/create/new
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:retailerProductNew } 
+    
+retailer_admin_product_create:
+    pattern:  /retailer/product/new/create
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:retailerProductNewCreate } 
+  
