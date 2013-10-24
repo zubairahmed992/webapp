@@ -150,6 +150,7 @@ class Retailer
     {
         $this->brands = new \Doctrine\Common\Collections\ArrayCollection();
         $this->retailer_users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
