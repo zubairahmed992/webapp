@@ -1,4 +1,5 @@
 
+
 admin_brands:
     pattern:  /admin/brands/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Brand:index ,page_number: 1, sort:id }
@@ -6,6 +7,10 @@ admin_brands:
 admin_brand_show:
     pattern:  /admin/brand/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:Brand:show }
+
+admin_brand_products:
+    pattern:  /admin/brand/{id}/products/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:products ,page_number: 1, sort:id }
 
 admin_brand_new:
     pattern:  /admin/brand/new

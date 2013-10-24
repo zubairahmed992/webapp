@@ -15,7 +15,7 @@ class Brand {
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
      */
-     
+    protected $products;
      /**
      * @ORM\OneToMany(targetEntity="SizeChart", mappedBy="brand")
      */
@@ -314,5 +314,38 @@ public function deleteImages()
     public function getRetailers()
     {
         return $this->retailers;
+    }
+
+    /**
+     * Add products
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Product $products
+     * @return Brand
+     */
+    public function addProduct(\LoveThatFit\AdminBundle\Entity\Product $products)
+    {
+        $this->products[] = $products;
+    
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Product $products
+     */
+    public function removeProduct(\LoveThatFit\AdminBundle\Entity\Product $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

@@ -26,7 +26,12 @@ class Retailer
      * @ORM\JoinTable(name="retailer_brand")
      * */
     private $brands;
-   
+    
+     /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
+     */
+    protected $products;
+    
     
     /**
      * @var integer
@@ -224,5 +229,38 @@ class Retailer
         }
         //asort($brand_array);
         return $brand_array;        
+    }
+
+    /**
+     * Add products
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Product $products
+     * @return Retailer
+     */
+    public function addProduct(\LoveThatFit\AdminBundle\Entity\Product $products)
+    {
+        $this->products[] = $products;
+    
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Product $products
+     */
+    public function removeProduct(\LoveThatFit\AdminBundle\Entity\Product $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

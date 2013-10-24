@@ -4,6 +4,7 @@ namespace LoveThatFit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\BrandType;
 
@@ -13,6 +14,14 @@ class BrandController extends Controller {
     public function indexAction($page_number, $sort = 'id') {
         $brands_with_pagination = $this->get('admin.helper.brand')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Brand:index.html.twig', $brands_with_pagination);
+    }
+
+//------------------------------------------------------------------------------------------
+
+    public function productsAction($id) {
+$brand = $this->get('admin.helper.brand')->find($id);
+    $products=$brand->getProducts();
+return new Response (var_dump($products));
     }
 
 //------------------------------------------------------------------------------------------

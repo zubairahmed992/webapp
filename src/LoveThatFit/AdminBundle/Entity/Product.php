@@ -24,6 +24,11 @@ class Product {
      */
     protected $brand;
 
+   /**
+     * @ORM\ManyToOne(targetEntity="Retailer", inversedBy="products")
+     * @ORM\JoinColumn(name="retailer_id", referencedColumnName="id")
+     */
+    protected $retailer;
     
    /**
      * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product", orphanRemoval=true)
@@ -597,4 +602,27 @@ class Product {
     
     
     
+
+    /**
+     * Set retailer
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Retailer $retailer
+     * @return Product
+     */
+    public function setRetailer(\LoveThatFit\AdminBundle\Entity\Retailer $retailer = null)
+    {
+        $this->retailer = $retailer;
+    
+        return $this;
+    }
+
+    /**
+     * Get retailer
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Retailer 
+     */
+    public function getRetailer()
+    {
+        return $this->retailer;
+    }
 }
