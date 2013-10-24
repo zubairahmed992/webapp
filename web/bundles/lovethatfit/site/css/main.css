@@ -1051,6 +1051,7 @@ input[type=email]{
         margin: 50px 140px 0px 0px;       
         background:#fff;        
         border:1px dotted #ccc;
+        z-index: 0;
         
         
 }
@@ -1259,13 +1260,13 @@ input[type=email]{
 	position:relative;	
         z-index: 100;
         float:left;
-        background:url(../images/leftside_bg.png) repeat-x!important;      
-        background: -moz-linear-gradient(top, #eaeaea 0%, #ffffff 27%, #ffffff 52%, #ffffff 72%, #dfdfdf 100%)!important;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(27%,#ffffff), color-stop(52%,#ffffff), color-stop(72%,#ffffff), color-stop(100%,#dfdfdf));
-	background: -webkit-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
-	background: -o-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
-	background: -ms-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
-	background: linear-gradient(to bottom, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+        background-image:url(../images/leftside_bg.png) repeat-x!important;      
+        background-image: -moz-linear-gradient(top, #eaeaea 0%, #ffffff 27%, #ffffff 52%, #ffffff 72%, #dfdfdf 100%)!important;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(27%,#ffffff), color-stop(52%,#ffffff), color-stop(72%,#ffffff), color-stop(100%,#dfdfdf));
+	background-image: -webkit-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background-image: -o-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background-image: -ms-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background-image: linear-gradient(to bottom, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
 	
         
       
