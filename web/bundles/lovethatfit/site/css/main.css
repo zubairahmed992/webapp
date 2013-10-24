@@ -740,7 +740,7 @@ header.reg .strip_rgt {
 }
 .step_3 {
 	height:auto;	
-        padding:0px 0px 10px 0px;
+        padding:0px 0px 0px 0px;
 }
 .step_3 h2 {
 	margin-bottom:0px;
@@ -2405,7 +2405,7 @@ padding-bottom: 0px;
    clear:both;
    margin: 2px 0px 5px;  
    position: relative;
-   display: inline-block;
+   display: table;
    width: 330px;   
 }
 
@@ -3316,5 +3316,21 @@ div.play_area_hldr div.action_buts_bar {
 	padding-top:2px!important;
      
 }
+
+#measurement_body_shape{
+    
+    width:160px!important;
+}
+
+#measurement_bra_size{
+    
+    width:160px!important;
+}
+
+.left_column{
+    min-height: none!important;
+    
+}
+
 
 

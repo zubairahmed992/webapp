@@ -106,15 +106,22 @@
                     
                     
                      <!-- START CODE FOR BODY SHAPE AND BRA SIZE --->    
-            
+                     <div class="m_option" style="display: table;">   
                     <div class="body_shape" id="body_shape">
-                    <div class="mlabel">Body Shape</div>
-                    {{ form_widget(form.body_shape) }}
                    
-                    <div class="mlabel">Bra Size</div>
+                        <div style="float:left; margin-right: 10px;">
+                            <label style="display:block; float: none; width: auto;">Bra Shape</label>
+                    {{ form_widget(form.body_shape) }}
+                        </div>
+                        
+                        <div style="float: left;">                   
+                            <label style="display:block; float: none; width: auto;">Bra Size</label>
                     {{ form_widget(form.bra_size) }}
+                        </div>
+                        
                     </div>
-            {%endif%}                     
+            {%endif%}    
+                </div>
             <!-- END  CODE FOR BODY SHAPE AND BRA SIZE --->    
                     <div class="sep"></div>
 
@@ -355,11 +362,11 @@ $('#height_in_inches').change(function() {
 
                                 <!-- END WEIGHT !-->   
 {% if( entity.gender=='f') %}
-                                <div class="btm_buttons row">
+                                <div class="row">
       {%else%}                  
-                                        <div class="btm_buttons row" style="bottom:25px!important; left:0px!important;">
+                                        <div class="row">
 {% endif %}              
-                                <div class="btm_buttons row">
+                                <div class="row">
                                     <div class="frm_ele" style="float:none;">
                                         <input class="reg_next_step" type="submit" value="Save & Proceed" />
                                     </div>
