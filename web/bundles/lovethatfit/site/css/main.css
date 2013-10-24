@@ -790,14 +790,14 @@ a.but_short:visited {
 
 /*/// Step 3 in two steps ///*/
 
-#fitting_step{
+.fitting_step{
     position:absolute; 
     top:16px; 
     left: 499px; 
     width: 364px;    
 }
 
-#fitting_step div{    
+.fitting_step div{    
     width: 182px;    
     float:left;
     text-align: center;
@@ -808,11 +808,11 @@ a.but_short:visited {
     color: #9ba304;
 }
 
-#fitting_step div{    
+.fitting_step div{    
     position:relative; 
 }
 
-#fitting_step div span{    
+.fitting_step div span{    
     width: 182px; 
     background:url(../images/step_deactive.png) repeat-x;
     height: 5px; 
@@ -821,14 +821,14 @@ a.but_short:visited {
     left:0px;
 }
 
-#fitting_step #active{    
+.fitting_step .active{    
     width: 182px; 
     background:url(../images/step_bg_active.png) repeat-y;
     color: #666;
     font-weight: bold;
 }
 
-#fitting_step #active span{    
+.fitting_step .active span{    
     width: 182px; 
     background:url(../images/step_active.png) no-repeat;
     height: 5px; 
@@ -838,7 +838,7 @@ a.but_short:visited {
     z-index: 10;
 }
 
-#fitting_step #active #shd{   
+.fitting_step .active #shd{   
     box-shadow: -2px 0 0 #bababa;
     width: 182px;
     height: 30px;
