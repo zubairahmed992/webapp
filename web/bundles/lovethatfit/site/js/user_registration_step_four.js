@@ -18,9 +18,17 @@ $(".right_move").click(function(){
 /////Step3 > step 1//////
 
 $(".next_step2").click(function(){
-    $(".rotate_buts").fadeOut(500);
+    
+    $('.rotate_buts').animate({ opacity: 0, height: 0 }, 500, function() { $('.rotate_buts').css("display","none") });
+    
     $(".top_move").fadeOut(500);
     $(".bottom_move").fadeOut(500);
+    
+    $('.left_move').animate({ top: 20 }, 500, function() { });    
+    $('.right_move').animate({ top: 20 }, 500, function() { });
+    $('#rotate_move_box').animate({ height: 80 }, 500, function() { });
+    
+    
     $(".next_btn_4").fadeOut(200, function(){$(".save_btn_4").fadeIn(200);});
     $("#adj_popout_top").fadeIn(500);
     $("#adj_popout_bottom").fadeIn(500);
@@ -29,6 +37,34 @@ $(".next_step2").click(function(){
     $("#uploaded_photo").addClass("uploaded_photo");
     $("#dummy_mark").addClass("put_me_top");
     $(".step_4").hide(300);
+    $("#step_one").removeClass("active");
+    $("#step_two").addClass("active");
+    $("#step_one").addClass("make_clickable");
+});
+
+function pre_step_1(){
+    $("#step_one").removeClass("make_clickable");
+    $('.rotate_buts').animate({ opacity: 1, height: 47 }, 500, function() {$('.rotate_buts').css("display","block")});
+    $(".top_move").fadeIn(500);
+    $(".bottom_move").fadeIn(500);
+    $(".next_btn_4").fadeIn(200, function(){$(".save_btn_4").fadeOut(200);});
+    $("#adj_popout_top").fadeOut(500);
+    $("#adj_popout_bottom").fadeOut(500);
+    $("#adj_top_hldr").fadeOut(500);
+    $("#adj_belt_hldr").fadeOut(500);
+    $("#uploaded_photo").removeClass("uploaded_photo");
+    $("#dummy_mark").removeClass("put_me_top");
+    $(".step_4").show(300);
+    $("#step_two").removeClass("active");
+    $("#step_one").addClass("active");
+    
+    $('.left_move').animate({ top: 46 }, 500, function() { });    
+    $('.right_move').animate({ top: 46 }, 500, function() { });
+    $('#rotate_move_box').animate({ height: 190 }, 500, function() { });
+}
+
+$("#step_one_a").mousedown(function(){
+    pre_step_1();
 });
 
 /////Step3 > step 1//////

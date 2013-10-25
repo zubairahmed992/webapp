@@ -796,7 +796,7 @@ a.but_short:visited {
     left: 51px;
     width:261px;
     height:1px;
-    background: #ffcc00;
+    background: #000000;
     font-size: 0px;
     line-height: 1px;
     overflow: hidden;
@@ -808,7 +808,7 @@ a.but_short:visited {
     left: 51px;
     width:261px;
     height:1px;
-    background: #ffcc00;
+    background: #000000;
     font-size: 0px;
     line-height: 1px;
     overflow: hidden;
@@ -861,6 +861,12 @@ a.but_short:visited {
     top: 33px;
     left:0px;
     z-index: 10;
+}
+
+.fitting_step a,
+.fitting_step a:visited {
+    color:#9BA304;
+    font-weight: normal;
 }
 
 .fitting_step .active #shd{   
