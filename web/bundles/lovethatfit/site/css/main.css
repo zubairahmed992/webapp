@@ -790,6 +790,31 @@ a.but_short:visited {
 
 /*/// Step 3 in two steps ///*/
 
+.height_top_mark {
+    position: absolute;
+    top: 16px;
+    left: 51px;
+    width:261px;
+    height:1px;
+    background: #ffcc00;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 5000;
+}
+.height_bottom_mark {
+    position: absolute;
+    top: 16px;
+    left: 51px;
+    width:261px;
+    height:1px;
+    background: #ffcc00;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 5000;
+}
+
 .fitting_step{
     position:absolute; 
     top:16px; 
