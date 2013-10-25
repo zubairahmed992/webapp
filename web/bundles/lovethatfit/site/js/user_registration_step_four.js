@@ -231,7 +231,6 @@ user_back = user_back * 8 / 4 * 3;
   get_db_shoulder_hgt = $("#measurement_shoulder_height").attr('value');
   
   if(get_db_shoulder_hgt == 0){
-     alert("asdfasdf");
      get_db_shoulder_hgt = user_height - 70;
   }else{
       get_db_shoulder_hgt = $("#measurement_shoulder_height").attr('value') * inch_ratio;
@@ -260,7 +259,6 @@ user_back = user_back * 8 / 4 * 3;
   get_db_outseam = $("#measurement_outseam").attr('value');
   
    if(get_db_outseam == 0){
-     alert("asdfasdf");
      get_db_outseam = user_height / 2.2 - 40;
   }else{
       get_db_outseam = $("#measurement_outseam").attr('value') * inch_ratio;
