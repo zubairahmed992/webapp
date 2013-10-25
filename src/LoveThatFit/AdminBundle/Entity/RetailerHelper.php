@@ -171,8 +171,8 @@ class RetailerHelper {
             $no_of_paginations = 0;
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
-        }
-        return array('retailers' => $entity,
+        }        
+        return array('retailers' => $entity,            
             'rec_count' => $rec_count,
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,

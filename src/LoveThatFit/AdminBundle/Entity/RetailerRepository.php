@@ -17,10 +17,10 @@ class RetailerRepository extends EntityRepository
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT r.id,r.title FROM LoveThatFitAdminBundle:Retailer r ORDER BY r.' . $sort . ' ASC');
+                    ->createQuery('SELECT r FROM LoveThatFitAdminBundle:Retailer r ORDER BY r.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
-                    ->createQuery('SELECT r.id,r.title FROM LoveThatFitAdminBundle:Retailer r ORDER BY r.' . $sort . ' ASC')
+                    ->createQuery('SELECT r FROM LoveThatFitAdminBundle:Retailer r ORDER BY r.' . $sort . ' ASC')
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }

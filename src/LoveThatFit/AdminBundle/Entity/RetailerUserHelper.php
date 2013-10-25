@@ -58,7 +58,7 @@ class RetailerUserHelper {
             $entity->setUpdatedAt(new \DateTime('now'));             
             $this->em->persist($entity);
             $this->em->flush();
-            return array('message' => 'Retailer succesfully created.',
+            return array('message' => 'Retailer User succesfully created.',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -78,7 +78,7 @@ class RetailerUserHelper {
             $this->em->persist($entity);
             $this->em->flush();
 
-            return array('message' => 'Retailer ' . $entity->getName() . ' succesfully updated!',
+            return array('message' => 'Retailer User ' . $entity->getName() . ' succesfully updated!',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -99,7 +99,7 @@ class RetailerUserHelper {
             $this->em->flush();
 
             return array('retailer' => $entity,
-                'message' => 'The Retailer ' . $entity_name . ' has been Deleted!',
+                'message' => 'The Retailer User ' . $entity_name . ' has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );
@@ -132,14 +132,14 @@ class RetailerUserHelper {
             $entity = $this->createNew();
             return array(
                 'entity' => $entity,
-                'message' => 'Retailer not found.',
+                'message' => 'Retailer User not found.',
                 'message_type' => 'warning',
                 'success' => false,
             );
         } else {
             return array(
                 'entity' => $entity,
-                'message' => 'Retailer found!',
+                'message' => 'Retailer User found!',
                 'message_type' => 'success',
                 'success' => true,
             );
@@ -206,7 +206,7 @@ public function getRetaielerUserByRetailer($retailer)
 //----------------------------------------------------------
     private function validateForCreate($name) {
         if (count($this->findOneByName($name)) > 0) {
-            return array('message' => 'Retailer Name already exists!',
+            return array('message' => 'Retailer User Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,
@@ -220,7 +220,7 @@ public function getRetaielerUserByRetailer($retailer)
         $brand = $this->findOneByName($entity->getName());
 
         if ($brand && $brand->getId() != $entity->getId()) {
-            return array('message' => 'Retailer Name already exists!',
+            return array('message' => 'Retailer User Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',
                 'success' => false,

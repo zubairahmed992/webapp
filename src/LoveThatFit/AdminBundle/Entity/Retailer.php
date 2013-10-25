@@ -28,7 +28,7 @@ class Retailer
     private $brands;
     
      /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="retailer")
      */
     protected $products;
     
@@ -231,6 +231,23 @@ class Retailer
         //asort($brand_array);
         return $brand_array;        
     }
+    
+    
+     public function getBrandNames()
+    {
+        $brands = $this->brands;        
+        $brandname="";
+       foreach ($brands as $b) {  
+           if(strlen($brandname)>0)
+           {
+            $brandname=$brandname.', '.$b->getName();            
+           }else
+           {
+               $brandname=$b->getName();            
+           }
+        }      
+        return $brandname;        
+    }
 
     /**
      * Add products
@@ -264,4 +281,7 @@ class Retailer
     {
         return $this->products;
     }
+    
+    
+    
 }
