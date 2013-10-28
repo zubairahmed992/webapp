@@ -28,9 +28,17 @@ class ProductSize
     protected $product_items; 
     
     
+/**
+     * @ORM\OneToMany(targetEntity="ProductSizeMeasurement", mappedBy="product_size", orphanRemoval=true)
+     */
+    
+    protected $product_size_measurements;
+      
+    
       public function __construct()
     {
-        $this->product_items = new ArrayCollection();
+        $this->product_items = new ArrayCollection(); 
+        $this->product_size_measurements = new ArrayCollection(); 
     }
     
     
