@@ -6,134 +6,134 @@ services:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
-   
+ product_specification: 
   garment_type:
-    blouse: blouse
-    tunic: tunic
-    tee_knit: tee_knit
-    tank_knit: tank_knit
-    jacket: jacket
-    sweater: sweater
-    trouser: trouser
-    jean: jean
-    skirt: skirt
-    dress: dress
-    coat: coat
+    blouse: Blouse
+    tunic: Tunic
+    tee_knit: Tee knit
+    tank_knit: Tank knit
+    jacket: Jacket
+    sweater: Sweater
+    trouser: Trouser
+    jean: Jean
+    skirt: Skirt
+    dress: Dress
+    coat: Coat
     
   style_type:
     blouse:
-      tailored: tailored
-      princess_fit: princess_fit
-      loose: loose
-      full: full
-      shell: shell
-      camisole: camisole
+      tailored: Tailored
+      princess_fit: Princess Fit
+      loose: Loose
+      full: Full
+      shell: Shell
+      camisole: Camisole
     tunic:
-      loose: loose
-      fitted: fitted
+      loose: Loose
+      fitted: Fitted
     tee_knit:
-      loose: loose
-      fitted: fitted
-      polo: polo
-      draped: draped
+      loose: Loose
+      fitted: Fitted
+      polo: Polo
+      draped: Draped
     tank_knit:
-      loose: loose
-      fitted: fitted
-      camisole: camisole
+      loose: Loose
+      fitted: Fitted
+      camisole: Camisole
     jacket: 
-      blazer: blazer
-      loosy: loosy
-      swing: swing
-      vest: vest
+      blazer: Blazer
+      loosy: Loosy
+      swing: Swing
+      vest: Vest
     sweater:
-      pull_over: pull_over
-      cardigan: cardigan
+      pull_over: Pull_over
+      cardigan: Cardigan
     trouser:
-      legging: legging
-      straight_leg: straight_leg
-      skinny: skinny
-      boot_cut: boot_cut
-      palazzo: palazzo
-      pleated: pleated
-      peg: peg
-      wide_leg: wide_leg
-      bell: bell
+      legging: Legging
+      straight_leg: Straight Leg
+      skinny: Skinny
+      boot_cut: Boot Cut
+      palazzo: Palazzo
+      pleated: Pleated
+      peg: Peg
+      wide_leg: Wide Leg
+      bell: Bell
     jean:
       legging: legging
-      straight_leg: straight_leg
-      skinny: skinny
-      boot_cut: boot_cut
-      wide_leg: wide_leg
-      bell: bell  
+      straight_leg: Straight Leg
+      skinny: Skinny
+      boot_cut: Boot cut
+      wide_leg: Wide Leg
+      bell: Bell  
     skirt:
-      fitted_skinned_tight: fitted_skinned_tight
-      fitted_tailored: fitted_tailored
-      a_line: a_line
-      gathered_dirndl: gathered_dirndl
-      pleated: pleated
-      yoke_fitted: yoke_fitted
-      peg: peg
-      wrapped: wrapped
-      gored: gored
-      flared: flared
-      full_with_shaping_layers: full_with_shaping_layers
+      fitted_skinned_tight: Fitted Skinned Tight
+      fitted_tailored: Fitted Tailored
+      a_line: A line
+      gathered_dirndl: Gathered Dirndl
+      pleated: Pleated
+      yoke_fitted: Yoke Fitted
+      peg: Peg
+      wrapped: Wrapped
+      gored: Gored
+      flared: Flared
+      full_with_shaping_layers: Full With Shaping Layers
     dress:
-      fitted_princess_to_waist: fitted_princess_to_waist
-      fitted_princess_through_hips: fitted_princess_through_hips
-      fitted_sheath: fitted_sheath
-      empire: empire
-      loose: loose
-      wrap: wrap
-      shirt_dress: shirt_dress
-      coat_dress: coat_sress
-      formal_with_structured_fit: formal_with_structured_fit
+      fitted_princess_to_waist: Fitted Princess To Waist
+      fitted_princess_through_hips: Fitted Princess Through Hips
+      fitted_sheath: Fitted Sheath
+      empire: Empire
+      loose: Loose
+      wrap: Wrap
+      shirt_dress: Shirt Dress
+      coat_dress: Coat Dress
+      formal_with_structured_fit: Formal With Structured Fit
     coat:
-     blazer_single_breasted: blazer_single_breasted
-     blazer_double_breasted: blazer_double_breasted
-     lossy: lossy
-     swing: swing
+     blazer_single_breasted: Blazer Single Breasted
+     blazer_double_breasted: Blazer Double Breasted
+     lossy: Lossy
+     swing: Swing
 
   hem_length:
     blouse:
-      cropped: cropped
-      waist: waist
-      top_of_hip: top_of_hip  
-      bottom_of_hip: bottom_of_hip
+      cropped: Cropped
+      waist: Waist
+      top_of_hip: Top Of Hip  
+      bottom_of_hip: Bottom Of Hip
     tunic:
-      top_of_hip: top_of_hip  
-      bottom_of_hip: bottom_of_hip
-      mid_of_thigh: mid_of_thigh
+      top_of_hip: Top Of Hip  
+      bottom_of_hip: Bottom Of Hip
+      mid_of_thigh: Mid Of Thigh
     tee_knit:
-      cropped: cropped
-      waist: waist
-      top_of_hip: top_of_hip  
-      bottom_of_hip: bottom_of_hip
+      cropped: Cropped
+      waist: Waist
+      top_of_hip: Top Of Hip  
+      bottom_of_hip: Bottom Of Hip
     tank_knit:
-      cropped: cropped
-      waist: waist
-      top_of_hip: top_of_hip  
-      bottom_of_hip: bottom_of_hip   
+      cropped: Cropped
+      waist: Waist
+      top_of_hip: Top Of Hip  
+      bottom_of_hip: Bottom Of Hip
     jacket:
-      cropped: cropped
-      waist: waist
-      top_of_hip: top_of_hip  
-      bottom_of_hip: bottom_of_hip
+      cropped: Cropped
+      waist: Waist
+      top_of_hip: Top Of Hip  
+      bottom_of_hip: Bottom Of Hip
     sweater:
-      cropped: cropped
-      waist: waist
-      top_of_hip: top_of_hip  
-      bottom_of_hip: bottom_of_hip
+      cropped: Cropped
+      waist: Waist
+      top_of_hip: Top Of Hip  
+      bottom_of_hip: Bottom Of Hip
     trouser:
-      short: short
-      capri: capri 
-      cropped: cropped
-      ankle: ankle
+      short: Short
+      capri: Capri 
+      cropped: Cropped
+      ankle: Ankle
       full_length: Full Length
     jean:
-      short: short
-      capri: capri 
-      cropped: cropped
-      ankle: ankle
+      short: Short
+      capri: Capri 
+      cropped: Cropped
+      ankle: Ankle
       full_length: Full Length
     skirt:
        mini: Mini
@@ -152,10 +152,10 @@ constants:
        floor_length: Floor length
        with_train: With Train
     coat:
-      cropped: cropped
-      waist: waist
-      top_of_hip: top_of_hip  
-      bottom_of_hip: bottom_of_hip
+      cropped: Cropped
+      waist: Waist
+      top_of_hip: Top Of Hip  
+      bottom_of_hip: Bottom Of Hip
       knee_length: Knee length
       mid_calf: Mid Calf
       tea_length: Tea length
@@ -270,86 +270,67 @@ constants:
   sleeve_styling:
     blouse:
        strapless: strapless
-       spaghetti straps: spaghetti straps
-       narrow straps: narrow straps
+       spaghetti_straps: spaghetti straps
+       narrow_straps: narrow straps
        sleeveless: sleeveless
-       cap sleeved: cap sleeved
-       short sleeved: short sleeved
-       3/4 length sleeve: 3/4 length sleeve
-       long sleeved: long sleeved
+       cap_sleeved: cap sleeved
+       short_sleeved: short sleeved
+       3/4_length_sleeve: 3/4 length sleeve
+       long_sleeved: long sleeved
 
     tunic:
        strapless: strapless
-       spaghetti straps: spaghetti straps
-       narrow straps: narrow straps
+       spaghetti_straps: spaghetti straps
+       narrow_straps: narrow straps
        sleeveless: sleeveless
-       cap sleeved: cap sleeved
-       short sleeved: short sleeved
-       3/4 length sleeve: 3/4 length sleeve
-       long sleeved: long sleeved
+       cap_sleeved: cap sleeved
+       short_sleeved: short sleeved
+       3/4_length_sleeve: 3/4 length sleeve
+       long_sleeved: long sleeved
     tee_knit:
        strapless: strapless
-       spaghetti straps: spaghetti straps
-       narrow straps: narrow straps
+       spaghetti_straps: spaghetti straps
+       narrow_straps: narrow straps
        sleeveless: sleeveless
-       cap sleeved: cap sleeved
-       short sleeved: short sleeved
-       3/4 length sleeve: 3/4 length sleeve
-       long sleeved: long sleeved
+       cap_sleeved: cap sleeved
+       short_sleeved: short sleeved
+       3/4_length_sleeve: 3/4 length sleeve
+       long_sleeved: long sleeved
     tank_knit:
        strapless: strapless
-       spaghetti straps: spaghetti straps
-       narrow straps: narrow straps
+       spaghetti_straps: spaghetti straps
+       narrow_straps: narrow straps
        sleeveless: sleeveless
     jacket:
        strapless: strapless
-       spaghetti straps: spaghetti straps
-       narrow straps: narrow straps
+       spaghetti_straps: spaghetti straps
+       narrow_straps: narrow straps
        sleeveless: sleeveless
-       cap sleeved: cap sleeved
-       short sleeved: short sleeved
-       3/4 length sleeve: 3/4 length sleeve
-       long sleeved: long sleeved
+       cap_sleeved: cap sleeved
+       short_sleeved: short sleeved
+       3/4_length_sleeve: 3/4 length sleeve
+       long_sleeved: long sleeved
     sweater:
        sleeveless: sleeveless
-       cap sleeved: cap sleeved
-       short sleeved: short sleeved
-       3/4 length sleeve: 3/4 length sleeve
-       long sleeved: long sleeved
-    trouser:
-     
-    jean:
-      
-    skirt:
-      
+       cap_sleeved: cap sleeved
+       short_sleeved: short sleeved
+       3/4_length_sleeve: 3/4 length sleeve
+       long_sleeved: long sleeved
     dress:
-       strapless: strapless
-       spaghetti straps: spaghetti straps
-       narrow straps: narrow straps
-       sleeveless: sleeveless
-       cap sleeved: cap sleeved
-       short sleeved: short sleeved
-       3/4 length sleeve: 3/4 length sleeve
-       long sleeved: long sleeved
+       strapless: Strapless
+       spaghetti_straps: Spaghetti Straps
+       narrow_straps: Narrow Straps
+       sleeveless: Sleeveless
+       cap_sleeved: Cap Sleeved
+       short_sleeved: Short Sleeved
+       3/4_length_sleeve: 3/4 length Sleeve
+       long_sleeved: long Sleeved
     coat:
-       short sleeved: short sleeved
-       3/4 length sleeve: 3/4 length sleeve
-       long sleeved: long sleeved
+       short_sleeved: Short Sleeved
+       3/4_length_sleeve: 3/4 length sleeve
+       long_sleeved: long sleeved
      
   rise:
-    blouse:
-      
-
-    tunic:
-      
-    tee_knit:
-      
-    tank_knit:
-      
-    jacket:
-      
-    sweater:
-       
     trouser:
       high_rise: High Rise
       mid_rise: Mid Rise
@@ -370,10 +351,10 @@ constants:
     coat:
  
   stretch_type:
-    woven_straight_grain: woven straight grain
-    woven_ w_stretch_fibers: woven w/ stretch fibers
-    woven_bias_grain: woven bias grain
-    knit_2_way_knit_4_way: "knit 2 way	knit 4 way"  
+    woven_straight_grain: Woven straight grain
+    woven_ w_stretch_fibers: Woven w/ stretch fibers
+    woven_bias_grain: Woven bias grain
+    knit_2_way_knit_4_way:  "knit 2 way	knit 4 way"
 
   fabric_weight:
      light_weight_sheer: Light weight sheer
@@ -433,6 +414,190 @@ constants:
     lycra: Lycra
     wool: Wool
     other: Other
+ clothing_type_attributes:
+      blouse:
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        arm_length: Arm length
+        bicep: Bicep
+        triceps : Triceps
+        wrist: Wrist
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip  : Waist to Hip  
+        hip: Hip
+      tunic:
+        tee_knit:
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        arm_length: Arm length
+        bicep: Bicep
+        triceps : Triceps
+        wrist: Wrist
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip  : Waist to Hip  
+        hip: Hip
+      tee_knit:
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        arm_length: Arm length
+        bicep: Bicep
+        triceps : Triceps
+        wrist: Wrist
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip  : Waist to Hip  
+        hip: Hip
+      tank_knit: 
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip: Waist to Hip
+        hip: Hip
+      jacket:
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        arm_length: Arm length
+        bicep: Bicep
+        triceps : Triceps
+        wrist: Wrist
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip  : Waist to Hip  
+        hip: Hip
+      sweater:
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        arm_length: Arm length
+        bicep: Bicep
+        triceps : Triceps
+        wrist: Wrist
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip  : Waist to Hip  
+        hip: Hip
+      trouser:
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip: Waist to Hip
+        hip: Hip
+        outseam: Outseam
+        inseam: inseam
+        thigh: Thigh
+        knee: Knee 
+        calf: Calf
+        ankle: Ankle
+      jean:
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip: Waist to Hip
+        hip: Hip
+        outseam: Outseam
+        inseam: inseam
+        thigh: Thigh
+        knee: Knee 
+        calf: Calf
+        ankle: Ankle
+      skirt:
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip: Waist to Hip
+        hip: Hip
+        outseam: Outseam
+      dress:
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        arm_length: Arm length
+        bicep: Bicep
+        triceps : Triceps
+        wrist: Wrist
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip  : Waist to Hip  
+        hip: Hip
+      coat:
+        neck: Neck
+        shoulder_across_front: Shoulder across front
+        shoulder_across_back: Shoulder across back
+        shoulder_length: Shoulder length
+        arm_length: Arm length
+        bicep: Bicep
+        triceps : Triceps
+        wrist: Wrist
+        bust: Bust
+        back_waist: Back Waist
+        waist: Waist
+        cf_waist: CF Waist
+        back_waist: Back Waist
+        waist_to_hip  : Waist to Hip  
+        hip: Hip
+       
+ clothing_type_target:
+  Blouse : top
+  Tunic  : dress
+  Tee *knit : top
+  Tank *knit : top_sleevless
+  Jacket  : top
+  Sweater  : top
+  Trouser : bottom
+  Jean : bottom
+  Skirt : bottom
+  Dress : dress
+  Coat : dress
+
+      
+      
+
+
+      
+     
+     
+
+
+      
+
+
+      
    
 
    
