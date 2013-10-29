@@ -10,10 +10,18 @@
     {{ app.session.flash('warning') }}
             </div>
 {% endif %}
-    Neck: {{name.neck}}<br/>
-    Shoulder across front: {{name.shoulder_across_front}}
     
-   
+     <ul>
+    {% for key, value in size_measurements %}
+        <li>{{ key }}:
+        {% if value['exists'] == true %}
+        {{'exists'}}
+        {%else%}
+                {{'none'}}
+        {% endif %}
+        </li>
+    {% endfor %}
+</ul>
     
  
 </div>

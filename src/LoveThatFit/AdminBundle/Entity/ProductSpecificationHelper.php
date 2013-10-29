@@ -267,6 +267,10 @@ public function getGarmentDetail(){
 public function getAllAttribute(){
     return $this->conf["constants"]["clothing_type_attributes"];
 }
+#---Get Clothing type attribute----------------------#
+public function getAttributesFor($clothing_type){
+    return $this->conf["constants"]["clothing_type_attributes"][$clothing_type];
+}
 #---Get Blouse Clothing type attribute----------------------#
 public function getBlouseAttribute(){
     return $this->conf["constants"]["clothing_type_attributes"]["blouse"];

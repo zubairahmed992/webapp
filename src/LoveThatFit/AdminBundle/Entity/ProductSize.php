@@ -1134,4 +1134,37 @@ class ProductSize
     {
         return (int) $this->title;
     }
+
+    /**
+     * Add product_size_measurements
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement $productSizeMeasurements
+     * @return ProductSize
+     */
+    public function addProductSizeMeasurement(\LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement $productSizeMeasurements)
+    {
+        $this->product_size_measurements[] = $productSizeMeasurements;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_size_measurements
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement $productSizeMeasurements
+     */
+    public function removeProductSizeMeasurement(\LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement $productSizeMeasurements)
+    {
+        $this->product_size_measurements->removeElement($productSizeMeasurements);
+    }
+
+    /**
+     * Get product_size_measurements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductSizeMeasurements()
+    {
+        return $this->product_size_measurements;
+    }
 }

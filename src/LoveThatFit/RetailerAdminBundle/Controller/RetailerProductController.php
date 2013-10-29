@@ -385,18 +385,19 @@ protected $container;
 
     //--------------------------------------------------------------
 
-    public function productDetailSizeEditAction($id,$size_id) {
+    public function productDetailSizeEditAction($id, $size_id) {
         $product = $this->getProduct($id);
         if (!$product) {
-            $this->get('session')->setFlash('warning', 'Unable to find Product.');        }
-        $clothingType=strtolower($product->getClothingType()->getName());              
-        $clothingTypeAttributes=  $this->get('admin.helper.product.specification')->getAllAttribute();                
-        //return new Response(json_encode($clothingTypeAttributes[$clothingType]));
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        $clothingType = strtolower($product->getClothingType()->getName());
+        $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType);
+        $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size->getProductSizeMeasurements());        
         return $this->render('LoveThatFitRetailerAdminBundle:Product:retailer_product_detail_show.html.twig', array(
-                    'product' => $product,                   
-                    'size_id' => $size_id,
-                    'name'=>  $clothingTypeAttributes[$clothingType],
-        ));
+                    'product' => $product,
+                    'size_measurements' => $size_measurements,
+                ));
     }
 
 //----------------------------------------------------------------
