@@ -53,29 +53,19 @@ protected $container;
 
     public function retailerProductNewAction()
     {
-        /*
-        $id = $this->get('security.context')->getToken()->getUser()->getId();                 
-        $retailerentity = $this->get('admin.helper.retailer.user')->find($id);
-        //return new response(json_encode($retailerentity->getRetailer()->getId()));
-        $entity = $this->getRetailer($retailerentity->getRetailer()->getId());
-        if (!$entity) {
-            $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
-        }        
-        $brand_form = $this->addRetailerBrandForm();
-        $brand_form->get('brands')->setData($entity->getBrandArray());        
-        */
-        $productForm = $this->createForm(new RetailerProductDetailType());        
+       $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
+        $clothingTypes=$this->get('admin.helper.product.specification')->getClothingType();
+        $productForm = $this->createForm(new RetailerProductDetailType());     
         return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
-                    'form' => $productForm->createView(),                    
+                    'form' => $productForm->createView(),'productSpecification'=>$productSpecification,                    
         ));
     }
     
     public function retailerProductNewCreateAction(Request $request)
     {        
-        
         //return new Response(json_encode($request->request->all()));
         
-        
+        $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $em = $this->getDoctrine()->getManager();
         $entity = new Product();
         $form = $this->createForm(new RetailerProductDetailType(), $entity);
@@ -104,7 +94,7 @@ protected $container;
        }    
         
        return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
-                    'form' => $form->createView(),                    
+                    'form' => $form->createView(), 'productSpecification'=>$productSpecification                    
         ));
     }
     
