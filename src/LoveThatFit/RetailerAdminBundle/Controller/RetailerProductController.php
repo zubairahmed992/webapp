@@ -13,6 +13,7 @@ use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
+use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorImageType;
@@ -24,6 +25,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductSizeManBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenDressType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
+use LoveThatFit\AdminBundle\Form\Type\ProductSizeMeasurementType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
@@ -586,6 +588,104 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         $this->get('session')->setFlash('success', 'Raw Image Successfully Deleted');
         return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $id)));
 }
+
+
+//------------------------------Product Size Mesuremnt-----------------------
+    public function productSizeMeasurementCreateAction($id,$size_id)
+    {
+        
+        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
+        if(!$product_size)
+        {
+            throw $this->createNotFoundException('Unable to find Product Size.');
+        }
+        $form = $this->createForm(new ProductSizeMeasurementType());
+        $deleteForm = $this->getDeleteForm($size_id);
+        
+        return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'product_size' => $product_size));
+                  
+         
+    }
+    
+    
+    public function productSizeMeasurementupdateAction(Request $request,$size_id)
+    {
+        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
+        if(!$product_size)
+        {
+            throw $this->createNotFoundException('Unable to find Product Size.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $entity = new ProductSizeMeasurement();
+        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        if ($this->getRequest()->getMethod() == 'POST') {
+        $form->bindRequest($request);
+        $entity->setProductSize($product_size); 
+        $product_size->addProductSizeMeasurement($entity);
+        $em->persist($product_size);
+        $em->persist($entity);            
+        $em->flush();  
+        $this->get('session')->setFlash('success', 'Retailer Product Size Measurement Detail has been Created.');
+        }        
+        return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'product_size' => $product_size));
+    }
+    
+    
+    public function productSizeMeasurementEditAction($size_id,$measurement_id)
+    {
+        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
+        if(!$product_size)
+        {
+            throw $this->createNotFoundException('Unable to find Product Size.');
+        }
+        $product_size_measurement=$this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductSizeMeasurement')
+                ->find($measurement_id);
+        $form = $this->createForm(new ProductSizeMeasurementType(),$product_size_measurement);
+        $deleteForm = $this->getDeleteForm($size_id);        
+        return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement_edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'product_size' => $product_size,
+                    'productSizeMeasurement'=>$product_size_measurement
+                ));
+        
+    }
+    
+    public function productSizeMeasurementEditUpdateAction(Request $request,$size_id,$measurement_id)
+    {
+        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
+        if(!$product_size)
+        {
+            throw $this->createNotFoundException('Unable to find Product Size.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductSizeMeasurement')
+                ->find($measurement_id);
+        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $form->bindRequest($request); 
+        if ($form->isValid()) {
+        $em->persist($entity);            
+        $em->flush();  
+        $this->get('session')->setFlash('success', 'Retailer Product Size Measurement Detail has been Updated.');
+        }        
+        return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'product_size' => $product_size));
+    }
+
+
+
+
+
+
+
 //        
     //------------------------- Private methods ------------------------- 
 //------------------------------------------------------------------------
