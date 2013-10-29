@@ -1,0 +1,19 @@
+<div id="pro_sizes_wrapper">  
+    <h2> Product Sizes</h2>
+{% if app.session.hasFlash('success') %}
+    <div class="alert alert-success">   
+    {{ app.session.flash('success') }}
+        </div>
+{% endif %}
+    {% if app.session.hasFlash('warning') %}
+        <div class="alert alert-error">   
+    {{ app.session.flash('warning') }}
+            </div>
+{% endif %}
+    Neck: {{name.neck}}<br/>
+    Shoulder across front: {{name.shoulder_across_front}}
+    
+   
+    
+ 
+</div>

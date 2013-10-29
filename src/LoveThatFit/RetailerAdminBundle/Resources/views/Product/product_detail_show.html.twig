@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %} 
 <link rel="stylesheet" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/colorpicker.css')}}" type="text/css" />
@@ -8,7 +8,7 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/eye.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
-<li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span></li>
+<li><a href="{{ path('retailer_product') }}" >Products</a> <span class="divider">/</span></li>
 <li class="active">Show</li>         
 {% endblock %}
 
@@ -51,9 +51,7 @@
                     <div class="product_fld">
                         <div class="p_hd">Gender</div>
                         <div>{{product.gender }}</div>
-                    </div>
-                          
-                    <div class="product_fld">
+<div class="product_fld">
                         <div class="p_hd">Styling Type</div>
                         <div>{{product.StylingType}}</div>
                     </div>
@@ -89,10 +87,8 @@
                        <div class="product_fld">
                         <div class="p_hd">Horizontal Stretch</div>
                         <div>{{product.HorizontalStretch}}</div>
-                    </div>   
-                            
-                            
-                            
+                    </div>
+                        
                    <div class="product_fld">
                         <div class="p_hd">Vertical Stretch</div>
                         <div>{{product.VerticalStretch}}</div>
@@ -133,11 +129,16 @@
                         <div class="p_hd">Adjustment</div>
                         <div>{{product.adjustment }}</div>
                     </div> 
+                    </div>                    
+                     <div class="product_fld">
+                        <div class="p_hd">Adjustment</div>
+                        <div>{{product.adjustment }}</div>
+                    </div> 
                             
-                   <div class="product_fld">
-                     <div>{{product.description }}</div>    
-                     </div>       
-                   </div>
+                            <div class="product_fld">
+                        <div>{{product.description }}</div>    
+                            </div>       
+                        </div>
                     
                     {%if(product.displayProductColor!='')%}
                     <div style="margin-left: 500px;">
@@ -149,11 +150,11 @@
 
                     <div class="btn_wrapper" style="margin-top: 0px;">  
                         {% if(page_number is defined )%}
-                        <a href="{{ path('admin_products',{'page_number':page_number}) }}" class="btn">back</a>
+                        <a href="{{ path('retailer_product',{'page_number':page_number}) }}" class="btn">back</a>
                         {%else%}
-                        <a href="{{ path('admin_products') }}" class="btn">back</a>
+                        <a href="{{ path('retailer_product') }}" class="btn">back</a>
                         {%endif%}
-                        <a href="{{ path('admin_product_detail_edit', {'id': product.Id}) }}" class="btn">Edit</a>      
+                        <a href="{{ path('retailer_admin_product_detail_edit', {'id': product.Id}) }}" class="btn">Edit</a>      
                         <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
                     </div>       
 
@@ -162,12 +163,12 @@
         </div><!-- End pro_detail --> 
         
         <!-- Start OF Product Color Display --> 
-                        {% include 'LoveThatFitAdminBundle:Product:_productColors.html.twig'%}
+                        {% include 'LoveThatFitRetailerAdminBundle:Product:_productColors.html.twig'%}
         <!-- End OF Product Color Display -->  
         
-                        {% include 'LoveThatFitAdminBundle:Product:_productSizes.html.twig'%}
+                        {% include 'LoveThatFitRetailerAdminBundle:Product:_productSizes.html.twig'%}
         
-        {% include 'LoveThatFitAdminBundle:Product:_productItems.html.twig' %}
+        {% include 'LoveThatFitRetailerAdminBundle:Product:_productItems.html.twig' %}
      
 
     </div>
@@ -189,7 +190,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <a href="{{ path('admin_product_detail_delete', {'id': product.Id}) }}"  class="btn btn-primary">Delete</a>
+        <a href="{{ path('retailer_admin_product_detail_delete', {'id': product.Id}) }}"  class="btn btn-primary">Delete</a>
 
     </div>
 </div>              

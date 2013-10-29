@@ -1,0 +1,94 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Products</li>
+{% endblock %}
+
+
+
+{% block body %}
+  
+<div class="p_listing">     
+    <h1 style="float:left;">Products</h1>
+ <div class="btn_wrapper">
+     <div align="left">
+     Total Products:{{rec_count}}<br/>
+     Female Product:{{femaleProduct}}<br/>
+     Male Products:{{maleProduct}}<br/>    
+     
+     </div>
+    <a href="{{ path('retailer_admin_product_stats') }}" class="btn">Product Stats</a>  <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
+      </div>
+     <div class="clearfix"></div> 
+     
+    <div class="bs-docs-grid">              
+
+        <div class="row-fluid show-grid">
+            <div class="span1 hds"><a href="{{  path('retailer_product')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>
+            <div class="span1 hds"><a href="{{  path('retailer_product')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+            <div class="span1 hds"><a href="{{  path('retailer_product')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
+            <div class="span1 hds"><a href="{{  path('retailer_product')~'/'~ 1~'/'~'brand' }}">Brand</a></div>
+            <div class="span1 hds"><a href="{{  path('retailer_product')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
+            <div class="span1 hds"><a href="#_"> </a></div>              
+            <div class="span1 hds"></div>      
+            
+        </div>  
+
+          {% for p in products %}
+
+        <div class="row-fluid show-grid">
+            <div class="span1">{{p.Id}}</div>
+            <div class="span1">{{p.Name}}</div>
+            <div class="span1">{{p.Gender}}</div>
+            <div class="span1">{{p.Brand.Name}}</div>
+            <div class="span1">{{p.ClothingType.Name}}</div>
+            <div class="span1">
+                {%if(p.displayProductColor)%}
+                  
+                  <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
+                    {%endif%}
+                   
+           {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}            
+            </div>
+            <div class="span1">&nbsp;                 
+         <div>
+
+         <a href="{{ path('retailer_admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}"><i class="icon-eye-open"></i></a>
+         <a href="{{ path('retailer_admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
+         <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+         </div> 
+            </div>
+                
+        </div>
+        
+ <!-- ModalDetail -->
+<div id="myModaldetail{{p.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Product</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Product Detail <b>{{p.Name ~ ', ' ~ p.Brand.Name}}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('retailer_admin_product_detail_delete', {'id': p.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>        
+
+
+{% endfor %}
+
+   
+
+ </div> 
+
+    </div>
+   
+ {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'retailer_product'}
+ %}        
+   
+</div>
+ {% endblock %}

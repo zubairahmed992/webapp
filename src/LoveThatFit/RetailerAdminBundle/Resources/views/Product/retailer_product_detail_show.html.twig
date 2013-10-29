@@ -1,0 +1,71 @@
+{% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %} 
+<link rel="stylesheet" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/colorpicker.css')}}" type="text/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/layout.css')}}" />
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/colorpicker.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/eye.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
+<li><a href="{{ path('retailer_product') }}" >Products</a> <span class="divider">/</span></li>
+<li class="active">Show</li>         
+{% endblock %}
+
+{% block h1 %}Products{% endblock %}
+
+{% block title %}Products{% endblock %}
+
+
+{% block body %}
+<div> 
+<h1 style="float:left;">{{product.name }}</h1>
+<div class="clearfix"></div>   
+
+
+    <div id="detail_wrapper">      
+        <div id="p_hd">Product Detail</div>
+
+        
+        
+        <div id="product_info">
+            <div id="pro_detail">
+                <div class="edt_container">
+                    <div id="product_info_left">
+                        <div class="product_fld">
+                        <div class="p_hd">Brand</div>
+                        <div>{{product.brand.name }}</div>
+
+                    </div>
+                    
+                     <div class="product_fld">    
+                        <div class="p_hd">Clothing Type</div>
+                        <div>{{product.clothingType.name }}</div>                        
+                    </div>
+                            
+                    <div class="product_fld">
+                        <div class="p_hd">Gender</div>
+                        <div>{{product.gender }}</div>
+                    </div>
+                            
+                    
+                    {%if(product.displayProductColor!='')%}
+                    <div style="margin-left: 500px;">
+                        <img style="width: 50px; height: 100px;" src="{{ asset(product.displayProductColor.WebPath) }}" width="100" height="200"/>
+                    </div>       
+                    {%endif%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% include 'LoveThatFitRetailerAdminBundle:Product:_retailerProductSizes.html.twig'%}
+    </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}
+

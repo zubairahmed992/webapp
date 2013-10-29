@@ -34,5 +34,97 @@ admin_retailer_product_new:
     
 retailer_admin_product_create:
     pattern:  /retailer/product/new/create
-    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:retailerProductNewCreate } 
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:retailerProductNewCreate }
+
+retailer_admin_product_detail_show:    
+    pattern:  /retailer/product/productdetail/{id}
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailShow }
+
+retailer_admin_product_detail_edit:
+    pattern:  /retailer/productdetail/{id}/edit
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailEdit }
+
+retailer_admin_product_detail_update:
+   pattern:  /retailer/productdetail/{id}/update
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailUpdate }
+
+retailer_admin_product_detail_download:
+    pattern:  /retailer/productdetail/{id}/download
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailDownload }
+
+retailer_admin_product_detail_delete:
+    pattern:  /retailer/productdetail/{id}/delete
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailDelete }
+
+
+retailer_admin_product_detail_color_image_upload:
+   pattern:  /retailer/productdetail/{id}/color/image_upload
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productColorTemporaryImageUpload,_format: json} 
+
+retailer_admin_product_detail_color_create:
+   pattern:  /retailer/productdetail/{id}/color/create
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailColorCreate }   
+
+retailer_admin_product_detail_color_add:
+   pattern:  /retailer/productdetail/{id}/color/add
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailColorAddNew }
+   
+retailer_admin_product_detail_color_edit:
+   pattern:  /retailer/productdetail/{id}/color/{color_id}/edit
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailColorEdit }
+   
+retailer_admin_product_detail_color_update:
+   pattern:  /retailer/productdetail/{id}/color/{color_id}/update
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailColorUpdate }   
+   
+retailer_admin_product_detail_color_delete:
+   pattern:  /retailer/productdetail/{id}/color/{color_id}/delete
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailColorDelete }  
+
+#--------------------------- Product Sizes --------------       
+   
+retailer_admin_product_detail_size_edit:
+   pattern:  /retailer/productdetail/{id}/size/{size_id}/edit
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailSizeEdit }   
   
+retailer_admin_product_detail_size_update:
+   pattern:  /retailer/productdetail/{id}/size/{size_id}/update
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailSizeUpdate }   
+retailer_admin_product_detail_size_delete:
+   pattern:  /retailer/productdetail/{id}/size/{size_id}/delete
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailSizeDelete }   
+    
+#--------------------------- Product Items --------------       
+   
+retailer_admin_product_detail_item_edit:
+   pattern:  /retailer/productdetail/{id}/item/{item_id}/edit
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailItemEdit }   
+  
+retailer_admin_product_detail_item_update:
+   pattern:  /retailer/productdetail/{id}/item/{item_id}/update
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailItemUpdate } 
+
+retailer_admin_product_detail_item_delete:
+   pattern:  /retailer/productdetail/{id}/delete/{item_id}/edit
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailItemDelete }   
+retailer_admin_product_detail_item_raw_image_edit:
+   pattern:  /retailer/productdetail/{id}/raw_image/{item_id}/edit
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailItemRawImageEdit }   
+
+retailer_admin_product_detail_item_raw_image_download:
+   pattern:  /retailer/productdetail/{id}/raw_image/{item_id}/download
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailItemRawImageDownload } 
+retailer_admin_product_detail_item_raw_image_delete:   
+   pattern:  /retailer/productdetail/{id}/delete/{item_id}/raw_image_delete
+   defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailItemRawImageDelete }   
+   
+#--------------------------- Product Search -----------------------------------#  
+retailer_admin_product_search_from:
+     pattern:  /retailer/product/searchForm
+     defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSeachForm}
+retailer_admin_product_search_result:
+     pattern:  /retailer/product/searchResult/{page_number}/{sort}
+     defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSeachResult,page_number: 1, sort:id}
+retailer_admin_product_search_category_with_target:
+     pattern:  /retailer/product/searchCategory
+     defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSeachCategory}     
