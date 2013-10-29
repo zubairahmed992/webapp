@@ -19,35 +19,6 @@
 $(document).ready(function(){
     $('#optional_elements').hide();
     //Filling Values on load 
- //Filling select box for stretch type   
- {% for blouse_styling_type in productSpecification.stretch_type %}
- $('#product_stretch_type').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
- {%endfor%}
-     //Filling select box for Fabric Weight
- {% for blouse_styling_type in productSpecification.fabric_weight %}
- $('#product_fabric_weight').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
- {%endfor%}
- // Filling Structural Detail 
- {% for blouse_styling_type in productSpecification.structural_details %}
- $('#product_structural_detail').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
- {%endfor%}
- //Fit fit type
- {% for blouse_styling_type in productSpecification.fit_type %}
- $('#product_fit_type').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
- {%endfor%}
-  //Layering
- {% for blouse_styling_type in productSpecification.layering %}
- $('#product_layering').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
- {%endfor%}   
- 
- //Fabric Content 
- {% for blouse_styling_type in productSpecification.fabric_content %}
- $('#product_fabric_content').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
- {%endfor%}  
-//Garment Detail   
- {% for blouse_styling_type in productSpecification.garment_detail %}
- $('#product_garment_detail').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
- {%endfor%}  
  
  {%if(productSpecification is defined )%}  
   $("#product_ClothingType").change(function(){

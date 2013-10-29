@@ -8,11 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RetailerProductDetailType extends AbstractType
 {
-       // private $clothingType;
-      public function __construct()             
+       private $container;
+       private $stretch_type;
+      public function __construct($container)             
     {
-       
-       // $this->clothingType=$clothingType;
+        $this->container= $container;
+        $this->stretch_type=$this->container->getStretchType();
+        $this->fabric_weight=$this->container->getFabricWeight(); 
+        $this->structural_detail=$this->container->getStructuralDetails(); 
+        $this->fit_type=$this->container->getFitType(); 
+        $this->layering=$this->container->getLayering(); 
+        $this->fabric_content=$this->container->getFabricContent(); 
+        $this->garment_detail=$this->container->getGarmentDetail(); 
         
     }
     
@@ -26,16 +33,16 @@ class RetailerProductDetailType extends AbstractType
         $builder->add('neckline','choice', array( 'required' => false,'empty_value' => 'Neck Line',));
         $builder->add('sleeve_styling','choice', array( 'required' => false,'empty_value' => 'Sleeve Styling',));
         $builder->add('rise','choice', array( 'required' => false,'empty_value' => 'Rise',));
-        $builder->add('stretch_type','choice', array( 'required' => false,'empty_value' => 'Stretch Type',));
+        $builder->add('stretch_type','choice', array( 'choices' => $this->stretch_type,'required' => false,'empty_value' => 'Stretch Type',));
         $builder->add('horizontal_stretch');
         $builder->add('vertical_stretch');
-        $builder->add('fabric_weight','choice', array( 'required' => false,'empty_value' => 'Fabric Weight',));
-        $builder->add('structural_detail','choice', array( 'required' => false,'empty_value' => 'Stuctural Details',));
-        $builder->add('fit_type','choice', array( 'required' => false,'empty_value' => 'Fit Type',));
-        $builder->add('layering','choice', array( 'required' => false,'empty_value' => 'Layering',));
+        $builder->add('fabric_weight','choice', array( 'choices' => $this->fabric_weight,'required' => false,'empty_value' => 'Fabric Weight',));
+        $builder->add('structural_detail','choice', array( 'choices'=>$this->structural_detail,'required' => false,'empty_value' => 'Stuctural Details',));
+        $builder->add('fit_type','choice', array('choices'=>$this->fit_type, 'required' => false,'empty_value' => 'Fit Type',));
+        $builder->add('layering','choice', array('choices'=>$this->layering, 'required' => false,'empty_value' => 'Layering',));
         $builder->add('fit_priority');        
-        $builder->add('fabric_content','choice', array( 'required' => false,'empty_value' => 'Fabric Content',));
-        $builder->add('garment_detail','choice', array( 'required' => false,'empty_value' => 'Garment Detail',));
+        $builder->add('fabric_content','choice', array('choices'=>$this->fabric_content,'required' => false,'empty_value' => 'Fabric Content',));
+        $builder->add('garment_detail','choice', array('choices'=>$this->garment_detail, 'required' => false,'empty_value' => 'Garment Detail',));
         $builder->add('adjustment');
         $builder->add('description');        
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));               
