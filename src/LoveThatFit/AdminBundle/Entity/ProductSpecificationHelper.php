@@ -18,8 +18,8 @@ public function getProductSpecification(){
     return $this->conf["constants"]["product_specification"];
 }
 #--------------Reading Garment Type------------------------#
-public function getGarmentType(){
-    return $this->conf["constants"]["product_specification"]["garment_type"];
+public function getClothingType(){
+    return $this->conf["constants"]["product_specification"]["clothing_type"];
 }
 
 #--------------Reading Styling Type Of Blouse------------------------#

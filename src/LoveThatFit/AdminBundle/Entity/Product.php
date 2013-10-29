@@ -144,6 +144,12 @@ class Product {
      * @ORM\Column(type="string", length=255)
      */
     protected $fabric_weight;
+   
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $layering;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -1005,5 +1011,28 @@ class Product {
     public function getGarmentDetail()
     {
         return $this->garment_detail;
+    }
+
+    /**
+     * Set layering
+     *
+     * @param string $layering
+     * @return Product
+     */
+    public function setLayering($layering)
+    {
+        $this->layering = $layering;
+    
+        return $this;
+    }
+
+    /**
+     * Get layering
+     *
+     * @return string 
+     */
+    public function getLayering()
+    {
+        return $this->layering;
     }
 }

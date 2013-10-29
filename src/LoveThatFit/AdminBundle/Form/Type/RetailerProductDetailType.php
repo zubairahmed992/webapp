@@ -8,25 +8,34 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RetailerProductDetailType extends AbstractType
 {
+       // private $clothingType;
+      public function __construct()             
+    {
+       
+       // $this->clothingType=$clothingType;
+        
+    }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         //$brand_list=$this->get('admin.helper.brand')->getBrandArray();
+       // $builder->add('ClothingType', 'choice', array('choices' => $this->clothingType, 'required' => false,'empty_value' => 'Clothing Type',));
         $builder->add('name');
-        $builder->add('styling_type');
-        $builder->add('hem_length');
-        $builder->add('neckline');
-        $builder->add('sleeve_styling');
-        $builder->add('rise');
-        $builder->add('stretch_type');
+        $builder->add('styling_type','choice', array( 'required' => false,'empty_value' => 'Styling Type',));
+        $builder->add('hem_length','choice', array( 'required' => false,'empty_value' => 'Hem Length',));
+        $builder->add('neckline','choice', array( 'required' => false,'empty_value' => 'Neck Line',));
+        $builder->add('sleeve_styling','choice', array( 'required' => false,'empty_value' => 'Sleeve Styling',));
+        $builder->add('rise','choice', array( 'required' => false,'empty_value' => 'Rise',));
+        $builder->add('stretch_type','choice', array( 'required' => false,'empty_value' => 'Stretch Type',));
         $builder->add('horizontal_stretch');
         $builder->add('vertical_stretch');
-        $builder->add('fabric_weight');
-        $builder->add('structural_detail');
-        $builder->add('fit_type');
+        $builder->add('fabric_weight','choice', array( 'required' => false,'empty_value' => 'Fabric Weight',));
+        $builder->add('structural_detail','choice', array( 'required' => false,'empty_value' => 'Stuctural Details',));
+        $builder->add('fit_type','choice', array( 'required' => false,'empty_value' => 'Fit Type',));
+        $builder->add('layering','choice', array( 'required' => false,'empty_value' => 'Layering',));
         $builder->add('fit_priority');        
-        $builder->add('fabric_content');
-        $builder->add('garment_detail');
+        $builder->add('fabric_content','choice', array( 'required' => false,'empty_value' => 'Fabric Content',));
+        $builder->add('garment_detail','choice', array( 'required' => false,'empty_value' => 'Garment Detail',));
         $builder->add('adjustment');
         $builder->add('description');        
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));               
@@ -42,6 +51,7 @@ class RetailerProductDetailType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                 ));
+        
         $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,));
 
 //$builder->add('Brand', 'choice',array('choices'=>$brand_list) );

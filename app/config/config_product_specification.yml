@@ -7,7 +7,7 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
  product_specification: 
-  garment_type:
+  clothing_type:
     blouse: Blouse
     tunic: Tunic
     tee_knit: Tee knit
@@ -238,12 +238,6 @@ constants:
       lapel_button_down: Lapel button down
       peter_pan: Peter Pan
       cowl_draped: Cowl  Draped
-    trouser:
-     
-    jean:
-      
-    skirt:
-      
     dress:
       turtle_neck: Turtle Neck
       crew_neck: Crew neck
