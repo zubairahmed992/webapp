@@ -80,7 +80,7 @@ class RegistrationController extends Controller {
                 $user_helper->getLoggedInById($user);
 
                 //send registration email ....            
-                $this->get('mail_helper')->sendRegistrationEmail($user);
+                //$this->get('mail_helper')->sendRegistrationEmail($user);
 
                 if ($user->getGender() == 'm') {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);

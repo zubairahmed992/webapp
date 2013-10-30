@@ -42,8 +42,8 @@ constants:
      ({regular, petite})
  
   body_types_search:
-      regular: regular
-      petite: petite
+      regular: Regular
+      petite: Petite
      
  
   body_shape:
