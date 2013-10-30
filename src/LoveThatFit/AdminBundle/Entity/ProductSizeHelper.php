@@ -48,7 +48,7 @@ class ProductSizeHelper {
         foreach ($attributes as $key => $value) {
             
             foreach ($size_measurements as $sm) {
-            if ($sm->getTitle == $key) {
+            if ($sm->getTitle() == $key) {
                 $all_size_measurements[$key] =  array('exists' => true, 'measurement' => $sm);
             }
         }
