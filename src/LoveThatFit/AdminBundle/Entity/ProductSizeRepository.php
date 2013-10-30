@@ -43,7 +43,10 @@ class ProductSizeRepository extends EntityRepository {
     public function getSizeMeasurementArray($id) {
         $query = $this->getEntityManager()
                         ->createQuery('
-            SELECT ps FROM LoveThatFitAdminBundle:ProductSize ps
+            SELECT ps.title as size, psm.title, psm.garment_measurement_flat,
+            psm.max_body_measurement, psm.vertical_stretch, psm.horizontal_stretch,
+            psm.stretch_type_percentage, psm.ideal_body_size_high, psm.ideal_body_size_low
+            FROM LoveThatFitAdminBundle:ProductSize ps
             JOIN ps.product_size_measurements psm
             WHERE ps.id = :id'
                         )->setParameter('id', $id);

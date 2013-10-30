@@ -403,6 +403,7 @@ protected $container;
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $product_size = $this->get('admin.helper.productsizes')->findMeasurementArray($size_id);
+        //return new Response(var_dump($product_size));
         $clothingType = strtolower($product->getClothingType()->getName());
         $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType);
         $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);        

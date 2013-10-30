@@ -10,56 +10,37 @@
     {{ app.session.flash('warning') }}
             </div>
 {% endif %}
-    
-     <table width="100%" border="0">
-  
 
-     
+            <table width="100%" border="0">
+
+
+
     {% for key, value in size_measurements %}
-         {{value['measurement'] }}
-        {% if value['exists'] == true %}
-        <tr>
-    <td colspan="2">Neck</td>
-  </tr>
-  <tr>
-   <td colspan="2">
-   <table width="100%" border="0">
-  <tr>
-    <td>Garment Measurement Flat</td>
-    <td>15</td>
-    <td>Max body Measurement</td>
-    <td>15</td>    
-  </tr>
-  
-  <tr>
-    <td>vertical_stretch</td>
-    <td>15</td>
-    <td>horizontal_stretch</td>
-    <td>15</td>    
-  </tr>
-  
-  
-  <tr>
-    <td>stretch_type_percentage</td>
-    <td>15</td>
-    <td>ideal_body_size_high</td>
-    <td>15</td>    
-  </tr>
-  
-</table>
 
-   </td>
-  </tr>
-        {%else%}
-        <tr>
-            <td>{{key}}</td>
-            <td><a href="{{ path('retailer_admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a></td>
-        </tr>
-        
-        {% endif %}
-        
+                {% if (value['exists'])%}
+                <tr>
+                    <td>     
+                        <b>{{value['measurement']['title'] }} </b>
+                    </td>
+                    <td>
+                        Edit<br>
+                            garment_measurement_flat: {{value['measurement']['garment_measurement_flat'] }} <br>
+                          max_body_measurement : {{value['measurement']['max_body_measurement'] }} <br>
+                          vertical_stretch : {{value['measurement']['vertical_stretch'] }} <br>
+                            
+                    </td>
+
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">     
+                        {{key }} 
+                    </td>
+
+                </tr>
+                {% endif %}
     {% endfor %}
 
-    </table>
- 
-</div>
+            </table>
+
+        </div>

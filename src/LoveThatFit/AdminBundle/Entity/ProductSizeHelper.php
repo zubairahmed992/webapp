@@ -49,10 +49,11 @@ class ProductSizeHelper {
     public function checkAttributes($attributes, $size_measurements) {
         $all_size_measurements = array();
         foreach ($attributes as $key => $value) {
-            $i=0;
+            $all_size_measurements[$key] =  array('exists' => false, 'measurement' => null);
             foreach ($size_measurements as $sm) {
-                $i=$i+1;
+                if($sm['title']==$key){
                 $all_size_measurements[$key] =  array('exists' => true, 'measurement' => $sm);
+                }
         }
         
             
