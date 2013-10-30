@@ -66,14 +66,14 @@ protected $container;
     
     public function retailerProductNewCreateAction(Request $request)
     {        
-        //return new Response(json_encode($request->request->all()));
+       //return new Response(json_encode($request->request->all()));
         
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
-          $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
         $em = $this->getDoctrine()->getManager();
         $entity = new Product();
         $form = $this->createForm(new RetailerProductDetailType($productSpecificationHelper), $entity);
-        if ($this->getRequest()->getMethod() == 'POST') {
+       
         $form->bindRequest($request);
         $id = $this->get('security.context')->getToken()->getUser()->getId();                 
         $retailerentity = $this->get('admin.helper.retailer.user')->find($id);       
@@ -82,8 +82,16 @@ protected $container;
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
         }
         //return new Response(json_encode($request));
-        if ($form->isValid()) {            
-           $entity->setCreatedAt(new \DateTime('now'));
+      //  if ($form->isValid()) {            
+            
+           
+           $data=$request->request->all();
+            if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
+            if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
+            if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
+            if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
+            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
+            $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $entity->setRetailer($retailer); 
             $retailer->addProduct($entity);
@@ -91,11 +99,11 @@ protected $container;
             $em->persist($entity);            
             $em->flush();
             $this->get('session')->setFlash('success', 'Retailer Product Detail has been Created.');
-       }   
-        }else
-        {
-          $this->get('session')->setFlash('warning', 'The Retailer Product can not be Created!');
-       }    
+      // }   
+      // else
+     //   {
+        //  $this->get('session')->setFlash('warning', 'The Retailer Product can not be Created!');
+    //   }    
         
        return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
                     'form' => $form->createView(), 'productSpecification'=>$productSpecification                    

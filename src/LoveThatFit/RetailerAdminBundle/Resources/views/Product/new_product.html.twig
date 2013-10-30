@@ -36,26 +36,31 @@ $(document).ready(function(){
   if(strtolower(clothing_type)==strtolower('blouse')){
       
       // Styling Type 
+     
+                  
       {% for blouse_styling_type in productSpecification.style_type.blouse %}
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
       {%endfor%}
+     
       // Hem Length
+     
      {% for blouse_styling_type in productSpecification.hem_length.blouse %}
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
-      {%endfor%} 
+      {%endfor%}
      //Neck Line
+     
     {% for blouse_styling_type in productSpecification.neck_line.blouse %}
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
       {%endfor%}
+     
+         
        // Sleeving Style      
+     
       {% for blouse_styling_type in productSpecification.sleeve_styling.blouse %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
       {%endfor%}
-     
-     
-     
-     
-     
+      
+    $('#rise').hide();
     }
    if(strtolower(clothing_type)==strtolower('tunic')){   
        //Styling Type
@@ -75,6 +80,8 @@ $(document).ready(function(){
       {% for blouse_styling_type in productSpecification.sleeve_styling.tunic %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
       {%endfor%} 
+    $('#rise').hide();
+        
     }
    if(strtolower(clothing_type)==strtolower('tee_knit')){  
        //Styling type
@@ -92,7 +99,8 @@ $(document).ready(function(){
     // Sleeving Style      
       {% for blouse_styling_type in productSpecification.sleeve_styling.tee_knit %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
-      {%endfor%}      
+      {%endfor%}
+          $('#rise').hide();
      }
    if(strtolower(clothing_type)==strtolower('tank_knit')){   
        //Styling Type
@@ -107,11 +115,13 @@ $(document).ready(function(){
     {% for blouse_styling_type in productSpecification.neck_line.tank_knit %}
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
       {%endfor%}      
-      }
+      
       // Sleeving Style      
       {% for blouse_styling_type in productSpecification.sleeve_styling.tank_knit %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
       {%endfor%}  
+     $('#rise').hide(); 
+     }
   if(strtolower(clothing_type)==strtolower('jacket')){         
       //Styling Type
   {% for blouse_styling_type in productSpecification.style_type.jacket %}
@@ -128,7 +138,8 @@ $(document).ready(function(){
     // Sleeving Style      
       {% for blouse_styling_type in productSpecification.sleeve_styling.jacket %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
-      {%endfor%}        
+      {%endfor%}   
+          $('#rise').hide();
     }
   if(strtolower(clothing_type)==strtolower('sweater')){   
       //Styling Type
@@ -148,6 +159,7 @@ $(document).ready(function(){
       {% for blouse_styling_type in productSpecification.sleeve_styling.sweater %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
       {%endfor%}     
+     $('#rise').hide();
     }
   if(strtolower(clothing_type)==strtolower('trouser')){   
       // Styling Type
@@ -163,6 +175,11 @@ $(document).ready(function(){
        {% for blouse_styling_type in productSpecification.rise.trouser %}
       $('#product_rise').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
         {%endfor%} 
+       
+       $('#sleeve_styling').hide();
+       $('#neckline').hide();
+       
+            
 }    if(strtolower(clothing_type)==strtolower('jean')){
        //Styling Type 
        {% for blouse_styling_type in productSpecification.style_type.jean %}
@@ -177,7 +194,9 @@ $(document).ready(function(){
       {% for blouse_styling_type in productSpecification.rise.jean%}  
          $('#product_rise').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
           {%endfor%} 
-          }
+     $('#sleeve_styling').hide();
+     $('#neckline').hide();         
+  }
      if(strtolower(clothing_type)==strtolower('dress')){      
          //Styling Type
           {% for blouse_styling_type in productSpecification.style_type.dress %}
@@ -195,7 +214,9 @@ $(document).ready(function(){
    // Sleeving Style      
       {% for blouse_styling_type in productSpecification.sleeve_styling.dress %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
-      {%endfor%}         
+      {%endfor%}     
+      
+       $('#rise').hide();    
        }
      if(strtolower(clothing_type)==strtolower('coat')){
          // Styling Type
@@ -213,7 +234,8 @@ $(document).ready(function(){
      // Sleeving Style      
       {% for blouse_styling_type in productSpecification.sleeve_styling.coat %}
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
-      {%endfor%}       
+      {%endfor%}     
+    $('#rise').hide();      
        } 
    //Skirt     
   if(strtolower(clothing_type)==strtolower('skirt')){
@@ -230,6 +252,8 @@ $(document).ready(function(){
       {% for blouse_styling_type in productSpecification.rise.skirt%}  
          $('#product_rise').append('<option value="{{blouse_styling_type}}">{{blouse_styling_type}}</option>');
           {%endfor%} 
+      $('#sleeve_styling').hide();
+       $('#neckline').hide();        
           }     
  
   }); 
@@ -244,7 +268,7 @@ function strtolower (str) {
     
     <h1 style="float:left;"> Product Detail </h1>    
       <div class="clearfix"></div>   
-    <form action="{{path('retailer_admin_product_create')}}" method="post" {{ form_enctype(form) }}>
+      <form action="{{path('retailer_admin_product_create')}}" method="post" {{ form_enctype(form) }} name="form">
  {{ form_errors(form) }}
             <div id="detail_wrapper">      
                 <div id="p_hd">Product Detail</div>                

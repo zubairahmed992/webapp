@@ -28,21 +28,21 @@ class RetailerProductDetailType extends AbstractType
         //$brand_list=$this->get('admin.helper.brand')->getBrandArray();
        // $builder->add('ClothingType', 'choice', array('choices' => $this->clothingType, 'required' => false,'empty_value' => 'Clothing Type',));
         $builder->add('name');
-        $builder->add('styling_type','choice', array( 'required' => false,'empty_value' => 'Styling Type',));
-        $builder->add('hem_length','choice', array( 'required' => false,'empty_value' => 'Hem Length',));
-        $builder->add('neckline','choice', array( 'required' => false,'empty_value' => 'Neck Line',));
-        $builder->add('sleeve_styling','choice', array( 'required' => false,'empty_value' => 'Sleeve Styling',));
-        $builder->add('rise','choice', array( 'required' => false,'empty_value' => 'Rise',));
-        $builder->add('stretch_type','choice', array( 'choices' => $this->stretch_type,'required' => false,'empty_value' => 'Stretch Type',));
+        $builder->add('styling_type','choice', array( 'required' => false,'empty_value' => 'Select Styling Type',));
+        $builder->add('hem_length','choice', array( 'required' => false,'empty_value' => 'Select Hem Length',));
+        $builder->add('neckline','choice', array( 'required' => false,'empty_value' => 'Select Neck Line',));
+        $builder->add('sleeve_styling','choice', array( 'required' => false,'empty_value' => 'Select Sleeve Styling',));
+        $builder->add('rise','choice', array( 'required' => false,'empty_value' => 'Select Rise',));
+        $builder->add('stretch_type','choice', array( 'choices' => $this->stretch_type,'required' => false,'empty_value' => ' Select Stretch Type',));
         $builder->add('horizontal_stretch');
         $builder->add('vertical_stretch');
-        $builder->add('fabric_weight','choice', array( 'choices' => $this->fabric_weight,'required' => false,'empty_value' => 'Fabric Weight',));
-        $builder->add('structural_detail','choice', array( 'choices'=>$this->structural_detail,'required' => false,'empty_value' => 'Stuctural Details',));
-        $builder->add('fit_type','choice', array('choices'=>$this->fit_type, 'required' => false,'empty_value' => 'Fit Type',));
-        $builder->add('layering','choice', array('choices'=>$this->layering, 'required' => false,'empty_value' => 'Layering',));
+        $builder->add('fabric_weight','choice', array( 'choices' => $this->fabric_weight,'required' => false,'empty_value' => ' Select Fabric Weight',));
+        $builder->add('structural_detail','choice', array( 'choices'=>$this->structural_detail,'required' => false,'empty_value' => 'Select Stuctural Details',));
+        $builder->add('fit_type','choice', array('choices'=>$this->fit_type, 'required' => false,'empty_value' => 'Select Fit Type',));
+        $builder->add('layering','choice', array('choices'=>$this->layering, 'required' => false,'empty_value' => 'Select Layering',));
         $builder->add('fit_priority');        
-        $builder->add('fabric_content','choice', array('choices'=>$this->fabric_content,'required' => false,'empty_value' => 'Fabric Content',));
-        $builder->add('garment_detail','choice', array('choices'=>$this->garment_detail, 'required' => false,'empty_value' => 'Garment Detail',));
+        $builder->add('fabric_content','choice', array('choices'=>$this->fabric_content,'required' => false,'empty_value' => 'Select Fabric Content',));
+        $builder->add('garment_detail','choice', array('choices'=>$this->garment_detail, 'required' => false,'empty_value' => 'Select Garment Detail',));
         $builder->add('adjustment');
         $builder->add('description');        
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));               
@@ -57,6 +57,7 @@ class RetailerProductDetailType extends AbstractType
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'name',
+                    'empty_value' => 'Select Clothing Type'
                 ));
         
         $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,));
