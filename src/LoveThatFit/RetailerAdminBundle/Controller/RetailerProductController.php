@@ -72,7 +72,7 @@ protected $container;
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
         $em = $this->getDoctrine()->getManager();
         $entity = new Product();
-        $form = $this->createForm(new RetailerProductDetailType($productSpecificationHelper), $entity);
+        $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
        
         $form->bindRequest($request);
         $id = $this->get('security.context')->getToken()->getUser()->getId();                 
@@ -99,6 +99,7 @@ protected $container;
             $em->persist($entity);            
             $em->flush();
             $this->get('session')->setFlash('success', 'Retailer Product Detail has been Created.');
+            return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId())));  
       // }   
       // else
      //   {
@@ -116,14 +117,16 @@ protected $container;
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->findOneById($id);
-
-        $form = $this->createForm(new ProductDetailType(), $entity);
+$productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
+        $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
-                    'entity' => $entity));
+                    'entity' => $entity,
+                    'productSpecification' =>$productSpecification  
+                    ));
     }
 
     //------------------------------------------------------------------------------
@@ -136,7 +139,7 @@ protected $container;
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
 
-        $form = $this->createForm(new ProductDetailType(), $entity);
+        $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $form->bind($request);
         $gender = $entity->getGender();
 
