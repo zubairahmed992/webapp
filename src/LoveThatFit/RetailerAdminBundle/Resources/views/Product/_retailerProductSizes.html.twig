@@ -21,23 +21,31 @@
                 <tr>
                     <td>     
                         <b>{{value['measurement']['title'] }} </b>
+                        
+                        
                     </td>
                     <td>
-                        Edit<br>
-                            garment_measurement_flat: {{value['measurement']['garment_measurement_flat'] }} <br>
-                          max_body_measurement : {{value['measurement']['max_body_measurement'] }} <br>
-                          vertical_stretch : {{value['measurement']['vertical_stretch'] }} <br>
+                       <a href="{{ path('retailer_admin_product_size_measurement_edit', {'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a><br>
+                          Garment Measurement Flat: {{value['measurement']['garment_measurement_flat'] }} <br>
+                          Max Body Measurement : {{value['measurement']['max_body_measurement'] }} <br>
+                          Vertical Stretch : {{value['measurement']['vertical_stretch'] }} <br>
+                          Horizontal Stretch : {{value['measurement']['horizontal_stretch'] }} <br>
+                          Stretch Type Percentage : {{value['measurement']['stretch_type_percentage'] }} <br>
+                          Ideal Body Size High : {{value['measurement']['ideal_body_size_high'] }} <br>
+                          Ideal Body Size Low : {{value['measurement']['ideal_body_size_low'] }} <br>
                             
                     </td>
 
                 </tr>
                 {% else %}
-                <tr>
-                    <td colspan="2">     
-                        {{key }} 
-                    </td>
 
-                </tr>
+        <tr>
+            <td>{{key}}</td>
+            <td><a href="{{ path('retailer_admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a></td>
+        </tr>
+
+
+              
                 {% endif %}
     {% endfor %}
 

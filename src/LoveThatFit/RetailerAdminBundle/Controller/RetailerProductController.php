@@ -643,15 +643,30 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         $em->persist($entity);            
         $em->flush();  
         $this->get('session')->setFlash('success', 'Retailer Product Size Measurement Detail has been Created.');
-        }        
+        }    
+       $id=$product_size->getProduct()->getId();
+       $entity = $this->getProduct($id);             
+        return $this->redirect($this->generateUrl('retailer_admin_product_detail_size_edit', array(
+            'product'=>$entity,
+            'id' => $id,
+            'size_id'=>$size_id
+         )));
+        
+        
+        
+        
+        /*
+        
         return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
                     'form' => $form->createView(),                    
                     'product_size' => $product_size,
                     'title'=>$title ));
+          
+         */
     }
     
     
-    public function productSizeMeasurementEditAction($size_id,$measurement_id)
+    public function productSizeMeasurementEditAction($size_id,$measurement_id,$title)
     {
         $product_size=$this->get('admin.helper.productsizes')->find($size_id);
         if(!$product_size)
@@ -667,12 +682,13 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'product_size' => $product_size,
-                    'productSizeMeasurement'=>$product_size_measurement
+                    'productSizeMeasurement'=>$product_size_measurement,
+                    'title'=>$title,
                 ));
         
     }
     
-    public function productSizeMeasurementEditUpdateAction(Request $request,$size_id,$measurement_id)
+    public function productSizeMeasurementEditUpdateAction(Request $request,$size_id,$measurement_id,$title)
     {
         $product_size=$this->get('admin.helper.productsizes')->find($size_id);
         if(!$product_size)
@@ -690,9 +706,23 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         $em->flush();  
         $this->get('session')->setFlash('success', 'Retailer Product Size Measurement Detail has been Updated.');
         }        
+        
+      $id=$product_size->getProduct()->getId();
+       $entity = $this->getProduct($id);             
+        return $this->redirect($this->generateUrl('retailer_admin_product_detail_size_edit', array(
+            'product'=>$entity,
+            'id' => $id,
+            'size_id'=>$size_id
+         )));
+        
+        /*
         return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
                     'form' => $form->createView(),                    
-                    'product_size' => $product_size));
+                    'product_size' => $product_size,
+                    'title'=>$title,
+                ));
+         
+         */
     }
 
 

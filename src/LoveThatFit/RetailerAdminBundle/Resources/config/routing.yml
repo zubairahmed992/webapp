@@ -103,11 +103,11 @@ retailer_admin_product_size_measurement_update:
      defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSizeMeasurementupdate }
      
 retailer_admin_product_size_measurement_edit:
-     pattern:  /retailer/product/size/{size_id}/meaurement/{measurement_id}/edit
+     pattern:  /retailer/product/size/{size_id}/meaurement/{measurement_id}/{title}/edit
      defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSizeMeasurementEdit }
 
 retailer_admin_product_size_measurement_editUpdate:
-     pattern:  /retailer/product/size/{size_id}/meaurement/{measurement_id}/edit/Update
+     pattern:  /retailer/product/size/{size_id}/meaurement/{measurement_id}/{title}/edit/Update
      defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSizeMeasurementEditUpdate }
 #--------------------------- Product Items --------------       
    
