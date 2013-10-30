@@ -58,7 +58,10 @@
                     </div>
                 </div>
             </div>
-        {% include 'LoveThatFitRetailerAdminBundle:Product:_retailerProductSizes.html.twig'%}
+        {{ include('LoveThatFitRetailerAdminBundle:Product:_retailerProductSizes.html.twig',{'id':product.id,'size_id':size_id,})}}
+        
+        
+        
     </div>
     </div>
 

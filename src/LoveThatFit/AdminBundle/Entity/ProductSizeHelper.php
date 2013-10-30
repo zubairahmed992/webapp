@@ -42,17 +42,19 @@ class ProductSizeHelper {
      public function find($id) {
         return $this->repo->find($id);
     }
+       public function findMeasurementArray($id) {
+        return $this->repo->getSizeMeasurementArray($id);
+    }
     
     public function checkAttributes($attributes, $size_measurements) {
         $all_size_measurements = array();
         foreach ($attributes as $key => $value) {
-            
+            $i=0;
             foreach ($size_measurements as $sm) {
-            if ($sm->getTitle() == $key) {
+                $i=$i+1;
                 $all_size_measurements[$key] =  array('exists' => true, 'measurement' => $sm);
-            }
         }
-        $all_size_measurements[$key] = array('exists' => false, 'measurement' => null);
+        
             
         }
         return $all_size_measurements;

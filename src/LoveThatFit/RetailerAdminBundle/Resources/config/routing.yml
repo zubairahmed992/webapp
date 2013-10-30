@@ -95,11 +95,11 @@ retailer_admin_product_detail_size_delete:
    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailSizeDelete }   
  
 retailer_admin_product_detail_size_measurement_create:
-     pattern:  /retailer/product/{id}/size_meaurement/{size_id}/create
+     pattern:  /retailer/product/{id}/size_meaurement/{size_id}/{title}/create
      defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSizeMeasurementCreate }   
 
 retailer_admin_product_size_measurement_update:
-     pattern:  /retailer/product/size_meaurement/{size_id}/update
+     pattern:  /retailer/product/size_meaurement/{size_id}/{title}/update
      defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSizeMeasurementupdate }
      
 retailer_admin_product_size_measurement_edit:

@@ -11,17 +11,55 @@
             </div>
 {% endif %}
     
-     <ul>
+     <table width="100%" border="0">
+  
+
+     
     {% for key, value in size_measurements %}
-        <li>{{ key }}:
+         {{value['measurement'] }}
         {% if value['exists'] == true %}
-        {{'exists'}}
+        <tr>
+    <td colspan="2">Neck</td>
+  </tr>
+  <tr>
+   <td colspan="2">
+   <table width="100%" border="0">
+  <tr>
+    <td>Garment Measurement Flat</td>
+    <td>15</td>
+    <td>Max body Measurement</td>
+    <td>15</td>    
+  </tr>
+  
+  <tr>
+    <td>vertical_stretch</td>
+    <td>15</td>
+    <td>horizontal_stretch</td>
+    <td>15</td>    
+  </tr>
+  
+  
+  <tr>
+    <td>stretch_type_percentage</td>
+    <td>15</td>
+    <td>ideal_body_size_high</td>
+    <td>15</td>    
+  </tr>
+  
+</table>
+
+   </td>
+  </tr>
         {%else%}
-                {{'none'}}
+        <tr>
+            <td>{{key}}</td>
+            <td><a href="{{ path('retailer_admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a></td>
+        </tr>
+        
         {% endif %}
-        </li>
+        
     {% endfor %}
-</ul>
-    
+
+    </table>
  
 </div>
