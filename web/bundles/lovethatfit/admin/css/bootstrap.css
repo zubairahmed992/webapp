@@ -6640,3 +6640,28 @@ padding:5px 0px 5px 0px;
     max-height: 100px;
     vertical-align: middle;
 }
+
+.retailor_pro_size td{
+    padding:3px;
+}
+
+.retailer_edt{
+    float:right;
+}
+
+.retailor_pro_size table{    
+    margin:10px 0px 10px 0px;
+}
+
+.retailor_pro_size table td{    
+    border-bottom:1px solid #ccc;
+    padding:5px;
+}
+
+.retailor_det_key{
+    background:#ccc; 
+    border-bottom:2px solid #fff; 
+    color: #333; 
+    line-height: 28px; 
+    font-weight: bold;
+}
