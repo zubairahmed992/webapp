@@ -424,6 +424,7 @@ public function updateForgetPassword($email,$password){
     public function registerWithReqestArray(Request $request, $request_array) {
 
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
+        
         $email = $request_array['email'];
         $password = $request_array['password'];
 
@@ -436,6 +437,9 @@ public function updateForgetPassword($email,$password){
             $user = $this->setObjectWithArray($user, $request_array);
             $user->generateAuthenticationToken();
             
+             //send registration email ....            
+            $this->container->get('mail_helper')->sendRegistrationEmail($user);
+                
             $measurement = new Measurement();
             $measurement = $this->setSizechartInMeasurment($measurement, $request_array);
             $measurement->setUser($user);

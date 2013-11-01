@@ -115,7 +115,7 @@ public function userProfileAction()
         
         #/!!!!!!!!!!!!!!!!!!!!!!!!!!!! TESTING CODE SHOUDL BE REMOVED #/
       //$request_array=array();
-       /* $request_array=array('email'=>'test_service@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
+       /* $request_array=array('email'=>'test_service22@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
             'weight'=>4,'neck'=>4,'bust'=>5,'body_type'=>'Petite','bodyShape'=>'apple','braSize'=>'22');*/
         
         $user_info = $user->registerWithReqestArray($request,$request_array);
