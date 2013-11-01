@@ -136,41 +136,35 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
         if (!$entity) {
+             
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-
+        
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $form->bind($request);
         $gender = $entity->getGender();
+        $clothing_type=$entity->getClothingType()->getTarget();
+          if ($gender == 'M' and $clothing_type == 'Dress') {
+            $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));
 
-        $clothing_type = $entity->getClothingType()->getTarget();
-        if ($clothing_type == '') {
-            $this->get('session')->setFlash('warning', 'Select Clothing Type.');
-            return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_new.html.twig', array(
-                        'form' => $form->createView(),
-            ));
-        }
-
-        if ($gender == 'M' and $clothing_type == 'Dress') {
             $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
             return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_new.html.twig', array(
                         'form' => $form->createView(),
             ));
         }
-        if ($form->isValid()) {
-
+      
+             $data=$request->request->all();
+             if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
+            if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
+            if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
+            if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
+            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
             $entity->setUpdatedAt(new \DateTime('now'));
             $em->persist($entity);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail has been Update.');
-            return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId())));
-        } else {
-            $this->get('session')->setFlash('warning', 'Unable to update Product Detail.');
-            return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_edit.html.twig', array(
-                        'form' => $form->createView(),
-                        'delete_form' => $deleteForm->createView(),
-                        'entity' => $entity));
-        }
+            return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity)));
+        
     }
 
     //------------------------------------------------------------------------------
