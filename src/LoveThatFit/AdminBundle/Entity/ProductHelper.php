@@ -449,7 +449,7 @@ public function getDefaultFittingAlerts($request_array)
         $product_color_helper = $this->container->get('admin.helper.productcolor');
         $product_item_helper = $this->container->get('admin.helper.productitem');
         $product_size_helper = $this->container->get('admin.helper.productsizes');
-
+        $user_try_history_helper=$this->container->get('site.helper.usertryitemhistory');
         // find product
         if ($product_id) {
             $product = $this->repo->find($product_id);
