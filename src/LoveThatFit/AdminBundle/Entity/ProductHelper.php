@@ -486,7 +486,11 @@ public function getDefaultFittingAlerts($request_array)
                 $fit = new Algorithm($user, $productItem);
                 $data = array();
                 $data['data'] = $fit->getFeedBackArray();
-
+                    $json_feedback = $fit->getFeedBackJson();
+                $fits = $fit->fit();
+                $product_id=$product_item_helper->getProductByItemId($productItem);
+                $product_id=$product_id[0]['id'];        
+                $user_try_history_helper->createUserItemTryHistory($user,$product_id, $productItem, $json_feedback, $fits);
                 return ($data);
             }
             else {
@@ -676,6 +680,7 @@ public function getUserTryHistoryWebService($request,$user_id){
         
         $entity = $this->repo->tryOnHistoryWebService($user_id);
         $device_path=$this->getDeviceTypeByUser($user_id);   
+        if(!$device_path)
         $data=array();
         $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
         $data['data']=$entity;

@@ -219,7 +219,7 @@ class ProductController extends Controller {
         $request_array = json_decode($jsonInput, true);
  #------------------------------Authentication of Token--------------------------------------------#
         $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
+      $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -230,7 +230,7 @@ class ProductController extends Controller {
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
         $user_id = $request_array['user_id'];
-        
+       // $user_id=1;
         $product_helper =  $this->get('admin.helper.product');
         $msg=$product_helper->getUserTryHistoryWebService($request,$user_id);
         return new Response(json_encode($msg));
