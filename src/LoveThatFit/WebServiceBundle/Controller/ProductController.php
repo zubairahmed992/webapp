@@ -261,7 +261,7 @@ class ProductController extends Controller {
         $product_helper =  $this->get('admin.helper.product')->favouriteByUser($user_id,$request);
         return new response(json_encode($product_helper));
         }else{
-            return new Response(json_encode(array('Message'=>'User cant find')));
+            return new Response(json_encode(array('Message'=>'User cannot find')));
         }
     }
    

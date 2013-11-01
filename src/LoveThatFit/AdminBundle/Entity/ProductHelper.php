@@ -520,7 +520,7 @@ public function favouriteByUser($user_id,$request){
     $data_value['fitting_room_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
     $data_value['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone_list/';
     return $data_value;}else{
-        return $data['message']="There is no Favourite list ";
+        return $data['Message']="No such products found";
     }
 }    
 
@@ -588,7 +588,7 @@ public function favouriteByUser($user_id,$request){
             $data['path'] = $baseurl;
             return $data;
         } else {
-            return array('Message' => 'We can not find Product');
+            return array('Message' => 'We cannot find Product');
         }
      
  }
