@@ -404,10 +404,13 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
         $clothingType = strtolower($product->getClothingType()->getName());
         $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType);
         $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);        
+        $form = $this->createForm(new ProductSizeMeasurementType());        
         return $this->render('LoveThatFitRetailerAdminBundle:Product:retailer_product_detail_show.html.twig', array(
                     'product' => $product,
                     'size_measurements' => $size_measurements,
-                     'size_id'=>$size_id,                     
+                     'size_id'=>$size_id,  
+                     'form'=>$form->createView(),
+                     'addform'=>$form->createView(),
                 ));
     }
 
@@ -705,7 +708,7 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         }        
         
       $id=$product_size->getProduct()->getId();
-       $entity = $this->getProduct($id);             
+      $entity = $this->getProduct($id);             
         return $this->redirect($this->generateUrl('retailer_admin_product_detail_size_edit', array(
             'product'=>$entity,
             'id' => $id,

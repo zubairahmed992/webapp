@@ -12,7 +12,8 @@
 {% endif %}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="retailor_pro_size">
     {% for key, value in size_measurements %}
-                {% if (value['exists'])%}
+                    
+                {% if (value['exists'])%}                  
                 <tr>
                     <td class="retailor_det_key">{{value['measurement']['title'] }}                        
                         <div class="retailer_edt"><a href="{{ path('retailer_admin_product_size_measurement_edit', {'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a></div>
@@ -27,41 +28,36 @@
                                 <td width="20%">&nbsp;</td>
                                 <td width="20%">Max Body Measurement :</td>
                                 <td>{{value['measurement']['max_body_measurement'] }}</td>
-                            </tr>
-                           
+                            </tr>                           
                             <tr>
                                 <td>Vertical Stretch :</td>
                                 <td>{{value['measurement']['vertical_stretch'] }}</td>
                                 <td>&nbsp;</td>
                                 <td>Horizontal Stretch :</td>
                                 <td>{{value['measurement']['horizontal_stretch'] }}</td>
-                            </tr>
-                            
+                            </tr>                            
                              <tr>
                                 <td>Stretch Type Percentage :</td>
                                 <td>{{value['measurement']['stretch_type_percentage'] }}</td>
                                 <td>&nbsp;</td>
                                 <td>Ideal Body Size High :</td>
                                 <td>{{value['measurement']['ideal_body_size_high'] }}</td>
-                            </tr>
-                            
+                            </tr>                            
                             <tr>
                                 <td>Ideal Body Size Low :</td>
                                 <td>{{value['measurement']['ideal_body_size_low'] }}</td>
                                  <td>&nbsp;</td>
                                  <td>&nbsp;</td>
-                                 <td>&nbsp;</td>
-                                
+                                 <td>&nbsp;</td>                                
                             </tr>
                         </table>      
                     </td>
-                </tr>
+                </tr>                
                 {% else %}
         <tr>
             <td class="retailor_det_key" >{{key}}
             <div style="float:right;"><a href="{{ path('retailer_admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a></div>
-            </td>
-           
+            </td>           
         </tr>
                 {% endif %}
     {% endfor %}

@@ -41,6 +41,13 @@ class ClothingType
     
     protected $target;
     
+    
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255)     
+     */    
+    protected $gender;
+     
     /**
      * @ORM\Column(type="datetime")
      */
@@ -204,5 +211,28 @@ class ClothingType
         array_push($msg_array, array('valid'=>$valid));
         
         return $msg_array;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     * @return ClothingType
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string 
+     */
+    public function getGender()
+    {
+        return $this->gender;
     }
 }

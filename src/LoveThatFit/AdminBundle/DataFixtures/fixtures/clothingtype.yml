@@ -1,16 +1,67 @@
 clothing_type:  
-  shirts: 
+  shirt: 
       target:	top
-  pants: 
-      target:	bottom
-  dress:
-      target: dress
-  skirts:
-      target: bottom
-  capri:
-      target: bottom
-  t-shirts:
+      gender: m
+  casual_jacket:
       target:	top
-  shorts:
+      gender: m
+  sweater:
+      target:	top
+      gender: m
+  tee:
+      target:	top
+      gender: m
+  pant:
       target:	bottom
-      
+      gender: m
+  trouser:
+      target:	bottom
+      gender: m
+  jean:    
+      target:	bottom
+      gender: m
+  sport_jacket:
+      target:	top
+      gender: m
+  dress jacket:
+      target:	dress
+      gender: m 
+  coat:
+      target:	dress
+      gender: m 
+  blouse:
+      target:	top
+      gender: f
+  tunic:
+      target:	top
+      gender: f 
+  tee:  
+      target:	top
+      gender: f
+  tank:
+      target:	top
+      gender: f
+  jacket:
+      target:	top
+      gender: f
+  sweater:  
+      target:	top
+      gender: f
+  pant:
+      target:	bottom
+      gender: f
+  trouse:
+      target:	bottom
+      gender: f
+  jean:
+      target:	bottom
+      gender: f
+  skirt:  
+      target:	bottom
+      gender: f
+  dress:  
+      target:	dress
+      gender: f 
+  coat:  
+      target:	dress
+      gender: f
