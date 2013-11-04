@@ -601,7 +601,7 @@ Male:
     light_weight_sheer: Light weight sheer
     light_weight_woven: Light weight woven
     light_weight_knit: Light weight knit
-   	mid_weight_woven: Mid weight woven	
+    mid_weight_woven: Mid weight woven
     mid_weight_knit: Mid weight knit
     heavy_weight_woven: Heavy weight woven	
     heavy_weight_knit: Heavy weight knit
@@ -652,35 +652,8 @@ Male:
     lycra: Lycra
     wool: Wool
     other: Other  
-
-
-
-
-  
-
-
-      
-
-      
-
-
-
-
-      
-
-
-
-
-
-
-
-
-     
-
-
-
     
- clothing_type_attributes:
+  clothing_type_attributes:
       blouse:
         neck: Neck
         shoulder_across_front: Shoulder across front
