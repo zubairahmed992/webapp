@@ -6,6 +6,164 @@ services:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
+ clothing_type_attributes:
+  blouse:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+  tunic:
+    tee_knit:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+  tee_knit:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+  tank_knit: 
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip: Waist to Hip
+    hip: Hip
+  jacket:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+  sweater:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+  trouser:
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip: Waist to Hip
+    hip: Hip
+    outseam: Outseam
+    inseam: inseam
+    thigh: Thigh
+    knee: Knee 
+    calf: Calf
+    ankle: Ankle
+  jean:
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip: Waist to Hip
+    hip: Hip
+    outseam: Outseam
+    inseam: inseam
+    thigh: Thigh
+    knee: Knee 
+    calf: Calf
+    ankle: Ankle
+  skirt:
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip: Waist to Hip
+    hip: Hip
+    outseam: Outseam
+  dress:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+  coat:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip
+    
  product_specification: 
   clothing_type:
     blouse: Blouse
@@ -408,6 +566,7 @@ constants:
     lycra: Lycra
     wool: Wool
     other: Other
+  
 
 Male: 
  product_specification: 
@@ -653,163 +812,6 @@ Male:
     wool: Wool
     other: Other  
     
-  clothing_type_attributes:
-      blouse:
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        arm_length: Arm length
-        bicep: Bicep
-        triceps : Triceps
-        wrist: Wrist
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip  : Waist to Hip  
-        hip: Hip
-      tunic:
-        tee_knit:
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        arm_length: Arm length
-        bicep: Bicep
-        triceps : Triceps
-        wrist: Wrist
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip  : Waist to Hip  
-        hip: Hip
-      tee_knit:
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        arm_length: Arm length
-        bicep: Bicep
-        triceps : Triceps
-        wrist: Wrist
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip  : Waist to Hip  
-        hip: Hip
-      tank_knit: 
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip: Waist to Hip
-        hip: Hip
-      jacket:
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        arm_length: Arm length
-        bicep: Bicep
-        triceps : Triceps
-        wrist: Wrist
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip  : Waist to Hip  
-        hip: Hip
-      sweater:
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        arm_length: Arm length
-        bicep: Bicep
-        triceps : Triceps
-        wrist: Wrist
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip  : Waist to Hip  
-        hip: Hip
-      trouser:
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip: Waist to Hip
-        hip: Hip
-        outseam: Outseam
-        inseam: inseam
-        thigh: Thigh
-        knee: Knee 
-        calf: Calf
-        ankle: Ankle
-      jean:
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip: Waist to Hip
-        hip: Hip
-        outseam: Outseam
-        inseam: inseam
-        thigh: Thigh
-        knee: Knee 
-        calf: Calf
-        ankle: Ankle
-      skirt:
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip: Waist to Hip
-        hip: Hip
-        outseam: Outseam
-      dress:
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        arm_length: Arm length
-        bicep: Bicep
-        triceps : Triceps
-        wrist: Wrist
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip  : Waist to Hip  
-        hip: Hip
-      coat:
-        neck: Neck
-        shoulder_across_front: Shoulder across front
-        shoulder_across_back: Shoulder across back
-        shoulder_length: Shoulder length
-        arm_length: Arm length
-        bicep: Bicep
-        triceps : Triceps
-        wrist: Wrist
-        bust: Bust
-        back_waist: Back Waist
-        waist: Waist
-        cf_waist: CF Waist
-        back_waist: Back Waist
-        waist_to_hip  : Waist to Hip  
-        hip: Hip
        
  clothing_type_target:
   Blouse : top
