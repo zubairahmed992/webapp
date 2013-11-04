@@ -7,6 +7,9 @@
 {% block body %}
 <div>         
     <h1 style="float:left;"> Product Size Measurement </h1>    
+     <div class="btn_wrapper">      
+    <a href="{{ path('retailer_product') }}" class="btn">back</a>
+     </div>
       <div class="clearfix"></div>   
     <form action="{{ path('retailer_admin_product_size_measurement_update',{"size_id":product_size.id,'title':title}) }}" method="post" {{ form_enctype(form) }}>
  {{ form_errors(form) }}
