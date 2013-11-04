@@ -722,9 +722,9 @@ public function updateForgetPassword($email,$password){
         if ($entity->getImage()) {
             $image_path = $entity->uploadTempImage();
         } else {
-            $entity->upload();
+            $image_path = $entity->getUploadDir() . '/' . $entity->upload();
             $this->saveUser($entity);
-            $image_path = $entity->getWebPath();
+            //$image_path = getOriginalImageWebPath();
         }
         return $image_path;
     }

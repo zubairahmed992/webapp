@@ -198,6 +198,7 @@ class User implements UserInterface, \Serializable {
      * @Assert\File()
      */
     public $file;
+    public $temp_image;
 
     /**
      * @var string $authToken
@@ -783,7 +784,7 @@ class User implements UserInterface, \Serializable {
 
       //$unique_number=uniqid();
 
-      $this->image = 'cropped.'. $ext;
+/*      $this->image = 'cropped.'. $ext;
       $original_name = 'original.'. $ext;
       $this->file->move(
       $this->getUploadRootDir(), $this->image
@@ -791,7 +792,14 @@ class User implements UserInterface, \Serializable {
 
       $this->file = null;
       copy($this->getAbsolutePath(),$this->getUploadRootDir().'/'.$original_name);
-
+*/
+      $this->image = 'cropped.'. $ext;
+      $this->temp_image  = 'original.'. $ext;
+      $this->file->move(
+      $this->getUploadRootDir(), $this->temp_image
+      );
+        $this->file = null;
+      return $this->temp_image;
       } 
       
     public function writeImageFromCanvas($raw_data) {
@@ -802,7 +810,8 @@ class User implements UserInterface, \Serializable {
         @fclose($fp);
         
         $this->copyTempToOriginalImage();
-        return array("status"=>"true", "msg"=>"image has been saved");
+        //return array("status"=>"true", "msg"=>"image has been saved");
+        return "true";
     }
     
     private function copyTempToOriginalImage() {
