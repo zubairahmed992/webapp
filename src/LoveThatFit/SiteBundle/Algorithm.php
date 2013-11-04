@@ -66,9 +66,12 @@ class Algorithm {
             return "Product not found.";
         }
 
-        $this->feedback_array = $this->getBasicFeedbackArray();
+        return array("We are" => array("diff" => 0, "msg" => 'currently working hard to improve feedback engine..', 'fit' => false));
+        // will implement this with the new product structure 
+        // 
+        //$this->feedback_array = $this->getBasicFeedbackArray();
 
-        return $this->getRecomendations();
+        //return $this->getRecomendations();
     }
 
     //------------------------------------------------------------------------
@@ -301,7 +304,8 @@ class Algorithm {
     //------------------------------------------------------------------------    
 
     public function getFittingSize() {
-
+        // temporary null value, it is to incorporate the new algorithm & changing some fields
+        return null;
         $productSizes = $this->product->getProductSizes();
         $current_size = $this->product_measurement;
         $size_that_fits = null;
