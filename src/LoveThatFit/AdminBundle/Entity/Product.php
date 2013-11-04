@@ -88,13 +88,6 @@ class Product {
     private $description;
 
     /**
-     * this needs to be REMOVED~~~~~~~~~~~~X
-     * @ORM\Column(type="decimal", scale=2, nullable=true)
-     * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
-     */
-    protected $adjustment;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $gender;
@@ -228,27 +221,7 @@ class Product {
     }
 
 //----------------------------------------------------------
-    /**
-     * Set adjustment
-     *
-     * @param float $adjustment
-     * @return Product
-     */
-    public function setAdjustment($adjustment) {
-        $this->adjustment = $adjustment;
-
-        return $this;
-    }
-
-    /**
-     * Get adjustment
-     *
-     * @return float 
-     */
-    public function getAdjustment() {
-        return $this->adjustment;
-    }
-
+    
     /**
      * Set gender
      *

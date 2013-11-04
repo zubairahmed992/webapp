@@ -43,7 +43,6 @@ class RetailerProductDetailType extends AbstractType
         $builder->add('fit_priority');        
         $builder->add('fabric_content','choice', array('choices'=>$this->fabric_content,'required' => false,'empty_value' => 'Select Fabric Content',));
         $builder->add('garment_detail','choice', array('choices'=>$this->garment_detail, 'required' => false,'empty_value' => 'Select Garment Detail',));
-        $builder->add('adjustment');
         $builder->add('description');        
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));               
         $builder ->add('Brand', 'entity', array(

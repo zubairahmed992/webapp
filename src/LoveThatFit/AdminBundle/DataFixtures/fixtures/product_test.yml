@@ -3,8 +3,7 @@ products:
         dress:
             'CAP SLEEVED MAXI':
                 description: 'Cap Sleeved Maxi'
-                gender: F
-                adjustment: '10.00'
+                gender: F                
                 product_color:
                     'Grey Maxi':
                         title: 'Grey Maxi'
@@ -116,8 +115,7 @@ products:
                             image: 5236fb4e06181.png
             'Silk Pocket Shirt':
                 description: 'Silk Pocket Shirt'
-                gender: F
-                adjustment: '10.00'
+                gender: F                
                 product_color:
                     'Silk Pocket Shirt':
                         title: 'Silk Pocket Shirt'
@@ -245,11 +243,10 @@ products:
                             size_title: '16'
                             product_color_title: 'shirt dress'
                             image: 5236f5fecc00b.png
-        shirts:
+        shirt:
             'Crew Button-Up Cardigan':
                 description: 'Crew Button-Up Cardigan'
-                gender: F
-                adjustment: '10.00'
+                gender: F                
                 product_color:
                     pink:
                         title: pink
@@ -411,8 +408,7 @@ products:
                             image: 5236fe8e03c0b.png
             'Pink Sweater':
                 description: 'Pink Sweater'
-                gender: F
-                adjustment: '10.00'
+                gender: F                
                 product_color:
                     'Pink Sweater':
                         title: 'Pink Sweater'
@@ -524,8 +520,7 @@ products:
                             image: 5236f0abd02fe.png
             'Button-up Tailored Shirt':
                 description: 'Button-up Tailored Shirt'
-                gender: F
-                adjustment: '10.00'
+                gender: F                
                 product_color:
                     'Grey BlueButton-up Tailored Shirt':
                         title: 'Grey BlueButton-up Tailored Shirt'
@@ -663,11 +658,10 @@ products:
                             size_title: '2'
                             product_color_title: 'magenta blue'
                             image: 5236f1e110701.png
-        pants:
+        pant:
             'Pink Pant':
                 description: 'Pink Pant'
-                gender: F
-                adjustment: '10.00'
+                gender: F                
                 product_color:
                     'Red  Pant':
                         title: 'Red  Pant'

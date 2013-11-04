@@ -92,8 +92,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
                 $entity->setBrand($brand);
                 $entity->setClothingType($clothing_type);
                 $entity->setName($clothing_types_key);
-                $entity->setDescription($clothing_types_values['description']);
-                $entity->setAdjustment($clothing_types_values['adjustment']);
+                $entity->setDescription($clothing_types_values['description']);                
                 $entity->setGender(ucwords($clothing_types_values['gender']));
                 $entity->setDisabled(false);
                 $entity->setCreatedAt(new \DateTime('now'));
