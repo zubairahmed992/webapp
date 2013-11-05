@@ -74,6 +74,14 @@ class ProductSizeMeasurement
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $stretch_type_percentage;
+     /**
+     * @var float $garment_measurement_stretch_fit
+     *
+     * @ORM\Column(name="garment_measurement_stretch_fit", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $garment_measurement_stretch_fit;
+    
     /**
      * @var float $ideal_body_size_high
      *
@@ -307,5 +315,28 @@ class ProductSizeMeasurement
     public function getProductSize()
     {
         return $this->product_size;
+    }
+
+    /**
+     * Set garment_measurement_stretch_fit
+     *
+     * @param float $garmentMeasurementStretchFit
+     * @return ProductSizeMeasurement
+     */
+    public function setGarmentMeasurementStretchFit($garmentMeasurementStretchFit)
+    {
+        $this->garment_measurement_stretch_fit = $garmentMeasurementStretchFit;
+    
+        return $this;
+    }
+
+    /**
+     * Get garment_measurement_stretch_fit
+     *
+     * @return float 
+     */
+    public function getGarmentMeasurementStretchFit()
+    {
+        return $this->garment_measurement_stretch_fit;
     }
 }
