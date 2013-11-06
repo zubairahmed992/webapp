@@ -11,8 +11,7 @@
             </div>
 {% endif %}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="retailor_pro_size">
-    {% for key, value in size_measurements %}
-                    
+    {% for key, value in size_measurements %}                    
                 {% if (value['exists'])%}                  
                 <tr>
                     <td class="retailor_det_key">{{value['measurement']['title'] }}                        
@@ -55,11 +54,35 @@
                 </tr>                
                 {% else %}
         <tr>
-            <td class="retailor_det_key" >{{key}}
-            <div style="float:right;"><a href="{{ path('retailer_admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a></div>
+            <td class="retailor_det_key" >{{key}}                
+                <div style="float:right;"><a href="{{ path('retailer_admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id}) }}" class="btn">Add</a>   <a href="{{ path('retailer_admin_product_size_measurement_create', {'id':id,'size_id':size_id}) }}" class="btn" data-toggle="modal">Add New</a></div>
             </td>           
-        </tr>
+        </tr>      
+        
                 {% endif %}
+        
+</div>  
     {% endfor %}
+
+
+<div id="modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Add Product Measurement Size</h3>
+  </div>
+  <div class="modal-body">
+      <span id="{{ path('retailer_admin_product_size_measurement_create', {'id':id,'size_id':size_id}) }}" style="display:none;">{{ path('retailer_admin_product_size_measurement_create', {'id':id,'size_id':size_id}) }}</span>
+  </div>
+  </div>
+
+<script>
+$('[data-toggle="modal"]').click(function(e) {
+  e.preventDefault();
+ var url= $('#retailer_admin_product_size_measurement_create').text();  
+  $.get(url, function(data) {
+      $(data).modal();
+  });
+});
+    </script>
             </table>
         </div>
