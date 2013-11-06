@@ -81,7 +81,7 @@ class SecurityController extends Controller {
 
                     $baseurl = $this->getRequest()->getHost();
 
-                    $link = $baseurl . "/" . $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
+                    $link = $baseurl.$this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
 
                     $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmail($_user, $link);
 
@@ -194,7 +194,8 @@ class SecurityController extends Controller {
 
             $form->addError(new FormError('Something went wrong.'));
             return $this->render('LoveThatFitUserBundle:Security:forgotPasswordResetForm.html.twig', array(
-                        'form' => $form->createView(), 'entity' => $entity));
+                        'form' => $form->createView(),
+                        'entity' => $entity));
         }
     }
 

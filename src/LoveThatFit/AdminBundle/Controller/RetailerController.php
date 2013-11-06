@@ -291,7 +291,7 @@ class RetailerController extends Controller {
             $em->persist($retailer);
             $em->flush();
         }
-        $this->get('session')->setFlash('success', 'Retailer Brand has been created.');
+        $this->get('session')->setFlash('success', 'Retailer Brands have been edited.');
        }
         return $this->redirect($this->generateUrl('admin_retailer_show', array('id' => $retailer->getId())));
     }
