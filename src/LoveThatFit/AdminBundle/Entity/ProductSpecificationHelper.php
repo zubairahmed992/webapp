@@ -18,248 +18,398 @@ public function getProductSpecification(){
     return $this->conf["constants"]["product_specification"];
 }
 #--------------Reading Garment Type------------------------#
-public function getClothingType(){
-    return $this->conf["constants"]["product_specification"]["clothing_type"];
+public function getWomenClothingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["clothing_type"];
 }
 
 #--------------Reading Styling Type Of Blouse------------------------#
 
-public function getBlouseStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["blouse"];
+public function getWomenBlouseStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["blouse"];
 }
 
 #--------------Reading Styling Type Of tunic------------------------#
 
-public function getTunicStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["tunic"];
+public function getWomenTunicStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["tunic"];
 }
 
 #--------------Reading Styling Type Of tee_knit------------------------#
 
-public function getTeeKnitStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["tee_knit"];
+public function getWomenTeeKnitStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["tee_knit"];
 }
 
 #--------------Reading Styling Type Of tank_knit------------------------#
 
-public function getTankKnitStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["tank_knit"];
+public function getWomenTankKnitStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["tank_knit"];
 }
 #--------------Reading Styling Type Of jacket------------------------#
 
-public function getJacketStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["jacket"];
+public function getWomenJacketStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["jacket"];
 }
 #--------------Reading Styling Type Of sweater------------------------#
 
-public function getSweaterStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["sweater"];
+public function getWomenSweaterStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["sweater"];
 }
 #--------------Reading Styling Type Of trouser------------------------#
 
-public function getTrouserStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["trouser"];
+public function getWomenTrouserStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["trouser"];
 }
 #--------------Reading Styling Type Of jean------------------------#
 
-public function getJeanStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["jean"];
+public function getWomenJeanStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["jean"];
 }
 #--------------Reading Styling Type Of skirt------------------------#
 
-public function getSkirtStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["skirt"];
+public function getWomenSkirtStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["skirt"];
 }
 #--------------Reading Styling Type Of dress------------------------#
 
-public function getDressStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["dress"];
+public function getWomenDressStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["dress"];
 }
 #--------------Reading Styling Type Of coat------------------------#
 
-public function getCoatStylingType(){
-    return $this->conf["constants"]["product_specification"]["style_type"]["coat"];
+public function getWomenCoatStylingType(){
+    return $this->conf["constants"]["product_specification"]["women"]["style_type"]["coat"];
 }
 #--------------Reading Styling Type Of Hemlength of blouse----------------------#
-public function getHemlengthBlouse(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["blouse"];
+public function getWomenHemlengthBlouse(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["blouse"];
     
 }
 #--------------Reading Styling Type Of Hemlength of Tunic----------------------#
-public function getHemlengthTunic(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["tunic"];
+public function getWomenHemlengthTunic(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["tunic"];
     
 }
 #--------------Reading Styling Type Of Hemlength of tee_knit----------------------#
-public function getHemlengthTeeKnit(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["tee_knit"];
+public function getWomenHemlengthTeeKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["tee_knit"];
     
 }
 #--------------Reading Styling Type Of Hemlength of tank_knit----------------------#
-public function getHemlengthTankKnit(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["tank_knit"];
+public function getWomenHemlengthTankKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["tank_knit"];
     
 }
 
 #--------------Reading Styling Type Of Hemlength of jacket----------------------#
-public function getHemlengthJacket(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["jacket"];
+public function getWomenHemlengthJacket(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["jacket"];
     
 }#--------------Reading Styling Type Of Hemlength of Sweater----------------------#
-public function getHemlengthSweater(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["sweater"];
+public function getWomenHemlengthSweater(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["sweater"];
     
 }
 #--------------Reading Styling Type Of Hemlength of trouser----------------------#
-public function getHemlengthtrouser(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["trouser"];
+public function getWomenHemlengthtrouser(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["trouser"];
     
 }
 #--------------Reading Styling Type Of Hemlength of jeans----------------------#
-public function getHemlengthJean(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["jean"];
+public function getWomenHemlengthJean(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["jean"];
     
 }
 #--------------Reading Styling Type Of Hemlength of skirt----------------------#
-public function getHemlengthSkirt(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["skirt"];
+public function getWomenHemlengthSkirt(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["skirt"];
     
 }
 #--------------Reading Styling Type Of Hemlength of dress----------------------#
-public function getHemlengthDress(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["dress"];
+public function getWomenHemlengthDress(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["dress"];
 }
 #--------------Reading Styling Type Of Hemlength of Coat----------------------#
-public function getHemlengthCoat(){
-    return $this->conf["constants"]["product_specification"]["hem_length"]["coat"];
+public function getWomenHemlengthCoat(){
+    return $this->conf["constants"]["product_specification"]["women"]["hem_length"]["coat"];
 }
 #---------------Neck Line ------------------------------------#
-public function getNeckLineBlouse(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["blouse"];
+public function getWomenNeckLineBlouse(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["blouse"];
 }
 
-public function getNeckLineTunic(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["tunic"];
+public function getWomenNeckLineTunic(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["tunic"];
 }
-public function getNeckLineTeeKnit(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["tee_knit"];
+public function getWomenNeckLineTeeKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["tee_knit"];
 }
-public function getNeckLineTankKnit(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["tank_knit"];
+public function getWomenNeckLineTankKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["tank_knit"];
 }
-public function getNeckLineJacket(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["jacket"];
+public function getWomenNeckLineJacket(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["jacket"];
 }
-public function getNeckLineSweater(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["sweater"];
+public function getWomenNeckLineSweater(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["sweater"];
 }
-public function getNeckLineTrouser(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["trouser"];
+public function getWomenNeckLineTrouser(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["trouser"];
 }
-public function getNeckLineJean(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["jean"];
+public function getWomenNeckLineJean(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["jean"];
 }
-public function getNeckLineSkirt(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["skirt"];
+public function getWomenNeckLineSkirt(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["skirt"];
 }
-public function getNeckLineDress(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["dress"];
+public function getWomenNeckLineDress(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["dress"];
 }
-public function getNeckLineCoat(){
-    return $this->conf["constants"]["product_specification"]["neck_line"]["coat"];
+public function getWomenNeckLineCoat(){
+    return $this->conf["constants"]["product_specification"]["women"]["neck_line"]["coat"];
 }
 #---Seleeving Styling -----------------------------------------------#
-public function getSleeveStylingBlouse(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["blouse"];
+public function getWomenSleeveStylingBlouse(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["blouse"];
 }
-public function getSleeveStylingTunic(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["tunic"];
+public function getWomenSleeveStylingTunic(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["tunic"];
 }
-public function getSleeveStylingTeeKnit(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["tee_knit"];
+public function getWomenSleeveStylingTeeKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["tee_knit"];
 }
-public function getSleeveStylingTankKnit(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["tank_knit"];
+public function getWomenSleeveStylingTankKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["tank_knit"];
 }
-public function getSleeveStylingJacket(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["jacket"];
+public function getWomenSleeveStylingJacket(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["jacket"];
 }
-public function getSleeveStylingSweater(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["sweater"];
+public function getWomenSleeveStylingSweater(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["sweater"];
 }
-public function getSleeveStylingJean(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["jean"];
+public function getWomenSleeveStylingJean(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["jean"];
 }
-public function getSleeveStylingSkirt(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["skirt"];
+public function getWomenSleeveStylingSkirt(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["skirt"];
 }
-public function getSleeveStylingdress(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["dress"];
+public function getWomenSleeveStylingdress(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["dress"];
 }
-public function getSleeveStylingCoat(){
-    return $this->conf["constants"]["product_specification"]["sleeve_styling"]["coat"];
+public function getWomenSleeveStylingCoat(){
+    return $this->conf["constants"]["product_specification"]["women"]["sleeve_styling"]["coat"];
 }
 
 #---Getting The Rise-----------------------------------------------#
-public function getRiseBlouse(){
-    return $this->conf["constants"]["product_specification"]["rise"]["blouse"];
+public function getWomenRiseBlouse(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["blouse"];
 }
-public function getRiseTunic(){
-    return $this->conf["constants"]["product_specification"]["rise"]["tunic"];
+public function getWomenRiseTunic(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["tunic"];
 }
-public function getRiseTeeKnit(){
-    return $this->conf["constants"]["product_specification"]["rise"]["tee_knit"];
+public function getWomenRiseTeeKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["tee_knit"];
 }
-public function getRiseTankKnit(){
-    return $this->conf["constants"]["product_specification"]["rise"]["tank_knit"];
+public function getWomenRiseTankKnit(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["tank_knit"];
 }
-public function getRiseJacket(){
-    return $this->conf["constants"]["product_specification"]["rise"]["jacket"];
+public function getWomenRiseJacket(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["jacket"];
 }
-public function getRiseSweater(){
-    return $this->conf["constants"]["product_specification"]["rise"]["sweater"];
+public function getWomenRiseSweater(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["sweater"];
 }
-public function getRiseJean(){
-    return $this->conf["constants"]["product_specification"]["rise"]["jean"];
+public function getWomenRiseJean(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["jean"];
 }
-public function getRiseSkirt(){
-    return $this->conf["constants"]["product_specification"]["rise"]["skirt"];
+public function getWomenRiseSkirt(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["skirt"];
 }
-public function getRisedress(){
-    return $this->conf["constants"]["product_specification"]["rise"]["dress"];
+public function getWomenRisedress(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["dress"];
 }
-public function getRiseCoat(){
-    return $this->conf["constants"]["product_specification"]["rise"]["coat"];
+public function getWomenRiseCoat(){
+    return $this->conf["constants"]["product_specification"]["women"]["rise"]["coat"];
 }
 #--------------Stretch Type -------------------------#
-public function getStretchType(){
-    return $this->conf["constants"]["product_specification"]["stretch_type"];
+public function getWomenStretchType(){
+    return $this->conf["constants"]["product_specification"]["women"]["stretch_type"];
 }
 #-----------Fabric Weight-----------------------------------------------#
-public function getFabricWeight(){
-    return $this->conf["constants"]["product_specification"]["fabric_weight"];
+public function getWomenFabricWeight(){
+    return $this->conf["constants"]["product_specification"]["women"]["fabric_weight"];
     
 }
 #-------------Structural Details----------------------------#
-public function getStructuralDetails(){
-    return $this->conf["constants"]["product_specification"]["structural_details"];
+public function getWomenStructuralDetails(){
+    return $this->conf["constants"]["product_specification"]["women"]["structural_details"];
 }
 #-------------Fit Type----------------------------#
-public function getFitType(){
-    return $this->conf["constants"]["product_specification"]["fit_type"];
+public function getWomenFitType(){
+    return $this->conf["constants"]["product_specification"]["women"]["fit_type"];
 }
 #-------Layerring----------------------------------------------------#
-public function getLayering(){
-    return $this->conf["constants"]["product_specification"]["layering"];
+public function getWomenLayering(){
+    return $this->conf["constants"]["product_specification"]["women"]["layering"];
 }
 #----------Fabric Content-----------------------------------------------------#
-public function getFabricContent(){
-     return $this->conf["constants"]["product_specification"]["fabric_content"];
+public function getWomenFabricContent(){
+     return $this->conf["constants"]["product_specification"]["women"]["fabric_content"];
 }
 #---------------------Garments Detail------------------------------------------#
-public function getGarmentDetail(){
-     return $this->conf["constants"]["product_specification"]["garment_detail"];
+public function getWomenGarmentDetail(){
+     return $this->conf["constants"]["product_specification"]["women"]["garment_detail"];
 }
+
+#--------------------MALE PRODUCT SPECIFICATION------------------------------#
+###############################################################################
+#--------------Reading Garment Type------------------------#
+public function getManClothingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["clothing_type"];
+}
+#-------------------------Styling Type-----------------------------------------#
+#--------------Reading Styling Type Of Blouse------------------------#
+
+public function getManShirtStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["shirt"];
+}
+public function getManTankKnitStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["tank_knit"];
+}
+public function getManCasualJacketStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["casual_jacket"];
+}
+public function getManSweaterStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["sweater"];
+}
+public function getManTrouserStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["trouser"];
+}
+public function getManJacketStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["jacket"];
+}
+public function getManJeanStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["jean"];
+}
+
+public function getManDressStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["dress"];
+}
+public function getManCoatStylingType(){
+    return $this->conf["constants"]["product_specification"]["man"]["style_type"]["coat"];
+}
+#-------------------------HEM _LENGTH------------------------------------------#
+
+public function getManHemlengthShirt(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["shirt"];
+}
+public function getManHemlengthTankKnit(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["tank_knit"];
+}
+public function getManHemlengthCasualJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["casual_jacket"];
+}
+public function getManHemlengthSweater(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["sweater"];
+}
+public function getManHemlengthTrouser(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["trouser"];
+}
+public function getManHemlengthJean(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["jean"];
+}
+public function getManHemlengthSportJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["sport_jacket"];
+}
+public function getManHemlengthDressJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["dress_jacket"];
+}
+public function getManHemlengthCoat(){
+    return $this->conf["constants"]["product_specification"]["man"]["hem_length"]["coat"];
+}
+#------------------------------------NECKLINE----------------------------------#
+public function getManNeckLineShirt(){
+    return $this->conf["constants"]["product_specification"]["man"]["neck_line"]["shirt"];
+}
+public function getManNeckLineTankKnit(){
+    return $this->conf["constants"]["product_specification"]["man"]["neck_line"]["tank_knit"];
+}
+public function getManNeckLineCasualJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["neck_line"]["casual_jacket"];
+}
+public function getManNeckLineSweater(){
+    return $this->conf["constants"]["product_specification"]["man"]["neck_line"]["sweater"];
+}
+public function getManNeckLineSportJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["neck_line"]["sport_jacket"];
+}
+public function getManNeckLineDressJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["neck_line"]["dress_jacket"];
+}
+public function getManNeckLineCoat(){
+    return $this->conf["constants"]["product_specification"]["man"]["neck_line"]["coat"];
+}
+#--------------Sleeving Style--------------------------------------------------#
+public function getManSleeveStylingShirt(){
+    return $this->conf["constants"]["product_specification"]["man"]["sleeve_styling"]["shirt"];
+}
+public function getManSleeveStylingTankKnit(){
+    return $this->conf["constants"]["product_specification"]["man"]["sleeve_styling"]["tank_knit"];
+}
+public function getManSleeveStylingCasualJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["sleeve_styling"]["casual_jacket"];
+}
+public function getManSleeveStylingSweater(){
+    return $this->conf["constants"]["product_specification"]["man"]["sleeve_styling"]["sweater"];
+}
+public function getManSleeveStylingSportJacket(){
+    return $this->conf["constants"]["product_specification"]["man"]["sleeve_styling"]["sport_jacket"];
+}
+public function getManSleeveStylingDress(){
+    return $this->conf["constants"]["product_specification"]["man"]["sleeve_styling"]["dress"];
+}
+public function getManSleeveStylingCoat(){
+    return $this->conf["constants"]["product_specification"]["man"]["sleeve_styling"]["coat"];
+}
+#------------------------------STRETCH TYPE------------------------------------#
+public function getManStretchType(){
+    return $this->conf["constants"]["product_specification"]["man"]["stretch_type"];
+}
+#----------------------FABRIC WEIGHT-------------------------------------------#
+public function getManFabricWeight(){
+    return $this->conf["constants"]["product_specification"]["man"]["fabric_weight"];
+    
+}
+#-------------------------STRUCTURAL DETAILS-----------------------------------#
+public function getManStructuralDetails(){
+    return $this->conf["constants"]["product_specification"]["man"]["structural_details"];
+}
+#----------------------STYLING DETAILS-----------------------------------------#
+public function getManStylingDetails(){
+    return $this->conf["constants"]["product_specification"]["man"]["styling_details"];
+}
+#----------------------FIT TYPE-----------------------------------------------#
+public function getManFitType(){
+    return $this->conf["constants"]["product_specification"]["man"]["fit_Type"];
+  
+}
+#----------------------LAYERRING------------------------------------------------#
+public function getManLayering(){
+ return $this->conf["constants"]["product_specification"]["man"]["layering"];   
+}
+#-----------------------FABRIC CONTENT-----------------------------------------#
+public function getManFabricContent(){
+    return $this->conf["constants"]["product_specification"]["man"]["fabric_content"];   
+}
+#-----------------------Garment Details----------------------------------------#
+public function getManGarmentDetail(){
+    return $this->conf["constants"]["product_specification"]["man"]["garment_detail"];   
+}
+
+
+
+
+
 
 #-----------------Product Attribute -------------------------------------------#
 ###########################################################################

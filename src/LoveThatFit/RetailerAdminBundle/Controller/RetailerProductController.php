@@ -57,7 +57,7 @@ protected $container;
     {
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $clothingTypes=$this->get('admin.helper.product.specification')->getClothingType();
+        $clothingTypes=$this->get('admin.helper.product.specification')->getWomenClothingType();
         $productForm = $this->createForm(new RetailerProductDetailType($productSpecificationHelper));     
         return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
                     'form' => $productForm->createView(),'productSpecification'=>$productSpecification,                    

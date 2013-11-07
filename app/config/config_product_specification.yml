@@ -165,652 +165,651 @@ constants:
     hip: Hip
     
  product_specification: 
-  clothing_type:
-    blouse: Blouse
-    tunic: Tunic
-    tee_knit: Tee knit
-    tank_knit: Tank knit
-    jacket: Jacket
-    sweater: Sweater
-    trouser: Trouser
-    jean: Jean
-    skirt: Skirt
-    dress: Dress
-    coat: Coat
+  women:
+    clothing_type:
+      blouse: Blouse
+      tunic: Tunic
+      tee_knit: Tee knit
+      tank_knit: Tank knit
+      jacket: Jacket
+      sweater: Sweater
+      trouser: Trouser
+      jean: Jean
+      skirt: Skirt
+      dress: Dress
+      coat: Coat
     
-  style_type:
-    blouse:
-      tailored: Tailored
-      princess_fit: Princess Fit
-      loose: Loose
-      full: Full
-      shell: Shell
-      camisole: Camisole
-    tunic:
-      loose: Loose
-      fitted: Fitted
-    tee_knit:
-      loose: Loose
-      fitted: Fitted
-      polo: Polo
-      draped: Draped
-    tank_knit:
-      loose: Loose
-      fitted: Fitted
-      camisole: Camisole
-    jacket: 
-      blazer: Blazer
-      loosy: Loosy
-      swing: Swing
-      vest: Vest
-    sweater:
-      pull_over: Pull_over
-      cardigan: Cardigan
-    trouser:
-      legging: Legging
-      straight_leg: Straight Leg
-      skinny: Skinny
-      boot_cut: Boot Cut
-      palazzo: Palazzo
-      pleated: Pleated
-      peg: Peg
-      wide_leg: Wide Leg
-      bell: Bell
-    jean:
-      legging: legging
-      straight_leg: Straight Leg
-      skinny: Skinny
-      boot_cut: Boot cut
-      wide_leg: Wide Leg
-      bell: Bell  
-    skirt:
-      fitted_skinned_tight: Fitted Skinned Tight
-      fitted_tailored: Fitted Tailored
-      a_line: A line
-      gathered_dirndl: Gathered Dirndl
-      pleated: Pleated
-      yoke_fitted: Yoke Fitted
-      peg: Peg
-      wrapped: Wrapped
-      gored: Gored
-      flared: Flared
-      full_with_shaping_layers: Full With Shaping Layers
-    dress:
-      fitted_princess_to_waist: Fitted Princess To Waist
-      fitted_princess_through_hips: Fitted Princess Through Hips
-      fitted_sheath: Fitted Sheath
-      empire: Empire
-      loose: Loose
-      wrap: Wrap
-      shirt_dress: Shirt Dress
-      coat_dress: Coat Dress
-      formal_with_structured_fit: Formal With Structured Fit
-    coat:
-     blazer_single_breasted: Blazer Single Breasted
-     blazer_double_breasted: Blazer Double Breasted
-     lossy: Lossy
-     swing: Swing
+    style_type:
+      blouse:
+        tailored: Tailored
+        princess_fit: Princess Fit
+        loose: Loose
+        full: Full
+        shell: Shell
+        camisole: Camisole
+      tunic:
+        loose: Loose
+        fitted: Fitted
+      tee_knit:
+        loose: Loose
+        fitted: Fitted
+        polo: Polo
+        draped: Draped
+      tank_knit:
+        loose: Loose
+        fitted: Fitted
+        camisole: Camisole
+      jacket: 
+        blazer: Blazer
+        loosy: Loosy
+        swing: Swing
+        vest: Vest
+      sweater:
+        pull_over: Pull_over
+        cardigan: Cardigan
+      trouser:
+        legging: Legging
+        straight_leg: Straight Leg
+        skinny: Skinny
+        boot_cut: Boot Cut
+        palazzo: Palazzo
+        pleated: Pleated
+        peg: Peg
+        wide_leg: Wide Leg
+        bell: Bell
+      jean:
+        legging: legging
+        straight_leg: Straight Leg
+        skinny: Skinny
+        boot_cut: Boot cut
+        wide_leg: Wide Leg
+        bell: Bell  
+      skirt:
+        fitted_skinned_tight: Fitted Skinned Tight
+        fitted_tailored: Fitted Tailored
+        a_line: A line
+        gathered_dirndl: Gathered Dirndl
+        pleated: Pleated
+        yoke_fitted: Yoke Fitted
+        peg: Peg
+        wrapped: Wrapped
+        gored: Gored
+        flared: Flared
+        full_with_shaping_layers: Full With Shaping Layers
+      dress:
+        fitted_princess_to_waist: Fitted Princess To Waist
+        fitted_princess_through_hips: Fitted Princess Through Hips
+        fitted_sheath: Fitted Sheath
+        empire: Empire
+        loose: Loose
+        wrap: Wrap
+        shirt_dress: Shirt Dress
+        coat_dress: Coat Dress
+        formal_with_structured_fit: Formal With Structured Fit
+      coat:
+       blazer_single_breasted: Blazer Single Breasted
+       blazer_double_breasted: Blazer Double Breasted
+       lossy: Lossy
+       swing: Swing
 
-  hem_length:
-    blouse:
-      cropped: Cropped
-      waist: Waist
-      top_of_hip: Top Of Hip  
-      bottom_of_hip: Bottom Of Hip
-    tunic:
-      top_of_hip: Top Of Hip  
-      bottom_of_hip: Bottom Of Hip
-      mid_of_thigh: Mid Of Thigh
-    tee_knit:
-      cropped: Cropped
-      waist: Waist
-      top_of_hip: Top Of Hip  
-      bottom_of_hip: Bottom Of Hip
-    tank_knit:
-      cropped: Cropped
-      waist: Waist
-      top_of_hip: Top Of Hip  
-      bottom_of_hip: Bottom Of Hip
-    jacket:
-      cropped: Cropped
-      waist: Waist
-      top_of_hip: Top Of Hip  
-      bottom_of_hip: Bottom Of Hip
-    sweater:
-      cropped: Cropped
-      waist: Waist
-      top_of_hip: Top Of Hip  
-      bottom_of_hip: Bottom Of Hip
-    trouser:
-      short: Short
-      capri: Capri 
-      cropped: Cropped
-      ankle: Ankle
-      full_length: Full Length
-    jean:
-      short: Short
-      capri: Capri 
-      cropped: Cropped
-      ankle: Ankle
-      full_length: Full Length
-    skirt:
-       mini: Mini
-       knee_length: Knee length
-       mid_calf: Mid-Calf
-       tea_length: Tea length
-       maxi: Maxi
-       floor_length: Floor length
-       with_train: With Train
-    dress:
-       mini: Mini
-       knee_length: Knee length
-       mid_calf: Mid-Calf
-       tea_length: Tea length
-       maxi: Maxi
-       floor_length: Floor length
-       with_train: With Train
-    coat:
-      cropped: Cropped
-      waist: Waist
-      top_of_hip: Top Of Hip  
-      bottom_of_hip: Bottom Of Hip
-      knee_length: Knee length
-      mid_calf: Mid Calf
-      tea_length: Tea length
-      maxi: Maxi
+    hem_length:
+      blouse:
+        cropped: Cropped
+        waist: Waist
+        top_of_hip: Top Of Hip  
+        bottom_of_hip: Bottom Of Hip
+      tunic:
+        top_of_hip: Top Of Hip  
+        bottom_of_hip: Bottom Of Hip
+        mid_of_thigh: Mid Of Thigh
+      tee_knit:
+        cropped: Cropped
+        waist: Waist
+        top_of_hip: Top Of Hip  
+        bottom_of_hip: Bottom Of Hip
+      tank_knit:
+        cropped: Cropped
+        waist: Waist
+        top_of_hip: Top Of Hip  
+        bottom_of_hip: Bottom Of Hip
+      jacket:
+        cropped: Cropped
+        waist: Waist
+        top_of_hip: Top Of Hip  
+        bottom_of_hip: Bottom Of Hip
+      sweater:
+        cropped: Cropped
+        waist: Waist
+        top_of_hip: Top Of Hip  
+        bottom_of_hip: Bottom Of Hip
+      trouser:
+        short: Short
+        capri: Capri 
+        cropped: Cropped
+        ankle: Ankle
+        full_length: Full Length
+      jean:
+        short: Short
+        capri: Capri 
+        cropped: Cropped
+        ankle: Ankle
+        full_length: Full Length
+      skirt:
+         mini: Mini
+         knee_length: Knee length
+         mid_calf: Mid-Calf
+         tea_length: Tea length
+         maxi: Maxi
+         floor_length: Floor length
+         with_train: With Train
+      dress:
+         mini: Mini
+         knee_length: Knee length
+         mid_calf: Mid-Calf
+         tea_length: Tea length
+         maxi: Maxi
+         floor_length: Floor length
+         with_train: With Train
+      coat:
+        cropped: Cropped
+        waist: Waist
+        top_of_hip: Top Of Hip  
+        bottom_of_hip: Bottom Of Hip
+        knee_length: Knee length
+        mid_calf: Mid Calf
+        tea_length: Tea length
+        maxi: Maxi
 
-  neck_line:
-    blouse:
-      crew_neck: Crew neck
-      jewel_neck: Jewel neck
-      bateau neck: Bateau neck
-      scoop_neck: Scoop neck
-      ballet_neck: Ballet neck
-      v_neck: V neck
-      plunge_v_neck: Plunge v-neck
-      button_down : Button down 
-      mandarin: Mandarin
-      lapel_button_down: Lapel button down
-      peter_pan: Peter Pan
-      cowl_draped: Cowl  Draped
-    tunic:
-      crew_neck: Crew neck
-      jewel_neck: Jewel neck
-      bateau neck: Bateau neck
-      scoop_neck: Scoop neck
-      ballet_neck: Ballet neck
-      v_neck: V neck
-      plunge_v_neck: Plunge v-neck
-      button_down : Button down 
-      mandarin: Mandarin
-      lapel_button_down: Lapel button down
-      peter_pan: Peter Pan
-      cowl_draped: Cowl  Draped
-    tee_knit:
-      turtle_neck: Turtle Neck
-      crew_neck: Crew neck
-      jewel_neck: Jewel neck
-      bateau neck: Bateau neck
-      scoop_neck: Scoop neck
-      ballet_neck: Ballet neck
-      v_neck: V neck
-      plunge_v_neck: Plunge v-neck
-      button_down : Button down 
-      mandarin: Mandarin
-      lapel_button_down: Lapel button down
-      peter_pan: Peter Pan
-      cowl_draped: Cowl  Draped
-    tank_knit:
-      turtle_neck: Turtle Neck
-      crew_neck: Crew neck
-      jewel_neck: Jewel neck
-      bateau neck: Bateau neck
-      scoop_neck: Scoop neck
-      ballet_neck: Ballet neck
-      v_neck: V neck
-      plunge_v_neck: Plunge v-neck
-      button_down : Button down 
-      mandarin: Mandarin
-      lapel_button_down: Lapel button down
-      peter_pan: Peter Pan
-      cowl_draped: Cowl  Draped  
-    jacket:
-     single_breasted_lapels: Single Breasted Lapels
-     double_breasted_ lapels:  Double Breasted Lapels
-     shawl_single_breasted:  Shawl Single Breasted
-     shawl_double_breasted:  Shawl Double Breasted
-     v_neck:  V-neck
-     jewel_neck:  Jewel Neck
-     wrap:  Wrap
-    sweater:
-      turtle_neck: Turtle Neck
-      crew_neck: Crew neck
-      jewel_neck: Jewel neck
-      bateau neck: Bateau neck
-      scoop_neck: Scoop neck
-      ballet_neck: Ballet neck
-      v_neck: V neck
-      plunge_v_neck: Plunge v-neck
-      button_down : Button down 
-      mandarin: Mandarin
-      lapel_button_down: Lapel button down
-      peter_pan: Peter Pan
-      cowl_draped: Cowl  Draped
-    dress:
-      turtle_neck: Turtle Neck
-      crew_neck: Crew neck
-      jewel_neck: Jewel neck
-      bateau neck: Bateau neck
-      scoop_neck: Scoop neck
-      ballet_neck: Ballet neck
-      v_neck: V neck
-      plunge_v_neck: Plunge v-neck
-      button_down : Button down 
-      mandarin: Mandarin
-      lapel_button_down: Lapel button down
-      peter_pan: Peter Pan
-      cowl_draped: Cowl  Draped 
-    coat:
-     single_breasted_lapels: Single Breasted Lapels
-     double_breasted_ lapels:  Double Breasted Lapels
-     shawl_single_breasted:  Shawl Single Breasted
-     shawl_double_breasted:  Shawl Double Breasted
-     v_neck:  V-neck
-     jewel_neck:  Jewel Neck
-     wrap:  Wrap 
+    neck_line:
+      blouse:
+        crew_neck: Crew neck
+        jewel_neck: Jewel neck
+        bateau neck: Bateau neck
+        scoop_neck: Scoop neck
+        ballet_neck: Ballet neck
+        v_neck: V neck
+        plunge_v_neck: Plunge v-neck
+        button_down : Button down 
+        mandarin: Mandarin
+        lapel_button_down: Lapel button down
+        peter_pan: Peter Pan
+        cowl_draped: Cowl  Draped
+      tunic:
+        crew_neck: Crew neck
+        jewel_neck: Jewel neck
+        bateau neck: Bateau neck
+        scoop_neck: Scoop neck
+        ballet_neck: Ballet neck
+        v_neck: V neck
+        plunge_v_neck: Plunge v-neck
+        button_down : Button down 
+        mandarin: Mandarin
+        lapel_button_down: Lapel button down
+        peter_pan: Peter Pan
+        cowl_draped: Cowl  Draped
+      tee_knit:
+        turtle_neck: Turtle Neck
+        crew_neck: Crew neck
+        jewel_neck: Jewel neck
+        bateau neck: Bateau neck
+        scoop_neck: Scoop neck
+        ballet_neck: Ballet neck
+        v_neck: V neck
+        plunge_v_neck: Plunge v-neck
+        button_down : Button down 
+        mandarin: Mandarin
+        lapel_button_down: Lapel button down
+        peter_pan: Peter Pan
+        cowl_draped: Cowl  Draped
+      tank_knit:
+        turtle_neck: Turtle Neck
+        crew_neck: Crew neck
+        jewel_neck: Jewel neck
+        bateau neck: Bateau neck
+        scoop_neck: Scoop neck
+        ballet_neck: Ballet neck
+        v_neck: V neck
+        plunge_v_neck: Plunge v-neck
+        button_down : Button down 
+        mandarin: Mandarin
+        lapel_button_down: Lapel button down
+        peter_pan: Peter Pan
+        cowl_draped: Cowl  Draped  
+      jacket:
+       single_breasted_lapels: Single Breasted Lapels
+       double_breasted_ lapels:  Double Breasted Lapels
+       shawl_single_breasted:  Shawl Single Breasted
+       shawl_double_breasted:  Shawl Double Breasted
+       v_neck:  V-neck
+       jewel_neck:  Jewel Neck
+       wrap:  Wrap
+      sweater:
+        turtle_neck: Turtle Neck
+        crew_neck: Crew neck
+        jewel_neck: Jewel neck
+        bateau neck: Bateau neck
+        scoop_neck: Scoop neck
+        ballet_neck: Ballet neck
+        v_neck: V neck
+        plunge_v_neck: Plunge v-neck
+        button_down : Button down 
+        mandarin: Mandarin
+        lapel_button_down: Lapel button down
+        peter_pan: Peter Pan
+        cowl_draped: Cowl  Draped
+      dress:
+        turtle_neck: Turtle Neck
+        crew_neck: Crew neck
+        jewel_neck: Jewel neck
+        bateau neck: Bateau neck
+        scoop_neck: Scoop neck
+        ballet_neck: Ballet neck
+        v_neck: V neck
+        plunge_v_neck: Plunge v-neck
+        button_down : Button down 
+        mandarin: Mandarin
+        lapel_button_down: Lapel button down
+        peter_pan: Peter Pan
+        cowl_draped: Cowl  Draped 
+      coat:
+       single_breasted_lapels: Single Breasted Lapels
+       double_breasted_ lapels:  Double Breasted Lapels
+       shawl_single_breasted:  Shawl Single Breasted
+       shawl_double_breasted:  Shawl Double Breasted
+       v_neck:  V-neck
+       jewel_neck:  Jewel Neck
+       wrap:  Wrap 
     
-  sleeve_styling:
-    blouse:
-       strapless: strapless
-       spaghetti_straps: spaghetti straps
-       narrow_straps: narrow straps
-       sleeveless: sleeveless
-       cap_sleeved: cap sleeved
-       short_sleeved: short sleeved
-       3/4_length_sleeve: 3/4 length sleeve
-       long_sleeved: long sleeved
+    sleeve_styling:
+      blouse:
+         strapless: strapless
+         spaghetti_straps: spaghetti straps
+         narrow_straps: narrow straps
+         sleeveless: sleeveless
+         cap_sleeved: cap sleeved
+         short_sleeved: short sleeved
+         3/4_length_sleeve: 3/4 length sleeve
+         long_sleeved: long sleeved
 
-    tunic:
-       strapless: strapless
-       spaghetti_straps: spaghetti straps
-       narrow_straps: narrow straps
-       sleeveless: sleeveless
-       cap_sleeved: cap sleeved
-       short_sleeved: short sleeved
-       3/4_length_sleeve: 3/4 length sleeve
-       long_sleeved: long sleeved
-    tee_knit:
-       strapless: strapless
-       spaghetti_straps: spaghetti straps
-       narrow_straps: narrow straps
-       sleeveless: sleeveless
-       cap_sleeved: cap sleeved
-       short_sleeved: short sleeved
-       3/4_length_sleeve: 3/4 length sleeve
-       long_sleeved: long sleeved
-    tank_knit:
-       strapless: strapless
-       spaghetti_straps: spaghetti straps
-       narrow_straps: narrow straps
-       sleeveless: sleeveless
-    jacket:
-       strapless: strapless
-       spaghetti_straps: spaghetti straps
-       narrow_straps: narrow straps
-       sleeveless: sleeveless
-       cap_sleeved: cap sleeved
-       short_sleeved: short sleeved
-       3/4_length_sleeve: 3/4 length sleeve
-       long_sleeved: long sleeved
-    sweater:
-       sleeveless: sleeveless
-       cap_sleeved: cap sleeved
-       short_sleeved: short sleeved
-       3/4_length_sleeve: 3/4 length sleeve
-       long_sleeved: long sleeved
-    dress:
-       strapless: Strapless
-       spaghetti_straps: Spaghetti Straps
-       narrow_straps: Narrow Straps
-       sleeveless: Sleeveless
-       cap_sleeved: Cap Sleeved
-       short_sleeved: Short Sleeved
-       3/4_length_sleeve: 3/4 length Sleeve
-       long_sleeved: long Sleeved
-    coat:
-       short_sleeved: Short Sleeved
-       3/4_length_sleeve: 3/4 length sleeve
-       long_sleeved: long sleeved
+      tunic:
+         strapless: strapless
+         spaghetti_straps: spaghetti straps
+         narrow_straps: narrow straps
+         sleeveless: sleeveless
+         cap_sleeved: cap sleeved
+         short_sleeved: short sleeved
+         3/4_length_sleeve: 3/4 length sleeve
+         long_sleeved: long sleeved
+      tee_knit:
+         strapless: strapless
+         spaghetti_straps: spaghetti straps
+         narrow_straps: narrow straps
+         sleeveless: sleeveless
+         cap_sleeved: cap sleeved
+         short_sleeved: short sleeved
+         3/4_length_sleeve: 3/4 length sleeve
+         long_sleeved: long sleeved
+      tank_knit:
+         strapless: strapless
+         spaghetti_straps: spaghetti straps
+         narrow_straps: narrow straps
+         sleeveless: sleeveless
+      jacket:
+         strapless: strapless
+         spaghetti_straps: spaghetti straps
+         narrow_straps: narrow straps
+         sleeveless: sleeveless
+         cap_sleeved: cap sleeved
+         short_sleeved: short sleeved
+         3/4_length_sleeve: 3/4 length sleeve
+         long_sleeved: long sleeved
+      sweater:
+         sleeveless: sleeveless
+         cap_sleeved: cap sleeved
+         short_sleeved: short sleeved
+         3/4_length_sleeve: 3/4 length sleeve
+         long_sleeved: long sleeved
+      dress:
+         strapless: Strapless
+         spaghetti_straps: Spaghetti Straps
+         narrow_straps: Narrow Straps
+         sleeveless: Sleeveless
+         cap_sleeved: Cap Sleeved
+         short_sleeved: Short Sleeved
+         3/4_length_sleeve: 3/4 length Sleeve
+         long_sleeved: long Sleeved
+      coat:
+         short_sleeved: Short Sleeved
+         3/4_length_sleeve: 3/4 length sleeve
+         long_sleeved: long sleeved
      
-  rise:
-    trouser:
-      high_rise: High Rise
-      mid_rise: Mid Rise
-      low_rise: Low Rise
-      ultra_low_rise: Ultra Low Rise
-    jean:
-      high_rise: High Rise
-      mid_rise: Mid Rise
-      low_rise: Low Rise
-      ultra_low_rise: Ultra Low Rise
-    skirt:
-      high_rise: High Rise
-      mid_rise: Mid Rise
-      low_rise: Low Rise
-      ultra_low_rise: Ultra Low Rise
-    dress:
-       
-    coat:
- 
-  stretch_type:
-    woven_straight_grain: Woven straight grain
-    woven_ w_stretch_fibers: Woven w/ stretch fibers
-    woven_bias_grain: Woven bias grain
-    knit_2_way_knit_4_way:  "knit 2 way	knit 4 way"
+    rise:
+      trouser:
+        high_rise: High Rise
+        mid_rise: Mid Rise
+        low_rise: Low Rise
+        ultra_low_rise: Ultra Low Rise
+      jean:
+        high_rise: High Rise
+        mid_rise: Mid Rise
+        low_rise: Low Rise
+        ultra_low_rise: Ultra Low Rise
+      skirt:
+        high_rise: High Rise
+        mid_rise: Mid Rise
+        low_rise: Low Rise
+        ultra_low_rise: Ultra Low Rise
+      dress:
 
-  fabric_weight:
-     light_weight_sheer: Light weight sheer
-     light_weight_silky: Light weight silky
-     light_weight_woven: Light weight woven
-     light_weight_knit: Light weight knit
-     mid_weight_woven: Mid weight woven
-     mid_weight_knit: Mid weight knit
-     heavy_weight_woven: Heavy weight woven
-     heavy_weight_knit: Heavy weight knit
+      coat:
+
+    stretch_type:
+      woven_straight_grain: Woven straight grain
+      woven_ w_stretch_fibers: Woven w/ stretch fibers
+      woven_bias_grain: Woven bias grain
+      knit_2_way_knit_4_way:  "knit 2 way	knit 4 way"
+
+    fabric_weight:
+       light_weight_sheer: Light weight sheer
+       light_weight_silky: Light weight silky
+       light_weight_woven: Light weight woven
+       light_weight_knit: Light weight knit
+       mid_weight_woven: Mid weight woven
+       mid_weight_knit: Mid weight knit
+       heavy_weight_woven: Heavy weight woven
+       heavy_weight_knit: Heavy weight knit
+
+    structural_details:
+        shoulder_pads: Shoulder pads
+        boning:  Boning
+        underwire: Underwire
+        shelf_bra: Shelf bra
+        adjustable_waist:  Adjustable waist
+        adjustable_straps: Adjustable straps
+        cuffed_hem: Cuffed hem
+        cuffed_sleeve: Cuffed sleeve
+        peplum: Peplum
+        belted: Belted
+    fit_type:   
+       stretch_skin_tight: Stretch - skin tight
+       stretch_close_fitting: Stretch - close fitting
+       stretch_tailored_fit: Stretch - tailored fit
+       stretch_princess_fitted: Stretch - princess fitted
+       stretch_close_draped_fit:  Stretch - close draped fit 
+       stretch_loose_draped_fit: Stretch - loose draped fit
+       stretch_formal_structured_fit: Stretch - formal structured fit
+       woven_princess_fitted:  Woven - princess fitted
+       woven_tailored_fit: Woven - tailored fit
+       woven_loose_tailored_fit: Woven - loose tailored fit
+       woven_boxy_fit: Woven - boxy fit
+       woven_relaxed_loose_fit: Woven -relaxed/loose Fit
+       woven_draped_close_fit: Woven - draped close fit
+       woven_loose_draped_fit: Woven - loose draped fit
+       woven_formal_structured_fit:  Woven - formal structured fit
+
+    layering:
+       1st_layer_worn_next_to_skin:  1st layer - worn next to skin
+       2nd_layer_worn_over_close_fitting_items: 2nd layer - worn over close fitting items
+       3rd_layer_worn_over_loose_fitting_items:  3rd layer - worn over loose fitting items
+       4th_layer_outerwear:  4th layer - outerwear
+
+    fabric_content:
+       cotton: Cotton
+       poly: Poly
+       rayon: Rayon
+       acrylic: Acrylic
+       linen: Linen
+       other: Other
+
+    garment_detail:
+      silk: Silk
+      nylon: Nylon
+      lycra: Lycra
+      wool: Wool
+      other: Other
   
-  structural_details:
+  man: 
+    clothing_type:
+      shirt: Shirt
+      tank_knit: Tank knit
+      casual_jacket: Casual Jacket
+      sweater: Sweater
+      trouser: Trouser
+      jean: Jean
+      sport_jacket: Sport Jacket
+      dress_jacket:  Dress Jacket
+      coat: Coat 
+    style_type:
+      shirt:
+        tailored: Tailored
+        slim: Slim
+        athletic: Athletic
+        washed: Washed
+      tank_knit:
+        traditional: Traditional
+        loose: Loose
+        slim: Slim
+        washed: Washed
+      casual_jacket:
+        fitted_to_waist: Fitted to Waist
+        loose: Loose
+        sweatshirt_zip: Sweatshirt Zip
+        sweatshirt_pullover: Sweatshirt Pullover
+        demin_jacket: Demin Jacket
+        fatique: Fatique
+        technical: Technical
+        denim_jacket: Denim Jacket
+      sweater:
+        pull_over: Pull over
+        cardigan: Cardigan
+      trouser:
+        tailored: Tailored
+        straight: Straight
+        skinny: Skinny
+        relaxed: Relaxed
+        chino: Chino
+        cords: Cords
+      jean:
+        straight: Straight
+        skinny: Skinny
+        boot_cut: Boot Cut
+        relaxed: Relaxed
+        cords: Cords
+      jacket:
+        single_breasted: Single breasted
+        double_breasted: Double breasted
+        vest: Vest
+      dress:
+        single_breasted: Single breasted
+        double_breasted: Double breasted
+        tuxedo_single_breasted: Tuxedo single breasted
+        tuxedo_double_breasted: Tuxedo double breasted
+        dinner_jacket: Dinner jacket
+        tuxedo_single_breasted_with_tails: Tuxedo single breasted with tails
+        tuxedo_double_breasted_with_tails: Tuxedo double breasted with tails
+        tuxedo_morning_jacket: Tuxedo morning jacket
+        vest: Vest
+      coat:
+        single_breasted: Single Breasted 
+        double_breasted: Double Breasted
+        trench_single_breasted: Trench Single breasted
+        trench_double_breasted: Trench Double breasted
+        technical: Technical
+        duffle: Duffle
+        parka: Parka
+        vest: Vest
+        down: Down
+        skinny: Skinny
+    hem_length:
+      shirt:
+        hip_straight: Hip Straight
+        hip_shirttails: Hip Shirttails
+      tank_knit:  
+        top_of_hip_straight: Top of hip Straight
+        hip_straight: Hip Straight
+        hip_even_vented_hem: Hip Even Vented Hem
+        hip_uneven_vent_hem: Hip Uneven Vent Hem
+        hip_shirttails: Hip Shirttails
+      casual_jacket:
+        waist: Waist
+        top_of_hip: Top of hip
+        bottom_of_hip: Bottom of hip
+      sweater:
+        waist: Waist
+        top_of_hip: Top of hip
+        bottom_of_hip: Bottom of hip
+      trouser:
+        short: Short 
+        cropped:  Cropped
+        ankle:  Ankle
+        full_length: Full length
+      jean:
+        short: Short 
+        cropped:  Cropped
+        ankle:  Ankle
+        full_length: Full length  
+      sport_jacket:
+        single_vented: Single Vented
+        double_vented: Double Vented
+      dress_jacket:
+        single_vented: Single Vented
+        double_vented: Double Vented
+      coat:
+        top_of_hip: Top of hip
+        bottom_of_hip: Bottom of hip
+        knee_length: Knee length
+        mid_calf: Mid-Calf
+        full_length: Full length
+    neckline:
+      shirt:
+        spread: Spread
+        straight: Straight
+        button_down: Button Down
+        mandarin: Mandarin
+      tank_knit:
+        turtle_neck: Turtle neck
+        crew_neck: Crew neck
+        v_neck: V neck
+        Henley: Henley
+        Polo: Polo
+        bateau_neck: Bateau neck
+        mock_turtle: Mock turtle
+        classic_tank: Classic tank
+      casual_jacket:  
+        single_breasted_lapels: Single breasted lapels
+        double_breasted_lapels: Double breasted lapels
+        zip: Zip
+        shawl_single_breasted: Shawl single breasted
+        shawl_double_breasted: Shawl double breasted
+        v_neck: V-neck
+        crew_neck: Crew neck
+        collarless: Collarless
+      sweater:
+        turtle_neck: Turtle neck
+        crew_neck: Crew neck
+        shawl: shawl
+        v_neck: V-neck
+        mock_turtle: Mock Turtle
+        bateau_neck: Bateau neck
+      sport_jacket:
+        notch: Notch
+        peak: Peak
+      dress_jacket:
+        notch: Notch
+        peak: Peak
+        shawl: shawl
+      coat:
+        notch: Notch
+        peak: Peak
+        shawl: Shawl
+        no_collar: No Collar
+        mandarin: Mandarin
+        hooded: Hooded
+        stand_up_collar: Stand-up Collar
+    sleeve_styling:
+      shirt:
+        short_sleeved: Short sleeved
+        long_sleeved: Long sleeved
+      tank_knit:
+        short_sleeved: Short sleeved
+        long_sleeved: Long sleeved
+        sleeveless: Sleeveless
+        classic_tank_sleeveless: Classic tank sleeveless
+      casual_jacket:
+        long_sleeved: Long sleeved  
+      sweater:
+        short_sleeved: Short sleeved
+        long_sleeved: Long sleeved
+        sleeveless: Sleeveless  
+      sport_jakcet:
+        long_sleeved: Long sleeved
+        sleeveless: Sleeveless  
+      dress:
+        long_sleeved: Long sleeved
+        sleeveless: Sleeveless  
+      coat:
+        long_sleeved: Long sleeved
+        sleeveless: Sleeveless  
+    stretch_type:
+      woven_straight_grain: woven straight grain
+      woven_bias_grain: woven bias grain
+      knit_2_way	: knit 2 way	
+      knit_4_way: knit 4 way
+    fabric_weight:
+      light_weight_sheer: Light weight sheer
+      light_weight_woven: Light weight woven
+      light_weight_knit: Light weight knit
+      mid_weight_woven: Mid weight woven
+      mid_weight_knit: Mid weight knit
+      heavy_weight_woven: Heavy weight woven	
+      heavy_weight_knit: Heavy weight knit
+    structural_details:
       shoulder_pads: Shoulder pads
-      boning:  Boning
-      underwire: Underwire
-      shelf_bra: Shelf bra
-      adjustable_waist:  Adjustable waist
-      adjustable_straps: Adjustable straps
+      tailored_shaping: Tailored shaping    
+      adjustable_waist: Adjustable waist
+    styling_details:
+      pleated_pants: Pleated Pants
       cuffed_hem: Cuffed hem
       cuffed_sleeve: Cuffed sleeve
       peplum: Peplum
       belted: Belted
-  fit_type:   
-     stretch_skin_tight: Stretch - skin tight
-     stretch_close_fitting: Stretch - close fitting
-     stretch_tailored_fit: Stretch - tailored fit
-     stretch_princess_fitted: Stretch - princess fitted
-     stretch_close_draped_fit:  Stretch - close draped fit 
-     stretch_loose_draped_fit: Stretch - loose draped fit
-     stretch_formal_structured_fit: Stretch - formal structured fit
-     woven_princess_fitted:  Woven - princess fitted
-     woven_tailored_fit: Woven - tailored fit
-     woven_loose_tailored_fit: Woven - loose tailored fit
-     woven_boxy_fit: Woven - boxy fit
-     woven_relaxed_loose_fit: Woven -relaxed/loose Fit
-     woven_draped_close_fit: Woven - draped close fit
-     woven_loose_draped_fit: Woven - loose draped fit
-     woven_formal_structured_fit:  Woven - formal structured fit
-  
-  layering:
-     1st_layer_worn_next_to_skin:  1st layer - worn next to skin
-     2nd_layer_worn_over_close_fitting_items: 2nd layer - worn over close fitting items
-     3rd_layer_worn_over_loose_fitting_items:  3rd layer - worn over loose fitting items
-     4th_layer_outerwear:  4th layer - outerwear
-     
-  fabric_content:
-     cotton: Cotton
-     poly: Poly
-     rayon: Rayon
-     acrylic: Acrylic
-     linen: Linen
-     other: Other
-  
-  garment_detail:
-    silk: Silk
-    nylon: Nylon
-    lycra: Lycra
-    wool: Wool
-    other: Other
-  
+    fit_type:   
+       stretch_skin_tight: Stretch - skin tight
+       stretch_close_fitting: Stretch - close fitting
+       stretch_tailored_fit: Stretch - tailored fit
+       stretch_princess_fitted: Stretch - princess fitted
+       stretch_close_draped_fit:  Stretch - close draped fit 
+       stretch_loose_draped_fit: Stretch - loose draped fit
+       stretch_formal_structured_fit: Stretch - formal structured fit
+       woven_princess_fitted:  Woven - princess fitted
+       woven_tailored_fit: Woven - tailored fit
+       woven_loose_tailored_fit: Woven - loose tailored fit
+       woven_boxy_fit: Woven - boxy fit
+       woven_relaxed_loose_fit: Woven -relaxed/loose Fit
+       woven_draped_close_fit: Woven - draped close fit
+       woven_loose_draped_fit: Woven - loose draped fit
+       woven_formal_structured_fit:  Woven - formal structured fit
 
-Male: 
- product_specification: 
-  clothing_type:
-    shirt: Shirt
-    tank_knit: Tank knit
-    casual_jacket: Casual Jacket
-    sweater: Sweater
-    trouser: Trouser
-    jean: Jean
-    sport_jacket: Sport Jacket
-    dress_jacket:  Dress Jacket
-    coat: Coat 
-  style_type:
-    shirt:
-      tailored: Tailored
-      slim: Slim
-      athletic: Athletic
-      washed: Washed
-    tank_knit:
-      traditional: Traditional
-      loose: Loose
-      slim: Slim
-      washed: Washed
-    casual_jacket:
-      fitted_to_waist: Fitted to Waist
-      loose: Loose
-      sweatshirt_zip: Sweatshirt Zip
-      sweatshirt_pullover: Sweatshirt Pullover
-      demin_jacket: Demin Jacket
-      fatique: Fatique
-      technical: Technical
-      denim_jacket: Denim Jacket
-    sweater:
-      pull_over: Pull over
-      cardigan: Cardigan
-    trouser:
-      tailored: Tailored
-      straight: Straight
-      skinny: Skinny
-      relaxed: Relaxed
-      chino: Chino
-      cords: Cords
-    jean:
-      straight: Straight
-      skinny: Skinny
-      boot_cut: Boot Cut
-      relaxed: Relaxed
-      cords: Cords
-    jacket:
-      single_breasted: Single breasted
-      double_breasted: Double breasted
-      vest: Vest
-    dress:
-      single_breasted: Single breasted
-      double_breasted: Double breasted
-      tuxedo_single_breasted: Tuxedo single breasted
-      tuxedo_double_breasted: Tuxedo double breasted
-      dinner_jacket: Dinner jacket
-      tuxedo_single_breasted_with_tails: Tuxedo single breasted with tails
-      tuxedo_double_breasted_with_tails: Tuxedo double breasted with tails
-      tuxedo_morning_jacket: Tuxedo morning jacket
-      vest: Vest
-    coat:
-      single_breasted: Single Breasted 
-      double_breasted: Double Breasted
-      trench_single_breasted: Trench Single breasted
-      trench_double_breasted: Trench Double breasted
-      technical: Technical
-      duffle: Duffle
-      parka: Parka
-      vest: Vest
-      down: Down
-      skinny: Skinny
-  hem_length:
-    shirt:
-      hip_straight: Hip Straight
-      hip_shirttails: Hip Shirttails
-    tank_knit:  
-      top_of_hip_straight: Top of hip Straight
-      hip_straight: Hip Straight
-      hip_even_vented_hem: Hip Even Vented Hem
-      hip_uneven_vent_hem: Hip Uneven Vent Hem
-      hip_shirttails: Hip Shirttails
-    casual_jacket:
-      waist: Waist
-      top_of_hip: Top of hip
-      bottom_of_hip: Bottom of hip
-    sweater:
-      waist: Waist
-      top_of_hip: Top of hip
-      bottom_of_hip: Bottom of hip
-    trouser:
-      short: Short 
-      cropped:  Cropped
-      ankle:  Ankle
-      full_length: Full length
-    jean:
-      short: Short 
-      cropped:  Cropped
-      ankle:  Ankle
-      full_length: Full length  
-    sport_jacket:
-      single_vented: Single Vented
-      double_vented: Double Vented
-    dress_jacket:
-      single_vented: Single Vented
-      double_vented: Double Vented
-    coat:
-      top_of_hip: Top of hip
-      bottom_of_hip: Bottom of hip
-      knee_length: Knee length
-      mid_calf: Mid-Calf
-      full_length: Full length
-  neckline:
-    shirt:
-      spread: Spread
-      straight: Straight
-      button_down: Button Down
-      mandarin: Mandarin
-    tank_knit:
-      turtle_neck: Turtle neck
-      crew_neck: Crew neck
-      v_neck: V neck
-      Henley: Henley
-      Polo: Polo
-      bateau_neck: Bateau neck
-      mock_turtle: Mock turtle
-      classic_tank: Classic tank
-    casual_jacket:  
-      single_breasted_lapels: Single breasted lapels
-      double_breasted_lapels: Double breasted lapels
-      zip: Zip
-      shawl_single_breasted: Shawl single breasted
-      shawl_double_breasted: Shawl double breasted
-      v_neck: V-neck
-      crew_neck: Crew neck
-      collarless: Collarless
-    sweater:
-      turtle_neck: Turtle neck
-      crew_neck: Crew neck
-      shawl: shawl
-      v_neck: V-neck
-      mock_turtle: Mock Turtle
-      bateau_neck: Bateau neck
-    sport_jacket:
-      notch: Notch
-      peak: Peak
-    dress_jacket:
-      notch: Notch
-      peak: Peak
-      shawl: shawl
-    coat:
-      notch: Notch
-      peak: Peak
-      shawl: Shawl
-      no_collar: No Collar
-      mandarin: Mandarin
-      hooded: Hooded
-      stand_up_collar: Stand-up Collar
-  sleeve_styling:
-    shirt:
-      short_sleeved: Short sleeved
-      long_sleeved: Long sleeved
-    tank_knit:
-      short_sleeved: Short sleeved
-      long_sleeved: Long sleeved
-      sleeveless: Sleeveless
-      classic_tank_sleeveless: Classic tank sleeveless
-    casual_jakcet:
-      long_sleeved: Long sleeved  
-    sweater:
-      short_sleeved: Short sleeved
-      long_sleeved: Long sleeved
-      sleeveless: Sleeveless  
-    sport_jakcet:
-      long_sleeved: Long sleeved
-      sleeveless: Sleeveless  
-    dress:
-      long_sleeved: Long sleeved
-      sleeveless: Sleeveless  
-    coat:
-      long_sleeved: Long sleeved
-      sleeveless: Sleeveless  
-  stretch_type:
-    woven_straight_grain: woven straight grain
-    woven_bias_grain: woven bias grain
-    knit_2_way	: knit 2 way	
-    knit_4_way: knit 4 way
-  fabric_weight:
-    light_weight_sheer: Light weight sheer
-    light_weight_woven: Light weight woven
-    light_weight_knit: Light weight knit
-    mid_weight_woven: Mid weight woven
-    mid_weight_knit: Mid weight knit
-    heavy_weight_woven: Heavy weight woven	
-    heavy_weight_knit: Heavy weight knit
-  structural_details:
-    shoulder_pads: Shoulder pads
-    tailored_shaping: Tailored shaping    
-    adjustable_waist: Adjustable waist
-  styling_details:
-    pleated_pants: Pleated Pants
-    cuffed_hem: Cuffed hem
-    cuffed_sleeve: Cuffed sleeve
-    peplum: Peplum
-    belted: Belted
-  fit_type:   
-     stretch_skin_tight: Stretch - skin tight
-     stretch_close_fitting: Stretch - close fitting
-     stretch_tailored_fit: Stretch - tailored fit
-     stretch_princess_fitted: Stretch - princess fitted
-     stretch_close_draped_fit:  Stretch - close draped fit 
-     stretch_loose_draped_fit: Stretch - loose draped fit
-     stretch_formal_structured_fit: Stretch - formal structured fit
-     woven_princess_fitted:  Woven - princess fitted
-     woven_tailored_fit: Woven - tailored fit
-     woven_loose_tailored_fit: Woven - loose tailored fit
-     woven_boxy_fit: Woven - boxy fit
-     woven_relaxed_loose_fit: Woven -relaxed/loose Fit
-     woven_draped_close_fit: Woven - draped close fit
-     woven_loose_draped_fit: Woven - loose draped fit
-     woven_formal_structured_fit:  Woven - formal structured fit
-  
-  layering:
-     1st_layer_worn_next_to_skin:  1st layer - worn next to skin
-     2nd_layer_worn_over_close_fitting_items: 2nd layer - worn over close fitting items
-     3rd_layer_worn_over_loose_fitting_items:  3rd layer - worn over loose fitting items
-     4th_layer_outerwear:  4th layer - outerwear
-     
-  fabric_content:
-     cotton: Cotton
-     poly: Poly
-     rayon: Rayon
-     acrylic: Acrylic
-     linen: Linen
-     other: Other
-  
-  garment_detail:
-    silk: Silk
-    nylon: Nylon
-    lycra: Lycra
-    wool: Wool
-    other: Other  
+    layering:
+       1st_layer_worn_next_to_skin:  1st layer - worn next to skin
+       2nd_layer_worn_over_close_fitting_items: 2nd layer - worn over close fitting items
+       3rd_layer_worn_over_loose_fitting_items:  3rd layer - worn over loose fitting items
+       4th_layer_outerwear:  4th layer - outerwear
+
+    fabric_content:
+       cotton: Cotton
+       poly: Poly
+       rayon: Rayon
+       acrylic: Acrylic
+       linen: Linen
+       other: Other
+
+    garment_detail:
+      silk: Silk
+      nylon: Nylon
+      lycra: Lycra
+      wool: Wool
+      other: Other  
     
        
  clothing_type_target:

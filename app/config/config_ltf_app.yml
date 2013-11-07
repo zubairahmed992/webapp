@@ -50,6 +50,7 @@ constants:
     pear: pear
     hourglass: hourglass
     apple: apple
+    banana: banana
     
   size_titles:
      ({xxs, xs, s, m, l, xl, xxl})
