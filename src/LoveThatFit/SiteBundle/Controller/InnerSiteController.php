@@ -102,7 +102,7 @@ public function indexAction($list_type) {
 #------------------------------------------------------------------------------- 
     public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
         $entity = null;
-        return $this->renderProductTemplate($entity, $page_number, $limit, 'Coming Soon');
+        return $this->renderProductTemplate($entity, $page_number, $limit, 'Comming Soon');
     }
 #----------------------------------- by Brand-----------------------------------
     public function productsByBrandAction($gender, $brand_id, $page_number = 0, $limit = 0) {
