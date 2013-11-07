@@ -168,6 +168,10 @@ class ClothingTypeHelper {
    public function findAll(){
   return $this->repo->findAll();      
     }
+   #-----------------Find By Gender---------------------------------# 
+    public function findByGender($gender){
+        return $this->repo->findByGender($gender);      
+    }
 
     //-------------------------------------------------------
     //Private Methods    

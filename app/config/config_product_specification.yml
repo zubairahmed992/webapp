@@ -615,11 +615,11 @@ constants:
         boot_cut: Boot Cut
         relaxed: Relaxed
         cords: Cords
-      jacket:
+      sport_jacket:
         single_breasted: Single breasted
         double_breasted: Double breasted
         vest: Vest
-      dress:
+      dress_jacket:
         single_breasted: Single breasted
         double_breasted: Double breasted
         tuxedo_single_breasted: Tuxedo single breasted
@@ -680,7 +680,7 @@ constants:
         knee_length: Knee length
         mid_calf: Mid-Calf
         full_length: Full length
-    neckline:
+    neck_line:
       shirt:
         spread: Spread
         straight: Straight
@@ -741,10 +741,10 @@ constants:
         short_sleeved: Short sleeved
         long_sleeved: Long sleeved
         sleeveless: Sleeveless  
-      sport_jakcet:
+      sport_jacket:
         long_sleeved: Long sleeved
         sleeveless: Sleeveless  
-      dress:
+      dress_jacket:
         long_sleeved: Long sleeved
         sleeveless: Sleeveless  
       coat:

@@ -56,7 +56,10 @@ retailer_admin_product_detail_delete:
     pattern:  /retailer/productdetail/{id}/delete
     defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productDetailDelete }
 
-
+retailer_admin_product_gender_base_clothing_type:
+    pattern:  /retailer/product/gender/clothing_type
+    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:retailerProductGenderBaseClothingType }
+#------------------------------------------------------------------------------#
 retailer_admin_product_detail_color_image_upload:
    pattern:  /retailer/productdetail/{id}/color/image_upload
    defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productColorTemporaryImageUpload,_format: json} 

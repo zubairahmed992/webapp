@@ -66,7 +66,7 @@ protected $container;
     
     public function retailerProductNewCreateAction(Request $request)
     {        
-       //return new Response(json_encode($request->request->all()));
+      // return new Response(json_encode($request->request->all()));
         
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
@@ -81,7 +81,7 @@ protected $container;
         if (!$retailer) {
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
         }
-        //return new Response(json_encode($request));
+       // return new Response(json_encode($request));
       //  if ($form->isValid()) {            
             
            
@@ -99,16 +99,10 @@ protected $container;
             $em->persist($entity);            
             $em->flush();
             $this->get('session')->setFlash('success', 'Retailer Product Detail has been Created.');
-            return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId())));  
-      // }   
-      // else
-     //   {
-        //  $this->get('session')->setFlash('warning', 'The Retailer Product can not be Created!');
-    //   }    
+       return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity)));  
+          
         
-       return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
-                    'form' => $form->createView(), 'productSpecification'=>$productSpecification                    
-        ));
+      
     }
     
     //------------------------------------------------------------------------------
@@ -209,7 +203,13 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
                     'page_number'=>$page_number,
         ));
     }
-
+#-------------Clothing type base on Gender-----------------------------------#
+public function retailerProductGenderBaseClothingTypeAction(Request $request){
+    $target_array = $request->request->all();
+    $gender=$target_array['gender'];
+    return new response(json_encode($this->get('admin.helper.clothingtype')->findByGender($gender)));
+    
+}
     //------------------------------------------------------------------------------
     /*     * ************************* PRODUCT DETAIL COLOR ************************************************** */
 //------------------------------------------------------------------------------
