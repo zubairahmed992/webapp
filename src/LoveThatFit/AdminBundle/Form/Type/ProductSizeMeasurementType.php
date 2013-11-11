@@ -18,7 +18,8 @@ class ProductSizeMeasurementType extends AbstractType
         $builder->add('horizontal_stretch');
         $builder->add('stretch_type_percentage');
         $builder->add('ideal_body_size_high');
-        $builder->add('ideal_body_size_low');        
+        $builder->add('ideal_body_size_low');   
+        $builder->add('garment_measurement_stretch_fit');
     }
 
 

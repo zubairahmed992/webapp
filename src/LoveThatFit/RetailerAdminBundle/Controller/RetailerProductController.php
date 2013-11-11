@@ -627,7 +627,7 @@ public function createProductSizeMeasurementAction($id,$size_id)
 
 
 
-public function productSizeMeasurementCreateAction($id,$size_id)
+public function productSizeMeasurementCreateAction($id,$size_id,$title)
     {        
         $product_size=$this->get('admin.helper.productsizes')->find($size_id);
         if(!$product_size)
@@ -635,12 +635,15 @@ public function productSizeMeasurementCreateAction($id,$size_id)
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
         $entity = new ProductSizeMeasurement();
+        $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
+        $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
         $form = $this->createForm(new ProductSizeMeasurementType(),$entity);
         $deleteForm = $this->getDeleteForm($size_id);        
         return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'product_size' => $product_size,
+                    'title'=>$title,
                    )
                 );
                   
@@ -661,6 +664,8 @@ public function productSizeMeasurementCreateAction($id,$size_id)
         if ($this->getRequest()->getMethod() == 'POST') {
         $form->bindRequest($request);
         $entity->setTitle($title);
+        $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
+        $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
         $entity->setProductSize($product_size); 
         $product_size->addProductSizeMeasurement($entity);
         $em->persist($product_size);
