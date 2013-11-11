@@ -28,7 +28,7 @@ class ProductSizeMeasurementType extends AbstractType
             return array(
             'data_class' => 'LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement',
             'cascade_validation' => true,
-            'validation_groups' => array('product_size'),
+            'validation_groups' => array('product_size_measurement'),
              );
         } 
         

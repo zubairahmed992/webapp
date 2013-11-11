@@ -659,13 +659,26 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
         $em = $this->getDoctrine()->getManager();
-        $entity = new ProductSizeMeasurement();         
-        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
-        if ($this->getRequest()->getMethod() == 'POST') {
-        $form->bindRequest($request);
-        $entity->setTitle($title);
+        $entity = new ProductSizeMeasurement();  
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
+        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $deleteForm = $this->getDeleteForm($size_id);                  
+        if ($this->getRequest()->getMethod() == 'POST') {
+        $form->bindRequest($request);
+        if($entity->getGarmentMeasurementFlat()=='' || $entity->getGarmentMeasurementStretchFit()=='' || $entity->getIdealBodySizeHigh()=='' || $entity->getIdealBodySizeLow()=='' || $entity->getMaxBodyMeasurement()=='' || $entity->getStretchTypePercentage()=='')
+        {
+            $this->get('session')->setFlash('warning', 'Measurement cannot be null');
+            return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
+                    'form' => $form->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'product_size' => $product_size,
+                    'title'=>$title,
+                   )
+                );
+        }else
+        {
+        $entity->setTitle($title);        
         $entity->setProductSize($product_size); 
         $product_size->addProductSizeMeasurement($entity);
         $em->persist($product_size);
@@ -674,12 +687,16 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         $this->get('session')->setFlash('success', 'Retailer Product Size Measurement Detail has been Created.');
         }    
        $id=$product_size->getProduct()->getId();
-       $entity = $this->getProduct($id);             
+       $product = $this->getProduct($id);
         return $this->redirect($this->generateUrl('retailer_admin_product_detail_size_edit', array(
-            'product'=>$entity,
+            'product'=>$product,
             'id' => $id,
             'size_id'=>$size_id
          )));
+        }
+        
+     
+       
         
         
         

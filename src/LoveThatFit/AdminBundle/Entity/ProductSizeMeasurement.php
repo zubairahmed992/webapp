@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ProductSizeMeasurement
 {   
-
     
     /**
      * @ORM\ManyToOne(targetEntity="ProductSize", inversedBy="product_size_measurements")
@@ -42,42 +41,42 @@ class ProductSizeMeasurement
     /**
      * @var float $garment_measurement_flat
      *
-     * @ORM\Column(name="garment_measurement_flat", type="float",nullable=true)
+     * @ORM\Column(name="garment_measurement_flat", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $garment_measurement_flat;
     /**
      * @var float $max_body_measurement
      *
-     * @ORM\Column(name="max_body_measurement", type="float",nullable=true)
+     * @ORM\Column(name="max_body_measurement", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $max_body_measurement;
     /**
      * @var float $vertical_stretch
      *
-     * @ORM\Column(name="vertical_stretch", type="float",nullable=true)
+     * @ORM\Column(name="vertical_stretch", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $vertical_stretch;
     /**
      * @var float $horizontal_stretch
      *
-     * @ORM\Column(name="horizontal_stretch", type="float",nullable=true)
+     * @ORM\Column(name="horizontal_stretch", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $horizontal_stretch;
     /**
      * @var float $stretch_type_percentage
      *
-     * @ORM\Column(name="stretch_type_percentage", type="float",nullable=true)
+     * @ORM\Column(name="stretch_type_percentage", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $stretch_type_percentage;
      /**
      * @var float $garment_measurement_stretch_fit
      *
-     * @ORM\Column(name="garment_measurement_stretch_fit", type="float",nullable=true)
+     * @ORM\Column(name="garment_measurement_stretch_fit", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $garment_measurement_stretch_fit;
@@ -85,14 +84,14 @@ class ProductSizeMeasurement
     /**
      * @var float $ideal_body_size_high
      *
-     * @ORM\Column(name="ideal_body_size_high", type="float",nullable=true)
+     * @ORM\Column(name="ideal_body_size_high", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $ideal_body_size_high;
     /**
      * @var float $ideal_body_size_low
      *
-     * @ORM\Column(name="ideal_body_size_low", type="float",nullable=true)
+     * @ORM\Column(name="ideal_body_size_low", type="float",nullable=false)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $ideal_body_size_low;
