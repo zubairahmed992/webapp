@@ -666,7 +666,7 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         $deleteForm = $this->getDeleteForm($size_id);                  
         if ($this->getRequest()->getMethod() == 'POST') {
         $form->bindRequest($request);
-        if($entity->getGarmentMeasurementFlat()=='' || $entity->getGarmentMeasurementStretchFit()=='' || $entity->getIdealBodySizeHigh()=='' || $entity->getIdealBodySizeLow()=='' || $entity->getMaxBodyMeasurement()=='' || $entity->getStretchTypePercentage()=='')
+        if($entity->getIdealBodySizeLow()=='' && $entity->getIdealBodySizeHigh()=='')
         {
             $this->get('session')->setFlash('warning', 'Measurement cannot be null');
             return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
