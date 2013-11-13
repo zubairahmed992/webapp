@@ -15,7 +15,7 @@
                 {% if (value['exists'])%}                  
                 <tr>
                     <td class="retailor_det_key">{{value['measurement']['title'] }}                        
-                        <div class="retailer_edt"><a href="{{ path('retailer_admin_product_size_measurement_edit', {'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a></div>
+                        <div class="retailer_edt"><a href="{{ path('retailer_admin_product_size_measurement_edit', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a></div>
                     </td>
                 </tr>
                 <tr>
