@@ -172,6 +172,11 @@ class ClothingTypeHelper {
     public function findByGender($gender){
         return $this->repo->findByGender($gender);      
     }
+   #-----------------------------------------------------------------#
+    public function findById($id){
+        return $this->repo->findById($id);      
+        
+    }
 
     //-------------------------------------------------------
     //Private Methods    

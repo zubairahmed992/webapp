@@ -1,0 +1,31 @@
+     <script>
+$(document).ready(function(){
+ {% autoescape false %}
+    var json = {{product.FitPriority}};
+     length_obj=json.length;
+     Object.size = function(obj) {
+     var size = 0, key;
+     for (key in obj) {
+     if (obj.hasOwnProperty(key)) size++;
+     }
+     return size;
+ };
+ var size = Object.size(json);
+ s="";
+ s+='<div class="span">';
+ for(var key in json) {
+ s+= '<div class="p_hd">'+key+'</div><div class="span3">'+json[key]+'</div>';
+}
+ s+="</div>";
+ 
+       document.getElementById("fit_pirority").innerHTML=s; 
+   {% endautoescape %}
+   });    
+ </script>      
+       
+            <div class="product_fld">
+                <div class="p_hd">Fit Priority</div>
+                 <div class="span3" id="fit_pirority"></div>
+            
+           </div>         
+                    

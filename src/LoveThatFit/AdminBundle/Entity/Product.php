@@ -1007,4 +1007,5 @@ class Product {
     {
         return $this->layering;
     }
+ 
 }

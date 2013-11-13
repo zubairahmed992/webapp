@@ -110,11 +110,12 @@
                         <div>{{product.FitType}}</div>
                     </div>   
                             
-                    <div class="product_fld">
-                        <div class="p_hd">Fit Priority</div>
-                        <div>{{product.FitPriority}}</div>
-                    </div>         
                     
+                        
+      <!-- Start OF Product Fit Pirority --> 
+      {% include 'LoveThatFitRetailerAdminBundle:Product:_fitPirority.html.twig'%}
+      <!-- End OF Product Fit Pirority -->      
+                   
                       <div class="product_fld">
                         <div class="p_hd">Fabric Content</div>
                         <div>{{product.FabricContent}}</div>

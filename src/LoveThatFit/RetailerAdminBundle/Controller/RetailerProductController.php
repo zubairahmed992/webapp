@@ -33,6 +33,10 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use LoveThatFit\AdminBundle\ImageHelper;
 use ZipArchive;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class RetailerProductController extends Controller {
 
@@ -65,8 +69,9 @@ protected $container;
     }
     
     public function retailerProductNewCreateAction(Request $request)
-    {        
-      // return new Response(json_encode($request->request->all()));
+    {      
+        $data=$request->request->all();
+      
         
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
@@ -91,35 +96,55 @@ protected $container;
             if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
             if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
             if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
+            
+            //if(isset($data['fit_pirority'])){$entity->setFitPriority(stripslashes(json_encode($data['fit_pirority'])));}
+            if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
+            
             $entity->setRetailer($retailer); 
             $retailer->addProduct($entity);
             $em->persist($retailer);
             $em->persist($entity);            
+             
             $em->flush();
+            
+        //  return new response($fit_pirorty);
             $this->get('session')->setFlash('success', 'Retailer Product Detail has been Created.');
-       return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity)));  
+       //return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_pirorty'=>$entity->getFitPriority())));  
           
-        
+       return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_show.html.twig',  
+               array('id' => $entity->getId(),'product'=>$entity, 'fit_priority'=>$entity->getFitPriority())
+                    );  
       
     }
     
+    private function getJsonForFields($fields){
+        $f=array();
+        foreach ($fields as $key => $value) {
+        $f[$key]=$value;
+        }
+        return json_encode($f);
+        
+    }
+
+
     //------------------------------------------------------------------------------
 
     public function productDetailEditAction($id) {
-        $entity = $this->getDoctrine()
+    $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->findOneById($id);
 $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);
-
+//return new response(json_encode($entity->getFitPriority()));
         return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity,
-                    'productSpecification' =>$productSpecification  
+                    'productSpecification' =>$productSpecification ,
+                    'fit_priority'=> $entity->getFitPriority()
                     ));
     }
 
@@ -153,11 +178,12 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
             if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
             if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
             if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
+           if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
             $entity->setUpdatedAt(new \DateTime('now'));
             $em->persist($entity);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail has been Update.');
-            return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity)));
+            return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority())));
         
     }
 
@@ -208,6 +234,18 @@ public function retailerProductGenderBaseClothingTypeAction(Request $request){
     $target_array = $request->request->all();
     $gender=$target_array['gender'];
     return new response(json_encode($this->get('admin.helper.clothingtype')->findByGender($gender)));
+    
+}
+#------------Clothing type attribute base on clothing type --------------------#
+public function retailerProductClothingTypeAttributeAction(Request $request){
+    $target_array = $request->request->all();
+    $clothing_type_id = $target_array['clothing_type'];
+    $clothing_type=$this->get('admin.helper.clothingtype')->findById($clothing_type_id);
+  
+    $clothing_type_array=strtolower($clothing_type['name']);
+   // return new response(json_encode($clothing_type_array));
+    $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type_array);
+    return new response(json_encode($clothingTypeAttributes));
     
 }
     //------------------------------------------------------------------------------

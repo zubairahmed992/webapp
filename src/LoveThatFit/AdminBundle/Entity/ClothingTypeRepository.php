@@ -200,5 +200,19 @@ param:limit, page_number,limit,sort
         }
       
   }
-
+#--------------Find Clothing Type By ID---------------------------------#
+  public function findById($id){
+       $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT ct.name as name FROM LoveThatFitAdminBundle:ClothingType ct     
+     WHERE
+     ct.id=:id     
+    "  )->setParameters(array('id' => $id)) ;
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+      
+  }
 }
