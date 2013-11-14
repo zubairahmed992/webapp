@@ -78,6 +78,9 @@ class Algorithm {
 
     public function fit($sug_array = null) {
 
+        //TEMPORARILY DISABLING THE ALGORITHM
+        return false;
+        //-----------------------------------------------
         if (!$this->user_measurement) {
             return false;
         }
