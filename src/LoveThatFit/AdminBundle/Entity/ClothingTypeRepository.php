@@ -204,7 +204,7 @@ param:limit, page_number,limit,sort
   public function findById($id){
        $query = $this->getEntityManager()
                         ->createQuery("
-     SELECT ct.name as name FROM LoveThatFitAdminBundle:ClothingType ct     
+     SELECT ct.name as name,ct.target as target FROM LoveThatFitAdminBundle:ClothingType ct     
      WHERE
      ct.id=:id     
     "  )->setParameters(array('id' => $id)) ;

@@ -165,6 +165,36 @@ constants:
     hip: Hip
     
  product_specification: 
+  fit_priority:
+      man:
+        top: 
+         back_shoulder: Back Shoulder
+         chest: Chest
+         waist: Waist
+         hip: Hip 
+         neck: Neck
+        bottom: 
+         waist: Waist
+         hip: hip
+         Thigh: Thigh
+      women:
+        top: 
+         back_shoulder: Back Shoulder
+         bust: bust
+         waist: Waist
+         hip: Hip 
+         neck: Neck
+        bottom: 
+         waist: Waist
+         hip: hip
+         Thigh: Thigh
+        dress: 
+         back_shoulder: Back Shoulder
+         bust: Bust 
+         waist: Waist
+         hip: Hip
+         neck: Neck
+         Thigh: Thigh
   women:
     clothing_type:
       blouse: Blouse
@@ -567,6 +597,8 @@ constants:
       lycra: Lycra
       wool: Wool
       other: Other
+    
+
   
   man: 
     clothing_type:
@@ -809,8 +841,11 @@ constants:
       nylon: Nylon
       lycra: Lycra
       wool: Wool
-      other: Other  
+      other: Other 
     
+    
+
+
        
  clothing_type_target:
   Blouse : top

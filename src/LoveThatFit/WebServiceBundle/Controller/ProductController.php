@@ -282,7 +282,7 @@ class ProductController extends Controller {
  #------------Testing of product specification helper .REmoved!!!
    public function test_product_specificationAction(){
        
-       $product_helper =  $this->get('admin.helper.product.specification')->getManStretchType();
+       $product_helper =  $this->get('admin.helper.product.specification')->gettingWomenFittingPriority();
         return new response(json_encode($product_helper));
    }
  

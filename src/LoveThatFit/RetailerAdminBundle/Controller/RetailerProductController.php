@@ -240,11 +240,40 @@ public function retailerProductGenderBaseClothingTypeAction(Request $request){
 public function retailerProductClothingTypeAttributeAction(Request $request){
     $target_array = $request->request->all();
     $clothing_type_id = $target_array['clothing_type'];
+    $gender=$target_array['gender'];
+    if($gender=="F"){
+        $gender="women";
+    }else{
+        $gender="man";
+    }
+    
     $clothing_type=$this->get('admin.helper.clothingtype')->findById($clothing_type_id);
-  
-    $clothing_type_array=strtolower($clothing_type['name']);
+    
+    
+    $clothing_type_array=strtolower($clothing_type['target']);
+    $clothingTypeAttributes=array();
+    if($gender=="man") 
+    {    if($clothing_type_array=="top" ){
+        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingTopManFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="bottom" ){
+        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingBottomManFittingPriority($clothing_type_array);  
+        }
+    }
+    if($gender=="women") 
+    {   
+      if ($clothing_type_array=="top" ){
+        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingTopWomenFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="bottom" ){
+        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingBottomWomenFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="dress" ){
+        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingDressWomenFittingPriority($clothing_type_array);  
+        }
+    }     
    // return new response(json_encode($clothing_type_array));
-    $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type_array);
+   // $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type_array);
     return new response(json_encode($clothingTypeAttributes));
     
 }

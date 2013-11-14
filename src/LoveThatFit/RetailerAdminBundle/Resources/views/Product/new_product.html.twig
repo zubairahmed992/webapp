@@ -73,11 +73,13 @@ manClothingType();
 // Sending ajax request for fit pirority  and create dynamic elements
 
 var clothing_type=$("#product_ClothingType").val();
+var gender_type=$("#product_gender").val();
  $.ajax({
         type:'POST',
         url: $('#fit_pirority_url').text(),
-        data: {clothing_type: clothing_type},  
+        data: {clothing_type: clothing_type,gender:gender_type},  
         success: function(data) {
+           
            //fit_priority 
         
       var clothing_type_attribute = JSON.parse(data);

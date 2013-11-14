@@ -471,6 +471,37 @@ public function getClothingTypeTarget(){
     return $this->conf["constants"]["clothing_type_target"];
 }
 
+#---------Getting Fitting Priority----------------------------------------#
+public function gettingAllFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"];   
+}
+#------------Fitting Priority for Man--------------------------------------#
+public function gettingManFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"]["man"];   
+}
+#------------Fitting Priority for Women--------------------------------------#
+public function gettingWomenFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"]["women"];   
+}
+#----Man Fitting Attribute----------------------------#
+public function gettingTopManFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"]["man"]["top"];   
+}
+public function gettingBottomManFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"]["man"]["bottom"];   
+}
+#-----------Women Fittinf priority----------------------------------------#
+public function gettingTopWomenFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"]["women"]["top"];   
+}
+public function gettingBottomWomenFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"]["women"]["bottom"];   
+}
+public function gettingDressWomenFittingPriority(){
+    return $this->conf["constants"]["product_specification"]["fit_priority"]["women"]["dress"];   
+}
+
+
 
 
  
