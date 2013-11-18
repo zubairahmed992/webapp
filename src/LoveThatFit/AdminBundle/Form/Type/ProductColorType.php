@@ -8,17 +8,25 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProductColorType extends AbstractType
 {
+    private $container;
+    private $sizes;
+    //private $gender;
+     public function __construct($sizes)             
+    {
+        //$this->container= $container;
+        $this->sizes=$sizes;        
+        
+    }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $sizes = array('0'=>'0 (XXS)', '1'=>'1 (XS)', '2'=>'2 (XS)', '4'=>'4 (S)', '6'=>'6 (S)', '8'=>'8 (M)', '10'=>'10 (M)', '12'=>'12 (L)','14'=>'14 (L)','16'=>'16 (XL)','18'=>'18 (XL)','20'=>'20 (XXL)');
         $displayProductColor=array('Yes'=>'Yes');
         $builder->add('title');
         $builder->add('tempImage','hidden');
         $builder->add('tempPattern','hidden');
         $builder->add(
                 'sizes', 'choice', 
-                array('choices'=>$sizes,
+                array('choices'=>$this->sizes,
                        'multiple'  => true,
                        'expanded'  => true, 
                 )

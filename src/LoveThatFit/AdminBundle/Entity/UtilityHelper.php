@@ -87,7 +87,8 @@ public function getSizeNumbers()
 }
 //--------------------------------------------------------------------------------
 public function setSizeTitles($sizes)
-{ $new_sizes=array();
+{ 
+    $new_sizes=array();
     $new_key='';
     foreach ($sizes as $key => $value) {
         switch ($value){
@@ -155,4 +156,25 @@ public function getBraSize(){
     return $this->conf["constants"]["bra_size"];
     
 }
+
+public function getFemaleLetterSizeTitles()
+{
+    return $this->conf["constants"]["size_titles"]["letter"]["woman"];     
+}
+
+public function getFemaleNumberSizeTitles()
+{
+    return $this->conf["constants"]["size_titles"]["number"]["woman"]; 
+}
+
+public function getJsonForFields($fields){
+        $f=array();
+        foreach ($fields as $key => $value) {
+        $f[$key]=$value;
+        }
+        return $f;
+        
+    }
+
+
 }

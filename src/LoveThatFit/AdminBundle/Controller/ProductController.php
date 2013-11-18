@@ -23,6 +23,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Exception\ParseException;
 use LoveThatFit\AdminBundle\ImageHelper;
 use ZipArchive;
@@ -223,10 +224,44 @@ class ProductController extends Controller {
         $entity = $this->getProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
-        }
-
-        $colorform = $this->createForm(new ProductColorType());
-
+        }        
+        
+       if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='f' or $entity->getGender()=='F'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+          // $sizetilte=  $this->get('admin.helper.utility')->getFemaleLetterSizeTitles();      
+           //return new Response(gettype($sizetilte));           
+           $colorform = $this->createForm(new ProductColorType($sizes_letter));
+           //$colorform->get('sizes')->setData($sizetilte); 
+       }       
+       if($entity->getSizeTitleType()=='number' and ($entity->getGender()=='f' or $entity->getGender()=='F'))
+       {
+           $sizes_number = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           //$sizetilte=  $this->get('admin.helper.utility')->getFemaleNumberSizeTitles();
+           $colorform = $this->createForm(new ProductColorType($sizes_number));
+           //$colorform->get('sizes')->setData($sizetilte);
+       }
+       if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='m' or $entity->getGender()=='M') and ($entity->getClothingType()->getTarget()=='top' or $entity->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+           $colorform = $this->createForm(new ProductColorType($sizes_letter));
+       }
+       if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='m' or $entity->getGender()=='M' and ($entity->getClothingType()->getTarget()=='bottom') or $entity->getClothingType()->getTarget()=='Bottom'))
+       {
+          $sizes_letter = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           $colorform = $this->createForm(new ProductColorType($sizes_letter));
+       } 
+       
+       if($entity->getSizeTitleType()=='number' and ($entity->getGender()=='m' or $entity->getGender()=='M') and ($entity->getClothingType()->getTarget()=='top' or $entity->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_number = array('35'=> '35','36'=> '36','37'=> '37','38'=>'38','39'=> '39','40'=> '40','41'=> '41','42'=> '42','43'=> '43','44'=> '44','45'=> '45','46'=> '46','47'=>'47','48'=> '48');
+           $colorform = $this->createForm(new ProductColorType($sizes_number));
+       }
+       if($entity->getSizeTitleType()=='number' and ($entity->getGender()=='m' or $entity->getGender()=='M' and ($entity->getClothingType()->getTarget()=='bottom' or $entity->getClothingType()->getTarget()=='Bottom')))
+       {
+          $sizes_number = array('28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36','37'=> '37','38'=> '38','39'=> '39','40'=> '40','41'=> '41','42'=> '42');
+          $colorform = $this->createForm(new ProductColorType($sizes_number));
+       }          
         $imageUploadForm = $this->createForm(new ProductColorImageType());
         $patternUploadForm = $this->createForm(new ProductColorPatternType());
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
@@ -236,6 +271,14 @@ class ProductController extends Controller {
                     'patternUploadForm' => $patternUploadForm->createView(),
         ));
     }
+ private function getJsonForFields($fields){
+        $f=array();
+        foreach ($fields as $key => $value) {
+        $f[$key]=$value;
+        }
+        return $f;
+        
+    }
 
     //--------------------------------------------------------------   
     public function productDetailColorCreateAction(Request $request, $id) {
@@ -243,7 +286,42 @@ class ProductController extends Controller {
         $product = $this->getProduct($id);
         $productColor = new ProductColor();
         $productColor->setProduct($product);
-        $colorform = $this->createForm(new ProductColorType(), $productColor);
+        if($product->getSizeTitleType()=='letter' and ($product->getGender()=='f' or $product->getGender()=='F'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+          // $sizetilte=  $this->get('admin.helper.utility')->getFemaleLetterSizeTitles();      
+           //return new Response(gettype($sizetilte));           
+           $colorform = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+           //$colorform->get('sizes')->setData($sizetilte); 
+       }       
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='f' or $product->getGender()=='F'))
+       {
+           $sizes_number = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           //$sizetilte=  $this->get('admin.helper.utility')->getFemaleNumberSizeTitles();
+           $colorform = $this->createForm(new ProductColorType($sizes_number),$productColor);
+           //$colorform->get('sizes')->setData($sizetilte);
+       }
+       if($product->getSizeTitleType()=='letter' and ($product->getGender()=='m' or $product->getGender()=='M') and ($product->getClothingType()->getTarget()=='top' or $product->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+           $colorform = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+       }
+       if($product->getSizeTitleType()=='letter' and ($product->getGender()=='m' or $product->getGender()=='M' and ($product->getClothingType()->getTarget()=='bottom') or $product->getClothingType()->getTarget()=='Bottom'))
+       {
+          $sizes_letter = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           $colorform = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+       } 
+       
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='m' or $product->getGender()=='M') and ($product->getClothingType()->getTarget()=='top' or $product->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_number = array('35'=> '35','36'=> '36','37'=> '37','38'=>'38','39'=> '39','40'=> '40','41'=> '41','42'=> '42','43'=> '43','44'=> '44','45'=> '45','46'=> '46','47'=>'47','48'=> '48');
+           $colorform = $this->createForm(new ProductColorType($sizes_number),$productColor);
+       }
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='m' or $product->getGender()=='M' and ($product->getClothingType()->getTarget()=='bottom' or $product->getClothingType()->getTarget()=='Bottom')))
+       {
+          $sizes_number = array('28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36','37'=> '37','38'=> '38','39'=> '39','40'=> '40','41'=> '41','42'=> '42');
+          $colorform = $this->createForm(new ProductColorType($sizes_number),$productColor);
+       }   
         $colorform->bind($request);
         if ($colorform->isValid()) {
 
@@ -269,12 +347,48 @@ class ProductController extends Controller {
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-
         $productColor = $this->getProductColor($color_id);
-        $sizeTitle = $productColor->getSizeTitleArray();
+        //$sizeTitle = $productColor->getSizeTitleArray();
 
-        $colorform = $this->createForm(new ProductColorType(), $productColor);
-        $colorform->get('sizes')->setData($sizeTitle);
+        if($product->getSizeTitleType()=='letter' and ($product->getGender()=='f' or $product->getGender()=='F'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+          // $sizetilte=  $this->get('admin.helper.utility')->getFemaleLetterSizeTitles();      
+           //return new Response(gettype($sizetilte));           
+           $colorform = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+           //$colorform->get('sizes')->setData($sizetilte); 
+       }       
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='f' or $product->getGender()=='F'))
+       {
+           $sizes_number = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           //$sizetilte=  $this->get('admin.helper.utility')->getFemaleNumberSizeTitles();
+           $colorform = $this->createForm(new ProductColorType($sizes_number),$productColor);
+           //$colorform->get('sizes')->setData($sizetilte);
+       }
+       if($product->getSizeTitleType()=='letter' and ($product->getGender()=='m' or $product->getGender()=='M') and ($product->getClothingType()->getTarget()=='top' or $product->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+           $colorform = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+       }
+       if($product->getSizeTitleType()=='letter' and ($product->getGender()=='m' or $product->getGender()=='M' and ($product->getClothingType()->getTarget()=='bottom') or $product->getClothingType()->getTarget()=='Bottom'))
+       {
+          $sizes_letter = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           $colorform = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+       } 
+       
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='m' or $product->getGender()=='M') and ($product->getClothingType()->getTarget()=='top' or $product->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_number = array('35'=> '35','36'=> '36','37'=> '37','38'=>'38','39'=> '39','40'=> '40','41'=> '41','42'=> '42','43'=> '43','44'=> '44','45'=> '45','46'=> '46','47'=>'47','48'=> '48');
+           $colorform = $this->createForm(new ProductColorType($sizes_number),$productColor);
+       }
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='m' or $product->getGender()=='M' and ($product->getClothingType()->getTarget()=='bottom' or $product->getClothingType()->getTarget()=='Bottom')))
+       {
+          $sizes_number = array('28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36','37'=> '37','38'=> '38','39'=> '39','40'=> '40','41'=> '41','42'=> '42');
+          $colorform = $this->createForm(new ProductColorType($sizes_number),$productColor);
+       }  
+        
+        //$colorform = $this->createForm(new ProductColorType(), $productColor);
+        //$colorform->get('sizes')->setData($sizeTitle);
 
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
         $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
@@ -297,7 +411,43 @@ class ProductController extends Controller {
         }
 
         $productColor = $this->getProductColor($color_id);
-        $colorForm = $this->createForm(new ProductColorType(), $productColor);
+        
+        if($product->getSizeTitleType()=='letter' and ($product->getGender()=='f' or $product->getGender()=='F'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+          // $sizetilte=  $this->get('admin.helper.utility')->getFemaleLetterSizeTitles();      
+           //return new Response(gettype($sizetilte));           
+           $colorForm = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+           //$colorform->get('sizes')->setData($sizetilte); 
+       }       
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='f' or $product->getGender()=='F'))
+       {
+           $sizes_number = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           //$sizetilte=  $this->get('admin.helper.utility')->getFemaleNumberSizeTitles();
+           $colorForm = $this->createForm(new ProductColorType($sizes_number),$productColor);
+           //$colorform->get('sizes')->setData($sizetilte);
+       }
+       if($product->getSizeTitleType()=='letter' and ($product->getGender()=='m' or $product->getGender()=='M') and ($product->getClothingType()->getTarget()=='top' or $product->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_letter = array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+           $colorForm = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+       }
+       if($product->getSizeTitleType()=='letter' and ($product->getGender()=='m' or $product->getGender()=='M' and ($product->getClothingType()->getTarget()=='bottom') or $product->getClothingType()->getTarget()=='Bottom'))
+       {
+          $sizes_letter = array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+           $colorForm = $this->createForm(new ProductColorType($sizes_letter),$productColor);
+       } 
+       
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='m' or $product->getGender()=='M') and ($product->getClothingType()->getTarget()=='top' or $product->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes_number = array('35'=> '35','36'=> '36','37'=> '37','38'=>'38','39'=> '39','40'=> '40','41'=> '41','42'=> '42','43'=> '43','44'=> '44','45'=> '45','46'=> '46','47'=>'47','48'=> '48');
+           $colorForm = $this->createForm(new ProductColorType($sizes_number),$productColor);
+       }
+       if($product->getSizeTitleType()=='number' and ($product->getGender()=='m' or $product->getGender()=='M' and ($product->getClothingType()->getTarget()=='bottom' or $product->getClothingType()->getTarget()=='Bottom')))
+       {
+          $sizes_number = array('28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36','37'=> '37','38'=> '38','39'=> '39','40'=> '40','41'=> '41','42'=> '42');
+          $colorForm = $this->createForm(new ProductColorType($sizes_number),$productColor);
+       }  
         $colorForm->bind($request);
 
         if ($colorForm->isValid()) {
@@ -834,5 +984,6 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
     }
      
  }
+ 
 }
 
