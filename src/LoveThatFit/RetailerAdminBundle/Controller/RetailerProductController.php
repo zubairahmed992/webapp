@@ -99,6 +99,8 @@ protected $container;
             
             //if(isset($data['fit_pirority'])){$entity->setFitPriority(stripslashes(json_encode($data['fit_pirority'])));}
             if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
+            if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
+            if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             
@@ -144,7 +146,10 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity,
                     'productSpecification' =>$productSpecification ,
-                    'fit_priority'=> $entity->getFitPriority()
+                    'fit_priority'=> $entity->getFitPriority(),
+                    'fabric_content'=>$entity->getFabricContent(),
+                    'garment_detail'=>$entity->getGarmentDetail(),
+                
                     ));
     }
 
@@ -173,12 +178,14 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
         }
       
              $data=$request->request->all();
-             if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
-            if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
-            if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
-            if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
-            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
+           if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
+           if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
+           if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
+           if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
+           if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
            if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
+           if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
+           if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
             $entity->setUpdatedAt(new \DateTime('now'));
             $em->persist($entity);
             $em->flush();
@@ -274,6 +281,7 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
     }   
    
      $clothingTypeAttributes['fabric_content']=$this->get('admin.helper.product.specification')->getFabricContent();  
+     $clothingTypeAttributes['garment_detail']=$this->get('admin.helper.product.specification')->getGarmentDetail();  
    // return new response(json_encode($clothing_type_array));
    // $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type_array);
     return new response(json_encode($clothingTypeAttributes));
