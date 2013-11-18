@@ -89,7 +89,7 @@ var gender_type=$("#product_gender").val();
        {  
            $('#fit_priority').show();
            var s="";
-           s+= '<lable>Fit Pirority:</label>'; 
+           s+= '<lable>Fit Pirority:</lable>'; 
            var result = $.parseJSON(data);
             $.each(result['fitting_priority'], function(k, v) {
              s+= '<lable>'+v+'</lable>';  
@@ -100,17 +100,29 @@ var gender_type=$("#product_gender").val();
            //For Fabric Content 
            var fabric_content="";
            $('#fabric_content').show();
-            fabric_content+= '<lable>Fabric Content:</label>'; 
+            fabric_content+= '<lable>Fabric Content:</lable>'; 
            var result = $.parseJSON(data);
             $.each(result['fabric_content'], function(k, v) {
              fabric_content+= '<lable>'+v+'</lable>';  
-             fabric_content+= '<input type="text" name="fit_pirority['+v+']">'; 
+             fabric_content+= '<input type="text" name="fabric_content['+v+']">'; 
               
             });
-
+            
+         //Garment Detail 
+         
+         var garment_detail="";
+           $('#garment_detail').show();
+           garment_detail+= '<lable>Garment Detail:</lable>'; 
+           var result = $.parseJSON(data);
+            $.each(result['garment_detail'], function(k, v) {
+            garment_detail+= '<lable>'+v+'</lable>';  
+            garment_detail+= '<input type="text" name="garment_detail['+v+']">'; 
+              
+            });
         //$('#product_fit_priority').val();
          document.getElementById("fit_priority").innerHTML=s;
          document.getElementById("fabric_content").innerHTML=fabric_content;
+         document.getElementById("garment_detail").innerHTML=garment_detail;
          
       } 
      
@@ -710,7 +722,7 @@ function Onsubmit(){
                                 </div> 
                                     
                                     
-                               <div class="row-fluid show-grid">
+                               <div class="row-fluid show-grid" id="garment_detail" style="display:none;">
                                     <div class="span3">Garment Detail</div>
                                     <div class="span3">{{ form_widget(form.garment_detail) }}{{ form_errors(form.garment_detail) }}</div>
                                 </div>
