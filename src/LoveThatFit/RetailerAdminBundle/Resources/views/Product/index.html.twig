@@ -41,7 +41,7 @@
          <a href="{{ path('retailer_admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}"><i class="icon-eye-open"></i></a>
          <a href="{{ path('retailer_admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
          <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-         <a href="{{ path('retailer_admin_product_detail_download', {'id': p.Id}) }}" title="Download">Download </i></a>
+         <a href="{{ path('retailer_admin_product_detail_download', {'id': p.Id}) }}" title="Download" target="new">Download </i></a>
          </div>
         </div>
    
