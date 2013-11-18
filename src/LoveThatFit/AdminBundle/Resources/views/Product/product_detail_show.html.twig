@@ -128,7 +128,12 @@
                         <div class="p_hd">Garment Detail</div>
                         <div>{{product.GarmentDetail}}</div>
                     </div>                             
+                     <div class="product_fld">
+                        <div class="p_hd">Size Title Type</div>
+                        <div>{{product.sizeTitleType}}</div>
+                    </div>  
                      
+                   </div>
                     
                             
                    <div class="product_fld">
@@ -136,6 +141,7 @@
                      </div>       
                    </div>
                     
+                   
                     {%if(product.displayProductColor!='')%}
                     <div style="margin-left: 500px;">
                         <img style="width: 50px; height: 100px;" src="{{ asset(product.displayProductColor.WebPath) }}" width="100" height="200"/>

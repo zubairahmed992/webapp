@@ -172,6 +172,11 @@ class Product {
     protected $garment_detail;
     
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $size_title_type;
+    
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $created_at;
@@ -1008,4 +1013,27 @@ class Product {
         return $this->layering;
     }
  
+
+    /**
+     * Set size_title_type
+     *
+     * @param string $sizeTitleType
+     * @return Product
+     */
+    public function setSizeTitleType($sizeTitleType)
+    {
+        $this->size_title_type = $sizeTitleType;
+    
+        return $this;
+    }
+
+    /**
+     * Get size_title_type
+     *
+     * @return string 
+     */
+    public function getSizeTitleType()
+    {
+        return $this->size_title_type;
+    }
 }
