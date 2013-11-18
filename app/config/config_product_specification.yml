@@ -195,6 +195,45 @@ constants:
          hip: Hip
          neck: Neck
          Thigh: Thigh
+  fit_type:   
+       stretch_skin_tight: Stretch - skin tight
+       stretch_close_fitting: Stretch - close fitting
+       stretch_tailored_fit: Stretch - tailored fit
+       stretch_princess_fitted: Stretch - princess fitted
+       stretch_close_draped_fit:  Stretch - close draped fit 
+       stretch_loose_draped_fit: Stretch - loose draped fit
+       stretch_formal_structured_fit: Stretch - formal structured fit
+       woven_princess_fitted:  Woven - princess fitted
+       woven_tailored_fit: Woven - tailored fit
+       woven_loose_tailored_fit: Woven - loose tailored fit
+       woven_boxy_fit: Woven - boxy fit
+       woven_relaxed_loose_fit: Woven -relaxed/loose Fit
+       woven_draped_close_fit: Woven - draped close fit
+       woven_loose_draped_fit: Woven - loose draped fit
+       woven_formal_structured_fit:  Woven - formal structured fit
+
+  layering:
+      1st_layer_worn_next_to_skin:  1st layer - worn next to skin
+      2nd_layer_worn_over_close_fitting_items: 2nd layer - worn over close fitting items
+      3rd_layer_worn_over_loose_fitting_items:  3rd layer - worn over loose fitting items
+      4th_layer_outerwear:  4th layer - outerwear
+
+  fabric_content:
+     cotton: Cotton
+     poly: Poly
+     rayon: Rayon
+     acrylic: Acrylic
+     linen: Linen
+     other: Other
+     
+  garment_detail:
+      silk: Silk
+      nylon: Nylon
+      lycra: Lycra
+      wool: Wool
+      other: Other       
+
+         
   women:
     clothing_type:
       blouse: Blouse
@@ -560,46 +599,7 @@ constants:
         cuffed_sleeve: Cuffed sleeve
         peplum: Peplum
         belted: Belted
-    fit_type:   
-       stretch_skin_tight: Stretch - skin tight
-       stretch_close_fitting: Stretch - close fitting
-       stretch_tailored_fit: Stretch - tailored fit
-       stretch_princess_fitted: Stretch - princess fitted
-       stretch_close_draped_fit:  Stretch - close draped fit 
-       stretch_loose_draped_fit: Stretch - loose draped fit
-       stretch_formal_structured_fit: Stretch - formal structured fit
-       woven_princess_fitted:  Woven - princess fitted
-       woven_tailored_fit: Woven - tailored fit
-       woven_loose_tailored_fit: Woven - loose tailored fit
-       woven_boxy_fit: Woven - boxy fit
-       woven_relaxed_loose_fit: Woven -relaxed/loose Fit
-       woven_draped_close_fit: Woven - draped close fit
-       woven_loose_draped_fit: Woven - loose draped fit
-       woven_formal_structured_fit:  Woven - formal structured fit
-
-    layering:
-       1st_layer_worn_next_to_skin:  1st layer - worn next to skin
-       2nd_layer_worn_over_close_fitting_items: 2nd layer - worn over close fitting items
-       3rd_layer_worn_over_loose_fitting_items:  3rd layer - worn over loose fitting items
-       4th_layer_outerwear:  4th layer - outerwear
-
-    fabric_content:
-       cotton: Cotton
-       poly: Poly
-       rayon: Rayon
-       acrylic: Acrylic
-       linen: Linen
-       other: Other
-
-    garment_detail:
-      silk: Silk
-      nylon: Nylon
-      lycra: Lycra
-      wool: Wool
-      other: Other
     
-
-  
   man: 
     clothing_type:
       shirt: Shirt
@@ -805,48 +805,8 @@ constants:
       cuffed_sleeve: Cuffed sleeve
       peplum: Peplum
       belted: Belted
-    fit_type:   
-       stretch_skin_tight: Stretch - skin tight
-       stretch_close_fitting: Stretch - close fitting
-       stretch_tailored_fit: Stretch - tailored fit
-       stretch_princess_fitted: Stretch - princess fitted
-       stretch_close_draped_fit:  Stretch - close draped fit 
-       stretch_loose_draped_fit: Stretch - loose draped fit
-       stretch_formal_structured_fit: Stretch - formal structured fit
-       woven_princess_fitted:  Woven - princess fitted
-       woven_tailored_fit: Woven - tailored fit
-       woven_loose_tailored_fit: Woven - loose tailored fit
-       woven_boxy_fit: Woven - boxy fit
-       woven_relaxed_loose_fit: Woven -relaxed/loose Fit
-       woven_draped_close_fit: Woven - draped close fit
-       woven_loose_draped_fit: Woven - loose draped fit
-       woven_formal_structured_fit:  Woven - formal structured fit
-
-    layering:
-       1st_layer_worn_next_to_skin:  1st layer - worn next to skin
-       2nd_layer_worn_over_close_fitting_items: 2nd layer - worn over close fitting items
-       3rd_layer_worn_over_loose_fitting_items:  3rd layer - worn over loose fitting items
-       4th_layer_outerwear:  4th layer - outerwear
-
-    fabric_content:
-       cotton: Cotton
-       poly: Poly
-       rayon: Rayon
-       acrylic: Acrylic
-       linen: Linen
-       other: Other
-
-    garment_detail:
-      silk: Silk
-      nylon: Nylon
-      lycra: Lycra
-      wool: Wool
-      other: Other 
-    
-    
-
-
-       
+   
+        
  clothing_type_target:
   Blouse : top
   Tunic  : dress

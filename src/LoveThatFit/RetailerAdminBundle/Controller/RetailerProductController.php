@@ -254,24 +254,26 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
     $clothingTypeAttributes=array();
     if($gender=="man") 
     {    if($clothing_type_array=="top" ){
-        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingTopManFittingPriority($clothing_type_array);  
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingTopManFittingPriority($clothing_type_array);  
         }
         if($clothing_type_array=="bottom" ){
-        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingBottomManFittingPriority($clothing_type_array);  
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingBottomManFittingPriority($clothing_type_array);  
         }
     }
     if($gender=="women") 
     {   
       if ($clothing_type_array=="top" ){
-        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingTopWomenFittingPriority($clothing_type_array);  
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingTopWomenFittingPriority($clothing_type_array);  
         }
         if($clothing_type_array=="bottom" ){
-        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingBottomWomenFittingPriority($clothing_type_array);  
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingBottomWomenFittingPriority($clothing_type_array);  
         }
         if($clothing_type_array=="dress" ){
-        $clothingTypeAttributes=$this->get('admin.helper.product.specification')->gettingDressWomenFittingPriority($clothing_type_array);  
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingDressWomenFittingPriority($clothing_type_array);  
         }
-    }     
+    }   
+   
+     $clothingTypeAttributes['fabric_content']=$this->get('admin.helper.product.specification')->getFabricContent();  
    // return new response(json_encode($clothing_type_array));
    // $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type_array);
     return new response(json_encode($clothingTypeAttributes));

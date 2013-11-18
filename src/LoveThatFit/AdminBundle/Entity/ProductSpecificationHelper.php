@@ -244,21 +244,26 @@ public function getWomenFabricWeight(){
 public function getWomenStructuralDetails(){
     return $this->conf["constants"]["product_specification"]["women"]["structural_details"];
 }
+
+
+
+#---------------------------Common Properties male and female-------------------#
+##############################################################################
 #-------------Fit Type----------------------------#
-public function getWomenFitType(){
-    return $this->conf["constants"]["product_specification"]["women"]["fit_type"];
+public function getFitType(){
+    return $this->conf["constants"]["product_specification"]["fit_type"];
 }
 #-------Layerring----------------------------------------------------#
-public function getWomenLayering(){
-    return $this->conf["constants"]["product_specification"]["women"]["layering"];
+public function getLayering(){
+    return $this->conf["constants"]["product_specification"]["layering"];
 }
 #----------Fabric Content-----------------------------------------------------#
-public function getWomenFabricContent(){
-     return $this->conf["constants"]["product_specification"]["women"]["fabric_content"];
+public function getFabricContent(){
+     return $this->conf["constants"]["product_specification"]["fabric_content"];
 }
 #---------------------Garments Detail------------------------------------------#
-public function getWomenGarmentDetail(){
-     return $this->conf["constants"]["product_specification"]["women"]["garment_detail"];
+public function getGarmentDetail(){
+     return $this->conf["constants"]["product_specification"]["garment_detail"];
 }
 
 #--------------------MALE PRODUCT SPECIFICATION------------------------------#
@@ -388,27 +393,6 @@ public function getManStructuralDetails(){
 public function getManStylingDetails(){
     return $this->conf["constants"]["product_specification"]["man"]["styling_details"];
 }
-#----------------------FIT TYPE-----------------------------------------------#
-public function getManFitType(){
-    return $this->conf["constants"]["product_specification"]["man"]["fit_Type"];
-  
-}
-#----------------------LAYERRING------------------------------------------------#
-public function getManLayering(){
- return $this->conf["constants"]["product_specification"]["man"]["layering"];   
-}
-#-----------------------FABRIC CONTENT-----------------------------------------#
-public function getManFabricContent(){
-    return $this->conf["constants"]["product_specification"]["man"]["fabric_content"];   
-}
-#-----------------------Garment Details----------------------------------------#
-public function getManGarmentDetail(){
-    return $this->conf["constants"]["product_specification"]["man"]["garment_detail"];   
-}
-
-
-
-
 
 
 #-----------------Product Attribute -------------------------------------------#

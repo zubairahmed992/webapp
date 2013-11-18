@@ -16,10 +16,10 @@ class RetailerProductDetailType extends AbstractType
         $this->stretch_type=$this->container->getWomenStretchType();
         $this->fabric_weight=$this->container->getWomenFabricWeight(); 
         $this->structural_detail=$this->container->getWomenStructuralDetails(); 
-        $this->fit_type=$this->container->getWomenFitType(); 
-        $this->layering=$this->container->getWomenLayering(); 
-        $this->fabric_content=$this->container->getWomenFabricContent(); 
-        $this->garment_detail=$this->container->getWomenGarmentDetail(); 
+        $this->fit_type=$this->container->getFitType(); 
+        $this->layering=$this->container->getLayering(); 
+        $this->fabric_content=$this->container->getFabricContent(); 
+        $this->garment_detail=$this->container->getGarmentDetail(); 
         
     }
     
