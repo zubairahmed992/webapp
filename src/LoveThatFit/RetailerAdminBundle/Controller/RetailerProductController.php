@@ -52,8 +52,8 @@ protected $container;
 
     public function indexAction($page_number, $sort = 'id') {
         $id = $this->get('security.context')->getToken()->getUser()->getId();        
-        $retailer=$this->get('admin.helper.retailer')->find($id);
-        $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
+        $retailer=$this->get('admin.helper.retailer')->find($id);  
+        $product_with_pagination = $this->get('admin.helper.retailer')->getProductRetailerListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitRetailerAdminBundle:Product:index.html.twig',array('products'=>$product_with_pagination,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)));
     }
 

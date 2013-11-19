@@ -172,14 +172,41 @@ class RetailerHelper {
         } else {
             $no_of_paginations = ceil($rec_count / $limit);
         }        
-        return array('retailers' => $entity,            
+        return array('products' => $entity,            
             'rec_count' => $rec_count,
             'no_of_pagination' => $no_of_paginations,
             'limit' => $cur_page,
             'per_page_limit' => $limit,
             'sort'=>$sort,
+            'retailers' => $entity,  
         );
     }
+    
+    
+    
+    public function getProductRetailerListWithPagination($page_number, $sort) {
+        $yaml = new Parser();
+        $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+        $limit = $pagination_constants["constants"]["pagination"]["limit"];
+
+        $entity = $this->repo->listAllRetailerProduct($page_number, $limit, $sort);
+        $rec_count = count($this->repo->countAllRecordProduct());
+        $cur_page = $page_number;
+
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
+        }        
+        return array('products' => $entity,            
+            'rec_count' => $rec_count,
+            'no_of_pagination' => $no_of_paginations,
+            'limit' => $cur_page,
+            'per_page_limit' => $limit,
+            'sort'=>$sort,            
+        );
+    }
+    
     
     public function getRetailerBrandByRetailerAndBrand($retailer,$brand)
     {

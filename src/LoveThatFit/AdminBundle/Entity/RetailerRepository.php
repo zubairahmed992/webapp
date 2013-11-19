@@ -39,6 +39,54 @@ class RetailerRepository extends EntityRepository
       param:limit:
      * ------------------------------------------------------------------ */
 
+    
+    public function listAllRetailerProduct($page_number = 0, $limit = 0, $sort = 'id') {
+
+
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery(
+                            'SELECT p,b,r FROM LoveThatFitAdminBundle:Product p
+                             JOIN p.brand b
+                             JOIN b.retailers r
+                             ORDER BY p.' . $sort . ' ASC');
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery('SELECT p,b,r FROM LoveThatFitAdminBundle:Product p 
+                                 JOIN p.brand b
+                                JOIN b.retailers r
+                                  ORDER BY p.' . $sort . ' ASC')
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        }
+    }
+
+    /* -----End Of Function----------------- */
+
+    /* -----------------------------------------------------------------
+      Written:Suresh
+      Description:Count all Records
+      param:limit:
+     * ------------------------------------------------------------------ */
+
+    public function countAllRecordProduct() {
+        $total_record = $this->getEntityManager()
+                ->createQuery('SELECT p,b,r FROM LoveThatFitAdminBundle:Product p
+                             JOIN p.brand b
+                             JOIN b.retailers r');
+        try {
+            return $total_record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
     public function countAllRecord() {
         $total_record = $this->getEntityManager()
                 ->createQuery('SELECT r FROM LoveThatFitAdminBundle:Retailer r');
