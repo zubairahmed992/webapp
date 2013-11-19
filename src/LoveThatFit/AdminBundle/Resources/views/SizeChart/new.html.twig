@@ -5,11 +5,50 @@
 <li class="active">New</li>
  <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery-1.9.1.js') }}"></script>
 <script type="text/javascript">
+    {% autoescape false %}
+    var allSizeTitle={{allMixSizeTitles}};
+    {% endautoescape %}
+    function strLower(str){
+        return str.toLowerCase()
+    }
    $(document).ready(function() {
-       $('#sizechart_gender').change(function() {
-	 
-            var selectVals = $('#sizechart_gender').val();
-            var selectValtargets = $('#sizechart_target').val(); 
+       // By default woman size chart ////
+       
+      // womanSizeTitle();
+    
+  var gender=strLower($('#sizechart_gender').val());   
+  var target=strLower($('#sizechart_target').val());
+  
+  if(gender=='f'){
+  womanSizeTitle();
+  }
+  else if(gender=='m' && target=="top" ){
+      manTopSizeTitle();
+  }
+  else if(gender=='m' && target=="bottom" ){
+     manBottomSizeTitle();
+  
+ }
+       
+ $('#sizechart_target').change(function() {
+ var gender=strLower($('#sizechart_gender').val()); 
+  var target=strLower($('#sizechart_target').val());
+ changeTitle(gender,target);
+ 
+});    
+
+$('#sizechart_gender').change(function() {
+	  var gender=strLower($('#sizechart_gender').val()); 
+          var target=strLower($('#sizechart_target').val());
+          var selectVals = $('#sizechart_gender').val();
+            changeTitle(gender,target);  
+            
+            var selectValtargets = strLower($('#sizechart_target').val()); 
+            if(selectValtargets=="" && gender=='m'){
+            $('#sizechart_title').empty();
+            $('<option>').val('').text("Please Select Target Above").appendTo('#sizechart_title');  
+            }
+                    
             if(selectVals=='f' || selectVals=='F' )
                 {
                   $("#bodyType").show();
@@ -29,10 +68,11 @@
                          $("#bodyType").hide();
                     }                
             if(selectVals=='m' || selectVals=='M' )
-                {
+            {
                   $("#bodyType").hide();
                   $("#sizechart_target option[value='Dress']").remove();             
-                }else
+                  
+            }else
                     {
                         $("#sizechart_target").append('<option value="Dress">Dress</option>');
                     }
@@ -119,6 +159,58 @@
 	});      
         
         });
+ 
+ function changeTitle(gender,target){
+  if(gender=="f"){
+  womanSizeTitle();
+  }
+   else if(gender=="m" && target=="top" ){
+      manTopSizeTitle();
+  }
+  else if(gender=="m" && target=="bottom" ){
+      manBottomSizeTitle();
+ }
+ else{
+     $('#sizechart_title').empty();
+    $('<option>').val('').text("Not Found").appendTo('#sizechart_title');  
+ }
+ }
+ 
+  // For Woman Size Chart 
+  
+ function womanSizeTitle(){
+ $('#sizechart_title').empty();
+ {% autoescape false %}
+ var women=allSizeTitle;
+ $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(women['woman'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% endautoescape %}
+ }
+// For Man top Size Title
+function  manTopSizeTitle(){
+    $('#sizechart_title').empty();
+ {% autoescape false %}
+ var manTop=allSizeTitle;
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(manTop['man_top'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% endautoescape %}
+}
+// Man Bottom 
+function  manBottomSizeTitle(){
+    $('#sizechart_title').empty();
+ {% autoescape false %}
+ var manBottom=allSizeTitle;
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(manBottom['man_bottom'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% endautoescape %}
+}
 </script>
 
 

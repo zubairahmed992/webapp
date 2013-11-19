@@ -46,11 +46,11 @@ class SizeChartController extends Controller {
 
     
      public function newAction() {
+        
         $entity = $this->get('admin.helper.sizechart')->createNew();
         $form = $this->createForm(new SizeChartType('add'), $entity);      
-      
-       return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
-                    'form' => $form->createView()));
+      return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
+                    'form' => $form->createView(),'allMixSizeTitles'=>json_encode($this->get('admin.helper.sizechart')->getMixSizeTitle())));
     }
     
     public function createAction(Request $request)
@@ -79,6 +79,8 @@ class SizeChartController extends Controller {
         return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
+            'allMixSizeTitles'=>json_encode($this->get('admin.helper.sizechart')->getMixSizeTitle()),
+            
         ));
         
     }
@@ -115,7 +117,13 @@ class SizeChartController extends Controller {
         $form = $this->createForm(new SizeChartType('edit'), $entity);
         return $this->render('LoveThatFitAdminBundle:SizeChart:edit.html.twig', array(
                     'form' => $form->createView(),                   
-                    'entity' => $entity));
+                    'entity' => $entity,
+            'allMixSizeTitles'=>json_encode($this->get('admin.helper.sizechart')->getMixSizeTitle()),
+            'womanSizeTitle'=>$this->get('admin.helper.sizechart')->getMixSizeTitleForWoman(),
+            'manTopSizeTitle'=>$this->get('admin.helper.sizechart')->getMixSizeTitleForMenTop(),
+            'manBottomSizeTitle'=>$this->get('admin.helper.sizechart')->getMixSizeTitleForMenBottom(),
+            
+            ));
     }
     
     

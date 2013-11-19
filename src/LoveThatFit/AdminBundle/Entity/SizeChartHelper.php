@@ -41,6 +41,8 @@ class SizeChartHelper{
         $this->em = $em;
         $this->class = $class;
         $this->repo = $em->getRepository($class);
+         $conf_yml = new Parser();
+        $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         
     }
  //---------------------------------------------------------------------   
@@ -618,5 +620,18 @@ $no_of_paginations = ceil($countSearchSizeChart /$per_page);
 }
 return array('searchResult'=>$searchResult,'countRecord'=>$countRecord,'first_btn'=>$first_btn,'cur_page'=>$cur_page,'previous_btn'=>$previous_btn,'last_btn'=>$last_btn,'start_loop'=>$start_loop,'end_loop'=>$end_loop,'next_btn'=>$next_btn,'no_of_paginations'=>$no_of_paginations);    
     
+}
+#--- Getting All mix size title-----------------------------------------------#
+public function getMixSizeTitle(){
+     return $this->conf["constants"]["size_titles"]["mix"];
+}
+public function getMixSizeTitleForMenTop(){
+     return $this->conf["constants"]["size_titles"]["mix"]["man_top"];
+}
+public function getMixSizeTitleForMenBottom(){
+     return $this->conf["constants"]["size_titles"]["mix"]["man_bottom"];
+}
+public function getMixSizeTitleForWoman(){
+     return $this->conf["constants"]["size_titles"]["mix"]["woman"];
 }
 }
