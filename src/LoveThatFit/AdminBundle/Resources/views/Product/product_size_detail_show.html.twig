@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %} 
 <link rel="stylesheet" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/colorpicker.css')}}" type="text/css" />
@@ -70,7 +70,7 @@
                     </div>
                
             </div>
-        {{ include('LoveThatFitRetailerAdminBundle:Product:_retailerProductSizes.html.twig',{'id':product.id,'size_id':size_id,})}}
+        {{ include('LoveThatFitAdminBundle:Product:_adminProductSizes.html.twig',{'id':product.id,'size_id':size_id,})}}
         
         
         
@@ -87,7 +87,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <a href="{{ path('retailer_admin_product_detail_delete', {'id': product.Id}) }}"  class="btn btn-primary">Delete</a>
+        <a href="{{ path('admin_product_detail_delete', {'id': product.Id}) }}"  class="btn btn-primary">Delete</a>
 
     </div>
 </div>   
@@ -99,4 +99,16 @@
 
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
 

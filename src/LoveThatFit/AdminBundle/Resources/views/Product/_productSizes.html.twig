@@ -15,7 +15,7 @@
             <table style="width:20%">
 {% for ps in product.productSizes %} 
                     <div class="row-fluid show-grid p_title size_box">
-                        <div class="span1"><a href='{{path("retailer_admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >{{ps.title}}</a></div>
+                        <div class="span1"><a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >{{ps.title}}</a></div>
 {%endfor%}
                     </table> 
                     </div>

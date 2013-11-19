@@ -1,0 +1,372 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+ <li class="active">Retailer Dashboard </li>
+{% endblock %}
+{% block h1 %}Product{% endblock %}
+{% block title %}Product{% endblock %}
+{% block body %}
+<div>         
+   <h1 style="float:left;"> Product Size Measurement for {{title}}</h1>      
+     <div class="btn_wrapper">     
+         <a href="{{ path('admin_products') }}" class="btn">back</a>
+     </div>
+      <div class="clearfix"></div>   
+    <form id="productSizeMeasuremntAdd" action="{{ path('admin_product_size_measurement_editUpdate',{"id":id,"measurement_id":productSizeMeasurement.id,"size_id":product_size.id,'title':title}) }}" method="post" {{ form_enctype(form) }} onsubmit="return ProductSizeMeasuremtAdd()">
+ {{ form_errors(form) }}
+            <div id="detail_wrapper">      
+                <div id="p_hd">Product Size Measurement</div>                
+                    <div class="clearfix"></div>
+                    <div id="product_content">
+                        <div id="pro_detail"> 
+                             <div class="row-fluid show-grid">
+                                 <div class="span3"><h3>Measurement for {{title}}</h3></div>
+                                    <div class="span3"></div>
+                             </div>
+                                     <div class="row-fluid show-grid">
+                                    <div class="span3">Garment Measurement Flat</div>
+                                    <div class="span3">{{ form_widget(form.garment_measurement_flat) }}{{ form_errors(form.garment_measurement_flat) }}</div>                                    
+                                </div>
+                                <div class="login_error" >
+                                                    <div id="error_garment_measurement_flat" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter garment measurement flat value
+                                                         </div>
+                                                <div id="error_valid_garment_measurement_flat" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                    <div class="row-fluid show-grid">
+                                     <div class="span3">Max Body Measurement</div>
+                                    <div class="span3">{{ form_widget(form.max_body_measurement) }}{{ form_errors(form.max_body_measurement) }}
+                                        
+                                    </div>
+                                     <div class="login_error" >
+                                                    <div id="error_maxbodymeasurement" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter Max Body Measurement value
+                                                         </div>
+                                                <div id="error_validmaxbodymeasurement" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                </div>                                
+                                 <div id="optional_elements">
+                                <div class="row-fluid show-grid" id="styling_type">
+                                    <div class="span3">Vertical Stretch</div>
+                                    <div class="span3">
+                                        {{ form_widget(form.vertical_stretch) }}{{ form_errors(form.vertical_stretch) }}
+                                            
+                                    </div>
+                                </div>
+                                         <div class="login_error" >                                                    
+                                                <div id="error_valid_vertical_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                    
+                                <div class="row-fluid show-grid" id="hem_length">
+                                    <div class="span3">Horizontal Stretch</div>
+                                    <div class="span3">
+                                         {{ form_widget(form.horizontal_stretch) }}{{ form_errors(form.horizontal_stretch) }}
+                                    </div>
+                                </div>
+                                         <div class="login_error" >                                                    
+                                                <div id="error_valid_horizontal_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                
+                                <div class="row-fluid show-grid" id="neckline">
+                                    <div class="span3">Stretch Type Percentage</div>
+                                    <div class="span3">
+                                         {{ form_widget(form.stretch_type_percentage) }}{{ form_errors(form.stretch_type_percentage) }}
+                                    </div>
+                                </div>
+                                         <div class="login_error" >
+                                                    <div id="error_stretch_type_percentage" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter Stretch Type Percentage value
+                                                         </div>
+                                                <div id="error_valid_stretch_type_percentage" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                
+                                <div class="row-fluid show-grid" id="sleeve_styling">
+                                    <div class="span3">Ideal Body Size High</div>
+                                    <div class="span3">
+                                    {{ form_widget(form.ideal_body_size_high) }}{{ form_errors(form.ideal_body_size_high) }}
+                                           
+                                    </div>
+                                </div>
+                                    
+                               <div class="login_error" >
+                                                    <div id="error_ideal_body_size_high" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter ideal body size high measurement  Or  Ideal body size low measurement
+                                                         </div>
+                                       
+                                       <div id="error_ideal_body_size_high_zero" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter ideal body size high measurement  Or  Ideal body size low measurement greater than 0
+                                                         </div>
+                                       
+                                                <div id="error_valid_ideal_body_size_high" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter only numbers form 0-9
+                                                         </div>
+                                                    </div>
+                                         
+                                         
+                                         <div class="row-fluid show-grid" id="rise">
+                                    <div class="span3">Ideal Body Size Low</div>
+                                    <div class="span3">
+                                     {{ form_widget(form.ideal_body_size_low) }}{{ form_errors(form.ideal_body_size_low) }}
+                                            
+                                            
+                                    </div>
+                                </div>                                  
+                                
+                                
+                               <div class="row-fluid show-grid" id="rise">
+                                    <div class="span3">Garment Measurement Stretch Fit</div>
+                                    <div class="span3">
+                                     {{ form_widget(form.garment_measurement_stretch_fit) }}{{ form_errors(form.garment_measurement_stretch_fit) }}
+                                    
+                                        
+                                        </div>
+                                </div> 
+                                         <div class="login_error" >
+                                                    <div id="error_garment_measurement_stretch_fit" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter Garment Measurement Stretch Fit value
+                                                         </div>
+                                                <div id="error_valid_garment_measurement_stretch_fit" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                    
+                                    
+                                    
+                                 </div>    
+                                    
+                     
+                                    
+                                
+                                    
+                                    
+                                    
+                                    
+                              
+                                
+                                
+                                    
+                                
+                                
+                               
+                                
+                                        
+                                    
+                               
+                              
+                                    
+                                    
+                              
+                                    
+                               
+                                  
+                                
+                                    
+                                    
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">
+				{{ form_rest(form) }}
+                                            <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="ADD" class="btn btn-large btn-primary"/>                                     
+                                             <a href="{{ path('admin_product_detail_size_edit', {'id': id,"size_id":product_size.id}) }}" class="btn btn-large btn-primary">Cancel    </a>   
+                                    </div>                                    
+                                    </div>
+                                </div>
+                                </div> 
+                                     
+
+
+
+                                </div>      
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+    </div>               
+    </div> <!-- End detail_wrapper -->
+                </form>  
+      
+          <script>
+            function ProductSizeMeasuremtAdd()
+            {
+                var numeric = /^[0-9]+$/;
+                var garmentmeasurementflat=document.getElementById('product_size_measurement_garment_measurement_flat').value;
+                var maxbodymeasurement=document.getElementById('product_size_measurement_max_body_measurement').value;
+                var stretch_type_percentage=document.getElementById('product_size_measurement_stretch_type_percentage').value;
+                var ideal_body_size_low=document.getElementById('product_size_measurement_ideal_body_size_low').value;
+                var ideal_body_size_high=document.getElementById('product_size_measurement_ideal_body_size_high').value;
+                var garment_measurement_stretch_fit=document.getElementById('product_size_measurement_garment_measurement_stretch_fit').value;
+               var  vertical_stretch =document.getElementById('product_size_measurement_vertical_stretch').value;
+               var  horizontal_stretch =document.getElementById('product_size_measurement_horizontal_stretch').value;
+        if(ideal_body_size_high==0  && ideal_body_size_low==0)
+              {                
+                document.getElementById('error_ideal_body_size_high_zero').style.display="block";    
+                document.getElementById('error_ideal_body_size_high').style.display="none";    
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                ideal_body_size_high.focus;
+                return false;
+               } 
+        if(ideal_body_size_high=='' && ideal_body_size_low=='')
+              {
+                document.getElementById('error_ideal_body_size_high').style.display="block";  
+                document.getElementById('error_ideal_body_size_high_zero').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                ideal_body_size_high.focus;
+                return false;
+               }
+        if(!garmentmeasurementflat.match(numeric)){
+		document.getElementById('error_valid_garment_measurement_flat').style.display="block";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                garmentmeasurementflat.focus;
+                return false;
+                }
+               if(!maxbodymeasurement.match(numeric)){
+                document.getElementById('error_validmaxbodymeasurement').style.display="block";
+		document.getElementById('error_valid_garment_measurement_flat').style.display="none";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                maxbodymeasurement.focus;
+                return false;
+                }
+               if(!stretch_type_percentage.match(numeric)){
+                document.getElementById('error_valid_stretch_type_percentage').style.display="block";
+                document.getElementById('error_validmaxbodymeasurement').style.display="none";
+		document.getElementById('error_valid_garment_measurement_flat').style.display="none";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                stretch_type_percentage.focus;
+                return false;
+                }              
+               if(!ideal_body_size_high.match(numeric)){                
+                document.getElementById('error_valid_ideal_body_size_high').style.display="block";
+                document.getElementById('error_valid_ideal_body_size_low').style.display="block";    
+                document.getElementById('error_valid_stretch_type_percentage').style.display="none";
+                document.getElementById('error_validmaxbodymeasurement').style.display="none";
+		document.getElementById('error_valid_garment_measurement_flat').style.display="none";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                ideal_body_size_high.focus;
+                return false;
+                }
+               
+               if(!ideal_body_size_low.match(numeric)){
+                document.getElementById('error_valid_ideal_body_size_low').style.display="block";    
+                document.getElementById('error_valid_stretch_type_percentage').style.display="none";
+                document.getElementById('error_validmaxbodymeasurement').style.display="none";
+		document.getElementById('error_valid_garment_measurement_flat').style.display="none";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                ideal_body_size_low.focus;
+                return false;
+                }                
+                if(!vertical_stretch.match(numeric)){        
+                document.getElementById('error_valid_vertical_stretch').style.display="block";    
+                document.getElementById('error_valid_ideal_body_size_high').style.display="none";
+                document.getElementById('error_valid_ideal_body_size_low').style.display="block";    
+                document.getElementById('error_valid_stretch_type_percentage').style.display="none";
+                document.getElementById('error_validmaxbodymeasurement').style.display="none";
+		document.getElementById('error_valid_garment_measurement_flat').style.display="none";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                vertical_stretch.focus;
+                return false;
+                }
+                if(!horizontal_stretch.match(numeric)){        
+                document.getElementById('error_valid_horizontal_stretch').style.display="block"; 
+                document.getElementById('error_valid_vertical_stretch').style.display="none";
+                document.getElementById('error_valid_ideal_body_size_high').style.display="none";
+                document.getElementById('error_valid_ideal_body_size_low').style.display="block";    
+                document.getElementById('error_valid_stretch_type_percentage').style.display="none";
+                document.getElementById('error_validmaxbodymeasurement').style.display="none";
+		document.getElementById('error_valid_garment_measurement_flat').style.display="none";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                horizontal_stretch.focus;
+                return false;
+                }
+                if(!garment_measurement_stretch_fit.match(numeric)){        
+                document.getElementById('error_valid_garment_measurement_stretch_fit').style.display="block";
+                document.getElementById('error_valid_horizontal_stretch').style.display="none"; 
+                document.getElementById('error_valid_vertical_stretch').style.display="none";
+                document.getElementById('error_valid_ideal_body_size_high').style.display="none";
+                document.getElementById('error_valid_ideal_body_size_low').style.display="block";    
+                document.getElementById('error_valid_stretch_type_percentage').style.display="none";
+                document.getElementById('error_validmaxbodymeasurement').style.display="none";
+		document.getElementById('error_valid_garment_measurement_flat').style.display="none";
+                document.getElementById('error_garment_measurement_stretch_fit').style.display="none"; 
+                document.getElementById('error_ideal_body_size_low').style.display="none"; 
+                document.getElementById('error_ideal_body_size_high').style.display="none"; 
+                document.getElementById('error_stretch_type_percentage').style.display="none";
+                document.getElementById('error_maxbodymeasurement').style.display="none";
+                document.getElementById('error_garment_measurement_flat').style.display="none";
+                garment_measurement_stretch_fit.focus;
+                return false;
+                }
+               
+                else
+                   {
+                       return true;
+                   }
+            }   
+            </script> 
+            </div>     
+
+
+
+
+{% endblock %}
+
