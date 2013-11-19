@@ -67,7 +67,10 @@ class ProductController extends Controller {
 
     public function productDetailNewAction() {
 
-        $productForm = $this->createForm(new ProductDetailType());
+        $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        $clothingTypes=$this->get('admin.helper.product.specification')->getWomenClothingType();
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper));          
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                     'form' => $productForm->createView(),
         ));
@@ -78,27 +81,26 @@ class ProductController extends Controller {
     public function productDetailCreateAction(Request $request) {
 
         $data = $request->request->all();
-        $ClothingType = $data['product']['ClothingType'];
-
+        $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');
         $entity = new Product();
-
-        $form = $this->createForm(new ProductDetailType(), $entity);
-        $form->bind($request);
-
-
-        $gender = $entity->getGender();
-        $clothing_type = $entity->getClothingType()->getTarget();
-        if ($gender == 'M' and $clothing_type == 'Dress') {
-            $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));
-
-            $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
-                        'form' => $form->createView(),
-            ));
-        }
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
+       
+        $form->bindRequest($request);
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+             $data=$request->request->all();
+            if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
+            if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
+            if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
+            if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
+            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
+            
+            //if(isset($data['fit_pirority'])){$entity->setFitPriority(stripslashes(json_encode($data['fit_pirority'])));}
+            if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
+            if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
+            if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
             $em->persist($entity);
@@ -119,14 +121,19 @@ class ProductController extends Controller {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->findOneById($id);
-
-        $form = $this->createForm(new ProductDetailType(), $entity);
+        $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
-                    'entity' => $entity));
+                    'entity' => $entity,
+                    'productSpecification' =>$productSpecification ,
+                    'fit_priority'=> $entity->getFitPriority(),
+                    'fabric_content'=>$entity->getFabricContent(),
+                    'garment_detail'=>$entity->getGarmentDetail(),
+            ));
     }
 
     //------------------------------------------------------------------------------
@@ -136,22 +143,17 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
         if (!$entity) {
+             
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-
-        $form = $this->createForm(new ProductDetailType(), $entity);
+        
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $form->bind($request);
         $gender = $entity->getGender();
+        $clothing_type=$entity->getClothingType()->getTarget();
+          if ($gender == 'M' and $clothing_type == 'Dress') {
+            $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));
 
-        $clothing_type = $entity->getClothingType()->getTarget();
-        if ($clothing_type == '') {
-            $this->get('session')->setFlash('warning', 'Select Clothing Type.');
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
-                        'form' => $form->createView(),
-            ));
-        }
-
-        if ($gender == 'M' and $clothing_type == 'Dress') {
             $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                         'form' => $form->createView(),
@@ -173,6 +175,59 @@ class ProductController extends Controller {
         }
     }
 
+    
+    #-------------Clothing type base on Gender-----------------------------------#
+public function productGenderBaseClothingTypeAction(Request $request){
+    $target_array = $request->request->all();
+    $gender=$target_array['gender'];
+    return new response(json_encode($this->get('admin.helper.clothingtype')->findByGender($gender)));
+    
+}
+#------------Clothing type attribute base on clothing type --------------------#
+public function productClothingTypeAttributeAction(Request $request){
+    $target_array = $request->request->all();
+    $clothing_type_id = $target_array['clothing_type'];
+    $gender=$target_array['gender'];
+    if($gender=="F"){
+        $gender="women";
+    }else{
+        $gender="man";
+    }
+    
+    $clothing_type=$this->get('admin.helper.clothingtype')->findById($clothing_type_id);
+    
+    
+    $clothing_type_array=strtolower($clothing_type['target']);
+    $clothingTypeAttributes=array();
+    if($gender=="man") 
+    {    if($clothing_type_array=="top" ){
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingTopManFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="bottom" ){
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingBottomManFittingPriority($clothing_type_array);  
+        }
+    }
+    if($gender=="women") 
+    {   
+      if ($clothing_type_array=="top" ){
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingTopWomenFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="bottom" ){
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingBottomWomenFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="dress" ){
+        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingDressWomenFittingPriority($clothing_type_array);  
+        }
+    }   
+   
+     $clothingTypeAttributes['fabric_content']=$this->get('admin.helper.product.specification')->getFabricContent();  
+     $clothingTypeAttributes['garment_detail']=$this->get('admin.helper.product.specification')->getGarmentDetail();  
+   // return new response(json_encode($clothing_type_array));
+   // $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type_array);
+    return new response(json_encode($clothingTypeAttributes));
+    
+}
+    
     //------------------------------------------------------------------------------
 
     public function productDetailDeleteAction($id) {
@@ -278,10 +333,9 @@ class ProductController extends Controller {
         foreach ($fields as $key => $value) {
         $f[$key]=$value;
         }
-        return $f;
+        return json_encode($f);
         
     }
-
     //--------------------------------------------------------------   
     public function productDetailColorCreateAction(Request $request, $id) {
 
