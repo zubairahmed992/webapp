@@ -40,22 +40,25 @@ class RetailerRepository extends EntityRepository
      * ------------------------------------------------------------------ */
 
     
-    public function listAllRetailerProduct($page_number = 0, $limit = 0, $sort = 'id') {
+    public function listAllRetailerProduct($page_number = 0, $limit = 0, $sort = 'id',$retailer) {
 
 
         if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
                     ->createQuery(
                             'SELECT p,b,r FROM LoveThatFitAdminBundle:Product p
-                             JOIN p.brand b
-                             JOIN b.retailers r
+                             JOIN p.retailer r
+                             JOIN p.brand b 
+                             WHERE r.id=:retailer
                              ORDER BY p.' . $sort . ' ASC');
         } else {
             $query = $this->getEntityManager()
                     ->createQuery('SELECT p,b,r FROM LoveThatFitAdminBundle:Product p 
-                                 JOIN p.brand b
-                                JOIN b.retailers r
-                                  ORDER BY p.' . $sort . ' ASC')
+                                JOIN p.retailer r
+                                JOIN p.brand b  
+                                 WHERE r.id=:retailer
+                                 ORDER BY p.' . $sort . ' ASC')
+                    ->setParameters(array('retailer' => $retailer))
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         }
@@ -205,6 +208,41 @@ class RetailerRepository extends EntityRepository
                 return null;
                 }
    }
+   
+   
+   public function getRetailerByRetailerUser($retaileruser)
+   {
+       $query = $this->getEntityManager()
+                    ->createQuery("SELECT r,ru FROM LoveThatFitAdminBundle:Retailer r
+                    JOIN r.retailer_users ru                       
+                    WHERE ru.id=:retailer
+                    ")->setParameters(array('retailer' => $retaileruser));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+   }
+   
+   public function getProductByBrandAndRetailer($id,$retailer)
+   {       
+       $query = $this->getEntityManager()
+                    ->createQuery("SELECT p,b,r FROM LoveThatFitAdminBundle:Product p
+                    JOIN p.retailer r
+                    JOIN p.brand b
+                    WHERE r.id=:retailer
+                    AND b.id=:brand_id
+                    ")->setParameters(array('brand_id'=>$id,'retailer' => $retailer));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+   }
+
+
+   
+   
    
    public function getRetailerBrand($id)
    {

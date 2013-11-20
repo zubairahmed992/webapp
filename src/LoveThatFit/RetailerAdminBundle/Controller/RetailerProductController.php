@@ -38,9 +38,10 @@ protected $container;
     }
 
     public function indexAction($page_number, $sort = 'id') {
-        $id = $this->get('security.context')->getToken()->getUser()->getId();        
-        $retailer=$this->get('admin.helper.retailer')->find($id);  
-        $product_with_pagination = $this->get('admin.helper.retailer')->getProductRetailerListWithPagination($page_number, $sort);
+        $retaileruser = $this->get('security.context')->getToken()->getUser()->getId();        
+        $retailer=$this->get('admin.helper.retailer')->findRetailerByRetailerUser($retaileruser);
+        //$retailer=$this->get('admin.helper.retailer')->find($id);  
+        $product_with_pagination = $this->get('admin.helper.retailer')->getProductRetailerListWithPagination($page_number, $sort,$retailer);
         return $this->render('LoveThatFitRetailerAdminBundle:Product:index.html.twig',array('products'=>$product_with_pagination,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)));
     }       
 

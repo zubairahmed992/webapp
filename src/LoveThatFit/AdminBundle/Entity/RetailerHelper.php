@@ -184,13 +184,13 @@ class RetailerHelper {
     
     
     
-    public function getProductRetailerListWithPagination($page_number, $sort) {
+    public function getProductRetailerListWithPagination($page_number, $sort,$retailer) {
         $yaml = new Parser();
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         $limit = $pagination_constants["constants"]["pagination"]["limit"];
 
-        $entity = $this->repo->listAllRetailerProduct($page_number, $limit, $sort);
-        $rec_count = count($this->repo->countAllRecordProduct());
+        $entity = $this->repo->listAllRetailerProduct($page_number, $limit, $sort,$retailer);
+        $rec_count = count($this->repo->countAllRecordProduct($retailer));
         $cur_page = $page_number;
 
         if ($page_number == 0 || $limit == 0) {
@@ -234,6 +234,20 @@ class RetailerHelper {
    {
        return $this->repo->getRetailerBrand($id);
    }
+   
+   
+   public function  findRetailerByRetailerUser($retaileruser)
+   {
+       return $this->repo->getRetailerByRetailerUser($retaileruser);
+   }
+   
+   
+   public function  findProductByBrandAndRetailer($id,$retailer)
+   {
+       return $this->repo->getProductByBrandAndRetailer($id,$retailer);
+   }
+   
+   
    
    public function findProductByBrand($brand_id)
    {

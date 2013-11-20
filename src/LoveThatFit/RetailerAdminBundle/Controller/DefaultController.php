@@ -29,16 +29,17 @@ class DefaultController extends Controller
     
     public function retailerProductAction($id)
     {
-      $retailer = $this->get('security.context')->getToken()->getUser()->getId();   
-      $retailerid=$this->get('admin.helper.retailer')->find($retailer);
-      $proudct = $this->get('admin.helper.retailer')->findProductByBrand($id);
+      $retaileruser = $this->get('security.context')->getToken()->getUser()->getId();
+      $retailer=$this->get('admin.helper.retailer')->findRetailerByRetailerUser($retaileruser);
+      $retailerid=$this->get('admin.helper.retailer')->find($retaileruser);     
+      $proudct = $this->get('admin.helper.retailer')->findProductByBrandAndRetailer($id,$retailer);     
       if (!$proudct) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
             return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($retailer),'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailerid)));
         }      
       else
       {
-             return $this->render('LoveThatFitRetailerAdminBundle:Default:product.html.twig',array('product' =>$proudct,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailerid)));
+             return $this->render('LoveThatFitRetailerAdminBundle:Default:product.html.twig',array('product' =>$proudct,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retaileruser)));
       }      
     }
     
