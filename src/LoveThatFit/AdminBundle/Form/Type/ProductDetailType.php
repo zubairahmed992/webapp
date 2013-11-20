@@ -46,6 +46,15 @@ class ProductDetailType extends AbstractType
         $builder->add('garment_detail','choice', array('choices'=>$this->garment_detail, 'required' => false,'empty_value' => 'Select Garment Detail',));
         $builder->add('description');        
         $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));               
+        
+        $builder ->add('Retailer', 'entity', array(
+                    'class' => 'LoveThatFitAdminBundle:Retailer',
+                    'expanded' => false,
+                    'multiple' => false,
+                    'property' => 'title',
+                    'empty_value' => 'Select Retailer'
+                ));            
+        
         $builder ->add('Brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
                     'expanded' => false,

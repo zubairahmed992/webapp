@@ -148,4 +148,8 @@ admin_product_gender_base_clothing_type:
 
 admin_product_get_attribute:
     pattern:  /admin/product/get/attribute
-    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute }        
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productClothingTypeAttribute } 
+
+admin_product_get_retailer_base_brand:
+    pattern:  /admin/product/retailer/brand
+    defaults: { _controller: LoveThatFitAdminBundle:Product:findBrandBaseOnRetailer }      

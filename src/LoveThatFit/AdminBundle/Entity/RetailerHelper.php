@@ -343,4 +343,11 @@ class RetailerHelper {
         return $this->repo->isDuplicateEmail($id, $email);
     }
     
+#---------------- Find brand base on Retailer---------------------------------#
+public function findBrandBaseOnRetailer($retailer_id){
+    return $this->repo->findBrandBaseOnRetailer($retailer_id);
+    
+}
+#----------------End Of Brand ------------------------------------------------#    
+    
 }

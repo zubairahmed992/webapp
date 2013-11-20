@@ -80,7 +80,7 @@ class ProductController extends Controller {
     //------------------------------------------------------------------------------
 
     public function productDetailCreateAction(Request $request) {
-
+        
         $data = $request->request->all();
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
@@ -1205,5 +1205,11 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
          
          */
     }
+#---------------Get Brand Base on the Retailer---------------------#
+    public function findBrandBaseOnRetailerAction(Request $request ){
+    $target_array = $request->request->all();
+    return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
+    }
+    
 }
 

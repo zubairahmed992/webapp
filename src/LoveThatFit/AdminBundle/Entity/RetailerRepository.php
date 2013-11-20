@@ -295,4 +295,18 @@ class RetailerRepository extends EntityRepository
             return $e;
         }
     }
+    
+    #------------Find brand base on the  retailer-----------------------------#
+public function findBrandBaseOnRetailer($retailer_id){
+     return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('b.id as brand_id,b.name as brand_name')
+                        ->from('LoveThatFitAdminBundle:Brand','b')
+                        ->innerJoin('b.retailers','r')
+                        ->Where('r.id =:retailer')
+                        ->setParameters(array('retailer' => $retailer_id))
+                        ->getQuery()
+                        ->getResult(); 
+   
+}    
 }
