@@ -17,16 +17,19 @@ class DefaultController extends Controller
     /**
      * {@inheritDoc}
      */
+    
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
     }
+    //------------------------------------------------------------------------------------------
     public function indexAction()
     {        
-        $id = $this->get('security.context')->getToken()->getUser()->getId();        
-        $retailer=$this->get('admin.helper.retailer')->find($id);
-        return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($id),'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)));
+        $id = $this->get('security.context')->getToken()->getUser()->getId();                
+        return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',
+                array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($id),                   
+                    ));
     }
-    
+    //------------------------------------------------------------------------------------------
     public function retailerProductAction($id)
     {
       $retaileruser = $this->get('security.context')->getToken()->getUser()->getId();
@@ -35,11 +38,14 @@ class DefaultController extends Controller
       $proudct = $this->get('admin.helper.retailer')->findProductByBrandAndRetailer($id,$retailer);     
       if (!$proudct) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
-            return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($retailer),'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailerid)));
+            return $this->render('LoveThatFitRetailerAdminBundle:Default:index.html.twig',
+                    array('brands' => $this->get('admin.helper.retailer')->getRetailerBrand($retailer),
+                        'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailerid),
+                        ));
         }      
       else
       {
-             return $this->render('LoveThatFitRetailerAdminBundle:Default:product.html.twig',array('product' =>$proudct,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retaileruser)));
+             return $this->render('LoveThatFitRetailerAdminBundle:Default:product.html.twig',array('product' =>$proudct));
       }      
     }
     
@@ -55,7 +61,7 @@ class DefaultController extends Controller
                         )
         );
     }
-    
+    //------------------------------------------------------------------------------------------
     public function resetRetailerPasswordAction()
     {        
         $retailerid = $this->get('security.context')->getToken()->getUser()->getId();
@@ -68,34 +74,24 @@ class DefaultController extends Controller
                     'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)
                 ));        
     }
-    
+    //------------------------------------------------------------------------------------------
     public function retailerPasswordUpdateAction(Request $request )
     {      
         $id = $this->get('security.context')->getToken()->getUser()->getId();        
         $em = $this->getDoctrine()->getManager();
         
-        $entity = $this->get('admin.helper.retailer.user')->find($id);
-        
-        $retailer_old_password = $entity->getPassword();
-        
-        $salt_value_old = $entity->getSalt();
-        
-        $passwordResetForm = $this->createForm(new RetailerPasswordReset(), $entity);
-        
-        $passwordResetForm->bind($request);
-        
-        $data = $passwordResetForm->getData();
-        
-        $oldpassword = $data->getOldpassword();
-        
-        $factory = $this->get('security.encoder_factory');
-        
-        $encoder = $factory->getEncoder($entity);
-        
+        $entity = $this->get('admin.helper.retailer.user')->find($id);        
+        $retailer_old_password = $entity->getPassword();        
+        $salt_value_old = $entity->getSalt();        
+        $passwordResetForm = $this->createForm(new RetailerPasswordReset(), $entity);        
+        $passwordResetForm->bind($request);        
+        $data = $passwordResetForm->getData();        
+        $oldpassword = $data->getOldpassword();        
+        $factory = $this->get('security.encoder_factory');        
+        $encoder = $factory->getEncoder($entity);        
         $password_old_enc = $encoder->encodePassword($oldpassword, $salt_value_old);        
         
-        if ($retailer_old_password == $password_old_enc) {           
-            
+        if ($retailer_old_password == $password_old_enc) {                       
             if ($passwordResetForm->isValid()) {                                              
                 $entity->setUpdatedAt(new \DateTime('now'));                
                 $password= $this->encodePassword($entity);                 
@@ -103,8 +99,7 @@ class DefaultController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
-                $this->get('session')->setFlash('success', 'Password Updated Successfully');                
-                
+                $this->get('session')->setFlash('success', 'Password Updated Successfully');                                
             } else {
                 
                 $this->get('session')->setFlash('warning', 'Confirm pass doesnt match');
@@ -137,11 +132,6 @@ class DefaultController extends Controller
         return $password;
     }
 
-    
-    
-//------------------------------------------------------------------------------------------
-
-    
     
     
 }
