@@ -73,6 +73,7 @@ class ProductController extends Controller {
         $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper));          
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                     'form' => $productForm->createView(),
+     'productSpecification'=>$this->get('admin.helper.product.specification')->getProductSpecification()
         ));
     }
 
@@ -87,7 +88,7 @@ class ProductController extends Controller {
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
        
         $form->bindRequest($request);
-        if ($form->isValid()) {
+      
 
             $em = $this->getDoctrine()->getManager();
              $data=$request->request->all();
@@ -107,12 +108,7 @@ class ProductController extends Controller {
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
-        } else {
-            $this->get('session')->setFlash('warning', 'Product Detail cannot be created.');
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
-                        'form' => $form->createView(),
-            ));
-        }
+         
     }
 
     //------------------------------------------------------------------------------
@@ -156,23 +152,37 @@ class ProductController extends Controller {
 
             $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
-                        'form' => $form->createView(),
+                        'form' => $form->createView(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority()
             ));
         }
-        if ($form->isValid()) {
+        
+         if ($gender == 'M' and $clothing_type == 'Dress') {
+            $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));
 
+            $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
+            return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_new.html.twig', array(
+                        'form' => $form->createView(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority()
+            ));
+        }
+      
+             $data=$request->request->all();
+           if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
+           if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
+           if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
+           if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
+           if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
+           if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
+           if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
+           if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
             $entity->setUpdatedAt(new \DateTime('now'));
             $em->persist($entity);
             $em->flush();
+           // return new response(json_encode($entity->getFitPriority()));
             $this->get('session')->setFlash('success', 'Product Detail has been Update.');
-            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
-        } else {
-            $this->get('session')->setFlash('warning', 'Unable to update Product Detail.');
-            return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
-                        'form' => $form->createView(),
-                        'delete_form' => $deleteForm->createView(),
-                        'entity' => $entity));
-        }
+            //return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority())));
+            //return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
+              //          array('id' => $entity->getId(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority())));
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority())));
     }
 
     
