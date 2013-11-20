@@ -2,22 +2,17 @@
 
 namespace LoveThatFit\RetailerAdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use LoveThatFit\AdminBundle\Entity\Retailer;
 use LoveThatFit\AdminBundle\Form\Type\RetailerProductDetailType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\SecurityContext;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
-use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorImageType;
-use LoveThatFit\AdminBundle\Form\Type\ProductSizeType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeManTopType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenTopType;
@@ -28,15 +23,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeMeasurementType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Yaml\Dumper;
-use Symfony\Component\Yaml\Exception\ParseException;
-use LoveThatFit\AdminBundle\ImageHelper;
-use ZipArchive;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class RetailerProductController extends Controller {
 
@@ -55,13 +42,12 @@ protected $container;
         $retailer=$this->get('admin.helper.retailer')->find($id);  
         $product_with_pagination = $this->get('admin.helper.retailer')->getProductRetailerListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitRetailerAdminBundle:Product:index.html.twig',array('products'=>$product_with_pagination,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)));
-    }
+    }       
 
     public function retailerProductNewAction()
     {
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
-        $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $clothingTypes=$this->get('admin.helper.product.specification')->getWomenClothingType();
+        $productSpecificationHelper = $this->get('admin.helper.product.specification');        
         $productForm = $this->createForm(new RetailerProductDetailType($productSpecificationHelper));     
         return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
                     'form' => $productForm->createView(),'productSpecification'=>$productSpecification,                    
@@ -69,66 +55,41 @@ protected $container;
     }
     
     public function retailerProductNewCreateAction(Request $request)
-    {      
-        $data=$request->request->all();
-      
-        
-        $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
-        $productSpecificationHelper = $this->get('admin.helper.product.specification');
+    { 
         $em = $this->getDoctrine()->getManager();
         $entity = new Product();
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
-       
-        $form->bindRequest($request);
+       $form->bindRequest($request);
         $id = $this->get('security.context')->getToken()->getUser()->getId();                 
         $retailerentity = $this->get('admin.helper.retailer.user')->find($id);       
         $retailer = $this->getRetailer($retailerentity->getRetailer()->getId());
         if (!$retailer) {
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
         }
-       // return new Response(json_encode($request));
-      //  if ($form->isValid()) {            
-            
-           
-           $data=$request->request->all();
+            $data=$request->request->all();
             if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
             if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
             if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
             if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
             if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
-            
-            //if(isset($data['fit_pirority'])){$entity->setFitPriority(stripslashes(json_encode($data['fit_pirority'])));}
             if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
             if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
             if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
-            
             $entity->setRetailer($retailer); 
             $retailer->addProduct($entity);
             $em->persist($retailer);
-            $em->persist($entity);            
-             
-            $em->flush();
-            
-        //  return new response($fit_pirorty);
-            $this->get('session')->setFlash('success', 'Retailer Product Detail has been Created.');
-       //return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_pirorty'=>$entity->getFitPriority())));  
-          
+            $em->persist($entity);
+            $em->flush();          
+            $this->get('session')->setFlash('success', 'Retailer Product Detail has been Created.');                 
        return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_show.html.twig',  
                array('id' => $entity->getId(),'product'=>$entity, 'fit_priority'=>$entity->getFitPriority())
                     );  
       
     }
     
-    private function getJsonForFields($fields){
-        $f=array();
-        foreach ($fields as $key => $value) {
-        $f[$key]=$value;
-        }
-        return json_encode($f);
-        
-    }
+    
 
 
     //------------------------------------------------------------------------------
@@ -660,12 +621,7 @@ if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='f' or $enti
         if ($product->getClothingType()->getTarget() == "Dress" or $product->getClothingType()->getTarget() == "dress" and $product->getGender() == 'F') {
             $sizeForm = $this->createForm(new ProductSizeWomenDressType(), $this->getProductSize($size_id));
         }
-
-
-        //$sizeform = $this->createForm(new ProductSizeType(), $this->getProductSize($size_id));
-
         $sizeForm->bind($request);
-
         if ($sizeForm->isValid()) {
             $em->persist($entity_size);
             $em->flush();
@@ -697,13 +653,10 @@ if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='f' or $enti
     //--------------------------------------------------------------
 
     public function productDetailItemEditAction($id, $item_id) {
-
         $entity = $this->getProduct($id);
-
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-
         $itemform = $this->createForm(new ProductItemType(), $this->getProductItem($item_id));
         $itemrawimageform = $this->createForm(new ProductItemRawImageType(), $this->getProductItem($item_id));
         return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_show.html.twig', array(
@@ -716,29 +669,18 @@ if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='f' or $enti
 
 //----------------------------------------------------------------
     public function productDetailItemUpdateAction(Request $request, $id, $item_id) {
-
-
+        
         $entity = $this->getProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-
         $em = $this->getDoctrine()->getManager();
         $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find($item_id);
         if (!$entity_item) {
             throw $this->createNotFoundException('Unable to find Product Item.');
         }
-
         $itemform = $this->createForm(new ProductItemType(), $entity_item);
         $itemform->bind($request);
-
-        //condition for image ??????????????????????????????????????
-        /* if (!$entity_item->getImage())
-          {
-          $form->get('image')->addError(new FormError('Please upload image'));
-          }
-         */
-
         if ($itemform->isValid()) {
             $entity_item->upload(); //----- file upload method 
 
@@ -752,7 +694,6 @@ if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='f' or $enti
         } else {
 
             $this->get('session')->setFlash('warning', 'Unable to Product Detail Item');
-
             return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_show.html.twig', array(
                         'product' => $entity,
                         'itemform' => $itemform->createView(),
@@ -764,10 +705,8 @@ if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='f' or $enti
     //-----------------------------------------------------------------------
     public function productDetailItemDeleteAction(Request $request, $id, $item_id) {
         $em = $this->getDoctrine()->getManager();
-
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
-        $product = $repository->find($item_id);
-        
+        $product = $repository->find($item_id);        
         $em->remove($product);
         $em->flush();
         $this->get('session')->setFlash('success', 'Successfully Deleted');
@@ -912,22 +851,7 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
             'id' => $id,
             'size_id'=>$size_id
          )));
-        }
-        
-     
-       
-        
-        
-        
-        
-        /*
-        
-        return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
-                    'form' => $form->createView(),                    
-                    'product_size' => $product_size,
-                    'title'=>$title ));
-          
-         */
+        } 
     }
     
     
@@ -980,16 +904,8 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
             'product'=>$entity,
             'id' => $id,
             'size_id'=>$size_id
-         )));
-        
-        /*
-        return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
-                    'form' => $form->createView(),                    
-                    'product_size' => $product_size,
-                    'title'=>$title,
-                ));
-         
-         */
+         )));        
+     
     }
 
 
@@ -1039,12 +955,8 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
 
     //----------------------Products Stats-----------------
     public function productStatsAction() {
-        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $products = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findListAllProduct();
+        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');       
         $rec_count = count($productObj->countAllRecord());
-
         $entity = $this->getProductByBrand();
         return $this->render('LoveThatFitAdminBundle:Product:product_stats.html.twig', array(
                     'total_products' => $rec_count,
@@ -1100,20 +1012,14 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
 
     private function countProductsByGender($gender) {
         $em = $this->getDoctrine()->getManager();
-        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findPrductByGender($gender);
+        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');       
         $rec_count = count($ProductTypeObj->findPrductByGender($gender));
         return $rec_count;
     }
 
     private function countProductsByType($target) {
         $em = $this->getDoctrine()->getManager();
-        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findPrductByType($target);
+        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');        
         $rec_count = count($ProductTypeObj->findPrductByType($target));
         return $rec_count;
     }
@@ -1161,8 +1067,7 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
                     }
                 }
             }
-        }
-        //return $products;
+        }     
         $yaml = Yaml::dump($products, 40);
         return @file_put_contents('../app/config/config_ltf_product.yml', $yaml);
     }
@@ -1194,11 +1099,8 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
   
 #-------------------Searching Resulting----------------------------------------#
  public function productSeachResultAction(Request $request){
-  $data = $request->request->all();
-  
-  $productResult=$this->get('admin.helper.product')->searchProduct($data);
- //return new response(json_encode($productResult));
-  
+  $data = $request->request->all();  
+  $productResult=$this->get('admin.helper.product')->searchProduct($data); 
  return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig',$productResult);    
  }
 #------------------------------------------------------------------------------#
@@ -1219,7 +1121,7 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         $em = $this->getDoctrine()->getManager();
         $brand = $em->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
 
-        if (!$entity) {
+        if (!$brand) {
             $this->get('session')->setFlash('warning', 'Unable to find Brand.');
         }
         return $brand;
@@ -1235,6 +1137,15 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         return $this->getDoctrine()
                         ->getRepository('LoveThatFitAdminBundle:Retailer')
                         ->find($id);
+    }
+    
+    private function getJsonForFields($fields){
+        $f=array();
+        foreach ($fields as $key => $value) {
+        $f[$key]=$value;
+        }
+        return json_encode($f);
+        
     }
 }
 
