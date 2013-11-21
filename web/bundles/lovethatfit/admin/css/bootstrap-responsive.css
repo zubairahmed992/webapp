@@ -1169,3 +1169,36 @@
 	
   }
   
+  #fit_priority{
+      
+       float:left; 
+       width:300px;
+  }
+  
+  #fit_priority label{
+      
+      display:block;
+  }
+  
+   #fabric_content{      
+      float:left;
+      width:300px;
+   }
+  
+  #fabric_content label{
+      
+      display: block;
+  }
+  
+   #garment_detail{      
+      float:left;
+      width:300px;
+  }
+  
+  
+   #garment_detail label{
+      
+      display: block;
+  }
+  
+  
