@@ -6398,28 +6398,27 @@ margin-left: 80px;
 
 #product_info .product_fld{    
 clear:left;
-padding:5px 0px 5px 0px;
+padding:5px 0px 0px 0px;
+border-bottom: 1px dashed #cccccc;
+overflow: auto;
 }
 
 #product_info .product_fld .p_hd{
     
     font-weight: bold;
-    width: 80px!important;
+    width: 110px!important;
     padding-right: 50px;
-    
-}
-
-.hds a{
-    
-    color:#fff!important;
-    
-}
-
-#product_info .product_fld div{ 
-    
     float:left;
-    text-align: right;
+    
+}
 
+.hds a{    
+    color:#fff!important;    
+}
+
+#product_info .product_fld div{     
+    float:left;      
+    padding-bottom:5px;
 }
 
 .edt_container label {
@@ -6659,7 +6658,7 @@ padding:5px 0px 5px 0px;
 }
 
 .retailor_det_key{
-    background:#ccc; 
+    background:#efefef; 
     border-bottom:2px solid #fff; 
     color: #333; 
     line-height: 28px; 

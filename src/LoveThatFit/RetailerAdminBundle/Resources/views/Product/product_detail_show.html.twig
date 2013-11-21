@@ -36,103 +36,90 @@
                     
                     
                     
-                    <div id="product_info_left">
-                        <div class="product_fld">
+              <div id="product_info_left">
+                     <div class="product_fld">
                         <div class="p_hd">Brand</div>
                         <div>{{product.brand.name }}</div>
 
-                    </div>
-                    
+                    </div>                    
                      <div class="product_fld">    
                         <div class="p_hd">Clothing Type</div>
                         <div>{{product.clothingType.name }}</div>                        
-                    </div>
-                            
-                    <div class="product_fld">
+                    </div>                            
+                     <div class="product_fld">
                         <div class="p_hd">Gender</div>
                         <div>{{product.gender }}</div>
-<div class="product_fld">
+                    </div>
+                     <div class="product_fld">
                         <div class="p_hd">Styling Type</div>
                         <div>{{product.StylingType}}</div>
-                    </div>
-                            
-                    <div class="product_fld">
+                    </div>                            
+                     <div class="product_fld">
                         <div class="p_hd">Hem Length</div>
                         <div>{{product.HemLength}}</div>
-                    </div>
-                                   
+                    </div>                                   
                      <div class="product_fld">
                         <div class="p_hd">Neck line</div>
                         <div>{{product.Neckline}}</div>
-                    </div>
-                    
-                             <div class="product_fld">
+                    </div>                    
+                     <div class="product_fld">
                         <div class="p_hd">Sleeve Styling</div>
                         <div>{{product.SleeveStyling}}</div>
                     </div>
-                            
-                            
-                       <div class="product_fld">
+                     <div class="product_fld">
                         <div class="p_hd">Rise</div>
                         <div>{{product.Rise}}</div>
-                    </div>        
-                    
-                            
-                        <div class="product_fld">
+                    </div> 
+                     <div class="product_fld">
                         <div class="p_hd">Stretch Type</div>
                         <div>{{product.StretchType}}</div>
-                    </div>     
-                            
-                            
-                       <div class="product_fld">
+                    </div>   
+                     <div class="product_fld">
                         <div class="p_hd">Horizontal Stretch</div>
                         <div>{{product.HorizontalStretch}}</div>
-                    </div>
-                        
-                   <div class="product_fld">
+                    </div>                        
+                     <div class="product_fld">
                         <div class="p_hd">Vertical Stretch</div>
                         <div>{{product.VerticalStretch}}</div>
-                    </div>    
-                            
+                    </div> 
                      <div class="product_fld">
                         <div class="p_hd">Fabric Weight</div>
                         <div>{{product.FabricWeight}}</div>
-                    </div>        
-                            
+                    </div> 
                      <div class="product_fld">
                         <div class="p_hd">Structural Detail</div>
                         <div>{{product.StructuralDetail}}</div>
-                    </div>        
-                           
-                            
+                    </div>                            
                      <div class="product_fld">
                         <div class="p_hd">Fit Type</div>
                         <div>{{product.FitType}}</div>
                     </div>   
-                    <div class="product_fld">
+                     <div class="product_fld">
                         <div class="p_hd">Size Title Type</div>
                         <div>{{product.sizeTitleType}}</div>
                     </div>          
-                    
+                     <div class="product_fld">
+                        <div>{{product.description }}</div>    
+                            </div>   
                         
       <!-- Start OF Product Fit Pirority/ Fabric Content , Garment Detail --> 
       {% include 'LoveThatFitRetailerAdminBundle:Product:_fitPirority.html.twig'%}
       <!-- End OF Product Fit Pirority -->      
                    
-                           
-                            <div class="product_fld">
-                        <div>{{product.description }}</div>    
-                            </div>       
+                   
                         </div>
                     
                     {%if(product.displayProductColor!='')%}
-                    <div style="margin-left: 500px;">
-                        <img style="width: 50px; height: 100px;" src="{{ asset(product.displayProductColor.WebPath) }}" width="100" height="200"/>
-                    </div>       
+                    
+                    <div style="width:800px; float:left;">
+                    <div style="padding: 20px; width: 120px; margin: 0 auto; text-align: center;">
+                        <img style="width: 70px; height: 100px;" src="{{ asset(product.displayProductColor.WebPath) }}" width="100" height="200"/>
+                    </div> 
+                        </div>
                     {%endif%}
                     
 
-
+                    <div style="clear:both;"></div>
                     <div class="btn_wrapper" style="margin-top: 0px;">  
                         {% if(page_number is defined )%}
                         <a href="{{ path('retailer_product',{'page_number':page_number}) }}" class="btn">back</a>
@@ -144,8 +131,12 @@
                     </div>       
 
                 </div> 
+                    
+                    
             </div>      
         </div><!-- End pro_detail --> 
+        
+        <div style="clear:both;"></div>
         
         <!-- Start OF Product Color Display --> 
                         {% include 'LoveThatFitRetailerAdminBundle:Product:_productColors.html.twig'%}
@@ -158,7 +149,7 @@
 
     </div>
 
-
+        
 
 
 </div><!-- End product_content --> 

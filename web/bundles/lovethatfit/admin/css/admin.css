@@ -78,4 +78,31 @@ border-right:0px solid #ccc;
     width: 11.10%!important;
 }
 
+#dash_brand{    
+    float:left;
+}
+
+#dash_brand span{    
+    font-weight: bold;
+    display: block;
+    padding: 10px 0px 5px 0px;
+}
+
+#ret_pro_sizes a{    
+  width: 50px; 
+  float:left; 
+  border:1px solid #ccc; 
+  text-align:center; 
+  margin-right: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.ret_form_btns{
+    margin-top: 20px;
+    float: right!important;
+    margin-right: 160px;
+    
+}
+
 
