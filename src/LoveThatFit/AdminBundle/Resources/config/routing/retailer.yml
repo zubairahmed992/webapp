@@ -33,13 +33,17 @@ admin_retailer_delete:
     pattern:  /admin/retailer/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Retailer:delete }
  
-admin_retailer_manage_brand:
+ #---------------------------------------------------------------------------------
+ 
+admin_retailer_brand_edit:
     pattern:  /admin/retailer/brand/{id}/manage
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:retailerBrandManage }
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:brandEdit }
     
 admin_retailer_brand_add:
     pattern:  /admin/retailer/brand/{id}/create
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:createRetailerBrand }
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:brandUpdate }
+ 
+#---------------------------------------------------------------------------------    
     
 admin_new_retailer_user:
     pattern:  /admin/retailer/{id}/user/new

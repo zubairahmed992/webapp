@@ -38,7 +38,8 @@
                         {{ form_rest(form) }}
                                     <div class="span3">				
                                             <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>                                     
-                                    </div>                                    
+                                    </div>    
+                                            <a href="{{ path('admin_retailer_show', {'id': entity.retailer.id})}}" class="btn">cancel</a>
                                     </div>
                                 </div>
                                 </div> 

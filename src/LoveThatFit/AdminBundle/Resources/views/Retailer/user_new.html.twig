@@ -15,7 +15,7 @@
     <div>      
     <h1 style="float:left;">Add User Of   Retailer</h1>
      <div class="btn_wrapper">     
-<a href="{{ path('admin_retailers') }}" class="btn">back</a>
+<a href="{{ path('admin_retailers') }}" class="btn">back to list</a>
              
 
       </div>
@@ -50,7 +50,8 @@
                         {{ form_rest(form) }}
                                     <div class="span3">				
                                             <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>                                     
-                                    </div>                                    
+                                    </div>                      
+                                            <a href="{{ path('admin_retailer_show', {'id': entity.id})}}" class="btn">cancel</a>
                                     </div>
                                 </div>
                                 </div> 
