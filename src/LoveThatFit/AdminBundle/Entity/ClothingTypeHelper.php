@@ -153,8 +153,8 @@ class ClothingTypeHelper {
              'sort'=>$sort,
         );
     }
+    
 
-    //---------------------------------------------------------------------   
 //-------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
@@ -166,7 +166,7 @@ class ClothingTypeHelper {
      
     #-----------------------------------------------
    public function findAll(){
-  return $this->repo->findAll();      
+  return $this->repo->findAllRecord();      
     }
    #-----------------Find By Gender---------------------------------# 
     public function findByGender($gender){

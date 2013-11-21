@@ -10,36 +10,16 @@
 <div class="p_listing">     
     <h1>Clothing Types</h1>
  
-    
-    
-    <div class="btn_wrapper2">     
-        <div id="chart_figures" class="clothing_chart_figures">
-         <div class="facts">
-                    <div><span>Total:</span>{{rec_count}}</div>
-                    <div><span>Top:</span>{{criteriaTop}}</div>
-                    <div><span>Bottom:</span>{{criteriaBottom}}</div>
-                    <div><span>Dress:</span>{{criteriaDress}}</div>
-     </div>
-     </div>    
-     <a href="{{ path('admin_clothing_type_new') }}" class="btn">Add New</a>     
-      </div>
-    
-    
-    
-    
-    
-    
-    
      <div class="clearfix"></div> 
     
     <div class="bs-docs-grid">              
 
         <div class="row-fluid show-grid">
-            <div class="span1 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_clothing_types')~'/'~ 1~'/'~'target' }}" style=" text-decoration: none;">Target</a></div>
+            <div class="span1 hds">ID</div>
+            <div class="span1 hds">Name</div>
+            <div class="span1 hds">Target</div>
+            <div class="span1 hds">Gender</div>
             <div class="span1 hds"></div>                  
-            <div class="span1 hds">View - Edit - Delete</div>  
             <div class="span1 hds"></div> 
              <div class="span1 hds"></div>
             
@@ -50,32 +30,13 @@
         <div class="row-fluid show-grid">
             <div class="span1">{{ct.Id}}</div>
             <div class="span1">{{ct.Name}}</div>
-            <div class="span1">{{ct.Target}}</div>                        
+            <div class="span1">{{ct.Target}}</div>
+            <div class="span1">{{ct.Gender}}</div>
             <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%}  {%endif%}</div>
-            <div class="span1">
-                    <a href="{{ path('admin_clothing_type_show', {'id': ct.Id}) }}" title="Show {{ct.Name}}"><i class="icon-eye-open"></i></a>
-                    <a href="{{ path('admin_clothing_type_edit', {'id': ct.Id}) }}" title="Edit {{ct.Name}}"><i class="icon-edit"></i></a>
-                    <a href="#myModal{{ct.Id}}" role="button" data-toggle="modal" title="Delete {{ct.Name}}"><i class="icon-remove"></i></a>
-          
-            </div>
                 <div class="span1"></div> 
                  <div class="span1"></div> 
         </div>
-        <!-- Modal -->
-<div id="myModal{{ct.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Clothing Type</h3>
-  </div>
-  <div class="modal-body">
-      <p>Are you sure you want to Delete this Clothing type <b>{{ct.Name }}</b>?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_clothing_type_delete', {'id': ct.Id}) }}"  class="btn btn-primary">Delete</a>
-    
-  </div>
-</div>
+      
 {% endfor %}
 
    
@@ -84,10 +45,7 @@
 
     </div>
    
- {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
-  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
-,'controller_name':'admin_clothing_types','sort':sort}
-        %}   
+ 
 </div>
 
 

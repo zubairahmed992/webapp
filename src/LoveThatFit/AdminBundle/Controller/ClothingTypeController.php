@@ -13,8 +13,8 @@ class ClothingTypeController extends Controller {
 
 
     public function indexAction($page_number, $sort = 'id') {
-        $clothing_types_with_pagination = $this->get('admin.helper.clothingtype')->getListWithPagination($page_number, $sort);
-        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', $clothing_types_with_pagination);
+        $clothing_types = $this->get('admin.helper.clothingtype')->findAll();
+        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types'=>$clothing_types));
     }
 
 //------------------------------------------------------------------------------------------
