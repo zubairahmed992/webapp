@@ -1,21 +1,21 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
- <li class="active">Admin Dashboard </li>
- 
+ <li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span><a href="{{ path('admin_product_detail_show',{'id':id}) }}">{{productname}}</a><span class="divider">/</span><a href="{{ path('admin_product_detail_size_edit', {'id': id,"size_id":product_size.id}) }}">Size {{sizetitle}}</a><span class="divider">/</span>{{title}}<span class="divider">/</span></li>
+<li class="active">Add</li> 
 {% endblock %}
 {% block h1 %}Product{% endblock %}
 {% block title %}Product{% endblock %}
 {% block body %}
 <div>         
-    <h1 style="float:left;"> Product Size Measurement for {{title}}</h1>    
+    <h1 style="float:left;"> Add Product Size Measurement for {{title}}</h1>    
      <div class="btn_wrapper">      
-    <a href="{{ path('admin_products') }}" class="btn">back</a>
+    <a href="{{ path('admin_product_detail_size_edit', {'id': id,"size_id":product_size.id}) }}" class="btn">back</a>
      </div>
       <div class="clearfix"></div>   
     <form id="productSizeMeasuremntAdd" action="{{ path('admin_product_size_measurement_update',{"size_id":product_size.id,'title':title}) }}"  method="post" {{ form_enctype(form) }}  onsubmit="return ProductSizeMeasuremtAdd()">
  {{ form_errors(form) }}
             <div id="detail_wrapper">      
-                <div id="p_hd">Product Size Measurement</div>                
+                <div id="p_hd">Add Product Size Measurement</div>                
                     
                     <div id="product_content">
                         

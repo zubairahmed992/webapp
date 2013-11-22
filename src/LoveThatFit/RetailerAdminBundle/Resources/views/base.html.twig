@@ -11,6 +11,7 @@
     <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/css/admin.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
+    
     </head>
     <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -41,7 +42,7 @@
     
     <!-- Breadcrumb Start -->
     <ul class="breadcrumb">
-          <li><a href="#">Retailer</a> <span class="divider">/</span></li>
+          <li><a href="{{ path('retailer_admin_dashboard') }}">Retailer</a> <span class="divider">/</span></li>
           {% block breadcrumb %}{% endblock %}
     </ul>
 

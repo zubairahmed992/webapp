@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
   
 {% block breadcrumb %}
- <li class="active">Retailer Dashboard </li>
+<li class="active"><a href="{{ path('retailer_product') }}" >Retailer Products</a><span class="divider">/</span>Add New </li>
 
          
           
@@ -599,12 +599,15 @@ function Onsubmit(){
 <span id="fit_pirority_url" style="display:none;">{{path('retailer_admin_product_get_attribute')}}</span>
 <div>     
     
-    <h1 style="float:left;"> Product Detail </h1>    
+    <h1 style="float:left;"> Add New Retailer Product </h1>   
+    <div class="btn_wrapper">     
+<a href="{{ path('retailer_product') }}" class="btn">back to list</a>
+      </div>
       <div class="clearfix"></div>   
       <form action="{{path('retailer_admin_product_create')}}" method="post" {{ form_enctype(form) }} name="form" onsubmit="Onsubmit()">
  {{ form_errors(form) }}
             <div id="detail_wrapper">      
-                <div id="p_hd">Product Detail</div>                
+                <div id="p_hd">Add New Retailer Product</div>                
                     <div class="clearfix"></div>
                     <div id="product_content">
                         <div id="pro_detail">
@@ -752,6 +755,8 @@ function Onsubmit(){
                                     <div class="span3">
 				{{ form_rest(form) }}
                                             <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="ADD" class="btn btn-large btn-primary"/>                                     
+                                                <a href="{{ path('retailer_product') }}" class="btn btn-large btn-primary">Cancel    </a>
+                                                
                                     </div>                                    
                                     </div>
                                 </div>

@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
  
-<li><a href="{{ path('retailer_product') }}" >Products</a> <span class="divider">/</span></li>
+<li><a href="{{ path('retailer_product') }}" >Retailer Products</a> <span class="divider">/</span>{{entity.name}}<span class="divider">/</span></li>
           <li class="active">Edit</li>
           
 {% endblock %}
@@ -929,7 +929,7 @@ function strtolower (str) {
 <div>      
     <h1 style="float:left;">Edit Product </h1>
      <div class="btn_wrapper">     
-      
+      <a href="{{ path('retailer_product') }}" class="btn">back to list</a>
    
       </div>
       <div class="clearfix"></div>   
@@ -1085,6 +1085,7 @@ function strtolower (str) {
                                     <div class="span3">
 				{{ form_rest(form) }}
                                             <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="Update" class="btn btn-large btn-primary"/>                                     
+                                                <a href="{{ path('retailer_product') }}" class="btn btn-large btn-primary">Cancel    </a>
                                     </div>                                    
                                     </div>
                                 </div>

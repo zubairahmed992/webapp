@@ -1,6 +1,6 @@
 {% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-<li class="active">My Dashboard </li>
+<li class="active">{%for r in retailer%} {{r.title}} {%endfor%} Products</li>
 {% endblock %}
 {% block body %}
 <div class="p_listing">

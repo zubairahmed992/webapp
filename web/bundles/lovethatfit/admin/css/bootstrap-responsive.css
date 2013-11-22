@@ -1196,65 +1196,9 @@
   }
   
   
-   #garment_detail label{      
+   #garment_detail label{
+      
       display: block;
   }
   
-  
-  #error_box{      
-    margin: 10px 10px 0px 10px;   
-    display:block;
-    background:#cc0000;
-    padding: 5px;
-    border-radius:3px;
-    color: #ffffff;
-  }
-  
-  #product_info .product_fld .p_hd span{
-      font-weight: bold;
-      display:inline-block;
-     float:right;
-     color: #9BA304;
-     
-  }
-  
-  #fit_box{
-      float: left; 
-      clear:none!important;
-  }
-  
-  #fit_box .p_hd{
-      border-bottom: 1px dashed #777777;
-  }
-  
-  #fit_box .subhd{
-        color:#000;
-       
-  }
-  
-  #fabric_box{
-      float: left;
-      clear:none!important;
-  }
-  
-   #fabric_box .p_hd{
-      border-bottom: 1px dashed #777777;
-  }
-  
-  #fabric_box .subhd{
-      color:#000;
-  }
-  
-  #grmt_box{
-      float: left;
-      clear:none!important;
-  }
-  
-  #grmt_box .p_hd{
-      border-bottom: 1px dashed #777777;
-  }
-  
-  #grmt_box .subhd{
-      color:#000;
-  }
   

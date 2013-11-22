@@ -553,20 +553,19 @@ class ProductRepository extends EntityRepository {
 //-------------------------------------------------------------------------------------    
      public function tryOnHistoryWebService($user_id) {
          
-
-                 
-                 
          
            return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('pi.id as product_id ,p.name as product_name,b.name as brand_name,ps.title as size, pc.title as color ,pi.image as item_image')
-                        ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
+                        ->from('LoveThatFitAdminBundle:ProductItem ', 'pi')
                         ->innerJoin('pi.product','p')
                         ->innerJoin('p.brand', 'b')
-                        ->innerJoin('pi.product_color','pc')
-                        ->innerJoin('pi.product_size','ps')
-                        ->innerJoin('pi.user_item_try_history','uih')
+                        ->innerJoin('pi.product_color', 'pc')
+                        ->innerJoin('pi.product_size', 'ps')
+                        ->innerJoin('pi.user_item_try_history', 'uih')
                         ->where('uih.user = :id')
+                        ->andWhere("p.displayProductColor!=''")
+                        
                         ->orderBy('uih.count','DESC')
                         ->setMaxResults(20)
                         ->setParameter('id', $user_id)

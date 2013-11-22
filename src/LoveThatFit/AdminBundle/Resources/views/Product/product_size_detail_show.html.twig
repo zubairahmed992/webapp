@@ -8,7 +8,7 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/eye.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
-<li><a href="{{ path('retailer_product') }}" >Products</a> <span class="divider">/</span></li>
+<li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span><a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}">{{product.name}}</a><span class="divider">/</span>Size {{sizetitle}}<span class="divider">/</span></li>
 <li class="active">Show</li>         
 {% endblock %}
 
@@ -20,6 +20,9 @@
 {% block body %}
 <div> 
 <h1 style="float:left;">{{product.name }}</h1>
+<div class="btn_wrapper">     
+<a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">back</a>
+      </div>
 <div class="clearfix"></div>   
 
 
@@ -135,7 +138,7 @@
                         {% if(page_number is defined )%}
                         <a href="{{ path('admin_products',{'page_number':page_number}) }}" class="btn">back</a>
                         {%else%}
-                        <a href="{{ path('admin_products') }}" class="btn">back</a>
+                        <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">back</a>
                         {%endif%}
                         <a href="{{ path('admin_product_detail_edit', {'id': product.Id}) }}" class="btn">Edit</a>      
                         <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
