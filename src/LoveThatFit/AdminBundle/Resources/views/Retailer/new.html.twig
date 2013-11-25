@@ -15,6 +15,9 @@
 
 <div>      
     <h1 style="float:left;"> New Retailer </h1>    
+    <div class="btn_wrapper">     
+        <a href="{{ path('admin_retailers') }}" class="btn">back to list</a>
+    </div>
       <div class="clearfix"></div>   
     <form action="{{ path('admin_retailer_create') }}" method="post" {{ form_enctype(form) }}>
  {{ form_errors(form) }}

@@ -9,7 +9,10 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
 <li><a href="{{ path('retailer_product') }}" >Products</a> <span class="divider">/</span><a href="{{ path('retailer_admin_product_detail_show',{'id':  product.Id }) }}" >{{product.name }}</a><span class="divider">/</span></li>
-<li class="active">Size Measurement</li>         
+<li class="active">
+    Size {{sizetitle}}<span class="divider">/</span>
+    </li>         
+    <li class="active">Show</li>    
 {% endblock %}
 
 {% block h1 %}Products{% endblock %}

@@ -1,8 +1,8 @@
 {% extends 'LoveThatFitRetailerAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
 <li><a href="{{ path('retailer_product') }}" >Products</a> <span class="divider">/</span></li>
-<li class="active"><a href="{{path("retailer_admin_product_detail_size_edit",{"id":id, "size_id":product_size.id})}}">Size Measurement</a><span class="divider">/</span>{{title}}<span class="divider">/</span></li>  
-<li class="active">Edit</li>  
+<li><a href="{{ path('retailer_product') }}" >{{productname}}</a> <span class="divider">/</span></li>
+<li class="active"><a href="{{path("retailer_admin_product_detail_size_edit",{"id":id, "size_id":product_size.id})}}">Size {{sizetitle}}</a><span class="divider">/</span></li>  <li class="active">{{title}} <span class="divider">/</span>Edit</li>  
 {% endblock %}
 {% block h1 %}Product{% endblock %}
 {% block title %}Product{% endblock %}
@@ -10,7 +10,7 @@
 <div>         
    <h1 style="float:left;"> Update Retailer Product Size Measurement for {{title}}</h1>      
      <div class="btn_wrapper">     
-         <a href="{{path("retailer_admin_product_detail_size_edit",{"id":id, "size_id":product_size.id})}}" class="btn">back</a>
+         <a href="{{ path('retailer_product') }}" class="btn">back to list</a>
      </div>
       <div class="clearfix"></div>   
     <form id="productSizeMeasuremntAdd" action="{{ path('retailer_admin_product_size_measurement_editUpdate',{"id":id,"measurement_id":productSizeMeasurement.id,"size_id":product_size.id,'title':title}) }}" method="post" {{ form_enctype(form) }} onsubmit="return ProductSizeMeasuremtAdd()">

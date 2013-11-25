@@ -21,7 +21,7 @@
 <div>      
     <h1 style="float:left;">{{retailer.title}}</h1>
      <div class="btn_wrapper">     
-      <a href="{{ path('admin_retailers',{'page_number':page_number}) }}" class="btn">back</a>
+      <a href="{{ path('admin_retailers',{'page_number':page_number}) }}" class="btn">back to list</a>
       {%if retailer.id %}
       <a href="{{ path('admin_retailer_edit', {'id': retailer.id}) }}" class="btn">Edit</a>      
       <a href="#myModal2{{retailer.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
