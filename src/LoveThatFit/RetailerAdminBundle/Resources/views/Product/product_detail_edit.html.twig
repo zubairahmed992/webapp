@@ -31,18 +31,12 @@ $(document).ready(function(){
  };
  var size = Object.size(json);
  s="";
- s+='<div class="span3">Fit Pirority:</div><div class="span">';
+  s+='<label>Fit Pirority:</label>';
  for(var key in json) {
-    
-    s+= '<lable>'+key+'</lable>';
-    //s+= '<input type="text" name='+key+' value='+json[key]+'>';
-   s+=' <input type="text" name="fit_pirority['+key+']" value="'+json[key]+'">'; 
-   // alert('key: ' + key + '\n' + 'value: ' + json[key]);
+    s+= '<label>'+key+'</label>';
+    s+=' <input type="text" name="fit_pirority['+key+']" value="'+json[key]+'">'; 
 }
-           
- s+="</div>";
- 
-       document.getElementById("fit_pirority").innerHTML=s; 
+  document.getElementById("fit_pirority").innerHTML=s; 
    {% endautoescape %}
  
     // Fabric Content///
@@ -59,19 +53,13 @@ $(document).ready(function(){
  };
  var size = Object.size(json);
  s="";
- s+='<div class="span3">Fabric Content:</div><div class="span">';
+ s+='<label>Fabric Content:</label>';
  for(var key in json) {
-    
-    s+= '<lable>'+key+'</lable>';
-    //s+= '<input type="text" name='+key+' value='+json[key]+'>';
-   s+=' <input type="text" name="fabric_content['+key+']" value="'+json[key]+'">'; 
-   // alert('key: ' + key + '\n' + 'value: ' + json[key]);
+ s+= '<label>'+key+'</label>';
+ s+=' <input type="text" name="fabric_content['+key+']" value="'+json[key]+'">'; 
 }
-           
- s+="</div>";
- 
-       document.getElementById("fabric_content").innerHTML=s; 
-   {% endautoescape %}
+document.getElementById("fabric_content").innerHTML=s; 
+{% endautoescape %}
        
    //Garment Detail//////////////
    
@@ -87,19 +75,13 @@ $(document).ready(function(){
  };
  var size = Object.size(json);
  s="";
- s+='<div class="span3">Garment Detail:</div><div class="span">';
+ s+='<label>Garment Detail:</label>';
  for(var key in json) {
-    
-    s+= '<lable>'+key+'</lable>';
-    //s+= '<input type="text" name='+key+' value='+json[key]+'>';
-   s+=' <input type="text" name="garment_detail['+key+']" value="'+json[key]+'">'; 
-   // alert('key: ' + key + '\n' + 'value: ' + json[key]);
+ s+= '<label>'+key+'</label>';
+ s+=' <input type="text" name="garment_detail['+key+']" value="'+json[key]+'">'; 
 }
-           
- s+="</div>";
- 
-       document.getElementById("garment_detail").innerHTML=s; 
-   {% endautoescape %}
+ document.getElementById("garment_detail").innerHTML=s; 
+ {% endautoescape %}
        
        
     
