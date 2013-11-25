@@ -1,61 +1,64 @@
 clothing_type:  
-  shirt: 
-      target:	top
-      gender: m
-  casual_jacket:
-      target:	top
-      gender: m
-  sweater:
-      target:	top
-      gender: m
-  tee_knit:
-      target:	top
-      gender: m
-  trouser:
-      target:	bottom
-      gender: m
-  jean:    
-      target:	bottom
-      gender: m
-  sport_jacket:
-      target:	top
-      gender: m
-  dress jacket:
-      target:	dress
-      gender: m 
-  coat:
-      target:	dress
-      gender: m 
-  blouse:
-      target:	top
-      gender: f
-  tunic:
-      target:	top
-      gender: f 
-  tee_knit:  
-      target:	top
-      gender: f
-  tank_knit:
-      target:	top
-      gender: f
-  jacket:
-      target:	top
-      gender: f
-  sweater:  
-      target:	top
-      gender: f
-  trouse:
-      target:	bottom
-      gender: f
-  jean:
-      target:	bottom
-      gender: f
-  skirt:  
-      target:	bottom
-      gender: f
-  dress:  
-      target:	dress
-      gender: f 
-  coat:  
-      target:	dress
-      gender: f
+  female:
+    blouse:
+        target:	top
+        gender: f
+    tunic:
+        target:	top
+        gender: f 
+    tee_knit:  
+        target:	top
+        gender: f
+    tank_knit:
+        target:	top
+        gender: f
+    trouser:
+        target:	bottom
+        gender: f
+    jean:
+        target:	bottom
+        gender: f
+    skirt:  
+        target:	bottom
+        gender: f
+    dress:  
+        target:	dress
+        gender: f 
+    coat:  
+        target:	dress
+        gender: f
+    jacket:
+        target:	dress
+        gender: f
+    sweater:  
+        target:	dress
+        gender: f      
+  male:
+    shirt: 
+        target:	top
+        gender: m
+    sweater:
+        target:	top
+        gender: m
+    tee_knit:
+        target:	top
+        gender: m
+    casual_jacket:
+        target:	top
+        gender: m
+    sport_jacket:
+        target:	top
+        gender: m
+    dress_jacket:
+        target:	top
+        gender: m 
+    coat:
+        target:	top
+        gender: m   
+    trouser:
+        target:	bottom
+        gender: m
+    jean:    
+        target:	bottom
+        gender: m
+
