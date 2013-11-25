@@ -6664,3 +6664,23 @@ overflow: auto;
     line-height: 28px; 
     font-weight: bold;
 }
+
+.rt_user_show .span3:nth-child(3n){
+    text-align: right; 
+}
+
+#detail_wrapper .rt_user_show .row-fluid .span3:not(.hds){
+     text-align: right; 
+}
+
+.rt_user_show .span3{
+    text-align: right; 
+}
+
+.rt_user_show .span3:nth-child(3n){
+    width:25%!important;    
+}
+
+.rt_user_show .span3:nth-child(3n){
+    font-weight: normal;
+}

@@ -72,11 +72,14 @@
           {{ form_widget(editAnswerForm) }}
                             </div>          
                             <div align="center">
-                                <input type="submit" value="Submit" style="margin-left:30px" />   
+                                
+                         <input type="submit" value="Submit" style="margin-left:30px" /> 
+                         <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
+                         <input type="submit" value="Cancel"  /></a>
+                         
                                 </form>
                                    </div>
-                        <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                         <input type="submit" value="Cancel"  /></a>
+                        
                         
                         
                     </div>  
@@ -117,11 +120,12 @@
                                     </div>          
                                     <div align="center">
                                         <input type="submit"  value="Add Answer" style="margin-left:30px" />
+                                        <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
+                                        <input type="submit" value="Cancel"  /></a>
                                         </div>
                                         </form>
                             <div>
-                                      <a href="{{ path('admin_survey')}}" style="text-decoration:none;">
-                                      <input type="submit" value="Cancel"  /></a>
+                                      
                             </div>
                                 
                             </div> 
