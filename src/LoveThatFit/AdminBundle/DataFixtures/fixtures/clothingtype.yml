@@ -8,11 +8,8 @@ clothing_type:
   sweater:
       target:	top
       gender: m
-  tee:
+  tee_knit:
       target:	top
-      gender: m
-  pant:
-      target:	bottom
       gender: m
   trouser:
       target:	bottom
@@ -35,10 +32,10 @@ clothing_type:
   tunic:
       target:	top
       gender: f 
-  tee:  
+  tee_knit:  
       target:	top
       gender: f
-  tank:
+  tank_knit:
       target:	top
       gender: f
   jacket:
@@ -46,9 +43,6 @@ clothing_type:
       gender: f
   sweater:  
       target:	top
-      gender: f
-  pant:
-      target:	bottom
       gender: f
   trouse:
       target:	bottom
