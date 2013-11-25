@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
-<li><a href="{{ path('admin_retailers') }}" >Retailes</a> <span class="divider">/</span></li>
-<li class="active">Edit</li>
+<li><a href="{{ path('admin_retailers') }}" >Retailers</a> <span class="divider">/</span><a href="{{ path('admin_retailer_show', {'id': retailer.id})}}">{{retailer.title}}</a><span class="divider">/</span></li>
+<li class="active">Brands</li>
 {% endblock %}
 {% block h1 %}Retailer{% endblock %}
 {% block title %}Retailer{% endblock %}
@@ -23,8 +23,9 @@
                         {{ form_rest(form) }}
                                     <div class="span4">				
                                             <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>                                     
+                                                <a href="{{ path('admin_retailer_show', {'id': retailer.id})}}" class="btn btn-large btn-primary">cancel</a>
                                     </div>                
-                                            <a href="{{ path('admin_retailer_show', {'id': retailer.id})}}" class="btn">cancel</a>
+                                            
                                     </div>
                                 </div>
                                 </div> 

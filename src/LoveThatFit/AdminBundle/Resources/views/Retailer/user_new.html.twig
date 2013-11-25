@@ -1,23 +1,16 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
-<li><a href="{{ path('admin_retailers') }}" >Retailes</a> <span class="divider">/</span></li>
-<li class="active">Edit</li>
+<li><a href="{{ path('admin_retailers') }}" >Retailes</a> <span class="divider">/</span><a href="{{ path('admin_retailer_show', {'id': entity.id})}}">{{entity.title}}</a><span class="divider">/</span>Users<span class="divider">/</span></li>
+<li class="active">Add</li>
 {% endblock %}
 {% block h1 %}Retailer{% endblock %}
 {% block title %}Retailer{% endblock %}
-
-
 {% block body %}
-
-    
-  
     <div>      
-    <h1 style="float:left;">Add User Of   Retailer</h1>
+    <h1 style="float:left;">Add retailer user for   {{entity.title}}</h1>
      <div class="btn_wrapper">     
 <a href="{{ path('admin_retailers') }}" class="btn">back to list</a>
-             
-
       </div>
       <div class="clearfix"></div>   
       {%if entity.id %}
@@ -45,14 +38,17 @@
                                     <div class="span3">{{ form_widget(form.password) }}{{ form_errors(form.password) }}</div>                                   
                                 </div>
                                     
-                                    
-                                    
-                        {{ form_rest(form) }}
-                                    <div class="span3">				
-                                            <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>                                     
-                                    </div>                      
-                                            <a href="{{ path('admin_retailer_show', {'id': entity.id})}}" class="btn">cancel</a>
+                        <div class="row-fluid show-grid">
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">&nbsp;</div>
+                                    <div class="span3">
+				{{ form_rest(form) }}
+                                            <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="Add" class="btn btn-large btn-primary"/> <a  href="{{ path('admin_retailer_show', {'id': entity.id})}}" class="btn btn-large btn-primary">Cancel</a>                                     
+                                    </div>                                    
                                     </div>
+                                </div>
+                                    
                                 </div>
                                 </div> 
                                      

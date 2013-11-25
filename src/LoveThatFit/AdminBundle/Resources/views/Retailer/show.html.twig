@@ -7,10 +7,8 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/eye.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
-<li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span></li>
+<li><a href="{{ path('admin_retailers') }}" >Retailers</a> <span class="divider">/</span> {{retailer.title }}<span class="divider">/</span></li>
 <li class="active">Show</li>         
-<li><a href="{{ path('admin_retailers') }}" >Brands</a> <span class="divider">/</span></li>
-<li class="active">Show</li>
 {% endblock %}
 
 {% block h1 %}Brands{% endblock %}

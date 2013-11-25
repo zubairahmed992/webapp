@@ -292,6 +292,8 @@ class RetailerController extends Controller {
         return $this->render('LoveThatFitAdminBundle:Retailer:user_edit.html.twig', array(
                     'form' => $form->createView(),
                     'entity' => $entity,
+                    'retailer'=>$entity->getRetailer()->getTitle(),
+                    'retailerid'=>$entity->getRetailer()->getId(),
                         )
         );
     }
