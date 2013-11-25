@@ -68,7 +68,7 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-        $dirname = 'products';
+    /*    $dirname = 'products';
         $filename = realpath(dirname(__FILE__) . '/../../../../../web/uploads/ltf').'/'.$dirname;
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
         $fixtures = Yaml::parse(file_get_contents($fixturesPath . '/product_test.yml'));
@@ -171,6 +171,8 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         }
          }
         $this->copyAllProductImageFiles($source, $destination, $options = array('folderPermission' => 0777, 'filePermission' => 0777));
+     * 
+     */
     }
 
     private function get_value_if_exists($measurement_array, $measurement_point) {
