@@ -18,17 +18,20 @@ class LoadClothingTypeData implements FixtureInterface{
         $fixturesPath = realpath(dirname(__FILE__). '/../fixtures');
         $fixtures     = Yaml::parse(file_get_contents($fixturesPath. '/clothingtype.yml'));
         foreach($fixtures['clothing_type'] as $key=>$values) {  
+            foreach ($values as $gender_type_key => $gender_type_values) {
          $entity = new ClothingType();
-         $entity->setName($key);
-         $entity->setTarget($values['target']);
-         $entity->setGender($values['gender']);
+         $entity->setName($gender_type_key);
+         $entity->setTarget($gender_type_values['target']);
+         $entity->setGender($key);
          $entity->setCreatedAt(new \DateTime('now'));
          $entity->setUpdatedAt(new \DateTime('now'));
          $entity->setDisabled(false);         
          $manager->persist($entity);
          $manager->flush();
         }
+        }
     }
+    
     
     /**
      * {@inheritDoc}
