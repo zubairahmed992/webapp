@@ -179,4 +179,19 @@ class BrandRepository extends EntityRepository {
             return "null";
         }   
  }
+ 
+#Get Brand Base on Reailer 
+ public function getBrandBaseRetailer($id){
+     $query = $this->getEntityManager()
+                    ->createQuery("SELECT b.id as id ,b.name as name FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.retailer_brand rb   
+                    WHERE rb.retailer_id =:retailer")
+                   ->setParameters(array('retailer' => $id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                } 
+     
+ }
 }

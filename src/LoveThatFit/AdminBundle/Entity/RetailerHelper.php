@@ -348,6 +348,11 @@ public function findBrandBaseOnRetailer($retailer_id){
     return $this->repo->findBrandBaseOnRetailer($retailer_id);
     
 }
+
 #----------------End Of Brand ------------------------------------------------#    
     
+#---------------
+public function BrandBaseOnRetailer($id){
+  return $this->repo->getRetailerBrandParticular($id);
+}
 }

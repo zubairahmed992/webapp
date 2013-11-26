@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class RetailerProductDetailType extends AbstractType
 {
        private $container;
+       
        private $stretch_type;
       public function __construct($container)             
     {
@@ -20,7 +21,7 @@ class RetailerProductDetailType extends AbstractType
         $this->layering=$this->container->getLayering(); 
         $this->fabric_content=$this->container->getFabricContent(); 
         $this->garment_detail=$this->container->getGarmentDetail(); 
-        
+       
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -44,13 +45,14 @@ class RetailerProductDetailType extends AbstractType
         $builder->add('fabric_content','choice', array('choices'=>$this->fabric_content,'required' => false,'empty_value' => 'Select Fabric Content',));
         $builder->add('garment_detail','choice', array('choices'=>$this->garment_detail, 'required' => false,'empty_value' => 'Select Garment Detail',));
         $builder->add('description');        
-        $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));               
+        $builder->add('gender', 'choice', array('choices'=> array('M'=>'Male','F'=>'Female')));  
+     //   $builder->add('Brand','choice', array('choices'=>$this->getBrand,'multiple' => false,'required' => false,'empty_value' => 'Brand',));
         $builder ->add('Brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
                     'expanded' => false,
                     'multiple' => false,
                     'property' => 'name',
-                ));            
+                ));        
         $builder ->add('ClothingType', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:ClothingType',
                     'expanded' => false,

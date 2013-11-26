@@ -46,11 +46,14 @@ protected $container;
 
     public function retailerProductNewAction()
     {
+       $retaileruser= $this->get('security.context')->getToken()->getUser()->getId();  
+        $getBrand= $this->get('admin.helper.retailer')->BrandBaseOnRetailer($retaileruser);
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $productSpecificationHelper = $this->get('admin.helper.product.specification');        
         $productForm = $this->createForm(new RetailerProductDetailType($productSpecificationHelper));     
         return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
-                    'form' => $productForm->createView(),'productSpecification'=>$productSpecification,                    
+                    'form' => $productForm->createView(),'productSpecification'=>$productSpecification, 
+                    'getBrand'=>json_encode($getBrand)
         ));
     }
     
@@ -95,9 +98,11 @@ protected $container;
     //------------------------------------------------------------------------------
 
     public function productDetailEditAction($id) {
+        $retaileruser= $this->get('security.context')->getToken()->getUser()->getId();  
     $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->findOneById($id);
+   $getBrand= $this->get('admin.helper.retailer')->BrandBaseOnRetailer($retaileruser); 
 $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);
@@ -110,7 +115,7 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
                     'fit_priority'=> $entity->getFitPriority(),
                     'fabric_content'=>$entity->getFabricContent(),
                     'garment_detail'=>$entity->getGarmentDetail(),
-                
+                    'getBrand'=>json_encode($getBrand),
                     ));
     }
 

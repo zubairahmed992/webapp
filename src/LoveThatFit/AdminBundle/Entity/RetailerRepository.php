@@ -303,10 +303,45 @@ public function findBrandBaseOnRetailer($retailer_id){
                         ->select('b.id as brand_id,b.name as brand_name')
                         ->from('LoveThatFitAdminBundle:Brand','b')
                         ->innerJoin('b.retailers','r')
+                        ->innerJoin('r.retailer_users ','ru')
                         ->Where('r.id =:retailer')
                         ->setParameters(array('retailer' => $retailer_id))
                         ->getQuery()
                         ->getResult(); 
    
-}    
+
+   
+}
+public function  BrandBaseOnRetailer($retailer){
+    $query = $this->getEntityManager()
+                    ->createQuery("SELECT b.id as brand_id,b.name as brand_name FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.retailers r   
+                    WHERE r.id =:retailer")
+                   ->setParameters(array('retailer' => $retailer));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+               
+                
+}
+#-----------------------------------------------------------------------------#
+public function getRetailerBrandParticular($id)
+   {
+       $query = $this->getEntityManager()
+                    ->createQuery("SELECT b.id as brand_id,b.name as brand_name FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.retailers r   
+                    JOIN r.retailer_users ru
+                    WHERE ru.id=:retailer
+                    ")->setParameters(array('retailer' => $id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+   }
+   
+
+
 }

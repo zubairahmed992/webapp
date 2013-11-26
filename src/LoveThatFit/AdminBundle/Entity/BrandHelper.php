@@ -246,5 +246,6 @@ public function getRetailerBrandById($id)
         }
         return;
     }
-
+   
+  
 }
