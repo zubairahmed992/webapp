@@ -5,6 +5,7 @@ use Symfony\Component\Yaml\Dumper;
 use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\SiteBundle\Algorithm;
 use LoveThatFit\SiteBundle\Cart;
+use LoveThatFit\SiteBundle\FitEngine;
 use LoveThatFit\AdminBundle\ImageHelper;
 use LoveThatFit\AdminBundle\Entity\ClothingType;
 use LoveThatFit\AdminBundle\Entity\Product;
@@ -199,7 +200,9 @@ public function indexAction($list_type) {
     }
 #-------------------------------------------------------------------------------
     public function ajaxAction() {
-        return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');
+        $fe= new FitEngine($this->get('security.context')->getToken()->getUser());
+   return new Response($fe->fit());
+//return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');
     }
  //-----------------------------------------------------------------------------
     public function emailAction($id) {
