@@ -58,6 +58,13 @@ class ProductSize
      * @ORM\Column(name="title", type="string",nullable=true)
      */
     private $title;    
+    
+    /**
+     * @var string $body_type
+     *
+     * @ORM\Column(name="body_type", type="string",nullable=true)
+     */
+    private $body_type;   
     /**
      * Get id
      *
@@ -178,5 +185,28 @@ class ProductSize
     public function getProductSizeMeasurements()
     {
         return $this->product_size_measurements;
+    }
+
+    /**
+     * Set body_type
+     *
+     * @param string $bodyType
+     * @return ProductSize
+     */
+    public function setBodyType($bodyType)
+    {
+        $this->body_type = $bodyType;
+    
+        return $this;
+    }
+
+    /**
+     * Get body_type
+     *
+     * @return string 
+     */
+    public function getBodyType()
+    {
+        return $this->body_type;
     }
 }
