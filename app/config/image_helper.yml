@@ -39,6 +39,8 @@ image_category:
       height: 117
       prefix:  
       dir:  'uploads/ltf/products/display/iphone_list' 
+    
+      
   
   product_pattern:      
     original:
@@ -55,7 +57,19 @@ image_category:
       width: 50
       height: 50
       prefix:  
-      dir:  'uploads/ltf/products/pattern/iphone'  
+      dir:  'uploads/ltf/products/pattern/iphone' 
+      
+    ipad:
+      width: 80
+      height: 80
+      prefix:  
+      dir:  'uploads/ltf/products/pattern/ipad'  
+    
+    ipad_retina:
+      width: 100
+      height: 100
+      prefix:  
+      dir:  'uploads/ltf/products/pattern/ipad_retina'      
 
   product_item:
     original:
@@ -78,7 +92,19 @@ image_category:
       prefix: 
       dir:  'uploads/ltf/products/fitting_room/iphone5'
       available_height: 840
-      pixel_per_inch: 17      
+      pixel_per_inch: 17 
+      
+    ipad:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/ipad'
+      available_height: 870
+      pixel_per_inch: 18.125 
+    
+    ipad_retina:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/ipad_retina'
+      available_height: 870
+      pixel_per_inch: 18.125   
       
   user:
     original:
