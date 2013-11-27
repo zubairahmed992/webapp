@@ -1121,7 +1121,13 @@ public function productSizeMeasurementdeleteAction($id,$size_id,$measurement_id,
 
 #---------------------Product Download-----------------------------------------#
     public function productDetailDownloadAction($id){
-     return new Response($this->get('admin.helper.product')->zipDownload($id));
+     $product=$this->get('admin.helper.product')->zipDownload($id);
+     if($product['status']=='1'){
+         
+          $this->get('session')->setFlash('warning', 'Images not found');                 
+       return $this->redirect($this->generateUrl('retailer_product'));
+     }
+     
     }
 #--------------------Multiple Iamge Download as Zip----------------------------#
     public function productDetailZipDownloadAction(Request $request)

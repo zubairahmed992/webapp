@@ -811,13 +811,11 @@ public function productDetail($id, $product_color_id, $product_size_id){
     $images=$product->getColorImagesPaths();
     $itemImages=$product->getItemImagesPaths();
     $archive_file_name =$product->getName().$product->getId().'.zip';
-    if(count($images)>0 && count($itemImages>0)){
-    $this->zipFilesAndDownload($images,$archive_file_name,$itemImages);
-    }else{
-       return json_encode(array("Images not found"));
-    }
-   
-   
+   $product=$this->zipFilesAndDownload($images,$archive_file_name,$itemImages);
+   if($product['status']=='1'){
+       return array('status'=>'1');
+   }
+  
 }
 #------------------------------------------------------------------------------#
 public function zipMultipleDownload($data){
@@ -827,8 +825,7 @@ public function zipMultipleDownload($data){
     $images=$product->getColorImagesPaths();
     $itemImages=$product->getItemImagesPaths();
     $archive_file_name =$product->getName().$product->getId().'.zip';
-    $this->zipFilesAndDownload($images,$archive_file_name,$itemImages);
-
+    return new response(json_encode($this->zipFilesAndDownload($images,$archive_file_name,$itemImages)));
    
 }
 // #-------------Function for dowloading images in zip format--------------------#
@@ -836,22 +833,21 @@ public function zipMultipleDownload($data){
     {
         $zip = new ZipArchive();
 
-        if ($zip->open($archive_file_name, \ZIPARCHIVE::CREATE | \ZIPARCHIVE::OVERWRITE) === TRUE) {
+       	if ($zip->open($archive_file_name, \ZIPARCHIVE::CREATE | \ZIPARCHIVE::OVERWRITE) === TRUE) {
             foreach ($file_names as $files) {
                 $zip->addFile($files['web'], $files['web']);
                 $zip->addFile($files['iphone'], $files['iphone']);
+                
             }
             foreach ($itemImages as $itemfiles) {
-
-                $zip->addFile($itemfiles['web'], $itemfiles['web']);
-                $zip->addFile($itemfiles['iphone4s'], $itemfiles['iphone4s']);
+               $zip->addFile($itemfiles['web'], $itemfiles['web']);
+               $zip->addFile($itemfiles['iphone4s'], $itemfiles['iphone4s']);
                 $zip->addFile($itemfiles['iphone5'], $itemfiles['iphone5']);
             }
-            $zip->close();
-        } else {
-            return array("msg" => "Cannot find");
-        }
-
+          
+         
+        if($zip->status){
+         $zip->close();
         $response = new Response();
         //then send the headers to foce download the zip file
         $response->headers->set('Content-Type', 'application/zip');
@@ -861,8 +857,19 @@ public function zipMultipleDownload($data){
         $response->headers->set('Content-Transfer-Encoding', "binary");
         $response->sendHeaders();
         $response->setContent(readfile($archive_file_name));
-        return $response;
+        return $response; 
+         }else{
+             return array('msg'=>'Images not found','status'=>'1');
+         }
+         
+         
+        }
+         
     }
+    
+    
+    
+    
 
 #------------------------------------------------------------------------------#
 #----------------Get Count All Record With Current Product Limit---------------#
