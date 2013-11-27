@@ -15,7 +15,25 @@
                 {% if (value['exists'])%}                  
                 <tr>
                     <td class="retailor_det_key">{{value['measurement']['title'] }}                        
-                        <div class="retailer_edt"><a href="{{ path('admin_product_size_measurement_edit', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a></div>
+                        <div class="retailer_edt">
+                            <a href="{{ path('admin_product_size_measurement_edit', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a>
+                            <a href="#myModaldetail{{value['measurement']['id']}}" title="Delete {{key}}" role="button" data-toggle="modal" class="btn">Delete</a>
+                            <div id="myModaldetail{{value['measurement']['id']}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Product</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Product Size Measurement <b>{{key}}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_product_size_measurement_delete', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>        
+
+                        </div>
                     </td>
                 </tr>
                 <tr>

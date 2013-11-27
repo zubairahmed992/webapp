@@ -922,7 +922,29 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
     }
 
 
-
+public function productSizeMeasurementdeleteAction($id,$size_id,$measurement_id,$title)
+    {
+        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
+        if(!$product_size)
+        {
+            throw $this->createNotFoundException('Unable to find Product Size.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ProductSizeMeasurement')
+                ->find($measurement_id);
+        $em->remove($entity);
+        $em->flush();
+        $this->get('session')->setFlash('success', 'Successfully Deleted');
+        $id=$product_size->getProduct()->getId();
+        $product = $this->getProduct($id);          
+        return $this->redirect($this->generateUrl('retailer_admin_product_detail_size_edit', array(
+            'product'=>$product,
+            'id' => $id,
+            'size_id'=>$size_id
+         )));
+    }
+    
 
 
 

@@ -132,7 +132,11 @@ admin_product_size_measurement_create:
 admin_product_size_measurement_update:
      pattern:  /admin/product/size_meaurement/{size_id}/{title}/update
      defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeMeasurementupdate }     
-
+     
+admin_product_size_measurement_delete:
+     pattern:  /admin/product/{id}/size/{size_id}/meaurement/{title}/delete/{measurement_id}
+     defaults: { _controller: LoveThatFitAdminBundle:Product:productSizeMeasurementdelete }     
+     
 admin_product_gender_base_clothing_type:
     pattern:  /admin/product/gender/clothing_type
     defaults: { _controller: LoveThatFitAdminBundle:Product:productGenderBaseClothingType }
