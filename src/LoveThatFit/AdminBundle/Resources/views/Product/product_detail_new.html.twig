@@ -17,10 +17,12 @@
 
 
 <script>
+    
 $(document).ready(function(){
  // Retailer Section 
+ fetchClothingTypeBaseOnGender();
  
- 
+
  $("#product_Retailer").change(function(){
      var retailer_id=$('#product_Retailer').val();
      $.ajax({
@@ -41,8 +43,7 @@ $(document).ready(function(){
            {
              $('<option>').val('').text('Unavailable').appendTo('#product_Brand');       
            }
-               
-                
+          
     }})
 
 });
@@ -53,31 +54,7 @@ $(document).ready(function(){
  $('#optional_elements').hide();
  $('#product_ClothingType').empty();
  $("#product_gender").change(function(){
-     var gender=$('#product_gender').val();
-     // Clothing Type For Female
-     $.ajax({
-        type:'POST',
-        url: $('#url').text(),
-        data: {gender: gender},  
-        success: function(data) {
-        $('#product_ClothingType').empty();
-      var clothing_type = JSON.parse(data);
-      length_obj=Object.keys(clothing_type).length;
-      if( length_obj>0)
-        {
-            for(i=0;i<length_obj;i++)
-        {   
-         $('<option>').val(clothing_type[i]['id']).text(clothing_type[i]['name']).appendTo('#product_ClothingType');    
-        }
-      } 
-       else 
-           {
-             $('<option>').val('').text('Unavailable').appendTo('#product_ClothingType');       
-           }
-           
-           
-                
-    }})
+    fetchClothingTypeBaseOnGender();
 
 });
  $("#product_ClothingType").change(function(){
@@ -665,7 +642,35 @@ function validate(){
    //return false;
  }
  
-
+// Fetch Cltohing type base on Gender 
+function fetchClothingTypeBaseOnGender(){
+ 
+ var gender=$('#product_gender').val();
+     // Clothing Type For Female
+     $.ajax({
+        type:'POST',
+        url: $('#url').text(),
+        data: {gender: gender},  
+        success: function(data) {
+        $('#product_ClothingType').empty();
+      var clothing_type = JSON.parse(data);
+      length_obj=Object.keys(clothing_type).length;
+      if( length_obj>0)
+        {
+            for(i=0;i<length_obj;i++)
+        {   
+         $('<option>').val(clothing_type[i]['id']).text(clothing_type[i]['name']).appendTo('#product_ClothingType');    
+        }
+      } 
+       else 
+           {
+             $('<option>').val('').text('Unavailable').appendTo('#product_ClothingType');       
+           }
+           
+           
+                
+    }})
+}
 </script>    
 <span id="url" style="display:none;">{{path('admin_product_gender_base_clothing_type')}}</span>
 <span id="fit_pirority_url" style="display:none;">{{path('admin_product_get_attribute')}}</span>
