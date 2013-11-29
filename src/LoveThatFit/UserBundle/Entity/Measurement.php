@@ -1109,4 +1109,23 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     {
         return $this->bodyTypes;
     }
+
+    public function getArray(){
+
+        array('weight' => $this->weight,
+        'height' => $this->height,
+        'waist' => $this->waist,
+        'hip' => $this->hip,
+        'bust' => $this->bust,
+        'chest' => $this->chest,
+        'arm' => $this->arm,
+        'inseam' => $this->inseam,
+        'back' => $this->back,
+        'shoulder_height' => $this->shoulder_height,
+        'outseam' => $this->outseam,
+        'sleeve' => $this->sleeve,
+        'neck' => $this->neck);
+    
+
+    }
 }

@@ -187,6 +187,14 @@ class ProductSize
         return $this->product_size_measurements;
     }
 
+     public function getMeasurementArray()
+    {
+        $size_array = array();
+        foreach ($this->product_size_measurements as $psm) {
+            $size_array[$psm->getTitle()] = array( 'max' => $psm->getIdealBodySizeHigh() , 'min' => $psm->getIdealBodySizeLow(), 'mbm' => $psm->getMaxBodyMeasurement());
+         }
+            return $size_array;
+    }
     /**
      * Set body_type
      *

@@ -944,6 +944,11 @@ class Product {
         return $this->fit_priority;
     }
 
+         public function getFitPriorityArray(){
+        return json_decode($this->fit_priority);
+    }
+
+    
     /**
      * Set fabric_content
      *

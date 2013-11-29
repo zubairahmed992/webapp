@@ -200,8 +200,11 @@ public function indexAction($list_type) {
     }
 #-------------------------------------------------------------------------------
     public function ajaxAction() {
-        $fe= new FitEngine($this->get('security.context')->getToken()->getUser());
-   return new Response($fe->fit());
+        $product_item = $this->get('admin.helper.productitem')->getProductItemById(4);
+        
+        $fe= new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);
+   
+        return new Response($fe->fit());
 //return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');
     }
  //-----------------------------------------------------------------------------
