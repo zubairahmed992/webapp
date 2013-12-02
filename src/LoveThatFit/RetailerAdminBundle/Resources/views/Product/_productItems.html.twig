@@ -150,7 +150,7 @@ return true;
                     </div>
 
                     <div class="span2">
-                       <a href='{{path("retailer_admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a>
+                       <a href='{{path("retailer_admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' name="item" class="btn">Edit</a>
                        <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
                        {%if(pi.rawImage )%}
                        <a href="{{path("retailer_admin_product_detail_item_raw_image_download",{"id":product.id, "item_id":pi.id})}}" role="button" data-toggle="modal" class="btn">Download</a>
