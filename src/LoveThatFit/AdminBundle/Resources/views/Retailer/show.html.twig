@@ -68,7 +68,7 @@
                                         {%for r in retaileruser%}
                                          <div class="span9" style="border-bottom:1px solid #ccc; line-height: 54px;">{{r.name}}</div> 
                                          <div class="span3" style="border-bottom:1px solid #ccc;">
-                                             <a class="btn" href="{{ path('admin_retailer_edit_user', {'id': r.id}) }}">edit</a>
+                                             <a class="btn" href="{{ path('admin_retailer_edit_user', {'retailerId':retailer.id,'id': r.id}) }}">edit</a>
                                              <a class="btn" href="#myModal{{r.id}}" role="button" data-toggle="modal" title="Delete {{r.name}}">Delete</a>
                                          </div>                                         
                                          
