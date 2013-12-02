@@ -90,13 +90,12 @@ class ProductController extends Controller {
       
 
             $em = $this->getDoctrine()->getManager();
-             $data=$request->request->all();
+            $data=$request->request->all();
             if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
             if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
             if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
             if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
-            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
-            
+            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}            
             //if(isset($data['fit_pirority'])){$entity->setFitPriority(stripslashes(json_encode($data['fit_pirority'])));}
             if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
             if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
@@ -164,7 +163,7 @@ class ProductController extends Controller {
             ));
         }
       
-             $data=$request->request->all();
+           $data=$request->request->all();
            if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
            if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
            if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
