@@ -69,7 +69,8 @@ return true;
 
     {% if item_id is defined and item_id and item_id == pi.id %}
       <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
-        <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }} onsubmit="return validate();">
+       
+      <form action="{{ path('admin_product_detail_item_update',{"id":product.id, "item_id":pi.id}) }}" method="post" {{ form_enctype(itemform) }} onsubmit="return validate();" >
                                  {{ form_errors(itemform) }}
                 <div class="row-fluid show-grid p_title">
 
@@ -150,12 +151,11 @@ return true;
                     </div>
 
                     <div class="span2">
-                       <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}' class="btn">Edit</a>
+                       <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' class="btn" name="item">Edit</a>
                        <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
                        {%if(pi.rawImage )%}
                        <a href="{{path("admin_product_detail_item_raw_image_download",{"id":product.id, "item_id":pi.id})}}" role="button" data-toggle="modal" class="btn">Download</a>
-                       {%endif%} 
-                        
+                       {%endif%}                         
 
                     </div>
 
@@ -164,10 +164,10 @@ return true;
     <div id="myModal2{{pi.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete Product</h3>
+        <h3 id="myModalLabel">Delete Product Item</h3>
     </div>
     <div class="modal-body">
-        <p>Are you sure you want to Delete this Product <b>{{product.name }} Item</b>?</p>
+        <p>Are you sure you want to Delete this Product <b>{{product.name }} - Size {{pi.productSize.title}} Item</b>?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

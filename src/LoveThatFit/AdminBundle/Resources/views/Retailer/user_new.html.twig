@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
-<li><a href="{{ path('admin_retailers') }}" >Retailes</a> <span class="divider">/</span><a href="{{ path('admin_retailer_show', {'id': entity.id})}}">{{entity.title}}</a><span class="divider">/</span>Users<span class="divider">/</span></li>
+<li><a href="{{ path('admin_retailers') }}" >Retailers</a> <span class="divider">/</span><a href="{{ path('admin_retailer_show', {'id': entity.id})}}">{{entity.title}}</a><span class="divider">/</span>Users<span class="divider">/</span></li>
 <li class="active">Add</li>
 {% endblock %}
 {% block h1 %}Retailer{% endblock %}
@@ -42,7 +42,8 @@
                                     <div class="span3">&nbsp;</div>                                    
                                     <div class="span3">
 				{{ form_rest(form) }}
-                                            <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="Add" class="btn btn-primary"/> <a  href="{{ path('admin_retailer_show', {'id': entity.id})}}" class="btn btn-primary">Cancel</a>                                     
+                                            <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="Add" class="btn btn-primary"/> 
+                                                <a  href="{{ path('admin_retailer_show', {'id': entity.id})}}" class="btn btn-primary">Cancel</a>                                     
                                     </div>                                    
                                     </div>
                                 </div>
