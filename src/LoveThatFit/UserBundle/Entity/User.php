@@ -608,6 +608,9 @@ class User implements UserInterface, \Serializable {
     public function getMeasurement() {
         return $this->measurement;
     }
+     public function getMeasurementArray() {
+        return $this->measurement->getArray();
+    }
 
     /**
      * Add survey
