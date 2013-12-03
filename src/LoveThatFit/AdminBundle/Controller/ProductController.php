@@ -929,7 +929,8 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         foreach ($sizesForPetiteBodyType as $s) {
 
             //--------------check if size already there before inserting new size------------
-            $p_size = $product->getSizeByTitle($s);
+          //  $p_size = $product->getSizeByTitle($s);
+             $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypePetite);
 
             if (!$p_size) {
                 //--------------insert size------------
@@ -958,8 +959,8 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
  #---------------- For Regular BodyType--------------------------------------#
         foreach ($sizesForRegularBodyType as $s) {
 //--------------check if size already there before inserting new size------------
-            $p_size = $product->getSizeByTitle($s);
-
+            //$p_size = $product->getSizeByTitle($s);
+            $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeRegular);
             if (!$p_size) {
                 //--------------insert size------------
                 $p_size = new ProductSize();
@@ -989,7 +990,9 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
  #---------------- For Tall BodyType--------------------------------------#
         foreach ($sizesForTallBodyType as $s) {
 //--------------check if size already there before inserting new size------------
-            $p_size = $product->getSizeByTitle($s);
+            //$p_size = $product->getSizeByTitle($s);
+ #-----------The Method used for matching size title and body type ------------#
+            $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeTall);
 
             if (!$p_size) {
                 //--------------insert size------------

@@ -458,8 +458,18 @@ class Product {
     public static function getSizes() {
         return array('XS', 'S', 'M', 'ML', 'L', 'XL', '2XL', '3XL');
     }
-
+    public function getSizeByTitleBaseBodyType($sizeTitle,$bodyType){
+        $productSizes = $this->getProductSizes();
+        foreach ($productSizes as $ps) {
+            if ($ps->getTitle() == $sizeTitle and $ps->getBodyType()==$bodyType) {
+                return $ps;
+            }
+        }
+        return;
+        
+    }
     //----------------------------------------------------------
+    #----!!! This method used for 
     public function getSizeByTitle($sizeTitle) {
         $productSizes = $this->getProductSizes();
         foreach ($productSizes as $ps) {

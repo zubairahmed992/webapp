@@ -49,6 +49,14 @@ return false;
 return true;
 }    
 </script> 
+<style>
+        #detail_wrapper .row-fluid .span2:not(.hds) {
+    width: 15%;
+}
+#detail_wrapper .row-fluid .span2{
+    width:15%;
+}
+</style>
 <div id="pro_clr"> 
     <h2> Product Items</h2>
     
@@ -57,6 +65,7 @@ return true;
         <div class="row-fluid show-grid p_title">
 
             <div class="span2 hds"><b>Line Number</b></div>
+            <div class="span2 hds"><b>Body Type</b></div>
             <div class="span2 hds"><b>Size</b></div>
             <div class="span2 hds"><b>Color</b></div>
             <div class="span2 hds"><b>Fitting Room</b></div>
@@ -75,7 +84,7 @@ return true;
                 <div class="row-fluid show-grid p_title">
 
                     <div class="span2">{{ form_widget(itemform.line_number) }}{{ form_errors(itemform.line_number) }}</div>
-
+                    <div class="span2">{{pi.productSize.bodyType}}</div>
                     <div class="span2">{{pi.productSize.title}}</div>
                     <div class="span2">{{pi.productColor.title}}</div>
                     <div class="span2">{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</div>
@@ -138,8 +147,9 @@ return true;
 
                 <div class="row-fluid show-grid p_title">
 
-
+                    
                     <div class="span2">{{pi.lineNumber}}</div>
+                    <div class="span2">{{pi.productSize.bodyType}}</div>
                     <div class="span2">{{pi.productSize.title}}</div>
                     <div class="span2">{{pi.productColor.title}}</div>
                     <div class="span2">
