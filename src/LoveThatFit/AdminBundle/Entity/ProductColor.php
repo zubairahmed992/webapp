@@ -231,6 +231,39 @@ class ProductColor {
         return $this;
     }
 
+    #----- Petite Sizes-------------#
+    private $petiteSizes;
+     
+    public function getpetiteSizes() {
+        return $this->petiteSizes;
+    }
+    public function setpetiteSizes($petiteSizes) {
+        $this->petiteSizes = $petiteSizes;
+        return $this;
+    }
+    #----End Of Petite Size-------------#
+    
+#---------Start Of Regular Sizes    
+    private $regularSizes;
+     public function getregularSizes() {
+        return $this->regularSizes;
+    }
+    public function setregularSizes($regularSizes) {
+        $this->regularSizes = $regularSizes;
+        return $this;
+    }
+#-------End Of Regular Size---------------------#
+#-------Start Of Sizes--------------------------#    
+    
+    private $tallSizes;
+    public function gettallSizes() {
+        return $this->tallSizes;
+    }
+    public function settallSizes($tallSizes) {
+        $this->tallSizes = $tallSizes;
+        return $this;
+    }
+    
 //---------------------------------------------------------------    
 
     
@@ -276,13 +309,27 @@ class ProductColor {
         $size=$this->getSmallestAvailableSize();
         return $size->getId();
     }
+    
+     public function getSizeTitleArrayBodyType() {
+        $items = $this->product_items;
+        $size_titles = array();
+        foreach ($items as $i) {
+            //$size_titles[$i->getProductSize()->getTitle()] = $i->getProductSize()->getId();
+           $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getTitle();
+            //changed due to issue in size selection
+        }
+        
+        return $size_titles;
+    }
+    
+    
 //---------------------------------------------------------------
     public function getSizeTitleArray() {
         $items = $this->product_items;
         $size_titles = array();
         foreach ($items as $i) {
             //$size_titles[$i->getProductSize()->getTitle()] = $i->getProductSize()->getId();
-            $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getTitle();
+           $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getTitle();
             //changed due to issue in size selection
         }
         asort($size_titles);

@@ -9,12 +9,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ProductColorType extends AbstractType
 {
     private $container;
-    private $sizes;
+    private $sizes_number_petite;
+    private $sizes_number_regular;
+    private $sizes_number_tall;
+    
     //private $gender;
-     public function __construct($sizes)             
+     public function __construct($sizes_number_petite,$sizes_number_regular,$sizes_number_tall)             
     {
         //$this->container= $container;
-        $this->sizes=$sizes;        
+        $this->sizes_number_petite=$sizes_number_petite;        
+        $this->sizes_number_regular=$sizes_number_regular;        
+        $this->sizes_number_tall=$sizes_number_tall;        
         
     }
     
@@ -25,8 +30,24 @@ class ProductColorType extends AbstractType
         $builder->add('tempImage','hidden');
         $builder->add('tempPattern','hidden');
         $builder->add(
-                'sizes', 'choice', 
-                array('choices'=>$this->sizes,
+                'petiteSizes', 'choice', 
+                array('choices'=>$this->sizes_number_petite,
+                       'multiple'  => true,
+                       'expanded'  => true, 
+                )
+                
+                );
+        $builder->add(
+                'regularSizes', 'choice', 
+                array('choices'=>$this->sizes_number_regular,
+                       'multiple'  => true,
+                       'expanded'  => true, 
+                )
+                
+                );
+        $builder->add(
+                'tallSizes', 'choice', 
+                array('choices'=>$this->sizes_number_tall,
                        'multiple'  => true,
                        'expanded'  => true, 
                 )
