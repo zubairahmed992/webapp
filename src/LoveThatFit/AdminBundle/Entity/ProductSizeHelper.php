@@ -64,6 +64,7 @@ class ProductSizeHelper {
     public function getSizeArrayBaseOnProduct($product_id){
         $sizeArray=$this->repo->getSizeArrayBaseOnProduct($product_id);
         $sizes=array();
+        $sizes_bodyType=null;
        foreach($sizeArray as $body_type){
           
           $sizes['body_type']= $body_type['body_type']   ;

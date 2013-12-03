@@ -12,8 +12,23 @@
             </div>
 
 {% endif %}
-            <table style="width:20%">
-<div class="span1">Petite </div> 
+<table style="width:20%">
+     {%set petite=NULL %}
+     {%set regular=NULL %}
+     {%set tall=NULL %}
+    {% for ps in product.productSizes%} 
+    {% if(ps.bodyType=="Petite")%}
+        {% set  petite="Petite" %}
+    {%endif%}      
+    {% if(ps.bodyType=="Regular")%}
+        {% set  regular="Regular" %}
+    {%endif%}      
+    {% if(ps.bodyType=="Tall")%}
+        {% set  tall="Tall" %}
+    {%endif%}          
+        
+    {%endfor%}    
+<div class="span1">{{petite}}</div> 
 {% for ps in product.productSizes%} 
  <div id="ret_pro_sizes">
  {% if(ps.bodyType=="Petite")%}
@@ -26,7 +41,7 @@
   {%endif%}
   
 {%endfor%}                        
-<div class="span1">Regular </div> 
+<div class="span1">{{regular}}</div> 
 {% for ps in product.productSizes%} 
  
  {% if(ps.bodyType=="Regular")%}
@@ -40,7 +55,7 @@
  
 {%endfor%}  
 
-<div class="span1">Tall </div> 
+<div class="span1">{{tall}}</div> 
 {% for ps in product.productSizes%} 
  
  {% if(ps.bodyType=="Tall")%}
