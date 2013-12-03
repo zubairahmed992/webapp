@@ -57,4 +57,20 @@ class ProductSizeRepository extends EntityRepository {
         }
     }
     
+#----------Get  Size Array -----------------------#
+      public function getSizeArrayBaseOnProduct($id) {
+        $query = $this->getEntityManager()
+                        ->createQuery('
+            SELECT ps.id as id,ps.title as title,ps.body_type as body_type FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.product_sizes ps 
+            WHERE p.id = :id'
+                        )->setParameter('id', $id);
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 }

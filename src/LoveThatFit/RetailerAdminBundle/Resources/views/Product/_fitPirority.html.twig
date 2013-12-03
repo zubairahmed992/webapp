@@ -14,7 +14,9 @@ $(document).ready(function(){
  s="";
  
  for(var key in json) {
- s+= '<div class="p_hd">'+key+'<span>'+json[key]+'</span></div>';
+   if(json[key]){  
+ s+= '<div class="p_hd">'+key+'<span> '+json[key]+'% </span></div>';
+ }
 }
  
  
@@ -36,7 +38,9 @@ $(document).ready(function(){
  s="";
 
  for(var key in json) {
- s+= '<div class="p_hd">'+key+'<span>'+json[key]+'</span></div>';
+      if(json[key]){  
+ s+= '<div class="p_hd">'+key+'<span>'+json[key]+'%</span></div>';
+ }
 }
  document.getElementById("fabric_content").innerHTML=s; 
    {% endautoescape %}
@@ -56,7 +60,9 @@ $(document).ready(function(){
  var size = Object.size(json);
  s="";
  for(var key in json) {
- s+= '<div class="p_hd">'+key+'<span>'+json[key]+'</span></div>';
+      if(json[key]){  
+ s+= '<div class="p_hd">'+key+'<span>'+json[key]+'%</span></div>';
+ }
 }
 
  

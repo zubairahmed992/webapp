@@ -806,11 +806,11 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         $form = $this->createForm(new ProductSizeMeasurementType(),$entity);
         $deleteForm = $this->getDeleteForm($size_id);        
         return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
-                    'form' => $form->createView(),
+                   'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'product_size' => $product_size,
                     'title'=>$title,
-                    'id'=>$id,  
+                    'id'=>$id,
                     'productname'=>$product->getName(),
                     'sizetitle'=>$product_size->getTitle(),
                    )

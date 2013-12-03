@@ -60,5 +60,26 @@ class ProductSizeHelper {
         }
         return $all_size_measurements;
     }
-
+#--------------------Get Size Array Base On Product--------------------------#
+    public function getSizeArrayBaseOnProduct($product_id){
+        $sizeArray=$this->repo->getSizeArrayBaseOnProduct($product_id);
+        $sizes=array();
+       foreach($sizeArray as $body_type){
+          
+          $sizes['body_type']= $body_type['body_type']   ;
+          $sizes[]= $body_type['title']   ;
+       if($sizes['body_type']=='Petite'){
+           $sizes_bodyType['Petite'][]= $body_type['title']; 
+       }
+       if($sizes['body_type']=='Regular'){
+           $sizes_bodyType['Regular'][]= $body_type['title']; 
+       }
+        if($sizes['body_type']=='Tall'){
+           $sizes_bodyType['Tall'][]= $body_type['title']; 
+       }
+       }
+       
+       return $sizes_bodyType;
+       
+    }
 }
