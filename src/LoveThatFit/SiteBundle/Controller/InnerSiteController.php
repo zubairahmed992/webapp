@@ -204,7 +204,11 @@ public function indexAction($list_type) {
         
         $fe= new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);
    
-        return new Response($fe->fit());
+        //return new Response(json_encode($fe->fit()));
+        //array('item'=>$product_item, 'data' => $fe->fit()
+        //
+        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('item'=>$product_item, 'data' => $fe->getBasicFeedback(),
+        ));
 //return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');
     }
  //-----------------------------------------------------------------------------
@@ -225,6 +229,7 @@ public function indexAction($list_type) {
         ));
     }
 #-------------------------------------------------------------------------------
+    /*
     public function getFeedBackListAction($product_item_id) {
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
@@ -239,6 +244,21 @@ public function indexAction($list_type) {
         $product_id=$product_id[0]['id'];        
         $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product_id, $productItem, $json_feedback, $fits);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', array('product' => $productItem->getProduct(), 'product_item' => $productItem, 'data' => $fit->getFeedBackArray()));
+    }
+    */
+    public function getFeedBackListAction($product_item_id) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
+        if (!is_object($this->get('security.context')->getToken()->getUser())) return new Response("User Not found, Log in required!");
+        if (!$productItem) return new Response("Product not found!");
+        
+        $fit = new FitEngine($user,$productItem);
+        $bfb = $fit->getBasicFeedback();
+        
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', 
+                array('product' => $productItem->getProduct(), 
+                        'product_item' => $productItem, 
+                            'data' => $bfb));
     }
 #-------------------------------------------------------------------------------
     public function addToCloestAction($product_item_id) {

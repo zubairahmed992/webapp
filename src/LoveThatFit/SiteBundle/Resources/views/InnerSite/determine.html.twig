@@ -1,8 +1,17 @@
 
 
 
-<p>{{data}}</p>
+    <h3>{{item.product.name}}</h3>
+    {{ dump(data) }}
+    <ul>
+         {% for key, value in data %} 
+       <li>{{key | lower | capitalize ~' : '~value['msg']}}</li>
+         {% endfor %}
+    </ul>
 
-<p>{{alert}}</p>
+
+            
+
+
 
 
