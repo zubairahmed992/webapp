@@ -204,7 +204,7 @@ public function indexAction($list_type) {
         
         $fe= new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);
    
-        //return new Response(json_encode($fe->fit()));
+        return new Response(json_encode($fe->getFittingSize()));
         //array('item'=>$product_item, 'data' => $fe->fit()
         //
         return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('item'=>$product_item, 'data' => $fe->getBasicFeedback(),
