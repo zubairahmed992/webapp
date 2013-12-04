@@ -14,7 +14,7 @@
     {% for key, value in size_measurements %}                    
                 {% if (value['exists'])%}                  
                 <tr>
-                    <td class="retailor_det_key">{{value['measurement']['title'] }}                        
+                    <td class="retailor_det_key">{{value['measurement']['title']|capitalize |replace({'_': ' ', '_': " "}) }}                        
                         <div class="retailer_edt">
                             <a href="{{ path('retailer_admin_product_size_measurement_edit', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a>
                              <a href="#myModaldetail{{value['measurement']['id']}}" title="Delete {{key}}" role="button" data-toggle="modal" class="btn">Delete</a>
@@ -80,7 +80,7 @@
                 </tr>                
                 {% else %}
         <tr>
-            <td class="retailor_det_key" >{{key}}                
+            <td class="retailor_det_key" >{{key|capitalize |replace({'_': ' ', '_': " "}) }}               
                 <div style="float:right;"><a href="{{ path('retailer_admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a>   </div>
             </td>           
         </tr>      

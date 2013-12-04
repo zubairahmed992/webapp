@@ -11,7 +11,7 @@
 {% block title %}Product{% endblock %}
 {% block body %}
 <div>         
-    <h1 style="float:left;">Add  Retailer Product Size Measurement for {{title}}</h1>    
+    <h1 style="float:left;">Add  Retailer Product Size Measurement for {{ title|capitalize |replace({'_': ' ', '_': " "}) }}</h1>    
      <div class="btn_wrapper">      
     <a href="{{ path('retailer_product') }}" class="btn">back to list</a>
      </div>
@@ -19,11 +19,12 @@
     <form id="productSizeMeasuremntAdd" action="{{ path('retailer_admin_product_size_measurement_update',{"size_id":product_size.id,'title':title}) }}"  method="post" {{ form_enctype(form) }}  onsubmit="return ProductSizeMeasuremtAdd()">
  {{ form_errors(form) }}
             <div id="detail_wrapper">      
-                <div id="p_hd">Add Retailer Product Size Measurement for {{title}}</div>                
-                    
+                <div id="p_hd">
+               {{ title|capitalize |replace({'_': ' ', '_': " "}) }}
+                </div> 
                     <div id="product_content">
                         
-                        <div class="span4"><b>Measurement for {{title}}</b></div>
+                        <div class="span4"><b>Measurement for {{title|capitalize|replace({'_': ' ', '_': " "}) }}</b></div>
                         <div style="margin-top:65px"></div>
                         <div style="clear:both;"></div>
                         <div id="pro_detail"> 
