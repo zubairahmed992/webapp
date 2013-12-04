@@ -337,6 +337,18 @@ class ProductColor {
         $new_titles = $this->setSizeTitles($size_titles);
         return $new_titles;
     }
+    //---------------------------------------------------------------
+    public function getSizeDescriptionArray() {
+        $items = $this->product_items;
+        $size_titles = array();
+        foreach ($items as $i) {
+            $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getDescription();
+            }
+        asort($size_titles);
+        return $size_titles;
+    }
+    //-------------------------------------------------------------
+    
 public function setSizeTitles($sizes)
 { $new_sizes=array();
     $new_key='';

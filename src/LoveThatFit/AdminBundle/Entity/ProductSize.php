@@ -98,6 +98,11 @@ class ProductSize
         return $this->title;
     }
     
+    public function getDescription()
+    {
+        return $this->body_type . ' ' . $this->title;
+    }
+    
     /**
      * Set product
      *

@@ -257,7 +257,7 @@ if(jqXHR.responseText.trim()== "success")
 
                             
                   <select name="cloth_sizes" id="cloth_sizes"   class="cloth_sizes" onchange="select_size(this,{{product.id}},{{productColor.id}})">
-                                {%for key, pcsa in productColor.getSizeTitleArray%}                                    
+                                {%for key, pcsa in productColor.getSizeDescriptionArray%}                                    
                                 {% if(productSize.id==key)   %}
                                 <option value='{{key}}' selected="">{{pcsa}}</option>
                                 {%else%}

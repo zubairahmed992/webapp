@@ -53,15 +53,20 @@ class FitEngine {
         $sizes=$product->getProductSizes();
         $priority = $product->getFitPriorityArray();        
         $body_specs = $this->user->getMeasurement()->getArray();
-        
+        $tip="";
         foreach ($sizes as $size) {
             $item_specs = $size->getMeasurementArray();
             $dose_fit =  $this->fits($priority, $body_specs, $item_specs);
             if ($dose_fit){
-                return " Try size ".$size->getTitle();
+                if(strlen($tip)==0){
+                    $tip.= " Try size ".$size->getDescription();
+                }else{
+                    $tip.= ", ".$size->getDescription();
+                }
             }
         }
-        return " you are in between sizes.";
+        if(strlen($tip)==0) $tip= " you are in between sizes.";
+        return  $tip;
     }
 
 #--------------------------------------------------------------------------------->
