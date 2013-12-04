@@ -14,7 +14,7 @@ class ProductColorType extends AbstractType
     private $sizes_number_tall;
     
     //private $gender;
-     public function __construct($sizes_number_petite,$sizes_number_regular,$sizes_number_tall)             
+     public function __construct($sizes_number_petite,$sizes_number_regular=Null,$sizes_number_tall)             
     {
         //$this->container= $container;
         $this->sizes_number_petite=$sizes_number_petite;        
