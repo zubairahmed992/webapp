@@ -189,11 +189,17 @@
                                 <div id='frm_outseam'>
 
                                 </div>   
-
+<div id='frm_thigh'>         
+        {{ form_label(form.thigh) }}
+        {{ form_widget(form.thigh) }} &nbsp;<b>"</b>
+                        <div class="form_vld_error">{{ form_errors(form.thigh) }}</div>
+                    </div>
        {%if(measurement.height=="0"  or  measurement.weight=="0")%}  
                                 <div id='frm_bmi'>
                                     <label>BMI</label> Please Enter Your Height and Weight For BMI Result
-                                </div>   
+                                </div>  
+                                
+                                
          {%else%}
                                 <div id='frm_bmi'>
                                     <label>BMI</label> {{measurement.BMI}} 

@@ -22,6 +22,7 @@ class ProfileMeasurementFemaleType extends AbstractType
         $builder->add('shoulder_height', 'number', array('precision' => 2,'required'=>false));
         $builder->add('weight', 'number', array('precision' => 2,'required'=>false));
         $builder->add('back', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('thigh', 'number', array('precision' => 2,'required'=>false));
     }
   
      public function getDefaultOptions(array $options)

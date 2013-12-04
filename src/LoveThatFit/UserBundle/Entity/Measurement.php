@@ -332,6 +332,26 @@ class Measurement {
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updated_at;
+    
+    /**
+     * @var float $thigh
+     *
+     * @ORM\Column(name="thigh", type="float", nullable=true,options={"default" = 0})
+     * 
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "96",
+     *      minMessage = "You must be at least 20 tall inches",
+     *      maxMessage = "You cannot taller than 96 inches",
+     *      groups={"registration_step_two","profile_measurement"}
+    
+     * )      
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $thigh=0;
+    
 
     /**
      * Get id
@@ -1110,6 +1130,32 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
         return $this->bodyTypes;
     }
 
+    
+
+    /**
+     * Set thigh
+     *
+     * @param float $thigh
+     * @return Measurement
+     */
+    public function setThigh($thigh)
+    {
+        $this->thigh = $thigh;
+    
+        return $this;
+    }
+
+    /**
+     * Get thigh
+     *
+     * @return float 
+     */
+    public function getThigh()
+    {
+        return $this->thigh;
+    }
+    
+    
     public function getArray(){
 
         return array('weight' => $this->weight,
@@ -1124,8 +1170,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
         'shoulder_height' => $this->shoulder_height,
         'outseam' => $this->outseam,
         'sleeve' => $this->sleeve,
-        'neck' => $this->neck);
-    
-
+        'neck' => $this->neck,
+        'thigh' => $this->thigh);
     }
 }
