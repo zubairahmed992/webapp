@@ -1150,7 +1150,12 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
 
 #---------------------Product Download-----------------------------------------#
     public function productDetailDownloadAction($id){
-     return new Response($this->get('admin.helper.product')->zipDownload($id));
+    $product=$this->get('admin.helper.product')->zipDownload($id);
+      if($product['status']=='1'){
+         
+          $this->get('session')->setFlash('warning', 'Images not found');                 
+       return $this->redirect($this->generateUrl('admin_products'));
+     }
     }
 #--------------------Multiple Iamge Download as Zip----------------------------#
     public function productDetailZipDownloadAction(Request $request)
