@@ -58,10 +58,10 @@ class FitEngine {
             $item_specs = $size->getMeasurementArray();
             $dose_fit =  $this->fits($priority, $body_specs, $item_specs);
             if ($dose_fit){
-                return $size->getTitle();
+                return " Try size ".$size->getTitle();
             }
         }
-        return "No Size fits..";
+        return " you are in between sizes.";
     }
 
 #--------------------------------------------------------------------------------->
@@ -114,6 +114,9 @@ class FitEngine {
             $str = 'Love that Fit!';
             $feed_back = null;
             $feed_back['Overall'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
+        }else{
+            $str=$this->getFittingSize();
+            $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
         }
         return $feed_back;
     }
