@@ -1,6 +1,6 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 {% block breadcrumb %}
- <li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span><a href="{{ path('admin_product_detail_show',{'id':id}) }}">{{productname}}</a><span class="divider">/</span><a href="{{ path('admin_product_detail_size_edit', {'id': id,"size_id":product_size.id}) }}">Size{{sizetitle}}</a><span class="divider">/</span>{{title}}<span class="divider">/</span></li>
+ <li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span><a href="{{ path('admin_product_detail_show',{'id':id}) }}">{{productname}}</a><span class="divider">/</span><a href="{{ path('admin_product_detail_size_edit', {'id': id,"size_id":product_size.id}) }}">Size {{sizetitle}}</a><span class="divider">/</span>{{title|capitalize |replace({'_': ' ', '_': " "}) }}<span class="divider">/</span></li>
 <li class="active">Add</li> 
 {% endblock %}
 {% block h1 %}Product{% endblock %}
