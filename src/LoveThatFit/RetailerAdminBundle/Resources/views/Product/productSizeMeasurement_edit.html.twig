@@ -185,49 +185,49 @@
                 var garment_measurement_stretch_fit=document.getElementById('product_size_measurement_garment_measurement_stretch_fit').value;
                var  vertical_stretch =document.getElementById('product_size_measurement_vertical_stretch').value;
                var  horizontal_stretch =document.getElementById('product_size_measurement_horizontal_stretch').value;
-        if((ideal_body_size_high==0  && ideal_body_size_low==0) || (ideal_body_size_high=='' && ideal_body_size_low==''))
+        if((ideal_body_size_high=='' && ideal_body_size_low==''))
               {                
                 document.getElementById('error_ideal_body_size_high_zero').style.display="block";                    
                 ideal_body_size_high.focus;
                 return false;
                }               
-        if((garmentmeasurementflat=="") || (!garmentmeasurementflat.match(numeric)) ){
+        if((garmentmeasurementflat=="") || (garmentmeasurementflat>100) || (!garmentmeasurementflat.match(numeric)) ){
 		document.getElementById('error_valid_garment_measurement_flat').style.display="block";                
                 garmentmeasurementflat.focus;
                 return false;
                 }
-               if((maxbodymeasurement=='') || (!maxbodymeasurement.match(numeric))){
+               if((maxbodymeasurement=='') || (maxbodymeasurement>100) || (!maxbodymeasurement.match(numeric))){
                 document.getElementById('error_validmaxbodymeasurement').style.display="block";		
                 maxbodymeasurement.focus;
                 return false;
                 }
-               if((stretch_type_percentage=='') || (!stretch_type_percentage.match(numeric))){
+               if((stretch_type_percentage=='') || (stretch_type_percentage>100) || (!stretch_type_percentage.match(numeric))){
                 document.getElementById('error_valid_stretch_type_percentage').style.display="block";                
                 stretch_type_percentage.focus;
                 return false;
                 }              
-               if((ideal_body_size_high=='') || (!ideal_body_size_high.match(numeric))){                
+               if((ideal_body_size_high=='') || (ideal_body_size_high>100) || (!ideal_body_size_high.match(numeric))){                
                 document.getElementById('error_valid_ideal_body_size_high').style.display="block";                
                 ideal_body_size_high.focus;
                 return false;
                 }
                
-               if((ideal_body_size_low=='') || (!ideal_body_size_low.match(numeric))){
+               if((ideal_body_size_low=='') || (ideal_body_size_low>100) || (!ideal_body_size_low.match(numeric))){
                 document.getElementById('error_valid_ideal_body_size_low').style.display="block";
                 ideal_body_size_low.focus;
                 return false;
                 }                
-               else if((vertical_stretch=='') || (!vertical_stretch.match(numeric))){        
+               else if((vertical_stretch=='') ||(vertical_stretch>100)  || (!vertical_stretch.match(numeric))){        
                 document.getElementById('error_valid_vertical_stretch').style.display="block";                    
                 vertical_stretch.focus;
                 return false;
                 }
-                if((horizontal_stretch=='') || (!horizontal_stretch.match(numeric))){        
+                if((horizontal_stretch=='') || (horizontal_stretch>100) || (!horizontal_stretch.match(numeric))){        
                 document.getElementById('error_valid_horizontal_stretch').style.display="block";                 
                 horizontal_stretch.focus;
                 return false;
                 }
-                if((garment_measurement_stretch_fit=='') || (!garment_measurement_stretch_fit.match(numeric))){        
+                if((garment_measurement_stretch_fit=='') || (garment_measurement_stretch_fit>100) || (!garment_measurement_stretch_fit.match(numeric))){        
                 document.getElementById('error_valid_garment_measurement_stretch_fit').style.display="block";               
                 garment_measurement_stretch_fit.focus;
                 return false;
