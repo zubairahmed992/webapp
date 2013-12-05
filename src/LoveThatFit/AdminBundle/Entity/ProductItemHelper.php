@@ -83,6 +83,13 @@ public function rawImageDownload($item_id){
    $response->sendHeaders();
    $response->setContent(readfile($path));
    return $response;
-    
 }
+#---------------------Add Item For product--------------------------------------#
+public function addItem($product, $p_color, $p_size) {
+        $p_item = new ProductItem();
+        $p_item->setProduct($product);
+        $p_item->setProductSize($p_size);
+        $p_item->setProductColor($p_color);
+        $this->save($p_item);
+    }
 }

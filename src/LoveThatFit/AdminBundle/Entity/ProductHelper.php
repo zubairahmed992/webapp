@@ -74,7 +74,8 @@ class ProductHelper{
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
 
-            $entity->upload();
+            
+            //$entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
 
@@ -961,4 +962,124 @@ public function searchCategory($target){
     return $this->repo->searchCategory($target);
     
 }
+
+#------------------------------------------------------------------------------#
+#-------------------lattest Product Specificatiom-------------------#
+public function productDetailArray($data,$entity){
+            // $data=$request->request->all();
+            if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
+            if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
+            if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
+            if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
+            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}            
+            if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
+            if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
+            if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
+             return $this->save($entity);
+           
+    
+}
+#----------------------Product Cloting type attribute ------------------------#
+public function productClothingTypeAttribute($target_array){
+    $clothing_type_id = $target_array['clothing_type'];
+    $gender=$target_array['gender'];
+    if($gender=="F"){$gender="women";}
+    else{$gender="man";}
+    $clothing_type=$this->container->get('admin.helper.clothingtype')->findById($clothing_type_id);
+    $clothing_type_array=strtolower($clothing_type['target']);
+    $clothingTypeAttributes=array();
+    if($gender=="man") 
+    {    if($clothing_type_array=="top" ){
+        $clothingTypeAttributes['fitting_priority']=$this->container->get('admin.helper.product.specification')->gettingTopManFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="bottom" ){
+        $clothingTypeAttributes['fitting_priority']=$this->container->get('admin.helper.product.specification')->gettingBottomManFittingPriority($clothing_type_array);  
+        }
+    }
+    if($gender=="women") 
+    {   
+      if ($clothing_type_array=="top" ){
+        $clothingTypeAttributes['fitting_priority']=$this->container->get('admin.helper.product.specification')->gettingTopWomenFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="bottom" ){
+        $clothingTypeAttributes['fitting_priority']=$this->container->get('admin.helper.product.specification')->gettingBottomWomenFittingPriority($clothing_type_array);  
+        }
+        if($clothing_type_array=="dress" ){
+        $clothingTypeAttributes['fitting_priority']=$this->container->get('admin.helper.product.specification')->gettingDressWomenFittingPriority($clothing_type_array);  
+        }
+    }   
+   
+     $clothingTypeAttributes['fabric_content']=$this->container->get('admin.helper.product.specification')->getFabricContent();  
+     $clothingTypeAttributes['garment_detail']=$this->container->get('admin.helper.product.specification')->getGarmentDetail();  
+    
+  return $clothingTypeAttributes;  
+}
+#---------------Delete Product------------------------------------------------#
+public function productDelete($id){
+  return $this->delete($id);
+}
+#-------Product Color Add --------------------------------------#
+public function productDetailColorAdd($entity){
+       
+       $sizes_letter=array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
+       $sizes_number=array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24');
+       $sizes_top_man_numbers=array('35'=> '35','36'=> '36','37'=> '37','38'=>'38','39'=> '39','40'=> '40','41'=> '41','42'=> '42','43'=> '43','44'=> '44','45'=> '45','46'=> '46','47'=>'47','48'=> '48');
+       $sizes_bottom_man_numbers=array('28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36','37'=> '37','38'=> '38','39'=> '39','40'=> '40','41'=> '41','42'=> '42');
+       $sizes=array();
+       
+       if($entity->getSizeTitleType()=='letters' or $entity->getSizeTitleType()=='letter' and ($entity->getGender()=='f' or $entity->getGender()=='F'))
+       {
+           $sizes['petite'] = $sizes_letter;
+           $sizes['regular'] = $sizes_letter;
+           $sizes['tall'] = $sizes_letter;
+           return $sizes;
+       }       
+       if($entity->getSizeTitleType()=='numbers' and ($entity->getGender()=='f' or $entity->getGender()=='F'))
+       {
+           $sizes['petite'] = $sizes_number;
+           $sizes['regular'] = $sizes_number;
+           $sizes['tall'] = $sizes_number;
+           return $sizes;
+       }
+       if($entity->getSizeTitleType()=='letters' or  $entity->getSizeTitleType()=='letter'  and ($entity->getGender()=='m' or $entity->getGender()=='M') and ($entity->getClothingType()->getTarget()=='top' or $entity->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes['petite'] = Null;
+           $sizes['regular'] = $sizes_letter;
+           $sizes['tall'] = Null;
+           return $sizes;
+       }
+       if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='m' or $entity->getGender()=='M' and ($entity->getClothingType()->getTarget()=='bottom') or $entity->getClothingType()->getTarget()=='Bottom'))
+       {
+          $sizes['petite'] = Null;
+          $sizes['regular'] = $sizes_number;
+          $sizes['tall'] = Null;
+          return $sizes;
+       } 
+       
+       if($entity->getSizeTitleType()=='numbers' and ($entity->getGender()=='m' or $entity->getGender()=='M') and ($entity->getClothingType()->getTarget()=='top' or $entity->getClothingType()->getTarget()=='Top'))
+       {
+           $sizes['petite'] =Null;
+           $sizes['regular'] = $sizes_top_man_numbers;
+           $sizes['tall'] = Null;
+           return $sizes;
+       }
+       if($entity->getSizeTitleType()=='numbers' and ($entity->getGender()=='m' or $entity->getGender()=='M' and ($entity->getClothingType()->getTarget()=='bottom' or $entity->getClothingType()->getTarget()=='Bottom')))
+       {
+          $sizes['petite'] = Null;
+          $sizes['regular'] = $sizes_bottom_man_numbers;
+          $sizes['tall'] = Null;
+          return $sizes;
+       } 
+       
+}
+#-----Get JSON FEILD-----------------------------#
+ private function getJsonForFields($fields){
+        $f=array();
+        foreach ($fields as $key => $value) {
+        $f[$key]=$value;
+        }
+        return json_encode($f);
+        
+    }
+
 }
