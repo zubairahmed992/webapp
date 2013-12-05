@@ -1081,5 +1081,14 @@ public function productDetailColorAdd($entity){
         return json_encode($f);
         
     }
-
+#!!!!Found it duplication in product controller!!!
+    /*public function countProductsByGender($gender) {
+        $em = $this->getDoctrine()->getManager();
+        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
+        $entity = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Product')
+                ->findPrductByGender($gender);
+        $rec_count = count($ProductTypeObj->findPrductByGender($gender));
+        return $rec_count;
+    }*/
 }

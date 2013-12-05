@@ -449,7 +449,7 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
         $this->get('session')->setFlash('success', 'Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
- #----------------------Method for raw image edit -----------------------------#
+#----------------------Method for raw image edit -----------------------------#
   public function productDetailItemRawImageEditAction(Request $request, $id, $item_id){
        $entity = $this->getProduct($id);
         if (!$entity) {
@@ -489,9 +489,8 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         $this->get('session')->setFlash('success', 'Raw Image Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
 }
-//        
+
     //------------------------- Private methods ------------------------- 
-//------------------------------------------------------------------------
     public function getProduct($id) {
         return $this->getDoctrine()
                         ->getRepository('LoveThatFitAdminBundle:Product')
@@ -528,7 +527,7 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         $em->flush();
     }
 
-    //----------------------Products Stats-----------------
+#--------------------------------Products Stats--------------------------------#
     public function productStatsAction() {
         $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
         $products = $this->getDoctrine()
@@ -539,11 +538,11 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
         $entity = $this->getProductByBrand();
         return $this->render('LoveThatFitAdminBundle:Product:product_stats.html.twig', array(
                     'total_products' => $rec_count,
-                    'femaleProduct' => $this->countProductsByGender('f'),
-                    'maleProduct' => $this->countProductsByGender('m'),
-                    'topProduct' => $this->countProductsByType('Top'),
-                    'bottomProduct' => $this->countProductsByType('Bottom'),
-                    'dressProduct' => $this->countProductsByType('Dress'),
+                    'femaleProduct' => $this->get('admin.helper.product')->countProductsByGender('f'),
+                    'maleProduct' => $this->get('admin.helper.product')->countProductsByGender('m'),
+                    'topProduct' => $this->get('admin.helper.product')->countProductsByType('Top'),
+                    'bottomProduct' => $this->get('admin.helper.product')->countProductsByType('Bottom'),
+                    'dressProduct' => $this->get('admin.helper.product')->countProductsByType('Dress'),
                     'brandproduct' => $entity,
         ));
     }
@@ -552,31 +551,7 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
        $this->get('admin.helper.productsizes')->createSizeItemForBodyTypes($product, $p_color, $all_sizes);
     }
   
-//---------------------------------------------------------------------
-
-   
-
-    private function countProductsByGender($gender) {
-        $em = $this->getDoctrine()->getManager();
-        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findPrductByGender($gender);
-        $rec_count = count($ProductTypeObj->findPrductByGender($gender));
-        return $rec_count;
-    }
-
-    private function countProductsByType($target) {
-        $em = $this->getDoctrine()->getManager();
-        $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $entity = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findPrductByType($target);
-        $rec_count = count($ProductTypeObj->findPrductByType($target));
-        return $rec_count;
-    }
-
-    private function getProductByBrand() {
+   private function getProductByBrand() {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
                 ->findPrductByBrand();
