@@ -603,9 +603,62 @@ function validate(){
  var product_horizontal_stretch=$('#product_horizontal_stretch').val();
  var product_vertical_stretch=$('#product_vertical_stretch').val();
  var flage=false;
+ //Fitting Priority values
+ var fit_priority_values =0;
+    $("#fit_priority :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+                fit_priority_values  += parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(fit_priority_values>100){
+         window.scrollTo(10,10);
+         $('#error_box').html('Fitting Priority values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   };
+   
+  //Fabric Content--------
+  
+   var fabric_content_values =0;
+    $("#fabric_content :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+                fabric_content_values+= parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(fabric_content_values>100){
+        window.scrollTo(10,10);
+        $('#error_box').html('Fabric Content values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   };
+   
+  // Garment Detail 
+  var garment_detail_values=0;
+  $("#garment_detail :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+              garment_detail_values += parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(garment_detail_values>100){
+        window.scrollTo(10,10);
+        $('#error_box').html('Garment Detail  values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   }
+   
+   ////
+ 
+  
     if(product_horizontal_stretch!=""){
     if(!product_horizontal_stretch.match(/^\d+/)){
        window.scrollTo(10,10);
+         $('#error_box').html('Number Only.');
             $('#error_box').show();
         return false;
    }else{
@@ -615,6 +668,7 @@ function validate(){
    if(product_vertical_stretch!=""){ 
    if(!product_vertical_stretch.match(/^\d+/)){
        window.scrollTo(10,10);
+       $('#error_box').html('Number Only.');
    $('#error_box').show();
         return false;
   }else{
@@ -632,10 +686,15 @@ function validate(){
    if(!values.match(/^\d+/)){
    
   window.scrollTo(10,10);
+  $('#error_box').html('Number Only.');
    $('#error_box').show();
         return false;
    }
   } }
+
+
+
+  
   
 
   
