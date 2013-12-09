@@ -202,9 +202,9 @@ public function productClothingTypeAttributeAction(Request $request){
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $productColor = $this->getProductColor($color_id);
-         $sizeTitle=$this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
-         $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-         $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']),$productColor);
+        $sizeTitle=$this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
+        $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']),$productColor);
         if(isset($sizeTitle['Petite'])){ 
         $colorform->get('petiteSizes')->setData($sizeTitle['Petite']); 
         }

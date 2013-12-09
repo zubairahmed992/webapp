@@ -237,10 +237,24 @@
                                          
                        
                     
-                        <div class="row-fluid show-grid">    
-                            <div class="span3">Available sizes</div>
-                            <div>{{ form_widget(colorform.sizes) }}</div>
-                        </div>      
+                       {%if(product.gender=='F' or product.gender=='f' )%}
+                     <div class="row-fluid show-grid">    
+                            <div class="span3"> Petite Sizes</div>
+                            <div>{{ form_widget(colorform.petiteSizes) }}</div>
+                        </div> 
+                    
+                    {%endif%}
+                    <div class="row-fluid show-grid">    
+                            <div class="span3"> Regular Sizes</div>
+                            <div>{{ form_widget(colorform.regularSizes) }}</div>
+                        </div> 
+                    
+                    {%if(product.gender=='F' or product.gender=='f' )%}
+                     <div class="row-fluid show-grid">    
+                            <div class="span3">Tall Sizes</div>
+                            <div>{{ form_widget(colorform.tallSizes) }}</div>
+                        </div> 
+                    {%endif%}     
 
                        <div class="row-fluid show-grid">    
                             <div class="span3"> Make It Default Color</div>
@@ -248,11 +262,13 @@
                         </div> 
                     
                     
-                    
+                   <div style="float:right;display:none;">  
+                       {{ form_rest(colorform) }}
+                   </div>
 
                         <div style="float:right;">                                   
                             <div>
-				{{ form_rest(colorform) }}
+				
 
                                     <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn"/>      <a href="{{ path('retailer_admin_product_detail_show',{'id':product.Id}) }}" class="btn">CANCEL</a>                                   
                                     </div>                                    
@@ -301,10 +317,24 @@
            
            </div>
               
+                                       
+                                {%if(product.gender=='F' or product.gender=='f')%}
                                         <div class="row-fluid show-grid">    
-                                            <div class="span3">Available sizes</div>
-                                            <div>{{ form_widget(colorform.sizes) }}</div>
-                                        </div>      
+                                            <div class="span3">Petite Sizes</div>
+                                            <div>{{ form_widget(colorform.petiteSizes) }}</div>
+                                        </div>   
+                                          {%endif%}
+                                             <div class="row-fluid show-grid">    
+                                            <div class="span3">Regular  Sizes</div>
+                                            <div>{{ form_widget(colorform.regularSizes) }}</div>
+                                        </div>
+                                            {%if(product.gender=='F' or product.gender=='f')%}
+                                       <div class="row-fluid show-grid">    
+                                            <div class="span3">Tall Sizes</div>
+                                            <div>{{ form_widget(colorform.tallSizes) }}</div>
+                                        </div>           
+                                            
+                                       {%endif%}       
                                           {% if (product.getDisplayProductColor and color_id != product.getDisplayProductColor.id) or not product.getDisplayProductColor %} 
                                         
                                         <div class="row-fluid show-grid"> 
@@ -323,10 +353,12 @@
                                         </div>
                                      </div> 
                                      {%endif%}
-
+                                          <div style="float:right;display:none;">  
+                                                     {{ form_rest(colorform) }}
+                                                 </div>
                                         <div style="float:right;">                                   
                                             <div>
-                                       {{ form_rest(colorform) }}
+                                     
 
                                                     <div style="margin:0px 0px 0px 0px;"> 
                                                         <input type="submit" value="UPDATE" class="btn"/>                                     
