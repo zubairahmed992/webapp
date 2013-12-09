@@ -45,9 +45,16 @@ $(document).ready(function(){
     
    {% endautoescape %}
     ////////Edit for fit type pirorty////////////////
-    {% autoescape false %}
-    var json = {{fit_priority}};
+   
+{% autoescape false %}
+{%if(fit_priority)%}
+var json = {{fit_priority}};
+{%else%}
+  var json=null;  
+ {%endif%}
+     
      length_obj=json.length;
+     
      Object.size = function(obj) {
      var size = 0, key;
      for (key in obj) {
@@ -56,6 +63,8 @@ $(document).ready(function(){
      return size;
  };
  var size = Object.size(json);
+ 
+ if(size.length>0){
  s="";
   s+='<label>Fit Pirority:</label>';
  for(var key in json) {
@@ -63,6 +72,9 @@ $(document).ready(function(){
     s+=' <input type="text" name="fit_pirority['+key+']" value="'+json[key]+'">'; 
 }
   document.getElementById("fit_priority").innerHTML=s; 
+ }else{
+      $("#fit_priority").HTML('');
+ } 
    {% endautoescape %}
  
     // Fabric Content///
@@ -78,6 +90,7 @@ $(document).ready(function(){
      return size;
  };
  var size = Object.size(json);
+ if(size.length>0){
  s="";
  s+='<label>Fabric Content:</label>';
  for(var key in json) {
@@ -85,6 +98,9 @@ $(document).ready(function(){
  s+=' <input type="text" name="fabric_content['+key+']" value="'+json[key]+'">'; 
 }
 document.getElementById("fabric_content").innerHTML=s; 
+}else{
+    $("#fabric_content").hide();
+}
 {% endautoescape %}
        
    //Garment Detail//////////////
@@ -927,7 +943,127 @@ function strtolower (str) {
     return (str + '').toLowerCase();
 }
 
+// Validation 
 
+function validate(){
+   
+ var product_horizontal_stretch=$('#product_horizontal_stretch').val();
+ var product_vertical_stretch=$('#product_vertical_stretch').val();
+ var flage=false;
+ //Fitting Priority values
+ var fit_priority_values =0;
+    $("#fit_priority :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+                fit_priority_values  += parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(fit_priority_values>100){
+         window.scrollTo(10,10);
+          $('#error_box').html('');
+         $('#error_box').html('Fitting Priority values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   };
+   
+  //Fabric Content--------
+  
+   var fabric_content_values =0;
+    $("#fabric_content :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+                fabric_content_values+= parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(fabric_content_values>100){
+        window.scrollTo(10,10);
+        $('#error_box').html('');
+        $('#error_box').html('Fabric Content values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   };
+   
+  // Garment Detail 
+  var garment_detail_values=0;
+  $("#garment_detail :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+              garment_detail_values += parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(garment_detail_values>100){
+        window.scrollTo(10,10);
+        $('#error_box').html('');
+        $('#error_box').html('Garment Detail  values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   }
+   
+   ////
+ 
+  
+    if(product_horizontal_stretch!=""){
+    if(!product_horizontal_stretch.match(/^\d+/)){
+       window.scrollTo(10,10);
+       $('#error_box').html('');
+         $('#error_box').html('Number Only.');
+            $('#error_box').show();
+        return false;
+   }else{
+        $('#error_box').hide();
+    }
+    }
+   if(product_vertical_stretch!=""){ 
+   if(!product_vertical_stretch.match(/^\d+/)){
+       window.scrollTo(10,10);
+       $('#error_box').html('');
+       $('#error_box').html('Number Only.');
+   $('#error_box').show();
+        return false;
+  }else{
+       $('#error_box').hide();
+   }
+   }
+   
+ 
+   
+    var items = document.getElementsByClassName('required');
+    for (var i = 0; i < items.length; i++)
+     {   
+        values=items[i].value;
+   if(values!=""){
+   if(!values.match(/^\d+/)){
+   
+  window.scrollTo(10,10);
+  $('#error_box').html('');
+  $('#error_box').html('Number Only.');
+  $('#error_box').show();
+  return false;
+   }
+  } }
+
+var size_title_letter=$('#product_size_title_type_0');
+var size_title_number=$('#product_size_title_type_1');
+if($("#product_size_title_type_0").is(':checked') || $("#product_size_title_type_1").is(':checked') ){
+   
+return true;
+
+}else{
+     window.scrollTo(10,10);
+  $('#error_box').html('');
+  $('#error_box').html('Please Select Size Title .');
+  $('#error_box').show();
+  return false;
+}
+
+
+
+
+   //return false;
+ }
      
       
 
@@ -941,12 +1077,12 @@ function strtolower (str) {
    
       </div>
       <div class="clearfix"></div>   
-    <form action="{{ path('retailer_admin_product_detail_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form  onsubmit="return validate();" action="{{ path('retailer_admin_product_detail_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
  {{ form_errors(form) }}
 
             <div id="detail_wrapper">      
                 <div id="p_hd">Product Detail</div>
-                
+                 <span id="error_box"  style="display:none;">*Number Only</span> 
                     <div class="clearfix"></div>
                   
                    

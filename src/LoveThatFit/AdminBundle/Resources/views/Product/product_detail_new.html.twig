@@ -596,8 +596,6 @@ function manClothingType(){
 
 // Validation 
 
-
-
 function validate(){
    
  var product_horizontal_stretch=$('#product_horizontal_stretch').val();
@@ -614,6 +612,7 @@ function validate(){
     
    if(fit_priority_values>100){
          window.scrollTo(10,10);
+         $('#error_box').html('');
          $('#error_box').html('Fitting Priority values must be less than 100.');
         $('#error_box').show();
        return false;
@@ -631,6 +630,7 @@ function validate(){
     
    if(fabric_content_values>100){
         window.scrollTo(10,10);
+        $('#error_box').html('');
         $('#error_box').html('Fabric Content values must be less than 100.');
         $('#error_box').show();
        return false;
@@ -647,6 +647,7 @@ function validate(){
     
    if(garment_detail_values>100){
         window.scrollTo(10,10);
+        $('#error_box').html('');
         $('#error_box').html('Garment Detail  values must be less than 100.');
         $('#error_box').show();
        return false;
@@ -658,6 +659,7 @@ function validate(){
     if(product_horizontal_stretch!=""){
     if(!product_horizontal_stretch.match(/^\d+/)){
        window.scrollTo(10,10);
+       $('#error_box').html('');
          $('#error_box').html('Number Only.');
             $('#error_box').show();
         return false;
@@ -668,6 +670,7 @@ function validate(){
    if(product_vertical_stretch!=""){ 
    if(!product_vertical_stretch.match(/^\d+/)){
        window.scrollTo(10,10);
+       $('#error_box').html('');
        $('#error_box').html('Number Only.');
    $('#error_box').show();
         return false;
@@ -686,6 +689,7 @@ function validate(){
    if(!values.match(/^\d+/)){
    
   window.scrollTo(10,10);
+  $('#error_box').html('');
   $('#error_box').html('Number Only.');
    $('#error_box').show();
         return false;
@@ -693,11 +697,6 @@ function validate(){
   } }
 
 
-
-  
-  
-
-  
    //return false;
  }
  

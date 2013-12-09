@@ -43,7 +43,7 @@ $(document).ready(function(){
  $('#optional_elements').hide();
  $('#product_ClothingType').empty();
  $("#product_gender").change(function(){
-     fetchClothingTypeBaseOnGender();
+  fetchClothingTypeBaseOnGender();
 
 });
  $("#product_ClothingType").change(function(){
@@ -79,42 +79,50 @@ var gender_type=$("#product_gender").val();
            //fit_priority 
         //fabric_content
       var clothing_type_attribute = JSON.parse(data);
-      length_obj=Object.keys(clothing_type_attribute).length;
+      length_obj=Object.keys(data).length;
      
       if( length_obj>0)
        {  
+           
+          var result = $.parseJSON(data);
+          if(result.length>0){
            $('#fit_priority').show();
            var s="";
            s+= '<label>Fit Pirority:</label>'; 
            var result = $.parseJSON(data);
             $.each(result['fitting_priority'], function(k, v) {
              s+= '<label>'+v+'</label>';  
-             s+= '<input type="text" name="fit_pirority['+v+']">'; 
+             s+= '<input class="required" type="text" name="fit_pirority['+v+']">'; 
               
             });
-            
+            }
            //For Fabric Content 
-           var fabric_content="";
+          var result = $.parseJSON(data);
+          if(result.length>0){
+          var fabric_content="";
            $('#fabric_content').show();
-            fabric_content+= '<label>Fabric Content:</label>'; 
+           fabric_content+= '<label>Fabric Content:</label>'; 
            var result = $.parseJSON(data);
-            $.each(result['fabric_content'], function(k, v) {
-             fabric_content+= '<label>'+v+'</label>';  
-             fabric_content+= '<input type="text" name="fabric_content['+v+']">'; 
+           $.each(result['fabric_content'], function(k, v) {
+           fabric_content+= '<label>'+v+'</label>';  
+           fabric_content+= '<input type="text" class="required"  name="fabric_content['+v+']">'; 
               
             });
-            
+          }
+          
          //Garment Detail 
-         
+          var result = $.parseJSON(data);
+         if(result.length>0){  
          var garment_detail="";
-           $('#garment_detail').show();
-           garment_detail+= '<label>Garment Detail:</label>'; 
-           var result = $.parseJSON(data);
-            $.each(result['garment_detail'], function(k, v) {
-            garment_detail+= '<label>'+v+'</label>';  
-            garment_detail+= '<input type="text" name="garment_detail['+v+']">'; 
+         $('#garment_detail').show();
+         garment_detail+= '<label>Garment Detail:</label>'; 
+         var result = $.parseJSON(data);
+         $.each(result['garment_detail'], function(k, v) {
+         garment_detail+= '<label>'+v+'</label>';  
+         garment_detail+= '<input type="text" class="required" name="garment_detail['+v+']">'; 
               
             });
+         }
         //$('#product_fit_priority').val();
          document.getElementById("fit_priority").innerHTML=s;
          document.getElementById("fabric_content").innerHTML=fabric_content;
@@ -581,6 +589,7 @@ function manClothingType(){
 function fetchClothingTypeBaseOnGender(){
  
  var gender=$('#product_gender').val();
+ 
      // Clothing Type For Female
      $.ajax({
         type:'POST',
@@ -606,6 +615,129 @@ function fetchClothingTypeBaseOnGender(){
                 
     }})
 }
+
+// Validation 
+
+function validate(){
+   
+ var product_horizontal_stretch=$('#product_horizontal_stretch').val();
+ var product_vertical_stretch=$('#product_vertical_stretch').val();
+ var flage=false;
+ //Fitting Priority values
+ var fit_priority_values =0;
+    $("#fit_priority :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+                fit_priority_values  += parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(fit_priority_values>100){
+         window.scrollTo(10,10);
+          $('#error_box').html('');
+         $('#error_box').html('Fitting Priority values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   };
+   
+  //Fabric Content--------
+  
+   var fabric_content_values =0;
+    $("#fabric_content :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+                fabric_content_values+= parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(fabric_content_values>100){
+        window.scrollTo(10,10);
+        $('#error_box').html('');
+        $('#error_box').html('Fabric Content values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   };
+   
+  // Garment Detail 
+  var garment_detail_values=0;
+  $("#garment_detail :text").each(function(){
+         if(!isNaN(this.value) && this.value.length!=0) {
+              garment_detail_values += parseFloat(this.value);
+            }
+       // fit_priority_values= +$(this).val();
+    });
+    
+   if(garment_detail_values>100){
+        window.scrollTo(10,10);
+        $('#error_box').html('');
+        $('#error_box').html('Garment Detail  values must be less than 100.');
+        $('#error_box').show();
+       return false;
+   }
+   
+   ////
+ 
+  
+    if(product_horizontal_stretch!=""){
+    if(!product_horizontal_stretch.match(/^\d+/)){
+       window.scrollTo(10,10);
+       $('#error_box').html('');
+         $('#error_box').html('Number Only.');
+            $('#error_box').show();
+        return false;
+   }else{
+        $('#error_box').hide();
+    }
+    }
+   if(product_vertical_stretch!=""){ 
+   if(!product_vertical_stretch.match(/^\d+/)){
+       window.scrollTo(10,10);
+       $('#error_box').html('');
+       $('#error_box').html('Number Only.');
+   $('#error_box').show();
+        return false;
+  }else{
+       $('#error_box').hide();
+   }
+   }
+   
+ 
+   
+    var items = document.getElementsByClassName('required');
+    for (var i = 0; i < items.length; i++)
+     {   
+        values=items[i].value;
+   if(values!=""){
+   if(!values.match(/^\d+/)){
+   
+  window.scrollTo(10,10);
+  $('#error_box').html('');
+  $('#error_box').html('Number Only.');
+  $('#error_box').show();
+  return false;
+   }
+  } }
+
+var size_title_letter=$('#product_size_title_type_0');
+var size_title_number=$('#product_size_title_type_1');
+if($("#product_size_title_type_0").is(':checked') || $("#product_size_title_type_1").is(':checked') ){
+   
+return true;
+
+}else{
+     window.scrollTo(10,10);
+  $('#error_box').html('');
+  $('#error_box').html('Please Select Size Title .');
+  $('#error_box').show();
+  return false;
+}
+
+
+
+
+   //return false;
+ }
+ 
     </script>    
     <span id="url" style="display:none;">{{path('retailer_admin_product_gender_base_clothing_type')}}</span>
     <span id="fit_pirority_url" style="display:none;">{{path('retailer_admin_product_get_attribute')}}</span>
@@ -616,10 +748,11 @@ function fetchClothingTypeBaseOnGender(){
             <a href="{{ path('retailer_product') }}" class="btn">back to list</a>
         </div>
         <div class="clearfix"></div>   
-        <form action="{{path('retailer_admin_product_create')}}" method="post" {{ form_enctype(form) }} name="form" onsubmit="Onsubmit()">
+        <form action="{{path('retailer_admin_product_create')}}" method="post" {{ form_enctype(form) }} name="form" onsubmit="return validate();">
  {{ form_errors(form) }}
                 <div id="detail_wrapper">      
-                    <div id="p_hd">Add New Retailer Product</div>                
+                    <div id="p_hd">Add New Retailer Product</div>   
+                      <span id="error_box"  style="display:none;">*Number Only</span> 
                     <div class="clearfix"></div>
                     <div id="product_content">
                         <div id="pro_detail">
