@@ -36,30 +36,28 @@ protected $container;
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
     }
-
+#------------------------------------------------------------------------------#    
     public function indexAction($page_number, $sort = 'id') {
         $retaileruser = $this->get('security.context')->getToken()->getUser()->getId();        
         $retailer=$this->get('admin.helper.retailer')->findRetailerByRetailerUser($retaileruser);      
         $product_with_pagination = $this->get('admin.helper.retailer')->getProductRetailerListWithPagination($page_number, $sort,$retailer);
         return $this->render('LoveThatFitRetailerAdminBundle:Product:index.html.twig',array('products'=>$product_with_pagination,'retailer' => $this->get('admin.helper.retailer.user')->getRetailerNameByRetailerUser($retailer)));
     }       
-
+#----------------------Retailer Product New-------------------------------------#
     public function retailerProductNewAction()
     {
-       $retaileruser= $this->get('security.context')->getToken()->getUser()->getId();  
+        $retaileruser= $this->get('security.context')->getToken()->getUser()->getId();  
         $getBrand= $this->get('admin.helper.retailer')->BrandBaseOnRetailer($retaileruser);
         $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $productSpecificationHelper = $this->get('admin.helper.product.specification');        
         $productForm = $this->createForm(new RetailerProductDetailType($productSpecificationHelper));     
         return $this->render('LoveThatFitRetailerAdminBundle:Product:new_product.html.twig', array(
                     'form' => $productForm->createView(),'productSpecification'=>$productSpecification, 
-                    'getBrand'=>json_encode($getBrand)
-        ));
+                    'getBrand'=>json_encode($getBrand)));
     }
-    
+#-------------Retailer Product Create Action ----------------------------------#    
     public function retailerProductNewCreateAction(Request $request)
-    { 
-        $em = $this->getDoctrine()->getManager();
+    {   $em = $this->getDoctrine()->getManager();
         $entity = new Product();
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
        $form->bindRequest($request);
@@ -69,44 +67,23 @@ protected $container;
         if (!$retailer) {
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
         }
-            $data=$request->request->all();
-            if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
-            if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
-            if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
-            if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
-            if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
-            if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
-            if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
-            if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
-            $entity->setCreatedAt(new \DateTime('now'));
-            $entity->setUpdatedAt(new \DateTime('now'));
-            $entity->setRetailer($retailer); 
-            $retailer->addProduct($entity);
-            $em->persist($retailer);
-            $em->persist($entity);
-            $em->flush();          
-            $this->get('session')->setFlash('success', 'Retailer Product Detail has been Created.');                 
+        $data=$request->request->all();
+        $productArray= $this->get('admin.helper.product')->productDetailArray($data, $retailerentity);
+        $this->get('session')->setFlash($productArray['message_type'],$productArray['message']);
        return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_show.html.twig',  
                array('id' => $entity->getId(),'product'=>$entity, 'fit_priority'=>$entity->getFitPriority())
                     );  
-      
     }
-    
-    
-
-
-    //------------------------------------------------------------------------------
-
+#----------------Retailer Edit ------------------------------------------------#    
     public function productDetailEditAction($id) {
-        $retaileruser= $this->get('security.context')->getToken()->getUser()->getId();  
+    $retaileruser= $this->get('security.context')->getToken()->getUser()->getId();  
     $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:Product')
                 ->findOneById($id);
-   $getBrand= $this->get('admin.helper.retailer')->BrandBaseOnRetailer($retaileruser); 
-$productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
+    $getBrand= $this->get('admin.helper.retailer')->BrandBaseOnRetailer($retaileruser); 
+    $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);
-//return new response(json_encode($entity->getFitPriority()));
         return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -118,59 +95,30 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
                     'getBrand'=>json_encode($getBrand),
                     ));
     }
-
-    //------------------------------------------------------------------------------
-
+#-------------------Retailer Product Update------------------------------------#
     public function productDetailUpdateAction(Request $request, $id) {
-
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
         if (!$entity) {
-             
-            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+          $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $form->bind($request);
         $gender = $entity->getGender();
         $clothing_type=$entity->getClothingType()->getTarget();
-          if ($gender == 'M' and $clothing_type == 'Dress') {
-            $form->get('gender')->addError(new FormError('Dresses can not be selected  for Male'));
-
-            $this->get('session')->setFlash('warning', 'Dresses can not be selected for male.');
-            return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_new.html.twig', array(
-                        'form' => $form->createView(),
-            ));
-        }
-      
-             $data=$request->request->all();
-           if(isset($data['product']['styling_type'])){$entity->setStylingType($data['product']['styling_type']);}
-           if(isset($data['product']['hem_length'])){$entity->setHemLength($data['product']['hem_length']);}
-           if(isset($data['product']['neckline'])){$entity->setNeckLine($data['product']['neckline']);}
-           if(isset($data['product']['sleeve_styling'])){$entity->setSleeveStyling($data['product']['sleeve_styling']);}
-           if(isset($data['product']['rise'])){$entity->setRise($data['product']['rise']);}
-           if(isset($data['fit_pirority'])){$entity->setFitPriority($this->getJsonForFields($data['fit_pirority']));}
-           if(isset($data['fabric_content'])){$entity->setFabricContent($this->getJsonForFields($data['fabric_content']));}
-           if(isset($data['garment_detail'])){$entity->setGarmentDetail($this->getJsonForFields($data['garment_detail']));}
-            $entity->setUpdatedAt(new \DateTime('now'));
-            $em->persist($entity);
-            $em->flush();
-            $this->get('session')->setFlash('success', 'Product Detail has been Update.');
-            return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority())));
-        
-    }
-
-    //------------------------------------------------------------------------------
-
-    public function productDetailDeleteAction($id) {
+        $data=$request->request->all();
+        $productArray= $this->get('admin.helper.product')->productDetailArray($data, $entity);
+        $this->get('session')->setFlash($productArray['message_type'],'Product succesfully updated');
+        return $this->redirect($this->generateUrl('retailer_admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority())));
+}
+#-------------------------------Retailer Product Delete Method-----------------#
+ public function productDetailDeleteAction($id) {
         try {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('LoveThatFitAdminBundle:Product')->find($id);
-
             if (!$entity) {
                 $this->get('session')->setFlash('warning', 'Unable to find Product.');
             }
-
             $em->remove($entity);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail has been deleted.');
@@ -182,17 +130,14 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
-
-    //------------------------------------------------------------------------------
-
-    public function productDetailShowAction($id) {
+#-----------Product Detail View Method-----------------------------------------#
+ public function productDetailShowAction($id) {
         $product = $this->getProduct($id);
         $product_limit =$this->get('admin.helper.product')->getRecordsCountWithCurrentProductLimit($id);
         $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($product_limit[0]['id']));
         if($page_number==0){
             $page_number=1;
         }
-       
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -201,7 +146,7 @@ $productSpecification=$this->get('admin.helper.product.specification')->getProdu
                     'product' => $product,
                     'page_number'=>$page_number,
         ));
-    }
+ }
 #-------------Clothing type base on Gender-----------------------------------#
 public function retailerProductGenderBaseClothingTypeAction(Request $request){
     $target_array = $request->request->all();
@@ -212,54 +157,11 @@ public function retailerProductGenderBaseClothingTypeAction(Request $request){
 #------------Clothing type attribute base on clothing type --------------------#
 public function retailerProductClothingTypeAttributeAction(Request $request){
     $target_array = $request->request->all();
-    $clothing_type_id = $target_array['clothing_type'];
-    $gender=$target_array['gender'];
-    if($gender=="F"){
-        $gender="women";
-    }else{
-        $gender="man";
-    }
-    
-    $clothing_type=$this->get('admin.helper.clothingtype')->findById($clothing_type_id);
-    
-    
-    $clothing_type_array=strtolower($clothing_type['target']);
-    $clothingTypeAttributes=array();
-    if($gender=="man") 
-    {    if($clothing_type_array=="top" ){
-        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingTopManFittingPriority($clothing_type_array);  
-        }
-        if($clothing_type_array=="bottom" ){
-        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingBottomManFittingPriority($clothing_type_array);  
-        }
-    }
-    if($gender=="women") 
-    {   
-      if ($clothing_type_array=="top" ){
-        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingTopWomenFittingPriority($clothing_type_array);  
-        }
-        if($clothing_type_array=="bottom" ){
-        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingBottomWomenFittingPriority($clothing_type_array);  
-        }
-        if($clothing_type_array=="dress" ){
-        $clothingTypeAttributes['fitting_priority']=$this->get('admin.helper.product.specification')->gettingDressWomenFittingPriority($clothing_type_array);  
-        }
-    }   
-   
-     $clothingTypeAttributes['fabric_content']=$this->get('admin.helper.product.specification')->getFabricContent();  
-     $clothingTypeAttributes['garment_detail']=$this->get('admin.helper.product.specification')->getGarmentDetail();  
-   // return new response(json_encode($clothing_type_array));
-   // $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothing_type_array);
-    return new response(json_encode($clothingTypeAttributes));
-    
+     $clothingTypeAttributes=$this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
+     return new response(json_encode($clothingTypeAttributes));
 }
-    //------------------------------------------------------------------------------
-    /*     * ************************* PRODUCT DETAIL COLOR ************************************************** */
-//------------------------------------------------------------------------------
-
-
-
-    public function productDetailColorAddNewAction($id) {
+#--------------------Product Detail Color Section ------------------------------#
+   public function productDetailColorAddNewAction($id) {
         $entity = $this->getProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
