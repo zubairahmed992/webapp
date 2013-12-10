@@ -49,7 +49,12 @@ $(document).ready(function(){
     
     ////////Edit for fit type pirorty////////////////
     {% autoescape false %}
-     var json = {{fit_priority}};
+   {%if(fit_priority)%}
+    var json = {{fit_priority}};
+    {%else%}
+    var json=null;  
+    {%endif%}
+   if(json!=null)  {       
      length_obj=json.length;
      Object.size = function(obj) {
      var size = 0, key;
@@ -69,12 +74,41 @@ $(document).ready(function(){
 }
            
  document.getElementById("fit_priority").innerHTML=s; 
+ }else{
+var clothing_type=$("#product_ClothingType").val();
+var gender_type=$("#product_gender").val();
+$.ajax({
+        type:'POST',
+        url: $('#fit_pirority_url').text(),
+        data: {clothing_type: clothing_type,gender:gender_type},  
+        success: function(data) {
+       
+           $('#fit_priority').show();
+           var s="";
+           s+= '<label>Fit Pirority:</label>'; 
+           var result = $.parseJSON(data);
+           $.each(result['fitting_priority'], function(k, v) {
+           s+= '<label>'+v+'</label>';  
+           s+= '<input class="required" type="text" name="fit_pirority['+v+']">'; 
+           });
+          document.getElementById("fit_priority").innerHTML=s;
+        }})
+
+
+
+
+}
    {% endautoescape %}
  
     // Fabric Content///
     
      {% autoescape false %}
-    var json = {{fabric_content}};
+   {%if(fabric_content)%}
+var json = {{fabric_content}};
+{%else%}
+  var json=null;  
+ {%endif%}
+  if(json!=null)  {     
      length_obj=json.length;
      Object.size = function(obj) {
      var size = 0, key;
@@ -94,12 +128,44 @@ $(document).ready(function(){
   
 }
  document.getElementById("fabric_content").innerHTML=s; 
+ }else{
+ var clothing_type=$("#product_ClothingType").val();
+var gender_type=$("#product_gender").val();
+$.ajax({
+        type:'POST',
+        url: $('#fit_pirority_url').text(),
+        data: {clothing_type: clothing_type,gender:gender_type},  
+        success: function(data) {
+       
+          var fabric_content="";
+           $('#fabric_content').show();
+           fabric_content+= '<label>Fabric Content:</label>'; 
+           var result = $.parseJSON(data);
+           $.each(result['fabric_content'], function(k, v) {
+           fabric_content+= '<label>'+v+'</label>';  
+           fabric_content+= '<input type="text" class="required"  name="fabric_content['+v+']">'; 
+              
+            });
+             document.getElementById("fabric_content").innerHTML=fabric_content;  
+          }
+          
+        
+          
+        })
+
+
+}
    {% endautoescape %}
        
    //Garment Detail//////////////
    
     {% autoescape false %}
-    var json = {{garment_detail}};
+{%if(garment_detail)%}
+var json = {{garment_detail}};
+{%else%}
+var json=null;  
+{%endif%}
+ if(json!=null)  { 
      length_obj=json.length;
      Object.size = function(obj) {
      var size = 0, key;
@@ -119,6 +185,32 @@ $(document).ready(function(){
 }
    
        document.getElementById("garment_detail").innerHTML=s; 
+ }else{
+ 
+var clothing_type=$("#product_ClothingType").val();
+var gender_type=$("#product_gender").val();
+$.ajax({
+        type:'POST',
+        url: $('#fit_pirority_url').text(),
+        data: {clothing_type: clothing_type,gender:gender_type},  
+        success: function(data) {
+
+         var garment_detail="";
+         $('#garment_detail').show();
+         garment_detail+= '<label>Garment Detail:</label>'; 
+         var result = $.parseJSON(data);
+         $.each(result['garment_detail'], function(k, v) {
+         garment_detail+= '<label>'+v+'</label>';  
+         garment_detail+= '<input type="text" class="required" name="garment_detail['+v+']">'; 
+              
+            });
+        
+      document.getElementById("garment_detail").innerHTML=garment_detail;
+ }
+ })
+
+
+}      
    {% endautoescape %}
        
        
@@ -1044,6 +1136,7 @@ function strtolower (str) {
 
 </script>
 <span id="retailer_url" style="display:none;">{{path('admin_product_get_retailer_base_brand')}}</span>
+<span id="fit_pirority_url" style="display:none;">{{path('admin_product_get_attribute')}}</span>
 <div>      
     <h1 style="float:left;">Edit Product </h1>
     <div class="btn_wrapper">     
