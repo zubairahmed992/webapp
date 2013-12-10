@@ -127,48 +127,58 @@ class FitEngine {
     }
 
     
-   
-#---------------------------------------------------------------------------------
-
-    private function compare($body_specs, $item_specs, $fit_point, $fit_priority = null) {
+   private function compare($body_specs, $item_specs, $fit_point, $fit_priority = null) {
 
         if ($fit_point === NULL || $fit_priority === NULL || $fit_priority <= 0) {
             return null;
         }
-        $min = null; $max = null; $body = null; $diff = null;
+        $ideal_low = null; $ideal_high = null; $body = null; $diff = null;
         $priority = $fit_priority; $fit = false; $str = "";
-
+        $max_body_measurement = null; $max_body_diff=null; $under_max_body=false;
+// check if nodes exists 1
         if (array_key_exists($fit_point, $item_specs) && array_key_exists($fit_point, $body_specs)) {
-            if ($item_specs[$fit_point]['max'] === NULL || $item_specs[$fit_point]['max'] == 0 || $item_specs[$fit_point]['min'] === NULL || $item_specs[$fit_point]['min'] == 0) {
-                if ($item_specs[$fit_point]['max'] === NULL || $item_specs[$fit_point]['max'] == 0) {
+            //check if  specs missing 2
+            if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0 || $item_specs[$fit_point]['ideal_body_low'] === NULL || $item_specs[$fit_point]['ideal_body_low'] == 0) {
+                if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0) {
                     $str = 'Product maximum ' . $fit_point . ' measurement not available. ';
                 } else {
-                    $max = $item_specs[$fit_point]['max']; #~~~~~~~~~>
+                    $ideal_high = $item_specs[$fit_point]['ideal_body_high']; #~~~~~~~~~>
                 }
-                if ($item_specs[$fit_point]['min'] === NULL || $item_specs[$fit_point]['min'] == 0) {
+                if ($item_specs[$fit_point]['ideal_body_low'] === NULL || $item_specs[$fit_point]['ideal_body_low'] == 0) {
                     $str .= 'Product minimam ' . $fit_point . ' measurement not available. ';
                 } else {
-                    $min = $item_specs[$fit_point]['min']; #~~~~~~~~~>
+                    $ideal_low = $item_specs[$fit_point]['ideal_body_low']; #~~~~~~~~~>
                 }
+                //check if body measurement not provided 3
             } elseif ($body_specs[$fit_point] === NULL || $body_specs[$fit_point] == 0) {
                 $str = 'User body ' . $fit_point . ' measurement not provided. ';
-                $max = $item_specs[$fit_point]['max']; #~~~~~~~~~>
-                $min = $item_specs[$fit_point]['min']; #~~~~~~~~~>
+                $ideal_high = $item_specs[$fit_point]['ideal_body_high']; #~~~~~~~~~>
+                $ideal_low = $item_specs[$fit_point]['ideal_body_low']; #~~~~~~~~~>
             } else {
-                $max = $item_specs[$fit_point]['max']; #~~~~~~~~~>
-                $min = $item_specs[$fit_point]['min']; #~~~~~~~~~>
+                $ideal_high = $item_specs[$fit_point]['ideal_body_high']; #~~~~~~~~~>
+                $ideal_low = $item_specs[$fit_point]['ideal_body_low']; #~~~~~~~~~>
                 $body = $body_specs[$fit_point]; #~~~~~~~~~>
-
-                if ($body_specs[$fit_point] <= $item_specs[$fit_point]['max'] && $body_specs[$fit_point] >= $item_specs[$fit_point]['min']) {
+            // if perfect fit 4
+                if ($body_specs[$fit_point] <= $item_specs[$fit_point]['ideal_body_high'] && $body_specs[$fit_point] >= $item_specs[$fit_point]['ideal_body_low']) {
                     $str = 'Perfect fit ';
                     $diff = 0;
                     $fit = true;
-                } elseif ($body_specs[$fit_point] > $item_specs[$fit_point]['max']) {
-                    $str = 'loose';
-                    $diff = $body_specs[$fit_point] - $item_specs[$fit_point]['max']; #~~~~~~~~~>                        
-                } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['min']) {
+                } elseif ($body_specs[$fit_point] > $item_specs[$fit_point]['ideal_body_high']) {
+//------------- if tight
                     $str = 'tight';
-                    $diff = $body_specs[$fit_point] - $item_specs[$fit_point]['min']; #~~~~~~~~~>
+                    $diff = $item_specs[$fit_point]['ideal_body_high'] - $body_specs[$fit_point]; #~~~~~~~~~>                        
+                    
+//~~~~~~~~~~~~~~~ Check if its under max measurement
+//-------------if loose 
+                        if (!$item_specs[$fit_point]['max_body_measurement'] === NULL && !$item_specs[$fit_point]['max_body_measurement'] == 0) {
+                            $max_body_measurement = $item_specs[$fit_point]['$max_body_measurement']; #~~~~~~~~~>
+                            $str .= ' under max limit';                            
+                        }
+
+                } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
+                    $str = 'loose';
+                    $diff = $item_specs[$fit_point]['ideal_body_low']-$body_specs[$fit_point]; #~~~~~~~~~>
+                    //~~~ Check & calculate possible recomendation based on fit priority & diffs
                 } else {
                     $str = 'No comparision occur';
                 }
@@ -179,12 +189,67 @@ class FitEngine {
             $str = 'user ' . $fit_point . ' measurement not provided';
         }
 
-        return $this->getFeedbackArrayElement($min, $max, $body, $diff, $priority, $fit, $str);
+        return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str);
+    }
+#---------------------------------------------------------------------------------
+
+    private function _compare($body_specs, $item_specs, $fit_point, $fit_priority = null) {
+
+        if ($fit_point === NULL || $fit_priority === NULL || $fit_priority <= 0) {
+            return null;
+        }
+        $ideal_low = null; $ideal_high = null; $body = null; $diff = null;
+        $priority = $fit_priority; $fit = false; $str = "";
+
+        if (array_key_exists($fit_point, $item_specs) && array_key_exists($fit_point, $body_specs)) {
+            if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0 || $item_specs[$fit_point]['ideal_body_low'] === NULL || $item_specs[$fit_point]['ideal_body_low'] == 0) {
+                if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0) {
+                    $str = 'Product maximum ' . $fit_point . ' measurement not available. ';
+                } else {
+                    $ideal_high = $item_specs[$fit_point]['ideal_body_high']; #~~~~~~~~~>
+                }
+                if ($item_specs[$fit_point]['ideal_body_low'] === NULL || $item_specs[$fit_point]['ideal_body_low'] == 0) {
+                    $str .= 'Product minimam ' . $fit_point . ' measurement not available. ';
+                } else {
+                    $ideal_low = $item_specs[$fit_point]['ideal_body_low']; #~~~~~~~~~>
+                }
+            } elseif ($body_specs[$fit_point] === NULL || $body_specs[$fit_point] == 0) {
+                $str = 'User body ' . $fit_point . ' measurement not provided. ';
+                $ideal_high = $item_specs[$fit_point]['ideal_body_high']; #~~~~~~~~~>
+                $ideal_low = $item_specs[$fit_point]['ideal_body_low']; #~~~~~~~~~>
+            } else {
+                $ideal_high = $item_specs[$fit_point]['ideal_body_high']; #~~~~~~~~~>
+                $ideal_low = $item_specs[$fit_point]['ideal_body_low']; #~~~~~~~~~>
+                $body = $body_specs[$fit_point]; #~~~~~~~~~>
+
+                if ($body_specs[$fit_point] <= $item_specs[$fit_point]['ideal_body_high'] && $body_specs[$fit_point] >= $item_specs[$fit_point]['ideal_body_low']) {
+                    $str = 'Perfect fit ';
+                    $diff = 0;
+                    $fit = true;
+                } elseif ($body_specs[$fit_point] > $item_specs[$fit_point]['ideal_body_high']) {
+                    $str = 'tight';
+                    $diff = $item_specs[$fit_point]['ideal_body_high'] - $body_specs[$fit_point]; #~~~~~~~~~>                                            
+
+                } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
+                    $str = 'loose';
+                    $diff = $item_specs[$fit_point]['ideal_body_low']-$body_specs[$fit_point]; #~~~~~~~~~>
+                    //~~~ Check & calculate possible recomendation based on fit priority & diffs
+                } else {
+                    $str = 'No comparision occur';
+                }
+            }
+        } elseif (!array_key_exists($fit_point, $item_specs)) {
+            $str = 'Product ' . $fit_point . ' measurement (min-max) range is not available. ';
+        } elseif (!array_key_exists($fit_point, $body_specs)) {
+            $str = 'user ' . $fit_point . ' measurement not provided';
+        }
+
+        return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str);
     }
  #----------------------------------------------------------------------------------------------------
-    private function getFeedbackArrayElement($min, $max, $body, $diff, $priority, $fit, $msg) {
-        return array('min' => $min,
-            'max' => $max,
+    private function getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $msg) {
+        return array('ideal_low' => $ideal_low,
+            'ideal_high' => $ideal_high,
             'body' => $body,
             'diff' => $diff,
             'priority' => $priority,
