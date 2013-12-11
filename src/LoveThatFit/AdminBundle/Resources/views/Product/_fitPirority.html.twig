@@ -69,21 +69,23 @@ $(document).ready(function(){
      
    });    
  </script>      
-       
+       {%if product.FitPriority %}
             <div class="product_fld">
                 <div class="p_hd">Fit Priority</div>
                  <div class="span3" id="fit_pirority"></div>
             
-           </div>         
-                    
+           </div>
+         {%endif%}
+               {%if(product.FabricContent)%}     
  
                 <div class="product_fld">
                         <div class="p_hd">Fabric Content</div>
                         <div id="fabric_content"></div>
                     </div>   
-
-  <div class="product_fld">
+                    {%endif%}
+               {%if(product.GarmentDetail)%}         
+                <div class="product_fld">
                         <div class="p_hd">Garment Detail</div>
                         <div id="garment_detail"></div>
                     </div>                             
-                     
+               {%endif%}      

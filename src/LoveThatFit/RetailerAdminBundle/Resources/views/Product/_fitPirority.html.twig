@@ -12,15 +12,17 @@ $(document).ready(function(){
  };
  var size = Object.size(json);
  s="";
- 
+ fit_type=0;
  for(var key in json) {
    if(json[key]){  
+ fit_type+=json[key];      
  s+= '<div class="p_hd">'+key+'<span> '+json[key]+'% </span></div>';
  }
 }
- 
- 
-       document.getElementById("fit_pirority").innerHTML=s; 
+ document.getElementById("fit_pirority").innerHTML=s; 
+ if(fit_type==0){
+$('#fit_box').hide();
+}
    {% endautoescape %}
        
   // Fabric Content 
@@ -36,13 +38,19 @@ $(document).ready(function(){
  };
  var size = Object.size(json);
  s="";
-
+fab_key=0;
  for(var key in json) {
       if(json[key]){  
+ fab_key+=json[key];         
  s+= '<div class="p_hd">'+key+'<span>'+json[key]+'%</span></div>';
  }
 }
+
  document.getElementById("fabric_content").innerHTML=s; 
+ if(fab_key==0){
+    
+     $("#fabric_box").hide(); 
+ }
    {% endautoescape %}
        
  //Garment Detail 
@@ -59,34 +67,37 @@ $(document).ready(function(){
  };
  var size = Object.size(json);
  s="";
+ garment_type=0;
  for(var key in json) {
       if(json[key]){  
+  garment_type+=json[key];        
  s+= '<div class="p_hd">'+key+'<span>'+json[key]+'%</span></div>';
  }
 }
-
- 
-       document.getElementById("garment_detail").innerHTML=s; 
+document.getElementById("garment_detail").innerHTML=s; 
+if(garment_type==0){
+$('#grmt_box').hide();
+}
    {% endautoescape %}
        
      
    });    
  </script>      
        
- <div class="product_fld" id="fit_box">
-                <div class="p_hd subhd">Fit Priority</div>
-                 <div class="span3" id="fit_pirority"></div>
-            
-           </div>         
-                    
- 
+        <div class="product_fld" id="fit_box">
+               <div class="p_hd subhd">Fit Priority</div>
+               <div class="span3" id="fit_pirority"></div>
+        </div>         
+                
+  
                 <div class="product_fld" id="fabric_box">
-                        <div class="p_hd subhd">Fabric Content</div>
-                        <div id="fabric_content"></div>
-                    </div>   
+                   <div class="p_hd subhd">Fabric Content</div>
+                   <div id="fabric_content"></div>
+                </div>   
+ 
+            <div class="product_fld" id="grmt_box">
+                <div class="p_hd subhd">Garment Detail</div>
+                <div id="garment_detail"></div>
+           </div>    
 
-  <div class="product_fld" id="grmt_box">
-                        <div class="p_hd subhd">Garment Detail</div>
-                        <div id="garment_detail"></div>
-                    </div>                             
                      
