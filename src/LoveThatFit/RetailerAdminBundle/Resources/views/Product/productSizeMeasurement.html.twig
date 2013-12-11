@@ -16,7 +16,7 @@
     <a href="{{ path('retailer_product') }}" class="btn">back to list</a>
      </div>
       <div class="clearfix"></div>   
-    <form id="productSizeMeasuremntAdd" action="{{ path('retailer_admin_product_size_measurement_update',{"size_id":product_size.id,'title':title}) }}"  method="post" {{ form_enctype(form) }}  onsubmit="return ProductSizeMeasuremtAdd()">
+    <form id="productSizeMeasuremntAdd" action="{{ path('retailer_admin_product_size_measurement_update',{"id":id,"size_id":product_size.id,'title':title}) }}"  method="post" {{ form_enctype(form) }}  onsubmit="return ProductSizeMeasuremtAdd()">
  {{ form_errors(form) }}
             <div id="detail_wrapper">      
                 <div id="p_hd">
