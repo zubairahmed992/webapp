@@ -2,7 +2,7 @@
             <ul class="filter filter2">
      {% for ct in clothing_types %}
                     <li>
-                        <a href="{{path('ajax_product_by_clothing_type',{'gender' : app.user.gender, 'clothing_type_id' : ct.id })}}">{{ct.name}}</a>
+                        <a href="{{path('ajax_product_by_clothing_type',{'gender' : app.user.gender, 'clothing_type_id' : ct.id })}}">{{ct.Name|capitalize |replace({'_': ' ', '_': " "}) }}</a>
                         <span class="arw"></span>
                     </li>
     {% endfor %}

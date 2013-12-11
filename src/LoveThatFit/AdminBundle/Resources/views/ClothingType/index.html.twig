@@ -29,7 +29,7 @@
 
         <div class="row-fluid show-grid">
             <div class="span1">{{ct.Id}}</div>
-            <div class="span1">{{ct.Name}}</div>
+            <div class="span1">{{ct.Name|capitalize |replace({'_': ' ', '_': " "}) }}</div>
             <div class="span1">{{ct.Target}}</div>
             <div class="span1">{{ct.Gender}}</div>
             <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%}  {%endif%}</div>
