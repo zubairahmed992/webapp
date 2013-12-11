@@ -599,33 +599,22 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
         $deleteForm = $this->getDeleteForm($size_id);                  
         if ($this->getRequest()->getMethod() == 'POST') {
-        $form->bindRequest($request);
-        if($entity->getIdealBodySizeLow()=='' && $entity->getIdealBodySizeHigh()=='')
-        {
-            $this->get('session')->setFlash('warning', 'Measurement cannot be null');
-            return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
-                    'form' => $form->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                    'product_size' => $product_size,
-                    'title'=>$title,
-                   )
-                );
-        }else
-        {
+        $form->bindRequest($request);        
         $entity->setTitle($title);        
         $entity->setProductSize($product_size); 
         $product_size->addProductSizeMeasurement($entity);
         $em->persist($product_size);
         $em->persist($entity);            
         $em->flush();  
-        $this->get('session')->setFlash('success', 'Retailer Product Size Measurement Detail has been Created.');
-        }    
+        $this->get('session')->setFlash('success', 'Retailer Product Size Measurement Detail has been Created.');     
        $id=$product_size->getProduct()->getId();
        $product = $this->getProduct($id);
         return $this->redirect($this->generateUrl('retailer_admin_product_detail_size_edit', array(
-            'product'=>$product,
+           'product'=>$product,
             'id' => $id,
-            'size_id'=>$size_id
+            'size_id'=>$size_id,
+             'productname'=>$product->getName(),
+                 'sizetitle'=>$product_size->getTitle(),
          )));
         } 
     }

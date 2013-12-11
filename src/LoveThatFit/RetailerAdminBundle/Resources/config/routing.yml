@@ -110,7 +110,7 @@ retailer_admin_product_size_measurement_create:
      defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:createProductSizeMeasurement }     
 
 retailer_admin_product_size_measurement_update:
-     pattern:  /retailer/product/size_meaurement/{size_id}/{title}/update
+     pattern:  /retailer/product/{id}/size_meaurement/{size_id}/{title}/update
      defaults: { _controller: LoveThatFitRetailerAdminBundle:RetailerProduct:productSizeMeasurementupdate }
      
 retailer_admin_product_size_measurement_edit:

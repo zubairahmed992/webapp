@@ -680,7 +680,9 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         {
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
-        $product=$this->get('admin.helper.product')->find($id);
+        $id=$product_size->getProduct()->getId();
+        $product = $this->getProduct($id);   
+        //$product=$this->get('admin.helper.product')->find($id);
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
@@ -701,13 +703,13 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
     }
     
     
-    public function productSizeMeasurementupdateAction(Request $request,$size_id,$title)
+    public function productSizeMeasurementupdateAction(Request $request,$id,$size_id,$title)
     {
         $product_size=$this->get('admin.helper.productsizes')->find($size_id);
         if(!$product_size)
         {
             throw $this->createNotFoundException('Unable to find Product Size.');
-        }
+        }        
         $em = $this->getDoctrine()->getManager();
         $entity = new ProductSizeMeasurement();  
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
@@ -715,33 +717,22 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
         $deleteForm = $this->getDeleteForm($size_id);                  
         if ($this->getRequest()->getMethod() == 'POST') {
-        $form->bindRequest($request);
-        if($entity->getIdealBodySizeLow()=='' && $entity->getIdealBodySizeHigh()=='')
-        {
-            $this->get('session')->setFlash('warning', 'Measurement cannot be null');
-            return $this->render('LoveThatFitAdminBundle:Product:productSizeMeasurement.html.twig', array(
-                    'form' => $form->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                    'product_size' => $product_size,
-                    'title'=>$title,
-                   )
-                );
-        }else
-        {
+        $form->bindRequest($request);        
         $entity->setTitle($title);        
         $entity->setProductSize($product_size); 
         $product_size->addProductSizeMeasurement($entity);
         $em->persist($product_size);
         $em->persist($entity);            
         $em->flush();  
-        $this->get('session')->setFlash('success', 'Product Size Measurement Detail has been Created.');
-        }    
+        $this->get('session')->setFlash('success', 'Product Size Measurement Detail has been Created.');     
        $id=$product_size->getProduct()->getId();
        $product = $this->getProduct($id);
         return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
             'product'=>$product,
             'id' => $id,
-            'size_id'=>$size_id
+            'size_id'=>$size_id,
+             'productname'=>$product->getName(),
+                 'sizetitle'=>$product_size->getTitle(),
          )));
         }
         
@@ -810,7 +801,7 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         
       $id=$product_size->getProduct()->getId();
       $entity = $this->getProduct($id);             
-        return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
+       return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
             'product'=>$entity,
             'id' => $id,
             'size_id'=>$size_id
