@@ -61,24 +61,35 @@ class FitEngine {
         $sizes = $product->getProductSizes();
         $priority = $product->getFitPriorityArray();
         $body_specs = $this->user->getMeasurement()->getArray();
-        $tip = "";
-        $rec = "";
+        
+        $fit_rec = "";
+        $tight_fit_rec = "";
+        $loose_fit_rec = "";
+        $lowest_varience=null;
         foreach ($sizes as $size) {
             $item_specs = $size->getMeasurementArray();
             $feedback = $this->fits($priority, $body_specs, $item_specs);
             if ($feedback['fit']) {
-                if (strlen($tip) == 0) {
-                    $rec.= " Try size " . $size->getDescription();
-                } else {
-                    $rec.= ", " . $size->getDescription();
-                }
-            } elseif ($feedback['status']!=-2) {
-                    $str= $size->getDescription() . " : (". $feedback['status'] .")". $feedback['msg'];
-                $tip.="     >>>>>>>>". $str;
+                    $fit_rec.= " ->> " . $size->getDescription();
+            } elseif ($feedback['status']==0) {
+                    $tight_fit_rec .= " -->> ". $size->getDescription() . " : ". $feedback['msg'];
+            }elseif ($feedback['status']==2) {
+                if ($lowest_varience == null || $lowest_varience > $feedback['varience']){
+                    $lowest_varience=$feedback['varience'];
+                    $loose_fit_rec = " ->> ". $size->getDescription() . " : (". $feedback['varience'] .")". $feedback['msg'];
+                    }        
             }
         }
         //if(strlen($tip)==0) $tip= " you are in between sizes.";
-        return $rec . ' + ' . $tip;
+        $str="";
+        if (strlen($fit_rec)>0){
+        $str=" FITS ".$fit_rec;    
+        }elseif (strlen($tight_fit_rec)>0){
+        $str=" TIGHT-FITS ". $tight_fit_rec;    
+        }elseif (strlen($loose_fit_rec)>0){
+        $str=" LOOSE-FIT " . $loose_fit_rec;    
+        }
+        return $str;
     }
 
 #--------------------------------------------------------------------------------->
@@ -103,7 +114,7 @@ class FitEngine {
                            $status = -2;
                     }elseif($fb['max_fit'] === true) { #~~~~~~~~~~~~~> max fit
                         if($status != -2 && $status != -1 && $status != 2) $status = 0;#if not tight or loose    
-                    }elseif ($fb['varience_index'] === true) {  #~~~~~~~~~~~~~> loose
+                    }elseif ($fb['varience_index'] >0) {  #~~~~~~~~~~~~~> loose
                         $varience = $varience + $fb['varience_index'];
                         if($status != -2 && $status != -1) $status = 2;#if not tight 
                     }else {  #~~~~~~~~~~~~~> tight
@@ -112,7 +123,7 @@ class FitEngine {
                 }
             }
         }
-
+        $varience = number_format($varience, 2, '.', '');
         return array('fit' => $fit, 'msg' => $msg, 'varience' => $varience, 'status' => $status);
     }
 
