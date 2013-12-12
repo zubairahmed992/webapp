@@ -26,6 +26,19 @@ registration_step_four_measurement_update:
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourMeasurementUpdate}
     requirements: 
           _method: post 
+          
+measurement_vertical_position_update:
+    pattern:  /registration/measurement_vertical_position_update/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourVerticalMeasurementUpdate}
+    requirements: 
+          _method: post
+          
+          
+measurement_horizontal_position_update:
+    pattern:  /registration/measurement_horizontal_position_update/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourHorizontalMeasurementUpdate}
+    requirements: 
+          _method: post   
 
 registration_measurement_edit:
     pattern:  /registration/measurement/edit

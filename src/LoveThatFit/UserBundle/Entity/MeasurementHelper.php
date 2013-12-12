@@ -64,6 +64,17 @@ class MeasurementHelper {
         $this->em->flush();
     }
 
+    public function saveVerticalPositonMeasurement(Measurement $measurement) {
+        $measurement->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($measurement);
+        $this->em->flush();
+    }
+    
+    public function savehorizontalMeasurement(Measurement $measurement) {
+        $measurement->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($measurement);
+        $this->em->flush();
+    }
 
 #----------------------Code For Value Retaing ------------------------------------------------------------------------# 
     public function measurementRetain($measurement) {

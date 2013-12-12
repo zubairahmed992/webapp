@@ -222,6 +222,129 @@ class Measurement {
      */
     private $shoulder_height=0;
     
+    
+    /**
+     * @var float $shoulder_width
+     *
+     * @ORM\Column(name="shoulder_width", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "80",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 80 inches "
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $shoulder_width=0;
+    
+    
+    /**
+     * @var float $bust_height
+     *
+     * @ORM\Column(name="bust_height", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "80",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 80 inches "
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $bust_height=0;
+    
+    
+    /**
+     * @var float $waist_height
+     *
+     * @ORM\Column(name="waist_height", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "80",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 80 inches "
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $waist_height=0;
+    
+    
+    
+    
+    
+    /**
+     * @var float $hip_height
+     *
+     * @ORM\Column(name="hip_height", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "80",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 80 inches "
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $hip_height=0;
+    
+    
+    /**
+     * @var float $bust_width
+     *
+     * @ORM\Column(name="bust_width", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "80",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 80 inches "
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $bust_width=0;
+    
+    
+    
+    /**
+     * @var float $waist_width
+     *
+     * @ORM\Column(name="waist_width", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "80",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 80 inches "
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $waist_width=0;
+    
+    /**
+     * @var float $hip_width
+     *
+     * @ORM\Column(name="hip_width", type="float", nullable=true,options={"default" = 0})
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "80",
+     *      minMessage = "You must have at least 0 inches  ",
+     *      maxMessage = "You cannot have more than 80 inches "
+     * )
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $hip_width=0;
+    
+    
     /**
      * @var float $outseam
      *
@@ -1172,5 +1295,166 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
         'sleeve' => $this->sleeve,
         'neck' => $this->neck,
         'thigh' => $this->thigh);
+    }
+
+    /**
+     * Set shoulder_width
+     *
+     * @param float $shoulderWidth
+     * @return Measurement
+     */
+    public function setShoulderWidth($shoulderWidth)
+    {
+        $this->shoulder_width = $shoulderWidth;
+    
+        return $this;
+    }
+
+    /**
+     * Get shoulder_width
+     *
+     * @return float 
+     */
+    public function getShoulderWidth()
+    {
+        return $this->shoulder_width;
+    }
+
+    /**
+     * Set bust_height
+     *
+     * @param float $bustHeight
+     * @return Measurement
+     */
+    public function setBustHeight($bustHeight)
+    {
+        $this->bust_height = $bustHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get bust_height
+     *
+     * @return float 
+     */
+    public function getBustHeight()
+    {
+        return $this->bust_height;
+    }
+
+    /**
+     * Set waist_height
+     *
+     * @param float $waistHeight
+     * @return Measurement
+     */
+    public function setWaistHeight($waistHeight)
+    {
+        $this->waist_height = $waistHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get waist_height
+     *
+     * @return float 
+     */
+    public function getWaistHeight()
+    {
+        return $this->waist_height;
+    }
+
+    /**
+     * Set hip_height
+     *
+     * @param float $hipHeight
+     * @return Measurement
+     */
+    public function setHipHeight($hipHeight)
+    {
+        $this->hip_height = $hipHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get hip_height
+     *
+     * @return float 
+     */
+    public function getHipHeight()
+    {
+        return $this->hip_height;
+    }
+
+    /**
+     * Set bust_width
+     *
+     * @param float $bustWidth
+     * @return Measurement
+     */
+    public function setBustWidth($bustWidth)
+    {
+        $this->bust_width = $bustWidth;
+    
+        return $this;
+    }
+
+    /**
+     * Get bust_width
+     *
+     * @return float 
+     */
+    public function getBustWidth()
+    {
+        return $this->bust_width;
+    }
+
+    /**
+     * Set waist_width
+     *
+     * @param float $waistWidth
+     * @return Measurement
+     */
+    public function setWaistWidth($waistWidth)
+    {
+        $this->waist_width = $waistWidth;
+    
+        return $this;
+    }
+
+    /**
+     * Get waist_width
+     *
+     * @return float 
+     */
+    public function getWaistWidth()
+    {
+        return $this->waist_width;
+    }
+
+    /**
+     * Set hip_width
+     *
+     * @param float $hipWidth
+     * @return Measurement
+     */
+    public function setHipWidth($hipWidth)
+    {
+        $this->hip_width = $hipWidth;
+    
+        return $this;
+    }
+
+    /**
+     * Get hip_width
+     *
+     * @return float 
+     */
+    public function getHipWidth()
+    {
+        return $this->hip_width;
     }
 }

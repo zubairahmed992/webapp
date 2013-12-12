@@ -12,6 +12,8 @@ use LoveThatFit\UserBundle\Form\Type\MeasurementStepFourType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationStepFourType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementMaleType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
+use LoveThatFit\UserBundle\Form\Type\MeasurementVerticalPositionFormType;
+use LoveThatFit\UserBundle\Form\Type\MeasurementHorizantalPositionFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -153,10 +155,13 @@ class RegistrationController extends Controller {
         // Rendering step four
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-
-        return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+$measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+       return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                     'form' => $form->createView(),
                     'measurement_form' => $measurement_form->createView(),
+            'measurement_vertical_form' => $measurement_vertical_form->createView(),
+            'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => 'registration',
