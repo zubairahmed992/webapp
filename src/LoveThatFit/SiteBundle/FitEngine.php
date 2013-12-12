@@ -72,13 +72,9 @@ class FitEngine {
                 } else {
                     $rec.= ", " . $size->getDescription();
                 }
-            } else {
-
-                if (strlen($tip) == 0) {
-                    $tip.= $size->getDescription() . " : " . $feedback['msg'];
-                } else {
-                    $tip.= ", " . $size->getDescription() . " : " . $feedback['msg'];
-                }
+            } elseif ($feedback['status']!=-2) {
+                    $str= $size->getDescription() . " : (". $feedback['status'] .")". $feedback['msg'];
+                $tip.="     >>>>>>>>". $str;
             }
         }
         //if(strlen($tip)==0) $tip= " you are in between sizes.";
@@ -97,19 +93,19 @@ class FitEngine {
         foreach ($priority as $key => $value) {
             $fb = $this->evaluate_fit_point($body_specs, $item_specs, strtolower($key), $value);
             if ($fb != NULL) {
-                $msg.=' ' . $fb['msg']; # concatinating messages
+                 
+                $msg.='  ' .strtolower($key).':'. $fb['msg']; # concatinating messages
                 # adding evaluation params (fits/max_fits/loose/tight)
 
                 if ($fb['fit'] === false) {
                     $fit = false;
-
-                    if ($fb['max_fit'] === true) { #~~~~~~~~~~~~~> max fit
-                        if ($status != -1 && $status != 2)
-                            $status = 0;#if not tight or loose    
+                    if ($fb['ideal_low'] === null || $fb['ideal_high'] === null || $fb['body'] === null) {  #~~~~~~~~~~~~~> params missing
+                           $status = -2;
+                    }elseif($fb['max_fit'] === true) { #~~~~~~~~~~~~~> max fit
+                        if($status != -2 && $status != -1 && $status != 2) $status = 0;#if not tight or loose    
                     }elseif ($fb['varience_index'] === true) {  #~~~~~~~~~~~~~> loose
                         $varience = $varience + $fb['varience_index'];
-                        if ($status != -1)
-                            $status = 2;#if not tight
+                        if($status != -2 && $status != -1) $status = 2;#if not tight 
                     }else {  #~~~~~~~~~~~~~> tight
                         $status = -1;
                     }
