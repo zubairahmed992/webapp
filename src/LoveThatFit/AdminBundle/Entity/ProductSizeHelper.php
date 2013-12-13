@@ -91,6 +91,9 @@ class ProductSizeHelper {
         if($sizes['body_type']=='Tall'){
            $sizes_bodyType['Tall'][]= $body_type['title']; 
        }
+       if($sizes['body_type']=='Waist'){
+           $sizes_bodyType['Waist'][]= $body_type['title']; 
+       }
        }
        
        return $sizes_bodyType;
@@ -169,7 +172,31 @@ class ProductSizeHelper {
         }
      }
  #-----------------End of Tall  Size Size-----------------------------------------#      
-        
+    
+     
+     if($all_sizes->getwomenWaistSizes()!=NULL){
+        $sizesForWaistBodyType=$all_sizes->getwomenWaistSizes();
+        $bodyTypePetite="Waist";
+#-------------------- For Petite BodyType--------------------------------------#
+        foreach ($sizesForWaistBodyType as $s) {
+               $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypePetite);
+
+            if (!$p_size) {
+                $p_size = new ProductSize();
+                $p_size->setProduct($product);
+                $p_size->setTitle($s);
+                $p_size->setbodyType($bodyTypePetite);
+                $this->em->persist($p_size);
+                $this->em->flush();
+              $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
+            } else {
+                $p_item = $product->getThisItem($p_color, $p_size);
+                 if (!$p_item) {
+                $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);        
+                }
+            }
+        }
+}   
  }
   
 }

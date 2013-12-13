@@ -12,15 +12,16 @@ class ProductColorType extends AbstractType
     private $sizes_number_petite;
     private $sizes_number_regular;
     private $sizes_number_tall;
+    private $women_waist;
     
     //private $gender;
-     public function __construct($sizes_number_petite,$sizes_number_regular=Null,$sizes_number_tall)             
+     public function __construct($sizes_number_petite,$sizes_number_regular=Null,$sizes_number_tall,$women_waist)             
     {
         //$this->container= $container;
         $this->sizes_number_petite=$sizes_number_petite;        
         $this->sizes_number_regular=$sizes_number_regular;        
         $this->sizes_number_tall=$sizes_number_tall;        
-        
+        $this->women_waist=$women_waist;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -53,6 +54,14 @@ class ProductColorType extends AbstractType
                 )
                 
                 );
+        
+        $builder->add(
+                'womenWaistSizes', 'choice', 
+                array('choices'=>$this->women_waist,
+                       'multiple'  => true,
+                       'expanded'  => true, 
+                ));
+        
          $builder ->add('displayProductColor', 'choice', array(
                     'choices'   => array('1'=>' '),
                     'expanded' => true,

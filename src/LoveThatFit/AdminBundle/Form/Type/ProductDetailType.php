@@ -68,7 +68,7 @@ class ProductDetailType extends AbstractType
                     'property' => 'name',
                     'empty_value' => 'Select Clothing Type'
                 ));
-        $builder->add('size_title_type', 'choice', array('choices'=> array('letters'=>'Letters','numbers'=>'Numbers'),'expanded' => true,
+        $builder->add('size_title_type', 'choice', array('choices'=> array('letters'=>'Letters','numbers'=>'Numbers','Waist'=>'Waist'),'expanded' => true,
                     'multiple' => false,'required'  => true,));
         
         $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,));
