@@ -161,8 +161,8 @@ public function productClothingTypeAttributeAction(Request $request){
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $sizes=$this->get('admin.helper.product')->productDetailColorAdd($entity);
-       // return new response(json_encode($entity->getSizeTitleType()));
-        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']));
+       // return new response(json_encode($sizes));
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']));
         $imageUploadForm = $this->createForm(new ProductColorImageType());
         $patternUploadForm = $this->createForm(new ProductColorPatternType());
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
@@ -179,7 +179,8 @@ public function productClothingTypeAttributeAction(Request $request){
          $productColor = new ProductColor();
          $productColor->setProduct($product);
          $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-         $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']),$productColor);
+         //return new response(json_encode($sizes));
+         $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
          $colorform->bind($request);
         if ($colorform->isValid()) {
 
@@ -203,8 +204,9 @@ public function productClothingTypeAttributeAction(Request $request){
         }
         $productColor = $this->getProductColor($color_id);
         $sizeTitle=$this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
+       // return new response(json_encode($sizeTitle));
         $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']),$productColor);
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
         if(isset($sizeTitle['Petite'])){ 
         $colorform->get('petiteSizes')->setData($sizeTitle['Petite']); 
         }
@@ -213,6 +215,9 @@ public function productClothingTypeAttributeAction(Request $request){
         }
         if(isset($sizeTitle['Tall'])){
          $colorform->get('tallSizes')->setData($sizeTitle['Tall']); 
+        }
+        if(isset($sizeTitle['Waist'])){
+         $colorform->get('womenWaistSizes')->setData($sizeTitle['Waist']); 
         }
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
         $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
@@ -233,7 +238,7 @@ public function productClothingTypeAttributeAction(Request $request){
         
        $productColor = $this->getProductColor($color_id);
        $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-       $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']),$productColor);
+       $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
        $colorform->bind($request);
        if ($colorform->isValid()) {
         $this->get('admin.helper.productcolor')->uploadSave($productColor);

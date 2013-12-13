@@ -182,8 +182,6 @@ class RetailerHelper {
         );
     }
     
-    
-    
     public function getProductRetailerListWithPagination($page_number, $sort,$retailer) {
         $yaml = new Parser();
         $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
@@ -213,8 +211,6 @@ class RetailerHelper {
        return $this->repo->getRetailerBrandByRetailerAndBrand($retailer,$brand); 
     }
     
-    
-
     public function getRecordsCountWithCurrentRetailerLimit($retailer_id){
     
     return $this->repo->getRecordsCountWithCurrentRetailerLimit($retailer_id);
@@ -266,23 +262,10 @@ class RetailerHelper {
         }     
    }
     
-   
-   
-   
-   
-   
-   
-   
-   
+     
 //Private Methods    
 //----------------------------------------------------------
-  
-   
-   
-   
-   
-   
-   private function validateForCreate($name) {
+ private function validateForCreate($name) {
         if (count($this->findOneByName($name)) > 0) {
             return array('message' => 'Retailer Name already exists!',
                 'field' => 'name',
@@ -350,8 +333,7 @@ public function findBrandBaseOnRetailer($retailer_id){
 }
 
 #----------------End Of Brand ------------------------------------------------#    
-    
-#---------------
+
 public function BrandBaseOnRetailer($id){
   return $this->repo->getRetailerBrandParticular($id);
 }

@@ -263,7 +263,17 @@ class ProductColor {
         $this->tallSizes = $tallSizes;
         return $this;
     }
-    
+   
+#---------Start Of Women Waist Sizes-------------------------------------------#
+    private $womenWaistSizes;
+     public function getwomenWaistSizes() {
+        return $this->womenWaistSizes;
+    }
+    public function setwomenWaistSizes($womenWaistSizes) {
+        $this->womenWaistSizes = $womenWaistSizes;
+        return $this;
+    }
+#-------------------End Of Regular Size----------------------------------------#    
 //---------------------------------------------------------------    
 
     
