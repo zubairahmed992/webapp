@@ -12,16 +12,69 @@
             </div>
 
 {% endif %}
-            <table style="width:20%">
-{% for ps in product.productSizes %} 
-                    
-                     
-        <div id="ret_pro_sizes">
-             <a href='{{path("retailer_admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
-                 {{ps.title}}
-            </a>
-         </div>
-{%endfor%}
-                    </table> 
-                    </div>
-<div style="clear:both;"></div>
+
+ <table style="width:20%">
+     {%set petite=NULL %}
+     {%set regular=NULL %}
+     {%set tall=NULL %}
+     {% set waist=NULL %}   
+    {% for ps in product.productSizes%} 
+    {% if(ps.bodyType=="Petite")%}
+        {% set  petite="Petite" %}
+    {%endif%}      
+    {% if(ps.bodyType=="Regular")%}
+        {% set  regular="Regular" %}
+    {%endif%}      
+    {% if(ps.bodyType=="Tall")%}
+        {% set  tall="Tall" %}
+    {%endif%} 
+    {% if(ps.bodyType=="Waist")%}
+        {% set  waist="Waist" %}
+    {%endif%}     
+
+    {%endfor%}  
+<div class="span1">{{petite}}</div> 
+{% for ps in product.productSizes%} 
+<div id="ret_pro_sizes">
+ {% if(ps.bodyType=="Petite")%}
+        <div class="span1">                        
+            <a href='{{path("retailer_admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
+{{ps.title}}
+                </a>
+            </div>
+{%endif%}
+{%endfor%}  
+            <div class="span1">{{regular}}</div> 
+{% for ps in product.productSizes%} 
+{% if(ps.bodyType=="Regular")%}
+                                <div class="span1">                        
+                                    <a href='{{path("retailer_admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
+{{ps.title}}
+                                        </a>
+                                    </div>
+{%endif%}
+{%endfor%}                  
+                                    <div class="span1">{{tall}}</div> 
+{% for ps in product.productSizes%} 
+{% if(ps.bodyType=="Tall")%}
+                                    <div class="span1">                        
+                                        <a href='{{path("retailer_admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
+{{ps.title}}
+                                            </a>
+                                        </div>
+{%endif%}
+{%endfor%} 
+                                        <div class="span1">{{waist}}</div> 
+{% for ps in product.productSizes%} 
+{% if(ps.bodyType=="Waist")%}
+                                        <div class="span1">                        
+                                            <a href='{{path("retailer_admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
+{{ps.title}}
+                                                </a>
+                                            </div>
+{%endif%}
+{%endfor%} 
+                                        </div>
+                                    </table> 
+                                </div>
+                                <div style="clear:both;"></div>

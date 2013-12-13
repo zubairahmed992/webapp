@@ -60,7 +60,7 @@ protected $container;
     {   $em = $this->getDoctrine()->getManager();
         $entity = new Product();
         $form = $this->createForm(new RetailerProductDetailType($this->get('admin.helper.product.specification')), $entity);
-       $form->bindRequest($request);
+        $form->bindRequest($request);
         $id = $this->get('security.context')->getToken()->getUser()->getId();                 
         $retailerentity = $this->get('admin.helper.retailer.user')->find($id);       
         $retailer = $this->getRetailer($retailerentity->getRetailer()->getId());
@@ -68,13 +68,13 @@ protected $container;
             $this->get('session')->setFlash('warning', 'Unable to find Retailer.');
         }
         $data=$request->request->all();
-        $productArray= $this->get('admin.helper.product')->productDetailArray($data, $retailerentity);
+        $productArray= $this->get('admin.helper.product')->productDetailArray($data, $entity);
         $this->get('session')->setFlash($productArray['message_type'],$productArray['message']);
        return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_show.html.twig',  
                array('id' => $entity->getId(),'product'=>$entity, 'fit_priority'=>$entity->getFitPriority())
                     );  
     }
-#----------------Retailer Edit ------------------------------------------------#    
+#---------------------Retailer Edit --------------------------------------------#    
     public function productDetailEditAction($id) {
     $retaileruser= $this->get('security.context')->getToken()->getUser()->getId();  
     $entity = $this->getDoctrine()
@@ -167,8 +167,8 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
          $sizes=$this->get('admin.helper.product')->productDetailColorAdd($entity);
-       //return new response(json_encode($entity->getSizeTitleType()));
-        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']));
+       // return new response(json_encode($sizes));
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']));
          $imageUploadForm = $this->createForm(new ProductColorImageType());
         $patternUploadForm = $this->createForm(new ProductColorPatternType());
         return $this->render('LoveThatFitRetailerAdminBundle:Product:product_detail_show.html.twig', array(
@@ -186,7 +186,7 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
         $productColor = new ProductColor();
         $productColor->setProduct($product);
         $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']),$productColor);
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
         $colorform->bind($request);
         if ($colorform->isValid()) {
 
@@ -219,7 +219,7 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
         $productColor = $this->getProductColor($color_id);
          $sizeTitle=$this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
         $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall']),$productColor);
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
         // $colorform = $this->createForm(new ProductColorType(), $productColor);
       if(isset($sizeTitle['Petite'])){ 
         $colorform->get('petiteSizes')->setData($sizeTitle['Petite']); 
@@ -229,6 +229,9 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
         }
         if(isset($sizeTitle['Tall'])){
          $colorform->get('tallSizes')->setData($sizeTitle['Tall']); 
+        }
+        if(isset($sizeTitle['Waist'])){
+         $colorform->get('womenWaistSizes')->setData($sizeTitle['Waist']); 
         }
 
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
@@ -253,7 +256,7 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
 
         $productColor = $this->getProductColor($color_id);
         $sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
-        $colorForm = $this->createForm(new ProductColorType($sizes['petite'], $sizes['regular'], $sizes['tall']), $productColor);
+        $colorForm = $this->createForm(new ProductColorType($sizes['petite'], $sizes['regular'], $sizes['tall'],$sizes['women_waist']), $productColor);
 
         $colorForm->bind($request);
         if ($colorForm->isValid()) {
