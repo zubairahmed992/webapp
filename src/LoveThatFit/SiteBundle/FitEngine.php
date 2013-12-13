@@ -62,6 +62,7 @@ class FitEngine {
         $priority = $product->getFitPriorityArray();
         $body_specs = $this->user->getMeasurement()->getArray();
         
+        $logger="";
         $fit_rec = "";
         $tight_fit_rec = "";
         $loose_fit_rec = "";
@@ -69,25 +70,28 @@ class FitEngine {
         foreach ($sizes as $size) {
             $item_specs = $size->getMeasurementArray();
             $feedback = $this->fits($priority, $body_specs, $item_specs);
+            $str_size=" ~> " . $size->getDescription() . " : ". $feedback['msg'];
             if ($feedback['fit']) {
-                    $fit_rec.= " ->> " . $size->getDescription();
+                    $fit_rec.= $str_size;
             } elseif ($feedback['status']==0) {
-                    $tight_fit_rec .= " -->> ". $size->getDescription() . " : ". $feedback['msg'];
+                    $tight_fit_rec .= $str_size;
             }elseif ($feedback['status']==2) {
                 if ($lowest_varience == null || $lowest_varience > $feedback['varience']){
                     $lowest_varience=$feedback['varience'];
-                    $loose_fit_rec = " ->> ". $size->getDescription() . " : (". $feedback['varience'] .")". $feedback['msg'];
+                    $loose_fit_rec = $str_size . " varience index (". $feedback['varience'] .")";
                     }        
             }
+            $logger.="   ".$size->getDescription() ."|||   status(".$feedback['status'].")   vaience:".$feedback['varience'];
         }
+        
         //if(strlen($tip)==0) $tip= " you are in between sizes.";
         $str="";
         if (strlen($fit_rec)>0){
-        $str=" FITS ".$fit_rec;    
+        $str=" Perfect fitting Size ".$fit_rec;    
         }elseif (strlen($tight_fit_rec)>0){
-        $str=" TIGHT-FITS ". $tight_fit_rec;    
+        $str="  Tight fitting Size ". $tight_fit_rec;    
         }elseif (strlen($loose_fit_rec)>0){
-        $str=" LOOSE-FIT " . $loose_fit_rec;    
+        $str="  Loose fitting Size " . $loose_fit_rec;    
         }
         return $str;
     }
@@ -95,7 +99,7 @@ class FitEngine {
 #--------------------------------------------------------------------------------->
 
     private function fits($priority, $body_specs, $item_specs) {
-        #  tight=-1, max_fit=0, fit=1, loose=2
+        #  missing params=-2, tight=-1, max_fit=0, fit=1, loose=2
         $fit = true;
         $status = 1;
         $msg = "";
@@ -105,15 +109,15 @@ class FitEngine {
             $fb = $this->evaluate_fit_point($body_specs, $item_specs, strtolower($key), $value);
             if ($fb != NULL) {
                  
-                $msg.='  ' .strtolower($key).':'. $fb['msg']; # concatinating messages
+                $msg.='  ' .$key.':'. $fb['msg']; # concatinating messages
                 # adding evaluation params (fits/max_fits/loose/tight)
 
                 if ($fb['fit'] === false) {
                     $fit = false;
                     if ($fb['ideal_low'] === null || $fb['ideal_high'] === null || $fb['body'] === null) {  #~~~~~~~~~~~~~> params missing
                            $status = -2;
-                    }elseif($fb['max_fit'] === true) { #~~~~~~~~~~~~~> max fit
-                        if($status != -2 && $status != -1 && $status != 2) $status = 0;#if not tight or loose    
+                    }elseif($fb['max_fit']) { #~~~~~~~~~~~~~> max fit
+                        if($status != -2 && $status != -1) $status = 0;#if not tight    
                     }elseif ($fb['varience_index'] >0) {  #~~~~~~~~~~~~~> loose
                         $varience = $varience + $fb['varience_index'];
                         if($status != -2 && $status != -1) $status = 2;#if not tight 
@@ -124,6 +128,7 @@ class FitEngine {
             }
         }
         $varience = number_format($varience, 2, '.', '');
+        //return array('fit' => $fit, 'msg' => $msg, 'varience' => $varience, 'status' => $status);
         return array('fit' => $fit, 'msg' => $msg, 'varience' => $varience, 'status' => $status);
     }
 
@@ -232,43 +237,43 @@ class FitEngine {
                 $body = $body_specs[$fit_point]; #~~~~~~~~~>
                 // if perfect fi 4-a
                 if ($body_specs[$fit_point] <= $item_specs[$fit_point]['ideal_body_high'] && $body_specs[$fit_point] >= $item_specs[$fit_point]['ideal_body_low']) {
-                    $str = 'Perfect fit ';
+                    $str = ' (Perfect fit) ';
                     $diff = 0;
                     $fit = true;
                     $ideal_fit = true;
 //------------- if tight 4-b
                 } elseif ($body_specs[$fit_point] > $item_specs[$fit_point]['ideal_body_high']) {
 
-                    $str = 'tight';
+                    $str = '(Tight)';
                     $diff = $item_specs[$fit_point]['ideal_body_high'] - $body_specs[$fit_point]; #~~~~~~~~~>                        
 //~~~~~~~~~~~~~~~ Check if max measurement exists 4-c
-                    if (!$item_specs[$fit_point]['max_body_measurement'] === NULL && !$item_specs[$fit_point]['max_body_measurement'] == 0) {
-                        $max_body_measurement = $item_specs[$fit_point]['$max_body_measurement']; #~~~~~~~~~>
+                    if ($item_specs[$fit_point]['max_body_measurement'] != 0) {
+                        $max_body_measurement = $item_specs[$fit_point]['max_body_measurement']; #~~~~~~~~~>
 //~~~~~~~~~~~~~~~ Check if body measurement under max measurement 4-d
                         $max_body_diff = $max_body_measurement - $body_specs[$fit_point];
                         if ($max_body_diff > 0) {
-                            $str .= ': fitting under max limit';
+                            $str .= ' (Under Max Limit)';
                             $max_fit = true;
                         } else {
-                            $str .= ': exceeds max limit';
+                            $str .= ' (Exceeds Max Limit)';
                         }
                     }
 //-------------if loose 4-e
                 } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
-                    $str = 'loose';
+                    $str = ' (Loose)';
                     $diff = $item_specs[$fit_point]['ideal_body_low'] - $body_specs[$fit_point]; #~~~~~~~~~>
                     //~~~ Check & calculate possible recomendation based on fit priority & diffs
 
                     $diff_percent = ($diff / $item_specs[$fit_point]['ideal_body_low']) * 100;
                     $varience_index = ($fit_priority * $diff_percent) / 100;
                 } else {
-                    $str = 'No comparision occur';
+                    $str = 'No Comparision';
                 }
             }
         } elseif (!array_key_exists($fit_point, $item_specs)) {
             $str = 'Product ' . $fit_point . ' measurement (min-max) range is not available. ';
         } elseif (!array_key_exists($fit_point, $body_specs)) {
-            $str = 'user ' . $fit_point . ' measurement not provided';
+            $str = 'User ' . $fit_point . ' measurement not provided';
         }
 
         return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str, $ideal_fit, $max_fit, $varience_index, $diff_percent, $max_body_measurement, $max_body_diff);
