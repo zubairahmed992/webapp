@@ -19,7 +19,7 @@
 
 {% block body %}
 <div> 
-<h1 style="float:left;">{{product.name }}</h1>
+<h1 style="float:left;">{{product.name }} Size-{{sizetitle}}</h1>
 <div class="btn_wrapper">     
 <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">back</a>
       </div>
@@ -27,7 +27,7 @@
 
 
     <div id="detail_wrapper">      
-        <div id="p_hd">Product Detail</div>
+        <div id="p_hd">Product Specification</div>
 
         
         
