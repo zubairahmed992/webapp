@@ -14,25 +14,25 @@
 
 {% block body %}
 <div class="p_listing">
-    <h1>Dashboard</h1>
+  <h1>Dashboard</h1>
 {%if(totalproducts>0)%}
     <table width="100%" border="0" class="dashboard_tbl">
         <tr>
-       	    <td class="hd_bdr"><h4 style="float:left;">Products</h4></td>
+       	    <td class="hd_bdr" colspan="3"><h4 style="float:left;">Products</h4></td>
         </tr>
 
         <tr>
-            <td class="mainhd">Total Products:{{totalproducts}}</td>
+            <td class="mainhd" colspan="3">Total Products:{{totalproducts}}</td>
         </tr>
 
 
         <tr>
-            <td>
+            <td colspan="3">
                 <table width="100%">
                     <td width="49%">
                         <table width="100%">
                             <tr>
-                                <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Brand</h4></td>
+                                <td colspan="3" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Brand</h4></td>
                             </tr>
 
 
@@ -99,7 +99,7 @@
 
                             <table width="100%">
                                 <tr>
-                                    <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Clothing Type</h4></td>
+                                    <td colspan="3" valign="top" class="hd_bdr"><h4 style="float:left;">Products By Clothing Type</h4></td>
                                 </tr>
                                 <tr>
                                     <td valign="top" class="mainhd">
@@ -187,27 +187,21 @@
                 </tr>
 
                 <tr>
-                    <td colspan="2" valign="top" class="hd_bdr"><h4 style="float:left;">Users</h4></td>
+                    <td colspan="3" valign="top" class="hd_bdr"><h4 style="float:left;">Users</h4></td>
                 </tr> 
 
+                
                 <tr>
-                    <td valign="top" colspan="2" class="mainhd">
-
-
-
-                        <div> Total:  {{users['total_count']}}</div>
-                        <div>Female:  {{users['total_woman']}}         Percent:{%set femalepercent=100*users['total_woman']/users['total_count']%} {{femalepercent|number_format}}%</div>
-                        <div>Male:  {{users['total_man']}}   Percent:{%set malepercent=100*users['total_man']/users['total_count']%} {{malepercent|number_format}}%</div>                                           
-                    </td>
-                </tr>
-
-                <tr>
-                    <td valign="top"><h4 style="float:left;">Last Months Signups</h4>
+                    <td valign="top" class="mainhd">                      
+                        
+                        <div style="position:relative;">                        
+                        
+                        <h4 style="float:left;">Last Months Signups</h4>
                         <br><br>
                         
-                        <div style="position: absolute; top: 840px; left: 110px;"><b>{{totalusers}}</b></div>                    
+                        <div style="position: absolute; top: 65px; left: 70px;"><b>{{totalusers}}</b></div>                    
                         <canvas id="usersignups" height="300" width="300" style="margin-left:100px"></canvas>
-                       <div style="position: absolute; top: 1125px; left:110px;"><b>{{noofmonths}}</b></div>
+                       <div style="position: absolute; top: 340px; left:70px;"><b>{{noofmonths}}</b></div>
             <script>
                         var usersignupsbarChartData = {
                 labels : [{% for su in users['total_signups']%} "{{ su['month']}}", {%endfor%}],
@@ -223,33 +217,29 @@
                 var myLine = new Chart(document.getElementById("usersignups").getContext("2d")).Bar(usersignupsbarChartData);</script>
 
                  
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+             
 
- <br>
-
+            </div>
                     </td>
-                </tr> 
-
-                <tr>
-                    <td valign="top"><h4 style="float:left;">Users Age Groups</h4>
-                        <br><br>
-                        <div style="position: absolute; top: 1235px; left: 110px;"><b>{{totalusers}}</b></div>  
+                    
+                    <td>&nbsp;</td>
+                    
+                    
+                    <td valign="top" class="mainhd">
+                        
+                        <div style="position:relative;">
+                        
+                        
+                        <h4 style="float:left;">Users Age Groups</h4>
+                        <br><br>                       
+                                             
+                        <div style="position: absolute; top: 55px; left: 80px;"><b>{{totalusers}}</b></div>  
                         <canvas id="userage" height="300" width="300" style="margin-left:130px;"></canvas>
-                        <div style="position: absolute; top: 1515px; left:100px;"><b>{{ageinyears}}</b></div>
+                        <div style="position: absolute; top: 340px; left:55px;"><b>{{ageinyears}}</b></div>
+                        
+                        
+                        
+                        
             <script>
                         var useragebarChartData = {
                 labels : [{% for agc in users['age_group_count']%} "{{ agc['age']}}", {%endfor%}],
@@ -262,14 +252,56 @@
                 ]
                 }
                 var myLine = new Chart(document.getElementById("userage").getContext("2d")).Bar(useragebarChartData);</script>
-                 </td>
+                 
+            
+            
+            
+            
+            
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            </td>
+                </tr>
+                <tr>
+                  <td valign="top" align="center">
+                  
+                  <table width="50%" cellspacing="2" cellpadding="2" border="1">
+                                        
+                                          <tr>
+                                            <td bgcolor="#efefef" align="center"><strong>Total:</strong></td>
+                                            <td bgcolor="#efefef" align="center"><strong>Female:</strong></td>                                            
+                                            <td bgcolor="#efefef" align="center"><strong>Male</strong></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td align="center">{{users['total_count']}}</td>
+                                            <td align="center">{{users['total_woman']}} ({%set femalepercent=100*users['total_woman']/users['total_count']%} {{femalepercent|number_format}}%)</td>
+                                           <td align="center">{{users['total_man']}} ({%set malepercent=100*users['total_man']/users['total_count']%} {{malepercent|number_format}}%)</td>
+                                            
+                                        </tr>              
+
+
+          
+                                    </table> 
+
+                  
+                  </td>
+                  <td>&nbsp;</td>
+                  <td valign="top">&nbsp;</td>
                 </tr> 
 
+                
 
 
-
-
-            </table>   
+            </table>
+  
+  &nbsp;  &nbsp;
  {%endif%}
         </div>
 {% endblock %}

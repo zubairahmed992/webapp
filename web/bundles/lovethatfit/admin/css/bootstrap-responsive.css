@@ -1258,3 +1258,16 @@
       color:#000;
   }
   
+  
+  .space_wrap .span1:not(.hds) {
+   
+   min-height:65px;
+   max-height:65px;
+	padding-top:20px;
+        overflow:hidden;
+   
+	
+  }
+  
+
+   
