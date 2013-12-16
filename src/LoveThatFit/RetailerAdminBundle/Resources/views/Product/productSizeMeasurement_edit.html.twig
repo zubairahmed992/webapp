@@ -24,82 +24,17 @@
                         <div style="margin-top:65px"></div>
                         <div style="clear:both;"></div>
                         <div id="pro_detail"> 
-                                <div>
-                                    <div class="span3">Garment Measurement Flat</div>
-                                    <div class="span3">{{ form_widget(form.garment_measurement_flat) }}{{ form_errors(form.garment_measurement_flat) }}</div>                                    
-                                </div>
-                                <div class="login_error" >
-                                                    <div id="error_garment_measurement_flat" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                            Enter garment measurement flat value
-                                                         </div>
-                                                <div id="error_valid_garment_measurement_flat" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Enter Only digits form 0-9
-                                                         </div>
-                                                    </div>
-                                    <div >
-                                     <div class="span3">Max Body Measurement</div>
-                                    <div class="span3">{{ form_widget(form.max_body_measurement) }}{{ form_errors(form.max_body_measurement) }}
+                            
+                            
+                            <div id="rise">
+                                    <div class="span3">Ideal Body Size Low</div>
+                                    <div class="span3">
+                                     {{ form_widget(form.ideal_body_size_low) }}{{ form_errors(form.ideal_body_size_low) }}
                                         
                                     </div>
-                                     <div class="login_error" >
-                                                    <div id="error_maxbodymeasurement" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                            Enter Max Body Measurement value
-                                                         </div>
-                                                <div id="error_validmaxbodymeasurement" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Enter Only digits form 0-9
-                                                         </div>
-                                                    </div>
-                                </div>                                
-                                 <div id="optional_elements">
-                                <div id="styling_type">
-                                    <div class="span3">Vertical Stretch</div>
-                                    <div class="span3">
-                                        {{ form_widget(form.vertical_stretch) }}{{ form_errors(form.vertical_stretch) }}
-                                            
-                                    </div>
-                                </div>
-                                         <div class="login_error" >                                                    
-                                                <div id="error_valid_vertical_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Enter Only digits form 0-9
-                                                         </div>
-                                                    </div>
-                                    
-                                <div id="hem_length">
-                                    <div class="span3">Horizontal Stretch</div>
-                                    <div class="span3">
-                                         {{ form_widget(form.horizontal_stretch) }}{{ form_errors(form.horizontal_stretch) }}
-                                    </div>
-                                </div>
-                                         <div class="login_error" >                                                    
-                                                <div id="error_valid_horizontal_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Enter Only digits form 0-9
-                                                         </div>
-                                                    </div>
-                                
-                                <div id="neckline">
-                                    <div class="span3">Stretch Type Percentage</div>
-                                    <div class="span3">
-                                         {{ form_widget(form.stretch_type_percentage) }}{{ form_errors(form.stretch_type_percentage) }}
-                                    </div>
-                                </div>
-                                         <div class="login_error" >
-                                                    <div id="error_stretch_type_percentage" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                            Enter Stretch Type Percentage value
-                                                         </div>
-                                                <div id="error_valid_stretch_type_percentage" style="display:none;color: #DD1144;font-size: 0.8em;
-                                                         text-align:left">
-                                                             Enter Only digits form 0-9
-                                                         </div>
-                                                    </div>
-                                
-                                <div id="sleeve_styling">
+                                </div>    
+                            
+                            <div id="sleeve_styling">
                                     <div class="span3">Ideal Body Size High</div>
                                     <div class="span3">
                                     {{ form_widget(form.ideal_body_size_high) }}{{ form_errors(form.ideal_body_size_high) }}
@@ -121,20 +56,42 @@
                                                     </div>      
                                     </div>
                                 </div>
-                                    
-                              
-                                         
-                                         
-                                         <div id="rise">
-                                    <div class="span3">Ideal Body Size Low</div>
-                                    <div class="span3">
-                                     {{ form_widget(form.ideal_body_size_low) }}{{ form_errors(form.ideal_body_size_low) }}
+                            
+                            
+                            <div >
+                                     <div class="span3">Max Body Measurement</div>
+                                    <div class="span3">{{ form_widget(form.max_body_measurement) }}{{ form_errors(form.max_body_measurement) }}
                                         
                                     </div>
-                                </div>                                  
-                                
-                                
-                               <div id="rise">
+                                     <div class="login_error" >
+                                                    <div id="error_maxbodymeasurement" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter Max Body Measurement value
+                                                         </div>
+                                                <div id="error_validmaxbodymeasurement" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                </div> 
+                            
+                                <div>
+                                    <div class="span3">Garment Measurement Flat</div>
+                                    <div class="span3">{{ form_widget(form.garment_measurement_flat) }}{{ form_errors(form.garment_measurement_flat) }}</div>                                    
+                                </div>
+                                <div class="login_error" >
+                                                    <div id="error_garment_measurement_flat" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter garment measurement flat value
+                                                         </div>
+                                                <div id="error_valid_garment_measurement_flat" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                  
+                            
+                            <div id="rise">
                                     <div class="span3">Garment Measurement Stretch Fit</div>
                                     <div class="span3">
                                      {{ form_widget(form.garment_measurement_stretch_fit) }}{{ form_errors(form.garment_measurement_stretch_fit) }}
@@ -152,7 +109,52 @@
                                                              Enter Only digits form 0-9
                                                          </div>
                                                     </div>
-                                 </div>    
+                                 </div> 
+                        
+                        <div id="neckline">
+                                    <div class="span3">Stretch Type Percentage</div>
+                                    <div class="span3">
+                                         {{ form_widget(form.stretch_type_percentage) }}{{ form_errors(form.stretch_type_percentage) }}
+                                    </div>
+                                </div>
+                                         <div class="login_error" >
+                                                    <div id="error_stretch_type_percentage" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                            Enter Stretch Type Percentage value
+                                                         </div>
+                                                <div id="error_valid_stretch_type_percentage" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                        
+                            <div id="hem_length">
+                                    <div class="span3">Horizontal Stretch</div>
+                                    <div class="span3">
+                                         {{ form_widget(form.horizontal_stretch) }}{{ form_errors(form.horizontal_stretch) }}
+                                    </div>
+                                </div>
+                                         <div class="login_error" >                                                    
+                                                <div id="error_valid_horizontal_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                 <div id="optional_elements">
+                                <div id="styling_type">
+                                    <div class="span3">Vertical Stretch</div>
+                                    <div class="span3">
+                                        {{ form_widget(form.vertical_stretch) }}{{ form_errors(form.vertical_stretch) }}
+                                            
+                                    </div>
+                                </div>
+                                         <div class="login_error" >                                                    
+                                                <div id="error_valid_vertical_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Only digits form 0-9
+                                                         </div>
+                                                    </div>
+                                     
                                 <div >
                                     <div class="span3">&nbsp;</div>
                                     <div class="span3">&nbsp;</div>
