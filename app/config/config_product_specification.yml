@@ -168,7 +168,7 @@ constants:
   fit_priority:
       man:
         top: 
-         back_shoulder: Back Shoulder
+         shoulder_across_back: Shoulder across back
          chest: Chest
          waist: Waist
          hip: Hip 
@@ -179,7 +179,7 @@ constants:
          Thigh: Thigh
       women:
         top: 
-         back_shoulder: Back Shoulder
+         shoulder_across_back: Shoulder across back
          bust: bust
          waist: Waist
          hip: Hip 
@@ -189,7 +189,7 @@ constants:
          hip: hip
          Thigh: Thigh
         dress: 
-         back_shoulder: Back Shoulder
+         shoulder_across_back: Shoulder across back
          bust: Bust 
          waist: Waist
          hip: Hip
