@@ -6200,6 +6200,8 @@ a.badge:hover {
 	margin-top:10px;
 	margin-left:10px;
         min-height: 230px;
+        background: #fff;
+        box-shadow: 0px 0px 2px 2px #999;
 }
 
 .det_container{	}
@@ -6683,4 +6685,12 @@ overflow: auto;
 
 .rt_user_show .span3:nth-child(3n){
     font-weight: normal;
+}
+
+.edt_new label {
+   display: inline-block;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 16px;
+    padding-top: 0px;
 }
