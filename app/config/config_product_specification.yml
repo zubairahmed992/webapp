@@ -187,14 +187,14 @@ constants:
         bottom: 
          waist: Waist
          hip: hip
-         Thigh: Thigh
+         thigh: Thigh
         dress: 
          shoulder_across_back: Shoulder across back
          bust: Bust 
          waist: Waist
          hip: Hip
          neck: Neck
-         Thigh: Thigh
+         thigh: Thigh
   fit_type:   
        stretch_skin_tight: Stretch - skin tight
        stretch_close_fitting: Stretch - close fitting
