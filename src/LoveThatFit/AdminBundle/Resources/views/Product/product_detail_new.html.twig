@@ -109,7 +109,7 @@ var gender_type=$("#product_gender").val();
             $.each(result['fitting_priority'], function(k, v) {
                
              s+= '<label>'+v+'</label>';  
-             s+= '<input class="required" type="text" id="fit_pirority'+count+'" name="fit_pirority['+v+']">'; 
+             s+= '<input class="required" type="text" id="fit_pirority'+count+'" name="fit_pirority['+k+']">'; 
              count++;
               
             });
@@ -122,7 +122,7 @@ var gender_type=$("#product_gender").val();
            count=1;
             $.each(result['fabric_content'], function(k, v) {
              fabric_content+= '<label>'+v+'</label>';  
-             fabric_content+= '<input  class="required" type="text" id="fabric_content'+count+'" name="fabric_content['+v+']">'; 
+             fabric_content+= '<input  class="required" type="text" id="fabric_content'+count+'" name="fabric_content['+k+']">'; 
               count++;
             });
             
@@ -134,7 +134,7 @@ var gender_type=$("#product_gender").val();
            var result = $.parseJSON(data);
             $.each(result['garment_detail'], function(k, v) {
             garment_detail+= '<label>'+v+'</label>';  
-            garment_detail+= '<input class="required" type="text" name="garment_detail['+v+']">'; 
+            garment_detail+= '<input class="required" type="text" name="garment_detail['+k+']">'; 
               
             });
         //$('#product_fit_priority').val();

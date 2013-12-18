@@ -132,26 +132,17 @@ class FitEngine {
         return array('fit' => $fit, 'msg' => $msg, 'varience' => $varience, 'status' => $status);
     }
 
-#--------------------------------------------------------------------------------->
-
-    private function _fits($priority, $body_specs, $item_specs) {
-        $is_ltf = true;
-        foreach ($priority as $key => $value) {
-            $fb = $this->evaluate_fit_point($body_specs, $item_specs, strtolower($key), $value);
-            if ($fb != NULL) {
-                if ($fb['fit'] === false) {
-                    $is_ltf = false;
-                }
-            }
-        }
-
-        return $is_ltf;
-    }
 
 #--------------------------------------------------------------------------------->
 #---------------------------  Feedback Methods ------------------------------------------------------|
 #--------------------------------------------------------------------------------->
-
+private function getAllKeysTesting($ar){
+    $str="";
+    foreach ($ar as $key => $value) {
+        $str.=$key. " ,";
+    }
+    return $str;
+}#--------------------------------------------
     function getBasicFeedback($current_item = null) {
 
         $feed_back = array();
@@ -185,6 +176,7 @@ class FitEngine {
             $str = $this->getFittingSize();
             $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
         }
+
         return $feed_back;
     }
 
@@ -271,9 +263,9 @@ class FitEngine {
                 }
             }
         } elseif (!array_key_exists($fit_point, $item_specs)) {
-            $str = 'Product ' . $fit_point . ' measurement (min-max) range is not available. ';
+            $str = 'Product measurement not found! ' . $fit_point;
         } elseif (!array_key_exists($fit_point, $body_specs)) {
-            $str = 'User ' . $fit_point . ' measurement not provided';
+            $str = 'Please enter you measurement.';
         }
 
         return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str, $ideal_fit, $max_fit, $varience_index, $diff_percent, $max_body_measurement, $max_body_diff);
