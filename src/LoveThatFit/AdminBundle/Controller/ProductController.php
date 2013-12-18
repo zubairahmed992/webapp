@@ -60,11 +60,10 @@ class ProductController extends Controller {
         return $brand;
     }
 
-    /*     * ****************************************************************************
-     * ************************* PRODUCT DETAIL **********************************
-     * ***************************************************************************** */
-
-    public function productDetailNewAction() {
+    /***************************************************************************
+     * ************************* PRODUCT DETAIL ********************************
+     * ************************************************************************/
+  public function productDetailNewAction() {
 
         
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
