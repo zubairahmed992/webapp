@@ -655,6 +655,7 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
     }
      
  }
+ #-----------------------------------------------------------------------
  public function createProductSizeMeasurementAction($id,$size_id)
 {
     $product_size=$this->get('admin.helper.productsizes')->find($size_id);
@@ -676,7 +677,34 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
                 );
 }
 
-
+#-----------------------------------------------------------------------
+public function sizeMeasurementNewAction($id,$size_id,$title)
+    {        
+        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
+        if(!$product_size)
+        {
+            throw $this->createNotFoundException('Unable to find Product Size.');
+        }
+        $id=$product_size->getProduct()->getId();
+        $product = $this->getProduct($id);   
+        //$product=$this->get('admin.helper.product')->find($id);
+        $entity = new ProductSizeMeasurement();
+        $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
+        $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
+        $form = $this->createForm(new ProductSizeMeasurementType(),$entity);
+        
+        return $this->render('LoveThatFitAdminBundle:Product:_productSizeMeasurement.html.twig', array(
+                    'form' => $form->createView(),
+                    'product_size' => $product_size,
+                    'title'=>$title,
+                    'id'=>$id,
+                    'productname'=>$product->getName(),
+                    'sizetitle'=>$product_size->getTitle(),
+                   )
+                );
+                  
+    }
+#-----------------------------------------------------------------------
 
 public function productSizeMeasurementCreateAction($id,$size_id,$title)
     {        

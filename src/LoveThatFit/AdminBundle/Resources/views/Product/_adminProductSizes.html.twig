@@ -46,9 +46,6 @@
                                 <td>Ideal Body Size High :</td>
                                 <td>{{value['measurement']['ideal_body_size_high'] }}</td>                           
                             </tr>
-                            
-                            
-                            
                             <tr>
                                 <td width="20%">Max Body Measurement :</td>
                                 <td>{{value['measurement']['max_body_measurement'] }}</td>
@@ -56,7 +53,6 @@
                                 <td width="20%">Garment Measurement Flat:</td>
                                 <td>{{value['measurement']['garment_measurement_flat'] }}</td>
                             </tr>     
-                            
                             <tr>
                                 <td>Garment Measurement Stretch Fit :</td>
                                 <td>{{value['measurement']['garment_measurement_stretch_fit'] }}</td>
@@ -72,15 +68,32 @@
                                 <td>Horizontal Stretch :</td>
                                 <td>{{value['measurement']['horizontal_stretch'] }}</td>    
                             </tr>                            
-                            
-                            
                         </table>      
                     </td>
                 </tr>                
                 {% else %}
         <tr>
             <td class="retailor_det_key" >{{key|capitalize |replace({'_': ' ', '_': " "}) }}        
-                <div style="float:right;"><a href="{{ path('admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a></div>
+                <div style="float:right;"><a href="{{ path('admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a>&nbsp;
+                <button class="btn btn-primary btn-lg" data-toggle="modal" href="{{ path('admin_product_size_measurement_new', {'id':id,'size_id':size_id,'title':key}) }}"  data-target="#{{key}}Modal">Add</button>
+                </div>
+           
+                <!-- Modal -->
+<div class="modal_ad fade" id="{{key}}Modal" tabindex="-1" role="dialog" aria-labelledby="{{key}}ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">{{key|capitalize |replace({'_': ' ', '_': " "}) }}</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
             </td>           
         </tr>      
         
@@ -88,26 +101,6 @@
         
 </div>  
     {% endfor %}
-
-
-<div id="modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Add Product Measurement Size</h3>
-  </div>
-  <div class="modal-body">
-      <span id="{{ path('admin_product_size_measurement_create', {'id':id,'size_id':size_id}) }}" style="display:none;">{{ path('admin_product_size_measurement_create', {'id':id,'size_id':size_id}) }}</span>
-  </div>
-  </div>
-
-<script>
-$('[data-toggle="modal"]').click(function(e) {
-  e.preventDefault();
- var url= $('#admin_product_size_measurement_create').text();  
-  $.get(url, function(data) {
-      $(data).modal();
-  });
-});
-    </script>
+<!-- Button trigger modal -->
             </table>
         </div>
