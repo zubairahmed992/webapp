@@ -193,9 +193,7 @@
        {%if(measurement.height=="0"  or  measurement.weight=="0")%}  
                                 <div id='frm_bmi'>
                                     <label>BMI</label> Please Enter Your Height and Weight For BMI Result
-                                </div>  
-                                
-                                
+                                </div>
          {%else%}
                                 <div id='frm_bmi'>
                                     <label>BMI</label> {{measurement.BMI}} 
@@ -205,9 +203,7 @@
                                     <label>Age</label>  
                    {%if(app.user.age=="" or app.user.age=="0")%}
                                    
-                                    Your Age will appear after you specify Birthdate on <a href="{{path('user_profile_settings')}}">Account Settings</a>          
-                                    
-                                    
+                                    Your Age will appear after you specify Birthdate on <a href="{{path('user_profile_settings')}}">Account Settings</a>                                              
                             {%else%}
                                  {{app.user.age}}
                             {%endif%}
@@ -217,16 +213,10 @@
                                 <div class="clr_bth"></div>   
       {{ form_rest(form) }}  
                                 <input type="submit" value="Update" />
-
-
-
-
-
                             </form>
 <script type="text/javascript">
  $(document).ready(function() {
- var dd=$('#measurement_height').val();
- 
+ var dd=$('#measurement_height').val(); 
  if(isNaN(dd))
 {
 dd = dd.substring(0,(dd.length-1));
@@ -238,8 +228,7 @@ $('#height_in_feet').val(dd);
   if(inches==12){
 feet=feet+1;
 inches=0;
-}
- 
+} 
   $('#height_in_feet').val(feet);
   $('#height_in_inches').val(inches);
  });
@@ -255,7 +244,6 @@ if(isNaN(dd)){
   $('#height_in_feet').val(feet);
   $('#height_in_inches').val(inches);
 });
-
 $('#height_in_feet').change(function() {
     
   var dd =parseInt(this.value);
@@ -264,16 +252,13 @@ $('#height_in_feet').change(function() {
 	{
 	dd = dd.substring(0,(dd.length-1));
 	$('#height_in_feet').val(dd);
-	}
-        
+	}        
   var height_in_feet=dd * 12.000;
   var total_height_in_feet=height_in_feet+(parseInt(inches_select_box_value));
   var height_feet_fix=total_height_in_feet.toFixed(2);
   $('#measurement_height').val(height_feet_fix);
   $('#height_in_feet').val(dd);
 });
-
-
 $('#height_in_inches').change(function() {
     
   var dd =parseInt(this.value);
