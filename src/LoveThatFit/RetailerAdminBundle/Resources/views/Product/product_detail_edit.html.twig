@@ -63,7 +63,7 @@ var json = {{fit_priority}};
  };
  var size = Object.size(json);
  s="";
- s+='<label>Fit Pirority:</label>';
+ s+='<label><strong>Fit Pirority:</strong></label>';
  for(var key in json) {
     s+= '<label>'+key+'</label>';
     s+=' <input type="text" name="fit_pirority['+key+']" value="'+json[key]+'">'; 
@@ -80,7 +80,7 @@ $.ajax({
        
            $('#fit_priority').show();
            var s="";
-           s+= '<label>Fit Pirority:</label>'; 
+           s+= '<label><strong>Fit Pirority:</strong></label>'; 
            var result = $.parseJSON(data);
            $.each(result['fitting_priority'], function(k, v) {
            s+= '<label>'+v+'</label>';  
@@ -111,7 +111,7 @@ var json = {{fabric_content}};
  var size = Object.size(json);
  
  s="";
- s+='<label>Fabric Content:</label>';
+ s+='<label><strong>Fabric Content:</strong></label>';
  for(var key in json) {
  s+= '<label>'+key+'</label>';
  s+=' <input type="text" name="fabric_content['+key+']" value="'+json[key]+'">'; 

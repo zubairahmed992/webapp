@@ -15,23 +15,17 @@
     <form id="productSizeMeasuremntAdd" action="{{ path('admin_product_size_measurement_update',{"id":id,"size_id":product_size.id,'title':title}) }}"  method="post" {{ form_enctype(form) }}  onsubmit="return ProductSizeMeasuremtAdd()">
  {{ form_errors(form) }}
             <div id="detail_wrapper">      
-                <div id="p_hd">{{title|capitalize |replace({'_': ' ', '_': " "}) }}</div>                
-                    
-                    <div id="product_content">
-                        
+                <div id="p_hd">{{title|capitalize |replace({'_': ' ', '_': " "}) }}</div>
+                    <div id="product_content">                        
                         <div class="span3"><h3>Measurement for {{title|capitalize |replace({'_': ' ', '_': " "}) }}</h3></div>
                         <div style="clear:both;"></div>
                         <div id="pro_detail"> 
-                            
-                            
                             <div id="rise">
                                     <div class="span3">Ideal Body Size Low</div>
                                     <div class="span3">
-                                     {{ form_widget(form.ideal_body_size_low) }}{{ form_errors(form.ideal_body_size_low) }}
-                                        
+                                     {{ form_widget(form.ideal_body_size_low) }}{{ form_errors(form.ideal_body_size_low) }}                                        
                                     </div>
-                                </div>    
-                            
+                                </div>                                
                             <div id="sleeve_styling">
                                     <div class="span3">Ideal Body Size High</div>
                                     <div class="span3">
@@ -40,22 +34,18 @@
                                                     <div id="error_ideal_body_size_high" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
                                                             Enter ideal body size high measurement  Or  Ideal body size low measurement
-                                                         </div>
-                                       
+                                                         </div>                                       
                                        <div id="error_ideal_body_size_high_zero" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
                                                             Enter ideal body size high measurement  Or  Ideal body size low measurement greater than 0
-                                                         </div>
-                                       
+                                                         </div>                                       
                                                 <div id="error_valid_ideal_body_size_high" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
-                                                             Enter only numbers form 0-9
+                                                             Enter Only digits from 0-9
                                                          </div>
                                                     </div>      
                                     </div>
                                 </div>
-                            
-                            
                             <div >
                                      <div class="span3">Max Body Measurement</div>
                                     <div class="span3">{{ form_widget(form.max_body_measurement) }}{{ form_errors(form.max_body_measurement) }}
@@ -68,11 +58,10 @@
                                                          </div>
                                                 <div id="error_validmaxbodymeasurement" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
-                                                             Enter Only digits form 0-9
+                                                             Enter Only digits from 0-9
                                                          </div>
                                                     </div>
-                                </div> 
-                            
+                                </div>                            
                                 <div>
                                     <div class="span3">Garment Measurement Flat</div>
                                     <div class="span3">{{ form_widget(form.garment_measurement_flat) }}{{ form_errors(form.garment_measurement_flat) }}</div>                                    
@@ -84,7 +73,7 @@
                                                          </div>
                                                 <div id="error_valid_garment_measurement_flat" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
-                                                             Enter Only digits form 0-9
+                                                             Enter Only digits from 0-9
                                                          </div>
                                                     </div>
                                   
@@ -104,7 +93,7 @@
                                                          </div>
                                                 <div id="error_valid_garment_measurement_stretch_fit" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
-                                                             Enter Only digits form 0-9
+                                                             Enter Only digits from 0-9
                                                          </div>
                                                     </div>
                                  </div> 
@@ -122,7 +111,7 @@
                                                          </div>
                                                 <div id="error_valid_stretch_type_percentage" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
-                                                             Enter Only digits form 0-9
+                                                             Enter Only digits from 0-9
                                                          </div>
                                                     </div>
                         
@@ -135,7 +124,7 @@
                                          <div class="login_error" >                                                    
                                                 <div id="error_valid_horizontal_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
-                                                             Enter Only digits form 0-9
+                                                             Enter Only digits from 0-9
                                                          </div>
                                                     </div>
                                  <div id="optional_elements">
@@ -149,7 +138,7 @@
                                          <div class="login_error" >                                                    
                                                 <div id="error_valid_vertical_stretch" style="display:none;color: #DD1144;font-size: 0.8em;
                                                          text-align:left">
-                                                             Enter Only digits form 0-9
+                                                             Enter Only digits from 0-9
                                                          </div>
                                                     </div>
                                       
