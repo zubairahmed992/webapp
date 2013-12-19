@@ -734,6 +734,7 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
          
     }
     
+    
     public function productSizeMeasurementupdateAction(Request $request,$id,$size_id,$title)
     {
         $product_size=$this->get('admin.helper.productsizes')->find($size_id);
@@ -766,6 +767,11 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
                  'sizetitle'=>$product_size->getTitle(),
          )));
         }
+        
+     
+       
+        
+        
         
         
         /*
