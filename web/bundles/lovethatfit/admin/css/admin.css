@@ -22,10 +22,17 @@ body {
 }
 
 .hds{
-	background:#333333;
-	color:#fff;
+	background:#efefef;
+	color:#444;
+        font-weight: bold;
 	padding:5px 0px 0px 0px;
 	min-height:40px!important;
+}
+
+.hds a{
+	
+	color:#444!important;
+        
 }
 
 .span1 div i{	

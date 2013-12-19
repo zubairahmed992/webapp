@@ -210,6 +210,8 @@
     display: block;
     float: left;
     width: 100%;
+    text-align: center;
+    padding-top: 10px;
    
     margin-left: 1.1241%;
     *margin-left: 2.5109110747408616%;
