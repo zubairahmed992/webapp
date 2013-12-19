@@ -639,10 +639,12 @@ public function favouriteByUser($user_id,$request){
                 $color_size_array = array();
                 $counter=1;
                 foreach ($color_sizes as $cs) {
-                    $color_size_array [$cs['title']] = $cs;
-                    $like_status['like_status']=$user->getMyClosetListArray($cs['id']);
+                $color_size_array[$cs['id']]= $cs;
+              // $color_size_array[$cs['body_type']]= $cs;
+                //$color_size_array[$cs['body_type']] = $cs['body_type'];
+                $like_status['like_status']=$user->getMyClosetListArray($cs['id']);
                    // $item_id['item_id']=$cs['item_id'];
-                    array_push($color_size_array [$cs['title']],$like_status);
+                    array_push($color_size_array [$cs['id']],$like_status);
                     $counter++;
                 }
                 
