@@ -49,12 +49,26 @@ class FitEngine {
     }
 #----------------------------------------------------------------------------------
 //
-    function getFittingSize($current_item = null) {
-        if ($current_item === NULL) {
-            $current_item = $this->product_item;
+    function getFittingItem($product = null) {
+         if ($product === NULL) {
+            $product = $this->product_item->getProduct();
         }
-
-        $product = $current_item->getProduct();
+        
+        $fitting_sizes = $this->getFittingSize($product);
+        $product_color = $product->getDisplayProductColor();        
+        return $product_color->getItemBySizeId($fitting_sizes[0]['id']);
+        
+        }
+#------------------------------------------    
+    function getFittingSize($product = null) {
+        
+        if ($this->product_item === NULL) {
+            $current_item = $this->product_item;
+        } 
+        if ($product === NULL) {
+            $product = $current_item->getProduct();
+        }
+        
         $sizes = $product->getProductSizes();
         $priority = $product->getFitPriorityArray();
         $body_specs = $this->user->getMeasurement()->getArray();
@@ -66,11 +80,11 @@ class FitEngine {
         foreach ($sizes as $size) {
             $item_specs = $size->getMeasurementArray();
             $feedback = $this->fits($priority, $body_specs, $item_specs);
-            $feedback['id'] =$size.getId();
+            $feedback['id'] =$size->getId();
             if ($feedback['fit']) {
-                    $fit_rec [$size->getDescription()]= $feedback;
+                array_push($fit_rec , $feedback);                    
             } elseif ($feedback['status']==0) {
-                    $tight_fit_rec [$size->getDescription()]= $feedback;
+                    array_push($fit_rec , $feedback);
             }elseif ($feedback['status']==2) {
                 if ($lowest_varience == null || $lowest_varience > $feedback['varience']){
                     $lowest_varience=$feedback['varience'];
@@ -84,7 +98,7 @@ class FitEngine {
         }elseif (count($tight_fit_rec)>0){
         return $tight_fit_rec;    
         }elseif (count($loose_fit_rec)>0){
-        return $loose_fit_rec;    
+        return $loose_fit_rec;                
         }
         return null;
     }

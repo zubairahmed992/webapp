@@ -562,15 +562,10 @@ class Product {
 //----------------------------------------------------------
     public function getUserFittingSize($user) {
 
-        $fitting_algo = new Algorithm($user, null);
-
-        foreach ($this->getProductSizes() as $ps) {
-            $fitting_algo->setProductMeasurement($ps);
-            if ($fitting_algo->fit()) {
-                return $ps;
-            }
-        }
-        return null;
+        $fe = new \LoveThatFit\SiteBundle\FitEngine($user, null);
+        $item = $fe->getFittingItem($this);
+        return $item;
+        
     }
 
     //----------------------------------------------------------
