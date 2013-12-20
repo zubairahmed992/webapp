@@ -12,94 +12,96 @@
 {% endif %}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="retailor_pro_size">
     {% for key, value in size_measurements %}                    
-                {% if (value['exists'])%}                  
-                <tr>
-                    <td class="retailor_det_key">{{value['measurement']['title']|capitalize |replace({'_': ' ', '_': " "}) }}                   
-                        <div class="retailer_edt">
-                            <a href="{{ path('admin_product_size_measurement_edit', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a>
-                            <a href="#myModaldetail{{value['measurement']['id']}}" title="Delete {{key}}" role="button" data-toggle="modal" class="btn">Delete</a>
-                            <div id="myModaldetail{{value['measurement']['id']}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
+    {% if (value['exists'])%}                  
+    <tr>
+    <td class="retailor_det_key">{{value['measurement']['title']|capitalize |replace({'_': ' ', '_': " "}) }}                   
+    <div class="retailer_edt">
+   {# <a href="{{ path('admin_product_size_measurement_edit', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}" class="btn"> Edit</a>#}
+    <button class="btn btn-primary btn-lg" data-toggle="modal" href="{{ path('admin_product_size_measurement_edit', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}"  data-target="#{{key}}Modal">Edit</button>
+    <a href="#myModaldetail{{value['measurement']['id']}}" title="Delete {{key}}" role="button" data-toggle="modal" class="btn">Delete</a>
+    <div id="myModaldetail{{value['measurement']['id']}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Delete Product</h3>
-  </div>
-  <div class="modal-body">
+    </div>
+    <div class="modal-body">
       <p>Are you sure you want to Delete this Product Size Measurement <b>{{key}}</b>?</p>
-  </div>
-  <div class="modal-footer">
+   </div>
+   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
     <a href="{{ path('admin_product_size_measurement_delete', {'id':id,'measurement_id':value['measurement']['id'],'size_id':size_id,'title':key}) }}"  class="btn btn-primary">Delete</a>
     
-  </div>
-</div>        
+   </div>
+   </div>        
 
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>                      
-                        <table cellpadding="5" cellspacing="0" border="0" width="100%">
-                            <tr>
-                                <td>Ideal Body Size Low :</td>
-                                <td>{{value['measurement']['ideal_body_size_low'] }}</td>
-                                 <td>&nbsp;</td>
-                                <td>Ideal Body Size High :</td>
-                                <td>{{value['measurement']['ideal_body_size_high'] }}</td>                           
-                            </tr>
-                            <tr>
-                                <td width="20%">Max Body Measurement :</td>
-                                <td>{{value['measurement']['max_body_measurement'] }}</td>
-                                 <td width="20%">&nbsp;</td>
-                                <td width="20%">Garment Measurement Flat:</td>
-                                <td>{{value['measurement']['garment_measurement_flat'] }}</td>
-                            </tr>     
-                            <tr>
-                                <td>Garment Measurement Stretch Fit :</td>
-                                <td>{{value['measurement']['garment_measurement_stretch_fit'] }}</td>
-                                 <td>&nbsp;</td>
-                                 <td>Stretch Type Percentage :</td>
-                                <td>{{value['measurement']['stretch_type_percentage'] }}</td>
-                                                        
-                            </tr>
-                            <tr>
-                                 <td>Vertical Stretch :</td>
-                                <td>{{value['measurement']['vertical_stretch'] }}</td>   
-                                <td>&nbsp;</td>
-                                <td>Horizontal Stretch :</td>
-                                <td>{{value['measurement']['horizontal_stretch'] }}</td>    
-                            </tr>                            
-                        </table>      
-                    </td>
-                </tr>                
-                {% else %}
-        <tr>
-            <td class="retailor_det_key" >{{key|capitalize |replace({'_': ' ', '_': " "}) }}        
-                <div style="float:right;"><a href="{{ path('admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a>&nbsp;
-                <button class="btn btn-primary btn-lg" data-toggle="modal" href="{{ path('admin_product_size_measurement_new', {'id':id,'size_id':size_id,'title':key}) }}"  data-target="#{{key}}Modal">Add</button>
-                </div>
+   </div>
+   </td>
+   </tr>
+   <tr>
+   <td>                      
+      <table cellpadding="5" cellspacing="0" border="0" width="100%">
+      <tr>
+        <td>Ideal Body Size Low :</td>
+        <td>{{value['measurement']['ideal_body_size_low'] }}</td>
+        <td>&nbsp;</td>
+        <td>Ideal Body Size High :</td>
+        <td>{{value['measurement']['ideal_body_size_high'] }}</td>                           
+      </tr>
+      <tr>
+        <td width="20%">Max Body Measurement :</td>
+        <td>{{value['measurement']['max_body_measurement'] }}</td>
+        <td width="20%">&nbsp;</td>
+        <td width="20%">Garment Measurement Flat:</td>
+        <td>{{value['measurement']['garment_measurement_flat'] }}</td>
+      </tr>     
+      <tr>
+        <td>Garment Measurement Stretch Fit :</td>
+        <td>{{value['measurement']['garment_measurement_stretch_fit'] }}</td>
+        <td>&nbsp;</td>
+        <td>Stretch Type Percentage :</td>
+        <td>{{value['measurement']['stretch_type_percentage'] }}</td>
+      </tr>
+      <tr>
+        <td>Vertical Stretch :</td>
+        <td>{{value['measurement']['vertical_stretch'] }}</td>   
+        <td>&nbsp;</td>
+        <td>Horizontal Stretch :</td>
+        <td>{{value['measurement']['horizontal_stretch'] }}</td>    
+      </tr>                            
+     </table>      
+      </td>
+      </tr>                
+     {% else %}
+      <tr>
+      <td class="retailor_det_key" >{{key|capitalize |replace({'_': ' ', '_': " "}) }}        
+      <div style="float:right;">
+      {#<a href="{{ path('admin_product_detail_size_measurement_create', {'id':id,'size_id':size_id,'title':key}) }}" class="btn">Add</a>&nbsp;#}
+      <button class="btn btn-primary btn-lg" data-toggle="modal" href="{{ path('admin_product_size_measurement_new', {'id':id,'size_id':size_id,'title':key}) }}"  data-target="#{{key}}Modal">Add</button>
+      </div>
            
-                <!-- Modal -->
-<div class="modal_ad fade" id="{{key}}Modal" tabindex="-1" role="dialog" aria-labelledby="{{key}}ModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+    
+  </td>           
+    </tr>      
+   {% endif %}
+        
+</div>  
+
+  <!-- Modal -->
+    <div class="modal_ad fade" id="{{key}}Modal" tabindex="-1" role="dialog" aria-labelledby="{{key}}ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">{{key|capitalize |replace({'_': ' ', '_': " "}) }}</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-     
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+   {# <h4 class="modal-title" id="myModalLabel">{{key|capitalize |replace({'_': ' ', '_': " "}) }}</h4>#}
+    </div>
+    <div class="modal-body">
+      
+    </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-            </td>           
-        </tr>      
-        
-                {% endif %}
-        
-</div>  
+
     {% endfor %}
 <!-- Button trigger modal -->
             </table>
