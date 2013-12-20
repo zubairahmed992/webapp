@@ -233,6 +233,27 @@ $('#height_in_inches').change(function() {
                         <script>
                            
                            $(document).ready(function(){
+                       //Sorting of Body Shapes
+        var options = $('#measurement_body_shape option');
+        var arr = options.map(function(_, o) {
+        return {
+        t: $(o).text(),
+        v: o.value
+         };
+        }).get();
+        arr.sort(function(o1, o2) {
+         return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+        });
+    options.each(function(i, o) {
+         //console.log(i);
+         o.value = arr[i].v;
+      $(o).text(arr[i].t.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+    return letter.toUpperCase();
+ }));
+    });
+    
+
+
                           $('#measurement_body_types_0').prop('checked', true);
                         {%if(top_brand_id is defined)%}     
                              var top_brand_id={{top_brand_id}};
