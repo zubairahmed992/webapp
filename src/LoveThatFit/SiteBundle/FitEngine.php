@@ -53,11 +53,9 @@ class FitEngine {
          if ($product === NULL) {
             $product = $this->product_item->getProduct();
         }
-        
         $fitting_sizes = $this->getFittingSize($product);
         $product_color = $product->getDisplayProductColor();        
         return $product_color->getItemBySizeId($fitting_sizes[0]['id']);
-        
         }
 #------------------------------------------    
     function getFittingSize($product = null) {
@@ -84,7 +82,7 @@ class FitEngine {
             if ($feedback['fit']) {
                 array_push($fit_rec , $feedback);                    
             } elseif ($feedback['status']==0) {
-                    array_push($fit_rec , $feedback);
+                    array_push($tight_fit_rec , $feedback);
             }elseif ($feedback['status']==2) {
                 if ($lowest_varience == null || $lowest_varience > $feedback['varience']){
                     $lowest_varience=$feedback['varience'];
