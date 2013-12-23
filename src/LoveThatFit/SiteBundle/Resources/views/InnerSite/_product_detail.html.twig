@@ -301,7 +301,7 @@ if(jqXHR.responseText.trim()== "success")
 	<script>
 	  window.fbAsyncInit = function() {
 		FB.init({
-		  appId  : '622956737752091',
+		  appId  : '485918228194125',
 		  status : true, // check login status
 		  cookie : true, // enable cookies to allow the server to access the session
 		  xfbml  : true  // parse XFBML
@@ -315,9 +315,6 @@ if(jqXHR.responseText.trim()== "success")
 		document.getElementById('fb-root').appendChild(e);
 	  }());
 	</script>
-	
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
 	<img id = "share_button{{product.id}}" src="{{asset('bundles/lovethatfit/site/images/share_button.png')}}">
 	
 	
@@ -328,11 +325,7 @@ if(jqXHR.responseText.trim()== "success")
 	FB.ui(
 	{
 	method: 'feed',
-	name: '{{product.name}}',	        
-	picture:'{{ asset(productItem.WebPath) }}',
-	caption: '{{product.name}}',
-	description: '{{product.description}}',
-	message: ''
+	name: '{{product.name}}',   
 	});
 	});
 	});

@@ -864,5 +864,18 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
     return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
     }
     
+    
+#-----------------------Form Form Upload CSV File------------------#
+    public function addCsvProductFormAction()
+    {
+        $form = $this->createFormBuilder()
+        ->add('csvfile','file')
+        ->getForm();
+    return $this->render('LoveThatFitAdminBundle:Product:import_csv.html.twig',
+        array('form' => $form->createView(),)
+    );
+    }
+    
+    
 }
 
