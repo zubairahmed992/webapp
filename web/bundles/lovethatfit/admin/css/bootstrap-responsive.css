@@ -211,8 +211,7 @@
     float: left;
     width: 100%;
     text-align: center;
-    padding-top: 10px;
-   
+    padding-top: 10px;   
     margin-left: 1.1241%;
     *margin-left: 2.5109110747408616%;
     -webkit-box-sizing: border-box;
@@ -1265,10 +1264,32 @@
    
    min-height:65px;
    max-height:65px;
-	padding-top:20px;
-        overflow:hidden;
+   padding-top:20px;
+   overflow:hidden;
    
 	
+  }
+  
+  .space_wrap .span3:not(.hds) {   
+   min-height:65px;
+   max-height:65px;
+   padding-top:20px;
+   overflow:hidden;
+  }
+  
+
+  
+  .space_wrap_product [class*="span"] {
+    display: block;
+    float: left;
+    width: 12.5%!important;
+    text-align: center;
+    padding-top: 10px;   
+    margin-left: 1.1241%;
+    *margin-left: 2.5109110747408616%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
   }
   
 

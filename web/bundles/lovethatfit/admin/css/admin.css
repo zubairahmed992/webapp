@@ -29,10 +29,8 @@ body {
 	min-height:40px!important;
 }
 
-.hds a{
-	
-	color:#444!important;
-        
+.hds a{	
+	color:#444!important;        
 }
 
 .span1 div i{	
@@ -47,32 +45,26 @@ body {
 	margin-right:10px;	
 }
 .row-fluid{
-border-left:1px solid #ccc;	
-border-right:1px solid #ccc;	
+    border-left:1px solid #ccc;	
+    border-right:1px solid #ccc;	
 }
 
 .p_listing .span1{
-/*width:10.9em!important;*/	
+    /*width:10.9em!important;*/	
 }
 
 .p_listing .row-fluid{
-border-left:0px solid #ccc;	
-border-right:0px solid #ccc;
+    border-left:0px solid #ccc;	
+    border-right:0px solid #ccc;
 }
 
-#detail_wrapper .p_title .span1{
-    
+#detail_wrapper .p_title .span1{    
     width:9.88%!important;
-
 }
 
-#detail_wrapper .p_title .span1:last-child{
-    
+#detail_wrapper .p_title .span1:last-child{    
     width:11%!important;
-
 }
-
-
 
 #detail_wrapper .hds{
 	background:#ddd!important;
@@ -108,8 +100,11 @@ border-right:0px solid #ccc;
 .ret_form_btns{
     margin-top: 20px;
     float: right!important;
-    margin-right: 160px;
-    
+    margin-right: 160px;    
+}
+
+.product_main .span1{
+    width:12.5% !important;
 }
 
 

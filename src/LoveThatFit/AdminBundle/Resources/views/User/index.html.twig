@@ -39,22 +39,22 @@
 
         <div class="row-fluid">
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'id' }}" style="text-decoration: none;">ID</a></div>
-            <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'firstName' }}" style="text-decoration: none;">Full Name</a></div>
+            <div class="span3 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'firstName' }}" style="text-decoration: none;">Full Name</a></div>
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'gender' }}" style="text-decoration: none;">Gender</a></div>
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'zipcode' }}" style="text-decoration: none;">Zip Code</a></div>
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'email' }}" style="text-decoration: none;">Email</a></div>
-            <div class="span1 hds"></div>  
+           
             <div class="span1 hds"></div>
         </div>  
          
           {% for us in pagination.users %}
-        <div class="row-fluid show-grid">
+        <div class="row-fluid show-grid space_wrap">
             <div class="span1">{{us.id}}</div>
-            <div class="span1">{{us.firstName}} {{us.lastName}}</div>
+            <div class="span3">{{us.firstName}} {{us.lastName}}</div>
             <div class="span1">{{us.gender}}</div>
             <div class="span1">{{us.zipcode}}</div>
             <div class="span1">{{us.email}}</div>
-            <div class="span1">&nbsp; </div>         
+                
             <div class="span1"><a href="{{ path('admin_user_detail_show', {'id': us.id}) }}" title="Show {{us.firstName}}"><i class="icon-eye-open"></i></a></div> 
             </div>                
                

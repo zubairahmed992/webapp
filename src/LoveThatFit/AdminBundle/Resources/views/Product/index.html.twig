@@ -256,7 +256,7 @@ $(document).ready(function(){
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>                        
             <div class="span1 hds">Try Count</div>
-            <div class="span1 hds"></div>  
+           
             <div class="span1 hds"></div>  
             <div class="span1 hds">View - Edit - Delete</div>  
             
@@ -264,24 +264,31 @@ $(document).ready(function(){
 
           {% for p in products %}
 
-        <div class="row-fluid show-grid product_main">
+        <div class="row-fluid show-grid product_main space_wrap_product">
             <div class="span1">{{p.Id}}</div>
             <div class="span1">{{p.Brand.Name}}</div>
             <div class="span1">{{p.ClothingType.Name}}</div>
             <div class="span1">{{p.Gender}}</div>
             <div class="span1">{{p.Name}}</div>
             <div class="span1">{{ p.getTryProductCount }}</div>            
-            <div class="span1"> {%if(p.disabled==1)%} Disabled {%else%}  {%endif%}</div>
+            
             <div class="span1">
+                {%if(p.disabled==1)%}
+                    
+                    
+                    <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
+                    
+                 {%else%}   
                 {%if(p.displayProductColor)%}                  
                   <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
                     {%endif%}  
+                  {%endif%}
             </div>
          <div class="span1">           
          <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}"><i class="icon-eye-open"></i></a>
          <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
          <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-         <a href="{{ path('admin_product_detail_download', {'id': p.Id}) }}" title="Download">Download </i></a>
+         <a href="{{ path('admin_product_detail_download', {'id': p.Id}) }}" title="Download" class="icon-download-alt"></i></a>
          </div>
          
         </div>
