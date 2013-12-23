@@ -70,6 +70,10 @@ class FitEngine {
         $sizes = $product->getProductSizes();
         $priority = $product->getFitPriorityArray();
         $body_specs = $this->user->getMeasurement()->getArray();
+       
+        if ($priority===null){
+            return null;
+        }
         
         $fit_rec = array();
         $tight_fit_rec = array();
