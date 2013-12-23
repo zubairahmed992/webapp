@@ -280,7 +280,19 @@ class ProductColor {
     public function getRandomItem() {
       return $this->getProductItems()->getIterator()->current(); 
     }
-
+//---------------------------------------------------------------
+    public function getItemBySizeId($size_id) {
+        
+        $items = $this->product_items;
+        
+        foreach ($items as $i) {
+            if ($i->getId() == $size_id) {
+                return $i;
+            }            
+        }
+        return null;
+    }
+    
 //---------------------------------------------------------------
     public function getSmallestAvailableItem() {
         $items = $this->product_items;
@@ -314,12 +326,12 @@ class ProductColor {
         }
         return $smallest_size;
     }
-    
+#--------------------------------------------------------------    
     public function getSmallestAvailableSizeId() {
         $size=$this->getSmallestAvailableSize();
         return $size->getId();
     }
-    
+#----------------------------------------------------------------
      public function getSizeTitleArrayBodyType() {
         $items = $this->product_items;
         $size_titles = array();

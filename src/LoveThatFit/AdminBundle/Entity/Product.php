@@ -560,18 +560,29 @@ class Product {
     }
 
 //----------------------------------------------------------
-    public function getUserFittingSize($user) {
+    public function getUserFittingItem($user) {
 
-        $fitting_algo = new Algorithm($user, null);
-
-        foreach ($this->getProductSizes() as $ps) {
-            $fitting_algo->setProductMeasurement($ps);
-            if ($fitting_algo->fit()) {
-                return $ps;
-            }
-        }
-        return null;
+        $fe = new \LoveThatFit\SiteBundle\FitEngine($user, null);
+        $item = $fe->getFittingItem($this);
+        return $item;
+        
     }
+    #--------Get Default Product Colors----------------#
+    
+    public function getDefaultItem($user = null) {
+        
+        $default_item = null;
+        
+        if ($user != null) {
+            $default_item = $this->getUserFittingItem($user);
+        }
+        if ($user == null || $default_item == null) {
+            $default_item=$this->getDefaultColorFirstItem();
+        }
+        return $default_item;
+    }
+
+          
 
     //----------------------------------------------------------
     public function getRandomItem() {
@@ -583,6 +594,13 @@ class Product {
         return $this->displayProductColor()->getIterator()->current();
     }
 
+    //----------------------------------------------------------
+    public function getDefaultColorFirstItem() {
+          $productColor = $this->getDisplayProductColor();
+            foreach ($productColor->getProductItems() as $item) {
+                return $item;
+            }
+    }
     /**
      * Add user_item_try_history
      *
@@ -621,18 +639,7 @@ class Product {
         return $this->displayProductColor->getImagePaths();
     }
 
-    #--------Get Default Product Colors----------------#
-
-    public function getDefaultItem() {
-
-        $productColor = $this->getDisplayProductColor();
-
-        foreach ($productColor->getProductItems() as $item) {
-            return $item;
-        }
-        return;
-    }
-
+    
 #-----------------Get images path for image downloading------------------------#
 
     public function getColorImagesPaths() {

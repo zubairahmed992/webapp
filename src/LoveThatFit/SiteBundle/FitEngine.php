@@ -47,12 +47,65 @@ class FitEngine {
     function getFeedBackJSON() {
         return json_encode($this->getBasicFeedback());
     }
-
+#----------------------------------------------------------------------------------
+//
+    function getFittingItem($product = null) {
+         if ($product === NULL) {
+            $product = $this->product_item->getProduct();
+        }
+        $fitting_sizes = $this->getFittingSize($product);
+        $product_color = $product->getDisplayProductColor();        
+        return $product_color->getItemBySizeId($fitting_sizes[0]['id']);
+        }
+#------------------------------------------    
+    function getFittingSize($product = null) {
+        
+        if ($this->product_item === NULL) {
+            $current_item = $this->product_item;
+        } 
+        if ($product === NULL) {
+            $product = $current_item->getProduct();
+        }
+        
+        $sizes = $product->getProductSizes();
+        $priority = $product->getFitPriorityArray();
+        $body_specs = $this->user->getMeasurement()->getArray();
+        
+        $fit_rec = array();
+        $tight_fit_rec = array();
+        $loose_fit_rec = array();
+        $lowest_varience=null;
+        foreach ($sizes as $size) {
+            $item_specs = $size->getMeasurementArray();
+            $feedback = $this->fits($priority, $body_specs, $item_specs);
+            $feedback['id'] =$size->getId();
+            if ($feedback['fit']) {
+                array_push($fit_rec , $feedback);                    
+            } elseif ($feedback['status']==0) {
+                    array_push($tight_fit_rec , $feedback);
+            }elseif ($feedback['status']==2) {
+                if ($lowest_varience == null || $lowest_varience > $feedback['varience']){
+                    $lowest_varience=$feedback['varience'];
+                    $loose_fit_rec = $feedback;
+                    }        
+            }
+        }
+        
+        if (count($fit_rec)>0){
+        return $fit_rec;    
+        }elseif (count($tight_fit_rec)>0){
+        return $tight_fit_rec;    
+        }elseif (count($loose_fit_rec)>0){
+        return $loose_fit_rec;                
+        }
+        return null;
+    }
+    
 #--------------------------------------------------------------------------------->
 #----------------------------   Get Fitting Size  -----------------------------------------------------|
 #--------------------------------------------------------------------------------->
 
-    function getFittingSize($current_item = null) {
+    function getFittingSizeRecommendation($current_item = null) {
         if ($current_item === NULL) {
             $current_item = $this->product_item;
         }
@@ -173,7 +226,7 @@ private function getAllKeysTesting($ar){
             $feed_back = null;
             $feed_back['Overall'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
         } else {
-            $str = $this->getFittingSize();
+            $str = $this->getFittingSizeRecommendation();
             $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
         }
 
