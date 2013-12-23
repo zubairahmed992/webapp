@@ -425,7 +425,7 @@ class Measurement {
      * @ORM\Column(name="bra_size", type="string", length=50, nullable=true)
      * 
      */
-    private $braSize;
+    private $bra_size;
     
     /**
      * @var string $bodyTypes
@@ -433,7 +433,7 @@ class Measurement {
      * @ORM\Column(name="body_types", type="string", length=50, nullable=true)
      * 
      */
-    private $bodyTypes;
+    private $body_types;
     
     /**
      * @var string $bodyShape
@@ -441,7 +441,7 @@ class Measurement {
      * @ORM\Column(name="body_shape", type="string", length=50, nullable=true)
      * 
      */
-    private $bodyShape;
+    private $body_shape;
     
     
     /**
@@ -482,7 +482,7 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $shoulderAcrossFront=0;
+    private $shoulder_across_front=0;
     
     /**
      * @var float $shoulderAcrossBack
@@ -491,7 +491,7 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $shoulderAcrossBack=0;
+    private $shoulder_across_back=0;
     /**
      * @var float $bicep
      *
@@ -520,31 +520,31 @@ class Measurement {
     private $wrist=0;
     
      /**
-     * @var float $centerFrontWaist
+     * @var float $center_front_waist
      *
      * @ORM\Column(name="center_front_waist", type="float", nullable=true,options={"default" = 0})
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $centerFrontWaist=0;
+    private $center_front_waist=0;
     
      /**
-     * @var float $backWaist
+     * @var float $back_waist
      *
      * @ORM\Column(name="backWaist", type="float", nullable=true,options={"default" = 0})
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $backWaist=0;
+    private $back_waist=0;
     
     /**
-     * @var float $waistHip
+     * @var float $waist_hip
      *
      * @ORM\Column(name="waist_hip", type="float", nullable=true,options={"default" = 0})
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $waistHip=0;
+    private $waist_hip=0;
     
     /**
      * @var float $knee
@@ -1280,7 +1280,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBraSize()
     {
-        return $this->braSize;
+        return $this->bra_size;
     }
 
     /**
@@ -1314,7 +1314,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setBodyShape($bodyShape)
     {
-        $this->bodyShape = $bodyShape;
+        $this->body_shape = $bodyShape;
     
         return $this;
     }
@@ -1326,7 +1326,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBodyShape()
     {
-        return $this->bodyShape;
+        return $this->body_shape;
     }
 
     /**
@@ -1337,7 +1337,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setBodyTypes($bodyTypes)
     {
-        $this->bodyTypes = $bodyTypes;
+        $this->body_types = $bodyTypes;
     
         return $this;
     }
@@ -1349,7 +1349,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBodyTypes()
     {
-        return $this->bodyTypes;
+        return $this->body_types;
     }
 
     
@@ -1378,22 +1378,34 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
     
     
-    public function getArray(){
+    public function getArray() {
 
         return array('weight' => $this->weight,
-        'height' => $this->height,
-        'waist' => $this->waist,
-        'hip' => $this->hip,
-        'bust' => $this->bust,
-        'chest' => $this->chest,
-        'arm' => $this->arm,
-        'inseam' => $this->inseam,
-        'back' => $this->back,
-        'shoulder_height' => $this->shoulder_height,
-        'outseam' => $this->outseam,
-        'sleeve' => $this->sleeve,
-        'neck' => $this->neck,
-        'thigh' => $this->thigh);
+            'height' => $this->height,
+            'waist' => $this->waist,
+            'hip' => $this->hip,
+            'bust' => $this->bust,
+            'chest' => $this->chest,
+            'arm' => $this->arm,
+            'inseam' => $this->inseam,
+            'back' => $this->back,
+            'shoulder_height' => $this->shoulder_height,
+            'outseam' => $this->outseam,
+            'sleeve' => $this->sleeve,
+            'neck' => $this->neck,
+            'thigh' => $this->thigh,
+            'center_front_waist' => $this->center_front_waist,
+            'shoulder_across_front' => $this->shoulder_across_front,
+            'shoulder_across_back' => $this->shoulder_across_back,
+            'bicep' => $this->bicep,
+            'tricep' => $this->tricep,
+            'wrist' => $this->wrist,
+            'back_waist' => $this->back_waist,
+            'waist_hip' => $this->waist_hip,
+            'knee' => $this->knee,
+            'calf' => $this->calf,
+            'ankle' => $this->ankle,
+        );
     }
 
     /**
@@ -1565,7 +1577,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setShoulderAcrossFront($shoulderAcrossFront)
     {
-        $this->shoulderAcrossFront = $shoulderAcrossFront;
+        $this->shoulder_across_front = $shoulderAcrossFront;
     
         return $this;
     }
@@ -1577,7 +1589,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getShoulderAcrossFront()
     {
-        return $this->shoulderAcrossFront;
+        return $this->shoulder_across_front;
     }
 
     /**
@@ -1588,7 +1600,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setShoulderAcrossBack($shoulderAcrossBack)
     {
-        $this->shoulderAcrossBack = $shoulderAcrossBack;
+        $this->shoulder_across_back = $shoulderAcrossBack;
     
         return $this;
     }
@@ -1600,7 +1612,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getShoulderAcrossBack()
     {
-        return $this->shoulderAcrossBack;
+        return $this->shoulder_across_back;
     }
 
     /**
@@ -1680,7 +1692,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setCenterFrontWaist($centerFrontWaist)
     {
-        $this->centerFrontWaist = $centerFrontWaist;
+        $this->center_front_waist = $centerFrontWaist;
     
         return $this;
     }
@@ -1692,7 +1704,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getCenterFrontWaist()
     {
-        return $this->centerFrontWaist;
+        return $this->center_front_waist;
     }
 
     /**
@@ -1703,7 +1715,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setBackWaist($backWaist)
     {
-        $this->backWaist = $backWaist;
+        $this->back_waist = $backWaist;
     
         return $this;
     }
@@ -1715,7 +1727,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBackWaist()
     {
-        return $this->backWaist;
+        return $this->back_waist;
     }
 
     /**
@@ -1726,7 +1738,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setWaistHip($waistHip)
     {
-        $this->waistHip = $waistHip;
+        $this->waist_hip = $waistHip;
     
         return $this;
     }
@@ -1738,7 +1750,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getWaistHip()
     {
-        return $this->waistHip;
+        return $this->waist_hip;
     }
 
     /**
