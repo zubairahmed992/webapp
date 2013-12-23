@@ -190,6 +190,76 @@
         {{ form_widget(form.thigh) }} &nbsp;<b>"</b>
                         <div class="form_vld_error">{{ form_errors(form.thigh) }}</div>
                     </div>
+{# -----------------------New Measuremnt Added---------------------------------#}                                
+<div id='frm_thigh'>         
+Shoulder Length 
+{{ form_widget(form.shoulder_height) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.shoulder_height) }}</div>
+</div>
+<div id='frm_thigh'>         
+Shoulder Across Front
+{{ form_widget(form.shoulder_across_front) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.shoulder_across_front) }}</div>
+</div>           
+<div id='frm_thigh'>         
+Shoulder Across Back
+{{ form_widget(form.shoulder_across_back) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.shoulder_across_back) }}</div>
+</div>
+                                
+<div id='frm_thigh'>         
+Bicep
+{{ form_widget(form.bicep) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.bicep) }}</div>
+</div>
+<div id='frm_thigh'>         
+Tricep
+{{ form_widget(form.tricep) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.tricep) }}</div>
+</div>
+<div id='frm_thigh'>         
+Wrist
+{{ form_widget(form.wrist) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.wrist) }}</div>
+</div>
+<div id='frm_thigh'>         
+Central Front Waist
+{{ form_widget(form.centerFrontWaist) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.centerFrontWaist) }}</div>
+</div>
+<div id='frm_thigh'>         
+Back to Waist
+{{ form_widget(form.backWaist) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.backWaist) }}</div>
+</div>
+<div id='frm_thigh'>         
+Waist to Hip
+{{ form_widget(form.waistHip) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.waistHip) }}</div>
+</div>
+<div id='frm_thigh'>         
+{{ form_label(form.knee) }}
+{{ form_widget(form.knee) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.knee) }}</div>
+</div>
+
+<div id='frm_thigh'>         
+{{ form_label(form.calf) }}
+{{ form_widget(form.calf) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.calf) }}</div>
+</div>
+<div id='frm_thigh'>         
+{{ form_label(form.ankle) }}
+{{ form_widget(form.ankle) }} &nbsp;<b>"</b>
+<div class="form_vld_error">{{ form_errors(form.ankle) }}</div>
+</div>
+
+
+{#----------------------End Of Measuremnt-------------------------------------#}                                
+                                
+                                
+  
+                                
        {%if(measurement.height=="0"  or  measurement.weight=="0")%}  
                                 <div id='frm_bmi'>
                                     <label>BMI</label> Please Enter Your Height and Weight For BMI Result

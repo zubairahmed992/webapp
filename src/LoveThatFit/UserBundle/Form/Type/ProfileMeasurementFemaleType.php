@@ -23,6 +23,17 @@ class ProfileMeasurementFemaleType extends AbstractType
         $builder->add('weight', 'number', array('precision' => 2,'required'=>false));
         $builder->add('back', 'number', array('precision' => 2,'required'=>false));
         $builder->add('thigh', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('shoulder_across_front', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('shoulder_across_back', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('bicep', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('tricep', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('wrist', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('centerFrontWaist', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('backWaist', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('waistHip', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('knee', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('calf', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('ankle', 'number', array('precision' => 2,'required'=>false));
     }
   
      public function getDefaultOptions(array $options)

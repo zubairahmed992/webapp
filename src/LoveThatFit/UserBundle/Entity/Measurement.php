@@ -425,7 +425,7 @@ class Measurement {
      * @ORM\Column(name="bra_size", type="string", length=50, nullable=true)
      * 
      */
-    private $braSize;
+    private $bra_size;
     
     /**
      * @var string $bodyTypes
@@ -433,7 +433,7 @@ class Measurement {
      * @ORM\Column(name="body_types", type="string", length=50, nullable=true)
      * 
      */
-    private $bodyTypes;
+    private $body_types;
     
     /**
      * @var string $bodyShape
@@ -441,7 +441,7 @@ class Measurement {
      * @ORM\Column(name="body_shape", type="string", length=50, nullable=true)
      * 
      */
-    private $bodyShape;
+    private $body_shape;
     
     
     /**
@@ -475,7 +475,106 @@ class Measurement {
      */
     private $thigh=0;
     
-
+    /**
+     * @var float $shoulderAcrossFront
+     *
+     * @ORM\Column(name="shoulder_across_front", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $shoulder_across_front=0;
+    
+    /**
+     * @var float $shoulderAcrossBack
+     *
+     * @ORM\Column(name="shoulder_across_back", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $shoulder_across_back=0;
+    /**
+     * @var float $bicep
+     *
+     * @ORM\Column(name="bicep", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $bicep=0;
+    
+     /**
+     * @var float $tricep
+     *
+     * @ORM\Column(name="tricep", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $tricep=0;
+    
+    /**
+     * @var float $wrist
+     *
+     * @ORM\Column(name="wrist", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $wrist=0;
+    
+     /**
+     * @var float $center_front_waist
+     *
+     * @ORM\Column(name="center_front_waist", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $center_front_waist=0;
+    
+     /**
+     * @var float $back_waist
+     *
+     * @ORM\Column(name="backWaist", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $back_waist=0;
+    
+    /**
+     * @var float $waist_hip
+     *
+     * @ORM\Column(name="waist_hip", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $waist_hip=0;
+    
+    /**
+     * @var float $knee
+     *
+     * @ORM\Column(name="knee", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $knee=0;
+    
+    /**
+     * @var float $calf
+     *
+     * @ORM\Column(name="calf", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $calf=0;
+    
+    /**
+     * @var float $ankle
+     *
+     * @ORM\Column(name="ankle", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $ankle=0;
+    
+    
+    
     /**
      * Get id
      *
@@ -1181,7 +1280,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBraSize()
     {
-        return $this->braSize;
+        return $this->bra_size;
     }
 
     /**
@@ -1215,7 +1314,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setBodyShape($bodyShape)
     {
-        $this->bodyShape = $bodyShape;
+        $this->body_shape = $bodyShape;
     
         return $this;
     }
@@ -1227,7 +1326,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBodyShape()
     {
-        return $this->bodyShape;
+        return $this->body_shape;
     }
 
     /**
@@ -1238,7 +1337,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setBodyTypes($bodyTypes)
     {
-        $this->bodyTypes = $bodyTypes;
+        $this->body_types = $bodyTypes;
     
         return $this;
     }
@@ -1250,7 +1349,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBodyTypes()
     {
-        return $this->bodyTypes;
+        return $this->body_types;
     }
 
     
@@ -1279,22 +1378,34 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
     
     
-    public function getArray(){
+    public function getArray() {
 
         return array('weight' => $this->weight,
-        'height' => $this->height,
-        'waist' => $this->waist,
-        'hip' => $this->hip,
-        'bust' => $this->bust,
-        'chest' => $this->chest,
-        'arm' => $this->arm,
-        'inseam' => $this->inseam,
-        'back' => $this->back,
-        'shoulder_height' => $this->shoulder_height,
-        'outseam' => $this->outseam,
-        'sleeve' => $this->sleeve,
-        'neck' => $this->neck,
-        'thigh' => $this->thigh);
+            'height' => $this->height,
+            'waist' => $this->waist,
+            'hip' => $this->hip,
+            'bust' => $this->bust,
+            'chest' => $this->chest,
+            'arm' => $this->arm,
+            'inseam' => $this->inseam,
+            'back' => $this->back,
+            'shoulder_height' => $this->shoulder_height,
+            'outseam' => $this->outseam,
+            'sleeve' => $this->sleeve,
+            'neck' => $this->neck,
+            'thigh' => $this->thigh,
+            'center_front_waist' => $this->center_front_waist,
+            'shoulder_across_front' => $this->shoulder_across_front,
+            'shoulder_across_back' => $this->shoulder_across_back,
+            'bicep' => $this->bicep,
+            'tricep' => $this->tricep,
+            'wrist' => $this->wrist,
+            'back_waist' => $this->back_waist,
+            'waist_hip' => $this->waist_hip,
+            'knee' => $this->knee,
+            'calf' => $this->calf,
+            'ankle' => $this->ankle,
+        );
     }
 
     /**
@@ -1456,5 +1567,258 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getHipWidth()
     {
         return $this->hip_width;
+    }
+
+    /**
+     * Set shoulderAcrossFront
+     *
+     * @param float $shoulderAcrossFront
+     * @return Measurement
+     */
+    public function setShoulderAcrossFront($shoulderAcrossFront)
+    {
+        $this->shoulder_across_front = $shoulderAcrossFront;
+    
+        return $this;
+    }
+
+    /**
+     * Get shoulderAcrossFront
+     *
+     * @return float 
+     */
+    public function getShoulderAcrossFront()
+    {
+        return $this->shoulder_across_front;
+    }
+
+    /**
+     * Set shoulderAcrossBack
+     *
+     * @param float $shoulderAcrossBack
+     * @return Measurement
+     */
+    public function setShoulderAcrossBack($shoulderAcrossBack)
+    {
+        $this->shoulder_across_back = $shoulderAcrossBack;
+    
+        return $this;
+    }
+
+    /**
+     * Get shoulderAcrossBack
+     *
+     * @return float 
+     */
+    public function getShoulderAcrossBack()
+    {
+        return $this->shoulder_across_back;
+    }
+
+    /**
+     * Set bicep
+     *
+     * @param float $bicep
+     * @return Measurement
+     */
+    public function setBicep($bicep)
+    {
+        $this->bicep = $bicep;
+    
+        return $this;
+    }
+
+    /**
+     * Get bicep
+     *
+     * @return float 
+     */
+    public function getBicep()
+    {
+        return $this->bicep;
+    }
+
+    /**
+     * Set tricep
+     *
+     * @param float $tricep
+     * @return Measurement
+     */
+    public function setTricep($tricep)
+    {
+        $this->tricep = $tricep;
+    
+        return $this;
+    }
+
+    /**
+     * Get tricep
+     *
+     * @return float 
+     */
+    public function getTricep()
+    {
+        return $this->tricep;
+    }
+
+    /**
+     * Set wrist
+     *
+     * @param float $wrist
+     * @return Measurement
+     */
+    public function setWrist($wrist)
+    {
+        $this->wrist = $wrist;
+    
+        return $this;
+    }
+
+    /**
+     * Get wrist
+     *
+     * @return float 
+     */
+    public function getWrist()
+    {
+        return $this->wrist;
+    }
+
+    /**
+     * Set centerFrontWaist
+     *
+     * @param float $centerFrontWaist
+     * @return Measurement
+     */
+    public function setCenterFrontWaist($centerFrontWaist)
+    {
+        $this->center_front_waist = $centerFrontWaist;
+    
+        return $this;
+    }
+
+    /**
+     * Get centerFrontWaist
+     *
+     * @return float 
+     */
+    public function getCenterFrontWaist()
+    {
+        return $this->center_front_waist;
+    }
+
+    /**
+     * Set backWaist
+     *
+     * @param float $backWaist
+     * @return Measurement
+     */
+    public function setBackWaist($backWaist)
+    {
+        $this->back_waist = $backWaist;
+    
+        return $this;
+    }
+
+    /**
+     * Get backWaist
+     *
+     * @return float 
+     */
+    public function getBackWaist()
+    {
+        return $this->back_waist;
+    }
+
+    /**
+     * Set waistHip
+     *
+     * @param float $waistHip
+     * @return Measurement
+     */
+    public function setWaistHip($waistHip)
+    {
+        $this->waist_hip = $waistHip;
+    
+        return $this;
+    }
+
+    /**
+     * Get waistHip
+     *
+     * @return float 
+     */
+    public function getWaistHip()
+    {
+        return $this->waist_hip;
+    }
+
+    /**
+     * Set knee
+     *
+     * @param float $knee
+     * @return Measurement
+     */
+    public function setKnee($knee)
+    {
+        $this->knee = $knee;
+    
+        return $this;
+    }
+
+    /**
+     * Get knee
+     *
+     * @return float 
+     */
+    public function getKnee()
+    {
+        return $this->knee;
+    }
+
+    /**
+     * Set calf
+     *
+     * @param float $calf
+     * @return Measurement
+     */
+    public function setCalf($calf)
+    {
+        $this->calf = $calf;
+    
+        return $this;
+    }
+
+    /**
+     * Get calf
+     *
+     * @return float 
+     */
+    public function getCalf()
+    {
+        return $this->calf;
+    }
+
+    /**
+     * Set ankle
+     *
+     * @param float $ankle
+     * @return Measurement
+     */
+    public function setAnkle($ankle)
+    {
+        $this->ankle = $ankle;
+    
+        return $this;
+    }
+
+    /**
+     * Get ankle
+     *
+     * @return float 
+     */
+    public function getAnkle()
+    {
+        return $this->ankle;
     }
 }
