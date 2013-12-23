@@ -246,7 +246,7 @@ public function find($id) {
     }
     
 #---------------------------------------------------    
-    private function countProductsByGender($gender)
+    public function countProductsByGender($gender)
     {
         return count($this->repo->findPrductByGender($gender));           
     }
@@ -254,7 +254,7 @@ public function find($id) {
     
     #---------------------------------------------------
     
-    private function countProductsByType($target)
+    public function countProductsByType($target)
     {
         
         return count($this->repo->findPrductByType($target));           
@@ -1099,7 +1099,7 @@ public function productDetailColorAdd($entity){
         
     }
 #!!!!Found it duplication in product controller!!!
-    /*public function countProductsByGender($gender) {
+  /*  public function countProductsByGender($gender) {
         $em = $this->getDoctrine()->getManager();
         $ProductTypeObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
         $entity = $this->getDoctrine()
@@ -1107,5 +1107,7 @@ public function productDetailColorAdd($entity){
                 ->findPrductByGender($gender);
         $rec_count = count($ProductTypeObj->findPrductByGender($gender));
         return $rec_count;
-    }*/
+    }
+*/
+    
 }
