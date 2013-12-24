@@ -168,3 +168,7 @@ admin_product_import_csv:
 admin_product_csv_upload:
    pattern:  /admin/product/upload/csv
    defaults: { _controller: LoveThatFitAdminBundle:Product:uploadProductCsv }  
+   
+admin_product_read_csv:
+    pattern:  /admin/product/read/csv
+    defaults: { _controller: LoveThatFitAdminBundle:Product:readProductCsv }
