@@ -165,3 +165,6 @@ admin_product_get_retailer_base_brand:
 admin_product_import_csv:
     pattern:  /admin/product/import/csv
     defaults: { _controller: LoveThatFitAdminBundle:Product:addCsvProductForm }  
+admin_product_csv_upload:
+   pattern:  /admin/product/upload/csv
+   defaults: { _controller: LoveThatFitAdminBundle:Product:uploadProductCsv }  

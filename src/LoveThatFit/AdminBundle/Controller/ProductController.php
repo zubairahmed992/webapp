@@ -875,6 +875,30 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         array('form' => $form->createView(),)
     );
     }
+#------------Upload CSV Product------------------------------------------------#
+    public function uploadProductCsvAction(Request $request){
+       
+  $form = $this->createFormBuilder()
+        ->add('csvfile','file')
+        ->getForm();
+   $form->bindRequest($request);
+       $request = $this->getRequest();
+       $file = $form->get('csvfile');
+      // Your csv file here when you hit submit button
+      $filename=$file->getData();
+      $row = 1;
+      if (($handle = fopen($filename, "r")) !== FALSE) {
+      while (($data = fgetcsv($handle, 100000, ",")) !== FALSE) {
+      $num = count($data);
+      echo "<p> $num fields in line $row: <br /></p>\n";
+      $row++;
+        for ($c=0; $c < $num; $c++) {
+        echo $data[$c] . "<br />\n";
+         }
+      }
+      fclose($handle);
+      }
+   }
     
     
 }
