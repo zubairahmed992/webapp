@@ -161,3 +161,7 @@ admin_product_get_attribute:
 admin_product_get_retailer_base_brand:
     pattern:  /admin/product/retailer/brand
     defaults: { _controller: LoveThatFitAdminBundle:Product:findBrandBaseOnRetailer }      
+
+admin_product_import_csv:
+    pattern:  /admin/product/import/csv
+    defaults: { _controller: LoveThatFitAdminBundle:Product:addCsvProductForm }  
