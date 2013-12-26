@@ -157,9 +157,9 @@
 
                             {%else%}
                             
-                            {{ form_errors(form.back) }}
-                            <span class="boxlable" id="back_box">Back</span>
-                             {{ form_widget(form.back) }}
+                            {{ form_errors(form.shoulder_across_back) }}
+                            <span class="boxlable" id="back_box">Shoulder across back</span>
+                             {{ form_widget(form.shoulder_across_back) }}
 
                            {%endif%} 
 
@@ -336,8 +336,8 @@ $('#height_in_inches').change(function() {
 
                             <span class="boxlable" id="hip_box">Hip</span> 
                             {{ form_widget(form.hip) }} 
-                            {{ form_errors(form.back) }}
-                            {{ form_widget(form.back) }} 
+                            {{ form_errors(form.shoulder_across_back) }}
+                            {{ form_widget(form.shoulder_across_back) }} 
                         
                         </div>
                         
@@ -493,8 +493,8 @@ $('#height_in_inches').change(function() {
               }	
               });   
                //Slider Back
-              $("#slider_back").slider({ animate: true, range: "min", value: {{ measurement.back }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
-                              $( "#slider_result_back" ).html( ui.value + '"');
+              $("#slider_shoulder_across_back").slider({ animate: true, range: "min", value: {{ measurement.shoulderAcrossBack }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $( "#slider_result_shoulder_across_back" ).html( ui.value + '"');
               },
               change: function(event, ui) { 
              $(this).parent().find("input").attr('value', ui.value);	
@@ -559,11 +559,11 @@ $('#height_in_inches').change(function() {
   var dressmeasurement=document.getElementById('measurement_dress_size').value;
   var slevee=document.getElementById('measurement_sleeve').value;
   var Bust=document.getElementById('measurement_bust').value;
-  var Back=document.getElementById('measurement_back').value;  
+  var shoulder_across_back=document.getElementById('measurement_shoulder_across_back').value;  
   var waist=document.getElementById('measurement_waist').value;
   var outseam=document.getElementById('measurement_outseam').value;
   var hip=document.getElementById('measurement_hip').value;
-  if((height=='' && weight=='' && shirtmeasurement=='' && slevee=='' && Bust=='' && Back==''&& bottommeasurement=='' && waist=='' && outseam=='' && dressmeasurement=='' && hip==''))
+  if((height=='' && weight=='' && shirtmeasurement=='' && slevee=='' && Bust=='' && shoulder_across_back==''&& bottommeasurement=='' && waist=='' && outseam=='' && dressmeasurement=='' && hip==''))
           {
              
              document.getElementById('error_content10').style.display="none"             
@@ -575,7 +575,7 @@ $('#height_in_inches').change(function() {
              document.getElementById('error_content1').style.display="block";
              return false;
           }      
-  if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0 || Bust==0 || Back==0) && (bottommeasurement=='' || waist==0 || outseam==0) && (dressmeasurement=='' || hip==0))
+  if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0 || Bust==0 || shoulder_across_back==0) && (bottommeasurement=='' || waist==0 || outseam==0) && (dressmeasurement=='' || hip==0))
           {
              document.getElementById('error_content0').style.display="none";
              document.getElementById('error_content10').style.display="block"

@@ -188,24 +188,6 @@ class Measurement {
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
     private $inseam=0;
-
-    /**
-     * @var float $back
-     *
-     * @ORM\Column(name="back", type="float", nullable=true,options={"default" = 0})
-     * 
-     * @Assert\Range(
-     *      min = "0",
-     *      max = "300",
-     *      minMessage = "You must have at least 0 inches ",
-     *      maxMessage = "You cannot have more than 300 inches ",
-     *      groups={"registration_step_two","profile_measurement"}
-     * )
-     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
-     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
-     */
-    private $back=0;
-
     /**
      * @var float $shoulder_height
      *
@@ -818,40 +800,6 @@ class Measurement {
           return $this->inseam =0;        
         }
     }
-
-    /**
-     * Set back
-     *
-     * @param float $back
-     * @return Measurement
-     */
-    public function setBack($back) {
-        if($back!=null)
-        {
-           $this->back = $back;
-            return $this;
-        }else
-        {
-          return $this->back =0;
-        
-        }      
-    }
-
-    /**
-     * Get back
-     *
-     * @return float 
-     */
-    public function getBack() {
-        if($this->back!=null)
-        {
-           return $this->back;
-        }else
-        {
-          return $this->back =0;        
-        }
-    }
-
     /**
      * Set created_at
      *
@@ -1387,8 +1335,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
             'bust' => $this->bust,
             'chest' => $this->chest,
             'arm' => $this->arm,
-            'inseam' => $this->inseam,
-            'back' => $this->back,
+            'inseam' => $this->inseam,            
             'shoulder_height' => $this->shoulder_height,
             'outseam' => $this->outseam,
             'sleeve' => $this->sleeve,

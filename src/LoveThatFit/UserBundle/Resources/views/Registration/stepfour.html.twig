@@ -3,7 +3,7 @@
 {% block action_block_content %}
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_four.js') }}"></script>
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
-<input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.back }}" />
+<input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
 <div>
     
             <form id="frmUserMeasurement" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_form) }}>

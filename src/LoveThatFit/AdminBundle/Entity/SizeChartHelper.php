@@ -229,8 +229,8 @@ public function findOneByName($title) {
                 if ($measurement->getSleeve() == null || $measurement->getSleeve() == 0) {
                     $measurement->setSleeve($top_size->getSleeve());
                 }
-                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
-                    $measurement->setBack($top_size->getBack());
+                if ($measurement->getShoulderAcrossBack() == null || $measurement->getShoulderAcrossBack() == 0) {
+                    $measurement->setShoulderAcrossBack($top_size->getShoulderAcrossBack());
                 }
             }
         }
@@ -286,16 +286,16 @@ public function findOneByName($title) {
                     }
                 }
 
-                if ($measurement->getBack() == null || $measurement->getBack() == 0) {
-                    $measurement->setBack($dress_size->getBack());
+                if ($measurement->getShoulderAcrossBack() == null || $measurement->getShoulderAcrossBack() == 0) {
+                    $measurement->setShoulderAcrossBack($dress_size->getShoulderAcrossBack());
                 }
             }
         }
         
         // Temporary hack for the back just to have the slider in step 4 in proper place if back not provided
         // As currently we are not comparing back measurement in fitting algorithm
-        if ($measurement->getBack() == null || $measurement->getBack() == 0) {
-                    $measurement->setBack(14.5);
+        if ($measurement->getShoulderAcrossBack() == null || $measurement->getShoulderAcrossBack() == 0) {
+                    $measurement->setShoulderAcrossBack(14.5);
                 }
         
 

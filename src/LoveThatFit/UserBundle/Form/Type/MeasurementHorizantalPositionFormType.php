@@ -10,7 +10,7 @@ class MeasurementHorizantalPositionFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('shoulder_width', 'hidden');
+       $builder->add('shoulder_width', 'hidden');
        $builder->add('bust_width', 'hidden');
        $builder->add('waist_width', 'hidden');
        $builder->add('hip_width', 'hidden');
