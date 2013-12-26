@@ -9,7 +9,7 @@
    $(document).ready(function() {
                   $("#genderfemale").show();
                   $("#neck").show();
-                  $("#back").show();
+                  $("#shoulder_across_back").show();
                   $("#waist").show();
                   $("#bust").show();
                   $("#hip").show();  
@@ -35,7 +35,7 @@
                   $("#bust").hide();
                   $("#chest").hide();
                   $("#neck").hide();
-                  $("#back").hide();
+                  $("#shoulder_across_back").hide();
         });
 </script>
 {%endif%}
@@ -44,7 +44,7 @@
    $(document).ready(function() {
                   $("#genderfemale").show();
                   $("#neck").show();
-                  $("#back").show();
+                  $("#shoulder_across_back").show();
                   $("#sleeve").show();
                   $("#waist").show();                  
                   $("#hip").show();
@@ -61,7 +61,7 @@
    $(document).ready(function() {
                   $("#chest").show();
                   $("#neck").show();
-                  $("#back").show();
+                  $("#shoulder_across_back").show();
                   $("#sleeve").show();
                   $("#waist").show();                  
                   $("#hip").hide();                    
@@ -83,7 +83,7 @@
                   $("#thigh").show();  
                   $("#chest").hide();
                   $("#neck").hide();
-                  $("#back").hide();
+                  $("#shoulder_across_back").hide();
                   $("#sleeve").hide();                                  
                   $("#bust").hide();                                
         });
@@ -135,7 +135,7 @@
             if((selectValtargets=='Top') && (selectVals=='F'  || selectVals=='f') )
                 {
                   $("#neck").show();
-                  $("#back").show();
+                  $("#shoulder_across_back").show();
                   $("#bust").show();
                   $("#waist").show();                  
                   $("#hip").show();
@@ -153,7 +153,7 @@
                   $("#outseam").show();
                   $("#inseam").show();                  
                   $("#neck").hide();
-                  $("#back").hide();
+                  $("#shoulder_across_back").hide();
                   $("#bust").hide();
                   $("#sleeve").hide();                  
                   $("#chest").hide();                  
@@ -161,7 +161,7 @@
               if((selectValtargets=='Dress')&& (selectVals=='F' || selectVals=='f'))
                 {
                   $("#neck").show();  
-                  $("#back").show();
+                  $("#shoulder_across_back").show();
                   $("#bust").show();
                   $("#sleeve").show();  
                   $("#waist").show();
@@ -176,7 +176,7 @@
                   $("#neck").show();
                   $("#sleeve").show();
                   $("#chest").show();
-                  $("#back").show();
+                  $("#shoulder_across_back").show();
                   $("#waist").show();
                   $("#bust").hide();
                   $("#hip").hide();
@@ -191,7 +191,7 @@
                   $("#outseam").show();
                   $("#hip").show();    
                   $("#thigh").show();
-                  $("#back").hide();                                
+                  $("#shoulder_across_back").hide();                                
                   $("#bust").hide();
                   $("#sleeve").hide();                  
                   $("#neck").hide();                  
@@ -204,7 +204,7 @@
                   $("#outseam").hide();
                   $("#hip").hide();    
                   $("#thigh").hide();
-                  $("#back").hide();                                
+                  $("#shoulder_across_back").hide();                                
                   $("#bust").hide();
                   $("#sleeve").hide();                  
                   $("#neck").hide();                  
@@ -349,8 +349,8 @@ function  manBottomSizeTitle(){
                                 </div>    
                                     
                                 <div class="row-fluid show-grid" id="back">
-                                  <div class="span3">Back</div>
-                                  <div class="span3">{{ form_widget(form.back) }}{{ form_errors(form.back) }}</div>
+                                  <div class="span3">Shoulder across back</div>
+                                  <div class="span3">{{ form_widget(form.shoulder_across_back) }}{{ form_errors(form.shoulder_across_back) }}</div>
                                 </div>
                                 <div class="row-fluid show-grid" id="bust">
                                   <div class="span3">Bust</div>
