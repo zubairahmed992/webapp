@@ -6324,7 +6324,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', end
 }
 
 .span1:last-child div{     
-    margin-top:-25px;
+    /*margin-top:-25px;*/
   }
   
   .brands .span1:last-child div{     
