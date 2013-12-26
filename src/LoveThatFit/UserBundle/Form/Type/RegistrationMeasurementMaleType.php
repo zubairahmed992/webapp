@@ -40,6 +40,7 @@ private $container;
         $builder->add('neck');
         $builder->add('sleeve');
         $builder->add('outseam');
+        $builder->add('shoulder_across_back');
          }
   
      public function getDefaultOptions(array $options)

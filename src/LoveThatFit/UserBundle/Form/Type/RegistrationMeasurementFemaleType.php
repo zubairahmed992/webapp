@@ -50,7 +50,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
         $builder->add('sleeve');
         $builder->add('outseam');
         $builder->add('hip');
-        $builder->add('back');
+        $builder->add('shoulder_across_back');
     }
   
      public function getDefaultOptions(array $options)

@@ -20,8 +20,7 @@ class ProfileMeasurementMaleType extends AbstractType
         $builder->add('inseam', 'number', array('precision' => 2,'required'=>false));
         $builder->add('outseam', 'number', array('precision' => 2,'required'=>false));
         $builder->add('shoulder_height', 'number', array('precision' => 2,'required'=>false));
-        $builder->add('weight', 'number', array('precision' => 2,'required'=>false));
-        $builder->add('back', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('weight', 'number', array('precision' => 2,'required'=>false));       
         $builder->add('thigh', 'number', array('precision' => 2,'required'=>false));
         $builder->add('shoulder_across_front', 'number', array('precision' => 2,'required'=>false));
         $builder->add('shoulder_across_back', 'number', array('precision' => 2,'required'=>false));

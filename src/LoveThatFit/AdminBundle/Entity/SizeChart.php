@@ -141,12 +141,12 @@ class SizeChart
     private $sleeve=0;
     
     /**
-     * @var float $back
+     * @var float $shoulder_across_back
      *
-     * @ORM\Column(name="back", type="float")
+     * @ORM\Column(name="shoulder_across_back", type="float")
      * @Assert\Regex(pattern= "/[0-9]/", message="Require number only") 
      */
-    private $back=0;
+   private $shoulder_across_back=0;
     
     /**
      * @var float $thigh
@@ -503,26 +503,26 @@ class SizeChart
     }
 
     /**
-     * Set back
+     * Set shoulderAcrossBack
      *
-     * @param float $back
-     * @return SizeChart
+     * @param float $shoulderAcrossBack
+     * @return Measurement
      */
-    public function setBack($back)
+    public function setShoulderAcrossBack($shoulderAcrossBack)
     {
-        $this->back = $back;
+        $this->shoulder_across_back = $shoulderAcrossBack;
     
         return $this;
     }
 
     /**
-     * Get back
+     * Get shoulderAcrossBack
      *
      * @return float 
      */
-    public function getBack()
+    public function getShoulderAcrossBack()
     {
-        return $this->back;
+        return $this->shoulder_across_back;
     }
 
     /**
