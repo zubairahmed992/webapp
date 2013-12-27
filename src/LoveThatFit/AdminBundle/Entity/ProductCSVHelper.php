@@ -41,7 +41,12 @@ class ProductCSVHelper {
             $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
             $this->product['style'] = $data[7]; #~~~~~ Style
         }
-
+        
+        if ($this->row == 4){
+            $this->product['garment_name'] = $data[1];
+            $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
+            $this->product['style'] = $data[7]; #~~~~~ Style
+        }
 
         if ($this->row == 11) {
             $this->product['stretch_type'] = $data[1];
@@ -60,17 +65,31 @@ class ProductCSVHelper {
         }
         #~~~~~ Fit Priority
         if ($this->row == 18) {
-            $this->product['fit_priority'] = array();
+            $previous_row=$this->previous_row;
+            $this->product['fit_priority'] = array($previous_row[2] => $data[2], $previous_row[3] => $data[3], $previous_row[4] => $data[4], $previous_row[5] => $data[5], $previous_row[6] => $data[6], $previous_row[7]);
         }
         #~~~~~ Colors
         if ($this->row == 25) {
-            $this->product['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
+            $this->readColors($data);//['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
         }
 
         $this->readSize($data);
         $this->readMeasurement($data);
     }
+    
+#---------------------------------------------------------------
+ private function readColors($data) {
+        if ($this->row == 25) {
+            $i = 1;
+            $this->product['product_color']=array();
+            while (strlen($data[$i])>0 && $i<=11) {
+                array_push($this->product['product_color'], $data[$i]);
+                $i = $i + 1;
+            }
+        }
+    }
 
+    #---------------------------------------------------------------
     private function readSize($data) {
         //$this->product['sizes'] = array($data[23], $data[31], $data[39], $data[47], $data[55], $data[63], $data[71], $data[79], $data[87], $data[95]);
         if ($this->row == 0) {
@@ -82,15 +101,17 @@ class ProductCSVHelper {
             }
         }
     }
+    #---------------------------------------------------------------
     private function readMeasurement($data) {
         if ($this->row >= 5 && $this->row <= 22) {
             $sm=array();
             foreach($this->product['sizes'] as $k=>$v){
                 $this->product['sizes'][$k][$this->fitPoint($this->row)] = $this->fillFitPointMeasurement($data, intval($v['key']));
             }
-            //$this->product['sizes']=$sm;
+            
            }
     }
+    #---------------------------------------------------------------
     private function _readMeasurement($data) {
         if ($this->row >= 5 && $this->row <= 22) {
             $i = 23;
@@ -101,6 +122,7 @@ class ProductCSVHelper {
             }
         }
     }
+    #---------------------------------------------------------------
     private function fillFitPointMeasurement($data,$i) {
         return array('garment_measurement_flat' => $data[$i+2],	
         'stretch_type_percentage' => $data[$i+3],
@@ -110,6 +132,7 @@ class ProductCSVHelper {
         'ideal_body_size_low' => $data[$i+7],
             );	
     }
+    #---------------------------------------------------------------
     private function fitPoint($i){
 
         if($i==5) return 'central_front_waist';
