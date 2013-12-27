@@ -1,6 +1,8 @@
 <?php
+
 namespace LoveThatFit\AdminBundle\Controller;
 
+use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
@@ -30,16 +32,15 @@ use LoveThatFit\AdminBundle\ImageHelper;
 use ZipArchive;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
 
-
 class ProductController extends Controller {
 
 //---------------------------------------------------------------------
 
     public function indexAction($page_number, $sort = 'id') {
         //$this->productSaveYaml();
-      
+
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
- return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
+        return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
 
 //---------------------------------------------------------------------
@@ -60,22 +61,24 @@ class ProductController extends Controller {
         return $brand;
     }
 
-    /***************************************************************************
+    /*     * *************************************************************************
      * ************************* PRODUCT DETAIL ********************************
-     * ************************************************************************/
-  public function productDetailNewAction() {
+     * *********************************************************************** */
 
-        
+    public function productDetailNewAction() {
+
+
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $clothingTypes=$this->get('admin.helper.product.specification')->getWomenClothingType();
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper));          
+        $clothingTypes = $this->get('admin.helper.product.specification')->getWomenClothingType();
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper));
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                     'form' => $productForm->createView(),
-     'productSpecification'=>$this->get('admin.helper.product.specification')->getProductSpecification()
-        ));
+                    'productSpecification' => $this->get('admin.helper.product.specification')->getProductSpecification()
+                ));
     }
 
 #-----------------------------Product Detail ----------------------------------#
+
     public function productDetailCreateAction(Request $request) {
 
         $data = $request->request->all();
@@ -83,15 +86,16 @@ class ProductController extends Controller {
         $entity = new Product();
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $form->bindRequest($request);
-        $productArray= $this->get('admin.helper.product')->productDetailArray($data, $entity);
-        $this->get('session')->setFlash($productArray['message_type'],$productArray['message']);
+        $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
+        $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId())));
     }
 
- #--------------------Method for Edit Product Detail----------------------------#
+    #--------------------Method for Edit Product Detail----------------------------#
+
     public function productDetailEditAction($id) {
         $entity = $this->get('admin.helper.product')->find($id);
-        $productSpecification=$this->get('admin.helper.product.specification')->getProductSpecification();
+        $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);
 
@@ -99,69 +103,80 @@ class ProductController extends Controller {
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity,
-                    'productSpecification' =>$productSpecification ,
-                    'fit_priority'=> $entity->getFitPriority(),
-                    'fabric_content'=>$entity->getFabricContent(),
-                    'garment_detail'=>$entity->getGarmentDetail(),
-            ));
+                    'productSpecification' => $productSpecification,
+                    'fit_priority' => $entity->getFitPriority(),
+                    'fabric_content' => $entity->getFabricContent(),
+                    'garment_detail' => $entity->getGarmentDetail(),
+                ));
     }
+
 #------------------Product Update Method---------------------------------------#
- public function productDetailUpdateAction(Request $request, $id) {
+
+    public function productDetailUpdateAction(Request $request, $id) {
         $entity = $this->get('admin.helper.product')->find($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $form->bind($request);
-        $data=$request->request->all();
-        $productArray= $this->get('admin.helper.product')->productDetailArray($data, $entity);
-        $this->get('session')->setFlash($productArray['message_type'],$productArray['message']);
-        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId(),'product'=>$entity,'fit_priority'=> $entity->getFitPriority())));
+        $data = $request->request->all();
+        $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
+        $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getId(), 'product' => $entity, 'fit_priority' => $entity->getFitPriority())));
     }
+
 #---------------Clothing type base on Gender-----------------------------------#
- public function productGenderBaseClothingTypeAction(Request $request){
-    $target_array = $request->request->all();
-    $gender=$target_array['gender'];
-    return new response(json_encode($this->get('admin.helper.clothingtype')->findByGender($gender)));
-    
-}
+
+    public function productGenderBaseClothingTypeAction(Request $request) {
+        $target_array = $request->request->all();
+        $gender = $target_array['gender'];
+        return new response(json_encode($this->get('admin.helper.clothingtype')->findByGender($gender)));
+    }
+
 #------------Clothing type attribute base on clothing type --------------------#
-public function productClothingTypeAttributeAction(Request $request){
-    $target_array = $request->request->all();
-    $clothingTypeAttributes=$this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
-    return new response(json_encode($clothingTypeAttributes));
-}
+
+    public function productClothingTypeAttributeAction(Request $request) {
+        $target_array = $request->request->all();
+        $clothingTypeAttributes = $this->get('admin.helper.product')->productClothingTypeAttribute($target_array);
+        return new response(json_encode($clothingTypeAttributes));
+    }
+
 #-------------------------------Product Delete --------------------------------#
-  public function productDetailDeleteAction($id) {
-     $productArray= $this->get('admin.helper.product')->productDelete($id);
-     $this->get('session')->setFlash($productArray['message_type'],$productArray['message']);
-     return $this->redirect($this->generateUrl('admin_products'));
-}
+
+    public function productDetailDeleteAction($id) {
+        $productArray = $this->get('admin.helper.product')->productDelete($id);
+        $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
+        return $this->redirect($this->generateUrl('admin_products'));
+    }
+
 #----------------------Proudct Detail------------------------------------------#
- public function productDetailShowAction($id) {
+
+    public function productDetailShowAction($id) {
         $product = $this->getProduct($id);
-        $product_limit =$this->get('admin.helper.product')->getRecordsCountWithCurrentProductLimit($id);
-        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($product_limit[0]['id']));
-        if($page_number==0){
-            $page_number=1;
+        $product_limit = $this->get('admin.helper.product')->getRecordsCountWithCurrentProductLimit($id);
+        $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($product_limit[0]['id']));
+        if ($page_number == 0) {
+            $page_number = 1;
         }
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
-                    'page_number'=>$page_number,
-        ));
+                    'page_number' => $page_number,
+                ));
     }
+
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
-   public function productDetailColorAddNewAction($id) {
+
+    public function productDetailColorAddNewAction($id) {
         $entity = $this->getProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        $sizes=$this->get('admin.helper.product')->productDetailColorAdd($entity);
-       // return new response(json_encode($sizes));
-        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']));
+        $sizes = $this->get('admin.helper.product')->productDetailColorAdd($entity);
+        // return new response(json_encode($sizes));
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'], $sizes['regular'], $sizes['tall'], $sizes['women_waist']));
         $imageUploadForm = $this->createForm(new ProductColorImageType());
         $patternUploadForm = $this->createForm(new ProductColorPatternType());
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
@@ -169,18 +184,20 @@ public function productClothingTypeAttributeAction(Request $request){
                     'colorform' => $colorform->createView(),
                     'imageUploadForm' => $imageUploadForm->createView(),
                     'patternUploadForm' => $patternUploadForm->createView(),
-        ));
+                ));
     }
-#--------------------PRODUCT COLOR CREATE--------------------------------------#
-   public function productDetailColorCreateAction(Request $request, $id) {
 
-         $product = $this->getProduct($id);
-         $productColor = new ProductColor();
-         $productColor->setProduct($product);
-         $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-         //return new response(json_encode($sizes));
-         $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
-         $colorform->bind($request);
+#--------------------PRODUCT COLOR CREATE--------------------------------------#
+
+    public function productDetailColorCreateAction(Request $request, $id) {
+
+        $product = $this->getProduct($id);
+        $productColor = new ProductColor();
+        $productColor->setProduct($product);
+        $sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
+        //return new response(json_encode($sizes));
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'], $sizes['regular'], $sizes['tall'], $sizes['women_waist']), $productColor);
+        $colorform->bind($request);
         if ($colorform->isValid()) {
 
             $this->get('admin.helper.productcolor')->uploadSave($productColor);
@@ -195,28 +212,30 @@ public function productClothingTypeAttributeAction(Request $request){
             $this->get('session')->setFlash('warning', 'Product Detail color cannot been created.');
         }
     }
+
 #----------------------------Product Color Edit--------------------------------#
- public function productDetailColorEditAction($id, $color_id, $temp_img_path = null) {
-       $product = $this->getProduct($id);
+
+    public function productDetailColorEditAction($id, $color_id, $temp_img_path = null) {
+        $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $productColor = $this->getProductColor($color_id);
-        $sizeTitle=$this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
-       // return new response(json_encode($sizeTitle));
-        $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-        $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
-        if(isset($sizeTitle['Petite'])){ 
-        $colorform->get('petiteSizes')->setData($sizeTitle['Petite']); 
+        $sizeTitle = $this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
+        // return new response(json_encode($sizeTitle));
+        $sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'], $sizes['regular'], $sizes['tall'], $sizes['women_waist']), $productColor);
+        if (isset($sizeTitle['Petite'])) {
+            $colorform->get('petiteSizes')->setData($sizeTitle['Petite']);
         }
-        if(isset($sizeTitle['Regular'])){
-         $colorform->get('regularSizes')->setData($sizeTitle['Regular']); 
+        if (isset($sizeTitle['Regular'])) {
+            $colorform->get('regularSizes')->setData($sizeTitle['Regular']);
         }
-        if(isset($sizeTitle['Tall'])){
-         $colorform->get('tallSizes')->setData($sizeTitle['Tall']); 
+        if (isset($sizeTitle['Tall'])) {
+            $colorform->get('tallSizes')->setData($sizeTitle['Tall']);
         }
-        if(isset($sizeTitle['Waist'])){
-         $colorform->get('womenWaistSizes')->setData($sizeTitle['Waist']); 
+        if (isset($sizeTitle['Waist'])) {
+            $colorform->get('womenWaistSizes')->setData($sizeTitle['Waist']);
         }
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
         $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
@@ -226,26 +245,28 @@ public function productClothingTypeAttributeAction(Request $request){
                     'color_id' => $color_id,
                     'imageUploadForm' => $imageUploadForm->createView(),
                     'patternUploadForm' => $patternUploadForm->createView(),
-        ));
+                ));
     }
+
 #-------------------------Product color Update---------------------------------#
+
     public function productDetailColorUpdateAction(Request $request, $id, $color_id) {
-    $product = $this->getProduct($id);
+        $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        
-       $productColor = $this->getProductColor($color_id);
-       $sizes=$this->get('admin.helper.product')->productDetailColorAdd($product);
-       $colorform = $this->createForm(new ProductColorType($sizes['petite'],$sizes['regular'],$sizes['tall'],$sizes['women_waist']),$productColor);
-       $colorform->bind($request);
-       if ($colorform->isValid()) {
-        $this->get('admin.helper.productcolor')->uploadSave($productColor);
-         if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
+
+        $productColor = $this->getProductColor($color_id);
+        $sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
+        $colorform = $this->createForm(new ProductColorType($sizes['petite'], $sizes['regular'], $sizes['tall'], $sizes['women_waist']), $productColor);
+        $colorform->bind($request);
+        if ($colorform->isValid()) {
+            $this->get('admin.helper.productcolor')->uploadSave($productColor);
+            if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
             }
-         $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData());
-         $this->get('session')->setFlash(
+            $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData());
+            $this->get('session')->setFlash(
                     'success', 'Product Color Detail has been updated!'
             );
 
@@ -261,12 +282,13 @@ public function productClothingTypeAttributeAction(Request $request){
                         'product' => $product,
                         'colorform' => $colorForm->createView(),
                         'color_id' => $color_id,
-            ));
+                    ));
         }
     }
 
 #---------------------Product Color Temporary ---------------------------------#
-public function productColorTemporaryImageUploadAction(Request $request, $id) {
+
+    public function productColorTemporaryImageUploadAction(Request $request, $id) {
         $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
@@ -276,16 +298,18 @@ public function productColorTemporaryImageUploadAction(Request $request, $id) {
         $colorImageForm = $this->createForm(new ProductColorImageType(), $productColor);
         $colorImageForm->bind($request);
         $temp = $productColor->uploadTemporaryImage();
-        
+
         $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . "/" . $productColor->getWebPath() . $temp['image_url'];
         $data = array('image_name' => $temp['image_name'],
             'image_url' => $baseurl);
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'text/html');
         return $response;
- }
+    }
+
 #--------------------------Product Color Delete--------------------------------#
-public function productDetailColorDeleteAction($id, $color_id) {
+
+    public function productDetailColorDeleteAction($id, $color_id) {
         try {
             $em = $this->getDoctrine()->getManager();
             $productColor = $em->getRepository('LoveThatFitAdminBundle:ProductColor')->find($color_id);
@@ -320,31 +344,34 @@ public function productDetailColorDeleteAction($id, $color_id) {
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         }
     }
+
 #--------------------Product Detail Size----------------------------------------#
-  public function productDetailSizeEditAction($id, $size_id) {
+
+    public function productDetailSizeEditAction($id, $size_id) {
         $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $product_size = $this->get('admin.helper.productsizes')->findMeasurementArray($size_id);
-        $productsize=$this->get('admin.helper.productsizes')->find($size_id);
+        $productsize = $this->get('admin.helper.productsizes')->find($size_id);
         $clothingType = strtolower($product->getClothingType()->getName());
         $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType);
-        $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);        
-        $form = $this->createForm(new ProductSizeMeasurementType());        
+        $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);
+        $form = $this->createForm(new ProductSizeMeasurementType());
         return $this->render('LoveThatFitAdminBundle:Product:product_size_detail_show.html.twig', array(
                     'product' => $product,
                     'size_measurements' => $size_measurements,
-                    'size_id'=>$size_id,  
-                    'form'=>$form->createView(),
-                    'addform'=>$form->createView(),
-                    'product_size' => $product_size,  
-                    'sizetitle'=>$productsize->getTitle(),
-                     
+                    'size_id' => $size_id,
+                    'form' => $form->createView(),
+                    'addform' => $form->createView(),
+                    'product_size' => $product_size,
+                    'sizetitle' => $productsize->getTitle(),
                 ));
     }
+
 #-------------------Product Detail Size Update---------------------------------#
-public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
+
+    public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
         $product = $this->getProduct($id);
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Please Insert valid value');
@@ -368,8 +395,8 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
             $sizeForm = $this->createForm(new ProductSizeWomenDressType(), $this->getProductSize($size_id));
         }
 
-    $sizeForm->bind($request);
-    if ($sizeForm->isValid()) {
+        $sizeForm->bind($request);
+        if ($sizeForm->isValid()) {
             $em->persist($entity_size);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail size has been update.');
@@ -380,10 +407,12 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
                         'product' => $product,
                         'sizeform' => $sizeForm->createView(),
                         'size_id' => $size_id,
-            ));
+                    ));
         }
     }
+
 #-----------------Product Detail Delete ---------------------------------------#
+
     public function productDetailSizeDeleteAction(Request $request, $id, $size_id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductSize');
@@ -393,9 +422,11 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
         $this->get('session')->setFlash('success', 'Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
+
 #----------------------Product Item Edit ---------------------------------------#
- public function productDetailItemEditAction($id, $item_id) {
-       $entity = $this->getProduct($id);
+
+    public function productDetailItemEditAction($id, $item_id) {
+        $entity = $this->getProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -405,10 +436,12 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
                     'product' => $entity,
                     'itemform' => $itemform->createView(),
                     'item_id' => $item_id,
-                    'itemrawimageform'=>$itemrawimageform->createView(),
-        ));
+                    'itemrawimageform' => $itemrawimageform->createView(),
+                ));
     }
+
 #-----------------------Product Detail Item Update-----------------------------#
+
     public function productDetailItemUpdateAction(Request $request, $id, $item_id) {
         $entity = $this->getProduct($id);
         if (!$entity) {
@@ -419,8 +452,8 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
         if (!$entity_item) {
             throw $this->createNotFoundException('Unable to find Product Item.');
         }
-   $itemform = $this->createForm(new ProductItemType(), $entity_item);
-   $itemform->bind($request);
+        $itemform = $this->createForm(new ProductItemType(), $entity_item);
+        $itemform->bind($request);
 
         if ($itemform->isValid()) {
             $entity_item->upload(); //----- file upload method 
@@ -430,7 +463,7 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                         'product' => $entity,
                         'itemform' => $itemform->createView(),
-            ));
+                    ));
         } else {
 
             $this->get('session')->setFlash('warning', 'Unable to Product Detail Item');
@@ -439,11 +472,12 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
                         'product' => $entity,
                         'itemform' => $itemform->createView(),
                         'item_id' => $item_id,
-            ));
+                    ));
         }
     }
 
 #--------------------Product Detail Item Delete---------------------------------#
+
     public function productDetailItemDeleteAction(Request $request, $id, $item_id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
@@ -453,9 +487,11 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
         $this->get('session')->setFlash('success', 'Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
     }
+
 #----------------------Method for raw image edit -----------------------------#
-  public function productDetailItemRawImageEditAction(Request $request, $id, $item_id){
-       $entity = $this->getProduct($id);
+
+    public function productDetailItemRawImageEditAction(Request $request, $id, $item_id) {
+        $entity = $this->getProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -465,34 +501,38 @@ public function productDetailSizeUpdateAction(Request $request, $id, $size_id) {
         if (!$entity_item) {
             throw $this->createNotFoundException('Unable to find Product Item.');
         }
-        
-        $itemrawimageform = $this->createForm(new ProductItemRawImageType(),$entity_item);
+
+        $itemrawimageform = $this->createForm(new ProductItemRawImageType(), $entity_item);
         $itemrawimageform->bind($request);
         $entity_item->uploadRawImage(); //----- file upload method 
         $em->persist($entity_item);
         $em->flush();
-       $this->get('session')->setFlash('success', 'Product item updated  Successfully');
-        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id))); 
-  }
+        $this->get('session')->setFlash('success', 'Product item updated  Successfully');
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
+    }
+
 #-------------Product Raw Item Downloading ------------------------------------#
-public function productDetailItemRawImageDownloadAction(Request $request, $id, $item_id){
-    return new response($this->get('admin.helper.productitem')->rawImageDownload($item_id));
-}
+
+    public function productDetailItemRawImageDownloadAction(Request $request, $id, $item_id) {
+        return new response($this->get('admin.helper.productitem')->rawImageDownload($item_id));
+    }
+
 #--------------Raw image Deleteing --------------------------------------------#
-public function productDetailItemRawImageDeleteAction(Request $request, $id, $item_id) {
+
+    public function productDetailItemRawImageDeleteAction(Request $request, $id, $item_id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:ProductItem');
         $product = $repository->find($item_id);
         $old_image_path = $product->getRawImageWebPath();
-         if (is_readable($old_image_path)) {
-           @unlink($old_image_path);
-       }
+        if (is_readable($old_image_path)) {
+            @unlink($old_image_path);
+        }
         $product->setRawImage('');
         $em->persist($product);
         $em->flush();
         $this->get('session')->setFlash('success', 'Raw Image Successfully Deleted');
         return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
-}
+    }
 
     //------------------------- Private methods ------------------------- 
     public function getProduct($id) {
@@ -532,6 +572,7 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
     }
 
 #--------------------------------Products Stats--------------------------------#
+
     public function productStatsAction() {
         $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
         $products = $this->getDoctrine()
@@ -548,14 +589,16 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
                     'bottomProduct' => $this->get('admin.helper.product')->countProductsByType('Bottom'),
                     'dressProduct' => $this->get('admin.helper.product')->countProductsByType('Dress'),
                     'brandproduct' => $entity,
-        ));
+                ));
     }
+
 #---------------START OF CREATE SIZE ITEM -------------------------------------#
+
     private function createSizeItemForBodyTypes($product, $p_color, $all_sizes) {
-       $this->get('admin.helper.productsizes')->createSizeItemForBodyTypes($product, $p_color, $all_sizes);
+        $this->get('admin.helper.productsizes')->createSizeItemForBodyTypes($product, $p_color, $all_sizes);
     }
-  
-   private function getProductByBrand() {
+
+    private function getProductByBrand() {
         $em = $this->getDoctrine()->getManager();
         $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
                 ->findPrductByBrand();
@@ -571,6 +614,7 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
                 ->findDefaultProductByColorId($product_color);
         return $entity;
     }
+
 //------------------------------------------------------------------------------------
     private function productSaveYaml() {
         $entity = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product')
@@ -619,198 +663,188 @@ public function productDetailItemRawImageDeleteAction(Request $request, $id, $it
     }
 
 #---------------------Product Download-----------------------------------------#
-    public function productDetailDownloadAction($id){
-    $product=$this->get('admin.helper.product')->zipDownload($id);
-      if($product['status']=='1'){
-         
-          $this->get('session')->setFlash('warning', 'Images not found');                 
-       return $this->redirect($this->generateUrl('admin_products'));
-     }
+
+    public function productDetailDownloadAction($id) {
+        $product = $this->get('admin.helper.product')->zipDownload($id);
+        if ($product['status'] == '1') {
+
+            $this->get('session')->setFlash('warning', 'Images not found');
+            return $this->redirect($this->generateUrl('admin_products'));
+        }
     }
+
 #--------------------Multiple Iamge Download as Zip----------------------------#
-    public function productDetailZipDownloadAction(Request $request)
-    {
-       $data = $request->request->all();
-       return new Response($this->get('admin.helper.product')->zipMultipleDownload($data));
+
+    public function productDetailZipDownloadAction(Request $request) {
+        $data = $request->request->all();
+        return new Response($this->get('admin.helper.product')->zipMultipleDownload($data));
     }
-    
-  #-----------------------------------------------------------------------------#
-  
+
+    #-----------------------------------------------------------------------------#
 #-------------------Searching Resulting----------------------------------------#
- public function productSeachResultAction(Request $request){
-  $data = $request->request->all();
-  $productResult=$this->get('admin.helper.product')->searchProduct($data);
- return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig',$productResult);    
- }
-#------------------------------------------------------------------------------#
- public function productSeachCategoryAction(Request $request){
-     
-    $target_array = $request->request->all();
-    if($target_array){
-    $result= $this->get('admin.helper.product')->searchCategory($target_array);
-    return new response(json_encode($result));
-    }else{
-       return new response(json_encode("null"));
+
+    public function productSeachResultAction(Request $request) {
+        $data = $request->request->all();
+        $productResult = $this->get('admin.helper.product')->searchProduct($data);
+        return $this->render('LoveThatFitAdminBundle:Product:searchResult.html.twig', $productResult);
     }
-     
- }
- #-----------------------------------------------------------------------
- public function createProductSizeMeasurementAction($id,$size_id)
-{
-    $product_size=$this->get('admin.helper.productsizes')->find($size_id);
-        if(!$product_size)
-        {
+
+#------------------------------------------------------------------------------#
+
+    public function productSeachCategoryAction(Request $request) {
+
+        $target_array = $request->request->all();
+        if ($target_array) {
+            $result = $this->get('admin.helper.product')->searchCategory($target_array);
+            return new response(json_encode($result));
+        } else {
+            return new response(json_encode("null"));
+        }
+    }
+
+    #-----------------------------------------------------------------------
+
+    public function createProductSizeMeasurementAction($id, $size_id) {
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
-        $form = $this->createForm(new ProductSizeMeasurementType(),$entity);
+        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
         $deleteForm = $this->getDeleteForm($size_id);
-        
+
         return $this->render('LoveThatFitAdminBundle:Product:productSizeMeasurementForm.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
-                    'product_size' => $product_size,                 
-            )
-                );
-}
+                    'product_size' => $product_size,
+                        )
+        );
+    }
 
 #-----------------------------------------------------------------------
-public function sizeMeasurementNewAction($id,$size_id,$title)
-    {        
-        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
-        if(!$product_size)
-        {
+
+    public function sizeMeasurementNewAction($id, $size_id, $title) {
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
-        $id=$product_size->getProduct()->getId();
-        $product = $this->getProduct($id);   
+        $id = $product_size->getProduct()->getId();
+        $product = $this->getProduct($id);
         //$product=$this->get('admin.helper.product')->find($id);
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
-        $form = $this->createForm(new ProductSizeMeasurementType(),$entity);
-        
+        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+
         return $this->render('LoveThatFitAdminBundle:Product:_productSizeMeasurement.html.twig', array(
                     'form' => $form->createView(),
                     'product_size' => $product_size,
-                    'title'=>$title,
-                    'id'=>$id,
-                    'productname'=>$product->getName(),
-                    'sizetitle'=>$product_size->getTitle(),
-                   )
-                );
-                  
+                    'title' => $title,
+                    'id' => $id,
+                    'productname' => $product->getName(),
+                    'sizetitle' => $product_size->getTitle(),
+                        )
+        );
     }
+
 #-----------------------------------------------------------------------
 
-public function productSizeMeasurementCreateAction($id,$size_id,$title)
-    {        
-        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
-        if(!$product_size)
-        {
+    public function productSizeMeasurementCreateAction($id, $size_id, $title) {
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
-        $id=$product_size->getProduct()->getId();
-        $product = $this->getProduct($id);   
+        $id = $product_size->getProduct()->getId();
+        $product = $this->getProduct($id);
         //$product=$this->get('admin.helper.product')->find($id);
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
-        $form = $this->createForm(new ProductSizeMeasurementType(),$entity);
-        $deleteForm = $this->getDeleteForm($size_id);        
+        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $deleteForm = $this->getDeleteForm($size_id);
         return $this->render('LoveThatFitAdminBundle:Product:productSizeMeasurement.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'product_size' => $product_size,
-                    'title'=>$title,
-                    'id'=>$id,
-                    'productname'=>$product->getName(),
-                    'sizetitle'=>$product_size->getTitle(),
-                   )
-                );
-                  
-         
+                    'title' => $title,
+                    'id' => $id,
+                    'productname' => $product->getName(),
+                    'sizetitle' => $product_size->getTitle(),
+                        )
+        );
     }
-    
-    public function productSizeMeasurementupdateAction(Request $request,$id,$size_id,$title)
-    {
-        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
-        if(!$product_size)
-        {
+
+    public function productSizeMeasurementupdateAction(Request $request, $id, $size_id, $title) {
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
-        }        
+        }
         $em = $this->getDoctrine()->getManager();
-        $entity = new ProductSizeMeasurement();  
+        $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
         $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
-        $deleteForm = $this->getDeleteForm($size_id);                  
+        $deleteForm = $this->getDeleteForm($size_id);
         if ($this->getRequest()->getMethod() == 'POST') {
-        $form->bindRequest($request);        
-        $entity->setTitle($title);        
-        $entity->setProductSize($product_size); 
-        $product_size->addProductSizeMeasurement($entity);
-        $em->persist($product_size);
-        $em->persist($entity);            
-        $em->flush();  
-        $this->get('session')->setFlash('success', 'Product Size Measurement Detail has been Created.');     
-       $id=$product_size->getProduct()->getId();
-       $product = $this->getProduct($id);
-        return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
-            'product'=>$product,
-            'id' => $id,
-            'size_id'=>$size_id,
-             'productname'=>$product->getName(),
-                 'sizetitle'=>$product_size->getTitle(),
-         )));
+            $form->bindRequest($request);
+            $entity->setTitle($title);
+            $entity->setProductSize($product_size);
+            $product_size->addProductSizeMeasurement($entity);
+            $em->persist($product_size);
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->setFlash('success', 'Product Size Measurement Detail has been Created.');
+            $id = $product_size->getProduct()->getId();
+            $product = $this->getProduct($id);
+            return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
+                                'product' => $product,
+                                'id' => $id,
+                                'size_id' => $size_id,
+                                'productname' => $product->getName(),
+                                'sizetitle' => $product_size->getTitle(),
+                            )));
         }
-        
-        
+
+
         /*
-        
-        return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
-                    'form' => $form->createView(),                    
-                    'product_size' => $product_size,
-                    'title'=>$title ));
-          
+
+          return $this->render('LoveThatFitRetailerAdminBundle:Product:productSizeMeasurement.html.twig', array(
+          'form' => $form->createView(),
+          'product_size' => $product_size,
+          'title'=>$title ));
+
          */
     }
-    
-    
-    public function productSizeMeasurementEditAction($id,$size_id,$measurement_id,$title)
-    {
-        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
-        if(!$product_size)
-        {
+
+    public function productSizeMeasurementEditAction($id, $size_id, $measurement_id, $title) {
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
-        
-        $product=$this->get('admin.helper.product')->find($id);
-        $product_size_measurement=$this->getDoctrine()
+
+        $product = $this->get('admin.helper.product')->find($id);
+        $product_size_measurement = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductSizeMeasurement')
-                ->find($measurement_id);        
-        $form = $this->createForm(new ProductSizeMeasurementType(),$product_size_measurement);
-        $deleteForm = $this->getDeleteForm($size_id);        
+                ->find($measurement_id);
+        $form = $this->createForm(new ProductSizeMeasurementType(), $product_size_measurement);
+        $deleteForm = $this->getDeleteForm($size_id);
         return $this->render('LoveThatFitAdminBundle:Product:productSizeMeasurement_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'product_size' => $product_size,
-                    'productSizeMeasurement'=>$product_size_measurement,
-                    'title'=>$title,
-                    'id'=>$id,
-                    'sizetitle'=>$product_size->getTitle(),
-                    'productname'=>$product->getName(),
+                    'productSizeMeasurement' => $product_size_measurement,
+                    'title' => $title,
+                    'id' => $id,
+                    'sizetitle' => $product_size->getTitle(),
+                    'productname' => $product->getName(),
                 ));
-        
     }
-    
-    public function productSizeMeasurementEditUpdateAction(Request $request,$id,$size_id,$measurement_id,$title)
-    {
-        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
-        if(!$product_size)
-        {
+
+    public function productSizeMeasurementEditUpdateAction(Request $request, $id, $size_id, $measurement_id, $title) {
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
         $em = $this->getDoctrine()->getManager();
@@ -818,27 +852,25 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
                 ->getRepository('LoveThatFitAdminBundle:ProductSizeMeasurement')
                 ->find($measurement_id);
         $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
-        $form->bindRequest($request); 
+        $form->bindRequest($request);
         if ($form->isValid()) {
-        $em->persist($entity);            
-        $em->flush();  
-        $this->get('session')->setFlash('success', 'Product Size Measurement Detail has been Updated.');
-        }        
-        
-      $id=$product_size->getProduct()->getId();
-      $entity = $this->getProduct($id);             
-       return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
-            'product'=>$entity,
-            'id' => $id,
-            'size_id'=>$size_id
-         )));
-   }
-    
-    public function productSizeMeasurementdeleteAction($id,$size_id,$measurement_id,$title)
-    {
-        $product_size=$this->get('admin.helper.productsizes')->find($size_id);
-        if(!$product_size)
-        {
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->setFlash('success', 'Product Size Measurement Detail has been Updated.');
+        }
+
+        $id = $product_size->getProduct()->getId();
+        $entity = $this->getProduct($id);
+        return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
+                            'product' => $entity,
+                            'id' => $id,
+                            'size_id' => $size_id
+                        )));
+    }
+
+    public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
+        if (!$product_size) {
             throw $this->createNotFoundException('Unable to find Product Size.');
         }
         $em = $this->getDoctrine()->getManager();
@@ -848,165 +880,163 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
         $em->remove($entity);
         $em->flush();
         $this->get('session')->setFlash('success', 'Successfully Deleted');
-        $id=$product_size->getProduct()->getId();
-        $product = $this->getProduct($id);          
+        $id = $product_size->getProduct()->getId();
+        $product = $this->getProduct($id);
         return $this->redirect($this->generateUrl('admin_product_detail_size_edit', array(
-            'product'=>$product,
-            'id' => $id,
-            'size_id'=>$size_id
-         )));
+                            'product' => $product,
+                            'id' => $id,
+                            'size_id' => $size_id
+                        )));
     }
-    
-    
+
 #---------------Get Brand Base on the Retailer---------------------#
-    public function findBrandBaseOnRetailerAction(Request $request ){
-    $target_array = $request->request->all();
-    return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
+
+    public function findBrandBaseOnRetailerAction(Request $request) {
+        $target_array = $request->request->all();
+        return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
     }
-    
-    
+
 #-----------------------Form Form Upload CSV File------------------#
-    public function addCsvProductFormAction()
-    {
+
+    public function addCsvProductFormAction() {
         $form = $this->createFormBuilder()
-        ->add('csvfile','file')
-        ->getForm();
-    return $this->render('LoveThatFitAdminBundle:Product:import_csv.html.twig',
-        array('form' => $form->createView(),)
-    );
+                ->add('csvfile', 'file')
+                ->getForm();
+        return $this->render('LoveThatFitAdminBundle:Product:import_csv.html.twig', array('form' => $form->createView(),)
+        );
     }
+
 #------------Upload CSV Product------------------------------------------------#
-    public function uploadProductCsvAction(Request $request){
-       
-  $form = $this->createFormBuilder()
-        ->add('csvfile','file')
-        ->getForm();
-   $form->bindRequest($request);
-       $request = $this->getRequest();
-       $file = $form->get('csvfile');
-      // Your csv file here when you hit submit button
-      $filename=$file->getData();
-      $row = 1;
-      if (($handle = fopen($filename, "r")) !== FALSE) {
-          
-      while (($data = fgetcsv($handle, 100000, ",")) !== FALSE) {
-      $num = count($data);
-      echo "<p> $num fields in line $row: <br /></p>\n";
-      if ($row==1){
-          echo $data[2];
-      }
-      
-      $row++;
-        for ($c=0; $c < $num; $c++) {
-        echo $data[$c] . "\n";
-         }
-      }
-      fclose($handle);
-      }
-   }
-    //------------------------------------------------------
-   
-    public function _readProductCsvAction(){
-        $row = 0;
-        $previous_row='';
-    if (($handle = fopen("../app/config/LaceBlouse.csv", "r")) !== FALSE) {
-    
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-        $num = count($data);        
-       
-         if ($row==0){
-            echo $data[0].' ' .$data[1] . "<br />\n"; #~~~~~ Garment Name
-            echo $data[3].' ' .$data[4] . "<br />\n"; #~~~~~ Retailer
-            echo $data[6].' ' .$data[7] . "<br />\n"; #~~~~~ Style
+
+    public function uploadProductCsvAction(Request $request) {
+
+        $form = $this->createFormBuilder()
+                ->add('csvfile', 'file')
+                ->getForm();
+        $form->bindRequest($request);
+        $request = $this->getRequest();
+        $file = $form->get('csvfile');
+        // Your csv file here when you hit submit button
+        $filename = $file->getData();
+        $row = 1;
+        if (($handle = fopen($filename, "r")) !== FALSE) {
+
+            while (($data = fgetcsv($handle, 100000, ",")) !== FALSE) {
+                $num = count($data);
+                echo "<p> $num fields in line $row: <br /></p>\n";
+                if ($row == 1) {
+                    echo $data[2];
+                }
+
+                $row++;
+                for ($c = 0; $c < $num; $c++) {
+                    echo $data[$c] . "\n";
+                }
+            }
+            fclose($handle);
         }
-        
-        if ($row==11){
-            echo $data[0].' : ' .$data[1] . "<br />\n"; #~~~~~ Stretch
-            echo $data[2].' : ' .$data[3] . "<br />\n"; #~~~~~ H-Stretch
-            echo $data[4].' : ' .$data[5] . "<br />\n"; #~~~~~ V-Stretch
-        }
-        
-        if ($row==13){
-            echo $data[0].' : ' .$data[1] . "<br />\n"; #~~~~~ Fabric Weight
-            echo $data[3].' : ' .$data[4] . "<br />\n"; #~~~~~ Structural Detail
-            echo $data[6].' : ' .$data[7] . "<br />\n"; #~~~~~ Styling Detail
-        }
-        if ($row==15){
-            echo $data[0].' : ' .$data[1] . "<br />\n"; #~~~~~ Fit Type
-            echo $data[3].' : ' .$data[4] . "<br />\n"; #~~~~~ Layering            
-        }        
-        #~~~~~ Fit Priority
-        if ($row==18){    
-            echo "<b>Fit Priority :</b>" ;
-            echo $data[1]. $previous_row[2]. ' : ' . $data[2]. $previous_row[3]. ' : ' . $data[3]. $previous_row[4]. ' : ' . $data[4]. $previous_row[5]. ' : ' . $data[5]. $previous_row[6]. ' : ' . $data[6]. $previous_row[7]."<br />\n";            
-        } 
-        #~~~~~ Colors
-        if ($row==25){    
-            echo "<b>Colors :</b>" ;
-            echo $data[1] .', '. $data[2].', '. $data[3] .', '. $data[4].', '. $data[5].', '. $data[6] .', '. $data[7].', '. $data[8].', '. $data[9].', '. $data[10].', '. $data[11]."<br />\n";            
-        } 
-        #---------- Fabric Content
-        if ($row==28){    
-            echo "<b>Fabric Content </b><br/>";            
-            echo $data[1] .' : '. $data[0] . "<br />\n";
-            echo $data[3] .' : '. $data[2] . "<br />\n";
-            echo $data[5] .' : '. $data[4] . "<br />\n";
-            echo $data[7] .' : '. $data[6] . "<br />\n";
-            echo $data[9] .' : '. $data[8] . "<br />\n";
-            echo $previous_row[1] .' : '. $previous_row[0] . "<br />\n";
-            echo $previous_row[3] .' : '. $previous_row[2] . "<br />\n";
-            echo $previous_row[5] .' : '. $previous_row[4] . "<br />\n";
-            echo $previous_row[7] .' : '. $previous_row[6] . "<br />\n";
-            echo $previous_row[9] .' : '. $previous_row[8] . "<br />\n";            
-          } 
-        $this->getCSVSizeDetail($data, $row);
-        $previous_row=$data;
-        
-        $row++;
-        /*
-        for ($c=0; $c < $num; $c++) {
-            echo $data[$c] . "<br />\n";
-        }*/
-    }
-    fclose($handle);
-    //return new Response(json_encode($data[$c]));
-    return new Response('true');
-}
-      
-    
-    }
-    
-    private function getCSVSizeDetail($data, $row){
-       if ($row>=5 && $row<=22){
-        $this->getCSVFields($data, $row);
-       }
-    }
-    private function getCSVFields($data, $row){
-       
-        echo $data[24]." ".$data[32]." ".$data[47]." ".$data[54]." ".$data[63]." ".$data[71]." ".$data[79]." ".$data[87]." ".$data[95]."<br>";
-       
     }
 
     //------------------------------------------------------
-   
-    public function readProductCsvAction() {
+
+    public function _readProductCsvAction() {
         $row = 0;
         $previous_row = '';
         if (($handle = fopen("../app/config/LaceBlouse.csv", "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {                
-               if ($row >= 5 && $row <= 22) {
-                        #garment_measurement_flat	stretch_type_percentage	garment_measurement_stretch_fit	maximum_body_measurement ideal_body_size_high | ideal_body_size_low			
-                        echo "00  |" . $data[23].":".$data[25].":".$data[26].":".$data[27].":".$data[28].":".$data[29].":".$data[30]."<br>";
-                        echo "0   |" . $data[31].":".$data[32].":".$data[33].":".$data[34].":".$data[35].":".$data[36].":".$data[37]."<br>";
-                        echo "2   |" . $data[39].":".$data[33].":".$data[34].":".$data[35].":".$data[36].":".$data[37].":".$data[38]."<br>";
-                        echo "4   |" . $data[47].":".$data[48].":".$data[49].":".$data[50].":".$data[51].":".$data[52].":".$data[53]."<br>";
-                        echo "6   |" . $data[55].":".$data[56].":".$data[57].":".$data[58].":".$data[59].":".$data[60].":".$data[61]."<br>";
-                        echo "8   |" . $data[63].":".$data[64].":".$data[65].":".$data[66].":".$data[67].":".$data[68].":".$data[69]."<br>";
-                        echo "10  |" . $data[71].":".$data[72].":".$data[73].":".$data[74].":".$data[75].":".$data[76].":".$data[77]."<br>";
-                        echo "12  |" . $data[79].":".$data[80].":".$data[81].":".$data[82].":".$data[83].":".$data[84].":".$data[85]."<br>";
-                        echo "14  |" . $data[87].":".$data[88].":".$data[89].":".$data[90].":".$data[91].":".$data[92].":".$data[93]."<br>";
-                        echo "16  |" . $data[95].":".$data[96].":".$data[97].":".$data[98].":".$data[99].":".$data[100].":".$data[101]."<br>";
 
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $num = count($data);
+
+                if ($row == 0) {
+                    echo $data[0] . ' ' . $data[1] . "<br />\n"; #~~~~~ Garment Name
+                    echo $data[3] . ' ' . $data[4] . "<br />\n"; #~~~~~ Retailer
+                    echo $data[6] . ' ' . $data[7] . "<br />\n"; #~~~~~ Style
+                }
+
+                if ($row == 11) {
+                    echo $data[0] . ' : ' . $data[1] . "<br />\n"; #~~~~~ Stretch
+                    echo $data[2] . ' : ' . $data[3] . "<br />\n"; #~~~~~ H-Stretch
+                    echo $data[4] . ' : ' . $data[5] . "<br />\n"; #~~~~~ V-Stretch
+                }
+
+                if ($row == 13) {
+                    echo $data[0] . ' : ' . $data[1] . "<br />\n"; #~~~~~ Fabric Weight
+                    echo $data[3] . ' : ' . $data[4] . "<br />\n"; #~~~~~ Structural Detail
+                    echo $data[6] . ' : ' . $data[7] . "<br />\n"; #~~~~~ Styling Detail
+                }
+                if ($row == 15) {
+                    echo $data[0] . ' : ' . $data[1] . "<br />\n"; #~~~~~ Fit Type
+                    echo $data[3] . ' : ' . $data[4] . "<br />\n"; #~~~~~ Layering            
+                }
+                #~~~~~ Fit Priority
+                if ($row == 18) {
+                    echo "<b>Fit Priority :</b>";
+                    echo $data[1] . $previous_row[2] . ' : ' . $data[2] . $previous_row[3] . ' : ' . $data[3] . $previous_row[4] . ' : ' . $data[4] . $previous_row[5] . ' : ' . $data[5] . $previous_row[6] . ' : ' . $data[6] . $previous_row[7] . "<br />\n";
+                }
+                #~~~~~ Colors
+                if ($row == 25) {
+                    echo "<b>Colors :</b>";
+                    echo $data[1] . ', ' . $data[2] . ', ' . $data[3] . ', ' . $data[4] . ', ' . $data[5] . ', ' . $data[6] . ', ' . $data[7] . ', ' . $data[8] . ', ' . $data[9] . ', ' . $data[10] . ', ' . $data[11] . "<br />\n";
+                }
+                #---------- Fabric Content
+                if ($row == 28) {
+                    echo "<b>Fabric Content </b><br/>";
+                    echo $data[1] . ' : ' . $data[0] . "<br />\n";
+                    echo $data[3] . ' : ' . $data[2] . "<br />\n";
+                    echo $data[5] . ' : ' . $data[4] . "<br />\n";
+                    echo $data[7] . ' : ' . $data[6] . "<br />\n";
+                    echo $data[9] . ' : ' . $data[8] . "<br />\n";
+                    echo $previous_row[1] . ' : ' . $previous_row[0] . "<br />\n";
+                    echo $previous_row[3] . ' : ' . $previous_row[2] . "<br />\n";
+                    echo $previous_row[5] . ' : ' . $previous_row[4] . "<br />\n";
+                    echo $previous_row[7] . ' : ' . $previous_row[6] . "<br />\n";
+                    echo $previous_row[9] . ' : ' . $previous_row[8] . "<br />\n";
+                }
+                $this->getCSVSizeDetail($data, $row);
+                $previous_row = $data;
+
+                $row++;
+                /*
+                  for ($c=0; $c < $num; $c++) {
+                  echo $data[$c] . "<br />\n";
+                  } */
+            }
+            fclose($handle);
+            //return new Response(json_encode($data[$c]));
+            return new Response('true');
+        }
+    }
+
+    private function getCSVSizeDetail($data, $row) {
+        if ($row >= 5 && $row <= 22) {
+            $this->getCSVFields($data, $row);
+        }
+    }
+
+    private function getCSVFields($data, $row) {
+
+        echo $data[24] . " " . $data[32] . " " . $data[47] . " " . $data[54] . " " . $data[63] . " " . $data[71] . " " . $data[79] . " " . $data[87] . " " . $data[95] . "<br>";
+    }
+
+    //------------------------------------------------------
+
+    public function __readProductCsvAction() {
+        $row = 0;
+        $previous_row = '';
+        if (($handle = fopen("../app/config/LaceBlouse.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($row >= 5 && $row <= 22) {
+                    #garment_measurement_flat	stretch_type_percentage	garment_measurement_stretch_fit	maximum_body_measurement ideal_body_size_high | ideal_body_size_low			
+                    echo "00  |" . $data[23] . ":" . $data[25] . ":" . $data[26] . ":" . $data[27] . ":" . $data[28] . ":" . $data[29] . ":" . $data[30] . "<br>";
+                    echo "0   |" . $data[31] . ":" . $data[32] . ":" . $data[33] . ":" . $data[34] . ":" . $data[35] . ":" . $data[36] . ":" . $data[37] . "<br>";
+                    echo "2   |" . $data[39] . ":" . $data[33] . ":" . $data[34] . ":" . $data[35] . ":" . $data[36] . ":" . $data[37] . ":" . $data[38] . "<br>";
+                    echo "4   |" . $data[47] . ":" . $data[48] . ":" . $data[49] . ":" . $data[50] . ":" . $data[51] . ":" . $data[52] . ":" . $data[53] . "<br>";
+                    echo "6   |" . $data[55] . ":" . $data[56] . ":" . $data[57] . ":" . $data[58] . ":" . $data[59] . ":" . $data[60] . ":" . $data[61] . "<br>";
+                    echo "8   |" . $data[63] . ":" . $data[64] . ":" . $data[65] . ":" . $data[66] . ":" . $data[67] . ":" . $data[68] . ":" . $data[69] . "<br>";
+                    echo "10  |" . $data[71] . ":" . $data[72] . ":" . $data[73] . ":" . $data[74] . ":" . $data[75] . ":" . $data[76] . ":" . $data[77] . "<br>";
+                    echo "12  |" . $data[79] . ":" . $data[80] . ":" . $data[81] . ":" . $data[82] . ":" . $data[83] . ":" . $data[84] . ":" . $data[85] . "<br>";
+                    echo "14  |" . $data[87] . ":" . $data[88] . ":" . $data[89] . ":" . $data[90] . ":" . $data[91] . ":" . $data[92] . ":" . $data[93] . "<br>";
+                    echo "16  |" . $data[95] . ":" . $data[96] . ":" . $data[97] . ":" . $data[98] . ":" . $data[99] . ":" . $data[100] . ":" . $data[101] . "<br>";
                 }
                 echo "<br>";
                 $previous_row = $data;
@@ -1015,6 +1045,11 @@ public function productSizeMeasurementCreateAction($id,$size_id,$title)
             fclose($handle);
             return new Response('true');
         }
-      
-}
+    }
+
+    public function readProductCsvAction() {
+        $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
+        return  new Response(json_encode($pcsv->read()));
+    }
+
 }

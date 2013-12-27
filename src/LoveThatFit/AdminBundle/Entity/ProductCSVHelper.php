@@ -1,138 +1,137 @@
 <?php
 
+namespace LoveThatFit\AdminBundle\Entity;
 
 class ProductCSVHelper {
-        //--------------------------------------------------------------------
-    public function __construct() {
-        
-    }
-   //------------------------------------------------------
-   private $product;
-   
-    public function read($path){
-        return 'foo bar';
-        $row = 0;
-        $previous_row='';
-    if (($handle = fopen($path, "r")) !== FALSE) {
-    
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-        $num = count($data);        
-       
-         if ($row==0){
-            $product['garment_name']=$data[1];
-            $product['retailer_name']= $data[4]; #~~~~~ Retailer
-            $product['style']= $data[7]; #~~~~~ Style
-            
-        }
-        
-        if ($row==11){
-            $product['stretch_type']=$data[1];
-            $product['horizontal_stretch']= $data[3]; 
-            $product['vertical_stretch']= $data[5]; 
-            
-        }
-        
-        if ($row==13){
-            $product['fabric_weight']=$data[1];
-            $product['structural_detail']= $data[4]; 
-            $product['styling_detail']= $data[7]; 
-            }
-        if ($row==15){
-            $product['fit_type']=$data[1];
-            $product['layring']= $data[4]; 
-            }        
-        #~~~~~ Fit Priority
-        if ($row==18){    
-            $product['fit_priority']=array();
-            
-            //echo "<b>Fit Priority :</b>" ;
-            //echo $data[1]. $previous_row[2]. ' : ' . $data[2]. $previous_row[3]. ' : ' . $data[3]. $previous_row[4]. ' : ' . $data[4]. $previous_row[5]. ' : ' . $data[5]. $previous_row[6]. ' : ' . $data[6]. $previous_row[7]."<br />\n";            
-        } 
-        #~~~~~ Colors
-        if ($row==25){    
-            $product['product_color']=  array($data[1], $data[2], $data[3],  $data[4],  $data[5],  $data[6] ,  $data[7],  $data[8],  $data[9],  $data[10],  $data[11]);
-            //echo "<b>Colors :</b>" ;
-            //echo $data[1] .', '. $data[2].', '. $data[3] .', '. $data[4].', '. $data[5].', '. $data[6] .', '. $data[7].', '. $data[8].', '. $data[9].', '. $data[10].', '. $data[11]."<br />\n";            
-        }
-        /*
-        #---------- Fabric Content
-        if ($row==28){    
-            $product['']=$data[];
-            $product['']= $data[]; 
-            $product['']= $data[]; 
-            
-            echo "<b>Fabric Content </b><br/>";            
-            echo $data[1] .' : '. $data[0] . "<br />\n";
-            echo $data[3] .' : '. $data[2] . "<br />\n";
-            echo $data[5] .' : '. $data[4] . "<br />\n";
-            echo $data[7] .' : '. $data[6] . "<br />\n";
-            echo $data[9] .' : '. $data[8] . "<br />\n";
-            echo $previous_row[1] .' : '. $previous_row[0] . "<br />\n";
-            echo $previous_row[3] .' : '. $previous_row[2] . "<br />\n";
-            echo $previous_row[5] .' : '. $previous_row[4] . "<br />\n";
-            echo $previous_row[7] .' : '. $previous_row[6] . "<br />\n";
-            echo $previous_row[9] .' : '. $previous_row[8] . "<br />\n";            
-          } 
-        $this->getCSVSizeDetail($data, $row);
-        */
-        $previous_row=$data;
-        
-        $row++;
-        /*
-        for ($c=0; $c < $num; $c++) {
-            echo $data[$c] . "<br />\n";
-        }*/
-    }
-    fclose($handle);
-    //return new Response(json_encode($data[$c]));
-    return new Response('true');
-}
-      
-    
-    }
-    
-    private function getCSVSizeDetail($data, $row){
-       if ($row>=5 && $row<=22){
-        $this->getCSVFields($data, $row);
-       }
-    }
-    private function getCSVFields($data, $row){
-       
-        echo $data[24]." ".$data[32]." ".$data[47]." ".$data[54]." ".$data[63]." ".$data[71]." ".$data[79]." ".$data[87]." ".$data[95]."<br>";
-       
+
+    private $product;
+    private $row;
+    private $previous_row;
+    private $path;
+
+//--------------------------------------------------------------------
+    public function __construct($path) {
+        $this->path = $path;
     }
 
     //------------------------------------------------------
-   
-    public function readProductCsvAction() {
-        $row = 0;
-        $previous_row = '';
-        if (($handle = fopen("../app/config/LaceBlouse.csv", "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {                
-               if ($row >= 5 && $row <= 22) {
-                        #garment_measurement_flat	stretch_type_percentage	garment_measurement_stretch_fit	maximum_body_measurement ideal_body_size_high | ideal_body_size_low			
-                        echo "00  |" . $data[23].":".$data[25].":".$data[26].":".$data[27].":".$data[28].":".$data[29].":".$data[30]."<br>";
-                        echo "0   |" . $data[31].":".$data[32].":".$data[33].":".$data[34].":".$data[35].":".$data[36].":".$data[37]."<br>";
-                        echo "2   |" . $data[39].":".$data[33].":".$data[34].":".$data[35].":".$data[36].":".$data[37].":".$data[38]."<br>";
-                        echo "4   |" . $data[47].":".$data[48].":".$data[49].":".$data[50].":".$data[51].":".$data[52].":".$data[53]."<br>";
-                        echo "6   |" . $data[55].":".$data[56].":".$data[57].":".$data[58].":".$data[59].":".$data[60].":".$data[61]."<br>";
-                        echo "8   |" . $data[63].":".$data[64].":".$data[65].":".$data[66].":".$data[67].":".$data[68].":".$data[69]."<br>";
-                        echo "10  |" . $data[71].":".$data[72].":".$data[73].":".$data[74].":".$data[75].":".$data[76].":".$data[77]."<br>";
-                        echo "12  |" . $data[79].":".$data[80].":".$data[81].":".$data[82].":".$data[83].":".$data[84].":".$data[85]."<br>";
-                        echo "14  |" . $data[87].":".$data[88].":".$data[89].":".$data[90].":".$data[91].":".$data[92].":".$data[93]."<br>";
-                        echo "16  |" . $data[95].":".$data[96].":".$data[97].":".$data[98].":".$data[99].":".$data[100].":".$data[101]."<br>";
 
-                }
-                echo "<br>";
-                $previous_row = $data;
-                $row++;
+    public function read() {
+        
+        $this->row = 0;
+        $this->previous_row = '';
+
+        if (($handle = fopen($this->path, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $this->readProduct($data);
+                $this->previous_row = $data;
+                $this->row++;
             }
             fclose($handle);
-            return new Response('true');
+            return $this->product;
         }
-      
-}
-    
+        return;
+    }
+
+//------------------------------------------------------
+
+    private function readProduct($data) {
+        if ($this->row == 0) {
+            $this->product['garment_name'] = $data[1];
+            $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
+            $this->product['style'] = $data[7]; #~~~~~ Style
+        }
+
+
+        if ($this->row == 11) {
+            $this->product['stretch_type'] = $data[1];
+            $this->product['horizontal_stretch'] = $data[3];
+            $this->product['vertical_stretch'] = $data[5];
+        }
+
+        if ($this->row == 13) {
+            $this->product['fabric_weight'] = $data[1];
+            $this->product['structural_detail'] = $data[4];
+            $this->product['styling_detail'] = $data[7];
+        }
+        if ($this->row == 15) {
+            $this->product['fit_type'] = $data[1];
+            $this->product['layring'] = $data[4];
+        }
+        #~~~~~ Fit Priority
+        if ($this->row == 18) {
+            $this->product['fit_priority'] = array();
+        }
+        #~~~~~ Colors
+        if ($this->row == 25) {
+            $this->product['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
+        }
+
+        $this->readSize($data);
+        $this->readMeasurement($data);
+    }
+
+    private function readSize($data) {
+        //$this->product['sizes'] = array($data[23], $data[31], $data[39], $data[47], $data[55], $data[63], $data[71], $data[79], $data[87], $data[95]);
+        if ($this->row == 0) {
+            $i = 23;
+            while (isset($data[$i]) > 0) {
+                $s = explode(" ", $data[$i]);
+                $this->product['sizes'][$s[1]]['key'] = $i;
+                $i = $i + 8;
+            }
+        }
+    }
+    private function readMeasurement($data) {
+        if ($this->row >= 5 && $this->row <= 22) {
+            $sm=array();
+            foreach($this->product['sizes'] as $k=>$v){
+                $this->product['sizes'][$k][$this->fitPoint($this->row)] = $this->fillFitPointMeasurement($data, intval($v['key']));
+            }
+            //$this->product['sizes']=$sm;
+           }
+    }
+    private function _readMeasurement($data) {
+        if ($this->row >= 5 && $this->row <= 22) {
+            $i = 23;
+            while ($i <= 95) {
+                $m = $data[$i];
+                $this->product['sizes'][$m] = $this->fillFitPointMeasurement($data, intval($i));
+                $i = $i + 8;
+            }
+        }
+    }
+    private function fillFitPointMeasurement($data,$i) {
+        return array('garment_measurement_flat' => $data[$i+2],	
+        'stretch_type_percentage' => $data[$i+3],
+        'garment_measurement_stretch_fit' => $data[$i+4],		
+        'maximum_body_measurement' => $data[$i+5],
+        'ideal_body_size_high' => $data[$i+6], 
+        'ideal_body_size_low' => $data[$i+7],
+            );	
+    }
+    private function fitPoint($i){
+
+        if($i==5) return 'central_front_waist';
+        if($i==6) return 'back_waist';
+        if($i==7)return 'waist_ to_hip';
+        if($i==8)return 'inseam';
+        if($i==9)return 'arm_length';
+        if($i==10)return 'bust';
+        if($i==11)return 'waist';
+        if($i==12)return 'hip';
+        if($i==13)return 'thigh';
+        if($i==14)return 'shoulder_across_front';
+        if($i==15)return 'shoulder_across_back';
+        if($i==16)return 'shoulder_height';
+        if($i==17)return 'tricep';
+        if($i==18)return 'bicep';
+        if($i==19)return 'wrist';
+        if($i==20)return 'knee';
+        if($i==21)return 'calf';
+        if($i==22)return 'ankle';
+
+    }
 }
 
 ?>
