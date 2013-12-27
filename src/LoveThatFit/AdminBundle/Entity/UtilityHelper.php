@@ -157,6 +157,15 @@ public function getBraSize(){
     
 }
 
+public function getBraLetters(){
+    return $this->conf["constants"]["bra_letters"];
+    
+}
+
+public function getBraNumbers(){
+    return $this->conf["constants"]["bra_numbers"];
+    
+}
 public function getFemaleLetterSizeTitles()
 {
     return $this->conf["constants"]["size_titles"]["letter"]["woman"];     

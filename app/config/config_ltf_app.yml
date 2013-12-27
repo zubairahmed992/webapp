@@ -261,7 +261,23 @@ constants:
     40c: 40c
     40d: 40d
     40dd: 40dd
-
+    
+  bra_numbers:
+    28: 28         
+    30: 30
+    32: 32
+    34: 34
+    36: 36
+    38: 38
+    40: 40
+  
+  bra_letters:
+    a: a         
+    b: b
+    c: c
+    d: d
+    dd: dd
+    ddd: ddd     
 
 Twitter:  
 consumer_key: 9GBx1IchmgsTC404I52w
