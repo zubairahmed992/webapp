@@ -1774,4 +1774,27 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     {
         return $this->brasize;
     }
+    /**
+     * Get brasizeletters
+     *
+     * @return string 
+     */
+    
+    
+    public function getBraSizes()
+    {
+      $bra_letters=  explode(' ',$this->getBrasize());      
+      return $bra_letters[0];
+    }
+    /**
+     * Get brasizeCup
+     *
+     * @return string 
+     */
+    
+    public function getBraCup()
+    {
+        $bra_cup=  explode(' ',$this->getBrasize());      
+        return $bra_cup[1];
+    }
 }

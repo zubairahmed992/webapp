@@ -177,11 +177,10 @@ class RegistrationController extends Controller {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
-            $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());
-           
-            
+            $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   
+            $registrationMeasurementform->get('bra_letters')->setData($measurement->getBraCup());   
+            $registrationMeasurementform->get('bra_numbers')->setData($measurement->getBraSizes());            
         }
-
         $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
             
         #-----------End of Retaining BodyType----------------------------------#

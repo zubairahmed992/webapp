@@ -59,8 +59,7 @@ class MeasurementHelper {
     }
     #-------------------------------------------------------------------------
     public function saveMeasurement(Measurement $measurement) {
-        $measurement->setUpdatedAt(new \DateTime('now')); 
-        $measurement->setBraSize($measurement->bra_numbers." ".$measurement->bra_letters);
+        $measurement->setUpdatedAt(new \DateTime('now'));        
         $this->em->persist($measurement);
         $this->em->flush();
     }   
