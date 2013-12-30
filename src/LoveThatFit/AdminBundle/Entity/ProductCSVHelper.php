@@ -43,9 +43,11 @@ class ProductCSVHelper {
         }
         
         if ($this->row == 4){
-            $this->product['garment_name'] = $data[1];
-            $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
-            $this->product['style'] = $data[7]; #~~~~~ Style
+            $this->product['styling_type'] = $data[1];
+            $this->product['neck_line'] = $data[4]; 
+            $this->product['sleeve_styling'] = $data[7]; 
+            $this->product['rise'] = $data[7]; 
+            $this->product['hem_length'] = $data[7];
         }
 
         if ($this->row == 11) {
@@ -76,6 +78,20 @@ class ProductCSVHelper {
         $this->readSize($data);
         $this->readMeasurement($data);
     }
+#---------------------------------------------------------------
+ private function readClothingType($data) {
+        if ($this->row >= 3 && $this->row <= 8) {
+            if ($this->row >= 3) {
+                $this->product['clothing_type']=array();
+            }
+            $i = 1;
+            $this->product['product_color']=array();
+            while (strlen($data[$i])>0 && $i<=11) {
+                array_push($this->product['product_color'], $data[$i]);
+                $i = $i + 1;
+            }
+        }
+    }    
     
 #---------------------------------------------------------------
  private function readColors($data) {
