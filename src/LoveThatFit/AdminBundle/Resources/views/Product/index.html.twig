@@ -258,7 +258,7 @@ $(document).ready(function(){
             <div class="span1 hds">Try Count</div>
            
             <div class="span1 hds"></div>  
-            <div class="span1 hds">View - Edit - Delete</div>  
+            <div class="span1 hds">Actions</div>  
             
         </div>  
 
@@ -284,7 +284,7 @@ $(document).ready(function(){
                     {%endif%}  
                   {%endif%}
             </div>
-         <div class="span1">           
+         <div class="span1 edits_btn">           
          <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}"><i class="icon-eye-open"></i></a>
          <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
          <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
