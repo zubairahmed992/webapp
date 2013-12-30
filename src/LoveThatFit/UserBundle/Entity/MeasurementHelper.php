@@ -59,10 +59,10 @@ class MeasurementHelper {
     }
     #-------------------------------------------------------------------------
     public function saveMeasurement(Measurement $measurement) {
-        $measurement->setUpdatedAt(new \DateTime('now'));
+        $measurement->setUpdatedAt(new \DateTime('now'));        
         $this->em->persist($measurement);
         $this->em->flush();
-    }
+    }   
 
     public function saveVerticalPositonMeasurement(Measurement $measurement) {
         $measurement->setUpdatedAt(new \DateTime('now'));

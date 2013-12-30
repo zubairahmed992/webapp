@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Measurement {
 
+    public $bra_letters;
+    public $bra_numbers;
+    
     /**
      * Bidirectional (OWNING SIDE - FK)
      * 
@@ -402,12 +405,12 @@ class Measurement {
      */
     private $iphone_outseam=0;
     /**
-     * @var string $braSize
+     * @var string $brasize
      *
-     * @ORM\Column(name="bra_size", type="string", length=50, nullable=true)
+     * @ORM\Column(name="brasize", type="string", length=50, nullable=true)
      * 
      */
-    private $bra_size;
+    private $brasize;
     
     /**
      * @var string $bodyTypes
@@ -1208,28 +1211,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
         return $this->iphone_shoulder_height;
     }
 
-    /**
-     * Set braSize
-     *
-     * @param string $braSize
-     * @return Measurement
-     */
-    public function setBraSize($braSize)
-    {
-        $this->braSize = $braSize;
     
-        return $this;
-    }
-
-    /**
-     * Get braSize
-     *
-     * @return string 
-     */
-    public function getBraSize()
-    {
-        return $this->bra_size;
-    }
 
     /**
      * Set bodyType
@@ -1767,5 +1749,52 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getAnkle()
     {
         return $this->ankle;
+    }
+    
+
+    /**
+     * Set brasize
+     *
+     * @param string $brasize
+     * @return Measurement
+     */
+    public function setBrasize($brasize)
+    {
+        $this->brasize = $brasize;
+    
+        return $this;
+    }
+
+    /**
+     * Get brasize
+     *
+     * @return string 
+     */
+    public function getBrasize()
+    {
+        return $this->brasize;
+    }
+    /**
+     * Get brasizeletters
+     *
+     * @return string 
+     */
+    
+    
+    public function getBraSizes()
+    {
+      $bra_letters=  explode(' ',$this->getBrasize());      
+      return $bra_letters[0];
+    }
+    /**
+     * Get brasizeCup
+     *
+     * @return string 
+     */
+    
+    public function getBraCup()
+    {
+        $bra_cup=  explode(' ',$this->getBrasize());      
+        return $bra_cup[1];
     }
 }
