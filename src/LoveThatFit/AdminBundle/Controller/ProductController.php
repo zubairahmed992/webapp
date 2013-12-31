@@ -939,72 +939,38 @@ class ProductController extends Controller {
 
     //------------------------------------------------------
 
-    public function _readProductCsvAction() {
-        $row = 0;
-        $previous_row = '';
-        if (($handle = fopen("../app/config/LaceBlouse.csv", "r")) !== FALSE) {
-
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $num = count($data);
-
-                if ($row == 0) {
-                    echo $data[0] . ' ' . $data[1] . "<br />\n"; #~~~~~ Garment Name
-                    echo $data[3] . ' ' . $data[4] . "<br />\n"; #~~~~~ Retailer
-                    echo $data[6] . ' ' . $data[7] . "<br />\n"; #~~~~~ Style
-                }
-
-                if ($row == 11) {
-                    echo $data[0] . ' : ' . $data[1] . "<br />\n"; #~~~~~ Stretch
-                    echo $data[2] . ' : ' . $data[3] . "<br />\n"; #~~~~~ H-Stretch
-                    echo $data[4] . ' : ' . $data[5] . "<br />\n"; #~~~~~ V-Stretch
-                }
-
-                if ($row == 13) {
-                    echo $data[0] . ' : ' . $data[1] . "<br />\n"; #~~~~~ Fabric Weight
-                    echo $data[3] . ' : ' . $data[4] . "<br />\n"; #~~~~~ Structural Detail
-                    echo $data[6] . ' : ' . $data[7] . "<br />\n"; #~~~~~ Styling Detail
-                }
-                if ($row == 15) {
-                    echo $data[0] . ' : ' . $data[1] . "<br />\n"; #~~~~~ Fit Type
-                    echo $data[3] . ' : ' . $data[4] . "<br />\n"; #~~~~~ Layering            
-                }
-                #~~~~~ Fit Priority
-                if ($row == 18) {
-                    echo "<b>Fit Priority :</b>";
-                    echo $data[1] . $previous_row[2] . ' : ' . $data[2] . $previous_row[3] . ' : ' . $data[3] . $previous_row[4] . ' : ' . $data[4] . $previous_row[5] . ' : ' . $data[5] . $previous_row[6] . ' : ' . $data[6] . $previous_row[7] . "<br />\n";
-                }
-                #~~~~~ Colors
-                if ($row == 25) {
-                    echo "<b>Colors :</b>";
-                    echo $data[1] . ', ' . $data[2] . ', ' . $data[3] . ', ' . $data[4] . ', ' . $data[5] . ', ' . $data[6] . ', ' . $data[7] . ', ' . $data[8] . ', ' . $data[9] . ', ' . $data[10] . ', ' . $data[11] . "<br />\n";
-                }
-                #---------- Fabric Content
-                if ($row == 28) {
-                    echo "<b>Fabric Content </b><br/>";
-                    echo $data[1] . ' : ' . $data[0] . "<br />\n";
-                    echo $data[3] . ' : ' . $data[2] . "<br />\n";
-                    echo $data[5] . ' : ' . $data[4] . "<br />\n";
-                    echo $data[7] . ' : ' . $data[6] . "<br />\n";
-                    echo $data[9] . ' : ' . $data[8] . "<br />\n";
-                    echo $previous_row[1] . ' : ' . $previous_row[0] . "<br />\n";
-                    echo $previous_row[3] . ' : ' . $previous_row[2] . "<br />\n";
-                    echo $previous_row[5] . ' : ' . $previous_row[4] . "<br />\n";
-                    echo $previous_row[7] . ' : ' . $previous_row[6] . "<br />\n";
-                    echo $previous_row[9] . ' : ' . $previous_row[8] . "<br />\n";
-                }
-                $this->getCSVSizeDetail($data, $row);
-                $previous_row = $data;
-
-                $row++;
-                /*
-                  for ($c=0; $c < $num; $c++) {
-                  echo $data[$c] . "<br />\n";
-                  } */
-            }
-            fclose($handle);
-            //return new Response(json_encode($data[$c]));
-            return new Response('true');
-        }
+    public function saveProductCsvAction() {
+        $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
+        $data=$pcsv->read();
+        $retailer=$this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);        
+        $clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['style']));
+        $brand=$this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
+        $em = $this->getDoctrine()->getManager();
+        $product=new Product();
+        $product->setBrand($brand);
+        $product->setClothingType($clothingType);
+        $product->setRetailer($retailer);
+        $product->setName($data['garment_name']);
+        $product->setStretchType($data['stretch_type']);
+        $product->setHorizontalStretch($data['horizontal_stretch']);
+        $product->setVerticalStretch($data['vertical_stretch']);        
+        $product->setCreatedAt(new \DateTime('now'));
+        $product->setUpdatedAt(new \DateTime('now'));
+        $product->setGender('F');
+        $product->setStylingType($data['styling_type']);
+        $product->setNeckline($data['neck_line']);
+        $product->setSleeveStyling($data['sleeve_styling']);
+        $product->setRise($data['rise']);
+        $product->setHemLength($data['hem_length']);
+        $product->setFabricWeight($data['fabric_weight']);
+        $product->setStructuralDetail($data['structural_detail']);
+        $product->setFitType($data['fit_type']);
+        $product->setLayering($data['layring']);
+        $product->setFitPriority(json_encode($data['fit_priority']));
+        $product->setDisabled(false);
+        $em->persist($product);
+        $em->flush();
+        return new Response('true');       
     }
 
     private function getCSVSizeDetail($data, $row) {
@@ -1051,5 +1017,8 @@ class ProductController extends Controller {
         $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
         return  new Response(json_encode($pcsv->read()));
     }
+    
+    
+    
 
 }
