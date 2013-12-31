@@ -6732,3 +6732,7 @@ overflow: auto;
 .modal_ad.fade.in {
   top: 40%;
 }
+
+.edits_btn a{    
+    margin-right: 10px;
+}
