@@ -405,12 +405,12 @@ class Measurement {
      */
     private $iphone_outseam=0;
     /**
-     * @var string $brasize
+     * @var string $bra_size
      *
-     * @ORM\Column(name="brasize", type="string", length=50, nullable=true)
+     * @ORM\Column(name="bra_size", type="string", length=50, nullable=true)
      * 
      */
-    private $brasize;
+    private $bra_size;
     
     /**
      * @var string $bodyTypes
@@ -1753,14 +1753,14 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     
 
     /**
-     * Set brasize
+     * Set bra_size
      *
-     * @param string $brasize
+     * @param string $bra_size
      * @return Measurement
      */
     public function setBrasize($brasize)
     {
-        $this->brasize = $brasize;
+        $this->bra_size = $brasize;
     
         return $this;
     }
@@ -1772,7 +1772,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function getBrasize()
     {
-        return $this->brasize;
+        return $this->bra_size;
     }
     /**
      * Get brasizeletters
@@ -1783,7 +1783,8 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     
     public function getBraSizes()
     {
-      $bra_letters=  explode(' ',$this->getBrasize());      
+        if ($this->bra_size==null) return null;
+      $bra_letters=  explode(' ',$this->bra_size);      
       return $bra_letters[0];
     }
     /**
@@ -1794,7 +1795,12 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     
     public function getBraCup()
     {
-        $bra_cup=  explode(' ',$this->getBrasize());      
-        return $bra_cup[1];
+        if ($this->bra_size==null) return null;
+        $bra_cup=  explode(' ',$this->bra_size);      
+        if (array_key_exists(1, $bra_cup)) {
+        return $bra_cup[1];}
+        else{
+            return null;
+        }
     }
 }
