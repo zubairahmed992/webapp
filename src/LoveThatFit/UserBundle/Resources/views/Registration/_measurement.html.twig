@@ -409,7 +409,7 @@ $('#height_in_inches').change(function() {
     });
     options.each(function(i, o) {
         //console.log(i);
-        o.value = arr[i].v;
+        //o.value = arr[i].v;
         $(o).text(arr[i].t.toLowerCase().replace(/\b[a-z]/g, function(letter) {
     return letter.toUpperCase();
 }));
