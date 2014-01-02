@@ -404,12 +404,12 @@ $('#height_in_inches').change(function() {
             v: o.value
         };
     }).get();
-    arr.sort(function(o1, o2) {
-        return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
-    });
+    //arr.sort(function(o1, o2) {
+        //return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+    //});
     options.each(function(i, o) {
         //console.log(i);
-        o.value = arr[i].v;
+        //o.value = arr[i].v;
         $(o).text(arr[i].t.toLowerCase().replace(/\b[a-z]/g, function(letter) {
     return letter.toUpperCase();
 }));
