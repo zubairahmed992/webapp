@@ -909,32 +909,14 @@ class ProductController extends Controller {
 #------------Upload CSV Product------------------------------------------------#
 
     public function uploadProductCsvAction(Request $request) {
-
         $form = $this->createFormBuilder()
                 ->add('csvfile', 'file')
                 ->getForm();
         $form->bindRequest($request);
-        $request = $this->getRequest();
         $file = $form->get('csvfile');
-        // Your csv file here when you hit submit button
         $filename = $file->getData();
-        $row = 1;
-        if (($handle = fopen($filename, "r")) !== FALSE) {
-
-            while (($data = fgetcsv($handle, 100000, ",")) !== FALSE) {
-                $num = count($data);
-                echo "<p> $num fields in line $row: <br /></p>\n";
-                if ($row == 1) {
-                    echo $data[2];
-                }
-
-                $row++;
-                for ($c = 0; $c < $num; $c++) {
-                    echo $data[$c] . "\n";
-                }
-            }
-            fclose($handle);
-        }
+        $pcsv = new ProductCSVHelper($filename);
+        return  new Response(json_encode($pcsv->read()));
     }
 
     //------------------------------------------------------
