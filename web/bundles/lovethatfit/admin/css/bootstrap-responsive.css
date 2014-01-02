@@ -1292,5 +1292,25 @@
     box-sizing: border-box;
   }
   
+  
+   .space_wrap_rt_ad .span1:not(.hds) {
+   
+   min-height:90px;
+   max-height:90px;
+   padding-top:20px;
+   overflow:hidden;
+   
+	
+  }
+  
+  .space_wrap_rt_ad .span3:not(.hds) {   
+   min-height:90px;
+   max-height:90px;
+   padding-top:20px;
+   overflow:hidden;
+  }
+  
 
+  
+  
    
