@@ -47,10 +47,11 @@ constants:
      
  
   body_shape:
-    pear: pear
-    hourglass: hourglass
     apple: apple
     banana: banana
+    hourglass: hourglass
+    pear: pear
+    
     
   size_titles:
     letter:
