@@ -421,7 +421,7 @@ class Measurement {
     private $body_types;
     
     /**
-     * @var string $body_shape
+     * @var string $bodyShape
      *
      * @ORM\Column(name="body_shape", type="string", length=50, nullable=true)
      * 
@@ -1237,7 +1237,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
 
     /**
-     * Set body_shape
+     * Set bodyShape
      *
      * @param string $bodyShape
      * @return Measurement
@@ -1250,7 +1250,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
 
     /**
-     * Get body_shape
+     * Get bodyShape
      *
      * @return string 
      */
