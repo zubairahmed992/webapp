@@ -99,9 +99,22 @@ class ProductCSVHelper {
             case 25:
                 $this->readColors($data); //['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
                 break;
-            case 27:
+            case 28:
                 $previous_row = $this->previous_row;
-                $this->product['fiber_content'] = array($data[1] => $data[0], $previous_row[1] => $previous_row[0], $data[3] => $data[2], $previous_row[3] => $previous_row[2], $data[5] => $data[4], $previous_row[5] => $previous_row[4], $data[7] => $data[6], $previous_row[7] => $previous_row[6], $data[9] => $data[8], $previous_row[9] => $previous_row[8], $data[11] => $data[10], $previous_row[11] => $previous_row[10]);
+                $this->product['fiber_content'] = array(
+                    $data[1] => $data[0], 
+                    $data[3] => $data[2], 
+                    $data[5] => $data[4], 
+                    $data[7] => $data[6], 
+                    $data[9] => $data[8], 
+                    $data[11] => $data[10], 
+                    $previous_row[1] => $previous_row[0], 
+                    $previous_row[3] => $previous_row[2], 
+                    $previous_row[5] => $previous_row[4], 
+                    $previous_row[7] => $previous_row[6], 
+                    $previous_row[9] => $previous_row[8], 
+                    $previous_row[11] => $previous_row[10],
+                    );
                 break;
         }
 
@@ -141,7 +154,7 @@ class ProductCSVHelper {
         $i = 23;
         while (isset($data[$i]) > 0) {
             $s = explode(" ", $data[$i]);
-            $this->product['sizes'][$s[1]]['key'] = $i;
+            if(array_key_exists(1,$s)) $this->product['sizes'][$s[1]]['key'] = $i;
             $i = $i + 8;
         }
     }
