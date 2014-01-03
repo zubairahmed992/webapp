@@ -916,11 +916,27 @@ class ProductController extends Controller {
         $file = $form->get('csvfile');
         $filename = $file->getData();
         $pcsv = new ProductCSVHelper($filename);
-        return  new Response(json_encode($pcsv->read()));
+        $data=$pcsv->read();
+        #$this->savecsvdata($pcsv, $data);
+        return  new Response(json_encode($data));
     }
 
     //------------------------------------------------------
-
+    private function savecsvdata($pcsv, $data){
+        
+        $retailer=$this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);        
+        $clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['style']));
+        $brand=$this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
+        $em = $this->getDoctrine()->getManager();
+        $product=$pcsv->fillProduct($data);
+        
+        $product->setBrand($brand);
+        $product->setClothingType($clothingType);
+        $product->setRetailer($retailer);
+        $em->persist($product);
+        $em->flush();
+        return;    
+    }
     public function saveProductCsvAction() {
         $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
         $data=$pcsv->read();
