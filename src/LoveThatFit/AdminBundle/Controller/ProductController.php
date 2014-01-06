@@ -917,15 +917,18 @@ class ProductController extends Controller {
         $filename = $file->getData();
         $pcsv = new ProductCSVHelper($filename);
         $data=$pcsv->read();
-        #$this->savecsvdata($pcsv, $data);
-        return  new Response(json_encode($data));
+        
+        #$this->savecsvdata($pcsv, $data);        
+        $str = $this->kazaimSizes($data);
+        return  new Response($str);
+        //return  new Response(json_encode($data));
     }
 
     //------------------------------------------------------
     private function savecsvdata($pcsv, $data){
         
         $retailer=$this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);        
-        $clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['style']));
+        $clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['clothing_type']));
         $brand=$this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
         $em = $this->getDoctrine()->getManager();
         $product=$pcsv->fillProduct($data);
@@ -935,54 +938,90 @@ class ProductController extends Controller {
         $product->setRetailer($retailer);
         $em->persist($product);
         $em->flush();
+        $this->addProductSizes($product, $data);
+        $this->addProductColors($product, $data);
+        $this->addProductItems($product);
         return;    
     }
-    public function saveProductCsvAction() {
-        $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
-        $data=$pcsv->read();
-        $retailer=$this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);        
-        $clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['style']));
-        $brand=$this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
+    #------------------------------------------------------------
+
+    public function addProductColors($product, $data) {        
         $em = $this->getDoctrine()->getManager();
-        $product=new Product();
-        $product->setBrand($brand);
-        $product->setClothingType($clothingType);
-        $product->setRetailer($retailer);
-        $product->setName($data['garment_name']);
-        $product->setStretchType($data['stretch_type']);
-        $product->setHorizontalStretch($data['horizontal_stretch']);
-        $product->setVerticalStretch($data['vertical_stretch']);        
-        $product->setCreatedAt(new \DateTime('now'));
-        $product->setUpdatedAt(new \DateTime('now'));
-        $product->setGender('F');
-        $product->setStylingType($data['styling_type']);
-        $product->setNeckline($data['neck_line']);
-        $product->setSleeveStyling($data['sleeve_styling']);
-        $product->setRise($data['rise']);
-        $product->setHemLength($data['hem_length']);
-        $product->setFabricWeight($data['fabric_weight']);
-        $product->setStructuralDetail($data['structural_detail']);
-        $product->setFitType($data['fit_type']);
-        $product->setLayering($data['layring']);
-        $product->setFitPriority(json_encode($data['fit_priority']));
-        $product->setDisabled(false);
-        $em->persist($product);
-        $em->flush();
-        return new Response('true');       
-    }
-
-    private function getCSVSizeDetail($data, $row) {
-        if ($row >= 5 && $row <= 22) {
-            $this->getCSVFields($data, $row);
+        
+        foreach($data['product_color'] as $c){
+            $pc = new ProductColor;
+            $pc->setTitle(strtolower($c));
+            $pc->setProduct($product);
+            $em->persist($pc);
+            $em->flush();            
         }
+        return;
     }
-
-    private function getCSVFields($data, $row) {
-
-        echo $data[24] . " " . $data[32] . " " . $data[47] . " " . $data[54] . " " . $data[63] . " " . $data[71] . " " . $data[79] . " " . $data[87] . " " . $data[95] . "<br>";
+    #------------------------------------------------------------
+    public function addProductSizes($product, $data) {        
+        $em = $this->getDoctrine()->getManager();
+        foreach($data['sizes'] as $key=>$value){
+            $ps = new ProductSize;
+            $ps->setTitle($key);
+            $ps->setProduct($product);
+            $ps->setBodyType('Regular');
+            $em->persist($ps);
+            $em->flush();            
+            addProductSizeMeasurement($ps, $value);
+            
+        }
+        return $product;
     }
+    #------------------------------------------------------
+      public function addProductSizeMeasurement($size, $data) {        
+        $em = $this->getDoctrine()->getManager();
+        foreach($data as $key=>$value){
+            $ps = new ProductSize;
+            $ps->setTitle($key);
+            $ps->setProduct($product);
+            $ps->setBodyType('Regular');
+            $em->persist($ps);
+            $em->flush();            
+        }
+        return $product;
+    }
+    
+    #------------------------------------------------------------
+      #------------------------------------------------------------
+    public function kazaimSizes($data) {                
+        $foo=array();
+        foreach($data['sizes'] as $key=>$value){
+            $foo[$key]    =  $this->kazaim($value);            
+        }
+        return json_encode($foo);
+    }
+    #-------
+      public function kazaim($data) {        
+        $str=array();
+        foreach($data as $key=>$value ){           
+            if ($key!='key'){
+            $str[$key]=$value['ideal_body_size_high'].', '. $value['ideal_body_size_low'].', '. $value['maximum_body_measurement'];
+            }
+            
+        
+        }
+        return $str;
+    }
+    
+#------------------------------------------------------
+    public function readProductCsvAction() {
+        $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
+        return  new Response(json_encode($pcsv->read()));
+    }
+    
+    
+    
 
-    //------------------------------------------------------
+}
+
+
+/*
+ * //------------------------------------------------------
 
     public function __readProductCsvAction() {
         $row = 0;
@@ -1010,13 +1049,4 @@ class ProductController extends Controller {
             return new Response('true');
         }
     }
-
-    public function readProductCsvAction() {
-        $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
-        return  new Response(json_encode($pcsv->read()));
-    }
-    
-    
-    
-
-}
+ */

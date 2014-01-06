@@ -93,28 +93,13 @@ class ProductCSVHelper {
 
                 break;
             case 18:
-                $previous_row = $this->previous_row;
-                $this->product['fit_priority'] = array($previous_row[1] => $data[1], $previous_row[2] => $data[2], $previous_row[3] => $data[3], $previous_row[4] => $data[4], $previous_row[5] => $data[5], $previous_row[6] => $data[6]);
+                $this->readFitPriority($data);
                 break;
             case 25:
                 $this->readColors($data); //['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
                 break;
-            case 28:
-                $previous_row = $this->previous_row;
-                $this->product['fiber_content'] = array(
-                    $data[1] => $data[0], 
-                    $data[3] => $data[2], 
-                    $data[5] => $data[4], 
-                    $data[7] => $data[6], 
-                    $data[9] => $data[8], 
-                    $data[11] => $data[10], 
-                    $previous_row[1] => $previous_row[0], 
-                    $previous_row[3] => $previous_row[2], 
-                    $previous_row[5] => $previous_row[4], 
-                    $previous_row[7] => $previous_row[6], 
-                    $previous_row[9] => $previous_row[8], 
-                    $previous_row[11] => $previous_row[10],
-                    );
+            case 28:             
+                $this->readFabricContent($data);
                 break;
         }
 
@@ -122,7 +107,39 @@ class ProductCSVHelper {
     
         
     }
+#---------------------------------------------------------------
+#---------------------------------------------------------------
 
+    private function readFitPriority($data) {
+          $previous_row = $this->previous_row;
+                $this->product['fit_priority'] = array(
+                   $this->makeSnake($previous_row[1]) => $this->removePercent($data[1]), 
+                    $this->makeSnake($previous_row[2]) => $this->removePercent($data[2]), 
+                    $this->makeSnake($previous_row[3]) => $this->removePercent($data[3]), 
+                    $this->makeSnake($previous_row[4]) => $this->removePercent($data[4]), 
+                    $this->makeSnake($previous_row[5]) => $this->removePercent($data[5]), 
+                    $this->makeSnake($previous_row[6]) => $this->removePercent($data[6]));
+    }
+    
+#---------------------------------------------------------------
+
+    private function readFabricContent($data) {
+             $previous_row = $this->previous_row;
+                $this->product['fabric_content'] = array(
+                   $this->makeSnake($data[1]) => $this->removePercent($data[0]), 
+                    $this->makeSnake($data[3]) => $this->removePercent($data[2]), 
+                    $this->makeSnake($data[5]) => $this->removePercent($data[4]), 
+                    $this->makeSnake($data[7]) => $this->removePercent($data[6]), 
+                    $this->makeSnake($data[9]) => $this->removePercent($data[8]), 
+                    $this->makeSnake($data[11]) => $this->removePercent($data[10]), 
+                    $this->makeSnake($previous_row[1]) => $this->removePercent($previous_row[0]), 
+                    $this->makeSnake($previous_row[3]) => $this->removePercent($previous_row[2]), 
+                    $this->makeSnake($previous_row[5]) => $this->removePercent($previous_row[4]), 
+                    $this->makeSnake($previous_row[7]) => $this->removePercent($previous_row[6]), 
+                    $this->makeSnake($previous_row[9]) => $this->removePercent($previous_row[8]), 
+                    $this->makeSnake($previous_row[11]) => $this->removePercent($previous_row[10]),
+                    );
+    }
 #---------------------------------------------------------------
 
     private function readClothingType($data) {
@@ -174,15 +191,15 @@ class ProductCSVHelper {
     #---------------------------------------------------------------
 
     private function fillFitPointMeasurement($data, $i) {
-        return array('garment_measurement_flat' => $data[$i + 2],
-            'stretch_type_percentage' => $data[$i + 3],
-            'garment_measurement_stretch_fit' => $data[$i + 4],
+        return array('garment_measurement_flat' => $this->removePercent($data[$i + 2]),
+            'stretch_type_percentage' => $this->removePercent($data[$i + 3]),
+            'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 4]),
             'maximum_body_measurement' => $data[$i + 5],
             'ideal_body_size_high' => $data[$i + 6],
             'ideal_body_size_low' => $data[$i + 7],
         );
     }
-
+  
     #---------------------------------------------------------------
     private function fitPoint($i){
 
@@ -213,7 +230,7 @@ class ProductCSVHelper {
         #$retailer=$this->get('admin.helper.retailer')->findOneByName($this->product['retailer_name']);        
         #$clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($this->product['clothing_type']));
         #$brand=$this->get('admin.helper.brand')->findOneByName($this->product['retailer_name']);
-#$data=$this->product;
+        #$data=$this->product;
         $product=new Product;
         #$product->setBrand($brand);
         #$product->setClothingType($clothingType);
@@ -235,11 +252,17 @@ class ProductCSVHelper {
         $product->setFitType($data['fit_type']);
         $product->setLayering($data['layring']);
         $product->setFitPriority(json_encode($data['fit_priority']));
+        $product->setFabricContent(json_encode($data['fabric_content']));
         $product->setDisabled(false);
+        #????
+        $product->setSizeTitleType('numbers');
+        
+        #---------
         return $product;
     }
-    public function fillProductColor(){
+    public function fillProductColor($data){
         $pc=new ProductColor;
+        $pc->setTitle($data);
         return $pc;
     }
     public function fillProductSize(){
@@ -253,6 +276,22 @@ class ProductCSVHelper {
     public function fillProductItem(){
         $pi=new ProductItem;
         return $pi;
+    }
+
+    
+//-------------------------------------------------------
+    private function initialCap($str){        
+        return str_replace('\' ', '\'', ucwords(str_replace('\'', '\' ', strtolower($str))));
+    }
+    
+//-------------------------------------------------------
+    private function makeSnake($str){                
+        return str_replace(' ', '_', strtolower($str));
+    }
+    
+    //-------------------------------------------------------
+      private function removePercent($str){
+        return str_replace('%', '', $str);
     }
 }
 

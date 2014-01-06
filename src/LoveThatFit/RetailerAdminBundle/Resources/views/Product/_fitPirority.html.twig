@@ -1,7 +1,8 @@
      <script>
 $(document).ready(function(){
+   {% if (product.FitPriority) %}  
  {% autoescape false %}
-    var json = {{product.FitPriority}};
+    var json = {{product.FitPriorityLowerCase}};
      length_obj=json.length;
      Object.size = function(obj) {
      var size = 0, key;
@@ -23,11 +24,14 @@ $(document).ready(function(){
  if(fit_type==0){
 $('#fit_box').hide();
 }
+
    {% endautoescape %}
-       
+     {% endif %}  
+     {%if(product.GarmentDetail)%}  
   // Fabric Content 
   {% autoescape false %}
    var json = {{product.FabricContent}};
+   
      length_obj=json.length;
      Object.size = function(obj) {
      var size = 0, key;
@@ -52,11 +56,12 @@ fab_key=0;
      $("#fabric_box").hide(); 
  }
    {% endautoescape %}
-       
+  {%endif%}     
  //Garment Detail 
- 
+ {%if(product.GarmentDetail)%}
  {% autoescape false %}
    var json =  {{product.GarmentDetail}} ;
+  
      length_obj=json.length;
      Object.size = function(obj) {
      var size = 0, key;
@@ -79,7 +84,7 @@ if(garment_type==0){
 $('#grmt_box').hide();
 }
    {% endautoescape %}
-       
+  {%endif%}     
      
    });    
  </script>      

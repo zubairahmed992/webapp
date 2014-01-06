@@ -156,17 +156,20 @@ class ClothingTypeHelper {
     
 
 //-------------------------------------------------------
+    private function initialCap($str){        
+        return str_replace('\' ', '\'', ucwords(str_replace('\'', '\' ', strtolower($str))));
+    }
+//-------------------------------------------------------    
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
-
+//-------------------------------------------------------
     public function findClothingTypeByName($name) {
         return $this->repo->findClothingTypeByName($name);
-    }
-     
+    }     
     #-----------------------------------------------
    public function findAll(){
-  return $this->repo->findAllRecord();      
+        return $this->repo->findAllRecord();      
     }
    #-----------------Find By Gender---------------------------------# 
     public function findByGender($gender){
@@ -206,7 +209,6 @@ class ClothingTypeHelper {
     }
 
     private function countStatistics($target) {
-
         return $rec_count = count($this->repo->findStatisticsBy($target));
     }
 

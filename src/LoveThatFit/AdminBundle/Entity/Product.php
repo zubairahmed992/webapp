@@ -963,7 +963,10 @@ class Product {
         return json_decode($this->fit_priority);
     }
 
-    
+    public function getFitPriorityLowerCase(){        
+        return str_replace('_', ' ', strtolower($this->fit_priority));
+    }
+        
     /**
      * Set fabric_content
      *
