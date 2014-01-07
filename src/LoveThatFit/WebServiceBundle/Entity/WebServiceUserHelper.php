@@ -1,7 +1,6 @@
 <?php
 
-namespace LoveThatFit\UserBundle\Entity;
-
+namespace LoveThatFit\WebServiceBundle\Entity;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
@@ -17,7 +16,7 @@ use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Component\HttpFoundation\Request;
 
-class UserHelper {
+class WebServiceUserHelper {
 
     /**
      * Holds the Symfony2 event dispatcher service
@@ -74,26 +73,7 @@ class UserHelper {
         $user->uploadAvatar();
         $this->saveUser($user);
     }
-
-//-------------------------------------------------------
-
-    public function getLoggedIn(User $userEntity) {
-        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
-        $this->container->get('security.context')->setToken($token);
-        return $token->getUser();
-    }
-
-//-------------------------------------------------------
-
-    public function getLoggedInById($id) {
-        $userEntity = $this->find($id);
-        $token = new UsernamePasswordToken($userEntity, null, 'secured_area', array('ROLE_USER'));
-        $this->container->get('security.context')->setToken($token);
-        return $token->getUser();
-    }
-
-#----------------------------All Find Method -------------------------------------------------------------#    
-
+#----------------------------All Find Method ----------------------------------#    
     public function find($id) {
         return $this->repo->findOneBy(array('id' => $id));
     }
@@ -102,35 +82,25 @@ class UserHelper {
     public function findByEmail($email) {
         return $this->repo->findOneBy(array('email' => $email));
     }
-
-    //-------------------------------------------------------
+//-------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
-
-    #---------------------------------------------------------------#
-
+#------------------------------------------------------------------------------#
     public function findMaxUserId() {
         return $this->repo->findMaxUserId();
     }
-
-#---------------------------------------------------------------#
-    //have to be removed
-
+#------------------------------------------------------------------------------#
     public function findOneBy($email) {
         return $this->repo->findOneBy(array('email' => $email));
     }
 
-    #---------------------------------------------------------------    
-
+#------------------------------------------------------------------------------#    
     public function findByGender($gender) {
         return  $this->repo->findUserByGender($gender);        
     }
-
     
-    
-    #---------------------------------------------------------------
-
+#------------------------------------------------------------------------------#
     public function findWithSpecs($id) {
         $entity = $this->repo->findOneBy(array('id' => $id));
         if (!$entity) {
@@ -151,82 +121,53 @@ class UserHelper {
         }
     }
 
-#---------------------------------------------------------------
-
+#------------------------------------------------------------------------------#
     public function getUserBirthDate($age) {
         $agedate = new \DateTime();
         $agedate->sub(new \DateInterval("P" . $age . "Y"));
         return $agedate->format("Y-m-d");
     }
-
-    #---------------------------------------------------------------
-
+#------------------------------------------------------------------------------#
     public function findByBirthDateRange($beginDate, $endDate) {
         return $this->repo->findUserByAge($beginDate, $endDate);        
     }
-
-    #---------------------------------------------------------------
-
+#------------------------------------------------------------------------------#
     public function findByName($firstname, $lastname) {
         return $this->repo->findByName($firstname, $lastname);        
     }
-
-    #---------------------------------------------------------------
-
+#------------------------------------------------------------------------------#
     public function findByGenderName($firstname, $lastname, $gender) {
         return $this->repo->findByGenderName($firstname, $lastname, $gender);        
     }
-
-    #---------------------------------------------------------------
-
+#------------------------------------------------------------------------------#
     public function findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate) {
         return $this->repo->findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate);        
     }
-    
+#------------------------------------------------------------------------------#    
     public function getRecordsCountWithCurrentUserLimit($user_id){
-    
     return $this->repo->getRecordsCountWithCurrentUserLimit($user_id);
 }
-
+#------------------------------------------------------------------------------#
     private function countByGender($gender) {
         return  count($this->repo->findUserByGender($gender));        
     }
-   #---------------------------------------------------------------------------#
+#------------------------------------------------------------------------------#
     public function findByAuthToken($auth_token){
         return $this->repo->loadUserByAuthToken($auth_token);
     }
-    
-    #---------------------------------------------------------------
-// only use in website for security context in login
-    public function getRegistrationSecurityContext($request) {        
-        $session = $request->getSession();
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                    SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-        return array('last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error' => $error,
-        );
-    }
-
-//------------- Password encoding ------------------------------------------
+#------------------------------------------------------------------------------#
+#----------------- Password encoding ------------------------------------------#
     public function encodePassword(User $user) {
         return $this->encodeThisPassword($user, $user->getPassword());
     }
-
-//-------------------------------------------------------
+#------------------------------------------------------------------------------#
     private function encodeThisPassword(User $user, $password) {
         $factory = $this->container->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword($password, $user->getSalt());
         return $password;
     }
-
-//-------------------------------------------------------
+#------------------------------------------------------------------------------#
     public function matchPassword(User $user, $password) {
         $password = $this->encodeThisPassword($user, $password);
         if ($user->getPassword() == $password) {
@@ -234,8 +175,7 @@ class UserHelper {
         }
         return false;
     }
-    
-//-------------------------------------------------------
+#------------------------------------------------------------------------------#
     public function resetPassword($user, $request_array) {
         $oldPassword=$request_array->getOldpassword();
         $oldEncodedPassword = $this->encodeThisPassword($user, $oldPassword);
@@ -249,7 +189,7 @@ class UserHelper {
             return array('status' => false, 'header' => 'Warning', 'message' => 'Old password Invalid', 'entity' => $user);
         }
     }
-    //-------------------------------------------------------------------
+#------------------------------------------------------------------------------#
     public function _resetPassword($user, $oldPassword, $newPassword) {
         $oldEncodedPassword = $this->encodeThisPassword($user, $oldPassword);
         return array('status' => true, 'header' => 'tester', 'message' => $oldEncodedPassword.' ~> '.$user->getPassword(), 'entity' => $user);
@@ -262,23 +202,28 @@ class UserHelper {
         }
     }
 
-    #-------------------------Web Service For Email Checking--------------------------------------#
-
-    public function emailCheck($email) {
+#-------------------------Web Service For Email Checking------------------------#
+     public function emailCheck($email) {
         $entity = $this->repo->findOneBy(array('email' => $email));
         if(count($entity)>0){
            return array('Message' => 'The Email already exists');  
         }else{
              return array('Message' => 'Valid Email');
         }
-        
     }
-  
-    #--------------------------------------------------------------------------#
+#--------------------------------------Forget Password Checking-----------------# 
+    public function emailCheckForgetPassowrd($email) {
+        if ($this->isDuplicateEmail(Null, $email) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+#------------------------------------------------------------------------------#
     public function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
     }
-   #--------------Forget Password Webservices ---------------------------------# 
+#--------------Forget Password Webservices ------------------------------------# 
     public function updateTokenSendEmail($request,$email){
         $_user=$this->repo->findByEmail($email);
         $uniq_id=  uniqid();
@@ -286,10 +231,32 @@ class UserHelper {
         $this->saveUser($_user) ;
         return $_user;
     }
-  
-    #------------------------Chek Token ------------------------#
-
-    public function authenticateToken($token) {
+  #---------------Update Authenicated Token------------------------------------#  
+  public function checkTokenforgetPassword($auth_token){
+  $entity = $this->repo->findOneBy(array('authToken' => $auth_token));
+        if (count($entity) > 0) {
+            $user=array();
+            $user['email']=$entity->getEmail();
+            return $user;
+        } else {
+            return array('status' => False, 'Message' => 'Authentication Failure');
+        };   
+   return $user;
+  }
+#--------------------------Update Forget Password------------------------------#
+public function updateForgetPassword($email,$password){
+     $entity = $this->repo->findOneBy(array('email' => $email));// this to replace with renamed method
+        if (count($entity) > 0) {
+                $password = $this->encodeThisPassword($entity, $password);
+                $entity->setPassword($password);
+                $this->saveUser($entity);
+                return array('Message' => 'Paasword has been updated');
+        } else {
+            return array('Message' => 'Invalid Email');
+        }
+}  
+#----------------------------Chek Token ---------------------------------------#
+public function authenticateToken($token) {
         $entity = $this->repo->findOneBy(array('authToken' => $token));
         if (count($entity) > 0) {
             return array('status' => True, 'Message' => 'Authentication Success');
@@ -297,10 +264,8 @@ class UserHelper {
             return array('status' => False, 'Message' => 'Authentication Failure');
         }
     }
-
-#-----------------------Save User at Registeration  ------------------------------------------------------------------------------#
-
-    public function registerUser(User $user) {
+#-----------------------Save User at Registeration  ---------------------------#
+public function registerUser(User $user) {
         $user->setCreatedAt(new \DateTime('now'));
         $user->setUpdatedAt(new \DateTime('now'));
         $password = $this->encodePassword($user);
@@ -311,10 +276,8 @@ class UserHelper {
         $this->saveUser($user);
         return $user;
     }
-
-#-----------------------Get User Measurment ------------------------------------------#
-
-    public function getMeasurement($user) {
+#-----------------------Get User Measurment ------------------------------------#
+ public function getMeasurement($user) {
         $measurement = $user->getMeasurement();
         if (!$measurement) {
             $measurement = new Measurement();
@@ -322,14 +285,17 @@ class UserHelper {
         }
         return $measurement;
     }
+#------------------------------------------------------------------------------#
+    public function getArrayByEmail($email) {//getUserArrayByEmail
+        $entity = $this->repo->findOneBy(array('email' => $email));
+        $userinfo = array();
+        $userinfo = $this->fillUserArray($entity);
+        return $userinfo;
+    }
 
-
-
-#--------------------------------User Detail Array -----------------------------------#
-
-    private function gettingUserDetailArray($entity, $request) {
+#--------------------------------User Detail Array -----------------------------#
+ private function gettingUserDetailArray($entity, $request) {
         // change name getUserDetailArrayWithRequestArray
-        
         $userinfo = $this->fillUserArray($entity);
         $entity = $this->repo->find($userinfo['id']);
         $measurement = $entity->getMeasurement();        
@@ -338,8 +304,7 @@ class UserHelper {
         $userinfo['authTokenWebService'] = $entity->getAuthToken();        
         return array_merge($userinfo, $user_measurment);
     }
-
-#-------------Edit/Update Profile for Web Services----------------#
+#---------------------Edit/Update Profile for Web Services---------------------#
     public function updateWithUserArray($decoded) {
         $email = $decoded['email'];
         if ($email) {
@@ -351,17 +316,15 @@ class UserHelper {
             return false;
         }
     }
-
-#---------------------------------------------Login Web Service -----------------------------------#
-
-
-    public function loginWebService($request_array, $request) {
+#-------------------------Login Web Service------------------------------------#
+  public function loginWebService($request_array, $request) {
         $email = $request_array['email'];
         $password = $request_array['password'];
         $deviceType=$request_array['deviceType'];
         /*$email ='oldnavywomen0@ltf.com';
         $password ='123456'; 
         $deviceType="iphone4s";*/
+        
         $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
                 $device_type=array();
@@ -371,9 +334,8 @@ class UserHelper {
                  $device_type['preDeviceType']=$pre_device_type;
                  $entity->setDeviceType($deviceType);
                  $this->saveUser($entity);
-                 
                  $user_info=$this->gettingUserDetailArray($entity, $request);
-                return array_merge($user_info,$device_type);                
+                    return array_merge($user_info,$device_type);                
             } else {
                 return array('Message' => 'Invalid Password');
             }
@@ -381,10 +343,8 @@ class UserHelper {
             return array('Message' => 'Invalid Email');
         }
     }
-
-#---------------------------------Web Service For Registration--------------------#
-
-    public function registerWithReqestArray(Request $request, $request_array) {
+#-------------------------------Web Service For Registration-------------------#
+public function registerWithReqestArray(Request $request, $request_array) {
 
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
         
@@ -413,15 +373,11 @@ class UserHelper {
             return $this->gettingUserDetailArray($user, $request);             
         }
     }
-
-#------------------------------------------------Measurement Edit Service--------------------------------------------#
-
-    public function updateMeasurementWithReqestArray($id, $request_array) {
-
+#-----------------------Measurement Edit Service-------------------------------#
+public function updateMeasurementWithReqestArray($id, $request_array) {
         $entity = $this->repo->find($id);
         $measurement = $entity->getMeasurement();
         if ($measurement) {
-
             $measurement->setUpdatedAt(new \DateTime('now'));
             $measurement = $this->setMeasurmentObjectWithArray($measurement, $request_array);
             $entity->setMeasurement($measurement);
@@ -431,13 +387,62 @@ class UserHelper {
             return array('Message' => 'Sorry We can not find measurment');
         }
     }
+#---------------------------------Edit Shoulder/Outseam-----------------------#
+ public function updateMarkingParamWithReqestArray($request, $request_array) {
+        $email = $request_array['email'];
+        $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
+        $iphone_outseam = $request_array['iphone_outseam'];
+        $entity = $this->repo->findOneBy(array('email' => $email));// has to be change to getByEmail
+        
+        if (count($entity) > 0) {
+            $userinfo = $this->fillUserArray($entity);
+            $userinfo['authTokenWebService'] = $entity->getAuthToken();
+            $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";             
 
-   
-   
-
-#-------- Getting the User Info ------------------------------------------------------------#
-
-    private function fillUserArray($entity) {        
+            $entity = $this->repo->find($userinfo['id']);
+            $measurement = $entity->getMeasurement();// remove this when added to  
+            
+            if ($measurement) {
+                $measurement->setUpdatedAt(new \DateTime('now'));
+                if (isset($iphone_shoulder_height)) {
+                    $measurement->setIphoneShoulderHeight($iphone_shoulder_height);
+                }
+                if (isset($iphone_outseam)) {
+                    $measurement->setIphoneOutseam($iphone_outseam);
+                }
+                $entity->setMeasurement($measurement);
+                $this->saveUser($entity);
+            }                        
+            $user_measurment = $this->fillMeasurementArray($measurement);            
+            return  array_merge($userinfo, $user_measurment);
+        } else {
+            return array('Message' => 'Invalid Email');
+        }
+}
+#---------------------Change Password Action-----------------------------------#  
+public function changePasswordWithReqestArray($request_array) {
+        if (isset($request_array['email'])) {$email = $request_array['email'];}
+        if (isset($request_array['password'])){$password = $request_array['password'];}
+        if (isset($request_array['old_password'])){$old_password = $request_array['old_password'];}
+        /* $email='oldnavywomen0@ltf.com';
+         $password='12';
+         $old_password='123456'; */
+        $entity = $this->repo->findOneBy(array('email' => $email));// this to replace with renamed method
+        if (count($entity) > 0) {
+            if ($this->matchPassword($entity, $old_password)) {                
+                $password = $this->encodeThisPassword($entity, $password);
+                $entity->setPassword($password);
+                $this->saveUser($entity);
+                return array('Message' => 'Paasword has been updated');
+            } else {
+                return array('Message' => 'Invalid Password');
+            }
+        } else {
+            return array('Message' => 'Invalid Email');
+        }
+    }
+#----------------- Getting the User Info ---------------------------------------#
+private function fillUserArray($entity) {        
         $birth_date = $entity->getBirthDate();
         $userinfo = array();
         $userinfo['id'] = $entity->getId();
@@ -457,7 +462,7 @@ class UserHelper {
         $userinfo['preDeviceType']= $entity->getDeviceType();
         return $userinfo;
     }
-#------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------#
     public function fillMeasurementArray($measurement) {
         
         $userinfo = array();
@@ -470,7 +475,7 @@ class UserHelper {
             $userinfo['chest'] = $measurement->getChest();
             $userinfo['neck'] = $measurement->getNeck();
             $userinfo['inseam'] = $measurement->getInseam();
-            $userinfo['back'] = $measurement->getBack();
+            $userinfo['shoulder_across_back'] = $measurement->getShoulderAcrossBack();
             $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
             $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
             $userinfo['bodyType'] = $measurement->getBodyTypes();
@@ -484,15 +489,15 @@ class UserHelper {
             $userinfo['chest'] = 0;
             $userinfo['neck'] = 0;
             $userinfo['inseam'] = 0;
-            $userinfo['back'] = 0;
+            $userinfo['shoulder_across_back'] = 0;
             $userinfo['iphone_shoulder_height'] = 0;
             $userinfo['iphone_outseam'] = 0;
             $userinfo['bodyType'] = 0;
             $userinfo['bodyShape'] = 0;
             $userinfo['braSize'] = 0;
         }
-        if (!$userinfo['back']) {
-            $userinfo['back'] = 15.5;
+        if (!$userinfo['shoulder_across_back']) {
+            $userinfo['shoulder_across_back'] = 15.5;
         }
         if (!$userinfo['iphone_shoulder_height']) {
             $userinfo['iphone_shoulder_height'] = 150;
@@ -503,9 +508,8 @@ class UserHelper {
         return $userinfo;
     }
 
-#------------------Set User Array----------------------------------------------#
-
-    private function setObjectWithArray($user, $request_array) {
+#----------------------------Set User Array-------------------------------------#
+private function setObjectWithArray($user, $request_array) {
 
         if (array_key_exists('email', $request_array)) {
             $user->setEmail($request_array['email']);
@@ -599,8 +603,8 @@ class UserHelper {
         if (array_key_exists('neck', $request_array)) {
             $measurement->setNeck($request_array['neck']);
         }
-        if (array_key_exists('bodyType', $request_array)) {
-            $measurement->setBodyTypes($request_array['bodyType']);
+        if (array_key_exists('body_type', $request_array)) {
+            $measurement->setBodyTypes($request_array['body_type']);
         }
         if (array_key_exists('bodyShape', $request_array)) {
             $measurement->setBodyShape($request_array['bodyShape']);
@@ -611,9 +615,8 @@ class UserHelper {
         return $measurement;
     }
 
-    #------------------------user Image upload ------------------------#
-
-    public function uploadFittingRoomImage($entity) {
+#------------------------------User Image upload ------------------------------#
+public function uploadFittingRoomImage($entity) {
         $image_path = "";
 
         if ($entity->getImage()) {
@@ -626,29 +629,6 @@ class UserHelper {
         return $image_path;
     }
 
-//---------------Pagination List Method---------------------------------
-    public function getListWithPagination($page_number, $sort) {
-        $yaml = new Parser();
-        $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
-        $limit = $pagination_constants["constants"]["pagination"]["limit"];
-        $entity = $this->repo->findAllUsers($page_number, $limit, $sort);
-        $rec_count = count($this->repo->countAllUserRecord());
-        $cur_page = $page_number;
 
-        if ($page_number == 0 || $limit == 0) {
-            $no_of_paginations = 0;
-        } else {
-            $no_of_paginations = ceil($rec_count / $limit);
-        }
-        return array('users' => $entity,
-            'rec_count' => $rec_count,
-            'no_of_pagination' => $no_of_paginations,
-            'limit' => $cur_page,
-            'per_page_limit' => $limit,
-            'femaleUsers' => $this->countByGender('f'),
-            'maleUsers' => $this->countByGender('m'),
-            'sort'=>$sort
-        );
-    }
 
 }

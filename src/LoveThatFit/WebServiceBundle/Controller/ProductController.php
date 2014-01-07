@@ -19,11 +19,93 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
 use LoveThatFit\SiteBundle\Algorithm;
 
 class ProductController extends Controller {
-#-----------------Brand List Related To Size Chart For Registration Step2---------------------------------------------------#
 
- 
+#-----------------Brand List Related To Size Chart For Registration Step2-------#
+
+#----------------------Brand List-----------------------------------------------#
+public function brandListAction() {
+        $request = $this->getRequest();
+        $brand = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Brand')
+                ->findAllBrandWebService();
+
+        $total_record = count($brand);
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+        $data = array();
+        $data['data'] = $brand;
+        $data['path'] = $baseurl;
+        return new Response($this->json_view($total_record, $data));
+    }
+#--------------------------End of Brand List------------------------------------#   
+#--------------Productlist Against Brand or Clothing Type ----------------------#   
+ public function productlistAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+ #-----------------------Authentication of Token-------------------------------#
+      $user = $this->get('webservice.helper.user');
+      $authTokenWebService = $request_array['authTokenWebService'];
+      if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+ #-------------------------------End Of Authentication Token-------------------#
+/*$request_array=array('authTokenWebService'=>'7823fa718ffc2aab541de9c960efc2fd','id'=>1,'type'=>'brand','gender'=>'F');*/
+        $product_helper =  $this->get('webservice.helper.product');
+        $product_response=$product_helper->productListWebService($request,$request_array);
+        return new response(json_encode($product_response));
+    }
+#------------------------------End of Product list-----------------------------#    
+    
+#-------Proudct List By Clothing Type and By Brand  With Gender----------------#
+    public function byBrandClothingTypeAction() {
+        $request = $this->getRequest();
+        $brand = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Brand')
+                ->findAllBrandWebService();
+        $clothing_types = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:ClothingType')
+                ->findAllBrandWebService();
+        $total_record = count($brand);
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+        $data = array();
+        $data['data'] = array_merge($brand, $clothing_types);
+        $data['brand_image_path'] = $baseurl;
+        return new Response($this->json_view($total_record, $data));
+    } 
+#---------------------------------End of Brand Clothing Type-------------------#   
+#--------------------Product Detail -------------------------------------------#
+    public function productDetailAction() {
+        
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+#------------------------------Authentication of Token-------------------------#
+        $user = $this->get('webservice.helper.product');
+       $authTokenWebService = $request_array['authTokenWebService'];
+       if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+     // $request_array=array('id'=>186,'user_id'=>1);
+#------------------------------End Of Authentication Token--------------------#
+        $product_helper =  $this->get('webservice.helper.product');
+        $product_response=$product_helper->productDetailWebService($request,$request_array);
+        
+       return new response(json_encode($product_response));
+    }
+#-----------------------End Of Product Detail----------------------------------#    
     public function brandListSizeChartAction() {
-       
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $brand_list = $size_chart_helper->getBrandArraySizeChart();
         $total_record = count($brand_list);
@@ -39,10 +121,9 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-        
         $size_chart_helper = $this->get('admin.helper.sizechart');
            
-  //$request_array=array('gender'=>'f','body_type'=>'Petite','target_top'=>1,'top_size'=>1,'target_bottom'=>2,'bottom_size'=>2,'target_dress'=>3,'dress_size'=>3);
+//$request_array=array('gender'=>'f','body_type'=>'Petite','target_top'=>1,'top_size'=>1,'target_bottom'=>2,'bottom_size'=>2,'target_dress'=>3,'dress_size'=>3);
         $size_chart = $size_chart_helper->sizeChartList($request_array);
         if ($size_chart) {
             $size_chart_data = array();
@@ -54,97 +135,8 @@ class ProductController extends Controller {
         }
     }
 
-#--------------------Brand List-------------------------------------------------------------------------------#
+   
 
-    public function brandListAction() {
-        $request = $this->getRequest();
-        $brand = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Brand')
-                ->findAllBrandWebService();
-
-        $total_record = count($brand);
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
-        $data = array();
-        $data['data'] = $brand;
-        $data['path'] = $baseurl;
-        return new Response($this->json_view($total_record, $data));
-    }
-
-#----------------------Service for Product --------------------------------------#
-    //------Proudct List By Clothing Type and By Brand  With Gender----------------------///   
-    public function byBrandClothingTypeAction() {
-        $request = $this->getRequest();
-        $brand = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Brand')
-                ->findAllBrandWebService();
-        $clothing_types = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ClothingType')
-                ->findAllBrandWebService();
-
-        $total_record = count($brand);
-
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
-        $data = array();
-
-        $data['data'] = array_merge($brand, $clothing_types);
-
-        $data['brand_image_path'] = $baseurl;
-        return new Response($this->json_view($total_record, $data));
-    }
-
-    #-----------------------------Productlist Against Brand or Clothing Type -----------------------------------#   
-
-    public function productlistAction() {
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $request_array = json_decode($jsonInput, true);
-        
- #------------------------------Authentication of Token---------------------------------------------#
-         $user = $this->get('user.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
-      if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
-            if ($tokenResponse['status'] == False) {
-                return new Response(json_encode($tokenResponse));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
-        }
- #-------------------------------End Of Authentication Token--------------------------------------#
-     //   $request_array=array('authTokenWebService'=>'f9d797d8a61c8ee1de994f69c29460ee');
-        $product_helper =  $this->get('admin.helper.product');
-        $product_response=$product_helper->productListWebService($request,$request_array);
-        return new response(json_encode($product_response));
-        
-    }
-#--------------------Product Detail -------------------------------------------------------------#
-    //------Proudct List By Product Detail----------------------///   
-
-    public function productDetailAction() {
-        
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $request_array = json_decode($jsonInput, true);
-       #------------------------------Authentication of Token--------------------------------------------#
-        $user = $this->get('user.helper.user');
-       $authTokenWebService = $request_array['authTokenWebService'];
-       if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
-            if ($tokenResponse['status'] == False) {
-                return new Response(json_encode($tokenResponse));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
-        }
-   //   $request_array=array('id'=>186,'user_id'=>1);
- #-------------------------------End Of Authentication Token--------------------------------------#
-        $product_helper =  $this->get('admin.helper.product');
-        $product_response=$product_helper->productDetailWebService($request,$request_array);
-        
-       return new response(json_encode($product_response));
-    }
 #------------------------------Default Fitting Room Alerts --------------------------------------------------#
 ////-------------------------------------------------------------------
     public function defaultProductFittingAlertAction() {
@@ -164,7 +156,7 @@ class ProductController extends Controller {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
  #-------------------------------End Of Authentication Token--------------------------------------#
-        $msg=$this->get('admin.helper.product')->getDefaultFittingAlerts($request_array);
+        $msg=$this->get('webservice.helper.product')->getDefaultFittingAlerts($request_array);
         return new Response(json_encode($msg));
    }  
     //-------------------------------------------------------------------
@@ -183,17 +175,15 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-
-
         $user_id = $request_array['user_id'];
         $product_item_id = $request_array['product_item_id'];
-     /*   $user_id=2;
+     /*  $user_id=2;
         $product_item_id=2;
         $request_array['like']='like';*/
        
        $authTokenWebService = $request_array['authTokenWebService'];
   #------------------------------Authentication of Token--------------------------------------------#
-        $user_helper = $this->get('user.helper.user');
+        $user_helper = $this->get('webservice.helper.user');
           if ($authTokenWebService) {
             $tokenResponse = $user_helper->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -204,7 +194,7 @@ class ProductController extends Controller {
         }
         
      
-        $msg=$this->get('admin.helper.product')->loveItem($request_array);
+        $msg=$this->get('webservice.helper.product')->loveItem($request_array);
         return new Response(json_encode($msg));
         
       
@@ -217,7 +207,7 @@ class ProductController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
- #------------------------------Authentication of Token--------------------------------------------#
+ #------------------------------Authentication of Token-------------------------#
         $user = $this->get('user.helper.user');
       $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
@@ -228,10 +218,10 @@ class ProductController extends Controller {
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
- #-------------------------------End Of Authentication Token--------------------------------------#
+#------------------------------End Of Authentication Token---------------------#
         $user_id = $request_array['user_id'];
        // $user_id=1;
-        $product_helper =  $this->get('admin.helper.product');
+        $product_helper =  $this->get('webservice.helper.product');
         $msg=$product_helper->getUserTryHistoryWebService($request,$user_id);
         return new Response(json_encode($msg));
     }
@@ -258,7 +248,7 @@ class ProductController extends Controller {
  #-------------------------------End Of Authentication Token--------------------------------------#
         //$user_id=1;
         if($user_id){
-        $product_helper =  $this->get('admin.helper.product')->favouriteByUser($user_id,$request);
+        $product_helper =  $this->get('webservice.helper.product')->favouriteByUser($user_id,$request);
         return new response(json_encode($product_helper));
         }else{
             return new Response(json_encode(array('Message'=>'User cannot find')));
@@ -279,7 +269,7 @@ class ProductController extends Controller {
 
 #---------------------------------------------------------------------------------------------------------#
 
- #------------Testing of product specification helper .REmoved!!!
+ #------------Testing of product specification helper .REmoved in future!!!
    public function test_product_specificationAction(){
        
        $product_helper =  $this->get('admin.helper.product.specification')->gettingWomenFittingPriority();

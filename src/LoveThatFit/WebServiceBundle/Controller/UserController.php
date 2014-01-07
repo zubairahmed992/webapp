@@ -1,7 +1,5 @@
 <?php
-
 namespace LoveThatFit\WebServiceBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\UserBundle\Entity\Measurement;
@@ -18,51 +16,66 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 
 class UserController extends Controller {
-#--------------------------------Login ----------------------------------------------------------------#
-  #---------------------Login Service---------------------------------------------------------#
-   
-    
-    public function emailCheckAction(){
-        
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-        $email = $decoded['email'];
-        //$email='skamrani2002@gmail.com';
-        if ($email) {
-            $user_helper = $this->get('user.helper.user');
-            $checkEmail = $user_helper->emailCheck($email);
-            return new response(json_encode($checkEmail));
-        } else {
-            return new Response(json_encode(array('Message' => 'Email missing')));
-        }
-    }
+
+#--------------------Login User -----------------------------------------------#     
     public function loginAction() {
-        
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-        $user_helper = $this->get('user.helper.user');
+        $user_helper = $this->get('webservice.helper.user');
         $user_info = $user_helper->loginWebService($decoded,$request);
         return new response(json_encode($user_info));
       
     }
-#------------------------------Edit Profile----------------------------------------------------------#    
-  
-#----------------------------------------------------------------------------------------------------#
-    public function editProfileAction()
-{
-         $request = $this->getRequest();
+#----------------------End of Login User---------------------------------------# 
+#----------------------Registration--------------------------------------------#
+ public function registrationCreateAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user = $this->get('webservice.helper.user');
+      //$request_array=array();
+      //  $request_array=array('email'=>'test_service26@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
+      //      'weight'=>4,'neck'=>4,'bust'=>5,'body_type'=>'Petite','bodyShape'=>'apple','braSize'=>'888');
+        
+        $user_info = $user->registerWithReqestArray($request,$request_array);
+        return new response(json_encode($user_info));
+    }
+#--------------------------End Of Registration --------------------------------#    
+#-------------------Change Password--------------------------------------------#
+ public function changePasswordAction() {
+        $handle = fopen('php://input','r');
+         $jsonInput = fgets($handle);
+         $request_array  = json_decode($jsonInput,true);
+#---------------------------Authentication of Token-----------------------------#
+      $user = $this->get('webservice.helper.user');
+      $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+#---------------------------End Of Authentication Token------------------------#
+          $msg=$user->changePasswordWithReqestArray($request_array);
+         return new response(json_encode($msg));
+    }
+#------------------------------End Of Change Password--------------------------#
+    #------------------------------Edit Profile----------------------------------------------------------#    
+public function editProfileAction()
+{        $request = $this->getRequest();
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
       /*   $decoded=array();
         $decoded=array('email'=>'oldnavywomen0@ltf.com','firstName'=>'test','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
             'weight'=>4,'neck'=>4,'bust'=>5);*/
- #------------------------------Authentication of Token--------------------------------------------#
-        $user = $this->get('user.helper.user');
+#------------------------------Authentication of Token--------------------------#
+        $user = $this->get('webservice.helper.user');
        $authTokenWebService = $decoded['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -72,30 +85,22 @@ class UserController extends Controller {
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
-#------------------------------End Of Authentication Token--------------------------------------#
-
+#------------------------------End Of Authentication Token----------------------#
     $entity=$user->updateWithUserArray($decoded);   
-       // return new response(json_encode($entity));
-    if ($entity) {
-            return new Response(json_encode(array('Message' => 'Update Sucessfully')));
-        } else {
-            return new Response(json_encode(array('Message' => 'We can not find user')));
-        }
-          
+    if ($entity) {return new Response(json_encode(array('Message' => 'Update Sucessfully')));}
+    else {return new Response(json_encode(array('Message' => 'We can not find user')));}
 }        
-#------------------------------End of Edit Profile---------------------------------------------------#
-#------------------------------User Profile----------------------------------------------------------#
+#------------------------------End of Edit Profile------------------------------#
+#------------------------------User Profile-------------------------------------#
 public function userProfileAction()
-{
-        $request = $this->getRequest();
+{       $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
         $email = $decoded['email'];
-       /* $email='oldnavywomen0@ltf.com';*/
-        $user = $this->get('user.helper.user');
+      /*  $email='oldnavywomen0@ltf.com';*/
+        $user = $this->get('webservice.helper.user');
         $entity = $user->getArrayByEmail($email);
-
         if (count($entity) > 0) {
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $entity['id'] . "/";
             $entity['path'] = $baseurl;
@@ -103,28 +108,66 @@ public function userProfileAction()
         } else {
             return new Response(json_encode(array('Message' => 'Invalid Email')));
         }
-    }
-#------------------------------End Of User Profile---------------------------------------------------#
-#------------------------------------------Registration---------------------------------------------#
- public function registrationCreateAction() {
+}
+#------------------------------End Of User Profile-----------------------------#
+#--------------------------Shoulder Height and Outseam Ration Edit/Update------#
+ public function shoulderOutseamEditAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-        $user = $this->get('user.helper.user');
-        
-        #/!!!!!!!!!!!!!!!!!!!!!!!!!!!! TESTING CODE SHOUDL BE REMOVED #/
-      //$request_array=array();
-       /* $request_array=array('email'=>'test_service22@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
-            'weight'=>4,'neck'=>4,'bust'=>5,'body_type'=>'Petite','bodyShape'=>'apple','braSize'=>'22');*/
-        
-        $user_info = $user->registerWithReqestArray($request,$request_array);
-        return new response(json_encode($user_info));
+        $user = $this->get('webservice.helper.user');
+#---------------------------Authentication of Token----------------------------#
+       $authTokenWebService = $request_array['authTokenWebService'];
+        if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {return new Response(json_encode($tokenResponse));}
+        } else {return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));}
+#------------------------End Of Authentication Token---------------------------#
+        $msg=$user->updateMarkingParamWithReqestArray($request,$request_array);
+        return new response(json_encode($msg));
     }
+#-------------End Of Outseam Shoulder -----------------------------------------#
+#------------------------Password Forget Services------------------------------#
+ public function forgetPasswordAction(){
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $email = $decoded['email'];
+     if($this->get('webservice.helper.user')->emailCheckForgetPassowrd($email)){
+      $userData=$this->get('webservice.helper.user')->updateTokenSendEmail($request,$email);
+      $baseurl = $this->getRequest()->getHost();
+      $link = $baseurl . "/" . $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $userData->getAuthToken()));
+      $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmail($userData, $link);
+      $msg = "";
+      if ($defaultData[0]) {$msg = " Email has been sent with reset password link to " . $userData->getEmail();}
+      else { $msg = " Email not sent due to some problem, please try again later.";}
+       return new response(json_encode(array("Message"=>$msg)));
+      }else{return new response(json_encode(array("Message"=>"This Email doesn't exist")));}
+}
+#---------------------------------End of ofrgot password-----------------------#
 
+    public function emailCheckAction(){
+        
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $email = $decoded['email'];
+      //  $email='skamrani2002@gmail.com';
+        if ($email) {
+            $user_helper = $this->get('webservice.helper.user');
+            $checkEmail = $user_helper->emailCheck($email);
+            return new response(json_encode($checkEmail));
+        } else {
+            return new Response(json_encode(array('Message' => 'Email missing')));
+        }
+    }
+  
  #-------------------------Measurement Edit Web Service-----------------------------------------------------------------------------#       
  public function measurementEditAction() {
-       $user = $this->get('user.helper.user');
+       $user = $this->get('webservice.helper.user');
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
@@ -132,7 +175,7 @@ public function userProfileAction()
         $email = $request_array['email'];
        
 #------------------------------Authentication of Token--------------------------------------------#
-        $user = $this->get('user.helper.user');
+        $user = $this->get('webservice.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -146,7 +189,7 @@ public function userProfileAction()
 
         if ($user->isDuplicateEmail(Null,$email)) {
 
-            $user = $this->get('user.helper.user');
+            $user = $this->get('webservice.helper.user');
             $userinfo = $user->getArrayByEmail($email);
            
             $msg=array();
@@ -158,60 +201,10 @@ public function userProfileAction()
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }
-#------------------------------------Shoulder Height and Outseam Ration Edit/Update---------------------------#
- public function shoulder_outseamEditAction() {
 
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $request_array = json_decode($jsonInput, true);
-        $user = $this->get('user.helper.user');
-   #---------------------------Authentication of Token--------------------------------------------#
-       
-        $authTokenWebService = $request_array['authTokenWebService'];
-        if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
-            if ($tokenResponse['status'] == False) {
-                return new Response(json_encode($tokenResponse));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
-        }
- #-------------------------------End Of Authentication Token--------------------------------#
-        $msg=$user->updateMarkingParamWithReqestArray($request,$request_array);
-        return new response(json_encode($msg));
-        
-       
-    }
-
-    #--------------Change Password--------------------------------------------------------#
- public function changePasswordAction() {
-       
-          
-         $handle = fopen('php://input','r');
-         $jsonInput = fgets($handle);
-         $request_array  = json_decode($jsonInput,true);
-#---------------------------Authentication of Token--------------------------------------------#
-         $user = $this->get('user.helper.user');
-      $authTokenWebService = $request_array['authTokenWebService'];
-        if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
-            if ($tokenResponse['status'] == False) {
-                return new Response(json_encode($tokenResponse));
-            }
-        } else {
-            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
-        }
-#-------------------------------End Of Authentication Token--------------------------------#
-         
-           $msg=$user->changePasswordWithReqestArray($request_array);
-         return new response(json_encode($msg));
-    }
-
- #---------------------------------------Image Upload---------------------------------------#   
+#-------------------------------Image Upload-----------------------------------#   
  public function imageUploadAction() {
-     $request = $this->getRequest();
-
+         $request = $this->getRequest();
         $email = $_POST['email'];
         $deviceType=$_POST['deviceType'];
         $heightPerInch=$_POST['heightPerInch'];
@@ -252,13 +245,12 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-    
-#----------------------Avatar Image Uploading -------------------------------------------------------------#
+#----------------------Avatar Image Uploading ----------------------------------#
 public function avatarUploadAction() {
     $request = $this->getRequest();
 
         $email = $_POST['email'];
-        $user_helper = $this->get('user.helper.user');
+        $user_helper = $this->get('webservice.helper.user');
         $email_chk = $user_helper ->findOneBy(array('email' => $email));
         
         
@@ -300,44 +292,10 @@ public function avatarUploadAction() {
 #------------------------Constant Fetching Web Service-----------------------------------------------------#
     public function ConstantValuesAction() {
         $utility_helper = $this->get('admin.helper.utility');
-        //$utility_help=$utility_helper->getDeviceBootstrap();
-      /*  $constant_values=array();
-        $constant_values['pixcel_per_inch']=$utility_help['resolution_scale']['pixcel_per_inch'];
-        $constant_values['inches']=$utility_help['resolution_scale']['inches'];
-        $constant_values['standard']=$utility_help['resolution_scale']['standard'];
-        $constant_values['iphone4s']=$utility_help['resolution_scale']['iphone4s'];
-        $constant_values['iphone5']=$utility_help['resolution_scale']['iphone5'];
-        $constant_values['ipad']=$utility_help['resolution_scale']['ipad'];
-        $constant_values['ipad_retina']=$utility_help['resolution_scale']['ipad_retina'];*/
         return new response(json_encode($utility_helper->getDeviceBootstrap()));
     }
-#------------------------Password Forget Services------------------------------#
- public function forgetPasswordAction(){
-       
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-        $email = $decoded['email'];
-        
-        if($this->get('user.helper.user')->emailCheckForgetPassowrd($email)){
-            $userData=$this->get('user.helper.user')->updateTokenSendEmail($request,$email);
-           $baseurl = $this->getRequest()->getHost();
-           $link = $baseurl . "/" . $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $userData->getAuthToken()));
-          $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmail($userData, $link);
-          $msg = "";
-          if ($defaultData[0]) {
-            $msg = " Email has been sent with reset password link to " . $userData->getEmail();
-            } else {
-            $msg = " Email not sent due to some problem, please try again later.";
-           }
-            return new response(json_encode(array("Message"=>$msg)));
-        }else{
-       return new response(json_encode(array("Message"=>"This Email doesn't exist")));
-        }
-     
- }
-#-----------------------------Check Token -----------------------------#
+
+#-----------------------------Check Token -------------------------------------#
  public function  checkTokenforgetPasswordAction(){
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -346,13 +304,13 @@ public function avatarUploadAction() {
         $authToken = $decoded['auth_token'];
         
         if($authToken){
-        $updatePassword=$this->get('user.helper.user')->checkTokenforgetPassword($authToken);
+        $updatePassword=$this->get('webservice.helper.user')->checkTokenforgetPassword($authToken);
         return new response(json_encode($updatePassword));
  }else{
  return new response(json_encode(array("Message"=>"Authenticated Token Missing")));
  }
  }
- 
+#---------------------End of Token forgot password-----------------------------# 
 #----------------------------Update Forget Password----------------------------# 
  public function updateForgetPasswordAction(){
       $request = $this->getRequest();
@@ -361,7 +319,7 @@ public function avatarUploadAction() {
         $decoded = json_decode($jsonInput, true);
         $password = $decoded['password'];
         $email = $decoded['email'];
-        $updatePassword=$this->get('user.helper.user')->updateForgetPassword($email,$password);
+        $updatePassword=$this->get('webservice.helper.user')->updateForgetPassword($email,$password);
         return new response(json_encode($updatePassword));
      
  }
