@@ -82,9 +82,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             if (array_key_exists('chest', $user_values)) {
                             $mesurement->setChest($user_values['chest']);
                         }
-            if (array_key_exists('back', $user_values)) {
-                            $mesurement->setBack($user_values['back']);
-                        }
             if (array_key_exists('shoulder_height', $user_values)) {
                             $mesurement->setShoulderHeight($user_values['shoulder_height']);
                         } 

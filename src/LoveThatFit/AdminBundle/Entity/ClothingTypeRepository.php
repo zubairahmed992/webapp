@@ -139,7 +139,7 @@ param:limit, page_number,limit,sort
         $record = $this->getEntityManager()
                         ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
                                 WHERE c.name = :name")
-                        ->setParameters(array('name' => ucwords($name)));
+                        ->setParameters(array('name' => $name));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -153,6 +153,18 @@ param:limit, page_number,limit,sort
                         ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
                                 WHERE c.name = :name")
                         ->setParameters(array('name' =>$name));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+     public function findOneByGenderName($gender, $name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:ClothingType c    
+                                WHERE c.name = :name AND c.gender = :gender")
+                        ->setParameters(array('name' =>$name, 'gender' => $gender));
         try {
             return $record->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

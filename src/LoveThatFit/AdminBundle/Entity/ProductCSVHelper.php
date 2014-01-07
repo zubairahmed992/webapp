@@ -46,6 +46,7 @@ class ProductCSVHelper {
     private function readProduct($data) {
         switch ($this->row) {
             case 0:
+                $this->product['gender'] = 'F';
                 $this->product['garment_name'] = $data[1];
                 $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
                 $this->product['style'] = $data[7]; #~~~~~ Style

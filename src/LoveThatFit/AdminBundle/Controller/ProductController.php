@@ -936,7 +936,7 @@ class ProductController extends Controller {
     private function savecsvdata($pcsv, $data) {
 
         $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
-        $clothingType = $this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['clothing_type']));
+        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
         $brand = $this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
         $return_ar = array();
         $return_ar['msg'] = '';

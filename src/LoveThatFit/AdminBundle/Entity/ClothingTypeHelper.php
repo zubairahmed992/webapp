@@ -166,7 +166,11 @@ class ClothingTypeHelper {
 //-------------------------------------------------------
     public function findClothingTypeByName($name) {
         return $this->repo->findClothingTypeByName($name);
-    }     
+    }
+    //-------------------------------------------------------
+    public function findOneByGenderName($gender, $name) {
+        return $this->repo->findOneByGenderName($gender, $name);
+    }
     #-----------------------------------------------
    public function findAll(){
         return $this->repo->findAllRecord();      
