@@ -775,6 +775,7 @@ class ProductController extends Controller {
                         )
         );
     }
+#-----------------------------------------------------------------------
 
     public function productSizeMeasurementupdateAction(Request $request, $id, $size_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
@@ -817,6 +818,7 @@ class ProductController extends Controller {
 
          */
     }
+#-----------------------------------------------------------------------
 
     public function productSizeMeasurementEditAction($id, $size_id, $measurement_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
@@ -841,6 +843,7 @@ class ProductController extends Controller {
                     'productname' => $product->getName(),
                 ));
     }
+#-----------------------------------------------------------------------
 
     public function productSizeMeasurementEditUpdateAction(Request $request, $id, $size_id, $measurement_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
@@ -868,6 +871,7 @@ class ProductController extends Controller {
                         )));
     }
 
+#-----------------------------------------------------------------------
     public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {
@@ -889,14 +893,14 @@ class ProductController extends Controller {
                         )));
     }
 
-#---------------Get Brand Base on the Retailer---------------------#
+#---------------Get Brand Based on the Retailer---------------------#
 
     public function findBrandBaseOnRetailerAction(Request $request) {
         $target_array = $request->request->all();
         return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
     }
 
-#-----------------------Form Form Upload CSV File------------------#
+#-----------------------Form Upload CSV File------------------#
 
     public function addCsvProductFormAction() {
         $form = $this->createFormBuilder()
@@ -915,83 +919,129 @@ class ProductController extends Controller {
         $form->bindRequest($request);
         $file = $form->get('csvfile');
         $filename = $file->getData();
+                
         $pcsv = new ProductCSVHelper($filename);
-        $data=$pcsv->read();
-        
-        #$this->savecsvdata($pcsv, $data);        
-        $str = $this->kazaimSizes($data);
-        return  new Response($str);
-        //return  new Response(json_encode($data));
+        $data = $pcsv->read();
+        #return new Response(json_encode($data));
+        $ar = $this->savecsvdata($pcsv, $data);
+        if ($ar['success']==false) {
+            $this->get('session')->setFlash('warning',$ar['msg']);
+        } else {
+            $this->get('session')->setFlash('success',$ar['msg']);
+        }
+        return $this->addCsvProductFormAction();
     }
 
     //------------------------------------------------------
-    private function savecsvdata($pcsv, $data){
-        
-        $retailer=$this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);        
-        $clothingType=$this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['clothing_type']));
-        $brand=$this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
-        $em = $this->getDoctrine()->getManager();
-        $product=$pcsv->fillProduct($data);
-        
-        $product->setBrand($brand);
-        $product->setClothingType($clothingType);
-        $product->setRetailer($retailer);
-        $em->persist($product);
-        $em->flush();
-        $this->addProductSizes($product, $data);
-        $this->addProductColors($product, $data);
-        $this->addProductItems($product);
-        return;    
+    private function savecsvdata($pcsv, $data) {
+
+        $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
+        $clothingType = $this->get('admin.helper.clothingtype')->findOneByName(strtolower($data['clothing_type']));
+        $brand = $this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
+        $return_ar = array();
+        $return_ar['msg'] = '';
+        $return_ar['obj'] = null;
+        if ($clothingType == Null) {
+            $return_ar['msg'] = "Clothing Type did not match";
+            $return_ar['success'] = false;
+        } elseif ($brand == Null) {
+            $return_ar['msg'] = 'Brand name did not match';
+            $return_ar['success'] = false;
+        } else {
+            
+            $em = $this->getDoctrine()->getManager();
+            $product = $pcsv->fillProduct($data);
+            $product->setBrand($brand);
+            $product->setClothingType($clothingType);
+            $product->setRetailer($retailer);
+            $em->persist($product);
+            $em->flush();
+            #----
+            $this->addProductSizes($product, $data);
+            $this->addProductColors($product, $data); 
+            $return_ar['obj'] = $product;             
+            $return_ar['msg'] = 'product successfully added';            
+            $return_ar['success'] = true;
+        }
+        return $return_ar;
     }
+
     #------------------------------------------------------------
 
-    public function addProductColors($product, $data) {        
+    private function addProductColors($product, $data) {
         $em = $this->getDoctrine()->getManager();
-        
-        foreach($data['product_color'] as $c){
+
+        foreach ($data['product_color'] as $c) {
             $pc = new ProductColor;
             $pc->setTitle(strtolower($c));
             $pc->setProduct($product);
             $em->persist($pc);
-            $em->flush();            
+            $em->flush();
         }
         return;
     }
+
     #------------------------------------------------------------
-    public function addProductSizes($product, $data) {        
+    private function addProductSizes($product, $data) {
         $em = $this->getDoctrine()->getManager();
-        foreach($data['sizes'] as $key=>$value){
-            $ps = new ProductSize;
-            $ps->setTitle($key);
-            $ps->setProduct($product);
-            $ps->setBodyType('Regular');
-            $em->persist($ps);
-            $em->flush();            
-            addProductSizeMeasurement($ps, $value);
-            
+        foreach ($data['sizes'] as $key => $value) {
+            if ($this->sizeMeasurementsAvailable($value)) {
+                $ps = new ProductSize;
+                $ps->setTitle($key);
+                $ps->setProduct($product);
+                $ps->setBodyType('Regular');
+                $em->persist($ps);
+                $em->flush();
+                $this->addProductSizeMeasurement($ps, $value);
+            }
         }
         return $product;
+    }
+
+    #-----------------------------------------------------
+    
+      private function sizeMeasurementsAvailable($data) {
+        $has_values = false;
+        foreach ($data as $key => $value) {
+            if ($key != 'key') {
+                if ($value['garment_measurement_flat'] || $value['ideal_body_size_high'] || $value['ideal_body_size_low']) {
+                    $has_values = true;
+                }
+            }
+        }
+        return $has_values;
     }
     #------------------------------------------------------
-      public function addProductSizeMeasurement($size, $data) {        
+      private function addProductSizeMeasurement($size, $data) {
         $em = $this->getDoctrine()->getManager();
-        foreach($data as $key=>$value){
-            $ps = new ProductSize;
-            $ps->setTitle($key);
-            $ps->setProduct($product);
-            $ps->setBodyType('Regular');
-            $em->persist($ps);
-            $em->flush();            
+        foreach ($data as $key => $value) {
+            $psm = new ProductSizeMeasurement;
+            $psm->setTitle($key);
+            $psm->setProductSize($size);
+            $psm->setGarmentMeasurementFlat($value['garment_measurement_flat']);
+            $psm->setStretchTypePercentage($value['stretch_type_percentage']);
+            $psm->setGarmentMeasurementStretchFit($value['garment_measurement_stretch_fit']);
+            $psm->setMaxBodyMeasurement($value['maximum_body_measurement']);
+            $psm->setIdealBodySizeHigh($value['ideal_body_size_high']);
+            $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
+            $em->persist($psm);
+            $em->flush();
         }
-        return $product;
+        return;
     }
-    
-    #------------------------------------------------------------
-      #------------------------------------------------------------
+
+}
+
+
+/*
+ * 
+ *   #------------------------------------------------------------
     public function kazaimSizes($data) {                
         $foo=array();
         foreach($data['sizes'] as $key=>$value){
-            $foo[$key]    =  $this->kazaim($value);            
+            if ($this->kazaimCheck($value)){
+                $foo[$key]    =  $this->kazaim($value);            
+            }
         }
         return json_encode($foo);
     }
@@ -1000,27 +1050,31 @@ class ProductController extends Controller {
         $str=array();
         foreach($data as $key=>$value ){           
             if ($key!='key'){
-            $str[$key]=$value['ideal_body_size_high'].', '. $value['ideal_body_size_low'].', '. $value['maximum_body_measurement'];
-            }
+                if($value['garment_measurement_flat'] || $value['ideal_body_size_high'] || $value['ideal_body_size_low'])    {
+                $str[$key]=$value['garment_measurement_flat'].', '. $value['stretch_type_percentage'].', '. $value['garment_measurement_stretch_fit'].', '. $value['maximum_body_measurement'] .', '. $value['ideal_body_size_high'] .', '. $value['ideal_body_size_low'];
+                }
             
-        
-        }
+            }
+         }
         return $str;
     }
+    #~~~~~~~~~~~~~
     
-#------------------------------------------------------
-    public function readProductCsvAction() {
-        $pcsv = new ProductCSVHelper("../app/config/LaceBlouse.csv");
-        return  new Response(json_encode($pcsv->read()));
+      public function kazaimCheck($data) {        
+        $has_values=false;
+        foreach($data as $key=>$value ){           
+            if ($key!='key'){
+            if($value['garment_measurement_flat'] || $value['ideal_body_size_high'] || $value['ideal_body_size_low'])    {
+                $has_values=true;
+            }
+            
+            }
+         }
+        return $has_values;
     }
     
     
-    
-
-}
-
-
-/*
+#------------------------------------------------------
  * //------------------------------------------------------
 
     public function __readProductCsvAction() {

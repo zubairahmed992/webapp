@@ -146,11 +146,19 @@ class ProductCSVHelper {
         $i = 1;
         while ($i <= 11) {
             if (strlen($data[$i]) > 0 && $data[$i] != 'N/A') {
-                $this->product['clothing_type'] = $this->previous_row[$i];
+                $this->product['clothing_type'] = $this->getMatchingClothingType($this->previous_row[$i]);
                 $this->clothing_type_index = $i;
             }
             $i = $i + 1;
         }
+    }
+    private function getMatchingClothingType($ct){
+        if($ct=='Tee *knit') return 'tee knit';
+        if($ct=='Tank *knit') return 'tank knit';
+        if($ct=='Pant/ Trouser') return 'trouser';
+        if($ct=='Pant/ Jean') return "jean";
+        if($ct=='Tee/Polo/Tank *knit') return 'tee knit';
+        return $ct;
     }
 
 #---------------------------------------------------------------
@@ -191,12 +199,12 @@ class ProductCSVHelper {
     #---------------------------------------------------------------
 
     private function fillFitPointMeasurement($data, $i) {
-        return array('garment_measurement_flat' => $this->removePercent($data[$i + 2]),
-            'stretch_type_percentage' => $this->removePercent($data[$i + 3]),
-            'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 4]),
-            'maximum_body_measurement' => $data[$i + 5],
-            'ideal_body_size_high' => $data[$i + 6],
-            'ideal_body_size_low' => $data[$i + 7],
+        return array('garment_measurement_flat' => $this->removePercent($data[$i + 1]),
+            'stretch_type_percentage' => $this->removePercent($data[$i + 2]),
+            'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 3]),
+            'maximum_body_measurement' => $data[$i + 4],
+            'ideal_body_size_high' => $data[$i + 5],
+            'ideal_body_size_low' => $data[$i + 6],
         );
     }
   
