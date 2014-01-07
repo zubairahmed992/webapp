@@ -273,15 +273,7 @@ class UserHelper {
         }
         
     }
-   #----------------------------------Forget Password Checking-----------------# 
-    public function emailCheckForgetPassowrd($email) {
-        
-        if ($this->isDuplicateEmail(Null, $email) == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+  
     #--------------------------------------------------------------------------#
     public function isDuplicateEmail($id, $email) {
         return $this->repo->isDuplicateEmail($id, $email);
@@ -294,30 +286,7 @@ class UserHelper {
         $this->saveUser($_user) ;
         return $_user;
     }
-  #---------------Update Authenicated Token------------------------------------#  
-  public function checkTokenforgetPassword($auth_token){
-  $entity = $this->repo->findOneBy(array('authToken' => $auth_token));
-        if (count($entity) > 0) {
-            $user=array();
-            $user['email']=$entity->getEmail();
-            return $user;
-        } else {
-            return array('status' => False, 'Message' => 'Authentication Failure');
-        };   
-   return $user;
-  }
-#--------------------------Update Forget Password------------------------------#
-public function updateForgetPassword($email,$password){
-     $entity = $this->repo->findOneBy(array('email' => $email));// this to replace with renamed method
-        if (count($entity) > 0) {
-                $password = $this->encodeThisPassword($entity, $password);
-                $entity->setPassword($password);
-                $this->saveUser($entity);
-                return array('Message' => 'Paasword has been updated');
-        } else {
-            return array('Message' => 'Invalid Email');
-        }
-}  
+  
     #------------------------Chek Token ------------------------#
 
     public function authenticateToken($token) {
@@ -354,13 +323,7 @@ public function updateForgetPassword($email,$password){
         return $measurement;
     }
 
-//----------------------------------------------------------------------
-    public function getArrayByEmail($email) {//getUserArrayByEmail
-        $entity = $this->repo->findOneBy(array('email' => $email));
-        $userinfo = array();
-        $userinfo = $this->fillUserArray($entity);
-        return $userinfo;
-    }
+
 
 #--------------------------------User Detail Array -----------------------------------#
 
@@ -469,74 +432,8 @@ public function updateForgetPassword($email,$password){
         }
     }
 
-    #-----------------------------------------------Edit Shoulder/Outseam--------------------------------------------
-
-    public function updateMarkingParamWithReqestArray($request, $request_array) {
-        
-        $email = $request_array['email'];
-        $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
-        $iphone_outseam = $request_array['iphone_outseam'];
-        $entity = $this->repo->findOneBy(array('email' => $email));// has to be change to getByEmail
-        
-        if (count($entity) > 0) {
-            $userinfo = $this->fillUserArray($entity);
-            $userinfo['authTokenWebService'] = $entity->getAuthToken();
-            $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";             
-
-            $entity = $this->repo->find($userinfo['id']);
-            $measurement = $entity->getMeasurement();// remove this when added to  
-            
-            if ($measurement) {
-                $measurement->setUpdatedAt(new \DateTime('now'));
-                if (isset($iphone_shoulder_height)) {
-                    $measurement->setIphoneShoulderHeight($iphone_shoulder_height);
-                }
-                if (isset($iphone_outseam)) {
-                    $measurement->setIphoneOutseam($iphone_outseam);
-                }
-                $entity->setMeasurement($measurement);
-                $this->saveUser($entity);
-            }                        
-            $user_measurment = $this->fillMeasurementArray($measurement);            
-            return  array_merge($userinfo, $user_measurment);
-        } else {
-            return array('Message' => 'Invalid Email');
-        }
-    }
-
-    #---------------------Change Password Action-----------------------------------------------------#  
-
-    public function changePasswordWithReqestArray($request_array) {
-        
-//-------break functionality into further methods
-
-        if (isset($request_array['email'])) {
-            $email = $request_array['email'];
-        }
-        if (isset($request_array['password'])) {
-            $password = $request_array['password'];
-        }
-        if (isset($request_array['old_password'])) {
-            $old_password = $request_array['old_password'];
-        }
-
-        /* $email='oldnavywomen0@ltf.com';
-          $password='12';
-          $old_password='123456'; */
-        $entity = $this->repo->findOneBy(array('email' => $email));// this to replace with renamed method
-        if (count($entity) > 0) {
-            if ($this->matchPassword($entity, $old_password)) {                
-                $password = $this->encodeThisPassword($entity, $password);
-                $entity->setPassword($password);
-                $this->saveUser($entity);
-                return array('Message' => 'Paasword has been updated');
-            } else {
-                return array('Message' => 'Invalid Password');
-            }
-        } else {
-            return array('Message' => 'Invalid Email');
-        }
-    }
+   
+   
 
 #-------- Getting the User Info ------------------------------------------------------------#
 

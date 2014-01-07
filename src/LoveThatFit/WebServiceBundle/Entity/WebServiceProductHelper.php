@@ -447,11 +447,8 @@ public function favouriteByUser($user_id,$request){
          
         $user = $user_helper->find($user_id);
         $user_re = new User();
-        
-        
         $count_rec = count($products);
         $productdetail['product'] = $products;
-        
         $product_color_array = array();
 
         #-- FOR COLORS AND SIZE----------#

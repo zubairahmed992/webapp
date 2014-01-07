@@ -1,13 +1,68 @@
-ws_create:
-    pattern:  /web_service/create
-    defaults: { _controller: LoveThatFitWebServiceBundle:User:createForm }
-
-
+#----------------------------- User Routes--------------------------------------#
 ws_login:
     pattern:  /web_service/login
     defaults: { _controller: LoveThatFitWebServiceBundle:User:login }
+
+ws_registration_create:
+   pattern:  /web_service/register
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:registrationCreate}
+
+ws_measurement_edit:
+   pattern:  /web_service/measurement_edit
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:measurementEdit}
+ 
+ws_change_password:
+   pattern:  /web_service/change_password
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:changePassword}
+  
+ws_forget_password:
+    pattern:  /web_service/forget_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:forgetPassword }
+   
+   
+ws_edit_profile:
+   pattern:  /web_service/edit_profile
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:editProfile}   
     
+ws_user_profile:
+   pattern:  /web_service/user_profile
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:userProfile}    
+   
+ws_iphone_shoulder_outseam:
+   pattern:  /web_service/iphone_shoulder_outseam
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:shoulderOutseamEdit}   
+
+ws_image_upload:
+   pattern:  /web_service/image_upload
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:imageUpload}
+
+
+ws_check_token__forget_password:
+    pattern:  /web_service/check_token_forget_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:checkTokenforgetPassword }
     
+
+ws_update__forget_password:
+    pattern:  /web_service/check_update_password
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:updateForgetPassword }  
+
+checkEmail:
+   pattern:  /web_service/checkemail
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:emailCheck}   
+   
+avatarUpload:
+   pattern:  /web_service/upload_avatar
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:avatarUpload} 
+   
+constantValue:
+   pattern:  /web_service/constant_values
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:ConstantValues}  
+   
+   
+    
+
+
+#----------------------------- Product Routes----------------------------------#    
 ws_brands:
     pattern:  /web_service/brands
     defaults: { _controller: LoveThatFitWebServiceBundle:Product:brandList,_format: json}
@@ -24,54 +79,6 @@ ws_product_detail:
     pattern:  /web_service/product_detail
     defaults: { _controller: LoveThatFitWebServiceBundle:Product:productDetail,_format: json}
 
-web_service_my_closet:
-    pattern:  /web_service/my_closet/{user_id}
-    defaults: { _controller: LoveThatFitWebServiceBundle:Default:myClostList,_format: json,user_id:1}
-
-ws_registration_create:
-   pattern:  /web_service/register
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:registrationCreate}
-   
-ws_measurement_edit:
-   pattern:  /web_service/measurement_edit
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:measurementEdit}
-   
-ws_change_password_form:
-   pattern:  /web_service/change_password_form
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:changePasswordForm}
-
-ws_change_password:
-   pattern:  /web_service/change_password
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:changePassword}
-   
-ws_edit_profile:
-   pattern:  /web_service/edit_profile
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:editProfile}
-ws_user_profile:
-   pattern:  /web_service/user_profile
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:userProfile}
-
-ws_iphone_shoulder_outseam:
-   pattern:  /web_service/iphone_shoulder_outseam
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:shoulder_outseamEdit}
-
-ws_image_upload:
-   pattern:  /web_service/image_upload
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:imageUpload}
-   
-ws_forget_password:
-    pattern:  /web_service/forget_password
-    defaults: { _controller: LoveThatFitWebServiceBundle:User:forgetPassword }
-
-ws_check_token__forget_password:
-    pattern:  /web_service/check_token_forget_password
-    defaults: { _controller: LoveThatFitWebServiceBundle:User:checkTokenforgetPassword }
-ws_update__forget_password:
-    pattern:  /web_service/check_update_password
-    defaults: { _controller: LoveThatFitWebServiceBundle:User:updateForgetPassword }    
-    
-    
-   
 ws_brand_list_size_chart:
    pattern:  /web_service/brand_list_size_chart
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:brandListSizeChart}
@@ -79,7 +86,7 @@ ws_brand_list_size_chart:
 ws_size_chart:
    pattern:  /web_service/size_chart
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:sizeCharts}
-
+   
 ws_default_fittng_alert:
    pattern:  /web_service/default_fitting_alerts
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:defaultProductFittingAlert}
@@ -87,31 +94,29 @@ ws_default_fittng_alert:
 ws_fittng_alert:
    pattern:  /web_service/fitting_alerts
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:getFeedBackJSON}
-   
+
 ws_love_item:
    pattern:  /web_service/love_item
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:loveItem}
-
+   
 ws_try_history:
    pattern:  /web_service/user_try_history
-   defaults: { _controller: LoveThatFitWebServiceBundle:Product:userTryHistory}
-
-checkEmail:
-   pattern:  /web_service/checkemail
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:emailCheck}   
- 
-avatarUpload:
-   pattern:  /web_service/upload_avatar
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:avatarUpload}  
-
-constantValue:
-   pattern:  /web_service/constant_values
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:ConstantValues}  
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:userTryHistory} 
 
 userFavouriteList:
    pattern:  /web_service/user_favourite_list
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:favouriteByUser}
  
+   
+   
+   
+
+
+
+  
+ 
+
+
 test_product:
    pattern:  /web_service/product_specification
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:test_product_specification}

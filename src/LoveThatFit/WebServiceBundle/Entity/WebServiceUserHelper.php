@@ -321,9 +321,10 @@ public function registerUser(User $user) {
         $email = $request_array['email'];
         $password = $request_array['password'];
         $deviceType=$request_array['deviceType'];
-       /* $email ='oldnavywomen0@ltf.com';
+        /*$email ='oldnavywomen0@ltf.com';
         $password ='123456'; 
         $deviceType="iphone4s";*/
+        
         $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
                 $device_type=array();
@@ -333,9 +334,8 @@ public function registerUser(User $user) {
                  $device_type['preDeviceType']=$pre_device_type;
                  $entity->setDeviceType($deviceType);
                  $this->saveUser($entity);
-                 
                  $user_info=$this->gettingUserDetailArray($entity, $request);
-                return array_merge($user_info,$device_type);                
+                    return array_merge($user_info,$device_type);                
             } else {
                 return array('Message' => 'Invalid Password');
             }
@@ -418,23 +418,15 @@ public function updateMeasurementWithReqestArray($id, $request_array) {
         } else {
             return array('Message' => 'Invalid Email');
         }
-    }
+}
 #---------------------Change Password Action-----------------------------------#  
 public function changePasswordWithReqestArray($request_array) {
-//-------break functionality into further methods
-        if (isset($request_array['email'])) {
-            $email = $request_array['email'];
-        }
-        if (isset($request_array['password'])) {
-            $password = $request_array['password'];
-        }
-        if (isset($request_array['old_password'])) {
-            $old_password = $request_array['old_password'];
-        }
-
+        if (isset($request_array['email'])) {$email = $request_array['email'];}
+        if (isset($request_array['password'])){$password = $request_array['password'];}
+        if (isset($request_array['old_password'])){$old_password = $request_array['old_password'];}
         /* $email='oldnavywomen0@ltf.com';
-          $password='12';
-          $old_password='123456'; */
+         $password='12';
+         $old_password='123456'; */
         $entity = $this->repo->findOneBy(array('email' => $email));// this to replace with renamed method
         if (count($entity) > 0) {
             if ($this->matchPassword($entity, $old_password)) {                
