@@ -906,7 +906,7 @@ class ProductController extends Controller {
         $form = $this->createFormBuilder()
                 ->add('csvfile', 'file')
                 ->getForm();
-        return $this->render('LoveThatFitAdminBundle:Product:import_csv.html.twig', array('form' => $form->createView(),)
+        return $this->render('LoveThatFitAdminBundle:Product:import_csv.html.twig', array('form' => $form->createView())
         );
     }
 
@@ -921,15 +921,18 @@ class ProductController extends Controller {
         $filename = $file->getData();
                 
         $pcsv = new ProductCSVHelper($filename);
-        $data = $pcsv->read();
-        #return new Response(json_encode($data));
+        $data = $pcsv->read();        
         $ar = $this->savecsvdata($pcsv, $data);
+        
         if ($ar['success']==false) {
             $this->get('session')->setFlash('warning',$ar['msg']);
         } else {
             $this->get('session')->setFlash('success',$ar['msg']);
         }
-        return $this->addCsvProductFormAction();
+        
+        return $this->render('LoveThatFitAdminBundle:Product:import_csv.html.twig', array('form' => $form->createView(),'product'=>$ar['obj'])
+        );
+        
     }
 
     //------------------------------------------------------
@@ -960,7 +963,7 @@ class ProductController extends Controller {
             $this->addProductSizes($product, $data);
             $this->addProductColors($product, $data); 
             $return_ar['obj'] = $product;             
-            $return_ar['msg'] = 'product successfully added';            
+            $return_ar['msg'] = 'Product successfully added';            
             $return_ar['success'] = true;
         }
         return $return_ar;
