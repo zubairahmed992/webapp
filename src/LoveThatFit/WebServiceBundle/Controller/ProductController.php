@@ -36,14 +36,14 @@ public function brandListAction() {
         $data['path'] = $baseurl;
         return new Response($this->json_view($total_record, $data));
     }
-#--------------------------End of Brand List------------------------------------#   
+
 #--------------Productlist Against Brand or Clothing Type ----------------------#   
  public function productlistAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
- #-----------------------Authentication of Token-------------------------------#
+
       $user = $this->get('webservice.helper.user');
       $authTokenWebService = $request_array['authTokenWebService'];
       if ($authTokenWebService) {
@@ -54,14 +54,12 @@ public function brandListAction() {
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
- #-------------------------------End Of Authentication Token-------------------#
+
 /*$request_array=array('authTokenWebService'=>'7823fa718ffc2aab541de9c960efc2fd','id'=>1,'type'=>'brand','gender'=>'F');*/
         $product_helper =  $this->get('webservice.helper.product');
         $product_response=$product_helper->productListWebService($request,$request_array);
         return new response(json_encode($product_response));
     }
-#------------------------------End of Product list-----------------------------#    
-    
 #-------Proudct List By Clothing Type and By Brand  With Gender----------------#
     public function byBrandClothingTypeAction() {
         $request = $this->getRequest();
@@ -78,7 +76,7 @@ public function brandListAction() {
         $data['brand_image_path'] = $baseurl;
         return new Response($this->json_view($total_record, $data));
     } 
-#---------------------------------End of Brand Clothing Type-------------------#   
+
 #--------------------Product Detail -------------------------------------------#
     public function productDetailAction() {
         
@@ -86,7 +84,7 @@ public function brandListAction() {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-#------------------------------Authentication of Token-------------------------#
+
         $user = $this->get('webservice.helper.product');
        $authTokenWebService = $request_array['authTokenWebService'];
        if ($authTokenWebService) {
@@ -98,7 +96,7 @@ public function brandListAction() {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
      // $request_array=array('id'=>186,'user_id'=>1);
-#------------------------------End Of Authentication Token--------------------#
+
         $product_helper =  $this->get('webservice.helper.product');
         $product_response=$product_helper->productDetailWebService($request,$request_array);
         
@@ -138,7 +136,7 @@ public function brandListAction() {
    
 
 #------------------------------Default Fitting Room Alerts --------------------------------------------------#
-////-------------------------------------------------------------------
+
     public function defaultProductFittingAlertAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
