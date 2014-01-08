@@ -54,176 +54,18 @@ class WebServiceProductHelper{
         
     }
     
-//-------------------------------------------------------
-    public function createNew() {
-        $class = $this->class;
-        $product = new $class();
-        return $product;
-    }
-   
-//-------------------------------------------------------
-
-    public function delete($id) {
-        $entity = $this->repo->find($id);
-        $entity_name = $entity->getName();
-
-        if ($entity) {
-            $this->em->remove($entity);
-            $this->em->flush();
-
-            return array('product' => $entity,
-                'message' => 'The Product ' . $entity_name . ' has been Deleted!',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        } else {
-
-            return array('product' => $entity,
-                'message' => 'Product not found!',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-    }
-//-------------------------------------------------------
-    
-    public function findWithSpecs($id) {
-        $entity = $this->repo->find($id);
-
-        if (!$entity) {
-            $entity = $this->createNew();
-            return array(
-                'entity' => $entity,
-                'message' => 'Product not found.',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        } else {
-            return array(
-                'entity' => $entity,
-                'message' => 'Product found!',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        }
-    }
-    
-    public function removeBrand() {
-        return $this->repo->removeBrand();
-    }
-
-    
-
-//Private Methods    
-//----------------------------------------------------------
-    private function validateForCreate($name) {
-        if (count($this->findOneByName($name)) > 0) {
-            return array('message' => 'Product Name already exists!',
-                'field' => 'name',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-        return;
-    }
-
-//----------------------------------------------------------
-    private function validateForUpdate($entity) {
-        $brand = $this->findOneByName($entity->getName());
-
-        if ($brand && $brand->getId() != $entity->getId()) {
-            return array('message' => 'Product Name already exists!',
-                'field' => 'name',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-        return;
-    }
-    
 #------------------------------------------------------------------------------#
 public function find($id) {
         return $this->repo->find($id);
     }
 #------------------------------------------------------------------------------#
-    public function findProductByTitle($name) {
-        return $this->repo->findProductByTitle($name);
-    }
-#------------------------------------------------------------------------------#    
-    public function countProductsByGender($gender)
-    {
-        return count($this->repo->findPrductByGender($gender));           
-    }
-#------------------------------------------------------------------------------#
-    public function countProductsByType($target)
-    {
-        
-        return count($this->repo->findPrductByType($target));           
-    }
-#------------------------------------------------------------------------------#
     public function findByGender($gender, $page_number, $limit){
-        
       return $this->repo->findByGender($gender, $page_number, $limit);  
     }
-#------------------------------------------------------------------------------#
- public function findProductByEllieHM($brand,$gender,$page_number, $limit){
-     
-     return $this->repo->findProductByEllieHM($brand,$gender,$page_number, $limit);
- } 
 #------------------------------------------------------------------------------#
  public function findOneByName($brand){
     return $this->repo->findOneByName($brand);
 }   
-#------------------------------------------------------------------------------#
-public function findByGenderBrand($gender, $brand_id, $page_number, $limit){
-    return $this->repo->findByGenderBrand($gender, $brand_id, $page_number, $limit);
-    
-}
-#------------------------------------------------------------------------------#
-public function findByGenderClothingType($gender, $clothing_type_id, $page_number, $limit){
-    return $this->repo->findByGenderClothingType($gender, $clothing_type_id, $page_number, $limit);
-}
-#------------------------------------------------------------------------------#
-public function findSampleClothingTypeGender($gender){
-    return $this->repo->findSampleClothingTypeGender($gender);
-}
-#------------------------------------------------------------------------------#
-public function findMostFavoriteProducts($gender, $page_number=0, $limit=0){
-    return $this->repo->findMostFavoriteByGender($gender, $page_number, $limit);
-}
-#------------------------------------------------------------------------------#
-//public function findMostLikedProducts($page_number, $limit){
- //   return $this->repo->findMostLikedProducts($page_number, $limit);
-//}
-public function findProductItemByUser($user_id, $page_number, $limit){
-    return $this->repo->findProductItemByUser($user_id, $page_number, $limit);
-}
-
-#------------------------------------------------------------------------------#    
-public function findByGenderBrandName($gender, $brand, $page_number=0, $limit=0){
-return $this->repo->findByGenderBrandName($gender, $brand, $page_number=0, $limit=0);           
-    }
-#------------------------------------------------------------------------------#
-  public function findByGenderRandom($gender, $limit){
-        return $this->repo->findByGenderRandom($gender, $limit);           
-    }
-#------------------------------------------------------------------------------#
-    public function findByGenderLatest($gender='F', $page_number=0, $limit=0) {
-        return $this->repo->findByGenderLatest($gender, $page_number, $limit);
-   }
-#------------------------------------------------------------------------------#
-    public function findRecentlyTriedOnByUser($user_id, $page_number=0, $limit=0) {
-        return $this->repo->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
-   }
-#------------------------------------------------------------------------------#
-   public function findMostTriedOnByGender($gender='F', $page_number=0, $limit=0) {
-        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        
-   }
-#------------------------------------------------------------------------------#
-   public function findLTFRecomendedByGender($gender='F', $page_number=0, $limit=0) {
-        return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);                                    
-   }
-#-----------------------------Web Service--------------------------------------#
 
 #--------------------------------For Love/Unlove Item--------------------------#
 public function loveItem($request_array){
@@ -527,25 +369,18 @@ public function getUserTryHistoryWebService($request,$user_id){
         }
 }
 
+#------------------------Private Methods---------------------------------------#
 #-------------------------------------Count My Closet--------------------------#
-public function countMyCloset($user_id){
+private function countMyCloset($user_id){
     return $this->repo->countMyCloset($user_id);
 }
+
 #------------------Method For Returning Device Type of Current User------------# 
-    public function getDeviceTypeByUser($user_id){
-        
+ private function getDeviceTypeByUser($user_id){
          $user_helper = $this->container->get('user.helper.user');
          $user=$user_helper->find($user_id);
          return $user_device_type=$user->getDeviceType();
  }
-#----------------Get Count All Record With Current Product Limit---------------#
-public function getRecordsCountWithCurrentProductLimit($product_id){
-    return $this->repo->getRecordsCountWithCurrentProductLimit($product_id);
-}
-#-------------------------Delete Product---------------------------------------#
-public function productDelete($id){
-  return $this->delete($id);
-}
 #--------------------------Get JSON FEILD--------------------------------------#
  private function getJsonForFields($fields){
         $f=array();

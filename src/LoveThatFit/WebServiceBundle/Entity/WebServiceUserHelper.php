@@ -68,11 +68,6 @@ class WebServiceUserHelper {
         $this->em->flush();
     }
 
-//----------------------------------------------------------
-    public function updateProfile(User $user) {
-        $user->uploadAvatar();
-        $this->saveUser($user);
-    }
 #----------------------------All Find Method ----------------------------------#    
     public function find($id) {
         return $this->repo->findOneBy(array('id' => $id));
@@ -87,75 +82,19 @@ class WebServiceUserHelper {
         return $this->repo->findOneByName($name);
     }
 #------------------------------------------------------------------------------#
-    public function findMaxUserId() {
-        return $this->repo->findMaxUserId();
-    }
-#------------------------------------------------------------------------------#
     public function findOneBy($email) {
         return $this->repo->findOneBy(array('email' => $email));
     }
 
-#------------------------------------------------------------------------------#    
-    public function findByGender($gender) {
-        return  $this->repo->findUserByGender($gender);        
-    }
-    
-#------------------------------------------------------------------------------#
-    public function findWithSpecs($id) {
-        $entity = $this->repo->findOneBy(array('id' => $id));
-        if (!$entity) {
-            $entity = $this->createNewUser();
-            return array(
-                'entity' => $entity,
-                'message' => 'User not found.',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        } else {
-            return array(
-                'entity' => $entity,
-                'message' => 'User found!',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        }
-    }
-
-#------------------------------------------------------------------------------#
-    public function getUserBirthDate($age) {
-        $agedate = new \DateTime();
-        $agedate->sub(new \DateInterval("P" . $age . "Y"));
-        return $agedate->format("Y-m-d");
-    }
-#------------------------------------------------------------------------------#
-    public function findByBirthDateRange($beginDate, $endDate) {
-        return $this->repo->findUserByAge($beginDate, $endDate);        
-    }
 #------------------------------------------------------------------------------#
     public function findByName($firstname, $lastname) {
         return $this->repo->findByName($firstname, $lastname);        
     }
-#------------------------------------------------------------------------------#
-    public function findByGenderName($firstname, $lastname, $gender) {
-        return $this->repo->findByGenderName($firstname, $lastname, $gender);        
-    }
-#------------------------------------------------------------------------------#
-    public function findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate) {
-        return $this->repo->findByNameGenderBirthDateRange($firstname, $lastname, $gender, $beginDate, $endDate);        
-    }
-#------------------------------------------------------------------------------#    
-    public function getRecordsCountWithCurrentUserLimit($user_id){
-    return $this->repo->getRecordsCountWithCurrentUserLimit($user_id);
-}
-#------------------------------------------------------------------------------#
-    private function countByGender($gender) {
-        return  count($this->repo->findUserByGender($gender));        
-    }
+
 #------------------------------------------------------------------------------#
     public function findByAuthToken($auth_token){
         return $this->repo->loadUserByAuthToken($auth_token);
     }
-#------------------------------------------------------------------------------#
 #----------------- Password encoding ------------------------------------------#
     public function encodePassword(User $user) {
         return $this->encodeThisPassword($user, $user->getPassword());
@@ -175,33 +114,6 @@ class WebServiceUserHelper {
         }
         return false;
     }
-#------------------------------------------------------------------------------#
-    public function resetPassword($user, $request_array) {
-        $oldPassword=$request_array->getOldpassword();
-        $oldEncodedPassword = $this->encodeThisPassword($user, $oldPassword);
-        $_user =  $this->find(1);
-        return array('status' => true, 'header' => 'tester', 'message' => $oldEncodedPassword.' >~~> '.$_user->getPassword(), 'entity' => $user);
-        if ($oldEncodedPassword == $user->getPassword()) {
-            $user->getPassword($this->encodeThisPassword($user, $newPassword));
-            $this->saveUser($user);
-            return array('status' => true, 'header' => 'Success', 'message' => 'Password has been successfully changed', 'entity' => $user);
-        } else {
-            return array('status' => false, 'header' => 'Warning', 'message' => 'Old password Invalid', 'entity' => $user);
-        }
-    }
-#------------------------------------------------------------------------------#
-    public function _resetPassword($user, $oldPassword, $newPassword) {
-        $oldEncodedPassword = $this->encodeThisPassword($user, $oldPassword);
-        return array('status' => true, 'header' => 'tester', 'message' => $oldEncodedPassword.' ~> '.$user->getPassword(), 'entity' => $user);
-        if ($oldEncodedPassword == $user->getPassword()) {
-            $user->getPassword($this->encodeThisPassword($user, $newPassword));
-            $this->saveUser($user);
-            return array('status' => true, 'header' => 'Success', 'message' => 'Password has been successfully changed', 'entity' => $user);
-        } else {
-            return array('status' => false, 'header' => 'Warning', 'message' => 'Old password Invalid', 'entity' => $user);
-        }
-    }
-
 #-------------------------Web Service For Email Checking------------------------#
      public function emailCheck($email) {
         $entity = $this->repo->findOneBy(array('email' => $email));
@@ -614,21 +526,6 @@ private function setObjectWithArray($user, $request_array) {
         }
         return $measurement;
     }
-
-#------------------------------User Image upload ------------------------------#
-public function uploadFittingRoomImage($entity) {
-        $image_path = "";
-
-        if ($entity->getImage()) {
-            $image_path = $entity->uploadTempImage();
-        } else {
-            $image_path = $entity->getUploadDir() . '/' . $entity->upload();
-            $this->saveUser($entity);
-            //$image_path = getOriginalImageWebPath();
-        }
-        return $image_path;
-    }
-
 
 
 }
