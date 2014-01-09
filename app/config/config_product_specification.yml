@@ -576,7 +576,8 @@ constants:
       woven_straight_grain: Woven straight grain
       woven_ w_stretch_fibers: Woven w/ stretch fibers
       woven_bias_grain: Woven bias grain
-      knit_2_way_knit_4_way:  "knit 2 way	knit 4 way"
+      knit_2_way: "knit 2 way"
+      knit_4_way:  "knit 4 way"
 
     fabric_weight:
        light_weight_sheer: Light weight sheer

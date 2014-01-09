@@ -9,7 +9,7 @@
 <a href="{{ path('admin_products') }}" class="btn">back to list</a>
       </div>
       <div class="clearfix"></div>   
-      {% if product is defined %}
+      {% if product is defined and product is not empty%}
       <div>
                 <a href="{{path('admin_product_detail_show', {'id':product.id})}}">{{product.name}}</a> has been added to the system.
                 </div>
