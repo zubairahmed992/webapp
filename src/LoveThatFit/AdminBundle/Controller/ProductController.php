@@ -70,10 +70,12 @@ class ProductController extends Controller {
 
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
         $clothingTypes = $this->get('admin.helper.product.specification')->getWomenClothingType();
+        $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
         $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper));
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                     'form' => $productForm->createView(),
-                    'productSpecification' => $this->get('admin.helper.product.specification')->getProductSpecification()
+                    'productSpecification' => $this->get('admin.helper.product.specification')->getProductSpecification(),
+                    'brandObj'=>$brandObj,
                 ));
     }
 
@@ -98,7 +100,9 @@ class ProductController extends Controller {
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);
-
+        
+        $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
+        
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -107,6 +111,7 @@ class ProductController extends Controller {
                     'fit_priority' => $entity->getFitPriority(),
                     'fabric_content' => $entity->getFabricContent(),
                     'garment_detail' => $entity->getGarmentDetail(),
+                    'brandObj'=>$brandObj,
                 ));
     }
 

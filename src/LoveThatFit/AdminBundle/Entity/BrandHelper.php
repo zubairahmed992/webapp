@@ -247,5 +247,11 @@ public function getRetailerBrandById($id)
         return;
     }
    
+    #----------------Get Brand and Id ----------------------------------------#
+    public function getBrandNameId(){
+     return $this->repo->getBrandNameId();   
+        
+        
+    }
   
 }
