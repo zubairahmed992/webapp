@@ -53,29 +53,20 @@ class ProductCSVHelper {
                 $this->readSize($data);
                 break;
             case 4:
-                $this->product['styling_type'] = $data[1];
-                $this->product['neck_line'] = $data[4];
-                $this->product['sleeve_styling'] = $data[7];
-                $this->product['rise'] = $data[7];
-                $this->product['hem_length'] = $data[7];
                 $this->readClothingType($data);
                 $this->product['styling_type'] = strtolower($data[$this->clothing_type_index]);
                 break;
             case 5:
-                $this->product['neckline'] = strtolower($data[$this->clothing_type_index]);
-
+                $this->product['neck_line'] = strtolower($data[$this->clothing_type_index]);
                 break;
             case 6:
                 $this->product['sleeve_styling'] = strtolower($data[$this->clothing_type_index]);
-
                 break;
             case 7:
                 $this->product['rise'] = strtolower($data[$this->clothing_type_index]);
-
                 break;
             case 8:
                 $this->product['hem_length'] = strtolower($data[$this->clothing_type_index]);
-
                 break;
             case 11:
                 $this->product['stretch_type'] = $data[1];
@@ -211,7 +202,6 @@ class ProductCSVHelper {
   
     #---------------------------------------------------------------
     private function fitPoint($i){
-
         if($i==5) return 'central_front_waist';
         if($i==6) return 'back_waist';
         if($i==7)return 'waist_to_hip';
@@ -230,7 +220,6 @@ class ProductCSVHelper {
         if($i==20)return 'knee';
         if($i==21)return 'calf';
         if($i==22)return 'ankle';
-
     }
     
     #===================================================================

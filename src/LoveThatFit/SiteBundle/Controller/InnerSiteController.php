@@ -200,11 +200,10 @@ public function indexAction($list_type) {
     }
 #-------------------------------------------------------------------------------
     public function ajaxAction() {
-        $product_item = $this->get('admin.helper.productitem')->getProductItemById(4);
-        
-        $fe= new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);
-   
-        return new Response(json_encode($fe->getFittingSize()));
+        $product_item = $this->get('admin.helper.productitem')->getProductItemById(1);        
+        $fe= new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);   
+        //return new Response(json_encode($fe->getFittingSize()));
+        return new Response($fe->getFeedBackJSON());
         //array('item'=>$product_item, 'data' => $fe->fit()
         //
         return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('item'=>$product_item, 'data' => $fe->getBasicFeedback(),

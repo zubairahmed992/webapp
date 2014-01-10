@@ -52,7 +52,7 @@ class FitEngine {
             $current_item = $this->product_item;
         } 
         if ($product === NULL) {
-            $product = $current_item->getProduct();
+            $product = $this->product_item->getProduct();
         }
         
         $sizes = $product->getProductSizes();
@@ -211,6 +211,8 @@ private function getAllKeysTesting($ar){
                     }
                 }
             }
+            $fb = $this->inseam_diff_message($body_measurement, $measurement_array);
+            $feed_back ['inseam'] = $fb;
         }
         if ($is_ltf === true) {
             $str = 'Love that Fit!';
@@ -273,14 +275,14 @@ private function getAllKeysTesting($ar){
                 $body = $body_specs[$fit_point]; #~~~~~~~~~>
                 // if perfect fi 4-a
                 if ($body_specs[$fit_point] <= $item_specs[$fit_point]['ideal_body_high'] && $body_specs[$fit_point] >= $item_specs[$fit_point]['ideal_body_low']) {
-                    $str = ' (Perfect fit) ';
+                    $str = ' great fit ';
                     $diff = 0;
                     $fit = true;
                     $ideal_fit = true;
 //------------- if tight 4-b
                 } elseif ($body_specs[$fit_point] > $item_specs[$fit_point]['ideal_body_high']) {
 
-                    $str = '(Tight)';
+                    $str = ' Tight ';
                     $diff = $item_specs[$fit_point]['ideal_body_high'] - $body_specs[$fit_point]; #~~~~~~~~~>                        
 //~~~~~~~~~~~~~~~ Check if max measurement exists 4-c
                     if ($item_specs[$fit_point]['max_body_measurement'] != 0) {
@@ -331,7 +333,39 @@ private function getAllKeysTesting($ar){
 
         return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str, $ideal_fit, $max_fit, $varience_index, $diff_percent, $max_body_measurement, $max_body_diff);
     }
+    #------------------------
+ public function inseam_diff_message($body_specs, $item_specs) {
+        $str = '';
+        if (array_key_exists('inseam', $item_specs) && array_key_exists('inseam', $body_specs)) {
+            
+        $diff=$item_specs['inseam']['ideal_body_high'] - $body_specs['inseam'];
+        if (4.5 < $diff){
+            $str = 'too long, hem';
+        }elseif (3.25 <=$diff && $diff <= 4.5) {
+            $str = 'very long, hem or wear with 4” – 5” heels';
+        } elseif(2.25 <=$diff && $diff <= 3.5) {
+            $str = 'long, hem or wear with 3” – 4" heels';
+        } elseif(1.25 <=$diff && $diff <= 2.5) {
+            $str = 'long, hem or wear with 2" - 3” heels';
+        } elseif(0 <=$diff && $diff <= 1.5) {
+            $str = 'long, hem or wear with 1” – 2” heels';
+        } elseif(-1 <=$diff && $diff <= -0.5) {
+            $str = 'perfect fit wear with flats or heels';
+        } elseif(-2.5 <=$diff && $diff <=-1) {
+            $str = 'short';
+        } elseif(-4 <=$diff && $diff<=-2.5) {
+            $str = 'ankle length';
+        } elseif(-6 <=$diff && $diff<=-4) {
+            $str = 'cropped';
+        } elseif(-6 > $diff) {
+            $str = 'too short';
+        }
 
+        return $this->getFeedbackArrayElement($item_specs['inseam']['ideal_body_low'], $item_specs['inseam']['ideal_body_high'],  $body_specs['inseam'], $diff, 0, true, $str);
+        }else{
+            return;
+        }
+    }
 
 #----------------------------------------------------------------------------------------------------
 # create array element for the feed back array
