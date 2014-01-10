@@ -51,6 +51,7 @@ class ProductDetailType extends AbstractType
                     'class' => 'LoveThatFitAdminBundle:Retailer',
                     'expanded' => false,
                     'multiple' => false,
+                     'required' => false,
                     'property' => 'title',
                     'empty_value' => 'Select Retailer'
                 ));            

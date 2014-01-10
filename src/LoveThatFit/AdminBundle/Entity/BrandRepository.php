@@ -194,4 +194,16 @@ class BrandRepository extends EntityRepository {
                 } 
      
  }
+ 
+ #--------------------------Get Brand name and Id-------------------------------#
+ public function getBrandNameId(){
+     $query = $this->getEntityManager()
+                    ->createQuery("SELECT b.id as id ,b.name as name FROM LoveThatFitAdminBundle:Brand b");
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                } 
+     
+ }
 }

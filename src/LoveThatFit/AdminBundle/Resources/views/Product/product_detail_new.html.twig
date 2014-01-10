@@ -21,7 +21,16 @@ var product_retailer=$("#product_Retailer").val();
 if((product_retailer=="") || (product_retailer==NULL))
 {
     $('#product_Brand').empty();
-    $('<option>').val('').text('Unavailable').appendTo('#product_Brand');   
+    {% autoescape false %}
+          var brand_gets={{brandObj}};     
+          var brand_get=(brand_gets);
+           length_obj=brand_get.length;
+          
+         
+    for(i=0;i<length_obj;i++){
+     $('<option>').val(brand_get[i]['id']).text(brand_get[i]['name']).appendTo('#product_Brand');    
+   }
+{% endautoescape  %}  
 }
 
  $("#product_Retailer").change(function(){
@@ -42,7 +51,16 @@ if((product_retailer=="") || (product_retailer==NULL))
       } 
        else 
            {
-             $('<option>').val('').text('Unavailable').appendTo('#product_Brand');       
+           {% autoescape false %}
+          var brand_gets={{brandObj}};     
+          var brand_get=(brand_gets);
+           length_obj=brand_get.length;
+          
+         
+    for(i=0;i<length_obj;i++){
+     $('<option>').val(brand_get[i]['id']).text(brand_get[i]['name']).appendTo('#product_Brand');    
+   }
+{% endautoescape  %}      
            }
           
     }})
