@@ -88,6 +88,31 @@ class ProductHelper{
             return $msg_array;
         }
     }
+    
+#--------------Updated when color,item and sizes created and updated .---------#
+     public function updatedAt($entity) {
+        //$msg_array =null;
+        //$msg_array = ;
+
+        $productName = $entity->getName();
+        $msg_array = $this->validateForCreate($productName);
+        if ($msg_array == null) {
+           // $entity->setCreatedAt(new \DateTime('now'));
+            $entity->setUpdatedAt(new \DateTime('now'));
+
+            //$entity->upload();
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            return array('message' => 'Product succesfully created.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+            return $msg_array;
+        }
+    }
 
     //-------------------------------------------------------
 
