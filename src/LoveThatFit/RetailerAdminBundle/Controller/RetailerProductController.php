@@ -191,6 +191,7 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
         if ($colorform->isValid()) {
 
             $this->get('admin.helper.productcolor')->uploadSave($productColor);
+             $this->get('admin.helper.product')->updatedAt($product);
 
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
@@ -262,6 +263,8 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
         if ($colorForm->isValid()) {
 
             $this->get('admin.helper.productcolor')->uploadSave($productColor);
+            $this->get('admin.helper.product')->updatedAt($product);
+             
          if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
             }
@@ -398,6 +401,7 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
         }
         $sizeForm->bind($request);
         if ($sizeForm->isValid()) {
+             $this->get('admin.helper.product')->updatedAt($product);
             $em->persist($entity_size);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail size has been update.');
@@ -457,6 +461,7 @@ public function retailerProductClothingTypeAttributeAction(Request $request){
         $itemform = $this->createForm(new ProductItemType(), $entity_item);
         $itemform->bind($request);
         if ($itemform->isValid()) {
+             $this->get('admin.helper.product')->updatedAt($entity);
             $entity_item->upload(); //----- file upload method 
 
             $em->persist($entity_item);

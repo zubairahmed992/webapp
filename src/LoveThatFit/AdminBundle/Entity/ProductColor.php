@@ -366,7 +366,9 @@ class ProductColor {
         foreach ($items as $i) {
             $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getDescription();
             }
-        asort($size_titles);
+            
+      // array_multisort($size_titles, SORT_ASC);
+        natsort($size_titles);
         return $size_titles;
     }
     //-------------------------------------------------------------
