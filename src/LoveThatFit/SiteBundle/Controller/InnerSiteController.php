@@ -200,8 +200,10 @@ public function indexAction($list_type) {
     }
 #-------------------------------------------------------------------------------
     public function ajaxAction() {
+        return new Response(json_encode($this->get('admin.helper.utility')->getSizeTitleArray($this->get('security.context')->getToken()->getUser()->getGender(),'standard')));       
+        
         $product_item = $this->get('admin.helper.productitem')->getProductItemById(1);        
-        $fe= new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);   
+        $fe = new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);   
         //return new Response(json_encode($fe->getFittingSize()));
         return new Response($fe->getFeedBackJSON());
         //array('item'=>$product_item, 'data' => $fe->fit()

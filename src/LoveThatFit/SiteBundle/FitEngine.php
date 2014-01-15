@@ -211,8 +211,7 @@ private function getAllKeysTesting($ar){
                     }
                 }
             }
-            $fb = $this->inseam_diff_message($body_measurement, $measurement_array);
-            $feed_back ['inseam'] = $fb;
+            
         }
         if ($is_ltf === true) {
             $str = 'Love that Fit!';
@@ -222,7 +221,9 @@ private function getAllKeysTesting($ar){
             $str = $this->getFittingSizeRecommendation();
             $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
         }
-
+        if($product->getHemLength()=='Full Length'){            
+            $feed_back ['inseam'] = $this->inseam_diff_message($body_measurement, $measurement_array);
+        }
         return $feed_back;
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -315,7 +316,7 @@ private function getAllKeysTesting($ar){
 #Too Large: if the difference is equal to Three sizes
                     
                 } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
-                    $str = ' (Loose)';
+                    $str = ' Loose'.$item_specs[$fit_point]['title'];
                     $diff = $item_specs[$fit_point]['ideal_body_low'] - $body_specs[$fit_point]; #~~~~~~~~~>
                     //~~~ Check & calculate possible recomendation based on fit priority & diffs
 
@@ -333,8 +334,28 @@ private function getAllKeysTesting($ar){
 
         return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str, $ideal_fit, $max_fit, $varience_index, $diff_percent, $max_body_measurement, $max_body_diff);
     }
-    #------------------------
- public function inseam_diff_message($body_specs, $item_specs) {
+#------------------------
+
+    private function get_loose_message($body_specs, $title){
+        $sizes=  $this->getSizeTitleArray();
+        // search
+    }
+    
+    private function getSizeTitleArray($gender = 'f', $type = 'standard') {
+        if ($type == 'letters') {//$female_letters
+            return array('XS', 'S', 'M', 'L', 'XL', 'XXL');
+        } else if ($gender == 'f' && $type == 'standard') {//$female_standard
+            return array('00', '0', '2', '4', '6', '8', '10', '12', '16', '18', '20');
+        } else if ($gender == 'f' && $type == 'waist') {//$female_waist
+            return array('23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36');
+        } else if ($gender == 'm' && $type == 'top') {//man Top
+            return array('35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48');
+        } else if ($gender == 'm' && $type == 'bottom') {//man bottom
+            return array('28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42');
+        }
+    }
+#------------------------
+ private function inseam_diff_message($body_specs, $item_specs) {
         $str = '';
         if (array_key_exists('inseam', $item_specs) && array_key_exists('inseam', $body_specs)) {
             
