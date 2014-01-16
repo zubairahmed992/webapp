@@ -295,9 +295,6 @@ if(jqXHR.responseText.trim()== "success")
                             <div style="clear:both"></div>
                             <div id="fb-root"></div>
 	
-	<!-- USE 'Asynchronous Loading' version, for IE8 to work
-	http://developers.facebook.com/docs/reference/javascript/FB.init/ -->
-	
 	<script>
 	  window.fbAsyncInit = function() {
 		FB.init({
@@ -315,7 +312,7 @@ if(jqXHR.responseText.trim()== "success")
 		document.getElementById('fb-root').appendChild(e);
 	  }());
 	</script>
-	<img id = "share_button{{product.id}}" src="{{asset('bundles/lovethatfit/site/images/share_button.png')}}">
+	<img id = "share_button{{product.id}}" src="{{asset('bundles/lovethatfit/site/images/icon_fb.png')}}">
 	
 	
 	<script type="text/javascript">
@@ -325,18 +322,18 @@ if(jqXHR.responseText.trim()== "success")
 	FB.ui(
 	{
 	method: 'feed',
-	name: '{{product.name}}',   
+	name: '{{product.name}}',           
 	});
 	});
 	});
 	</script> 
+        <a href="https://twitter.com/share"  data-url="http://dev.lovethatfit.com/{{product.name}}" data-text="Name:{{product.name}} Description:{{product.description}} >" data-via="lovethatfit" data-size="large" data-related="lovethatfit"><img src="{{asset('bundles/lovethatfit/site/images/icon_t.png')}}"></a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
        <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.lovethatfit.com%2F&media=dev.lovethatfit.com{{ asset(productItem.WebPath) }}&description=Name:{{product.name}}
-        Description:{{product.description}}" class="pin-it-button" count-layout="horizontal">
-   <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" />
-</a>
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://dev.lovethatfit.com/{{product.name}}" data-text="Name:{{product.name}} Description:{{product.description}} >" data-via="lovethatfit" data-size="large" data-related="lovethatfit">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        Description:{{product.description}}">
+       <img src="{{asset('bundles/lovethatfit/site/images/icon_p.png')}}" /></a>
+        
         
       
                         </div>
