@@ -196,7 +196,7 @@ class ProductSize
     {
         $size_array = array();
         foreach ($this->product_size_measurements as $psm) {
-            $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  'title' => $psm->getTitle(),  'ideal_body_high' => $psm->getIdealBodySizeHigh() , 'ideal_body_low' => $psm->getIdealBodySizeLow(), 'max_body_measurement' => $psm->getMaxBodyMeasurement());
+            $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  'title' => $psm->getTitle(),  'ideal_body_high' => $psm->getIdealBodySizeHigh() , 'ideal_body_low' => $psm->getIdealBodySizeLow(), 'max_body_measurement' => $psm->getMaxBodyMeasurement(), 'size_title'=>$this->getTitle());
          }
             return $size_array;
     }
