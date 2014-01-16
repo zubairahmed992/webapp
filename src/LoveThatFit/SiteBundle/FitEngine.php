@@ -316,7 +316,9 @@ private function getAllKeysTesting($ar){
 #Too Large: if the difference is equal to Three sizes
                     
                 } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
-                    $str = ' Loose';
+                    //$str = ' Loose';
+                    $str = $this->get_foo_bar($body_specs,$item_specs[$fit_point]['title'], $item_specs[$fit_point]['title']);
+                    //$loose_size_count=0;
                     $loose_size_count=$this->get_loose_message($body_specs,$item_specs[$fit_point]['title'], $item_specs[$fit_point]['title']);
                     if ($loose_size_count==1){
                         $str = ' Loose Fit';
@@ -345,11 +347,11 @@ private function getAllKeysTesting($ar){
     }
 #------------------------
 
-    private function get_loose_message($body_specs, $size_title, $fit_point){
+    private function get_loose_message($body_specs, $fit_point){
         $sizes=  $this->getSizeTitleArray();
         $j=0;
         for($i=count($sizes)-1;$i>=0; $i--){
-            if($sizes[$i]==$size_title) $j=1;
+            if($sizes[$i]===$size_title) $j=1;
             if($j!=0){
               $fp_specs=$this->get_size_measurement($sizes[$i], $fit_point);
               if ($fp_specs['ideal_body_high']>$body_specs[$fit_point]){
@@ -357,6 +359,24 @@ private function getAllKeysTesting($ar){
               }
             }
         }
+        return $j;
+    }
+    
+    private function get_foo_bar($body_specs, $size_title, $fit_point){
+        $sizes=  $this->getSizeTitleArray();
+        $j=0;
+        $str="";
+        for($i=count($sizes)-1;$i>=0; $i--){
+            if($sizes[$i]===$size_title) $j=1;
+            $str.=$sizes[$i].' = '.$size_title. ', ';
+            if($j!=0){
+              $fp_specs=$this->get_size_measurement($sizes[$i], $fit_point);
+              if ($fp_specs['ideal_body_high']>$body_specs[$fit_point]){
+                $j++;    
+              }
+            }
+        }
+        return $str;
         return $j;
     }
     
