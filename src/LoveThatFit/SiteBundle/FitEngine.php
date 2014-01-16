@@ -348,6 +348,7 @@ private function getAllKeysTesting($ar){
 #------------------------
 
     private function get_loose_message($body_specs, $fit_point){
+        $size_title="";
         $sizes=  $this->getSizeTitleArray();
         $j=0;
         for($i=count($sizes)-1;$i>=0; $i--){
