@@ -316,7 +316,16 @@ private function getAllKeysTesting($ar){
 #Too Large: if the difference is equal to Three sizes
                     
                 } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
-                    $str = ' Loose'.$item_specs[$fit_point]['title'];
+                    $str = ' Loose';
+                    $loose_size_count=$this->get_loose_message($body_specs,$item_specs[$fit_point]['title'], $item_specs[$fit_point]['title']);
+                    if ($loose_size_count==1){
+                        $str = ' Loose Fit';
+                    }elseif($loose_size_count==2){
+                        $str = ' Too Loose';
+                    }elseif($loose_size_count>=3){
+                     $str = ' Too Large';
+                    }
+                    
                     $diff = $item_specs[$fit_point]['ideal_body_low'] - $body_specs[$fit_point]; #~~~~~~~~~>
                     //~~~ Check & calculate possible recomendation based on fit priority & diffs
 
@@ -336,9 +345,33 @@ private function getAllKeysTesting($ar){
     }
 #------------------------
 
-    private function get_loose_message($body_specs, $title){
+    private function get_loose_message($body_specs, $size_title, $fit_point){
         $sizes=  $this->getSizeTitleArray();
-        // search
+        $j=0;
+        for($i=count($sizes)-1;$i>=0; $i--){
+            if($sizes[$i]==$size_title) $j=1;
+            if($j!=0){
+              $fp_specs=$this->get_size_measurement($sizes[$i], $fit_point);
+              if ($fp_specs['ideal_body_high']>$body_specs[$fit_point]){
+                $j++;    
+              }
+            }
+        }
+        return $j;
+    }
+    
+    
+    private function get_size_measurement($size_title, $fit_point){
+        $product = $this->product_item->getProduct();
+        $sizes = $product->getProductSizes();
+        
+        foreach ($sizes as $size) {
+            if ($size->getTitle()==$size_title){
+            $item_specs = $size->getMeasurementArray();
+            return $item_specs[$fit_point];    
+            }
+            }
+        return;
     }
     
     private function getSizeTitleArray($gender = 'f', $type = 'standard') {
