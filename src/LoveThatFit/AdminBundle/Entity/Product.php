@@ -456,30 +456,15 @@ class Product {
 
     //----------------------------------------------------------
     
-    public function getSizeByTitleBaseBodyType($sizeTitle,$bodyType){
+    public function getSizeByTitleBaseBodyType($sizeTitle, $bodyType) {
         $productSizes = $this->getProductSizes();
-        if($sizeTitle==="00")
-            {
-                $sizeTitle="00";
-            }
-            if($sizeTitle==="0")
-            {
-                $sizeTitle="0";
-            }
-            if($sizeTitle!="00" and $sizeTitle!="0")
-            {  
-                $sizeTitle=$sizeTitle;
-            }
-        foreach ($productSizes as $ps) {      
-            
-            if ($ps->getTitle() === $sizeTitle and $ps->getBodyType()===$bodyType) {
+
+        foreach ($productSizes as $ps) {
+            if ($ps->getTitle() == $sizeTitle and $ps->getBodyType() == $bodyType) {
                 return $ps;
-            }     
             }
-            
-           
+        }
         return;
-        
     }
     //----------------------------------------------------------
     #----!!! This method used for 
