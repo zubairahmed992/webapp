@@ -1,0 +1,96 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Algorithm</li>
+{% endblock %}
+{% block body %}
+       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+       <script>
+      jQuery(document).ready(function(){
+	jQuery("select[id='algorithm_User']").change(function(){
+        var user_id = jQuery("select[id='algorithm_User']").val();
+        var admin_algorithm_user= "../admin/algorithm/user/"+ user_id;          
+        jQuery.ajax({
+	  type: "POST",
+	  url: admin_algorithm_user,              
+          success: function(response){                            
+              $('#cityAjax').html(response);
+	  }
+	});
+   })
+});           
+       </script>
+       <script>
+      jQuery(document).ready(function(){
+         jQuery("select[id='algorithm_Product']").change(function(){
+         var product_id = jQuery("select[id='algorithm_Product']").val();                    
+         var admin_algorithm_product= "../admin/algorithm/product/"+ product_id;         
+         jQuery.ajax({
+	  type: "POST",
+	  url: admin_algorithm_product,              
+          success: function(response){                            
+              $('#productAjax').html(response);
+	  }
+	});   
+    })
+});           
+       </script>
+  
+<div class="p_listing">     
+    <h1>Algorithm</h1>
+            <div id="detail_wrapper">                      
+                <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+ {{ form_errors(userForm) }}                  
+                    <div class="clearfix"></div>
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container">
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">User</div>
+                                    <div class="span3">{{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}</div>
+                               </div> 
+                                    {{ form_rest(userForm) }}
+                                    </form>                 
+                <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
+ {{ form_errors(productForm) }}
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Product</div>
+                                    <div class="span3">{{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}</div>
+                               </div> 
+                               {{ form_rest(productForm) }}
+                       </form>      
+                                
+                    <div class="row-fluid show-grid">
+                        <div id="cityAjax">                        
+                     
+                        </div>
+                            
+                        <div id="productAjax">                        
+                     
+                        </div>  
+                            
+               
+                        
+                            
+                                </div>
+                                </div> 
+                                     
+
+
+
+                                </div>      
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+    </div>               
+    </div> <!-- End detail_wrapper -->
+                
+    
+    
+     <div class="clearfix"></div> 
+     
+    
+
+ 
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<div><strong>Product Detail</strong></div>
+<div> 
+    Name:{{product.name }}
+    <div class="featured_sizes">                        
+                                {%for key, pcsa in product.getDisplayProductColor.getSizeDescriptionArray%}                                    
+                                {{pcsa}}
+                                {%endfor%} 
+                                
+                            </div>
+    
+    <br/>    
+   {%for apc in product.productColors%}
+     <img src="{{asset(apc.PatternWebPath)}}" style="width:16px !important; height:16px !important">
+  {%endfor%}
+     
+     <img src="{{asset(product.getDisplayProductColor.ImagePaths['web'])}}" class="prod_{{product.clothingType.target|lower}} ui-draggable">
+                                </div> 
