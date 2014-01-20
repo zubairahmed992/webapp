@@ -1,0 +1,13 @@
+
+
+admin_algorithm:
+    pattern:  /admin/algoritm
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:index}
+
+admin_algoritm_user_url:
+    pattern:  /admin/algorithm/user/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getUserForTestAlgorithm}
+    
+admin_algoritm_product_url:
+    pattern:  /admin/algorithm/product/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getProductForTestAlgorithm}    

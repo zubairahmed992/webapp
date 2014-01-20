@@ -1,0 +1,37 @@
+<div>{{user.firstName }}'s Detail</div>
+<div>
+                                    Full Name:{{user.firstName }} {{user.lastName }}
+                                    <br/>
+                                   {%if(user.gender=='f') %}                                  
+                                    Gender:Female
+                                    {%endif%}
+                                  {%if(user.gender=='m') %}
+                                  Gender:Male                                           
+                                    {%endif%}                                    
+                                    <br/>                                        
+                                    Email:{{user.email }}
+                                    <br/>                               
+                                    Date Of Birth:
+                                    {{ user.birthDate|date('d-m-Y') }} 
+                                    <br/>   
+                                    Age:{{user.age}}
+                                    <br/>
+                                    Weight:{{user.measurement.weight}}
+                                    <br/>
+                                   Height:{{user.measurement.height}}
+                                   <br/>
+                                   Waist:{{user.measurement.waist}}
+                                   <br/>
+                                   Hip{{user.measurement.hip}}
+                                   <br/> 
+                                   Bust:{{user.measurement.bust}}
+                                   <br/>
+                                    Chest:{{user.measurement.chest}}
+                                   <br/>                                             
+                                   Arm:{{user.measurement.arm}} 
+                                   <br/>     
+                                    Inseam:{{user.measurement.inseam}}<br/>
+                                     Outseam:{{user.measurement.outseam}}<br/>
+                                    Sleeve:{{user.measurement.sleeve}}<br/>                                    
+                                    Neck:{{user.measurement.neck}}
+                                </div> 

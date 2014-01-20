@@ -19,9 +19,9 @@ class BrandController extends Controller {
 //------------------------------------------------------------------------------------------
 
     public function productsAction($id) {
-$brand = $this->get('admin.helper.brand')->find($id);
-    $products=$brand->getProducts();
-return new Response (var_dump($products));
+        $brand = $this->get('admin.helper.brand')->find($id);
+        $products = $brand->getProducts();
+        return new Response(var_dump($products));
     }
 
 //------------------------------------------------------------------------------------------
@@ -30,17 +30,17 @@ return new Response (var_dump($products));
 
         $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
         $entity = $specs['entity'];
-        $brand_limit =$this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id);
-        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit[0]['id']));
-        if($page_number==0){
-       $page_number=1;
-     }
+        $brand_limit = $this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id);
+        $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit[0]['id']));
+        if ($page_number == 0) {
+            $page_number = 1;
+        }
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
         return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
                     'brand' => $entity,
-                    'page_number'=>$page_number,
+                    'page_number' => $page_number,
         ));
     }
 
@@ -150,5 +150,5 @@ return new Response (var_dump($products));
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
-  
+
 }
