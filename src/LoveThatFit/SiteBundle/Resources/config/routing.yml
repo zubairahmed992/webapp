@@ -121,8 +121,8 @@ ajax_fitting_feedback_list:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackList}
     
 ajax_product_ajax:
-    pattern:  /ajax
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax}
+    pattern:  /ajax/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax, id:0}
     
 email:
     pattern:  /email/{id}
