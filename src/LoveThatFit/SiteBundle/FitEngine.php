@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\SiteBundle;
+use LoveThatFit\AdminBundle\Entity\ProductItemHelper;
 
 class FitEngine {
 
@@ -41,9 +42,11 @@ class FitEngine {
          if ($product === NULL) {
             $product = $this->product_item->getProduct();
         }
-        $fitting_sizes = $this->getFittingSize($product);
+        $fitting_sizes = $this->getFittingSize($product);                
         $product_color = $product->getDisplayProductColor();        
         return $product_color->getItemBySizeId($fitting_sizes[0]['id']);
+        //$i= $product_color->getItemBySizeId($fitting_sizes[0]['id']);
+        //return $i->getId();
         }
 #------------------------------------------    
     function getFittingSize($product = null) {

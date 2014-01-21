@@ -286,7 +286,8 @@ class ProductColor {
         $items = $this->product_items;
         
         foreach ($items as $i) {
-            if ($i->getId() == $size_id) {
+            $s=$i->getProductSize();
+            if ( $s->getId()== $size_id) {
                 return $i;
             }            
         }
