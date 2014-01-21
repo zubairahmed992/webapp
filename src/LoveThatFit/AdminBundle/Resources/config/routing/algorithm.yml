@@ -11,3 +11,7 @@ admin_algoritm_user_url:
 admin_algoritm_product_url:
     pattern:  /admin/algorithm/product/{id}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getProductForTestAlgorithm}    
+
+admin_algorithm_product_size:    
+    pattern:  /admin/algorithm/product/size/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getProductSizeForTestAlgorithm}    
