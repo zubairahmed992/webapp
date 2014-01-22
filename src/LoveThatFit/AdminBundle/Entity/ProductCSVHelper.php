@@ -90,7 +90,7 @@ class ProductCSVHelper {
                 $this->readFitPriority($data);
                 break;
             case 21:
-                $this->product['size_title_type'] = $data[0];         
+                $this->product['size_title_type'] = $this->changeSizeTitleType($data[0]);         
                 break;
             case 23:
                 $this->product['body_type'] = $data[0];                
@@ -128,6 +128,13 @@ class ProductCSVHelper {
             return $this->product;
         }
         return;
+    }
+
+#---------------------------------------------------------------
+    private function changeSizeTitleType($str) {
+        if(strtolower($str)=='numeric') return 'numbers';
+        else if(strtolower($str)=='letter') return 'letters';        
+        else return $str;         
     }
 
 #---------------------------------------------------------------

@@ -457,15 +457,10 @@ class Product {
     //----------------------------------------------------------
     
     public function getSizeByTitleBaseBodyType($sizeTitle, $bodyType) {
-        if(strval($sizeTitle==='0')||$sizeTitle==='0'){
-            $sizeTitle='0';
-        }elseif(strval($sizeTitle==='00')||$sizeTitle==='00'){
-            $sizeTitle='00';
-        }
         $productSizes = $this->getProductSizes();
 
         foreach ($productSizes as $ps) {
-            if ($ps->getTitle() == $sizeTitle and $ps->getBodyType() == $bodyType) {
+            if (strcmp($ps->getTitle(),$sizeTitle)==0 and $ps->getBodyType() == $bodyType) {
                 return $ps;
             }
         }
