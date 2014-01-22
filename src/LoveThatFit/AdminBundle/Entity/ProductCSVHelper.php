@@ -29,7 +29,7 @@ class ProductCSVHelper {
         $this->previous_row = '';
 
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 2000, ",")) !== FALSE) {
                 $this->readProduct($data);
                 $this->previous_row = $data;
                 $this->row++;
@@ -46,11 +46,13 @@ class ProductCSVHelper {
     private function readProduct($data) {
         switch ($this->row) {
             case 0:
-                $this->product['gender'] = 'F';
                 $this->product['garment_name'] = $data[1];
                 $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
                 $this->product['style'] = $data[7]; #~~~~~ Style
                 $this->readSize($data);
+                break;
+            case 1:
+                $this->product['gender'] = strtolower($data[1])=='male'?'m':'f';
                 break;
             case 4:
                 $this->readClothingType($data);
@@ -87,6 +89,12 @@ class ProductCSVHelper {
             case 18:
                 $this->readFitPriority($data);
                 break;
+            case 21:
+                $this->product['size_title_type'] = $data[0];         
+                break;
+            case 23:
+                $this->product['body_type'] = $data[0];                
+                break;
             case 25:
                 $this->readColors($data); //['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
                 break;
@@ -100,8 +108,29 @@ class ProductCSVHelper {
         
     }
 #---------------------------------------------------------------
-#---------------------------------------------------------------
+    public function map() {
 
+        $this->row = 0;
+        $this->previous_row = '';
+
+        if (($handle = fopen($this->path, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 2000, ",")) !== FALSE) {
+                //$this->readProduct($data);
+                $str = $this->row . '  ';
+                for ($i=0;$i<=110;$i++){
+                    $str.=$data[$i].', ';
+                }
+                $this->product[$this->row] = $str;
+                $this->row++;
+            }
+            fclose($handle);
+            
+            return $this->product;
+        }
+        return;
+    }
+
+#---------------------------------------------------------------
     private function readFitPriority($data) {
           $previous_row = $this->previous_row;
                 $this->product['fit_priority'] = array(
@@ -144,6 +173,8 @@ class ProductCSVHelper {
             $i = $i + 1;
         }
     }
+   
+    #---------------------------------------------------------------
     private function getMatchingClothingType($ct){
         if($ct=='Tee *knit') return 'tee knit';
         if($ct=='Tank *knit') return 'tank knit';
@@ -182,8 +213,10 @@ class ProductCSVHelper {
         if ($this->row >= 5 && $this->row <= 22) {
             $sm = array();
             foreach ($this->product['sizes'] as $k => $v) {
+                if ($data[intval($v['key'])+1]>0){
                 $i = $this->fitPoint($this->row);
                 $this->product['sizes'][$k][$i] = $this->fillFitPointMeasurement($data, intval($v['key']));
+                }
             }
         }
     }
@@ -239,7 +272,7 @@ class ProductCSVHelper {
         $product->setVerticalStretch($data['vertical_stretch']);        
         $product->setCreatedAt(new \DateTime('now'));
         $product->setUpdatedAt(new \DateTime('now'));
-        $product->setGender('F');
+        $product->setGender($data['gender']);
         $product->setStylingType($data['styling_type']);
         $product->setNeckline($data['neck_line']);
         $product->setSleeveStyling($data['sleeve_styling']);
@@ -251,9 +284,8 @@ class ProductCSVHelper {
         $product->setLayering($data['layring']);
         $product->setFitPriority(json_encode($data['fit_priority']));
         $product->setFabricContent(json_encode($data['fabric_content']));
-        $product->setDisabled(false);
-        #????
-        $product->setSizeTitleType('numbers');
+        $product->setDisabled(false);        
+        $product->setSizeTitleType($data['size_title_type']);
         
         #---------
         return $product;

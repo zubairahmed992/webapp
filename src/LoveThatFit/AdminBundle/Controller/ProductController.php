@@ -1001,7 +1001,7 @@ class ProductController extends Controller {
                 $ps = new ProductSize;
                 $ps->setTitle($key);
                 $ps->setProduct($product);
-                $ps->setBodyType('Regular');
+                $ps->setBodyType($data['body_type']);                
                 $em->persist($ps);
                 $em->flush();
                 $this->addProductSizeMeasurement($ps, $value);
