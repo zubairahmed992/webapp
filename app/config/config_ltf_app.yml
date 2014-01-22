@@ -278,7 +278,263 @@ constants:
     c: c
     d: d
     dd: dd
-    ddd: ddd     
+    ddd: ddd    
+
+Bust_Measurement:
+  28a:
+      size: 28 
+      cup: a 
+      low: 28 
+      high: 30 
+      average: 29 
+  28b:
+      size: 28 
+      cup: b 
+      low: 29 
+      high: 31 
+      average: 30     
+  28c:
+      size: 28 
+      cup: c 
+      low: 30 
+      high: 32 
+      average: 31
+  28d:
+      size: 28 
+      cup: d 
+      low: 31 
+      high: 33 
+      average: 32         
+  28dd:
+      size: 28 
+      cup: dd 
+      low: 32 
+      high: 34 
+      average: 33         
+  28ddd:
+      size: 28 
+      cup: ddd 
+      low: 33 
+      high: 35 
+      average: 34
+  30a:
+      size: 30 
+      cup: a 
+      low: 30 
+      high: 32 
+      average: 31
+  30b:
+      size: 30 
+      cup: b 
+      low: 31 
+      high: 33 
+      average: 32             
+  30c:
+      size: 30 
+      cup: c 
+      low: 32 
+      high: 34 
+      average: 33             
+  30d:
+      size: 30 
+      cup: d 
+      low: 33 
+      high: 35 
+      average: 34             
+  30dd:
+      size: 30 
+      cup: dd 
+      low: 34 
+      high: 36 
+      average: 35             
+  30ddd:
+      size: 30 
+      cup: ddd 
+      low: 35 
+      high: 37 
+      average: 36 
+  32a:
+      size: 32 
+      cup: a 
+      low: 32 
+      high: 34 
+      average: 33  
+  32b:
+      size: 32 
+      cup: b 
+      low: 33 
+      high: 35 
+      average: 34 
+  32c:
+      size: 32 
+      cup: c 
+      low: 34 
+      high: 36 
+      average: 35      
+  32d:
+      size: 32 
+      cup: d
+      low: 35 
+      high: 37 
+      average: 36 
+  32dd:
+      size: 32 
+      cup: dd
+      low: 36 
+      high: 38 
+      average: 37
+  32ddd:
+      size: 32 
+      cup: ddd
+      low: 37 
+      high: 39 
+      average: 38
+  34a:
+      size: 34 
+      cup: a
+      low: 34 
+      high: 36 
+      average: 35 
+  34b:
+      size: 34 
+      cup: b
+      low: 35 
+      high: 37 
+      average: 36     
+  34c:
+      size: 34 
+      cup: c
+      low: 36 
+      high: 38 
+      average: 37 
+  34d:
+      size: 34 
+      cup: d
+      low: 37 
+      high: 39 
+      average: 38  
+  34dd:
+      size: 34 
+      cup: dd
+      low: 38 
+      high: 40 
+      average: 39      
+  34ddd:
+      size: 34 
+      cup: ddd
+      low: 39 
+      high: 41 
+      average: 40
+  36a:
+      size: 36 
+      cup: a
+      low: 36 
+      high: 38 
+      average: 37
+  36b:
+      size: 36 
+      cup: b
+      low: 37 
+      high: 39 
+      average: 38 
+  36c:
+      size: 36 
+      cup: c
+      low: 38 
+      high: 40 
+      average: 39
+  36d:
+      size: 36 
+      cup: d
+      low: 39 
+      high: 41 
+      average: 40
+  36dd:
+      size: 36 
+      cup: dd
+      low: 40 
+      high: 42 
+      average: 41 
+  36ddd:
+      size: 36 
+      cup: ddd
+      low: 41 
+      high: 43 
+      average: 42     
+  38a:
+      size: 38 
+      cup: a
+      low: 38 
+      high: 40
+      average: 39
+  38b:
+      size: 38 
+      cup: b
+      low: 39 
+      high: 41
+      average: 40
+  38c:
+      size: 38 
+      cup: c
+      low: 40 
+      high: 42
+      average: 41 
+  38d:
+      size: 38 
+      cup: d
+      low: 41 
+      high: 43
+      average: 42
+  38dd:
+      size: 38 
+      cup: dd
+      low: 42 
+      high: 44
+      average: 43 
+  38ddd:
+      size: 38 
+      cup: dd
+      low: 43 
+      high: 45
+      average: 44 
+  40a:
+      size: 40 
+      cup: a
+      low: 40 
+      high: 42
+      average: 41 
+  40b:
+      size: 40 
+      cup: b
+      low: 41 
+      high: 43
+      average: 42      
+  40c:
+      size: 40 
+      cup: c
+      low: 42 
+      high: 44
+      average: 43 
+  40d:
+      size: 40 
+      cup: d
+      low: 43 
+      high: 45
+      average: 44
+  40dd:
+      size: 40 
+      cup: dd
+      low: 44 
+      high: 46
+      average: 45 
+  40ddd:
+      size: 40 
+      cup: ddd
+      low: 45 
+      high: 47
+      average: 46      
+    
+    
 
 Twitter:  
 consumer_key: 9GBx1IchmgsTC404I52w

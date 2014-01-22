@@ -145,7 +145,9 @@ class RegistrationController extends Controller {
         }
         $registrationMeasurementform->bind($this->getRequest());
         #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
-        $request_array = $this->getRequest()->get('measurement');      
+        
+        $request_array = $this->getRequest()->get('measurement');     
+       // return new response(json_encode($request_array));
         $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
          $measurement->setBraSize($measurement->bra_numbers." ".$measurement->bra_letters);
         $this->get('user.helper.measurement')->saveMeasurement($measurement);

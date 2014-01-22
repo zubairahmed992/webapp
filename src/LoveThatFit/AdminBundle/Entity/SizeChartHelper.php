@@ -200,6 +200,7 @@ public function findOneByName($title) {
     
 //-------------------------------------------------------------------------------------
     public function evaluateWithSizeChart($measurement) {
+        
 
         if (is_null($measurement)) {
             return;
@@ -292,16 +293,31 @@ public function findOneByName($title) {
             }
         }
         
+        
         // Temporary hack for the back just to have the slider in step 4 in proper place if back not provided
         // As currently we are not comparing back measurement in fitting algorithm
         if ($measurement->getShoulderAcrossBack() == null || $measurement->getShoulderAcrossBack() == 0) {
                     $measurement->setShoulderAcrossBack(14.5);
                 }
-        
-
+                $braSize=$measurement->getBraSize();
+                $findAverage=$this->getBustAverage($braSize);
+                if($findAverage){
+                    $measurement->setBust($findAverage);
+                }
+                    
         return $measurement;
     }
+#------------------------------------------------------------------------------#
+private function getBustAverage($bra_num){
     
+     $bustRange = $this->conf["Bust_Measurement"];
+     foreach($bustRange as $bust){
+            $size_cup=$bust['size'].$bust['cup'];
+            if($size_cup==$bra_num){
+                return $bust['average'];
+            }
+            }
+}
     //------------------------------------------------------------------------
 
     public function getBrandArray($target) {

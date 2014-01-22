@@ -10,6 +10,7 @@ use LoveThatFit\UserBundle\Event\UserEvent;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Yaml\Parser;
 
 class MeasurementHelper {
 
@@ -117,5 +118,21 @@ class MeasurementHelper {
         }
         return $retaining_array;
     }
-
+#----------------Get  Bust measurment Range------------------------------------#   
+    public function getBustMeasurementRange($bra_num) {
+        $yaml = new Parser();
+        $bustMeasurement = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+        $bustRange = $bustMeasurement["Bust_Measurement"];
+        foreach($bustRange as $bust){
+            $size_cup=$bust['size'].$bust['cup'];
+            if($size_cup==$bra_num){
+                return $bust['average'];
+            }
+        
+            
+            
+        }
+        //return array('bustRange'=>$bustRange);
+    }
+    
 }
