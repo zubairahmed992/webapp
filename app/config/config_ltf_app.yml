@@ -204,7 +204,231 @@ constants:
         l: l
         xl: xl
         xxl: xxl
-        
+  
+  size_title_revamp:
+    women:
+      letter:
+        'xxs':
+          title: 'xxs'
+          index: 1
+        'xs': 
+          title: 'xs'
+          index: 2
+        's': 
+          title: 's'
+          index: 3
+        'm': 
+          title: 'm'
+          index: 4
+        'l':
+          title: 'l'
+          index: 5
+        'xl': 
+          title: 'xl'
+          index: 6
+        'xxl': 
+          title: 'xxl'
+          index: 7
+      numbers:
+        0: 
+          title: 0
+          index: 9
+        1: 
+          title: 1
+          index: 10
+        2:
+          title: 2
+          index: 12
+        4: 
+          title: 4
+          index: 13
+        6: 
+          title: 6
+          index: 14
+        8: 
+          title: 8
+          index: 15
+        10: 
+          title: 10
+          index: 16
+        12: 
+          title: 12
+          index: 17
+        14: 
+          title: 14
+          index: 18
+        16: 
+          title: 16
+          index: 19
+        18:
+          title: 18
+          index: 20
+        20: 
+          title: 20
+          index: 21
+        22: 
+          title: 22
+          index: 22
+        24: 
+          title: 24
+          index: 23
+      waist:
+        23: 
+          title: 23
+          index: 24
+        24:
+          title: 24
+          index: 25
+        25: 
+          title: 25
+          index: 26
+        26: 
+          title: 26
+          index: 27
+        27: 
+          title: 27 
+          index: 28
+        28:
+          title: 28 
+          index: 29
+        29:
+          title: 29 
+          index: 30
+        30: 
+          title: 30 
+          index: 31
+        31: 
+          title: 31 
+          index: 32
+        32: 
+          title: 32 
+          index: 33
+        33: 
+          title: 33 
+          index: 34
+        34: 
+          title: 34 
+          index: 35
+        35: 
+          title: 35 
+          index: 36
+        36: 
+          title: 36
+          index: 37
+    man:
+      letter:
+        xxs: 
+          title: xxs
+          index: 1
+        xs: 
+          title: xs
+          index: 2
+        s: 
+          title: s
+          index: 3
+        m: 
+          title: m
+          index: 4
+        l: 
+          title: l
+          index: 5
+        xl:
+          title: xl
+          index: 6
+        xxl: 
+          title: xxl
+          index: 7
+      number:
+        top:
+         35: 
+           title: 35
+           index: 8
+         36: 
+           title: 36
+           index: 9
+         37: 
+           title: 37
+           index: 10
+         38: 
+           title: 38
+           index: 11
+         39: 
+           title: 39
+           index: 12
+         40:
+           title: 40
+           index: 13
+         41:
+           title: 41
+           index: 14
+         42:
+           title: 42
+           index: 15
+         43:
+           title: 43
+           index: 16
+         44:
+           title: 44
+           index: 17
+         45: 
+           title:  45
+           index: 18
+         46:
+           title: 46
+           index: 19
+         47: 
+           title: 47
+           index: 20
+         48:
+           title: 48
+           index: 21
+      bottom:
+         28: 
+           title: 28
+           index: 22
+         29:
+           title: 29
+           index: 23
+         30: 
+           title: 30
+           index: 24
+         31: 
+           title: 31
+           index: 25
+         32: 
+           title: 32
+           index: 26
+         33: 
+           title: 33
+           index: 27
+         34: 
+           title: 34
+           index: 28
+         35:
+          title: 35
+          index: 29
+         36: 
+          title: 36
+          index: 30
+         37: 
+          title: 37
+          index: 31
+         38: 
+          title: 38
+          index: 32
+          39:
+          title: 39
+          index: 33
+         40:
+          title: 40
+          index: 34
+         41:
+          title: 41
+          index: 35
+         42: 
+          title: 42
+          index: 36
+      
         
   size_charts:
     xxs: 0

@@ -70,6 +70,14 @@ class ProductSize
      *
      * @return integer 
      */
+    
+    /**
+     * @var string $index_value
+     *
+     * @ORM\Column(name="index_value", type="integer",nullable=true)
+     */
+    private $index_value;  
+    
     public function getId()
     {
         return $this->id;
