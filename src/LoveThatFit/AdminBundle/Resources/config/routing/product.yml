@@ -1,3 +1,7 @@
+#-------------------------------------------------------------
+admin_product_foo:
+    pattern:  /admin/product/foo/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:foo , id: 0}
 
 #-------------------------------------------------------------
 admin_products:

@@ -55,6 +55,9 @@ class ProductSizeHelper {
        public function findMeasurementArray($id) {
         return $this->repo->getSizeMeasurementArray($id);
     }
+    public function getFitPointMeasurementArray($id, $fit_point) {
+        return $this->repo->getProductFitPointMeasurementArray($id, $fit_point);
+    }
      public function save($entity) {
             $this->em->persist($entity);
             $this->em->flush();

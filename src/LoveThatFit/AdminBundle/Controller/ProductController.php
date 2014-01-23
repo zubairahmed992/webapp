@@ -881,6 +881,11 @@ class ProductController extends Controller {
     }
 
 #-----------------------------------------------------------------------
+    public function fooAction($id=0) {
+        $fit_points = $this->get('admin.helper.productsizes')->getFitPointMeasurementArray($id,'waist');
+        return new Response(json_encode($fit_points));
+    }
+#-----------------------------------------------------------------------
     public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         if (!$product_size) {

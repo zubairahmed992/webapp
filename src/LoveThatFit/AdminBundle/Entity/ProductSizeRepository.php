@@ -27,6 +27,26 @@ class ProductSizeRepository extends EntityRepository {
         }
     }
 
+    public function getProductFitPointMeasurementArray($id, $fit_point) {
+        $query = $this->getEntityManager()
+                        ->createQuery('
+            SELECT ps.title, psm.title fit_point, psm.ideal_body_size_high, psm.ideal_body_size_low
+            , psm.max_body_measurement
+            FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.product_sizes ps
+            JOIN ps.product_size_measurements psm
+            WHERE p.id = :id
+            AND psm.title like :fit_point'
+                        )->setParameters(array('id'=> $id, 'fit_point'=>$fit_point));
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    
     public function findSizeByProductTitle($title, $productid) {
         $record = $this->getEntityManager()
                 ->createQuery("SELECT p FROM LoveThatFitAdminBundle:ProductSize p                                   
