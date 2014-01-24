@@ -13,8 +13,9 @@
 {% if (app.user.measurement)%}
 
 
-<input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getHeight - app.user.measurement.getShoulderHeight}}" />
-<input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHeight - app.user.measurement.getOutseam }}" />
+<input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
+<input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
+<input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
 {% endif %}
 <section class="products">
     
@@ -98,21 +99,43 @@ function set_slider_buttons(){
 }
 
 function set_droppables(){
-    var top_pos_drop = $("#hdn_prod_top_pos").attr("value");
+    var top_pos_drop = parseInt($("#hdn_prod_top_pos").attr("value"));
     
-    top_pos_drop = top_pos_drop * 6;
+    console.log("Top value = " + top_pos_drop);
     
-    $("#top_dropable").css("top", top_pos_drop + 9 + "px");
+    //top_pos_drop = top_pos_drop * 6;
     
-    var bottom_pos_drop = $("#hdn_prod_bottom_pos").attr("value");
+    var user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
     
-    bottom_pos_drop = bottom_pos_drop * 6;
+    var top_marg = user_height * 13;
     
-    $("#bottom_dropable").css({top: bottom_pos_drop + 9 + "px"});
+    top_marg = top_marg / 100;
+    
+    top_pos_drop = Math.round(top_marg + top_pos_drop + 1);
+    
+    final_top_pos = top_pos_drop - 25;
+    
+    $("#top_dropable").css("top", final_top_pos + "px");
+    
+    var bottom_pos_drop = parseInt($("#hdn_prod_bottom_pos").attr("value"));
+    
+    //bottom_pos_drop = bottom_pos_drop * 6;
+    
+    var top_marg_btm = user_height * 48;
+    
+    top_marg_btm = top_marg_btm / 100;
+    
+    bottom_pos_drop = Math.round(top_marg_btm + bottom_pos_drop + 23);
+    
+    console.log("Check Botom = " + bottom_pos_drop);
+    
+    bottom_final_pos = bottom_pos_drop - 73;
+    
+    $("#bottom_dropable").css({top: bottom_final_pos + "px"});
     
     var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");
     
-    dress_pos_drop = dress_pos_drop * 6;
+    //dress_pos_drop = dress_pos_drop * 6;
     
     $("#full_dropable").css({top: top_pos_drop + 9 + "px"});
 }

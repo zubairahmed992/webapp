@@ -179,13 +179,15 @@ class RegistrationController extends Controller {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
         } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
+           
             $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   
             $registrationMeasurementform->get('bra_letters')->setData($measurement->getBraCup());   
             $registrationMeasurementform->get('bra_numbers')->setData($measurement->getBraSizes());
             $registrationMeasurementform->get('body_shape')->setData($measurement->getBodyShape());
         }
         $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
-            
+          $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);      
         #-----------End of Retaining BodyType----------------------------------#
         return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                     'form' => $registrationMeasurementform->createView(),
@@ -197,6 +199,8 @@ class RegistrationController extends Controller {
                     'bottom_size_chart_id' => $retaining_array['bottomSizeChartId'],
                     'dress_brand_id' => $retaining_array['dress_brand_id'],
                     'dress_size_chart_id' => $retaining_array['dressSizeChartId'],
+            'measurement_vertical_form' => $measurement_vertical_form->createView(),
+            'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                    
                 ));
     }
@@ -213,14 +217,17 @@ class RegistrationController extends Controller {
             throw $this->createNotFoundException('Unable to find User.');
         }
         $measurement = $user->getMeasurement();
-        
+        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
 
         return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                     'form' => $form->createView(),
                     'form' => $form->createView(),
-                    'measurement_form' => $measurement_form->createView(),
+                        'measurement_form' => $measurement_form->createView(),                   
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => 'registration',
@@ -242,7 +249,8 @@ class RegistrationController extends Controller {
 
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-
+$measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
         return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                     'form' => $form->createView(),
                     'form' => $form->createView(),
@@ -250,6 +258,8 @@ class RegistrationController extends Controller {
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => 'fitting_room',
+            'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                 ));
     }
 
@@ -313,6 +323,57 @@ class RegistrationController extends Controller {
 
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
         return new Response($response);
+    }
+    
+    
+    public function stepFourVerticalMeasurementUpdateAction(Request $request, $id) {
+
+        $entity = $this->get('user.helper.user')->find($id);
+        $measurement = $entity->getMeasurement();
+
+        $form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $this->get('user.helper.measurement')->saveVerticalPositonMeasurement($measurement);
+            return new Response('Measurement Updated');
+        } else {
+            return new Response('Vertical Position Measurement has not been updated!');
+        }
+    }
+    
+    
+    
+    
+    public function stepFourHorizontalMeasurementUpdateAction(Request $request, $id) {
+
+        $entity = $this->get('user.helper.user')->find($id);
+        $measurement = $entity->getMeasurement();
+
+        $form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $this->get('user.helper.measurement')->savehorizontalMeasurement($measurement);
+            return new Response('Measurement Updated');
+        } else {
+            return new Response('Horizontal Position Measurement has not been updated!');
+        }
+    }
+    #-----------------Downloading pdf ----------------------------------------#
+    public function downloadMeasurementPdfAction(Request $request){
+    $basename = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath()."/bundles/lovethatfit/site/pdf/final_version_tape.pdf";
+      
+   $response =new Response();
+    //then send the headers to foce download the zip file
+   $response->headers->set('Content-Type','application/pdf');
+   $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($basename) . '"');        
+   $response->headers->set('Pragma', "no-cache");
+   $response->headers->set('Expires', "0");
+   $response->headers->set('Content-Transfer-Encoding', "binary");
+   $response->sendHeaders();
+   $response->setContent(readfile($basename));
+   return $response;
     }
 
 }

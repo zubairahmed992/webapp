@@ -39,6 +39,10 @@ measurement_horizontal_position_update:
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourHorizontalMeasurementUpdate}
     requirements: 
           _method: post   
+          
+measurement_tape_pdf:
+    pattern:  /registration/pdf
+    defaults: { _controller: LoveThatFitUserBundle:Registration:downloadMeasurementPdf }          
 
 registration_measurement_edit:
     pattern:  /registration/measurement/edit

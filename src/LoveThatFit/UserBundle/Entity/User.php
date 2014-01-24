@@ -811,10 +811,11 @@ class User implements UserInterface, \Serializable {
         $fp = fopen($this->getAbsolutePath(), 'wb');
         @fwrite($fp, $decodedData);
         @fclose($fp);
-        usleep(2000);
         $this->copyTempToOriginalImage();
-        //return array("status"=>"true", "msg"=>"image has been saved");
-        return "true";
+       $cropped_image_url=$this->getWebPath();
+        
+       return json_encode(array("status"=>"check", "url"=>$cropped_image_url));
+        
     }
     
     private function copyTempToOriginalImage() {

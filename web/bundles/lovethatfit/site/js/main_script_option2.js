@@ -42,9 +42,7 @@ function set_vertical_step(){
     
     $('.left_move').animate({ top: 20 }, 500, function() { });    
     $('.right_move').animate({ top: 20 }, 500, function() { });
-    
-    $('#rotate_move_box').fadeOut(300);
-    //$('#rotate_move_box').animate({ height: 80 }, 500, function() { });
+    $('#rotate_move_box').animate({ height: 80 }, 500, function() { });
     
     $(".hiw_upload_photo").css("display","none");
     //$(".hiw_step_1").fadeOut(200, function(){$(".hiw_step_2").fadeIn(200);});
@@ -64,11 +62,7 @@ function set_vertical_step(){
     $("#adj_belt_hldr").fadeIn(500);
     $("#uploaded_photo").addClass("uploaded_photo");
     $("#dummy_mark").addClass("put_me_top");
-    
-    
     $(".step_4").hide(300);
-    
-    
     $("#step_three").removeClass("active");
     $("#step_one").removeClass("active");
     $("#step_two").addClass("active");
@@ -173,6 +167,7 @@ function set_horizontal_step(){
    
    var step_3_b = $("#frmUserMeasurement").attr('action');
         $("#frmUserMeasurement").ajaxSubmit({url: step_3_b, type: 'post'})
+   
    console.log(croped_img_path);
 }
 
@@ -205,17 +200,12 @@ $(".right_move").click(function(){
 
 /////Step3 > step 1//////
 
-$(".edt_link").click(function(){
-    window.reload();
-});
-
 
 $(".next_step3").click(function(){
     submit_all_step_3 = false;
     submit_step_3_first = false;
     submit_step_3_second = true;
-    set_horizontal_step();
-    //shift_to_canvas();
+    shift_to_canvas();
 });
 
 
@@ -225,8 +215,7 @@ $(".next_step2").click(function(){
     submit_all_step_3 = false;
     submit_step_3_first = true;
     submit_step_3_second = false;
-    //rotate_me_to("just_shift");
-    //shift_to_canvas();
+    shift_to_canvas();
 });
 
 
@@ -264,7 +253,7 @@ function pre_step_1(){
     $('.right_move').animate({ top: 46 }, 500, function() { });
     $('#rotate_move_box').animate({ height: 190 }, 500, function() { });
     
-    //shift_to_canvas ();
+    shift_to_canvas ();
 }
 
 $("#step_one_a").mousedown(function(){
@@ -294,7 +283,7 @@ if(rotate_side == "cw"){
      'transform':'rotate(' + req_deg + 'deg)'
     });
     
-    //$('#uploaded_photo').css({left: $('#play_area').width()/2 - $('#img_to_upload').width()/2, top:$('#play_area').height()/2 - $('#img_to_upload').height()/2});
+    $('#uploaded_photo').css({left: $('#play_area').width()/2 - $('#img_to_upload').width()/2, top:$('#play_area').height()/2 - $('#img_to_upload').height()/2});
     
     //$('#uploaded_photo').css({left: 364/2 - $('#img_to_upload').width()/2,top: 505/2 - $('#img_to_upload').height()/2});
 }
@@ -412,7 +401,7 @@ $('.img_acw_min').click(function(){
     rotate_me_to("acw", 0.2);
 });
 $('.reg_next_step2').click(function(){
-   //rotate_me_to("just_shift");
+   rotate_me_to("just_shift");
    $(".action_buts_bar").hide();
 });
 $('.next_step2').click(function(){
@@ -952,7 +941,7 @@ function post_content_of_canvas(){
   
               var obj_url = jQuery.parseJSON( data );
                
-              console.log("i am checked bhai");
+              
                 
                       if(obj_url.status === "check"){
                 
@@ -970,7 +959,6 @@ function post_content_of_canvas(){
                           }
                           
                           if(submit_step_3_second == true){
-                              console.log("2nd 3nd");
                               $("#hdn_user_cropped_image_url").attr("value", "/webapp/web/" + obj_url.url);
                               $('.zoomed_img').html("<img class='zoomed_img_inner' src='"+"/webapp/web/" + obj_url.url+"' width='728' height='1010'>");
                                 set_horizontal_step();
@@ -1000,7 +988,7 @@ function next_button_click()
         submit_all_step_3 = true;
 
         
-        //shift_to_canvas();
+        shift_to_canvas();
         
        
         
@@ -1009,7 +997,7 @@ function next_button_click()
         
         var step_3_final = $("#frmUserMeasurement_2").attr('action');
         $("#frmUserMeasurement_2").ajaxSubmit({url: step_3_final, type: 'post'})
-        setTimeout(go_to_index,'3500');
+        //setTimeout(go_to_index,'6000');
     
     
 }
@@ -1037,7 +1025,7 @@ function shift_to_canvas (rotate_deg, x1, y1){
       
         context.clearRect(0,0,364,505);
         context.save();
-        context.translate(x + width/2, y + 1 + height/2);
+        context.translate(x + 1 + width/2, y + 1 + height/2);
         
         context.rotate(0);
         context.rotate(rotate_deg * 0.0174532925);

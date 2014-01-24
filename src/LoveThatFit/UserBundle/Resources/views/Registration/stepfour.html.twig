@@ -2,16 +2,38 @@
 
 {% block action_block_content %}
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_four.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/step_3_new.js') }}"></script>
+
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
 <input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
 <div>
     
-            <form id="frmUserMeasurement" action="{{ path('registration_step_four_measurement_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_form) }}>
-             {{ form_errors(measurement_form) }}
-                {{ form_widget(measurement_form.shoulder_height) }}
-                {{ form_widget(measurement_form.outseam) }}
-                {{ form_rest(measurement_form) }}
+
+    
+  <form id="frmUserMeasurement" action="{{ path('measurement_vertical_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_vertical_form) }}>
+             {{ form_errors(measurement_vertical_form) }}
+                {{ form_widget(measurement_vertical_form.shoulder_height) }}
+                {{ form_widget(measurement_vertical_form.bust_height) }}
+                {{ form_widget(measurement_vertical_form.waist_height) }}
+                {{ form_widget(measurement_vertical_form.hip_height) }}
+                {{ form_rest(measurement_vertical_form) }}
+          
+          
             </form>
+    
+    
+           <form id="frmUserMeasurement_2" action="{{ path('measurement_horizontal_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_horizontal_form) }}>
+             {{ form_errors(measurement_horizontal_form) }}
+                {{ form_widget(measurement_horizontal_form.shoulder_width) }}
+                {{ form_widget(measurement_horizontal_form.bust_width) }}
+                {{ form_widget(measurement_horizontal_form.waist_width) }}
+                {{ form_widget(measurement_horizontal_form.hip_width) }}
+                {{ form_rest(measurement_horizontal_form) }}
+            </form>
+
+    
+    
 </div>
 <script>
         
@@ -40,7 +62,19 @@
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
-                <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+                
+                
+                  {% if(edit_type=="registration")%}
+                    <input type="hidden" id="hdn_user_cropped_image_url" value="/webapp/web/" />
+                 {% else %}
+                    <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+                 {% endif%}    
+                 
+                
+                
+                
+                
+                
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
      {{ form_errors(form) }}
                 <div class="input_file_hldr">
@@ -49,8 +83,15 @@
 
                         <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
                     </div>
-                <div class="upload_again_hldr"><a href="{{ path('registration_step_four_edit') }}">Try Another Photo</a></div>
-         {{ form_rest(form) }}
+                
+                {% if(edit_type=="registration")%}
+                    <div class="upload_again_hldr"><a href="{{ path('registration_step_four_edit') }}">Try Another Photo</a></div>
+                 {% else %}
+                  <div class="upload_again_hldr"><a href="{{ path('fitting_room_image_edit') }}">Try Another Photo</a></div>
+                 {% endif%} 
+                
+                
+                    {{ form_rest(form) }}
 
 
                     <div class="clr_bth"></div>
@@ -93,18 +134,21 @@
     
     <div class="how_it_works">
         <h2>How It Works</h2>
-        <ol>
-            <li>Take a Full Body picture of yourself in your bathing suit using any camera, smartphone or webcam.</li>
-            <li>Stand straight with arms relaxed by sides and feet facing forward and shoulder width apart. <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
-            <li>Upload photo and zoom in &amp; out until the crown of your head is touching the top line and the bottom line runs right over the top of your feet.</li>
-            <li>Adjust sliders so they are just above your shoulders with head centered and bottom one where you like your pants to sit.</li>
-            <li>Save and Continue.</li>
+        <ol class="hiw_upload_photo">
+            <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>
+            <li>For photo - Stand straight, arms relaxed by side, shoulders back and feet shoulder width apart. <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
+            <li>Do not forget to smile!</li>
+            <li>Click browse to upload photo</li>
         </ol>
-        <div id="stella_box">
-            <img src="{{ asset('bundles/lovethatfit/site/images/pic.png') }}">
-            <span id="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('stella_box').style.display='none'">x</a></span>
+        <ol class="hiw_step_1">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'">here</a> </li>
+        </ol>
+        <ol class="hiw_step_2">
+            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'">here</a> </li>
+        </ol>
         
-        </div>
+        
     </div>
         <!--/.action_blk--></section>
 {% endblock %}
@@ -112,7 +156,18 @@
 
 {% block reg_fitting_room %}
         <section>
-    
+    <div id="stella_box">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('stella_box').style.display='none'">x</a></span>
+        </div>
+        <div id="pic_step_1">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic_step_1.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_1').style.display='none'">x</a></span>
+        </div>
+        <div id="pic_step_2">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic_step_2.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_2').style.display='none'">x</a></span>
+        </div>
             <style>
                     #load_current_pic {
                         position: absolute;
@@ -139,8 +194,11 @@
                       
                      <div class="action_buts_bar rotate_buts">
                          <span class="rotate_label">Rotate</span>       
+                            <a href="#" class="but_rotate img_acw_min"></a>   
+                            <a href="#" class="but_rotate img_cw_min"></a>
                             <a href="#" class="but_rotate img_acw"></a>   
-                            <a href="#" class="but_rotate img_cw"></a>                            
+                            <a href="#" class="but_rotate img_cw"></a>
+                            
                      </div>
                           
                           <div class="clr_bth"></div>
@@ -166,14 +224,14 @@
                         
                         
                             
-                        <div id="adj_popout_top" class="adj_popout_msg">
-                            <div class="arrow_img_alerts"></div>
-                            <span>Align with the top of your shoulder & neck</span>
-                        <!--/.adj_popout_msg--></div>
+                        
                         
                         <div id="adj_popout_bottom" class="adj_popout_msg">
                             <div class="arrow_img_alerts"></div>
-                            <span>Align to where you like your pants to rest</span>
+                            <span>Move so it lies at your natural waist</span>
+                            <div class="step_2_example">
+                               <img class="step_2_exam_1" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
+                            </div>
                         <!--/.adj_popout_msg--></div>
 
                         <div class="tip tt_arrow step_4_tip">
@@ -190,27 +248,245 @@
                             
                             
                             
-                            <div class="active" id="step_one"><a id="step_one_a" class="step_one_a" href="#">Step 1<span></span></a></div>
-                            <div id="step_two">Step 2<span></span><span id="shd"></span></div> 
+                            <div class="active" id="step_one">
+                                <a id="step_one_a" class="step_one_a" href="#">Step 1<span></span></a>
+                            </div>
                             
+                            <div id="step_two">
+                                <span id="prev"></span>
+                                Step 2<span></span><span class="shd"></span>
+                            </div> 
+                            
+                            <div id="step_three">
+                                <span id="prev"></span>
+                                Step 3<span></span><span class="shd"></span>
+                            </div>
                            
                             
                         </div>
                         
+                        <div id="adj_markers_hldr">
+                            
+                            <div class="chk_it_out" style="display:none; background: #ffcc00;">CHECK</div>
+                            <div id="verti_shoulder" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Adjust slider bar to set height of shoulder</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <img class="step_2_exam_1" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            <div id="verti_bust" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Adjust slider bar to set height of the {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%} at the fullest point</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <img class="step_2_exam_2" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            <div id="verti_waist" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Adjust the slider bar to set the height of the waist at the narrowest point</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <img class="step_2_exam_3" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            <div id="verti_hip" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Adjust the slider bar to set the height of the hip at the fullest point</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <img class="step_2_exam_4" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            
+                            
+                            <div id="extra_hldr"></div>            
+                            <div id="shoulder_mark_hldr">
+                                            
+                                            
+                                            
+                                            <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Adjust slider to set the width of your shoulder</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="shoulder_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="shoulder_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                <div class="edt_link example_link"><a href="">Example</a></div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                <div class="step_1_example">
+                                    <img src="/webapp/web/bundles/lovethatfit/site/images/img_step_1.png" class="step_1_exam_1">
+                                </div>
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="shoulder_mark_h" class="inner_slider_hldr">
+                                                   
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#shoulder_mark_h--></div>
+                                            </div>
+                                         <div id="shoulder_mark_v" class="v_pos"></div>
+                                         
+                                         
+                                         
+                                         
+                                         
+                                           </div>
+                                        <div id="bust_mark_hldr">
+                                            
+                                            
+                                            <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Adjust slider to set the width of your {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%}</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="bust_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="bust_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                 <div class="edt_link example_link"><a href="">Example</a></div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                
+                                                <div class="step_1_example">
+                                    <img src="/webapp/web/bundles/lovethatfit/site/images/img_step_1.png" class="step_1_exam_2">
+                                </div>
+                                                
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="bust_mark_h" class="inner_slider_hldr">
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#bust_mark_h--></div>
+                                            </div>
+                                         <div id="bust_mark_v" class="v_pos"></div>
+                                    
+                                        </div>
+                                        
+                            
+                                    <div id="waist_mark_hldr">
+                                           
+                                        <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Adjust slider to set the width of your waist</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="waist_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="waist_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                 <div class="edt_link example_link"><a href="">Example</a></div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                
+                                                <div class="step_1_example">
+                                    <img src="/webapp/web/bundles/lovethatfit/site/images/img_step_1.png" class="step_1_exam_3">
+                                </div>
+                                                
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="waist_mark_h" class="inner_slider_hldr">
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#waist_mark_h--></div>
+                                            </div>
+                                         <div id="waist_mark_v" class="v_pos"></div>
+                                        
+                                        </div>
+                                        <div id="hip_mark_hldr">
+                                            
+                                            <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Adjust slider to set the width of your hip</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="hip_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="hip_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                 <div class="edt_link example_link"><a href="">Example</a></div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                
+                                                <div class="step_1_example">
+                                    <img src="/webapp/web/bundles/lovethatfit/site/images/img_step_1.png" class="step_1_exam_4">
+                                </div>
+                                                
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="hip_mark_h" class="inner_slider_hldr">
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#hip_mark_h--></div>
+                                            </div>
+                                         <div id="hip_mark_v" class="v_pos"></div>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                        
+                        
                         <div id="play_area" class="play_area hide">
                             
+                            <div class="center_mark"></div>
                             <div class="height_top_mark"></div>
                             <div class="height_bottom_mark"></div>
                             
                             <div id="top_layer"></div>
                             <div id="dummy_mark">
+                                
+                                
+                                
                                 <div id="user_body_marks">
                                     <div id="adj_top_hldr">
                                         <div id="top_adj_marks">
                                             <div id="top_moveable"></div>
-                                            <div id="right_hand"></div>
-                                            <div id="top_mid_body"></div>
-                                            <div id="left_hand"></div>
+                                            
                                         </div>
                                     </div>
                                     <div id="adj_belt_hldr">
@@ -230,6 +506,7 @@
             <div class="next_btn_4">
                 <div class="frm_ele">
                     <input class="next_step2" type="button" value="Next Step" />
+                    <input class="next_step3" type="button" value="Next Step" />
                 </div>
            </div>
             
@@ -239,5 +516,6 @@
                         </div>
                        
                     </div>
+            
 </section>
 {% endblock %}
