@@ -1309,8 +1309,10 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     
     
     public function getArray() {
-
-        return array('weight' => $this->weight,
+        $u=$this->getUser();
+        return array(
+            'gender' => $u->getGender(),
+            'weight' => $this->weight,
             'height' => $this->height,
             'waist' => $this->waist,
             'hip' => $this->hip,

@@ -208,6 +208,15 @@ class ProductSize
          }
             return $size_array;
     }
+    public function getFitPointMeasurements($fit_point)
+    {
+        foreach ($this->product_size_measurements as $psm) {            
+            if ($psm->getTitle()==$fit_point){
+                return $psm;
+            }
+         }
+            return;
+    }
     /**
      * Set body_type
      *

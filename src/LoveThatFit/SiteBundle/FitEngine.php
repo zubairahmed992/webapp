@@ -6,6 +6,7 @@ use LoveThatFit\AdminBundle\Entity\ProductItemHelper;
 class FitEngine {
 
     private $user;
+    private $product;
     private $product_item;
     private $product_size;
     private $user_measurement;
@@ -19,6 +20,7 @@ class FitEngine {
     function setProductItem($product_item) {
         $this->product_item = $product_item;
         $this->product_size = $product_item->getProductSize();
+        $this->product = $product_item->getProduct();        
     }
 #--------------------->
     function setUser($user) {
@@ -201,9 +203,9 @@ private function getAllKeysTesting($ar){
         }
 
         if ($current_item) {
-            $product = $current_item->getProduct();
+            $this->product = $current_item->getProduct();            
             $measurement_array = $this->product_size->getMeasurementArray();
-            $fp_array = $product->getFitPriorityArray();
+            $fp_array = $this->product->getFitPriorityArray();
             $body_measurement = $this->user->getMeasurement()->getArray();
 
             foreach ($fp_array as $key => $value) {
@@ -214,8 +216,7 @@ private function getAllKeysTesting($ar){
                         $is_ltf = false;
                     }
                 }
-            }
-            
+            }            
         }
         if ($is_ltf === true) {
             $str = 'Love that Fit!';
@@ -322,7 +323,7 @@ private function getAllKeysTesting($ar){
                     $str = ' Loose';
                     $loose_size_count=0;
                    // $str = $this->get_foo_bar($body_specs,$item_specs[$fit_point]['title'], $item_specs[$fit_point]['title']);
-                   // $loose_size_count=$this->get_loose_message($body_specs,$item_specs[$fit_point]['title'], $item_specs[$fit_point]['title']);
+                    //$loose_size_count=$this->get_loose_message($body_specs,$item_specs[$fit_point]['title']);
                     if ($loose_size_count==1){// one size too big
                         $str = ' Loose Fit';
                     }elseif($loose_size_count==2){// two size too big
@@ -350,19 +351,15 @@ private function getAllKeysTesting($ar){
     }
 #------------------------
 
-    private function get_loose_message($body_specs, $fit_point){
-        $size_title="";
-        $sizes=  $this->getSizeTitleArray();
+    private function get_loose_message($size_title, $body_specs, $fit_point){
+        
+        $sizes =  $this->getSizeTitleArray($body_specs['gender'], $this->product->getGender());
+        $size_fit_points = $this->product->getProductSizeTitleFitPointArray($fit_point);
         $j=0;
-        for($i=count($sizes)-1;$i>=0; $i--){
-            if($sizes[$i]===$size_title) $j=1;
-            if($j!=0){
-              $fp_specs=$this->get_size_measurement($sizes[$i], $fit_point);
-              if ($fp_specs['ideal_body_high']>$body_specs[$fit_point]){
-                $j++;    
+        for($i=0;$i<count($sizes)-1; $i++){
+           if($size_fit_points[$sizes[$i]]['ideal_body_size_low']>$body_specs[$fit_point])
+               $j++;                
               }
-            }
-        }
         return $j;
     }
     

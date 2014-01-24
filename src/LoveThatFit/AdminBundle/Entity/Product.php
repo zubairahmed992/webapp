@@ -500,6 +500,16 @@ class Product {
 
         return $sizeTitle;
     }
+    
+    //----------------------------------------------------------
+    public function getProductSizeTitleFitPointArray($fit_point) {
+        $productSizes = $this->getProductSizes();
+        $sizeTitle = array();
+        foreach ($productSizes as $ps) {            
+            $sizeTitle [$ps->getTitle()] = $ps->getFitPointMeasurements($fit_point);
+        }
+        return $sizeTitle;
+    }
 
 //----------------------------------------------------------
     /**
