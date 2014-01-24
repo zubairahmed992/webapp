@@ -984,7 +984,7 @@ a.but_short:visited {
     position:absolute; 
     top:16px; 
     left: 499px; 
-    width: 364px;    
+    width: 366px;    
 }
 
 
@@ -3286,7 +3286,7 @@ div.play_area_hldr div.action_buts_bar {
      z-index: 6000;
  }
  
- #popup_cross{     
+ .popup_cross{     
      position:absolute; 
      top:5px; right:10px; 
      border: 1px solid #ddd; 
@@ -3454,9 +3454,9 @@ margin-left: 4px;
     width:90px;
     background: url("../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
     position: absolute;
-    top: 50px;
+    top: 56px;
     left:864px;
-    height: 190px;
+    height: 210px;
     padding: 0px 0px 20px 10px;
 }
 
@@ -3545,7 +3545,15 @@ margin-left: 4px;
 
 
 .fitting_step div{
-position:relative;
+     width: 97px;
+float:left;
+padding: 8px 0px;
+background:url(../images/step_bg_normal.png) repeat-x;
+height: 30px;
+text-decoration: none;
+color: #9ba304;
+position: relative;
+
 }
 .fitting_step div span{
 width: 20px;
@@ -3703,19 +3711,23 @@ position: relative;
 }
 .step_2_exam_1 {
 position: relative;
-top:-40px;
+top:-100px;
+left:-95px;
 }
 .step_2_exam_2 {
 position: relative;
-top:-90px;
+top:-160px;
+left:-95px;
 }
 .step_2_exam_3 {
 position: relative;
-top:-136px;
+top:-235px;
+left:-95px;
 }
 .step_2_exam_4 {
 position: relative;
-top:-190px;
+top:-350px;
+left:-95px;
 }
 /*//////////////////////////////////////*/
 #adj_popout_bottom {
@@ -3865,23 +3877,23 @@ font-weight: bold;
 }
 .step_1_exam_1 {
 position: relative;
-top:-100px;
-left:-100px;
+top:-130px;
+left:-150px;
 }
 .step_1_exam_2 {
 position: relative;
-top:-180px;
-left:-100px;
+top:-225px;
+left:-150px;
 }
 .step_1_exam_3 {
 position: relative;
-top:-235px;
-left:-100px;
+top:-295px;
+left:-150px;
 }
 .step_1_exam_4 {
 position: relative;
-top:-340px;
-left:-100px;
+top:-420px;
+left:-150px;
 }
 .step_1_example {
 width:300px;
@@ -3900,3 +3912,20 @@ padding-top: 14px;
 
 
 
+#profile_measurement_link {
+font-size: 0.95em;
+color: #333;
+border:1px solid #ccc;
+display: block;
+padding: 5px;
+text-align: center;
+}
+#profile_measurement_link a {
+color:#C4C933;
+font-weight: bold;
+}
+#forgot_pass{
+margin-top: 30px;
+color:#DD1144;
+font-size: 0.8em;
+}
