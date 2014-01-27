@@ -3271,7 +3271,7 @@ div.play_area_hldr div.action_buts_bar {
      padding: 36px 10px 10px; 
      border:1px solid #ddd; 
      box-shadow:0px 3px 15px #000;
-     z-index: 6000;
+     z-index: 9000;
  }
  
   #pic_step_2{     

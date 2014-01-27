@@ -35,6 +35,10 @@ class ProductSizeHelper {
     protected $class;
     
     private $container;
+   
+    protected $conf;
+   
+    
     
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, Container $container)
     {
@@ -43,6 +47,9 @@ class ProductSizeHelper {
         $this->em = $em;
         $this->class = $class;
         $this->repo = $em->getRepository($class);
+        
+        $conf_yml = new Parser();
+        $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         
     }
 
@@ -102,6 +109,62 @@ class ProductSizeHelper {
        return $sizes_bodyType;
        
     }
+    
+    
+    
+    
+    
+#------------------ Save the index of Size Base on the size title --------------#
+    private function getSizeIndexValue($productSizeTitleType,$gender,$allSizes,$product){
+#------------------------------------Gender Female------------------------------#
+         if($gender=='F'){
+           if($productSizeTitleType=='numbers'){
+               $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['women']['numbers'];
+           }
+           if($productSizeTitleType=='letters'){
+               $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['women']['letter'];
+           }
+           if($productSizeTitleType=='Waist'){
+               $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['women']['waist'];
+           }
+               foreach($productSizesRevampWomanNumbers as $womanNumbers){
+                    if($womanNumbers['title']==$allSizes){
+                        return $womanNumbers['index']; 
+                      //  $p_size->setIndexValue($womanNumbers['index']);
+                    }
+               }
+           }
+           
+        
+        
+       #---------------------For Male-----------------------------------------#
+       if($gender=='M'){
+           
+           if($productSizeTitleType=='numbers'){
+               
+                if($product->getClothingType()->getTarget()=='Top'){
+                $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['man']['number']['top'];
+                }
+                if($product->getClothingType()->getTarget()=='Bottom'){
+                $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['man']['number']['bottom'];
+                }
+             }
+            
+        if($productSizeTitleType=='letter'){
+          $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['man']['letter'];
+        }
+       
+       
+       foreach($productSizesRevampWomanNumbers as $womanNumbers){
+                     if($womanNumbers['title']==$allSizes){
+                         return $womanNumbers['index']; 
+                       //  $p_size->setIndexValue($womanNumbers['index']);
+                     }
+                }
+       }  
+ }
+    
+    
 #----------------Product Create Sizes------------------------------------------#    
  public function createSizeItemForBodyTypes($product, $p_color, $all_sizes){
   if($all_sizes->getPetiteSizes()!=NULL){
@@ -110,12 +173,14 @@ class ProductSizeHelper {
 #-------------------- For Petite BodyType--------------------------------------#
         foreach ($sizesForPetiteBodyType as $s) {
                $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypePetite);
-
+               $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
+             //  return $indexValue;
             if (!$p_size) {
                 $p_size = new ProductSize();
                 $p_size->setProduct($product);
                 $p_size->setTitle($s);
                 $p_size->setbodyType($bodyTypePetite);
+                $p_size->setIndexValue($indexValue);
                 $this->em->persist($p_size);
                 $this->em->flush();
               $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
@@ -134,11 +199,14 @@ class ProductSizeHelper {
  #---------------- For Regular BodyType--------------------------------------#
         foreach ($sizesForRegularBodyType as $s) {
             $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeRegular);
+             $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
+            
             if (!$p_size) {
                 $p_size = new ProductSize();
                 $p_size->setProduct($product);
                 $p_size->setTitle($s);
                 $p_size->setbodyType($bodyTypeRegular);
+                $p_size->setIndexValue($indexValue);
                 $this->em->persist($p_size);
                 $this->em->flush();
                 $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
@@ -158,11 +226,13 @@ class ProductSizeHelper {
         foreach ($sizesForTallBodyType as $s) {
  #-----------The Method used for matching size title and body type ------------#
             $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeTall);
+             $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
             if (!$p_size) {
                 $p_size = new ProductSize();
                 $p_size->setProduct($product);
                 $p_size->setTitle($s);
                 $p_size->setbodyType($bodyTypeTall);
+                $p_size->setIndexValue($indexValue);
                 $this->em->persist($p_size);
                 $this->em->flush();
                 $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
@@ -183,12 +253,14 @@ class ProductSizeHelper {
 #-------------------- For Petite BodyType--------------------------------------#
         foreach ($sizesForWaistBodyType as $s) {
                $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypePetite);
+                $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
 
             if (!$p_size) {
                 $p_size = new ProductSize();
                 $p_size->setProduct($product);
                 $p_size->setTitle($s);
                 $p_size->setbodyType($bodyTypePetite);
+                $p_size->setIndexValue($indexValue);
                 $this->em->persist($p_size);
                 $this->em->flush();
               $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  

@@ -242,4 +242,27 @@ class ProductSize
     {
         return $this->body_type;
     }
+
+    /**
+     * Set index_value
+     *
+     * @param integer $indexValue
+     * @return ProductSize
+     */
+    public function setIndexValue($indexValue)
+    {
+        $this->index_value = $indexValue;
+    
+        return $this;
+    }
+
+    /**
+     * Get index_value
+     *
+     * @return integer 
+     */
+    public function getIndexValue()
+    {
+        return $this->index_value;
+    }
 }
