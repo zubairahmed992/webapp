@@ -16,7 +16,7 @@
     <div class="action_cnt">
         <div class="steps step_3 measurements">
             <h2>Brands &amp; Sizes</h2>
-            <div id="inst">Put all values in inches.</div>
+            <div id="inst">Put all values in inches.</div>          
             <form id="RegistrationMeasurement" action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
                 {{ form_errors(form) }}
                     
@@ -234,7 +234,7 @@ $('#height_in_inches').change(function() {
                         <script>
                            
                            $(document).ready(function(){
-                          $('#measurement_body_types_0').prop('checked', true);
+                          //$('#measurement_body_types_0').prop('checked', true);
                         {%if(top_brand_id is defined)%}     
                              var top_brand_id={{top_brand_id}};
                            $('#measurement_top_brand').val({{top_brand_id}}).change().ajaxStop(function() {
@@ -378,7 +378,7 @@ $('#height_in_inches').change(function() {
                             <!--/.step_3--></div>
                         <!--/.action_cnt--></div>
                     <!--/.action_blk--></section>
- {{ form_rest(form) }}
+ 
             </form>
          
 
