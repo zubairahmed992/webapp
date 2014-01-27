@@ -92,4 +92,9 @@ public function addItem($product, $p_color, $p_size) {
         $p_item->setProductColor($p_color);
         $this->save($p_item);
     }
+#-------------Get Item base on product-----------------------------------------#
+    public function getAllItemBaseProduct($product_id){
+        return $this->repo->getAllItemBaseProduct($product_id);
+        
+    }
 }

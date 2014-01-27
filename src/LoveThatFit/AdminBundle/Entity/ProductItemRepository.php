@@ -34,7 +34,7 @@ class ProductItemRepository extends EntityRepository
       JOIN pi.product_color pc
       WHERE
       pc.id = :color_id AND
-      ps.id = :size_id"                         
+      ps.id = :size_id "                         
                         )->setParameters(array('color_id' => $color_id, 'size_id' => $size_id)) ;
         try {
             return $query->getOneOrNullResult();
@@ -57,5 +57,20 @@ class ProductItemRepository extends EntityRepository
             return null;
         }
     }
-    
+  #-------------------Get all Item base on Product ----------------------------#  
+    public function getAllItemBaseProduct($product_id){
+     $query = $this->getEntityManager()
+                    ->createQuery("SELECT pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi
+                        JOIN pi.product_size ps
+                        JOIN pi.product_color pc
+                        JOIN pi.product p
+                        WHERE
+                        p.id = :product_id ORDER BY ps.body_type ,ps.title "                         
+       )->setParameters(array('product_id' => $product_id)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }  
+    }
 }

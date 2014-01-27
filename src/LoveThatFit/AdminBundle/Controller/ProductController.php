@@ -158,6 +158,7 @@ class ProductController extends Controller {
 
     public function productDetailShowAction($id) {
         $product = $this->getProduct($id);
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $product_limit = $this->get('admin.helper.product')->getRecordsCountWithCurrentProductLimit($id);
         $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($product_limit[0]['id']));
         if ($page_number == 0) {
@@ -169,6 +170,7 @@ class ProductController extends Controller {
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                     'product' => $product,
                     'page_number' => $page_number,
+                    'productItems'=>$productItems,
                 ));
     }
 
@@ -176,6 +178,7 @@ class ProductController extends Controller {
 
     public function productDetailColorAddNewAction($id) {
         $entity = $this->getProduct($id);
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -189,6 +192,7 @@ class ProductController extends Controller {
                     'colorform' => $colorform->createView(),
                     'imageUploadForm' => $imageUploadForm->createView(),
                     'patternUploadForm' => $patternUploadForm->createView(),
+                    'productItems'=>$productItems,
                 ));
     }
 
@@ -211,7 +215,8 @@ class ProductController extends Controller {
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
             }
-            $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData()); //--creating sizes & item records
+            
+          $this->createSizeItemForBodyTypes($product, $productColor,$colorform->getData()); //--creating sizes & item records
             $this->get('session')->setFlash('success', 'Product Detail color has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } else {
@@ -272,6 +277,9 @@ class ProductController extends Controller {
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
             }
+           
+            
+            
             $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData());
             $this->get('session')->setFlash(
                     'success', 'Product Color Detail has been updated!'
@@ -434,7 +442,9 @@ class ProductController extends Controller {
 #----------------------Product Item Edit ---------------------------------------#
 
     public function productDetailItemEditAction($id, $item_id) {
+        
         $entity = $this->getProduct($id);
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -445,6 +455,7 @@ class ProductController extends Controller {
                     'itemform' => $itemform->createView(),
                     'item_id' => $item_id,
                     'itemrawimageform' => $itemrawimageform->createView(),
+                    'productItems'=>$productItems,
                 ));
     }
 
@@ -452,6 +463,7 @@ class ProductController extends Controller {
 
     public function productDetailItemUpdateAction(Request $request, $id, $item_id) {
         $entity = $this->getProduct($id);
+         $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -472,6 +484,7 @@ class ProductController extends Controller {
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                         'product' => $entity,
                         'itemform' => $itemform->createView(),
+                        'productItems'=>$productItems,
                     ));
         } else {
 
@@ -481,6 +494,7 @@ class ProductController extends Controller {
                         'product' => $entity,
                         'itemform' => $itemform->createView(),
                         'item_id' => $item_id,
+                        'productItems'=>$productItems,
                     ));
         }
     }
