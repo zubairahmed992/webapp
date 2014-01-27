@@ -963,17 +963,19 @@ function post_content_of_canvas(){
                           
                           if(submit_step_3_first == true){
                               console.log("First");
-                              $("#hdn_user_cropped_image_url").attr("value", "/webapp/web/" + obj_url.url);
+                              $("#hdn_user_cropped_image_url").attr("value", $("#hdn_serverpath").attr("value") + obj_url.url);
                               // var test_url_chk = $("#hdn_user_cropped_image_url").attr('value');
-                              $('.zoomed_img').html("<img class='zoomed_img_inner' src='"+"/webapp/web/" + obj_url.url+"' width='728' height='1010'>");
+                              $('.zoomed_img').html("<img class='zoomed_img_inner' src='"+ $("#hdn_serverpath").attr("value") + obj_url.url+"' width='728' height='1010'>");
                                 set_vertical_step();
+                                console.log("Setp two path variable: "+ obj_url.url );
                           }
                           
                           if(submit_step_3_second == true){
                               console.log("2nd 3nd");
-                              $("#hdn_user_cropped_image_url").attr("value", "/webapp/web/" + obj_url.url);
-                              $('.zoomed_img').html("<img class='zoomed_img_inner' src='"+"/webapp/web/" + obj_url.url+"' width='728' height='1010'>");
+                              $("#hdn_user_cropped_image_url").attr("value", $("#hdn_serverpath").attr("value") + obj_url.url);
+                              $('.zoomed_img').html("<img class='zoomed_img_inner' src='"+ $("#hdn_serverpath").attr("value") + obj_url.url+"' width='728' height='1010'>");
                                 set_horizontal_step();
+                                console.log("Setp Three path variable: "+ obj_url.url );
                           }
                           
                       }
