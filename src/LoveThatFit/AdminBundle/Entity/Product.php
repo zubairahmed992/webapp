@@ -502,11 +502,13 @@ class Product {
     }
     
     //----------------------------------------------------------
-    public function getProductSizeTitleFitPointArray($fit_point) {
+    public function getProductSizeTitleFitPointArray($fit_point, $body_type) {
         $productSizes = $this->getProductSizes();
         $sizeTitle = array();
+        $body_type=  strtolower($body_type);
         foreach ($productSizes as $ps) {            
-            $sizeTitle [$ps->getTitle()] = $ps->getFitPointMeasurements($fit_point);
+            if ($body_type==strtolower($ps->getBodyType()))
+                $sizeTitle [$ps->getTitle()] = $ps->getFitPointMeasurements($fit_point);
         }
         return $sizeTitle;
     }

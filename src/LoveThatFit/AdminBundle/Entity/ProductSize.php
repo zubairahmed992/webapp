@@ -199,15 +199,18 @@ class ProductSize
     {
         return $this->product_size_measurements;
     }
-
+    #-------------------------------------------------------------------------------
      public function getMeasurementArray()
     {
         $size_array = array();
         foreach ($this->product_size_measurements as $psm) {
-            $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  'title' => $psm->getTitle(),  'ideal_body_high' => $psm->getIdealBodySizeHigh() , 'ideal_body_low' => $psm->getIdealBodySizeLow(), 'max_body_measurement' => $psm->getMaxBodyMeasurement(), 'size_title'=>$this->getTitle());
+            $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  'title' => $psm->getTitle(),  'ideal_body_high' => $psm->getIdealBodySizeHigh() , 'ideal_body_low' => $psm->getIdealBodySizeLow(), 'max_body_measurement' => $psm->getMaxBodyMeasurement());
          }
+         $size_array['size_title']=$this->getTitle();
+         $size_array['body_type']=$this->getBodyType();
             return $size_array;
     }
+    #-------------------------------------------------------------------------------
     public function getFitPointMeasurements($fit_point)
     {
         foreach ($this->product_size_measurements as $psm) {            

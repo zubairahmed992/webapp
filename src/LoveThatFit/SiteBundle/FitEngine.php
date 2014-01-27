@@ -209,7 +209,7 @@ private function getAllKeysTesting($ar){
             $body_measurement = $this->user->getMeasurement()->getArray();
 
             foreach ($fp_array as $key => $value) {
-                $fb = $this->evaluate_fit_point($body_measurement, $measurement_array, strtolower($key), $value);
+                $fb = $this->evaluate_fit_point_get_feedback($body_measurement, $measurement_array, strtolower($key), $value);
                 if ($fb != NULL) {
                     $feed_back [strtolower($key)] = $fb;
                     if ($fb['fit'] === FALSE) {
@@ -235,8 +235,43 @@ private function getAllKeysTesting($ar){
          
         return $feed_back;
     }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private function evaluate_fit_point($body_specs, $item_specs, $fit_point, $fit_priority = null) {
+
+        if ($fit_point === NULL || $fit_priority === NULL || $fit_priority <= 0) {
+            return null;
+        }
+
+        $ideal_low = null; $ideal_high = null; $body = null;
+        //------------------------------
+        $diff = null; $varience_index = null; $diff_percent = null;
+        //------------------------------        
+        $str = "";
+        //---------------------------
+        $fit = false; $max_fit = false; $ideal_fit = false;
+
+        if (array_key_exists($fit_point, $item_specs) && array_key_exists($fit_point, $body_specs)) {
+            $ideal_high = $item_specs[$fit_point]['ideal_body_high']; #~~~~~~~~~>
+            $ideal_low = $item_specs[$fit_point]['ideal_body_low']; #~~~~~~~~~>
+            $body = $body_specs[$fit_point]; #~~~~~~~~~>
+            if ($body_specs[$fit_point] <= $item_specs[$fit_point]['ideal_body_high'] && $body_specs[$fit_point] >= $item_specs[$fit_point]['ideal_body_low']) {
+                $diff = 0;
+                $fit = true;
+                $ideal_fit = true;
+                $str = "good fit";
+            } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
+                $diff = $item_specs[$fit_point]['ideal_body_low'] - $body_specs[$fit_point]; #~~~~~~~~~>
+                $diff_percent = ($diff / $item_specs[$fit_point]['ideal_body_low']) * 100;
+                $varience_index = ($fit_priority * $diff_percent) / 100;
+                $str = "loose fit";
+            }elseif ($body_specs[$fit_point] > $item_specs[$fit_point]['ideal_body_high']) {
+                $str = "tight fit";
+            }
+        }
+        return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, 0, $fit, $str, $ideal_fit, $max_fit, $varience_index);
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private function evaluate_fit_point_get_feedback($body_specs, $item_specs, $fit_point, $fit_priority = null) {
 
         if ($fit_point === NULL || $fit_priority === NULL || $fit_priority <= 0) {
             return null;
@@ -323,7 +358,9 @@ private function getAllKeysTesting($ar){
                     $str = ' Loose';
                     $loose_size_count=0;
                    // $str = $this->get_foo_bar($body_specs,$item_specs[$fit_point]['title'], $item_specs[$fit_point]['title']);
-                    //$loose_size_count=$this->get_loose_message($body_specs,$item_specs[$fit_point]['title']);
+                    //$loose_size_count=$this->get_loose_message($item_specs, $body_specs,$item_specs[$fit_point]['title']);
+//$foo ='';                    
+                    #$foo = $this->get_loose_message($item_specs, $body_specs,$item_specs[$fit_point]['title']);
                     if ($loose_size_count==1){// one size too big
                         $str = ' Loose Fit';
                     }elseif($loose_size_count==2){// two size too big
@@ -331,7 +368,7 @@ private function getAllKeysTesting($ar){
                     }elseif($loose_size_count>=3){// three or more size too big
                      $str = ' Too Large';
                     }
-                    
+                    #$str.=' ('.$loose_size_count.')'. $foo;
                     $diff = $item_specs[$fit_point]['ideal_body_low'] - $body_specs[$fit_point]; #~~~~~~~~~>
                     //~~~ Check & calculate possible recomendation based on fit priority & diffs
 
@@ -351,16 +388,21 @@ private function getAllKeysTesting($ar){
     }
 #------------------------
 
-    private function get_loose_message($size_title, $body_specs, $fit_point){
-        
-        $sizes =  $this->getSizeTitleArray($body_specs['gender'], $this->product->getGender());
-        $size_fit_points = $this->product->getProductSizeTitleFitPointArray($fit_point);
-        $j=0;
+    private function get_loose_message($item_specs, $body_specs, $fit_point){
+        $sizes =  $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
+        $size_fit_points = $this->product->getProductSizeTitleFitPointArray($fit_point, $item_specs['body_type']);
+        $j=-1;
+        $str='';
         for($i=0;$i<count($sizes)-1; $i++){
-           if($size_fit_points[$sizes[$i]]['ideal_body_size_low']>$body_specs[$fit_point])
-               $j++;                
-              }
-        return $j;
+           if($item_specs['size_title']==$sizes[$i]) $j=0;
+           if (array_key_exists($sizes[$i], $size_fit_points)) {
+                if ($j == 0 || $size_fit_points[$sizes[$i]]->getIdealBodySizeLow() > $body_specs[$fit_point]) {
+                    $j++;
+                }
+            }
+            $str.=$sizes[$i]. '='. $item_specs['size_title'].'>'.$j.', ';
+        }
+        return $str.'  ~>'.$j;
     }
     
     private function get_foo_bar($body_specs, $size_title, $fit_point){
@@ -395,10 +437,13 @@ private function getAllKeysTesting($ar){
         return;
     }
     
-    private function getSizeTitleArray($gender = 'f', $type = 'standard') {
+    private function getSizeTitleArray($gender = 'f', $type = 'numbers') {
+        $gender =  strtolower($gender);
+        $type =  strtolower($type);
+        
         if ($type == 'letters') {//$female_letters
             return array('XS', 'S', 'M', 'L', 'XL', 'XXL');
-        } else if ($gender == 'f' && $type == 'standard') {//$female_standard
+        } else if ($gender == 'f' && $type == 'numbers') {//$female_standard
             return array('00', '0', '2', '4', '6', '8', '10', '12', '16', '18', '20');
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
             return array('23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36');
