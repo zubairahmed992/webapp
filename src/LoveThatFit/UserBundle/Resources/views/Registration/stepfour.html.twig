@@ -11,16 +11,15 @@
     
 
     
-  <form id="frmUserMeasurement" action="{{ path('measurement_vertical_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_vertical_form) }}>
-             {{ form_errors(measurement_vertical_form) }}
+          <form id="frmUserMeasurement" action="{{ path('measurement_vertical_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_vertical_form) }}>
+                {{ form_errors(measurement_vertical_form) }}
                 {{ form_widget(measurement_vertical_form.shoulder_height) }}
                 {{ form_widget(measurement_vertical_form.bust_height) }}
                 {{ form_widget(measurement_vertical_form.waist_height) }}
                 {{ form_widget(measurement_vertical_form.hip_height) }}
-                {{ form_rest(measurement_vertical_form) }}
+                {{ form_rest(measurement_vertical_form) }}          
           
-          
-            </form>
+           </form>
     
     
            <form id="frmUserMeasurement_2" action="{{ path('measurement_horizontal_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_horizontal_form) }}>
@@ -334,7 +333,8 @@
                                                 <div class="edt_link example_link"><a href="">Example</a></div>
                                                 <div class="edt_link"><a href="">Edit Photo</a></div>
                                                 <div class="step_1_example">
-                                    <img src="/webapp/web/bundles/lovethatfit/site/images/img_step_1.png" class="step_1_exam_1">
+                                   
+                                    <img class="step_1_exam_1" src="{{ asset('bundles/lovethatfit/site/images/img_step_1.png') }}" />
                                 </div>
                                             <!--/.adj_popout_tip--></div>
                                             
@@ -376,7 +376,8 @@
                                                 <div class="edt_link"><a href="">Edit Photo</a></div>
                                                 
                                                 <div class="step_1_example">
-                                    <img src="/webapp/web/bundles/lovethatfit/site/images/img_step_1.png" class="step_1_exam_2">
+                                                    <img class="step_1_exam_2" src="{{ asset('bundles/lovethatfit/site/images/img_step_1.png') }}" />
+                                    
                                 </div>
                                                 
                                             <!--/.adj_popout_tip--></div>
@@ -415,7 +416,8 @@
                                                 <div class="edt_link"><a href="">Edit Photo</a></div>
                                                 
                                                 <div class="step_1_example">
-                                    <img src="/webapp/web/bundles/lovethatfit/site/images/img_step_1.png" class="step_1_exam_3">
+                                    
+                                    <img class="step_1_exam_3" src="{{ asset('bundles/lovethatfit/site/images/img_step_1.png') }}" />
                                 </div>
                                                 
                                             <!--/.adj_popout_tip--></div>
