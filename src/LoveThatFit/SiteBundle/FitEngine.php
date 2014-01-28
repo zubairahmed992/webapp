@@ -356,11 +356,11 @@ private function getAllKeysTesting($ar){
                     
                 } elseif ($body_specs[$fit_point] < $item_specs[$fit_point]['ideal_body_low']) {
                     $str = ' Loose';
-                    $loose_size_count=0;
+                    #$loose_size_count=0;
                    // $str = $this->get_foo_bar($body_specs,$item_specs[$fit_point]['title'], $item_specs[$fit_point]['title']);
                     //$loose_size_count=$this->get_loose_message($item_specs, $body_specs,$item_specs[$fit_point]['title']);
-//$foo ='';                    
-                    #$foo = $this->get_loose_message($item_specs, $body_specs,$item_specs[$fit_point]['title']);
+
+                    $loose_size_count = $this->get_loose_message($item_specs, $body_specs,$item_specs[$fit_point]['title']);
                     if ($loose_size_count==1){// one size too big
                         $str = ' Loose Fit';
                     }elseif($loose_size_count==2){// two size too big
@@ -368,7 +368,7 @@ private function getAllKeysTesting($ar){
                     }elseif($loose_size_count>=3){// three or more size too big
                      $str = ' Too Large';
                     }
-                    #$str.=' ('.$loose_size_count.')'. $foo;
+
                     $diff = $item_specs[$fit_point]['ideal_body_low'] - $body_specs[$fit_point]; #~~~~~~~~~>
                     //~~~ Check & calculate possible recomendation based on fit priority & diffs
 
@@ -388,23 +388,26 @@ private function getAllKeysTesting($ar){
     }
 #------------------------
 
-    private function get_loose_message($item_specs, $body_specs, $fit_point){
-        $sizes =  $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
+    private function get_loose_message($item_specs, $body_specs, $fit_point) {
+        $sizes = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
         $size_fit_points = $this->product->getProductSizeTitleFitPointArray($fit_point, $item_specs['body_type']);
-        $j=-1;
-        $str='';
-        for($i=0;$i<count($sizes)-1; $i++){
-           if($item_specs['size_title']==$sizes[$i]) $j=0;
-           if (array_key_exists($sizes[$i], $size_fit_points)) {
-                if ($j == 0 || $size_fit_points[$sizes[$i]]->getIdealBodySizeLow() > $body_specs[$fit_point]) {
+        $j = 0;
+        $in_range = false;
+        for ($i = 0; $i < count($sizes) - 1; $i++) {
+            if (array_key_exists($sizes[$i], $size_fit_points)) {
+                if ($size_fit_points[$sizes[$i]]->getIdealBodySizeHigh() > $body_specs[$fit_point] &&
+                        $size_fit_points[$sizes[$i]]->getIdealBodySizeLow() < $body_specs[$fit_point]) {
+                    $in_range = true;
+                } elseif ($in_range) {
+                    if ($item_specs['size_title'] == $sizes[$i])
+                        $in_range = false;
                     $j++;
                 }
             }
-            $str.=$sizes[$i]. '='. $item_specs['size_title'].'>'.$j.', ';
         }
-        return $str.'  ~>'.$j;
+        return $j;
     }
-    
+
     private function get_foo_bar($body_specs, $size_title, $fit_point){
         $sizes=  $this->getSizeTitleArray();
         $j=0;
