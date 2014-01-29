@@ -8,11 +8,13 @@
   </tr>
  {% for key, value in measurement.getMeasurementArray %} 
   <tr>
+      {% if (value.title is defined )%}
   <td>{{value['title'] }}</td>
     <td>{{value['ideal_body_low'] }}</td>
     <td>{{value['ideal_body_high'] }}</td>
     <td>{{value['max_body_measurement'] }}</td>
   </tr>  
+  {% endif%}
   {%endfor%}
   
   

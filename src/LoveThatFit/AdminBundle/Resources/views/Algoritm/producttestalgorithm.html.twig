@@ -1,20 +1,5 @@
 <div><strong>Product Detail</strong></div>
-<script>
-function getProductSize(id)
-{
-    jQuery(document).ready(function(){	
-        var admin_algorithm_product_szie= "../admin/algorithm/product/size/"+ id;          
-        jQuery.ajax({
-	  type: "POST",
-	  url: admin_algorithm_product_szie,              
-          success: function(response){                            
-              $('#productSizeAjax').html(response);
-	  }
-	});
-   });  
-}
 
-    </script>
 <div> 
     Name:{{product.name }}
     <div class="featured_sizes">                        
@@ -29,7 +14,7 @@ function getProductSize(id)
      <img src="{{asset(product.getDisplayProductColor.ImagePaths['web'])}}" class="prod_{{product.clothingType.target|lower}} ui-draggable">
                                 </div> 
 
-
+<!-- Product Size specification ~~~~~~~~~~~~~~~~~~~  -->
 <div id="productSizeAjax">                        
                      
                         </div> 

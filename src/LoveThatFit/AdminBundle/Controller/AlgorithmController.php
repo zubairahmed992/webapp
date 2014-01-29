@@ -8,7 +8,7 @@ use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use LoveThatFit\AdminBundle\Form\Type\AlgoritumTestlType;
 use LoveThatFit\AdminBundle\Form\Type\AlgoritumProductTestlType;
-
+use LoveThatFit\SiteBundle\FitEngine;
 
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Entity\User;
@@ -48,4 +48,16 @@ class AlgorithmController extends Controller {
                 ));
     }
 
+      public function getFeedbackAction($size_id, $user_id)
+    {   
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);               
+        $product = $product_size->getProduct();  
+        $product_color=$product->getDisplayProductColor();
+        $product_item = $this->get('admin.helper.productitem')->findByColorSize($product_color->getId(), $size_id);
+        $user = $this->get('user.helper.user')->find($user_id);  
+        $fe = new FitEngine($user, $product_item);        
+        return $this->render('LoveThatFitAdminBundle:Algoritm:feedback.html.twig',array(                   
+                    'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fe->getFeedBackJson(),
+                ));
+    }
 }
