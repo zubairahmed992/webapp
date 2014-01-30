@@ -57,9 +57,10 @@ class AlgorithmController extends Controller {
         $product_item = $this->get('admin.helper.productitem')->findByColorSize($product_color->getId(), $size_id);
         $user = $this->get('user.helper.user')->find($user_id);  
         $fe = new FitEngine($user, $product_item);        
-        return new Response($fe->getFeedBackJSON());
+         $fb=$fe->getBasicFeedback();
+        //return new Response($fe->getFeedBackJSON());
         return $this->render('LoveThatFitAdminBundle:Algoritm:_feedback.html.twig',array(                   
-                    'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fe->getFeedBackJson(),
+                    'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fb, 'fb_json'=>  json_encode($fb),
                 ));
     }
 }

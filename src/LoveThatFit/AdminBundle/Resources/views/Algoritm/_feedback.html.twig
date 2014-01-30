@@ -2,12 +2,15 @@
     <ul>
          {% for key, value in data %} 
             <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
-            
-            {%if (value.body is defined) and (value['body']==false) and (key | lower != 'tip') and (key | lower != 'overall')%}
-               <b><a href="{{ path('user_profile_about_me') }}" > here</a></b>
-           {% endif %}
          {% endfor %}
     </ul>
-
-
-            
+    <div>
+        <b>extended feedback</b><br>
+         {% for key, value in data %} 
+            <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
+         {% endfor %}
+</div>
+<br>
+    <div>
+    {{fb_json}}
+    </div>
