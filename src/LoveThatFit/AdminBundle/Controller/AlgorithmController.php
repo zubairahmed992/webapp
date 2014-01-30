@@ -60,7 +60,7 @@ class AlgorithmController extends Controller {
          $fb=$fe->getBasicFeedback();
         //return new Response($fe->getFeedBackJSON());
         return $this->render('LoveThatFitAdminBundle:Algoritm:_feedback.html.twig',array(                   
-                    'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fb, 'fb_json'=>  json_encode($fb),
+                    'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fb, 'fb_json'=>  $fb,
                 ));
     }
 }

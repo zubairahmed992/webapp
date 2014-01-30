@@ -72,9 +72,9 @@ jQuery(document).ready(function(){
 
             </script>
 
-            <span id='product_id'></span>
-            <span id='size_id'></span>
-            <span id='user_id'></span>
+            <span id='product_id' style="display: none"></span>
+            <span id='size_id' style="display: none"></span>
+            <span id='user_id' style="display: none"></span>
             <a href="#" onclick="return getFeedBack()">feedback</a>
             <div class="p_listing">     
                 <h1>Algorithm</h1>
@@ -99,10 +99,8 @@ jQuery(document).ready(function(){
                                         {{ form_rest(productForm) }}
                             </form>      
                             <!-- Product Detail ~~~~~~~~~~~~~~~~~~~  -->
-
                             <div id="productAjax">                        
                             </div>  
-
                         </div>
                         <div style="float: left">Feedback
                             <div id="feedbackAjax" style="float: left">                        
@@ -113,7 +111,5 @@ jQuery(document).ready(function(){
                             </div>  
                         </div>
                     </div> 
-
-
 
 {% endblock %}

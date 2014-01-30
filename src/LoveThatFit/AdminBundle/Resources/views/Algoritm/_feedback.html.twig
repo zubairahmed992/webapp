@@ -1,16 +1,46 @@
-    <h3>{{product.name}}</h3>
+<h3>{{product.name}}</h3>
     <ul>
          {% for key, value in data %} 
             <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
          {% endfor %}
     </ul>
+    <div style="clear: both"></div>
     <div>
         <b>extended feedback</b><br>
          {% for key, value in data %} 
             <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
          {% endfor %}
 </div>
-<br>
-    <div>
-    {{fb_json}}
+    <div style="clear: both"></div>    
+    
+    <div><strong>Feed Back</strong></div>
+    
+  <div style="float:left">
+  <table width="100%" border="0" align="center">
+  <tr>
+    <td width="15%" height="24">Fit Points</td>
+    <td width="15%">Ideal Low</td>
+    <td width="13%">Ideal High</td>
+    <td width="11%">Max</td>
+    <td width="10%">Body</td>
+    <td width="19%">Priority</td>
+    <td width="19%">Varience</td>
+    <td width="17%">Note</td>
+  </tr>
+   {% for key, value in fb_json %} 
+  <tr>
+    <td width="15%" height="24">{{key | lower | capitalize}}</td>
+    <td width="15%">{{value['ideal_low']}}</td>
+    <td width="13%">{{value['ideal_high']}}</td>
+    <td width="11%">{{value['max_body_measurement']}}</td>
+    <td width="10%">{{value['body']}}</td>
+    <td width="19%">{{value['priority']}}</td>
+    <td width="19%">{{value['diff']}}</td>    
+    <td width="17%">{{value['msg']}}</td>
+  </tr>  
+   {% endfor %}
+</table>
+           </div>     
+        </div> 
     </div>
+    <div style="clear: both"></div>
