@@ -4,6 +4,7 @@ namespace LoveThatFit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use LoveThatFit\AdminBundle\Form\Type\AlgoritumTestlType;
@@ -29,13 +30,13 @@ class AlgorithmController extends Controller {
     public function getUserForTestAlgorithmAction($id)
     {
         $user=$this->get('user.helper.user')->find($id);               
-        return $this->render('LoveThatFitAdminBundle:Algoritm:usertestalgorithm.html.twig',array('user'=>$user));
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_user_detail.html.twig',array('user'=>$user));
     }
     
     public function getProductForTestAlgorithmAction($id)
     {
         $entity = $this->get('admin.helper.product')->find($id);                
-        return $this->render('LoveThatFitAdminBundle:Algoritm:producttestalgorithm.html.twig',array(                   
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_product_detail.html.twig',array(                   
                     'product'=>$entity,
                 ));
     }
@@ -43,7 +44,7 @@ class AlgorithmController extends Controller {
     public function getProductSizeForTestAlgorithmAction($id)
     {        
         $productsize = $this->get('admin.helper.productsizes')->find($id);               
-        return $this->render('LoveThatFitAdminBundle:Algoritm:productsizetestalgorithm.html.twig',array(                   
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_size_detail.html.twig',array(                   
                     'measurement'=>$productsize,
                 ));
     }
@@ -56,7 +57,8 @@ class AlgorithmController extends Controller {
         $product_item = $this->get('admin.helper.productitem')->findByColorSize($product_color->getId(), $size_id);
         $user = $this->get('user.helper.user')->find($user_id);  
         $fe = new FitEngine($user, $product_item);        
-        return $this->render('LoveThatFitAdminBundle:Algoritm:feedback.html.twig',array(                   
+        return new Response($fe->getFeedBackJSON());
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_feedback.html.twig',array(                   
                     'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fe->getFeedBackJson(),
                 ));
     }

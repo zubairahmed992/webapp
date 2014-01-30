@@ -17,5 +17,5 @@ admin_algorithm_product_size:
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getProductSizeForTestAlgorithm}    
 admin_algorithm_feedback:
     pattern:  /admin/algoritm/feedback/{user_id}/{size_id}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:index, user_id: 0, size_id: 0}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getFeedback, user_id: 0, size_id: 0}
     

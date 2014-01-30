@@ -500,7 +500,27 @@ class Product {
 
         return $sizeTitle;
     }
+        //----------------------------------------------------------
+    public function getProductSizeDetailArray() {
+        $productSizes = $this->getProductSizes();
+
+        $sizeTitle = array();
+        foreach ($productSizes as $ps) {
+            $sizeTitle[$ps->getId()] = array('title' => $ps->getTitle(), 'description' => $ps->getTitle(), 'body_type' => $ps->getBodyType());
+        }
+        return $sizeTitle;
+    }
+    //----------------------------------------------------------
+    public function getProductSizesLayeredArray() {
+        $productSizes = $this->getProductSizes();
+
+        $sizeTitle = array();
+        foreach ($productSizes as $ps) {
+            $sizeTitle[$ps->getBodyType()][$ps->getTitle()]=$ps->getTitle(); 
+            }
+        return $sizeTitle;
     
+    }
     //----------------------------------------------------------
     public function getProductSizeTitleFitPointArray($fit_point, $body_type) {
         $productSizes = $this->getProductSizes();

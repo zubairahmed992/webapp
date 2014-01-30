@@ -1,12 +1,11 @@
-<div><strong>Product Detail</strong></div>
+<div><strong>Product:{{product.name }}</strong></div>
 
 <div> 
-    Name:{{product.name }}
     <div class="featured_sizes">                        
-                                {%for key, pcsa in product.getDisplayProductColor.getSizeDescriptionArray%}                                    
-            <a onclick="return getProductSize({{key}})">{{pcsa}}</a>    
+                    {%for key, pcsa in product.getProductSizeDetailArray%}                                    
+            <a onclick="return getProductSize({{key}})">{{pcsa['title']}}</a> |   
                                 {%endfor%}                                 
-                            </div>    
+            
     <br/>    
    {%for apc in product.productColors%}
      <img src="{{asset(apc.PatternWebPath)}}" style="width:16px !important; height:16px !important">
