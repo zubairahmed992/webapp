@@ -143,10 +143,10 @@ class ProductSizeHelper {
            if($productSizeTitleType=='numbers'){
                
                 if($product->getClothingType()->getTarget()=='Top'){
-                $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['man']['number']['top'];
+                $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['man']['top'];
                 }
                 if($product->getClothingType()->getTarget()=='Bottom'){
-                $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['man']['number']['bottom'];
+                $productSizesRevampWomanNumbers= $this->conf['constants']['size_title_revamp']['man']['bottom'];
                 }
              }
             
