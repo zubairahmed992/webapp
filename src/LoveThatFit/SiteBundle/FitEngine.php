@@ -218,6 +218,7 @@ private function getAllKeysTesting($ar){
                 }
             }            
         }
+        $feed_back['fits']=$is_ltf ;
         if ($is_ltf === true) {
             $str = 'Love that Fit!';
             $feed_back = null;

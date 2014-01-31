@@ -1,14 +1,19 @@
 <h3>{{product.name}}</h3>
     <ul>
          {% for key, value in data %} 
+            {%if (key | lower != 'fits')%}
             <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
+            {% endif %}
          {% endfor %}
+             
     </ul>
     <div style="clear: both"></div>
     <div>
         <b>extended feedback</b><br>
          {% for key, value in data %} 
+         {%if (key | lower != 'fits')%}
             <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
+            {% endif %}
          {% endfor %}
 </div>
     <div style="clear: both"></div>    
@@ -28,6 +33,7 @@
     <td width="17%">Note</td>
   </tr>
    {% for key, value in fb_json %} 
+  {%if (key | lower != 'fits')%}
   <tr>
     <td width="15%" height="24">{{key | lower | capitalize}}</td>
     <td width="15%">{{value['ideal_low']}}</td>
@@ -38,6 +44,7 @@
     <td width="19%">{{value['diff']}}</td>    
     <td width="17%">{{value['msg']}}</td>
   </tr>  
+  {% endif %}
    {% endfor %}
 </table>
            </div>     
