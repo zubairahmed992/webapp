@@ -130,16 +130,18 @@
                         <div class="mlabel">Shirt</div>
                         <div class="shirts_mus manual_opn show_hide" id="shirts_mus" style="">
                             
-                             {{ form_errors(form.sleeve) }}
+                            {% if( entity.gender=='f') %}
+                            {{ form_errors(form.sleeve) }}
                             <span class="boxlable" id="sleeve_box">Sleeves</span>                        
                             {{ form_widget(form.sleeve) }}
-
+                            {%endif%}
                             {# ---------------  Chest or Bust ------------------ #}
                             
                             {% if( entity.gender=='m') %}
-                                {{ form_errors(form.chest) }}
+                            {#    {{ form_errors(form.chest) }}
                                 <span class="boxlable" id="chest_box">Chest</span>                              
                                 {{ form_widget(form.chest) }}
+                            #}
                             {%else%}
                             
                                 {{ form_errors(form.bust) }}
@@ -149,20 +151,13 @@
                                 
                                 {# ---------------  Neck or Back ------------------ #}
                                 
-                          {% if( entity.gender=='m') %}
-                            
-                            {{ form_errors(form.neck) }}
-                            <span class="boxlable" id="neck_box">Neck</span>                             
-                            {{ form_widget(form.neck) }}
-
-                            {%else%}
+                          {% if( entity.gender=='f') %}
                             
                             {{ form_errors(form.shoulder_across_back) }}
                             <span class="boxlable" id="back_box">Shoulder across back</span>
                              {{ form_widget(form.shoulder_across_back) }}
-
-                           {%endif%} 
-
+                            {%endif%}
+                          
                         </div>
                         
                     {# ----------------------  Top Brand & Size ------------------ #}
@@ -267,17 +262,26 @@ $('#height_in_inches').change(function() {
                           
                             {{form_errors(form.top_brand)}}  
                             {{form_widget(form.top_brand)}} 
-
+                            {% if( entity.gender=='f') %}
                             {{form_errors(form.top_size)}}  
-                            {{form_widget(form.top_size)}}                 
-                       
+                            {{form_widget(form.top_size)}}
+                            {%endif%}
+                            {% if( entity.gender=='m') %}
+                            {{ form_errors(form.sleeve) }}
+                            {{ form_widget(form.sleeve) }}
+                            {%endif%}
+                           
+                            {% if( entity.gender=='m') %}
+                            {{ form_errors(form.neck) }}
+                            {{ form_widget(form.neck) }}
+                            {% endif%}
                            
                         </div>
                         
                         
-                        
+                       {% if( entity.gender=='f') %}
                         <div class="shuf_icon shirt_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
-
+                       {%endif%}
                     </div>
                     
             <span>
@@ -290,15 +294,16 @@ $('#height_in_inches').change(function() {
                         <div class="mlabel">Pant</div>
                         
                         <div class="pants_mus manual_opn show_hide" id="pants_mus">
-                         
+                          {% if( entity.gender=='f') %}
                             {{ form_errors(form.waist) }}
                             <span class="boxlable" id="waist_box">Waist</span>                        
                             {{ form_widget(form.waist) }}
+                            
 
                             {{ form_errors(form.outseam) }}
                             <span class="boxlable" id="outseam_box">Pant Length</span> 
                             {{ form_widget(form.outseam) }}       
-
+                            {%endif%}
                         </div>
                         
                         
@@ -307,14 +312,25 @@ $('#height_in_inches').change(function() {
 
                             {{form_errors(form.bottom_brand)}}  
                             {{form_widget(form.bottom_brand)}} 
-
+                              {% if( entity.gender=='f') %}
                             {{form_errors(form.bottom_size)}}  
                             {{form_widget(form.bottom_size)}}  
+                            {%endif%}
+                            
+                             {% if( entity.gender=='m') %}
+                            {{ form_errors(form.waist) }}
+                            {{ form_widget(form.waist) }}
+                            
+                            {{ form_errors(form.inseam) }}
+                            {{ form_widget(form.inseam) }}
+                            
+                            {%endif%}
+                           
 
                         </div>
-
+                         {% if( entity.gender=='f') %}
                         <div class="shuf_icon pant_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
-
+                          {% endif%}
                         <!---  pant section close  !-->
 
 
