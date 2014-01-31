@@ -43,17 +43,7 @@ class Measurement {
  
 
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Brand", inversedBy="measurement")
-     * @ORM\JoinColumn(name="top_brand_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $top_brand;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Brand", inversedBy="measurement")
-     * @ORM\JoinColumn(name="bottom_brand_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    private $bottom_brand;
     
 //---------------------------------------------------------------------    
 
