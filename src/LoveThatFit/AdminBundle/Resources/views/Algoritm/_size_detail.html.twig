@@ -1,15 +1,15 @@
-<strong>{{measurement.getBodyType}} {{measurement.title}} </strong>
+<strong>{{product_size_measurement.getBodyType}} {{product_size_measurement.title}} </strong>
 <table width="42%" border="0">
   <tr>
-    <td width="32%"></td>
-    <td width="18%"><strong>Low</strong></td>
-    <td width="23%"><strong>High</strong></td>
-    <td width="27%"><strong>Max</strong></td>
+    <td width="50px"></td>
+    <td><strong>Low</strong></td>
+    <td><strong>High</strong></td>
+    <td><strong>Max</strong></td>
   </tr>
- {% for key, value in measurement.getMeasurementArray %} 
+ {% for key, value in product_size_measurement.getPriorityMeasurementArray %} 
   <tr>
       {% if (value.title is defined )%}
-  <td>{{value['title'] }}</td>
+  <td><strong>{{value['title'] }}</strong> &nbsp;&nbsp;</td>
     <td>{{value['ideal_body_low'] }}</td>
     <td>{{value['ideal_body_high'] }}</td>
     <td>{{value['max_body_measurement'] }}</td>

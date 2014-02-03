@@ -44,8 +44,9 @@ class AlgorithmController extends Controller {
     public function getProductSizeForTestAlgorithmAction($id)
     {        
         $productsize = $this->get('admin.helper.productsizes')->find($id);               
+        
         return $this->render('LoveThatFitAdminBundle:Algoritm:_size_detail.html.twig',array(                   
-                    'measurement'=>$productsize,
+                    'product_size_measurement'=>$productsize,
                 ));
     }
 

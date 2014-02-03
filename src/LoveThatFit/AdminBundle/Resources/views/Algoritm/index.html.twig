@@ -39,9 +39,9 @@ jQuery(document).ready(function(){
         <script>
         function getProductSize(id)
         {
-            jQuery(document).ready(function(){	
-                var admin_algorithm_product_szie= "../admin/algorithm/product/size/"+ id;          
-                $('#size_id').text(id);
+            $('#size_id').text(id);
+            /*jQuery(document).ready(function(){	
+                var admin_algorithm_product_szie= "../admin/algorithm/product/size/"+ id;                          
                 jQuery.ajax({
                   type: "POST",
                   url: admin_algorithm_product_szie,              
@@ -49,7 +49,9 @@ jQuery(document).ready(function(){
                       $('#productSizeAjax').html(response);
                   }
                 });
-           });  
+           });
+           */
+           getFeedBack();
         }
 
         function getFeedBack()
@@ -57,8 +59,7 @@ jQuery(document).ready(function(){
             size_id=$('#size_id').text();
             user_id=$('#user_id').text();
             product_id=$('#product_id').text();
-            
-            jQuery(document).ready(function(){	
+            	if (user_id.length>0 && size_id.length >0){
                 var feedback_url= "../admin/algoritm/feedback/"+user_id+"/"+size_id;          
                 jQuery.ajax({
                   type: "POST",
@@ -66,8 +67,8 @@ jQuery(document).ready(function(){
                   success: function(response){                            
                       $('#feedbackAjax').html(response);
                   }
-                });
-           });  
+                });           
+                }
         }
 
             </script>
@@ -81,7 +82,7 @@ jQuery(document).ready(function(){
                 <div style="float: left">User
                     <form id="userForm" method="post" {{ form_enctype(userForm) }}>
                         {{ form_errors(userForm) }}                                  
-                            User
+                            
                                         {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
 
                                     {{ form_rest(userForm) }}
@@ -90,12 +91,11 @@ jQuery(document).ready(function(){
                         <div id="cityAjax">                        
                         </div>
 
-
                     </div>
                     <div style="float: left">Product
                         <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
                                          {{ form_errors(productForm) }}                                            
-                                Product{{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            
+                                {{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            
                                         {{ form_rest(productForm) }}
                             </form>      
                             <!-- Product Detail ~~~~~~~~~~~~~~~~~~~  -->

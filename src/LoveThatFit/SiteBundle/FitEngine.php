@@ -279,7 +279,7 @@ private function getAllKeysTesting($ar){
 
         $ideal_low = null;
         $ideal_high = null;
-        $max_body_measurement = null;
+        $max_body_measurement = $item_specs[$fit_point]['max_body_measurement'];
         $body = null;
         //------------------------------
         $diff = null;
@@ -328,10 +328,14 @@ private function getAllKeysTesting($ar){
                 } elseif ($body_specs[$fit_point] > $item_specs[$fit_point]['ideal_body_high']) {
 
                     $str = '';
+                    $diff = $item_specs[$fit_point]['ideal_body_high'] - $body_specs[$fit_point]; #~~~~~~~~~>
 //1~~~~~~~~~~~~~~~ Check if max measurement exists 4-c
                     if ($item_specs[$fit_point]['max_body_measurement'] != 0) {
+                        $diff = $item_specs[$fit_point]['ideal_body_high'] - $body_specs[$fit_point]; #~~~~~~~~~>
+                        $max_body_diff = $item_specs[$fit_point]['max_body_measurement'] - $body_specs[$fit_point]; #~~~~~~~~~>
 //2~~~~~~~~~~~~~~~ Check if body measurement under max measurement 4-d
                         if ($item_specs[$fit_point]['max_body_measurement'] > $body_specs[$fit_point]) {
+                            $max_fit=true;
                             $mid_of_high_max = ($item_specs[$fit_point]['max_body_measurement'] + $item_specs[$fit_point]['ideal_body_high']) / 2;
                             #3~~~~~~~~~~~Tight Fit: User Measurement is in first half of the value between Ideal Body Size High & Max Body Measurement
                             if ($mid_of_high_max > $body_specs[$fit_point]) {
@@ -343,9 +347,10 @@ private function getAllKeysTesting($ar){
                         } else {
 #5~~~~~~~~~~~Too Small: User Measurement value beyond Max Body Measurement
                             $str .= ' too Small';
+                            $max_fit=false;
                         }
                     }
-
+                    
 
 //-------------if loose 4-e
 #Feedback  comments for loose item 

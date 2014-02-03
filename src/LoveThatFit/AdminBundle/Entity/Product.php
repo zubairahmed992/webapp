@@ -992,7 +992,7 @@ class Product {
     }
 
          public function getFitPriorityArray(){
-        return json_decode($this->fit_priority);
+        return json_decode($this->fit_priority, true);
     }
 
     public function getFitPriorityLowerCase(){        

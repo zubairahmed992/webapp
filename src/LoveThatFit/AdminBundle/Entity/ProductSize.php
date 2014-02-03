@@ -210,6 +210,24 @@ class ProductSize
          $size_array['body_type']=$this->getBodyType();
             return $size_array;
     }
+      #-------------------------------------------------------------------------------
+     public function getPriorityMeasurementArray()
+    {
+        $fp = $this->product->getFitPriorityArray();
+         
+        $size_array = array();
+        foreach ($this->product_size_measurements as $psm) {
+            if (array_key_exists($psm->getTitle(), $fp)){
+                if ($fp[$psm->getTitle()]>0){
+                    $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  'title' => $psm->getTitle(),  'ideal_body_high' => $psm->getIdealBodySizeHigh() , 'ideal_body_low' => $psm->getIdealBodySizeLow(), 'max_body_measurement' => $psm->getMaxBodyMeasurement(), 'priority' => $fp[$psm->getTitle()]);
+                }
+                
+            }
+        }
+         $size_array['size_title']=$this->getTitle();
+         $size_array['body_type']=$this->getBodyType();
+            return $size_array;
+    }
     #-------------------------------------------------------------------------------
     public function getFitPointMeasurements($fit_point)
     {
