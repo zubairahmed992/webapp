@@ -206,4 +206,87 @@ class BrandRepository extends EntityRepository {
                 } 
      
  }
+
+ #-- --------------Get Top Brand From the Size Chart For Male ------------------#
+ public function getTopBrandForMaleBaseOnSizeChart(){     
+     
+      $query = $this->getEntityManager()
+                        ->createQuery("SELECT b FROM LoveThatFitAdminBundle:Brand b
+                            JOIN b.sizechart sc
+                            WHERE
+                            sc.gender='M'
+                            AND sc.target='Top'
+                            GROUP BY b.id");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
+ #-- --------------Get Bottom Brand From the Size Chart For Male ------------------#
+ public function getBottomBrandForMaleBaseOnSizeChart(){     
+     $query = $this->getEntityManager()
+                        ->createQuery("SELECT b FROM LoveThatFitAdminBundle:Brand b
+                            JOIN b.sizechart sc
+                            WHERE
+                            sc.gender='M'
+                            AND sc.target='Bottom'
+                            GROUP BY b.id");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
+ 
+ #------------------Get Top Brand From the Size Chart For Female ------------------#
+ public function getTopBrandForFemaleBaseOnSizeChart(){     
+     
+      $query = $this->getEntityManager()
+                        ->createQuery("SELECT b FROM LoveThatFitAdminBundle:Brand b
+                            JOIN b.sizechart sc
+                            WHERE
+                            sc.gender='F'
+                            AND sc.target='Top'
+                            GROUP BY b.id");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
+ 
+ #------------------Get Bottom Brand From the Size Chart For Female ------------------#
+ public function getBottomBrandForFemaleBaseOnSizeChart(){     
+     
+      $query = $this->getEntityManager()
+                        ->createQuery("SELECT b FROM LoveThatFitAdminBundle:Brand b
+                            JOIN b.sizechart sc
+                            WHERE
+                            sc.gender='F'
+                            AND sc.target='Bottom'
+                            GROUP BY b.id");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
+ 
+ #------------------Get Bottom Brand From the Size Chart For Female ------------------#
+ public function getDressBrandForFemaleBaseOnSizeChart(){     
+     
+      $query = $this->getEntityManager()
+                        ->createQuery("SELECT b FROM LoveThatFitAdminBundle:Brand b
+                            JOIN b.sizechart sc
+                            WHERE
+                            sc.gender='F'
+                            AND sc.target='dress'
+                            GROUP BY b.id");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
 }
