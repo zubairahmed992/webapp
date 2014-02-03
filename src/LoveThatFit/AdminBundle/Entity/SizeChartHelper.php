@@ -650,4 +650,8 @@ public function getMixSizeTitleForMenBottom(){
 public function getMixSizeTitleForWoman(){
      return $this->conf["constants"]["size_titles"]["mix"]["woman"];
 }
+
+
+
+  
 }
