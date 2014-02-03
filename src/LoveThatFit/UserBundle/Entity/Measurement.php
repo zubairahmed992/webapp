@@ -42,6 +42,9 @@ class Measurement {
     private $dress_fitting_size_chart;
  
 
+    
+    
+    
 //---------------------------------------------------------------------    
 
     /**

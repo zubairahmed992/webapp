@@ -85,7 +85,12 @@ class RegistrationController extends Controller {
                 $this->get('mail_helper')->sendRegistrationEmail($user);
 
                 if ($user->getGender() == 'm') {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
+
+                    $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
+                    $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
+                    $waist_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
+                    $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
+                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size), $measurement);
                 } else {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
                 }
@@ -135,21 +140,30 @@ class RegistrationController extends Controller {
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
-    
-#---------Start OF CRF Protection--------------------------------------#
+   #---------Start OF CRF Protection--------------------------------------#
  if ($this->getRequest()->getMethod() == 'POST') {
         if ($user->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
-        } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
+    $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
+    $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
+    $waist_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
+    $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
+    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size), $measurement);
+   } else {
+      $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
         }
         $registrationMeasurementform->bind($this->getRequest());
         #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
         
         $request_array = $this->getRequest()->get('measurement');     
-       // return new response(json_encode($request_array));
+       
         $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
-         $measurement->setBraSize($measurement->bra_numbers." ".$measurement->bra_letters);
+       
+        $measurement->setBraSize($measurement->bra_numbers." ".$measurement->bra_letters);
+        if(isset($request_array['neck'])!=0 and isset($request_array['sleeve'])!=0){
+            $sizeBaseOnSleeveNeck=$this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve($request_array['neck'],$request_array['sleeve']);
+            $measurement->setArm($sizeBaseOnSleeveNeck['arm_length']);
+            $measurement->setShoulderAcrossBack($sizeBaseOnSleeveNeck['shoulder']);
+        }
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
 
         // Rendering step four
@@ -175,9 +189,16 @@ class RegistrationController extends Controller {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
+        
+       // $shirtSizesBaseNeckSleeve = $this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve(14,32);
+        
         if ($user->getGender() == 'm') {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper), $measurement);
-        } else {
+            $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
+            $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
+            $waist_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
+            $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size), $measurement);
+       } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching()), $measurement);
            
             $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   

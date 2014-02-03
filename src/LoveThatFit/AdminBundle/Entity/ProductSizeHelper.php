@@ -273,5 +273,48 @@ class ProductSizeHelper {
         }
 }   
  }
-  
+ 
+ #--------Fetching Neck and Sleeve Size for Measruemt setp 2 combo box---------#
+ public function manSizeList($neck,$sleeve,$waist,$inseam){
+     
+     if($neck==1){
+         $shirtSizes= $this->conf['constants']['size_title_revamp']['man']['neck_sizes'];
+     return $shirtSizes;  
+     }
+     if($sleeve==1){
+         $shirtSizes= $this->conf['constants']['size_title_revamp']['man']['sleeve_size'];
+         return $shirtSizes;
+     }
+     if($waist==1){
+            $shirtSizes= $this->conf['constants']['size_title_revamp']['man']['waist'];
+            $counter=28;
+            foreach($shirtSizes as $waistSize){
+                $waistSizes[$counter]=$waistSize['title'];
+            
+             $counter++;   
+            }
+         return $waistSizes;
+     }
+   if($inseam==1){
+         $shirtSizes= $this->conf['constants']['size_title_revamp']['man']['inseam'];
+     return $shirtSizes;  
+       
+   }
+ }
+ 
+ #----- Fetching Data From yml for shirt sizes base on neck and sleeve---------#
+ public function shirtSizeBaseOnNeckSleeve($neck,$sleeve){
+ $shirtSizes= $this->conf['constants']['size_title_revamp']['man']['shirt'];
+ foreach($shirtSizes as $singleIndex){
+     if($singleIndex['neck']==$neck and $singleIndex['sleeve_size']==$sleeve){
+         return $singleIndex;
+     }
+ }
+     
+ }
+ 
+ 
+ 
+ 
+ 
 }

@@ -1,6 +1,8 @@
 <div><strong>Product:{{product.name }}</strong></div>
-
+<div>{% include 'LoveThatFitAdminBundle:Algoritm:_fitPirority.html.twig'%}</div>
+<div style="clear: both;"></div>
 <div> 
+    
     <div class="featured_sizes">                        
                     {%for key, pcsa in product.getProductSizeDetailArray%}                                    
             <a onclick="return getProductSize({{key}})">{{pcsa['title']}}</a> |   
