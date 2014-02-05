@@ -1,5 +1,4 @@
-<h3>{{product.name ~ ' size:' ~product_size.title}}</h3>
-<div>
+<h3>{{product.name}}</h3>
     <ul>
          {% for key, value in data %} 
             {%if (key | lower != 'fits')%}
@@ -8,10 +7,7 @@
          {% endfor %}
              
     </ul>
-</div>        
     <div style="clear: both"></div>
-<<<<<<< HEAD
-=======
     <div>
         <b>extended feedback</b><br>
          {% for key, value in data %} 
@@ -23,101 +19,35 @@
     <div style="clear: both"></div>    
     
     <div><strong>Feed Back</strong></div>
->>>>>>> b271014995f023e01a5b5b8cda29d734f99e9701
     
   <div style="float:left">
-  <table width="100%" border="1" align="center">
-      
-      <tr>
-          <td><b>Fit Points</b></td>
-          <td >Low</td>
-          <td >High</td>
-          <td >Max</td>
-          <td >User</td>    
-          <td >Varience</td>
-          <td >diff</td>
-          <td >Message</td>
-         <!--
-          <td>max_body_diff</td>    
-          <td>diff_percent</td>    
-          <td>fit</td>    
-          <td>ideal_fit</td>    
-          <td>max_fit</td>    
-         -->
-      </tr>
-   {% for key, value in fb_json %} 
-
-  {% if (key | lower != 'tip') %}
-
-  {%if (key | lower != 'fits')%}
-
+  <table width="100%" border="0" align="center">
   <tr>
-      <td width="15%" height="24"><b>{{key | lower | capitalize}}</b> ({{value['priority']}}%)</td>
+    <td width="15%" height="24">Fit Points</td>
+    <td width="15%">Ideal Low</td>
+    <td width="13%">Ideal High</td>
+    <td width="11%">Max</td>
+    <td width="10%">Body</td>
+    <td width="19%">Priority</td>
+    <td width="19%">Varience</td>
+    <td width="17%">Note</td>
+  </tr>
+   {% for key, value in fb_json %} 
+  {%if (key | lower != 'fits')%}
+  <tr>
+    <td width="15%" height="24">{{key | lower | capitalize}}</td>
     <td width="15%">{{value['ideal_low']}}</td>
     <td width="13%">{{value['ideal_high']}}</td>
     <td width="11%">{{value['max_body_measurement']}}</td>
-    <td width="10%">{{value['body']}}</td>    
-    <td width="19%">{{value['varience_index']|number_format(2, '.', ',')}}</td>    
+    <td width="10%">{{value['body']}}</td>
+    <td width="19%">{{value['priority']}}</td>
     <td width="19%">{{value['diff']}}</td>    
-    <td width="17%">{{value['msg']}}
-        <br>
-    
-    </td>    
-    <!--
-<td>{{value['max_body_diff']}}</td>    
-<td>{{value['diff_percent']}}%</td>    
-<td>{{(value['fit'] is empty) ? 'false' : 'true'}}</td>    
-<td>{{value['ideal_fit']}}</td>    
-<td>{{(value['max_fit'] is empty) ? 'false' : 'true'}}</td> 
-
--->
-    
+    <td width="17%">{{value['msg']}}</td>
   </tr>  
   {% endif %}
-  {% endif %}
    {% endfor %}
-  
 </table>
            </div>     
         </div> 
     </div>
     <div style="clear: both"></div>
-    
-    <script>
-jQuery(document).ready(function(){
- jQuery("select[id='algorithm_User']").change(function(){
- var user_id = jQuery("select[id='algorithm_User']").val();
- var admin_algorithm_user= "../admin/algorithm/user/"+ user_id;          
- $('#user_id').text(user_id);
- jQuery.ajax({
-   type: "POST",
-   url: admin_algorithm_user,              
-   success: function(response){                            
-       $('#cityAjax').html(response);
-   }
- });
-})
-});           
-    </script>
-    <script>
-   jQuery(document).ready(function(){
-      jQuery("select[id='algorithm_Product']").change(function(){
-      var product_id = jQuery("select[id='algorithm_Product']").val();                    
-      $('#product_id').text(product_id);
-      var admin_algorithm_product= "../admin/algorithm/product/"+ product_id;         
-      jQuery.ajax({
-       type: "POST",
-       url: admin_algorithm_product,              
-       success: function(response){                            
-           $('#productAjax').html(response);
-       }
-     });   
- })
-});           
-        </script>
-        <script>
-        function getMessage(id)
-        {
-            
-        }
-            </script>
