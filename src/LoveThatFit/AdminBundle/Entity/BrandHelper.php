@@ -250,8 +250,35 @@ public function getRetailerBrandById($id)
     #----------------Get Brand and Id ----------------------------------------#
     public function getBrandNameId(){
      return $this->repo->getBrandNameId();   
-        
+    }
+    
+#-------------Get Brand For Male Top Size Chart--------------------------------#
+    public function getTopBrandForMaleBaseOnSizeChart(){
+        return $this->repo->getTopBrandForMaleBaseOnSizeChart();
         
     }
-  
+    
+#-------------Get Brand For Male Bottom Size Chart--------------------------------#
+    public function getBottomBrandForMaleBaseOnSizeChart(){
+        return $this->repo->getBottomBrandForMaleBaseOnSizeChart();
+        
+    }
+
+    
+#-------------Get Brand For FeMale Top Size Chart--------------------------------#
+    public function getTopBrandForFemaleBaseOnSizeChart(){
+        return $this->repo->getTopBrandForFemaleBaseOnSizeChart();
+        
+    }
+
+#-------------Get Brand For Female Bottomop Size Chart--------------------------------#
+    public function getBottomBrandForFemaleBaseOnSizeChart(){
+        return $this->repo->getBottomBrandForFemaleBaseOnSizeChart();
+    }
+
+#-------------Get Brand For Female Bottomop Size Chart--------------------------------#
+    public function getDressBrandForFemaleBaseOnSizeChart(){
+        return $this->repo->getDressBrandForFemaleBaseOnSizeChart();
+    }
+    
 }

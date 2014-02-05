@@ -75,9 +75,6 @@ function set_vertical_step(){
     
     $(".h_pos").fadeOut(200, function(){$(".v_pos").fadeIn(200, function(){$("#verti_shoulder").fadeIn(200);});});
     set_w_tips($("#verti_shoulder"));
-    
-    
-    
 }
 
 function set_horizontal_step(){

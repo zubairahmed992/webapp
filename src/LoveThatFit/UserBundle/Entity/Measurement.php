@@ -41,6 +41,25 @@ class Measurement {
  */
     private $dress_fitting_size_chart;
  
+ /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="measurement")
+     * @ORM\JoinColumn(name="top_brand_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $top_brand;
+    
+/**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="measurement")
+     * @ORM\JoinColumn(name="bottom_brand_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $bottom_brand;    
+    
+
+
+/**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="measurement")
+     * @ORM\JoinColumn(name="dress_brand_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $dress_brand;    
 
 //---------------------------------------------------------------------    
 
@@ -1063,9 +1082,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
           return $this->outseam =0;        
         }
     }
-    public $top_brand;
-    public $bottom_brand;
-    public $dress_brand;
+//    public $top_brand;
+    //public $bottom_brand;
+   // public $dress_brand;
     public $top_size;
     public $bottom_size;
     public $dress_size;
@@ -1762,7 +1781,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     
     
-    public function getBraSizes()
+    public function getBraNumberSize()// The name changed getBraSizes to getBraNumberSize
     {
         if ($this->bra_size==null) return null;
       $bra_letters=  explode(' ',$this->bra_size);      
@@ -1786,4 +1805,75 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
 
     
+
+    /**
+     * Set top_brand
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Brand $topBrand
+     * @return Measurement
+     */
+    public function setTopBrand(\LoveThatFit\AdminBundle\Entity\Brand $topBrand = null)
+    {
+        $this->top_brand = $topBrand;
+    
+        return $this;
+    }
+
+    /**
+     * Get top_brand
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Brand 
+     */
+    public function getTopBrand()
+    {
+        return $this->top_brand;
+    }
+
+    
+
+    /**
+     * Set bottom_brand
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Brand $bottomBrand
+     * @return Measurement
+     */
+    public function setBottomBrand(\LoveThatFit\AdminBundle\Entity\Brand $bottomBrand = null)
+    {
+        $this->bottom_brand = $bottomBrand;
+    
+        return $this;
+    }
+
+    /**
+     * Get bottom_brand
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Brand 
+     */
+    public function getBottomBrand()
+    {
+        return $this->bottom_brand;
+    }
+
+    /**
+     * Set dress_brand
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Brand $dressBrand
+     * @return Measurement
+     */
+    public function setDressBrand(\LoveThatFit\AdminBundle\Entity\Brand $dressBrand = null)
+    {
+        $this->dress_brand = $dressBrand;
+    
+        return $this;
+    }
+
+    /**
+     * Get dress_brand
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Brand 
+     */
+    public function getDressBrand()
+    {
+        return $this->dress_brand;
+    }
 }

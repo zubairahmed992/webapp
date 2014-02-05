@@ -1,11 +1,13 @@
     <h3>{{product.name}}</h3>
     <ul>
          {% for key, value in data %} 
+            {%if (key | lower != 'fits')%}
             <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
             
-            {%if (value.body is defined) and (value['body']==false) and (key | lower != 'tip') and (key | lower != 'overall')%}
+            {%if (value.body is defined) and (value['body']==false) and (key | lower != 'tip') and (key | lower != 'overall') %}
                <b><a href="{{ path('user_profile_about_me') }}" > here</a></b>
            {% endif %}
+               {% endif %}
          {% endfor %}
     </ul>
 

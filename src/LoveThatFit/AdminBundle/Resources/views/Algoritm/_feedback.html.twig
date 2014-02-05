@@ -2,11 +2,28 @@
 <div>
     <ul>
          {% for key, value in data %} 
+            {%if (key | lower != 'fits')%}
             <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
+            {% endif %}
          {% endfor %}
+             
     </ul>
 </div>        
     <div style="clear: both"></div>
+<<<<<<< HEAD
+=======
+    <div>
+        <b>extended feedback</b><br>
+         {% for key, value in data %} 
+         {%if (key | lower != 'fits')%}
+            <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}</li>
+            {% endif %}
+         {% endfor %}
+</div>
+    <div style="clear: both"></div>    
+    
+    <div><strong>Feed Back</strong></div>
+>>>>>>> b271014995f023e01a5b5b8cda29d734f99e9701
     
   <div style="float:left">
   <table width="100%" border="1" align="center">
@@ -29,7 +46,11 @@
          -->
       </tr>
    {% for key, value in fb_json %} 
+<<<<<<< HEAD
   {% if (key | lower != 'tip') %}
+=======
+  {%if (key | lower != 'fits')%}
+>>>>>>> b271014995f023e01a5b5b8cda29d734f99e9701
   <tr>
       <td width="15%" height="24"><b>{{key | lower | capitalize}}</b> ({{value['priority']}}%)</td>
     <td width="15%">{{value['ideal_low']}}</td>

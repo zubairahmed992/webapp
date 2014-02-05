@@ -221,6 +221,7 @@ public function indexAction($list_type) {
          $session = $this->get("session");
     }
 #-------------------------------------------------------------------------------
+    /*
     public function getFeedBackJSONAction($user_id, $product_item_id) {
         $user = $this->get('user.helper.user')->find($user_id);
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);        
@@ -233,7 +234,7 @@ public function indexAction($list_type) {
         ));
     }
 #-------------------------------------------------------------------------------
-    /*
+    
     public function getFeedBackListAction($product_item_id) {
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
@@ -258,6 +259,11 @@ public function indexAction($list_type) {
         
         $fit = new FitEngine($user,$productItem);
         $bfb = $fit->getBasicFeedback();
+        
+        $product=$productItem->getProduct();
+        $fits=$bfb['fits'];        
+        $json_feedback=  json_encode($bfb);
+        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
         
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', 
                 array('product' => $productItem->getProduct(), 

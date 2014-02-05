@@ -231,6 +231,7 @@ class ProductController extends Controller {
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
+        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $productColor = $this->getProductColor($color_id);
         $sizeTitle = $this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
         // return new response(json_encode($sizeTitle));
@@ -256,6 +257,7 @@ class ProductController extends Controller {
                     'color_id' => $color_id,
                     'imageUploadForm' => $imageUploadForm->createView(),
                     'patternUploadForm' => $patternUploadForm->createView(),
+                    'productItems'=>$productItems,
                 ));
     }
 
