@@ -46,11 +46,11 @@
          -->
       </tr>
    {% for key, value in fb_json %} 
-<<<<<<< HEAD
+
   {% if (key | lower != 'tip') %}
-=======
+
   {%if (key | lower != 'fits')%}
->>>>>>> b271014995f023e01a5b5b8cda29d734f99e9701
+
   <tr>
       <td width="15%" height="24"><b>{{key | lower | capitalize}}</b> ({{value['priority']}}%)</td>
     <td width="15%">{{value['ideal_low']}}</td>
@@ -73,6 +73,7 @@
 -->
     
   </tr>  
+  {% endif %}
   {% endif %}
    {% endfor %}
   
