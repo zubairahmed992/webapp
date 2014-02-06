@@ -54,7 +54,7 @@ public function indexAction($list_type) {
     public function productsByTypeAction($list_type='latest', $page_number = 0, $limit = 0) {
         if ($list_type == 'ltf_recommendation' || $list_type == 'most_faviourite') {
             $entity = null;
-            return $this->renderProductTemplate($entity, $page_number, $limit, 'Comming Soon');
+            return $this->renderProductTemplate($entity, $page_number, $limit, 'Coming Soon');
         } else {
             $user_id = $this->get('security.context')->getToken()->getUser()->getId();
             $gender = $this->get('security.context')->getToken()->getUser()->getGender();
@@ -103,7 +103,7 @@ public function indexAction($list_type) {
 #------------------------------------------------------------------------------- 
     public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
         $entity = null;
-        return $this->renderProductTemplate($entity, $page_number, $limit, 'Comming Soon');
+        return $this->renderProductTemplate($entity, $page_number, $limit, 'Coming Soon');
     }
 #----------------------------------- by Brand-----------------------------------
     public function productsByBrandAction($gender, $brand_id, $page_number = 0, $limit = 0) {
