@@ -624,7 +624,7 @@ header.reg .strip_rgt {
         padding:5px 15px;
 }
 .next_step2 {
-    background: #929707;
+    background: #888888;
 	font-size:1em;
 	color:#fff;
 	border:none;
@@ -633,7 +633,7 @@ header.reg .strip_rgt {
 
 
 .next_step3 {
- 			background: #929707;
+ 			background: #888888;
  			font-size:1em;
  			color:#fff;
  			border:none;
@@ -642,7 +642,7 @@ header.reg .strip_rgt {
  			}
 			
 .reg_next_step2 {
-	background: #929707;
+	background: #888888;
 	font-size:1em;
 	color:#fff;
 	border:none;
@@ -3552,7 +3552,7 @@ padding: 8px 0px;
 background:url(../images/step_bg_normal.png) repeat-x;
 height: 30px;
 text-decoration: none;
-color: #9ba304;
+color: #416fb6;
 position: relative;
 
 }
@@ -3602,7 +3602,7 @@ z-index: 10;
 }
 .fitting_step a,
 .fitting_step a:visited {
-color:#9BA304;
+color:#416fb6;
 font-weight: normal;
 }
 .play_area {
