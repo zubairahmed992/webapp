@@ -580,7 +580,7 @@ header.reg .strip_rgt {
 .reg_blk h2 {
 	font-family: 'century gothic';
 	font-size:26px;
-	color:#929707;
+	color:#444444;
 	text-align:center;
 	margin-bottom:0;
 	padding-top:10px;
@@ -617,7 +617,7 @@ header.reg .strip_rgt {
 	height:60px;
 }
 .reg_next_step {
-	background: #929707;
+	background: #888888;
 	font-size:1em;
 	color:#fff!important;
 	border:none;
@@ -1564,7 +1564,7 @@ input[type=email]{
 }
 
 .left_column nav ul li ul li a:hover{
-	background:#444444;
+	background:#cccccc;
 	color:#000;
 	width:175px;
         padding:0px 0 0px 20px;
@@ -2323,7 +2323,7 @@ text-align: left;
 }
 
 .pro_content{
-	border-left:2px solid #c4c933;
+	border-left:2px solid #cccccc;
 	padding:20px;
         min-height: 320px; 
 }
@@ -2337,7 +2337,7 @@ text-align: left;
 }
 
 .pro_content input[type=submit]{
-    background:#a8ae20;
+    background:#426eb6;
     color:#fff;
     padding:5px 20px 5px 20px;
     font-size: 0.85em; 
@@ -2439,7 +2439,7 @@ width:200px;
     text-decoration: none;
     color:#fff;
     font-size: 0.85em;
-    background: #c4c933;
+    background: #426EB6;
     padding: 5px;
 }
 
@@ -2504,7 +2504,7 @@ padding-bottom: 0px;
 }
 
 .left_active{    
-    background: none repeat scroll 0 0 #C4C933;
+    background: none repeat scroll 0 0 #ccc;
     font-size: 0.95em;
     padding: 6px 0 6px 10px !important;
 }
@@ -3255,11 +3255,12 @@ div.play_area_hldr div.action_buts_bar {
      display:none; 
      position: absolute; 
      left: 270px; 
-     top: -120px; 
+     
      background: #fff; 
      padding: 15px 35px 15px 35px; 
      border:1px solid #ddd; 
      box-shadow:0px 3px 15px #000;
+     z-index: 200;
  }
  
   #pic_step_1{     
@@ -3921,7 +3922,7 @@ padding: 5px;
 text-align: center;
 }
 #profile_measurement_link a {
-color:#C4C933;
+color:#444444;
 font-weight: bold;
 }
 #forgot_pass{
@@ -3929,3 +3930,5 @@ margin-top: 30px;
 color:#DD1144;
 font-size: 0.8em;
 }
+
+
