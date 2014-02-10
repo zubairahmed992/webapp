@@ -1925,7 +1925,7 @@ margin:0 auto;
 }
 
 .page_container h1 {
-    color: #444444;
+    color: #426EB6;
     font-size: 2em;
     font-weight: normal;
     padding: 0 0 20px;
@@ -2378,7 +2378,7 @@ margin:0px!important;
 .profile_nav li a:hover,
 .profile_nav li a:active{  
 font-size: 0.95em;
-background:#c4c933;
+background:#cccccc;
 padding: 6px 0px 6px 10px!important;
 }
 
@@ -2931,6 +2931,7 @@ padding-bottom: 0px;
 
 .user_product_hd td{   
     padding: 5px 0px 5px 5px;
+    font-size: 0.9em;
     border-bottom: 1px dashed #efefef;
 }
 .login_reg_box{
@@ -3320,11 +3321,11 @@ div.play_area_hldr div.action_buts_bar {
  }
  
  .nom{
-    background: none repeat scroll 0 0 #C4C933;
+    background: none repeat scroll 0 0 #426EB6;
     border: 1px solid #444444;
     padding: 0 6px;
-    margin:0px 1px 0px 1px;
-    font-weight: bold;
+    margin:0px 1px 0px 1px;   
+    color:#fff!important;
  }
  
   .nomi{
