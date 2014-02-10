@@ -185,49 +185,53 @@
                         <div class="form_vld_error">{{ form_errors(form.thigh) }}</div>
                     </div>
 {# -----------------------New Measuremnt Added---------------------------------#}                                
-<div id='frm_thigh'>         
-Shoulder Length 
+<div id='frm_thigh'> 
+    {{ form_label(form.shoulder_height) }}
+
 {{ form_widget(form.shoulder_height) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.shoulder_height) }}</div>
 </div>
-<div id='frm_thigh'>         
-Shoulder Across Front
+<div id='frm_thigh'> 
+     {{ form_label(form.shoulder_across_front) }}
+
 {{ form_widget(form.shoulder_across_front) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.shoulder_across_front) }}</div>
 </div>           
 <div id='frm_thigh'>         
-Shoulder Across Back
+
+ {{ form_label(form.shoulder_across_back) }}
 {{ form_widget(form.shoulder_across_back) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.shoulder_across_back) }}</div>
 </div>
                                 
 <div id='frm_thigh'>         
-Bicep
+
+{{ form_label(form.bicep) }}
 {{ form_widget(form.bicep) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.bicep) }}</div>
 </div>
 <div id='frm_thigh'>         
-Tricep
+{{ form_label(form.tricep) }}
 {{ form_widget(form.tricep) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.tricep) }}</div>
 </div>
 <div id='frm_thigh'>         
-Wrist
+{{ form_label(form.wrist) }}
 {{ form_widget(form.wrist) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.wrist) }}</div>
 </div>
 <div id='frm_thigh'>         
-Central Front Waist
+{{ form_label(form.centerFrontWaist) }}
 {{ form_widget(form.centerFrontWaist) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.centerFrontWaist) }}</div>
 </div>
 <div id='frm_thigh'>         
-Back to Waist
+{{ form_label(form.backWaist) }}
 {{ form_widget(form.backWaist) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.backWaist) }}</div>
 </div>
 <div id='frm_thigh'>         
-Waist to Hip
+{{ form_label(form.waistHip) }}
 {{ form_widget(form.waistHip) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.waistHip) }}</div>
 </div>
