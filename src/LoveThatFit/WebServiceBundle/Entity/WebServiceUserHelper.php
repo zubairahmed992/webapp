@@ -233,10 +233,10 @@ public function registerUser(User $user) {
         $email = $request_array['email'];
         $password = $request_array['password'];
         $deviceType=$request_array['deviceType'];
-        /*$email ='oldnavywomen0@ltf.com';
-        $password ='123456'; 
+        /*$email ='amrani192@gmail.com';
+        $password =''; 
         $deviceType="iphone4s";*/
-        
+       
         $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
                 $device_type=array();
