@@ -121,6 +121,9 @@ test_product:
    pattern:  /web_service/product_specification
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:test_product_specification}
    
+service_interface:
+   pattern:  /web_service/service_interface
+   defaults: { _controller: LoveThatFitWebServiceBundle:Default:serviceInterface}
 
 
   

@@ -1,0 +1,205 @@
+ <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Admin ~ Love That Fit</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/lovethatfit/admin/css/admin.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
+ <script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/js/jquery.js') }}"></script>   
+ </head>
+    <style>
+    .text_feild{
+        width: 200px;
+        
+    }
+        </style>
+        
+ <script>
+ function getServiceName(){
+var service_name=$('#service').val();
+    if(service_name=="_login"){
+      $('#_login').show();
+     }else if(service_name=="_register"){
+          $('#_register').show();
+     }else{
+           $('#_login').hide();
+           $('#_register').hide();
+    }
+    
+}
+function getService(){
+   var param=$('#param').val();
+   if(param=='_login'){
+       email=$('#email').val();
+       password=$('#password').val();
+       deviceType=$('#deviceType').val();
+       $.ajax({
+         type:'POST',
+         url: 'login',
+         data: {email: email, password: password ,deviceType:deviceType, 'type':'type'},  
+         success: function(response) {
+        $('#json_data').html(response);
+
+     }});
+    return false;
+   }
+}
+     </script>       
+{% block body %}
+<div>      
+   
+      <div class="clearfix"></div>   
+   
+            <div id="detail_wrapper">      
+                <div id="p_hd">Check Your Service</div>
+                <div class="span3">
+                    
+                   
+
+                    <div class="clearfix"></div>
+                    
+                    </div>         
+
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container">         
+                                <div class="row-fluid show-grid">
+                                    <div class="span3">Select Service</div>
+                                    <div class="span3">
+                                        <select name="service" id="service" onchange="getServiceName()">
+                                            <option value="">Select Service</option>
+                                            <option value="_login">Login</option>
+                                            <option value="_register">Register</option>
+                                        </select>
+                                        
+                                   </div>
+                                   
+                                </div> 
+                              
+                                </div>       
+
+
+
+                                </div>     
+                            <div id="_login" style=" display: none;">
+                                        <legend>Login</legend>
+                                        <table style="width: 400px; padding: 2px;">
+                                            <tr>
+                                                <th  style="text-align: center;">Email</td>
+                                                <td ><input type="text" id="email" name="email" class="text_feild"></td>
+                                            </tr>
+                                             <tr>
+                                                <th  style="text-align: center;">Password</td>
+                                                <td ><input type="password" id="password" name="password" class="text_feild"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Device Type</td>
+                                                <td>
+                                                    <select name="deviceType" id="deviceType">
+                                                        <option value="iphone4s">iphone4s</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <input type="hidden" value="_login" id="param"></td>
+                                                <td style=""><input type="button" value="Run Service" onclick="getService()"</td>
+                                            </tr>
+                                        </table>
+                                         
+                                 </div>
+                           <div id="_register" style=" display: none;">
+                                        <legend>Register</legend>
+                                        <table style="width: 400px; padding: 2px;">
+                                            <tr>
+                                                <th  style="text-align: center;">Email</td>
+                                                <td ><input type="text" id="email" name="email" class="text_feild"></td>
+                                            </tr>
+                                             <tr>
+                                                <th  style="text-align: center;">Password</td>
+                                                <td ><input type="password" id="password" name="password" class="text_feild"></td>
+                                            </tr>
+                                            <tr>
+                                                <th  style="text-align: center;">Confirm Password</td>
+                                                <td ><input type="password" id="cpassword" name="cpassword" class="text_feild"></td>
+                                            </tr>
+                                            <tr>
+                                                <th  style="text-align: center;">Zip Code</td>
+                                                <td ><input type="text" id="zip_code" name="zip_code" class="text_feild"></td>
+                                            </tr>
+                                            <tr>
+                                                <th  style="">Gender</th>
+                                                <td><input type="radio" name="gender" value="m">Male
+                                                    <input type="radio" name="gender" value="f">Female
+                                                
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th  style="">Height</th>
+                                                <td>
+                                                    <input type="text" id="height" name="height">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th  style="">Width</th>
+                                                <td>
+                                                    <input type="text" id="width" name="width">
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>Body Type</td>
+                                                <td>
+                                         <input type="radio" id="body_type_male" name="body_type" value="regular">Regular
+                                         <input type="radio" id="measurement_body_types_1" name="body_type" value="petite">Petite
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Body Shape</td>
+                                                <td>
+                                                    <select name="body_shape">
+                                                        <option value="">Select</option>
+                                                        <option value="apple">Apple</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bra Size</td>
+                                                <td>
+                                                    <select id="bra_size" name="bra_size">
+                                                        <option value="32">32</option>
+                                                        <option value="33">33</option>
+                                                        <option value="34">34</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Device Type</td>
+                                                <td>
+                                                    <select name="deviceType" id="deviceType">
+                                                        <option value="iphone4s">iphone4s</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <input type="hidden" value="_login" id="param"></td>
+                                                <td style=""><input type="button" value="Run Service" onclick="getService()"</td>
+                                            </tr>
+                                        </table>
+                                         
+                                 </div> 
+                            
+                            <div id="json_data1" style="width: 400px;" algin="center">
+                                <textarea id="json_data" style="width: 400px; height: 200px;" placeholder="Result how here"></textarea>
+                            </div>
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+                   
+      
+            </div>  
+
+{% endblock %}
+

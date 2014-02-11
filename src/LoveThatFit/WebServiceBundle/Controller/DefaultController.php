@@ -127,5 +127,10 @@ class DefaultController extends Controller {
             return json_encode(array('msg'=>'Record Not Found'));
         }
     }
+#---------------------------Service Interface---------------------------------#    
+    public function serviceInterfaceAction(){
+        
+         return $this->render('LoveThatFitWebServiceBundle::serviceInterface.html.twig');
+    }
 
 }
