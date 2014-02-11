@@ -280,7 +280,7 @@ private function getAllKeysTesting($ar){
 
         $ideal_low = null;
         $ideal_high = null;
-        $max_body_measurement = $item_specs[$fit_point]['max_body_measurement'];
+        $max_body_measurement = null;
         $body = null;
         //------------------------------
         $diff = null;
@@ -298,6 +298,7 @@ private function getAllKeysTesting($ar){
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~ check if nodes exists 1
         if (array_key_exists($fit_point, $item_specs) && array_key_exists($fit_point, $body_specs)) {
+            $max_body_measurement = $item_specs[$fit_point]['max_body_measurement'];
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~ Product specs high & low nodes exists 2
             if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0 || $item_specs[$fit_point]['ideal_body_low'] === NULL || $item_specs[$fit_point]['ideal_body_low'] == 0) {
                 if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0) {
