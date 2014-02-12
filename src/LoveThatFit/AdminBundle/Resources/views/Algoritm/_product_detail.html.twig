@@ -12,7 +12,10 @@
    {%for apc in product.productColors%}
      <img src="{{asset(apc.PatternWebPath)}}" style="width:16px !important; height:16px !important">
   {%endfor%}     
+     {%if (product.getDisplayProductColor) %}
      <img src="{{asset(product.getDisplayProductColor.ImagePaths['web'])}}" class="prod_{{product.clothingType.target|lower}} ui-draggable">
+     {% endif %}
+     
                                 </div> 
 
 <!-- Product Size specification ~~~~~~~~~~~~~~~~~~~  -->

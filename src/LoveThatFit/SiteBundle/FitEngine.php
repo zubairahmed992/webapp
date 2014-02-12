@@ -218,7 +218,7 @@ private function getAllKeysTesting($ar){
                 }
             }            
         }
-        $feed_back['fits']=$is_ltf ;
+        
         if ($is_ltf === true) {
             $str = 'Love that Fit!';
             $feed_back = null;
@@ -227,6 +227,7 @@ private function getAllKeysTesting($ar){
             $str = $this->getFittingSizeRecommendation();
             $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
         }
+        $feed_back['fits']=$is_ltf ;
         /*
         if($product->getHemLength()=='Full Length'){            
             $feed_back ['inseam'] = $this->inseam_diff_message($body_measurement, $measurement_array);
