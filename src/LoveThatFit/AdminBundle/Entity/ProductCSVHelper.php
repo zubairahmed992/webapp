@@ -114,7 +114,7 @@ class ProductCSVHelper {
         $this->previous_row = '';
 
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 2000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
                 //$this->readProduct($data);
                 $str = $this->row . '  ';
                 for ($i=0;$i<=110;$i++){

@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use LoveThatFit\AdminBundle\Form\Type\AlgoritumTestlType;
 use LoveThatFit\AdminBundle\Form\Type\AlgoritumProductTestlType;
 use LoveThatFit\SiteBundle\FitEngine;
-
+use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Entity\User;
 
@@ -63,5 +63,16 @@ class AlgorithmController extends Controller {
         return $this->render('LoveThatFitAdminBundle:Algoritm:_feedback.html.twig',array(                   
                     'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fb, 'fb_json'=>  $fb,
                 ));
+    }
+     public function getComparisonAction($user_id, $product_id)
+    {   
+         
+         
+        $product = $this->get('admin.helper.product')->find($product_id);
+        $user = $this->get('user.helper.user')->find($user_id);  
+        $fe = new Comparison($user, $product);        
+        
+        return new Response($fe->getFeedBackJSON());
+        
     }
 }

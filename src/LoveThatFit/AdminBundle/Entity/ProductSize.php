@@ -219,7 +219,13 @@ class ProductSize
         foreach ($this->product_size_measurements as $psm) {
             if (array_key_exists($psm->getTitle(), $fp)){
                 if ($fp[$psm->getTitle()]>0){
-                    $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  'title' => $psm->getTitle(),  'ideal_body_high' => $psm->getIdealBodySizeHigh() , 'ideal_body_low' => $psm->getIdealBodySizeLow(), 'max_body_measurement' => $psm->getMaxBodyMeasurement(), 'priority' => $fp[$psm->getTitle()]);
+                    $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  
+                                                           'fit_point' => $psm->getTitle(),  
+                                                            'ideal_body_size_high' => $psm->getIdealBodySizeHigh() , 
+                                                            'ideal_body_size_low' => $psm->getIdealBodySizeLow(), 
+                                                            'max_body_measurement' => $psm->getMaxBodyMeasurement(), 
+                                                            'fit_priority' => $fp[$psm->getTitle()],
+                        );
                 }
                 
             }

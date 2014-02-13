@@ -10,6 +10,7 @@ jQuery(document).ready(function(){
  var user_id = jQuery("select[id='algorithm_User']").val();
  var admin_algorithm_user= "../admin/algorithm/user/"+ user_id;          
  $('#user_id').text(user_id);
+ setCompareLink();
  jQuery.ajax({
    type: "POST",
    url: admin_algorithm_user,              
@@ -51,6 +52,7 @@ jQuery(document).ready(function(){
                 });
            });
            */
+          setCompareLink();
            getFeedBack();
         }
 
@@ -70,13 +72,22 @@ jQuery(document).ready(function(){
                 });           
                 }
         }
+        
+        function setCompareLink()
+        {
+            user_id=$('#user_id').text();
+            product_id=$('#product_id').text();
+                var feedback_url= "../admin/algorithm/compare/"+user_id+"/"+product_id;          
+            ('#compare_link').attr("href", feedback_url);    
+            
+        }
 
             </script>
 
-            <span id='product_id' style="display: none"></span>
+            <span id='product_id' style="display: block"></span>
             <span id='size_id' style="display: none"></span>
-            <span id='user_id' style="display: none"></span>
-            <a href="#" onclick="return getFeedBack()">feedback</a>
+            <span id='user_id' style="display: block"></span>
+            <a id='compare_link' href="#">Compare All</a>
             <div class="p_listing">     
                 <h1>Algorithm</h1>
                 <div style="float: left">User
