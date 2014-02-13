@@ -22,31 +22,65 @@
  function getServiceName(){
 var service_name=$('#service').val();
     if(service_name=="_login"){
-      $('#_login').show();
+        $('#_login').show();
+        $('#_register').hide();
+        $('#_user_profile').hide();
      }else if(service_name=="_register"){
-          $('#_register').show();
-     }else{
-           $('#_login').hide();
-           $('#_register').hide();
+         $('#_register').show();
+         $('#_login').hide();
+         $('#_user_profile').hide();
+     }
+     else if(service_name=="_user_profile"){
+         $('#_user_profile').show();
+         $('#_login').hide();
+         $('#_register').hide();
+     }
+     else if(service_name=="_product_list"){
+        $('#_product_list').show();
+        $('#_user_profile').hide();
+        $('#_login').hide();
+        $('#_register').hide();
+    }
+     else{
+        $('#_login').hide();
+        $('#_register').hide();
+        $('#_user_profile').hide();
+        $('#_product_list').hide();
     }
     
 }
 function getService(){
    var param=$('#param').val();
+   
    if(param=='_login'){
        email=$('#email').val();
        password=$('#password').val();
        deviceType=$('#deviceType').val();
-       $.ajax({
-         type:'POST',
-         url: 'login',
-         data: {email: email, password: password ,deviceType:deviceType, 'type':'type'},  
-         success: function(response) {
-        $('#json_data').html(response);
-
-     }});
+       url="lgoin";
+       data =new Array();
+       data={'email':email,'password':password,'deviceType':deviceType,'type':'type'};
+    }
+    if(param=='_user_profile'){
+        email=$('#user_profile_email').val();
+       url="user_profile";
+       data =new Array();
+       data={'email':email, 'type': 'type'};
+    }
+    if(param=="_product_list"){
+        url="products";
+        data=new Array();
+        data={'id':3,'type':'brand','gender':'F','test':'test','authTokenWebService':'9fbfe79a5b545d4bba6a1e83418022fe'};
+    }
+     $.ajax({
+       type:'POST',
+       url: url,
+       data: data,  
+       success: function(response) {
+       $('#json_data').html(response);
+        }
+    });
     return false;
-   }
+  
 }
      </script>       
 {% block body %}
@@ -73,7 +107,10 @@ function getService(){
                                         <select name="service" id="service" onchange="getServiceName()">
                                             <option value="">Select Service</option>
                                             <option value="_login">Login</option>
+                                            <option value="_user_profile">User Profile</option>
+                                            <option value="_product_list">Product list</option>
                                             <option value="_register">Register</option>
+                                            
                                         </select>
                                         
                                    </div>
@@ -84,7 +121,27 @@ function getService(){
 
 
 
-                                </div>     
+                                </div>  
+                            <div id="_product_list" style="display:none;" >
+                                <input type="hidden" name="param" id="param" value="_product_list">
+                                <input type="button" value="Run Service" onclick="getService()">
+                            
+                            </div>
+                            <div id="_user_profile"  style="display:none;">
+                                <legend>User Profile</legend>   
+                                <table>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><input type="text" name="user_profile_email" id="user_profile_email"></td>
+                                    </tr>
+                                    <tr>
+                                       <td> <input type="hidden" value="_user_profile" id="param"></td>
+                                        <td><input type="button" value="Run Service" onclick="getService()"></td>
+                                    </tr>
+                                </table>
+                                
+                                
+                            </div>
                             <div id="_login" style=" display: none;">
                                         <legend>Login</legend>
                                         <table style="width: 400px; padding: 2px;">
@@ -106,7 +163,7 @@ function getService(){
                                             </tr>
                                             <tr>
                                                 <td> <input type="hidden" value="_login" id="param"></td>
-                                                <td style=""><input type="button" value="Run Service" onclick="getService()"</td>
+                                                <td style=""><input type="button" value="Run Service" onclick="getService()"></td>
                                             </tr>
                                         </table>
                                          
@@ -193,7 +250,8 @@ function getService(){
                                  </div> 
                             
                             <div id="json_data1" style="width: 400px;" algin="center">
-                                <textarea id="json_data" style="width: 400px; height: 200px;" placeholder="Result how here"></textarea>
+                                <textarea id="json_data" class="json_data" style="width:200%; height: 200px;" placeholder="Result how here">
+                                </textarea>
                             </div>
                             </div><!-- End pro_detail -->      
                         </div><!-- End product_content --> 
