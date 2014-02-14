@@ -75,8 +75,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
         $builder->add('bust');
         $builder->add('height');
         $builder->add('waist');
-        $builder->add('sleeve');
-        $builder->add('outseam');
+        $builder->add('sleeve');       
         $builder->add('hip');
         $builder->add('shoulder_across_back');
     }

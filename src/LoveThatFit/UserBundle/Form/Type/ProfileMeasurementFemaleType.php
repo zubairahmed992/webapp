@@ -17,8 +17,7 @@ class ProfileMeasurementFemaleType extends AbstractType
         $builder->add('bust', 'number', array('precision' => 2,'required'=>false));
         $builder->add('waist', 'number', array('precision' => 2,'required'=>false));
         $builder->add('hip', 'number', array('precision' => 2,'required'=>false));        
-        $builder->add('inseam', 'number', array('precision' => 2,'required'=>false));
-        $builder->add('outseam', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('inseam', 'number', array('precision' => 2,'required'=>false));        
         $builder->add('shoulder_height', 'number', array('precision' => 2,'required'=>false));
         $builder->add('weight', 'number', array('precision' => 2,'required'=>false));       
         $builder->add('thigh', 'number', array('precision' => 2,'required'=>false));

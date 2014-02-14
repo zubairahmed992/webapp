@@ -104,7 +104,15 @@ services:
             class: LoveThatFit\AdminBundle\Entity\RetailerUser
      
      admin.helper.product.specification:
-        class: LoveThatFit\AdminBundle\Entity\ProductSpecificationHelper        
+        class: LoveThatFit\AdminBundle\Entity\ProductSpecificationHelper
+        
+     admin.helper.color:
+        class: LoveThatFit\AdminBundle\Entity\ColorHelper  
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\Color  
+            container: "@service_container"
     
      
          

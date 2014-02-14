@@ -106,13 +106,21 @@ public function userProfileAction()
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
+        $target_array = $request->request->all();
+       
+         if(isset($target_array['type'])=='type'){
+             $email = $target_array['email'];
+         }else{
         $email = $decoded['email'];
+         }
       /*  $email='oldnavywomen0@ltf.com';*/
+      //  return new response(json_encode($email));
         $user = $this->get('webservice.helper.user');
+         $chk_email = $user->findOneBy($email);
+           if (count($chk_email) > 0) {
         $entity = $user->getArrayByEmail($email);
-        if (count($entity) > 0) {
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $entity['id'] . "/";
-            $entity['path'] = $baseurl;
+       $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $entity['id'] . "/";
+        $entity['path'] = $baseurl;
             return new Response(json_encode($entity));
         } else {
             return new Response(json_encode(array('Message' => 'Invalid Email')));

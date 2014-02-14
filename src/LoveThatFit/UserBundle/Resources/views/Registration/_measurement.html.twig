@@ -300,9 +300,7 @@ $('#height_in_inches').change(function() {
                             {{ form_widget(form.waist) }}
                             
 
-                            {{ form_errors(form.outseam) }}
-                            <span class="boxlable" id="outseam_box">Pant Length</span> 
-                            {{ form_widget(form.outseam) }}       
+                           
                             {%endif%}
                         </div>
                         
@@ -424,12 +422,11 @@ $('#height_in_inches').change(function() {
   var shoulder_across_back=document.getElementById('measurement_shoulder_across_back').value;  
   {%endif%}            
   var waist=document.getElementById('measurement_waist').value;
-  var outseam=document.getElementById('measurement_outseam').value;
   {% if(entity.gender=='f')%}
   var hip=document.getElementById('measurement_hip').value;
   {%endif%}
       {% if(entity.gender=='f')%}
-  if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0 || Bust==0 || shoulder_across_back==0) && (bottommeasurement=='' || waist==0 || outseam==0) && (dressmeasurement=='' || hip==0))
+  if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0 || Bust==0 || shoulder_across_back==0) && (bottommeasurement=='' || waist==0) && (dressmeasurement=='' || hip==0))
           {
              document.getElementById('error_content0').style.display="none";
              document.getElementById('error_content10').style.display="block"
@@ -441,7 +438,7 @@ $('#height_in_inches').change(function() {
              return false;
           }
           {%else%}
-            if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0) && (bottommeasurement=='' || waist==0 || outseam==0))
+            if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0) && (bottommeasurement=='' || waist==0))
           {
              document.getElementById('error_content0').style.display="none";
              document.getElementById('error_content10').style.display="block"
@@ -453,7 +450,7 @@ $('#height_in_inches').change(function() {
              return false;
           }  
           {%endif%}
-  if((height=='' && weight=='' && shirtmeasurement=='' && slevee=='' && Bust=='' && shoulder_across_back==''&& bottommeasurement=='' && waist=='' && outseam=='' && dressmeasurement=='' && hip==''))
+  if((height=='' && weight=='' && shirtmeasurement=='' && slevee=='' && Bust=='' && shoulder_across_back==''&& bottommeasurement=='' && waist=='' && dressmeasurement=='' && hip==''))
           {
              
              document.getElementById('error_content10').style.display="none"             
@@ -494,7 +491,7 @@ $('#height_in_inches').change(function() {
           return false;
       }  
   
-  if((shirtmeasurement=='') && (slevee==0 || Bust==0 || Back==0))
+  if((shirtmeasurement=='') && (slevee==0 || Bust==0))
       {
           document.getElementById('error_content0').style.display="none";
           document.getElementById('error_content10').style.display="none"
@@ -503,7 +500,7 @@ $('#height_in_inches').change(function() {
           document.getElementById('error_content2').style.display="block";
           return false;
       }
-   if((bottommeasurement=='') && (waist==0 || outseam==0))
+   if((bottommeasurement=='') && (waist==0))
       {
           document.getElementById('error_content0').style.display="none";
           document.getElementById('error_content10').style.display="none"
