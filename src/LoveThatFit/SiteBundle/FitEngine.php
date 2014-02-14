@@ -113,38 +113,48 @@ class FitEngine {
         $fit_rec = "";
         $tight_fit_rec = "";
         $loose_fit_rec = "";
+        $fit_size = array();
+        $tight_size =  array();
+        $loose_size =  array();
+        
+
         $lowest_varience=null;
+        
         foreach ($sizes as $size) {
             $item_specs = $size->getMeasurementArray();
             $feedback = $this->fits($priority, $body_specs, $item_specs);
             #$str_size=" ~> " . $size->getDescription() . " : ". $feedback['msg'];
-            $str_size = $size->getDescription() . ". ". $feedback['msg'];
+            $str_size = $size->getDescription();
+            $message = " Try size " . $size->getDescription();
             if ($feedback['fit']) {
                     $fit_rec.= $str_size;
+                    array_push($fit_size, array('id'=>$size->getId(),'size_title'=>$size->getTitle(),'size_description'=>$size->getDescription(),'status'=>$feedback['status'], 'variance'=>$feedback['varience'], 'message'=>$message));
             } elseif ($feedback['status']==0) {
                     $tight_fit_rec .= $str_size;
+                    array_push($tight_size, array('id'=>$size->getId(),'size_title'=>$size->getTitle(),'size_description'=>$size->getDescription(),'status'=>$feedback['status'], 'variance'=>$feedback['varience'], 'message'=>$message));
             }elseif ($feedback['status']==2) {
                 if ($lowest_varience == null || $lowest_varience > $feedback['varience']){
                     $lowest_varience=$feedback['varience'];
-                    #$loose_fit_rec = $str_size . " varience index (". $feedback['varience'] .")";
                     $loose_fit_rec = $str_size;
+                    $loose_size = array('id'=>$size->getId(),'size_title'=>$size->getTitle(),'size_description'=>$size->getDescription(),'status'=>$feedback['status'], 'variance'=>$feedback['varience'], 'message'=>$message);
                     }        
             }
             $logger.="   ".$size->getDescription() ."|||   status(".$feedback['status'].")   vaience:".$feedback['varience'];
         }
         
-        $str=" Try size ";
-        if (strlen($fit_rec)>0){
-        #$str=" Perfect fitting Size ".$fit_rec;    
-        $str = $str . $fit_rec;    
-        }elseif (strlen($tight_fit_rec)>0){
-        #$str="  Tight fitting Size ". $tight_fit_rec;    
-        $str = $str .  $tight_fit_rec;    
-        }elseif (strlen($loose_fit_rec)>0){
-        #$str="  Try size " . $loose_fit_rec;    
-        $str = $str . $loose_fit_rec;    
-        }
-        return $str;
+        $str=" Try size ";        
+        if (strlen($fit_rec) > 0) {#$str=" Perfect fitting Size ".$fit_rec;    
+            $str = $str . $fit_rec;
+            return $fit_size[0];
+        } elseif (strlen($tight_fit_rec) > 0) {# tight sizes
+            $str = $str . $tight_fit_rec;
+            return $tight_size[0];
+        } elseif (strlen($loose_fit_rec) > 0) {#$str="  Try size " . $loose_fit_rec;    
+            $str = $str . $loose_fit_rec;
+            return $loose_size[0];
+        } else {
+            return ;
+        }        
     }
 
 #--------------------------------------------------------------------------------->
@@ -206,6 +216,9 @@ private function getAllKeysTesting($ar){
             $this->product = $current_item->getProduct();            
             $measurement_array = $this->product_size->getMeasurementArray();
             $fp_array = $this->product->getFitPriorityArray();
+            if(!$fp_array){
+                $fp_array=array();
+            }
             $body_measurement = $this->user->getMeasurement()->getArray();
 
             foreach ($fp_array as $key => $value) {
@@ -224,8 +237,11 @@ private function getAllKeysTesting($ar){
             $feed_back = null;
             $feed_back['Overall'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
         } else {
-            $str = $this->getFittingSizeRecommendation();
-            $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
+            $recomended_size = $this->getFittingSizeRecommendation();
+            //$recomended_size=  json_encode($recomended_size);
+            if ($recomended_size){
+            $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $recomended_size['message']);
+            }
         }
         $feed_back['fits']=$is_ltf ;
         /*
