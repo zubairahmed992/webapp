@@ -814,8 +814,8 @@ a.but_short:visited {
 }
 #extra_hldr {height: 13%;}
 #shoulder_mark_hldr {height: 12%; position: relative;}
-#bust_mark_hldr { height: 11%; position: relative;}
-#waist_mark_hldr { height: 12%; position: relative;}
+#bust_mark_hldr { height: 7%; position: relative;}
+#waist_mark_hldr { height: 9%; position: relative;}
 #hip_mark_hldr { height: 18%; position: relative;}
 
 #adj_markers_hldr .v_pos {
@@ -2330,7 +2330,7 @@ text-align: left;
 
 .pro_content label{
     font-size: 0.85em;
-    width:80px;
+    width:156px;
     margin-bottom:15px;
     display:inline-block;
 	
@@ -2474,7 +2474,7 @@ padding-bottom: 0px;
 }
 
 .success_alert{
-    background: #A8AE20;
+    background: #426EB6;
     padding: 3px 0px 3px 5px;
     font-size: 0.85em;
     color:#fff;  
