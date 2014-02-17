@@ -41,15 +41,18 @@ class FitEngine {
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
     function getFittingItem($product = null) {
-         if ($product === NULL) {
+        if ($product === NULL) {
             $product = $this->product_item->getProduct();
         }
-        $fitting_sizes = $this->getFittingSize($product);                
-        $product_color = $product->getDisplayProductColor();        
-        return $product_color->getItemBySizeId($fitting_sizes[0]['id']);
-        //$i= $product_color->getItemBySizeId($fitting_sizes[0]['id']);
-        //return $i->getId();
+        $fitting_sizes = $this->getFittingSize($product);
+        $product_color = $product->getDisplayProductColor();
+
+        if ($fitting_sizes && array_key_exists(0, $fitting_sizes)) {
+            return $product_color->getItemBySizeId($fitting_sizes[0]['id']);
+        } else {
+            return;
         }
+    }
 #------------------------------------------    
     function getFittingSize($product = null) {
         # used to have the dragable image link for a fitting size
@@ -80,7 +83,10 @@ class FitEngine {
             }elseif ($feedback['status']==2) {
                 if ($lowest_varience == null || $lowest_varience > $feedback['varience']){
                     $lowest_varience=$feedback['varience'];
-                    $loose_fit_rec = $feedback;
+                    #$loose_fit_rec = $feedback;
+                    #array_push($loose_fit_rec , $feedback);
+                   array_unshift($loose_fit_rec , $feedback);
+                    
                     }        
             }
         }
