@@ -37,7 +37,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
     {   $builder->add('body_shape', 'choice', array('choices' => $this->body_shape, 'required' => false,'empty_value' => 'Body Shape',));      
         $builder->add('bra_letters', 'choice', array('choices' => $this->bra_letters, 'required' => false,'empty_value' => 'cup',));
         $builder->add('bra_numbers', 'choice', array('choices' => $this->bra_numbers, 'required' => false,'empty_value' => 'size',));
-        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => true));
+        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => true,));
         //$builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false,'empty_value' => 'Brand',));
         
         
@@ -47,6 +47,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                     'choices' => $this->top_brands,
+                    'empty_value' => 'Brand',
                 ));
          $builder->add('bottom_brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
@@ -54,6 +55,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                     'choices' => $this->bottom_brands,
+                    'empty_value' => 'Brand',
                 )); 
         //$builder->add('bottom_brand', 'choice', array('choices' => $this->bottom_brands, 'required' => false,'empty_value' => 'Brand',));
         
@@ -63,6 +65,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                     'choices' => $this->dress_brands,
+                    'empty_value' => 'Brand',
                 ));
          //$builder->add('dress_brand', 'choice', array('choices' => $this->dress_brands, 'required' => false,'empty_value' => 'Brand',));
 
