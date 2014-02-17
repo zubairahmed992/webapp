@@ -52,7 +52,7 @@ class FitEngine {
         }
 #------------------------------------------    
     function getFittingSize($product = null) {
-        
+        # used to have the dragable image link for a fitting size
         if ($product === NULL) {
             $product = $this->product_item->getProduct();
         }
@@ -151,7 +151,7 @@ class FitEngine {
             return $tight_size[0];
         } elseif (strlen($loose_fit_rec) > 0) {#$str="  Try size " . $loose_fit_rec;    
             $str = $str . $loose_fit_rec;
-            return $loose_size[0];
+            return $loose_size;
         } else {
             return ;
         }        
@@ -239,7 +239,7 @@ private function getAllKeysTesting($ar){
         } else {
             $recomended_size = $this->getFittingSizeRecommendation();
             //$recomended_size=  json_encode($recomended_size);
-            if ($recomended_size){
+            if ($recomended_size && $recomended_size['id'] != $current_item->getProductSize()->getId()){
             $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $recomended_size['message']);
             }
         }
