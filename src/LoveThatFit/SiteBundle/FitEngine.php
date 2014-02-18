@@ -208,7 +208,10 @@ private function getAllKeysTesting($ar){
         $str.=$key. " ,";
     }
     return $str;
-}#--------------------------------------------
+}
+
+#--------------------------------------------
+
     function getBasicFeedback($current_item = null) {
 
         $feed_back = array();
@@ -228,7 +231,8 @@ private function getAllKeysTesting($ar){
             $body_measurement = $this->user->getMeasurement()->getArray();
 
             foreach ($fp_array as $key => $value) {
-                $fb = $this->evaluate_fit_point_get_feedback($body_measurement, $measurement_array, strtolower($key), $value);
+                $fit_point=$this->makeSnake($key);
+                $fb = $this->evaluate_fit_point_get_feedback($body_measurement, $measurement_array, strtolower($fit_point), $value);
                 if ($fb != NULL) {
                     $feed_back [strtolower($key)] = $fb;
                     if ($fb['fit'] === FALSE) {
@@ -542,5 +546,7 @@ private function getAllKeysTesting($ar){
             'max_fit' => $max_fit,
         );
     }
-
+ private function makeSnake($str){                
+        return str_replace(' ', '_', strtolower($str));
+    }
 }
