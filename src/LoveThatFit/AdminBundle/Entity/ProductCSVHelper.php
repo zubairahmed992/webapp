@@ -29,7 +29,7 @@ class ProductCSVHelper {
         $this->previous_row = '';
 
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 2000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $this->readProduct($data);
                 $this->previous_row = $data;
                 $this->row++;
@@ -134,7 +134,7 @@ class ProductCSVHelper {
     private function changeSizeTitleType($str) {
         if(strtolower($str)=='numeric') return 'numbers';
         else if(strtolower($str)=='letter') return 'letters';        
-        else return $str;         
+        else return strtolower($str);         
     }
 
 #---------------------------------------------------------------
