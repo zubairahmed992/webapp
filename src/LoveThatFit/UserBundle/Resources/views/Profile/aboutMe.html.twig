@@ -179,7 +179,7 @@
                     </div>
 {# -----------------------New Measuremnt Added---------------------------------#}                                
 <div id='frm_thigh'> 
-    {{ form_label(form.shoulder_height) }}
+    <label>Shoulder Length</label>
 
 {{ form_widget(form.shoulder_height) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.shoulder_height) }}</div>
@@ -214,17 +214,17 @@
 <div class="form_vld_error">{{ form_errors(form.wrist) }}</div>
 </div>
 <div id='frm_thigh'>         
-{{ form_label(form.centerFrontWaist) }}
+    <label>Center Front Neck to Waist</label>
 {{ form_widget(form.centerFrontWaist) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.centerFrontWaist) }}</div>
 </div>
 <div id='frm_thigh'>         
-{{ form_label(form.backWaist) }}
+    <label>Center Back Neck to Waist</label>
 {{ form_widget(form.backWaist) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.backWaist) }}</div>
 </div>
 <div id='frm_thigh'>         
-{{ form_label(form.waistHip) }}
+    <label>Waist to Hip</label>
 {{ form_widget(form.waistHip) }} &nbsp;<b>"</b>
 <div class="form_vld_error">{{ form_errors(form.waistHip) }}</div>
 </div>
