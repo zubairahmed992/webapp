@@ -460,7 +460,7 @@ class Product {
         $productSizes = $this->getProductSizes();
 
         foreach ($productSizes as $ps) {
-            if (strcmp($ps->getTitle(),$sizeTitle)==0 and $ps->getBodyType() == $bodyType) {
+            if (strcmp(strtolower($ps->getTitle()),strtolower($sizeTitle))==0 and $ps->getBodyType() == $bodyType) {
                 return $ps;
             }
         }

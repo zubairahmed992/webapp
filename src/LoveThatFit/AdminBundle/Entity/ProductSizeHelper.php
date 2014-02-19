@@ -93,16 +93,16 @@ class ProductSizeHelper {
           $sizes['body_type']= $body_type['body_type']   ;
           $sizes[]= $body_type['title']   ;
        if($sizes['body_type']=='Petite'){
-           $sizes_bodyType['Petite'][]= $body_type['title']; 
+           $sizes_bodyType['Petite'][]= strtoupper($body_type['title']); 
        }
        if($sizes['body_type']=='Regular'){
-           $sizes_bodyType['Regular'][]= $body_type['title']; 
+           $sizes_bodyType['Regular'][]= strtoupper($body_type['title']); 
        }
         if($sizes['body_type']=='Tall'){
-           $sizes_bodyType['Tall'][]= $body_type['title']; 
+           $sizes_bodyType['Tall'][]= strtoupper($body_type['title']); 
        }
        if($sizes['body_type']=='Waist'){
-           $sizes_bodyType['Waist'][]= $body_type['title']; 
+           $sizes_bodyType['Waist'][]= strtoupper($body_type['title']); 
        }
        }
        
