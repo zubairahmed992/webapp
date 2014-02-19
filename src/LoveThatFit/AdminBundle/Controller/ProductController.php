@@ -97,6 +97,7 @@ class ProductController extends Controller {
 
     public function productDetailEditAction($id) {
         $entity = $this->get('admin.helper.product')->find($id);
+        $entity->setGender(strtolower($entity->getGender()));
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
         $deleteForm = $this->getDeleteForm($id);

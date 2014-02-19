@@ -746,32 +746,28 @@ public function productDetailColorAdd($entity){
            $sizes['petite'] = $sizes_letter;
            $sizes['regular'] = $sizes_letter;
            $sizes['tall'] = $sizes_letter;
-           $sizes['women_waist'] =Null;
-           return $sizes;
+           $sizes['women_waist'] =Null;           
        }       
        if($entity->getSizeTitleType()=='numbers' and ($entity->getGender()=='f' or $entity->getGender()=='F'))
        {
            $sizes['petite'] = $sizes_number;
            $sizes['regular'] = $sizes_number;
            $sizes['tall'] = $sizes_number;
-           $sizes['women_waist'] =Null;
-           return $sizes;
+           $sizes['women_waist'] =Null;           
        }
        if($entity->getSizeTitleType()=='letters' or  $entity->getSizeTitleType()=='letter'  and ($entity->getGender()=='m' or $entity->getGender()=='M') and ($entity->getClothingType()->getTarget()=='top' or $entity->getClothingType()->getTarget()=='Top'))
        {
            $sizes['petite'] = Null;
            $sizes['regular'] = $sizes_letter;
            $sizes['tall'] = Null;
-           $sizes['women_waist'] =Null;
-           return $sizes;
+           $sizes['women_waist'] =Null;           
        }
        if($entity->getSizeTitleType()=='letter' and ($entity->getGender()=='m' or $entity->getGender()=='M' and ($entity->getClothingType()->getTarget()=='bottom') or $entity->getClothingType()->getTarget()=='Bottom'))
        {
           $sizes['petite'] = Null;
           $sizes['regular'] = $sizes_number;
           $sizes['tall'] = Null;
-          $sizes['women_waist'] =Null;
-          return $sizes;
+          $sizes['women_waist'] =Null;          
        } 
        
        if($entity->getSizeTitleType()=='numbers' and ($entity->getGender()=='m' or $entity->getGender()=='M') and ($entity->getClothingType()->getTarget()=='top' or $entity->getClothingType()->getTarget()=='Top'))
@@ -779,26 +775,24 @@ public function productDetailColorAdd($entity){
            $sizes['petite'] =Null;
            $sizes['regular'] = $sizes_top_man_numbers;
            $sizes['tall'] = Null;
-           $sizes['women_waist'] =Null;
-           return $sizes;
+           $sizes['women_waist'] =Null;          
        }
        if($entity->getSizeTitleType()=='numbers' and ($entity->getGender()=='m' or $entity->getGender()=='M' and ($entity->getClothingType()->getTarget()=='bottom' or $entity->getClothingType()->getTarget()=='Bottom')))
        {
           $sizes['petite'] = Null;
           $sizes['regular'] = $sizes_bottom_man_numbers;
           $sizes['tall'] = Null;
-          $sizes['women_waist'] =Null;
-          return $sizes;
+          $sizes['women_waist'] =Null;          
        } 
-        if($entity->getSizeTitleType()=='Waist' and ($entity->getGender()=='f' or $entity->getGender()=='F' and ($entity->getClothingType()->getTarget()=='bottom' or $entity->getClothingType()->getTarget()=='Bottom')))
+        if(($entity->getSizeTitleType()=='Waist' or $entity->getSizeTitleType()=='waist' )and ($entity->getGender()=='f' or $entity->getGender()=='F' and ($entity->getClothingType()->getTarget()=='bottom' or $entity->getClothingType()->getTarget()=='Bottom')))
        {
-          $sizes['petite'] = Null;
-          $sizes['regular'] = Null;
-          $sizes['tall'] = Null;
-          $sizes['women_waist'] =$sizes_women_waist;
-          return $sizes;
+          $sizes['petite'] = $sizes_women_waist;
+          $sizes['regular'] = $sizes_women_waist;
+          $sizes['tall'] = $sizes_women_waist;
+          $sizes['women_waist'] =$sizes_women_waist;          
        } 
        
+       return $sizes;
 }
 #-----Get JSON FEILD-----------------------------#
  private function getJsonForFields($fields){
