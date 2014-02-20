@@ -62,7 +62,7 @@ jQuery(document).ready(function(){
             user_id=$('#user_id').text();
             product_id=$('#product_id').text();
             	if (user_id.length>0 && size_id.length >0){
-                var feedback_url= "../admin/algoritm/feedback/"+user_id+"/"+size_id;          
+                var feedback_url= "../admin/algorithm/feedback/"+user_id+"/"+size_id;          
                 jQuery.ajax({
                   type: "POST",
                   url: feedback_url,              
