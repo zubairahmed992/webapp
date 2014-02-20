@@ -1,0 +1,54 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active"> Algorithm / Comparison</li>
+{% endblock %}
+{% block body %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    
+ 
+ $('a.compare').click(function (event){ 
+     event.preventDefault(); 
+     
+    var user_id = $("#algorithm_User").val();
+    var product_id = $("#algorithm_Product").val();                    
+    var compare_url = "../algorithm/compare/" + user_id + "/"+ product_id;         
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {
+           $('#summary_ajax').html(response);
+        }
+     })
+     return false; //for good measure
+});
+
+});        
+    </script>
+
+<span id='product_id' style="display: block"></span>
+<span id='size_id' style="display: none"></span>
+<span id='user_id' style="display: block"></span>
+
+<div class="p_listing">     
+    <h3>Comparison</h3>
+    <div style="float: left">User
+        <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+        {{ form_errors(userForm) }}                                  
+        {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
+        {{ form_rest(userForm) }}
+        </form>                 
+    </div>
+    <div style="float: left">Product
+        <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
+        {{ form_errors(productForm) }}                                            
+        {{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            
+        {{ form_rest(productForm) }}
+        </form>      
+    </div>
+    <a id='compare' class='compare' href="#">Compare</a>
+    <div id="summary_ajax" style="float: left">
+    </div>
+</div> 
+
+{% endblock %}

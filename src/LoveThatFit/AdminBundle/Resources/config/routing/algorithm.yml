@@ -1,7 +1,7 @@
 
 
 admin_algorithm:
-    pattern:  /admin/algoritm
+    pattern:  /admin/algorithm
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:index}
 
 admin_algoritm_user_url:
@@ -16,10 +16,14 @@ admin_algorithm_product_size:
     pattern:  /admin/algorithm/product/size/{id}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getProductSizeForTestAlgorithm}    
 admin_algorithm_feedback:
-    pattern:  /admin/algoritm/feedback/{user_id}/{size_id}
+    pattern:  /admin/algorithm/feedback/{user_id}/{size_id}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getFeedback, user_id: 0, size_id: 0}
+
+admin_algorithm_comparison:
+    pattern:  /admin/algorithm/comparison
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:comparison}
 
 admin_algorithm_compare:
     pattern:  /admin/algorithm/compare/{user_id}/{product_id}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getComparison, user_id: 0, product_id: 0}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:compare, user_id: 0, product_id: 0}
     

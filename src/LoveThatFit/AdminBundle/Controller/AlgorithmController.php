@@ -26,13 +26,13 @@ class AlgorithmController extends Controller {
                     'user'=>'',
                 ));
     }
-    
+       //------------------------------------------------------------------------------------------
     public function getUserForTestAlgorithmAction($id)
     {
         $user=$this->get('user.helper.user')->find($id);               
         return $this->render('LoveThatFitAdminBundle:Algoritm:_user_detail.html.twig',array('user'=>$user));
     }
-    
+       //------------------------------------------------------------------------------------------
     public function getProductForTestAlgorithmAction($id)
     {
         $entity = $this->get('admin.helper.product')->find($id);                
@@ -40,7 +40,7 @@ class AlgorithmController extends Controller {
                     'product'=>$entity,
                 ));
     }
-    
+     //------------------------------------------------------------------------------------------  
     public function getProductSizeForTestAlgorithmAction($id)
     {        
         $productsize = $this->get('admin.helper.productsizes')->find($id);               
@@ -49,7 +49,7 @@ class AlgorithmController extends Controller {
                     'product_size_measurement'=>$productsize,
                 ));
     }
-
+   //------------------------------------------------------------------------------------------
       public function getFeedbackAction($size_id, $user_id)
     {   
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);               
@@ -64,15 +64,26 @@ class AlgorithmController extends Controller {
                     'product'=>$product, 'product_size'=>$product_size, 'user'=>$user, 'data'=>$fb, 'fb_json'=>  $fb,
                 ));
     }
-     public function getComparisonAction($user_id, $product_id)
+       //------------------------------------------------------------------------------------------
+     public function compareAction($user_id, $product_id)
     {   
-         
-         
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);  
-        $fe = new Comparison($user, $product);        
-        
-        return new Response($fe->getFeedBackJSON());
-        
+        $fe = new Comparison($user, $product);                
+        #return new Response($fe->getFeedBackJSON());        
+        return $this->render('LoveThatFitAdminBundle:Algoritm:_summary.html.twig',array(                   
+                    'product'=>$product, 'user'=>$user, 'data'=>$fe->getComparison(),
+                ));
     }
+       //------------------------------------------------------------------------------------------
+    public function comparisonAction() { 
+        $userForm = $this->createForm(new AlgoritumTestlType());
+        $productForm = $this->createForm(new AlgoritumProductTestlType());        
+        return $this->render('LoveThatFitAdminBundle:Algoritm:comparison.html.twig',array(
+                    'userForm' => $userForm->createView(),                  
+                    'productForm' => $productForm->createView(),   
+                    'user'=>'',
+                ));
+    }
+    
 }
