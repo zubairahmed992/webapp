@@ -114,10 +114,10 @@ class ProductCSVHelper {
         $this->previous_row = '';
 
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 //$this->readProduct($data);
                 $str = $this->row . '  ';
-                for ($i=0;$i<=110;$i++){
+                for ($i=0;$i<=70;$i++){
                     $str.=$data[$i].', ';
                 }
                 $this->product[$this->row] = $str;
@@ -220,7 +220,8 @@ class ProductCSVHelper {
         if ($this->row >= 5 && $this->row <= 22) {
             $sm = array();
             foreach ($this->product['sizes'] as $k => $v) {
-                if ($data[intval($v['key'])+1]>0){
+                # if flat measurement or (high & low measurements available then pic the data )
+                if ($data[intval($v['key'])+1]>0 || ($data[intval($v['key'])+5]>0 && $data[intval($v['key'])+6]>0)){
                 $i = $this->fitPoint($this->row);
                 $this->product['sizes'][$k][$i] = $this->fillFitPointMeasurement($data, intval($v['key']));
                 }

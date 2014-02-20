@@ -954,7 +954,8 @@ class ProductController extends Controller {
         $pcsv = new ProductCSVHelper($filename);
         $data = $pcsv->read();        
         $ar = $this->savecsvdata($pcsv, $data);
-        //return new Response(json_encode($data));
+        #$data = $pcsv->map();
+        #return new Response(json_encode($data));
         if ($ar['success']==false) {
             $this->get('session')->setFlash('warning',$ar['msg']);
         } else {
