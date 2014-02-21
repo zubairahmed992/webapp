@@ -1,0 +1,232 @@
+<script>
+    
+function chk_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_applied_loaded(prod_type_applied), 200);
+                return false;
+            }else {
+                $("#top_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#applied_prod_top").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+            }
+        }
+
+function chk_bottom_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_bottom_applied_loaded(prod_type_applied), 200);
+                return false;
+            }else {
+                $("#bottom_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#applied_prod_bottom").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+            }
+        }
+        
+        
+function chk_dress_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_dress_applied_loaded(prod_type_applied), 200);
+                return false;
+            }else {
+                $("#full_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#applied_prod_dress").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+            }
+        }
+
+
+  
+   // Code for love and unlove, like
+
+function loveItem(item_id)
+{  
+    alert("test");
+base_url_love=$('#ajax_product_love_url'+item_id).html();
+url_load= "../ajax/user_product_item/create/"+ item_id;
+var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+url_load= "../../ajax/user_product_item/create/"+ item_id;
+}
+
+var jqXHR = $.ajax({
+ 
+  type: "POST",
+  url:url_load,
+success: function (XMLHttpRequest, textStatus, errorThrown) {
+if(jqXHR.responseText.trim()== "success")
+{
+    $("#like_icon_"+item_id).html('');
+    $(".like_icon1_"+item_id).html('');
+   $("#like_icon_"+item_id).replaceWith(' <div class="like_icon1_'+item_id+'"><a href="javascript:void(0);" onclick="lovedItems('+item_id+')" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a><span id="ajax_product_loved_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span> </div>');
+}else{
+ alert('Sorry .. You are overlimit please delete some of your loved products ');
+  }
+         }
+        });
+}
+
+function lovedItems(item_id)
+{  
+  base_url_loved=$('#ajax_product_loved_url'+item_id).text();
+  url_load= "../ajax/user_product_item/delete/"+ item_id;
+  var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+ url_load= "../../ajax/user_product_item/delete/"+ item_id;
+}
+  var jqXHR = $.ajax({
+  //url: base_url+"/app_dev.php/ajax/products/my_closet/delete/"+ item_id,
+   url: url_load,
+  success: function (XMLHttpRequest, textStatus, errorThrown) {
+if(jqXHR.responseText.trim()== "success")
+{
+    $("#like_icon_"+item_id).html('');
+    $(".like_icon1_"+item_id).html('');
+    $(".like_icon1_"+item_id).replaceWith(' <div id="like_icon_'+item_id+'"><a href="javascript:void(0);"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}" onclick=loveItem('+item_id+')></a><span id="ajax_product_love_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span></div>'); 
+}               
+   }
+ });
+}
+
+
+
+
+
+
+    </script> 
+
+    <div class="prod_row_{{product.id}}" id="">
+     
+    
+                 <div class="prod_handle" onclick="update_size_color_blk(this)">
+                     <div class="handle_inner" onclick="set_select_color('{{product.clothingType.target|lower}}');">  
+                   <div class="lft_col">
+                       <div class="small_thumb">
+   <img  onclick="" class="small_thumb_img prod_{{product.clothingType.target|lower}} ui-draggable" src="{{asset(productColor.ImagePaths['web'])}}" >    
+   <span class="prod_fitting_details" id="fitting_feedback_{{productItem.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}'>feedback</a></span>
+                    </div>
+                    </div>
+                     <div class="rgt_col">
+                      <h3>{{product.Name}}</h3>
+                     </div>
+                     </div>
+                     
+                 </div>
+                    
+               <div class="prod_applied_detail">
+                   
+     <div id="hdn_imp_data">
+     <span class="current_product_type">{{product.clothingType.target|lower}}</span>
+     <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>
+     <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>
+     <span></span>
+     <span class="hidden_color_id" style="display:none;">{{productColor.id}}</span>
+     <span id="hidden_size_{{productSize.id}}" class="curr_size_data" style="display:none;">{{productSize.id}}</span>
+     <span id="hidden_item_{{productItem.id}}" class="curr_color_data" style="display:none;">{{productItem.id}}</span>
+     
+    <div class="hldr_of_size_color">
+     
+     <div  id="hdn_sizes_hldr" class="hdn_sizes_hldr select_size">
+     <label class="lbl_size">Size:</label>
+       <select name="cloth_sizes" id="cloth_sizes" class="cloth_sizes" onchange="new_product_control(false,{{product.id}},{{productColor.id}},this.value)">
+      {%for key, pcsa in productColor.getSizeDescriptionArray%}                                    
+       {% if(productSize.id==key)   %}
+        <option value='{{key}}' selected="">{{pcsa}}</option>
+        {%else%}
+        <option value='{{key}}'>{{pcsa}}</option>
+        {%endif%}
+        {%endfor%}                     
+   </select>
+    </div>
+    <div id="hdn_color_hldr" class="hdn_color_hldr select_color">
+      <label class="lbl_color">Color:</label>
+      {%for apc in product.productColors%}
+      <span id="color_id_pattern" style="display:none;">{{apc.id}}</span>         
+       <a href="javascript:void(0)"  id="a_color_id" onclick="new_product_control(false,{{product.id}},{{apc.id}},{{productSize.id}})">
+      <img width="16" height="16" src="{{asset(apc.PatternWebPath)}}" >
+      </a>
+      {%endfor%}
+    </div> 
+     
+     </div>
+     
+     </div>
+                   
+<div class="but_remove_prod" onclick="remove_prod_details(this)"><img onclick="" src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
+                      <div class="lft_col">
+                                    <div class="prod_price">$25</div>
+                                    <div class="prod_share"></div>
+                                    <div class="action_icons">
+                                        <span class="fav_prod">
+                                            
+                                            {% if productItem and productItem%}
+                            {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
+  <div class="like_icon1_{{productItem.id}}" style="">
+<a href="javascript:void(0);" onclick="lovedItems({{productItem.id}})" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a>
+<span id="ajax_product_loved_url{{productItem.id}}" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':productItem.id})}}</span>  
+</div>  
+
+                            {%else%}
+<div id="like_icon_{{productItem.id}}" >
+<a href="javascript:void(0);" onclick="loveItem({{productItem.id}})" title="Love/Like" >
+<img src="{{asset('bundles/lovethatfit/site/images/like.png')}}"></a>
+<span id="ajax_product_love_url{{productItem.id}}" style="display:none;" on>{{path('ajax_user_product_item_create',{'product_item_id':productItem.id})}}</span>
+</div>
+                            {%endif%}
+           <a class="apply_img hide" href="{{ asset(productItem.WebPath) }}"></a>
+           <a class="fitting_alerts_feeback_{{product.id}}" style="display: none;">{{path("ajax_fitting_feedback_list", {"product_item_id" : productItem.id})}}</a>
+              {% endif %}
+                                            
+                                            
+                                           </span>
+                                        <span class="cart_prod"><img src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}"></span>
+                                    </div>
+                                </div>
+                                <div class="rgt_col">
+                                    
+                                    <ul class="fitting_alerts_ul" id="fitting_alerts_ul_{{product.id}}">
+                                       
+                                    </ul>
+                                    <!--<div class="rec_tip">
+                                        <span class="bolder">Tip:</span> Try Size 4.
+                                    </div>-->
+                                </div>
+                            </div>
+                           <!--/.prod_row--></div>
+
+

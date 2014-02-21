@@ -137,7 +137,7 @@ public function indexAction($list_type) {
 #----------------------------------- Product Detail-----------------------------
     public function productDetailAction($id, $product_color_id, $product_size_id) {
         $product_detail= $this->get('admin.helper.product')->productDetail($id, $product_color_id, $product_size_id);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_product_detail.html.twig', array('product' => $product_detail['product'],
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_new_product_detail.html.twig', array('product' => $product_detail['product'],
                     'productColor' => $product_detail['product_color'],
                     'productSize' => $product_detail['product_size'],
                     'productItem' => $product_detail['product_item'],
