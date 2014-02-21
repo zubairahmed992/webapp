@@ -75,7 +75,7 @@ return true;
     <form action="{{ path('user_profile_settings_update')}}" method="post" {{ form_enctype(form) }} onsubmit="return validate();">
    <!-- {{ form_errors(form) }}-->
 
-            <div class="frm_ele act_set">
+            <div class="frm_ele act_set acc_set">
                 
                 <label>First Name</label>   
                 {{ form_widget(form.firstName) }}
@@ -84,7 +84,7 @@ return true;
                 {{ form_errors(form.firstName) }}
                      </div>
             </div>
-            <div class="frm_ele act_set">
+            <div class="frm_ele act_set acc_set">
                
                 <label>Last Name</label>
                 {{ form_widget(form.lastName) }}
@@ -95,7 +95,7 @@ return true;
    
    <div class="clr_bth"></div>
             
-            <div class="frm_ele select_inline act_set">
+            <div class="frm_ele select_inline act_set acc_set">
                  {{ form_errors(form.birthdate) }}
                  {{ form_label(form.birthdate) }}
                  {{ form_widget(form.birthdate.month) }}
@@ -104,7 +104,7 @@ return true;
             </div>
                     
                
-              <div class="frm_ele radio_buts act_radio">                
+              <div class="frm_ele radio_buts act_radio acc_set">                
                 <div class="radio_ele"> {{ form_label(form.gender) }}  {{ form_widget(form.gender) }} </div>
                               
             </div>
@@ -112,7 +112,7 @@ return true;
                     <div class="clr_bth"></div>
                    
                     
-                <div class="frm_ele image">                
+                <div class="frm_ele image acc_set">                
                     <label>Upload Image:</label>   {{ form_widget(form.file) }}   
               
             </div>    
@@ -141,7 +141,7 @@ return true;
   <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }} onsubmit="return formPasswordValidates()">
     {{ form_errors(form_password_reset) }}
             
-           <div class="frm_ele">
+           <div class="frm_ele acc_set">
                <label>New Password</label>
                 {{ form_errors(form_password_reset.password) }}                
                 {{ form_widget(form_password_reset.password.password) }}
@@ -154,13 +154,13 @@ return true;
                    </div>
                </div>
           
-           <div class="frm_ele">
+           <div class="frm_ele acc_set">
              <label>Confirm Password</label>                
               {{ form_errors(form_password_reset.password.confirm) }}                
               {{ form_widget(form_password_reset.password.confirm) }}
            </div>
           
-          <div class="frm_ele">
+          <div class="frm_ele acc_set">
           <label>Old Password</label>                
               {{ form_errors(form_password_reset.old_password) }}                
               {{ form_widget(form_password_reset.old_password) }}
