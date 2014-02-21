@@ -288,7 +288,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
         else{
             //alert("Else");
             //details_base_url = $('#ajax_product_base_url').text();
-            details_base_url = "/webapp/web/app_dev.php/ajax/product/";
+            details_base_url = "http://dev.lovethatfit.com/ajax/product/";
             details_base_url = details_base_url + new_prod_id + "/" + new_color_id + "/" + new_size_id;
             //alert(details_base_url);
             }
@@ -1316,6 +1316,12 @@ function set_select_color(curr_prod_clicked_id){
          }
 }
   
+  
+$(".share_but_new").click(
+  function() {
+      $(".share_inner").show();
+  }
+);
   
 </script>
 

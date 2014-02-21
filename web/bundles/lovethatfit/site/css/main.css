@@ -4159,3 +4159,17 @@ ul.fitting_alerts_ul{
 #measurement_waist{
      width:50px!important;
  }
+ 
+.share_inner {
+    position: absolute;
+    background: #fff;
+    padding: 5px 6px 1px;
+    border: solid 1px #ccc;
+    display: none;
+}
+
+.prod_share:hover .share_inner{
+     display: block !important;
+ }
+ 
+ 

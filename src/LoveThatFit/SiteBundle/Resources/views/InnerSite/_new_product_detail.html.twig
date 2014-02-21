@@ -190,7 +190,50 @@ if(jqXHR.responseText.trim()== "success")
 <div class="but_remove_prod" onclick="remove_prod_details(this)"><img onclick="" src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
                       <div class="lft_col">
                                     <div class="prod_price">$25</div>
-                                    <div class="prod_share"></div>
+                                    <div class="prod_share"><img class="share_but_new" onclick="" src="{{ asset('bundles/lovethatfit/site/images/share_icon.png') }}">
+                                        <div class="share_inner">
+                                            <div id="fb-root"></div>
+	
+	<script>
+	  window.fbAsyncInit = function() {
+		FB.init({
+		  appId  : '485918228194125',
+		  status : true, // check login status
+		  cookie : true, // enable cookies to allow the server to access the session
+		  xfbml  : true  // parse XFBML
+		});
+	  };
+	
+	  (function() {
+		var e = document.createElement('script');
+		e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+		e.async = true;
+		document.getElementById('fb-root').appendChild(e);
+	  }());
+	</script>
+	<img id = "share_button{{product.id}}" src="{{asset('bundles/lovethatfit/site/images/icon_fb.png')}}">
+	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+	$('#share_button'+{{product.id}}).click(function(e){
+	e.preventDefault();
+	FB.ui(
+	{
+	method: 'feed',
+	name: '{{product.name}}',           
+	});
+	});
+	});
+	</script> 
+        <a href="https://twitter.com/share"  data-url="http://dev.lovethatfit.com/{{product.name}}" data-text="Name:{{product.name}} Description:{{product.description}} >" data-via="lovethatfit" data-size="large" data-related="lovethatfit"><img src="{{asset('bundles/lovethatfit/site/images/icon_t.png')}}"></a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+       <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.lovethatfit.com%2F&media=dev.lovethatfit.com{{ asset(productItem.WebPath) }}&description=Name:{{product.name}}
+        Description:{{product.description}}" >
+       <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>
+                                        </div>
+                                    </div>
                                     <div class="action_icons">
                                         <span class="fav_prod">
                                             
