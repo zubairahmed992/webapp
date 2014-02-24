@@ -4,20 +4,40 @@
 <div style="clear: both"></div>
 
 <div style="float:left">
-    <table width="100%" border="1" align="center">
+    <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
+    {% for size, size_specs in data %} 
+            <tr>
+                <td>size {{size}} {{size_specs.message}}</td>            
+            </tr>
+            
+            <tr>
+                <td>
+                    <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
+                            {% for fp, fp_specs in size_specs %} 
+                            {% if fp != "fits" and fp != "message" %}
+                            <tr>
+                                <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
+                                <td>low:{{fp_specs.ideal_body_size_low}}</td>
+                                <td>high:{{fp_specs.ideal_body_size_high}}</td>
+                                <td>max:{{fp_specs.max_body_measurement}}</td>
+                                <td>body:{{fp_specs.body_measurement}}</td>
+                                <td>variance:{{fp_specs.variance}}</td>
+                                <td>max-variance:{{fp_specs.max_variance}}</td>
+                                <td>
+                                    {{fp_specs.status}}
+                                    {%if (fp_specs.fits)%}
+                                            , {{'fits'}}
+                                    {%endif%}
+                                </td>
+                                
+                            </tr>
+                            {%endif%}
+                            {% endfor %}
+                        </table>
+                    </td>            
+                </tr>
 
-        <tr>
-            <td>sizes</td>
-            <td>sizes</td>
-            <td>sizes</td>
-        </tr>
-   {% for key, value in data %} 
-        <tr>
-            <td>{{key}}</td>            
-            <td>sizes</td>
-            <td>sizes</td>
-        </tr>  
    {% endfor %}
 
-    </table>
-</div>     
+            </table>
+        </div>     
