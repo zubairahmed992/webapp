@@ -209,10 +209,10 @@ public function registerUser(User $user) {
  private function gettingUserDetailArray($entity, $request) {
         // change name getUserDetailArrayWithRequestArray
         $userinfo = $this->fillUserArray($entity);
-        $entity = $this->repo->find($userinfo['id']);
+        $entity = $this->repo->find($userinfo['userId']);
         $measurement = $entity->getMeasurement();        
         $user_measurment = $this->fillMeasurementArray($measurement);
-        $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";
+        $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['userId'] . "/";
         $userinfo['authTokenWebService'] = $entity->getAuthToken();        
         return array_merge($userinfo, $user_measurment);
     }
@@ -357,7 +357,7 @@ public function changePasswordWithReqestArray($request_array) {
 private function fillUserArray($entity) {        
         $birth_date = $entity->getBirthDate();
         $userinfo = array();
-        $userinfo['id'] = $entity->getId();
+        $userinfo['userId'] = $entity->getId();
         $userinfo['first_name'] = $entity->getFirstName();
         $userinfo['last_name'] = $entity->getLastName();
         $userinfo['zipcode'] = $entity->getZipcode();
@@ -376,48 +376,97 @@ private function fillUserArray($entity) {
     }
 #------------------------------------------------------------------------------#
     public function fillMeasurementArray($measurement) {
-        
         $userinfo = array();
         if ($measurement) {
-            $userinfo['weight'] = $measurement->getWeight();
+           $userinfo['weight'] = $measurement->getWeight();
+           // $userinfo['weight']= isset($measurement->getWeight())? $measurement->getWeight():0;
             $userinfo['height'] = $measurement->getHeight();
             $userinfo['waist'] = $measurement->getWaist();
             $userinfo['hip'] = $measurement->getHip();
             $userinfo['bust'] = $measurement->getBust();
             $userinfo['chest'] = $measurement->getChest();
-            $userinfo['neck'] = $measurement->getNeck();
+            $userinfo['arm'] = $measurement->getChest();
             $userinfo['inseam'] = $measurement->getInseam();
-            $userinfo['shoulder_across_back'] = $measurement->getShoulderAcrossBack();
-            $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
-            $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+            $userinfo['shoulderHeight'] = $measurement->getShoulderHeight();
+            $userinfo['outseam'] = $measurement->getOutseam();
+            $userinfo['sleeve'] = $measurement->getSleeve();
+            $userinfo['neck'] = $measurement->getNeck();
+           // $userinfo['back'] = $measurement->getBack();
+           // $userinfo['iphone_shoulder_height'] = $measurement->getIphoneShoulderHeight();
+           // $userinfo['iphone_outseam'] = $measurement->getIphoneOutseam();
+            if($measurement->getBodyTypes()){
             $userinfo['bodyType'] = $measurement->getBodyTypes();
+            }else{
+                $userinfo['bodyType']=0;
+            }
+            if($measurement->getBodyShape()){
             $userinfo['bodyShape'] = $measurement->getBodyShape();
+            }else{
+                $userinfo['bodyShape'] =0;}
+                
+            if($measurement->getBraSize()){
             $userinfo['braSize'] = $measurement->getBraSize();
-        } else {
-            $userinfo['weight'] = 0;
-            $userinfo['height'] = 0;
-            $userinfo['hip'] = 0;
-            $userinfo['bust'] = 0;
-            $userinfo['chest'] = 0;
-            $userinfo['neck'] = 0;
-            $userinfo['inseam'] = 0;
-            $userinfo['shoulder_across_back'] = 0;
-            $userinfo['iphone_shoulder_height'] = 0;
-            $userinfo['iphone_outseam'] = 0;
-            $userinfo['bodyType'] = 0;
-            $userinfo['bodyShape'] = 0;
-            $userinfo['braSize'] = 0;
-        }
-        if (!$userinfo['shoulder_across_back']) {
-            $userinfo['shoulder_across_back'] = 15.5;
-        }
-        if (!$userinfo['iphone_shoulder_height']) {
-            $userinfo['iphone_shoulder_height'] = 150;
-        }
-        if (!$userinfo['iphone_outseam']) {
-            $userinfo['iphone_outseam'] = 260;
-        }
+            }else{
+                $userinfo['braSize']=0;
+            }
+            $userinfo['thigh'] = $measurement->getThigh();
+            $userinfo['shoulderWidth'] = $measurement->getShoulderWidth();
+            
+            $userinfo['bustHeight'] = $measurement->getbustHeight();
+            $userinfo['waistHeight'] = $measurement->getWaistHeight();
+            $userinfo['hipHeight'] = $measurement->getHipHeight();
+            
+            $userinfo['bustWidth'] = $measurement->getBustWidth();
+            $userinfo['waistWidth'] = $measurement->getWaistWidth();
+            $userinfo['hipWidth'] = $measurement->getHipWidth();
+            $userinfo['shoulderAcrossFront'] = $measurement->getShoulderAcrossFront();
+            $userinfo['shoulderAcrossBack'] = $measurement->getShoulderAcrossBack();
+            $userinfo['bicep'] = $measurement->getBicep();
+            $userinfo['tricep'] = $measurement->getTricep();
+            $userinfo['wrist'] = $measurement->getWrist();
+            $userinfo['centerFrontWaist'] = $measurement->getCenterFrontWaist();
+            $userinfo['backWaist'] = $measurement->getBackWaist();
+            $userinfo['waistHip'] = $measurement->getWaistHip();
+            $userinfo['knee'] = $measurement->getKnee();
+            $userinfo['calf'] = $measurement->getCalf();
+            $userinfo['ankle'] = $measurement->getAnkle();
+            
+            if($measurement->getTopBrand()){
+            $userinfo['topBrandId'] = $measurement->getTopBrand()->getId();
+            }else{
+                $userinfo['topBrandId']=0;
+            }
+            if($measurement->getBottomBrand()){
+            $userinfo['bottomBrandId'] = $measurement->getBottomBrand()->getId();
+            }else{
+                $userinfo['bottomBrandId']=0;
+            }
+            if($measurement->getDressBrand()){
+            $userinfo['dressBrandId'] = $measurement->getDressBrand()->getId();
+            }else{
+                $userinfo['dressBrandId']=0;
+            }
+           
+            if($measurement->getTopFittingSizeChart()){
+            $userinfo['topFittingSizeChartId'] = $measurement->getTopFittingSizeChart()->getId();
+            }else{
+                $userinfo['topFittingSizeChartId']=0;
+            }
+            if($measurement->getBottomFittingSizeChart()){
+            $userinfo['bottomFittingSizeChartId'] = $measurement->getBottomFittingSizeChart()->getId();}
+            else{
+                $userinfo['bottomFittingSizeChartId']=0;
+            }
+            if($measurement->getDressFittingSizeChart()){
+            $userinfo['dressFittingSizeChartId'] =$measurement->getDressFittingSizeChart()->getId();
+            }else{
+                $userinfo['dressFittingSizeChartId']=0;
+            }
+    
+        } 
+         
         return $userinfo;
+    
     }
 
 #----------------------------Set User Array-------------------------------------#
