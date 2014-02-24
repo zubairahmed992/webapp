@@ -1,23 +1,17 @@
 <!--/ this templete should have the objects products, page_number, limit & row_count -->
-<ul class="prod_wrapper">
-
- 
     
 {% if(functionality_status is defined and functionality_status  )%}
-    
-    <li>
-        <div class="prod_node">
-            <span></span>
-            <div class="featured_box">                
-                              <div class="featured_content" style="background: #f3f3f3; height: 500px;">
-                    <h3 style="font-size:0.95em; padding-top: 220px; height: auto; width: 160px; margin:0 auto;">
-{{functionality_status}}</h3>                    
-
-                <!--/prod_node--></div>
-    </li> 
+ <div>
+    <h3 class="comingsoon_new">
+        {{functionality_status}}
+    </h3>                    
+ </div>
         
     {%else%}
-{% if(row_count>0)%}    
+{% if(row_count>0)%}
+
+<ul class="prod_wrapper">
+  
 {% for p in products %}
     <li>
         {%  set randon_item = p.getDefaultItem(app.user)%}
@@ -69,18 +63,13 @@
                 {% endfor %}
                 {%else%}
                
-    <li>
-        <div class="prod_node">
-            <span></span>
-            <div class="featured_box">                
-                
-                              <div class="featured_content" style="background: #f3f3f3; height: 500px;">
-                    <h3 style="font-size:0.95em; padding-top: 220px; height: auto; width: 160px; margin:0 auto;">
-Products are currently<br>  not available.</h3>                    
-            <!--/prod_node--></div>
-    </li> 
     
-                {%endif%}
+ <div>
+    <h3 class="comingsoon_new">
+        Products are currently not available.
+    </h3>                    
+ </div>
+      {%endif%}
 {%endif%}
 </ul>
 

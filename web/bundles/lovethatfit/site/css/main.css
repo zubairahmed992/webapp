@@ -1632,16 +1632,17 @@ input[type=email]{
     width: 280px;   
 }
 .loading_now .loading_inner {
-background: url("../images/trans_dot_10.png") repeat scroll 0 0 transparent;
+background: #fff;
 display: block;
-height: 278px;
+height: 426px;
 left: 0;
-padding-top: 240px;
+padding-top: 36px;
+opacity: 0.9;
 position: absolute;
 text-align: center;
-top: 13px;
+top: 47px;
 vertical-align: middle;
-width: 280px;
+width: 750px;
 
 }
 ul.prod_wrapper{
@@ -4173,4 +4174,9 @@ ul.fitting_alerts_ul{
      display: block !important;
  }
  
- 
+ .comingsoon_new {
+     width:80%;
+     text-align: center;
+     color: #666;
+     padding-top: 20px;
+ }
