@@ -3986,7 +3986,7 @@ width: 160px;
     top:0;
     padding: 8px 0 8px 26px;
     color: #406db5;
-    background: url("../images/but_opn_fr_bg.png") 0 0 no-repeat #fff;
+    background: url("../images/but_opn_fr_bg.png") 0 0 no-repeat;
 }
 
 #ltf_fitting_room .but_cls_fr {
@@ -4175,7 +4175,8 @@ ul.fitting_alerts_ul{
 }
 
 .handle_inner {
-    background: #ffcc00;
+    background: #fff;
+    height: 54px;
     display:block;
 }
 .featured_img img,
