@@ -354,7 +354,9 @@ public function changePasswordWithReqestArray($request_array) {
         }
     }
 #----------------- Getting the User Info ---------------------------------------#
-private function fillUserArray($entity) {        
+private function fillUserArray($entity) {  
+    
+   
         $birth_date = $entity->getBirthDate();
         $userinfo = array();
         $userinfo['userId'] = $entity->getId();
@@ -373,7 +375,10 @@ private function fillUserArray($entity) {
         $userinfo['email'] = $entity->getEmail();
         if (isset($birth_date)) {
             $userinfo['birthDate'] = $birth_date->format('Y-m-d');
-        }else{$userinfo['birthDate'] =  date('1970-1-1');}
+        }else{
+              $fecha = new \DateTime(1970-1-1);
+                $fecha = $fecha->format('Y-m-d');
+            $userinfo['birthDate'] = $fecha;}
         if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
         if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
