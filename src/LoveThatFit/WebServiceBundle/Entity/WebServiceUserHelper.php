@@ -375,10 +375,7 @@ private function fillUserArray($entity) {
         $userinfo['email'] = $entity->getEmail();
         if (isset($birth_date)) {
             $userinfo['birthDate'] = $birth_date->format('Y-m-d');
-        }else{
-              $fecha = new \DateTime(1970-1-1);
-                $fecha = $fecha->format('Y-m-d');
-            $userinfo['birthDate'] = $fecha;}
+        }else{$userinfo['birthDate'] = Null;}
         if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
         if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
