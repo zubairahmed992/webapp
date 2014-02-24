@@ -358,20 +358,28 @@ private function fillUserArray($entity) {
         $birth_date = $entity->getBirthDate();
         $userinfo = array();
         $userinfo['userId'] = $entity->getId();
-        $userinfo['first_name'] = $entity->getFirstName();
-        $userinfo['last_name'] = $entity->getLastName();
-        $userinfo['zipcode'] = $entity->getZipcode();
+        if($entity->getFirstName()){
+        $userinfo['firstName'] = $entity->getFirstName();
+        }else{
+            $userinfo['firstName'] ='';
+        }
+        if($entity->getLastName()){
+        $userinfo['lastName'] = $entity->getLastName();}
+        else{
+            $userinfo['lastName'] = '';
+        }
+        $userinfo['zipCode'] = $entity->getZipcode();
         $userinfo['gender'] = $entity->getGender();
         $userinfo['email'] = $entity->getEmail();
         if (isset($birth_date)) {
-            $userinfo['birth_date'] = $birth_date->format('Y-m-d');
-        }
-        $userinfo['image'] = $entity->getImage();
-        $userinfo['avatar'] = $entity->getAvatar();
-        $userinfo['iphoneImage'] = $entity->getIphoneImage();
-        $userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();
-        $userinfo['postDeviceType']= $entity->getDeviceType();
-        $userinfo['preDeviceType']= $entity->getDeviceType();
+            $userinfo['birthDate'] = $birth_date->format('Y-m-d');
+        }else{$userinfo['birthDate'] ='';}
+        if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
+        if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
+        if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
+        if($entity->getDeviceUserPerInchPixelHeight()){$userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();}else{$userinfo['heightPerInch']='';}
+        if($entity->getDeviceType()){$userinfo['postDeviceType']= $entity->getDeviceType();} else{$userinfo['postDeviceType']='';}
+        if($entity->getDeviceType()){$userinfo['preDeviceType']= $entity->getDeviceType();}else{ $userinfo['preDeviceType']='';}
         return $userinfo;
     }
 #------------------------------------------------------------------------------#
@@ -397,17 +405,17 @@ private function fillUserArray($entity) {
             if($measurement->getBodyTypes()){
             $userinfo['bodyType'] = $measurement->getBodyTypes();
             }else{
-                $userinfo['bodyType']=0;
+                $userinfo['bodyType']='';
             }
             if($measurement->getBodyShape()){
             $userinfo['bodyShape'] = $measurement->getBodyShape();
             }else{
-                $userinfo['bodyShape'] =0;}
+                $userinfo['bodyShape'] ='';}
                 
             if($measurement->getBraSize()){
             $userinfo['braSize'] = $measurement->getBraSize();
             }else{
-                $userinfo['braSize']=0;
+                $userinfo['braSize']='';
             }
             $userinfo['thigh'] = $measurement->getThigh();
             $userinfo['shoulderWidth'] = $measurement->getShoulderWidth();
