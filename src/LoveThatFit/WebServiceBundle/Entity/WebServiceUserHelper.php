@@ -373,7 +373,7 @@ private function fillUserArray($entity) {
         $userinfo['email'] = $entity->getEmail();
         if (isset($birth_date)) {
             $userinfo['birthDate'] = $birth_date->format('Y-m-d');
-        }else{$userinfo['birthDate'] ='1970-01-01';}
+        }else{$userinfo['birthDate'] =  date('1970-1-1');}
         if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
         if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
