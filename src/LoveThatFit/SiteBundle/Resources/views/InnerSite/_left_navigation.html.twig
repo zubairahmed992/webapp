@@ -42,7 +42,9 @@
                     return false;
                 }
                 else {
-                    
+                    if($("#ltf_fitting_room").width() > 35){
+                        close_fr();
+                    }
                     
                     var clicked_url = $(this).attr("href");
                     //alert(clicked_url);
