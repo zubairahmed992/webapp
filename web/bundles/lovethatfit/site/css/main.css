@@ -1618,7 +1618,7 @@ input[type=email]{
 #slider_dis_canv {
     height:500px;
     overflow: hidden;
-    margin-top: 10px;
+    margin-top: 40px;
     
 }
 .loading_now {
@@ -3975,6 +3975,7 @@ font-size: 0.8em;
     color: #406db5;
     display: none;
     background: url("../images/but_cls_fr_bg.png") 0 0 no-repeat #fff;
+    z-index: 5000;
 }
 #ltf_fitting_room .ltf_fitting_room_inner {
     display:none;

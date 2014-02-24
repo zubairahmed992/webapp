@@ -288,7 +288,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
         else{
             //alert("Else");
             //details_base_url = $('#ajax_product_base_url').text();
-            details_base_url = "http://dev.lovethatfit.com/ajax/product/";
+            details_base_url = "/webapp/web/app_dev.php/ajax/product/";
             details_base_url = details_base_url + new_prod_id + "/" + new_color_id + "/" + new_size_id;
             //alert(details_base_url);
             }
@@ -404,12 +404,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
     
     
 
-$(".featured_img img").click(
-function(){
-    //new_product_control(false,6,7,21);
-    //new_product_control(false,7,8,24);
-    new_product_control(this);
-});
+
 
 $(".featu red_img img").click(
     function(){
@@ -1068,7 +1063,7 @@ var scroll_heighting = 506;
                     return false;
                 }
                 else {
-                    
+                    alert("Me Hit");
                     
                     var clicked_url = $(this).attr("href");
                     //alert(clicked_url);
