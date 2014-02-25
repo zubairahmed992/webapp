@@ -6736,3 +6736,11 @@ overflow: auto;
 .edits_btn a{    
     margin-right: 10px;
 }
+
+#preview_pattern{
+    border:1px solid red;
+    width:15px;
+    height: 15px;
+    margin-right:-200px!important;
+    margin-top: 60px!important;
+}

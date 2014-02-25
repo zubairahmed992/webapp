@@ -409,6 +409,24 @@ class ProductRepository extends EntityRepository {
     
     
  #--------------------------------Web Service for Product list ------------------------#
+    
+    
+     public function newproductListingWebService($gender) {
+
+        return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image,b.name as brand_name')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->innerJoin('p.brand', 'b')
+                        ->where('p.gender=:gender')
+                        ->groupBy('p.id')
+                        ->setParameters(array('gender' => $gender))
+                        ->getQuery()
+                        ->getResult();
+    }
+
  public function findProductByBrandWebService($id, $gender) {
 
         return $this->getEntityManager()
@@ -796,7 +814,7 @@ class ProductRepository extends EntityRepository {
             JOIN pi.product_color pc
             JOIN pi.product_size ps            
             JOIN pi.user_item_try_history uih            
-        WHERE uih.user = :id ORDER BY uih.count DESC"  )->setParameters(array('id' => $user_id)) 
+            WHERE uih.user = :id ORDER BY uih.count DESC"  )->setParameters(array('id' => $user_id)) 
                 ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         
@@ -965,4 +983,37 @@ class ProductRepository extends EntityRepository {
                 }
      
  }
+ 
+ public function findTryProfileProductHistory($user_id , $page_number , $limit)
+    {
+              if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps            
+            JOIN pi.user_item_try_history uih            
+            WHERE uih.user = :id ORDER BY uih.created_at DESC"  )->setParameters(array('id' => $user_id)) ;                   
+        
+        }else{
+            
+             $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT uih,pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi                         
+            JOIN pi.product_color pc
+            JOIN pi.product_size ps            
+            JOIN pi.user_item_try_history uih            
+            WHERE uih.user = :id ORDER BY uih.created_at DESC"  )->setParameters(array('id' => $user_id)) 
+                ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        
+        }
+    try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }      
+    }
+ 
+ 
 }
