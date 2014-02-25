@@ -4029,7 +4029,7 @@ width: 160px;
     background: #fff;
     position: relative;
     overflow: auto;
-    padding-bottom: 4px;
+    
 }
 
 #prod_accordion .ui-state-active {
@@ -4121,7 +4121,8 @@ width: 160px;
     float:left;
     font-size: 13px;
     width: 165px;
-    padding-left: 5px;    
+    padding-left: 5px; 
+    padding-top: 5px;
 }
 
 .prod_price{
@@ -4171,13 +4172,15 @@ ul.fitting_alerts_ul{
 
 #prod_accordion{
     over flow:auto!important;
-    max-h eight: 430px!important;
+    max-height:430px!important;
 }
 
 .handle_inner {
     background: #fff;
-    height: 54px;
+    height: 58px;
     display:block;
+    margin-bottom: 5px;
+    
 }
 .featured_img img,
 .but_remove_prod,
