@@ -517,6 +517,34 @@ public function productDetail($id, $product_color_id, $product_size_id){
         );
        
     }
+    
+    
+    public function userProfileTryProducts($user_id,$page_number){
+         
+        
+        $yaml = new Parser();
+        $pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+        $limit = $pagination_constants["constants"]["pagination"]["limit"];
+
+        $entity = $this->repo->findTryProfileProductHistory($user_id, $page_number, $limit);
+        $rec_count = count($this->repo->findTryProfileProductHistory($user_id, 0, 0));
+        $cur_page = $page_number;
+
+        if ($page_number == 0 || $limit == 0) {
+            $no_of_paginations = 0;
+        } else {
+            $no_of_paginations = ceil($rec_count / $limit);
+        }
+        return array('productItem' => $entity,
+            'rec_count' => $rec_count,
+            'no_of_pagination' => $no_of_paginations,
+            'limit' => $cur_page,
+            'per_page_limit' => $limit,
+        );
+       
+    }
+    
+    
 #------------------------------------------------------------------------------#
  #-----------------------------------------Zip Downloading------------------#
     public function zipDownload($id){
