@@ -87,8 +87,8 @@ jQuery(document).ready(function(){
             <span id='product_id' style="display: block"></span>
             <span id='size_id' style="display: none"></span>
             <span id='user_id' style="display: block"></span>
-            <a id='compare_link' href="#">Compare All</a>
-            <div class="p_listing">     
+            
+            <div class="p_listing"  style="clear: both; float: none">     
                 <h1>Algorithm</h1>
                 <div style="float: left">User
                     <form id="userForm" method="post" {{ form_enctype(userForm) }}>
@@ -113,12 +113,14 @@ jQuery(document).ready(function(){
                             <div id="productAjax">                        
                             </div>  
                         </div>
-                        <div style="float: left">
-                            <div id="feedbackAjax" style="float: left">                        
+                <a id='compare_link' href="#">Compare All</a>
+                </div> 
+                        
+                            <div id="feedbackAjax"  style="clear: both; float: none">                        
 
                             </div>
 
-                        </div>
-                    </div> 
+                        
+                    
 
 {% endblock %}
