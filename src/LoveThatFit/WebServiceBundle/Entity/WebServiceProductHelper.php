@@ -300,7 +300,7 @@ public function favouriteByUser($user_id,$request){
                 $product_id = $ind_product['id'];
                 if ($product_id) {
                     $p = $this->find($product_id);
-                    $data['data'][$product_id]['id'] = $ind_product['id'];
+                    $data['data'][$product_id]['productId'] = $ind_product['id'];
                     $data['data'][$product_id]['name'] = $ind_product['name'];
                     $data['data'][$product_id]['description'] = $ind_product['description'];
                     $data['data'][$product_id]['target'] = $ind_product['target'];
