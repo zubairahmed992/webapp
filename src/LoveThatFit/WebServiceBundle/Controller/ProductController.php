@@ -36,6 +36,30 @@ public function brandListAction() {
         $data['path'] = $baseurl;
         return new Response($this->json_view($total_record, $data));
     }
+#------ Gieving new product listing of product table for sotring in ipone 
+    public function newproductListingAction(){
+         $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user = $this->get('webservice.helper.user');
+       // $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5','gender'=>'F');
+         $authTokenWebService = $request_array['authTokenWebService'];
+    if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+
+         $product_helper =  $this->get('webservice.helper.product');
+        $product_response=$product_helper->newproductListingWebService($request,$request_array);
+        return new response(json_encode($product_response));
+       
+        
+    }
 
 #--------------Productlist Against Brand or Clothing Type ----------------------#   
  public function productlistAction() {

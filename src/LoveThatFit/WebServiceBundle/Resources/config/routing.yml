@@ -66,6 +66,10 @@ constantValue:
 ws_brands:
     pattern:  /web_service/brands
     defaults: { _controller: LoveThatFitWebServiceBundle:Product:brandList,_format: json}
+    
+ws_new_products:
+    pattern:  /web_service/newproducts
+    defaults: { _controller: LoveThatFitWebServiceBundle:Product:newproductListing,_format: json  }    
 
 ws_products:
     pattern:  /web_service/products

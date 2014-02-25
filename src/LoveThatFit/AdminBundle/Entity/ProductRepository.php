@@ -409,6 +409,24 @@ class ProductRepository extends EntityRepository {
     
     
  #--------------------------------Web Service for Product list ------------------------#
+    
+    
+     public function newproductListingWebService($gender) {
+
+        return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('p.id,p.name,p.description,ct.target as target ,pc.image as product_image,b.name as brand_name')
+                        ->from('LoveThatFitAdminBundle:Product', 'p')
+                        ->innerJoin('p.product_colors', 'pc')
+                        ->innerJoin('p.clothing_type', 'ct')
+                        ->innerJoin('p.brand', 'b')
+                        ->where('p.gender=:gender')
+                        ->groupBy('p.id')
+                        ->setParameters(array('gender' => $gender))
+                        ->getQuery()
+                        ->getResult();
+    }
+
  public function findProductByBrandWebService($id, $gender) {
 
         return $this->getEntityManager()
