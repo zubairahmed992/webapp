@@ -275,17 +275,20 @@ public function favouriteByUser($user_id,$request){
  public function newproductListingWebService($request,$request_array){
        // $id = $request_array['id'];
        
-        $gender = $request_array['gender'];
-     
         if($request_array['authTokenWebService']){
-           
         $user=$this->container->get('user.helper.user')->findByAuthToken($request_array['authTokenWebService']);
         $device_path=$this->getDeviceTypeByUser($user->getId());   
         }
+        
       /* $id=1;
        $type='brand';
        $gender='F';*/
          //$gender='F';
+        if(!$user){
+           return array('Message' => 'We cannot find User');  
+            
+        }
+        $gender = $user->getGender();
         $products = Null;
         $products = $this->repo->newproductListingWebService($gender);
         $data = array();
