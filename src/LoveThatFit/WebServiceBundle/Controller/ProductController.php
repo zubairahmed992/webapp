@@ -21,7 +21,11 @@ use LoveThatFit\SiteBundle\Algorithm;
 class ProductController extends Controller {
 
 #-----------------Brand List Related To Size Chart For Registration Step2-------#
-
+public function imagesUrlAction(){
+    $request = $this->getRequest();
+    $product_response =  $this->get('webservice.helper.product')->imagesUrl($request);
+     return new response(json_encode($product_response));
+}
 #----------------------Brand List-----------------------------------------------#
 public function brandListAction() {
         $request = $this->getRequest();
@@ -30,10 +34,9 @@ public function brandListAction() {
                 ->findAllBrandWebService();
 
         $total_record = count($brand);
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
-        $data = array();
+         $data = array();
         $data['data'] = $brand;
-        $data['path'] = $baseurl;
+        
         return new Response($this->json_view($total_record, $data));
     }
 #------ Gieving new product listing of product table for sotring in ipone 
@@ -43,7 +46,7 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-      // $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
+      $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
          $authTokenWebService = $request_array['authTokenWebService'];
     if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -60,21 +63,45 @@ public function brandListAction() {
        
         
     }
-
-#--------------Productlist Against Brand or Clothing Type ----------------------#   
- public function productlistAction() {
+    
+    #--------------------Product Detail -------------------------------------------#
+    public function newproductDetailAction() {
+        
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-        $authTokenWebService = $request_array['authTokenWebService'];
-    $ajax_array = $request->request->all();
-    if(isset($ajax_array['test'])=='test'){
-        $request_array=$ajax_array;
-        $authTokenWebService = $ajax_array['authTokenWebService'];
+        $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
+       $authTokenWebService = $request_array['authTokenWebService'];
+       if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+     // $request_array=array('id'=>186,'user_id'=>1);
+
+        $product_helper =  $this->get('webservice.helper.product');
+        $product_response=$product_helper->newproductDetailWebService($request,$request_array);
+        
+       return new response(json_encode($product_response));
     }
-     
+
+#-------------Productlist Against Brand or Clothing Type ----------------------#   
+
+    public function productlistAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user = $this->get('webservice.helper.user');
+       //$request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5','type'=>'fav');
+        $authTokenWebService = $request_array['authTokenWebService'];
+    
+      
       if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -106,7 +133,7 @@ public function brandListAction() {
         return new Response($this->json_view($total_record, $data));
     } 
 
-#--------------------Product Detail -------------------------------------------#
+#!!! yet not used ----------------Product Detail -------------------------------------------#
     public function productDetailAction() {
         
         $request = $this->getRequest();

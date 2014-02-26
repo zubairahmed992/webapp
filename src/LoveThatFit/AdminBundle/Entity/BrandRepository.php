@@ -108,7 +108,7 @@ class BrandRepository extends EntityRepository {
 
     public function findAllBrandWebService() {
 
-        $query = $this->getEntityManager()->createQuery("SELECT b.id as id, b.name as name,'brand' AS type,b.image as image FROM LoveThatFitAdminBundle:Brand b
+        $query = $this->getEntityManager()->createQuery("SELECT b.id as brandId, b.name as name,'brand' AS type,b.image as image FROM LoveThatFitAdminBundle:Brand b
             WHERE b.disabled=0 ORDER BY name asc");
         try {
             return $query->getResult();
