@@ -39,6 +39,7 @@
                     {% if(randon_item and randon_item!=null)%}            
                     <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}"/>
                     <span id="{{'product_'~p.id}}" class="curr_prod_full_url" style="display:none;">{{path('ajax_product_detail', {'id':p.id, 'product_color_id':randon_item.productColor.id, 'product_size_id':randon_item.productSize.id})}}</span>
+                     <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>
                     <a class="apply_img hide" href="{{asset(randon_item.WebPath)}}">{{asset(randon_item.WebPath)}}</a>
                       <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : randon_item.id})}}'>feedback</a></span>
                       <span class="product_feedback" id="" style="display:none;">{{p.id}}</span>
