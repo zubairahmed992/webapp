@@ -275,9 +275,10 @@
   .row-fluid .span1:not(.hds) {
     width: 5.982905982905983%;
     *width: 5.929714493544281%;
-   min-height:95px;
-   max-height:95px;
-	padding-top:30px;
+   min-height:60px;
+   max-height:60px;
+   
+	
         overflow:hidden;
 	
   }

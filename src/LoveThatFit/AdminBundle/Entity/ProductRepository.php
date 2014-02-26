@@ -474,6 +474,7 @@ class ProductRepository extends EntityRepository {
                         ->andWhere("p.displayProductColor!=''")
                         ->groupBy('p.id')
                         ->orderBy('p.created_at','asc')
+                        ->setMaxResults(20)
                         ->setParameter('gender', $gender)
                         ->getQuery()
                         ->getResult();
@@ -571,11 +572,7 @@ class ProductRepository extends EntityRepository {
 //-------------------------------------------------------------------------------------    
      public function tryOnHistoryWebService($user_id) {
          
-
-                 
-                 
-         
-           return $this->getEntityManager()
+  return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('pi.id as product_id ,p.name as product_name,b.name as brand_name,ps.title as size, pc.title as color ,pi.image as item_image')
                         ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
