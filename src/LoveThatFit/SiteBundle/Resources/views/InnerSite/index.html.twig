@@ -370,7 +370,67 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
             //my_curr_prod_apply;
     }
     
-    
+// Code for love and unlove, like
+
+function loveItem(item_id)
+{  
+   // alert("test");
+base_url_love=$('#ajax_product_love_url'+item_id).html();
+url_load= "../ajax/user_product_item/create/"+ item_id;
+var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+url_load= "../../ajax/user_product_item/create/"+ item_id;
+}
+
+var jqXHR = $.ajax({
+ 
+  type: "POST",
+  url:url_load,
+success: function (XMLHttpRequest, textStatus, errorThrown) {
+if(jqXHR.responseText.trim()== "success")
+{
+    $("#like_icon_"+item_id).html('');
+    $(".like_icon1_"+item_id).html('');
+  
+    $("#like_icon_"+item_id).replaceWith(' <div class="like_icon1_'+item_id+'"><a href="javascript:void(0);" onclick="lovedItems('+item_id+')" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a><span id="ajax_product_loved_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':'item_id'})}}</span> </div>');
+}else{
+ alert('Sorry .. You are overlimit please delete some of your loved products ');
+  }
+         }
+        });
+}
+
+function lovedItems(item_id)
+{  
+  base_url_loved=$('#ajax_product_loved_url'+item_id).text();
+  url_load= "../ajax/user_product_item/delete/"+ item_id;
+  var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+ url_load= "../../ajax/user_product_item/delete/"+ item_id;
+}
+  var jqXHR = $.ajax({
+  //url: base_url+"/app_dev.php/ajax/products/my_closet/delete/"+ item_id,
+   url: url_load,
+  success: function (XMLHttpRequest, textStatus, errorThrown) {
+if(jqXHR.responseText.trim()== "success")
+{
+    $("#like_icon_"+item_id).html('');
+    $(".like_icon1_"+item_id).html('');
+    $(".like_icon1_"+item_id).replaceWith(' <div id="like_icon_'+item_id+'"><a href="javascript:void(0);"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}" onclick=loveItem('+item_id+')></a><span id="ajax_product_love_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':'item_id'})}}</span></div>'); 
+}               
+   }
+ });
+}
+
+
+
+
 //--Slider--//
     
 function set_slider_buttons(){
@@ -1063,6 +1123,8 @@ $(".share_but_new").click(
   }
 );
   
+
+
 </script>
 
  
