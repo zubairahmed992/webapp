@@ -203,15 +203,16 @@ public function favouriteByUser($user_id,$request){
 #--------------Web Service for product listing --------------------------------#
  public function productListWebService($request,$request_array){
         
-        $id = $request_array['id'];
+        //$id = $request_array['id'];
         $type = $request_array['type'];
-        $gender = $request_array['gender'];
+       // $gender = $request_array['gender'];
      
         if($request_array['authTokenWebService']){
            
         $user=$this->container->get('user.helper.user')->findByAuthToken($request_array['authTokenWebService']);
-        $device_path=$this->getDeviceTypeByUser($user->getId());   
+       // $device_path=$this->getDeviceTypeByUser($user->getId());   
         }
+        $gender=$user->getGender();
       /* $id=1;
        $type='brand';
        $gender='F';*/
@@ -241,27 +242,20 @@ public function favouriteByUser($user_id,$request){
                 $product_id = $ind_product['id'];
                 if ($product_id) {
                     $p = $this->find($product_id);
-                    $data['data'][$product_id]['id'] = $ind_product['id'];
-                    $data['data'][$product_id]['name'] = $ind_product['name'];
-                    $data['data'][$product_id]['description'] = $ind_product['description'];
-                    $data['data'][$product_id]['target'] = $ind_product['target'];
-                    $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
-                    $item = $p->getDefaultItem();
-                    if ($item) {
-                        $data['data'][$product_id]['fitting_room_image'] = $item->getImage();
-                    }
+                    $data['data'][$product_id]['productId'] = $ind_product['id'];
+                   // $data['data'][$product_id]['name'] = $ind_product['name'];
+                   // $data['data'][$product_id]['description'] = $ind_product['description'];
+                   // $data['data'][$product_id]['target'] = $ind_product['target'];
+                   // $data['data'][$product_id]['product_image'] = $ind_product['product_image'];
+                    //$item = $p->getDefaultItem();
+                    //if ($item) {
+                      //  $data['data'][$product_id]['fitting_room_image'] = $item->getImage();
+                    //}
                 }
             }   
            
             //$data[] = $products;
            
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
-            $data['fitting_room_path'] = $fitting_room;
-            $total_record = count($products);
-
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-            $data['path'] = $baseurl;
             return $data;
         } else {
             return array('Message' => 'We cannot find Product');
@@ -319,20 +313,95 @@ public function favouriteByUser($user_id,$request){
            
            // $data[] = $products;
            
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
-            $data['fittingRoomPath'] = $fitting_room;
+           //$baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
+           //$fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
+           // $data['fittingRoomPath'] = $fitting_room;
+            //$baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
+            //$data['path'] = $baseurl;
             $total_record = count($products);
-
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-            $data['path'] = $baseurl;
-            return $data;
+  return $data;
         } else {
             return array('Message' => 'We cannot find Product');
         }
      
 }
 
+
+#----------This is used for saving db all product id with append of detail 
+public function newproductDetailWebService($request,$request_array){
+       
+        if($request_array['authTokenWebService']){
+        $user=$this->container->get('user.helper.user')->findByAuthToken($request_array['authTokenWebService']);
+         $user_id=$user->getId();
+        }
+      if(!$user_id){
+            return  array('Message' => 'User Missing');
+       }    
+        $user_helper = $this->container->get('user.helper.user');
+        $product_color_helper = $this->container->get('admin.helper.productcolor');
+        $productdetail = array();
+        $gender = $user->getGender();
+        $products = $this->repo->newproductListingWebService($gender);
+       
+       $product_detail = array();
+        $user = $user_helper->find($user_id);
+        $user_re = new User();
+        $count_rec = count($products);
+        $product_color_array = array();
+        if ($products) {
+          foreach ($products as $ind_product) {
+                $product_id = $ind_product['id'];
+            if ($product_id) {
+                 
+                 $p = $this->find($product_id);
+                 $product_colors = $p->getProductColors();
+                 $product_size_id = null;
+                 $size_id = null;
+                    foreach ($product_colors as $product_color_value) {
+                      $product_color_id = $product_color_value->getId();
+                      $color_sizes = $product_color_helper->getSizeItemImageUrlArray($product_color_id);
+                      $color_size_array = array();
+                      $counter=1;
+                     
+                       foreach ($color_sizes as $cs) {
+                            $color_size_array[$cs['sizeId']]= $cs;
+                            $like_status['likeStatus']=$user->getMyClosetListArray($cs['sizeId']);
+                            array_push($color_size_array [$cs['sizeId']],$like_status);
+                              $counter++;
+                            }
+                            
+                  $product_color_array[$ind_product['name']] = array(
+                            'colorId' => $product_color_value->getId(),
+                            'image' => $product_color_value->getImage(),
+                            'pattern' => $product_color_value->getPattern(),
+                            'title' => $product_color_value->getTitle(),
+                            'sizes' => $color_size_array,
+                        );
+                      
+                    }
+                        
+                 
+           }
+                
+            }  
+            
+            } 
+      
+            $device_path=$this->getDeviceTypeByUser($user_id);   
+           // $productdetail['data'] = $product_color_array;
+            $data = array();
+            $data['data'] = $product_color_array;
+         //   $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
+          //  $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
+          //  $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+
+            //$data['productColorPath'] = $baseurl;
+            //$data['fittingRoomPath'] = $fitting_room;
+            //$data['patternPath'] = $pattern;
+
+            return  $data;
+        
+}
 
 #--------------------Product Detail Web Service --------------------------------#
  public function productDetailWebService($request,$request_array){
@@ -456,4 +525,22 @@ private function countMyCloset($user_id){
         return json_encode($f);
         
     }
+    
+ public function imagesUrl($request){
+     
+     $data=array();
+     $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+     $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
+     $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+     $data['ipad'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/ipad/';
+     $data['ipadRetina'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/ipad_retina/';
+     $data['iphone4s'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone4s/';
+     $data['iphone5'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone5/';
+
+    return $data;
+            
+
+     
+       
+ }   
 }

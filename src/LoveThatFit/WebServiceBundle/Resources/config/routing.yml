@@ -71,6 +71,11 @@ ws_new_products:
     pattern:  /web_service/newproducts
     defaults: { _controller: LoveThatFitWebServiceBundle:Product:newproductListing,_format: json  }    
 
+ws_new_products_detail:
+    pattern:  /web_service/newproducts_detail
+    defaults: { _controller: LoveThatFitWebServiceBundle:Product:newproductDetail,_format: json  }    
+
+
 ws_products:
     pattern:  /web_service/products
     defaults: { _controller: LoveThatFitWebServiceBundle:Product:productList,_format: json  }
@@ -111,7 +116,9 @@ userFavouriteList:
    pattern:  /web_service/user_favourite_list
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:favouriteByUser}
  
-   
+ws_images_ul:
+   pattern:  /web_service/images_url
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:imagesUrl}   
    
    
 
