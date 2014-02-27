@@ -35,6 +35,16 @@ class FitEngine {
     function getUser() {
         return $this->user;
     }
+#--------------------->
+    function getUserBodySpecs() {
+        return $this->user->getMeasurement()->getArray();
+    }
+#--------------------->
+    function getProductFitPriority() {
+        return $this->product->getFitPriorityArray();
+    }    
+    
+    
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
     function getFeedBackJSON() {
         return json_encode($this->getBasicFeedback());
@@ -245,12 +255,12 @@ private function getAllKeysTesting($ar){
         if ($is_ltf === true) {
             $str = 'Love that Fit!';
             $feed_back = null;
-            $feed_back['Overall'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $str);
+            $feed_back['Overall'] = $this->getFeedbackArrayElement('overall', null, null, null, 0, null, true, $str);
         } else {
             $recomended_size = $this->getFittingSizeRecommendation();
             //$recomended_size=  json_encode($recomended_size);
             if ($recomended_size && $recomended_size['id'] != $current_item->getProductSize()->getId()){
-            $feed_back['Tip'] = $this->getFeedbackArrayElement(null, null, null, 0, null, true, $recomended_size['message']);
+            $feed_back['Tip'] = $this->getFeedbackArrayElement('Tip',null, null, null, 0, null, true, $recomended_size['message']);
             }
         }
         $feed_back['fits']=$is_ltf ;
@@ -296,7 +306,7 @@ private function getAllKeysTesting($ar){
                 $str = "tight fit";
             }
         }
-        return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, 0, $fit, $str, $ideal_fit, $max_fit, $varience_index);
+        return $this->getFeedbackArrayElement($fit_point, $ideal_low, $ideal_high, $body, $diff, 0, $fit, $str, $ideal_fit, $max_fit, $varience_index);
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private function evaluate_fit_point_get_feedback($body_specs, $item_specs, $fit_point, $fit_priority = null) {
@@ -321,11 +331,15 @@ private function getAllKeysTesting($ar){
         $fit = false;
         $max_fit = false;
         $ideal_fit = false;
-
+        
+        if(array_key_exists($fit_point, $body_specs)){
+        $body = $body_specs[$fit_point]; #~~~~~~~~~> to avoid measurement missing in feedback incase
+        }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~ check if nodes exists 1
         if (array_key_exists($fit_point, $item_specs) && array_key_exists($fit_point, $body_specs)) {
             $max_body_measurement = $item_specs[$fit_point]['max_body_measurement'];
+            
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~ Product specs high & low nodes exists 2
             if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0 || $item_specs[$fit_point]['ideal_body_low'] === NULL || $item_specs[$fit_point]['ideal_body_low'] == 0) {
                 if ($item_specs[$fit_point]['ideal_body_high'] === NULL || $item_specs[$fit_point]['ideal_body_high'] == 0) {
@@ -418,7 +432,7 @@ private function getAllKeysTesting($ar){
             $str = 'Please enter you measurement.';
         }
 
-        return $this->getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str, $ideal_fit, $max_fit, $varience_index, $diff_percent, $max_body_measurement, $max_body_diff);
+        return $this->getFeedbackArrayElement($fit_point, $ideal_low, $ideal_high, $body, $diff, $priority, $fit, $str, $ideal_fit, $max_fit, $varience_index, $diff_percent, $max_body_measurement, $max_body_diff);
     }
 #------------------------
 
@@ -429,6 +443,7 @@ private function getAllKeysTesting($ar){
         $in_range = false;
         for ($i = 0; $i < count($sizes) - 1; $i++) {
             if (array_key_exists($sizes[$i], $size_fit_points)) {
+                if ($size_fit_points[$sizes[$i]]){
                 if ($size_fit_points[$sizes[$i]]->getIdealBodySizeHigh() > $body_specs[$fit_point] &&
                         $size_fit_points[$sizes[$i]]->getIdealBodySizeLow() < $body_specs[$fit_point]) {
                     $in_range = true;
@@ -437,6 +452,7 @@ private function getAllKeysTesting($ar){
                         $in_range = false;
                     $j++;
                 }
+            }
             }
         }
         return $j;
@@ -518,7 +534,7 @@ private function getAllKeysTesting($ar){
             $str = 'too short';
         }
 
-        return $this->getFeedbackArrayElement($item_specs['inseam']['ideal_body_low'], $item_specs['inseam']['ideal_body_high'],  $body_specs['inseam'], $diff, 0, true, $str);
+        return $this->getFeedbackArrayElement('inseam', $item_specs['inseam']['ideal_body_low'], $item_specs['inseam']['ideal_body_high'],  $body_specs['inseam'], $diff, 0, true, $str);
         }else{
             return;
         }
@@ -526,7 +542,7 @@ private function getAllKeysTesting($ar){
 
 #----------------------------------------------------------------------------------------------------
 # create array element for the feed back array
-    private function getFeedbackArrayElement($ideal_low, $ideal_high, $body, $diff, $priority, $fit, $msg, $ideal_fit = null, $max_fit = null, $varience_index = null, $diff_percent = null, $max_body_measurement = null, $max_body_diff = null) {
+    private function getFeedbackArrayElement($title, $ideal_low, $ideal_high, $body, $diff, $priority, $fit, $msg, $ideal_fit = null, $max_fit = null, $varience_index = null, $diff_percent = null, $max_body_measurement = null, $max_body_diff = null) {
         return array(
             'ideal_low' => $ideal_low,
             'ideal_high' => $ideal_high,
@@ -544,9 +560,26 @@ private function getAllKeysTesting($ar){
             'fit' => $fit,
             'ideal_fit' => $ideal_fit,
             'max_fit' => $max_fit,
+            'title' => $this->getFeedbackLabel($title),
         );
     }
- private function makeSnake($str){                
+    private function makeSnake($str) {
         return str_replace(' ', '_', strtolower($str));
+    }
+
+    private function snakeToNormal($str) {
+        return str_replace('_', ' ', ucfirst($str));
+    }
+
+    private function getFeedbackLabel($str) {
+        $str = str_replace(' ', '_', strtolower($str));
+        switch ($str) {
+            case 'shoulder_across_back':
+                return 'Shoulder';
+                break;
+            default:
+                return $this->snakeToNormal($str);
+                break;
+        }
     }
 }

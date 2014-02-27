@@ -1,11 +1,13 @@
 
          {% for key, value in data %} 
             {%if (key | lower != 'fits')%}
-            <li><b>{{key | lower | capitalize }}</b>{{' : '~value['msg']}}
+            <li><b>{{value['title'] | lower | capitalize }}</b>
             
             {%if (value.body is defined) and (value['body']==false) and (key | lower != 'tip') and (key | lower != 'overall') %}
-               <a href="{{ path('user_profile_about_me') }}" > here</a> </li>
-           {% endif %}
+               Please provide your measurements <a href="{{ path('user_profile_about_me') }}" > here</a> </li>
+           {%else%}
+            {{' : '~value['msg']}}
+            {% endif %}
                
               
                
