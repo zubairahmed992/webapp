@@ -990,7 +990,7 @@ class ProductRepository extends EntityRepository {
             JOIN pi.product_color pc
             JOIN pi.product_size ps            
             JOIN pi.user_item_try_history uih            
-            WHERE uih.user = :id ORDER BY uih.created_at DESC"  )->setParameters(array('id' => $user_id)) ;                   
+            WHERE uih.user = :id ORDER BY uih.updated_at DESC"  )->setParameters(array('id' => $user_id)) ;                   
         
         }else{
             
@@ -1000,7 +1000,7 @@ class ProductRepository extends EntityRepository {
             JOIN pi.product_color pc
             JOIN pi.product_size ps            
             JOIN pi.user_item_try_history uih            
-            WHERE uih.user = :id ORDER BY uih.created_at DESC"  )->setParameters(array('id' => $user_id)) 
+            WHERE uih.user = :id ORDER BY uih.updated_at DESC"  )->setParameters(array('id' => $user_id)) 
                 ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
         
