@@ -16,6 +16,13 @@ image_category:
       height: 106      
       prefix:  
       dir:  'uploads/ltf/brands/iphone'  
+   
+    ipad:
+        width: 140
+        height: 120      
+        prefix:  
+        dir:  'uploads/ltf/brands/ipad'      
+      
 
   product:
     original:
@@ -40,7 +47,18 @@ image_category:
       prefix:  
       dir:  'uploads/ltf/products/display/iphone_list' 
     
+    ipad_product_list:
+      width: 145
+      height: 117
+      prefix:  
+      dir:  'uploads/ltf/products/display/ipad_product_list' 
       
+    ipad_ftting_room_list:
+       width: 145
+       height: 117
+       prefix:  
+       dir:  'uploads/ltf/products/display/ipad_ftting_room_list'    
+
   
   product_pattern:      
     original:
