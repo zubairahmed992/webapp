@@ -23,7 +23,11 @@ class ProductController extends Controller {
 #-----------------Brand List Related To Size Chart For Registration Step2-------#
 public function imagesUrlAction(){
     $request = $this->getRequest();
-    $product_response =  $this->get('webservice.helper.product')->imagesUrl($request);
+    $handle = fopen('php://input', 'r');
+    $jsonInput = fgets($handle);
+    $request_array = json_decode($jsonInput, true);
+   // $request_array=array('deviceType'=>'ipad');
+    $product_response =  $this->get('webservice.helper.product')->imagesUrl($request,$request_array);
      return new response(json_encode($product_response));
 }
 #----------------------Brand List-----------------------------------------------#
@@ -46,7 +50,7 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-      $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
+     // $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
          $authTokenWebService = $request_array['authTokenWebService'];
     if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -72,8 +76,9 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-        $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
-       $authTokenWebService = $request_array['authTokenWebService'];
+       // $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
+        
+        $authTokenWebService = $request_array['authTokenWebService'];
        if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -98,7 +103,7 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-       //$request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5','type'=>'fav');
+     // $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5','brandId'=>5,'type'=>'brand');
         $authTokenWebService = $request_array['authTokenWebService'];
     
       
