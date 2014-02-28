@@ -138,14 +138,43 @@
             <li>For photo - Stand straight, arms relaxed by side, shoulders back and feet shoulder width apart. <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
             <li>Do not forget to smile!</li>
             <li>Click browse to upload photo</li>
+            
+            <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
         </ol>
         <ol class="hiw_step_1">
             <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'">here</a> </li>
+        
+        <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        
         </ol>
         <ol class="hiw_step_2">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'">here</a> </li>
+       <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        
+        
         </ol>
+        
+         <ol class="hiw_step_3">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'">here</a> </li>
+        
+              <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+         
+         </ol>
+        
+        
+        
+        
         
         
     </div>
@@ -160,12 +189,17 @@
             <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('stella_box').style.display='none'">x</a></span>
         </div>
         <div id="pic_step_1">
-            <img src="{{ asset('bundles/lovethatfit/site/images/pic_step_1.png') }}">
+            <img src="{{ asset('bundles/lovethatfit/site/images/1_top_bottom.png') }}">
             <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_1').style.display='none'">x</a></span>
         </div>
-        <div id="pic_step_2">
-            <img src="{{ asset('bundles/lovethatfit/site/images/pic_step_2.png') }}">
+                
+              <div id="pic_step_2">
+            <img src="{{ asset('bundles/lovethatfit/site/images/1_vert.png') }}">
             <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_2').style.display='none'">x</a></span>
+        </div>
+        <div id="pic_step_3">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic_step_2_2.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_3').style.display='none'">x</a></span>
         </div>
             <style>
                     #load_current_pic {
@@ -270,7 +304,7 @@
                             <div id="verti_shoulder" class="adj_popout_msg_verti adj_popout_tip_verti hide">
                                 <span class="arrow_img"></span>
                                 <div class="arrow_img_alerts"></div>
-                                <span>Adjust slider bar to set height of shoulder</span>
+                                <span>Click and drag bar to set top of shoulders</span>
                                 <div class="label_tip">Example:</div>
                                 <div class="step_2_example">
                                     <img class="step_2_exam_1" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
@@ -280,7 +314,7 @@
                             <div id="verti_bust" class="adj_popout_msg_verti adj_popout_tip_verti hide">
                                 <span class="arrow_img"></span>
                                 <div class="arrow_img_alerts"></div>
-                                <span>Adjust slider bar to set height of the {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%} at the fullest point</span>
+                                <span>Click and drag bar to set {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%} at fullest point</span>
                                 <div class="label_tip">Example:</div>
                                 <div class="step_2_example">
                                     <img class="step_2_exam_2" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
@@ -290,7 +324,7 @@
                             <div id="verti_waist" class="adj_popout_msg_verti adj_popout_tip_verti hide">
                                 <span class="arrow_img"></span>
                                 <div class="arrow_img_alerts"></div>
-                                <span>Adjust the slider bar to set the height of the waist at the narrowest point</span>
+                                <span>Click and drag bar to set natural waist at narrowest point</span>
                                 <div class="label_tip">Example:</div>
                                 <div class="step_2_example">
                                     <img class="step_2_exam_3" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
@@ -300,7 +334,7 @@
                             <div id="verti_hip" class="adj_popout_msg_verti adj_popout_tip_verti hide">
                                 <span class="arrow_img"></span>
                                 <div class="arrow_img_alerts"></div>
-                                <span>Adjust the slider bar to set the height of the hip at the fullest point</span>
+                                <span>Click and drag bar to set hips at fullest point</span>
                                 <div class="label_tip">Example:</div>
                                 <div class="step_2_example">
                                     <img class="step_2_exam_4" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
@@ -317,7 +351,7 @@
                                             <div class="adj_popout_msg adj_popout_tip">
                                                 <span class="arrow_img"></span>
                                                 <div class="arrow_img_alerts"></div>
-                                                <span>Adjust slider to set the width of your shoulder</span>
+                                                <span>Click and drag to set the width of your shoulders</span>
                                                 <div class="zoom_slider_hldr">
                                                     <div id="shoulder_slider_set" class="tip_slider"></div>
                                                 </div>
@@ -359,7 +393,7 @@
                                             <div class="adj_popout_msg adj_popout_tip">
                                                 <span class="arrow_img"></span>
                                                 <div class="arrow_img_alerts"></div>
-                                                <span>Adjust slider to set the width of your {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%}</span>
+                                                <span>Click and drag to set the width of your {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%}</span>
                                                 <div class="zoom_slider_hldr">
                                                     <div id="bust_slider_set" class="tip_slider"></div>
                                                 </div>

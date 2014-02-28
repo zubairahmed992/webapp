@@ -3153,12 +3153,12 @@ padding-bottom: 0px;
     text-align: center;
     font-weight: normal;
     text-transform: uppercase;
-    border-bottom: 3px solid #c4c833;
+    border-bottom: 3px solid #ccc;
     margin-bottom: 10px;    
 }
 
 .home_box .slid{    
-    border-bottom: 3px solid #c4c833; 
+    border-bottom: 3px solid #406db5; 
     overflow: hidden;
     }
 
@@ -3272,7 +3272,8 @@ div.play_area_hldr div.action_buts_bar {
      border:1px solid #ddd; 
      box-shadow:0px 3px 15px #000;
      z-index: 9000;
- }
+ } 
+ 
  
   #pic_step_2{     
      display:none; 
@@ -3283,7 +3284,19 @@ div.play_area_hldr div.action_buts_bar {
      padding: 36px 10px 10px;
      border:1px solid #ddd; 
      box-shadow:0px 3px 15px #000;
-     z-index: 6000;
+     z-index: 9000;
+ }
+ 
+ #pic_step_3{     
+     display:none; 
+     position: absolute; 
+     left: 270px; 
+     top: 60px; 
+     background: #fff; 
+     padding: 36px 10px 10px; 
+     border:1px solid #ddd; 
+     box-shadow:0px 3px 15px #000;
+     z-index: 9000;
  }
  
  .popup_cross{     
@@ -3296,7 +3309,8 @@ div.play_area_hldr div.action_buts_bar {
  }
  
   .hiw_step_1,
- hiw_step_2 {
+ hiw_step_2,
+hiw_step_3 {
      display:none;
  }
  
@@ -3921,7 +3935,7 @@ width: 160px;
 
 .step_1_exam_4 {
     position: relative;
-    top:-420px;
+    top:-405px;
     left:-150px;
 }
 
@@ -4221,4 +4235,35 @@ ul.fitting_alerts_ul{
  
  .prod_share{
      margin-left: 5px;
+ }
+ 
+ 
+ #profile_measurement_link_reg {
+    font-size: 0.75em!important;
+    color: #333;    
+    display: block;
+    padding: 5px;
+    text-align: center;
+}
+
+#profile_measurement_link_reg a {
+    color:#444444!important;
+    font-weight: bold;
+}
+
+#exp_sml{
+    float:right;
+    margin-right: 110px;
+}
+
+.handle_inner{
+margin-bottom: 4px;
+margin-top: 4px;
+margin-left: 4px;
+}
+
+.set_width_chg {
+     position: relative;
+     color:#666;
+     font-size: 14px;
  }

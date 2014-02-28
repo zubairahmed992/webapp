@@ -178,6 +178,7 @@ function pre_step_1(){
     $("#stella_box").css("display","none");
     $("#pic_step_1").css("display","none");
     $("#pic_step_2").css("display","none");
+    $("#pic_step_3").css("display","none");
     
     $(".hiw_step_2").css("display","none");
     
@@ -266,6 +267,20 @@ $('.reg_next_step2').click(function(){
 $('.next_step2').click(function(){
    rotate_me_to("just_shift");
    $(".action_buts_bar").hide();
+
+    $(".hiw_step_1").fadeOut(200);
+    $(".hiw_step_3").fadeOut(200);
+    $(".hiw_step_2").fadeIn(200);
+   
+});
+
+$('.next_step3').click(function(){
+   rotate_me_to("just_shift");
+   $(".action_buts_bar").hide();
+
+    $(".hiw_step_2").fadeOut(200);
+    $(".hiw_step_3").fadeIn(200);
+   
 });
 
 
@@ -447,6 +462,7 @@ $('#uploaded_photo').html("<img id='img_to_upload' src='"+croped_img_path+"' cla
 
 $(".hiw_upload_photo").css("display","none");
 $(".hiw_step_2").css("display","none");
+$(".hiw_step_3").css("display","none");
 $(".hiw_step_1").fadeIn(200);
 
 $("#play_area").removeClass("hide");
