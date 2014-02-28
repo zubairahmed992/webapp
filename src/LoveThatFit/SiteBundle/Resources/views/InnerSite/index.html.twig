@@ -245,7 +245,9 @@
 <script>
     
 function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id ){
+
     open_fr();
+
     if(prod_thumb){
         //alert($(prod_thumb).attr("class"));
             details_base_url = $(prod_thumb).parent().find(".curr_prod_full_url").html();
@@ -284,10 +286,10 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         //alert("Top");
                         if($("#prod_accordion").find("#prod_type_top_hlder")){
                            $("#prod_accordion").find("#prod_type_top_hlder").fadeOut(200, function(){this.remove();});
-                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'></div></div>");
+                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
                            //$("#products_details").prepend("<div id='top_type_select_color'></div>");
                         }else{
-                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'></div></div>");
+                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
                            //$("#products_details").prepend("<div id='top_type_select_color'></div>");
                         }
                         main_container_hldr = "#prod_type_top_hlder";
@@ -298,10 +300,10 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     //alert("Bottom");
                         if($("#prod_accordion").find("#prod_type_bottom_hlder")){
                            $("#prod_accordion").find("#prod_type_bottom_hlder").fadeOut(200, function(){this.remove();});
-                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'></div></div>");
+                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
                            //$("#products_details").prepend("<div id='bottom_type_select_color'></div>");
                         }else{
-                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'></div></div>");
+                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
                           // $("#products_details").prepend("<div id='bottom_type_select_color'></div>");
                         }
                         main_container_hldr = "#prod_type_bottom_hlder";
@@ -312,10 +314,10 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                      //alert("Dress");
                         if($("#prod_accordion").find("#prod_type_dress_hlder")){
                            $("#prod_accordion").find("#prod_type_dress_hlder").fadeOut(200, function(){this.remove();});
-                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'></div></div>");
+                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
                            //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
                         }else{
-                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'></div></div>");
+                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
                            //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
                         }
                         main_container_hldr = "#prod_type_dress_hlder";
@@ -323,6 +325,8 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         main_select_color = "#dress_type_select_color";
                     }
                     set_select_color(curr_prod_type);
+                    
+                    
                      $.ajax({
                         url: curr_prod_feedback,
                         cache: false,
@@ -348,6 +352,12 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     
                     $(main_dropable).fadeOut("200", function (){
                         $(main_dropable).html("<img class='curr_prod' src='" + curr_prod_apply + "' />").fadeIn();
+                        //$(main_dropable).prepend("<div class='uploading_in_progress set_width_chg'></div>").fadeIn(100);
+                        
+                        //chk_prod_img_load =  document.getElementById(prod_type_applied).width;
+
+                        //chk_applied_loaded(main_dropable);
+                        
                         $(main_dropable + " img").draggable({
                                     start: function(){
                                     },
@@ -355,6 +365,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                                         product_drag_limit_check(this);
                                     },
                                     stop: function() {
+                                        
                                         remove_product_applied(this);
 
                                     }
@@ -938,25 +949,24 @@ function updateSizeColorCombo(product_id){
  
 }
 
-function chk_applied_loaded(prod_type_applied){
-    photo_width_a =  document.getElementById(prod_type_applied).width;
-            if(photo_width_a == null){
-                //alert("not loaded yet");
-                setTimeout(chk_applied_loaded(prod_type_applied), 200);
-                return false;
-            }else {
-                $("#top_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
-                $("#applied_prod_top").draggable({
-                        start: function(){
-                        },
-                        drag: function(){
-                            product_drag_limit_check(this);
-                        },
-                        stop: function() {
-                            remove_product_applied(this);
-                        }
-                    });
-            }
+function chk_applied_loaded(chk_main_dropable){
+    
+    //alert(chk_main_dropable );
+    
+    chk_prod_img_load =  $(chk_main_dropable + " .curr_prod").width();
+     
+     
+     
+    if(chk_prod_img_load == 0){
+        
+       // setTimeout(chk_applied_loaded(chk_main_dropable), 200);
+        
+        
+        //alert("If: "+chk_prod_img_load);
+    }else{
+       // alert("Else: "+chk_prod_img_load);
+    }
+    
         }
 
 function chk_bottom_applied_loaded(prod_type_applied){

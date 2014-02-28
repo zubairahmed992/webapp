@@ -171,10 +171,10 @@ function chk_dress_applied_loaded(prod_type_applied){
 	});
 	});
 	</script> 
-        <a href="https://twitter.com/share"  data-url="http://dev.lovethatfit.com/{{product.name}}" data-text="Name:{{product.name}} Description:{{product.description}} >" data-via="lovethatfit" data-size="large" data-related="lovethatfit"><img src="{{asset('bundles/lovethatfit/site/images/icon_t.png')}}"></a>
+        <a target="_blank" href="https://twitter.com/share"  data-url="http://dev.lovethatfit.com/{{product.name}}" data-text="Name:{{product.name}} Description:{{product.description}} >" data-via="lovethatfit" data-size="large" data-related="lovethatfit"><img src="{{asset('bundles/lovethatfit/site/images/icon_t.png')}}"></a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
-       <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.lovethatfit.com%2F&media=dev.lovethatfit.com{{ asset(productItem.WebPath) }}&description=Name:{{product.name}}
+        <a target="_blank" href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.lovethatfit.com%2F&media=dev.lovethatfit.com{{ asset(productItem.WebPath) }}&description=Name:{{product.name}}
         Description:{{product.description}}" >
        <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>
                                         </div>
@@ -208,7 +208,7 @@ function chk_dress_applied_loaded(prod_type_applied){
                                 <div class="rgt_col">
                                     
                                     <ul class="fitting_alerts_ul" id="fitting_alerts_ul_{{product.id}}">
-                                       
+                                        <li><div class='uploading_in_progress set_width_chg'>Loading...</div></li>
                                     </ul>
                                     <!--<div class="rec_tip">
                                         <span class="bolder">Tip:</span> Try Size 4.
