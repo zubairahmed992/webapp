@@ -213,13 +213,14 @@ public function favouriteByUser($user_id,$request){
        // $device_path=$this->getDeviceTypeByUser($user->getId());   
         }
         $gender=$user->getGender();
-      /* $id=1;
+      /* $brandId=5;
        $type='brand';
        $gender='F';*/
         
         $products = Null;
         if ($type == "brand") {
-            $products = $this->repo->findProductByBrandWebService($id, $gender);
+            $brandId=$request_array['brandId'];
+            $products = $this->repo->findProductByBrandWebService($brandId, $gender);
         }
         if ($type == "clothing_type") {
             $products = $this->repo->findProductByClothingTypeWebService($id, $gender);
@@ -303,6 +304,7 @@ public function favouriteByUser($user_id,$request){
                     $data['data'][$product_id]['target'] = $ind_product['target'];
                     $data['data'][$product_id]['productImage'] = $ind_product['product_image'];
                     $data['data'][$product_id]['brandName'] = $ind_product['brand_name'];
+                    $data['data'][$product_id]['brandId'] = $ind_product['brandId'];
                     
                     $item = $p->getDefaultItem();
                     if ($item) {
@@ -341,9 +343,12 @@ public function newproductDetailWebService($request,$request_array){
         $product_color_helper = $this->container->get('admin.helper.productcolor');
         $productdetail = array();
         $gender = $user->getGender();
-        $products = $this->repo->newproductListingWebService($gender);
-       
-       $product_detail = array();
+          $data=array();
+       // $products = $this->repo->newproductListingWebService($gender);
+      $data['data'] = $this->repo->newproductDetailDBStructureWebService($gender);
+      
+        return $data;
+    /*   $product_detail = array();
         $user = $user_helper->find($user_id);
         $user_re = new User();
         $count_rec = count($products);
@@ -399,7 +404,7 @@ public function newproductDetailWebService($request,$request_array){
             //$data['fittingRoomPath'] = $fitting_room;
             //$data['patternPath'] = $pattern;
 
-            return  $data;
+            return  $data;*/
         
 }
 
@@ -526,16 +531,30 @@ private function countMyCloset($user_id){
         
     }
     
- public function imagesUrl($request){
-     
+ public function imagesUrl($request,$request_array){
+     $deviceType=$request_array['deviceType'];
      $data=array();
-     $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+     if($deviceType=='ipad' ||$deviceType=='ipad_retina'){
+      $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/ipad/';
+     }  else {
+      $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+      $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+      
+     }
+     if($deviceType=="ipad"){
+         $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/ipad/';
+     }
+     elseif($deviceType=="ipad_retina"){
+         $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/ipad_retina/';
+     }else{
+         $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+     }
+    
      $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-     $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
-     $data['ipad'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/ipad/';
-     $data['ipadRetina'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/ipad_retina/';
-     $data['iphone4s'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone4s/';
-     $data['iphone5'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone5/';
+     $data['fittingRoomImage'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$deviceType.'/';
+   //  $data['ipadRetina'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/ipad_retina/';
+   //  $data['iphone4s'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone4s/';
+   //  $data['iphone5'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone5/';
 
     return $data;
             
