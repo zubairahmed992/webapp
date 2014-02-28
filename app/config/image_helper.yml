@@ -18,8 +18,8 @@ image_category:
       dir:  'uploads/ltf/brands/iphone'  
    
     ipad:
-        width: 140
-        height: 120      
+        width: 230 
+        height: 145      
         prefix:  
         dir:  'uploads/ltf/brands/ipad'      
       
@@ -48,16 +48,28 @@ image_category:
       dir:  'uploads/ltf/products/display/iphone_list' 
     
     ipad_product_list:
-      width: 145
-      height: 117
+      width: 290
+      height: 415
       prefix:  
       dir:  'uploads/ltf/products/display/ipad_product_list' 
       
     ipad_ftting_room_list:
-       width: 145
-       height: 117
+       width: 123
+       height: 160
        prefix:  
        dir:  'uploads/ltf/products/display/ipad_ftting_room_list'    
+    
+    ipad_retina_product_list:
+      width: 580
+      height: 830
+      prefix:  
+      dir:  'uploads/ltf/products/display/ipad_retina_product_list' 
+      
+    ipad_retina_ftting_room_list:
+       width: 246
+       height: 320
+       prefix:  
+       dir:  'uploads/ltf/products/display/ipad_retina_ftting_room_list'        
 
   
   product_pattern:      

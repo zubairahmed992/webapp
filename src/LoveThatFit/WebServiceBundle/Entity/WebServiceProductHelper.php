@@ -536,9 +536,12 @@ private function countMyCloset($user_id){
      $data=array();
      if($deviceType=='ipad' ||$deviceType=='ipad_retina'){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/ipad/';
+      $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_product_list/';
+      $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_ftting_room_list/';
      }  else {
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
       $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+      $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
       
      }
      if($deviceType=="ipad"){
@@ -550,7 +553,7 @@ private function countMyCloset($user_id){
          $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
      }
     
-     $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
+     
      $data['fittingRoomImage'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$deviceType.'/';
    //  $data['ipadRetina'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/ipad_retina/';
    //  $data['iphone4s'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone4s/';
