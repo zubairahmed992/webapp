@@ -517,11 +517,13 @@ if(chk_no_img_path == false){
     
     $(".hiw_step_1").css("display","none");
     $(".hiw_step_2").css("display","none");
+    $(".hiw_step_3").css("display","none");
     $(".hiw_upload_photo").fadeIn(200);
     
     $("#stella_box").css("display","none");
     $("#pic_step_1").css("display","none");
     $("#pic_step_2").css("display","none");
+    
     
 }
 

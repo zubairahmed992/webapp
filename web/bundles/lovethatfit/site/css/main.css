@@ -3538,7 +3538,7 @@ hiw_step_3 {
 }
 
 .left_column{
-    min-height: none!important;   
+    min-height: 675px!important;   
 }
 
 #measurement_bra_numbers{    
