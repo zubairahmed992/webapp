@@ -7,9 +7,11 @@
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
     {% for size, size_specs in data %} 
             <tr>
-                <td>size {{size}} {{size_specs.message}}</td>            
+                <td>{{size}} | <i><b>{{size_specs.message}}</b></i> | variance:{{size_specs.variance}} | max-variance:{{size_specs.max_variance}} | fit_scale:{{size_specs.fit_scale}} |  ({{size_specs.status}})
+                
+                </td>            
             </tr>
-
+            
             <tr>
                 <td>
                     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
