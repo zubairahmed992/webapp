@@ -196,6 +196,11 @@ body {
     padding: 40px 0px 20px 0px;
     text-align: center;
 }
+
+.left_column2 .logo {
+    padding: 40px 0px 20px 0px;
+    text-align: center;
+}
 .footer {
 	width:996px;
 	margin:0 auto;
@@ -1412,6 +1417,14 @@ input[type=email]{
         float:left;
         background: #fff;
 }
+
+.left_column2{	
+	width:200px;
+	position:relative;	
+        z-index: 100;
+        float:left;
+        background: #fff;
+}
 .full_site .left_column {	
 	width:357px;
 	position:relative;	
@@ -1424,10 +1437,24 @@ input[type=email]{
 	background-image: -o-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
 	background-image: -ms-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
 	background-image: linear-gradient(to bottom, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
-	
-        
-      
-        -webkit-box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
+        -moz-box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
+        box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
+}
+
+.full_site .left_column2 {	
+	width:357px;
+	position:relative;	
+        z-index: 100;
+        float:left;
+        background-image:url(../images/leftside_bg.png) repeat-x!important;      
+        background-image: -moz-linear-gradient(top, #eaeaea 0%, #ffffff 27%, #ffffff 52%, #ffffff 72%, #dfdfdf 100%)!important;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(27%,#ffffff), color-stop(52%,#ffffff), color-stop(72%,#ffffff), color-stop(100%,#dfdfdf));
+	background-image: -webkit-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background-image: -o-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background-image: -ms-linear-gradient(top, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	background-image: linear-gradient(to bottom, #eaeaea 0%,#ffffff 27%,#ffffff 52%,#ffffff 72%,#dfdfdf 100%);
+	-webkit-box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
         -moz-box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
         box-shadow: 4px 0 3px -2px rgba(0, 0, 0, 0.7);
 }
@@ -3539,6 +3566,10 @@ hiw_step_3 {
 
 .left_column{
     min-height: none!important;   
+}
+
+.left_column2{
+    min-height: 675px!important;   
 }
 
 #measurement_bra_numbers{    
