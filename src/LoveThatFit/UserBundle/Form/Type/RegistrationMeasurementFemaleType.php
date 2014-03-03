@@ -48,6 +48,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
                     'property' => 'name',
                     'choices' => $this->top_brands,
                     'empty_value' => 'Brand',
+                    'required' => false,
                 ));
          $builder->add('bottom_brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
@@ -56,6 +57,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
                     'property' => 'name',
                     'choices' => $this->bottom_brands,
                     'empty_value' => 'Brand',
+                    'required' => false,
                 )); 
         //$builder->add('bottom_brand', 'choice', array('choices' => $this->bottom_brands, 'required' => false,'empty_value' => 'Brand',));
         
@@ -66,6 +68,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
                     'property' => 'name',
                     'choices' => $this->dress_brands,
                     'empty_value' => 'Brand',
+                     'required' => false,
                 ));
          //$builder->add('dress_brand', 'choice', array('choices' => $this->dress_brands, 'required' => false,'empty_value' => 'Brand',));
 
