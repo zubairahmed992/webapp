@@ -41,15 +41,14 @@ $('#sizechart_gender').change(function() {
 	  var gender=strLower($('#sizechart_gender').val()); 
           var target=strLower($('#sizechart_target').val());
           var selectVals = $('#sizechart_gender').val();
-            changeTitle(gender,target);  
-            
+            changeTitle(gender,target);              
             var selectValtargets = strLower($('#sizechart_target').val()); 
             if(selectValtargets=="" && gender=='m'){
             $('#sizechart_title').empty();
             $('<option>').val('').text("Please Select Target Above").appendTo('#sizechart_title');  
             }
                     
-            if(selectVals=='f' || selectVals=='F' )
+            if(selectVals=='f')
                 {
                   $("#bodyType").show();
                   $("#neck").show();
@@ -62,15 +61,16 @@ $('#sizechart_gender').change(function() {
                   $("#outseam").hide();
                   $("#chest").hide();
                   $("#thigh").hide();
-                   $("#sizechart_target option[value='Dress']").remove();   
+                  $("#sizechart_target option[value='Dress']").remove();   
                 }else
                     {
                          $("#bodyType").hide();
                     }                
-            if(selectVals=='m' || selectVals=='M' )
+            if(selectVals=='m')
             {
                   $("#bodyType").hide();
-                  $("#sizechart_target option[value='Dress']").remove();             
+                  $("#sizechart_target option[value='Dress']").remove(); 
+                  $("#bust").hide();
                   
             }else
                     {
@@ -78,7 +78,7 @@ $('#sizechart_gender').change(function() {
                     }
                 
         
-        if((selectValtargets=='Top') && (selectVals=='F'  || selectVals=='f') )
+        if((selectValtargets=='top' && selectVals=='f') )
                 {
                   $("#neck").show();
                   $("#shoulder_across_back").show();
@@ -91,7 +91,7 @@ $('#sizechart_gender').change(function() {
                   $("#chest").hide();
                   $("#thigh").hide();                  
                 }
-            if((selectValtargets=='Bottom') && (selectVals=='F'  || selectVals=='f'))
+            if((selectValtargets=='bottom' &&  selectVals=='f'))
                 {
                   $("#waist").show();
                   $("#hip").show();
@@ -104,7 +104,7 @@ $('#sizechart_gender').change(function() {
                   $("#sleeve").hide();                  
                   $("#chest").hide();                  
                 }                
-              if((selectValtargets=='Dress')&& (selectVals=='F' || selectVals=='f'))
+              if((selectValtargets=='dress' && selectVals=='f'))
                 {
                   $("#neck").show();  
                   $("#shoulder_across_back").show();
@@ -117,7 +117,7 @@ $('#sizechart_gender').change(function() {
                   $("#inseam").hide();                  
                   $("#chest").hide();                                  
                 }  
-              if((selectValtargets=='Top') && (selectVals=='M' || selectVals=='m'))
+              if((selectValtargets=='top' && selectVals=='m'))
                 {
                   $("#neck").show();
                   $("#sleeve").show();
@@ -130,7 +130,7 @@ $('#sizechart_gender').change(function() {
                   $("#outseam").hide();
                   $("#thigh").hide();                  
                 }
-            if((selectValtargets=='Bottom')&& (selectVals=='M' || selectVals=='m'))
+            if((selectValtargets=='bottom' && selectVals=='m'))
                 {
                   $("#waist").show();
                   $("#inseam").show();
@@ -143,7 +143,7 @@ $('#sizechart_gender').change(function() {
                   $("#neck").hide();                  
                   $("#chest").hide();                                    
                 }                
-              if((selectValtargets=='Dress')&& (selectVals=='M' || selectVals=='m'))
+              if((selectValtargets=='dress' &&  selectVals=='m'))
                 {
                  $("#waist").hide();
                   $("#inseam").hide();
@@ -160,8 +160,8 @@ $('#sizechart_gender').change(function() {
         
         });
  
- function changeTitle(gender,target){
-  if(gender=="f"){
+ function changeTitle(gender,target){  
+        if(gender=="f"){
   womanSizeTitle();
   }
    else if(gender=="m" && target=="top" ){
@@ -171,7 +171,8 @@ $('#sizechart_gender').change(function() {
       manBottomSizeTitle();
  }
  else{
-     $('#sizechart_title').empty();
+    $('#sizechart_title').empty();
+    
     $('<option>').val('').text("Not Found").appendTo('#sizechart_title');  
  }
  }
@@ -231,7 +232,7 @@ function  manBottomSizeTitle(){
      <a href="{{ path('admin_size_charts') }}" class="btn">back</a>
       </div>
       <div class="clearfix"></div>   
-    <form action="{{ path('admin_size_chart_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('admin_size_chart_create') }}" method="post" {{form_enctype(form)}}>
  {{ form_errors(form) }}
 
             <div id="detail_wrapper">      

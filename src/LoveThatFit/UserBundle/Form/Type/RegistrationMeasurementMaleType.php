@@ -42,6 +42,8 @@ private $brandHelper;
                     'multiple' => false,
                     'property' => 'name',
                     'choices' => $this->top_brands,
+                    'required' => false,
+                    'empty_value' => 'Brand',
                 ));
         $builder->add('bottom_brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
@@ -49,6 +51,8 @@ private $brandHelper;
                     'multiple' => false,
                     'property' => 'name',
                     'choices' => $this->bottom_brands,
+                    'required' => false,
+                     'empty_value' => 'Brand',
                 ));
       //  $builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false,'empty_value' => 'Brand',));
         //$builder->add('bottom_brand', 'choice', array('choices' => $this->bottom_brands, 'required' => false,'empty_value' => 'Brand',));
