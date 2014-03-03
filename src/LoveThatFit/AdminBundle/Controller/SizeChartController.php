@@ -45,8 +45,7 @@ class SizeChartController extends Controller {
 
 
     
-     public function newAction() {
-        
+     public function newAction() {        
         $entity = $this->get('admin.helper.sizechart')->createNew();
         $form = $this->createForm(new SizeChartType('add'), $entity);      
       return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', array(
@@ -57,7 +56,8 @@ class SizeChartController extends Controller {
     {       
         $entity = $this->get('admin.helper.sizechart')->createNew();
         $form = $this->createForm(new SizeChartType('add'), $entity);
-        $form->bind($request);
+        $form->bindRequest($request);
+        return new response(json_encode($entity->getTitle()));
         if($entity->getTarget()=='Dress' and $entity->getGender()=='m' )
         {
             $this->get('session')->setFlash('warning', 'Dresses can not be selected  for Male');
@@ -132,7 +132,7 @@ class SizeChartController extends Controller {
        $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
        $entity = $specs['entity'];   
        $form = $this->createForm(new SizeChartType('edit'), $entity);
-        $form->bind($request);
+        $form->bindRequest($request);
       if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
             return $this->redirect($this->generateUrl('admin_size_charts'));

@@ -3,7 +3,9 @@
    <li class="active">Products</li>
 {% endblock %}
 
-
+{% block header_right_links %}
+   <a href="{{ path('admin_algorithm_comparison') }}" >Comparison</a> | <a href="{{ path('admin_algorithm') }}" >Algorithm</a>
+{% endblock %}
 
 {% block body %}
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
@@ -161,7 +163,7 @@ $(document).ready(function(){
     
      </div>
     
-<a href="{{ path('admin_algorithm') }}" class="btn">Algorithm</a>      <a href="{{ path('admin_product_import_csv') }}" class="btn">Import CSV</a> <a href="{{ path('admin_product_stats') }}" class="btn">Product Stats</a>  <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
+      <a href="{{ path('admin_product_import_csv') }}" class="btn">Import CSV</a> <a href="{{ path('admin_product_stats') }}" class="btn">Product Stats</a>  <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
      
       </div>
     
@@ -244,10 +246,8 @@ $(document).ready(function(){
     </div>
     
     
-    
      <div class="clearfix"></div> 
-     
-    <div class="bs-docs-grid" id="all_data">              
+     <div class="bs-docs-grid" id="all_data">              
 
         <div class="row-fluid product_main">
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>

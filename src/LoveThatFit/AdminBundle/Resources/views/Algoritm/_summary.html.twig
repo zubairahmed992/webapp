@@ -37,8 +37,17 @@
                             <td>{{fp_specs.ideal_body_size_high}}</td>
                             <td>{{fp_specs.max_body_measurement}}</td>
                             <td>{{fp_specs.body_measurement}}</td>
-                            <td>{{fp_specs.variance}}</td>
-                            <td>{{fp_specs.max_variance}}</td>
+                            <td>v:{{fp_specs.variance}} | 
+                                    d:{{fp_specs.diff}} | 
+                                    dp:{{fp_specs.diff_percent}}  
+                            
+                            </td>
+                            <td>v:{{fp_specs.max_variance}} | 
+                                    d:{{fp_specs.max_diff}} | 
+                                    dp:{{fp_specs.max_diff_percent}}  
+                            
+                            </td>
+                            
                             <td>
                                     {{fp_specs.status}}
                                     {{fp_specs.message}}

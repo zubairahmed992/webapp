@@ -42,13 +42,15 @@ class Comparison {
                     #get fit point specs merged & calculated
                     $fb[$size_title]['fit_points'][$fp_specs['fit_point']] =
                     $this->get_fit_point_array($fp_specs, $body_specs);                                    
-                    $it_fits=$fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fits'];                                            
                     #if true then keep the old value else assign false ~~~>
-                    $fb[$size_title]['fits'] = $it_fits? $fb[$size_title]['fits']: $it_fits;                
                     $max_variance=  $this->get_accumulated_variance($max_variance, $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['max_variance']);
                     $variance = $this->get_accumulated_variance($variance, $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['variance']);                      
                     $status=$this->get_accumulated_status($status, $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['status']);
-                    if ($variance==0){
+                    if ($variance<0 || $fit_scale<0){
+                        $fit_scale=-1;
+                    }elseif ($variance==0){
+                        $fit_scale=$fit_scale+ $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fit_priority']/10;
+                    }elseif ($variance>0){
                         $fit_scale=$fit_scale+ $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fit_priority']/10;
                     }
                     
@@ -62,6 +64,9 @@ class Comparison {
         }
         return $fb;
     }
+    
+
+    
 #-----------------------------------------------------    
     private function get_fit_point_array($fp_specs, $body_specs) {
 
@@ -69,19 +74,24 @@ class Comparison {
 
         $variance=$this->get_variance($body_measurement, $fp_specs['ideal_body_size_high'],
                     $fp_specs['ideal_body_size_low'], $fp_specs['max_body_measurement'], $fp_specs['fit_priority']);
-        $message=  $this->get_fp_status_text($variance[2]);
+        $message=  $this->get_fp_status_text($variance['status']);
         
         return array('fit_point' => $fp_specs['fit_point'],
             'ideal_body_size_low' => $fp_specs['ideal_body_size_low'],
             'ideal_body_size_high' => $fp_specs['ideal_body_size_high'],
             'max_body_measurement' => $fp_specs['max_body_measurement'],
             'fit_priority' => $fp_specs['fit_priority'],
-            'body_measurement' => $body_measurement,
-            'fits' => $variance[2]==1?true:false,
-            'variance' => $variance[0],
-            'max_variance' => $variance[1],
+            'body_measurement' => $body_measurement,            
+            'variance' => $variance['variance'],
+            'max_variance' => $variance['max_variance'],
             'message'=>$message,
-            'status'=>$variance[2],
+            'status'=>$variance['status'],
+            'diff' => $variance['diff'],
+            'diff_percent' => $variance['diff_percent'],
+            'max_diff' => $variance['max_diff'],
+            'max_diff_percent' => $variance['max_diff_percent'],
+            
+            
         );
     }
     
@@ -95,7 +105,8 @@ class Comparison {
         }
         
         $mid_of_high_max = ($max + $high) / 2;
-        $varience = 0; $max_varience = 0; $status = 0; 
+        $varience = number_format(0, 2, '.', '');
+        $max_varience = number_format(0, 2, '.', ''); $status = 0; 
 
         if ($body >= $low && $body <= $high) { #perfect
             $status = 0; 
@@ -115,15 +126,19 @@ class Comparison {
             $max_varience = $this->calculate_variance($body, $mid_of_high_max, $priority);
         }
 
-        return array($varience, $max_varience, $status);
+        return array('variance'=>$varience[0], 'max_variance'=>$max_varience[0], 'status'=>$status, 'diff'=>$varience[1], 'diff_percent'=>$varience[2], 'max_diff'=>$max_varience[1],'max_diff_percent'=>$max_varience[2]);
     }
     
     #----------------------------------------------------------
     private function calculate_variance($body, $item, $priority) {
         if ($item > 0 && $body > 0) {
             $diff = $item - $body;
-            $diff_percent = ($diff / $item) * 100;
-            return number_format(($priority * $diff_percent) / 100, 2, '.', '');
+            $diff_percent = ($diff / $item) * 100;# how much (in %age of item measurement) the difference is?
+            $d=number_format($diff, 2, '.', '');
+            $dp=number_format($diff_percent, 2, '.', '');
+            $v=number_format(($priority * $diff_percent) / 100, 2, '.', '');
+            
+            return array($v, $dp, $d);
         }else
             return;
     }
@@ -160,13 +175,13 @@ class Comparison {
         
         if ($accumulated == $this->status['below_low']) {
             if ($this->is_loose_status($current)) return $this->status['below_low'];
-            if ($this->is_loose_tight_status($current)) return $this->status['below_low_and_between_high_mid_max'];            
+            if ($this->is_loose_tight_status($current)) return $this->status['below_low_between_high_mid_max'];            
         
             
         } elseif ($accumulated == $this->status['first_half_high_mid_max'] ||
-                $accumulated == $this->status['below_low_and_between_high_mid_max']) {
+                $accumulated == $this->status['below_low_between_high_mid_max']) {
             if ($this->is_loose_tight_status($current) || $this->is_loose_status($current)) {
-                return $this->status['below_low_and_between_high_mid_max'];
+                return $this->status['below_low_between_high_mid_max'];
             }
         }
     }
@@ -200,14 +215,14 @@ class Comparison {
             if ($this->is_loose_status($current)) {
                 return $this->status['below_low'];
             } elseif ($this->is_loose_tight_status($current)) {
-                return $this->status['below_low_and_between_high_mid_max'];
+                return $this->status['below_low_between_high_mid_max'];
             }
             #accumulated fitting loose & fit tight ~~~~~~~~~~~>ac#7
             #accumulated fitting 1st half ~~~~~~~~~~~>ac#8
         } elseif ($accumulated == $this->status['first_half_high_mid_max'] ||
-                $accumulated == $this->status['below_low_and_between_high_mid_max']) {
+                $accumulated == $this->status['below_low_between_high_mid_max']) {
             if ($this->is_loose_tight_status($current) || $this->is_loose_status($current)) {
-                return $this->status['below_low_and_between_high_mid_max'];
+                return $this->status['below_low_between_high_mid_max'];
             }
         }
     }
@@ -247,6 +262,9 @@ class Comparison {
               case $this->status['more_size_below_low'] :
                   return 'Too Large (more_size_big)';
               break;
+              case $this->status['below_low_between_high_mid_max'] :
+                  return 'Tight at some points & loose at others';
+              break;
               
           }
           #$str=array_search($id,$this->status);
@@ -266,6 +284,7 @@ class Comparison {
         'one_size_below_low'=>2,
         'two_size_below_low'=>3,
         'more_size_below_low'=>4,
+        'below_low_between_high_mid_max'=>5,
     );
    
     private function is_loose_status($status) {
@@ -281,12 +300,53 @@ class Comparison {
     
      private function is_loose_tight_status($status) {
         if ($status == $this->status['first_half_high_mid_max'] ||
-                $status == $this->status['below_low_and_between_high_mid_max']) {
+                $status == $this->status['below_low_between_high_mid_max']) {
             return true;
         } else {
             return false;
         }
     }
       
+    #-----------------------------------------------------
+    private function round2($sizes) {
+        $str='' ;
+        foreach ($sizes as $title=>$size) {
+           foreach ($size['fit_points'] as $fit_point=>$specs) {
+             $str.=$fit_point;
+         }
+         }
+         return $str;
+    }
+
+     private function caculate_size_diff_count($size,$fp) {
+     $sizes = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
+     $str='' ;
+        for ($i = 0; $i < count($sizes) - 1; $i++) {
+            if (array_key_exists($sizes[$i], $fp)) {
+                
+            }
+            
+        }
+         
+         
+         return $str;
+    }
     
+      
+    private function getSizeTitleArray($gender = 'f', $type = 'numbers') {
+        $gender =  strtolower($gender);
+        $type =  strtolower($type);
+        
+        if ($type == 'letters') {//$female_letters
+            return array('XS', 'S', 'M', 'L', 'XL', 'XXL');
+        } else if ($gender == 'f' && $type == 'numbers') {//$female_standard
+            return array('00', '0', '2', '4', '6', '8', '10', '12', '16', '18', '20');
+        } else if ($gender == 'f' && $type == 'waist') {//$female_waist
+            return array('23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36');
+        } else if ($gender == 'm' && $type == 'top') {//man Top
+            return array('35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48');
+        } else if ($gender == 'm' && $type == 'bottom') {//man bottom
+            return array('28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42');
+        }
+    }
 }

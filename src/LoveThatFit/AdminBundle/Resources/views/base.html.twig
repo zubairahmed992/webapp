@@ -50,7 +50,9 @@
           <li><a href="{{ path('admin_dashboard') }}">Admin</a> <span class="divider">/</span></li>
           {% block breadcrumb %}{% endblock %}
     </ul>
-
+    <div style="float: right">
+     {% block header_right_links %}{% endblock %}
+    </div>
     <!-- Breadcrumb End -->      
 {% if app.session.hasFlash('warning') %}
        <div class="alert alert-error">
