@@ -2544,9 +2544,8 @@ padding-bottom: 0px;
 }
 
 .sep{
-    border-bottom:1px dashed #ccc;
-   
-    margin-bottom: 20px;
+    border-bottom:1px dashed #ccc;   
+    margin-bottom: 10px;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 .measurements .m_option input[type="text"]{ 
@@ -2559,9 +2558,10 @@ padding-bottom: 0px;
 
 
 .measurements .m_option select{   
- width:116px!important; 
+ width:126px!important; 
  padding: 3px 3px;
  height: 25px;
+ margin-bottom: 9px;
  
 }
 
@@ -2592,15 +2592,13 @@ padding-bottom: 0px;
 
 .m_option{
    clear:both;
-   margin: 2px 0px 8px;  
+   margin: 0px 0px 8px;  
    position: relative;
    display: table;
    width: 330px;   
 }
 
-#shirts_mus{
-    display:none;
-}
+
 
 #pants_mus{
     display:none;
@@ -2640,9 +2638,7 @@ padding-bottom: 0px;
     text-decoration: none;    
 }
 
-#measurement_sleeve{
-    width:50px!important;    
-}
+
 
 .boxlable{
     color: #666666;
@@ -4235,9 +4231,7 @@ ul.fitting_alerts_ul{
 .handle_inner {
     cursor: pointer;
 }
-#measurement_waist{
-     width:50px!important;
- }
+
  
 .share_inner {
     position: absolute;
@@ -4297,4 +4291,155 @@ margin-left: 4px;
      position: relative;
      color:#666;
      font-size: 14px;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ .tabs {
+     border-radius: 4px!important;
+     border:1px solid #ccc;
+     overflow: auto;
+     width: 212px;
+     font-size: 0.75em;
+     margin:0 auto;
+    
+ }
+ 
+ #tabs ul li a{
+     color:#3f3d3d;
+     text-decoration: none;
+    
+ }
+ 
+ .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+     background:#426eb6!important;     
+ }
+ 
+ .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active a{
+     color:#fff!important;     
+ }
+ 
+ #tabs ul li{
+     background:#ccc;    
+     list-style: none;
+     padding: 3px;
+     text-align: center;
+     float:left;
+ }
+ 
+ #tabs ul li:first-child{
+     width:160px;
+    
+ }
+ 
+  #tabs ul li:nth-child(2){
+     width:40px;     
+ }
+ 
+ #tabs ul li a{
+     color:#3f3d3d;
+     text-decoration: none;
+    
+ }
+ 
+ #slider-range-min{
+     border:1px solid red;
+ }
+ 
+ #slider-range-min .ui-slider-handle{
+     border:1px solid red;
+     
+ }
+ 
+ .shirts_mus .ui-slider-handle {    
+    top: -8px; 
+    height: 15px;
+    width: 4px;
+ }
+
+.shirts_mus span {    
+    display:inline-block;
+    float:left;
+    width: 50px;
+}
+ 
+ .bustt_slider_wrap {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;   
+    float: left;     
+    padding: 10px;
+    position: relative;
+    width: 200px;   
+}
+ 
+ .bustt_slider {
+    border-bottom: 1px solid #D2D1D1;
+    float: left;   
+    margin: 0;  
+    position: relative;
+    width: 200px;    
+}
+
+.waistt_slider_wrap {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;    
+    float: left;    
+    padding: 10px;
+    position: relative;
+    width: 200px;   
+}
+ 
+ .waistt_slider {
+    border-bottom: 1px solid #D2D1D1;
+    float: left;   
+    margin: 0;  
+    position: relative;
+    width: 200px;    
+}
+
+.hipp_slider_wrap {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;   
+    float: left;    
+    padding: 10px;
+    position: relative;
+    width: 200px;   
+}
+ 
+ .hipp_slider {
+    border-bottom: 1px solid #D2D1D1;
+    float: left;   
+    margin: 0;  
+    position: relative;
+    width: 200px;    
+}
+
+.measurement_sm_boxes{
+    width:30px!important;
+    margin-left: 5px;
+    box-shadow: none!important;
+    text-align: center;
+}
+
+#measurement_waist{
+    /* width:50px!important;*/
+ }
+ 
+ #measurement_sleeve{
+   /* width:50px!important;   */ 
+}
+ 
+ .female_measurement_sec{
+     margin-bottom: 5px;
+ }
+ 
+ .men_sel select{     
+    height: 25px;
+    margin-bottom: 9px;
+    padding: 3px;
+    width: 126px !important;
  }
