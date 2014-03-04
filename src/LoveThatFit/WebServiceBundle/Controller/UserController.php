@@ -73,7 +73,7 @@ public function editProfileAction()
          $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $decoded = json_decode($jsonInput,true);
-      /*   $decoded=array();
+      /*  $decoded=array();
         $decoded=array('email'=>'oldnavywomen0@ltf.com','firstName'=>'test','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
             'weight'=>4,'neck'=>4,'bust'=>5);*/
 #------------------------------Authentication of Token--------------------------#

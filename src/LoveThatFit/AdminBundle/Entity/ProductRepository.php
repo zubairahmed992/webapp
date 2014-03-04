@@ -411,20 +411,29 @@ class ProductRepository extends EntityRepository {
  #--------------------------------Web Service for Product list ------------------------#
     
          public function newproductDetailDBStructureWebService($gender) {
+             
+               $query = $this->getEntityManager()
+                        ->createQuery("
+      SELECT  p.id as productId,pc.title as colorTitle,pc.pattern as pattern, pc.image as colorImage,ps.body_type as bodyType,ps.id as sizeId,
+ps.title as sizeTitle, pi.id as itemId, pi.image as itemImage
+      FROM LoveThatFitAdminBundle:Product p 
+      JOIN p.product_items pi
+      JOIN pi.product_color pc
+      JOIN pi.product_size ps
+      WHERE  
+      pi.image!='' AND
+      p.disabled=0 AND  
+      p.gender=:gender AND
+      p.disabled=0 
+      AND 
+      p.displayProductColor!='' ")->setParameter('gender', $gender);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
 
-        return $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select(' p.id as productId,pc.title as colorTitle,pc.pattern as pattern, pc.image as colorImage,ps.body_type as bodyType,ps.id as sizeId,
-ps.title as sizeTitle, pi.id as itemId, pi.image as itemImage')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_items', 'pi')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.product_sizes', 'ps')
-                       
-                         ->where('p.gender=:gender')
-                        ->setParameters(array('gender' => $gender))
-                        ->getQuery()
-                        ->getResult();
+        }
+
     }
 
 

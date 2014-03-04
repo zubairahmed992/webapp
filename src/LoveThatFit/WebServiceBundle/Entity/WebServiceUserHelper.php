@@ -574,8 +574,8 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('neck', $request_array)) {
             $measurement->setNeck($request_array['neck']);
         }
-        if (array_key_exists('body_type', $request_array)) {
-            $measurement->setBodyTypes($request_array['body_type']);
+        if (array_key_exists('bodyType', $request_array)) {
+            $measurement->setBodyTypes($request_array['bodyType']);
         }
         if (array_key_exists('bodyShape', $request_array)) {
             $measurement->setBodyShape($request_array['bodyShape']);
@@ -583,6 +583,72 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('braSize', $request_array)) {
             $measurement->setBraSize($request_array['braSize']);
         }
+        
+        if (array_key_exists('thigh', $request_array)) {
+            $measurement->setThigh($request_array['thigh']);
+        }
+        if (array_key_exists('centerFrontWaist', $request_array)) {
+            $measurement->setCenterFrontWaist($request_array['centerFrontWaist']);
+        }
+        if (array_key_exists('backWaist', $request_array)) {
+            $measurement->setBackWaist($request_array['backWaist']);
+        }
+        if (array_key_exists('shoulderAcrossFront', $request_array)) {
+            $measurement->setShoulderAcrossFront($request_array['shoulderAcrossFront']);
+        }
+        if (array_key_exists('shoulderAcrossBack', $request_array)) {
+            $measurement->setShoulderAcrossBack($request_array['shoulderAcrossBack']);
+        }
+         if (array_key_exists('sleeve', $request_array)) {
+            $measurement->setSleeve($request_array['sleeve']);
+        }
+        if (array_key_exists('bicep', $request_array)) {
+            $measurement->setBicep($request_array['bicep']);
+        }
+         if (array_key_exists('tricep', $request_array)) {
+            $measurement->setTricep($request_array['tricep']);
+        }
+         if (array_key_exists('wrist', $request_array)) {
+            $measurement->setWrist($request_array['wrist']);
+        }
+        if (array_key_exists('shoulderWidth', $request_array)) {
+            $measurement->setShoulderWidth($request_array['shoulderWidth']);
+        }
+        if (array_key_exists('bustHeight', $request_array)) {
+            $measurement->setbustHeight($request_array['bustHeight']);
+        }
+        if (array_key_exists('waistHeight', $request_array)) {
+            $measurement->setWaistHeight($request_array['waistHeight']);
+        }
+        if (array_key_exists('hipHeight', $request_array)) {
+            $measurement->setHipHeight($request_array['hipHeight']);
+        }
+        if (array_key_exists('bustWidth', $request_array)) {
+            $measurement->setBustWidth($request_array['bustWidth']);
+        }
+         if (array_key_exists('waistWidth', $request_array)) {
+            $measurement->setWaistWidth($request_array['waistWidth']);
+        }
+        if (array_key_exists('hipWidth', $request_array)) {
+            $measurement->setHipWidth($request_array['hipWidth']);
+        }
+        if (array_key_exists('waistHip', $request_array)) {
+            $measurement->setWaistHip($request_array['waistHip']);
+        }
+         if (array_key_exists('knee', $request_array)) {
+            $measurement->setKnee($request_array['knee']);
+        }
+         if (array_key_exists('calf', $request_array)) {
+            $measurement->setCalf($request_array['calf']);
+        }   
+           if (array_key_exists('ankle', $request_array)) {
+            $measurement->setAnkle($request_array['ankle']);
+        } 
+           
+            
+            
+            
+            
         return $measurement;
     }
 
