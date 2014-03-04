@@ -1,6 +1,6 @@
 
          {% for key, value in data %} 
-            {%if (key | lower != 'fits')%}
+            {%if (key | lower != 'fits' and key | lower != 'fit_scale')%}
             <li><b>{{value['title'] | lower | capitalize }}</b>
             
             {%if (value.body is defined) and (value['body']==false) and (key | lower != 'tip') and (key | lower != 'overall') %}

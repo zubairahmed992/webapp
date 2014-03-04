@@ -36,7 +36,7 @@ class Comparison {
             $max_variance=0;
             $status=0;
             $fit_scale=0;
-            
+            if(is_array($size_specs)){
             foreach ($size_specs as $fp_specs) {
                 if (is_array($fp_specs) && array_key_exists('id', $fp_specs)){
                     #get fit point specs merged & calculated
@@ -51,30 +51,33 @@ class Comparison {
                     }elseif ($variance==0){
                         $fit_scale=$fit_scale+ $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fit_priority']/10;
                     }elseif ($variance>0){
-                        $fit_scale=$fit_scale+ $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fit_priority']/10;
-                    }
-                    
+                        $fit_scale=$fit_scale+ $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fit_priority']/20;
+                    }                    
                 }
             }
+            if(!array_key_exists('fit_points',$fb[$size_title])){
+                $status=$this->status['product_measurement_not_available'];                
+                }
                 $fb[$size->getDescription()]['variance'] = $variance;
                 $fb[$size->getDescription()]['max_variance'] = $max_variance;
                 $fb[$size->getDescription()]['status'] = $status;
                 $fb[$size->getDescription()]['message'] =  $this->get_fp_status_text($status);
-                $fb[$size->getDescription()]['fit_scale'] =  $fit_scale;
+                $fb[$size->getDescription()]['fit_scale'] =  $fit_scale;            
+            }                
         }
         return $fb;
     }
     
 
     
-#-----------------------------------------------------    
+#--------------------------------------------------------------    
     private function get_fit_point_array($fp_specs, $body_specs) {
 
         $body_measurement = array_key_exists($fp_specs['fit_point'], $body_specs) ? $body_specs[$fp_specs['fit_point']] : 0;
 
-        $variance=$this->get_variance($body_measurement, $fp_specs['ideal_body_size_high'],
+        $calc_values=$this->get_calculated_values($body_measurement, $fp_specs['ideal_body_size_high'],
                     $fp_specs['ideal_body_size_low'], $fp_specs['max_body_measurement'], $fp_specs['fit_priority']);
-        $message=  $this->get_fp_status_text($variance['status']);
+        $message=  $this->get_fp_status_text($calc_values['status']);
         
         return array('fit_point' => $fp_specs['fit_point'],
             'ideal_body_size_low' => $fp_specs['ideal_body_size_low'],
@@ -82,21 +85,21 @@ class Comparison {
             'max_body_measurement' => $fp_specs['max_body_measurement'],
             'fit_priority' => $fp_specs['fit_priority'],
             'body_measurement' => $body_measurement,            
-            'variance' => $variance['variance'],
-            'max_variance' => $variance['max_variance'],
+            'variance' => $calc_values['variance'],
+            'max_variance' => $calc_values['max_variance'],
             'message'=>$message,
-            'status'=>$variance['status'],
-            'diff' => $variance['diff'],
-            'diff_percent' => $variance['diff_percent'],
-            'max_diff' => $variance['max_diff'],
-            'max_diff_percent' => $variance['max_diff_percent'],
+            'status'=>$calc_values['status'],
+            'diff' => $calc_values['diff'],
+            'diff_percent' => $calc_values['diff_percent'],
+            'max_diff' => $calc_values['max_diff'],
+            'max_diff_percent' => $calc_values['max_diff_percent'],
             
             
         );
     }
     
-#-----------------------------------------------------
-    private function get_variance($body, $high, $low, $max, $priority) {
+#--------------------------------------------------------------
+    private function get_calculated_values($body, $high, $low, $max, $priority) {
 
         if ($high==0 || $low==0 || $max==0){
             return array(null, null, $this->status['product_measurement_not_available']);
@@ -126,9 +129,14 @@ class Comparison {
             $max_varience = $this->calculate_variance($body, $mid_of_high_max, $priority);
         }
 
-        return array('variance'=>$varience[0], 'max_variance'=>$max_varience[0], 'status'=>$status, 'diff'=>$varience[1], 'diff_percent'=>$varience[2], 'max_diff'=>$max_varience[1],'max_diff_percent'=>$max_varience[2]);
-    }
-    
+        return array('variance'=>$varience[0], 
+            'max_variance'=>$max_varience[0], 
+            'status'=>$status, 
+            'diff'=>$varience[1], 
+            'diff_percent'=>$varience[2], 
+            'max_diff'=>$max_varience[1],
+            'max_diff_percent'=>$max_varience[2]);
+    }    
     #----------------------------------------------------------
     private function calculate_variance($body, $item, $priority) {
         if ($item > 0 && $body > 0) {
@@ -141,8 +149,7 @@ class Comparison {
             return array($v, $dp, $d);
         }else
             return;
-    }
-    
+    }    
     #----------------------------------------------------------
     private function get_accumulated_variance($accumulated, $current) {
         if (($accumulated >= 0 && $current >= 0) || ($accumulated <= 0 && $current <= 0)) {
@@ -184,48 +191,7 @@ class Comparison {
                 return $this->status['below_low_between_high_mid_max'];
             }
         }
-    }
-    
-    private function _get_accumulated_status($accumulated, $current) {
-
-        # accumulated value is perfect ~~~~~~~~~~~> ac#1
-        if ($accumulated == $this->status['perfect_fit']) {
-            return $current;
-            # current value is perfect ~~~~~~~~~~~>C#1
-        } elseif ($current == $this->status['between_low_high']) {
-            return $accumulated;
-            # accumulated value missing ~~~~~~~~~~~>ac#2,3
-        } elseif ($accumulated == $this->status['body_measurement_not_available'] ||
-                $accumulated == $this->status['product_measurement_not_available']) {
-            return $accumulated;
-            # current value missing ~~~~~~~~~~~> C#2,3
-        } elseif ($current == $this->status['body_measurement_not_available'] ||
-                $current == $this->status['product_measurement_not_available']) {
-            return $current;
-            # accumulated fitting is tight ~~~~~~~~~~~>ac#4,5
-        } elseif ($accumulated == $this->status['beyond_max'] ||
-                $accumulated == $this->status['second_half_high_mid_max']) {
-            return $accumulated;
-            # current fitting is tight ~~~~~~~~~~~>  C#3,4      
-        } elseif ($current == $this->status['second_half_high_mid_max'] ||
-                $current == $this->status['beyond_max']) {
-            return $current;
-            #accumulated fitting loose ~~~~~~~~~~~>ac#6            
-        } elseif ($accumulated == $this->status['below_low']) {
-            if ($this->is_loose_status($current)) {
-                return $this->status['below_low'];
-            } elseif ($this->is_loose_tight_status($current)) {
-                return $this->status['below_low_between_high_mid_max'];
-            }
-            #accumulated fitting loose & fit tight ~~~~~~~~~~~>ac#7
-            #accumulated fitting 1st half ~~~~~~~~~~~>ac#8
-        } elseif ($accumulated == $this->status['first_half_high_mid_max'] ||
-                $accumulated == $this->status['below_low_between_high_mid_max']) {
-            if ($this->is_loose_tight_status($current) || $this->is_loose_status($current)) {
-                return $this->status['below_low_between_high_mid_max'];
-            }
-        }
-    }
+    }    
     #----------------------------------------------------------
     private function get_fp_status_text($id){                        
           switch ($id){
@@ -318,7 +284,7 @@ class Comparison {
          return $str;
     }
 
-     private function caculate_size_diff_count($size,$fp) {
+    private function calculate_size_diff_count($size,$fp) {
      $sizes = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
      $str='' ;
         for ($i = 0; $i < count($sizes) - 1; $i++) {
@@ -331,8 +297,7 @@ class Comparison {
          
          return $str;
     }
-    
-      
+          
     private function getSizeTitleArray($gender = 'f', $type = 'numbers') {
         $gender =  strtolower($gender);
         $type =  strtolower($type);
