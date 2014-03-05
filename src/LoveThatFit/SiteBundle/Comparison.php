@@ -8,6 +8,21 @@ class Comparison {
 
     private $user;
     private $product;
+      
+     var $status=array(
+        'fit_point_dose_not_match'=>-6,
+        'body_measurement_not_available'=>-5,
+        'product_measurement_not_available'=>-4,
+        'beyond_max'=>-3,
+        'second_half_high_mid_max'=>-2,
+        'first_half_high_mid_max'=>-1,
+        'between_low_high'=>0,
+        'below_low'=>1,
+        'one_size_below_low'=>2,
+        'two_size_below_low'=>3,
+        'more_size_below_low'=>4,
+        'below_low_between_high_mid_max'=>5,
+    );
 #-----------------------------------------------------
     function __construct($user = null, $product = null) {
         $this->user = $user;
@@ -15,12 +30,27 @@ class Comparison {
     }
 #-----------------------------------------------------
     function getFeedBackJSON() {
-        return json_encode($this->array_mix());
+        return json_encode($this->getFeedBack());
+    }
+#-----------------------------------------------------
+    function getFeedBack() {
+        $cm =$this->array_sort($this->array_mix());        
+        $rc = $this->getFittingSize($cm);
+        return array('feedback'=>$cm, 
+                     'recommendation'=>$rc);
     }
 #-----------------------------------------------------
     function getComparison() {
         return $this->array_mix();
     }
+#-----------------------------------------------------
+    function getRecommendation($sizes=null) {
+        if ($sizes){
+            return $this->getFittingSize($sizes);
+        }else{
+            return $this->getFittingSize($this->array_mix());
+        }
+    }    
 #-----------------------------------------------------
     private function array_mix() {
         $sizes = $this->product->getProductSizes();
@@ -30,8 +60,11 @@ class Comparison {
       
         foreach ($sizes as $size) {
             $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
-            $size_title=$size->getDescription();
-            $fb[$size_title]['fits']=true;
+            $size_identifier=$size->getDescription();            
+            $fb[$size_identifier]['fits']=true;
+            $fb[$size_identifier]['description'] = $size_identifier;
+            $fb[$size_identifier]['title'] = $size->getTitle();
+            $fb[$size_identifier]['body_type'] = $size->getBodyType();
             $variance=0;
             $max_variance=0;
             $status=0;
@@ -40,43 +73,61 @@ class Comparison {
             foreach ($size_specs as $fp_specs) {
                 if (is_array($fp_specs) && array_key_exists('id', $fp_specs)){
                     #get fit point specs merged & calculated
-                    $fb[$size_title]['fit_points'][$fp_specs['fit_point']] =
+                    $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']] =
                     $this->get_fit_point_array($fp_specs, $body_specs);                                    
                     #if true then keep the old value else assign false ~~~>
-                    $max_variance=  $this->get_accumulated_variance($max_variance, $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['max_variance']);
-                    $variance = $this->get_accumulated_variance($variance, $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['variance']);                      
-                    $status=$this->get_accumulated_status($status, $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['status']);
+                    $max_variance=  $this->get_accumulated_variance($max_variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['max_variance']);
+                    $variance = $this->get_accumulated_variance($variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['variance']);                      
+                    $status=$this->get_accumulated_status($status, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['status']);
                     if ($variance<0 || $fit_scale<0){
                         $fit_scale=-1;
                     }elseif ($variance==0){
-                        $fit_scale=$fit_scale+ $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fit_priority']/10;
+                        $fit_scale=$fit_scale+ $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['fit_priority']/10;
                     }elseif ($variance>0){
-                        $fit_scale=$fit_scale+ $fb[$size_title]['fit_points'][$fp_specs['fit_point']]['fit_priority']/20;
+                        $fit_scale=$fit_scale+ $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['fit_priority']/20;
                     }                    
                 }
             }
-            if(!array_key_exists('fit_points',$fb[$size_title])){
+            if(!array_key_exists('fit_points',$fb[$size_identifier])){
                 $status=$this->status['product_measurement_not_available'];                
                 }
-                $fb[$size->getDescription()]['variance'] = $variance;
-                $fb[$size->getDescription()]['max_variance'] = $max_variance;
-                $fb[$size->getDescription()]['status'] = $status;
-                $fb[$size->getDescription()]['message'] =  $this->get_fp_status_text($status);
-                $fb[$size->getDescription()]['fit_scale'] =  $fit_scale;            
+                
+                $fb[$size_identifier]['variance'] = $variance;
+                $fb[$size_identifier]['max_variance'] = $max_variance;
+                $fb[$size_identifier]['status'] = $status;
+                $fb[$size_identifier]['message'] =  $this->get_fp_status_text($status);
+                $fb[$size_identifier]['fit_scale'] =  $fit_scale;            
             }                
         }
         return $fb;
     }
-    
+#-----------------------------------------------------
+     private function array_sort($sizes) {
+        $size_titles = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
+        $size_types = $this->getSizeTypes();
+        $fb = array();
+        $size_identifier = '';
+        foreach ($size_types as $stype) {
+            foreach ($size_titles as $stitle) {
+                $size_identifier=$stype.' '.$stitle;                
+                if (array_key_exists($size_identifier, $sizes))
+                    $fb[$size_identifier]=$sizes[$size_identifier];
+            }
+        }
+        return $fb;
+    }
 
-    
 #--------------------------------------------------------------    
     private function get_fit_point_array($fp_specs, $body_specs) {
 
         $body_measurement = array_key_exists($fp_specs['fit_point'], $body_specs) ? $body_specs[$fp_specs['fit_point']] : 0;
-
-        $calc_values=$this->get_calculated_values($body_measurement, $fp_specs['ideal_body_size_high'],
-                    $fp_specs['ideal_body_size_low'], $fp_specs['max_body_measurement'], $fp_specs['fit_priority']);
+        $calc_values=$this->get_calculated_values(
+                    $body_measurement, 
+                    $fp_specs['ideal_body_size_high'],
+                    $fp_specs['ideal_body_size_low'], 
+                    $fp_specs['max_body_measurement'], 
+                    $fp_specs['fit_priority']);
+        
         $message=  $this->get_fp_status_text($calc_values['status']);
         
         return array('fit_point' => $fp_specs['fit_point'],
@@ -102,17 +153,16 @@ class Comparison {
     private function get_calculated_values($body, $high, $low, $max, $priority) {
 
         if ($high==0 || $low==0 || $max==0){
-            return array(null, null, $this->status['product_measurement_not_available']);
+            return $this->get_calculated_values_array_element($this->status['product_measurement_not_available']);
         }elseif ($body==0 ){
-            return array(null, null, $this->status['body_measurement_not_available']);
-        }
-        
-        $mid_of_high_max = ($max + $high) / 2;
+            return $this->get_calculated_values_array_element($this->status['body_measurement_not_available']);
+        }else{
+               $mid_of_high_max = ($max + $high) / 2;
         $varience = number_format(0, 2, '.', '');
-        $max_varience = number_format(0, 2, '.', ''); $status = 0; 
-
+        $max_varience = number_format(0, 2, '.', '');
+        $status = 0;
         if ($body >= $low && $body <= $high) { #perfect
-            $status = 0; 
+            $status = $this->status['between_low_high']; 
         } elseif ($body < $low) { #loose
             $status = $this->status['below_low'];
             $varience = $this->calculate_variance($body, $low, $priority);
@@ -128,15 +178,28 @@ class Comparison {
             $varience = $this->calculate_variance($body, $high, $priority);
             $max_varience = $this->calculate_variance($body, $mid_of_high_max, $priority);
         }
-
-        return array('variance'=>$varience[0], 
+        }
+        
+     
+        return $this->get_calculated_values_array_element($status, $varience[0], $max_varience[0], $varience[1], $varience[2], $max_varience[1], $max_varience[2]);
+        /*return array('variance'=>$varience[0], 
             'max_variance'=>$max_varience[0], 
             'status'=>$status, 
             'diff'=>$varience[1], 
             'diff_percent'=>$varience[2], 
             'max_diff'=>$max_varience[1],
-            'max_diff_percent'=>$max_varience[2]);
-    }    
+            'max_diff_percent'=>$max_varience[2]);*/
+    }
+    
+    private function get_calculated_values_array_element($status, $varience=0, $max_varience=0, $diff=0, $diff_percent=0, $max_diff=0, $max_diff_percent=0){
+        return array('variance'=>$varience, 
+            'max_variance'=>$max_varience, 
+            'status'=>$status, 
+            'diff'=>$diff, 
+            'diff_percent'=>$diff_percent, 
+            'max_diff'=>$max_diff,
+            'max_diff_percent'=>$max_diff_percent);
+    }
     #----------------------------------------------------------
     private function calculate_variance($body, $item, $priority) {
         if ($item > 0 && $body > 0) {
@@ -236,23 +299,8 @@ class Comparison {
           #$str=array_search($id,$this->status);
           #return str_replace('_', ' ', $str);
           
-    }
-    #----------------------------------------------------------
-     var $status=array(
-        'fit_point_dose_not_match'=>-6,
-        'body_measurement_not_available'=>-5,
-        'product_measurement_not_available'=>-4,
-        'beyond_max'=>-3,
-        'second_half_high_mid_max'=>-2,
-        'first_half_high_mid_max'=>-1,
-        'between_low_high'=>0,
-        'below_low'=>1,
-        'one_size_below_low'=>2,
-        'two_size_below_low'=>3,
-        'more_size_below_low'=>4,
-        'below_low_between_high_mid_max'=>5,
-    );
-   
+    }  
+   #----------------------------------------------------------
     private function is_loose_status($status) {
         if ($status == $this->status['below_low'] ||
                 $status == $this->status['one_size_below_low'] ||
@@ -263,8 +311,8 @@ class Comparison {
             return false;
         }
     }
-    
-     private function is_loose_tight_status($status) {
+    #----------------------------------------------------------
+    private function is_loose_tight_status($status) {
         if ($status == $this->status['first_half_high_mid_max'] ||
                 $status == $this->status['below_low_between_high_mid_max']) {
             return true;
@@ -272,32 +320,7 @@ class Comparison {
             return false;
         }
     }
-      
-    #-----------------------------------------------------
-    private function round2($sizes) {
-        $str='' ;
-        foreach ($sizes as $title=>$size) {
-           foreach ($size['fit_points'] as $fit_point=>$specs) {
-             $str.=$fit_point;
-         }
-         }
-         return $str;
-    }
-
-    private function calculate_size_diff_count($size,$fp) {
-     $sizes = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
-     $str='' ;
-        for ($i = 0; $i < count($sizes) - 1; $i++) {
-            if (array_key_exists($sizes[$i], $fp)) {
-                
-            }
-            
-        }
-         
-         
-         return $str;
-    }
-          
+    #----------------------------------------------------------       
     private function getSizeTitleArray($gender = 'f', $type = 'numbers') {
         $gender =  strtolower($gender);
         $type =  strtolower($type);
@@ -313,5 +336,32 @@ class Comparison {
         } else if ($gender == 'm' && $type == 'bottom') {//man bottom
             return array('28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42');
         }
+    }
+     #----------------------------------------------------------       
+    private function getSizeTypes() {
+        return array('Regular', 'Petite', 'Tall');
+    }
+    #-------------------------------------------------
+    private function getFittingSize($sizes) {
+        
+        $fits = array(); $loose = array(); $tights = array();
+        $lowest_variance=null;
+        foreach ($sizes as $size) {
+            if ($size['status'] == $this->status['between_low_high']){
+                $fits[$size['description']]= $size;                
+                }
+            elseif ($this->is_loose_tight_status($size['status'])){                
+                $tights[$size['description']]= $size;
+                }
+            elseif ($this->is_loose_status($size['status'])){
+                if ($lowest_variance == null || $lowest_variance > $size['variance']) {
+                    $lowest_variance = $size['variance'];                    
+                    $loose = array($size['description']=> $size)+$loose; //array_shift
+                }
+            }
+        }
+        if (count($fits) > 0) return $fits;
+        if (count($tights) > 0) return $tights;
+        if (count($loose) > 0) return $loose;
     }
 }

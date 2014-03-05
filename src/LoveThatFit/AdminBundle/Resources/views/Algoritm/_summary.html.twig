@@ -5,7 +5,7 @@
 
 
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
-    {% for size, size_specs in data %} 
+    {% for size, size_specs in data.feedback %} 
             <tr>
                 <td style="width: 50px;">{{size}} | <i><b>{{size_specs.message}}</b></i> 
                     {% if size_specs.fit_points is defined %}

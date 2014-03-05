@@ -70,9 +70,10 @@ class AlgorithmController extends Controller {
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);  
         $fe = new Comparison($user, $product);                
+        #return new Response(json_encode($fe->getRecommendation()));        
         #return new Response($fe->getFeedBackJSON());        
         return $this->render('LoveThatFitAdminBundle:Algoritm:_summary.html.twig',array(                   
-                    'product'=>$product, 'user'=>$user, 'data'=>$fe->getComparison(),
+                    'product'=>$product, 'user'=>$user, 'data'=>$fe->getFeedback(),
                 ));
     }
        //------------------------------------------------------------------------------------------
