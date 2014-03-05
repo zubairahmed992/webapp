@@ -15,6 +15,7 @@ use LoveThatFit\UserBundle\Event\UserEvent;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Component\HttpFoundation\Request;
+use LoveThatFit\UserBundle\Entity\UserDevices;
 
 class WebServiceUserHelper {
 
@@ -275,6 +276,15 @@ public function registerWithReqestArray(Request $request, $request_array) {
              //send registration email ....            
             $this->container->get('mail_helper')->sendRegistrationEmail($user);
                 
+            
+            
+            // Saving Device Type in User Device Table
+            $user_device_name=$request_array['deviceId'];
+            $userDevice= new UserDevices();
+            $userDevice->setDeviceName($user_device_name);
+            $userDevice->setUser($user);
+            $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
+               
             $measurement = new Measurement();
             $measurement = $this->setSizechartInMeasurment($measurement, $request_array);
             $measurement->setUser($user);
@@ -488,8 +498,8 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('gender', $request_array)) {
             $user->setGender($request_array['gender']);
         }
-        if (array_key_exists('zipcode', $request_array)) {
-            $user->setZipcode($request_array['zipcode']);
+        if (array_key_exists('zipCode', $request_array)) {
+            $user->setZipcode($request_array['zipCode']);
         }
         if (array_key_exists('firstName', $request_array)) {
             $user->setFirstName($request_array['firstName']);
@@ -574,8 +584,8 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('neck', $request_array)) {
             $measurement->setNeck($request_array['neck']);
         }
-        if (array_key_exists('bodyType', $request_array)) {
-            $measurement->setBodyTypes($request_array['bodyType']);
+        if (array_key_exists('clothingFit', $request_array)) {
+            $measurement->setBodyTypes($request_array['clothingFit']);
         }
         if (array_key_exists('bodyShape', $request_array)) {
             $measurement->setBodyShape($request_array['bodyShape']);
@@ -596,9 +606,7 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('shoulderAcrossFront', $request_array)) {
             $measurement->setShoulderAcrossFront($request_array['shoulderAcrossFront']);
         }
-        if (array_key_exists('shoulderAcrossBack', $request_array)) {
-            $measurement->setShoulderAcrossBack($request_array['shoulderAcrossBack']);
-        }
+        
          if (array_key_exists('sleeve', $request_array)) {
             $measurement->setSleeve($request_array['sleeve']);
         }

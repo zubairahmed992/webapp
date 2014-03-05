@@ -20,6 +20,14 @@ services:
              em: "@doctrine.orm.entity_manager"
              class: LoveThatFit\UserBundle\Entity\Measurement            
 
+  user.helper.userdevices:
+        class: LoveThatFit\UserBundle\Entity\UserDevicesHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\UserBundle\Entity\UserDevices
+            container: "@service_container"
+  
   twitter_helper:
           class:  LoveThatFit\UserBundle\TwitterHelper
        

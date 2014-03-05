@@ -38,9 +38,9 @@ class UserController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-      //$request_array=array();
-      //  $request_array=array('email'=>'test_service26@gmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
-      //      'weight'=>4,'neck'=>4,'bust'=>5,'body_type'=>'Petite','bodyShape'=>'apple','braSize'=>'888');
+  //    $request_array=array();
+   //   $request_array=array('deviceId'=>'aaaaa','email'=>'test_service33@gmail.com','password'=>'123456','gender'=>'f','zipCode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
+     //      'weight'=>4,'neck'=>4,'bust'=>5,'body_type'=>'Petite','bodyShape'=>'apple','braSize'=>'888');
         
         $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));

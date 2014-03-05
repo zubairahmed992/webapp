@@ -27,7 +27,14 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SurveyUser", mappedBy="user")
      */
     protected $survey;
+    
+    
+     /**
+     * @ORM\OneToMany(targetEntity="UserDevices", mappedBy="user", orphanRemoval=true)
+     */
+    protected $user_devices;
 
+    
 
     // ...
 
@@ -1022,5 +1029,38 @@ class User implements UserInterface, \Serializable {
     public function getDeviceUserPerInchPixelHeight()
     {
         return $this->deviceUserPerInchPixelHeight;
+    }
+
+    /**
+     * Add user_devices
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserDevices $userDevices
+     * @return User
+     */
+    public function addUserDevice(\LoveThatFit\UserBundle\Entity\UserDevices $userDevices)
+    {
+        $this->user_devices[] = $userDevices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_devices
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserDevices $userDevices
+     */
+    public function removeUserDevice(\LoveThatFit\UserBundle\Entity\UserDevices $userDevices)
+    {
+        $this->user_devices->removeElement($userDevices);
+    }
+
+    /**
+     * Get user_devices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserDevices()
+    {
+        return $this->user_devices;
     }
 }
