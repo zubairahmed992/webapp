@@ -56,8 +56,7 @@ class SizeChartController extends Controller {
     {       
         $entity = $this->get('admin.helper.sizechart')->createNew();
         $form = $this->createForm(new SizeChartType('add'), $entity);
-        $form->bindRequest($request);
-        return new response(json_encode($entity->getTitle()));
+        $form->bindRequest($request);       
         if($entity->getTarget()=='Dress' and $entity->getGender()=='m' )
         {
             $this->get('session')->setFlash('warning', 'Dresses can not be selected  for Male');

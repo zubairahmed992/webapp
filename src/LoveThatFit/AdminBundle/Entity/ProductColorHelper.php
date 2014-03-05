@@ -69,4 +69,9 @@ class ProductColorHelper {
         $this->em->flush();
     }
 
+    public function findColorByProduct($id)
+    {
+        return $this->repo->findColorByProduct($id);
+    }
+    
 }

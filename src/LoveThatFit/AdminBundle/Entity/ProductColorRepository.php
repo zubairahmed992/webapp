@@ -56,6 +56,19 @@ class ProductColorRepository extends EntityRepository {
             return null;
         }
     }
+    
+    public function findColorByProduct($productid) {
+        $record = $this->getEntityManager()
+                ->createQuery("SELECT pc FROM LoveThatFitAdminBundle:ProductColor pc                                    
+                                WHERE pc.product=:product")
+                ->setParameters(array('product' => $productid));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
 
     public function getSizeItemImageUrlArray($id) {
         $query = $this->getEntityManager()

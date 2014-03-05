@@ -1,0 +1,9 @@
+admin_product_data:
+    pattern:  /admin/product/data
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:index}
+
+admin_product_data_create:
+    pattern:  /admin/product/data/create
+    defaults: { _controller: LoveThatFitAdminBundle:ProductData:createProductData}
+
+    

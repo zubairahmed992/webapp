@@ -49,4 +49,8 @@ admin_retailer_routes:
      #-------------- Algorithm Route By Azeem ------------------------
 admin_algoritm_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/algorithm.yml"
+    prefix:   /
+    
+admin_product_data_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/product_data.yml"
     prefix:   /    
