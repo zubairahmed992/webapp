@@ -258,9 +258,11 @@ public function registerUser(User $user) {
     }
 #-------------------------------Web Service For Registration-------------------#
 public function registerWithReqestArray(Request $request, $request_array) {
-
+       $brandHelper = $this->container->get('admin.helper.brand');   
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
         
+            
+            
         $email = $request_array['email'];
         $password = $request_array['password'];
 
@@ -498,8 +500,8 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('gender', $request_array)) {
             $user->setGender($request_array['gender']);
         }
-        if (array_key_exists('zipCode', $request_array)) {
-            $user->setZipcode($request_array['zipCode']);
+        if (array_key_exists('zipcode', $request_array)) {
+            $user->setZipcode($request_array['zipcode']);
         }
         if (array_key_exists('firstName', $request_array)) {
             $user->setFirstName($request_array['firstName']);
@@ -521,36 +523,71 @@ private function setObjectWithArray($user, $request_array) {
 
     private function setSizechartInMeasurment($measurement, $request_array) {
 
-        $sizeChartHelper = $this->container->get('admin.helper.sizechart');        
+        $sizeChartHelper = $this->container->get('admin.helper.sizechart');    
+        $brandHelper = $this->container->get('admin.helper.brand');    
+        
+        //getBrandIdBaseOnBrandName
         
         //user teranary operator
         // $sc_top_id = isset($request_array['sc_top_id'])? $request_array['sc_top_id']:0;
+        //targetTop='Abc'
+       // targetBottom='Bottom'
+       // targetDress='Dress'
+       
         
-        if (isset($request_array['sc_top_id'])) {
-            $sc_top_id = $request_array['sc_top_id'];
-        } else {
-            $sc_top_id = 0;
+        
+        $gender=$request_array['gender'];
+         
+         if(isset($request_array['bodyType'])){
+             $bodyType=$request_array['bodyType'];
+         }else{
+             
+             $bodyType='Regular';
+         }
+        if(isset($request_array['targetTop'])){
+        
+            $target='Top';
+            
+            $size_title=$request_array['topSize'];
+            $brandId=$brandHelper->getBrandIdBaseOnBrandName($request_array['targetTop']);
+            $bodyType=$request_array['bodyType'];
+            $sc_top_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title,$bodyType);
+            $top_id=$sc_top_id[0];
+            
         }
-        if (isset($request_array['sc_bottom_id'])) {
-            $sc_bottom_id = $request_array['sc_bottom_id'];
-        } else {
-            $sc_bottom_id = 0;
+         else {
+            $top_id = 0;
         }
-        if (isset($request_array['sc_dress_id'])) {
-            $sc_dress_id = $request_array['sc_dress_id'];
+        if (isset($request_array['targetBottom'])) {
+            $target='Bottom';
+            $size_title=$request_array['bottomSize'];
+            $brandId=$brandHelper->getBrandIdBaseOnBrandName($request_array['targetBottom']);
+            $sc_bottom_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title);
+            $bottom_id=$sc_bottom_id[0];
         } else {
-            $sc_dress_id = 0;
+            $bottom_id = 0;
         }
-        if ($sc_top_id) {
-            $top_size = $sizeChartHelper->findOneById($sc_top_id);
+        if (isset($request_array['targetDress'])) {
+            $target='Dress';
+            $size_title=$request_array['dressSize'];
+            $brandId=$brandHelper->getBrandIdBaseOnBrandName($request_array['targetDress']);
+            $sc_dress_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title);
+            $dress_id=$sc_dress_id[0];
+            
+        } else {
+            $dress_id = 0;
+        }
+        
+        if ($top_id) {
+            $top_size = $sizeChartHelper->findOneById($top_id);
             $measurement->setTopFittingSizeChart($top_size); //
         }
-        if ($sc_bottom_id) {
-            $bottom_size = $sizeChartHelper->findOneById($sc_bottom_id);
+        if ($bottom_id) {
+            $bottom_size = $sizeChartHelper->findOneById($bottom_id);
             $measurement->setBottomFittingSizeChart($bottom_size); //
         }
-        if ($sc_dress_id) {
-            $dress_size = $sizeChartHelper->findOneById($sc_dress_id);
+        if ($dress_id) {
+            $dress_size = $sizeChartHelper->findOneById($dress_id);
             $measurement->setDressFittingSizeChart($dress_size); //
         }
         return $measurement;

@@ -465,5 +465,24 @@ class SizeChartRepository extends EntityRepository {
  }
  
  
+ #-------------Counting Of Size Chart-----------------------------------------#
+ public function getIdBaseOnTargetGender($brand_id,$gender,$target,$size_title,$body_type){
+     
+      return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('sc.id')
+                        ->from('LoveThatFitAdminBundle:SizeChart', 'sc')
+                        ->innerJoin('sc.brand', 'b')
+                        ->Where('b.id=:brand_id')
+                        ->andWhere('sc.gender=:gender')
+                        ->andWhere('sc.target=:target')
+                        ->andWhere('sc.title=:title')
+                        ->andWhere('sc.bodytype=:bodytype')
+                       ->setParameters(array( 'brand_id' => $brand_id,'gender'=>$gender,'title'=>$size_title,'bodytype'=>$body_type))
+                        ->setParameter('target',$target)
+                        ->getQuery()
+                        ->getResult(); 
+ }
+ 
  
 }

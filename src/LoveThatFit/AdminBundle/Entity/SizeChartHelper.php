@@ -650,7 +650,12 @@ public function getMixSizeTitleForMenBottom(){
 public function getMixSizeTitleForWoman(){
      return $this->conf["constants"]["size_titles"]["mix"]["woman"];
 }
-
+#--- get size chart id base on brand, gender, target for web services
+public function  getIdBaseOnTargetGender($brand_id,$gender,$target,$size_title,$body_type){
+    
+   return  $this->repo->getIdBaseOnTargetGender($brand_id,$gender,$target,$size_title,$body_type);
+    
+}
 
 
   

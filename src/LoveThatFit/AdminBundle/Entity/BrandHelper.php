@@ -280,5 +280,11 @@ public function getRetailerBrandById($id)
     public function getDressBrandForFemaleBaseOnSizeChart(){
         return $this->repo->getDressBrandForFemaleBaseOnSizeChart();
     }
+  
+ #---------Get Brand id Base On Brand Name for Web SErvice---------------------#
+   public function getBrandIdBaseOnBrandName($brandName){
+       return $this->repo->getBrandIdBaseOnBrandName($brandName);
+   } 
+    
     
 }

@@ -38,9 +38,9 @@ class UserController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-  //    $request_array=array();
-   //   $request_array=array('deviceId'=>'aaaaa','email'=>'test_service33@gmail.com','password'=>'123456','gender'=>'f','zipCode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2',
-     //      'weight'=>4,'neck'=>4,'bust'=>5,'body_type'=>'Petite','bodyShape'=>'apple','braSize'=>'888');
+   //   $request_array=array();
+   // $request_array=array('deviceId'=>'aaaaa','email'=>'test_service43@gmail.com','password'=>'123456','gender'=>'f','zipCode'=>'123','targetTop'=>'Gap','topSize'=>'0',
+   //       'weight'=>4,'neck'=>4,'bust'=>5,'bodyType'=>'Petite','bodyShape'=>'apple','braSize'=>'888');
         
         $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));
@@ -302,7 +302,18 @@ public function avatarUploadAction() {
 #------------------------Constant Fetching Web Service-----------------------------------------------------#
     public function ConstantValuesAction() {
         $utility_helper = $this->get('admin.helper.utility');
-        return new response(json_encode($utility_helper->getDeviceBootstrap()));
+        $data=array();
+        $data=$utility_helper->getDeviceBootstrap();
+        $data['body_type']=$utility_helper->getBodyTypesSearching();
+        $data['body_shape']=$utility_helper->getBodyShape();
+        $data['neck_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
+        
+       // $data['neck_size']=sort($data['neck_sizes']);
+        $data['sleeve_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
+        $data['waist_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
+        $data['inseam_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
+        
+        return new response(json_encode(($data)));
     }
 
 #-----------------------------Check Token -------------------------------------#
