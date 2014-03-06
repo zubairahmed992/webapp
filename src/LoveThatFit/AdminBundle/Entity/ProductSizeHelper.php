@@ -313,7 +313,10 @@ class ProductSizeHelper {
      
  }
  
- 
+ public function findSizesByProductId($id)
+ {
+     return $this->repo->findSizesByProductId($id);
+ }
  
  
  

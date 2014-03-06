@@ -73,4 +73,24 @@ class ProductItemRepository extends EntityRepository
             return null;
         }  
     }
+    
+    public function findItemBySizeAndProductAndColor($product_size_id,$product_id){
+     $query = $this->getEntityManager()
+                    ->createQuery("SELECT pi,ps,p FROM LoveThatFitAdminBundle:ProductItem pi                        
+                       JOIN pi.product_size ps                       
+                       JOIN pi.product p
+                        WHERE
+                        pi.product_size = :size_id
+                        AND
+                        pi.product= :product_id
+                      "                         
+       )->setParameters(array('size_id' => $product_size_id,'product_id' => $product_id)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }  
+    }
+    
+    
 }

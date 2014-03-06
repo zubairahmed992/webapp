@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductSizeMeasurementRepository extends EntityRepository
 {
+    public function findBySizeId($id)
+    {
+        $query = $this->getEntityManager()
+                        ->createQuery('
+            SELECT p FROM LoveThatFitAdminBundle:ProductSizeMeasurement p            
+            WHERE p.product_size = :id'
+                        )->setParameter('id', $id);
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
+
+
+

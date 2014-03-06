@@ -63,7 +63,7 @@ class ProductColorRepository extends EntityRepository {
                                 WHERE pc.product=:product")
                 ->setParameters(array('product' => $productid));
         try {
-            return $record->getSingleResult();
+            return $record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
