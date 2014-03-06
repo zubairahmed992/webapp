@@ -34,7 +34,7 @@ class Comparison {
     }
 #-----------------------------------------------------
     function getFeedBack() {
-        $cm =$this->array_sort($this->array_mix());        
+        $cm =$this->array_mix();        
         $rc = $this->getFittingSize($cm);
         return array('feedback'=>$cm, 
                      'recommendation'=>$rc);
@@ -61,6 +61,7 @@ class Comparison {
         foreach ($sizes as $size) {
             $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
             $size_identifier=$size->getDescription();            
+            $fb[$size_identifier]['id']=$size->getId();
             $fb[$size_identifier]['fits']=true;
             $fb[$size_identifier]['description'] = $size_identifier;
             $fb[$size_identifier]['title'] = $size->getTitle();
@@ -99,7 +100,7 @@ class Comparison {
                 $fb[$size_identifier]['fit_scale'] =  $fit_scale;            
             }                
         }
-        return $fb;
+        return $this->array_sort($fb);
     }
 #-----------------------------------------------------
      private function array_sort($sizes) {
@@ -331,9 +332,9 @@ class Comparison {
             return array('00', '0', '2', '4', '6', '8', '10', '12', '16', '18', '20');
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
             return array('23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36');
-        } else if ($gender == 'm' && $type == 'top') {//man Top
+        } else if ($gender == 'm' && $type == 'numbers') {//man Top
             return array('35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48');
-        } else if ($gender == 'm' && $type == 'bottom') {//man bottom
+        } else if ($gender == 'm' && $type == 'waist') {//man bottom
             return array('28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42');
         }
     }
@@ -363,5 +364,41 @@ class Comparison {
         if (count($fits) > 0) return $fits;
         if (count($tights) > 0) return $tights;
         if (count($loose) > 0) return $loose;
+    }
+
+    private function get_loose_size_messages($sizes) {
+        
+        foreach ($sizes as $size) {
+            foreach ($size['fit_points'] as $fp) {
+            if ($fp['status'] == $this->status['below_low']){
+                $count=$this->get_loose_size_rating($sizes, $size, $fp['fit_point']);
+                if($count==1){
+                    $fp['status'] == $this->status['one_size_below_low'];
+                    $fp['message']=  $this->get_fp_status_text($fp['status']);
+                }elseif($count==2){
+                    $fp['status'] == $this->status['two_size_below_low'];
+                    $fp['message']=  $this->get_fp_status_text($fp['status']);
+                }elseif($count>2){
+                    $fp['status'] == $this->status['more_size_below_low'];
+                    $fp['message']=  $this->get_fp_status_text($fp['status']);
+                }
+                
+                }
+            }
+        }
+        return $sizes;
+    }
+
+    private function get_loose_size_rating($sizes, $current_size, $fit_point){
+        $count=0;
+        foreach ($sizes as $size){
+            if ($size['fit_points'][$fit_point]['status']==$this->status['between_low_high'] || $count>0){
+                $count++;
+            }
+            if ($size['id']==$current_size['id']){
+                break;
+            }
+        }
+        return $count;
     }
 }
