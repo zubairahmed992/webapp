@@ -484,5 +484,16 @@ class SizeChartRepository extends EntityRepository {
                         ->getResult(); 
  }
  
- 
+ #-----------Find Size Title and Target Base on Brand Id For Web Services------#
+ public function findSizeTitleTarget() {
+        $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT sc.id as sizeChartId ,b.name as brandName,sc.title as title,sc.gender as gender,sc.target as target,sc.bodytype as bodyType FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b");
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

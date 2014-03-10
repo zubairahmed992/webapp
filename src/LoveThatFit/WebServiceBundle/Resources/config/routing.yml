@@ -56,11 +56,14 @@ avatarUpload:
    
 constantValue:
    pattern:  /web_service/constant_values
-   defaults: { _controller: LoveThatFitWebServiceBundle:User:ConstantValues}  
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:ConstantValues}
    
-   
-    
+registrationSizechart:
+   pattern:  /web_service/registration_sizechart
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:sizeChartForReg}
 
+   
+   
 
 #----------------------------- Product Routes----------------------------------#    
 ws_brands:
@@ -122,9 +125,6 @@ ws_images_ul:
    
    
 
-
-
-  
  
 
 

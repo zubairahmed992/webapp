@@ -38,9 +38,13 @@ class UserController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-   //   $request_array=array();
-   // $request_array=array('deviceId'=>'aaaaa','email'=>'test_service43@gmail.com','password'=>'123456','gender'=>'f','zipCode'=>'123','targetTop'=>'Gap','topSize'=>'0',
-   //       'weight'=>4,'neck'=>4,'bust'=>5,'bodyType'=>'Petite','bodyShape'=>'apple','braSize'=>'888');
+        
+     //{"email":"kamran@hotmail.com","password":"123456","gender":"f","zipcode":"123456","weight":"80.00","height":"61.00","bust":"0.00","neck":"0.00","chest":"0.00","inseam":"0.00","hip":"0.00","waist":"0.00","deviceType":"ipad","bodyShape":"pear","braSize":"30 b","bodyType":"Regular","deviceId":"tempID","sleeve":"0.00","targetTop":"Banana Republic","targetBottom":"CARMEN MARC VALVO","targetDress":"CARMEN MARC VALVO","topSize":"0","bottomSize":"0","dressSize":"4"}
+
+  //  $request_array=array();
+ //  $request_array=array('deviceId'=>'tempID','email'=>'kamrantest18@hotmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','weight'=>40.00, "height"=>"73.000000",
+ // 'targetTop'=>'Banana Republic','topSize'=>'6',"inseam"=>"36.000000","hip"=>"0.000000","waist"=>"36.000000","deviceType"=>"ipad",
+ // 'neck'=>4,'bust'=>5,'bodyType'=>'Regular','bodyShape'=>'banana','targetBottom'=>'CARMEN MARC VALVO','targetDress'=>'CARMEN MARC VALVO',"braSize"=>"28 a","bottomSize"=>"00","dressSize"=>"0");
         
         $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));
@@ -312,9 +316,18 @@ public function avatarUploadAction() {
         $data['sleeve_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
         $data['waist_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
         $data['inseam_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
+     //   $brandList=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
         
         return new response(json_encode(($data)));
     }
+    
+   public function sizeChartForRegAction(){
+       $data['sizeChart']=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
+        return new response(json_encode(($data)));
+       
+   } 
+    
+
 
 #-----------------------------Check Token -------------------------------------#
  public function  checkTokenforgetPasswordAction(){

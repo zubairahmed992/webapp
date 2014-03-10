@@ -214,7 +214,8 @@ public function registerUser(User $user) {
         $measurement = $entity->getMeasurement();        
         $user_measurment = $this->fillMeasurementArray($measurement);
         $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['userId'] . "/";
-        $userinfo['authTokenWebService'] = $entity->getAuthToken();        
+        $userinfo['authTokenWebService'] = $entity->getAuthToken();   
+        
         return array_merge($userinfo, $user_measurment);
     }
 #---------------------Edit/Update Profile for Web Services---------------------#
@@ -262,7 +263,8 @@ public function registerWithReqestArray(Request $request, $request_array) {
         $sizeChartHelper = $this->container->get('admin.helper.sizechart');
         
             
-            
+        
+        
         $email = $request_array['email'];
         $password = $request_array['password'];
 
@@ -293,8 +295,10 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $measurement->setUpdatedAt(new \DateTime('now'));
             $measurement = $this->setMeasurmentObjectWithArray($measurement, $request_array);
             $user->setMeasurement($measurement);
-            $this->saveUser($user);                        
-            return $this->gettingUserDetailArray($user, $request);             
+            $this->saveUser($user);
+            $user_info=$this->gettingUserDetailArray($user, $request);
+            return $user_info;
+            //return $this->gettingUserDetailArray($user, $request);             
         }
     }
 #-----------------------Measurement Edit Service-------------------------------#
@@ -544,35 +548,63 @@ private function setObjectWithArray($user, $request_array) {
              
              $bodyType='Regular';
          }
-        if(isset($request_array['targetTop'])){
+        if($request_array['targetTop'] ){
         
             $target='Top';
             
             $size_title=$request_array['topSize'];
+             if($size_title==00 or $size_title=='00'){
+                $size_title=00;
+            }
+             if($size_title==0 or $size_title==='0'){
+                $size_title=0;
+            }
             $brandId=$brandHelper->getBrandIdBaseOnBrandName($request_array['targetTop']);
-            $bodyType=$request_array['bodyType'];
+           
             $sc_top_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title,$bodyType);
-            $top_id=$sc_top_id[0];
+            if($sc_top_id){
+            $top_id=$sc_top_id[0];}else{
+            $top_id=0;    
+            }
             
         }
          else {
             $top_id = 0;
         }
-        if (isset($request_array['targetBottom'])) {
+        if ($request_array['targetBottom']) {
             $target='Bottom';
             $size_title=$request_array['bottomSize'];
+            if($size_title==00 or $size_title=='00'){
+                $size_title=00;
+            }
+             if($size_title==0 or $size_title=='0'){
+                $size_title=0;
+            }
             $brandId=$brandHelper->getBrandIdBaseOnBrandName($request_array['targetBottom']);
-            $sc_bottom_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title);
-            $bottom_id=$sc_bottom_id[0];
+            $sc_bottom_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title,$bodyType);
+            if($sc_bottom_id){
+            $bottom_id=$sc_bottom_id[0];}else{
+            $bottom_id=0;    
+            }
         } else {
             $bottom_id = 0;
         }
-        if (isset($request_array['targetDress'])) {
+        if ($request_array['targetDress']) {
             $target='Dress';
             $size_title=$request_array['dressSize'];
+            if($size_title==00 or $size_title=='00'){
+                $size_title=00;
+            }
+             if($size_title==0 or $size_title=='0'){
+                $size_title=0;
+            }
             $brandId=$brandHelper->getBrandIdBaseOnBrandName($request_array['targetDress']);
-            $sc_dress_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title);
+            $sc_dress_id=$sizeChartHelper->getIdBaseOnTargetGender($brandId,$gender,$target,$size_title,$bodyType);
+            if($sc_dress_id){
             $dress_id=$sc_dress_id[0];
+            }else{
+                $dress_id=0;
+            }
             
         } else {
             $dress_id = 0;

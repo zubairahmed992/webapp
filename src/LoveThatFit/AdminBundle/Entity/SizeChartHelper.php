@@ -657,6 +657,9 @@ public function  getIdBaseOnTargetGender($brand_id,$gender,$target,$size_title,$
     
 }
 
-
+#--- For Web services to sending them brand with its sizes-----#
+public function getBrandSizeTitleArray() {
+    return $this->repo->findSizeTitleTarget();
+  }
   
 }

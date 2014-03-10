@@ -275,6 +275,7 @@ public function favouriteByUser($user_id,$request){
         $device_path=$this->getDeviceTypeByUser($user->getId());   
         }
         
+     
       /* $id=1;
        $type='brand';
        $gender='F';*/
@@ -284,8 +285,9 @@ public function favouriteByUser($user_id,$request){
             
         }
         $gender = $user->getGender();
-        $products = Null;
+       
         $products = $this->repo->newproductListingWebService($gender);
+        
         $data = array();
        
         #-------Fetching The Path------------#
@@ -313,14 +315,7 @@ public function favouriteByUser($user_id,$request){
                 }
             }   
            
-           // $data[] = $products;
-           
-           //$baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-           //$fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
-           // $data['fittingRoomPath'] = $fitting_room;
-            //$baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-            //$data['path'] = $baseurl;
-            $total_record = count($products);
+          
   return $data;
         } else {
             return array('Message' => 'We cannot find Product');
