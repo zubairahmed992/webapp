@@ -4315,6 +4315,9 @@ margin-left: 4px;
     
  }
  
+ #prod_type_top_hlder .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+  background:#F3F3F3!important; 
+ }
  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
      background:#426eb6!important;     
  }
