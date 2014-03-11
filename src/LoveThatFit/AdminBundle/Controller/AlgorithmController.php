@@ -65,17 +65,21 @@ class AlgorithmController extends Controller {
                 ));
     }
        //------------------------------------------------------------------------------------------
-     public function compareAction($user_id, $product_id)
+     public function compareAction($user_id, $product_id, $json)
     {   
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);  
         $fe = new Comparison($user, $product);                
         #return new Response(json_encode($fe->getComparison()));  
         #return new Response(json_encode($fe->getRecommendation()));        
-        #return new Response($fe->getFeedBackJSON());        
-        return $this->render('LoveThatFitAdminBundle:Algoritm:_summary.html.twig',array(                   
-                    'product'=>$product, 'user'=>$user, 'data'=>$fe->getFeedback(),
+        $fb=$fe->getFeedback();
+         if($json){
+            return new Response(json_encode($fb));        
+        }else{
+            return $this->render('LoveThatFitAdminBundle:Algoritm:_summary.html.twig',array(                   
+                    'product'=>$product, 'user'=>$user, 'data'=>$fb,
                 ));
+        }           
     }
        //------------------------------------------------------------------------------------------
     public function comparisonAction() { 

@@ -23,6 +23,21 @@ $(document).ready(function(){
      return false; //for good measure
 });
 
+$('a.json').click(function (event){ 
+     event.preventDefault(); 
+     
+    var user_id = $("#algorithm_User").val();
+    var product_id = $("#algorithm_Product").val();                    
+    var compare_url = "../algorithm/compare/" + user_id + "/"+ product_id + "/"+true;         
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {
+           $('#summary_ajax').html( JSON.stringify(response, null, ' '));
+        }
+     })
+     return false; //for good measure
+});
+
 });        
     </script>
 
@@ -46,7 +61,8 @@ $(document).ready(function(){
         {{ form_rest(productForm) }}
         </form>      
     </div>
-    <a id='compare' class='compare' href="#">Compare</a>
+    <a id='compare' class='compare' href="#">Compare</a> | 
+    <a id='json' class='json' href="#">JSON</a>
     <br>
     <div id="summary_ajax" style="float: none">
     </div>

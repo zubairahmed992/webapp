@@ -98,6 +98,7 @@ class Comparison {
                 $fb[$size_identifier]['status'] = $status;
                 $fb[$size_identifier]['message'] =  $this->get_fp_status_text($status);
                 $fb[$size_identifier]['fit_scale'] =  $fit_scale;            
+                $fb[$size_identifier]['fits']=$status==0?true:false;
             }                
         }
         return $this->array_sort($fb);
