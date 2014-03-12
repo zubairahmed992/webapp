@@ -37,7 +37,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
     {   $builder->add('body_shape', 'choice', array('choices' => $this->body_shape, 'required' => false,'empty_value' => 'Body Shape',));      
         $builder->add('bra_letters', 'choice', array('choices' => $this->bra_letters, 'required' => false,'empty_value' => 'cup',));
         $builder->add('bra_numbers', 'choice', array('choices' => $this->bra_numbers, 'required' => false,'empty_value' => 'size',));
-        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => true,));
+        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => false,'data'=>'Regular'));
         //$builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false,'empty_value' => 'Brand',));
         
         
@@ -86,7 +86,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
         $builder->add('shoulder_across_back');
         $builder->add('birthdate','date', array(
             'years'=> range(date('Y')-14,date('Y')-60),  
-            'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
+            'empty_value' => array('year' => 'YY', 'month' => 'MM', 'day' => 'DD'),
             'format' => 'yyyy MM dd',
             )
                 );

@@ -35,7 +35,7 @@ private $brandHelper;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => true,'data'=>'Regular'));
+        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => false,'data'=>'Regular'));
         $builder->add('top_brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
                     'expanded' => false,
@@ -71,7 +71,7 @@ private $brandHelper;
         $builder->add('shoulder_across_back');
         $builder->add('birthdate','date', array(
             'years'=> range(date('Y')-14,date('Y')-60),  
-            'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
+            'empty_value' => array('year' => 'YY', 'month' => 'MM', 'day' => 'DD'),
             'format' => 'yyyy MM dd',
             )
                 );
