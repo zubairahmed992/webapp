@@ -230,19 +230,7 @@ class User implements UserInterface, \Serializable {
      */
     private $authTokenCreatedAt;
     
-     /**
-     * @var string $deviceType
-     *
-     * @ORM\Column(name="device_type", type="string", length=60, nullable=true)
-     */
-    private $deviceType;
-    
-     /**
-     * @var string $deviceUserPerInchPixelHeight
-     *
-     * @ORM\Column(name="device_user_per_inch_pixel_height", type="string", length=60, nullable=true)
-     */
-    private $deviceUserPerInchPixelHeight;
+   
 
     /**
      * Get id
@@ -985,51 +973,9 @@ class User implements UserInterface, \Serializable {
         return $this->iphoneImage;
     }
 
-    /**
-     * Set deviceType
-     *
-     * @param string $deviceType
-     * @return User
-     */
-    public function setDeviceType($deviceType)
-    {
-        $this->deviceType = $deviceType;
     
-        return $this;
-    }
-
-    /**
-     * Get deviceType
-     *
-     * @return string 
-     */
-    public function getDeviceType()
-    {
-        return $this->deviceType;
-    }
-
-    /**
-     * Set deviceUserPerInchPixelHeight
-     *
-     * @param string $deviceUserPerInchPixelHeight
-     * @return User
-     */
-    public function setDeviceUserPerInchPixelHeight($deviceUserPerInchPixelHeight)
-    {
-        $this->deviceUserPerInchPixelHeight = $deviceUserPerInchPixelHeight;
     
-        return $this;
-    }
-
-    /**
-     * Get deviceUserPerInchPixelHeight
-     *
-     * @return string 
-     */
-    public function getDeviceUserPerInchPixelHeight()
-    {
-        return $this->deviceUserPerInchPixelHeight;
-    }
+    
 
     /**
      * Add user_devices

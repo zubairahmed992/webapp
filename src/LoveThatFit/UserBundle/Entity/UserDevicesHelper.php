@@ -60,8 +60,14 @@ class UserDevicesHelper {
         $this->em->flush();
     }
 
-
-
+#-------------- Find Heightper inch base on user id and device type------------#
+    public function findHeightPerInchRatio($deviceType,$userId){
+        return $this->repo->findHeightPerInchRatio($deviceType,$userId);
+    }
+ #--------------- Find Device Type base on user id ---------------------------#   
+    public function findDeviceTypeBaseOnUserId($userId){
+    return $this->repo->findDeviceTypeBaseOnUserId($userId);
+    }
 
 
 

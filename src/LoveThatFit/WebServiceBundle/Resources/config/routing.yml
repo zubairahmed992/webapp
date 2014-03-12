@@ -2,6 +2,10 @@
 ws_login:
     pattern:  /web_service/login
     defaults: { _controller: LoveThatFitWebServiceBundle:User:login }
+  
+ws_login_test:
+    pattern:  /web_service/login1
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:login1 }    
 
 ws_registration_create:
    pattern:  /web_service/register

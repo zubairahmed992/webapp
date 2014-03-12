@@ -462,12 +462,12 @@ public function newproductDetailWebService($request,$request_array){
                 );
             }
             //Fetching the Device type 
-            $device_path=$this->getDeviceTypeByUser($user_id);   
+           $device_path=$this->getDeviceTypeByUser($user_id);   
             $productdetail['product_color'] = $product_color_array;
             $data = array();
             $data['data'] = $productdetail;
             $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
-            $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
+           // $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
             $pattern = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
 
             $data['product_color_path'] = $baseurl;
@@ -512,9 +512,9 @@ private function countMyCloset($user_id){
 
 #------------------Method For Returning Device Type of Current User------------# 
  private function getDeviceTypeByUser($user_id){
-         $user_helper = $this->container->get('user.helper.user');
-         $user=$user_helper->find($user_id);
-         return $user_device_type=$user->getDeviceType();
+       //  $user_helper = $this->container->get('user.helper.user');
+       //  $user=$user_helper->find($user_id);
+       //  return $user_device_type=$user->getDeviceType();
  }
 #--------------------------Get JSON FEILD--------------------------------------#
  private function getJsonForFields($fields){

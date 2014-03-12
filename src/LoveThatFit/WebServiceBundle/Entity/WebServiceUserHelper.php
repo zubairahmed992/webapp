@@ -230,8 +230,40 @@ public function registerUser(User $user) {
             return false;
         }
     }
+    
 #-------------------------Login Web Service------------------------------------#
-  public function loginWebService($request_array, $request) {
+ 
+ /*   public function loginWebService($request_array, $request) {
+        $email = $request_array['email'];
+        $password = $request_array['password'];
+        $deviceType=$request_array['deviceType'];
+        /*$email ='amrani192@gmail.com';
+        $password =''; 
+        $deviceType="iphone4s";*/
+       
+       /* $entity = $this->findOneBy($email);
+        if (count($entity) > 0) {
+                $device_type=array();
+               //  $pre_device_type=$entity->getDeviceType();
+            if ($this->matchPassword($entity, $password)) {
+               
+                // $device_type['preDeviceType']=$pre_device_type;
+                // $entity->setDeviceType($deviceType);
+                 $this->saveUser($entity);
+                 $user_info=$this->gettingUserDetailArray($entity, $request);
+                    return array_merge($user_info,$device_type);                
+            } else {
+                return array('Message' => 'Invalid Password');
+            }
+        } else {
+            return array('Message' => 'Invalid Email');
+        }
+    }*/
+    
+
+    
+
+ public function loginWebService($request_array, $request) {
         $email = $request_array['email'];
         $password = $request_array['password'];
         $deviceType=$request_array['deviceType'];
@@ -241,12 +273,17 @@ public function registerUser(User $user) {
        
         $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
-                $device_type=array();
-                 $pre_device_type=$entity->getDeviceType();
+            
+           
             if ($this->matchPassword($entity, $password)) {
+                
+           $device_type=$this->getUserDeviceTypeAndMarking($entity,$deviceType);
+           
+            
+            //$pre_device_type=$entity->getDeviceType();
                
-                 $device_type['preDeviceType']=$pre_device_type;
-                 $entity->setDeviceType($deviceType);
+                
+                // $entity->setDeviceType($deviceType);
                  $this->saveUser($entity);
                  $user_info=$this->gettingUserDetailArray($entity, $request);
                     return array_merge($user_info,$device_type);                
@@ -257,6 +294,7 @@ public function registerUser(User $user) {
             return array('Message' => 'Invalid Email');
         }
     }
+   
 #-------------------------------Web Service For Registration-------------------#
 public function registerWithReqestArray(Request $request, $request_array) {
        $brandHelper = $this->container->get('admin.helper.brand');   
@@ -274,7 +312,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $user = $this->createNewUser();            
             $password=  $this->encodeThisPassword($user, $password);
             $user->setPassword($password);
-            $user = $this->setObjectWithArray($user, $request_array);
+            $this->setObjectWithArray($user, $request_array);
             $user->generateAuthenticationToken();
             
              //send registration email ....            
@@ -286,6 +324,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $user_device_name=$request_array['deviceId'];
             $userDevice= new UserDevices();
             $userDevice->setDeviceName($user_device_name);
+            $userDevice->setDeviceType($request_array['deviceType']);
             $userDevice->setUser($user);
             $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
                
@@ -297,7 +336,8 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $user->setMeasurement($measurement);
             $this->saveUser($user);
             $user_info=$this->gettingUserDetailArray($user, $request);
-            return $user_info;
+            $device_type=$this->getUserDeviceTypeAndMarking($user,$request_array['deviceType']);
+            return array_merge($user_info,$device_type);
             //return $this->gettingUserDetailArray($user, $request);             
         }
     }
@@ -395,9 +435,15 @@ private function fillUserArray($entity) {
         if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
         if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
-        if($entity->getDeviceUserPerInchPixelHeight()){$userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();}else{$userinfo['heightPerInch']='';}
-        if($entity->getDeviceType()){$userinfo['postDeviceType']= $entity->getDeviceType();} else{$userinfo['postDeviceType']='';}
-        if($entity->getDeviceType()){$userinfo['preDeviceType']= $entity->getDeviceType();}else{ $userinfo['preDeviceType']='';}
+     
+                  
+          //  $userDevice= new UserDevices();
+          
+//  if($entity->getDeviceUserPerInchPixelHeight()){$userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();}else{$userinfo['heightPerInch']='';}
+      //  if($entity->getDeviceType()){$userinfo['postDeviceType']= $entity->getDeviceType();} else{$userinfo['postDeviceType']='';}
+      //  if($entity->getDeviceType()){$userinfo['preDeviceType']= $entity->getDeviceType();}else{ $userinfo['preDeviceType']='';}
+       
+        
         return $userinfo;
     }
 #------------------------------------------------------------------------------#
@@ -516,10 +562,7 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('dob', $request_array)) {
             $user->setBirthDate(new \DateTime($request_array['dob']));
         }
-       if (array_key_exists('deviceType', $request_array)) {
-            $user->setDeviceType($request_array['deviceType']);
-        } 
-
+      
         return $user;
     }
 
@@ -730,4 +773,90 @@ private function setObjectWithArray($user, $request_array) {
     }
 
 
+    
+     #-- in_aray dosn't work on multidimensional, so this is recursion method for check array exist or not ---#  
+ private function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_array_r($needle, $item, $strict))) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+#-------Device Type and Height Per Inch Getting values
+public function getUserDeviceTypeAndMarking($entity,$deviceType){
+   
+            $device_type=array();
+            $userId=$entity->getId();
+          
+            $deviceTypeDb=$this->container->get('user.helper.userdevices')->findDeviceTypeBaseOnUserId($userId);
+           if($this->in_array_r($deviceType,$deviceTypeDb)){
+               
+               foreach($deviceTypeDb as $singleId){
+                if($singleId['deviceType']==$deviceType){
+                   $userDevicesMarking=$this->container->get('user.helper.userdevices')->findHeightPerInchRatio($singleId['deviceType'],$userId);
+                    foreach($userDevicesMarking as $singleDeviceMarking){
+                       $singleMarking=$singleDeviceMarking['deviceUserPerInchPixelHeight'];
+                    if($singleMarking){  
+                       $device_type['heightPerInch']=$singleMarking;
+                       $device_type['deviceType']=$deviceType;
+                       return $device_type;
+                   }else{
+                       $device_type['heightPerInch']='0';
+                       $device_type['deviceType']=$deviceType;
+                       return $device_type;
+                     }
+                   }
+                }
+              }
+            }else{
+                $newUserDevice=new UserDevices(); 
+                $newUserDevice->setDeviceType($deviceType);
+                $newUserDevice->setUser($entity);
+                $this->container->get('user.helper.userdevices')->saveUserDevices($newUserDevice);
+                $device_type['heightPerInch']='0';
+                $device_type['deviceType']=$deviceType;
+                 return $device_type;
+            }
+}
+#--------------------Set Marking against Device Type---------------------------#
+public function setMarkingDeviceType($entity, $deviceType,$heightPerInch){
+    
+    $chkMarking=$this->container->get('user.helper.userdevices')->findHeightPerInchRatio($deviceType,$entity->getId());
+   if($chkMarking){
+    foreach($chkMarking as $singleMarking)
+   {
+       $chkSingleMarking=$singleMarking['deviceUserPerInchPixelHeight'];
+   }
+    }else{
+         $chkSingleMarking=null;
+
+    }
+   //return $chkSingleMarking;
+   if($chkSingleMarking==0 || $chkSingleMarking==Null){
+               $newUserDevice=new UserDevices(); 
+               $newUserDevice->setDeviceType($deviceType);
+               $newUserDevice->setDeviceUserPerInchPixelHeight($heightPerInch);
+               $newUserDevice->setUser($entity);
+               $this->container->get('user.helper.userdevices')->saveUserDevices($newUserDevice);
+   } 
+   else{
+               //$newUserDevice=new UserDevices(); 
+               $userDevices=$entity->getUserDevices();
+               foreach($userDevices as $singleDevice){
+                   $deviceTypeDb=$singleDevice->getDeviceType();
+                   if($deviceTypeDb==$deviceType){
+                $singleDevice->setDeviceType($deviceType);
+               $singleDevice->setDeviceUserPerInchPixelHeight($heightPerInch);
+               $singleDevice->setUser($entity);
+              $this->container->get('user.helper.userdevices')->saveUserDevices($singleDevice);
+                   }
+               }
+               
+              
+   } 
+}
 }

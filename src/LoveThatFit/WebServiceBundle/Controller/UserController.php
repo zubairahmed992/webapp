@@ -23,13 +23,30 @@ class UserController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-       //$decoded=array('email'=>'test@gmail.com','password'=>'Apple2013','deviceType'=>'4s');
+     //  $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'4s');
         $user_helper = $this->get('webservice.helper.user');
         $user_info = $user_helper->loginWebService($decoded,$request);
       // $user_info = $user_helper->loginWebService($decoded,$request);
         return new response(json_encode($user_info));
       
     }
+    
+    
+    
+    /* public function login1Action() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+       $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'7s');
+        $user_helper = $this->get('webservice.helper.user');
+        $user_info = $user_helper->loginWebService1($decoded,$request);
+      // $user_info = $user_helper->loginWebService($decoded,$request);
+        return new response(json_encode($user_info));
+      
+    }*/
+    
+    
 #----------------------End of Login User---------------------------------------# 
 #----------------------Registration--------------------------------------------#
  public function registrationCreateAction() {
@@ -41,9 +58,9 @@ class UserController extends Controller {
         
      //{"email":"kamran@hotmail.com","password":"123456","gender":"f","zipcode":"123456","weight":"80.00","height":"61.00","bust":"0.00","neck":"0.00","chest":"0.00","inseam":"0.00","hip":"0.00","waist":"0.00","deviceType":"ipad","bodyShape":"pear","braSize":"30 b","bodyType":"Regular","deviceId":"tempID","sleeve":"0.00","targetTop":"Banana Republic","targetBottom":"CARMEN MARC VALVO","targetDress":"CARMEN MARC VALVO","topSize":"0","bottomSize":"0","dressSize":"4"}
 
-  //  $request_array=array();
- //  $request_array=array('deviceId'=>'tempID','email'=>'kamrantest18@hotmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','weight'=>40.00, "height"=>"73.000000",
- // 'targetTop'=>'Banana Republic','topSize'=>'6',"inseam"=>"36.000000","hip"=>"0.000000","waist"=>"36.000000","deviceType"=>"ipad",
+ //  $request_array=array();
+  //$request_array=array('deviceId'=>'tempID','email'=>'kamrantes32@hotmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','weight'=>40.00, "height"=>"73.000000",
+// 'targetTop'=>'Banana Republic','topSize'=>'6',"inseam"=>"36.000000","hip"=>"0.000000","waist"=>"36.000000","deviceType"=>"ipad",
  // 'neck'=>4,'bust'=>5,'bodyType'=>'Regular','bodyShape'=>'banana','targetBottom'=>'CARMEN MARC VALVO','targetDress'=>'CARMEN MARC VALVO',"braSize"=>"28 a","bottomSize"=>"00","dressSize"=>"0");
         
         $user_info = $user->registerWithReqestArray($request,$request_array);
@@ -233,14 +250,15 @@ public function userProfileAction()
             $user_id = $entity->getId();
             $file_name = $_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $newFilename = 'iphone' . "." . $ext;
+           $newFilename = 'iphone' . "." . $ext;
             $entity->setIphoneImage($newFilename);
             if (!is_dir($entity->getUploadRootDir())) {
                 @mkdir($entity->getUploadRootDir(), 0700);
             }
-     if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
-                $entity->setDeviceType($deviceType);
-                $entity->setDeviceUserPerInchPixelHeight($heightPerInch);
+   if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
+       $this->get('webservice.helper.user')->setMarkingDeviceType($entity, $deviceType,$heightPerInch);
+             //   $entity->setDeviceType($deviceType);
+             //   $entity->setDeviceUserPerInchPixelHeight($heightPerInch);
 
                  $em->persist($entity);
                  $em->flush();
@@ -248,12 +266,12 @@ public function userProfileAction()
                  $userinfo = array();
                  $userimage = $entity->getIphoneImage();
                  $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-                 $userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();
+                $userinfo['heightPerInch']= $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($entity,$deviceType);//$entity->getDeviceUserPerInchPixelHeight();
                  $userinfo['iphoneImage'] = $userimage;
                  $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
-            } else {
-                return new response(json_encode(array('Message' => 'Image not uploaded')));
+          } else {
+              return new response(json_encode(array('Message' => 'Image not uploaded')));
             }
         } else {
             return new response(json_encode(array('Message' => 'We can not find user')));
@@ -275,6 +293,8 @@ public function avatarUploadAction() {
         } else {
             return new response(json_encode(array('Message' => 'Email Not Found')));
         }
+      //  return new response(count($entity));
+        
         if (count($entity) > 0) {
             $user_id = $entity->getId();
             $file_name = $_FILES["file"]["name"];
