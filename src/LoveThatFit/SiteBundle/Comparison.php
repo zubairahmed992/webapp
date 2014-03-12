@@ -37,7 +37,9 @@ class Comparison {
         $cm =$this->array_mix();        
         $rc = $this->getFittingSize($cm);
         return array('feedback'=>$cm, 
-                     'recommendation'=>$rc);
+                     'recommendation'=>$rc,
+                     'status'=>  array_flip($this->status),
+                        );
     }
 #-----------------------------------------------------
     function getComparison() {
