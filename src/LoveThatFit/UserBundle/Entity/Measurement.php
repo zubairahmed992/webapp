@@ -578,7 +578,12 @@ class Measurement {
      */
     private $ankle=0;
     
-    
+     /**
+     * @var float $iphone_foot_height
+     *
+     * @ORM\Column(name="iphone_foot_height", type="float", nullable=true,options={"default" = 0})
+     */
+    private $iphone_foot_height=0;
     
     /**
      * Get id
@@ -1877,5 +1882,30 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getDressBrand()
     {
         return $this->dress_brand;
+    }
+
+   
+
+    /**
+     * Set iphone_foot_height
+     *
+     * @param float $iphoneFootHeight
+     * @return Measurement
+     */
+    public function setIphoneFootHeight($iphoneFootHeight)
+    {
+        $this->iphone_foot_height = $iphoneFootHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get iphone_foot_height
+     *
+     * @return float 
+     */
+    public function getIphoneFootHeight()
+    {
+        return $this->iphone_foot_height;
     }
 }

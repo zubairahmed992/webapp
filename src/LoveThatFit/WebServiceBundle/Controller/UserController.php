@@ -23,7 +23,7 @@ class UserController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-     //  $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'4s');
+       $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'4s');
         $user_helper = $this->get('webservice.helper.user');
         $user_info = $user_helper->loginWebService($decoded,$request);
       // $user_info = $user_helper->loginWebService($decoded,$request);
@@ -148,6 +148,9 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
+       // $request_array= array();
+        
+      //  $request_array=array('email'=>'iphone@gmail.com','authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','deviceType'=>'4s','heightPerInch'=>'6');
 #---------------------------Authentication of Token----------------------------#
        $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
