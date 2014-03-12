@@ -14,6 +14,7 @@ class Measurement {
 
     public $bra_letters;
     public $bra_numbers;
+    public $birthdate;
     
     /**
      * Bidirectional (OWNING SIDE - FK)
@@ -1779,6 +1780,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return string 
      */
+    
     
     
     public function getBraNumberSize()// The name changed getBraSizes to getBraNumberSize

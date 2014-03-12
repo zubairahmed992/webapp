@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
+use \DateTime;
 
 class RegistrationController extends Controller {
 
@@ -143,6 +144,7 @@ class RegistrationController extends Controller {
         $brandHelper=$this->get('admin.helper.brand');
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
+        
    #---------Start OF CRF Protection--------------------------------------#
  if ($this->getRequest()->getMethod() == 'POST') {
         if ($user->getGender() == 'm') {
@@ -167,7 +169,12 @@ class RegistrationController extends Controller {
             $measurement->setArm($sizeBaseOnSleeveNeck['arm_length']);
             $measurement->setShoulderAcrossBack($sizeBaseOnSleeveNeck['shoulder']);
         }
+        
+        //$birthDate=date("Y-m-d",strtotime());
+                
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
+        $user->setBirthDate($measurement->birthdate);
+        $this->get('user.helper.user')->saveUser($user);
 
         // Rendering step four
         $form = $this->createForm(new RegistrationStepFourType(), $user);
@@ -192,6 +199,9 @@ class RegistrationController extends Controller {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
+         
+        
+        
         $brandHelper=$this->get('admin.helper.brand');
        // $shirtSizesBaseNeckSleeve = $this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve(14,32);
         
@@ -241,6 +251,7 @@ class RegistrationController extends Controller {
             throw $this->createNotFoundException('Unable to find User.');
         }
         $measurement = $user->getMeasurement();
+        
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
         $form = $this->createForm(new RegistrationStepFourType(), $user);
@@ -290,6 +301,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
 //--------------------------- update fitting room image, 
     public function stepFourCreateAction(Request $request, $id) {
 
+        
         $entity = $this->get('user.helper.user')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');

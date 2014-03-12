@@ -84,6 +84,12 @@ class RegistrationMeasurementFemaleType extends AbstractType
         $builder->add('sleeve');       
         $builder->add('hip');
         $builder->add('shoulder_across_back');
+        $builder->add('birthdate','date', array(
+            'years'=> range(date('Y')-14,date('Y')-60),  
+            'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
+            'format' => 'yyyy MM dd',
+            )
+                );
     }
   
      public function getDefaultOptions(array $options)
