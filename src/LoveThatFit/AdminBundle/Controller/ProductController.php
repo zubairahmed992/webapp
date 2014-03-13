@@ -952,7 +952,7 @@ class ProductController extends Controller {
         $filename = $file->getData();
                 
         $pcsv = new ProductCSVHelper($filename);
-        $data = $pcsv->read();        
+        $data = $pcsv->read(700);
         $ar = $this->savecsvdata($pcsv, $data);
         #$data = $pcsv->map();
         #return new Response(json_encode($data));
