@@ -61,6 +61,12 @@ registration_step_four_image_update:
 registration_step_four_edit:
     pattern:  /registration/step_four_edit
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
+    
+registration_parent_child:
+    pattern:  /registration/parent/child/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:parentChildEmail }
+    
+   
 
 #-------------------------Edit Fitting Room Image URL-------------------------#
 fitting_room_image_edit:

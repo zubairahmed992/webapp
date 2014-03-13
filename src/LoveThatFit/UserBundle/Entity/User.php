@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable {
 
+   public $isApproved;
+    
     /**
      * Bidirectional (INVERSE SIDE)
      * 

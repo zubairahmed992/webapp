@@ -1,0 +1,93 @@
+{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+
+{% block action_block_content %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+
+ function Validate(){
+ var registration_parent_child_create= "../parent/child/"+ {{app.user.id}};  
+ var str = $('#parentemail').serialize();
+ jQuery.ajax({
+   type: "POST",
+   url: registration_parent_child_create, 
+   data : str, // our data object
+   success: function(response){                            
+       $('#cityAjax').html(response);   
+       $('#parentemailcheck').hide();   
+   }
+ });
+}
+          
+    </script>
+
+
+
+<section class="reg_blk">  
+    <div class="action_cnt">
+        <div class="steps step_4" id="parentemailcheck">            
+            <h7>Enter parent email</h7>
+            <form id="parentemail"  method="POST" action="#_" {{ form_enctype(form) }} >
+           {{ form_errors(form) }}
+                <div>
+                    {{ form_errors(form.email) }}
+                    </div>
+                    {{ form_rest(form) }} 
+                     <div class="frm_ele" style="float:none;">
+                      <a class="reg_next_step" href="{{path('inner_site_index')}}">Later</a>
+                      <input class="reg_next_step" type="button" value="Submit"  onclick="return Validate();" />
+                     </div>
+                </form>
+              
+                
+                
+                <!--/.step_4--></div>
+              <div id="cityAjax">                
+                </div>
+                
+            <!--/.action_cnt--></div>
+        <!--/.action_blk--></section>
+{% endblock %}
+{% block reg_fitting_room %}
+        <section>
+    <div id="stella_box">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('stella_box').style.display='none'">x</a></span>
+        </div>
+        <div id="pic_step_1">
+            <img src="{{ asset('bundles/lovethatfit/site/images/1_top_bottom.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_1').style.display='none'">x</a></span>
+        </div>
+                
+              <div id="pic_step_2">
+            <img src="{{ asset('bundles/lovethatfit/site/images/1_vert.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_2').style.display='none'">x</a></span>
+        </div>
+        <div id="pic_step_3">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic_step_2_2.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_3').style.display='none'">x</a></span>
+        </div>
+            <style>
+                    #load_current_pic {
+                        position: absolute;
+                        top:100px;
+                        left: 550px;
+                        background: #fff;
+                        padding:22px;
+                        border:1px solid #444;
+                    }
+                    #load_current_pic a,
+                    #load_current_pic a:visited {
+                        color:darkgreen;
+                        font-size: 20px;
+                    }
+            </style>
+            
+            
+                    
+            
+            
+            
+            
+            
+</section>
+{% endblock %}
