@@ -51,7 +51,7 @@ public function brandListAction() {
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
          //$request_array=array('authTokenWebService'=>'e0aeb1a4a2a11a1b61a757397f6b921a');
-       // $request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
+     //   $request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
         $authTokenWebService = $request_array['authTokenWebService'];
     if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
@@ -77,8 +77,8 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-       $request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
-        
+       //$request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
+         // $request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
         $authTokenWebService = $request_array['authTokenWebService'];
        if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);

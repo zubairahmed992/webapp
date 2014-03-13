@@ -358,26 +358,60 @@ public function updateMeasurementWithReqestArray($id, $request_array) {
 #---------------------------------Edit Shoulder/Outseam-----------------------#
  public function updateMarkingParamWithReqestArray($request, $request_array) {
         $email = $request_array['email'];
-        $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
-        $iphone_outseam = $request_array['iphone_outseam'];
-        $entity = $this->repo->findOneBy(array('email' => $email));// has to be change to getByEmail
+      //  $iphone_shoulder_height = $request_array['iphone_shoulder_height'];
+      //  $iphone_outseam = $request_array['iphone_outseam'];
         
+        $entity = $this->repo->findOneBy(array('email' => $email));// has to be change to getByEmail
         if (count($entity) > 0) {
             $userinfo = $this->fillUserArray($entity);
             $userinfo['authTokenWebService'] = $entity->getAuthToken();
-            $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";             
-
-            $entity = $this->repo->find($userinfo['id']);
+          //  $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";             
+                
+            $entity = $this->repo->find($userinfo['userId']);
+             if (array_key_exists('deviceType', $request_array) and (array_key_exists('heightPerInch', $request_array)) ) {
+            $this->setMarkingDeviceType($entity, $request_array['deviceType'],$request_array['heightPerInch']);
+            }
             $measurement = $entity->getMeasurement();// remove this when added to  
             
             if ($measurement) {
                 $measurement->setUpdatedAt(new \DateTime('now'));
-                if (isset($iphone_shoulder_height)) {
+               /* if (isset($iphone_shoulder_height)) {
                     $measurement->setIphoneShoulderHeight($iphone_shoulder_height);
                 }
                 if (isset($iphone_outseam)) {
                     $measurement->setIphoneOutseam($iphone_outseam);
-                }
+                }*/
+        if (array_key_exists('shoulderWidth', $request_array)) {
+            $measurement->setShoulderWidth($request_array['shoulderWidth']);
+        }    
+        if (array_key_exists('shoulderHeight', $request_array)) {
+            $measurement->setShoulderHeight($request_array['shoulderHeight']);
+        }    
+        
+           if (array_key_exists('bustHeight', $request_array)) {
+            $measurement->setbustHeight($request_array['bustHeight']);
+        }
+         if (array_key_exists('bustWidth', $request_array)) {
+            $measurement->setBustWidth($request_array['bustWidth']);
+        }
+         if (array_key_exists('hipHeight', $request_array)) {
+            $measurement->setHipHeight($request_array['hipHeight']);
+        }
+         if (array_key_exists('hipWidth', $request_array)) {
+            $measurement->setHipWidth($request_array['hipWidth']);
+        }
+         
+        if (array_key_exists('waistHeight', $request_array)) {
+            $measurement->setWaistHeight($request_array['waistHeight']);
+        }
+       if (array_key_exists('waistWidth', $request_array)) {
+            $measurement->setWaistWidth($request_array['waistWidth']);
+        }
+        if (array_key_exists('iphoneFootHeight', $request_array)) {
+            $measurement->setIphoneFootHeight($request_array['iphoneFootHeight']);
+        }
+        
+        
                 $entity->setMeasurement($measurement);
                 $this->saveUser($entity);
             }                        
@@ -502,6 +536,8 @@ private function fillUserArray($entity) {
             $userinfo['knee'] = $measurement->getKnee();
             $userinfo['calf'] = $measurement->getCalf();
             $userinfo['ankle'] = $measurement->getAnkle();
+             $userinfo['iphoneFootHeight'] = $measurement->getIphoneFootHeight();
+            
             
             if($measurement->getTopBrand()){
             $userinfo['topBrandId'] = $measurement->getTopBrand()->getId();
@@ -763,6 +799,9 @@ private function setObjectWithArray($user, $request_array) {
         }   
            if (array_key_exists('ankle', $request_array)) {
             $measurement->setAnkle($request_array['ankle']);
+        } 
+          if (array_key_exists('iphoneFootHeight', $request_array)) {
+            $measurement->setIphoneFootHeight($request_array['iphoneFootHeight']);
         } 
            
             
