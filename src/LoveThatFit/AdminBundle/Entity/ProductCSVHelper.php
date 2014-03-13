@@ -23,13 +23,13 @@ class ProductCSVHelper {
 
     //------------------------------------------------------
 
-    public function read() {
+    public function read($row_length) {
 
         $this->row = 0;
         $this->previous_row = '';
 
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, $row_length, ",")) !== FALSE) {
                 $this->readProduct($data);
                 $this->previous_row = $data;
                 $this->row++;
