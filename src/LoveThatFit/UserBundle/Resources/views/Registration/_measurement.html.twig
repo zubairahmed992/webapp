@@ -80,6 +80,9 @@
                     <span id="body_type" style="display: none;">{{ form_widget(form.body_types) }}</span>
                 {%endif%}
 
+                    
+                    
+                    
                 {% if( entity.gender=='f') %}
 
                     <div class="m_option">   
@@ -88,8 +91,7 @@
                             {{ form_widget(form.body_types) }}
                             </div>
                     </div>
-                    
-                    
+                    {%endif%}    
                     <div class="">   
                         <div class="mlabel">Birth Date</div>
                         <div class="">                 
@@ -99,9 +101,10 @@
             </div>
                     
                     </div>
+                    
 
 
-
+{% if( entity.gender=='f') %}
                         <!-- START CODE FOR BODY SHAPE AND BRA SIZE --->    
                         <div class="m_option" style="display: table;">   
                             <div class="body_shape" id="body_shape">
@@ -118,8 +121,8 @@
 
                             </div>
                         </div>
-            {%endif%}    
-
+            
+               {%endif%}    
                         <!-- END  CODE FOR BODY SHAPE AND BRA SIZE --->    
                         <div class="sep"></div>
 
