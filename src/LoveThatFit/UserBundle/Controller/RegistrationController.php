@@ -177,30 +177,29 @@ class RegistrationController extends Controller {
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
         $user->setBirthDate($measurement->birthdate);
         $this->get('user.helper.user')->saveUser($user);        
-        if($user->getAge()<15)
+        if($user->getAge()<15 and $user->isApproved==NULL)
         {        // Rendering step four
         $form = $this->createForm(new UserParentChildLinkType());
             return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
                     'form' => $form->createView(),                    
                     'entity' => $user,      
                     'edit_type' => 'registration',
+                     'isapproved'=>$user->isApproved,
                 ));
-            
-            
         }else
         {
-            $form = $this->createForm(new RegistrationStepFourType(), $user);
-        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
-        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
-       return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+         $form = $this->createForm(new RegistrationStepFourType(), $user);
+         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+         return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
                     'form' => $form->createView(),
                     'measurement_form' => $measurement_form->createView(),
             'measurement_vertical_form' => $measurement_vertical_form->createView(),
             'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
                     'measurement' => $measurement,
-                    'edit_type' => 'registration',
+                    'edit_type' => 'registration',            
                 ));
         }
     }
@@ -259,14 +258,12 @@ class RegistrationController extends Controller {
         $data = $request->request->all();      
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
-        $userParentChild=new UserParentChildLink();
+        $userParentChild = $this->get('user.helper.parent.child')->createNew();
         $form = $this->createForm(new UserParentChildLinkType(), $userParentChild);
-        $form->bindRequest($request); 
+        $form->bindRequest($request);  
         if ($form->isValid()) {
-         $em = $this->getDoctrine()->getManager();
-         $userParentChild->setChild($user);         
-         $em->persist($userParentChild);    
-         $em->flush();             
+          $userParentChild->setChild($user);  
+           $this->get('user.helper.parent.child')->saveUserParentLink($userParentChild);            
          } 
          return $this->render('LoveThatFitUserBundle:Registration:user_parent_child_email.html.twig', array(
                     'form' => $form->createView(),                    
@@ -274,6 +271,26 @@ class RegistrationController extends Controller {
                     'parent'=>$userParentChild,
                 ));
         
+    }
+    
+    
+    public function parentChildUpdateEmailAction(Request $request)
+    {
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->get('user.helper.user')->find($id);
+        $userParentChilds=$this->get('user.helper.parent.child')->findByUser($user); 
+        $userParentChildId=$userParentChilds->getId();       
+        $userParentChilds=$this->get('user.helper.parent.child')->find($userParentChildId); 
+        $form = $this->createForm(new UserParentChildLinkType(), $userParentChilds);
+        $form->bindRequest($request);  
+        if ($form->isValid()) {            
+           $this->get('user.helper.parent.child')->update($userParentChilds);            
+        } 
+         return $this->render('LoveThatFitUserBundle:Registration:user_parent_child_email.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $user,
+                    'parent'=>$userParentChilds,
+                ));
     }
     
     
@@ -320,6 +337,16 @@ class RegistrationController extends Controller {
 
         $measurement = $user->getMeasurement();
 
+        if($user->getAge()<15 and $user->isApproved==NULL)
+        {        // Rendering step four
+        $form = $this->createForm(new UserParentChildLinkType());
+            return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $user,      
+                    'edit_type' => 'fitting_room',
+                    'isapproved'=>$user->isApproved,
+                ));
+        }else{        
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
 $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
@@ -334,6 +361,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                 ));
+        }
     }
 
 //--------------------------- update fitting room image, 

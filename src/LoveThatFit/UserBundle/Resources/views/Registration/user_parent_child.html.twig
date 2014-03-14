@@ -19,29 +19,80 @@
 }
           
     </script>
-
-
-
+    
+    <script>
+    function Validates()
+    {
+        var registration_parent_child_update= "../registration/parent/update/child/"+ {{app.user.id}};  
+ var str = $('#parentemail2').serialize();
+ jQuery.ajax({
+   type: "POST",
+   url: registration_parent_child_update, 
+   data : str, // our data object
+   success: function(response){                            
+       $('#cityAjax').html(response);   
+       $('#changeparentemail').hide();   
+       $('#parentemailcheckfitting').hide(); 
+   }
+ });
+    }
+        </script> 
+    
+    
+    
+    <script>
+    function ChangeEmail()
+    {
+        document.getElementById('parentemailcheckfitting').style.display="none";
+        document.getElementById('changeparentemail').style.display="block";      
+    }
+        
+    </script>
+    
 <section class="reg_blk">  
     <div class="action_cnt">
+        {%if(isapproved==NULL and edit_type=='fitting_room')%}       
+             <div class="steps step_4" id="parentemailcheckfitting">            
+            <h7>Your parent does not approved yet</h7>
+             <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
+                 <a class="reg_next_step"  onclick="return ChangeEmail();">Change Email</a>          
+                <!--/.step_4--></div>
+         {%else%}
         <div class="steps step_4" id="parentemailcheck">            
             <h7>Enter parent email</h7>
-            <form id="parentemail"  method="POST" action="#_" {{ form_enctype(form) }} >
+            <form id="parentemail"  method="POST" action="" {{ form_enctype(form) }} >
            {{ form_errors(form) }}
                 <div>
                     {{ form_errors(form.email) }}
                     </div>
                     {{ form_rest(form) }} 
                      <div class="frm_ele" style="float:none;">
-                      <a class="reg_next_step" href="{{path('inner_site_index')}}">Later</a>
+                      <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
                       <input class="reg_next_step" type="button" value="Submit"  onclick="return Validate();" />
                      </div>
                 </form>
-              
-                
-                
+               
                 <!--/.step_4--></div>
-              <div id="cityAjax">                
+             
+         {%endif%}
+            
+            
+            <div id="changeparentemail" style="display:none">
+                <h7>Enter parent email</h7>
+            <form id="parentemail2"  method="POST" action="" {{ form_enctype(form) }} >
+           {{ form_errors(form) }}
+                <div>
+                    {{ form_errors(form.email) }}
+                    </div>
+                    {{ form_rest(form) }} 
+                     <div class="frm_ele" style="float:none;">
+                      <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
+                      <input class="reg_next_step" type="button" value="Send"  onclick="return Validates();" />
+                     </div>
+                </form>
+            </div>
+            
+        <div id="cityAjax">                
                 </div>
                 
             <!--/.action_cnt--></div>

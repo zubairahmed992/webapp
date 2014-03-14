@@ -12,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserParentChildLinkRepository extends EntityRepository
 {
+    public function findByUser($user) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT u,up FROM LoveThatFitUserBundle:UserParentChildLink u     
+                                       JOIN u.child up
+                                       WHERE u.child=:child_id")
+                        ->setParameters(array('child_id' => $user));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    
 }

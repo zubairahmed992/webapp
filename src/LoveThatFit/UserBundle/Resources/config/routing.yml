@@ -66,8 +66,9 @@ registration_parent_child:
     pattern:  /registration/parent/child/{id}
     defaults: { _controller: LoveThatFitUserBundle:Registration:parentChildEmail }
     
-   
-
+registration_parent_child_update:   
+    pattern:  /registration/parent/update/child/{id}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:parentChildUpdateEmail }
 #-------------------------Edit Fitting Room Image URL-------------------------#
 fitting_room_image_edit:
     pattern:  /registration/fitting_room_image_edit

@@ -20,6 +20,7 @@ class UserParentChildLink
     
     
     /**     
+     * Bidirectional (OWNING SIDE - FK)
      * 
      * @ORM\OneToOne(targetEntity="User", inversedBy="userparentchildlink")
      * @ORM\JoinColumn(name="child_id", referencedColumnName="id", onDelete="CASCADE")
