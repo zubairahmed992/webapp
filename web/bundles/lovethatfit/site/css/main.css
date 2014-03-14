@@ -4476,3 +4476,7 @@ margin-left: 4px;
 #dob select{
     width:50px;
 }
+
+#prod_type_top_hlder .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+     background:#F3F3F3!important;     
+ }
