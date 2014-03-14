@@ -2592,7 +2592,7 @@ padding-bottom: 0px;
 
 .m_option{
    clear:both;
-   margin: 0px 0px 8px;  
+   margin: 0px 0px 5px;  
    position: relative;
    display: table;
    width: 330px;   
@@ -2831,7 +2831,7 @@ padding-bottom: 0px;
 }
 
 #measurement_body_types{
-    padding-top: 10px;
+    padding: none!important;
 }
 
 #measurement_body_types label{
@@ -4437,7 +4437,7 @@ margin-left: 4px;
 }
  
  .female_measurement_sec{
-     margin-bottom: 5px;
+     margin-bottom: 3px;
  }
  
  .men_sel select{     
@@ -4450,4 +4450,33 @@ margin-left: 4px;
  .pro_set label{
      width: 80px!important;
      
+ }
+ 
+ .boxlable2{
+    color: #666666;
+    display: block;
+    font-size: 0.75em;
+    overflow: auto;
+    position: absolute; 
+}
+
+#height_box2{
+    top: 135px;
+}
+
+#clg_sel select{
+    width:160px;
+}
+
+#weight_box2{
+    top: 135px;
+    left:165px;
+}
+
+#dob select{
+    width:50px;
+}
+
+#prod_type_top_hlder .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+     background:#F3F3F3!important;     
  }

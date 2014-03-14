@@ -38,7 +38,7 @@
                                 <option value="7">7</option>
                             </select>
                             <span class="boxlable" id="height_box" style="left:81px;">in</span>
-                            <span class="boxlable" id="height_box" style="margin-left:115px;"><a onclick="hidefeet()" href="javascript:void(0);" style="color: #929707; font-weight: bold;">In Inches?</a></span>
+                            <span class="boxlable" id="height_box" style="margin-left:101px;"><a onclick="hidefeet()" href="javascript:void(0);" style="color: #929707; font-weight: bold;">In Inches?</a></span>
                             <select name="height_in_inches" id="height_in_inches" style="width:78px;">
                                 <option value="0">0</option>    
                                 <option value="1">1</option>
@@ -84,23 +84,67 @@
                     
                     
                 {% if( entity.gender=='f') %}
-
-                    <div class="m_option">   
-                        <div class="mlabel" style="width:100px;">Clothing Fit</div>
-                        <div>
-                            {{ form_widget(form.body_types) }}
-                            </div>
-                    </div>
-                    {%endif%}    
-                    <div class="">   
-                        <div class="mlabel">Birth Date</div>
-                        <div class="">                 
-                 {{ form_widget(form.birthdate.month) }}
+                    
+                    
+                    
+                    <div style="margin-bottom: 25px; clear:both;"></div>    
+                    
+             
+                    <div style="float:left; margin-right: 10px;">
+                        <div id="height_wrapper">
+                            <span class="boxlable2" id="height_box2">Clothing Fit</span>                             
+                        </div>                           
+                        <span id="clg_sel">{{ form_widget(form.body_types) }}</span>
+                       </div>    
+                       {%endif%} 
+                   
+                   <div>
+                   <span class="boxlable2" id="weight_box2">Birth Date</span>  
+                   <span id="dob">                 
+{{ form_widget(form.birthdate.month) }}
                  {{ form_widget(form.birthdate.day) }}
                  {{ form_widget(form.birthdate.year) }}
-            </div>
+        </span>
+                   </div>
+                   
+                 
                     
-                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     
 
 

@@ -16,12 +16,22 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable {
 
+   public $isApproved;
+    
     /**
      * Bidirectional (INVERSE SIDE)
      * 
      * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user", cascade={"ALL"}, orphanRemoval=true)
      * */
     private $measurement;
+    
+    
+    /**
+     * Bidirectional (INVERSE SIDE)
+     * 
+     * @ORM\OneToOne(targetEntity="UserParentChildLink", mappedBy="child", cascade={"ALL"}, orphanRemoval=true)
+     * */
+    private $userparentchildlink;
 
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\SurveyUser", mappedBy="user")
@@ -1008,5 +1018,28 @@ class User implements UserInterface, \Serializable {
     public function getUserDevices()
     {
         return $this->user_devices;
+    }
+
+    /**
+     * Set userparentchildlink
+     *
+     * @param \LoveThatFit\UserBundle\Entity\UserParentChildLink $userparentchildlink
+     * @return User
+     */
+    public function setUserparentchildlink(\LoveThatFit\UserBundle\Entity\UserParentChildLink $userparentchildlink = null)
+    {
+        $this->userparentchildlink = $userparentchildlink;
+    
+        return $this;
+    }
+
+    /**
+     * Get userparentchildlink
+     *
+     * @return \LoveThatFit\UserBundle\Entity\UserParentChildLink 
+     */
+    public function getUserparentchildlink()
+    {
+        return $this->userparentchildlink;
     }
 }
