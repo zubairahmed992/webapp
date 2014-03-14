@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\Yaml\Parser;
 use LoveThatFit\SiteBundle\Algorithm;
+use LoveThatFit\SiteBundle\Comparison;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\ImageHelper;
 
@@ -70,8 +71,8 @@ public function find($id) {
 #--------------------------------For Love/Unlove Item--------------------------#
 public function loveItem($request_array){
     
-    $user_id = $request_array['user_id'];
-    $product_item_id = $request_array['product_item_id'];
+    $user_id = $request_array['userId'];
+    $product_item_id = $request_array['productItemId'];
     $user_helper = $this->container->get('user.helper.user');
     $product_item_helper = $this->container->get('admin.helper.productitem');
       
@@ -114,8 +115,17 @@ public function loveItem($request_array){
 }
 #------------------------------------------------------------------------------#
 public function getDefaultFittingAlerts($request_array)
-{       $user_id = $request_array['user_id'];
-        $product_id = $request_array['product_id'];
+{      
+        
+        
+          if ($request_array['productId']) { 
+              $user=$this->container->get('user.helper.user')->find($request_array['userId']);
+              $product=$this->find($request_array['productId']);
+          $fit = new Comparison($user, $product);
+          $data = array();
+          $data['data'] = $fit->getFeedBack();
+          return $data;
+       /* 
         //Calling of Helper 
         $user_helper = $this->container->get('user.helper.user');
         $product_color_helper = $this->container->get('admin.helper.productcolor');
@@ -163,15 +173,12 @@ public function getDefaultFittingAlerts($request_array)
                 $product_id=$product_item_helper->getProductByItemId($productItem);
                 $product_id=$product_id[0]['id'];        
                 $user_try_history_helper->createUserItemTryHistory($user,$product_id, $productItem, $json_feedback, $fits);
-                return ($data);
+                return ($data);*/
             }
             else {
-                return (array('Message' => 'Missing User/Item'));
+                return (array('Message' => ' Product Can not find'));
             }
-        }//End of If      
-        else {
-            return json_encode(array('Message' => 'Can not find'));
-        }
+        
     } 
 #------------------User Favourite List-----------------------------------------#
 public function favouriteByUser($user_id,$request){

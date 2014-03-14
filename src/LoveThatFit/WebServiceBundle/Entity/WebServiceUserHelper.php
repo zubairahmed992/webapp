@@ -342,7 +342,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
         }
     }
 #-----------------------Measurement Edit Service-------------------------------#
-public function updateMeasurementWithReqestArray($id, $request_array) {
+public function updateMeasurementWithReqestArray($id, $request_array,$request) {
         $entity = $this->repo->find($id);
         $measurement = $entity->getMeasurement();
         if ($measurement) {
@@ -350,7 +350,8 @@ public function updateMeasurementWithReqestArray($id, $request_array) {
             $measurement = $this->setMeasurmentObjectWithArray($measurement, $request_array);
             $entity->setMeasurement($measurement);
             $this->saveUser($entity);
-            return array('Message' => 'success');
+             $user_info=$this->gettingUserDetailArray($entity, $request);
+            return $user_info;
         } else {
             return array('Message' => 'Sorry We can not find measurment');
         }
@@ -804,9 +805,6 @@ private function setObjectWithArray($user, $request_array) {
             $measurement->setIphoneFootHeight($request_array['iphoneFootHeight']);
         } 
            
-            
-            
-            
             
         return $measurement;
     }

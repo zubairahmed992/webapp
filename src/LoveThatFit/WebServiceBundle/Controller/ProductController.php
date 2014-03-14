@@ -205,6 +205,7 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
 #------------------------------Authentication of Token--------------------------------------------#
+        //$request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','productId'=>11,'userId'=>17);
         $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
@@ -235,12 +236,12 @@ public function brandListAction() {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-        $user_id = $request_array['user_id'];
-        $product_item_id = $request_array['product_item_id'];
-     /*  $user_id=2;
-        $product_item_id=2;
-        $request_array['like']='like';*/
-       
+        $user_id = $request_array['userId'];
+        $product_item_id = $request_array['productItemId'];
+       //$user_id=17;
+       // $product_item_id=2;
+        //$request_array['like']='like';
+      // $request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','productItemId'=>12,'userId'=>17,'like'=>'like');
        $authTokenWebService = $request_array['authTokenWebService'];
   #------------------------------Authentication of Token--------------------------------------------#
         $user_helper = $this->get('webservice.helper.user');

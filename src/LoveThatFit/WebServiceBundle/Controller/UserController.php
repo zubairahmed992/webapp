@@ -205,7 +205,11 @@ public function userProfileAction()
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
+        
+        
         $request_array = json_decode($jsonInput, true);
+        //$request_array= array();
+        //$request_array=array('email'=>'iphone@gmail.com','authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','deviceType'=>'4s','heightPerInch'=>'6','weight'=>'100','thigh'=>80);
         $email = $request_array['email'];
        
 #------------------------------Authentication of Token--------------------------------------------#
@@ -227,7 +231,7 @@ public function userProfileAction()
             $userinfo = $user->getArrayByEmail($email);
            
             $msg=array();
-            $msg=$user->updateMeasurementWithReqestArray($userinfo['id'],$request_array);
+            $msg=$user->updateMeasurementWithReqestArray($userinfo['userId'],$request_array,$request);
             
            
              return new Response(json_encode($msg));
