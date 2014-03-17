@@ -123,7 +123,7 @@ public function getDefaultFittingAlerts($request_array)
               $product=$this->find($request_array['productId']);
           $fit = new Comparison($user, $product);
           $data = array();
-          $data['data'] = $fit->getFeedBack();
+          $data['data'] = $fit->getStrippedFeedBack();
           return $data;
        /* 
         //Calling of Helper 

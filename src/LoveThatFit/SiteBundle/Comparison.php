@@ -34,13 +34,26 @@ class Comparison {
     }
 #-----------------------------------------------------
     function getFeedBack() {
-        $cm =$this->array_mix();        
+        $cm = $this->array_mix();                
         $rc = $this->getFittingSize($cm);
-        return array('feedback'=>$cm, 
-                     'recommendation'=>$rc,
-                     'status'=>  array_flip($this->status),
+        return array('feedback'=>$this->strip_for_services($cm), 
+                     'recommendation'=>$this->strip_for_services($rc),
+                     'status'=>  $this->get_display_status_text(), #array_flip($this->status),
                         );
     }
+#-----------------------------------------------------
+    function getStripedFeedBackJSON() {
+        return json_encode($this->getStripedFeedBack());
+    }    
+#-----------------------------------------------------
+    function getStrippedFeedBack() {
+        $cm = $this->array_mix();                
+        $rc = $this->getFittingSize($cm);
+        return array('feedback'=>$this->strip_for_services($cm), 
+                     'recommendation'=>$this->strip_for_services($rc),
+                     'status'=>  array_flip($this->status),
+                        );
+    }    
 #-----------------------------------------------------
     function getComparison() {
         return $this->array_mix();
@@ -93,19 +106,18 @@ class Comparison {
             }
             if(!array_key_exists('fit_points',$fb[$size_identifier])){
                 $status=$this->status['product_measurement_not_available'];                
-                }
-                
+                }                
                 $fb[$size_identifier]['variance'] = $variance;
                 $fb[$size_identifier]['max_variance'] = $max_variance;
                 $fb[$size_identifier]['status'] = $status;
                 $fb[$size_identifier]['message'] =  $this->get_fp_status_text($status);
-                $fb[$size_identifier]['fit_scale'] =  $fit_scale;            
+                $fb[$size_identifier]['fit_scale'] =  $fit_scale>0?$fit_scale:0;            
                 $fb[$size_identifier]['fits']=$status==0?true:false;
             }                
         }
         return $this->array_sort($fb);
     }
-#-----------------------------------------------------
+# -----------------------------------------------------
      private function array_sort($sizes) {
         $size_titles = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
         $size_types = $this->getSizeTypes();
@@ -120,8 +132,30 @@ class Comparison {
         }
         return $fb;
     }
-
-#--------------------------------------------------------------    
+# -----------------------------------------------------
+     private function strip_for_services($sizes) {
+         foreach ($sizes as $key=>$value) {             
+             unset($sizes[$key]['message']);
+             unset($sizes[$key]['variance']);
+             unset($sizes[$key]['description']);
+             unset($sizes[$key]['max_variance']);
+             if(array_key_exists('fit_points', $sizes[$key])){
+                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]['fit_points']);
+             }
+             unset($sizes[$key]['fit_points']);
+         }
+        
+        return $sizes;
+    }    
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private function strip_fit_point_summary($fit_points) {
+        $str='';
+        foreach ($fit_points as $key=>$value) {
+            $str.=$this->snakeToNormal($key) . ':' . $value['message'].', ';             
+         }              
+        return trim($str, ", ");
+    }
+# --------------------------------------------------------------    
     private function get_fit_point_array($fp_specs, $body_specs) {
 
         $body_measurement = array_key_exists($fp_specs['fit_point'], $body_specs) ? $body_specs[$fp_specs['fit_point']] : 0;
@@ -260,6 +294,14 @@ class Comparison {
         }
     }    
     #----------------------------------------------------------
+    private function get_display_status_text(){
+        $display_statuses= array();
+        foreach ($this->status as $v){
+            $display_statuses[$v]=  $this->get_fp_status_text($v);            
+        }
+        return $display_statuses;
+   }
+    #----------------------------------------------------------
     private function get_fp_status_text($id){                        
           switch ($id){
               case $this->status['fit_point_dose_not_match'] :
@@ -348,6 +390,8 @@ class Comparison {
     #-------------------------------------------------
     private function getFittingSize($sizes) {
         
+        if ($sizes==null) return;
+        
         $fits = array(); $loose = array(); $tights = array();
         $lowest_variance=null;
         foreach ($sizes as $size) {
@@ -403,5 +447,9 @@ class Comparison {
             }
         }
         return $count;
+    }
+    
+    private function snakeToNormal($str) {
+        return str_replace('_', ' ', ucfirst($str));
     }
 }
