@@ -25,5 +25,17 @@ class UserParentChildLinkRepository extends EntityRepository
         }
     }
     
+    public function findUserByParentEmail($email)
+    {
+         $record = $this->getEntityManager()
+                        ->createQuery("SELECT u FROM LoveThatFitUserBundle:UserParentChildLink u                                            
+                                       WHERE u.email=:email")
+                        ->setParameters(array('email' => $email));
+        try {
+            return $record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
     
 }

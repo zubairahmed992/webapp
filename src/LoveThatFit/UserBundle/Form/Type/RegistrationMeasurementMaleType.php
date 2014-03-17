@@ -70,7 +70,7 @@ private $brandHelper;
         $builder->add('outseam');
         $builder->add('shoulder_across_back');
         $builder->add('birthdate','date', array(
-            'years'=> range(date('Y')-14,date('Y')-60),  
+            'years'=> range(date('Y')-8,date('Y')-100),  
             'empty_value' => array('year' => 'YY', 'month' => 'MM', 'day' => 'DD'),
             'format' => 'yyyy MM dd',
             )

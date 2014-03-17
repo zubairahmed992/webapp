@@ -1,0 +1,33 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% block profile_heading %}
+<h1>Family</h1>
+{% endblock %}
+{% block profile_section %} 
+<div>
+    {% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">        
+        {{ app.session.flash('warning') }}
+        </div>   
+{% endif %}      
+{% if app.session.hasFlash('success') %}
+  <div class="success_alert">    
+    {{ app.session.flash('success') }}
+   </div>   
+{% endif %}
+        <table width="700" border="0" class="user_product_hd">
+  <tr>
+    <td>Fisr Name</td>
+    <td>Last Name</td>    
+    <td>Email</td>    
+    <td>Action</td>    
+  </tr>
+  {% for item in data %}   
+<tr>
+    <td>{{item.firstname}}</td>
+    <td>{{item.lastname}}</td> 
+    <td>{{item.email}}</td>     
+    <td><a href="{{ path('user_child_approve', {'id': item.userparentchildlink.Id,'approve':'1'}) }}">Approve</a> |  <a href="{{ path('user_child_approve', {'id': item.userparentchildlink.Id,'approve':'0'}) }}">Disapprove</a>  </td>
+   </tr>  
+{%endfor%}
+  </table>
+{% endblock %}

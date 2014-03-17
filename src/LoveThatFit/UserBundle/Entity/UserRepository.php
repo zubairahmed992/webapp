@@ -218,6 +218,20 @@ class UserRepository extends EntityRepository {
                 return null;
                 }
         } 
+        
+  public function findChildUser($user)
+  {
+      $record = $this->getEntityManager()
+                        ->createQuery("SELECT u,up FROM LoveThatFitUserBundle:User u     
+                                       JOIN u.userparentchildlink up
+                                       WHERE up.parent=:child_id")
+                        ->setParameters(array('child_id' => $user));
+        try {
+            return $record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
 
 }
 

@@ -80,11 +80,19 @@ class RegistrationController extends Controller {
             }
 
             if ($form->isValid()) {
+                
+               
+                
                 $u = $user_helper->registerUser($user);
                 $user = $user_helper->find($u->getId());
                 $measurement = $user->getMeasurement();
                 $user_helper->getLoggedInById($user);
-
+                $users=$this->get('user.helper.parent.child')->findUserByParentEmail($user->getEmail());              
+                foreach($users as $parent)
+                {
+                    $userParentChilds=$this->get('user.helper.parent.child')->find($parent->getId());
+                    $this->get('user.helper.parent.child')->updateParent($userParentChilds,$user);
+                }              
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($user);
 
@@ -177,7 +185,7 @@ class RegistrationController extends Controller {
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
         $user->setBirthDate($measurement->birthdate);
         $this->get('user.helper.user')->saveUser($user);        
-        if($user->getAge()<15 and $user->isApproved==NULL)
+        if($user->getAge()<15 and $user->isApproved!=1)
         {        // Rendering step four
         $form = $this->createForm(new UserParentChildLinkType());
             return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
@@ -255,37 +263,54 @@ class RegistrationController extends Controller {
     
     public function parentChildEmailAction(Request $request)
     {
-        $data = $request->request->all();      
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         $userParentChild = $this->get('user.helper.parent.child')->createNew();
         $form = $this->createForm(new UserParentChildLinkType(), $userParentChild);
         $form->bindRequest($request);  
         if ($form->isValid()) {
-          $userParentChild->setChild($user);  
-           $this->get('user.helper.parent.child')->saveUserParentLink($userParentChild);            
+          
+          $users=$this->get('user.helper.user')->findByEmail($userParentChild->getEmail());
+          if($users)
+          {
+              $userParentChild->setParent($users);
+              $userParentChild->setChild($user);  
+              $this->get('user.helper.parent.child')->saveUserParentLink($userParentChild);            
+          }else
+          {
+              $userParentChild->setChild($user);  
+              $this->get('user.helper.parent.child')->saveUserParentLink($userParentChild);            
+          }
          } 
+         $this->get('mail_helper')->sendParentRegistrationEmail($userParentChild);
          return $this->render('LoveThatFitUserBundle:Registration:user_parent_child_email.html.twig', array(
                     'form' => $form->createView(),                    
                     'entity' => $user,
                     'parent'=>$userParentChild,
-                ));
-        
+                ));        
     }
     
     
     public function parentChildUpdateEmailAction(Request $request)
     {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $user = $this->get('user.helper.user')->find($id);
-        $userParentChilds=$this->get('user.helper.parent.child')->findByUser($user); 
-        $userParentChildId=$userParentChilds->getId();       
-        $userParentChilds=$this->get('user.helper.parent.child')->find($userParentChildId); 
+        $user = $this->get('user.helper.user')->find($id);        
+        $userParentChild=$this->get('user.helper.parent.child')->findByUser($user);           
+        $userParentChilds=$this->get('user.helper.parent.child')->find($userParentChild->getId());
         $form = $this->createForm(new UserParentChildLinkType(), $userParentChilds);
         $form->bindRequest($request);  
-        if ($form->isValid()) {            
-           $this->get('user.helper.parent.child')->update($userParentChilds);            
+        if ($form->isValid()) {         
+           $users=$this->get('user.helper.user')->findByEmail($userParentChilds->getEmail());
+           if($users)
+           {   
+               $this->get('user.helper.parent.child')->updateparent($userParentChilds,$users);            
+               $this->get('user.helper.parent.child')->update($userParentChilds);            
+           }else
+           {
+               $this->get('user.helper.parent.child')->update($userParentChilds);            
+           }
         } 
+        $this->get('mail_helper')->sendParentRegistrationEmail($userParentChilds);
          return $this->render('LoveThatFitUserBundle:Registration:user_parent_child_email.html.twig', array(
                     'form' => $form->createView(),                    
                     'entity' => $user,

@@ -19,6 +19,8 @@ use LoveThatFit\AdminBundle\Entity\SurveyAnswer;
 use LoveThatFit\AdminBundle\Entity\SurveyUser;
 use LoveThatFit\AdminBundle\Entity\Brand;
 use LoveThatFit\AdminBundle\Entity\SizeChart;
+use LoveThatFit\UserBundle\Entity\UserParentChildLink;
+use LoveThatFit\UserBundle\Form\Type\UserParentChildLinkType;
 
 class ProfileController extends Controller {
 
@@ -231,7 +233,26 @@ public function passwordResetUpdateAction(Request $request) {
         $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
         return $this->redirect($this->generateUrl('user_profile_what_i_like'));
     }
-
+    
+    
+    public function userFamilyAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $user=$this->get('user.helper.user')->findChildUser($user);
+        return $this->render('LoveThatFitUserBundle:Profile:parent_family.html.twig', array(
+                    'data' =>$user,                    
+                ));
+    }
+    
+    public function userParentChildApproveAction($id,$approve)
+    {
+        $userParentChild=$this->get('user.helper.parent.child')->find($id);  
+        $message_array=$this->get('user.helper.parent.child')->approveChild($userParentChild,$approve); 
+        $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+        return $this->redirect($this->generateUrl('user_family'));
+    }
+    
+    
     //----------------------------------------------------------------------------
 
     

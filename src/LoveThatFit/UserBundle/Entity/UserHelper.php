@@ -651,6 +651,9 @@ class UserHelper {
         );
     }
     
-
+  public function findChildUser($user)
+  {
+      return $this->repo->findChildUser($user);
+  }
 
 }

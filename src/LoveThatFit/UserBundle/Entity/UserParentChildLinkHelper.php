@@ -68,6 +68,20 @@ class UserParentChildLinkHelper {
         $this->em->flush();
     }
     
+    public function updateParent($userparentchildlink,$users)
+    {
+        $userparentchildlink=$userparentchildlink->setParent($users);
+        $this->em->persist($userparentchildlink);
+        $this->em->flush();
+    }
+
+    public function updateParentEmail($users)
+    {
+        $userparentchildlink=$userparentchildlink->setParent($users);
+        $this->em->persist($userparentchildlink);
+        $this->em->flush();
+    }
+
     public function findByUser($user)
     {
      return $this->repo->findByUser($user);
@@ -77,6 +91,26 @@ class UserParentChildLinkHelper {
     public function find($id) {
         return $this->repo->find($id);
     } 
+    
+    public function findUserByParentEmail($email)
+    {
+        return $this->repo->findUserByParentEmail($email);
+    }
+    
+    public function approveChild($userParentChild,$approve)
+    {
+      $userParentChild->setIsApproved($approve); 
+      $userParentChild->setApprovedAt(new \DateTime('now')); 
+      $this->em->persist($userParentChild);
+      $this->em->flush();
+      return array('message' => 'success.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+    }
+     
+    
 }
     
 ?>

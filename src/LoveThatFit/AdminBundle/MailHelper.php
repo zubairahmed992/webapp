@@ -57,6 +57,18 @@ class MailHelper {
         
     }
 
+    public function sendParentRegistrationEmail($user) {
+
+        $from = $this->conf['parameters']['mailer_user'];
+        $to = $user->getEmail();
+        $body = "LoveThatFitAdminBundle::email/parent_registration.html.twig";
+        $subject = 'LoveThatFit: Thank you for registering parent email. ';
+        //return 'emailing is currently disabled';
+        return $this->sendEmail($from, $to, $body, $subject, $user);
+        
+    }
+    
+    
     public function sendPasswordResetLinkEmail($user, $reset_link) {
         $from = $this->conf['parameters']['mailer_user'];
         $to = $user->getEmail();
