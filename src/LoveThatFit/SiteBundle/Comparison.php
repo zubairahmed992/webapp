@@ -24,12 +24,30 @@ class Comparison {
         'below_low_between_high_mid_max'=>5,
     );
        #----------------------------------------------------------
+     /*
     public static function getStatusArray(){
         $display_statuses= array();
         foreach ($this->status as $v){
             $display_statuses[$v]=  $this->get_fp_status_text($v);            
         }
         return $display_statuses;
+   }*/
+         #----------------------------------------------------------
+    public static function getStatusArray(){
+          return array(
+        'Fitting point dose not exists'=>-6,
+        'User measurement not provided'=>-5,
+        'Product measurement missing'=>-4,
+        'Too Small'=>-3,
+        'Too tight, restrictive'=>-2,
+        'tight fit'=>-1,
+        'Love That Fit'=>0,
+        'Loose'=>1,
+        'Loose Fit'=>2,
+        'Too Loose'=>3,
+        'Too Large'=>4,
+        'Tight at some points & loose at others'=>5,
+    );
    }
 #-----------------------------------------------------
     function __construct($user = null, $product = null) {
