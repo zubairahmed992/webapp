@@ -2,14 +2,19 @@
     <h3>{{product.name }}</h3>
 
     <div style="clear: both"></div>
-
+    <b>Recommendation</b> 
+{% for size, size_specs in data.recommendation %}     
+    &nbsp;|&nbsp;{{size}} 
+    {% endfor %}
+    
+    <h5>Feedback</h5>
 
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
     {% for size, size_specs in data.feedback %} 
             <tr>
-                <td style="width: 50px;">{{size}} | <i><b>{{size_specs.message}}</b></i> 
+                <td style="width: 50px;"><b>{{size}} </b>| <i>{{size_specs.message}}</i> 
                     {% if size_specs.fit_points is defined %}
-                    | variance:{{size_specs.variance}} | max-variance:{{size_specs.max_variance}} | fit_scale:{{size_specs.fit_scale}} |  ({{size_specs.status}})
+                        | fit_scale:<b>{{size_specs.fit_scale}} 
                     {% endif %}
                 
                 </td>            
@@ -21,12 +26,12 @@
                         <b>
                             <tr>
                                 <td></td>
-                                <td>low</td>
-                                <td>high</td>
-                                <td>max</td>
+                                <td>low &nbsp;-&nbsp; high &nbsp;-&nbsp; max</td>
                                 <td>body</td>
-                                <td>variance</td>
-                                <td>max-variance</td>
+                                <td>avg</td>
+                                <td>mid</td>                                
+                                <td>variance <b>{{size_specs.variance}}</b></td>
+                                <td>max-variance <b>{{size_specs.max_variance}}</b></td>
                                 <td>
                                 </td>
 
@@ -38,23 +43,22 @@
                             
                         <tr>
                             <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
-                            <td>{{fp_specs.ideal_body_size_low}}</td>
-                            <td>{{fp_specs.ideal_body_size_high}}</td>
-                            <td>{{fp_specs.max_body_measurement}}</td>
-                            <td>{{fp_specs.body_measurement}}</td>
+                            <td>{{fp_specs.ideal_body_size_low}}&nbsp;-&nbsp;
+                                {{fp_specs.ideal_body_size_high}}&nbsp;-&nbsp;
+                                {{fp_specs.max_body_measurement}}</td>
+                            <td>{{fp_specs.body_measurement}}</td>                                
+                            <td>({{fp_specs.avg_low_high}})</td>
+                            <td>({{fp_specs.mid_high_max}})</td>
+                            
                             <td>v:{{fp_specs.variance}} | 
-                                    d:{{fp_specs.diff}} | 
-                                    dp:{{fp_specs.diff_percent}}  
+                                    d:{{fp_specs.diff}}  
                             
                             </td>
                             <td>v:{{fp_specs.max_variance}} | 
-                                    d:{{fp_specs.max_diff}} | 
-                                    dp:{{fp_specs.max_diff_percent}}  
-                            
+                                    d:{{fp_specs.max_diff}}                             
                             </td>
                             
                             <td>
-                                    {{fp_specs.status}}
                                     {{fp_specs.message}}
                                 </td>
 

@@ -396,7 +396,7 @@ private function getAllKeysTesting($ar){
                             $mid_of_high_max = ($item_specs[$fit_point]['max_body_measurement'] + $item_specs[$fit_point]['ideal_body_high']) / 2;
                             #3~~~~~~~~~~~Tight Fit: User Measurement is in first half of the value between Ideal Body Size High & Max Body Measurement
                             if ($mid_of_high_max > $body_specs[$fit_point]) {
-                                $str .= ' tight fight';
+                                $str .= ' tight fit';
                                 $scale=$fit_priority/20; # user clue of fitting???? keeping it half for now~~~~~~~~~~~~~~~~~~~~*?
                                 #4~~~~~~~~~~~Too Tight, restrictive : User Measurement is in second half of the value between Ideal Body Size High & Max Body Measurement
                             } else {

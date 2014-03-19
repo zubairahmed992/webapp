@@ -91,5 +91,15 @@ class AlgorithmController extends Controller {
                     'user'=>'',
                 ));
     }
+
+           //------------------------------------------------------------------------------------------
+     public function fooAction($user_id, $product_id)
+    {   
+        $product = $this->get('admin.helper.product')->find($product_id);
+        $user = $this->get('user.helper.user')->find($user_id);  
+        $fe = new Comparison($user, $product);                
+        return new Response($fe->getFeedBackJSON());                                
+    }
+
     
 }
