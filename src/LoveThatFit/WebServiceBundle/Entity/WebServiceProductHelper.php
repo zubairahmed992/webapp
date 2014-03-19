@@ -124,6 +124,7 @@ public function getDefaultFittingAlerts($request_array)
            $fit = new Comparison($user, $product);
           $data = array();
           $data['data'] = $fit->getStrippedFeedBack();
+          $data['productId']=$request_array['productId'];
           return $data;
        /* 
         //Calling of Helper 
@@ -318,6 +319,8 @@ public function favouriteByUser($user_id,$request){
                     $item = $p->getDefaultItem();
                     if ($item) {
                         $data['data'][$product_id]['fittingRoomImage'] = $item->getImage();
+                        $data['data'][$product_id]['sizeId'] = $item->getProductSize()->getId();
+                        $data['data'][$product_id]['colorId'] = $item->getProductColor()->getId();
                     }
                 }
             }   
