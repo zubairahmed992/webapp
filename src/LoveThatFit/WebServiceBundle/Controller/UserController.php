@@ -23,7 +23,7 @@ class UserController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-       $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'4s');
+      // $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'ipad');
         $user_helper = $this->get('webservice.helper.user');
         $user_info = $user_helper->loginWebService($decoded,$request);
       // $user_info = $user_helper->loginWebService($decoded,$request);
@@ -208,8 +208,8 @@ public function userProfileAction()
         
         
         $request_array = json_decode($jsonInput, true);
-        //$request_array= array();
-        //$request_array=array('email'=>'iphone@gmail.com','authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','deviceType'=>'4s','heightPerInch'=>'6','weight'=>'100','thigh'=>80);
+       // $request_array= array();
+      //  $request_array=array('email'=>'iphone@gmail.com','authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','deviceType'=>'4s','heightPerInch'=>'6','weight'=>'100','thigh'=>10);
         $email = $request_array['email'];
        
 #------------------------------Authentication of Token--------------------------------------------#
@@ -344,7 +344,7 @@ public function avatarUploadAction() {
         $data['waist_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
         $data['inseam_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
      //   $brandList=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
-        
+        $data['fittingStatus']=$this->get('webservice.helper.product')->getFittingStatus();
         return new response(json_encode(($data)));
     }
     

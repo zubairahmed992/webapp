@@ -121,7 +121,7 @@ public function getDefaultFittingAlerts($request_array)
           if ($request_array['productId']) { 
               $user=$this->container->get('user.helper.user')->find($request_array['userId']);
               $product=$this->find($request_array['productId']);
-          $fit = new Comparison($user, $product);
+           $fit = new Comparison($user, $product);
           $data = array();
           $data['data'] = $fit->getStrippedFeedBack();
           return $data;
@@ -562,9 +562,12 @@ private function countMyCloset($user_id){
    //  $data['iphone5'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/iphone5/';
 
     return $data;
-            
-
-     
-       
- }   
+  } 
+  
+#-------------GEt Fitting Constant Status--------------------------------------#
+  public function getFittingStatus(){
+        
+        return Comparison()->getStatusArray();
+          
+  }
 }
