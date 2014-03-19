@@ -23,6 +23,14 @@ class Comparison {
         'more_size_below_low'=>4,
         'below_low_between_high_mid_max'=>5,
     );
+       #----------------------------------------------------------
+    public static function getStatusArray(){
+        $display_statuses= array();
+        foreach ($this->status as $v){
+            $display_statuses[$v]=  $this->get_fp_status_text($v);            
+        }
+        return $display_statuses;
+   }
 #-----------------------------------------------------
     function __construct($user = null, $product = null) {
         $this->user = $user;
@@ -36,9 +44,8 @@ class Comparison {
     function getFeedBack() {
         $cm = $this->array_mix();                
         $rc = $this->getFittingSize($cm);
-        return array('feedback'=>$this->strip_for_services($cm), 
-                     'recommendation'=>$this->strip_for_services($rc),
-                     'status'=>  $this->get_display_status_text(), #array_flip($this->status),
+        return array('feedback'=>$cm, 
+                     'recommendation'=>$rc,
                         );
     }
 #-----------------------------------------------------
@@ -47,12 +54,9 @@ class Comparison {
     }    
 #-----------------------------------------------------
     function getStrippedFeedBack() {
-        $cm = $this->array_mix();                
-        $rc = $this->getFittingSize($cm);
+        $cm = $this->array_mix();                        
         return array('feedback'=>$this->strip_for_services($cm), 
-                     'recommendation'=>$this->strip_for_services($rc),
-                     'status'=>  array_flip($this->status),
-                        );
+                     );
     }    
 #-----------------------------------------------------
     function getComparison() {
@@ -113,6 +117,7 @@ class Comparison {
                 $fb[$size_identifier]['message'] =  $this->get_fp_status_text($status);
                 $fb[$size_identifier]['fit_scale'] =  $fit_scale>0?$fit_scale:0;            
                 $fb[$size_identifier]['fits']=$status==0?true:false;
+                $fb[$size_identifier]['recommended']=$status==0?true:false;
             }                
         }
         return $this->array_sort($fb);
@@ -293,14 +298,7 @@ class Comparison {
             }
         }
     }    
-    #----------------------------------------------------------
-    private function get_display_status_text(){
-        $display_statuses= array();
-        foreach ($this->status as $v){
-            $display_statuses[$v]=  $this->get_fp_status_text($v);            
-        }
-        return $display_statuses;
-   }
+    
     #----------------------------------------------------------
     private function get_fp_status_text($id){                        
           switch ($id){

@@ -17,7 +17,7 @@ class AlgoritumTestlType extends AbstractType
                     'expanded' => false,
                     'multiple' => false,
                     'required' => false,
-                    'property' => 'firstName',
+                    'property' => 'email',
                     'empty_value' => 'Select User'
                 ));
     }
