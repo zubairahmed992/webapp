@@ -436,7 +436,7 @@ public function changePasswordWithReqestArray($request_array) {
                 $password = $this->encodeThisPassword($entity, $password);
                 $entity->setPassword($password);
                 $this->saveUser($entity);
-                return array('Message' => 'Paasword has been updated');
+                return array('Message' => 'Password has been updated');
             } else {
                 return array('Message' => 'Invalid Password');
             }
