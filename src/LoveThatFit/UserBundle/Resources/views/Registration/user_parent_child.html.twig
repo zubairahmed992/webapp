@@ -2,6 +2,7 @@
 
 {% block action_block_content %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
 <script>
 
  function Validate(){
@@ -33,6 +34,7 @@
        $('#cityAjax').html(response);   
        $('#changeparentemail').hide();   
        $('#parentemailcheckfitting').hide(); 
+       $('#parentdisapprove').hide(); 
    }
  });
     }
@@ -44,20 +46,36 @@
     function ChangeEmail()
     {
         document.getElementById('parentemailcheckfitting').style.display="none";
-        document.getElementById('changeparentemail').style.display="block";      
+        document.getElementById('changeparentemail').style.display="block";   
+        document.getElementById('parentdisapprove').style.display="none";   
     }
         
+    function ChangeEmails()
+    {
+        document.getElementById('parentdisapprove').style.display="none";
+        document.getElementById('changeparentemail').style.display="block";   
+        
+    }    
     </script>
     
 <section class="reg_blk">  
     <div class="action_cnt">
-        {%if(isapproved==NULL and edit_type=='fitting_room')%}       
+          {%if(edit_type=='disaprove')%}    
+           <div class="steps step_4" id="parentdisapprove">            
+            <h7>Your parent has disapproved you</h7>
+             <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
+                 <a class="reg_next_step"  onclick="return ChangeEmails();">Change Email</a>          
+                <!--/.step_4--></div>     
+         {%endif%}
+        
+        {%if(edit_type=='fitting_room')%}       
              <div class="steps step_4" id="parentemailcheckfitting">            
             <h7>Your parent does not approved yet</h7>
              <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
                  <a class="reg_next_step"  onclick="return ChangeEmail();">Change Email</a>          
                 <!--/.step_4--></div>
-         {%else%}
+         {%endif%}
+        {%if(edit_type=='registration')%}            
         <div class="steps step_4" id="parentemailcheck">            
             <h7>Enter parent email</h7>
             <form id="parentemail"  method="POST" action="" {{ form_enctype(form) }} >
@@ -76,6 +94,7 @@
              
          {%endif%}
             
+           
             
             <div id="changeparentemail" style="display:none">
                 <h7>Enter parent email</h7>

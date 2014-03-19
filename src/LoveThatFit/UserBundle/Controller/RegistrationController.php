@@ -192,7 +192,7 @@ class RegistrationController extends Controller {
                     'form' => $form->createView(),                    
                     'entity' => $user,      
                     'edit_type' => 'registration',
-                     'isapproved'=>$user->isApproved,
+                    'isapproved'=>$user->isApproved,
                 ));
         }else
         {
@@ -361,18 +361,59 @@ class RegistrationController extends Controller {
         }
 
         $measurement = $user->getMeasurement();
-
-        if($user->getAge()<15 and $user->isApproved==NULL)
+        $users=$this->get('user.helper.parent.child')->findByUser($user);
+        if($users)
+        {
+        if($users->getIsApproved()=='0')
         {        // Rendering step four
-        $form = $this->createForm(new UserParentChildLinkType());
+            $form = $this->createForm(new UserParentChildLinkType());
+            return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $user,      
+                    'edit_type' => 'disaprove',
+                    'isapproved'=>0,
+                ));
+        }
+        if($users->getIsApproved()==NULL or $users->getIsApproved()==null or $users->getIsApproved()=='' )
+        {        // Rendering step four
+            $form = $this->createForm(new UserParentChildLinkType());
             return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
                     'form' => $form->createView(),                    
                     'entity' => $user,      
                     'edit_type' => 'fitting_room',
+                    'isapproved'=>$users->getIsApproved(),
+                ));
+        }
+        
+        
+        if($users->getIsApproved()==1)
+        {        // Rendering step four
+           $form = $this->createForm(new RegistrationStepFourType(), $user);
+           $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+           $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+           $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+           return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+                    'form' => $form->createView(),
+                    'form' => $form->createView(),
+                    'measurement_form' => $measurement_form->createView(),
+                    'entity' => $user, 
+                    'measurement' => $measurement,
+                    'edit_type' => 'fitting_room',
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                ));
+        }        
+        }elseif(!$users  and $user->getAge()<15 and $user->isApproved==NULL){        
+            $form = $this->createForm(new UserParentChildLinkType());
+            return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $user,      
+                    'edit_type' => 'registration',
                     'isapproved'=>$user->isApproved,
                 ));
-        }else{        
-        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        }else
+        {
+            $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
 $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
