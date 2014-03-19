@@ -566,8 +566,8 @@ private function countMyCloset($user_id){
   
 #-------------GEt Fitting Constant Status--------------------------------------#
   public function getFittingStatus(){
-        
-        return Comparison()->getStatusArray();
+       
+        return Comparison::getStatusArray();
           
   }
 }
