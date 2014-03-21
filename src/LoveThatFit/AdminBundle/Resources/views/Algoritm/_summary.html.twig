@@ -27,15 +27,15 @@
                             <tr>
                                 <td></td>
                                 <td>Body</td>
-                            
+                                <td>Fit-model</td>
                                 <td>Low</td>
                                 <td>High</td>
                                 <td>Max</td>
-                                <td>Mid</td>                                
+                                
                                 <td>Variance <b>{{size_specs.variance}}</b></td>
-                                <td>Max-Variance <b>{{size_specs.max_variance}}</b></td>
-                                <td>Fit-model</td>
-                                <td>Fit-Model-Variance</td>
+                                <td>Fit-Model-Variance <b>{{size_specs.ideal_variance}}</b></td>
+                                
+                                <td></td>
                                 
                                 <td>
                                 </td>
@@ -50,24 +50,17 @@
                             <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
                             
                             <td><b>{{fp_specs.body_measurement}}</b></td>
-                   
+                            <td>({{fp_specs.ideal_measurement}})</td>
                             <td><b>{{fp_specs.ideal_body_size_low}}</b></td>
                             <td><b>{{fp_specs.ideal_body_size_high}}</b></td>
                             <td><b>{{fp_specs.max_body_measurement}}</b></td>                                
-                            <td>({{fp_specs.mid_high_max}})</td>
-                            
                             <td>v:{{fp_specs.variance}} | 
                                     d:{{fp_specs.diff}}  
-                            
                             </td>
-                            <td>v:{{fp_specs.max_variance}} | 
-                                    d:{{fp_specs.max_diff}}                             
-                            </td>
-                            <td>({{fp_specs.avg_low_high}})</td>
-                            
-                            <td>
-                                    {{fp_specs.message}}
-                                </td>
+                            <td>v:{{fp_specs.ideal_variance}} | 
+                                    d:{{fp_specs.ideal_diff}}                             
+                            </td>                                                        
+                            <td>{{fp_specs.message}}</td>
 
                             </tr>
                             
