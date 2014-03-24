@@ -417,10 +417,10 @@ class Comparison {
                 return 'Too Small (beyond_max)';
                 break;
             case $this->status['second_half_high_mid_max'] :
-                return 'too tight, restrictive (2nd_half_high_mid_max)';
+                return 'tight fitting (2nd_half_high_mid_max)';
                 break;
             case $this->status['first_half_high_mid_max'] :
-                return 'tight fit (first_half_high_mid_max)';
+                return 'close fitting (first_half_high_mid_max)';
                 break;
             case $this->status['between_low_high'] :
                 return 'Love That Fit (between_low_high)';
@@ -470,8 +470,8 @@ class Comparison {
             'User measurement not provided' => -5,
             'Product measurement missing' => -4,
             'Too Small' => -3,
-            'Too tight, restrictive' => -2,
-            'tight fit' => -1,
+            'Tight Fitting' => -2,
+            'Close Fitting' => -1,
             'Love That Fit' => 0,
             'Loose' => 1,
             'Loose Fit' => 2,
