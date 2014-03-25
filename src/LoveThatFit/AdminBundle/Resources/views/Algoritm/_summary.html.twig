@@ -6,7 +6,7 @@
 {% for size, size_specs in data.recommendation %}     
     &nbsp;|&nbsp;{{size}} 
     {% endfor %}
-    
+
     <h5>Feedback</h5>
 
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
@@ -16,61 +16,84 @@
                     {% if size_specs.fit_points is defined %}
                         | fit_scale:<b>{{size_specs.fit_scale}} 
                     {% endif %}
-                
-                </td>            
-            </tr>
+
+                        </td>            
+                    </tr>
             {% if size_specs.fit_points is defined %}
-            <tr>
-                <td>
-                    <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
-                        <b>
-                            <tr>
-                                <td></td>
-                                <td>Body</td>
-                                <td>Fit-model</td>
-                                <td>Low</td>
-                                <td>High</td>
-                                <td>Max</td>
-                                
-                                <td>Variance <b>{{size_specs.variance}}</b></td>
-                                <td>Fit-Model-Variance <b>{{size_specs.ideal_variance}}</b></td>
-                                
-                                <td></td>
-                                
-                                <td>
-                                </td>
+                    <tr>
+                        <td>
+                            <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
+                                <b>
+                                    <tr>
+                                        <td></td>
+                                        <td>Body</td>
+                                        <td>Fit-model</td>
+                                        <td>Low</td>
+                                        <td>High</td>
+                                        <td>Max</td>
 
-                            </tr>
-                        </b>
-                            
-                            
+                                        <td>Variance <b>{{size_specs.variance}}</b></td>
+                                        <td>Fit-Model-Variance <b>{{size_specs.ideal_variance}}</b></td>
+
+                                        <td></td>
+
+                                        <td>
+                                        </td>
+
+                                    </tr>
+                                </b>
+
+
                             {% for fp, fp_specs in size_specs.fit_points %} 
-                            
-                        <tr>
-                            <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
-                            
-                            <td><b>{{fp_specs.body_measurement}}</b></td>
-                            <td>({{fp_specs.ideal_measurement}})</td>
-                            <td><b>{{fp_specs.ideal_body_size_low}}</b></td>
-                            <td><b>{{fp_specs.ideal_body_size_high}}</b></td>
-                            <td><b>{{fp_specs.max_body_measurement}}</b></td>                                
-                            <td>v:{{fp_specs.variance}} | 
-                                    d:{{fp_specs.diff}}  
-                            </td>
-                            <td>v:{{fp_specs.ideal_variance}} | 
-                                    d:{{fp_specs.ideal_diff}}                             
-                            </td>                                                        
-                            <td>{{fp_specs.message}}</td>
 
-                            </tr>
-                            
+
+                                    {%if (fp_specs.status ==0) %}
+                                        <tr  style="color:green">
+                                    {%elseif (fp_specs.status ==4) %}
+                                        <tr  style="color:green">
+                                    {%elseif (fp_specs.status ==3) %}
+                                        <tr  style="color:green">
+                                    {%elseif (fp_specs.status ==2) %}
+                                        <tr  style="color:green">
+                                    {%elseif (fp_specs.status ==1) %}
+                                        <tr  style="color:#78B4F5">
+                                    {%elseif (fp_specs.status ==-1) %}
+                                        <tr  style="color:#78B4F5">
+                                    {%elseif (fp_specs.status ==-2) %}
+                                        <tr  style="color:green">
+                                    {%elseif (fp_specs.status ==-3) %}
+                                        <tr  style="color:blueviolet">
+                                    {%elseif (fp_specs.status <-3) %}
+                                        <tr  style="color:blueviolet">
+                                            
+                                    {% else %}
+                                    <tr>
+                                    {% endif %}
+                                
+                                    <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
+
+                                    <td><b>{{fp_specs.body_measurement}}</b></td>
+                                    <td>({{fp_specs.ideal_measurement}})</td>
+                                    <td><b>{{fp_specs.ideal_body_size_low}}</b></td>
+                                    <td><b>{{fp_specs.ideal_body_size_high}}</b></td>
+                                    <td><b>{{fp_specs.max_body_measurement}}</b></td>                                
+                                    <td>v:{{fp_specs.variance}} | 
+                                        d:{{fp_specs.diff}}  
+                                    </td>
+                                    <td>v:{{fp_specs.ideal_variance}} | 
+                                        d:{{fp_specs.ideal_diff}}                             
+                                    </td>                 
+                                    <td>{{fp_specs.message}}</td>
+                                    
+                                </tr>
+
                             {% endfor %}
-                        </table>
-                    </td>            
-                </tr>
+                            </table>
+                        </td>            
+                    </tr>
                 {% endif%}
 
    {% endfor %}
 
-            </table>
-        </div>     
+                </table>
+            </div>     
