@@ -490,7 +490,7 @@ class Comparison {
         if ($type == 'letters') {//$female_letters
             return array('XS', 'S', 'M', 'L', 'X', 'XL', '1X', 'XXL', '2X', 'XXXL', '3X');
         } else if ($gender == 'f' && $type == 'numbers') {//$female_standard
-            return array('00', '0', '2', '4', '6', '8', '10', '12', '16', '18', '20', '22', '24', '26', '28', '30');
+            return array('00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30');
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
             return array('23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36');
         } else if ($gender == 'm' && $type == 'numbers') {//man Top

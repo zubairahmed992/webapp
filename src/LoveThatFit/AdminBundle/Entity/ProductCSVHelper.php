@@ -183,11 +183,11 @@ class ProductCSVHelper {
    
     #---------------------------------------------------------------
     private function getMatchingClothingType($ct){
-        if($ct=='Tee *knit') return 'tee knit';
-        if($ct=='Tank *knit') return 'tank knit';
+        if($ct=='Tee *knit') return 'tee_knit';
+        if($ct=='Tank *knit') return 'tank_knit';
         if($ct=='Pant/ Trouser') return 'trouser';
         if($ct=='Pant/ Jean') return "jean";
-        if($ct=='Tee/Polo/Tank *knit') return 'tee knit';
+        if($ct=='Tee/Polo/Tank *knit') return 'tee_knit';
         return $ct;
     }
 
