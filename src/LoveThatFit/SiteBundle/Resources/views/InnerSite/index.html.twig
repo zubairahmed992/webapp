@@ -78,8 +78,20 @@ $(function(){
                   Products
               </div>
            <div class="ltf_fitting_room_inner">
+               
           
             
+               <div style="margin-top: 40px; width: 125px; float:left; margin-left: 10px;"> 
+                 
+                 <div id="rect_hd">Recently Tried</div>
+                 <div class="up_arrow click_able_top"></div>
+<div class="fitting_room_recent">
+        {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
+ </div>  
+                 <div class="down_arrow click_able_btm"></div>
+                 
+                 
+          </div>  
                
           <!-- ---- New Product Detail Show Here  -->  
           
@@ -260,6 +272,7 @@ $(function(){
                   <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}">
               </div>
           </div>
+            
           <div id="slider_dis_canv">
             {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type,'page_number':1,'limit':15} %}
             <!--.prod_sliding_area-->
@@ -500,19 +513,19 @@ if(jqXHR.responseText.trim()== "success")
 //--Slider--//
     
 function set_slider_buttons(){
-  if($("#slider_dis_canv").scrollTop() == 0){
-      $(".slider_but_top").removeClass("click_able_top").addClass("disable_me_top");
+  if($(".fitting_room_recent").scrollTop() == 0){
+      $(".up_arrow").removeClass("click_able_top").addClass("disable_me_top");
       //alert("top_disabled now");
   }
   else {
-      $(".slider_but_top").removeClass("disable_me_top").addClass("click_able_top");
+      $(".up_arrow").removeClass("disable_me_top").addClass("click_able_top");
   }
-  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 500){
-      $(".slider_but_btm").removeClass("click_able_btm").addClass("disable_me_btm");
-      //alert("bottom_disabled now");
+  if($(".fitting_room_recent").scrollTop() >= $(".fitting_room_recent ul.prod_wrapper").height() - 380){
+      $(".down_arrow").removeClass("click_able_btm").addClass("disable_me_btm");
+     
   }
   else {
-      $(".slider_but_btm").removeClass("disable_me_btm").addClass("click_able_btm");
+      $(".down_arrow").removeClass("disable_me_btm").addClass("click_able_btm");
   }
 }
 
@@ -575,12 +588,13 @@ $(document).ready(function(){
 });
 var scroll_heighting = 506;
     $(".click_able_top").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        $(".fitting_room_recent").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+       
         
     });
     $(".click_able_btm").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
-        
+        $(".fitting_room_recent").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+         
     });
     
     

@@ -1066,7 +1066,7 @@ a.but_short:visited {
 	
 	width:364px;
 	height:505px;
-	margin:18px 86px 0 0;
+	margin:50px 0px 0 0;
 }
 .input_file_hldr {
 	float:left;
@@ -1674,7 +1674,8 @@ width: 750px;
 }
 ul.prod_wrapper{
 	padding:0;
-	margin:0px 0px 0px 0px;	       
+	margin:0px 0px 0px 0px;	
+      
        
 }
 
@@ -1689,7 +1690,7 @@ ul.prod_wrapper{
     overflow: hidden;
     padding: 10px 10px 0;
     margin-left: -10px;
-    margin-top: -10px;
+    margin-top: -16px;
 }
 
 .prod_wrapper li{
@@ -1748,51 +1749,75 @@ ul.prod_wrapper{
     float:none;
    
 }
-.slider_but_top,
-.slider_but_btm {
-   width:250px;
-   height:11px;
+.up_arrow{
+   width:24px;
+   height:10px;
    position:relative;
    z-index: 56;
    cursor: pointer;
-   display: none;
+   
+   
 }
-.slider_but_btm {
+
+.down_arrow {
+   width:24px;
+   height:10px;
+   position:relative;
+   z-index: 56;
+   cursor: pointer;
+   top: 410px;
+}
+.down_arrow {
    /*background:url(../images/bottom_nav.png) 0 0 no-repeat;*/  
-   background:url(../images/bottom_nav_hover.png) 0 0 no-repeat;
-   width:199px;
+   background:url(../images/scroll_active_down.png) 0 0 no-repeat;
+   width:24px;
    margin:-2px auto;
+   top:410px;
+   margin-top: 10px;
 }
-.slider_but_top {
+.up_arrow {
     /*background:url(../images/top_nav.png) 0 0 no-repeat;*/
-    background:url(../images/top_nav_hover.png) 0 0 no-repeat;
+    background:url(../images/scroll_active_up.png) 0 0 no-repeat;
     margin-bottom:2px!important;
-    width:199px;
+    width:24px;
     margin:0 auto;    
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+    left:47px;
 }
 
 .disable_me_top {
-    background:url(../images/top_nav.png) 0 0 no-repeat !important;
+    background:url(../images/scroll_up.png) 0 0 no-repeat !important;
     cursor: default;
-    width: 199px;
-    margin: 0 auto;
+    width: 24px;    
+    display: inline-block;
+    left: 47px;
+    margin: 0 auto 10px;
+    position: relative;
 }
 .disable_me_btm {
-  background:url(../images/bottom_nav.png) 0 0 no-repeat !important;
-  width:199px;
-  margin:-2px auto;
+  background:url(../images/scroll_down.png) 0 0 no-repeat !important;
+  width:24px;
+  margin:0px auto;
   cursor: default;
+  top: 420px;
+  
 }
 
-.slider_but_top:hover,
-.slider_but_top:focus,
-.slider_but_top:active {
-   background:url(../images/top_nav_hover.png) 0 0 no-repeat;
+.up_arrow:hover,
+.up_arrow:focus,
+.up_arrow:active {
+   background:url(../images/scroll_active_up.png) 0 0 no-repeat;
+   margin-bottom: 10px;
+   display: inline-block;
+   left: 47px;   
+   position: relative;
 }
-.slider_but_btm:hover,
-.slider_but_btm:focus,
-.slider_but_btm:active {
-   background:url(../images/bottom_nav_hover.png) 0 0 no-repeat;
+.down_arrow:hover,
+.down_arrow:focus,
+.down_arrow:active {
+   background:url(../images/scroll_active_down.png) 0 0 no-repeat;
 }
 
 /*-- Fitting room + Drag/Drop --*/
@@ -4046,7 +4071,7 @@ width: 160px;
 
 #ltf_fitting_room .ltf_fitting_room_inner {
     display:none;
-    background: url("../images/top_shade.png") center top no-repeat #ffcc00;
+    
 }
 
 .default_item .featured_img {
@@ -4480,3 +4505,54 @@ margin-left: 4px;
 #tabs .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
      background:#426EB6 !important;     
  }
+ 
+ 
+ 
+ .fitting_room_recent{  
+   
+   float: left;
+    left: 10px;
+    max-height: 425px;
+    overflow: hidden;
+ }
+ 
+ .fitting_room_recent .prod_wrapper li{
+     display:block;
+ }
+ 
+ .fitting_room_recent .featured_content{
+     display: none;
+ }
+
+ .fitting_room_recent .fbox{
+     padding:0px;
+ }
+ 
+ .fitting_room_recent .prod_wrapper li{
+     min-height: 30px;
+     width:auto;
+     line-height: 30px;
+     vertical-align: middle
+ }
+ 
+ .fitting_room_recent .featured_img img{
+     width:40%;
+ }
+ 
+ ul.prod_wrapper{
+	padding:0;
+	margin:0px 0px 0px 5px;	
+        max-height: 400px;
+      
+       
+}
+
+
+
+#rect_hd{
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #666666;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
