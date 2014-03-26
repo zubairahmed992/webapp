@@ -328,8 +328,7 @@ public function findProductItemByUser($user_id, $page_number, $limit){
     //               Methods Product listing on index page
     #---------------------------------------------------
     
-    public function listByType($options) {
-        
+    public function listByType($options) {        
         $list="";
         
         if (!array_key_exists ('gender', $options)){
@@ -337,7 +336,7 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         }
         
         if(!array_key_exists ('limit', $options)){
-            $options['limit']=10;
+            $options['limit']=0;
         }
         if(!array_key_exists ('list_type', $options)){
             $options['list_type']="latest";
@@ -347,7 +346,7 @@ public function findProductItemByUser($user_id, $page_number, $limit){
             switch ($options['list_type'])
         {
         case "latest":        
-        $list = $this->findByGenderLatest($options['gender']);
+        $list = $this->findByGenderLatest($options['gender'],$options['page_number'],$options['limit']);
         break;
     
         case "most_tried_on":        
@@ -359,14 +358,12 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         break;
     
         case "most_faviourite":        
-        $list = $this->findMostFavoriteProducts($options['gender']);
-        
-        break ;
-        
+        $list = $this->findMostFavoriteProducts($options['gender']);        
+        break ;      
         
             
         default:
-        $list = $this->findByGenderLatest($options['gender']);
+       $list = $this->findByGenderLatest($options['gender'],$options['page_number'],$options['limit']);
         break ;
         }
         if ($list && count($list)==0){
