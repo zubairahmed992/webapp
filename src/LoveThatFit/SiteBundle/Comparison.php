@@ -68,6 +68,7 @@ class Comparison {
             $fb[$size_identifier]['body_type'] = $size->getBodyType();
             $variance = 0;
             $ideal_variance = 0;
+            $max_variance = 0;
             $status = 0;
             $fit_scale = 0;
             if (is_array($size_specs)) {
@@ -77,8 +78,9 @@ class Comparison {
                         $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']] =
                                 $this->get_fit_point_array($fp_specs, $body_specs);
                         #if true then keep the old value else assign false ~~~>
-                        $ideal_variance = $this->get_accumulated_variance($ideal_variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['ideal_variance']);
                         $variance = $this->get_accumulated_variance($variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['variance']);
+                        $ideal_variance = $this->get_accumulated_variance($ideal_variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['ideal_variance']);
+                        $max_variance = $this->get_accumulated_variance($max_variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['max_variance']);
                         $status = $this->get_accumulated_status($status, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['status']);
                         if ($variance < 0 || $fit_scale < 0) {
                             $fit_scale = -1;
@@ -94,11 +96,12 @@ class Comparison {
                 }
                 $fb[$size_identifier]['variance'] = $variance;
                 $fb[$size_identifier]['ideal_variance'] = $ideal_variance;
+                $fb[$size_identifier]['max_variance'] = $max_variance;
                 $fb[$size_identifier]['status'] = $status;
                 $fb[$size_identifier]['message'] = $this->get_fp_status_text($status);
                 $fb[$size_identifier]['fit_scale'] = $fit_scale > 0 ? $fit_scale : 0;
-                $fb[$size_identifier]['fits'] = $status == 0 ? true : false;
-                $fb[$size_identifier]['recommended'] = $status == 0 ? true : false;
+                $fb[$size_identifier]['fits'] = $status == 0 || $status == -1 || $status == -2 ? true : false;
+                $fb[$size_identifier]['recommended'] = $status == 0 || $status == -1 || $status == -2 ? true : false;
             }
         }
         return $this->array_sort($fb);
@@ -167,12 +170,13 @@ class Comparison {
             'body_measurement' => $body_measurement,
             'variance' => $calc_values['variance'],
             'ideal_variance' => $calc_values['ideal_variance'],
+            'max_variance' => $calc_values['max_variance'],
             'message' => $message,
             'status' => $calc_values['status'],
-            'diff' => $calc_values['diff'],
-            'diff_percent' => $calc_values['diff_percent'],
+            'diff' => $calc_values['diff'],            
             'ideal_diff' => $calc_values['ideal_diff'],
-            'ideal_diff_percent' => $calc_values['ideal_diff_percent'],
+            'max_diff' => $calc_values['max_diff'],
+            
         );
     }
 
@@ -189,39 +193,44 @@ class Comparison {
             $avg_low_high = ($low+$high)/2;
             $mid_of_high_max = ($max + $high) / 2;
             $status = 0;
-            
+            $varience =  array(0,0,0);
+            $max_variance =  array(0,0,0);
+            $ideal_varience = array(0,0,0); 
+                
             if ($body >= $low && $body <= $high) { #perfect
                 $status = $this->status['between_low_high'];
-                $varience = 0;
-                $ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);
+                $ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);                
             } elseif ($body < $low) { #loose
                 $status = $this->status['below_low'];               
                 $varience = $this->calculate_variance($body, $low, $priority);
+                $max_variance = $varience;
                 $ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);
             } else {#tight
                 if ($body > $high && $body < $mid_of_high_max) { #high max 1st half    
                     $status = $this->status['first_half_high_mid_max'];
-                } elseif ($body > $mid_of_high_max && $body < $max) { #high max 2nd half
+                } elseif ($body > $mid_of_high_max && $body <= $max) { #high max 2nd half
                     $status = $this->status['second_half_high_mid_max'];
-                } elseif ($body >= $max) { #not fitting
+                } elseif ($body > $max) { #not fitting
                     $status = $this->status['beyond_max'];
                 }
                 $varience = $this->calculate_variance($body, $high, $priority);
                 $ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);
+                $max_variance = $this->calculate_variance($body, $max, $priority);
             }
             
-            return $this->get_calculated_values_array_element($status, $varience[0], $ideal_varience[0], $varience[1], $varience[2], $ideal_varience[1], $ideal_varience[2], $avg_low_high, $mid_of_high_max);
+            return $this->get_calculated_values_array_element($status, $varience[0], $ideal_varience[0], $max_variance[0], $varience[1], $ideal_varience[1], $max_variance[1], $avg_low_high, $mid_of_high_max);
         }                       
     }
 
-    private function get_calculated_values_array_element($status, $varience = 0, $ideal_varience = 0, $diff = 0, $diff_percent = 0, $ideal_diff = 0, $ideal_diff_percent = 0, $avg_low_high = 0, $mid_high_max = 0) {
-        return array('variance' => $this->limit_num($varience),
+    private function get_calculated_values_array_element($status, $varience = 0, $ideal_varience = 0, $max_variance = 0, $diff = 0, $ideal_diff = 0, $max_diff = 0, $avg_low_high = 0, $mid_high_max = 0) {
+        return array(
+            'status' => $status,            
+            'variance' => $this->limit_num($varience),
             'ideal_variance' => $this->limit_num($ideal_varience),
-            'status' => $status,
-            'diff' => $this->limit_num($diff),
-            'diff_percent' => $this->limit_num($diff_percent),
-            'ideal_diff' => $this->limit_num($ideal_diff),
-            'ideal_diff_percent' => $this->limit_num($ideal_diff_percent),
+            'max_variance' => $this->limit_num($max_variance),
+            'diff' => $this->limit_num($diff),            
+            'ideal_diff' => $this->limit_num($ideal_diff),            
+            'max_diff' => $this->limit_num($max_diff),            
             'avg_low_high'=>$this->limit_num($avg_low_high),
             'mid_high_max'=>$this->limit_num($mid_high_max),
         );
@@ -236,12 +245,15 @@ class Comparison {
     private function calculate_variance($body, $item, $priority) {
         if ($item > 0 && $body > 0) {
             $diff = $item - $body;
+            if ($diff==0){
+                $v=0; $dp=0; $d=0;
+            }else{
             $diff_percent = ($diff / $item) * 100; # how much (in %age of item measurement) the difference is?
             $d = number_format($diff, 2, '.', '');
             $dp = number_format($diff_percent, 2, '.', '');
             $v = number_format(($priority * $diff_percent) / 100, 2, '.', '');
-
-            return array($v, $dp, $d);
+            }
+            return array($v, $d, $dp);
         }else
             return;
     }
@@ -263,43 +275,47 @@ class Comparison {
 
     private function get_accumulated_status($accumulated, $current) {
 
-        if ($accumulated == $this->status['between_low_high'])
+        if ($accumulated == $this->status['between_low_high']) #accumulated is LTF
             return $current;
 
-        if ($current == $this->status['between_low_high'])
+        if ($current == $this->status['between_low_high']) #current is LTF
             return $accumulated;
 
         if ($accumulated == $this->status['body_measurement_not_available'] ||
-                $accumulated == $this->status['product_measurement_not_available'])
+                $accumulated == $this->status['product_measurement_not_available']) # body not available in either
             return $accumulated;
 
         if ($current == $this->status['body_measurement_not_available'] ||
-                $current == $this->status['product_measurement_not_available'])
+                $current == $this->status['product_measurement_not_available']) # product not available in either
             return $current;
 
-        if ($accumulated == $this->status['beyond_max'] ||
-                $accumulated == $this->status['second_half_high_mid_max'])
+        if ($accumulated == $this->status['beyond_max']) # accumulated beyond Max
             return $accumulated;
 
-        if ($current == $this->status['second_half_high_mid_max'] ||
-                $current == $this->status['beyond_max'])
+        if ($current == $this->status['beyond_max']) # current beyond Max
             return $current;
 
-        if ($accumulated == $this->status['below_low']) {
-            if ($this->is_loose_status($current))
-                return $this->status['below_low'];
-            if ($this->is_loose_tight_status($current))
-                return $this->status['below_low_between_high_mid_max'];
-        } elseif ($accumulated == $this->status['first_half_high_mid_max'] ||
-                $accumulated == $this->status['below_low_between_high_mid_max']) {
-            if ($this->is_loose_tight_status($current) || $this->is_loose_status($current)) {
-                return $this->status['below_low_between_high_mid_max'];
+        if ($this->is_loose_status($accumulated)) { # accumulated loose
+            if ($this->is_loose_status($current)) {
+                return $accumulated >= $current ? $accumulated : $current; # greater will be returned                 
+            } else {# Remaining b/w 1st & 2nd half of High-Max
+                return $this->status['anywhere_below_max'];
+            }
+        }
+        if ($this->is_loose_tight_status($accumulated)) { #accumulated tight or loose
+            if ($accumulated == $this->status['first_half_high_mid_max'] ||
+                    $accumulated == $this->status['second_half_high_mid_max']) {
+                if ($this->is_loose_status($current)) {
+                    return $this->status['anywhere_below_max'];
+                } else { # current Remaining b/w 1st & 2nd half of High-Max
+                    return $accumulated <= $current ? $accumulated : $current; # greater will be returned                 
+                }
+            } else { #accumulated=anywhere_below_max
+                return $this->status['anywhere_below_max'];
             }
         }
     }
 
-   
-    
     #-------------------------------------------------
 
     private function getFittingItem($sizes) {
@@ -393,7 +409,8 @@ class Comparison {
 
     private function is_loose_tight_status($status) {
         if ($status == $this->status['first_half_high_mid_max'] ||
-                $status == $this->status['below_low_between_high_mid_max']) {
+                $status == $this->status['second_half_high_mid_max'] ||
+                $status == $this->status['anywhere_below_max']) {
             return true;
         } else {
             return false;
@@ -437,7 +454,7 @@ class Comparison {
             case $this->status['more_size_below_low'] :
                 return 'Too Large (more_size_big)';
                 break;
-            case $this->status['below_low_between_high_mid_max'] :
+            case $this->status['anywhere_below_max'] :
                 return 'Tight at some points & loose at others';
                 break;
         }
@@ -459,7 +476,7 @@ class Comparison {
         'one_size_below_low' => 2,
         'two_size_below_low' => 3,
         'more_size_below_low' => 4,
-        'below_low_between_high_mid_max' => 5,
+        'anywhere_below_max' => 5,
     );
 
     #----------------------------------------------------------
