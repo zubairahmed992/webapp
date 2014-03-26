@@ -10,6 +10,16 @@ admin_users_search:
     pattern:  /admin/user/search
     defaults: { _controller: LoveThatFitAdminBundle:User:search }
     
+admin_user_detail_edit:
+    pattern:  /admin/user/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:User:edit}
+    
+admin_user_detail_update:
+    pattern:  /admin/user/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:User:update}
+    requirements:
+     _method:  POST        
+    
 toss:
     pattern:  /toss/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:toss }

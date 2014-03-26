@@ -6,78 +6,112 @@
 {% for size, size_specs in data.recommendation %}     
     &nbsp;|&nbsp;{{size}} 
     {% endfor %}
-    
+
     <h5>Feedback</h5>
 
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
     {% for size, size_specs in data.feedback %} 
             <tr>
-                <td style="width: 50px;"><b>{{size}} </b>| <i>{{size_specs.message}}</i> 
+                <td style="width: 50px;"><b>
+                        <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
+                    
+                    </b>| <i>{{size_specs.message}}</i> 
                     {% if size_specs.fit_points is defined %}
                         | fit_scale:<b>{{size_specs.fit_scale}} 
                     {% endif %}
-                
-                </td>            
-            </tr>
+
+                        </td>            
+                    </tr>
             {% if size_specs.fit_points is defined %}
-            <tr>
-                <td>
-                    <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
-                        <b>
-                            <tr>
-                                <td></td>
-                                <td>Body</td>
-                            
-                                <td>Low</td>
-                                <td>High</td>
-                                <td>Max</td>
-                                <td>Mid</td>                                
-                                <td>Variance <b>{{size_specs.variance}}</b></td>
-                                <td>Max-Variance <b>{{size_specs.max_variance}}</b></td>
-                                <td>Fit-model</td>
-                                <td>Fit-Model-Variance</td>
-                                
-                                <td>
-                                </td>
+                    <tr>
+                        <td>
+                            <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
+                                <b>
+                                    <tr>
+                                        <td></td>
+                                        <td>Body</td>
+                                        <td>Fit-model</td>
+                                        <td>Low</td>
+                                        <td>High</td>
+                                        <td>Max</td>
 
-                            </tr>
-                        </b>
-                            
-                            
+                                        <td>High-Variance <b>{{size_specs.variance}}</b></td>
+                                        <td>Max-Variance <b>{{size_specs.max_variance}}</b></td>
+                                        <td>Fit-Model-Variance <b>{{size_specs.ideal_variance}}</b></td>
+
+                                        <td></td>
+
+                                        <td>
+                                        </td>
+
+                                    </tr>
+                                </b>
+{# 'fit_point_dose_not_match' => -6,
+        'body_measurement_not_available' => -5,
+        'product_measurement_not_available' => -4,
+        'beyond_max' => -3,
+        'second_half_high_mid_max' => -2,
+        'first_half_high_mid_max' => -1,
+        'between_low_high' => 0,
+        'below_low' => 1,
+        'one_size_below_low' => 2,
+        'two_size_below_low' => 3,
+        'more_size_below_low' => 4,
+        'below_low_between_high_mid_max' => 5,
+#}
                             {% for fp, fp_specs in size_specs.fit_points %} 
-                            
-                        <tr>
-                            <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
-                            
-                            <td><b>{{fp_specs.body_measurement}}</b></td>
-                   
-                            <td><b>{{fp_specs.ideal_body_size_low}}</b></td>
-                            <td><b>{{fp_specs.ideal_body_size_high}}</b></td>
-                            <td><b>{{fp_specs.max_body_measurement}}</b></td>                                
-                            <td>({{fp_specs.mid_high_max}})</td>
-                            
-                            <td>v:{{fp_specs.variance}} | 
-                                    d:{{fp_specs.diff}}  
-                            
-                            </td>
-                            <td>v:{{fp_specs.max_variance}} | 
-                                    d:{{fp_specs.max_diff}}                             
-                            </td>
-                            <td>({{fp_specs.avg_low_high}})</td>
-                            
-                            <td>
-                                    {{fp_specs.message}}
-                                </td>
 
-                            </tr>
-                            
+
+                                    {%if (fp_specs.status ==0) %}
+                                        <tr  style="color:#003300">
+                                    {%elseif (fp_specs.status ==4) %}
+                                        <tr  style="color:#336699">
+                                    {%elseif (fp_specs.status ==3) %}
+                                        <tr  style="color:#99CCFF">
+                                    {%elseif (fp_specs.status ==2) %}
+                                        <tr  style="color:#6699CC">
+                                    {%elseif (fp_specs.status ==1) %}
+                                        <tr  style="color:#336699">
+                                    {%elseif (fp_specs.status ==-1) %}
+                                        <tr  style="color:#006600">
+                                    {%elseif (fp_specs.status ==-2) %}
+                                        <tr  style="color:#006633">
+                                    {%elseif (fp_specs.status ==-3) %}
+                                        <tr  style="color:#666666">
+                                    {%elseif (fp_specs.status <-3) %}
+                                        <tr  style="color:red">
+                                            
+                                    {% else %}
+                                    <tr>
+                                    {% endif %}
+                                
+                                    <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
+
+                                    <td><b>{{fp_specs.body_measurement}}</b></td>
+                                    <td>({{fp_specs.ideal_measurement}})</td>
+                                    <td><b>{{fp_specs.ideal_body_size_low}}</b></td>
+                                    <td><b>{{fp_specs.ideal_body_size_high}}</b></td>
+                                    <td><b>{{fp_specs.max_body_measurement}}</b></td>                                
+                                    <td>v:{{fp_specs.variance}} | 
+                                        d:{{fp_specs.diff}}  
+                                    </td>
+                                    <td>v:{{fp_specs.max_variance}} | 
+                                        d:{{fp_specs.max_diff}}                             
+                                    </td>                 
+                                    <td>v:{{fp_specs.ideal_variance}} | 
+                                        d:{{fp_specs.ideal_diff}}                             
+                                    </td>                 
+                                    <td>{{fp_specs.message}}</td>
+                                    
+                                </tr>
+
                             {% endfor %}
-                        </table>
-                    </td>            
-                </tr>
+                            </table>
+                        </td>            
+                    </tr>
                 {% endif%}
 
    {% endfor %}
 
-            </table>
-        </div>     
+                </table>
+            </div>     

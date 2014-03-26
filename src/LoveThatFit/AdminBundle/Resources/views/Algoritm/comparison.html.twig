@@ -32,13 +32,30 @@ $('a.json').click(function (event){
      $.ajax({
         url: compare_url
         ,success: function(response) {
-           $('#summary_ajax').html( JSON.stringify(response, null, ' '));
+           
+           window.open(compare_url);
         }
      })
      return false; //for good measure
 });
 
+
+$( "select[id='algorithm_User']" ).change(function() {
+    var user_id = $("select[id='algorithm_User']").val();
+    var url= '../user/'+ user_id +'/edit';
+    $('#user_edit_link').attr("href", url);    
+});
+$( "select[id='algorithm_Product']" ).change(function() {
+    var product_id= $("select[id='algorithm_Product']").val();
+    var url= '../productdetail/'+product_id+'';
+    $('#product_edit_link').attr("href", url);    
+});
+
+var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
+
+
 });        
+
     </script>
 
 <span id='product_id' style="display: block"></span>
@@ -47,14 +64,18 @@ $('a.json').click(function (event){
 
 <div class="p_listing">     
     <h3>Comparison</h3>
-    <div style="float: left">User
+    <div style="float: left">
+        
+        
+        <a id="user_edit_link" name='user_edit_link' href="#" target="_blank">User</a>
         <form id="userForm" method="post" {{ form_enctype(userForm) }}>
         {{ form_errors(userForm) }}                                  
         {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
         {{ form_rest(userForm) }}
         </form>                 
     </div>
-    <div style="float: left">Product
+    <div style="float: left">
+        <a id="product_edit_link" name='user_edit_link' href="#" target="_blank">Product</a>
         <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
         {{ form_errors(productForm) }}                                            
         {{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            

@@ -1,0 +1,133 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('admin_users') }}" >Users</a> <span class="divider">/</span></li>
+<li class="active">Show</li>
+{% endblock %}
+
+{% block h1 %}Users{% endblock %}
+
+{% block title %}Users{% endblock %}
+
+
+{% block body %}
+
+<div>      
+    <h1 style="float:left;">User's Detail</h1>
+     
+      <div class="clearfix"></div>   
+    
+
+            <div id="detail_wrapper">      
+                <div id="p_hd">{{entity.firstName }}'s Detail</div>
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container">  
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+<form action="{{ path('admin_user_detail_update', {'id': entity.Id})}}" method="post" {{ form_enctype(form) }}>
+
+
+
+        <div id='frm_sleeve '>
+
+        {{ form_label(form.sleeve) }}
+        {{ form_widget(form.sleeve, { 'attr': {'style': 'width: 233px !important;'} }) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(form.sleeve) }}</div>
+        </div>
+        <div class="clr_bth"></div>    
+        <div id='frm_neck'>
+
+        {{ form_label(form.neck) }}
+        {{ form_widget(form.neck) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(form.neck) }}</div>
+        </div>
+        <div class="clr_bth"></div>     
+     {% if(entity.gender=='m')%}    
+        <div id='frm_bust'>
+
+        {{ form_label(form.chest) }}
+        {{ form_widget(form.chest) }} &nbsp;<b>"</b>
+            <div class="form_vld_error">{{ form_errors(form.chest) }}</div>
+        </div>
+
+         {%else%}
+
+        <div id='frm_bust'>
+
+        {{ form_label(form.bust) }}
+        {{ form_widget(form.bust) }} &nbsp;<b>"</b>
+            <div class="form_vld_error">{{ form_errors(form.bust) }}</div>
+        </div>
+         {%endif%}
+        <div class="clr_bth"></div>
+        <div id='frm_waist'>
+
+        {{ form_label(form.waist) }}
+        {{ form_widget(form.waist) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(form.waist) }}</div>
+        </div>
+        <div class="clr_bth"></div>
+
+        <div id='frm_hip'>         
+        {{ form_label(form.hip) }}
+        {{ form_widget(form.hip) }} &nbsp;<b>"</b>
+                <div class="form_vld_error">{{ form_errors(form.hip) }}</div>
+            </div>
+
+            <div class="clr_bth"></div>
+
+            <div id='frm_inseam' class="more">
+        {{ form_label(form.inseam) }}
+        {{ form_widget(form.inseam) }} &nbsp;<b>"</b>
+                    <div class="form_vld_error">{{ form_errors(form.inseam) }}</div>
+                </div>
+
+                <div class="clr_bth"></div>
+
+                <div id='frm_thigh' class="more">         
+        {{ form_label(form.thigh) }}
+        {{ form_widget(form.thigh) }} &nbsp;<b>"</b>
+                        <div class="form_vld_error">{{ form_errors(form.thigh) }}</div>
+                    </div>
+                        <div id='frm_thigh'>         
+
+ {{ form_label(form.shoulder_across_back) }}
+{{ form_widget(form.shoulder_across_back) }} &nbsp;<b>"</b>
+                            <div class="form_vld_error">{{ form_errors(form.shoulder_across_back) }}</div>
+                        </div>
+
+                                            <div class="clr_bth"></div>   
+       
+                                            <input type="submit" value="Update" />
+                                            <a href="{{ path('admin_users') }}" class="btn">Cancel</a>    
+                                        </form>
+
+
+
+
+                                </div>      
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+                    </div> <!-- End detail_wrapper -->
+                
+
+                       
+            </div>      
+
+{% endblock %}
