@@ -240,7 +240,7 @@ class User implements UserInterface, \Serializable {
      */
     private $authTokenCreatedAt;
     
-   
+     
 
     /**
      * Get id
@@ -1042,4 +1042,7 @@ class User implements UserInterface, \Serializable {
     {
         return $this->userparentchildlink;
     }
+
+    
+    
 }

@@ -123,6 +123,17 @@ ws_images_ul:
    pattern:  /web_service/images_url
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:imagesUrl}   
    
+ws_product_syn:
+   pattern:  /web_service/product_sync
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductSyn}   
+   
+ws_brand_syn:
+   pattern:  /web_service/brand_sync
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getBrandSync}   
+   
+ws_product_detail_syn:
+   pattern:  /web_service/product_detail_sync
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductDetailSyn}   
    
 
  

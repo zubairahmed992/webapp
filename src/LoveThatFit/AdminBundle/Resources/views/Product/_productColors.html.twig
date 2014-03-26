@@ -175,6 +175,26 @@
 
         {%endif%}
  
+ // For Toggle For Sizes X, Xl1 etc..//
+
+           var arr = [];
+           var chkbox_val= document.querySelectorAll('div#product_color_regularSizes input[type=checkbox]');
+           for (var i = 0; i < chkbox_val.length; i++) {
+           var elem = chkbox_val[i].value;
+           if(elem=="X"){
+           $("#product_color_regularSizes input:checkbox[value='X']").fadeOut();
+           $("#product_color_regularSizes input:label[value='X']").fadeOut();
+            }
+           
+            
+           
+           
+            
+           arr.push(elem)
+        }
+        
+
+       
  
                   }); 
     

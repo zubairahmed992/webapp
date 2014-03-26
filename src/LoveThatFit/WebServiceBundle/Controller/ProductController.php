@@ -17,6 +17,7 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementMaleType;
 use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
 use LoveThatFit\SiteBundle\Algorithm;
+use LoveThatFit\WebServiceBundle\Controller\DateTimeZone;
 
 class ProductController extends Controller {
 
@@ -50,7 +51,7 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-      //  $request_array=array('authTokenWebService'=>'123');
+      // $request_array=array('authTokenWebService'=>'123');
      //  $request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
         $authTokenWebService = $request_array['authTokenWebService'];
     if ($authTokenWebService) {
@@ -77,6 +78,7 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
+       // $request_array=array('authTokenWebService'=>'123');
        //$request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
          //$request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
         $authTokenWebService = $request_array['authTokenWebService'];
@@ -205,7 +207,7 @@ public function brandListAction() {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
 #------------------------------Authentication of Token--------------------------------------------#
-        //$request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','productId'=>11,'userId'=>17);
+        //$request_array=array('authTokenWebService'=>'123','productId'=>11,'userId'=>17);
         $user = $this->get('user.helper.user');
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
@@ -315,6 +317,82 @@ public function brandListAction() {
             return new Response(json_encode(array('Message'=>'User cannot find')));
         }
     }
+    
+    
+ #----- Work for Product Synchronization  -------------------------------------#
+    public function getProductSynAction(){
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user = $this->get('webservice.helper.user');
+      // $request_array=array('authTokenWebService'=>'123','date'=>'1395831976');
+     //  $request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
+        $authTokenWebService = $request_array['authTokenWebService'];
+    if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+        $product_helper =  $this->get('webservice.helper.product');
+        $product_response=$product_helper->newproductListingWebService($request,$request_array);
+        return new response(json_encode($product_response));
+        
+    }
+ #--------------------Get product Detail Sunc-----------------------------------#
+    public function getProductDetailSynAction() {
+        
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user = $this->get('webservice.helper.user');
+       // $request_array=array('authTokenWebService'=>'123','date'=>'1395835322');
+       //$request_array=array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5');
+         //$request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
+        $authTokenWebService = $request_array['authTokenWebService'];
+       if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+        $product_helper =  $this->get('webservice.helper.product');
+        $product_response=$product_helper->newproductDetailWebService($request,$request_array);
+        
+       return new response(json_encode($product_response));
+    }
+
+  
+ #-------------------Get Brand Sync-------------------------------------------#
+ public function getBrandSyncAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+      //  $request_array=array('date'=>'1395831976');
+        if($request_array){
+       $date_fromat=$this->get('webservice.helper.product')->returnFormattedTime($request_array);
+        if($date_fromat){
+        $brand = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Brand')
+                ->findAllBrandWebService($date_fromat);
+        }
+        $total_record = count($brand);
+         $data = array();
+        $data['data'] = $brand;
+        
+        return new Response($this->json_view($total_record, $data));
+        
+        }else{
+            return new response(json_encode(array("Message"=>"No Data Found")));
+        }
+    }
    
 #---------------------------Render Json--------------------------------------------------------------------#
 
@@ -338,6 +416,8 @@ public function brandListAction() {
    }
  
     
+   
+   
     
 }
 

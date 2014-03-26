@@ -116,8 +116,6 @@ public function loveItem($request_array){
 #------------------------------------------------------------------------------#
 public function getDefaultFittingAlerts($request_array)
 {      
-        
-        
           if ($request_array['productId']) { 
               $user=$this->container->get('user.helper.user')->find($request_array['userId']);
               $product=$this->find($request_array['productId']);
@@ -126,56 +124,7 @@ public function getDefaultFittingAlerts($request_array)
           $data['data'] = $fit->getStrippedFeedBack();
           $data['productId']=$request_array['productId'];
           return $data;
-       /* 
-        //Calling of Helper 
-        $user_helper = $this->container->get('user.helper.user');
-        $product_color_helper = $this->container->get('admin.helper.productcolor');
-        $product_item_helper = $this->container->get('admin.helper.productitem');
-        $product_size_helper = $this->container->get('admin.helper.productsizes');
-        $user_try_history_helper=$this->container->get('site.helper.usertryitemhistory');
-        // find product
-        if ($product_id) {
-            $product = $this->repo->find($product_id);
-            $product_color = $product->getDisplayProductColor();
-            $product_color_id = $product_color->getId();
-
-            //get color size array, sizes that are available in this color 
-            $color_sizes_array = $product_color_helper->getSizeArray($product_color_id);
-            $size_id = null;
-            // find size id is not in param gets the first size id for this color
-            $psize = array_shift($color_sizes_array);
-            $size_id = $psize['id'];
-            $product_size_id = $size_id;
-            $product_size = $product_size_helper->find($product_size_id);
-
-            //2) color & size can get an item
-
-            if ($product_size && $product_color) {
-                $product_item = $product_item_helper->findByColorSize($product_color->getId(), $product_size->getId());
-                $product_item_id = $product_item->getId();
-            }
-
-            if ($user_id && $product_item_id) {
-
-                $user = $user_helper->find($user_id);
-                $productItem = $product_item_helper->getProductItemById($product_item_id);
-
-                if (!$user)
-                    return array('Message' => 'User not found');
-
-                if (!$productItem)
-                    return array('Message' => 'Product not found');
-
-                $fit = new Algorithm($user, $productItem);
-                $data = array();
-                $data['data'] = $fit->getFeedBackArray();
-                    $json_feedback = $fit->getFeedBackJson();
-                $fits = $fit->fit();
-                $product_id=$product_item_helper->getProductByItemId($productItem);
-                $product_id=$product_id[0]['id'];        
-                $user_try_history_helper->createUserItemTryHistory($user,$product_id, $productItem, $json_feedback, $fits);
-                return ($data);*/
-            }
+       }
             else {
                 return (array('Message' => ' Product Can not find'));
             }
@@ -275,7 +224,7 @@ public function favouriteByUser($user_id,$request){
  
  
  #--------------------Product list with  Detail data Web Service --------------------------------#
- public function newproductListingWebService($request,$request_array){
+ public function newproductListingWebService($request,$request_array,$date_format=Null){
        // $id = $request_array['id'];
        
         if($request_array['authTokenWebService']){
@@ -293,9 +242,11 @@ public function favouriteByUser($user_id,$request){
             
         }
         $gender = $user->getGender();
+        if(isset($request_array['date'])){
+          $date_format=$this->returnFormattedTime($request_array);
+        }
+        $products = $this->repo->newproductListingWebService($gender,$date_format);
        
-        $products = $this->repo->newproductListingWebService($gender);
-        
         $data = array();
        
         #-------Fetching The Path------------#
@@ -312,6 +263,7 @@ public function favouriteByUser($user_id,$request){
                     $data['data'][$product_id]['name'] = $ind_product['name'];
                     $data['data'][$product_id]['description'] = $ind_product['description'];
                     $data['data'][$product_id]['target'] = $ind_product['target'];
+                    $data['data'][$product_id]['clothingType'] = $ind_product['clothing_type'];
                     $data['data'][$product_id]['productImage'] = $ind_product['product_image'];
                     $data['data'][$product_id]['brandName'] = $ind_product['brand_name'];
                     $data['data'][$product_id]['brandId'] = $ind_product['brandId'];
@@ -336,7 +288,7 @@ public function favouriteByUser($user_id,$request){
 
 
 #----------This is used for saving db all product id with append of detail 
-public function newproductDetailWebService($request,$request_array){
+public function newproductDetailWebService($request,$request_array,$date_format=Null){
        
         if($request_array['authTokenWebService']){
         $user=$this->container->get('user.helper.user')->findByAuthToken($request_array['authTokenWebService']);
@@ -350,10 +302,17 @@ public function newproductDetailWebService($request,$request_array){
         $productdetail = array();
         $gender = $user->getGender();
           $data=array();
-       // $products = $this->repo->newproductListingWebService($gender);
-      $data['data'] = $this->repo->newproductDetailDBStructureWebService($gender);
-      
+        if(isset($request_array['date'])){
+          $date_format=$this->returnFormattedTime($request_array);
+        }
+       
+        $data['data'] = $this->repo->newproductDetailDBStructureWebService($gender,$date_format);
+       if($data['data']){
         return $data;
+        
+        }else{
+            return array('Message' => 'We cannot find Product'); 
+        }
     /*   $product_detail = array();
         $user = $user_helper->find($user_id);
         $user_re = new User();
@@ -574,4 +533,19 @@ private function countMyCloset($user_id){
         return Comparison::getStatusArray();
           
   }
+  
+  #----- Set Time Zone Base On User Authenticated Toke -------------------------#
+    public function returnFormattedTime($request_array){
+         if (array_key_exists('date', $request_array)) {
+            $date=$request_array['date'];
+            $d = new \DateTime(); 
+            $d->setTimestamp($date);
+            return $d->format("Y-m-d H:i:s");
+        } else{
+            return false;
+        }
+           
+            //$product=$this->container->get('webservice.helper.product')->newproductListingWebService($request,$request_array,$format_date);
+          //  return json_encode($product);
+    }
 }

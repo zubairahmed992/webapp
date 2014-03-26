@@ -106,14 +106,26 @@ class BrandRepository extends EntityRepository {
 
     #---------------------------Brand List For Web Service-----------------------------------#
 
-    public function findAllBrandWebService() {
-
-        $query = $this->getEntityManager()->createQuery("SELECT b.id as brandId, b.name as name,'brand' AS type,b.image as image FROM LoveThatFitAdminBundle:Brand b
+    public function findAllBrandWebService($date_format=Null) {
+        if($date_format){
+            
+                $query = $this->getEntityManager()->createQuery("SELECT b.id as brandId, b.name as name,'brand' AS type,b.image as image ,b.updated_at FROM LoveThatFitAdminBundle:Brand b
+                WHERE b.disabled=0  AND b.updated_at>=:date_format ORDER BY name asc")
+                ->setParameters(array('date_format' => $date_format)) ;
+                try {
+                    return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                    return null;
+                }
+        }
+        else{
+            $query = $this->getEntityManager()->createQuery("SELECT b.id as brandId, b.name as name,'brand' AS type,b.image as image FROM LoveThatFitAdminBundle:Brand b
             WHERE b.disabled=0 ORDER BY name asc");
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
+                try {
+                    return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                    return null;
+                }
         }
     }
     

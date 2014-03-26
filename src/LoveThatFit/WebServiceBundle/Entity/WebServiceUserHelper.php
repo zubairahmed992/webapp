@@ -861,16 +861,12 @@ public function getUserDeviceTypeAndMarking($entity,$deviceType){
 }
 #--------------------Set Marking against Device Type---------------------------#
 public function setMarkingDeviceType($entity, $deviceType,$heightPerInch){
-    
-    $chkMarking=$this->container->get('user.helper.userdevices')->findHeightPerInchRatio($deviceType,$entity->getId());
+  $chkMarking=$this->container->get('user.helper.userdevices')->findHeightPerInchRatio($deviceType,$entity->getId());
    if($chkMarking){
-    foreach($chkMarking as $singleMarking)
-   {
-       $chkSingleMarking=$singleMarking['deviceUserPerInchPixelHeight'];
-   }
+   foreach($chkMarking as $singleMarking){
+    $chkSingleMarking=$singleMarking['deviceUserPerInchPixelHeight'];}
     }else{
          $chkSingleMarking=null;
-
     }
    //return $chkSingleMarking;
    if($chkSingleMarking==0 || $chkSingleMarking==Null){
@@ -896,4 +892,6 @@ public function setMarkingDeviceType($entity, $deviceType,$heightPerInch){
               
    } 
 }
+
+
 }
