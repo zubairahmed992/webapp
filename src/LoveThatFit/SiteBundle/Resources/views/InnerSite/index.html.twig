@@ -18,8 +18,41 @@
 <input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
 {% endif %}
 
-
-
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/scrollpagination.js') }}"></script>       
+<script type="text/javascript">
+$(function(){
+      var url='../ajax/products/{{app.user.gender}}/latest/';
+      
+	$('#content').scrollPagination({
+		'contentPage': url, // the url you are fetching the results
+		'contentData': {}, // these are the variables you can pass to the request, for example: children().size() to know which page you are
+		'scrollTarget': $(window), // who gonna scroll? in this example, the full window
+		'heightOffset': 10, // it gonna request when scroll is 10 pixels before the page ends
+		'beforeLoad': function(){ // before load function, you can display a preloader div
+			$('#loading').fadeIn();	
+		},
+		'afterLoad': function(elementsLoaded){ // after loading content, you can use this function to animate your new elements
+			 $('#loading').fadeOut();
+			 var i = 0;
+			 $(elementsLoaded).fadeInWithDelay();
+			 if ($('#content').children().size() > 100){ // if more than 100 results already loaded, then stop pagination (only for testing)
+			 	$('#nomoreresults').fadeIn();
+				$('#content').stopScrollPagination();
+			 }
+		}
+	});
+	
+	// code for fade in element by element
+	$.fn.fadeInWithDelay = function(){
+		var delay = 0;
+		return this.each(function(){
+			$(this).delay(delay).animate({opacity:1}, 200);
+			delay += 100;
+		});
+	};
+		   
+});
+</script>
 
 <section class="products">
     
@@ -241,10 +274,16 @@
           </div>
             
           <div id="slider_dis_canv">
-            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
-            <!--.prod_sliding_area--></div>
-           
+            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type,'page_number':1,'limit':15} %}
+            <!--.prod_sliding_area-->
+          </div>
+            <div id="content">
+            </div>
+            
+           <div class='uploading_in_progress set_width_chg'>Loading...</div>
         <!---/#dis canv---></div>
+        
+
         
        
         

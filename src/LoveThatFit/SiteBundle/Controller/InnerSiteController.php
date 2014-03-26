@@ -51,7 +51,7 @@ public function indexAction($list_type) {
            ));
     }
 #------------------------------Product Slider-----------------------------------
-    public function productsByTypeAction($list_type='latest', $page_number = 0, $limit = 0) {
+    public function productsByTypeAction($list_type='latest', $page_number = 0, $limit = 0) {       
         if ($list_type == 'ltf_recommendation' || $list_type == 'most_faviourite') {
             $entity = null;
             return $this->renderProductTemplate($entity, $page_number, $limit, 'Coming Soon');
