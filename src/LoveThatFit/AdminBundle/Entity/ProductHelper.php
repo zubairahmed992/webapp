@@ -341,7 +341,9 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         if(!array_key_exists ('list_type', $options)){
             $options['list_type']="latest";
         }
-        
+         if(!array_key_exists ('page_number', $options)){
+            $options['page_number']=0;
+        }
                 
             switch ($options['list_type'])
         {
