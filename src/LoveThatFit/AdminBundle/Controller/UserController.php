@@ -133,7 +133,12 @@ class UserController extends Controller {
         $measurementForm->bind($this->getRequest());
         $measurement->setUpdatedAt(new \DateTime('now'));
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $this->indexAction(1);
+        $this->get('session')->setFlash('success', 'Updated Successfuly');
+        return $this->render('LoveThatFitAdminBundle:user:edit.html.twig', array(
+                    'form' => $measurementForm->createView(),
+                    'measurement' => $measurement,
+                    'entity' => $entity,
+                ));
     }
 
 }

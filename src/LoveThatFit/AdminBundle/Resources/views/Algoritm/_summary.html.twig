@@ -12,7 +12,10 @@
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
     {% for size, size_specs in data.feedback %} 
             <tr>
-                <td style="width: 50px;"><b>{{size}} </b>| <i>{{size_specs.message}}</i> 
+                <td style="width: 50px;"><b>
+                        <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
+                    
+                    </b>| <i>{{size_specs.message}}</i> 
                     {% if size_specs.fit_points is defined %}
                         | fit_scale:<b>{{size_specs.fit_scale}} 
                     {% endif %}
@@ -42,29 +45,40 @@
 
                                     </tr>
                                 </b>
-
-
+{# 'fit_point_dose_not_match' => -6,
+        'body_measurement_not_available' => -5,
+        'product_measurement_not_available' => -4,
+        'beyond_max' => -3,
+        'second_half_high_mid_max' => -2,
+        'first_half_high_mid_max' => -1,
+        'between_low_high' => 0,
+        'below_low' => 1,
+        'one_size_below_low' => 2,
+        'two_size_below_low' => 3,
+        'more_size_below_low' => 4,
+        'below_low_between_high_mid_max' => 5,
+#}
                             {% for fp, fp_specs in size_specs.fit_points %} 
 
 
                                     {%if (fp_specs.status ==0) %}
-                                        <tr  style="color:green">
+                                        <tr  style="color:#003300">
                                     {%elseif (fp_specs.status ==4) %}
-                                        <tr  style="color:green">
+                                        <tr  style="color:#336699">
                                     {%elseif (fp_specs.status ==3) %}
-                                        <tr  style="color:green">
+                                        <tr  style="color:#99CCFF">
                                     {%elseif (fp_specs.status ==2) %}
-                                        <tr  style="color:green">
+                                        <tr  style="color:#6699CC">
                                     {%elseif (fp_specs.status ==1) %}
-                                        <tr  style="color:#78B4F5">
+                                        <tr  style="color:#336699">
                                     {%elseif (fp_specs.status ==-1) %}
-                                        <tr  style="color:#78B4F5">
+                                        <tr  style="color:#006600">
                                     {%elseif (fp_specs.status ==-2) %}
-                                        <tr  style="color:green">
+                                        <tr  style="color:#006633">
                                     {%elseif (fp_specs.status ==-3) %}
-                                        <tr  style="color:blueviolet">
+                                        <tr  style="color:#666666">
                                     {%elseif (fp_specs.status <-3) %}
-                                        <tr  style="color:blueviolet">
+                                        <tr  style="color:red">
                                             
                                     {% else %}
                                     <tr>
