@@ -6,7 +6,14 @@
 <script>
 
  function Validate(){
- var registration_parent_child_create= "../parent/child/"+ {{app.user.id}};  
+ var user_email=document.getElementById("user_email").value;
+ var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+ if(user_email=='' || !filter.test(user_email))
+     {
+  document.getElementById('emailvalidate').style.display="block";
+ }else
+ {
+  var registration_parent_child_create= "../parent/child/"+ {{app.user.id}};  
  var str = $('#parentemail').serialize();
  jQuery.ajax({
    type: "POST",
@@ -17,6 +24,8 @@
        $('#parentemailcheck').hide();   
    }
  });
+           
+ }
 }
           
     </script>
@@ -24,7 +33,14 @@
     <script>
     function Validates()
     {
-        var registration_parent_child_update= "../registration/parent/update/child/"+ {{app.user.id}};  
+       var user_email=document.getElementById("user_email").value;
+       var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+       if(user_email=='' || !filter.test(user_email))
+     {
+        document.getElementById('emailvalidate1').style.display="block";
+ }else
+ {
+  var registration_parent_child_update= "../registration/parent/update/child/"+ {{app.user.id}};  
  var str = $('#parentemail2').serialize();
  jQuery.ajax({
    type: "POST",
@@ -37,6 +53,8 @@
        $('#parentdisapprove').hide(); 
    }
  });
+            
+ }
     }
         </script> 
     
@@ -82,8 +100,11 @@
            {{ form_errors(form) }}
                 <div>
                     {{ form_errors(form.email) }}
+                        
                     </div>
+                    
                     {{ form_rest(form) }} 
+                    <div id="emailvalidate" style="display:none">Please enter email address</div>
                      <div class="frm_ele" style="float:none;">
                       <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
                       <input class="reg_next_step" type="button" value="Submit"  onclick="return Validate();" />
@@ -103,7 +124,9 @@
                 <div>
                     {{ form_errors(form.email) }}
                     </div>
+                    
                     {{ form_rest(form) }} 
+                    <div id="emailvalidate1" style="display:none">Please enter email address</div>
                      <div class="frm_ele" style="float:none;">
                       <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
                       <input class="reg_next_step" type="button" value="Send"  onclick="return Validates();" />

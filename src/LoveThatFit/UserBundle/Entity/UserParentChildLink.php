@@ -50,7 +50,9 @@ class UserParentChildLink
     /**
      * @var string $email
      *
-     * @ORM\Column(name="email", type="string", length=32, nullable=true)
+     * @ORM\Column(name="email", type="string", length=32, nullable=false)
+     * @Assert\Email(groups={"registration_step_one"}, message="Please provide a valid email")
+     * @Assert\NotBlank(groups={"registration_step_one"}, message="Email cannot be blank")
      */
     private $email;
 

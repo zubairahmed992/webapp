@@ -12,6 +12,13 @@ class UserParentChildLinkType extends AbstractType {
         $builder->add('email', 'email', array('label' =>' '));
     }  
 
+     public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'validation_groups' => array('registration_step_one')
+        ));
+    }
+
+    
     public function getName() {
         return 'user';
     }
