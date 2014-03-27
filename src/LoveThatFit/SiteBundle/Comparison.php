@@ -23,8 +23,10 @@ class Comparison {
 #-----------------------------------------------------
     function getFeedBack() {
         $cm = $this->array_mix();
-        $rc = $this->getFittingSize($cm);
-        return array('feedback' => $cm,
+        $rc = $this->getFittingSize($cm['feedback']);
+        return array(
+            'variance' => $this->get_variance_range($cm['feedback']),
+            'feedback' => $cm['feedback'],
             'recommendation' => $rc,
         );
     }
@@ -35,12 +37,13 @@ class Comparison {
 #-----------------------------------------------------
     function getStrippedFeedBack() {
         $cm = $this->array_mix();
-        return array('feedback' => $this->strip_for_services($cm),
+        return array('feedback' => $this->strip_for_services($cm['feedback']),
         );
     }
 #-----------------------------------------------------
     function getComparison() {
-        return $this->array_mix();
+        $cm = $this->array_mix();
+        return $this->array_mix($cm['feedback']);
     }
 #-----------------------------------------------------
 
@@ -48,7 +51,8 @@ class Comparison {
         if ($sizes) {
             return $this->getFittingSize($sizes);
         } else {
-            return $this->getFittingSize($this->array_mix());
+            $cm = $this->array_mix();
+            return $this->getFittingSize($cm['feedback']);
         }
     }
 #-----------------------------------------------------
@@ -57,7 +61,7 @@ class Comparison {
         $sizes = $this->product->getProductSizes();
         $body_specs = $this->user->getMeasurement()->getArray();
         $fb = array();
-        
+        $highest_variance=0;
         foreach ($sizes as $size) {
             $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
             $size_identifier = $size->getDescription();
@@ -99,12 +103,15 @@ class Comparison {
                 $fb[$size_identifier]['max_variance'] = $max_variance;
                 $fb[$size_identifier]['status'] = $status;
                 $fb[$size_identifier]['message'] = $this->get_fp_status_text($status);
-                $fb[$size_identifier]['fit_scale'] = $fit_scale > 0 ? $fit_scale : 0;
+                #$fb[$size_identifier]['fit_scale'] = $fit_scale > 0 ? $fit_scale : 0;
                 $fb[$size_identifier]['fits'] = $status == 0 || $status == -1 || $status == -2 ? true : false;
                 $fb[$size_identifier]['recommended'] = $status == 0 || $status == -1 || $status == -2 ? true : false;
+            
+                $highest_variance=$highest_variance>$max_variance?$highest_variance:$max_variance;
             }
         }
-        return $this->array_sort($fb);
+        $fb = $this->addFitScale($fb,$highest_variance);
+        return array('feedback'=>$this->array_sort($fb),'highest_variance'=>$highest_variance);
     }
 
 # -----------------------------------------------------
@@ -257,9 +264,7 @@ class Comparison {
         }else
             return;
     }
-
     #----------------------------------------------------------
-
     private function get_accumulated_variance($accumulated, $current) {
         if (($accumulated >= 0 && $current >= 0) || ($accumulated <= 0 && $current <= 0)) {
             $accumulated = $accumulated + $current;
@@ -270,9 +275,7 @@ class Comparison {
         }
         return $accumulated;
     }
-
     #----------------------------------------------------------
-
     private function get_accumulated_status($accumulated, $current) {
 
         if ($accumulated == $this->status['between_low_high']) #accumulated is LTF
@@ -316,6 +319,63 @@ class Comparison {
         }
     }
 
+   #-------------------------------------------------
+/*
+ * 
+ * Find the min and the max
+then for each number scale x to 2 * (x - min)/( max - min) - 1
+If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1` is a good idea.
+ * applied formula:
+ *  y = 1 + (x-A)*(10-1)/(B-A)
+ */
+    private function addFitScale($sizes, $max, $min=0) {
+
+        if ($sizes == null)
+            return;
+        $signedRangeInverse = 1.0 / ($max - $min);
+        foreach ($sizes as $desc=>$size) {
+            if ($size['max_variance']<0){
+                $fs=0;
+            }else{
+            #$fs=((($size['max_variance'] - $min) * $signedRangeInverse) * 2.0) - 1;
+            #$fs=(($size['max_variance']/$max) * 2.0) - 1;
+                $fs=1 + (($size['max_variance']-$min) * (10-1))/($max-$min);
+                $fs=10-$fs; #making it reverse
+            }
+        $sizes[$desc]['fit_scale']=$this->limit_num($fs);
+            
+        }
+        return $sizes;
+    }
+
+   #-------------------------------------------------
+
+    private function get_variance_range($sizes) {
+
+        if ($sizes == null)
+            return;
+        $lowest=0; $highest=null; $size_lowest=null; $size_highest=null;
+        foreach ($sizes as $size) {
+            $size_highest = $this->get_accumulated_variance_range($size_highest, $size['max_variance'], 'highest'); 
+       }
+        return array($lowest, $size_highest);
+    }
+#------------------------------------------
+    private function get_accumulated_variance_range($acc, $current, $type){
+        
+        if($acc===null || $acc<0){
+            return $current;
+        }elseif($current===null || $current<0){
+            return $acc;
+        }
+        
+        if($type=='lowest'){
+            return $acc<=$current?$acc:$current;
+        }else{
+            return $acc>=$current?$acc:$current;
+        }
+    }
+ 
     #-------------------------------------------------
 
     private function getFittingItem($sizes) {
