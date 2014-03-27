@@ -21,8 +21,7 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/scrollpagination.js') }}"></script>       
 <script type="text/javascript">
 $(function(){
-      var url='../ajax/products/{{app.user.gender}}/latest/';
-      
+      var url='../ajax/products/{{app.user.gender}}/latest/';      
 	$('#content').scrollPagination({
 		'contentPage': url, // the url you are fetching the results
 		'contentData': {}, // these are the variables you can pass to the request, for example: children().size() to know which page you are
@@ -35,9 +34,12 @@ $(function(){
 			 $('#loading').fadeOut();
 			 var i = 0;
 			 $(elementsLoaded).fadeInWithDelay();
-			 if ($('#content').children().size() > 100){ // if more than 100 results already loaded, then stop pagination (only for testing)
-			 	$('#nomoreresults').fadeIn();
+                         
+			 if ($('#content').children().size() > parseInt($("#totalproducts").val())){ // if more than 100 results already loaded, then stop pagination (only for testing)
+	//alert("got true");		 	
+            $('#nomoreresults').fadeIn();
 				$('#content').stopScrollPagination();
+                             
 			 }
 		}
 	});
@@ -47,7 +49,7 @@ $(function(){
 		var delay = 0;
 		return this.each(function(){
 			$(this).delay(delay).animate({opacity:1}, 200);
-			delay += 100;
+			delay += 30;
 		});
 	};
 		   
@@ -277,10 +279,12 @@ $(function(){
             {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type,'page_number':1,'limit':15} %}
             <!--.prod_sliding_area-->
           </div>
+            <div id="scrollpaginationdemo">
             <div id="content">
             </div>
             
-           <div class='uploading_in_progress set_width_chg'>Loading...</div>
+           <div class='uploading_in_progress set_width_chg' id="loading">Loading...</div>
+           </div>
         <!---/#dis canv---></div>
         
 

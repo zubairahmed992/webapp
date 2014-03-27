@@ -9,7 +9,7 @@
         
     {%else%}
 {% if(row_count>0)%}
-
+<input type="hidden" id="totalproducts" value="{{row_count}}"/>
 <ul class="prod_wrapper">
   
 {% for p in products %}
@@ -65,10 +65,10 @@
                 {%else%}
                
     
- <div>
-    <h3 class="comingsoon_new">
+ <div id="nomoreresults">
+   <!-- <h3 class="comingsoon_new">
         Products are currently not available.
-    </h3>                    
+    </h3> -->                   
  </div>
       {%endif%}
 {%endif%}
