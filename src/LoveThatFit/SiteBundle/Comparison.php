@@ -25,7 +25,6 @@ class Comparison {
         $cm = $this->array_mix();
         $rc = $this->getFittingSize($cm['feedback']);
         return array(
-            'variance' => $this->get_variance_range($cm['feedback']),
             'feedback' => $cm['feedback'],
             'recommendation' => $rc,
         );
@@ -62,6 +61,11 @@ class Comparison {
         $body_specs = $this->user->getMeasurement()->getArray();
         $fb = array();
         $highest_variance=0;
+        $highest_high_variance=0;
+        $highest_max_variance=0;
+        $highest_ideal_variance=0;
+        $lowest_ideal_variance=0;
+        
         foreach ($sizes as $size) {
             $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
             $size_identifier = $size->getDescription();
@@ -107,10 +111,14 @@ class Comparison {
                 $fb[$size_identifier]['fits'] = $status == 0 || $status == -1 || $status == -2 ? true : false;
                 $fb[$size_identifier]['recommended'] = $status == 0 || $status == -1 || $status == -2 ? true : false;
             
-                $highest_variance=$highest_variance>$max_variance?$highest_variance:$max_variance;
+                $highest_variance=$highest_variance>$variance?$highest_variance:$variance;
+                $highest_max_variance=$highest_max_variance>$max_variance?$highest_variance:$max_variance;
+                $highest_ideal_variance=$highest_ideal_variance>$ideal_variance?$highest_ideal_variance:$ideal_variance;
+                $lowest_ideal_variance=$lowest_ideal_variance<$ideal_variance?$lowest_ideal_variance:$ideal_variance;
+                
             }
         }
-        $fb = $this->addFitScale($fb,$highest_variance);
+        $fb = $this->addFitScale($fb, $highest_variance,$highest_max_variance, $highest_ideal_variance, $lowest_ideal_variance);
         return array('feedback'=>$this->array_sort($fb),'highest_variance'=>$highest_variance);
     }
 
@@ -328,27 +336,29 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
  * applied formula:
  *  y = 1 + (x-A)*(10-1)/(B-A)
  */
-    private function addFitScale($sizes, $max, $min=0) {
-
-        if ($sizes == null)
+    private function addFitScale($sizes, $high, $max_high=0, $ideal_high=0, $ideal_low=0, $low = 0) {
+        if ($sizes == null) {
             return;
-        $signedRangeInverse = 1.0 / ($max - $min);
-        foreach ($sizes as $desc=>$size) {
-            if ($size['max_variance']<0){
-                $fs=0;
-            }else{
-            #$fs=((($size['max_variance'] - $min) * $signedRangeInverse) * 2.0) - 1;
-            #$fs=(($size['max_variance']/$max) * 2.0) - 1;
-                $fs=1 + (($size['max_variance']-$min) * (10-1))/($max-$min);
-                $fs=10-$fs; #making it reverse
-            }
-        $sizes[$desc]['fit_scale']=$this->limit_num($fs);
-            
+        }
+        foreach ($sizes as $desc => $size) {
+            $sizes[$desc]['fit_scale'] = $this->calculate_fit_scale($size['variance'], $high, $low);
+            $sizes[$desc]['fit_max_scale'] = $this->calculate_fit_scale($size['max_variance'], $max_high, $low);
+            $sizes[$desc]['fit_ideal_scale'] = $this->calculate_fit_scale($size['ideal_variance'], $ideal_high, $ideal_low);
         }
         return $sizes;
     }
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~>>
+    private function calculate_fit_scale($variance, $high, $low){
+            if ($variance < 0) {
+                $fs = 0;
+            } else {
+                $fs = 1 + (($variance - $low) * (10 - 1)) / ($high - $low);
+                $fs = 10 - $fs; #making it reverse
+            }
+            return $this->limit_num($fs);
+    }
 
-   #-------------------------------------------------
+    #-------------------------------------------------
 
     private function get_variance_range($sizes) {
 
