@@ -21,12 +21,15 @@
 <div> 
 <h1 style="float:left;">{{product.name }} Size-{{sizetitle}}</h1>
 <div class="btn_wrapper">     
+    <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete Size</a>
 <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}" class="btn">back</a>
       </div>
 <div class="clearfix"></div>   
 
-
-    <div id="detail_wrapper">      
+    <div id="detail_wrapper">
+        {% include 'LoveThatFitAdminBundle:Product:_productSizes.html.twig'%}
+         <div class="clearfix"></div>  
+         
         <div id="p_hd">Product Specification</div>
 
         
@@ -149,21 +152,28 @@
         <h3 id="myModalLabel">Delete Product</h3>
     </div>
     <div class="modal-body">
-        <p>Are you sure you want to Delete this Product <b>{{product.name }}</b>?</p>
+        <p>Are you sure you want to Delete this Product  <b>{{product.name }}</b>?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="{{ path('admin_product_detail_size_delete',{'id':product.Id,'size_id':size_id}) }}  class="btn btn-primary">Delete</a>
+
+    </div>
+</div>  
+<div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Product</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to Delete this Product Size <b> {{sizetitle }}</b>?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
         <a href="{{ path('admin_product_detail_delete', {'id': product.Id}) }}"  class="btn btn-primary">Delete</a>
-
     </div>
-</div>   
+</div> 
     </div>
-
-
-
-
-
-
 {% endblock %}
 
 
