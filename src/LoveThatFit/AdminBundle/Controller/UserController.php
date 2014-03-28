@@ -125,6 +125,25 @@ class UserController extends Controller {
                     'entity' => $entity,
                 ));
     }
+    //------------------------------------------------------------------------------------------
+    
+    //-----------------------------Delete User-----------------------------------------------------------
+   public  function  deleteAction($id)
+    {
+          try {
+            $message_array = $this->get('user.helper.user')->delete($id);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+
+            return $this->redirect($this->generateUrl('admin_users'));
+        } catch (\Doctrine\DBAL\DBALException $e) {
+
+            $this->get('session')->setFlash('warning', 'This Size cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+    }
+    
+    
+    
 //------------------------------------------------------------------------------------------
     public function updateAction($id) {
         $entity = $this->get('user.helper.user')->find($id);
