@@ -401,7 +401,6 @@ public function avatarUploadAction() {
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
-    
    
 }
 

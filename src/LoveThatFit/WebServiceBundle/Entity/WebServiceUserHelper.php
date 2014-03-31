@@ -892,6 +892,13 @@ public function setMarkingDeviceType($entity, $deviceType,$heightPerInch){
               
    } 
 }
-
+#---------------------Get All User With Device name ---------------------------#
+ public function getAllUserDeviceType(){
+        return $this->repo->getAllUserDeviceType();
+ }
+ #------- Get Device Type Base on User ----------------------------------------#
+ public function getDeviceTypeBaseOnUser($user_id){
+     return $this->repo->getDeviceTypeBaseOnUser($user_id);
+ }
 
 }

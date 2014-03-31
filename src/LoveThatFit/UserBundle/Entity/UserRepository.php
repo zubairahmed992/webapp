@@ -233,5 +233,31 @@ class UserRepository extends EntityRepository {
         }
   }
 
+#--------------------------- Get User and Device Name -----------------------#
+  public function getAllUserDeviceType(){
+         return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('u.id as UserId ,ud.device_name as deviceName')
+                        ->from('LoveThatFitUserBundle:User', 'u')
+                        ->innerJoin('u.user_devices', 'ud')
+                        ->Where("ud.device_name!=''")
+                        ->groupBy('ud.device_name')
+                        ->getQuery()
+                        ->getResult(); 
+  }
+#-------------------------------Get Device Type Base On User ------------------#  
+  public function getDeviceTypeBaseOnUser($user_id){
+       return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('ud.device_name as deviceName')
+                        ->from('LoveThatFitUserBundle:User', 'u')
+                        ->innerJoin('u.user_devices', 'ud')
+                        ->Where("ud.device_name!=''")
+                        ->andWhere("u.id:=user_id ")
+                        ->groupBy('ud.device_name')
+                         ->setParameter('user_id',$user_id)
+                        ->getQuery()
+                        ->getResult(); 
+  }
 }
 

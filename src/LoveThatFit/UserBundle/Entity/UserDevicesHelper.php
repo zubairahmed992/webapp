@@ -69,7 +69,7 @@ class UserDevicesHelper {
     return $this->repo->findDeviceTypeBaseOnUserId($userId);
     }
 
-
+ 
 
 
 }
