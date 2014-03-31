@@ -58,14 +58,14 @@ class ProductSizeMeasurement
      * @ORM\Column(name="vertical_stretch", type="float",nullable=true)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $vertical_stretch;
+    private $vertical_stretch=0;
     /**
      * @var float $horizontal_stretch
      *
      * @ORM\Column(name="horizontal_stretch", type="float",nullable=true)
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
-    private $horizontal_stretch;
+    private $horizontal_stretch=0;
     /**
      * @var float $stretch_type_percentage
      *
