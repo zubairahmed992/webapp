@@ -656,4 +656,28 @@ class UserHelper {
       return $this->repo->findChildUser($user);
   }
 
+  public function delete($id) {
+
+        $entity = $this->repo->find($id);
+        $entity_name = $entity->getFirstName();
+
+        if ($entity) {
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            return array('users' => $entity,
+                'message' => 'The ' . $entity_name . ' has been Deleted!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+
+            return array('users' => $entity,
+                'message' => 'user not found!',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+    }
+  
 }
