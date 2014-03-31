@@ -10,6 +10,7 @@ use LoveThatFit\UserBundle\Form\Type\ProfileMeasurementFemaleType;
 use LoveThatFit\UserBundle\Form\Type\ProfileSettingsType;
 use LoveThatFit\UserBundle\Form\Type\SizeChartMeasurementType;
 use LoveThatFit\UserBundle\Form\Type\UserPasswordReset;
+use LoveThatFit\UserBundle\Form\Type\ChangeEmailType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,11 +81,13 @@ class ProfileController extends Controller {
         
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
+        $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
 
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
-                    'form_password_reset' => $passwordResetForm->createView()
+                    'form_password_reset' => $passwordResetForm->createView(),
+                    'form_email_change'=>$changeEmailForm->createView(),
                 ));
     }
 
@@ -103,13 +106,43 @@ class ProfileController extends Controller {
             $this->get('session')->setFlash('Success', 'Profile has been updated.');
         }
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
+        $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
-                    'form_password_reset' => $passwordResetForm->createView()
+                    'form_password_reset' => $passwordResetForm->createView(),
+                    'form_email_change'=>$changeEmailForm->createView(),
                 ));
     }
 
+    public function userChangeEmailAction()
+   {       
+     $id = $this->get('security.context')->getToken()->getUser()->getId();
+     $user=$this->get('user.helper.user')->find($id);
+     $changeEmailForm = $this->createForm(new ChangeEmailType(), $user);
+     $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
+     $userForm = $this->createForm(new ProfileSettingsType(), $user);
+     $changeEmailForm->bind($this->getRequest());
+     $users=$this->get('user.helper.user')->findByEmail($user->getEmail());
+     if($users){
+         $this->get('session')->setFlash('Warnings', 'Email Address already exits.');
+        
+     }else
+     {
+     if ($changeEmailForm->isValid()) {
+            $this->get('user.helper.user')->saveUser($user);
+            $this->get('session')->setFlash('Successs', 'Email Address  has been updated.');
+        }
+     }
+     return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
+                    'form' => $userForm->createView(),
+                    'entity' => $user,
+                    'form_password_reset' => $passwordResetForm->createView(),
+                    'form_email_change'=>$changeEmailForm->createView(),
+                ));
+     
+   }
+    
 //-------------------------------------------------------------------------
 
 public function passwordResetUpdateAction(Request $request) {
@@ -162,11 +195,12 @@ public function passwordResetUpdateAction(Request $request) {
         }
         $userForms = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
-
+        $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForms->createView(),
                     'entity' => $entity,
-                    'form_password_reset' => $passwordResetForm->createView()
+                    'form_password_reset' => $passwordResetForm->createView(),
+                    'form_email_change'=>$changeEmailForm->createView(),
                 ));
     }
 
@@ -188,16 +222,19 @@ public function passwordResetUpdateAction(Request $request) {
         //$this->get('session')->setFlash('Success', 'Profile has been updated.');
         $userForms = $this->createForm(new ProfileSettingsType(), $user);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
-
+        $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForms->createView(),
                     'entity' => $user,
-                    'form_password_reset' => $passwordResetForm->createView()
+                    'form_password_reset' => $passwordResetForm->createView(),
+                    'form_email_change'=>$changeEmailForm->createView(),
                 ));
     }
 
+   
 
-    public function userTryProductsAction($page_number)
+
+       public function userTryProductsAction($page_number)
     {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
         $user_try_history= $this->get('admin.helper.product')->userProfileTryProducts($user_id,$page_number);
