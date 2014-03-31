@@ -6747,3 +6747,18 @@ overflow: auto;
     margin-right:-200px!important;
     margin-top: 60px!important;
 }
+
+.p_left_blk{   
+    width:380px;
+    float:left;
+}
+
+.p_right_blk{
+    float:left;
+    width:380px;
+}
+
+.p_right_blk3{
+    float:left;
+    width:380px;
+}
