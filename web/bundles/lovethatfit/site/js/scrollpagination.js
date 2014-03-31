@@ -44,15 +44,17 @@ var page_number=1;
 		 }
 		 $(obj).children().attr('rel', 'loaded');
                  page_number=page_number+1;
+                
 		 $.ajax({
 			  type: 'POST',
 			  url: opts.contentPage + page_number+"/"+15,
 			  data: opts.contentData,
+                         
 			  success: function(data){
-				$(obj).append(data); 
+                              
+                             $(obj).append(data); 
 				var objectsRendered = $(obj).children('[rel!=loaded]');
-				
-				if (opts.afterLoad != null){
+                               if (opts.afterLoad != null){
 					opts.afterLoad(objectsRendered);	
 				}
 			  },

@@ -9,6 +9,10 @@ services:
     webservice_helper:
           class:  LoveThatFit\WebServiceBundle\WebServiceHelper
    
+    push_notification_helper:
+          class:  LoveThatFit\WebServiceBundle\PushNotificationHelper
+   
+   
     webservice.helper.product:
         class: LoveThatFit\WebServiceBundle\Entity\WebServiceProductHelper
         arguments:

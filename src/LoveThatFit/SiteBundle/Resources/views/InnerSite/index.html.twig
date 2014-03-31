@@ -29,15 +29,22 @@ $(function(){
 		'heightOffset': 10, // it gonna request when scroll is 10 pixels before the page ends
 		'beforeLoad': function(){ // before load function, you can display a preloader div
 			$('#loading').fadeIn();	
+                        
+                        
 		},
+                
 		'afterLoad': function(elementsLoaded){ // after loading content, you can use this function to animate your new elements
 			 $('#loading').fadeOut();
 			 var i = 0;
 			 $(elementsLoaded).fadeInWithDelay();
-                         
-			 if ($('#content').children().size() > parseInt($("#totalproducts").val())){ // if more than 100 results already loaded, then stop pagination (only for testing)
+                       if($("#totalproducts").val()<10){
+                         $('#loading').fadeOut();
+			 $('#content').stopScrollPagination();
+                        }
+                        if ($('#content').children().size() > 100){ 
+                        // if ($('#content').children().size() > parseInt($("#totalproducts").val())){ // if more than 100 results already loaded, then stop pagination (only for testing)
 	//alert("got true");		 	
-            $('#nomoreresults').fadeIn();
+                                $('#nomoreresults').fadeIn();
 				$('#content').stopScrollPagination();
                              
 			 }
@@ -49,7 +56,7 @@ $(function(){
 		var delay = 0;
 		return this.each(function(){
 			$(this).delay(delay).animate({opacity:1}, 200);
-			delay += 30;
+			delay += 100;
 		});
 	};
 		   

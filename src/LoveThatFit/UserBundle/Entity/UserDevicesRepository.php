@@ -19,6 +19,7 @@ class UserDevicesRepository extends EntityRepository
         $query = $this->getEntityManager()
                         ->createQuery("
      SELECT ud.deviceUserPerInchPixelHeight FROM LoveThatFitUserBundle:UserDevices ud 
+   
      WHERE ud.deviceType= :deviceType
      and ud.user =:userId"
                         )->setParameters(array('deviceType' => $deviceType, 'userId' => $userId));
@@ -42,4 +43,6 @@ class UserDevicesRepository extends EntityRepository
             return null;
         }
     }
+ 
+
 }
