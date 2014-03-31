@@ -272,7 +272,7 @@ private function getAllKeysTesting($ar){
             $feed_back['Tip'] = $this->getFeedbackArrayElement('Tip',null, null, null, 0, null, true, $recomended_size['message']);
             }
             
-            $feed_back['Overall'] = $this->getFeedbackArrayElement('scale',null, null, null, 0, null, true, $scale);
+            $feed_back['Overall'] = $this->getFeedbackArrayElement('fit index',null, null, null, 0, null, true, $scale);
         }
         $feed_back['fits']=$is_ltf ;
         /*
