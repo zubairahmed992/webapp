@@ -85,7 +85,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
         $builder->add('hip');
         $builder->add('shoulder_across_back');
         $builder->add('birthdate','date', array(
-            'years'=> range(date('Y')-8,date('Y')-100),  
+            'years'=> range(date('Y')-8,date('Y')-110),  
             'empty_value' => array('year' => 'YY', 'month' => 'MM', 'day' => 'DD'),
             'format' => 'yyyy MM dd',
             )

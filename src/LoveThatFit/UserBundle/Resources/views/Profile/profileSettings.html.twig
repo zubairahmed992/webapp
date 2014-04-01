@@ -175,14 +175,17 @@ return true;
     <div>
     
          
-{% if app.session.hasFlash('Successs') %}
-  <div class="success_alert">    
-    {{ app.session.flash('Successs') }}
-   </div>   
-{% endif %}         
-{% if app.session.hasFlash('Warnings') %}
-       <div class="alert alert-error">       
-        {{ app.session.flash('Warnings') }}
+       
+
+    
+    
+</div>  
+    
+    </div>
+<div>
+    {% if app.session.hasFlash('Successs') %}
+       <div class="success_alert">       
+        {{ app.session.flash('Successs') }}
         </div>   
 {% endif %}   
     <h5>Change Email</h5>
@@ -197,15 +200,9 @@ return true;
                 <input type="submit" value="Update" />
           </form>
     </div>
-</div>
-    
-    <div id="changeemail" style="display: none">
    
-      <p>Are you sure you want to Email Address</b>?</p>
     
-  </div>
-</div>  
-    </div>
+    
     
     <script>
     function ChangeEmail()
