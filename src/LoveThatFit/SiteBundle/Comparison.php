@@ -22,12 +22,18 @@ class Comparison {
     }
 #-----------------------------------------------------
     function getFeedBack() {
-        $cm = $this->array_mix();
-        $rc = $this->getFittingSize($cm['feedback']);
-        return array(
-            'feedback' => $cm['feedback'],
-            'recommendation' => $rc,
-        );
+        if ($this->product->fitPriorityAvailable()) {
+            $cm = $this->array_mix();
+            $rc = $this->getFittingSize($cm['feedback']);
+            return array(
+                'feedback' => $cm['feedback'],
+                'recommendation' => $rc,
+            );
+        } else {
+            return array(
+                'message' => 'Fit Priority is not set, please update the product detail.',
+            );
+        }
     }
 #-----------------------------------------------------
     function getStripedFeedBackJSON() {
@@ -42,7 +48,7 @@ class Comparison {
 #-----------------------------------------------------
     function getComparison() {
         $cm = $this->array_mix();
-        return $this->array_mix($cm['feedback']);
+        return $cm['feedback'];
     }
 #-----------------------------------------------------
 
@@ -53,6 +59,48 @@ class Comparison {
             $cm = $this->array_mix();
             return $this->getFittingSize($cm['feedback']);
         }
+    }
+    #-----------------------------------------------------
+
+    public function back_track() {
+        $sizes = $this->product->getProductSizes();
+        $body_specs = $this->user->getMeasurement()->getArray();
+        $fb = array();
+        $highest_variance=0;
+        $highest_high_variance=0;
+        $highest_max_variance=0;
+        $highest_ideal_variance=0;
+        $lowest_ideal_variance=0;
+        
+        foreach ($sizes as $size) {
+            $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
+            $size_identifier = $size->getDescription();
+            $fb[$size_identifier]['id'] = $size->getId();
+            $fb[$size_identifier]['fits'] = true;
+            $fb[$size_identifier]['description'] = $size_identifier;
+            $fb[$size_identifier]['title'] = $size->getTitle();
+            $fb[$size_identifier]['body_type'] = $size->getBodyType();
+            $variance = 0;
+            $ideal_variance = 0;
+            $max_variance = 0;
+            $status = 0;
+            $fit_scale = 0;
+            if (is_array($size_specs)) {
+                foreach ($size_specs as $fp_specs) {
+                    if (is_array($fp_specs) && array_key_exists('id', $fp_specs)) {
+                        $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']] =
+                                $this->get_fit_point_array($fp_specs, $body_specs);
+                  }
+                }
+                if (!array_key_exists('fit_points', $fb[$size_identifier])) {
+                    $status = $this->status['product_measurement_not_available'];
+                }
+            
+                
+            }
+        }
+        #$fb = $this->addFitScale($fb, $highest_variance,$highest_max_variance, $highest_ideal_variance, $lowest_ideal_variance);
+        return array('feedback'=>$this->array_sort($fb),'highest_variance'=>$highest_variance);
     }
 #-----------------------------------------------------
 
@@ -349,7 +397,7 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
     }
     #~~~~~~~~~~~~~~~~~~~~~~~~~~>>
     private function calculate_fit_scale($variance, $high, $low){
-            if ($variance < 0) {
+            if ($variance < 0 || $high <= $low) {
                 $fs = 0;
             } else {
                 $fs = 1 + (($variance - $low) * (10 - 1)) / ($high - $low);

@@ -991,10 +991,22 @@ class Product {
         return $this->fit_priority;
     }
 
-         public function getFitPriorityArray(){
+    public function getFitPriorityArray(){
         return json_decode($this->fit_priority, true);
     }
-
+    
+    public function fitPriorityAvailable(){
+        $fps = $this->getFitPriorityArray();
+        if (is_array($fps)){
+            foreach ($fps as $k=>$v){
+                if($v>0){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     public function getFitPriorityLowerCase(){        
         return str_replace('_', ' ', strtolower($this->fit_priority));
     }

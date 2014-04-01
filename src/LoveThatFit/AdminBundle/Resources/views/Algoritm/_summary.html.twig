@@ -2,13 +2,19 @@
     <h3>{{product.name }}</h3>
 
     <div style="clear: both"></div>
+{% if data.message is defined %}
+    <div  style="color:red"> {{data.message}}</div>
+{% endif %}
+    
+{% if data.recommendation is defined %}
     <b>Recommendation</b> 
-{% for size, size_specs in data.recommendation %}     
-    &nbsp;|&nbsp;{{size}} 
-    {% endfor %}
-
+        {% for size, size_specs in data.recommendation %}     
+            &nbsp;|&nbsp;{{size}} 
+        {% endfor %}
+{% endif %}
+    
+{% if data.feedback is defined %}
     <h5>Feedback</h5>
-
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
     {% for size, size_specs in data.feedback %} 
             <tr>
@@ -114,4 +120,5 @@
    {% endfor %}
 
                 </table>
+{% endif %}
             </div>     
