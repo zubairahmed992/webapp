@@ -115,7 +115,7 @@ class ProfileController extends Controller {
                 ));
     }
 
-    public function userChangeEmailAction()
+    public function userChangeEmailAction(Request $request)
    {       
      $id = $this->get('security.context')->getToken()->getUser()->getId();
      $user=$this->get('user.helper.user')->find($id);
@@ -125,21 +125,21 @@ class ProfileController extends Controller {
      $changeEmailForm->bind($this->getRequest());
      $users=$this->get('user.helper.user')->findByEmail($user->getEmail());
      if($users){
-         $this->get('session')->setFlash('Warnings', 'Email Address already exits.');
-        
-     }else
-     {
-     if ($changeEmailForm->isValid()) {
-            $this->get('user.helper.user')->saveUser($user);
-            $this->get('session')->setFlash('Successs', 'Email Address  has been updated.');
-        }
-     }
-     return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
+         $this->get('session')->setFlash('Successs', 'Email Address already exits.');
+         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $user,
                     'form_password_reset' => $passwordResetForm->createView(),
                     'form_email_change'=>$changeEmailForm->createView(),
-                ));
+                ));        
+     }else
+     {
+     if ($changeEmailForm->isValid()) {
+            $this->get('user.helper.user')->saveUser($user);
+            $this->get("security.context")->setToken(null);    
+            return $this->redirect($this->generateUrl('login'));
+        }
+     }
      
    }
     
