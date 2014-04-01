@@ -98,7 +98,8 @@ class AlgorithmController extends Controller {
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);  
         $fe = new Comparison($user, $product);                
-        return new Response($fe->getFeedBackJSON());                                
+        #return new Response($fe->getFeedBackJSON());                                
+        return new Response(json_encode($fe->back_track()));                                
     }
 
     

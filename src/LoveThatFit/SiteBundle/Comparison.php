@@ -67,10 +67,6 @@ class Comparison {
         $body_specs = $this->user->getMeasurement()->getArray();
         $fb = array();
         $highest_variance=0;
-        $highest_high_variance=0;
-        $highest_max_variance=0;
-        $highest_ideal_variance=0;
-        $lowest_ideal_variance=0;
         
         foreach ($sizes as $size) {
             $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
@@ -80,11 +76,7 @@ class Comparison {
             $fb[$size_identifier]['description'] = $size_identifier;
             $fb[$size_identifier]['title'] = $size->getTitle();
             $fb[$size_identifier]['body_type'] = $size->getBodyType();
-            $variance = 0;
-            $ideal_variance = 0;
-            $max_variance = 0;
             $status = 0;
-            $fit_scale = 0;
             if (is_array($size_specs)) {
                 foreach ($size_specs as $fp_specs) {
                     if (is_array($fp_specs) && array_key_exists('id', $fp_specs)) {
@@ -95,11 +87,8 @@ class Comparison {
                 if (!array_key_exists('fit_points', $fb[$size_identifier])) {
                     $status = $this->status['product_measurement_not_available'];
                 }
-            
-                
             }
         }
-        #$fb = $this->addFitScale($fb, $highest_variance,$highest_max_variance, $highest_ideal_variance, $lowest_ideal_variance);
         return array('feedback'=>$this->array_sort($fb),'highest_variance'=>$highest_variance);
     }
 #-----------------------------------------------------
@@ -623,7 +612,7 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         $type = strtolower($type);
 
         if ($type == 'letters') {//$female_letters
-            return array('XS', 'S', 'M', 'L', 'X', 'XL', '1X', 'XXL', '2X', 'XXXL', '3X');
+            return array('XS', 'S', 'M', 'L', 'X', 'XL', '1XL', 'XXL', '2XL', 'XXXL', '3XL');
         } else if ($gender == 'f' && $type == 'numbers') {//$female_standard
             return array('00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30');
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
