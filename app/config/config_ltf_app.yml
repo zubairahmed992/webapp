@@ -1803,7 +1803,14 @@ Bust_Measurement:
       high: 47
       average: 46      
     
-    
+PushNotification:
+  type:
+    product:
+      message: "A new product Updated"
+      status: true
+    User:
+      message: " User Profile Updated."
+      status: true
 
 Twitter:  
 consumer_key: 9GBx1IchmgsTC404I52w

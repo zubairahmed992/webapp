@@ -12,15 +12,55 @@ use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\UserBundle\Entity\User;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\HttpFoundation\Response;
+use LoveThatFit\UserBundle\Entity\PushNotification;
 
 
 class PushNotificationHelper{
+     /**
+     * Holds the Symfony2 event dispatcher service
+     */
+    protected $dispatcher;
 
-   
-    public function __construct()
-    {
+    /**
+     * Holds the Doctrine entity manager for database interaction
+     * @var EntityManager 
+     */
+    protected $em;
+
+    /**
+     * Entity-specific repo, useful for finding entities, for example
+     * @var EntityRepository
+     */
+    protected $repo;
+
+    /**
+     * The Fully-Qualified Class Name for our entity
+     * @var string
+     */
+    protected $class;
+    private $container;
+
+    protected $conf;
+    
+     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, Container $container) {
+        $this->container = $container;
+        $this->dispatcher = $dispatcher;
+        $this->em = $em;
+        $this->class = $class;
+        $this->repo = $em->getRepository($class);
+        $conf_yml = new Parser();
+        $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         
-        
+    }
+
+   //-------------------------------------------------------
+
+    public function savePushNotification(PushNotification $PushNotification) {
+      $PushNotification->setUpdatedAt(new \DateTime('now'));   
+      $PushNotification->setCreatedAt(new \DateTime('now'));
+       
+       $this->em->persist($PushNotification);
+       $this->em->flush();
     }
  
     public function sendPushNotification($deviceToken,$msg,$request){
@@ -71,4 +111,32 @@ class PushNotificationHelper{
         return "sending message :" . $payload;
     }
  
+#-----------Fetch PushNotification type from YML ------------------------------#   
+  public function getNotificationType($type){
+     
+       $allNotification= $this->conf["PushNotification"]['type'];
+        foreach($allNotification as $singleNotification=>$key){
+           if($singleNotification==$type and $key['status']=="true"){
+            return array('status'=>$key['status'],'message'=>$key['message']);
+           }else{
+               return array('status'=>'false');
+           }
+        }
+       
+  }
+  #---------------Save the notification in DB---------------------------#
+  public function setNotificationInDB($type, $msg){
+        $PushNotification = new PushNotification();
+        $PushNotification->setMessage($msg);
+        $PushNotification->setNotificationType($type);
+        $PushNotification->setUserId(1);
+        $PushNotification->setNotificationLimit(0);
+        $PushNotification->setIsActive(1);
+        
+        $this->savePushNotification($PushNotification);
+        return array('msg'=>' Notiifcation Saved Successfully');
+        
+      
+  }
+    
 }

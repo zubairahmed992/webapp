@@ -11,6 +11,11 @@ services:
    
     push_notification_helper:
           class:  LoveThatFit\WebServiceBundle\PushNotificationHelper
+          arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\UserBundle\Entity\PushNotification
+            container: "@service_container"
    
    
     webservice.helper.product:

@@ -28,7 +28,7 @@ class PushNotification  {
      *
      * @ORM\Column(name="user_id", type="integer")
      */
-    private $iserId;
+    private $userId;
     
    /**
      * @var string $message
@@ -39,18 +39,18 @@ class PushNotification  {
     
     
      /**
-     * @var string $type
+     * @var string $notificationType
      *
-     * @ORM\Column(name="type", type="string", length=60, nullable=true)
+     * @ORM\Column(name="notification_type", type="string", length=60, nullable=true)
      */
-    private $type;
+    private $notification_type;
     
     /**
-     * @var string $limit
+     * @var string $notificationlimit
      *
-     * @ORM\Column(name="limit", type="string", length=60, nullable=true)
+     * @ORM\Column(name="notification_limit", type="string", length=60, nullable=true)
      */
-    private $limit;
+    private $notification_limit;
     
      /**
      * @var boolean $isActive
@@ -74,8 +74,6 @@ class PushNotification  {
     private $updatedAt;
 
 
-   
-
     /**
      * Get id
      *
@@ -87,26 +85,26 @@ class PushNotification  {
     }
 
     /**
-     * Set iserId
+     * Set userId
      *
-     * @param integer $iserId
+     * @param integer $userId
      * @return PushNotification
      */
-    public function setIserId($iserId)
+    public function setUserId($userId)
     {
-        $this->iserId = $iserId;
+        $this->userId = $userId;
     
         return $this;
     }
 
     /**
-     * Get iserId
+     * Get userId
      *
      * @return integer 
      */
-    public function getIserId()
+    public function getUserId()
     {
-        return $this->iserId;
+        return $this->userId;
     }
 
     /**
@@ -245,5 +243,51 @@ class PushNotification  {
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set notification_type
+     *
+     * @param string $notificationType
+     * @return PushNotification
+     */
+    public function setNotificationType($notificationType)
+    {
+        $this->notification_type = $notificationType;
+    
+        return $this;
+    }
+
+    /**
+     * Get notification_type
+     *
+     * @return string 
+     */
+    public function getNotificationType()
+    {
+        return $this->notification_type;
+    }
+
+    /**
+     * Set notification_limit
+     *
+     * @param string $notificationLimit
+     * @return PushNotification
+     */
+    public function setNotificationLimit($notificationLimit)
+    {
+        $this->notification_limit = $notificationLimit;
+    
+        return $this;
+    }
+
+    /**
+     * Get notification_limit
+     *
+     * @return string 
+     */
+    public function getNotificationLimit()
+    {
+        return $this->notification_limit;
     }
 }

@@ -137,7 +137,13 @@ ws_product_detail_syn:
 
 ws_send_push_notifcation:
    pattern:  /web_service/send_push_notification
-   defaults: { _controller: LoveThatFitWebServiceBundle:Product:sendPushNotifcation}     
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:sendPushNotifcation}  
+
+ws_get_notification_type:
+   pattern:  /web_service/get_notification_type
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getNotificationType}  
+
+   
    
 
  

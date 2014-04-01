@@ -397,12 +397,22 @@ public function brandListAction() {
 #------------------ End of Product Synchronization-----------------------------#
 #----------------- Push notification Start-------------------------------------#
 public function sendPushNotifcationAction(){
-    
-    return new response (json_encode($this->get('webservice.helper.user')->getAllUserDeviceType()));
-    $request = $this->getRequest();
+   $request = $this->getRequest();
    $msg= $this->get('push_notification_helper')->sendPushNotification('5df5813920c2716badb4a90c81551276ae96cb60cf4a19a52399d1d407991f93',"12","test",$request);
    return new response($msg);
    
+}
+public function getNotificationTypeAction(){
+    $type='product';
+    $msg=$this->get('push_notification_helper')->getNotificationType($type);
+    // Save in DB
+    if($msg['status']=='true'){
+       $response= $this->get('push_notification_helper')->setNotificationInDB($type,$msg['message']);
+        return new response(json_encode($response));
+    }else{
+        return new response("Not saved");
+    }
+    
 }
 
 
