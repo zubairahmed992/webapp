@@ -12,8 +12,7 @@ class ProfileSettingsType extends AbstractType
     {
        
         $builder->add('firstName', 'text');
-        $builder->add('lastName', 'text');
-        
+        $builder->add('lastName', 'text');        
         $builder->add('gender', new GenderType(), array(
                
              'multiple'  => false, 

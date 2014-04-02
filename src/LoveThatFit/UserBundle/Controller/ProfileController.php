@@ -22,6 +22,7 @@ use LoveThatFit\AdminBundle\Entity\Brand;
 use LoveThatFit\AdminBundle\Entity\SizeChart;
 use LoveThatFit\UserBundle\Entity\UserParentChildLink;
 use LoveThatFit\UserBundle\Form\Type\UserParentChildLinkType;
+use LoveThatFit\UserBundle\Form\Type\UserSecretQuestionAnswer;
 
 class ProfileController extends Controller {
 
@@ -77,17 +78,21 @@ class ProfileController extends Controller {
     public function accountSettingsAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $entity = $this->get('user.helper.user')->find($id);
-        
+        $entity = $this->get('user.helper.user')->find($id);   
+        $entity->setSecretQuestion('');
+        $entity->setSecretAnswer('');
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
         $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
+        $secretQuestionAnswerForm = $this->createForm(new UserSecretQuestionAnswer(), $entity);
 
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
                     'form_password_reset' => $passwordResetForm->createView(),
                     'form_email_change'=>$changeEmailForm->createView(),
+                    'secret_question_answer'=>$secretQuestionAnswerForm->createView(),
+            
                 ));
     }
 
@@ -97,7 +102,8 @@ class ProfileController extends Controller {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $entity=$this->get('user.helper.user')->find($id);
-        
+         $entity->setSecretQuestion('');
+        $entity->setSecretAnswer('');
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
 
@@ -107,11 +113,13 @@ class ProfileController extends Controller {
         }
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
         $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
+        $secretQuestionAnswerForm = $this->createForm(new UserSecretQuestionAnswer(), $entity);
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $entity,
                     'form_password_reset' => $passwordResetForm->createView(),
                     'form_email_change'=>$changeEmailForm->createView(),
+             'secret_question_answer'=>$secretQuestionAnswerForm->createView(),
                 ));
     }
 
@@ -119,9 +127,12 @@ class ProfileController extends Controller {
    {       
      $id = $this->get('security.context')->getToken()->getUser()->getId();
      $user=$this->get('user.helper.user')->find($id);
+     $user->setSecretQuestion('');
+     $user->setSecretAnswer('');
      $changeEmailForm = $this->createForm(new ChangeEmailType(), $user);
      $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
      $userForm = $this->createForm(new ProfileSettingsType(), $user);
+     $secretQuestionAnswerForm = $this->createForm(new UserSecretQuestionAnswer(), $user);
      $changeEmailForm->bind($this->getRequest());
      $users=$this->get('user.helper.user')->findByEmail($user->getEmail());
      if($users){
@@ -131,6 +142,7 @@ class ProfileController extends Controller {
                     'entity' => $user,
                     'form_password_reset' => $passwordResetForm->createView(),
                     'form_email_change'=>$changeEmailForm->createView(),
+              'secret_question_answer'=>$secretQuestionAnswerForm->createView(),
                 ));        
      }else
      {
@@ -142,6 +154,29 @@ class ProfileController extends Controller {
      }
      
    }
+   
+//-------------------------------------------------------------------------
+   public function userSecretQuestionAnswerAction(Request $request)
+   {
+     $id = $this->get('security.context')->getToken()->getUser()->getId();
+     $user=$this->get('user.helper.user')->find($id);     
+     $changeEmailForm = $this->createForm(new ChangeEmailType(), $user);
+     $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
+     $userForm = $this->createForm(new ProfileSettingsType(), $user);
+     $secretQuestionAnswerForm = $this->createForm(new UserSecretQuestionAnswer(), $user);
+     $secretQuestionAnswerForm->bind($this->getRequest());
+     if ($secretQuestionAnswerForm->isValid()) {
+            $this->get('user.helper.user')->saveUser($user);      
+            $this->get('session')->setFlash('Successss', 'Secret Question and answer has been update.');
+        }
+         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
+                    'form' => $userForm->createView(),
+                    'entity' => $user,
+                    'form_password_reset' => $passwordResetForm->createView(),
+                    'form_email_change'=>$changeEmailForm->createView(),
+                    'secret_question_answer'=>$secretQuestionAnswerForm->createView(),
+                ));    
+   }
     
 //-------------------------------------------------------------------------
 
@@ -152,7 +187,8 @@ public function passwordResetUpdateAction(Request $request) {
          
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('LoveThatFitUserBundle:User')->find($id);
-
+        $entity->setSecretQuestion('');
+        $entity->setSecretAnswer('');
         $user_old_password = $entity->getPassword();
         $salt_value_old = $entity->getSalt();
 
@@ -196,11 +232,13 @@ public function passwordResetUpdateAction(Request $request) {
         $userForms = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
         $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
+        $secretQuestionAnswerForm = $this->createForm(new UserSecretQuestionAnswer(), $entity);
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForms->createView(),
                     'entity' => $entity,
                     'form_password_reset' => $passwordResetForm->createView(),
                     'form_email_change'=>$changeEmailForm->createView(),
+             'secret_question_answer'=>$secretQuestionAnswerForm->createView(),
                 ));
     }
 
@@ -209,6 +247,8 @@ public function passwordResetUpdateAction(Request $request) {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user=$this->get('user.helper.user')->find($id);
+        $user->setSecretQuestion('');
+        $user->setSecretAnswer('');
         $userForm = $this->createForm(new UserPasswordReset(), $user);
         $userForm->bind($request);
         $data = $userForm->getData();
@@ -223,11 +263,13 @@ public function passwordResetUpdateAction(Request $request) {
         $userForms = $this->createForm(new ProfileSettingsType(), $user);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
         $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
+        $secretQuestionAnswerForm = $this->createForm(new UserSecretQuestionAnswer(), $entity);
         return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForms->createView(),
                     'entity' => $user,
                     'form_password_reset' => $passwordResetForm->createView(),
                     'form_email_change'=>$changeEmailForm->createView(),
+             'secret_question_answer'=>$secretQuestionAnswerForm->createView(),
                 ));
     }
 
