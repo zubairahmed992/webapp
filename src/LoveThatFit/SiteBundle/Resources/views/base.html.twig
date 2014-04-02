@@ -15,8 +15,17 @@
     </head>
  
     <body>
+   {% set class_url=path(app.request.attributes.get('_route'))%}
+   {%set my_route="/webapp/web/app_dev.php/inner_site/index"%}            
+{% if (class_url ==my_route)  %}
+    {% set class="main" %}
+    {% else%}
+    {% set class="" %}
+            
+{%endif%}
         
-      <div class="full_wrapper">
+
+      <div class="{{class}} full_wrapper ">
         <div class="holder">
             {%if app.user %}
            

@@ -339,20 +339,7 @@ ul.row li {
 }
 /*--Home Page--*/
 
-#header{    
-overflow:hidden;
-    border-bottom: 3px solid #524E4E;
-    color: #444444;    
-    
-    padding: 5px 0;
-    right: 0;
-    top: 0;    
-    z-index: 2;
 
-
-
-
-}
 
 
 
@@ -1051,16 +1038,7 @@ a.but_short:visited {
 .step_4 .btm_buttons {
     bottom: -36px;
 }
-.uploading_in_progress {
-    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
-    height: 72px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    z-index: 5000;
-    top:0;
-    left:0;
-}
+
 
 .int_fitting_room {
 	
@@ -1627,14 +1605,7 @@ input[type=email]{
     width:790px;
 }
 
-.prod_sliding_area{
-	overflow:hidden;
-        z-index: 50;
-        width:789px;
-        position: relative;
-        
-       
-}
+
 .prod_sliding_area .play_area_hldr {
    float: right;
 }
@@ -4508,7 +4479,7 @@ margin-left: 4px;
  
  
  
- .fitting_room_recent{  
+ .main .fitting_room_recent{  
    
    float: left;
     left: 10px;
@@ -4516,19 +4487,20 @@ margin-left: 4px;
     overflow: hidden;
  }
  
- .fitting_room_recent .prod_wrapper li{
+ .main .fitting_room_recent .prod_wrapper li{
      display:block;
  }
  
- .fitting_room_recent .featured_content{
+ .main .fitting_room_recent .featured_content{
      display: none;
  }
 
- .fitting_room_recent .fbox{
+.main  .fitting_room_recent .fbox{
      padding:0px;
+     
  }
  
- .fitting_room_recent .prod_wrapper li{
+.main .fitting_room_recent .prod_wrapper li{
      min-height: 30px;
      width:auto;
      line-height: 30px;
@@ -4536,7 +4508,10 @@ margin-left: 4px;
  }
  
  .fitting_room_recent .featured_img img{
-     width:40%;
+    
+     display: inline-block;
+    height: 49px;
+    width: 40%;
  }
  
  ul.prod_wrapper{
@@ -4547,6 +4522,21 @@ margin-left: 4px;
        
 }
 
+.fitting_room_recent .prod_wrapper{
+	padding:0;
+	margin:40px 0px 0px 5px!important;	
+    
+       
+}
+
+ .main ul.prod_wrapper{
+	padding:0;
+	margin:75px 0px 0px 5px;	
+    
+       
+}
+
+
 
 
 #rect_hd{
@@ -4555,4 +4545,251 @@ margin-left: 4px;
     color: #666666;
     padding-left: 10px;
     margin-bottom: 10px;
+}
+
+
+
+
+
+.indic{
+    background: url("../images/indic_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 52px;
+    left: 87px;
+    position: absolute;
+    top: 65px;
+    width: 52px;
+}
+
+#scrollpaginationdemo{
+    margin-bottom: 100px;
+}
+
+.uploading_in_progress {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px 2px #CCCCCC;    
+    margin: 0 auto;
+    height: 100px;
+    opacity: 0.7;
+    padding: 15px;
+    width: 200px;
+    text-align: center;   
+    
+    
+}
+
+#loadg{
+    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
+    height: 72px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 5000;
+    top:10;
+    left:0;
+}
+.main #header{    
+   overflow:hidden;
+    border-bottom: 3px solid #524E4E;
+    color: #444444;       
+    padding: 5px 0; 
+    z-index: 51;
+    position: fixed;
+    background: #fff;
+    top: 0px;
+}
+
+#header{    
+overflow:hidden;
+    border-bottom: 3px solid #524E4E;
+    color: #444444;    
+    
+    padding: 5px 0;
+   
+    top: 0;    
+    z-index: 2;
+
+}
+
+
+
+.left_column{ 
+ width:200px;
+ position:relative; 
+        z-index: 100;
+        float:left;
+        background: #fff;
+}
+
+.main .left_column{	
+	width:200px;
+	position:relative;	
+        z-index: 100;
+        float:left;
+        background: #fff;
+        position: fixed;
+        margin-top: 12px;
+}
+
+#ltf_fitting_room {
+    display: block;
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 35px;
+    z-index: 5000;
+    border:none;
+    border-left: none;
+    padding-top: 10px;
+    height: 530px;
+    background: url("../images/bar_shadow_dark.png") 0 0 repeat-y #fff;
+}
+
+.main #ltf_fitting_room {
+    display: block;   
+     
+    width: 35px;
+    top:60px;
+    z-index: 5000;
+    border:none;
+    border-left: none;
+    padding-top: 10px;
+    height: 530px;
+    position: fixed;
+   
+    background: url("../images/bar_shadow_dark.png") 0 0 repeat-y #fff;
+}
+
+.prod_sliding_area{
+ overflow:hidden;
+        z-index: 50;
+        width:789px;
+        position: relative;
+        
+       
+}
+
+.main .prod_sliding_area{
+	overflow:hidden;
+        z-index: 50;
+        width:789px;
+        position: relative!important;  
+        margin-left: 200px;
+}
+
+.footer {
+ width:996px;
+ margin:0 auto;
+ height:60px;
+ padding-right:10px;
+ position:relative;
+        z-index: 600;
+        
+}
+
+.main .footer {
+	width:996px;
+	margin:0 auto;
+	height:60px;
+	padding-right:10px;
+	position:fixed;
+        z-index: 600;
+        bottom:0;
+        background: #fff;
+        left:129px;
+        border-top: 1px solid #ccc;
+        
+}
+
+.default_item .featured_img {
+   /* padding-right: 30px;*/
+    width:110px;
+    margin:0 auto;
+    text-align: center;
+    float:none;
+   
+}
+
+.main .default_item .featured_img {
+   /* padding-right: 30px;*/
+    width:110px;
+    margin:0 auto;
+    text-align: center;
+    float:none;
+    max-height: 114px;
+    min-height: 114px;
+   
+}
+
+.fbox{    
+    overflow: hidden;
+    padding: 10px 10px 0;
+    margin-left: -10px;
+    margin-top: -16px;
+}
+
+.main .fbox{    
+    overflow: hidden;
+    padding: 0px 0px;
+    margin-left: -10px;
+    margin-top: -48px;
+}
+
+.main .fitting_room_recent .fbox{    
+    overflow: hidden;
+    padding: 0px 0px;
+    margin-left: -10px;
+    margin-top: -48px;
+}
+
+.prod_wrapper li{
+	list-style:none;
+        width:130px;
+        display:inline-block;
+	padding:10px;
+        min-height: 146px;
+        /*border-bottom:1px dashed #c4c5c4;*/
+}
+
+.main .prod_wrapper li{
+    display: inline-block;
+    list-style: none outside none;
+    min-height: 134px;
+    padding: 10px;
+    width: 130px;
+}
+
+.prod_wrapper li h3 {
+    visibility: hidden;
+    min-height: 40px;
+    max-height: 40px;
+    font-size: 0.9em;
+}
+
+.main .prod_wrapper li h3 {   
+    min-height: 28px;
+    max-height: 37px;
+    font-size: 0.9em;
+    width: 108px;
+    text-align: center;
+}
+
+.welcome_box{	    
+    width: 580px;
+    float:right;        
+}
+
+.main .welcome_box{	    
+    width: 587px;
+    float:right;        
+}
+
+.full_wrapper {
+	background:none;
+	padding-top:10px;
+}
+
+.main {
+	background:none;
+	padding-top:0px;
 }
