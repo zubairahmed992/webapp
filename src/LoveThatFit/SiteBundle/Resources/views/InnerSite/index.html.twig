@@ -71,6 +71,7 @@ $(function(){
 });
 </script>
 
+
 <section class="products">
     
     <div id="fitting_alerts">
@@ -85,7 +86,10 @@ $(function(){
     
     <div class="prod_slider_hldr">
         <div class="slider_but_top click_able_top"></div>
+        
+        
         <div class="prod_sliding_area">
+            <div style="background:#fff; position:fixed; width:789px; z-index:200; height:70px; top:34px">&nbsp;</div>
             
           <div id="ltf_fitting_room">
           <div class="but_opn_fr">
@@ -298,7 +302,20 @@ $(function(){
             <div id="content">
             </div>
             
-           <div class='uploading_in_progress set_width_chg' id="loading">Loading...</div>
+           
+                   
+                    <div class='uploading_in_progress set_width_chg' id="loading">
+                        
+                        <div id="loadg"></div>Loading... 
+           
+           
+               <div class="indic"></div>
+           
+           
+           </div>
+                           
+          
+           
            </div>
         <!---/#dis canv---></div>
         
@@ -746,6 +763,7 @@ var scroll_heighting = 506;
         drop: function( event, ui ) {
             
             //alert(ui.draggable);
+
             
             new_product_control(ui.draggable);
  
@@ -1083,6 +1101,13 @@ function chk_dress_applied_loaded(prod_type_applied){
                     });
             }
         }
+        
+        
+       
+  
+    
+  
+  
 
 function apply_prod(size_id,product_id,color_id){
     //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
@@ -1202,7 +1227,24 @@ function set_select_color(curr_prod_clicked_id){
          }
 }
   
+ screen_height = $('.prod_sliding_area').height();
+// scrol = $('#scrollpaginationdemo').height();
+ 
+ total_height = screen_height+100;
+ $('#ltf_fitting_room').css( "height", total_height);
+ 
+  screen_width = $(window).width()/2;
   
+  
+  screen_width2 = $('.holder').width()/2;
+  
+  
+  rec = screen_width-screen_width2;
+  $('.main #ltf_fitting_room').css( "right", rec);
+  
+  
+  
+
 $(".share_but_new").click(
   function() {
       $(".share_inner").show();
@@ -1212,6 +1254,8 @@ $(".share_but_new").click(
 
 
 </script>
+
+
 
  
 {% endblock %} 
