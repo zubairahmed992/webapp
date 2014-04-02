@@ -158,6 +158,18 @@ forgot_password_reset_form:
 forgot_password_update:
     pattern:   /forgot_password_update/{id}
     defaults:  { _controller: LoveThatFitUserBundle:Security:forgotPasswordUpdate }
+    
+lost_user_account:
+    pattern:   /lost_user_account
+    defaults:  { _controller: LoveThatFitUserBundle:Security:lostUserAccount } 
+    
+lost_account_form:
+    pattern:   /lost_account_form
+    defaults:  { _controller: LoveThatFitUserBundle:Security:lostUserAccountForm }  
+
+lost_account_secret_answer:    
+   pattern:   /secret_question_answer
+   defaults:  { _controller: LoveThatFitUserBundle:Security:secretQuestionAnswer }  
 
 #----------------------------------------  Dev/Testing ------------------------------------------------  
 go_secure:

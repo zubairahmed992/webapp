@@ -157,7 +157,6 @@ class SecurityController extends Controller {
                     'invalid_message' => 'The password fields must match.',
                 ))
                 ->getForm();
-
         try {
 
             $em = $this->getDoctrine()->getManager();
@@ -198,5 +197,120 @@ class SecurityController extends Controller {
                         'entity' => $entity));
         }
     }
+    
+    
+    public function lostUserAccountAction()
+    {
+        $defaultData = array('message' => 'Enter your email address');
+        $form = $this->createFormBuilder($defaultData)
+                ->add('email', 'email')
+                ->getForm();
+        return $this->render('LoveThatFitUserBundle:Security:lostAccountForm.html.twig', array(
+                        'form' => $form->createView(),
+                        ));
+        
+    }
+    
+    public function lostUserAccountFormAction(Request $request)
+    {
+        $defaultData = array('message' => 'Enter your email address');
+        $form = $this->createFormBuilder($defaultData)
+                ->add('email', 'email')
+                ->getForm();
+        if ($this->getRequest()->getMethod() == 'POST') {
+            $form->bindRequest($this->getRequest());
+            $data = $form->getData();
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $_user = $em->getRepository('LoveThatFitUserBundle:User')->findByEmail($data['email']);                
+                if ($_user) {                     
+                $secretform = $this->createFormBuilder($defaultData)
+                ->add('secretAnswer', 'text')
+               ->add('email', 'hidden',array(
+                'data' => $data['email']))
+                ->getForm();
+               return $this->render('LoveThatFitUserBundle:Security:secretQuestionAnswerForm.html.twig', array(
+                              'secretForm' => $secretform->createView(),  "secretQuestion" => $_user->getSecretQuestion(),));
+                } else {
+                    if($data['email']==null)
+                    {
+                    $msg = "Enter your email address";
+                    return $this->render('LoveThatFitUserBundle:Security:lostAccountForm.html.twig', array(
+                              'form' => $form->createView(),  "defaultData" => $msg,));
+                    }else
+                    {
+                    $msg = "email address not found.";
+                    return $this->render('LoveThatFitUserBundle:Security:lostAccountForm.html.twig', array('form' => $form->createView(),
+                                "defaultData" => $msg,));
+                    }
+                }
+            }
+            return $this->render('LoveThatFitUserBundle:Security:lostAccountForm.html.twig', array(
+                        'form' => $form->createView(), "defaultData" => $defaultData));
+        } else {
+
+            return $this->render('LoveThatFitUserBundle:Security:lostAccountForm.html.twig', array(
+                        'form' => $form->createView()));
+        }
+        
+     
+        
+    }
+    
+    
+     public function secretQuestionAnswerAction(Request $request)
+      {         
+        $defaultData = array('message' => 'Enter your email address');
+        $form = $this->createFormBuilder($defaultData)
+                ->add('email', 'email')
+                ->getForm();         
+          
+          if ($this->getRequest()->getMethod() == 'POST') {      
+          $defaultData1 = array('message' => 'Enter your answer');
+          $secretform = $this->createFormBuilder($defaultData1)
+                ->add('secretAnswer', 'text')
+                ->add('email', 'hidden')
+                ->getForm();
+            $secretform->bindRequest($this->getRequest());
+            $data = $secretform->getData();            
+            if ($secretform->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $_user = $em->getRepository('LoveThatFitUserBundle:User')->findByEmail($data['email']);                
+           if ($_user) {
+               if($data['secretAnswer']==$_user->getSecretAnswer())
+               { 
+                    $_user->generateAuthenticationToken();
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($_user);
+                    $em->flush();
+                    $baseurl = $this->getRequest()->getHost();
+                    $link = $baseurl.$this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $_user->getAuthToken()));
+                    $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmail($_user, $link);
+                    $msg = "";
+                  if ($defaultData[0]) {
+                        $msg = " Email has been sent with reset password link to " . $_user->getEmail();
+                    } else {
+                        $msg = " Email not sent due to some problem, please try again later.";
+                    }
+                    return $this->render('LoveThatFitUserBundle:Security:lostAccountForm.html.twig', array(
+                               "defaultData" => $msg,
+                            ));
+                }
+                else
+           {
+                $msg = "Wrong answer please write correct answer" ;
+               return $this->render('LoveThatFitUserBundle:Security:secretQuestionAnswerForm.html.twig', array(
+                              'secretForm' => $secretform->createView(),  "secretQuestion" => $_user->getSecretQuestion(),"defaultData" => $msg,));
+           }
+           }
+                
+            }
+       
+      }
+    
+ }
+    
+    
+    
 
 }

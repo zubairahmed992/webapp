@@ -13,12 +13,6 @@ class UserSecretQuestionAnswer extends AbstractType {
         $builder->add('secretAnswer', 'text');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
-        $resolver->setDefaults(array(
-            'validation_groups' => array('profile_settings')
-        ));
-    }
-
     public function getName() {
         return 'user';
     }

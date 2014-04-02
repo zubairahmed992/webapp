@@ -244,10 +244,7 @@ class User implements UserInterface, \Serializable {
     /**
      * @var string $secretQuestion
      *
-     * @ORM\Column(name="secret_question", type="string", length=50, nullable=true)
-     * @Assert\NotBlank(groups={"profile_settings"})       
-     * groups={"profile_settings"}
-     * ) 
+     * @ORM\Column(name="secret_question", type="string", length=50, nullable=true)         
      */
     private $secretQuestion;
     
@@ -255,10 +252,7 @@ class User implements UserInterface, \Serializable {
     /**
      * @var string $secretAnswer
      *
-     * @ORM\Column(name="secret_answer", type="string", length=50, nullable=true)          
-     * @Assert\NotBlank(groups={"profile_settings"})      
-     * groups={"profile_settings"}
-     * ) 
+     * @ORM\Column(name="secret_answer", type="string", length=50, nullable=true)  
      */
     private $secretAnswer;
 
