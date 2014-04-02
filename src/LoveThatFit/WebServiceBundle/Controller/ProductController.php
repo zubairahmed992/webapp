@@ -403,6 +403,8 @@ public function sendPushNotifcationAction(){
    
 }
 public function getNotificationTypeAction(){
+    
+    return new response(json_encode($this->get('push_notification_helper')->updatePushNotification()));
     $type='product';
     $msg=$this->get('push_notification_helper')->getNotificationType($type);
     // Save in DB

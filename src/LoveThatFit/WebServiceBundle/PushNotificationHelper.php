@@ -129,14 +129,33 @@ class PushNotificationHelper{
         $PushNotification = new PushNotification();
         $PushNotification->setMessage($msg);
         $PushNotification->setNotificationType($type);
-        $PushNotification->setUserId(1);
+        $PushNotification->setUserId(0);
         $PushNotification->setNotificationLimit(0);
         $PushNotification->setIsActive(1);
-        
         $this->savePushNotification($PushNotification);
-        return array('msg'=>' Notiifcation Saved Successfully');
-        
-      
+        return array('msg'=>' Notifcation Saved Successfully');
   }
+#---------------Update Push Notification Table Base on User Id ----------------#
+ public function updatePushNotification ($notificationReceiverUserId){
+     $userId='1';
+     $notificationData=$this->findByUserId($userId);
+     
+     if(count($notificationData)>0){
+     
+        foreach($notificationData as $singleNotification){
+            $singleNotification->setUserId($notificationReceiverUserId);
+            $this->savePushNotification($singleNotification);
+        }
+     }else{
+         return array('status'=>'false');
+     }
+     
+     
+ }
+ #----------Find PushNotification Base On User Id------------------------------#
+ public function findByUserId($userId){
+  return $this->repo->findByUserId($userId);
+ }
+ 
     
 }
