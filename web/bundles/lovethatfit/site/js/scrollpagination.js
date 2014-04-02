@@ -11,7 +11,7 @@
 (function( $ ){
 
 var page_number=1;    
-
+$.fn.more_content_available = true;
 
  $.fn.scrollPagination = function(options) {
   	
@@ -50,14 +50,18 @@ var page_number=1;
 			  url: opts.contentPage + page_number+"/"+15,
 			  data: opts.contentData,
                          
-			  success: function(data){
-                              
+			  success: function(data){                              
+                            if (data.trim()=='false'){                              
+                              $.fn.more_content_available = false;
+                              data='';
+                            }
+                            
                              $(obj).append(data); 
 				var objectsRendered = $(obj).children('[rel!=loaded]');
                                if (opts.afterLoad != null){
 					opts.afterLoad(objectsRendered);	
 				}
-			  },
+                          },
 			  dataType: 'html'
 		 });
 	 }
