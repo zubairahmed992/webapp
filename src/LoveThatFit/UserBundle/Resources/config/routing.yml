@@ -94,6 +94,10 @@ user_profile_settings_update:
 user_profile_change_email:    
     pattern:  /profile/change/email
     defaults: { _controller: LoveThatFitUserBundle:Profile:userChangeEmail}
+
+user_secret_question_answer:
+    pattern:  /profile/secret/question/answer
+    defaults: { _controller: LoveThatFitUserBundle:Profile:userSecretQuestionAnswer} 
     
 user_profile_password_reset_update:
     pattern:  /profile/settings/password_update

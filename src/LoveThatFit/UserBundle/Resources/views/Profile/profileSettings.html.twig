@@ -93,6 +93,9 @@ return true;
                  </div>
             </div>
    
+   
+   
+   
    <div class="clr_bth"></div>
             
             <div class="frm_ele select_inline act_set acc_set">
@@ -112,6 +115,7 @@ return true;
                     <div class="clr_bth"></div>
                    
                     
+                    
                 <div class="frm_ele image acc_set">                
                     <label>Upload Image:</label>   {{ form_widget(form.file) }}   
               
@@ -121,8 +125,7 @@ return true;
             <input type="submit" value="Update" />
              </form>
         
-</div>
-   
+</div>  
 
 <div class="acct_second">
     {% if app.session.hasFlash('Success') %}
@@ -182,6 +185,7 @@ return true;
 </div>  
     
     </div>
+     <div class="clr_bth"></div>
 <div>
     {% if app.session.hasFlash('Successs') %}
        <div class="success_alert">       
@@ -200,7 +204,36 @@ return true;
                 <input type="submit" value="Update" />
           </form>
     </div>
-   
+    <div class="clr_bth"></div>
+    
+    <div>
+    {% if app.session.hasFlash('Successss') %}
+       <div class="success_alert">       
+        {{ app.session.flash('Successss') }}
+        </div>   
+{% endif %}   
+    <h5>Secret Question Answer</h5>
+  <form action="{{ path('user_secret_question_answer')}}" method="post" {{ form_enctype(secret_question_answer) }}>
+    {{ form_errors(secret_question_answer) }}            
+           <div class="frm_ele acc_set">               
+                <label>Secret Question</label>
+                {{ form_widget(secret_question_answer.secretQuestion) }}
+                 <div class="form_vld_error">  
+                 {{ form_errors(secret_question_answer.secretQuestion) }}
+                 </div>
+            </div>
+   <div class="frm_ele acc_set">
+               
+                <label>Secret Answer</label>
+                {{ form_widget(secret_question_answer.secretAnswer) }}
+                 <div class="form_vld_error">  
+                 {{ form_errors(secret_question_answer.secretAnswer) }}
+                 </div>
+            </div>
+             {{ form_rest(secret_question_answer) }}
+                <input type="submit" value="Update" />
+          </form>
+    </div>
     
     
     

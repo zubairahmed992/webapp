@@ -240,7 +240,27 @@ class User implements UserInterface, \Serializable {
      */
     private $authTokenCreatedAt;
     
-     
+            
+    /**
+     * @var string $secretQuestion
+     *
+     * @ORM\Column(name="secret_question", type="string", length=50, nullable=true)
+     * @Assert\NotBlank(groups={"profile_settings"})       
+     * groups={"profile_settings"}
+     * ) 
+     */
+    private $secretQuestion;
+    
+    
+    /**
+     * @var string $secretAnswer
+     *
+     * @ORM\Column(name="secret_answer", type="string", length=50, nullable=true)          
+     * @Assert\NotBlank(groups={"profile_settings"})      
+     * groups={"profile_settings"}
+     * ) 
+     */
+    private $secretAnswer;
 
     /**
      * Get id
@@ -1045,4 +1065,50 @@ class User implements UserInterface, \Serializable {
 
     
     
+
+    /**
+     * Set secretQuestion
+     *
+     * @param string $secretQuestion
+     * @return User
+     */
+    public function setSecretQuestion($secretQuestion)
+    {
+        $this->secretQuestion = $secretQuestion;
+    
+        return $this;
+    }
+
+    /**
+     * Get secretQuestion
+     *
+     * @return string 
+     */
+    public function getSecretQuestion()
+    {
+        return $this->secretQuestion;
+    }
+
+    /**
+     * Set secretAnswer
+     *
+     * @param string $secretAnswer
+     * @return User
+     */
+    public function setSecretAnswer($secretAnswer)
+    {
+        $this->secretAnswer = $secretAnswer;
+    
+        return $this;
+    }
+
+    /**
+     * Get secretAnswer
+     *
+     * @return string 
+     */
+    public function getSecretAnswer()
+    {
+        return $this->secretAnswer;
+    }
 }
