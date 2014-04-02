@@ -79,6 +79,8 @@ class ProfileController extends Controller {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $entity = $this->get('user.helper.user')->find($id); 
+          $entity->setSecretQuestion('');
+     $entity->setSecretAnswer('');   
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $passwordResetForm = $this->createForm(new UserPasswordReset(), $entity);
         $changeEmailForm = $this->createForm(new ChangeEmailType(), $entity);
@@ -99,7 +101,9 @@ class ProfileController extends Controller {
     public function accountSettingsUpdateAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        $entity=$this->get('user.helper.user')->find($id);      
+        $entity=$this->get('user.helper.user')->find($id);  
+          $entity->setSecretQuestion('');
+     $entity->setSecretAnswer('');    
         $userForm = $this->createForm(new ProfileSettingsType(), $entity);
         $userForm->bind($this->getRequest());
 
@@ -123,6 +127,8 @@ class ProfileController extends Controller {
    {       
      $id = $this->get('security.context')->getToken()->getUser()->getId();
      $user=$this->get('user.helper.user')->find($id);    
+       $user->setSecretQuestion('');
+     $user->setSecretAnswer('');    
      $changeEmailForm = $this->createForm(new ChangeEmailType(), $user);
      $changeEmailForm->bind($this->getRequest());
      $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
@@ -153,7 +159,9 @@ class ProfileController extends Controller {
    public function userSecretQuestionAnswerAction(Request $request)
    {
      $id = $this->get('security.context')->getToken()->getUser()->getId();
-     $user=$this->get('user.helper.user')->find($id);     
+     $user=$this->get('user.helper.user')->find($id);    
+       $user->setSecretQuestion('');
+     $user->setSecretAnswer('');    
      $secretQuestionAnswerForm = $this->createForm(new UserSecretQuestionAnswer(), $user);     
      $secretQuestionAnswerForm->bind($request);
      if ($secretQuestionAnswerForm->isValid()) {
@@ -163,8 +171,7 @@ class ProfileController extends Controller {
      $changeEmailForm = $this->createForm(new ChangeEmailType(), $user);
      $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
      $userForm = $this->createForm(new ProfileSettingsType(), $user);
-     $user->setSecretQuestion('');
-     $user->setSecretAnswer('');     
+    
          return $this->render('LoveThatFitUserBundle:Profile:profileSettings.html.twig', array(
                     'form' => $userForm->createView(),
                     'entity' => $user,
