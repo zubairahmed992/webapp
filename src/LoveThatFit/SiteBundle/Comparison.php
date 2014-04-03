@@ -93,7 +93,10 @@ class Comparison {
     }
 #-----------------------------------------------------
 
-    private function array_mix() {
+    private function array_mix($sizes=null) {
+        if ($sizes==null){ 
+                $sizes = $this->product->getProductSizes();
+        }
         $sizes = $this->product->getProductSizes();
         $body_specs = $this->user->getMeasurement()->getArray();
         $fb = array();
@@ -397,41 +400,6 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
 
     #-------------------------------------------------
 
-    private function get_variance_range($sizes) {
-
-        if ($sizes == null)
-            return;
-        $lowest=0; $highest=null; $size_lowest=null; $size_highest=null;
-        foreach ($sizes as $size) {
-            $size_highest = $this->get_accumulated_variance_range($size_highest, $size['max_variance'], 'highest'); 
-       }
-        return array($lowest, $size_highest);
-    }
-#------------------------------------------
-    private function get_accumulated_variance_range($acc, $current, $type){
-        
-        if($acc===null || $acc<0){
-            return $current;
-        }elseif($current===null || $current<0){
-            return $acc;
-        }
-        
-        if($type=='lowest'){
-            return $acc<=$current?$acc:$current;
-        }else{
-            return $acc>=$current?$acc:$current;
-        }
-    }
- 
-    #-------------------------------------------------
-
-    private function getFittingItem($sizes) {
-        //$fitting_sizes = $this->getFittingSize($sizes);
-        
-    }
-
-    #-------------------------------------------------
-
     private function getFittingSize($sizes) {
 
         if ($sizes == null)
@@ -629,5 +597,31 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
     private function getSizeTypes() {
         return array('Regular', 'Petite', 'Tall');
     }    
+    
+    #----------------------------- Item Thing ~~~~~~~~~~~~~~~~~>
+    function getItemFeedBack($item) {
+        if ($this->user ==null || $this->product == null){
+            return null;
+        }
+        if($item == null){
+            $color=$this->product->getDisplayProductColor();    
+        }else{
+            $color=$item->getProductColor();    
+        }
+        $sizes=$color->getProductSizes();
+        if ($this->product->fitPriorityAvailable()) {
+            $cm = $this->array_mix($sizes);
+            $rc = $this->getFittingSize($cm['feedback']);
+            return array(
+                'feedback' => $cm['feedback'],
+                'recommendation' => $rc,
+            );
+        } else {
+            return array(
+                'message' => 'Fit Priority is not set, please update the product detail.',
+            );
+        }
+    }
+
 
 }
