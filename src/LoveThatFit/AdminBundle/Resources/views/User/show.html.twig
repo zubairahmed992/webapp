@@ -38,7 +38,7 @@
                                     <div class="span3">Full Name</div>
                                     <div class="span3">{{user.firstName }} {{user.lastName }}</div>
                                     </div>
-                                {%if(user.gender=='f') %}
+                                 {%if(user.gender=='f') %}
                                   <div class="span8">
                                     <div class="span3">Gender</div>
                                     <div class="span3">Female</div>
@@ -66,8 +66,42 @@
                                     <div class="span8">
                                     <div class="span3">Age</div>
                                     <div class="span3">{{user.age}}</div>
-                                    </div>    
-                                  
+                                    </div>   
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Zip Code</div>
+                                    <div class="span3">{{user.zipcode}}</div>
+                                    </div>  
+                                        
+                                     <div class="span8">
+                                    <div class="span3">Auth Token</div>
+                                    <div class="span3">{{user.authToken}}</div>
+                                    </div> 
+                                        
+                                   
+                                      
+                                    <div class="span8">
+                                    <div class="span3">Auth Token for Web Services</div>
+                                    <div class="span3">{{user.authTokenWebService}}</div>
+                                    </div>     
+                                    
+                                        <div class="span8">
+                                    <div class="span3">Auth Token Created Date</div>
+                                    <div class="span3">{{user.authTokenCreatedAt|date('d-m-Y')}}</div>
+                                    </div> 
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Secret Question</div>
+                                    <div class="span3">{{user.secretQuestion}}</div>
+                                    </div>     
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Secret Answer</div>
+                                    <div class="span3">{{user.secretAnswer}}</div>
+                                    </div>  
+                                        
+                                        
+                                        
                                     <div class="span8">
                                     <div class="span3">Weight</div>
                                     <div class="span3">{{user.measurement.weight}}</div>
@@ -111,39 +145,201 @@
                                     <div class="span8">
                                     <div class="span3">Inseam</div>
                                     <div class="span3">{{user.measurement.inseam}}</div>
-                                    </div>     
-                                        
-                                        
-                                
-                                        
-                                        
-                                        
-                                        
-                                        
-                                   
-                                        
+                                    </div>
                                         
                                      <div class="span8">
                                     <div class="span3">Outseam</div>
                                     <div class="span3">{{user.measurement.outseam}}</div>
                                     </div>
                                         
+                                   <div class="span8">
+                                    <div class="span3">Shoulder height</div>
+                                    <div class="span3">{{user.measurement.shoulderHeight}}</div>
+                                    </div>
+                                       
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Shoulder width</div>
+                                    <div class="span3">{{user.measurement.shoulderWidth}}</div>
+                                    </div>   
+                                        
+                                      <div class="span8">
+                                    <div class="span3">shoulder Across Front</div>
+                                    <div class="span3">{{user.measurement.shoulderAcrossFront}}</div>
+                                    </div>    
+                                  
+                                    
+                                     <div class="span8">
+                                    <div class="span3">shoulder Across back</div>
+                                    <div class="span3">{{user.measurement.shoulderAcrossBack}}</div>
+                                    </div>        
+                                        
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Bust height</div>
+                                    <div class="span3">{{user.measurement.bustHeight}}</div>
+                                    </div>      
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Waist Height</div>
+                                    <div class="span3">{{user.measurement.waistHeight}}</div>
+                                    </div> 
+                                        
+                                  
+                                   <div class="span8">
+                                    <div class="span3">Hip height </div>
+                                    <div class="span3">{{user.measurement.hipHeight }}</div>
+                                    </div>       
+                                     
+                                   <div class="span8">
+                                    <div class="span3">Bust width </div>
+                                    <div class="span3">{{user.measurement.bustWidth }}</div>
+                                    </div> 
+                                        
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Waist width</div>
+                                    <div class="span3">{{user.measurement.waistWidth }}</div>
+                                    </div>   
+                                        
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Hip width</div>
+                                    <div class="span3">{{user.measurement.hipWidth }}</div>
+                                    </div>  
+                                        
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Hip width</div>
+                                    <div class="span3">{{user.measurement.hipWidth }}</div>
+                                    </div>      
                                         
                                     <div class="span8">
                                     <div class="span3">Sleeve</div>
                                     <div class="span3">{{user.measurement.sleeve}}</div>
-                                    </div>
-                                        
+                                    </div>           
                                         
                                     <div class="span8">
                                     <div class="span3">Neck</div>
                                     <div class="span3">{{user.measurement.neck}}</div>
                                     </div>    
                                         
+                                    <div class="span8">
+                                    <div class="span3">Thigh</div>
+                                    <div class="span3">{{user.measurement.thigh}}</div>
+                                    </div>   
+                                        
+                                     <div class="span8">
+                                    <div class="span3">Bicep</div>
+                                    <div class="span3">{{user.measurement.bicep}}</div>
+                                    </div>     
+                  
+                                    <div class="span8">
+                                    <div class="span3">Tricep</div>
+                                    <div class="span3">{{user.measurement.tricep}}</div>
+                                    </div> 
                                         
                                         
+                                  <div class="span8">
+                                    <div class="span3">Wrist</div>
+                                    <div class="span3">{{user.measurement.wrist}}</div>
+                                    </div>  
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Center Front Waist</div>
+                                    <div class="span3">{{user.measurement.centerFrontWaist}}</div>
+                                    </div>   
                                         
                                         
+                                    <div class="span8">
+                                    <div class="span3">Back Waist</div>
+                                    <div class="span3">{{user.measurement.backWaist}}</div>
+                                    </div>    
+                                   
+                                        
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Waist Hip</div>
+                                    <div class="span3">{{user.measurement.waistHip}}</div>
+                                    </div> 
+                                        
+                                        
+                                             
+                                   <div class="span8">
+                                    <div class="span3">Knee</div>
+                                    <div class="span3">{{user.measurement.knee}}</div>
+                                    </div> 
+                                        
+                                      <div class="span8">
+                                    <div class="span3">Calf</div>
+                                    <div class="span3">{{user.measurement.calf}}</div>
+                                    </div>  
+                                        
+                                        
+                                     <div class="span8">
+                                    <div class="span3">Ankle</div>
+                                    <div class="span3">{{user.measurement.ankle}}</div>
+                                    </div> 
+                                        
+                                         <div class="span8">
+                                    <div class="span3">Body Shape</div>
+                                    <div class="span3">{{user.measurement.bodyShape}}</div>
+                                    </div>   
+                                     
+                                           <div class="span8">
+                                    <div class="span3">Body Typese</div>
+                                    <div class="span3">{{user.measurement.bodyTypes}}</div>
+                                    </div>   
+                                        
+                                      <div class="span8">
+                                    <div class="span3">Bra size</div>
+                                    <div class="span3">{{user.measurement.brasize}}</div>
+                                    </div>    
+                                        
+                                        
+                                    
+                                 
+                                     
+                                 
+                                    
+                                    <div class="span8">
+                                    <div class="span3">Iphone Outseam</div>
+                                    <div class="span3">{{user.measurement.iphoneOutseam}}</div>
+                                    </div>  
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Iphone  Shoulder Height</div>
+                                    <div class="span3">{{user.measurement.iphoneShoulderHeight}}</div>
+                                    </div>   
+                                    
+                                        
+                                   <div class="span8">
+                                    <div class="span3">iphone foot height</div>
+                                    <div class="span3">{{user.measurement.iphoneFootHeight}}</div>
+                                    </div>   
+                                        
+                                        
+                                   <div class="span8">
+                                    <div class="span3">Devices</div>
+                                    <div> 
+                                    <table width="100%" border="0">
+                                    <tr>
+                                    <td>Device Name</td>
+                                    <td>Device Type</td>
+                                    <td>device user per inch pixel height</td>
+                                   </tr>
+                                      {% for a in user.getUserDevices %}
+                                   <tr>
+                                    <td> {{a.deviceName}}</td>
+                                    <td> {{a.deviceType}}</td>
+                                    <td> {{a.deviceUserPerInchPixelHeight}}</td>
+                                   </tr>
+                                        {%endfor%}
+                                    </table>
+                                    </div>
+                                    </div>      
+                                   
+                                          
                                
                                 </div> 
                                      
