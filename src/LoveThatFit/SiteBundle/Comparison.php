@@ -25,9 +25,11 @@ class Comparison {
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->array_mix();
             $rc = $this->getFittingSize($cm['feedback']);
+            $bfs = $this->getBestFittingSize($rc);
             return array(
                 'feedback' => $cm['feedback'],
                 'recommendation' => $rc,
+                'best_fit' => $bfs,
             );
         } else {
             return array(
@@ -35,6 +37,7 @@ class Comparison {
             );
         }
     }
+  
 #-----------------------------------------------------
     function getStripedFeedBackJSON() {
         return json_encode($this->getStripedFeedBack());
@@ -60,37 +63,7 @@ class Comparison {
             return $this->getFittingSize($cm['feedback']);
         }
     }
-    #-----------------------------------------------------
-
-    public function back_track() {
-        $sizes = $this->product->getProductSizes();
-        $body_specs = $this->user->getMeasurement()->getArray();
-        $fb = array();
-        $highest_variance=0;
-        
-        foreach ($sizes as $size) {
-            $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
-            $size_identifier = $size->getDescription();
-            $fb[$size_identifier]['id'] = $size->getId();
-            $fb[$size_identifier]['fits'] = true;
-            $fb[$size_identifier]['description'] = $size_identifier;
-            $fb[$size_identifier]['title'] = $size->getTitle();
-            $fb[$size_identifier]['body_type'] = $size->getBodyType();
-            $status = 0;
-            if (is_array($size_specs)) {
-                foreach ($size_specs as $fp_specs) {
-                    if (is_array($fp_specs) && array_key_exists('id', $fp_specs)) {
-                        $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']] =
-                                $this->get_fit_point_array($fp_specs, $body_specs);
-                  }
-                }
-                if (!array_key_exists('fit_points', $fb[$size_identifier])) {
-                    $status = $this->status['product_measurement_not_available'];
-                }
-            }
-        }
-        return array('feedback'=>$this->array_sort($fb),'highest_variance'=>$highest_variance);
-    }
+ 
 #-----------------------------------------------------
 
     private function array_mix($sizes=null) {
@@ -428,6 +401,38 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         if (count($loose) > 0)
             return $loose;
     }
+     #-------------------------------------------------
+
+    private function getBestFittingSize($recomended_sizes) {
+        $bfs=null;
+        $lowest_variance=null;
+        foreach ($recomended_sizes as $key => $value) {
+            if($lowest_variance==null || $value['ideal_variance']<=$lowest_variance){
+                $lowest_variance=$value['ideal_variance'];
+                $bfs = $value;
+            }
+        }        
+        #return array($bfs['description'] => $bfs);
+        return $bfs;
+    }
+     #----------------------------- Size Thing ~~~~~~~~~~~~~~~~~>
+    function getSizeFeedBack($size) {
+       $fb = $this->getFeedBack();
+
+        if ($fb == null)
+            return;
+        
+        if ($fb['best_fit']['id']==$size->getId()){ # if it matches best fit
+            return array($fb['best_fit']['description'] => $fb['best_fit']);
+        }
+        
+        foreach ($fb['feedback'] as $size) {            
+            if ($size['id']==$size->getId()){ 
+                return array($size['description'] => $size);
+            }        
+        }
+        return null;
+    }   
 #----------------------------------------------------------       
     private function get_loose_size_messages($sizes) {
 
