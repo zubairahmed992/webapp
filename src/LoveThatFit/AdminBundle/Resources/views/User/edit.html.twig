@@ -24,52 +24,39 @@
                         <div id="pro_detail">
                             <div class="edt_container">  
                                 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
 <form action="{{ path('admin_user_detail_update', {'id': entity.Id})}}" method="post" {{ form_enctype(form) }}>
 
-
-
-        <div id='frm_sleeve '>
-
-        {{ form_label(form.sleeve) }}
-        {{ form_widget(form.sleeve, { 'attr': {'style': 'width: 233px !important;'} }) }} &nbsp;<b>"</b>
-            <div class="form_vld_error"> {{ form_errors(form.sleeve) }}</div>
-        </div>
-        <div class="clr_bth"></div>    
+    <div id='frm_height'>
+        {{ form_label(form.height) }}
+        {{ form_widget(form.height) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(form.height) }}</div>
+        </div> 
+    
+    <div class="clr_bth"></div>    
+        
         <div id='frm_neck'>
-
         {{ form_label(form.neck) }}
         {{ form_widget(form.neck) }} &nbsp;<b>"</b>
             <div class="form_vld_error"> {{ form_errors(form.neck) }}</div>
         </div>
-        <div class="clr_bth"></div>     
-     {% if(entity.gender=='m')%}    
-        <div id='frm_bust'>
-
+    
+         <div class="clr_bth"></div>   
+    
+    <div id='frm_sleeve '>
+        {{ form_label(form.sleeve) }}
+        {{ form_widget(form.sleeve, { 'attr': {'style': 'width: 233px !important;'} }) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(form.sleeve) }}</div>
+        </div>
+        
+         <div class="clr_bth"></div>             
+       {% if(entity.gender=='m')%}    
+        <div id='frm_chest'>
         {{ form_label(form.chest) }}
         {{ form_widget(form.chest) }} &nbsp;<b>"</b>
             <div class="form_vld_error">{{ form_errors(form.chest) }}</div>
         </div>
-
          {%else%}
-
         <div id='frm_bust'>
-
         {{ form_label(form.bust) }}
         {{ form_widget(form.bust) }} &nbsp;<b>"</b>
             <div class="form_vld_error">{{ form_errors(form.bust) }}</div>
@@ -77,13 +64,11 @@
          {%endif%}
         <div class="clr_bth"></div>
         <div id='frm_waist'>
-
         {{ form_label(form.waist) }}
         {{ form_widget(form.waist) }} &nbsp;<b>"</b>
             <div class="form_vld_error"> {{ form_errors(form.waist) }}</div>
         </div>
         <div class="clr_bth"></div>
-
         <div id='frm_hip'>         
         {{ form_label(form.hip) }}
         {{ form_widget(form.hip) }} &nbsp;<b>"</b>
@@ -98,36 +83,189 @@
                     <div class="form_vld_error">{{ form_errors(form.inseam) }}</div>
                 </div>
 
-                <div class="clr_bth"></div>
+            
+            <div class="clr_bth"></div>
 
+                <div id='frm_shoulder_height' class="more">         
+        {{ form_label(form.shoulder_height) }}
+        {{ form_widget(form.shoulder_height) }} &nbsp;<b>"</b>
+                        <div class="form_vld_error">{{ form_errors(form.shoulder_height) }}</div>
+                    </div>
+            
+          <div class="clr_bth"></div>
+
+                <div id='frm_weight' class="more">         
+        {{ form_label(form.weight) }}
+        {{ form_widget(form.weight) }} &nbsp;<b>"</b>
+                        <div class="form_vld_error">{{ form_errors(form.weight) }}</div>
+                    </div>  
+          
+          <div class="clr_bth"></div>         
                 <div id='frm_thigh' class="more">         
         {{ form_label(form.thigh) }}
         {{ form_widget(form.thigh) }} &nbsp;<b>"</b>
                         <div class="form_vld_error">{{ form_errors(form.thigh) }}</div>
                     </div>
-                        <div id='frm_thigh'>         
+          
+           <div class="clr_bth"></div>
 
+                <div id='frm_shoulder_across_front' class="more">         
+        {{ form_label(form.shoulder_across_front) }}
+        {{ form_widget(form.shoulder_across_front) }} &nbsp;<b>"</b>
+                        <div class="form_vld_error">{{ form_errors(form.shoulder_across_front) }}</div>
+                    </div>  
+            
+           <div class="clr_bth"></div>                
+                        <div id='frm_shoulder_across_back'>         
  {{ form_label(form.shoulder_across_back) }}
 {{ form_widget(form.shoulder_across_back) }} &nbsp;<b>"</b>
                             <div class="form_vld_error">{{ form_errors(form.shoulder_across_back) }}</div>
-                        </div>
-
-                                            <div class="clr_bth"></div>   
-       
-                                            <input type="submit" value="Update" />
+                        </div>       
+           
+           <div class="clr_bth"></div>                
+          <div id='frm_bicep'>         
+            {{ form_label(form.bicep) }}
+            {{ form_widget(form.bicep) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.bicep) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div>   
+           
+           <div id='frm_tricep'>         
+            {{ form_label(form.tricep) }}
+            {{ form_widget(form.tricep) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.tricep) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div>  
+           
+           
+           
+           <div id='frm_wrist'>         
+            {{ form_label(form.wrist) }}
+            {{ form_widget(form.wrist) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.wrist) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div> 
+           
+           <div id='frm_centerFrontWaist'>         
+           center Front Waist
+            {{ form_widget(form.centerFrontWaist) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.centerFrontWaist) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div> 
+           
+           <div id='frm_backWaist'>         
+           Back Waist
+            {{ form_widget(form.backWaist) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.backWaist) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div> 
+           
+           
+           <div id='frm_waistHip'>         
+           waist Hip
+            {{ form_widget(form.waistHip) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.waistHip) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div> 
+           
+           <div id='frm_knee'>         
+           Knee
+            {{ form_widget(form.knee) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.knee) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div>            
+           <div id='frm_calf'>         
+           Calf
+            {{ form_widget(form.calf) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.calf) }}</div>
+          </div>                       
+           <div class="clr_bth"></div>        
+      <div id='frm_ankle'>         
+           Ankle
+            {{ form_widget(form.ankle) }} &nbsp;<b>"</b>
+          <div class="form_vld_error">{{ form_errors(form.ankle) }}</div>
+          </div>            
+           
+           <div class="clr_bth"></div> 
+           
+           <input type="submit" value="Update" />
                                             <a href="{{ path('admin_users') }}" class="btn">Cancel</a>    
                                         </form>
-
-
-
-
-                                </div>      
-                            </div><!-- End pro_detail -->      
-                        </div><!-- End product_content --> 
-                    </div> <!-- End detail_wrapper -->
-                
-
-                       
+                        <div class="clr_bth"></div>         
+                           <div class="clr_bth"></div> 
+                           <div class="clr_bth"></div> 
+                           
+                           <div><h3>Edit User Detail</h3></div>
+                               
+        <form action="{{ path('admin_user_profile_detail_update', {'id': entity.Id})}}"    method="post" {{ form_enctype(userform) }}>
+                                
+          <div>
+       First Name
+        {{ form_widget(userform.firstName) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(userform.firstName) }}</div>
+        </div>     
+    <div class="clr_bth"></div>
+        <div>
+        Last Name
+        {{ form_widget(userform.lastName) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(userform.lastName) }}</div>
+        </div>    
+         <div class="clr_bth"></div>  
+        
+         
+         <div>
+        Secret Question
+        {{ form_widget(userform.secretQuestion) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(userform.secretQuestion) }}</div>
+        </div>                         
+                 
+            
+        <div>
+        Secret Answer
+        {{ form_widget(userform.secretAnswer) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(userform.secretAnswer) }}</div>
+        </div>     
+         <div class="clr_bth"></div> 
+         
+         
+         <div>
+             
+                 {{ form_errors(userform.birthdate) }}
+                 {{ form_label(userform.birthdate) }}
+                 {{ form_widget(userform.birthdate.month) }}
+                 {{ form_widget(userform.birthdate.day) }}
+                 {{ form_widget(userform.birthdate.year) }}
+            </div>
+                  <div class="clr_bth"></div>   
+            <div class="frm_ele radio_buts act_radio acc_set">                
+                <div class="radio_ele"> {{ form_label(userform.gender) }}  {{ form_widget(userform.gender) }} </div>
+                              
+            </div>
+                                    
+                                    
+                                 <div class="clr_bth"></div> 
+                                
+                                 <input type="submit" value="Update" />
+                                            <a href="{{ path('admin_users') }}" class="btn">Cancel</a>    
+          
+                                
+                                </form>                          
+                                
+                                
+                                
+                                
+           </div>      
+         </div><!-- End pro_detail -->      
+       </div><!-- End product_content --> 
+     </div> <!-- End detail_wrapper -->
+                      
             </div>      
 
 {% endblock %}

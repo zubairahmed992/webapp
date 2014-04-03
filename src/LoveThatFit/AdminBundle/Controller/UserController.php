@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Form\Type\UserMeasurementType;
+use LoveThatFit\AdminBundle\Form\Type\UserProfileSettingsType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
@@ -119,8 +120,10 @@ class UserController extends Controller {
         $entity = $this->get('user.helper.user')->find($id);
         $measurement = $entity->getMeasurement();
         $measurementForm = $this->createForm(new UserMeasurementType(), $measurement);
+        $userForm=$this->createForm(new UserProfileSettingsType(), $entity);
         return $this->render('LoveThatFitAdminBundle:user:edit.html.twig', array(
                     'form' => $measurementForm->createView(),
+                    'userform' => $userForm->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
                 ));
@@ -153,11 +156,31 @@ class UserController extends Controller {
         $measurement->setUpdatedAt(new \DateTime('now'));
         $this->get('user.helper.measurement')->saveMeasurement($measurement);
         $this->get('session')->setFlash('success', 'Updated Successfuly');
+        $userForm=$this->createForm(new UserProfileSettingsType(), $entity);
         return $this->render('LoveThatFitAdminBundle:user:edit.html.twig', array(
                     'form' => $measurementForm->createView(),
+                    'userform' => $userForm->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
                 ));
     }
-
+    
+    public function updateUserProfileAction($id)
+    {
+        $entity = $this->get('user.helper.user')->find($id);
+        $measurement = $entity->getMeasurement();
+        $measurementForm = $this->createForm(new UserMeasurementType(), $measurement);
+        $userForm=$this->createForm(new UserProfileSettingsType(), $entity);
+        $userForm->bind($this->getRequest());       
+        $this->get('user.helper.user')->saveUser($entity);
+        $this->get('session')->setFlash('success', 'Updated Successfuly');
+        return $this->render('LoveThatFitAdminBundle:user:edit.html.twig', array(
+                    'form' => $measurementForm->createView(),
+                    'userform' => $userForm->createView(),
+                    'measurement' => $measurement,
+                    'entity' => $entity,
+                ));
+    }
+    
+    
 }
