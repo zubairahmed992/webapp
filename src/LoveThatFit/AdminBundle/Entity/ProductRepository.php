@@ -542,7 +542,7 @@ class ProductRepository extends EntityRepository {
                         ->andWhere("p.displayProductColor!=''")
                         ->groupBy('p.id')
                         ->orderBy('p.updated_at','desc')
-                        ->setMaxResults(2)
+                        ->setMaxResults(10)
                         ->setParameter('gender', $gender)
                         ->getQuery()
                         ->getResult();

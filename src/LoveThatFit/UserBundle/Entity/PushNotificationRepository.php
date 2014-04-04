@@ -23,6 +23,19 @@ class PushNotificationRepository extends EntityRepository
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-    }
+ }
+ #--------------------- Get Push Notification  Base on Base  On Type----------#
+ public function getPushNotificationBaseOnType($type){
+    $query = $this->getEntityManager()
+             ->createQuery("SELECT pn FROM LoveThatFitUserBundle:PushNotification pn   
+                           WHERE pn.userId =0
+                           AND pn.notification_type=:notification_type")
+             ->setParameters(array('notification_type' => $type));
+   try {
+         return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
 
 }

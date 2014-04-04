@@ -1811,6 +1811,9 @@ PushNotification:
     User:
       message: " User Profile Updated."
       status: true
+    brand_create:  
+      message: "Brand Created"
+      status: true
 
 Twitter:  
 consumer_key: 9GBx1IchmgsTC404I52w

@@ -60,13 +60,15 @@ class BrandController extends Controller {
         $entity = $this->get('admin.helper.brand')->createNew();
         $form = $this->createForm(new BrandType('add'), $entity);
         $form->bind($request);
-
-
-
-
-        if ($form->isValid()) {
+     if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.brand')->save($entity);
+            $msg=$this->get('push_notification_helper')->getNotificationType('brand_create');
+           
+            if($msg['status']=='true'){
+            $this->get('push_notification_helper')->setNotificationInDB($msg['type'],$msg['message']);
+            }
+           
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
 
             if ($message_array['success']) {
