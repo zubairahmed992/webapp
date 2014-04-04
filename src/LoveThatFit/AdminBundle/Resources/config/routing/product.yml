@@ -10,7 +10,13 @@ admin_products:
 
 
 #--------------------------- Product Details --------------    
-    
+admin_product_raw_edit:
+    pattern:  /admin/product_raw/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Product:productRawEdit }
+admin_product_raw_update:
+   pattern:  /admin/product_raw/{id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productRawUpdate }
+   
 admin_product_detail_new:
      pattern:  /admin/product/product_detail/new
      defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailNew }

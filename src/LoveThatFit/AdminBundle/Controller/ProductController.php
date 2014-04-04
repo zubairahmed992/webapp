@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\ProductDetailType;
+use LoveThatFit\AdminBundle\Form\Type\ProductRawType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorImageType;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
@@ -105,7 +106,7 @@ class ProductController extends Controller {
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
         
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_edit.html.twig', array(
-                    'form' => $form->createView(),
+                    'form' => $form->createView(),                    
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity,
                     'productSpecification' => $productSpecification,
@@ -114,6 +115,27 @@ class ProductController extends Controller {
                     'garment_detail' => $entity->getGarmentDetail(),
                     'brandObj'=>$brandObj,
                 ));
+    }
+    
+     #--------------------Method for Edit Product Raw as needed----------------------------#
+
+    public function productRawEditAction($id) {
+        $entity = $this->get('admin.helper.product')->find($id);
+        $form = $this->createForm(new ProductRawType(), $entity);
+        return $this->render('LoveThatFitAdminBundle:Product:_product_raw_edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'entity' => $entity,
+                ));
+    }
+    public function productRawUpdateAction(Request $request, $id) {
+        $entity = $this->get('admin.helper.product')->find($id);
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Unable to find Product.');
+        }
+        $raw_form = $this->createForm(new ProductRawType(), $entity);
+        $raw_form->bind($request);
+        $productArray = $this->get('admin.helper.product')->save($entity);
+        return new Response(json_encode($productArray));
     }
 
 #------------------Product Update Method---------------------------------------#
