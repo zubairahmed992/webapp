@@ -515,7 +515,7 @@ private function getAllKeysTesting($ar){
         $type =  strtolower($type);
         
         if ($type == 'letters') {//$female_letters
-            return array('XS', 'S', 'M', 'L', 'XL', 'XXL');
+            return array('XS', 'S', 'M', 'L', 'X', 'XL', '1XL', '1X', 'XXL', '2X', '2XL', 'XXXL', '3XL', '3X', 'XXXXL', '4XL', '4X');
         } else if ($gender == 'f' && $type == 'numbers') {//$female_standard
             return array('00', '0', '2', '4', '6', '8', '10', '12', '16', '18', '20');
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
