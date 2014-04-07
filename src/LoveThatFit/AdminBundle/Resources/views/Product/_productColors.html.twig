@@ -175,23 +175,7 @@
 
         {%endif%}
  
- // For Toggle For Sizes X, Xl1 etc..//
-
-           var arr = [];
-           var chkbox_val= document.querySelectorAll('div#product_color_regularSizes input[type=checkbox]');
-           for (var i = 0; i < chkbox_val.length; i++) {
-           var elem = chkbox_val[i].value;
-           if(elem=="X"){
-           $("#product_color_regularSizes input:checkbox[value='X']").fadeOut();
-           $("#product_color_regularSizes input:label[value='X']").fadeOut();
-            }
-           
-            
-           
-           
-            
-           arr.push(elem)
-        }
+ 
         
 
        
@@ -199,6 +183,426 @@
                   }); 
     
             </script>
+            
+
+<script>
+function petiteFirstSizes()
+{
+   $( "#petiteSecondSizes" ).show();
+ $( "#petiteFirstSizes" ).hide();
+ $( "#petiteThirdSizes" ).hide();  
+       
+       
+  $('label[for="product_color_petiteSizes_0"]').show ();
+  $('label[for="product_color_petiteSizes_1"]').show ();
+  $('label[for="product_color_petiteSizes_2"]').show ();
+  $('label[for="product_color_petiteSizes_3"]').show ();
+  $('label[for="product_color_petiteSizes_4"]').show ();
+   $('label[for="product_color_petiteSizes_6"]').show ();
+  $('label[for="product_color_petiteSizes_7"]').show ();
+  $('label[for="product_color_petiteSizes_8"]').show ();
+  $('label[for="product_color_petiteSizes_5"]').hide (); 
+  $('label[for="product_color_petiteSizes_9"]').hide ();
+  $('label[for="product_color_petiteSizes_10"]').hide ();
+  $('label[for="product_color_petiteSizes_11"]').hide ();
+  $('label[for="product_color_petiteSizes_12"]').hide ();
+  $('label[for="product_color_petiteSizes_13"]').hide ();
+  $('label[for="product_color_petiteSizes_14"]').hide ();
+  $('label[for="product_color_petiteSizes_15"]').hide ();
+  $('label[for="product_color_petiteSizes_16"]').hide ();  
+  $( "#product_color_petiteSizes_0" ).show();
+  $( "#product_color_petiteSizes_1" ).show();
+  $( "#product_color_petiteSizes_2" ).show();
+  $( "#product_color_petiteSizes_3" ).show();
+  $( "#product_color_petiteSizes_4" ).show();  
+  $( "#product_color_petiteSizes_6" ).show();
+  $( "#product_color_petiteSizes_7" ).show();
+  $( "#product_color_petiteSizes_8" ).show();
+  $( "#product_color_petiteSizes_5" ).hide();
+  $( "#product_color_petiteSizes_9" ).hide();
+  $( "#product_color_petiteSizes_10" ).hide();
+  $( "#product_color_petiteSizes_11" ).hide();
+  $( "#product_color_petiteSizes_12" ).hide();
+  $( "#product_color_petiteSizes_13" ).hide();
+  $( "#product_color_petiteSizes_14" ).hide();
+  $( "#product_color_petiteSizes_15" ).hide();
+  $( "#product_color_petiteSizes_16" ).hide();
+  
+  
+}
+    
+</script>
+
+
+<script>
+function petiteSecondSizes()
+{
+    $( "#petiteThirdSizes" ).show();
+ $( "#petiteSecondSizes" ).hide();
+ $( "#petiteFirstSizes" ).hide();  
+       
+  $('label[for="product_color_petiteSizes_0"]').show ();
+  $('label[for="product_color_petiteSizes_1"]').show ();
+  $('label[for="product_color_petiteSizes_2"]').show ();
+  $('label[for="product_color_petiteSizes_3"]').show ();
+  $('label[for="product_color_petiteSizes_5"]').show ();
+  $('label[for="product_color_petiteSizes_4"]').hide ();
+  $('label[for="product_color_petiteSizes_13"]').show ();
+  $('label[for="product_color_petiteSizes_14"]').show ();
+  $('label[for="product_color_petiteSizes_15"]').show ();
+  $('label[for="product_color_petiteSizes_16"]').show ();
+  $('label[for="product_color_petiteSizes_6"]').hide ();
+  $('label[for="product_color_petiteSizes_7"]').hide ();
+  $('label[for="product_color_petiteSizes_8"]').hide ();
+  $('label[for="product_color_petiteSizes_9"]').hide ();
+  $('label[for="product_color_petiteSizes_10"]').hide ();
+  $('label[for="product_color_petiteSizes_11"]').hide ();
+  $('label[for="product_color_petiteSizes_12"]').hide ();      
+  $( "#product_color_petiteSizes_0" ).show();
+  $( "#product_color_petiteSizes_1" ).show();
+  $( "#product_color_petiteSizes_2" ).show();
+  $( "#product_color_petiteSizes_3" ).show();  
+  $( "#product_color_petiteSizes_5" ).show();
+  $( "#product_color_petiteSizes_13" ).show();
+  $( "#product_color_petiteSizes_14" ).show();
+  $( "#product_color_petiteSizes_15" ).show();
+  $( "#product_color_petiteSizes_16" ).show();
+  $( "#product_color_petiteSizes_6" ).hide();
+  $( "#product_color_petiteSizes_7" ).hide();
+  $( "#product_color_petiteSizes_8" ).hide();  
+  $( "#product_color_petiteSizes_4" ).hide();  
+  $( "#product_color_petiteSizes_9" ).hide();
+  $( "#product_color_petiteSizes_10" ).hide();
+  $( "#product_color_petiteSizes_11" ).hide();
+  $( "#product_color_petiteSizes_12" ).hide(); 
+}
+    
+</script>
+
+<script>
+function petiteThirdSizes()
+{
+  $( "#petiteFirstSizes" ).show();
+ $( "#petiteSecondSizes" ).hide();
+ $( "#petiteThirdSizes" ).hide();  
+    
+  $('label[for="product_color_petiteSizes_0"]').show ();
+  $('label[for="product_color_petiteSizes_1"]').show ();
+  $('label[for="product_color_petiteSizes_2"]').show ();
+  $('label[for="product_color_petiteSizes_3"]').show ();
+  $('label[for="product_color_petiteSizes_6"]').show ();
+  $('label[for="product_color_petiteSizes_10"]').show ();
+  $('label[for="product_color_petiteSizes_11"]').show ();
+  $('label[for="product_color_petiteSizes_12"]').show ();
+  $('label[for="product_color_petiteSizes_4"]').hide ();
+  $('label[for="product_color_petiteSizes_5"]').hide ();  
+  $('label[for="product_color_petiteSizes_7"]').hide ();
+  $('label[for="product_color_petiteSizes_8"]').hide ();
+  $('label[for="product_color_petiteSizes_9"]').hide (); 
+  $('label[for="product_color_petiteSizes_13"]').hide ();
+  $('label[for="product_color_petiteSizes_14"]').hide ();
+  $('label[for="product_color_petiteSizes_15"]').hide ();
+  $('label[for="product_color_petiteSizes_16"]').hide (); 
+  $( "#product_color_petiteSizes_0" ).show();
+  $( "#product_color_petiteSizes_1" ).show();
+  $( "#product_color_petiteSizes_2" ).show();
+  $( "#product_color_petiteSizes_3" ).show();  
+  $( "#product_color_petiteSizes_4" ).hide();  
+  $( "#product_color_petiteSizes_5" ).hide();  
+  $( "#product_color_petiteSizes_6" ).show();
+  $( "#product_color_petiteSizes_7" ).hide();
+  $( "#product_color_petiteSizes_8" ).hide();    
+  $( "#product_color_petiteSizes_9" ).hide();
+  $( "#product_color_petiteSizes_10" ).show();
+  $( "#product_color_petiteSizes_11" ).show();
+  $( "#product_color_petiteSizes_12" ).show();
+  $( "#product_color_petiteSizes_13" ).hide();
+  $( "#product_color_petiteSizes_14" ).hide();
+  $( "#product_color_petiteSizes_15" ).hide();
+  $( "#product_color_petiteSizes_16" ).hide();
+  
+}
+    
+</script>
+
+
+
+
+<script>
+function regularFirstSizes()
+{
+   $( "#regularSecondSizes" ).show();
+ $( "#regularFirstSizes" ).hide();
+ $( "#regularThirdSizes" ).hide();    
+       
+  $('label[for="product_color_regularSizes_0"]').show ();
+  $('label[for="product_color_regularSizes_1"]').show ();
+  $('label[for="product_color_regularSizes_2"]').show ();
+  $('label[for="product_color_regularSizes_3"]').show ();
+  $('label[for="product_color_regularSizes_4"]').show ();
+   $('label[for="product_color_regularSizes_6"]').show ();
+  $('label[for="product_color_regularSizes_7"]').show ();
+  $('label[for="product_color_regularSizes_8"]').show ();
+  $('label[for="product_color_regularSizes_5"]').hide (); 
+  $('label[for="product_color_regularSizes_9"]').hide ();
+  $('label[for="product_color_regularSizes_10"]').hide ();
+  $('label[for="product_color_regularSizes_11"]').hide ();
+  $('label[for="product_color_regularSizes_12"]').hide ();
+  $('label[for="product_color_regularSizes_13"]').hide ();
+  $('label[for="product_color_regularSizes_14"]').hide ();
+  $('label[for="product_color_regularSizes_15"]').hide ();
+  $('label[for="product_color_regularSizes_16"]').hide ();  
+  $( "#product_color_regularSizes_0" ).show();
+  $( "#product_color_regularSizes_1" ).show();
+  $( "#product_color_regularSizes_2" ).show();
+  $( "#product_color_regularSizes_3" ).show();
+  $( "#product_color_regularSizes_4" ).show();  
+  $( "#product_color_regularSizes_6" ).show();
+  $( "#product_color_regularSizes_7" ).show();
+  $( "#product_color_regularSizes_8" ).show();
+  $( "#product_color_regularSizes_5" ).hide();
+  $( "#product_color_regularSizes_9" ).hide();
+  $( "#product_color_regularSizes_10" ).hide();
+  $( "#product_color_regularSizes_11" ).hide();
+  $( "#product_color_regularSizes_12" ).hide();
+  $( "#product_color_regularSizes_13" ).hide();
+  $( "#product_color_regularSizes_14" ).hide();
+  $( "#product_color_regularSizes_15" ).hide();
+  $( "#product_color_regularSizes_16" ).hide();
+  
+  
+}
+    
+</script>
+
+
+<script>
+function regularSecondSizes()
+{
+   $( "#regularThirdSizes" ).show();
+ $( "#regularFirstSizes" ).hide();
+ $( "#regularSecondSizes" ).hide();       
+ $('label[for="product_color_regularSizes_0"]').show ();
+  $('label[for="product_color_regularSizes_1"]').show ();
+  $('label[for="product_color_regularSizes_2"]').show ();
+  $('label[for="product_color_regularSizes_3"]').show ();
+  $('label[for="product_color_regularSizes_5"]').show ();
+  $('label[for="product_color_regularSizes_4"]').hide ();
+  $('label[for="product_color_regularSizes_13"]').show ();
+  $('label[for="product_color_regularSizes_14"]').show ();
+  $('label[for="product_color_regularSizes_15"]').show ();
+  $('label[for="product_color_regularSizes_16"]').show ();
+  $('label[for="product_color_regularSizes_6"]').hide ();
+  $('label[for="product_color_regularSizes_7"]').hide ();
+  $('label[for="product_color_regularSizes_8"]').hide ();
+  $('label[for="product_color_regularSizes_9"]').hide ();
+  $('label[for="product_color_regularSizes_10"]').hide ();
+  $('label[for="product_color_regularSizes_11"]').hide ();
+  $('label[for="product_color_regularSizes_12"]').hide ();      
+  $( "#product_color_regularSizes_0" ).show();
+  $( "#product_color_regularSizes_1" ).show();
+  $( "#product_color_regularSizes_2" ).show();
+  $( "#product_color_regularSizes_3" ).show();  
+  $( "#product_color_regularSizes_5" ).show();
+  $( "#product_color_regularSizes_13" ).show();
+  $( "#product_color_regularSizes_14" ).show();
+  $( "#product_color_regularSizes_15" ).show();
+  $( "#product_color_regularSizes_16" ).show();
+  $( "#product_color_regularSizes_6" ).hide();
+  $( "#product_color_regularSizes_7" ).hide();
+  $( "#product_color_regularSizes_8" ).hide();  
+  $( "#product_color_regularSizes_4" ).hide();  
+  $( "#product_color_regularSizes_9" ).hide();
+  $( "#product_color_regularSizes_10" ).hide();
+  $( "#product_color_regularSizes_11" ).hide();
+  $( "#product_color_regularSizes_12" ).hide();
+ 
+}
+    
+</script>
+
+<script>
+function regularThirdSizes()
+{
+   $( "#regularFirstSizes" ).show();
+ $( "#regularSecondSizes" ).hide();
+ $( "#regularThirdSizes" ).hide();           
+  $('label[for="product_color_regularSizes_0"]').show ();
+  $('label[for="product_color_regularSizes_1"]').show ();
+  $('label[for="product_color_regularSizes_2"]').show ();
+  $('label[for="product_color_regularSizes_3"]').show ();
+  $('label[for="product_color_regularSizes_6"]').show ();
+  $('label[for="product_color_regularSizes_10"]').show ();
+  $('label[for="product_color_regularSizes_11"]').show ();
+  $('label[for="product_color_regularSizes_12"]').show ();
+  $('label[for="product_color_regularSizes_4"]').hide ();
+  $('label[for="product_color_regularSizes_5"]').hide ();  
+  $('label[for="product_color_regularSizes_7"]').hide ();
+  $('label[for="product_color_regularSizes_8"]').hide ();
+  $('label[for="product_color_regularSizes_9"]').hide (); 
+  $('label[for="product_color_regularSizes_13"]').hide ();
+  $('label[for="product_color_regularSizes_14"]').hide ();
+  $('label[for="product_color_regularSizes_15"]').hide ();
+  $('label[for="product_color_regularSizes_16"]').hide (); 
+  $( "#product_color_regularSizes_0" ).show();
+  $( "#product_color_regularSizes_1" ).show();
+  $( "#product_color_regularSizes_2" ).show();
+  $( "#product_color_regularSizes_3" ).show();  
+  $( "#product_color_regularSizes_4" ).hide();  
+  $( "#product_color_regularSizes_5" ).hide();  
+  $( "#product_color_regularSizes_6" ).show();
+  $( "#product_color_regularSizes_7" ).hide();
+  $( "#product_color_regularSizes_8" ).hide();    
+  $( "#product_color_regularSizes_9" ).hide();
+  $( "#product_color_regularSizes_10" ).show();
+  $( "#product_color_regularSizes_11" ).show();
+  $( "#product_color_regularSizes_12" ).show();
+  $( "#product_color_regularSizes_13" ).hide();
+  $( "#product_color_regularSizes_14" ).hide();
+  $( "#product_color_regularSizes_15" ).hide();
+  $( "#product_color_regularSizes_16" ).hide();  
+}
+    
+</script>
+
+
+<script>
+function tallFirstSizes()
+{
+   $( "#tallSecondSizes" ).show();
+ $( "#tallFirstSizes" ).hide();
+ $( "#tallThirdSizes" ).hide();          
+  $('label[for="product_color_tallSizes_0"]').show ();
+  $('label[for="product_color_tallSizes_1"]').show ();
+  $('label[for="product_color_tallSizes_2"]').show ();
+  $('label[for="product_color_tallSizes_3"]').show ();
+  $('label[for="product_color_tallSizes_4"]').show ();
+   $('label[for="product_color_tallSizes_6"]').show ();
+  $('label[for="product_color_tallSizes_7"]').show ();
+  $('label[for="product_color_tallSizes_8"]').show ();
+  $('label[for="product_color_tallSizes_5"]').hide (); 
+  $('label[for="product_color_tallSizes_9"]').hide ();
+  $('label[for="product_color_tallSizes_10"]').hide ();
+  $('label[for="product_color_tallSizes_11"]').hide ();
+  $('label[for="product_color_tallSizes_12"]').hide ();
+  $('label[for="product_color_tallSizes_13"]').hide ();
+  $('label[for="product_color_tallSizes_14"]').hide ();
+  $('label[for="product_color_tallSizes_15"]').hide ();
+  $('label[for="product_color_tallSizes_16"]').hide ();  
+  $( "#product_color_tallSizes_0" ).show();
+  $( "#product_color_tallSizes_1" ).show();
+  $( "#product_color_tallSizes_2" ).show();
+  $( "#product_color_tallSizes_3" ).show();
+  $( "#product_color_tallSizes_4" ).show();  
+  $( "#product_color_tallSizes_6" ).show();
+  $( "#product_color_tallSizes_7" ).show();
+  $( "#product_color_tallSizes_8" ).show();
+  $( "#product_color_tallSizes_5" ).hide();
+  $( "#product_color_tallSizes_9" ).hide();
+  $( "#product_color_tallSizes_10" ).hide();
+  $( "#product_color_tallSizes_11" ).hide();
+  $( "#product_color_tallSizes_12" ).hide();
+  $( "#product_color_tallSizes_13" ).hide();
+  $( "#product_color_tallSizes_14" ).hide();
+  $( "#product_color_tallSizes_15" ).hide();
+  $( "#product_color_tallSizes_16" ).hide(); 
+}
+    
+</script>
+
+
+
+<script>
+function tallSecondSizes()
+{
+ $( "#tallThirdSizes" ).show();
+ $( "#tallFirstSizes" ).hide();
+ $( "#tallSecondSizes" ).hide();         
+  $('label[for="product_color_tallSizes_0"]').show ();
+  $('label[for="product_color_tallSizes_1"]').show ();
+  $('label[for="product_color_tallSizes_2"]').show ();
+  $('label[for="product_color_tallSizes_3"]').show ();
+  $('label[for="product_color_tallSizes_5"]').show ();
+  $('label[for="product_color_tallSizes_4"]').hide ();
+  $('label[for="product_color_tallSizes_13"]').show ();
+  $('label[for="product_color_tallSizes_14"]').show ();
+  $('label[for="product_color_tallSizes_15"]').show ();
+  $('label[for="product_color_tallSizes_16"]').show ();
+  $('label[for="product_color_tallSizes_6"]').hide ();
+  $('label[for="product_color_tallSizes_7"]').hide ();
+  $('label[for="product_color_tallSizes_8"]').hide ();
+  $('label[for="product_color_tallSizes_9"]').hide ();
+  $('label[for="product_color_tallSizes_10"]').hide ();
+  $('label[for="product_color_tallSizes_11"]').hide ();
+  $('label[for="product_color_tallSizes_12"]').hide ();    
+  $( "#product_color_tallSizes_0" ).show();
+  $( "#product_color_tallSizes_1" ).show();
+  $( "#product_color_tallSizes_2" ).show();
+  $( "#product_color_tallSizes_3" ).show();  
+  $( "#product_color_tallSizes_5" ).show();
+  $( "#product_color_tallSizes_13" ).show();
+  $( "#product_color_tallSizes_14" ).show();
+  $( "#product_color_tallSizes_15" ).show();
+  $( "#product_color_tallSizes_16" ).show();
+  $( "#product_color_tallSizes_6" ).hide();
+  $( "#product_color_tallSizes_7" ).hide();
+  $( "#product_color_tallSizes_8" ).hide();  
+  $( "#product_color_tallSizes_4" ).hide();  
+  $( "#product_color_tallSizes_9" ).hide();
+  $( "#product_color_tallSizes_10" ).hide();
+  $( "#product_color_tallSizes_11" ).hide();
+  $( "#product_color_tallSizes_12" ).hide();    
+}
+    
+</script>
+
+
+<script>
+function tallThirdSizes()
+{
+ $( "#tallFirstSizes" ).show();
+ $( "#tallSecondSizes" ).hide();
+ $( "#tallThirdSizes" ).hide();       
+  $('label[for="product_color_tallSizes_0"]').show ();
+  $('label[for="product_color_tallSizes_1"]').show ();
+  $('label[for="product_color_tallSizes_2"]').show ();
+  $('label[for="product_color_tallSizes_3"]').show ();
+  $('label[for="product_color_tallSizes_6"]').show ();
+  $('label[for="product_color_tallSizes_10"]').show ();
+  $('label[for="product_color_tallSizes_11"]').show ();
+  $('label[for="product_color_tallSizes_12"]').show ();
+  $('label[for="product_color_tallSizes_4"]').hide ();
+  $('label[for="product_color_tallSizes_5"]').hide ();  
+  $('label[for="product_color_tallSizes_7"]').hide ();
+  $('label[for="product_color_tallSizes_8"]').hide ();
+  $('label[for="product_color_tallSizes_9"]').hide (); 
+  $('label[for="product_color_tallSizes_13"]').hide ();
+  $('label[for="product_color_tallSizes_14"]').hide ();
+  $('label[for="product_color_tallSizes_15"]').hide ();
+  $('label[for="product_color_tallSizes_16"]').hide ();  
+  $( "#product_color_tallSizes_0" ).show();
+  $( "#product_color_tallSizes_1" ).show();
+  $( "#product_color_tallSizes_2" ).show();
+  $( "#product_color_tallSizes_3" ).show();  
+  $( "#product_color_tallSizes_4" ).hide();  
+  $( "#product_color_tallSizes_5" ).hide();  
+  $( "#product_color_tallSizes_6" ).show();
+  $( "#product_color_tallSizes_7" ).hide();
+  $( "#product_color_tallSizes_8" ).hide();    
+  $( "#product_color_tallSizes_9" ).hide();
+  $( "#product_color_tallSizes_10" ).show();
+  $( "#product_color_tallSizes_11" ).show();
+  $( "#product_color_tallSizes_12" ).show();
+  $( "#product_color_tallSizes_13" ).hide();
+  $( "#product_color_tallSizes_14" ).hide();
+  $( "#product_color_tallSizes_15" ).hide();
+  $( "#product_color_tallSizes_16" ).hide(); 
+}
+    
+</script>
+
+
+            
 {% if imageUploadForm is defined %}
   <div id="pro_color" style="overflow:auto;">
     <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}">
@@ -242,19 +646,39 @@
  {%if(product.gender=='F' or product.gender=='f' ) and (product.sizeTitleType!='Waist' ) %}
   <div class="row-fluid show-grid">    
   <div class="span3"> Petite Sizes</div>
-  <div>{{ form_widget(colorform.petiteSizes) }}</div>
+  <div>
+         <div style="float:left">{{ form_widget(colorform.petiteSizes) }}</div>
+         {%if(product.sizeTitleType=='letters')%}
+         <div style="float: right;margin-right: 10px;margin-top: 4px;"  id="petiteFirstSizes"><a class="btn" onclick="return petiteFirstSizes()">First</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="petiteSecondSizes"> <a class="btn" onclick="return petiteSecondSizes()">Second</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="petiteThirdSizes"><a class="btn" onclick="return petiteThirdSizes()">Third</a></div>
+         {%endif%}          </div>
   </div> 
   {%endif%}
   {%if(product.sizeTitleType!='Waist')%}
   <div class="row-fluid show-grid">    
   <div class="span3"> Regular Sizes</div>
-  <div>{{ form_widget(colorform.regularSizes) }}</div>
+  <div>
+         <div style="float:left">{{ form_widget(colorform.regularSizes) }}</div> 
+          {%if(product.sizeTitleType=='letters')%}
+         <div style="float: right;margin-right: 10px;margin-top: 4px;"  id="regularFirstSizes"><a class="btn" onclick="return regularFirstSizes()">First</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none" id="regularSecondSizes"><a class="btn" onclick="return regularSecondSizes()">Second</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none" id="regularThirdSizes"><a class="btn" onclick="return regularThirdSizes()">Third</a></div>
+        {%endif%}  
+         </div>
   </div> 
   {%endif%}
   {%if(product.gender=='F' or product.gender=='f' ) and (product.sizeTitleType!='Waist' )%}
   <div class="row-fluid show-grid">    
   <div class="span3">Tall Sizes</div>
-  <div>{{ form_widget(colorform.tallSizes) }}</div>
+  <div>
+         <div style="float:left">{{ form_widget(colorform.tallSizes) }}</div>
+          {%if(product.sizeTitleType=='letters')%}
+         <div style="float: right;margin-right: 10px;margin-top: 4px;"  id="tallFirstSizes"><a class="btn" onclick="return tallFirstSizes()">First</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="tallSecondSizes"><a class="btn" onclick="return tallSecondSizes()">Second</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="tallThirdSizes"><a class="btn" onclick="return tallThirdSizes()">Third</a></div>
+         {%endif%}  
+         </div>
   </div> 
   {%endif%}
   <div class="row-fluid show-grid">    
@@ -296,25 +720,49 @@
    {%if(product.gender=='F' or product.gender=='f')  and (product.sizeTitleType=='Waist' )%}
             <div class="row-fluid show-grid">    
             <div class="span3"> Waiste Sizes</div>
-            <div>{{ form_widget(colorform.womenWaistSizes) }}</div>
+            <div>{{ form_widget(colorform.womenWaistSizes) }}            
+            </div>
             </div> 
         {%endif%}
         {%if(product.gender=='F' or product.gender=='f')  and (product.sizeTitleType!='Waist' )%}
          <div class="row-fluid show-grid">    
          <div class="span3">Petite Sizes</div>
-         <div>{{ form_widget(colorform.petiteSizes) }}</div>
+         <div>
+         <div style="float:left">{{ form_widget(colorform.petiteSizes) }}</div>
+         {%if(product.sizeTitleType=='letters')%}
+         <div style=" float: right;margin-right: 10px;margin-top: 4px;"  id="petiteFirstSizes"><a class="btn" onclick="return petiteFirstSizes()">First</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="petiteSecondSizes"> <a class="btn" onclick="return petiteSecondSizes()">Second</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="petiteThirdSizes"><a class="btn" onclick="return petiteThirdSizes()">Third</a></div>
+         {%endif%}          </div>
          </div>   
          {%endif%}
          {% if(product.sizeTitleType!='Waist') %}                                   
          <div class="row-fluid show-grid">    
          <div class="span3">Regular  Sizes</div>
-         <div>{{ form_widget(colorform.regularSizes) }}</div>
+         <div>
+         <div style="float:left">{{ form_widget(colorform.regularSizes) }}</div> 
+          {%if(product.sizeTitleType=='letters')%}
+         <div style="float: right;margin-right: 10px;margin-top: 4px;"  id="regularFirstSizes"><a class="btn" onclick="return regularFirstSizes()">First</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none" id="regularSecondSizes"><a class="btn" onclick="return regularSecondSizes()">Second</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none" id="regularThirdSizes"><a class="btn" onclick="return regularThirdSizes()">Third</a></div>
+        {%endif%}  
+         </div>
+         
          </div>
          {%endif%}                                   
          {%if(product.gender=='F' or product.gender=='f')  and (product.sizeTitleType!='Waist' )%}
          <div class="row-fluid show-grid">    
          <div class="span3">Tall Sizes</div>
-         <div>{{ form_widget(colorform.tallSizes) }}</div>
+         <div>
+         <div style="float:left">{{ form_widget(colorform.tallSizes) }}</div>
+          {%if(product.sizeTitleType=='letters')%}
+         <div style="float: right;margin-right: 10px;margin-top: 4px;"  id="tallFirstSizes"><a class="btn" onclick="return tallFirstSizes()">First</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="tallSecondSizes"><a class="btn" onclick="return tallSecondSizes()">Second</a></div>
+         <div style="float: right;margin-right: 10px;margin-top: 4px;display:none"  id="tallThirdSizes"><a class="btn" onclick="return tallThirdSizes()">Third</a></div>
+         {%endif%}  
+         </div>
+         </div>
+         
          </div>           
          {%endif%}     
          {% if (product.getDisplayProductColor and color_id != product.getDisplayProductColor.id) or not product.getDisplayProductColor %} 
@@ -381,7 +829,7 @@
                               
                                 
                                                                 <tr>
-                                     <td height="3"></td>
+                                     <td height="9"></td>
                                    <td></td>
                                     <td></td>
                                     <td></td>
