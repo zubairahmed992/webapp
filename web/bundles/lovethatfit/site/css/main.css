@@ -1770,14 +1770,14 @@ ul.prod_wrapper{
 }
 
 .disable_me_top {
-    background:url(../images/top_nav.png) 0 0 no-repeat !important;
+    background:url(../images/scroll_up.png) 0 0 no-repeat !important;
     cursor: default;
-    width: 199px;
+    width: 24px;
     margin: 0 auto;
 }
 .disable_me_btm {
-  background:url(../images/bottom_nav.png) 0 0 no-repeat !important;
-  width:199px;
+  background:url(../images/scroll_down.png) 0 0 no-repeat !important;
+  width:24px;
   margin:-2px auto;
   cursor: default;
 }
