@@ -29,6 +29,6 @@ admin_algorithm_compare:
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:compare, user_id: 0, product_id: 0, json:false}
 
 admin_algorithm_foo:
-    pattern:  /admin/algorithm/foo/{user_id}/{product_id}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:foo, user_id: 0, product_id: 0}
+    pattern:  /admin/algorithm/foo/{user_id}/{product_id}/{size_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:foo, user_id: 0, product_id: 0, size_id: 0}
     

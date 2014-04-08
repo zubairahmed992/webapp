@@ -1,4 +1,4 @@
-
+{#
          {% for key, value in data %} 
             {%if (key | lower != 'fits' and key | lower != 'fit_scale')%}
             <li><b>{{value['title'] | lower | capitalize }}</b>
@@ -14,6 +14,32 @@
                {% endif %}
          {% endfor %}
     
+#}
 
 
-
+         {% for fp, fp_specs in data.feedback.fit_points %}             
+            <li><b>{{fp_specs.label}}</b>            
+            {%if (fp_specs.status == -5)%}
+               Please provide your measurements <a href="{{ path('user_profile_about_me') }}" > here</a> </li>
+           {%else%}
+            {{' : '~fp_specs.message}}
+            {% endif %}
+               
+         {% endfor %}
+                
+                {%if (data.feedback.fit_max_scale is defined and data.feedback.fit_max_scale is not null)%}
+                <li><b>
+                Fit Index :  
+                    </b>
+                    {{data.feedback.fit_max_scale}}
+                    </li>
+                {% endif %}
+                
+                
+                {%if (data.recommendation is defined and data.recommendation is not null)%}
+                <li><b>
+                Try size 
+                    </b>
+                    {{data.recommendation.description}}
+                    </li>
+                {% endif %}

@@ -93,13 +93,20 @@ class AlgorithmController extends Controller {
     }
 
            //------------------------------------------------------------------------------------------
-     public function fooAction($user_id, $product_id)
+    
+    #admin_algorithm_foo:
+    #pattern:  /admin/algorithm/foo/{user_id}/{product_id}
+    #defaults: { _controller: LoveThatFitAdminBundle:Algorithm:foo, user_id: 0, product_id: 0, size_id: 0}
+
+    
+     public function fooAction($user_id, $product_id, $size_id)
     {   
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);  
         $fe = new Comparison($user, $product);                
+        $product_size = $this->get('admin.helper.productsizes')->find($size_id);               
         #return new Response($fe->getFeedBackJSON());                                
-        return new Response(json_encode($fe->back_track()));                                
+        return new Response(json_encode($fe->getSizeFeedBack($product_size)));                                
     }
 
     

@@ -189,6 +189,7 @@ class Comparison {
 
         $message = $this->get_fp_status_text($calc_values['status']);
         return array('fit_point' => $fp_specs['fit_point'],
+            'label' =>  $this->getFitPointLabel($fp_specs['fit_point']),
             'ideal_body_size_low' => $fp_specs['ideal_body_size_low'],
             'ideal_measurement' => $calc_values['avg_low_high'],
             'ideal_body_size_high' => $fp_specs['ideal_body_size_high'],
@@ -264,8 +265,12 @@ class Comparison {
         );
     }
 
-    private function limit_num($n){
+    private function limit_num($n){        
+        if ($n == round($n)) {
+          return $n;
+        }else{
         return number_format($n, 2, '.', '');
+        }
     }
     
     #----------------------------------------------------------
@@ -405,15 +410,16 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
 
     private function getBestFittingSize($recomended_sizes) {
         $bfs=null;
+        if ($recomended_sizes){
         $lowest_variance=null;
         foreach ($recomended_sizes as $key => $value) {
             if($lowest_variance==null || $value['ideal_variance']<=$lowest_variance){
                 $lowest_variance=$value['ideal_variance'];
                 $bfs = $value;
             }
-        }        
-        #return array($bfs['description'] => $bfs);
+        }                
         return $bfs;
+       }
     }
      #----------------------------- Size Thing ~~~~~~~~~~~~~~~~~>
     function getSizeFeedBack($size) {
@@ -421,16 +427,25 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
 
         if ($fb == null)
             return;
+        if ($size == null || !isset($size))
+            return 'no size';
         
-        if ($fb['best_fit']['id']==$size->getId()){ # if it matches best fit
-            return array($fb['best_fit']['description'] => $fb['best_fit']);
+        if ($fb['best_fit']['id']==$size->getId()){ # if it matches best fit            
+            return array(
+                'feedback' => $fb['best_fit'],
+                );
         }
         
-        foreach ($fb['feedback'] as $size) {            
-            if ($size['id']==$size->getId()){ 
-                return array($size['description'] => $size);
+        foreach ($fb['feedback'] as $size_fb) {            
+            if ($size_fb['id'] ==  $size->getId()){ 
+                #return array($size_fb['description'] => $size_fb);
+                return array(
+                'feedback' => $size_fb,
+                'recommendation' => $fb['best_fit'],
+                );
             }        
         }
+               
         return null;
     }   
 #----------------------------------------------------------       
@@ -602,31 +617,18 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
     private function getSizeTypes() {
         return array('Regular', 'Petite', 'Tall');
     }    
+    #----------------------------------------------------------       
     
-    #----------------------------- Item Thing ~~~~~~~~~~~~~~~~~>
-    function getItemFeedBack($item) {
-        if ($this->user ==null || $this->product == null){
-            return null;
-        }
-        if($item == null){
-            $color=$this->product->getDisplayProductColor();    
-        }else{
-            $color=$item->getProductColor();    
-        }
-        $sizes=$color->getProductSizes();
-        if ($this->product->fitPriorityAvailable()) {
-            $cm = $this->array_mix($sizes);
-            $rc = $this->getFittingSize($cm['feedback']);
-            return array(
-                'feedback' => $cm['feedback'],
-                'recommendation' => $rc,
-            );
-        } else {
-            return array(
-                'message' => 'Fit Priority is not set, please update the product detail.',
-            );
+ private function getFitPointLabel($str) {
+        $str = str_replace(' ', '_', strtolower($str));
+        switch ($str) {
+            case 'shoulder_across_back':
+                return 'Shoulder';
+                break;
+            default:
+                return $this->snakeToNormal($str);
+                break;
         }
     }
-
 
 }

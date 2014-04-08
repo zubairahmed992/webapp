@@ -597,14 +597,26 @@ class Product {
         return $item;
         
     }
-    #--------Get Default Product Colors----------------#
-    
-    public function getDefaultItem($user = null) {
+//----------------------------------------------------------
+    public function getComparisonUserItem($user) {
+
+        $comp = new \LoveThatFit\SiteBundle\Comparison($user, $this);
+        $fb = $comp->getFeedBack();
+        if (array_key_exists('best_fit', $fb)){            
+            
+            $item=$this->displayProductColor->getItemBySizeId($fb['best_fit']['id']);
+            return $item;
+        }else{
+            return null;
+        }
         
-        $default_item = null;
-        
+    }    
+    #--------Get Default Product Colors----------------#    
+    public function getDefaultItem($user = null) {        
+        $default_item = null;        
         if ($user != null) {
-            $default_item = $this->getUserFittingItem($user);
+            $default_item = $this->getComparisonUserItem($user);
+            #$default_item = $this->getUserFittingItem($user);
         }
         if ($user == null || $default_item == null) {
             $default_item=$this->getDefaultColorFirstItem();
