@@ -1,11 +1,7 @@
 <!--/ this templete should have the objects products, page_number, limit & row_count -->
-    
+
 {% if(functionality_status is defined and functionality_status  )%}
- <div>
-    <h3 class="comingsoon_new">
-        {{functionality_status}}
-    </h3>                    
- </div>
+ 
         
     {%else%}
 {% if(row_count>0)%}
@@ -72,83 +68,8 @@
  </div>
       {%endif%}
 {%endif%}
+
 </ul>
 
-<script>
-
-
-$(".prod_details_arrow").click(
-    function(){
-       
-        var curr_prod_id = $(this).parent().parent().find(".featured_img img").attr("id");
-        base_url=$('#product_'+curr_prod_id ).text();
-        
-        $('.featured_box'+curr_prod_id+' .transp_list').removeClass("hide").addClass("disp_blk");
-        $.ajax({
-            url:  base_url,
-            success: function (data) {
-                
-                //var chk_data_jiji = $($.parseHTML(data));
-                
-                curr_handle = $(data).find('.prod_handle').html();
-                curr_details = $(data).find('.prod_applied_detail').html();
-                curr_size_apply = $(data).find('.curr_size_data').html();
-                curr_color_apply = $(data).find('.curr_color_data').html();
-                curr_fitting_alerts = $(data).find('.curr_fitting_alerts').html();
-                
-                //$('#prod_accordion #prod_type_dress_hlder .prod_handle').html(oneval);
-                
-                                
-               //var chk_data_jiji = $($.parseHTML(data)).find(".prod_handle").addClass("ffcc00");
-               
-               //$($.parseHTML(data)).find(".prod_handle").addClass("ff_ko_chk");
-               
-               //$(".ff_ko_chk").css("background","#ffcc00");
-                   
-                   //$(".prod_row_"+product_id).html();
-                
-                //alert(chk_data_jiji);
-                
-                
-              //$('#prod_accordion .prod_applied_detail .rgt_col').prepend(data);
-              
-            
-              
-             $('#select_size').html($(data).find('div#hdn_sizes_hldr').html());
-             $('#select_color').html($(data).find('div#hdn_color_hldr').html());
-            accordianCall();
-            
-           // $('.featured_box'+curr_prod_id+' .transp_list').removeClass("disp_blk").addClass("hide");
-           // $('.dynamic_data'+curr_prod_id ).html(data).addClass("disp_blk");
-           // $('.nrm_prod_data'+curr_prod_id ).addClass("hide");
-            set_drag_drop_ele();
-            
-            //var tesss = $(this).parent().parent().parent().find(".featured_box").attr("class");
-            
-            //alert(tesss);
-            }
-        });       
-        
-    }
-);
-    
-    
-$("#slider_dis_canv .featured_img img").click(
-function(){
-    //new_product_control(false,6,7,21);
-    //new_product_control(false,7,8,24);
-    new_product_control(this);
-    console.log("Main site");
-});
-$("#recent_prods_area .featured_img img").click(
-function(){
-    //new_product_control(false,6,7,21);
-    //new_product_control(false,7,8,24);
-    new_product_control(this);
-    console.log("Recent site");
-});
-
-
-</script>
 
 

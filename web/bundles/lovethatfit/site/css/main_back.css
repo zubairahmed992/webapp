@@ -339,20 +339,7 @@ ul.row li {
 }
 /*--Home Page--*/
 
-#header{    
-overflow:hidden;
-    border-bottom: 3px solid #524E4E;
-    color: #444444;    
-    
-    padding: 5px 0;
-    right: 0;
-    top: 0;    
-    z-index: 2;
 
-
-
-
-}
 
 
 
@@ -1051,21 +1038,13 @@ a.but_short:visited {
 .step_4 .btm_buttons {
     bottom: -36px;
 }
-.uploading_in_progress {
-    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
-    height: 72px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    z-index: 5000;
-    top:0;
-    left:0;
-}
+
 
 .int_fitting_room {
+	
 	width:364px;
 	height:505px;
-	margin:18px 20px 0 0;
+	margin:50px 0px 0 0;
 }
 .input_file_hldr {
 	float:left;
@@ -1626,14 +1605,7 @@ input[type=email]{
     width:790px;
 }
 
-.prod_sliding_area{
-	overflow:hidden;
-        z-index: 50;
-        width:789px;
-        position: relative;
-        
-       
-}
+
 .prod_sliding_area .play_area_hldr {
    float: right;
 }
@@ -1642,7 +1614,7 @@ input[type=email]{
    
 }
 #slider_dis_canv {
-    min-height:500px;
+    height:500px;
     overflow: hidden;
     margin-top: 40px;
     
@@ -1673,7 +1645,9 @@ width: 750px;
 }
 ul.prod_wrapper{
 	padding:0;
-	margin:0px 0px 0px 0px;	    
+	margin:0px 0px 0px 0px;	
+      
+       
 }
 
 .featured_content {
@@ -1687,7 +1661,7 @@ ul.prod_wrapper{
     overflow: hidden;
     padding: 10px 10px 0;
     margin-left: -10px;
-    margin-top: -10px;
+    margin-top: -16px;
 }
 
 .prod_wrapper li{
@@ -1746,51 +1720,75 @@ ul.prod_wrapper{
     float:none;
    
 }
-.slider_but_top,
-.slider_but_btm {
-   width:250px;
-   height:11px;
+.up_arrow{
+   width:24px;
+   height:10px;
    position:relative;
    z-index: 56;
    cursor: pointer;
-   display: none;
+   
+   
 }
-.slider_but_btm {
+
+.down_arrow {
+   width:24px;
+   height:10px;
+   position:relative;
+   z-index: 56;
+   cursor: pointer;
+   top: 410px;
+}
+.down_arrow {
    /*background:url(../images/bottom_nav.png) 0 0 no-repeat;*/  
-   background:url(../images/bottom_nav_hover.png) 0 0 no-repeat;
-   width:199px;
+   background:url(../images/scroll_active_down.png) 0 0 no-repeat;
+   width:24px;
    margin:-2px auto;
+   top:410px;
+   margin-top: 10px;
 }
-.slider_but_top {
+.up_arrow {
     /*background:url(../images/top_nav.png) 0 0 no-repeat;*/
-    background:url(../images/top_nav_hover.png) 0 0 no-repeat;
+    background:url(../images/scroll_active_up.png) 0 0 no-repeat;
     margin-bottom:2px!important;
-    width:199px;
+    width:24px;
     margin:0 auto;    
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+    left:47px;
 }
 
 .disable_me_top {
-    background:url(../images/top_nav.png) 0 0 no-repeat !important;
+    background:url(../images/scroll_up.png) 0 0 no-repeat !important;
     cursor: default;
-    width: 199px;
-    margin: 0 auto;
+    width: 24px;    
+    display: inline-block;
+    left: 47px;
+    margin: 0 auto 10px;
+    position: relative;
 }
 .disable_me_btm {
-  background:url(../images/bottom_nav.png) 0 0 no-repeat !important;
-  width:199px;
-  margin:-2px auto;
+  background:url(../images/scroll_down.png) 0 0 no-repeat !important;
+  width:24px;
+  margin:0px auto;
   cursor: default;
+  top: 420px;
+  
 }
 
-.slider_but_top:hover,
-.slider_but_top:focus,
-.slider_but_top:active {
-   background:url(../images/top_nav_hover.png) 0 0 no-repeat;
+.up_arrow:hover,
+.up_arrow:focus,
+.up_arrow:active {
+   background:url(../images/scroll_active_up.png) 0 0 no-repeat;
+   margin-bottom: 10px;
+   display: inline-block;
+   left: 47px;   
+   position: relative;
 }
-.slider_but_btm:hover,
-.slider_but_btm:focus,
-.slider_but_btm:active {
-   background:url(../images/bottom_nav_hover.png) 0 0 no-repeat;
+.down_arrow:hover,
+.down_arrow:focus,
+.down_arrow:active {
+   background:url(../images/scroll_active_down.png) 0 0 no-repeat;
 }
 
 /*-- Fitting room + Drag/Drop --*/
@@ -1804,7 +1802,7 @@ ul.prod_wrapper{
    left:0;
    top:125px;
    text-align: center;
-   z-index: 6002;
+   z-index: 2;
    width:364px;
 }
 
@@ -1814,7 +1812,7 @@ ul.prod_wrapper{
    top:227px;
    text-align: center;
    width:364px;
-   z-index: 6001;
+   z-index: 1;
 }
 
 #full_dropable {
@@ -1822,7 +1820,7 @@ ul.prod_wrapper{
    left:0;
    top:125px;
    text-align: center;
-   z-index: 6003;
+   z-index: 3;
    width:364px;
 }
 
@@ -4015,11 +4013,6 @@ width: 160px;
     height: 530px;
     background: url("../images/bar_shadow_dark.png") 0 0 repeat-y #fff;
 }
-#patch_btm {
-    position:absolute;
-    bottom:0;
-    left:0;
-}
 
 #ltf_fitting_room .but_opn_fr {
     width:150px;
@@ -4049,74 +4042,8 @@ width: 160px;
 
 #ltf_fitting_room .ltf_fitting_room_inner {
     display:none;
-    background: url("../images/top_shade.png") center top no-repeat #ffcc00;
+    
 }
-
-#recent_prods_area {
-    width: 110px;
-    float:left;
-    margin: 37px 0 0 10px;
-}
-#recent_prods_area .recent_head {
-    float:left;
-    color: #b2b2b2;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    width:110px;
-}
-#recent_prods_area .recent_prods_slider_hldr {
-    float:left;
-    width:110px;
-}
-#recent_prods_area #rece_up_but {
-    float:left;
-    width:110px;
-    text-align: center;
-}
-#recent_prods_area #rece_up_but span {
-    background:url(../images/scroll_active_up.png) 0 0 no-repeat;
-    width:24px;
-    height:10px;
-    margin:0 auto 2px;
-    position: relative;
-    display: inline-block;
-}
-#recent_prods_area #recent_prods{
-    height: 380px;
-    overflow: hidden;
-    float:left;
-}
-#recent_prods_area #rece_down_but {
-    float:left;
-    width:110px;
-    text-align: center;
-}
-
-#recent_prods_area .featured_content {
-    display:none;
-}
-#recent_prods_area .featured_img {
-    width: 90px;
-}
-#recent_prods_area .featured_img img {
-    max-height: 70px;
-    max-width: 60px;
-}
-#recent_prods_area .prod_wrapper li {
-    min-height: 76px;
-}
-
-#recent_prods_area #rece_down_but span {
-    background:url(../images/scroll_active_down.png) 0 0 no-repeat;
-    width:24px;
-    height:10px;
-    margin:0 auto;
-    position: relative;
-    display: inline-block;
-    margin:2px auto 0x;
-}
-
 
 .default_item .featured_img {
     margin-left: 0 !important;
@@ -4387,7 +4314,9 @@ margin-left: 4px;
  #prod_type_top_hlder .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
   background:#F3F3F3!important; 
  }
-
+ .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+     background:#426eb6!important;     
+ }
  
  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active a{
      color:#fff!important;     
@@ -4547,75 +4476,320 @@ margin-left: 4px;
 #tabs .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
      background:#426EB6 !important;     
  }
+ 
+ 
+ 
+ .main .fitting_room_recent{  
+   
+   float: left;
+    left: 10px;
+    max-height: 425px;
+    overflow: hidden;
+ }
+ 
+ .main .fitting_room_recent .prod_wrapper li{
+     display:block;
+ }
+ 
+ .main .fitting_room_recent .featured_content{
+     display: none;
+ }
 
+.main  .fitting_room_recent .fbox{
+     padding:0px;
+     
+ }
  
-/*///////// Fitting Room - Default Mannequin //////////*/
+.main .fitting_room_recent .prod_wrapper li{
+     min-height: 30px;
+     width:auto;
+     line-height: 30px;
+     vertical-align: middle
+ }
  
-#default_dummy_hldr {
-    float:left;
-    background: #fff;
-    width:364px;
-    height: 510px;
-    position: relative;
+ .fitting_room_recent .featured_img img{
+    
+     display: inline-block;
+    height: 49px;
+    width: 40%;
+ }
+ 
+ ul.prod_wrapper{
+	padding:0;
+	margin:0px 0px 0px 5px;	
+        max-height: 400px;
+      
+       
 }
-#default_dummy_hldr #default_dummy_inner {
-    position: relative;
-    width: 146px;
+
+.fitting_room_recent .prod_wrapper{
+	padding:0;
+	margin:40px 0px 0px 5px!important;	
+    
+       
+}
+
+ .main ul.prod_wrapper{
+	padding:0;
+	margin:75px 0px 0px 5px;	
+    
+       
+}
+
+
+
+
+#rect_hd{
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #666666;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+.indic{
+    background: url("../images/indic_icon.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 52px;
+    left: 87px;
+    position: absolute;
+    top: 65px;
+    width: 52px;
+}
+
+#scrollpaginationdemo{
+    margin-bottom: 100px;
+}
+
+.uploading_in_progress {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px 2px #CCCCCC;    
     margin: 0 auto;
+    height: 100px;
+    opacity: 0.7;
+    padding: 15px;
+    width: 200px;
+    text-align: center;   
+    
+    
 }
 
-#default_dummy_hldr #default_dummy_inner canvas#default_m_canv {
-    width:364px;
-    height:510px;
-    background: #87ca2e;
+#loadg{
+    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
+    height: 72px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 5000;
+    top:10;
+    left:0;
+}
+.main #header{    
+   overflow:hidden;
+    border-bottom: 3px solid #524E4E;
+    color: #444444;       
+    padding: 5px 0; 
+    z-index: 51;
+    position: fixed;
+    background: #fff;
+    top: 0px;
+}
+
+#header{    
+overflow:hidden;
+    border-bottom: 3px solid #524E4E;
+    color: #444444;    
+    
+    padding: 5px 0;
+   
+    top: 0;    
+    z-index: 2;
+
+}
+
+
+
+.left_column{ 
+ width:200px;
+ position:relative; 
+        z-index: 100;
+        float:left;
+        background: #fff;
+}
+
+.main .left_column{	
+	width:200px;
+	position:relative;	
+        z-index: 100;
+        float:left;
+        background: #fff;
+        position: fixed;
+        margin-top: 12px;
+}
+
+#ltf_fitting_room {
     display: block;
-}
-
-#dm_rgt_arm_hldr img,
-#dm_lft_arm_hldr img,
-.dm_part_div,
-.dm_part_div img {
-    float:left;
-    clear:both;
-    position: relative;
-}
-
-
-#dm_part_1 img,
-#dm_part_2 img,
-#dm_part_3 img,
-#dm_part_4 img,
-#dm_part_5 img,
-#dm_part_6 img,
-#dm_part_7 img,
-#dm_part_8 img {
-    width:84px;
-}
-
-#dm_part_8 img {
-    display:none;
-}
-
-#dm_rgt_arm_hldr {
-    float:left;
-    position: relative;
-    z-index: 200;
-}
-#dm_lft_arm_hldr {
-    float:left;
-    position: relative;
-    z-index: 200;
-}
-#dm_mid_body_hldr {
-    float:left;
-    z-index: 100;
-    margin-left: -4px;
-    margin-right: -4px;
-}
-
-#dm_rgt_arm_part_1 img,
-#dm_lft_arm_part_1 img,
-#dm_rgt_arm_part_2 img,
-#dm_lft_arm_part_2 img {
+    position: absolute;
+    right: 0;
+    top:0;
     width: 35px;
+    z-index: 5000;
+    border:none;
+    border-left: none;
+    padding-top: 10px;
+    height: 530px;
+    background: url("../images/bar_shadow_dark.png") 0 0 repeat-y #fff;
+}
+
+.main #ltf_fitting_room {
+    display: block;   
+     
+    width: 35px;
+    top:60px;
+    z-index: 5000;
+    border:none;
+    border-left: none;
+    padding-top: 10px;
+    height: 530px;
+    position: fixed;
+   
+    background: url("../images/bar_shadow_dark.png") 0 0 repeat-y #fff;
+}
+
+.prod_sliding_area{
+ overflow:hidden;
+        z-index: 50;
+        width:789px;
+        position: relative;
+        
+       
+}
+
+.main .prod_sliding_area{
+	overflow:hidden;
+        z-index: 50;
+        width:789px;
+        position: relative!important;  
+        margin-left: 200px;
+}
+
+.footer {
+ width:996px;
+ margin:0 auto;
+ height:60px;
+ padding-right:10px;
+ position:relative;
+        z-index: 600;
+        
+}
+
+.main .footer {
+	width:996px;
+	margin:0 auto;
+	height:60px;
+	padding-right:10px;
+	position:fixed;
+        z-index: 600;
+        bottom:0;
+        background: #fff;
+        left:129px;
+        border-top: 1px solid #ccc;
+        
+}
+
+.default_item .featured_img {
+   /* padding-right: 30px;*/
+    width:110px;
+    margin:0 auto;
+    text-align: center;
+    float:none;
+   
+}
+
+.main .default_item .featured_img {
+   /* padding-right: 30px;*/
+    width:110px;
+    margin:0 auto;
+    text-align: center;
+    float:none;
+    max-height: 114px;
+    min-height: 114px;
+   
+}
+
+.fbox{    
+    overflow: hidden;
+    padding: 10px 10px 0;
+    margin-left: -10px;
+    margin-top: -16px;
+}
+
+.main .fbox{    
+    overflow: hidden;
+    padding: 0px 0px;
+    margin-left: -10px;
+    margin-top: -48px;
+}
+
+.main .fitting_room_recent .fbox{    
+    overflow: hidden;
+    padding: 0px 0px;
+    margin-left: -10px;
+    margin-top: -48px;
+}
+
+.prod_wrapper li{
+	list-style:none;
+        width:130px;
+        display:inline-block;
+	padding:10px;
+        min-height: 146px;
+        /*border-bottom:1px dashed #c4c5c4;*/
+}
+
+.main .prod_wrapper li{
+    display: inline-block;
+    list-style: none outside none;
+    min-height: 134px;
+    padding: 10px;
+    width: 130px;
+}
+
+.prod_wrapper li h3 {
+    visibility: hidden;
+    min-height: 40px;
+    max-height: 40px;
+    font-size: 0.9em;
+}
+
+.main .prod_wrapper li h3 {   
+    min-height: 28px;
+    max-height: 37px;
+    font-size: 0.9em;
+    width: 108px;
+    text-align: center;
+}
+
+.welcome_box{	    
+    width: 580px;
+    float:right;        
+}
+
+.main .welcome_box{	    
+    width: 587px;
+    float:right;        
+}
+
+.full_wrapper {
+	background:none;
+	padding-top:10px;
+}
+
+.main {
+	background:none;
+	padding-top:0px;
 }

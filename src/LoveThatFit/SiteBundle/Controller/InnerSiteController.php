@@ -55,7 +55,13 @@ public function indexAction($list_type) {
         if ($list_type == 'ltf_recommendation' || $list_type == 'most_faviourite') {
             $entity = null;
             return $this->renderProductTemplate($entity, $page_number, $limit, 'Coming Soon');
-        } else {
+        } elseif ($list_type == 'recently_tried_on') {
+            $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+            $gender = $this->get('security.context')->getToken()->getUser()->getGender();
+            $options = array('gender' => $gender, 'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);
+            $entity = $this->get('admin.helper.product')->listByType($options);
+            return $this->render('LoveThatFitSiteBundle:InnerSite:_products_short.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
+        } else  {
             $user_id = $this->get('security.context')->getToken()->getUser()->getId();
             $gender = $this->get('security.context')->getToken()->getUser()->getGender();
             $options = array('gender' => $gender, 'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);

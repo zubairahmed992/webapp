@@ -13,15 +13,63 @@
 {% if (app.user.measurement)%}
 
 
-
 <input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
 <input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
 <input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
-
-
 {% endif %}
 
-
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/scrollpagination.js') }}"></script>       
+<script type="text/javascript">
+$(function(){
+      var url='../ajax/products/{{app.user.gender}}/latest/';      
+	$('#content').scrollPagination({
+		'contentPage': url, // the url you are fetching the results
+		'contentData': {}, // these are the variables you can pass to the request, for example: children().size() to know which page you are
+		'scrollTarget': $(window), // who gonna scroll? in this example, the full window
+		'heightOffset': 10, // it gonna request when scroll is 10 pixels before the page ends
+		'beforeLoad': function(){ // before load function, you can display a preloader div
+		var tot_rec=$("#totalproducts").val();
+                if(tot_rec<=15){
+                 $('#loading').hide();
+                 $('#content').stopScrollPagination();
+                  }else{  
+                   
+                   $('#loading').fadeIn(); 
+                     }
+                        
+                        
+		},
+                
+		'afterLoad': function(elementsLoaded){ // after loading content, you can use this function to animate your new elements
+			 
+                         $('#loading').fadeOut();
+			 var i = 0;
+			 $(elementsLoaded).fadeInWithDelay();
+                       if($("#totalproducts").val()<10){
+                         $('#loading').fadeOut();
+			 $('#content').stopScrollPagination();
+                        }
+                        if ($('#content').children().size() > 100 || $.fn.more_content_available==false){ 
+                        // if ($('#content').children().size() > parseInt($("#totalproducts").val())){ // if more than 100 results already loaded, then stop pagination (only for testing)
+	//alert("got true");		 	
+                                $('#nomoreresults').fadeIn();
+				$('#content').stopScrollPagination();
+                             
+			 }
+		}
+	});
+	
+	// code for fade in element by element
+	$.fn.fadeInWithDelay = function(){
+		var delay = 0;
+		return this.each(function(){
+			$(this).delay(delay).animate({opacity:1}, 200);
+			delay += 100;
+		});
+	};
+		   
+});
+</script>
 
 
 <section class="products">
@@ -38,10 +86,12 @@
     
     <div class="prod_slider_hldr">
         <div class="slider_but_top click_able_top"></div>
+        
+        
         <div class="prod_sliding_area">
+            <div style="background:#fff; position:fixed; width:789px; z-index:200; height:70px; top:34px">&nbsp;</div>
             
           <div id="ltf_fitting_room">
-              <img id="patch_btm" src="{{ asset('bundles/lovethatfit/site/images/bottom_patch.png') }}" />
           <div class="but_opn_fr">
                   Fitting Room
               </div>
@@ -49,21 +99,20 @@
                   Products
               </div>
            <div class="ltf_fitting_room_inner">
+               
           
-               <div id="recent_prods_area">
-                   <div class="recent_head">
-                       Recently Tried
-                   </div>
-                   <div class="recent_prods_slider_hldr">
-                       <div id="rece_up_but"><span class="click_able_top"></span></div>
-                       <div id="recent_prods">
-                           {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : 'recently_tried_on'} %}
-                       </div>
-                       <div id="rece_down_but"><span class="click_able_btm"></span></div>
-                   </div>
-               </div> 
-               
-               
+            
+               <div style="margin-top: 40px; width: 125px; float:left; margin-left: 10px;"> 
+                 
+                 <div id="rect_hd">Recently Tried</div>
+                 <div class="up_arrow click_able_top"></div>
+<div class="fitting_room_recent">
+        {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
+ </div>  
+                 <div class="down_arrow click_able_btm"></div>
+                 
+                 
+          </div>  
                
           <!-- ---- New Product Detail Show Here  -->  
           
@@ -206,42 +255,11 @@
                 <div id="top_dropable" class="hide"></div>
                 <div id="bottom_dropable" class="hide"></div>
                 
-                
-                
-                
                 {% if app.user.image != null %}
-                <input id="hdn_dm_status" type="hidden" value="user" />
                 <div id="user_dummy_img_hldr">
                     <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123">
                 </div>
                 {%else%}
-                <input id="hdn_dm_status" type="hidden" value="default" />
-                        
-                
-                <div id="default_dummy_hldr">
-                    <div id="default_dummy_inner">
-                        <div id="dm_rgt_arm_hldr">
-                            <div id="dm_rgt_arm_part_1"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_1.png') }}" /></div>
-                            <div id="dm_rgt_arm_part_2"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_2.png') }}" /></div>
-                        </div>
-                        
-                        <div id="dm_mid_body_hldr">
-                            <div id="dm_part_8" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_8.png') }}" /></div>
-                            <div id="dm_part_7" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_7.png') }}" /></div>
-                            <div id="dm_part_6" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6.png') }}" /></div>
-                            <div id="dm_part_5" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5.png') }}" /></div>
-                            <div id="dm_part_4" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4.png') }}" /></div>
-                            <div id="dm_part_3" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3.png') }}" /></div>
-                            <div id="dm_part_2" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_2.png') }}" /></div>
-                            <div id="dm_part_1" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_1.png') }}" /></div>
-                        </div>
-                        <div id="dm_lft_arm_hldr">
-                            <div id="dm_lft_arm_part_1"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_1.png') }}" /></div>
-                            <div id="dm_lft_arm_part_2"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_2.png') }}" /></div>
-                        </div>
-                        <!--<canvas id="default_m_canv" width="364" height="510"></canvas>-->
-                    </div>
-                </div>
                     <div class="upload_pic_msg">Please <a href="{{ path('fitting_room_image_edit') }}">Upload Your Photo</a> to try cloths on you.</div>
                     <div id="user_dummy_img_hldr">
                     </div>
@@ -275,11 +293,33 @@
                   <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}">
               </div>
           </div>
+            
           <div id="slider_dis_canv">
-            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
-            <!--.prod_sliding_area--></div>
+            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type,'page_number':1,'limit':15} %}
+            <!--.prod_sliding_area-->
+          </div>
+            <div id="scrollpaginationdemo">
+            <div id="content">
+            </div>
+            
            
+                   
+                    <div class='uploading_in_progress set_width_chg' id="loading">
+                        
+                        <div id="loadg"></div>Loading... 
+           
+           
+               <div class="indic"></div>
+           
+           
+           </div>
+                           
+          
+           
+           </div>
         <!---/#dis canv---></div>
+        
+
         
        
         
@@ -497,47 +537,23 @@ if(jqXHR.responseText.trim()== "success")
 //--Slider--//
     
 function set_slider_buttons(){
-  if($("#slider_dis_canv").scrollTop() == 0){
-      $(".slider_but_top").removeClass("click_able_top").addClass("disable_me_top");
+  if($(".fitting_room_recent").scrollTop() == 0){
+      $(".up_arrow").removeClass("click_able_top").addClass("disable_me_top");
       //alert("top_disabled now");
   }
   else {
-      $(".slider_but_top").removeClass("disable_me_top").addClass("click_able_top");
+      $(".up_arrow").removeClass("disable_me_top").addClass("click_able_top");
   }
-  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 500){
-      $(".slider_but_btm").removeClass("click_able_btm").addClass("disable_me_btm");
-      //alert("bottom_disabled now");
+  if($(".fitting_room_recent").scrollTop() >= $(".fitting_room_recent ul.prod_wrapper").height() - 380){
+      $(".down_arrow").removeClass("click_able_btm").addClass("disable_me_btm");
+     
   }
   else {
-      $(".slider_but_btm").removeClass("disable_me_btm").addClass("click_able_btm");
+      $(".down_arrow").removeClass("disable_me_btm").addClass("click_able_btm");
   }
 }
-
-
-function set_short_slider_buttons(){
-  if($("#recent_prods").scrollTop() == 0){
-      $("#rece_up_but span").removeClass("click_able_top").addClass("disable_me_top");
-      //alert("top_disabled now");
-  }
-  else {
-      $("#rece_up_but span").removeClass("disable_me_top").addClass("click_able_top");
-  }
-  
-  var chk_it_height = $("#recent_prods ul.prod_wrapper").height();
-  chk_it_height = chk_it_height -380;
-  if($("#recent_prods").scrollTop() >= chk_it_height){
-      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
-      //console.log(chk_it_height);
-  }
-  else {
-      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
-  }
-}
-
 
 function set_droppables(){
-    
-  if($("#hdn_dm_status").attr("value") != "default"){
     var top_pos_drop = parseInt($("#hdn_prod_top_pos").attr("value"));
     
     console.log("Top value = " + top_pos_drop);
@@ -577,18 +593,10 @@ function set_droppables(){
     //dress_pos_drop = dress_pos_drop * 6;
     
     $("#full_dropable").css({top: top_pos_drop + "px"});
-  }
-  else {
-      var user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
-    $("#top_dropable").css("top",((21.44*user_height)/100)-24);
-    $("#bottom_dropable").css("top", ((37*user_height)/100));
-    $("#full_dropable").css("top", ((21.44*user_height)/100)-24);
-  }
 }
 $(document).ready(function(){
   set_droppables();
   set_slider_buttons();
-  set_short_slider_buttons();
   set_drag_drop_ele();
   ///--- Fitting Alert ---///
               
@@ -603,23 +611,14 @@ $(document).ready(function(){
 
 });
 var scroll_heighting = 506;
-    $(".click_a ble_top").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
-        
-    });
-    $(".click _able_btm").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
-        
-    });
-    
-    var short_scroll_heighting = 386;
     $(".click_able_top").click(function (){
-        $("#recent_prods").animate({"scrollTop" : "-=" + short_scroll_heighting}, 1200, "swing", function (){set_short_slider_buttons();} );
+        $(".fitting_room_recent").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+       
         
     });
     $(".click_able_btm").click(function (){
-        $("#recent_prods").animate({"scrollTop" : "+=" + short_scroll_heighting}, 1200, "swing", function (){set_short_slider_buttons();} );
-        //alert("asfasd");
+        $(".fitting_room_recent").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+         
     });
     
     
@@ -696,14 +695,12 @@ var scroll_heighting = 506;
     
     
      function open_fr(){
-        $("#slider_dis_canv ul.prod_wrapper li").fadeOut(200);
         $("#ltf_fitting_room").animate({ width: 780 }, 500, function() { });
         $("#ltf_fitting_room .ltf_fitting_room_inner").fadeIn(300);
         $("#ltf_fitting_room .but_opn_fr").fadeOut(250);
         $("#ltf_fitting_room .but_cls_fr").fadeIn(250);
     }
     function close_fr(){
-        $("#slider_dis_canv ul.prod_wrapper li").fadeIn(200);
         $("#ltf_fitting_room").animate({ width: 35 }, 500, function() { });
         $("#ltf_fitting_room .ltf_fitting_room_inner").fadeOut(300);
         $("#ltf_fitting_room .but_opn_fr").fadeIn(250);
@@ -766,6 +763,7 @@ var scroll_heighting = 506;
         drop: function( event, ui ) {
             
             //alert(ui.draggable);
+
             
             new_product_control(ui.draggable);
  
@@ -856,9 +854,7 @@ var scroll_heighting = 506;
     
     </script>
     
-   <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/default_mannequin.js') }}"></script>
-    
-    
+   
     <div class="pro_cart">
     
     
@@ -1105,6 +1101,13 @@ function chk_dress_applied_loaded(prod_type_applied){
                     });
             }
         }
+        
+        
+       
+  
+    
+  
+  
 
 function apply_prod(size_id,product_id,color_id){
     //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
@@ -1224,7 +1227,24 @@ function set_select_color(curr_prod_clicked_id){
          }
 }
   
+ screen_height = $('.prod_sliding_area').height();
+// scrol = $('#scrollpaginationdemo').height();
+ 
+ total_height = screen_height+100;
+ $('#ltf_fitting_room').css( "height", total_height);
+ 
+  screen_width = $(window).width()/2;
   
+  
+  screen_width2 = $('.holder').width()/2;
+  
+  
+  rec = screen_width-screen_width2;
+  $('.main #ltf_fitting_room').css( "right", rec);
+  
+  
+  
+
 $(".share_but_new").click(
   function() {
       $(".share_inner").show();
@@ -1234,6 +1254,8 @@ $(".share_but_new").click(
 
 
 </script>
+
+
 
  
 {% endblock %} 
