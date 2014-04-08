@@ -6762,3 +6762,20 @@ overflow: auto;
     float:left;
     width:380px;
 }
+
+.glyphicon {
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    position: relative;
+    top: 1px;
+}
+
+.glyphicon-star {
+   background-image: url("../images/glyphicons-halflings.png");
+    background-position: 11px -121px;
+    height: 14px;
+    width: 12px;
+}

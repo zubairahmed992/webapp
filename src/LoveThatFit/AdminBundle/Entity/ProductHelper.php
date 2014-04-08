@@ -773,7 +773,7 @@ public function productDetailColorAdd($entity){
            'XL'=>'XL',
            'XXL'=>'XXL',
            'XXXL'=>'XXXL',
-           'XXXL'=>'XXXL',
+           'XXXXL'=>'XXXXL',
            '1XL'=>'1XL', 
            '2XL'=>'2XL', 
            '3XL'=>'3XL',
