@@ -91,6 +91,11 @@ ajax_product_hotest:
     pattern:  /ajax/products/{gender}/hotest/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsHotest, page_number: 0, limit: 0}
 
+ajax_fitting_room_product_list:
+    pattern:  /ajax/fitting_room_product/{gender}/list/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList, page_number: 0, limit: 0}
+
+
 ajax_product_by_brand:
     pattern:  /ajax/products/{gender}/brand/{brand_id}/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByBrand, page_number: 0, limit: 0}
