@@ -4011,8 +4011,7 @@ width: 160px;
     z-index: 5000;
     border:none;
     border-left: none;
-    padding-top: 10px;
-    height: 530px;
+    padding-top: 10px;    
     background: url("../images/bar_shadow_dark.png") 0 0 repeat-y #fff;
 }
 #patch_btm {
@@ -4618,4 +4617,15 @@ margin-left: 4px;
 #dm_rgt_arm_part_2 img,
 #dm_lft_arm_part_2 img {
     width: 35px;
+}
+
+.addwidth{
+    width:780px!important;
+    border:1px solid red;
+    
+}
+
+.showtab{
+    overflow:visible!important;
+    
 }
