@@ -118,13 +118,16 @@
                         <canvas id="cnv_img_crop" width="364" height="505" class="cnv_img_crop_style"></canvas>
 
                 </form>  
-         <input type="hidden" id="hdn_skip_flag" value="skip"/>
+            
+         
             <div class="frm_ele step4_btns">
                   
                   {% if(edit_type=="registration")%}
                   <a class="reg_next_step reg_second" href="{{path('registration_measurement_edit')}}">Back</a>
+                  <a class="reg_next_step" href="{{path('inner_site_index')}}">skip</a>
                  {% else %}
                   <a class="reg_next_step" href="{{path('inner_site_index')}}">Back</a>
+                  <a class="reg_next_step" href="{{path('inner_site_index')}}">skip</a>
                  {% endif%}    
                  </div>
                 <!--/.step_4--></div>
