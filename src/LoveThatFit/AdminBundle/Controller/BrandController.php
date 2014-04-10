@@ -5,8 +5,10 @@ namespace LoveThatFit\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use LoveThatFit\AdminBundle\Entity\BrandSpecification;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\BrandType;
+use LoveThatFit\AdminBundle\Form\Type\BrandSpecificationType;
 
 class BrandController extends Controller {
 
@@ -82,6 +84,43 @@ class BrandController extends Controller {
                     'form' => $form->createView(),
         ));
     }
+    
+//---------------------------------------------Brand Specification add new----------------------------
+  
+ public function newBrandSpecificationAction($id)
+ {
+     $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
+     $entity = $specs['entity'];       
+     $brandspecification=new BrandSpecification();
+     $form=$this->createForm(new BrandSpecificationType(),$brandspecification);
+      return $this->render('LoveThatFitAdminBundle:Brand:new_brand_specification.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
+ }
+ 
+public function createBrandSpecificationAction($id,Request $request)
+{
+    $entity = $this->get('admin.helper.brand')->find($id);     
+    $brandspecification=new BrandSpecification();    
+    $form=$this->createForm(new BrandSpecificationType(),$brandspecification);
+    $form->bind($request);     
+    $brandspecification->setBrand($entity);
+    $data = $request->request->all();    
+    $brandArray= $this->get('admin.helper.brand.specification')->brandDetailArray($data,$brandspecification);         
+    $this->get('session')->setFlash($brandArray['message_type'], $brandArray['message']);
+    $brand_limit = $this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id);
+     $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit[0]['id']));
+     if ($page_number == 0) {
+            $page_number = 1;
+        }
+        return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
+                    'brand' => $entity,
+                    'page_number' => $page_number,
+        ));
+}
+ 
+ 
 
 //------------------------------------------------------------------------------------------
     public function editAction($id) {

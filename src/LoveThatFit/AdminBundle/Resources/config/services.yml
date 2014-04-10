@@ -105,6 +105,13 @@ services:
      
      admin.helper.product.specification:
         class: LoveThatFit\AdminBundle\Entity\ProductSpecificationHelper
+    
+     admin.helper.brand.specification:
+        class: LoveThatFit\AdminBundle\Entity\BrandSpecificationHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\BrandSpecification
         
      admin.helper.color:
         class: LoveThatFit\AdminBundle\Entity\ColorHelper  

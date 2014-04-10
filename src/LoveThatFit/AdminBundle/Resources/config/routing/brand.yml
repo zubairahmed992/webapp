@@ -7,7 +7,15 @@ admin_brands:
 admin_brand_show:
     pattern:  /admin/brand/{id}/show
     defaults: { _controller: LoveThatFitAdminBundle:Brand:show }
+    
+admin_brand_specification_new:    
+    pattern:  /admin/brand/{id}/new
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:newBrandSpecification }
 
+admin_brand_specification_create:    
+    pattern:  /admin/brand/{id}/create
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:createBrandSpecification }
+    
 admin_brand_products:
     pattern:  /admin/brand/{id}/products/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:Brand:products ,page_number: 1, sort:id }

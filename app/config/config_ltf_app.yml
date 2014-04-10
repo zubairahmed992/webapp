@@ -39,7 +39,7 @@ constants:
      dress: dress
      
   body_types:
-     ({regular, petite})
+     ({regular, petite,tall})
  
   body_types_search:
       regular: Regular
