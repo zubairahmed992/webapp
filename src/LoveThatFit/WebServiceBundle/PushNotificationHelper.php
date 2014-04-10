@@ -54,6 +54,25 @@ class PushNotificationHelper{
         $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         
     }
+ #-----------Delete Notification --------------------------------------#
+     public function delete($id) {
+        $entity = $this->repo->find($id);
+        if ($entity) {
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            return array(
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+
+            return array(
+                'message' => 'Product not found!',
+                'success' => false,
+            );
+        }
+    }
 
    //-------------------------------------------------------
 
@@ -136,6 +155,16 @@ class PushNotificationHelper{
         $this->savePushNotification($PushNotification);
         return array('msg'=>' Notifcation Saved Successfully');
   }
+  
+  #----------Update Msg ----only ----------------------#
+  public function updateMsg ($req){
+       $notificationData=$this->repo->findById($req['id']);
+       
+        $notificationData->setMessage($req['msg']);
+        $this->savePushNotification($notificationData);
+        return array('status'=>true,'msg'=>'Message Send');
+      
+  }
 #---------------Update Push Notification Table Base on User Id ----------------#
  public function updatePushNotification ($lastUserId,$notificationId){
     
@@ -182,7 +211,7 @@ class PushNotificationHelper{
    if($data['status']==true){
        $data=$this->getCroneJob();
    }else{
-       return  $this->msgs;
+      $data= $this->inActiveNotification($this->msgs);
    }
    return $data;
  }
@@ -208,11 +237,11 @@ class PushNotificationHelper{
  }
  function processNotification($notification){
      
-    $userDeviceIdArray=$this->getUserDeviceIdArray(100, $notification['user_id']);
+    $userDeviceIdArray=$this->getUserDeviceIdArray(20, $notification['user_id']);
    //  return $userDeviceIdArray;
     #2 send notification
   //  $this->msgs[ $notification['user_id']]="Notification".$notification['user_id'];
-    $this->msgs[$notification['user_id']]=$userDeviceIdArray['deviceType'];
+    $this->msgs['last_user_id']=$notification['user_id'];
     $sendMsg=$this->sendPushNotification($userDeviceIdArray['deviceType'],$notification['msg']);
      #3 update notif DB
     #---------------------------------Get Max User Id -------------------------#
@@ -233,7 +262,15 @@ class PushNotificationHelper{
      }
      return $deviceType;
  }
- public function inActiveNotification($lastUserId){
+ public function inActiveNotification($lastUserId=0){
+    $msg=array();
+    $notifcationData=$this->findByUserId($lastUserId['last_user_id']);
+     foreach($notifcationData as $delNotif){
+        $id=$delNotif->getId();
+        $msg[]=$this->delete($id);
+        
+    }
+    return $msg;
      
  }
  #-------------------------------------------

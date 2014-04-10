@@ -1,0 +1,15 @@
+
+
+admin_push_notification:
+    pattern:  /admin/push_notification
+    defaults: { _controller: LoveThatFitAdminBundle:PushNotification:index  }
+
+admin_pushnotiifcation_send:
+    pattern:  /admin/send_push_notification
+    defaults: { _controller: LoveThatFitAdminBundle:PushNotification:sendPushNotifcation  }
+
+admin_pushnotification_status:
+    pattern:  /admin/send_push_status
+    defaults: { _controller: LoveThatFitAdminBundle:PushNotification:statusUpdate  }
+
+    

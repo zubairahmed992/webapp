@@ -143,6 +143,12 @@ ws_get_notification_type:
    pattern:  /web_service/get_notification_type
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:getNotificationType}  
 
+ws_run_crone_job:
+   pattern:  /web_service/run_crone_job
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:runCroneJob}  
+
+
+
    
    
 

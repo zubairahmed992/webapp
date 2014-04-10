@@ -1,0 +1,130 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<script>
+function showTextBox(id){
+    $('#msg_show'+id).toggle();
+    $('#msg_hide'+id).toggle();
+}
+
+function sendNotification(id){
+    
+    var msg=$('#msg'+id).val();
+    
+    if($.trim(msg)!=''){
+   var msg_sent=msg;
+    }if($.trim(msg)==''){
+     msg_sent=null;
+    }
+     $.ajax({
+        type:'POST',
+        url: $('#url').text(),
+        data: {id: id,msg:msg_sent},  
+        success: function(data) {
+            alert(data);
+       }
+   });
+     }   
+     
+ function updateStatus(){
+    
+    var msg=$('#msg'+id).val();
+    
+    if($.trim(msg)!=''){
+   var msg_sent=msg;
+    }if($.trim(msg)==''){
+     msg_sent=null;
+    }
+     $.ajax({
+        type:'POST',
+        url: $('#url').text(),
+        data: {id: id,msg:msg_sent},  
+        success: function(data) {
+            alert(data);
+       }
+   });
+     }       
+    </script>
+
+<li class="active">Products</li>
+{% endblock %}
+
+
+
+{% block body %}
+ 
+    <span id="admin_product_zip" style="display:none;">{{path('admin_product_detail_zipdownlaod')}}</span>
+<div class="p_listing">     
+    <h1>Products</h1>
+ 
+    
+    
+    <div class="btn_wrapper2">
+     
+      
+      </div>
+    
+    
+    
+    
+    
+    
+    
+     <div class="clearfix"></div> 
+     
+    <div class="bs-docs-grid">              
+
+        <div class="row-fluid show-grid product_main">
+            <div class="span1 hds"><a href="#_" style=" text-decoration: none;"> ID</a></div>
+            <div class="span1 hds"><a href="#_">Last UserId</a></div>
+            <div class="span1 hds"><a href="#_">Message</a></div>
+            <div class="span1 hds"><a href="#_">Type</a></div>
+            <div class="span1 hds"><a href="#_">Active/InActive</a></div>
+            <div class="span1 hds">Action</div>  
+            
+        </div>  
+
+          {% for p in get_all_notification %}
+
+        <div class="row-fluid show-grid product_main">
+            <div class="span1">{{p.Id}}</div>
+            <div class="span1">{{p.userId}}</div>
+            <div class="span1">{{p.message}}</div>
+            <div class="span1">{{p.notificationType}}</div>
+            <div class="span1"><a href="">{{p.isActive}}</a></div>
+           <div class="span1"><a href="#myModaldetail{{p.Id}}" title="Delete" role="button" data-toggle="modal"><i class="icon-ok-sign"></i></a></div>
+            
+        </div>
+   
+        <span id="activeStatus" style="display:none;">{{path('admin_pushnotification_status')}}</span>
+
+<!-- ModalDetail -->
+<div id="myModaldetail{{p.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+   <span id="url" style="display:none;">{{path('admin_pushnotiifcation_send')}}</span>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Send Push Notification :{{p.notificationType}}!</h3>
+  </div>
+  <div class="modal-body">
+      <div class="icon-edit" onclick="showTextBox('{{p.Id}}')" style=" float: right;"> </div>
+      <div id="msg_show{{p.Id}}">Message: {{p.message}}</div>
+     
+      <div id="msg_hide{{p.Id}}" style=" display: none;">Message: 
+          <input type="text" name="msg" id="msg{{p.Id}}">
+          </idv>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="#"  class="btn btn-primary" onclick="sendNotification('{{p.Id}}')">Send</a>
+    
+  </div>
+</div>     
+
+
+ </div> 
+{% endfor %}
+    </div>
+  
+    
+   
+</div>
+ {% endblock %}

@@ -53,4 +53,8 @@ admin_algoritm_routes:
     
 admin_product_data_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/product_data.yml"
-    prefix:   /    
+    prefix:   /   
+    #---------------------------Push Notification Interface ------------------#
+admin_push_notification:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/push_notification.yml"
+    prefix:   /       

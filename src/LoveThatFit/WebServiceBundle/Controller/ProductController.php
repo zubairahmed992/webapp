@@ -402,10 +402,13 @@ public function sendPushNotifcationAction(){
    return new response($msg);
    
 }
+###Testing prupose ------------------#
 public function getNotificationTypeAction(){
-    
+ return new response(json_encode($this->get('push_notification_helper')->getCroneJob()));
+}
+#------ Run Crone job Action -----------------#
+public function runCroneJobAction(){
     return new response(json_encode($this->get('push_notification_helper')->getCroneJob()));
-    
     
 }
 
