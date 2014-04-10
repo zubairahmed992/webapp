@@ -16,10 +16,15 @@ class Brand {
      * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
      */
     protected $products;
-     /**
-     * @ORM\OneToMany(targetEntity="SizeChart", mappedBy="brand")
-     */
-    protected $sizechart;
+    
+    
+    
+    /**
+     * Bidirectional (INVERSE SIDE)
+     * 
+     * @ORM\OneToOne(targetEntity="BrandSpecification", mappedBy="brand", cascade={"ALL"}, orphanRemoval=true)
+     * */
+    private $brandspecification;
     
     /**
      * @ORM\ManyToMany(targetEntity="Retailer", mappedBy="brands")
@@ -362,5 +367,129 @@ public function deleteImages()
     public function getProducts()
     {
         return $this->products;
+    }
+
+    
+
+    /**
+     * Add top_brand
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Measurement $topBrand
+     * @return Brand
+     */
+    public function addTopBrand(\LoveThatFit\UserBundle\Entity\Measurement $topBrand)
+    {
+        $this->top_brand[] = $topBrand;
+    
+        return $this;
+    }
+
+    /**
+     * Remove top_brand
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Measurement $topBrand
+     */
+    public function removeTopBrand(\LoveThatFit\UserBundle\Entity\Measurement $topBrand)
+    {
+        $this->top_brand->removeElement($topBrand);
+    }
+
+    /**
+     * Get top_brand
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTopBrand()
+    {
+        return $this->top_brand;
+    }
+
+    /**
+     * Add bottom_brand
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Measurement $bottomBrand
+     * @return Brand
+     */
+    public function addBottomBrand(\LoveThatFit\UserBundle\Entity\Measurement $bottomBrand)
+    {
+        $this->bottom_brand[] = $bottomBrand;
+    
+        return $this;
+    }
+
+    /**
+     * Remove bottom_brand
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Measurement $bottomBrand
+     */
+    public function removeBottomBrand(\LoveThatFit\UserBundle\Entity\Measurement $bottomBrand)
+    {
+        $this->bottom_brand->removeElement($bottomBrand);
+    }
+
+    /**
+     * Get bottom_brand
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBottomBrand()
+    {
+        return $this->bottom_brand;
+    }
+
+    /**
+     * Add dress_brand
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Measurement $dressBrand
+     * @return Brand
+     */
+    public function addDressBrand(\LoveThatFit\UserBundle\Entity\Measurement $dressBrand)
+    {
+        $this->dress_brand[] = $dressBrand;
+    
+        return $this;
+    }
+
+    /**
+     * Remove dress_brand
+     *
+     * @param \LoveThatFit\UserBundle\Entity\Measurement $dressBrand
+     */
+    public function removeDressBrand(\LoveThatFit\UserBundle\Entity\Measurement $dressBrand)
+    {
+        $this->dress_brand->removeElement($dressBrand);
+    }
+
+    /**
+     * Get dress_brand
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDressBrand()
+    {
+        return $this->dress_brand;
+    }
+
+    /**
+     * Set brandspecification
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\BrandSpecification $brandspecification
+     * @return Brand
+     */
+    public function setBrandspecification(\LoveThatFit\AdminBundle\Entity\BrandSpecification $brandspecification = null)
+    {
+        $this->brandspecification = $brandspecification;
+    
+        return $this;
+    }
+
+    /**
+     * Get brandspecification
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\BrandSpecification 
+     */
+    public function getBrandspecification()
+    {
+        return $this->brandspecification;
     }
 }
