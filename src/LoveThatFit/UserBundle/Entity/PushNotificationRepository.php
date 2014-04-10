@@ -12,12 +12,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class PushNotificationRepository extends EntityRepository
 {
+    public function findById($id) {
+        return $this->findOneBy(array('id' => $id));
+    }
 #-------------------- Find By User Id-----------------------------------------#
  public function findByUserId($userId) {
   $query = $this->getEntityManager()
              ->createQuery("SELECT pn FROM LoveThatFitUserBundle:PushNotification pn   
                            WHERE pn.userId = :userId")
              ->setParameters(array('userId' => $userId));
+   try {
+         return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
+ #-------------------- Find All active-----------------------------------------#
+ public function findAllActive() {
+  $query = $this->getEntityManager()
+             ->createQuery("SELECT pn FROM LoveThatFitUserBundle:PushNotification pn   
+                           WHERE pn.isActive = 1");
    try {
          return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {

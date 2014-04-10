@@ -259,19 +259,22 @@ class UserRepository extends EntityRepository {
                         ->getQuery()
                         ->getResult(); 
   }
-#------ Get 100 User with Device Type 
- function getFirstHundredUSerWithDeviceType(){
+#--------------------- Get  User with Device Type ------------------------------#
+ function getFirstLimtedUserWithDeviceType($limit=0,$user_id=0){
      return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('u.id as UserId ,ud.device_name as deviceName')
                         ->from('LoveThatFitUserBundle:User', 'u')
                         ->innerJoin('u.user_devices', 'ud')
                         ->Where("ud.device_name!=''")
+                        ->andWhere('u.id>:user_id')
                         ->groupBy('ud.device_name')
                         ->orderBy('u.id')
-                        ->setMaxResults(100)
+                        ->setMaxResults($limit)
+                        ->setParameter('user_id',$user_id)
                         ->getQuery()
                         ->getResult(); 
+       
   }
    
 }

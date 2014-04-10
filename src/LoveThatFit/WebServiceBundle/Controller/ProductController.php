@@ -404,16 +404,8 @@ public function sendPushNotifcationAction(){
 }
 public function getNotificationTypeAction(){
     
-    return new response(json_encode($this->get('push_notification_helper')->updatePushNotification()));
-    $type='product';
-    $msg=$this->get('push_notification_helper')->getNotificationType($type);
-    // Save in DB
-    if($msg['status']=='true'){
-       $response= $this->get('push_notification_helper')->setNotificationInDB($type,$msg['message']);
-        return new response(json_encode($response));
-    }else{
-        return new response("Not saved");
-    }
+    return new response(json_encode($this->get('push_notification_helper')->getCroneJob()));
+    
     
 }
 

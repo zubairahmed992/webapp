@@ -16,6 +16,7 @@ use LoveThatFit\UserBundle\Entity\PushNotification;
 
 
 class PushNotificationHelper{
+   
      /**
      * Holds the Symfony2 event dispatcher service
      */
@@ -41,6 +42,7 @@ class PushNotificationHelper{
     private $container;
 
     protected $conf;
+    var $msgs = array();
     
      public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, Container $container) {
         $this->container = $container;
@@ -64,19 +66,16 @@ class PushNotificationHelper{
     }
  
     public function sendPushNotification($deviceToken,$msg){
-        
-    $deviceToken =$deviceToken; //OR //$deviceToken = $argv[2];//$_GET['token'] or $deviceToken = $argv[2] ;//or $deviceToken reason
-   // Passphrase for the private key (ck.pem file)
     $pass = '123456';
    // Get the parameters from http get or from command line
 
- $message=null;
+  $message=$msg;
    $badge = 1 ;
   $sound = 'default';
    // Construct the notification payload
-  foreach($msg as $messages=>$key){
-      $message.=$key;
-  }
+  //foreach($msg as $messages=>$key){
+    //  $message.=$key;
+ // }
    $body = array();
    $body['aps'] = array('alert' => $message);
 
@@ -108,7 +107,7 @@ class PushNotificationHelper{
         $fp = stream_socket_client($appleServer, $err, $errstr, 60, STREAM_CLIENT_CONNECT, $ctx);
         $payload = json_encode($body);
         foreach($deviceToken as $token=>$key){
-        $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $key)) . pack("n",strlen($payload)).$payload;
+         $msg = chr(0) . pack("n",32) . pack('H*', str_replace(' ', '', $key)) . pack("n",strlen($payload)).$payload;
         fwrite($fp, $msg);
         }
         fclose($fp);
@@ -138,41 +137,107 @@ class PushNotificationHelper{
         return array('msg'=>' Notifcation Saved Successfully');
   }
 #---------------Update Push Notification Table Base on User Id ----------------#
- public function updatePushNotification (){
-     $userId='0';
-     $notificationData=$this->findByUserId($userId);
-     $msg=array();
-     foreach($notificationData as $keyData){
-         $msg[]=$keyData->getMessage();
-     }
-     
-     #------------ GEt first 100 User with Device Type-------------------------#
-     $firstHundredUser= $this->container->get('webservice.helper.user')->getFirstHundredUSerWithDeviceType();
-     $device_type_array=array();
-     foreach($firstHundredUser as $device_type){
-         $device_type_array[]=$device_type['deviceName'];
-     }
- 
-    $sendMsg=$this->sendPushNotification($device_type_array, $msg);
-    return  $sendMsg;
+ public function updatePushNotification ($lastUserId,$notificationId){
     
-     
-     if(count($notificationData)>0){
-         
-        foreach($notificationData as $singleNotification){
-            $singleNotification->setUserId($notificationReceiverUserId);
-            $this->savePushNotification($singleNotification);
-        }
+    
+        $notificationData=$this->repo->findById($notificationId);
+       
+      //  return $this->msgs[]=$lastUserId;
+       if($notificationData->getUserId()<$lastUserId){
+        $notificationData->setUserId($lastUserId);
+        $this->savePushNotification($notificationData);
+        return array('status'=>true,'msg'=>'Message Send');
      }else{
-         return array('status'=>'false');
+         return  array('status'=>false,'msg'=>'End Up','lastUserId'=>$lastUserId);
      }
-     
      
  }
+ #---------- Get Max User Id From User ----------------------------------------#
+ public function getMaxUserId($userArray){
+     $userId=array();
+     if($userArray){
+     foreach($userArray as $userIds){
+          $userId[]=$userIds['UserId'];
+     }
+     return max($userId);}
+     
+ }
+ 
  #----------Find PushNotification Base On User Id------------------------------#
  public function findByUserId($userId){
   return $this->repo->findByUserId($userId);
  }
+  #----------Find All active------------------------------#
+ public function findAllActive(){
+  return $this->repo->findAllActive();
+ }
  
+ ######################################################
+ ####################################################3
+#---------------Crone Job Call-----------------------#
+ public function getCroneJob(){
+  
+    $data=$this->readNotification();
+  
+   if($data['status']==true){
+       $data=$this->getCroneJob();
+   }else{
+       return  $this->msgs;
+   }
+   return $data;
+ }
+ 
+ function readNotification(){      
+     
+     $notificationData=$this->findAllActive();
+     $notifs=array();
+     foreach($notificationData as $keyData){
+         #$notifs[$keyData->getId()]=array(
+         $notifs=array(
+             'Id'=>$keyData->getId(),
+             'msg'=>$keyData->getMessage(),
+             'user_id'=>$keyData->getUserId(),
+         );
+         
+        $data= $this->processNotification($notifs);
+     }
+     return $data;
     
+    
+    
+ }
+ function processNotification($notification){
+     
+    $userDeviceIdArray=$this->getUserDeviceIdArray(100, $notification['user_id']);
+   //  return $userDeviceIdArray;
+    #2 send notification
+  //  $this->msgs[ $notification['user_id']]="Notification".$notification['user_id'];
+    $this->msgs[$notification['user_id']]=$userDeviceIdArray['deviceType'];
+    $sendMsg=$this->sendPushNotification($userDeviceIdArray['deviceType'],$notification['msg']);
+     #3 update notif DB
+    #---------------------------------Get Max User Id -------------------------#
+   #return array($userDeviceIdArray['lastUserId'],$notification['Id']);
+    return $this->updatePushNotification($userDeviceIdArray['lastUserId'],$notification['Id']);
+ 
+ }
+ function getUserDeviceIdArray($limit, $lastUserId){
+     $getUserList= $this->container->get('webservice.helper.user')->getFirstLimtedUserWithDeviceType($limit,$lastUserId);
+     $lastUserId=$this->getMaxUserId($getUserList);
+     $deviceType=$this->getDeviceNameArray($getUserList);
+     return array ('lastUserId'=>$lastUserId,'deviceType'=>$deviceType);
+ }
+ private function getDeviceNameArray($userDeviceIdArray){
+      $deviceType=array();
+     foreach($userDeviceIdArray as $devices){
+          $deviceType[]=$devices['deviceName'];
+     }
+     return $deviceType;
+ }
+ public function inActiveNotification($lastUserId){
+     
+ }
+ #-------------------------------------------
+ 
+ 
+ 
 }
