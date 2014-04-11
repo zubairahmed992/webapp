@@ -73,7 +73,10 @@ class PushNotificationHelper{
             );
         }
     }
-
+#---------------Find All Record---------------------------------------#
+public function findAll(){
+return $this->repo->findAll();
+}
    //-------------------------------------------------------
 
     public function savePushNotification(PushNotification $PushNotification) {
@@ -156,12 +159,22 @@ class PushNotificationHelper{
         return array('msg'=>' Notifcation Saved Successfully');
   }
   
+  #--------------Update Active and InActive Push Notification -----------------#
+  public function updateStatus($target_array){
+      
+       $notificationData=$this->repo->findById($target_array['id']);
+       $notificationData->setIsActive($target_array['isActive']);
+        $this->savePushNotification($notificationData);
+        return array('status'=>true,'msg'=>'Status Updated');
+  }
+  
   #----------Update Msg ----only ----------------------#
   public function updateMsg ($req){
        $notificationData=$this->repo->findById($req['id']);
        
         $notificationData->setMessage($req['msg']);
         $this->savePushNotification($notificationData);
+        
         return array('status'=>true,'msg'=>'Message Send');
       
   }
@@ -210,9 +223,9 @@ class PushNotificationHelper{
   
    if($data['status']==true){
        $data=$this->getCroneJob();
-   }else{
-      $data= $this->inActiveNotification($this->msgs);
-   }
+   }//else{
+    //  $data= $this->inActiveNotification($this->msgs);
+  // }
    return $data;
  }
  

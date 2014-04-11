@@ -10,6 +10,10 @@ admin_pushnotiifcation_send:
 
 admin_pushnotification_status:
     pattern:  /admin/send_push_status
-    defaults: { _controller: LoveThatFitAdminBundle:PushNotification:statusUpdate  }
+    defaults: { _controller: LoveThatFitAdminBundle:PushNotification:statusUpdate }
+
+admin_pushnotification_delete:
+    pattern:  /admin/delete_push_notification
+    defaults: { _controller: LoveThatFitAdminBundle:PushNotification:deletePushNotification  }
 
     

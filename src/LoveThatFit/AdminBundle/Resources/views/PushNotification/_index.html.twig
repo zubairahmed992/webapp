@@ -5,44 +5,80 @@ function showTextBox(id){
     $('#msg_show'+id).toggle();
     $('#msg_hide'+id).toggle();
 }
-
+function deleteNotification(id)
+{
+    $('#myModalDel'+id).hide();
+     $.ajax({
+        type:'POST',
+        url: $('#del_url').text(),
+        data: {id: id},  
+        success: function(data) {
+       location.reload();
+       }
+   });
+       
+}
 function sendNotification(id){
     
     var msg=$('#msg'+id).val();
+    active_class=$.trim($('#active_class'+id).text());
+    if(active_class=="Active"){
+        
     
     if($.trim(msg)!=''){
    var msg_sent=msg;
     }if($.trim(msg)==''){
      msg_sent=null;
     }
+      $('#myModaldetail'+id).hide();
      $.ajax({
         type:'POST',
         url: $('#url').text(),
         data: {id: id,msg:msg_sent},  
         success: function(data) {
-            alert(data);
+       
+         location.reload();
+         $('#notificaltion_msg').show();
        }
    });
-     }   
+     }
+else{
+alert("Selected Notifcation not activated!");
+ }     
+}   
      
- function updateStatus(){
-    
-    var msg=$('#msg'+id).val();
-    
-    if($.trim(msg)!=''){
-   var msg_sent=msg;
-    }if($.trim(msg)==''){
-     msg_sent=null;
-    }
-     $.ajax({
+
+function in_active(id){
+
+var active_class=$.trim($('#active_class'+id).text());
+if(active_class=='Active'){
+$('#active_class'+id).replaceWith(' <a href="#_" class="in_active_class" id="in_active_class'+id+'" onclick="activeit('+id+')">InActive</a>');
+$.ajax({
         type:'POST',
-        url: $('#url').text(),
-        data: {id: id,msg:msg_sent},  
+        url: $('#status_url').text(),
+        data: {id:id,isActive:0},  
         success: function(data) {
-            alert(data);
        }
    });
-     }       
+
+
+}
+}
+function activeit(id){
+var active_class=$.trim($('#in_active_class'+id).text());
+if(active_class=='InActive'){
+$('#in_active_class'+id).replaceWith('<a href="#_" class="active_class" id="active_class'+id+'" onclick="in_active('+id+')">Active</a>');
+$.ajax({
+        type:'POST',
+        url: $('#status_url').text(),
+        data: {id:id,isActive:1},  
+        success: function(data) {
+       
+       }
+   });
+
+ }
+}
     </script>
 
 <li class="active">Products</li>
@@ -60,7 +96,7 @@ function sendNotification(id){
     
     <div class="btn_wrapper2">
      
-      
+        <div id="notificaltion_msg" style=" display: none;"><b>Notification has been successfully sent.</b></div>   
       </div>
     
     
@@ -78,7 +114,7 @@ function sendNotification(id){
             <div class="span1 hds"><a href="#_">Last UserId</a></div>
             <div class="span1 hds"><a href="#_">Message</a></div>
             <div class="span1 hds"><a href="#_">Type</a></div>
-            <div class="span1 hds"><a href="#_">Active/InActive</a></div>
+            <div class="span1 hds"><a href="#_">Status</a></div>
             <div class="span1 hds">Action</div>  
             
         </div>  
@@ -90,12 +126,21 @@ function sendNotification(id){
             <div class="span1">{{p.userId}}</div>
             <div class="span1">{{p.message}}</div>
             <div class="span1">{{p.notificationType}}</div>
-            <div class="span1"><a href="">{{p.isActive}}</a></div>
-           <div class="span1"><a href="#myModaldetail{{p.Id}}" title="Delete" role="button" data-toggle="modal"><i class="icon-ok-sign"></i></a></div>
+            <div class="span1">
+               {% if(p.isActive==1)%}  
+                <a href="#_" class="active_class" id="active_class{{p.Id}}" onclick="in_active('{{p.Id}}')"> Active</a>
+               {% else%}
+               <a href="#_" class="in_active_class" id="in_active_class{{p.Id}}" onclick="activeit('{{p.Id}}')">InActive</a>
+               {% endif%} 
+          </div>
+           <div class="span1">
+               <a  style="vertical-align:text-top;"href="#myModaldetail{{p.Id}}" title="Send Notification" role="button" data-toggle="modal"><i class="icon-ok-sign"></i></a>
+             <a  style="vertical-align:text-top;"href="#myModalDel{{p.Id}}" title="Send Notification" role="button" data-toggle="modal"> <i class="icon-remove-sign"></i></a>
+           </div>
             
         </div>
-   
-        <span id="activeStatus" style="display:none;">{{path('admin_pushnotification_status')}}</span>
+        <span id="status_url" style="display:none;">{{path('admin_pushnotification_status')}}</span>
+        
 
 <!-- ModalDetail -->
 <div id="myModaldetail{{p.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -115,6 +160,26 @@ function sendNotification(id){
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
     <a href="#"  class="btn btn-primary" onclick="sendNotification('{{p.Id}}')">Send</a>
+    
+  </div>
+</div>     
+
+
+ </div> 
+
+<!-- ModalDetail -->
+<div id="myModalDel{{p.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+   <span id="del_url" style="display:none;">{{path('admin_pushnotification_delete')}}</span>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete notification</h3>
+  </div>
+  <div class="modal-body">
+     Delete this notification ?
+      
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="#"  class="btn btn-primary" onclick="deleteNotification('{{p.Id}}')">Delete</a>
     
   </div>
 </div>     

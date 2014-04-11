@@ -38,6 +38,17 @@ class PushNotificationRepository extends EntityRepository
             return null;
         }
  }
+ 
+ ##-------------------- Find All Records-----------------------------------------#
+ public function findAll() {
+  $query = $this->getEntityManager()
+             ->createQuery("SELECT pn FROM LoveThatFitUserBundle:PushNotification pn ");
+   try {
+         return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+ }
  #--------------------- Get Push Notification  Base on Base  On Type----------#
  public function getPushNotificationBaseOnType($type){
     $query = $this->getEntityManager()
