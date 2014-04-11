@@ -5,18 +5,18 @@ namespace LoveThatFit\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use LoveThatFit\SiteBundle\Algorithm;
 
 /** 
- * @ORM\Entity 
+ * LoveThatFit\AdminBundle\Entity\BrandSpecification
  * @ORM\Table(name="brand_specification")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\BrandSpecificationRepository")
  */
 class BrandSpecification {       
+    
     /**     
      * Bidirectional (OWNING SIDE - FK)
      * 
-     * @ORM\OneToOne(targetEntity="Brand", inversedBy="brand")
+     * @ORM\OneToOne(targetEntity="Brand", inversedBy="brandspecification")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="CASCADE")
      * */
     private $brand;  
@@ -327,4 +327,6 @@ class BrandSpecification {
     {
         return $this->brand;
     }
+
+    
 }
