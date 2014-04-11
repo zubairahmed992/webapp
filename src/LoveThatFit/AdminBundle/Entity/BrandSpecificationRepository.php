@@ -12,6 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class BrandSpecificationRepository extends EntityRepository
 {
-	
+	public function findByBrand($entity){            
+            $query = $this->getEntityManager()
+                    ->createQuery("SELECT bs,b FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.brandspecification bs   
+                    WHERE bs.brand =:brand")
+                   ->setParameters(array('brand' => $entity));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                } 
+        }
 
 }

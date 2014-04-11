@@ -79,14 +79,14 @@ class BrandSpecificationHelper {
             $this->em->flush();
 
             return array('brands' => $entity,
-                'message' => 'The Brand '. ' has been Deleted!',
+                'message' => 'The Brand specification '. ' has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );
         } else {
 
             return array('brands' => $entity,
-                'message' => 'Brand not found!',
+                'message' => 'Brand specification not found!',
                 'message_type' => 'warning',
                 'success' => false,
             );
@@ -102,6 +102,11 @@ class BrandSpecificationHelper {
   public function findAll(){
   return $this->repo->findAll();      
     }
+    
+  public function findByBrand($entity)
+  {
+     return $this->repo->findByBrand($entity);   
+  }
 
  public function brandDetailArray($data,$entity){
         // $data=$request->request->all();                     

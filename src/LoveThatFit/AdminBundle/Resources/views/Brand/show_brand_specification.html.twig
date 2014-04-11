@@ -1,0 +1,211 @@
+<script>
+$(document).ready(function(){
+ {% autoescape false %} 
+   
+    var json = {{brand.getBrandspecification.gender}};
+   
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_gender").innerHTML=s; 
+   {% endautoescape %} 
+       
+ {% autoescape false %} 
+    var json = {{brand.getBrandspecification.fitType}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_fitType").innerHTML=s; 
+   {% endautoescape %}  
+       
+   {% autoescape false %} 
+    var json = {{brand.getBrandspecification.sizeTitleType}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_size_title_type").innerHTML=s; 
+   {% endautoescape %}  
+   
+    
+    {% autoescape false %} 
+    var json = {{brand.getBrandspecification.maleNumbers}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_male_numbers").innerHTML=s; 
+   {% endautoescape %}  
+    
+    
+    {% autoescape false %} 
+    var json = {{brand.getBrandspecification.maleLetters}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_male_letters").innerHTML=s; 
+   {% endautoescape %}  
+    
+    
+    
+  {% autoescape false %} 
+    var json = {{brand.getBrandspecification.maleWaists}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_male_waists").innerHTML=s; 
+   {% endautoescape %} 
+       
+       
+    {% autoescape false %} 
+    var json = {{brand.getBrandspecification.femaleNumbers}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_female_numbers").innerHTML=s; 
+   {% endautoescape %}    
+       
+       
+   {% autoescape false %} 
+    var json = {{brand.getBrandspecification.femaleLetters}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_female_letters").innerHTML=s; 
+   {% endautoescape %}      
+     
+   
+   {% autoescape false %} 
+    var json = {{brand.getBrandspecification.femaleWaists}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_female_waists").innerHTML=s; 
+   {% endautoescape %}   
+    
+   });    
+ </script>
+
+ <div><span style="float:left"><h3>Brand Specification</h3></span> </div>
+ <div style="clear:both;"></div> 
+ <div class="product_fld">
+     {%if brand.getBrandspecification.gender%} 
+    <div>
+     <div style="float:left">
+     <strong>Gender:</strong>
+     <span style="padding-left: 20px" id="brand_gender"></span>            
+     </div>   
+    </div>
+          {%endif%}    
+           <div style="clear:both;"></div>  
+       {%if brand.getBrandspecification.fitType%}   
+      <div>
+     <div style="float:left">
+     <strong>Fit Type:</strong>
+     <span style="padding-left: 20px" id="brand_fitType"></span>            
+     </div>   
+    </div> 
+            {%endif%}    
+            <div style="clear:both;"></div> 
+            {%if brand.getBrandspecification.sizeTitleType%} 
+    <div>
+     <div style="float:left">
+     <strong>Size Title Type:</strong>
+     <span style="padding-left: 20px" id="brand_size_title_type"></span>            
+     </div>   
+    </div> 
+          {%endif%}    
+             <div style="clear:both;"></div>
+             {%if brand.getBrandspecification.maleNumbers%} 
+   <div>
+     <div style="float:left">
+     <strong>Male Numbers:</strong>
+     <span style="padding-left: 20px" id="brand_male_numbers"></span>            
+     </div>   
+    </div> 
+          {%endif%}    
+             <div style="clear:both;"></div>
+             {%if brand.getBrandspecification.maleLetters%} 
+    <div>
+     <div style="float:left">
+     <strong>Male Letters:</strong>
+     <span style="padding-left: 20px" id="brand_male_letters"></span>            
+     </div>   
+    </div> 
+              {%endif%}    
+             <div style="clear:both;"></div>
+        {%if brand.getBrandspecification.maleWaists%}  
+    <div>
+     <div style="float:left">
+     <strong>Male Waists:</strong>
+     <span style="padding-left: 20px" id="brand_male_waists"></span>            
+     </div>   
+    </div>
+              {%endif%}    
+             <div style="clear:both;"></div>
+         {%if brand.getBrandspecification.femaleNumbers%} 
+    <div>
+     <div style="float:left">
+     <strong>Female Numbers:</strong>
+     <span style="padding-left: 20px" id="brand_female_numbers"></span>            
+     </div>   
+    </div> 
+          {%endif%}    
+             <div style="clear:both;"></div>
+             {%if brand.getBrandspecification.femaleLetters%} 
+    <div>
+     <div style="float:left">
+     <strong>Female Letters:</strong>
+     <span style="padding-left: 20px" id="brand_female_letters"></span>            
+     </div>   
+    </div> 
+              {%endif%}    
+             <div style="clear:both;"></div>
+         
+     <div>
+     {%if brand.getBrandspecification.femaleWaists%}    
+     <div style="float:left">
+     <strong>Female Waists:</strong>
+     <span style="padding-left: 20px" id="brand_female_waists"></span>            
+     </div>   
+     {%endif%}        
+    </div>   
+          <div style="clear:both;"></div>
+         </div>
+ 
+ <a href="{{ path('admin_brand_specificationabs_edit', {'id': brand.getBrandspecification.Id,'brand_id':brand.Id}) }}" class="btn">Edit</a>      
+ <a href="#myModal1" role="button" data-toggle="modal" class="btn">Delete</a>
+ 
+ 
+<div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Brand Specification</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Brand Specification?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_brand_specification_delete', {'id': brand.getBrandspecification.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div> 
+
+

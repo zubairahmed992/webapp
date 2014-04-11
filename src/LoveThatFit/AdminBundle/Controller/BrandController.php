@@ -109,18 +109,16 @@ public function createBrandSpecificationAction($id,Request $request)
     $data = $request->request->all();    
     $brandArray= $this->get('admin.helper.brand.specification')->brandDetailArray($data,$brandspecification);         
     $this->get('session')->setFlash($brandArray['message_type'], $brandArray['message']);
-    $brand_limit = $this->get('admin.helper.brand')->getRecordsCountWithCurrentBrandLimit($id);
-     $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($brand_limit[0]['id']));
-     if ($page_number == 0) {
-            $page_number = 1;
-        }
-        return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
-                    'brand' => $entity,
-                    'page_number' => $page_number,
-        ));
+     return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
 }
  
- 
+public function showBrandSpecificationAction($id)
+{
+     $entity = $this->get('admin.helper.brand')->find($id);        
+     return $this->render('LoveThatFitAdminBundle:Brand:show_brand_specification.html.twig', array(
+                    'brand' => $entity,                    
+        ));
+}
 
 //------------------------------------------------------------------------------------------
     public function editAction($id) {
@@ -140,6 +138,19 @@ public function createBrandSpecificationAction($id,Request $request)
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));
     }
+    //------------------------------------------------------------------------------------------
+    public function editBrandSpecificationAction($id,$brand_id)
+    {
+     $entity = $this->get('admin.helper.brand')->find($brand_id);  
+     $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
+     return new Response(json_encode(stripcslashes($brandspecification->getGender()))); 
+     $form=$this->createForm(new BrandSpecificationType(),$brandspecification);
+      return $this->render('LoveThatFitAdminBundle:Brand:brand_specification_edit_detail.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
+    }
+    
 
     //------------------------------------------------------------------------------------------
 
@@ -190,5 +201,22 @@ public function createBrandSpecificationAction($id,Request $request)
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
+    
+    
+ //----------------------------------------------------------------------------------------------
+    public function deleteBrandSpecificationAction($id)
+    {
+        try {
+
+            $message_array = $this->get('admin.helper.brand.specification')->delete($id);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+            return $this->redirect($this->generateUrl('admin_brands'));
+        } catch (\Doctrine\DBAL\DBALException $e) {
+
+            $this->get('session')->setFlash('warning', 'This Brand specification  cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+    }
+    
 
 }

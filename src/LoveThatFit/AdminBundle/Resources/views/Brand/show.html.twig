@@ -1,6 +1,7 @@
 {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
 {% block breadcrumb %}
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/jquery.js')}}"></script>
 <li><a href="{{ path('admin_brands') }}" >Brands</a> <span class="divider">/</span></li>
 <li class="active">Show</li>
 {% endblock %}
@@ -8,7 +9,6 @@
 {% block h1 %}Brands{% endblock %}
 
 {% block title %}Brands{% endblock %}
-
 
 {% block body %}
 
@@ -19,22 +19,16 @@
       {%if brand.id %}
       <a href="{{ path('admin_brand_edit', {'id': brand.Id}) }}" class="btn">Edit</a>      
       <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
-      {% endif %}
-      
+      {% endif %}      
       </div>
       <div class="clearfix"></div>   
-    
-
             <div id="detail_wrapper">      
                 <div id="p_hd">Brand Detail</div>
                 <div class="span3">
                     <div id="pro_img"> <img src="{{ asset(brand.WebPath) }}" />
                     </div><!--/.well -->
-
-                    <div class="clearfix"></div>
-                    
-                    </div>         
-
+                    <div class="clearfix"></div>                    
+                    </div>
                     <div id="product_content">
                         <div id="pro_detail">
                             <div class="edt_container">         
@@ -45,14 +39,16 @@
                                     </div>
                                      <div class="span8">
                                     <div class="span3">Name</div>
-                                    <div class="span3">{{brand.name }}</div>
+                                    <div class="span3">{{brand.name }}
                                     </div>
-                                        
-                                  
-
-                                    
-                                </div>  
-                                
+                                    </div>                                    
+                                </div> 
+                                    {%if (brand.getBrandspecification!=null)%}
+                                     {% include 'LoveThatFitAdminBundle:Brand:show_brand_specification.html.twig'%}
+                                     {%else%}
+                                    <span style="float:right"> <a href="{{ path('admin_brand_specification_new', {'id': brand.Id}) }}" title="Brand Specification {{brand.name}}" class="btn">Add Brand Spec</a></span>
+                                     {%endif%}
+                                   
                                 </div> 
                                      
 
@@ -74,8 +70,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_brand_delete', {'id': brand.Id}) }}"  class="btn btn-primary">Delete</a>
-    
+    <a href="{{ path('admin_brand_delete', {'id': brand.Id}) }}"  class="btn btn-primary">Delete</a>    
   </div>
 </div>                        
             </div>      

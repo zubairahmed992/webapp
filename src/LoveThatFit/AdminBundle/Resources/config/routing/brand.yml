@@ -11,6 +11,19 @@ admin_brand_show:
 admin_brand_specification_new:    
     pattern:  /admin/brand/{id}/new
     defaults: { _controller: LoveThatFitAdminBundle:Brand:newBrandSpecification }
+ 
+admin_brand_specification_show:    
+    pattern:  /admin/brand/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:showBrandSpecification } 
+    
+admin_brand_specificationabs_edit:    
+    pattern:  /admin/brand/{brand_id}/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:editBrandSpecification }  
+
+admin_brand_specification_delete:    
+    pattern:  /admin/brand/specification/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:deleteBrandSpecification }  
+
 
 admin_brand_specification_create:    
     pattern:  /admin/brand/{id}/create
