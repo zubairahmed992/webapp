@@ -87,21 +87,23 @@
          {%endif%}
         
         {%if(edit_type=='fitting_room')%}       
-             <div class="steps step_4" id="parentemailcheckfitting">            
-            <h7>Your parent has not approved yet</h7>
+             <div class="steps step_4" id="parentemailcheckfitting" style="text-align:center;">            
+                 <div id="parent_label">Your parent has not approved yet</div>
              <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
                  <a class="reg_next_step"  onclick="return ChangeEmail();">Change Email</a>          
                 <!--/.step_4--></div>
          {%endif%}
         {%if(edit_type=='registration')%}            
-        <div class="steps step_4" id="parentemailcheck">            
-            <h7>Enter parent email</h7>
+            <div class="steps step_4" id="parentemailcheck" style="text-align:center;">            
+            <div id="parent_label">Enter parent email</div>
             <form id="parentemail"  method="POST" action="" {{ form_enctype(form) }} >
-           {{ form_errors(form) }}
+                       
+{{ form_errors(form) }}
                 <div>
                     {{ form_errors(form.email) }}
                         
                     </div>
+                   
                     
                     {{ form_rest(form) }} 
                     <div id="emailvalidate" style="display:none">Please enter email address</div>
@@ -117,8 +119,8 @@
             
            
             
-            <div id="changeparentemail" style="display:none">
-                <h7>Enter parent email</h7>
+            <div id="changeparentemail" style="display:none; text-align: center;">
+                <div id="parent_label">Enter parent email</div>
             <form id="parentemail2"  method="POST" action="" {{ form_enctype(form) }} >
            {{ form_errors(form) }}
                 <div>

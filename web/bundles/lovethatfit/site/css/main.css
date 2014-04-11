@@ -4629,3 +4629,28 @@ margin-left: 4px;
     overflow:visible!important;
     
 }
+
+#parent_label{
+    font-size: 0.85em;
+    color: #666;
+    float: left;
+    margin-left: 40px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
+
+#emailvalidate {
+    color: #DD1144;
+    display: block;
+    font-size: 0.8em;
+    text-align: left;
+    margin-left: 40px;
+}
+
+#emailvalidate1 {
+    color: #DD1144;
+    display: block;
+    font-size: 0.8em;
+    text-align: left;
+    margin-left: 40px;
+}

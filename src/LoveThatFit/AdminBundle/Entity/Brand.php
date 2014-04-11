@@ -16,7 +16,10 @@ class Brand {
      * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
      */
     protected $products;
-    
+    /**
+     * @ORM\OneToMany(targetEntity="SizeChart", mappedBy="brand")
+     */
+    protected $sizechart;
     
     
     /**
