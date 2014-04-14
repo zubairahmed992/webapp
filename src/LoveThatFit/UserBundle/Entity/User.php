@@ -852,6 +852,10 @@ class User implements UserInterface, \Serializable {
              {
             $accuracy=$accuracy+1;
         } 
+        if($this->measurement->getInseam())
+             {
+            $accuracy=$accuracy+1;
+        } 
         if($this->measurement->getOutseam())
              {
             $accuracy=$accuracy+1;
