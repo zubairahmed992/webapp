@@ -876,7 +876,7 @@
 
                             ///////////////////////////////////////////
 
-$(function() {
+$(function() {    
 $( "#tabs" ).tabs();
 }); 
 
@@ -896,6 +896,8 @@ $( "#tabs" ).tabs();
 
 
  $(function() {
+   var gender=$('#gender').text();
+   if(gender=='f' || gender=='F' ){
     $( ".waistt_slider" ).slider({
     range: "min",
     value: 37,
@@ -906,7 +908,9 @@ $( "#tabs" ).tabs();
     }
     });
     $( "#measurement_waist" ).val($( ".waistt_slider" ).slider( "value" ) );
+    }
 });
+ 
 
 
 $(function() {
