@@ -1,7 +1,36 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
 {% block action_block_content %}
+<script>
+function validate(){
+   
+var month_select=$('#measurement_birthdate_month').val();
+var day_select=$('#measurement_birthdate_day').val();
+var year_select=$('#measurement_birthdate_year').val();
+if(!month_select){
+   $('#date_error').html('Please Enter Month.');
+   return false;
+}else{
+       $('#date_error').html('');
+}
+if(!day_select){
+   $('#date_error').html('Please Select Day.');
+   return false;
+}else{
+       $('#date_error').html('');
+}
+if(!year_select){
+   $('#date_error').html('Please select year.');
+   return false;
+}else{
+       $('#date_error').html('');
+}
 
+
+return true;
+
+}
+    </script>
 <section class="reg_blk">
     <div id="popout_blk" class="popout_blk">
         <h2>Welcome!</h2>
@@ -18,7 +47,7 @@
         <div class="steps step_3 measurements">
             <h2>Brands &amp; Sizes</h2>
             <div id="inst">Put all values in inches.</div>          
-            <form id="RegistrationMeasurement" action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
+            <form  onsubmit="return validate();"id="RegistrationMeasurement" action="{{ path('registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
                 {{ form_errors(form) }}
                     <div>
                      {{ form_errors(form.height) }}
@@ -101,10 +130,14 @@
                    <div>
                    <span class="boxlable2" id="weight_box2">Birth Date</span>  
                    <span id="dob">                 
-{{ form_widget(form.birthdate.month) }}
+                  {{ form_widget(form.birthdate.month) }}
+                 
                  {{ form_widget(form.birthdate.day) }}
+                           
                  {{ form_widget(form.birthdate.year) }}
         </span>
+                   
+                   <span id="date_error"></span>
                    </div>
                    
                  

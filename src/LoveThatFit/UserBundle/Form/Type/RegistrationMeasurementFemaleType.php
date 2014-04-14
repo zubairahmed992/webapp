@@ -88,6 +88,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
             'years'=> range(date('Y')-8,date('Y')-110),  
             'empty_value' => array('year' => 'YY', 'month' => 'MM', 'day' => 'DD'),
             'format' => 'yyyy MM dd',
+             'required' => false,
             )
                 );
     }
