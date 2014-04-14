@@ -3,12 +3,15 @@
 {% block action_block_content %}
 <script>
 function validate(){
-   
+
+
 var month_select=$('#measurement_birthdate_month').val();
 var day_select=$('#measurement_birthdate_day').val();
 var year_select=$('#measurement_birthdate_year').val();
+
 if(!month_select){
    $('#date_error').html('Please Enter Month.');
+   $('#date_error').show();
    return false;
 }else{
        $('#date_error').html('');
@@ -141,9 +144,8 @@ return true;
                    </div>
                    
                  
-                    
-                    
-                    
+             
+               
                     
                     
                     

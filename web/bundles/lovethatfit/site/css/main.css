@@ -4654,3 +4654,17 @@ margin-left: 4px;
     text-align: left;
     margin-left: 40px;
 }
+
+#date_error{
+   display: none;
+    color:red;
+    padding: 3px;
+    font-size: 0.70em;
+    position:absolute;
+    top:180px;
+    left:170px;
+    background: white;
+    border:1px solid #ccc;
+    z-index: 2000;
+    
+}
