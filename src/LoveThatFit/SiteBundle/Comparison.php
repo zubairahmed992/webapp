@@ -631,4 +631,96 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         }
     }
 
+    #------------------------------------------------
+ 
+    private function inseam_diff_message($body_specs, $item_specs) {        
+        $str = '';
+        if (array_key_exists('inseam', $item_specs) && array_key_exists('inseam', $body_specs)) {
+            $body_specs = $this->calculate_body_hem_bits($body_specs);
+            
+        $diff=$item_specs['inseam']['max'] - $body_specs['inseam'];
+        if (4.5 < $diff){
+            $str = 'too long, hem';
+        }elseif (3.25 <=$diff && $diff <= 4.5) {
+            $str = 'very long, hem or wear with 4” – 5” heels';
+        } elseif(2.25 <=$diff && $diff <= 3.5) {
+            $str = 'long, hem or wear with 3” – 4" heels';
+        } elseif(1.25 <=$diff && $diff <= 2.5) {
+            $str = 'long, hem or wear with 2" - 3” heels';
+        } elseif(0 <=$diff && $diff <= 1.5) {
+            $str = 'long, hem or wear with 1” – 2” heels';
+        } elseif(-1 <=$diff && $diff <= -0.5) {
+            $str = 'perfect fit wear with flats or heels';
+        } elseif(-2.5 <=$diff && $diff <=-1) {
+            $str = 'short';
+        } elseif(-4 <=$diff && $diff<=-2.5) {
+            $str = 'ankle length';
+        } elseif(-6 <=$diff && $diff<=-4) {
+            $str = 'cropped';
+        } elseif(-6 > $diff) {
+            $str = 'too short';
+        }
+
+        return $this->getFeedbackArrayElement('inseam', $item_specs['inseam']['ideal_body_low'], $item_specs['inseam']['ideal_body_high'],  $body_specs['inseam'], $diff, 0, true, $str);
+        }else{
+            return;
+        }
+    }
+    
+    private function calculate_body_hem_bits($body_specs){
+        $head=0;        
+        if (array_key_exists('height', $body_specs) && $body_specs['height']>0) {
+            $head=$body_specs['height']/8;
+            if (array_key_exists('inseam', $body_specs) && $body_specs['inseam']>0){
+                $body_specs['knee_height'] = $body_specs['inseam']-($head * 2);
+                $body_specs['ankle_height'] = $head * 0.25;
+                $body_specs['mid_calf_height']=0;
+            }else{
+                $body_specs['knee_height']=0;
+                $body_specs['ankle_height']=0;
+                $body_specs['mid_calf_height']=0;        
+            }
+        }        
+        return $body_specs;
+    }
+    
 }
+/*
+ * A perfect body is 8 heads high, total. 
+
+The neck space is 1/4 of one head length, under the chin of the top first head. 
+The second head starts under this neck space. 
+One quarter of one head down on this second head is the shoulder line and clavicle. This leaves space for the for the neck support muscles. 
+
+The shoulder line is two head lengths (two widths on a female) wide and is the top line of the torso triangle that extends down to the top of the hip triangle. 
+The chin to the shoulder line is 1/2 of one heads length. That is, 1/4 of a head for the neck space and 1/4 head down on the second head. 
+The nipple line equals one head length, at the bottom of the second head, the younger the higher. Males stay higher. 
+The nipples to the belly button equals one head length. 
+From the belly button to the space between the legs is one head length, that's the bottom of the third trunk head. This between the leg space is actually 4 1/4 heads down from the top, including the 1/4 head neck space. It's 3 and 3/4 heads up from the bottom of the feet, for a total of 8 heads high. The two center heads overlap by 1/4 head, the top of the bend line triangle is 4 heads up from the base. The top three torso heads were lowered 1/4 head because of the empty neck space. 
+The width of the waist at the belly button is one head length wide. 
+From the top line of the hip/trunk triangle to the space between the legs is 3/4's of one head, and is two head widths wide. Not more. 
+
+The center of the body is the bend line, which forms the top line of this small, third, bend line triangle. Its top line is 1/4 head above the space between the legs and two head widths wide. Not more. 
+This bend line can also be measured as four heads up from the base, which has no added 1/4 head space for the neck as happened in the top 4 heads. 
+In other words.. 
+The big torso triangle is from the shoulder line to the top of the hip/trunk triangle. The second triangle is the trunk triangle, the hip bones down to the space between the legs. The third triangle, the bend line triangle is a quarter head high, within the trunk triangle, starting at the space between the legs. 
+
+The rib cage can be represented by an oval two heads high, starting at the top of the (lowered) second head to the bottom of the third head. 
+The bottom of the forth head from the top plus the neck space is the space between the legs. 
+The upper arm, from the shoulder triangles outside edge, is one and one half heads long. 
+The lower arm is one and one quarter heads long. 
+The hand is 3/4 of a head long, equal to the average face up to the hair line. 
+The chest side view is one head, width wide, at the nipples. 
+The upper arm, which is one and one half head lengths long, connects from the center of the shoulder ball which is a quarter head circle. 
+Just below the leg space, the legs and the body are the widest. 
+Two egg shaped heads, side by side, upside down, will fit in the trunk area. 
+
+From the outside point of the bend line triangle down to the bottom of the knee cap is two head lengths. 
+The bend line is always the center of the body. 
+The knee cap is a 1/4 head length circle. 
+The calf muscle is higher on the outside. 
+From the center of the knee cap to the ground is two head lengths. 
+The ankle is 1/4 head high off the ground. 
+The foot is one head length long. 
+The ankle bone is higher on the inside.
+ */
