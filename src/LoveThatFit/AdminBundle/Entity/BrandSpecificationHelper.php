@@ -58,8 +58,7 @@ class BrandSpecificationHelper {
 
     //-------------------------------------------------------
 
-    public function update($entity) {
-            $entity->upload();
+    public function update($entity) {            
             $this->em->persist($entity);
             $this->em->flush();
             return array('message' => 'Brand Specification '. ' succesfully updated!',
@@ -121,6 +120,20 @@ class BrandSpecificationHelper {
             if(isset($data['brand_specification']['female_waists'])){$entity->setFemaleWaists($this->getJsonForFields($data['brand_specification']['female_waists']));}
              return $this->save($entity);
 }   
+
+public function brandSpscificationDetailArray($data,$entity){
+        // $data=$request->request->all();                     
+            if(isset($data['brand_specification']['gender'])){$entity->setGender($this->getJsonForFields($data['brand_specification']['gender']));}
+            if(isset($data['brand_specification']['fit_type'])){$entity->setFitType($this->getJsonForFields($data['brand_specification']['fit_type']));}
+            if(isset($data['brand_specification']['size_title_type'])){$entity->setSizeTitleType($this->getJsonForFields($data['brand_specification']['size_title_type']));}
+            if(isset($data['brand_specification']['male_numbers'])){$entity->setMaleNumbers($this->getJsonForFields($data['brand_specification']['male_numbers']));}
+            if(isset($data['brand_specification']['male_letters'])){$entity->setMaleLetters($this->getJsonForFields($data['brand_specification']['male_letters']));}
+            if(isset($data['brand_specification']['male_waists'])){$entity->setMaleWaists($this->getJsonForFields($data['brand_specification']['male_waists']));}
+            if(isset($data['brand_specification']['female_numbers'])){$entity->setFemaleNumbers($this->getJsonForFields($data['brand_specification']['female_numbers']));}
+            if(isset($data['brand_specification']['female_letters'])){$entity->setFemaleLetters($this->getJsonForFields($data['brand_specification']['female_letters']));}
+            if(isset($data['brand_specification']['female_waists'])){$entity->setFemaleWaists($this->getJsonForFields($data['brand_specification']['female_waists']));}
+             return $this->update($entity);
+}  
     
     //-------------------------------------------------------
 

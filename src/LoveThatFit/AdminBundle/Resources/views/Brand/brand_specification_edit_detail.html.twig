@@ -23,7 +23,7 @@
      <a href="{{ path('admin_brands') }}" class="btn">back</a>     
      </div>
       <div class="clearfix"></div>   
-    <form action="" method="post" >
+    <form action="{{ path('admin_brand_specificationabs_update', { 'brand_id': entity.id,'id':id }) }}" method="post" >
  {{ form_errors(form) }}
 
             <div id="detail_wrapper">      

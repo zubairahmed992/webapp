@@ -20,6 +20,10 @@ admin_brand_specificationabs_edit:
     pattern:  /admin/brand/{brand_id}/{id}/edit
     defaults: { _controller: LoveThatFitAdminBundle:Brand:editBrandSpecification }  
 
+admin_brand_specificationabs_update:    
+    pattern:  /admin/brand/{brand_id}/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Brand:updateBrandSpecification }  
+
 admin_brand_specification_delete:    
     pattern:  /admin/brand/specification/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:Brand:deleteBrandSpecification }  

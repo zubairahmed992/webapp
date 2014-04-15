@@ -143,12 +143,70 @@ public function showBrandSpecificationAction($id)
     {
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
      $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
-     return new Response(json_encode(stripcslashes($brandspecification->getGender()))); 
-     $form=$this->createForm(new BrandSpecificationType(),$brandspecification);
-      return $this->render('LoveThatFitAdminBundle:Brand:brand_specification_edit_detail.html.twig', array(
+     $gender=json_encode(json_decode($brandspecification->getGender()));
+     $fit_type=json_encode(json_decode($brandspecification->getFitType()));
+     $size_title_type=json_encode(json_decode($brandspecification->getSizeTitleType()));
+     $male_numbers=json_encode(json_decode($brandspecification->getMaleNumbers()));
+     $male_letters=json_encode(json_decode($brandspecification->getMaleLetters()));
+     $male_waists=json_encode(json_decode($brandspecification->getMaleWaists()));
+     $female_numbers=json_encode(json_decode($brandspecification->getFemaleNumbers()));
+     $female_letters=json_encode(json_decode($brandspecification->getFemaleLetters()));
+     $female_waists=json_encode(json_decode($brandspecification->getFemaleWaists()));     
+     $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));
+     if (isset($gender)) {
+            $form->get('gender')->setData(json_decode($gender));
+        } 
+     if (isset($fit_type)) {
+            $form->get('fit_type')->setData(json_decode($fit_type));
+        }
+     if (isset($size_title_type)) {
+            $form->get('size_title_type')->setData(json_decode($size_title_type));
+        }
+     if (isset($male_numbers)) {
+            $form->get('male_numbers')->setData(json_decode($male_numbers));
+        }
+     if (isset($male_letters)) {
+            $form->get('male_letters')->setData(json_decode($male_letters));
+        }
+     if (isset($male_waists)) {
+            $form->get('male_waists')->setData(json_decode($male_waists));
+        }
+     if (isset($female_numbers)) {
+            $form->get('female_numbers')->setData(json_decode($female_numbers));
+        }
+     if (isset($female_letters)) {
+            $form->get('female_letters')->setData(json_decode($female_letters));
+        }        
+     if (isset($female_waists)) {
+            $form->get('female_waists')->setData(json_decode($female_waists));
+        }
+     return $this->render('LoveThatFitAdminBundle:Brand:brand_specification_edit_detail.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
+                    'id'=>$id
         ));
+    }
+    
+    public function updateBrandSpecificationAction(Request $request,$id,$brand_id)
+    {
+     $entity = $this->get('admin.helper.brand')->find($brand_id);  
+     $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
+     $gender=json_encode(json_decode($brandspecification->getGender()));
+     $fit_type=json_encode(json_decode($brandspecification->getFitType()));
+     $size_title_type=json_encode(json_decode($brandspecification->getSizeTitleType()));
+     $male_numbers=json_encode(json_decode($brandspecification->getMaleNumbers()));
+     $male_letters=json_encode(json_decode($brandspecification->getMaleLetters()));
+     $male_waists=json_encode(json_decode($brandspecification->getMaleWaists()));
+     $female_numbers=json_encode(json_decode($brandspecification->getFemaleNumbers()));
+     $female_letters=json_encode(json_decode($brandspecification->getFemaleLetters()));
+     $female_waists=json_encode(json_decode($brandspecification->getFemaleWaists())); 
+     $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));
+     $form->bind($request);     
+     $brandspecification->setBrand($entity);
+     $data = $request->request->all();    
+     $brandArray= $this->get('admin.helper.brand.specification')->brandSpscificationDetailArray($data,$brandspecification);         
+     $this->get('session')->setFlash($brandArray['message_type'], $brandArray['message']);
+     return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
     }
     
 
