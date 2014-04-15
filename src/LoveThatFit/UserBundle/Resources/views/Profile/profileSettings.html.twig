@@ -192,13 +192,12 @@ return true;
         {{ app.session.flash('Successs') }}
         </div>   
 {% endif %}   
-    <h5>Change Email</h5>
+    <h5>Please enter the new email address you would like to use for your user name and email at LoveThatFit. You will receive a confirmation email. Please click the link in the email to confirm your account</h5>
   <form action="{{ path('user_profile_change_email')}}" method="post" {{ form_enctype(form_email_change) }} onsubmit="return ChangeEmail()">
     {{ form_errors(form_email_change) }}
             
            <div class="frm_ele acc_set">
-               <label>Email</label>
-                {{ form_errors(form_email_change.email) }}     
+              Enter Email Address<br/>                {{ form_errors(form_email_change.email) }}     
                </div>
              {{ form_rest(form_email_change) }}
                 <input type="submit" value="Update" />
@@ -234,15 +233,18 @@ return true;
                 <input type="submit" value="Update" />
           </form>
     </div>
-    
-    
-    
     <script>
     function ChangeEmail()
     {
-       alert("Are You Sure to Change the Email");
+       var r=confirm("Your user name and email {{app.user.email}} will be changed \n You will be logged out");
+    if (r==true)
+    {
+      return true;
+    }else
+    {
+      return false;
     }
-   
+    }   
     </script>
     
       <script>
