@@ -202,9 +202,20 @@ class ProductSize
     #-------------------------------------------------------------------------------
      public function getMeasurementArray()
     {
+        $fp = $this->product->getFitPriorityArray();
         $size_array = array();
         foreach ($this->product_size_measurements as $psm) {
-            $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  'title' => $psm->getTitle(),  'ideal_body_high' => $psm->getIdealBodySizeHigh() , 'ideal_body_low' => $psm->getIdealBodySizeLow(), 'max_body_measurement' => $psm->getMaxBodyMeasurement());
+            if($psm->getTitle()!='key')
+            $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  
+                                                   'title' => $psm->getTitle(), # will remove after checking usage 
+                                                   'ideal_body_high' => $psm->getIdealBodySizeHigh(), # will remove 
+                                                   'ideal_body_low' => $psm->getIdealBodySizeLow(), # will remove 
+                                                   'fit_point' => $psm->getTitle(),                                                          
+                                                   'ideal_body_size_high' => $psm->getIdealBodySizeHigh(), 
+                                                   'ideal_body_size_low' => $psm->getIdealBodySizeLow(), 
+                                                   'max_body_measurement' => $psm->getMaxBodyMeasurement(),
+                                                   'fit_priority' =>  array_key_exists($psm->getTitle(), $fp)? $fp[$psm->getTitle()]: 0,
+                                                   );
          }
          $size_array['size_title']=$this->getTitle();
          $size_array['body_type']=$this->getBodyType();

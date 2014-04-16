@@ -63,14 +63,16 @@ class Comparison {
             return $this->getFittingSize($cm['feedback']);
         }
     }
- 
+ public function raw_check(){
+     $body_specs = $this->user->getMeasurement()->getArray();
+     $this->calculate_body_hem_bits($body_specs, $fp_specs);
+ }
 #-----------------------------------------------------
 
     private function array_mix($sizes=null) {
         if ($sizes==null){ 
                 $sizes = $this->product->getProductSizes();
-        }
-        $sizes = $this->product->getProductSizes();
+        }        
         $body_specs = $this->user->getMeasurement()->getArray();
         $fb = array();
         $highest_variance=0;
@@ -80,7 +82,8 @@ class Comparison {
         $lowest_ideal_variance=0;
         
         foreach ($sizes as $size) {
-            $size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
+            #$size_specs = $size->getPriorityMeasurementArray(); #~~~~~~~~>
+            $size_specs = $size->getMeasurementArray(); #~~~~~~~~>
             $size_identifier = $size->getDescription();
             $fb[$size_identifier]['id'] = $size->getId();
             $fb[$size_identifier]['fits'] = true;
@@ -94,7 +97,7 @@ class Comparison {
             $fit_scale = 0;
             if (is_array($size_specs)) {
                 foreach ($size_specs as $fp_specs) {
-                    if (is_array($fp_specs) && array_key_exists('id', $fp_specs)) {
+                    if (is_array($fp_specs) && array_key_exists('id', $fp_specs) && $fp_specs['fit_priority']>0) {
                         #get fit point specs merged & calculated
                         $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']] =
                                 $this->get_fit_point_array($fp_specs, $body_specs);
@@ -129,7 +132,14 @@ class Comparison {
                 $highest_ideal_variance=$highest_ideal_variance>$ideal_variance?$highest_ideal_variance:$ideal_variance;
                 $lowest_ideal_variance=$lowest_ideal_variance<$ideal_variance?$lowest_ideal_variance:$ideal_variance;
                 
-            }
+                if (array_key_exists('inseam', $size_specs) && $size_specs['inseam']['fit_priority'] == 0) {
+                    $fb[$size_identifier]['fit_points']['inseam'] = 
+                        $this->calculate_body_hem_bits($body_specs, $size_specs);
+                }
+                if (is_array($fp_specs)){
+                    #$fb[$size_identifier]['fit_points']['inseam-hem'] = $this->calculate_body_hem_bits($body_specs, $fp_specs);
+                }
+            }   
         }
         $fb = $this->addFitScale($fb, $highest_variance,$highest_max_variance, $highest_ideal_variance, $lowest_ideal_variance);
         return array('feedback'=>$this->array_sort($fb),'highest_variance'=>$highest_variance);
@@ -635,8 +645,8 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
  
     private function inseam_diff_message($body_specs, $item_specs) {        
         $str = '';
-        if (array_key_exists('inseam', $item_specs) && array_key_exists('inseam', $body_specs)) {
-            $body_specs = $this->calculate_body_hem_bits($body_specs);
+        $body_specs = $this->calculate_body_hem_bits($body_specs);
+        if (array_key_exists('inseam', $item_specs) && array_key_exists('inseam', $body_specs)) {            
             
         $diff=$item_specs['inseam']['max'] - $body_specs['inseam'];
         if (4.5 < $diff){
@@ -667,23 +677,81 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         }
     }
     
-    private function calculate_body_hem_bits($body_specs){
-        $head=0;        
-        if (array_key_exists('height', $body_specs) && $body_specs['height']>0) {
-            $head=$body_specs['height']/8;
-            if (array_key_exists('inseam', $body_specs) && $body_specs['inseam']>0){
-                $body_specs['knee_height'] = $body_specs['inseam']-($head * 2);
-                $body_specs['ankle_height'] = $head * 0.25;
-                $body_specs['mid_calf_height']=0;
-            }else{
-                $body_specs['knee_height']=0;
-                $body_specs['ankle_height']=0;
-                $body_specs['mid_calf_height']=0;        
+    private function calculate_body_hem_bits($body_specs, $item_specs) {
+
+        if ((!array_key_exists('inseam', $item_specs) || $item_specs['inseam']['max_body_measurement'] == 0) &&
+                ((!array_key_exists('inseam', $body_specs) || $body_specs['inseam'] == 0) &&
+                (!array_key_exists('height', $body_specs) || $body_specs['height'] == 0))) {
+            return;
+        }
+        $item_inseam = $item_specs['inseam']['max_body_measurement'];
+
+        if (array_key_exists('inseam', $body_specs) && $body_specs['inseam'] > 0) {
+            #   Inseam based: Knee: 57.40%,   Mid-Calf: 40.22%,  Ankle: 7.97%            
+            $body_specs['knee_height'] = 0.574 * $body_specs['inseam'];
+            $body_specs['mid_calf_height'] = 0.4022 * $body_specs['inseam'];
+            $body_specs['ankle_height'] = 0.0797 * $body_specs['inseam'];
+        } elseif (array_key_exists('height', $body_specs) && $body_specs['height'] > 0) {
+            #   Total Height based:Knee: 26.95%,  Mid-Calf: 18.88%,  Ankle: 3.74%            
+            $body_specs['knee_height'] = 0.2695 * $body_specs['height'];
+            $body_specs['mid_calf_height'] = 0.1888 * $body_specs['height'];
+            $body_specs['ankle_height'] = 0.0374 * $body_specs['height'];
+        }
+        $str = '';
+
+        if ($item_inseam < $body_specs['knee_height']) {
+            $str = 'less than knee';
+        } elseif ($item_inseam == $body_specs['knee_height']) {
+            $str = 'about knee high';
+        } else {
+            if ($item_inseam < $body_specs['mid_calf_height']) {
+                $str = 'between knee & mid calf';
+            } elseif ($item_inseam == $body_specs['mid_calf_height']) {
+                $str = 'mid calf';
+            } else {
+                if ($item_inseam < $body_specs['ankle_height']) {
+                    $str = 'between calf & ankle';
+                } elseif ($item_inseam == $body_specs['ankle_height']) {
+                    $str = 'ankle length';
+                } else {
+                    $diff = $item_inseam - $body_specs['inseam'];
+                    if (4.5 < $diff) {
+                        $str = 'too long, hem';
+                    } elseif (3.25 <= $diff && $diff <= 4.5) {
+                        $str = 'very long, hem or wear with 4” – 5” heels';
+                    } elseif (2.25 <= $diff && $diff <= 3.5) {
+                        $str = 'long, hem or wear with 3” – 4" heels';
+                    } elseif (1.25 <= $diff && $diff <= 2.5) {
+                        $str = 'long, hem or wear with 2" - 3” heels';
+                    } elseif (0 <= $diff && $diff <= 1.5) {
+                        $str = 'long, hem or wear with 1” – 2” heels';
+                    } elseif (-1 <= $diff && $diff <= -0.5) {
+                        $str = 'perfect fit wear with flats or heels';
+                    }
+                }
             }
-        }        
-        return $body_specs;
+        }
+        #return $body_specs;
+        return array('fit_point' => 'inseam',
+            'label' =>  'inseam',
+            'ideal_body_size_low' => $item_inseam,
+            'ideal_measurement' => $item_inseam,
+            'ideal_body_size_high' => $item_inseam,
+            'mid_high_max' => $item_inseam,
+            'max_body_measurement' => $item_inseam,
+            'fit_priority' => 0,
+            'body_measurement' => $body_specs['inseam'],
+            'variance' => 0,
+            'ideal_variance' => 0,
+            'max_variance' => 0,
+            'message' => $str,
+            'status' => 0,
+            'diff' => 0,            
+            'ideal_diff' => 0,
+            'max_diff' => 0,            
+        );
     }
-    
+
 }
 /*
  * A perfect body is 8 heads high, total. 
