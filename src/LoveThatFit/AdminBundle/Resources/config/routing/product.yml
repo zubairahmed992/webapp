@@ -97,6 +97,15 @@ admin_product_detail_item_update:
 admin_product_detail_item_delete:
    pattern:  /admin/productdetail/{id}/delete/{item_id}/edit
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemDelete }   
+   
+admin_product_detail_item_two_piece_new:
+   pattern:  /admin/productdetail/{id}/piece/{item_id}/new
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceAddNew } 
+   
+admin_product_detail_item_two_piece_create:
+   pattern:  /admin/productdetail/{id}/piece/{item_id}/create
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceCreate } 
+   
 admin_product_detail_item_raw_image_edit:
    pattern:  /admin/productdetail/{id}/raw_image/{item_id}/edit
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemRawImageEdit }   

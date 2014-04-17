@@ -90,7 +90,8 @@ return true;
                     <div class="span2">{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</div>
               {{ form_rest(itemform) }}
                     <div class="span2"> <input type="submit" value="SAVE" class="btn"/>
-                     <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}#item" class="btn" name="item">Cancel</a>
+                        <a href="">Add 2 piece</a>
+                        <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}#item" class="btn" name="item">Cancel</a>
                       <a href="#rawimage{{pi.id}}" role="button" data-toggle="modal" class="btn">Upload Raw Image</a>
                       {%if(pi.rawImage )%}
                       <a href="#rawimagedelete{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete Raw Image</a>
@@ -159,8 +160,13 @@ return true;
                              No Image                   
                     {%endif%}
                     </div>
-
+                  <div class="span2">{%for pp in pi.productitemtwopieces%}
+                      {{pp.pieceType}}
+                      {%endfor%}
+                  
+                  </div>
                     <div class="span2">
+                        <a href="{{path("admin_product_detail_item_two_piece_new",{"id":product.id,"item_id":pi.id})}}">Add 2 piece</a>
                        <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' class="btn" name="item">Edit</a>
                        <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
                        {%if(pi.rawImage )%}

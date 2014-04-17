@@ -44,6 +44,15 @@ class ProductItem
      * @ORM\ManyToMany(targetEntity="LoveThatFit\UserBundle\Entity\User", mappedBy="product_items")
      **/
     private $users;
+    
+    
+    /**
+     * Bidirectional (INVERSE SIDE)
+     * 
+     * @ORM\OneToMany(targetEntity="ProductItemTwoPieces", mappedBy="productitem")
+     * */
+    private $productitemtwopieces;
+    
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -398,5 +407,38 @@ class ProductItem
     public function getRawImage()
     {
         return $this->raw_image;
+    }
+
+    /**
+     * Add productitemtwopieces
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces
+     * @return ProductItem
+     */
+    public function addProductitemtwopiece(\LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces)
+    {
+        $this->productitemtwopieces[] = $productitemtwopieces;
+    
+        return $this;
+    }
+
+    /**
+     * Remove productitemtwopieces
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces
+     */
+    public function removeProductitemtwopiece(\LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces)
+    {
+        $this->productitemtwopieces->removeElement($productitemtwopieces);
+    }
+
+    /**
+     * Get productitemtwopieces
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductitemtwopieces()
+    {
+        return $this->productitemtwopieces;
     }
 }
