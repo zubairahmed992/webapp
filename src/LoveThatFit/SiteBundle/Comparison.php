@@ -133,8 +133,10 @@ class Comparison {
                 $lowest_ideal_variance=$lowest_ideal_variance<$ideal_variance?$lowest_ideal_variance:$ideal_variance;
                 
                 if (array_key_exists('inseam', $size_specs) && $size_specs['inseam']['fit_priority'] == 0) {
-                    $fb[$size_identifier]['fit_points']['inseam'] = 
-                        $this->calculate_body_hem_bits($body_specs, $size_specs);
+                   if($body_specs['inseam']>0){
+                    $hem_bits= $this->calculate_body_hem_bits($body_specs, $size_specs);
+                    if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
+                   }
                 }
                 if (is_array($fp_specs)){
                     #$fb[$size_identifier]['fit_points']['inseam-hem'] = $this->calculate_body_hem_bits($body_specs, $fp_specs);
@@ -676,11 +678,17 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
             return;
         }
     }
-    
+    private function calculate_outseam_by_height($height){
+        return $height/4;
+    }
     private function calculate_body_hem_bits($body_specs, $item_specs) {
 
+        if(!array_key_exists('inseam', $item_specs) || $item_specs['inseam']['max_body_measurement'] == 0) return;
+        if((!array_key_exists('inseam', $body_specs) || $body_specs['inseam'] == 0) &&
+                (!array_key_exists('height', $body_specs) || $body_specs['height'] == 0)) return;
+        
         if ((!array_key_exists('inseam', $item_specs) || $item_specs['inseam']['max_body_measurement'] == 0) &&
-                ((!array_key_exists('inseam', $body_specs) || $body_specs['inseam'] == 0) &&
+                ((!array_key_exists('inseam', $body_specs) || $body_specs['inseam'] == 0) ||
                 (!array_key_exists('height', $body_specs) || $body_specs['height'] == 0))) {
             return;
         }
@@ -733,7 +741,7 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         }
         #return $body_specs;
         return array('fit_point' => 'inseam',
-            'label' =>  'inseam',
+            'label' =>  'Hem Advice',
             'ideal_body_size_low' => $item_inseam,
             'ideal_measurement' => $item_inseam,
             'ideal_body_size_high' => $item_inseam,

@@ -131,6 +131,7 @@ constants:
     waist_to_hip: Waist to Hip
     hip: Hip
     outseam: Outseam
+    inseam: inseam
   dress:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -147,6 +148,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
+    inseam: inseam
   coat:
     neck: Neck
     shoulder_across_front: Shoulder across front
@@ -163,7 +165,7 @@ constants:
     back_waist: Back Waist
     waist_to_hip  : Waist to Hip  
     hip: Hip
-    
+    inseam: inseam
  product_specification: 
   fit_priority:
       man:

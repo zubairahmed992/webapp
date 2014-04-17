@@ -112,13 +112,18 @@
                                 </tr>
 
                             {% endfor %}
+                            {% if size_specs.hem_advice is defined %}
+                                    <tr>
+                                        <td colspan="10">
+                                            <b>hem advice :</b> {{size_specs.hem_advice.message}} 
+                                        </td>            
+                                    </tr>
+                            {% endif %}
                             </table>
-                        </td>            
+                        </td>   
                     </tr>
                 {% endif%}
-
    {% endfor %}
-
                 </table>
 {% endif %}
             </div>     

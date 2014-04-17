@@ -16,7 +16,7 @@
     
 #}
 
-
+{%if (data.feedback.fit_points is defined)%}
          {% for fp, fp_specs in data.feedback.fit_points %}             
             <li><b>{{fp_specs.label}}</b>            
             {%if (fp_specs.status == -5)%}
@@ -43,3 +43,6 @@
                     {{data.recommendation.description}}
                     </li>
                 {% endif %}
+{% else %}      
+                    <li>Details not found.</li>
+{% endif %}                    
