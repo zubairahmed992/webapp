@@ -146,6 +146,9 @@ private function getJsonForFields($fields){
         return json_encode($f);
         
     }
-
+#-------------------------Bet Brand Detail base on id-------------------------#    
+   public function getBrandSpecifications($id){
+       return $this->repo->getBrandSpecifications($id);
+   }
     
 }

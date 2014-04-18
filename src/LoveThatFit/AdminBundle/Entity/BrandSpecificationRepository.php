@@ -24,5 +24,19 @@ class BrandSpecificationRepository extends EntityRepository
                 return null;
                 } 
         }
+ #-----------------Get Brand Specification base on Brand Id -------------------#
+ public function getBrandSpecifications($id){
+     $query = $this->getEntityManager()
+                    ->createQuery("SELECT bs,b FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.brandspecification bs   
+                    WHERE bs.brand =:id")
+                   ->setParameters(array('id' => $id));
+
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                } 
+ }        
 
 }
