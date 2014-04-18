@@ -11,7 +11,9 @@ class ProductItemTwoPiece extends AbstractType {
     {        
         $builder->add('piece_type', 'choice', array('choices'=> array('suit'=>'Suit','pant'=>'Pant','coat'=>'Coat')
                     ,'expanded' => false,
-                     'multiple' => false,'required'  => true,));        
+                     'multiple' => false,'required'  => true,
+                      'empty_value' => 'Select Piece Type'
+              ));        
          $builder->add('piece_image', 'text'); 
     }
 

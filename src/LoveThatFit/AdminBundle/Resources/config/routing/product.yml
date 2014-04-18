@@ -105,6 +105,19 @@ admin_product_detail_item_two_piece_new:
 admin_product_detail_item_two_piece_create:
    pattern:  /admin/productdetail/{id}/piece/{item_id}/create
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceCreate } 
+
+admin_product_detail_item_two_piece_delete:
+   pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceDelete } 
+
+admin_product_detail_item_two_piece_edit:   
+   pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/edit
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceEdit }
+   
+admin_product_detail_item_two_piece_update:   
+   pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceUpdate }
+   
    
 admin_product_detail_item_raw_image_edit:
    pattern:  /admin/productdetail/{id}/raw_image/{item_id}/edit

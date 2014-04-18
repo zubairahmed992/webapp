@@ -63,9 +63,6 @@ return true;
     <table style="width:50%">
 
         <div class="row-fluid show-grid p_title">
-
-            <div class="span2 hds"><b>Line Number</b></div>
-            <div class="span2 hds"><b>Body Type</b></div>
             <div class="span2 hds"><b>Size</b></div>
             <div class="span2 hds"><b>Color</b></div>
             <div class="span2 hds"><b>Fitting Room</b></div>
@@ -89,16 +86,14 @@ return true;
                     <div class="span2">{{pi.productColor.title}}</div>
                     <div class="span2">{{ form_widget(itemform.file) }}{{ form_errors(itemform.file) }}</div>
               {{ form_rest(itemform) }}
-                    <div class="span2"> <input type="submit" value="SAVE" class="btn"/>
-                        <a href="">Add 2 piece</a>
+                    <div class="span2"> <input type="submit" value="SAVE" class="btn"/>                      
                         <a href="{{ path('admin_product_detail_show',{'id':product.Id}) }}#item" class="btn" name="item">Cancel</a>
                       <a href="#rawimage{{pi.id}}" role="button" data-toggle="modal" class="btn">Upload Raw Image</a>
                       {%if(pi.rawImage )%}
                       <a href="#rawimagedelete{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete Raw Image</a>
                       {% endif %}
                     </div>
-                </div>
-                
+                </div>                
                 
         </form>
       
@@ -147,11 +142,7 @@ return true;
          {% else %}
 
                 <div class="row-fluid show-grid p_title">
-
-                    
-                    <div class="span2">{{pi.lineNumber}}</div>
-                    <div class="span2">{{pi.productSize.bodyType}}</div>
-                    <div class="span2">{{pi.productSize.title}}</div>
+                    <div class="span2">{{pi.productSize.bodyType}} {{pi.productSize.title}}</div>
                     <div class="span2">{{pi.productColor.title}}</div>
                     <div class="span2">
                         {%if(pi.image!='')%}
@@ -160,17 +151,36 @@ return true;
                              No Image                   
                     {%endif%}
                     </div>
-                  <div class="span2">{%for pp in pi.productitemtwopieces%}
+                  <div class="span2">
+                   {%for pp in pi.productitemtwopieces%}
+                    <span>
                       {{pp.pieceType}}
-                      {%endfor%}
-                  
+                            <a href='{{path("admin_product_detail_item_two_piece_edit",{"id":product.id, "item_id":pi.id,'piece_id':pp.id})}}'><i class="icon-edit"></i></a>
+                            <a href="#myModal3{{pp.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    </span>
+                          
+                          <div id="myModal3{{pp.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Product Item Piece</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to Delete this Product <b>{{product.name }} - Size {{pi.productSize.title}} Item  {{pp.pieceType}} Piece</b>?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="{{path("admin_product_detail_item_two_piece_delete",{"id":product.id, "item_id":pi.id,'piece_id':pp.id})}}"  class="btn btn-primary">Delete</a>
+
+    </div>
+</div>
+                    {%endfor%}                  
                   </div>
                     <div class="span2">
-                        <a href="{{path("admin_product_detail_item_two_piece_new",{"id":product.id,"item_id":pi.id})}}">Add 2 piece</a>
-                       <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' class="btn" name="item">Edit</a>
-                       <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
+                        <a href="{{path("admin_product_detail_item_two_piece_new",{"id":product.id,"item_id":pi.id})}}" class="btn btn-primary btn-lg" >Add piece</a>
+                       <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' name="item"><i class="icon-edit"></i></a>
+                       <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
                        {%if(pi.rawImage )%}
-                       <a href="{{path("admin_product_detail_item_raw_image_download",{"id":product.id, "item_id":pi.id})}}" role="button" data-toggle="modal" class="btn">Download</a>
+                       <a href="{{path("admin_product_detail_item_raw_image_download",{"id":product.id, "item_id":pi.id})}}" role="button" data-toggle="modal" class="icon-download-alt"></i></a>
                        {%endif%}                        
 
                     </div>
@@ -193,7 +203,7 @@ return true;
 </div>   
 
                 
-                
+                  
                 
              
                              {% endif %}

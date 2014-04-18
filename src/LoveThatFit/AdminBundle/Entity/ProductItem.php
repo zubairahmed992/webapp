@@ -217,7 +217,7 @@ class ProductItem
     /**
      * Get product_color
      *
-     * @return LoveTha  tFit\AdminBundle\Entity\ProductColor 
+     * @return LoveThatFit\AdminBundle\Entity\ProductColor 
      */
     public function getProductColor()
     {

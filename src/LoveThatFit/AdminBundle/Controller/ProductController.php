@@ -492,6 +492,46 @@ class ProductController extends Controller {
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));         
     }
     
+    public function productDetailItemTwoPieceDeleteAction($id,$piece_id)
+    {        
+        try {
+            $message_array = $this->get('admin.helper.product.item.piece')->delete($piece_id);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+           return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));         
+           
+        } catch (\Doctrine\DBAL\DBALException $e) {
+
+            $this->get('session')->setFlash('warning', 'This Piece cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }       
+       
+    }
+    
+    public function productDetailItemTwoPieceEditAction($id,$item_id,$piece_id)
+    {
+        $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
+        $form = $this->createForm(new ProductItemTwoPiece(), $entity);
+        return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'item_id' => $item_id,     
+                    'entity'=>$this->getProduct($id),
+                    'piece_id'=>$piece_id
+                ));
+    }
+    
+    public function productDetailItemTwoPieceUpdateAction(Request $request,$id,$item_id,$piece_id)
+    {
+         $item=$this->getProductItem($item_id);
+         $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
+         $form = $this->createForm(new ProductItemTwoPiece(), $entity);
+         $form->bind($request);
+         $em = $this->getDoctrine()->getManager();
+            $entity->setProductitem($item);
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->setFlash('success', 'Product Detail size has been update.');           
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));         
+    }
     
 #----------------------Product Item Edit ---------------------------------------#
 
