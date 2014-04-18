@@ -2,8 +2,6 @@
 
 namespace LoveThatFit\SiteBundle;
 
-use Symfony\Component\Yaml\Parser;
-
 class Comparison {
 
     private $user;
@@ -134,7 +132,7 @@ class Comparison {
                 
                 if (array_key_exists('inseam', $size_specs) && $size_specs['inseam']['fit_priority'] == 0) {
                    if($body_specs['inseam']>0){
-                    $hem_bits= $this->calculate_body_hem_bits($body_specs, $size_specs);
+                    $hem_bits = $this->calculate_body_hem_bits($body_specs, $size_specs);
                     if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
                    }
                 }
@@ -678,9 +676,32 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
             return;
         }
     }
-    private function calculate_outseam_by_height($height){
-        return $height/4;
+    private function cut_to_natural_waste($outseam){
+        if ($outseam==null || $outseam==0){
+            return $outseam;            
+            }
+            
+        $rise = $this->product->getRise();
+        
+        switch ($rise){
+            case 'high_rise':
+                $outseam = $outseam;
+                break;
+            case 'mid_rise':
+                $outseam = $outseam-4.5;
+                break;
+            case 'low_rise':
+                $outseam=$outseam-6.5;
+                break;
+            case 'ultra_low_rise':
+                $outseam=$outseam;
+                break;
+            default:
+                break;
+        }        
+        return $outseam;
     }
+    
     private function calculate_body_hem_bits($body_specs, $item_specs) {
 
         if(!array_key_exists('inseam', $item_specs) || $item_specs['inseam']['max_body_measurement'] == 0) return;
@@ -692,7 +713,8 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
                 (!array_key_exists('height', $body_specs) || $body_specs['height'] == 0))) {
             return;
         }
-        $item_inseam = $item_specs['inseam']['max_body_measurement'];
+        
+        $item_inseam = $this->cut_to_natural_waste($item_specs['inseam']['max_body_measurement']);
 
         if (array_key_exists('inseam', $body_specs) && $body_specs['inseam'] > 0) {
             #   Inseam based: Knee: 57.40%,   Mid-Calf: 40.22%,  Ankle: 7.97%            
