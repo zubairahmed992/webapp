@@ -676,32 +676,33 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
             return;
         }
     }
-    private function cut_to_natural_waste($outseam){
-        if ($outseam==null || $outseam==0){
-            return $outseam;            
+    private function cut_to_natural_waste($hem_length) {
+        if ($hem_length == null || $hem_length == 0) {
+            return $hem_length;
+        }
+
+        if ($this->product->getClothingType() == 'skirt') {
+          $rise = $this->product->getRise();
+            switch ($rise) {
+                case 'high_rise':
+                    $hem_length = $hem_length;
+                    break;
+                case 'mid_rise':
+                    $hem_length = $hem_length - 4.5;
+                    break;
+                case 'low_rise':
+                    $hem_length = $hem_length - 6.5;
+                    break;
+                case 'ultra_low_rise':
+                    $hem_length = $hem_length;
+                    break;
+                default:
+                    break;
             }
-            
-        $rise = $this->product->getRise();
-        
-        switch ($rise){
-            case 'high_rise':
-                $outseam = $outseam;
-                break;
-            case 'mid_rise':
-                $outseam = $outseam-4.5;
-                break;
-            case 'low_rise':
-                $outseam=$outseam-6.5;
-                break;
-            case 'ultra_low_rise':
-                $outseam=$outseam;
-                break;
-            default:
-                break;
-        }        
-        return $outseam;
+        }
+        return $hem_length;
     }
-    
+
     private function calculate_body_hem_bits($body_specs, $item_specs) {
 
         if(!array_key_exists('inseam', $item_specs) || $item_specs['inseam']['max_body_measurement'] == 0) return;
@@ -781,7 +782,56 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
             'max_diff' => 0,            
         );
     }
+    private function hem_advice() {
+        $clothing_type = $this->product->getClothingType();
+        if ($clothing_type == 'blouse' ||
+                $clothing_type == 'blouse' ||
+                $clothing_type == 'tee_knit' ||
+                $clothing_type == 'tank_knit' ||
+                $clothing_type == 'jacket' ||
+                $clothing_type == 'sweater') {
+            #  cropped: Cropped
+            #waist: Waist
+            #top_of_hip: Top Of Hip  
+            #bottom_of_hip: Bottom Of Hip
+        }
+        if ($clothing_type == 'tunic') {
+            #  top_of_hip: Top Of Hip  
+            # bottom_of_hip: Bottom Of Hip
+            # mid_of_thigh: Mid Of Thigh        
+        }
+        if ($clothing_type == 'trouser' ||
+                $clothing_type == 'jean') {
+            #short: Short
+            #capri: Capri 
+            #cropped: Cropped
+            #ankle: Ankle
+            #full_length: Full Length
+        }
+        if ($clothing_type == 'skirt' || $clothing_type == 'dress') {
+            # mini: Mini
+            #knee_length: Knee length
+            #mid_calf: Mid-Calf
+            #tea_length: Tea length
+            #maxi: Maxi
+            #floor_length: Floor length
+            #with_train: With Train        
+        }
 
+
+        if ($clothing_type == 'coat') {
+            /*
+              cropped: Cropped
+              waist: Waist
+              top_of_hip: Top Of Hip
+              bottom_of_hip: Bottom Of Hip
+              knee_length: Knee length
+              mid_calf: Mid Calf
+              tea_length: Tea length
+              maxi: Maxi
+             */
+        }
+    }
 }
 /*
  * A perfect body is 8 heads high, total. 
