@@ -15,13 +15,21 @@ class ProductColorType extends AbstractType
     private $women_waist;
     
     //private $gender;
-     public function __construct($sizes_number_petite,$sizes_number_regular=Null,$sizes_number_tall,$women_waist)             
+     public function __construct($sizes=Null)             
     {
         //$this->container= $container;
-        $this->sizes_number_petite=$sizes_number_petite;        
-        $this->sizes_number_regular=$sizes_number_regular;        
-        $this->sizes_number_tall=$sizes_number_tall;        
-        $this->women_waist=$women_waist;
+       if(isset($sizes['petite'])){
+         $this->sizes_number_petite= $sizes['petite'];//$sizes_number_petite;        
+       }
+       if(isset($sizes['regular'])){
+        $this->sizes_number_regular=$sizes['regular'];//$sizes_number_regular;        
+       }
+       if(isset($sizes['tall'])){
+        $this->sizes_number_tall=$sizes['tall'];//$sizes_number_tall;        
+       }
+       if(isset($sizes['women_waist'])){
+        $this->women_waist=$sizes['women_waist'];//$women_waist;
+       }
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,6 +38,7 @@ class ProductColorType extends AbstractType
         $builder->add('title');
         $builder->add('tempImage','hidden');
         $builder->add('tempPattern','hidden');
+        if($this->sizes_number_petite){
         $builder->add(
                 'petiteSizes', 'choice', 
                 array('choices'=>$this->sizes_number_petite,
@@ -37,7 +46,8 @@ class ProductColorType extends AbstractType
                        'expanded'  => true, 
                 )
                 
-                );
+                );}
+        if($this->sizes_number_regular){
         $builder->add(
                 'regularSizes', 'choice', 
                 array('choices'=>$this->sizes_number_regular,
@@ -45,7 +55,8 @@ class ProductColorType extends AbstractType
                        'expanded'  => true, 
                 )
                 
-                );
+                );}
+       if($this->sizes_number_tall){
         $builder->add(
                 'tallSizes', 'choice', 
                 array('choices'=>$this->sizes_number_tall,
@@ -54,14 +65,15 @@ class ProductColorType extends AbstractType
                 )
                 
                 );
-        
+       }
+       if($this->women_waist){
         $builder->add(
                 'womenWaistSizes', 'choice', 
                 array('choices'=>$this->women_waist,
                        'multiple'  => true,
                        'expanded'  => true, 
                 ));
-        
+       }
          $builder ->add('displayProductColor', 'choice', array(
                     'choices'   => array('1'=>' '),
                     'expanded' => true,
