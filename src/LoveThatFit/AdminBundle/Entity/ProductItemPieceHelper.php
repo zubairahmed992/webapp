@@ -7,10 +7,10 @@ use Doctrine\ORM\EntityRepository;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Yaml\Parser;
-use LoveThatFit\AdminBundle\Event\ProductItemTwoPiecesEvent;
+use LoveThatFit\AdminBundle\Event\ProductItemPieceEvent;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductItemTwoPieceHelper {
+class ProductItemPieceHelper {
 
     protected $dispatcher;
 
@@ -40,20 +40,32 @@ class ProductItemTwoPieceHelper {
 
     public function createNew() {
         $class = $this->class;
-        $brand = new $class();
-        return $brand;
+        $piece = new $class();
+        return $piece;
     }
 
 //-------------------------------------------------------
 
-    public function save($entity) {                   
+    public function save($entity) {   
+        $msg_array =null;
+          if ($msg_array == null) {
+            $entity->upload();
             $this->em->persist($entity);
-            $this->em->flush();                  
+            $this->em->flush();    
+             return array('message' => 'Piece has been succesfully created.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+            return $msg_array;
+        }
     }
 
     //-------------------------------------------------------
 
-    public function update($entity) {            
+    public function update($entity) { 
+            $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();                  
     }

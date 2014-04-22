@@ -11,7 +11,7 @@ class ProductSizeMeasurementType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
-        
+        $builder->add('title');
         $builder->add('garment_measurement_flat');
         $builder->add('max_body_measurement');
         $builder->add('vertical_stretch');

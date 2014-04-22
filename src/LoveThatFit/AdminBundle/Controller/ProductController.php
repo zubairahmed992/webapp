@@ -7,7 +7,7 @@ use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
-use LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces;
+use LoveThatFit\AdminBundle\Entity\ProductItemPiece;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenBottomType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeWomenDressType;
 use LoveThatFit\AdminBundle\Form\Type\ProductColorPatternType;
 use LoveThatFit\AdminBundle\Form\Type\ProductSizeMeasurementType;
-use LoveThatFit\AdminBundle\Form\Type\ProductItemTwoPiece;
+use LoveThatFit\AdminBundle\Form\Type\ProductItemPieceType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
@@ -474,10 +474,10 @@ class ProductController extends Controller {
     }
 
 //-----------------------------Product Item two piece add new-----------------------------
-    public function productDetailItemTwoPieceAddNewAction($id,$item_id)
+    public function productDetailItemPieceAddNewAction($id,$item_id)
     {
-        $twopiece=new ProductItemTwoPieces();
-        $pieceitemform = $this->createForm(new ProductItemTwoPiece(),$twopiece);
+        $twopiece=new ProductItemPiece();
+        $pieceitemform = $this->createForm(new ProductItemPieceType(),$twopiece);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_new.html.twig', array(
                     'form' => $pieceitemform->createView(),
                     'item_id' => $item_id,     
@@ -485,21 +485,22 @@ class ProductController extends Controller {
                 ));
     }
     
-    public function productDetailItemTwoPieceCreateAction(Request $request,$id,$item_id)
+    public function productDetailItemPieceCreateAction(Request $request,$id,$item_id)
     {
         $item=$this->getProductItem($item_id);
-        $itemtwopiece=new ProductItemTwoPieces();
-        $form = $this->createForm(new ProductItemTwoPiece(),$itemtwopiece);        
+        $piece=new ProductItemPiece();
+        $form = $this->createForm(new ProductItemPieceType(),$piece);         
         $form->bind($request);      
-            $em = $this->getDoctrine()->getManager();
-            $itemtwopiece->setProductitem($item);
-            $em->persist($itemtwopiece);
+            $em = $this->getDoctrine()->getManager();            
+            $piece->setProductitem($item);
+            $piece->upload();
+            $em->persist($piece);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail size has been update.');           
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));         
     }
     
-    public function productDetailItemTwoPieceDeleteAction($id,$piece_id)
+    public function productDetailItemPieceDeleteAction($id,$piece_id)
     {        
         try {
             $message_array = $this->get('admin.helper.product.item.piece')->delete($piece_id);
@@ -514,10 +515,10 @@ class ProductController extends Controller {
        
     }
     
-    public function productDetailItemTwoPieceEditAction($id,$item_id,$piece_id)
+    public function productDetailItemPieceEditAction($id,$item_id,$piece_id)
     {
         $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
-        $form = $this->createForm(new ProductItemTwoPiece(), $entity);
+        $form = $this->createForm(new ProductItemPieceType('edit'), $entity);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_edit.html.twig', array(
                     'form' => $form->createView(),
                     'item_id' => $item_id,     
@@ -526,14 +527,15 @@ class ProductController extends Controller {
                 ));
     }
     
-    public function productDetailItemTwoPieceUpdateAction(Request $request,$id,$item_id,$piece_id)
+    public function productDetailItemPieceUpdateAction(Request $request,$id,$item_id,$piece_id)
     {
          $item=$this->getProductItem($item_id);
          $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
-         $form = $this->createForm(new ProductItemTwoPiece(), $entity);
+         $form = $this->createForm(new ProductItemPieceType('edit'), $entity);
          $form->bind($request);
          $em = $this->getDoctrine()->getManager();
             $entity->setProductitem($item);
+            $entity->upload();
             $em->persist($entity);
             $em->flush();
             $this->get('session')->setFlash('success', 'Product Detail size has been update.');           

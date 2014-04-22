@@ -111,6 +111,17 @@ image_category:
       dir:  'uploads/ltf/products/fitting_room/web'
       available_height: 1152  
       pixel_per_inch: 6
+   
+  product_item_piece:
+    original:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room'
+      pixel_per_inch: 24      
+    web:
+      prefix: 
+      dir:  'uploads/ltf/products/fitting_room/piece'
+      available_height: 1152  
+      pixel_per_inch: 6    
       
     iphone4s:
       prefix: 

@@ -13,9 +13,12 @@
                 <div id="p_hd">{{productname}} </div>                
 
                 <div id="product_content">
-
-                    <div class="span3"><h3> Size {{sizetitle}}: {{title|capitalize |replace({'_': ' ', '_': " "}) }} </h3></div>
+                    <div class="span3"><h3> Size {{sizetitle}}: {{title|capitalize |replace({'_': ' ', '_': " "}) }} <span id="showSizeTitle"><a class="btn" onClick="return ShowSizeTitle()" ><i class="icon-edit"></i></a></span> <span id="hideSizeTitle" style="display:none"><a class="btn" onClick="return HideSizeTitle()" ><i class="icon-edit"></i></a></span></h3></div>
                     <div style="clear:both;"></div>
+                    <div id="size_title" style="display:none">{{ form_widget(form.title) }}{{ form_errors(form.title) }}</div>
+                    <div style="clear:both;"></div>
+                   
+                    
                     <div id="pro_detail"> 
                             
                             
@@ -194,7 +197,25 @@
                                                                                   </div><!-- End product_content --> 
                                                                               </div>               
                                                                           </div> <!-- End detail_wrapper -->
-                                                                     </form>  
+                                                                     </form> 
+    
+    <script>
+    function ShowSizeTitle()
+    {
+        document.getElementById('size_title').style.display="block";
+        document.getElementById('showSizeTitle').style.display="none";
+        document.getElementById('hideSizeTitle').style.display="block";
+        
+    }
+    function HideSizeTitle()
+    {
+        document.getElementById('size_title').style.display="none";
+        document.getElementById('showSizeTitle').style.display="block";
+        document.getElementById('hideSizeTitle').style.display="none";
+        
+    }
+    </script>   
+    
 <script>
 function ProductSizeMeasuremtAdd()
 {

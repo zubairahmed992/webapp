@@ -19,7 +19,7 @@
     <a href="{{ path('admin_products') }}" class="btn">back to list</a>  
      </div>
       <div class="clearfix"></div>   
-    <form action="{{ path('admin_product_detail_item_two_piece_update', {'id':entity.id, 'item_id': item_id,'piece_id':piece_id }) }}" method="post" >
+    <form action="{{ path('admin_product_detail_item_two_piece_update', {'id':entity.id, 'item_id': item_id,'piece_id':piece_id }) }}" method="post" enctype="multipart/form-data" >
  {{ form_errors(form) }}
 
             <div id="detail_wrapper">      
@@ -35,7 +35,7 @@
                                     
                                   <div class="row-fluid show-grid">
                                     <div class="span3">Image</div>
-                                    <div class="span3">{{ form_widget(form.piece_image) }}{{ form_errors(form.piece_image) }}</div>
+                                    <div class="span3">{{ form_widget(form.file) }}{{ form_errors(form.file) }}</div>
                                 </div>  
                                 
                                     

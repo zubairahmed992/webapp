@@ -100,23 +100,23 @@ admin_product_detail_item_delete:
    
 admin_product_detail_item_two_piece_new:
    pattern:  /admin/productdetail/{id}/piece/{item_id}/new
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceAddNew } 
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceAddNew } 
    
 admin_product_detail_item_two_piece_create:
    pattern:  /admin/productdetail/{id}/piece/{item_id}/create
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceCreate } 
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceCreate } 
 
 admin_product_detail_item_two_piece_delete:
    pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/delete
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceDelete } 
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceDelete } 
 
 admin_product_detail_item_two_piece_edit:   
    pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/edit
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceEdit }
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceEdit }
    
 admin_product_detail_item_two_piece_update:   
    pattern:  /admin/productdetail/{id}/item/{item_id}/piece/{piece_id}/update
-   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemTwoPieceUpdate }
+   defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemPieceUpdate }
    
    
 admin_product_detail_item_raw_image_edit:

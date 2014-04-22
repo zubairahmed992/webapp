@@ -49,9 +49,9 @@ class ProductItem
     /**
      * Bidirectional (INVERSE SIDE)
      * 
-     * @ORM\OneToMany(targetEntity="ProductItemTwoPieces", mappedBy="productitem")
+     * @ORM\OneToMany(targetEntity="ProductItemPiece", mappedBy="productitem")
      * */
-    private $productitemtwopieces;
+    private $productitempiece;
     
 
     public function __construct() {
@@ -409,36 +409,40 @@ class ProductItem
         return $this->raw_image;
     }
 
+    
+
+    
+
     /**
-     * Add productitemtwopieces
+     * Add productitempiece
      *
-     * @param \LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece
      * @return ProductItem
      */
-    public function addProductitemtwopiece(\LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces)
+    public function addProductitempiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece)
     {
-        $this->productitemtwopieces[] = $productitemtwopieces;
+        $this->productitempiece[] = $productitempiece;
     
         return $this;
     }
 
     /**
-     * Remove productitemtwopieces
+     * Remove productitempiece
      *
-     * @param \LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece
      */
-    public function removeProductitemtwopiece(\LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces $productitemtwopieces)
+    public function removeProductitempiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece)
     {
-        $this->productitemtwopieces->removeElement($productitemtwopieces);
+        $this->productitempiece->removeElement($productitempiece);
     }
 
     /**
-     * Get productitemtwopieces
+     * Get productitempiece
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProductitemtwopieces()
+    public function getProductitempiece()
     {
-        return $this->productitemtwopieces;
+        return $this->productitempiece;
     }
 }

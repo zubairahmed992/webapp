@@ -5,7 +5,7 @@ namespace LoveThatFit\AdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProductItemTwoPiece extends AbstractType {
+class ProductItemPieceType extends AbstractType {   
    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
@@ -14,20 +14,20 @@ class ProductItemTwoPiece extends AbstractType {
                      'multiple' => false,'required'  => true,
                       'empty_value' => 'Select Piece Type'
               ));        
-         $builder->add('piece_image', 'text'); 
+            $builder->add('file');   
     }
 
     public function getDefaultOptions(array $options) {
 
             return array(
-                'data_class' => 'LoveThatFit\AdminBundle\Entity\ProductItemTwoPieces',
-                'cascade_validation' => true,              
+                'data_class' => 'LoveThatFit\AdminBundle\Entity\ProductItemPiece',
+                'cascade_validation' => true,                      
             );
         
     }
 
     public function getName() {
-        return 'item_piece';
+        return 'piece';
     }
 
 }
