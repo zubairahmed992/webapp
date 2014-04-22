@@ -406,7 +406,7 @@ class ProductController extends Controller {
         $clothingType = strtolower($product->getClothingType()->getName());
         $clothingTypeAttributes = $this->get('admin.helper.product.specification')->getAttributesFor($clothingType);
         $size_measurements = $this->get('admin.helper.productsizes')->checkAttributes($clothingTypeAttributes, $product_size);
-        $form = $this->createForm(new ProductSizeMeasurementType());
+        $form = $this->createForm(new ProductSizeMeasurementType('edit'));
         return $this->render('LoveThatFitAdminBundle:Product:product_size_detail_show.html.twig', array(
                     'product' => $product,
                     'size_measurements' => $size_measurements,
@@ -838,7 +838,7 @@ class ProductController extends Controller {
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
-        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $form = $this->createForm(new ProductSizeMeasurementType('add'), $entity);
         $deleteForm = $this->getDeleteForm($size_id);
 
         return $this->render('LoveThatFitAdminBundle:Product:productSizeMeasurementForm.html.twig', array(
@@ -862,7 +862,7 @@ class ProductController extends Controller {
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
-        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $form = $this->createForm(new ProductSizeMeasurementType('add'), $entity);
 
         return $this->render('LoveThatFitAdminBundle:Product:_productSizeMeasurement.html.twig', array(
                     'form' => $form->createView(),
@@ -888,7 +888,7 @@ class ProductController extends Controller {
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
-        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $form = $this->createForm(new ProductSizeMeasurementType('add'), $entity);
         $deleteForm = $this->getDeleteForm($size_id);
         return $this->render('LoveThatFitAdminBundle:Product:productSizeMeasurement.html.twig', array(
                     'form' => $form->createView(),
@@ -912,7 +912,7 @@ class ProductController extends Controller {
         $entity = new ProductSizeMeasurement();
         $entity->setVerticalStretch($product_size->getProduct()->getVerticalStretch());
         $entity->setHorizontalStretch($product_size->getProduct()->getHorizontalStretch());
-        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $form = $this->createForm(new ProductSizeMeasurementType('edit'), $entity);
         $deleteForm = $this->getDeleteForm($size_id);
         if ($this->getRequest()->getMethod() == 'POST') {
             $form->bindRequest($request);
@@ -956,7 +956,7 @@ class ProductController extends Controller {
         $product_size_measurement = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductSizeMeasurement')
                 ->find($measurement_id);
-        $form = $this->createForm(new ProductSizeMeasurementType(), $product_size_measurement);
+        $form = $this->createForm(new ProductSizeMeasurementType('edit'), $product_size_measurement);
         $deleteForm = $this->getDeleteForm($size_id);
         return $this->render('LoveThatFitAdminBundle:Product:productSizeMeasurement_edit.html.twig', array(
                     'form' => $form->createView(),
@@ -980,7 +980,7 @@ class ProductController extends Controller {
         $entity = $this->getDoctrine()
                 ->getRepository('LoveThatFitAdminBundle:ProductSizeMeasurement')
                 ->find($measurement_id);
-        $form = $this->createForm(new ProductSizeMeasurementType(), $entity);
+        $form = $this->createForm(new ProductSizeMeasurementType('edit'), $entity);
         $form->bindRequest($request);
         if ($form->isValid()) {
             $em->persist($entity);

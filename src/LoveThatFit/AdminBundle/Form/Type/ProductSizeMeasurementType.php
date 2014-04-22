@@ -8,10 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProductSizeMeasurementType extends AbstractType
 {
-    
+     public function __construct($mode) {
+        $this->mode = $mode;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {        
-        $builder->add('title');
+    {   
+         if($this->mode=='add'){
+            $builder->add('title','hidden');
+        }else{
+            $builder->add('title');
+        }        
         $builder->add('garment_measurement_flat');
         $builder->add('max_body_measurement');
         $builder->add('vertical_stretch');
