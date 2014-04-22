@@ -130,12 +130,9 @@ class Comparison {
                 $highest_ideal_variance=$highest_ideal_variance>$ideal_variance?$highest_ideal_variance:$ideal_variance;
                 $lowest_ideal_variance=$lowest_ideal_variance<$ideal_variance?$lowest_ideal_variance:$ideal_variance;
                 
-                if (array_key_exists('inseam', $size_specs) && $size_specs['inseam']['fit_priority'] == 0) {
-                   if($body_specs['inseam']>0){
-                    $hem_bits = $this->calculate_body_hem_bits($body_specs, $size_specs);
-                    if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
-                   }
-                }
+                $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
+                if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
+                
                 if (is_array($fp_specs)){
                     #$fb[$size_identifier]['fit_points']['inseam-hem'] = $this->calculate_body_hem_bits($body_specs, $fp_specs);
                 }
@@ -782,93 +779,163 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
             'max_diff' => 0,            
         );
     }
-    private function hem_advice() {
+   
+    private function get_hem_advice($item_specs, $body_specs) {
         $clothing_type = $this->product->getClothingType();
-        if ($clothing_type == 'blouse' ||
-                $clothing_type == 'blouse' ||
-                $clothing_type == 'tee_knit' ||
-                $clothing_type == 'tank_knit' ||
-                $clothing_type == 'jacket' ||
-                $clothing_type == 'sweater') {
-            #  cropped: Cropped
-            #waist: Waist
-            #top_of_hip: Top Of Hip  
-            #bottom_of_hip: Bottom Of Hip
-        }
-        if ($clothing_type == 'tunic') {
-            #  top_of_hip: Top Of Hip  
-            # bottom_of_hip: Bottom Of Hip
-            # mid_of_thigh: Mid Of Thigh        
-        }
-        if ($clothing_type == 'trouser' ||
-                $clothing_type == 'jean') {
-            #short: Short
-            #capri: Capri 
-            #cropped: Cropped
-            #ankle: Ankle
-            #full_length: Full Length
-        }
-        if ($clothing_type == 'skirt' || $clothing_type == 'dress') {
-            # mini: Mini
-            #knee_length: Knee length
-            #mid_calf: Mid-Calf
-            #tea_length: Tea length
-            #maxi: Maxi
-            #floor_length: Floor length
-            #with_train: With Train        
-        }
 
-
-        if ($clothing_type == 'coat') {
-            /*
-              cropped: Cropped
-              waist: Waist
-              top_of_hip: Top Of Hip
-              bottom_of_hip: Bottom Of Hip
-              knee_length: Knee length
-              mid_calf: Mid Calf
-              tea_length: Tea length
-              maxi: Maxi
-             */
+        if ($clothing_type->getName() == 'trouser' ||
+                $clothing_type->getName() == 'jean') {
+            return $this->get_inseam_advice($item_specs, $body_specs);
+        } elseif ($clothing_type->getName() == 'skirt' || $clothing_type->getName() == 'dress' || $clothing_type->getName() == 'coat') {
+            return $this->get_hem_length_advice($item_specs, $body_specs);
         }
+        
+           
     }
+    private function get_hem_length_advice($item_specs, $body_specs) {
+
+        if ($body_specs['outseam']==0 && $body_specs['height']==0){
+            return null;
+        }
+        if (!array_key_exists('hem_length', $item_specs) || $item_specs['hem_length']['max_body_measurement']==0){
+            return null;
+        }
+
+        $knee_height = (0.2695 * $body_specs['height']);
+        $mid_calf_height = (0.1888 * $body_specs['height']);
+        $ankle_height = (0.0374 * $body_specs['height']);        
+        
+        if ($body_specs['outseam']==0) {
+            $body_specs['outseam'] = 0.6 * $body_specs['height'];
+        }
+        $body_specs['outseam_knee'] = $body_specs['outseam'] - $knee_height;
+        $body_specs['outseam_mid_calf'] = $body_specs['outseam'] - $mid_calf_height;
+        $body_specs['outseam_ankle'] = $body_specs['outseam'] - $ankle_height;
+
+        $str = '';
+        $hem_length = $item_specs['hem_length']['max_body_measurement'];
+        $actual_hem_length = $hem_length;
+        $clothing_type=$this->product->getClothingType();
+        
+          if($clothing_type->getName()=='skirt'){
+          $hem_length = $this->cut_to_natural_waste($item_specs['hem_length']['max_body_measurement']);
+          }else{
+          $hem_length = $item_specs['hem_length']['max_body_measurement'];          
+          }
+        
+        $level=0;
+        if ($hem_length < $body_specs['outseam_knee']) {
+            $str = 'less than knee';$level=1;
+        } elseif ($hem_length == $body_specs['outseam_knee']) {
+            $str = 'about knee high';$level=1;
+        } else {
+            if ($hem_length < $body_specs['outseam_mid_calf']) {
+                $str = 'between knee & mid calf';$level=2;
+            } elseif ($hem_length == $body_specs['outseam_mid_calf']) {
+                $str = 'mid calf';$level=2;
+            } else {
+                if ($hem_length < $body_specs['outseam_ankle']) {
+                    $str = 'between calf & ankle';$level=3;
+                } elseif ($hem_length == $body_specs['outseam_ankle']) {
+                    $str = 'ankle length';$level=3;
+                } else {
+                    $diff = $hem_length - $body_specs['outseam'];
+                    $level=4;
+                    if (4.5 < $diff) {
+                        $str = 'too long, hem';
+                    } elseif (3.25 <= $diff && $diff <= 4.5) {
+                        $str = 'very long, hem or wear with 4” – 5” heels';
+                    } elseif (2.25 <= $diff && $diff <= 3.5) {
+                        $str = 'long, hem or wear with 3” – 4" heels';
+                    } elseif (1.25 <= $diff && $diff <= 2.5) {
+                        $str = 'long, hem or wear with 2" - 3” heels';
+                    } elseif (0 <= $diff && $diff <= 1.5) {
+                        $str = 'long, hem or wear with 1” – 2” heels';
+                    } elseif (-1 <= $diff && $diff <= -0.5) {
+                        $str = 'perfect fit wear with flats or heels';
+                    }
+                }
+            }
+        }
+        
+            return array('fit_point' => 'hem_advice',
+            'label' =>  'Hem Advice',            
+            'body_outseam' => $body_specs['outseam'],
+            'item_hem_length' => $hem_length,
+            'item_actual_hem_length' => $actual_hem_length,                
+            'knee' => $body_specs['outseam_knee'],
+            'mid_calf' => $body_specs['outseam_mid_calf'],
+            'ankle' => $body_specs['outseam_ankle'],
+            'message' => $str,            
+        );
+    }
+    private function get_inseam_advice($item_specs, $body_specs) {
+           
+        if ($body_specs['inseam']==0 && $body_specs['height']==0){
+            return null;
+        }
+        if (!array_key_exists('inseam', $item_specs) || $item_specs['inseam']['max_body_measurement']==0){
+            return null;
+        }
+        
+        if ($body_specs['inseam']==0) {
+        $body_specs['inseam'] = 0.269 * $body_specs['height'];
+        }
+
+        $knee_height = 0.574 * $body_specs['inseam'];
+        $mid_calf_height = 0.4022 * $body_specs['inseam'];
+        $ankle_height  = 0.0797 * $body_specs['inseam'];
+
+        $body_specs['inseam_knee'] = $body_specs['inseam'] - $knee_height;
+        $body_specs['inseam_mid_calf'] = $body_specs['inseam'] - $mid_calf_height;
+        $body_specs['inseam_ankle'] = $body_specs['inseam'] - $ankle_height;
+
+        $level=0;
+        $inseam=$item_specs['inseam']['max_body_measurement'];
+        if ($inseam < $body_specs['inseam_knee']) {
+            $str = 'less than knee';$level=1;
+        } elseif ($inseam == $body_specs['inseam_knee']) {
+            $str = 'about knee high';$level=1;
+        } else {
+            if ($inseam < $body_specs['inseam_mid_calf']) {
+                $str = 'between knee & mid calf';$level=2;
+            } elseif ($inseam == $body_specs['inseam_mid_calf']) {
+                $str = 'mid calf';$level=2;
+            } else {
+                if ($inseam < $body_specs['inseam_ankle']) {
+                    $str = 'between calf & ankle';$level=3;
+                } elseif ($inseam == $body_specs['inseam_ankle']) {
+                    $str = 'ankle length';$level=3;
+                } else {
+                    $diff = $inseam - $body_specs['inseam'];
+                    $level=4;
+                    if (4.5 < $diff) {
+                        $str = 'too long, hem';
+                    } elseif (3.25 <= $diff && $diff <= 4.5) {
+                        $str = 'very long, hem or wear with 4” – 5” heels';
+                    } elseif (2.25 <= $diff && $diff <= 3.5) {
+                        $str = 'long, hem or wear with 3” – 4" heels';
+                    } elseif (1.25 <= $diff && $diff <= 2.5) {
+                        $str = 'long, hem or wear with 2" - 3” heels';
+                    } elseif (0 <= $diff && $diff <= 1.5) {
+                        $str = 'long, hem or wear with 1” – 2” heels';
+                    } elseif (-1 <= $diff && $diff <= -0.5) {
+                        $str = 'perfect fit wear with flats or heels';
+                    }
+                }
+            }
+        }
+        
+            return array('fit_point' => 'hem_advice',
+            'label' =>  'Hem Advice',
+            'body_inseam' => $body_specs['inseam'],                                    
+            'item_inseam' => $inseam,                        
+            'knee' => $body_specs['inseam_knee'],
+            'mid_calf' => $body_specs['inseam_mid_calf'],
+            'ankle' => $body_specs['inseam_ankle'],
+            'message' => $str,            
+        );
+        
+    }
+    
 }
-/*
- * A perfect body is 8 heads high, total. 
-
-The neck space is 1/4 of one head length, under the chin of the top first head. 
-The second head starts under this neck space. 
-One quarter of one head down on this second head is the shoulder line and clavicle. This leaves space for the for the neck support muscles. 
-
-The shoulder line is two head lengths (two widths on a female) wide and is the top line of the torso triangle that extends down to the top of the hip triangle. 
-The chin to the shoulder line is 1/2 of one heads length. That is, 1/4 of a head for the neck space and 1/4 head down on the second head. 
-The nipple line equals one head length, at the bottom of the second head, the younger the higher. Males stay higher. 
-The nipples to the belly button equals one head length. 
-From the belly button to the space between the legs is one head length, that's the bottom of the third trunk head. This between the leg space is actually 4 1/4 heads down from the top, including the 1/4 head neck space. It's 3 and 3/4 heads up from the bottom of the feet, for a total of 8 heads high. The two center heads overlap by 1/4 head, the top of the bend line triangle is 4 heads up from the base. The top three torso heads were lowered 1/4 head because of the empty neck space. 
-The width of the waist at the belly button is one head length wide. 
-From the top line of the hip/trunk triangle to the space between the legs is 3/4's of one head, and is two head widths wide. Not more. 
-
-The center of the body is the bend line, which forms the top line of this small, third, bend line triangle. Its top line is 1/4 head above the space between the legs and two head widths wide. Not more. 
-This bend line can also be measured as four heads up from the base, which has no added 1/4 head space for the neck as happened in the top 4 heads. 
-In other words.. 
-The big torso triangle is from the shoulder line to the top of the hip/trunk triangle. The second triangle is the trunk triangle, the hip bones down to the space between the legs. The third triangle, the bend line triangle is a quarter head high, within the trunk triangle, starting at the space between the legs. 
-
-The rib cage can be represented by an oval two heads high, starting at the top of the (lowered) second head to the bottom of the third head. 
-The bottom of the forth head from the top plus the neck space is the space between the legs. 
-The upper arm, from the shoulder triangles outside edge, is one and one half heads long. 
-The lower arm is one and one quarter heads long. 
-The hand is 3/4 of a head long, equal to the average face up to the hair line. 
-The chest side view is one head, width wide, at the nipples. 
-The upper arm, which is one and one half head lengths long, connects from the center of the shoulder ball which is a quarter head circle. 
-Just below the leg space, the legs and the body are the widest. 
-Two egg shaped heads, side by side, upside down, will fit in the trunk area. 
-
-From the outside point of the bend line triangle down to the bottom of the knee cap is two head lengths. 
-The bend line is always the center of the body. 
-The knee cap is a 1/4 head length circle. 
-The calf muscle is higher on the outside. 
-From the center of the knee cap to the ground is two head lengths. 
-The ankle is 1/4 head high off the ground. 
-The foot is one head length long. 
-The ankle bone is higher on the inside.
- */

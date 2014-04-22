@@ -18,7 +18,7 @@
     <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
     {% for size, size_specs in data.feedback %} 
             <tr>
-                <td style="width: 50px;"><b>
+                <td style="width: 50px;background-color: #FFFFDF"><b>
                         <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
                     
                     </b>| <i>{{size_specs.message}}</i> 
@@ -116,7 +116,27 @@
                             {% if size_specs.hem_advice is defined %}
                                     <tr>
                                         <td colspan="10">
-                                            <b>hem advice :</b> {{size_specs.hem_advice.message}} 
+                                            <b>Hem Advice :</b> {{size_specs.hem_advice.message}}
+                                            
+                                            <br>
+                                            <span  style="background-color: #FFFFFF; font-size:11px;">
+                                                    <b>Body</b>&nbsp;
+                                                    (&nbsp;
+                                                    {{ (size_specs.hem_advice.body_outseam is defined)? 'outseam:'~size_specs.hem_advice.body_outseam~' , ' }}
+                                                    {{ (size_specs.hem_advice.body_inseam is defined)? 'inseam:'~size_specs.hem_advice.body_inseam~' , ' }}                                             
+                                                    {{ (size_specs.hem_advice.knee is defined)? 'knee:'~size_specs.hem_advice.knee~' , ' }}
+                                                    {{ (size_specs.hem_advice.mid_calf is defined)? 'mid calf:'~size_specs.hem_advice.mid_calf~' , ' }}
+                                                    {{ (size_specs.hem_advice.ankle is defined)? 'ankle:'~size_specs.hem_advice.ankle~' , ' }}
+                                                    &nbsp;)
+                                            </span>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span  style="background-color: #FFFFFF; font-size:11px;">
+                                                    <b>Item</b> &nbsp;
+                                                    (&nbsp;
+                                                    {{ (size_specs.hem_advice.item_hem_length is defined) ? 'hem length:'~size_specs.hem_advice.item_hem_length~' , '}}
+                                                    {{ (size_specs.hem_advice.item_inseam is defined) ? 'hem length:'~size_specs.hem_advice.item_inseam~' , '}}                                             
+                                                    &nbsp;)
+                                            </span>
                                         </td>            
                                     </tr>
                             {% endif %}
