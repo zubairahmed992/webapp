@@ -174,9 +174,6 @@ var gender_type=$("#product_gender").val();
 });
 
 
-
-
-
 })
 function strtolower (str) {
     return (str + '').toLowerCase();
@@ -202,35 +199,32 @@ function womenClothingType(){
   if(strtolower(clothing_type)==strtolower('Blouse')){
       
       // Styling Type 
-      
-                  
       {% for blouse_styling_type in productSpecification.women.style_type.blouse %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
      
       // Hem Length
      
-     {% for blouse_styling_type in productSpecification.women.hem_length.blouse %}
+      {% for blouse_styling_type in productSpecification.women.hem_length.blouse %}
          var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
      //Neck Line
      
     {% for blouse_styling_type in productSpecification.women.neck_line.blouse %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
      
-         
        // Sleeving Style      
      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.blouse %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
       
@@ -240,26 +234,26 @@ function womenClothingType(){
        //Styling Type
     {% for blouse_styling_type in productSpecification.women.style_type.tunic %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
      //Hem Length
     {% for blouse_styling_type in productSpecification.women.hem_length.tunic %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%}       
     
 //Neck Line
     {% for blouse_styling_type in productSpecification.women.neck_line.tunic %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
          // Sleeving Style      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.tunic %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
     $('#rise').hide();
@@ -269,25 +263,25 @@ function womenClothingType(){
        //Styling type
     {% for blouse_styling_type in productSpecification.women.style_type.tee_knit %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
           //Hem Length
    {% for blouse_styling_type in productSpecification.women.hem_length.tee_knit %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%}   
     //Neck Line
     {% for blouse_styling_type in productSpecification.women.neck_line.tee_knit %}
          var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}   
     // Sleeving Style      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.tee_knit %}
            var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
           $('#rise').hide();
@@ -296,26 +290,26 @@ function womenClothingType(){
        //Styling Type
       {% for blouse_styling_type in productSpecification.women.style_type.tank_knit %}
            var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
        //Hem Length   
     {% for blouse_styling_type in productSpecification.women.hem_length.tank_knit %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%}    
     //Neck Line
     {% for blouse_styling_type in productSpecification.women.neck_line.tank_knit %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}      
       
       // Sleeving Style      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.tank_knit %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}  
      $('#rise').hide(); 
@@ -324,25 +318,25 @@ function womenClothingType(){
       //Styling Type
   {% for blouse_styling_type in productSpecification.women.style_type.jacket %}
       var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
         //Hem Length  
    {% for blouse_styling_type in productSpecification.women.hem_length.jacket %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
     //Neck Line
     {% for blouse_styling_type in productSpecification.women.neck_line.jacket %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}    
     // Sleeving Style      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.jacket %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}   
           $('#rise').hide();
@@ -351,26 +345,26 @@ function womenClothingType(){
       //Styling Type
       {% for blouse_styling_type in productSpecification.women.style_type.sweater %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}  
           //Hem Lenght
     {% for blouse_styling_type in productSpecification.women.hem_length.sweater %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
      
    //Neck Line
     {% for blouse_styling_type in productSpecification.women.neck_line.sweater %}
         var str='{{blouse_styling_type}}';
-        str = capitaliseFirstLetter(str.replace('_', ' '));
+        str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
        $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
        // Sleeving Style      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.sweater %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}     
      $('#rise').hide();
@@ -379,20 +373,20 @@ function womenClothingType(){
       // Styling Type
        {% for blouse_styling_type in productSpecification.women.style_type.trouser %}
            var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
      //Hem Length     
      {% for blouse_styling_type in productSpecification.women.hem_length.trouser %}
          var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
           
       // Rise   
        {% for blouse_styling_type in productSpecification.women.rise.trouser %}
          var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_rise').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
         {%endfor%} 
        
@@ -404,20 +398,20 @@ function womenClothingType(){
        //Styling Type 
        {% for blouse_styling_type in productSpecification.women.style_type.jean %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));   
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' '));    
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
       // Hem Length    
       {% for blouse_styling_type in productSpecification.women.hem_length.jean %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%}     
       //Neck Line
        //Rise
       {% for blouse_styling_type in productSpecification.women.rise.jean%}  
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
          $('#product_rise').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
           {%endfor%} 
      $('#sleeve_styling').hide();
@@ -427,26 +421,26 @@ function womenClothingType(){
          //Styling Type
           {% for blouse_styling_type in productSpecification.women.style_type.dress %}
               var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
        //Hem Length   
           {% for blouse_styling_type in productSpecification.women.hem_length.dress %}
               var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
      
       //Neck Line
     {% for blouse_styling_type in productSpecification.women.neck_line.dress %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
    // Sleeving Style      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.dress %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}     
       
@@ -456,25 +450,25 @@ function womenClothingType(){
          // Styling Type
       {% for blouse_styling_type in productSpecification.women.style_type.coat %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
       //Hem Length
       {% for blouse_styling_type in productSpecification.women.hem_length.coat %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
        //Neck 
         {% for blouse_styling_type in productSpecification.women.neck_line.coat %}
             var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
      // Sleeving Style      
       {% for blouse_styling_type in productSpecification.women.sleeve_styling.coat %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}     
     $('#rise').hide();      
@@ -485,19 +479,19 @@ function womenClothingType(){
  // Styling Type
       {% for blouse_styling_type in productSpecification.women.style_type.skirt %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
       //Hem Length
       {% for blouse_styling_type in productSpecification.women.hem_length.skirt %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
       //Rise
       {% for blouse_styling_type in productSpecification.women.rise.skirt%}  
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
          $('#product_rise').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
           {%endfor%} 
       $('#sleeve_styling').hide();
@@ -526,7 +520,7 @@ function manClothingType(){
       // Styling Type 
       {% for blouse_styling_type in productSpecification.man.style_type.shirt %}
                   var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
      
@@ -534,14 +528,14 @@ function manClothingType(){
      
      {% for blouse_styling_type in productSpecification.man.hem_length.shirt %}
          var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
      //Neck Line
      
     {% for blouse_styling_type in productSpecification.man.neck_line.shirt %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
      
@@ -550,7 +544,7 @@ function manClothingType(){
      
       {% for blouse_styling_type in productSpecification.man.sleeve_styling.shirt %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
       
@@ -562,26 +556,26 @@ function manClothingType(){
        //Styling Type
       {% for blouse_styling_type in productSpecification.man.style_type.tank_knit %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
        //Hem Length   
     {% for blouse_styling_type in productSpecification.man.hem_length.tank_knit %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%}    
     //Neck Line
     {% for blouse_styling_type in productSpecification.man.neck_line.tank_knit %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}      
       
       // Sleeving Style      
       {% for blouse_styling_type in productSpecification.man.sleeve_styling.tank_knit %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}  
      $('#rise').hide(); 
@@ -590,25 +584,25 @@ function manClothingType(){
       //Styling Type
   {% for blouse_styling_type in productSpecification.man.style_type.casual_jacket %}
       var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
         //Hem Length  
    {% for blouse_styling_type in productSpecification.man.hem_length.casual_jacket %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
     //Neck Line
     {% for blouse_styling_type in productSpecification.man.neck_line.casual_jacket %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}    
     // Sleeving Style      
       {% for blouse_styling_type in productSpecification.man.sleeve_styling.casual_jacket %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}   
           $('#rise').hide();
@@ -617,26 +611,26 @@ function manClothingType(){
       //Styling Type
       {% for blouse_styling_type in productSpecification.man.style_type.sweater %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}  
           //Hem Lenght
     {% for blouse_styling_type in productSpecification.man.hem_length.sweater %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
      
    //Neck Line
     {% for blouse_styling_type in productSpecification.man.neck_line.sweater %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
        // Sleeving Style      
       {% for blouse_styling_type in productSpecification.man.sleeve_styling.sweater %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}     
      $('#rise').hide();
@@ -645,13 +639,13 @@ function manClothingType(){
       // Styling Type
        {% for blouse_styling_type in productSpecification.man.style_type.trouser %}
            var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
      //Hem Length     
      {% for blouse_styling_type in productSpecification.man.hem_length.trouser %}
          var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
        $('#sleeve_styling').hide();
@@ -662,13 +656,13 @@ function manClothingType(){
        //Styling Type 
        {% for blouse_styling_type in productSpecification.man.style_type.jean %}
            var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
       // Hem Length    
       {% for blouse_styling_type in productSpecification.man.hem_length.jean %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%}     
       //Neck Line
@@ -683,25 +677,25 @@ function manClothingType(){
       //Styling Type
   {% for blouse_styling_type in productSpecification.man.style_type.sport_jacket %}
       var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
         //Hem Length  
    {% for blouse_styling_type in productSpecification.man.hem_length.sport_jacket %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
     //Neck Line
     {% for blouse_styling_type in productSpecification.man.neck_line.sport_jacket %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}    
     // Sleeving Style      
       {% for blouse_styling_type in productSpecification.man.sleeve_styling.sport_jacket %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}   
           $('#rise').hide();
@@ -711,25 +705,25 @@ function manClothingType(){
       //Styling Type
   {% for blouse_styling_type in productSpecification.man.style_type.dress_jacket %}
       var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
         //Hem Length  
    {% for blouse_styling_type in productSpecification.man.hem_length.dress_jacket %}
        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
     //Neck Line
     {% for blouse_styling_type in productSpecification.man.neck_line.dress_jacket %}
         var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}    
     // Sleeving Style      
       {% for blouse_styling_type in productSpecification.man.sleeve_styling.dress_jacket %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}   
           $('#rise').hide();
@@ -738,25 +732,25 @@ function manClothingType(){
          // Styling Type
       {% for blouse_styling_type in productSpecification.man.style_type.coat %}
       var str='{{blouse_styling_type}}';
-      str = capitaliseFirstLetter(str.replace('_', ' '));        
+      str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' '));         
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
       //Hem Length
       {% for blouse_styling_type in productSpecification.man.hem_length.coat %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_hem_length').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
     {%endfor%} 
        //Neck 
         {% for blouse_styling_type in productSpecification.man.neck_line.coat %}
             var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_neckline').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%} 
      // Sleeving Style      
       {% for blouse_styling_type in productSpecification.man.sleeve_styling.coat %}
           var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace('_', ' '));
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_sleeve_styling').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}     
     $('#rise').hide();      
