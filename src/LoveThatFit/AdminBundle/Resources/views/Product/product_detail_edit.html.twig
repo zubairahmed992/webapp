@@ -817,9 +817,10 @@ function manClothingType(){
    
    if(strtolower(clothing_type)==strtolower('Tank knit')){   
        //Styling Type
-        var str='{{blouse_styling_type}}';
-       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
+        
       {% for blouse_styling_type in productSpecification.man.style_type.tank_knit %}
+          var str='{{blouse_styling_type}}';
+       str = capitaliseFirstLetter(str.replace(new RegExp("_", "g"), ' ')); 
       $('#product_styling_type').append('<option value="{{blouse_styling_type}}">'+str+'</option>');
       {%endfor%}
       {% for blouse_styling_type in productSpecification.man.style_type.tank_knit %}
