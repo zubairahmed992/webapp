@@ -130,15 +130,34 @@ return true;
                        </div>    
                        {%endif%} 
                    
-                   <div>
-                   <span class="boxlable2" id="weight_box2">Birth Date</span>  
-                   <span id="dob">                 
-                  {{ form_widget(form.birthdate.month) }}
-                 
-                 {{ form_widget(form.birthdate.day) }}
-                           
-                 {{ form_widget(form.birthdate.year) }}
-        </span>
+                   <div style="overflow: auto;">
+                       
+                   <div class="boxlable2" id="weight_box2">Birth Date</div>  
+                  
+                   
+                    {% if( entity.gender=='f') %}
+                   
+                   
+                   <div id="dob">                 
+                    {{ form_widget(form.birthdate.month) }}                 
+                    {{ form_widget(form.birthdate.day) }}                           
+                    {{ form_widget(form.birthdate.year) }}
+                  </div>
+                    {%endif%}
+                   
+                   
+                    {% if( entity.gender=='m') %}
+                   
+                   
+                   <div id="dob" class="male_dob">                 
+                    {{ form_widget(form.birthdate.month) }}                 
+                    {{ form_widget(form.birthdate.day) }}                           
+                    {{ form_widget(form.birthdate.year) }}
+                  </div>
+                    {%endif%}
+                   
+                   
+                   
                    
                    <span id="date_error"></span>
                    </div>

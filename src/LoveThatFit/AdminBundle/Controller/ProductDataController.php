@@ -5,20 +5,13 @@ namespace LoveThatFit\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\ProductDataType;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use LoveThatFit\AdminBundle\Form\Type\AlgoritumTestlType;
-use LoveThatFit\AdminBundle\Form\Type\AlgoritumProductTestlType;
-use LoveThatFit\SiteBundle\FitEngine;
-use LoveThatFit\SiteBundle\Comparison;
-use LoveThatFit\UserBundle\Entity\Measurement;
-use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
+use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
 
 class ProductDataController extends Controller {
 
@@ -186,5 +179,163 @@ class ProductDataController extends Controller {
         $products->setDisplayProductColor($productcolors);
         $em->persist($products);
         $em->flush();
+    }
+
+    
+
+
+#--------------------------------------------------------------
+#-----------------------Form Upload CSV File------------------#
+
+    public function csvIndexAction() {
+        $form = $this->getCsvUploadForm();
+        return $this->render('LoveThatFitAdminBundle:ProductData:import_csv.html.twig', array('form' => $form->createView())
+        );
+    }
+
+#------------------------------------------------------------#
+    public function csvUploadAction(Request $request) {
+        $form = $this->getCsvUploadForm();
+        $form->bindRequest($request);
+        
+        $file = $form->get('csvfile');
+        $filename = $file->getData();
+        $row_length = $form->get('row_length')->getData();                
+        $pcsv = new ProductCSVHelper($filename);        
+        $data = $pcsv->read($row_length);
+        $ar = $this->savecsvdata($pcsv, $data);
+        #$data = $pcsv->map();
+        #return new Response(json_encode($data));
+        if ($ar['success']==false) {
+            $this->get('session')->setFlash('warning',$ar['msg']);
+        } else {
+            $this->get('session')->setFlash('success',$ar['msg']);
+        }
+        
+        return $this->render('LoveThatFitAdminBundle:ProductData:import_csv.html.twig', array('form' => $form->createView(),'product'=>$ar['obj'])
+        );
+        
+    }
+#------------------------------------------------------------#
+    public function csvReadAction(Request $request) {
+        $form = $this->getCsvUploadForm();
+        $form->bindRequest($request);        
+        $file = $form->get('csvfile');
+        $filename = $file->getData();
+        $row_length = $form->get('row_length')->getData();                
+        $pcsv = new ProductCSVHelper($filename);        
+        $data = $pcsv->read($row_length);        
+        #$data = $pcsv->map();
+        return new Response(json_encode($data));
+    }
+
+    //------------------------------------------------------
+    private function savecsvdata($pcsv, $data) {
+
+        $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
+        $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
+        $brand = $this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
+        $return_ar = array();
+        $return_ar['msg'] = '';
+        $return_ar['obj'] = null;
+        if ($clothingType == Null) {
+            $return_ar['msg'] = "Clothing Type did not match";
+            $return_ar['success'] = false;
+        } elseif ($brand == Null) {
+            $return_ar['msg'] = 'Brand name did not match';
+            $return_ar['success'] = false;
+        } else {
+            
+            $em = $this->getDoctrine()->getManager();
+            $product = $pcsv->fillProduct($data);
+            $product->setBrand($brand);
+            $product->setClothingType($clothingType);
+            $product->setRetailer($retailer);
+            $em->persist($product);
+            $em->flush();
+            #----
+            $this->addProductSizesFromArray($product, $data);
+            $this->addProductColorsFromArray($product, $data); 
+            $return_ar['obj'] = $product;             
+            $return_ar['msg'] = 'Product successfully added';            
+            $return_ar['success'] = true;
+        }
+        return $return_ar;
+    }
+    #------------------------------------------------------------
+    private function addProductColorsFromArray($product, $data) {
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($data['product_color'] as $c) {
+            $pc = new ProductColor;
+            $pc->setTitle(strtolower($c));
+            $pc->setProduct($product);
+            $em->persist($pc);
+            $em->flush();
+        }
+        return;
+    }
+    #------------------------------------------------------------
+    private function addProductSizesFromArray($product, $data) {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($data['sizes'] as $key => $value) {
+            if ($this->sizeMeasurementsAvailable($value)) {
+                $ps = new ProductSize;
+                $ps->setTitle($key);
+                $ps->setProduct($product);
+                $ps->setBodyType($data['body_type']);                
+                $em->persist($ps);
+                $em->flush();
+                $this->addProductSizeMeasurementFromArray($ps, $value);
+            }
+        }
+        return $product;
+    }
+    #-----------------------------------------------------
+    private function sizeMeasurementsAvailable($data) {
+        $has_values = false;
+        foreach ($data as $key => $value) {
+            if ($key != 'key') {
+                if ($value['garment_measurement_flat'] || $value['ideal_body_size_high'] || $value['ideal_body_size_low']) {
+                    $has_values = true;
+                }
+            }
+        }
+        return $has_values;
+    }
+    #------------------------------------------------------
+    private function addProductSizeMeasurementFromArray($size, $data) {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($data as $key => $value) {
+            $psm = new ProductSizeMeasurement;
+            $psm->setTitle($key);
+            $psm->setProductSize($size);
+            $psm->setGarmentMeasurementFlat($value['garment_measurement_flat']);
+            $psm->setStretchTypePercentage($value['stretch_type_percentage']);
+            $psm->setGarmentMeasurementStretchFit($value['garment_measurement_stretch_fit']);
+            $psm->setMaxBodyMeasurement($value['maximum_body_measurement']);
+            $psm->setIdealBodySizeHigh($value['ideal_body_size_high']);
+            $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
+            $em->persist($psm);
+            $em->flush();
+        }
+        return;
+    }
+    #------------------------------------------------------
+    private function getCsvUploadForm(){
+           return $this->createFormBuilder()
+                ->add('csvfile', 'file')
+                     ->add('row_length', 'choice', array(
+                'choices'   => array(
+                    '700' => 700, 
+                    '800' => 800, 
+                    '1000' => 1000, 
+                    '2000' => 2000, 
+                    '3000' => 3000, 
+                    ),
+                'empty_value' => 'Choose Length',
+                'required'  => false,
+                    ))
+                ->getForm();
     }
 }

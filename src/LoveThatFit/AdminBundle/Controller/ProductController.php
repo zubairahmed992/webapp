@@ -1031,7 +1031,7 @@ class ProductController extends Controller {
         $target_array = $request->request->all();
         return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
     }
-
+/*
 #-----------------------Form Upload CSV File------------------#
 
     public function addCsvProductFormAction() {
@@ -1165,78 +1165,5 @@ class ProductController extends Controller {
         }
         return;
     }
-
+*/
 }
-
-
-/*
- * 
- *   #------------------------------------------------------------
-    public function kazaimSizes($data) {                
-        $foo=array();
-        foreach($data['sizes'] as $key=>$value){
-            if ($this->kazaimCheck($value)){
-                $foo[$key]    =  $this->kazaim($value);            
-            }
-        }
-        return json_encode($foo);
-    }
-    #-------
-      public function kazaim($data) {        
-        $str=array();
-        foreach($data as $key=>$value ){           
-            if ($key!='key'){
-                if($value['garment_measurement_flat'] || $value['ideal_body_size_high'] || $value['ideal_body_size_low'])    {
-                $str[$key]=$value['garment_measurement_flat'].', '. $value['stretch_type_percentage'].', '. $value['garment_measurement_stretch_fit'].', '. $value['maximum_body_measurement'] .', '. $value['ideal_body_size_high'] .', '. $value['ideal_body_size_low'];
-                }
-            
-            }
-         }
-        return $str;
-    }
-    #~~~~~~~~~~~~~
-    
-      public function kazaimCheck($data) {        
-        $has_values=false;
-        foreach($data as $key=>$value ){           
-            if ($key!='key'){
-            if($value['garment_measurement_flat'] || $value['ideal_body_size_high'] || $value['ideal_body_size_low'])    {
-                $has_values=true;
-            }
-            
-            }
-         }
-        return $has_values;
-    }
-    
-    
-#------------------------------------------------------
- * //------------------------------------------------------
-
-    public function __readProductCsvAction() {
-        $row = 0;
-        $previous_row = '';
-        if (($handle = fopen("../app/config/LaceBlouse.csv", "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                if ($row >= 5 && $row <= 22) {
-                    #garment_measurement_flat	stretch_type_percentage	garment_measurement_stretch_fit	maximum_body_measurement ideal_body_size_high | ideal_body_size_low			
-                    echo "00  |" . $data[23] . ":" . $data[25] . ":" . $data[26] . ":" . $data[27] . ":" . $data[28] . ":" . $data[29] . ":" . $data[30] . "<br>";
-                    echo "0   |" . $data[31] . ":" . $data[32] . ":" . $data[33] . ":" . $data[34] . ":" . $data[35] . ":" . $data[36] . ":" . $data[37] . "<br>";
-                    echo "2   |" . $data[39] . ":" . $data[33] . ":" . $data[34] . ":" . $data[35] . ":" . $data[36] . ":" . $data[37] . ":" . $data[38] . "<br>";
-                    echo "4   |" . $data[47] . ":" . $data[48] . ":" . $data[49] . ":" . $data[50] . ":" . $data[51] . ":" . $data[52] . ":" . $data[53] . "<br>";
-                    echo "6   |" . $data[55] . ":" . $data[56] . ":" . $data[57] . ":" . $data[58] . ":" . $data[59] . ":" . $data[60] . ":" . $data[61] . "<br>";
-                    echo "8   |" . $data[63] . ":" . $data[64] . ":" . $data[65] . ":" . $data[66] . ":" . $data[67] . ":" . $data[68] . ":" . $data[69] . "<br>";
-                    echo "10  |" . $data[71] . ":" . $data[72] . ":" . $data[73] . ":" . $data[74] . ":" . $data[75] . ":" . $data[76] . ":" . $data[77] . "<br>";
-                    echo "12  |" . $data[79] . ":" . $data[80] . ":" . $data[81] . ":" . $data[82] . ":" . $data[83] . ":" . $data[84] . ":" . $data[85] . "<br>";
-                    echo "14  |" . $data[87] . ":" . $data[88] . ":" . $data[89] . ":" . $data[90] . ":" . $data[91] . ":" . $data[92] . ":" . $data[93] . "<br>";
-                    echo "16  |" . $data[95] . ":" . $data[96] . ":" . $data[97] . ":" . $data[98] . ":" . $data[99] . ":" . $data[100] . ":" . $data[101] . "<br>";
-                }
-                echo "<br>";
-                $previous_row = $data;
-                $row++;
-            }
-            fclose($handle);
-            return new Response('true');
-        }
-    }
- */
