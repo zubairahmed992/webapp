@@ -138,7 +138,7 @@ class ProductItemPiece
             return;
         }
         
-       $ih=new ImageHelper('product_item_piece', $this);
+       $ih=new ImageHelper('product_item', $this);
         $ih->upload();
     }
 //---------------------------------------------------
@@ -164,12 +164,12 @@ class ProductItemPiece
 
 //-------------------------------------------------------5
     protected function getUploadDir() {        
-       return 'uploads/ltf/products/fitting_room/piece';            
+       return 'uploads/ltf/products/fitting_room/web';            
     }
 
     //---------------------------------------------------
        public function getImagePaths() {
-        $ih = new ImageHelper('product_item_piece', $this);        
+        $ih = new ImageHelper('product_item', $this);        
         return $ih->getImagePaths();
     }
     
