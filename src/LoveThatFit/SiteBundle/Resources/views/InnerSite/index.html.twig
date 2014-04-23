@@ -712,16 +712,17 @@ var scroll_heighting = 506;
         //$('#ltf_fitting_room').css({"width":"780","border":"1px solid red"});
         
         
-       
-        sst = 700;
+       // sst = $('#ltf_fitting_room').css({"top":vvv});
+        //sst = 700;
         $('.holder').css({"height":sst,"overflow":"hidden"});
          $('#ltf_fitting_room').addClass("addwidth");
-       
+     // $('#ltf_fitting_room').css({"top":vvv});
         
   
     }
     
     function close_fr(){
+         
         fr_indicator = "closed";
         $("#slider_dis_canv ul.prod_wrapper li").fadeIn(200);
         $("#ltf_fitting_room").animate({ width: 35 }, 500, function() { });
@@ -756,6 +757,8 @@ var scroll_heighting = 506;
     $(".but_opn_fr").click(
         function(){
             open_fr();
+            
+            vvv = $('#ltf_fitting_room').offset().top;
             
         }
     );
