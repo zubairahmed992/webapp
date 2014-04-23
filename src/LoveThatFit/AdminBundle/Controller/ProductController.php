@@ -523,7 +523,8 @@ class ProductController extends Controller {
                     'form' => $form->createView(),
                     'item_id' => $item_id,     
                     'entity'=>$this->getProduct($id),
-                    'piece_id'=>$piece_id
+                    'piece_id'=>$piece_id,
+                    'piece'=>$entity,
                 ));
     }
     
