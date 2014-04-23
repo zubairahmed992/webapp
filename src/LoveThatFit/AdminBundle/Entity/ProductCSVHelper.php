@@ -23,8 +23,8 @@ class ProductCSVHelper {
 
     //------------------------------------------------------
 
-    public function read($row_length) {
-
+    public function read($row_length=1000) {
+        if($row_length==null)$row_length=1000;
         $this->row = 0;
         $this->previous_row = '';
 
