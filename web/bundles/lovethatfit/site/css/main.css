@@ -4430,11 +4430,7 @@ margin-left: 4px;
     width: 4px;
  }
 
-.shirts_mus span {    
-    display:inline-block;
-    float:left;
-    width: 50px;
-}
+
  
  .bustt_slider_wrap {
     background: none repeat scroll 0 0 #FFFFFF;
@@ -4442,7 +4438,7 @@ margin-left: 4px;
     float: left;     
     padding: 10px;
     position: relative;
-    width: 200px;   
+    width: 188px;   
 }
  
  .bustt_slider {
@@ -4450,7 +4446,7 @@ margin-left: 4px;
     float: left;   
     margin: 0;  
     position: relative;
-    width: 200px;    
+    width: 190px;    
 }
 
 .waistt_slider_wrap {
@@ -4459,7 +4455,7 @@ margin-left: 4px;
     float: left;    
     padding: 10px;
     position: relative;
-    width: 200px;   
+    width: 188px;   
 }
  
  .waistt_slider {
@@ -4467,7 +4463,7 @@ margin-left: 4px;
     float: left;   
     margin: 0;  
     position: relative;
-    width: 200px;    
+    width: 190px;    
 }
 
 .hipp_slider_wrap {
@@ -4476,7 +4472,7 @@ margin-left: 4px;
     float: left;    
     padding: 10px;
     position: relative;
-    width: 200px;   
+    width: 188px;   
 }
  
  .hipp_slider {
@@ -4484,7 +4480,7 @@ margin-left: 4px;
     float: left;   
     margin: 0;  
     position: relative;
-    width: 200px;    
+    width: 190px;    
 }
 
 .measurement_sm_boxes{
@@ -4536,7 +4532,7 @@ margin-left: 4px;
 
 #weight_box2{
     top: 135px;
-    left:165px;
+    float:left;
 }
 
 #dob select{
@@ -4559,7 +4555,6 @@ margin-left: 4px;
 }
 #default_dummy_hldr #default_dummy_inner {
     position: relative;
-    width: 146px;
     margin: 0 auto;
 }
 
@@ -4570,29 +4565,73 @@ margin-left: 4px;
     display: block;
 }
 
-#dm_rgt_arm_hldr img,
-#dm_lft_arm_hldr img,
-.dm_part_div,
-.dm_part_div img {
+#dm_mid_body_hldr {
     float:left;
-    clear:both;
+}
+
+#dm_rgt_arm_hldr img,
+#dm_lft_arm_hldr img {
+    float:left;
     position: relative;
 }
 
 
+.dm_part_div,
+.dm_part_div img,
+.dm_part_img,
+.dm_part_lft,
+.dm_part_mid,
+.dm_part_rgt {
+    float:left;
+}
+#dm_part_3,
+#dm_part_4,
+#dm_part_5,
+#dm_part_6 {
+    float:left;
+}
 #dm_part_1 img,
 #dm_part_2 img,
-#dm_part_3 img,
-#dm_part_4 img,
-#dm_part_5 img,
-#dm_part_6 img,
 #dm_part_7 img,
 #dm_part_8 img {
-    width:84px;
+    float:left;
+}
+
+#dm_part_3_lft,
+#dm_part_4_lft,
+#dm_part_5_lft,
+#dm_part_6_lft,
+#dm_part_3_lft img,
+#dm_part_4_lft img,
+#dm_part_5_lft img,
+#dm_part_6_lft img {
+    float:left;
+}
+#dm_part_3_mid,
+#dm_part_4_mid,
+#dm_part_5_mid,
+#dm_part_6_mid,
+#dm_part_3_mid img,
+#dm_part_4_mid img,
+#dm_part_5_mid img,
+#dm_part_6_mid img {
+    float:left;
+   
+}
+
+#dm_part_3_rgt,
+#dm_part_4_rgt,
+#dm_part_5_rgt,
+#dm_part_6_rgt,
+#dm_part_3_rgt img,
+#dm_part_4_rgt img,
+#dm_part_5_rgt img,
+#dm_part_6_rgt img {
+    float:left;
 }
 
 #dm_part_8 img {
-    display:none;
+    visibility: hidden;
 }
 
 #dm_rgt_arm_hldr {
@@ -4608,8 +4647,6 @@ margin-left: 4px;
 #dm_mid_body_hldr {
     float:left;
     z-index: 100;
-    margin-left: -4px;
-    margin-right: -4px;
 }
 
 #dm_rgt_arm_part_1 img,
@@ -4665,6 +4702,14 @@ margin-left: 4px;
     left:170px;
     background: white;
     border:1px solid #ccc;
-    z-index: 2000;
-    
+    z-index: 2000;    
+}
+
+.men_sel{
+    margin-bottom: 5px;
+}
+
+.male_dob{
+    margin-left:70px!important;
+    float:left;   
 }

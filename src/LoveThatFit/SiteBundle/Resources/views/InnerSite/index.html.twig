@@ -227,11 +227,31 @@
                         
                         <div id="dm_mid_body_hldr">
                             <div id="dm_part_8" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_8.png') }}" /></div>
-                            <div id="dm_part_7" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_7.png') }}" /></div>
-                            <div id="dm_part_6" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6.png') }}" /></div>
-                            <div id="dm_part_5" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5.png') }}" /></div>
-                            <div id="dm_part_4" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4.png') }}" /></div>
-                            <div id="dm_part_3" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3.png') }}" /></div>
+                            <div id="dm_part_7" class="dm_part_div">
+                                
+                                <img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_7.png') }}" />
+                                
+                            </div>
+                            <div id="dm_part_6" class="dm_part_div">
+                                <div id="dm_part_6_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_lft.png') }}" /></div>
+                                <div id="dm_part_6_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_mid.png') }}" /></div>
+                                <div id="dm_part_6_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_rgt.png') }}" /></div>
+                            </div>    
+                            <div id="dm_part_5" class="dm_part_div">
+                                <div id="dm_part_5_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_lft.png') }}" /></div>
+                                <div id="dm_part_5_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_mid.png') }}" /></div>
+                                <div id="dm_part_5_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_rgt.png') }}" /></div>
+                            </div>
+                            <div id="dm_part_4" class="dm_part_div">
+                                <div id="dm_part_4_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_lft.png') }}" /></div>
+                                <div id="dm_part_4_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_mid.png') }}" /></div>
+                                <div id="dm_part_4_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_rgt.png') }}" /></div>
+                            </div>
+                            <div id="dm_part_3" class="dm_part_div">
+                                <div id="dm_part_3_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_lft.png') }}" /></div>
+                                <div id="dm_part_3_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_mid.png') }}" /></div>
+                                <div id="dm_part_3_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_rgt.png') }}" /></div>
+                            </div>
                             <div id="dm_part_2" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_2.png') }}" /></div>
                             <div id="dm_part_1" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_1.png') }}" /></div>
                         </div>
@@ -712,17 +732,16 @@ var scroll_heighting = 506;
         //$('#ltf_fitting_room').css({"width":"780","border":"1px solid red"});
         
         
-       // sst = $('#ltf_fitting_room').css({"top":vvv});
-        //sst = 700;
+       
+        sst = 700;
         $('.holder').css({"height":sst,"overflow":"hidden"});
          $('#ltf_fitting_room').addClass("addwidth");
-     // $('#ltf_fitting_room').css({"top":vvv});
+       
         
   
     }
     
     function close_fr(){
-         
         fr_indicator = "closed";
         $("#slider_dis_canv ul.prod_wrapper li").fadeIn(200);
         $("#ltf_fitting_room").animate({ width: 35 }, 500, function() { });
@@ -757,8 +776,6 @@ var scroll_heighting = 506;
     $(".but_opn_fr").click(
         function(){
             open_fr();
-            
-            vvv = $('#ltf_fitting_room').offset().top;
             
         }
     );
