@@ -4430,11 +4430,7 @@ margin-left: 4px;
     width: 4px;
  }
 
-.shirts_mus span {    
-    display:inline-block;
-    float:left;
-    width: 50px;
-}
+
  
  .bustt_slider_wrap {
     background: none repeat scroll 0 0 #FFFFFF;
@@ -4442,7 +4438,7 @@ margin-left: 4px;
     float: left;     
     padding: 10px;
     position: relative;
-    width: 200px;   
+    width: 188px;   
 }
  
  .bustt_slider {
@@ -4450,7 +4446,7 @@ margin-left: 4px;
     float: left;   
     margin: 0;  
     position: relative;
-    width: 200px;    
+    width: 190px;    
 }
 
 .waistt_slider_wrap {
@@ -4459,7 +4455,7 @@ margin-left: 4px;
     float: left;    
     padding: 10px;
     position: relative;
-    width: 200px;   
+    width: 188px;   
 }
  
  .waistt_slider {
@@ -4467,7 +4463,7 @@ margin-left: 4px;
     float: left;   
     margin: 0;  
     position: relative;
-    width: 200px;    
+    width: 190px;    
 }
 
 .hipp_slider_wrap {
@@ -4476,7 +4472,7 @@ margin-left: 4px;
     float: left;    
     padding: 10px;
     position: relative;
-    width: 200px;   
+    width: 188px;   
 }
  
  .hipp_slider {
@@ -4484,7 +4480,7 @@ margin-left: 4px;
     float: left;   
     margin: 0;  
     position: relative;
-    width: 200px;    
+    width: 190px;    
 }
 
 .measurement_sm_boxes{
@@ -4536,7 +4532,8 @@ margin-left: 4px;
 
 #weight_box2{
     top: 135px;
-    left:165px;
+    float:left;
+    
 }
 
 #dob select{
@@ -4667,4 +4664,14 @@ margin-left: 4px;
     border:1px solid #ccc;
     z-index: 2000;
     
+}
+
+.men_sel{
+    margin-bottom: 5px;
+}
+
+.male_dob{
+    margin-left:70px!important;
+    float:left;
+   
 }
