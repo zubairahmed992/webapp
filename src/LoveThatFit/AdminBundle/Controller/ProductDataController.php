@@ -198,12 +198,18 @@ class ProductDataController extends Controller {
         $form = $this->getCsvUploadForm();
         $form->bindRequest($request);
         
+        $row_length = $form->get('row_length')->getData();
+        $preview_only = $form->get('preview')->getData();
+        
         $file = $form->get('csvfile');
         $filename = $file->getData();
-        $row_length = $form->get('row_length')->getData();                
         $pcsv = new ProductCSVHelper($filename);        
         $data = $pcsv->read($row_length);
+        if ($preview_only){
+            return new Response(json_encode($data));
+        }else{
         $ar = $this->savecsvdata($pcsv, $data);
+        }
         #$data = $pcsv->map();
         #return new Response(json_encode($data));
         if ($ar['success']==false) {
@@ -336,6 +342,10 @@ class ProductDataController extends Controller {
                 'empty_value' => 'Choose Length',
                 'required'  => false,
                     ))
+                ->add('preview', 'checkbox', array(
+                  'label'     => 'preview only',
+                  'required'  => false,
+                    ))   
                 ->getForm();
     }
 }
