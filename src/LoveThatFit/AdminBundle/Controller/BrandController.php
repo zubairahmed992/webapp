@@ -89,10 +89,11 @@ class BrandController extends Controller {
   
  public function newBrandSpecificationAction($id)
  {
+     $allSizes=$this->get('admin.helper.size')->getAllSizes();
      $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
      $entity = $specs['entity'];       
      $brandspecification=new BrandSpecification();
-     $form=$this->createForm(new BrandSpecificationType(),$brandspecification);
+     $form=$this->createForm(new BrandSpecificationType($allSizes),$brandspecification);
       return $this->render('LoveThatFitAdminBundle:Brand:new_brand_specification.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -101,9 +102,10 @@ class BrandController extends Controller {
  
 public function createBrandSpecificationAction($id,Request $request)
 {
+     $allSizes=$this->get('admin.helper.size')->getAllSizes();
     $entity = $this->get('admin.helper.brand')->find($id);     
     $brandspecification=new BrandSpecification();    
-    $form=$this->createForm(new BrandSpecificationType(),$brandspecification);
+    $form=$this->createForm(new BrandSpecificationType($allSizes),$brandspecification);
     $form->bind($request);     
     $brandspecification->setBrand($entity);
     $data = $request->request->all();    
@@ -143,7 +145,7 @@ public function showBrandSpecificationAction($id)
     {
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
      $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
-     $gender=json_encode(json_decode($brandspecification->getGender()));
+   /*  $gender=json_encode(json_decode($brandspecification->getGender()));
      $fit_type=json_encode(json_decode($brandspecification->getFitType()));
      $size_title_type=json_encode(json_decode($brandspecification->getSizeTitleType()));
      $male_numbers=json_encode(json_decode($brandspecification->getMaleNumbers()));
@@ -151,8 +153,10 @@ public function showBrandSpecificationAction($id)
      $male_waists=json_encode(json_decode($brandspecification->getMaleWaists()));
      $female_numbers=json_encode(json_decode($brandspecification->getFemaleNumbers()));
      $female_letters=json_encode(json_decode($brandspecification->getFemaleLetters()));
-     $female_waists=json_encode(json_decode($brandspecification->getFemaleWaists()));     
-     $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));
+     $female_waists=json_encode(json_decode($brandspecification->getFemaleWaists()));    
+     $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));*/
+     $allSizes=$this->get('admin.helper.size')->getAllSizes();
+     $form=$this->createForm(new BrandSpecificationType($allSizes));
      if (isset($gender)) {
             $form->get('gender')->setData(json_decode($gender));
         } 
@@ -189,9 +193,10 @@ public function showBrandSpecificationAction($id)
     
     public function updateBrandSpecificationAction(Request $request,$id,$brand_id)
     {
+      $allSizes=$this->get('admin.helper.size')->getAllSizes();
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
      $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
-     $gender=json_encode(json_decode($brandspecification->getGender()));
+     /*$gender=json_encode(json_decode($brandspecification->getGender()));
      $fit_type=json_encode(json_decode($brandspecification->getFitType()));
      $size_title_type=json_encode(json_decode($brandspecification->getSizeTitleType()));
      $male_numbers=json_encode(json_decode($brandspecification->getMaleNumbers()));
@@ -200,7 +205,9 @@ public function showBrandSpecificationAction($id)
      $female_numbers=json_encode(json_decode($brandspecification->getFemaleNumbers()));
      $female_letters=json_encode(json_decode($brandspecification->getFemaleLetters()));
      $female_waists=json_encode(json_decode($brandspecification->getFemaleWaists())); 
-     $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));
+     $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));*/
+     $form=$this->createForm(new BrandSpecificationType($allSizes));
+     
      $form->bind($request);     
      $brandspecification->setBrand($entity);
      $data = $request->request->all();    
