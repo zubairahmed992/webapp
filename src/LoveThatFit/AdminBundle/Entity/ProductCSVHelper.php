@@ -108,7 +108,7 @@ class ProductCSVHelper {
         
     }
 #---------------------------------------------------------------
-    public function map() {
+    public function map($row_length=1000, $col=20) {
 
         $this->row = 0;
         $this->previous_row = '';
@@ -117,7 +117,7 @@ class ProductCSVHelper {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 //$this->readProduct($data);
                 $str = $this->row . '  ';
-                for ($i=0;$i<=70;$i++){
+                for ($i=0;$i<=$col;$i++){
                     $str.=$data[$i].', ';
                 }
                 $this->product[$this->row] = $str;
@@ -246,7 +246,15 @@ class ProductCSVHelper {
         if($i==5) return 'central_front_waist';
         if($i==6) return 'back_waist';
         if($i==7)return 'waist_to_hip';
-        if($i==8)return 'inseam';
+        
+        if($i==8){
+            if ($this->product['clothing_type'] == 'trouser' || $this->product['clothing_type'] == "jean"){
+               return 'inseam';
+            }else{
+               return 'hem_length'; 
+            }
+        }
+        
         if($i==9)return 'arm_length';
         if($i==10)return 'bust';
         if($i==11)return 'waist';

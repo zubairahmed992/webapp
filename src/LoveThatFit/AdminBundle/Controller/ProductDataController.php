@@ -200,15 +200,21 @@ class ProductDataController extends Controller {
         
         $row_length = $form->get('row_length')->getData();
         $preview_only = $form->get('preview')->getData();
+        $raw_only = $form->get('raw')->getData();
         
         $file = $form->get('csvfile');
         $filename = $file->getData();
         $pcsv = new ProductCSVHelper($filename);        
-        $data = $pcsv->read($row_length);
+        
         if ($preview_only){
+            $data = $pcsv->read($row_length);
+            return new Response(json_encode($data));
+        }elseif ($raw_only){
+            $data = $pcsv->map($row_length);
             return new Response(json_encode($data));
         }else{
-        $ar = $this->savecsvdata($pcsv, $data);
+            $data = $pcsv->read($row_length);
+            $ar = $this->savecsvdata($pcsv, $data);
         }
         #$data = $pcsv->map();
         #return new Response(json_encode($data));
@@ -313,6 +319,7 @@ class ProductDataController extends Controller {
     private function addProductSizeMeasurementFromArray($size, $data) {
         $em = $this->getDoctrine()->getManager();
         foreach ($data as $key => $value) {
+            if($key!='key'){
             $psm = new ProductSizeMeasurement;
             $psm->setTitle($key);
             $psm->setProductSize($size);
@@ -324,6 +331,8 @@ class ProductDataController extends Controller {
             $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
             $em->persist($psm);
             $em->flush();
+            }
+            
         }
         return;
     }
@@ -333,6 +342,7 @@ class ProductDataController extends Controller {
                 ->add('csvfile', 'file')
                      ->add('row_length', 'choice', array(
                 'choices'   => array(
+                    '500' => 500, 
                     '700' => 700, 
                     '800' => 800, 
                     '1000' => 1000, 
@@ -344,6 +354,10 @@ class ProductDataController extends Controller {
                     ))
                 ->add('preview', 'checkbox', array(
                   'label'     => 'preview only',
+                  'required'  => false,
+                    ))   
+                   ->add('raw', 'checkbox', array(
+                  'label'     => 'raw data',
                   'required'  => false,
                     ))   
                 ->getForm();
