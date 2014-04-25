@@ -34,7 +34,7 @@ $(document).ready(function() {
    function create_default_mannequin() {
         var actual_user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
    
-        var mid_width_final = 76;
+        var mid_width_final = 64;
         var lft_width_final = 10;
         var rgt_width_final = 10;
 

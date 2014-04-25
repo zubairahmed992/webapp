@@ -1,6 +1,9 @@
 {% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
 
 {% block action_block_content %}
+
+
+
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_four.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/step_3_new.js') }}"></script>
@@ -38,7 +41,7 @@
         
     </script>
 
-<section class="reg_blk">
+<section {% if(entity.gender=='f') %} class="reg_blk reg_female" {%else%} class="reg_blk reg_male" {%endif%}>
     <!--<div class="reg_steps">
         <ul>
             <li><span>1</span></li>
@@ -186,7 +189,7 @@
 
 
 {% block reg_fitting_room %}
-        <section>
+        <section {% if(entity.gender=='f') %} class="reg_female" {%else%} class="reg_male" {%endif%}>
     <div id="stella_box">
             <img src="{{ asset('bundles/lovethatfit/site/images/pic.png') }}">
             <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('stella_box').style.display='none'">x</a></span>
