@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
+use Symfony\Component\Yaml\Parser;
 
 class MannequinHelper {
 
@@ -10,9 +11,59 @@ class MannequinHelper {
     public function __construct($user=null) {
         $this->user = $user;            
     }
-    private function readConfiguration(){
-        #read yaml assign to $mannequin
+    public function readConfiguration(){
+        #read yaml assign to mannequin
+        $conf_yml = new Parser();
+        $this->mannequin = $conf_yml->parse(file_get_contents('../app/config/config_mannequin.yml'));
+        return $this->mannequin;
+    }
+        
+    public function userMannequin($user,$mannequin)
+    {
+        if($mannequin['sizes']['0']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['0']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['0']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['0']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['0']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['0']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['0']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['0']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['0']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['0']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['0']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['0']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['0']['Arm Length']==$user->getMeasurement()->getArm())
+        {
+              return 'size 0';
+        }elseif($mannequin['sizes']['00']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['00']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['00']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['00']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['00']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['00']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['00']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['00']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['00']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['00']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['00']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['00']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['00']['Arm Length']==$user->getMeasurement()->getArm()){
+              return 'size 00';
+        }elseif($mannequin['sizes']['2']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['2']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['2']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['2']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['2']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['2']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['2']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['2']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['2']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['2']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['2']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['2']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['2']['Arm Length']==$user->getMeasurement()->getArm()){
+              return 'size 2';
+        }elseif($mannequin['sizes']['4']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['4']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['4']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['4']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['4']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['4']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['4']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['4']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['4']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['4']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['4']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['4']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['4']['Arm Length']==$user->getMeasurement()->getArm()){
+              return 'size 4';
+        }elseif($mannequin['sizes']['6']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['6']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['6']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['6']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['6']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['6']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['6']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['6']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['6']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['6']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['6']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['6']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['6']['Arm Length']==$user->getMeasurement()->getArm()){
+              return 'size 6';
+        }elseif($mannequin['sizes']['8']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['8']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['8']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['8']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['8']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['8']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['8']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['8']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['8']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['8']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['8']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['8']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['8']['Arm Length']==$user->getMeasurement()->getArm()){
+              return 'size 8';
+        }elseif($mannequin['sizes']['10']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['10']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['10']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['10']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['10']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['10']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['10']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['10']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['10']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['10']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['10']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['10']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['10']['Arm Length']==$user->getMeasurement()->getArm()){
+              return 'size 10';
+        }elseif($mannequin['sizes']['12']['Waist']==$user->getMeasurement()->getWaist() and $mannequin['sizes']['12']['Neck']==$user->getMeasurement()->getNeck() and $mannequin['sizes']['12']['Bust']==$user->getMeasurement()->getBust() and $mannequin['sizes']['12']['Hips']==$user->getMeasurement()->getHip()   and $mannequin['sizes']['12']['Across Shoulder']==$user->getMeasurement()->getShoulderAcrossBack()  and $mannequin['sizes']['12']['Thigh']==$user->getMeasurement()->getThigh()  and $mannequin['sizes']['12']['Knee']==$user->getMeasurement()->getKnee() and $mannequin['sizes']['12']['Calf']==$user->getMeasurement()->getCalf() and $mannequin['sizes']['12']['Ankle']==$user->getMeasurement()->getAnkle() and $mannequin['sizes']['12']['Tricep']==$user->getMeasurement()->getTricep() and $mannequin['sizes']['12']['Bicep']==$user->getMeasurement()->getBicep() and $mannequin['sizes']['12']['Wrist']==$user->getMeasurement()->getWrist() and $mannequin['sizes']['12']['Arm Length']==$user->getMeasurement()->getArm()){
+              return 'size 12';
+        }elseif(($user->getMeasurement()->getWaist() > $mannequin['sizes']['00']['Waist'] and  $user->getMeasurement()->getWaist() < $mannequin['sizes']['0']['Waist']) and ($user->getMeasurement()->getHip() > $mannequin['sizes']['00']['Hips'] and  $user->getMeasurement()->getHip() < $mannequin['sizes']['0']['Hips']) and ($user->getMeasurement()->getThigh() > $mannequin['sizes']['00']['Thigh'] and $user->getMeasurement()->getThigh() < $mannequin['sizes']['0']['Thigh'] )   and ($user->getMeasurement()->getBust() > $mannequin['sizes']['00']['Bust'] and $user->getMeasurement()->getBust() < $mannequin['sizes']['0']['Bust'] )){
+            return 'size 0';
+        }elseif(($user->getMeasurement()->getWaist() > $mannequin['sizes']['0']['Waist'] and  $user->getMeasurement()->getWaist() < $mannequin['sizes']['2']['Waist']) and ($user->getMeasurement()->getHip() > $mannequin['sizes']['0']['Hips'] and  $user->getMeasurement()->getHip() < $mannequin['sizes']['2']['Hips']) and ($user->getMeasurement()->getThigh() > $mannequin['sizes']['0']['Thigh'] and $user->getMeasurement()->getThigh() < $mannequin['sizes']['2']['Thigh'] )   and ($user->getMeasurement()->getBust() > $mannequin['sizes']['0']['Bust'] and $user->getMeasurement()->getBust() < $mannequin['sizes']['2']['Bust'] )){
+            return 'size 2';
+        }elseif(($user->getMeasurement()->getWaist() > $mannequin['sizes']['2']['Waist'] and  $user->getMeasurement()->getWaist() < $mannequin['sizes']['4']['Waist']) and ($user->getMeasurement()->getHip() > $mannequin['sizes']['2']['Hips'] and  $user->getMeasurement()->getHip() < $mannequin['sizes']['4']['Hips']) and ($user->getMeasurement()->getThigh() > $mannequin['sizes']['2']['Thigh'] and $user->getMeasurement()->getThigh() < $mannequin['sizes']['4']['Thigh'] )   and ($user->getMeasurement()->getBust() > $mannequin['sizes']['2']['Bust'] and $user->getMeasurement()->getBust() < $mannequin['sizes']['4']['Bust'] )){
+            return 'size 4';
+        }elseif(($user->getMeasurement()->getWaist() > $mannequin['sizes']['4']['Waist'] and  $user->getMeasurement()->getWaist() < $mannequin['sizes']['6']['Waist']) and ($user->getMeasurement()->getHip() > $mannequin['sizes']['4']['Hips'] and  $user->getMeasurement()->getHip() < $mannequin['sizes']['6']['Hips']) and ($user->getMeasurement()->getThigh() > $mannequin['sizes']['4']['Thigh'] and $user->getMeasurement()->getThigh() < $mannequin['sizes']['6']['Thigh'] )   and ($user->getMeasurement()->getBust() > $mannequin['sizes']['4']['Bust'] and $user->getMeasurement()->getBust() < $mannequin['sizes']['6']['Bust'] )){
+            return 'size 6';
+        }elseif(($user->getMeasurement()->getWaist() > $mannequin['sizes']['6']['Waist'] and  $user->getMeasurement()->getWaist() < $mannequin['sizes']['8']['Waist']) and ($user->getMeasurement()->getHip() > $mannequin['sizes']['6']['Hips'] and  $user->getMeasurement()->getHip() < $mannequin['sizes']['8']['Hips']) and ($user->getMeasurement()->getThigh() > $mannequin['sizes']['6']['Thigh'] and $user->getMeasurement()->getThigh() < $mannequin['sizes']['8']['Thigh'] )   and ($user->getMeasurement()->getBust() > $mannequin['sizes']['6']['Bust'] and $user->getMeasurement()->getBust() < $mannequin['sizes']['8']['Bust'] )){
+            return 'size 8';
+        }elseif(($user->getMeasurement()->getWaist() > $mannequin['sizes']['8']['Waist'] and  $user->getMeasurement()->getWaist() < $mannequin['sizes']['10']['Waist']) and ($user->getMeasurement()->getHip() > $mannequin['sizes']['8']['Hips'] and  $user->getMeasurement()->getHip() < $mannequin['sizes']['10']['Hips']) and ($user->getMeasurement()->getThigh() > $mannequin['sizes']['8']['Thigh'] and $user->getMeasurement()->getThigh() < $mannequin['sizes']['10']['Thigh'] )   and ($user->getMeasurement()->getBust() > $mannequin['sizes']['8']['Bust'] and $user->getMeasurement()->getBust() < $mannequin['sizes']['10']['Bust'] )){
+            return 'size 10';
+        }elseif(($user->getMeasurement()->getWaist() > $mannequin['sizes']['10']['Waist'] and  $user->getMeasurement()->getWaist() < $mannequin['sizes']['12']['Waist']) and ($user->getMeasurement()->getHip() > $mannequin['sizes']['10']['Hips'] and  $user->getMeasurement()->getHip() < $mannequin['sizes']['12']['Hips']) and ($user->getMeasurement()->getThigh() > $mannequin['sizes']['10']['Thigh'] and $user->getMeasurement()->getThigh() < $mannequin['sizes']['12']['Thigh'] )   and ($user->getMeasurement()->getBust() > $mannequin['sizes']['10']['Bust'] and $user->getMeasurement()->getBust() < $mannequin['sizes']['12']['Bust'] )){
+            return 'size 12';
+        }
+        else{
+            return 'size 14';
+        }
+        
         
     }
+      
+    
+    
+    
+    
   
+  
+    
 }

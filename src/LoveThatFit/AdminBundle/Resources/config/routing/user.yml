@@ -34,3 +34,11 @@ admin_user_delete:
 toss:
     pattern:  /toss/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:toss }
+
+admin_user_compare_mannequin_size:
+    pattern:  /admin/user/compare/mannequin/size
+    defaults: { _controller: LoveThatFitAdminBundle:User:comapareUser}
+    
+admin_user_size_compare:    
+    pattern:  /admin/user/compare/size/mannequin
+    defaults: { _controller: LoveThatFitAdminBundle:User:comapareUserSize}

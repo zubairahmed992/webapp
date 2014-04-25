@@ -1,0 +1,28 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li><a href="{{ path('admin_users') }}" >Users</a> <span class="divider">/</span></li>
+<li class="active">Show</li>
+{% endblock %}
+{% block h1 %}Users{% endblock %}
+{% block title %}Users{% endblock %}
+{% block body %}
+    <div>      
+        <div class="clearfix"></div>   
+        <div id="detail_wrapper">      
+            <div id="product_content">
+                <div id="pro_detail">
+                    <div class="edt_container">  
+                        <form action="{{ path('admin_user_size_compare')}}" method="post" {{ form_enctype(form) }}>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">User</div>
+                                <div class="span3">{{ form_widget(form.User) }}{{ form_errors(form.User) }} 
+                                    <input type="submit" value="Compare" class="btn"/>                                              </div>
+                            </div>
+                        </form>                               
+
+                    </div>      
+                </div><!-- End pro_detail -->      
+            </div><!-- End product_content --> 
+        </div> <!-- End detail_wrapper -->
+    </div>      
+{% endblock %}

@@ -130,7 +130,9 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Color  
             container: "@service_container"
-    
+     
+     admin.helper.user.mannequin:
+        class: LoveThatFit\UserBundle\Entity\MannequinHelper
      
          
 #    love_that_fit_admin.example:

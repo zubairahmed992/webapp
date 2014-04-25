@@ -2,6 +2,10 @@
 {% block breadcrumb %}
    <li class="active">Users</li>
 {% endblock %}
+       {% block header_right_links %}
+   <a href="{{ path('admin_user_compare_mannequin_size') }}" >Mannequin</a>
+{% endblock %}
+
 {% block body %}
 <div class="p_listing">     
     <h1 style="float:left;">Users</h1>
