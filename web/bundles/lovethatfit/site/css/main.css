@@ -818,11 +818,21 @@ a.but_short:visited {
     z-index: 8000;
     display: none;
 }
-#extra_hldr {height: 13%;}
-#shoulder_mark_hldr {height: 12%; position: relative;}
-#bust_mark_hldr { height: 7%; position: relative;}
-#waist_mark_hldr { height: 9%; position: relative;}
-#hip_mark_hldr { height: 18%; position: relative;}
+
+.reg_female #extra_hldr {height: 13%;}
+.reg_female #shoulder_mark_hldr {height: 12%; position: relative;}
+.reg_female #bust_mark_hldr { height: 7%; position: relative;}
+.reg_female #waist_mark_hldr { height: 9%; position: relative;}
+.reg_female #hip_mark_hldr { height: 18%; position: relative;}
+
+
+.reg_male #extra_hldr {height: 13%;}
+.reg_male #shoulder_mark_hldr {height: 12%; position: relative;}
+.reg_male #bust_mark_hldr { height: 7%; position: relative;}
+.reg_male #waist_mark_hldr { height: 9%; position: relative;}
+.reg_male #hip_mark_hldr { height: 18%; position: relative;}
+
+
 
 #adj_markers_hldr .v_pos {
     position: relative;
@@ -3754,24 +3764,36 @@ hiw_step_3 {
     position: relative;
     top:-100px;
     left:-95px;
+    background:url(../images/img_step_2.png) no-repeat;
+    width:500px;
+    height: 698px;
 }
 
 .step_2_exam_2 {
     position: relative;
     top:-160px;
     left:-95px;
+    background:url(../images/img_step_2.png) no-repeat;
+    width:500px;
+    height: 698px;
 }
 
 .step_2_exam_3 {
     position: relative;
     top:-235px;
     left:-95px;
+    background:url(../images/img_step_2.png) no-repeat;
+    width:500px;
+    height: 698px;
 }
 
 .step_2_exam_4 {
     position: relative;
     top:-350px;
     left:-95px;
+     background:url(../images/img_step_2.png) no-repeat;
+    width:500px;
+    height: 698px;
 }
 
 /*//////////////////////////////////////*/
@@ -3944,24 +3966,36 @@ width: 160px;
     position: relative;
     top:-130px;
     left:-150px;
+    background: url("../images/img_step_1.png") no-repeat;
+    width: 600px;
+    height: 838px;
 }
 
 .step_1_exam_2 {
     position: relative;
     top:-225px;
     left:-150px;
+    background: url("../images/img_step_1.png") no-repeat;
+    width: 600px;
+    height: 838px;
 }
 
 .step_1_exam_3 {
     position: relative;
     top:-295px;
     left:-150px;
+    background: url("../images/img_step_1.png") no-repeat;
+    width: 600px;
+    height: 838px;
 }
 
 .step_1_exam_4 {
     position: relative;
     top:-405px;
     left:-150px;
+    background: url("../images/img_step_1.png") no-repeat;
+    width: 600px;
+    height: 838px;
 }
 
 .step_1_example {
