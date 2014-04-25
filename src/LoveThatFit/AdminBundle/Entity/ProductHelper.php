@@ -760,63 +760,25 @@ public function productDelete($id){
 }
 
 private function foo($size_type){
-
+$allSizes=$this->container->get('admin.helper.size')->getAllSizes();
     switch ($size_type){
         case 'female_letter':
-            return array(
-        'XXS'=>'XXS', 
-           'XS'=>'XS', 
-           'S'=>'S', 
-           'M'=>'M', 
-           'L'=>'L',
-           'X'=>'X',
-           'XL'=>'XL',
-           'XXL'=>'XXL',
-           'XXXL'=>'XXXL',
-           'XXXXL'=>'XXXXL',
-           '1XL'=>'1XL', 
-           '2XL'=>'2XL', 
-           '3XL'=>'3XL',
-           '4XL'=>'4XL',
-           '1X'=>'1X', 
-           '2X'=>'2X',
-           '3X'=>'3X',
-           '4X'=>'4X',
-           );
+            return $allSizes['women_letter_sizes'];
             break;
        case 'male_letter':
-            return array(
-        'XXS'=>'XXS', 
-           'XS'=>'XS', 
-           'S'=>'S', 
-           'M'=>'M', 
-           'L'=>'L',
-           'X'=>'X',
-           'XL'=>'XL',
-           'XXL'=>'XXL',
-           'XXXL'=>'XXXL',
-           'XXXXL'=>'XXXXL',
-           '1XL'=>'1XL', 
-           '2XL'=>'2XL', 
-           '3XL'=>'3XL',
-           '4XL'=>'4XL',
-           '1X'=>'1X', 
-           '2X'=>'2X',
-           '3X'=>'3X',
-           '4X'=>'4X',
-           );
+            return   $allSizes['man_letter_sizes'];
             break; 
         case 'female_number':
-            return array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24','26'=>'26','28'=> '28','30'=>'30');
+            return $allSizes['woman_number_sizes'];
             break;
          case 'male_number':
-            return array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24','26'=>'26','28'=> '28','30'=>'30');
+            return   $allSizes['man_number_sizes'];
             break;
         case 'male_waist':
-            return array('28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36','37'=> '37','38'=> '38','39'=> '39','40'=> '40','41'=> '41','42'=> '42');
+            return $allSizes['man_waist_sizes'];
             break;
         case 'female_waist':
-           return  array('23'=>'23','24'=>'24','25'=>'25','26'=>'26','27'=>'27','28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36');
+           return  $allSizes['woman_waist_sizes'];
             break;
     }
     
@@ -828,36 +790,12 @@ private function foo($size_type){
 }
 #-------Product Color Add --------------------------------------#
 public function productDetailColorAdd($entity){
-    
-          #$sizes_letter=array('xxs'=>'xxs','xs'=>'xs','s'=> 's','m'=> 'm','l'=> 'l','xl'=> 'xl','xxl'=> 'xxl');
-       #$sizes_letter=array(array('XXS'=>'XXS', 'XS'=>'XS', 'S'=>'S', 'M'=>'M', '1XL'=>'1XL', '2XL'=>'2XL', '3XL'=>'3XL'),array('L'=>'L','XL'=>'XL','2XL'=>'2XL','3XL'=>'3XL','4XL'=>'4XL', 'XXL'=>'XXL','XXXL'=>'XXXL'), array('X'=>'X','1X'=>'1X', '2X'=>'2X','3X'=>'3X','4X'=>'4X'));
-       $sizes_letter=array(
-        'XXS'=>'XXS', 
-           'XS'=>'XS', 
-           'S'=>'S', 
-           'M'=>'M', 
-           'L'=>'L',
-           'X'=>'X',
-           'XL'=>'XL',
-           'XXL'=>'XXL',
-           'XXXL'=>'XXXL',
-           'XXXXL'=>'XXXXL',
-           '1XL'=>'1XL', 
-           '2XL'=>'2XL', 
-           '3XL'=>'3XL',
-           '4XL'=>'4XL',
-           '1X'=>'1X', 
-           '2X'=>'2X',
-           '3X'=>'3X',
-           '4X'=>'4X',
-           );   
-       
-       $sizes_number=array('00'=> '00','0'=>'0','2'=>'2','4'=> '4','6'=>'6','8'=> '8','10'=>'10','12'=>'12','14'=>'14','16'=>'16','18'=>'18','20'=> '20','22'=> '22', '24'=> '24','26'=>'26','28'=> '28','30'=>'30');
-       $sizes_top_man_numbers=array('35'=> '35','36'=> '36','37'=> '37','38'=>'38','39'=> '39','40'=> '40','41'=> '41','42'=> '42','43'=> '43','44'=> '44','45'=> '45','46'=> '46','47'=>'47','48'=> '48');
-       $sizes_bottom_man_numbers=array('28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36','37'=> '37','38'=> '38','39'=> '39','40'=> '40','41'=> '41','42'=> '42');
-       $sizes_women_waist=array('23'=>'23','24'=>'24','25'=>'25','26'=>'26','27'=>'27','28'=>'28','29'=> '29','30'=> '30','31'=> '31','32'=> '32','33'=> '33','34'=> '34','35'=> '35','36'=> '36');
-     //  $sizes=array();
-     
+    $allSizes=$this->container->get('admin.helper.size')->getAllSizes();
+    $sizes_letter=$allSizes['women_letter_sizes'];   
+    $sizes_number=$allSizes['man_number_sizes'];
+    $sizes_top_man_numbers=$allSizes['man_number_sizes'];;
+    $sizes_bottom_man_numbers=$allSizes['man_waist_sizes'];;
+    $sizes_women_waist=$allSizes['woman_waist_sizes'];
        if(strtolower($entity->getSizeTitleType())=='letters' and strtolower($entity->getGender())=='f')
        {
           
