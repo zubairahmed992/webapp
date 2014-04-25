@@ -145,7 +145,7 @@ public function showBrandSpecificationAction($id)
     {
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
      $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
-   /*  $gender=json_encode(json_decode($brandspecification->getGender()));
+   /* $gender=json_encode(json_decode($brandspecification->getGender()));
      $fit_type=json_encode(json_decode($brandspecification->getFitType()));
      $size_title_type=json_encode(json_decode($brandspecification->getSizeTitleType()));
      $male_numbers=json_encode(json_decode($brandspecification->getMaleNumbers()));
