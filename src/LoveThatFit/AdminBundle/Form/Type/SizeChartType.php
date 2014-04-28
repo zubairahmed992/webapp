@@ -45,6 +45,8 @@ class SizeChartType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                 ));
+       $builder->add('size_title_type', 'choice', array('choices'=> array('letters'=>'Letters','numbers'=>'Numbers','Waist'=>'Waist'),'expanded' => true,
+                    'multiple' => false,'required'  => true,)); 
        $builder->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,));
        
     }

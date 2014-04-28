@@ -92,42 +92,44 @@
 
 <script type="text/javascript">
     {% autoescape false %}
-     var allSizeTitle={{allMixSizeTitles}};
-     {% endautoescape  %}
+    var allSizes={{allSizes}};
+    {% endautoescape  %}
      function strLower(str){
         return str.toLowerCase()
     }
    $(document).ready(function() {
-       // Fetching All size titles from yml
-  var gender=strLower($('#sizechart_gender').val());   
-  var target=strLower($('#sizechart_target').val());
-  if(gender=='f'){
-  womanSizeTitle();
-  }
-  else if(gender=='m' && target=="top" ){
-      manTopSizeTitle();
-  }
-  else if(gender=='m' && target=="bottom" ){
-    manBottomSizeTitle();
-  
- }
+     var $radios = $('input:radio[id=sizechart_size_title_type_0]');
+       var $radios1 = $('input:radio[id=sizechart_size_title_type_1]');
+       var $radios2 = $('input:radio[id=sizechart_size_title_type_2]');
+
+if($radios.is(':checked') === false && $radios1.is(':checked') === false && $radios2.is(':checked') === false ) {
+$radios1.filter('[value=numbers]').prop('checked', true);
+}
+
+
+var gender=strLower($('#sizechart_gender').val());   
+if(gender==''){gender='f';}    
+ var target=strLower($('#sizechart_target').val());
+  getWomanNumberSizes();
+
+ /*    Clicking on Size title type  change */        
+ $('input:radio').click(function() { 
+    
+    var gender=strLower($('#sizechart_gender').val()); 
+    changeTitle(gender,$(this).attr('value')); 
+}); 
+   });
  
  $('#sizechart_gender').change(function() {
 	  var gender=strLower($('#sizechart_gender').val()); 
           var target=strLower($('#sizechart_target').val());
-           changeTitle(gender,target);  
+             sizeTitleType=getSizeTitleType();
+            changeTitle(gender,sizeTitleType);
             if(target=="" && gender=='m'){
             $('#sizechart_title').empty();
             $('<option>').val('').text("Please Select Target Above").appendTo('#sizechart_title');  
             }
    });   
-   $('#sizechart_target').change(function() {
- var gender=strLower($('#sizechart_gender').val()); 
-  var target=strLower($('#sizechart_target').val());
- changeTitle(gender,target);
- 
-});  
-// End of Code
        
        $('#sizechart_target').change(function() {	 
             var selectVals = $('#sizechart_gender').val();
@@ -212,86 +214,156 @@
                 }    
 	});      
         
-        });
+    
         
         
-  // Size Title from yml --Suresh----#     
- function changeTitle(gender,target){
-  if(gender=="f"){
-  womanSizeTitle();
+  function changeTitle(gender,sizeTitleType){  
+ if(gender=="f" && sizeTitleType=='letters'){
+     
+   getWomanLetterSizes();  
   }
-   else if(gender=="m" && target=="top" ){
-      manTopSizeTitle();
+ else if(gender=="f" && sizeTitleType=="numbers" ){
+      getWomanNumberSizes();  
   }
-  else if(gender=="m" && target=="bottom" ){
-      manBottomSizeTitle();
+  else if(gender=="f" && sizeTitleType=="Waist" ){
+      getWomanWaistSizes();
+ }
+ else if(gender=="m" && sizeTitleType=='letters'){
+   getManLetterSizes();  
+  }
+ else if(gender=="m" && sizeTitleType=="numbers" ){
+      getManNumberSizes();  
+  }
+  else if(gender=="m" && sizeTitleType=="Waist" ){
+      getManWaistSizes();
  }
  else{
-     $('#sizechart_title').empty();
+    $('#sizechart_title').empty();
     $('<option>').val('').text("Not Found").appendTo('#sizechart_title');  
  }
  }
- 
-  // For Woman Size Chart 
-  
-        
-  
- function womanSizeTitle(){
- $('#sizechart_title').empty();
+//  New Sizes From Yml ------------------#
+//1- Get Woman letter Size
+ function getWomanLetterSizes(){
  {% autoescape false %}
- var women=allSizeTitle;
- $('#sizechart_title').empty();
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
  $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
- $.each(women['woman'], function(k, v) {
-     
+ $.each(womanLetter['women_letter_sizes'], function(k, v) {
  $('<option>').val(k).text(k).appendTo('#sizechart_title');    
  });
  
- 
- {% for womansize in womanSizeTitle %}
+ {% for womansize in womanLetterSize %}
   {% if(womansize==entity.title) %}
   $("option[value='{{womansize}}']").attr('selected','selected');
   {%endif%}
  {% endfor %}
-     
- {% endautoescape %}
-   
- }
-// For Man top Size Title
-function  manTopSizeTitle(){
-    $('#sizechart_title').empty();
- {% autoescape false %}
- var manTop=allSizeTitle;
- $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
- $.each(manTop['man_top'], function(k, v) {
- $('<option>').val(k).text(k).appendTo('#sizechart_title');    
- });
  
- {% for womansize in manTopSizeTitle %}
-  {% if(womansize==entity.title) %}
-  $("option[value='{{womansize}}']").attr('selected','selected');
-  {%endif%}
- {% endfor %}
-     
  {% endautoescape %}
 }
-// Man Bottom 
-function  manBottomSizeTitle(){
-    $('#sizechart_title').empty();
+//2- Woman Number Sizes-----------------#
+ function getWomanNumberSizes(){
  {% autoescape false %}
- var manBottom=allSizeTitle;
+ var womanLetter=allSizes;
+ $('#sizechart_title').empty();
  $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
- $.each(manBottom['man_bottom'], function(k, v) {
+ $.each(womanLetter['woman_number_sizes'], function(k, v) {
  $('<option>').val(k).text(k).appendTo('#sizechart_title');    
  });
- 
- {% for womansize in manBottomSizeTitle %}
+ {% for womansize in womanNumberSize %}
   {% if(womansize==entity.title) %}
   $("option[value='{{womansize}}']").attr('selected','selected');
   {%endif%}
  {% endfor %}
+ 
  {% endautoescape %}
 }
+//3- Woman Waist Size-------------------#
+ function getWomanWaistSizes(){
+ {% autoescape false %}
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['woman_waist_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% for womansize in womanWaistSize %}
+  {% if(womansize==entity.title) %}
+  $("option[value='{{womansize}}']").attr('selected','selected');
+  {%endif%}
+ {% endfor %}
+ 
+ {% endautoescape %}
+}
+// For Man Size base on new yml------------#
+//4- For man sizes in letter
+function getManLetterSizes(){
+     {% autoescape false %}
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['man_letter_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% for womansize in manLetterSize %}
+  {% if(womansize==entity.title) %}
+  $("option[value='{{womansize}}']").attr('selected','selected');
+  {%endif%}
+ {% endfor %}
+ 
+ {% endautoescape %}
+}
+//5- For man number sizes
+function getManNumberSizes(){
+ {% autoescape false %}
+ var womanLetter=allSizes;
+ $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['man_number_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% for womansize in manNumberSize %}
+  {% if(womansize==entity.title) %}
+  $("option[value='{{womansize}}']").attr('selected','selected');
+  {%endif%}
+ {% endfor %}
+ 
+ {% endautoescape %}
+}
+// 6- For man waist sizes
+function getManWaistSizes(){
+{% autoescape false %}
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['man_waist_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% for womansize in manWaistSize %}
+  {% if(womansize==entity.title) %}
+  $("option[value='{{womansize}}']").attr('selected','selected');
+  {%endif%}
+ {% endfor %}
+ 
+ {% endautoescape %}
+}
+function getSizeTitleType(){
+      var $radios = $('input:radio[id=sizechart_size_title_type_0]');
+       var $radios1 = $('input:radio[id=sizechart_size_title_type_1]');
+       var $radios2 = $('input:radio[id=sizechart_size_title_type_2]');
+var sizeTitleType=null;
+    if($radios.is(':checked') === true){
+    sizeTitleType=$('#sizechart_size_title_type_0').val();
+    }
+    if($radios1.is(':checked') === true){
+    sizeTitleType=$('#sizechart_size_title_type_1').val();
+    }
+    if($radios2.is(':checked') === true){
+    sizeTitleType=$('#sizechart_size_title_type_2').val();
+    }
+return sizeTitleType;
+}
+
 
 </script>
 
@@ -334,6 +406,10 @@ function  manBottomSizeTitle(){
                                   <div class="span3">Body Type</div>
                                   <div class="span3">{{ form_widget(form.bodytype) }}{{ form_errors(form.bodytype) }}</div>
                                 </div>
+                                 <div class="row-fluid show-grid">    
+                                    <div class="span3">Size Title Type</div>
+                                    <div class="span3" id="size_titles">{{ form_widget(form.size_title_type) }}{{ form_errors(form.size_title_type) }}</div>
+                                  </div> 
                                 <div class="row-fluid show-grid">
                                   <div class="span3">Gender</div>
                                   <div class="span3">{{ form_widget(form.gender) }}{{ form_errors(form.gender) }}</div>

@@ -507,6 +507,8 @@ private function countMyCloset($user_id){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
       $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
       $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+      $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_product_list/';
+      $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_ftting_room_list/';
       
      }
      if($deviceType=="ipad"){

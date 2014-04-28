@@ -162,6 +162,12 @@ class SizeChart
      * @ORM\Column(name="disabled", type="boolean")
      */
     public $disabled;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $size_title_type;
+    
     /**
      * Get id
      *
@@ -546,5 +552,28 @@ class SizeChart
     public function getThigh()
     {
         return $this->thigh;
+    }
+
+    /**
+     * Set size_title_type
+     *
+     * @param string $sizeTitleType
+     * @return SizeChart
+     */
+    public function setSizeTitleType($sizeTitleType)
+    {
+        $this->size_title_type = $sizeTitleType;
+    
+        return $this;
+    }
+
+    /**
+     * Get size_title_type
+     *
+     * @return string 
+     */
+    public function getSizeTitleType()
+    {
+        return $this->size_title_type;
     }
 }
