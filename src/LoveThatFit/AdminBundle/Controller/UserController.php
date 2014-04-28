@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Form\Type\UserMeasurementType;
 use LoveThatFit\AdminBundle\Form\Type\UserProfileSettingsType;
-use LoveThatFit\AdminBundle\Form\Type\MannequinTest1Type;
+use LoveThatFit\AdminBundle\Form\Type\MannequinTestType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
@@ -186,7 +186,7 @@ class UserController extends Controller {
     
     public function comapareUserAction()
     {
-        $form=$this->createForm(new MannequinTest1Type());
+        $form=$this->createForm(new MannequinTestType());
         return $this->render('LoveThatFitAdminBundle:user:compare.html.twig', array(
                     'form' => $form->createView(),                   
                 ));
@@ -195,7 +195,7 @@ class UserController extends Controller {
     
     public function comapareUserSizeAction(Request $request)
     {        
-        $form=$this->createForm(new MannequinTest1Type());                
+        $form=$this->createForm(new MannequinTestType());                
         $data = $request->request->all();
         $email = $data['user']['User'];
         $entity = $this->get('user.helper.user')->find($email);       
