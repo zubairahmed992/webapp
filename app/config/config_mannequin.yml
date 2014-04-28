@@ -1,113 +1,113 @@
 sizes:
   "00":
-    Neck: 12
-    Bust: 34.25
-    Waist: 24
-    Hips: 33.75
-    Across Shoulder: 13.25
-    Thigh: 18
-    Knee: 13
-    Calf: 12.5
-    Ankle: 7.25
-    Tricep: 8
-    Bicep: 7.5
-    Wrist: 5.5
-    Arm Length: 22
+    neck: 12
+    bust: 34.25
+    waist: 24
+    hips: 33.75
+    shoulder_across_back: 13.25
+    thigh: 18
+    knee: 13
+    calf: 12.5
+    ankle: 7.25
+    tricep: 8
+    bicep: 7.5
+    wrist: 5.5
+    arm: 22
   0:
-    Neck: 12.5
-    Bust: 34.75
-    Waist: 24.5
-    Hips: 34.25
-    Across Shoulder: 13.75
-    Thigh: 18.5
-    Knee: 13
-    Calf: 13.5
-    Ankle: 7.75
-    Tricep: 8.5
-    Bicep: 8
-    Wrist: 6
-    Arm Length: 22.5
+    neck: 12.5
+    bust: 34.75
+    waist: 24.5
+    hips: 34.25
+    shoulder_across_back: 13.75
+    thigh: 18.5
+    knee: 13
+    calf: 13.5
+    ankle: 7.75
+    tricep: 8.5
+    bicep: 8
+    wrist: 6
+    arm: 22.5
   2:
-    Neck: 13
-    Bust: 35.25
-    Waist: 25
-    Hips: 34.75
-    Across Shoulder: 14.25
-    Thigh: 19
-    Knee: 14
-    Calf: 13.5
-    Ankle: 8.25
-    Tricep: 9
-    Bicep: 8.5
-    Wrist: 6.5
-    Arm Length: 23
+    neck: 13
+    bust: 35.25
+    waist: 25
+    hips: 34.75
+    shoulder_across_back: 14.25
+    thigh: 19
+    knee: 14
+    calf: 13.5
+    ankle: 8.25
+    tricep: 9
+    bicep: 8.5
+    wrist: 6.5
+    arm: 23
   4:
-    Neck: 13.5
-    Bust: 35.75
-    Waist: 25.5
-    Hips: 35.25
-    Across Shoulder: 14.75
-    Thigh: 19.5
-    Knee: 14.5
-    Calf: 14
-    Ankle: 8.75
-    Tricep: 9.5
-    Bicep: 9
-    Wrist: 7
-    Arm Length: 23.5
+    neck: 13.5
+    bust: 35.75
+    waist: 25.5
+    hips: 35.25
+    shoulder_across_back: 14.75
+    thigh: 19.5
+    knee: 14.5
+    calf: 14
+    ankle: 8.75
+    tricep: 9.5
+    bicep: 9
+    wrist: 7
+    arm: 23.5
   6:
-    Neck: 14
-    Bust: 36.25
-    Waist: 26
-    Hips: 35.75
-    Across Shoulder: 15.25
-    Thigh: 20
-    Knee: 15
-    Calf: 15.5
-    Ankle: 9.25
-    Tricep: 10
-    Bicep: 9.5
-    Wrist: 7.5
-    Arm Length: 24
+    neck: 14
+    bust: 36.25
+    waist: 26
+    hips: 35.75
+    shoulder_across_back: 15.25
+    thigh: 20
+    knee: 15
+    calf: 15.5
+    ankle: 9.25
+    tricep: 10
+    bicep: 9.5
+    wrist: 7.5
+    arm: 24
   8:
-    Neck: 14.5
-    Bust: 36.75
-    Waist: 26.5
-    Hips: 36.25
-    Across Shoulder: 15.75
-    Thigh: 20.5
-    Knee: 15.5
-    Calf: 16
-    Ankle: 9.75
-    Tricep: 10.5
-    Bicep: 10
-    Wrist: 8
-    Arm Length: 24.5
+    neck: 14.5
+    bust: 36.75
+    waist: 26.5
+    hips: 36.25
+    shoulder_across_back: 15.75
+    thigh: 20.5
+    knee: 15.5
+    calf: 16
+    ankle: 9.75
+    tricep: 10.5
+    bicep: 10
+    wrist: 8
+    arm: 24.5
   10:
-    Neck: 15
-    Bust: 37.25
-    Waist: 27
-    Hips: 36.75
-    Across Shoulder: 16.25
-    Thigh: 21
-    Knee: 16
-    Calf: 16.5
-    Ankle: 10.25
-    Tricep: 11
-    Bicep: 10.5
-    Wrist: 8.5
-    Arm Length: 25
+    neck: 15
+    bust: 37.25
+    waist: 27
+    hips: 36.75
+    shoulder_across_back: 16.25
+    thigh: 21
+    knee: 16
+    calf: 16.5
+    ankle: 10.25
+    tricep: 11
+    bicep: 10.5
+    wrist: 8.5
+    arm: 25
   12:
-    Neck: 15.5
-    Bust: 37.75
-    Waist: 28
-    Hips: 37.25
-    Across Shoulder: 16.75
-    Thigh: 21.5
-    Knee: 16.5
-    Calf: 17
-    Ankle: 10.75
-    Tricep: 11.5
-    Bicep: 11
-    Wrist: 9
-    Arm Length: 25.5   
+    neck: 15.5
+    bust: 37.75
+    waist: 28
+    hips: 37.25
+    shoulder_across_back: 16.75
+    thigh: 21.5
+    knee: 16.5
+    calf: 17
+    ankle: 10.75
+    tricep: 11.5
+    bicep: 11
+    wrist: 9
+    arm: 25.5   

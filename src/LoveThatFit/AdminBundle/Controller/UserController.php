@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Form\Type\UserMeasurementType;
 use LoveThatFit\AdminBundle\Form\Type\UserProfileSettingsType;
-use LoveThatFit\AdminBundle\Form\Type\MannequinTestlType;
+use LoveThatFit\AdminBundle\Form\Type\MannequinTest1Type;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
@@ -186,7 +186,7 @@ class UserController extends Controller {
     
     public function comapareUserAction()
     {
-        $form=$this->createForm(new MannequinTestlType());
+        $form=$this->createForm(new MannequinTest1Type());
         return $this->render('LoveThatFitAdminBundle:user:compare.html.twig', array(
                     'form' => $form->createView(),                   
                 ));
@@ -195,13 +195,12 @@ class UserController extends Controller {
     
     public function comapareUserSizeAction(Request $request)
     {        
-        $form=$this->createForm(new MannequinTestlType());                
+        $form=$this->createForm(new MannequinTest1Type());                
         $data = $request->request->all();
         $email = $data['user']['User'];
-        $entity = $this->get('user.helper.user')->find($email);
-        $mannequin=$this->get('admin.helper.user.mannequin')->readConfiguration();
-        $user=$this->get('admin.helper.user.mannequin')->userMannequin($entity,$mannequin);        
-        return new Response(json_encode($user));
+        $entity = $this->get('user.helper.user')->find($email);       
+        $manequin_size=$this->get('admin.helper.user.mannequin')->userMannequin($entity);        
+        return new Response(json_encode($manequin_size));
         return $this->render('LoveThatFitAdminBundle:user:compare.html.twig', array(
                     'form' => $form->createView(),                   
          ));
