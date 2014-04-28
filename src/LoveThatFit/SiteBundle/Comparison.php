@@ -101,7 +101,9 @@ class Comparison {
                                 $this->get_fit_point_array($fp_specs, $body_specs);
                         #if true then keep the old value else assign false ~~~>
                         $variance = $this->get_accumulated_variance($variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['variance']);
+                        #$ideal_variance = $this->get_accumulated_variance($ideal_variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['ideal_variance']);
                         $ideal_variance = $this->get_accumulated_variance($ideal_variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['ideal_variance']);
+                        
                         $max_variance = $this->get_accumulated_variance($max_variance, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['max_variance']);
                         $status = $this->get_accumulated_status($status, $fb[$size_identifier]['fit_points'][$fp_specs['fit_point']]['status']);
                         if ($variance < 0 || $fit_scale < 0) {
@@ -250,8 +252,11 @@ class Comparison {
                     $status = $this->status['beyond_max'];
                 }
                 $varience = $this->calculate_variance($body, $high, $priority);
-                $ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);
+                #$ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);
+                $ideal_varience = $this->calculate_fit_model_variance($body, $high, $low, $priority);
+                #$ideal_varience =array(9,9,9);
                 $max_variance = $this->calculate_variance($body, $max, $priority);
+                
             }
             
             return $this->get_calculated_values_array_element($status, $varience[0], $ideal_varience[0], $max_variance[0], $varience[1], $ideal_varience[1], $max_variance[1], $avg_low_high, $mid_of_high_max);
@@ -297,6 +302,31 @@ class Comparison {
         }else
             return;
     }
+     #----------------------------------------------------------
+
+    private function calculate_fit_model_variance($body, $high, $low, $priority) {
+        
+        $fit_model = ($high + $low) / 2;
+
+        if ($fit_model > 0 && $body > 0) {
+            $diff = $fit_model - $body;
+            if ($diff == 0) {
+                $v = 0; $dp = 0; $d = 0;
+            } else {
+                
+                if ($body > $low && $diff < 0) {
+                    $diff = $diff * -1;
+                }
+                $diff_percent = ($diff / $fit_model) * 100; # how much (in %age of item measurement) the difference is?
+                $d = number_format($diff, 2, '.', '');
+                $dp = number_format($diff_percent, 2, '.', '');
+                $v = number_format(($priority * $diff_percent) / 100, 2, '.', '');
+            }
+            return array($v, $d, $dp);
+        }else
+            return;
+    }
+    
     #----------------------------------------------------------
     private function get_accumulated_variance($accumulated, $current) {
         if (($accumulated >= 0 && $current >= 0) || ($accumulated <= 0 && $current <= 0)) {
