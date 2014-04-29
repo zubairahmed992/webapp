@@ -236,13 +236,11 @@ class Comparison {
             $ideal_varience = array(0,0,0); 
                 
             if ($body >= $low && $body <= $high) { #perfect
-                $status = $this->status['between_low_high'];
-                $ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);                
+                $status = $this->status['between_low_high'];                
             } elseif ($body < $low) { #loose
                 $status = $this->status['below_low'];               
                 $varience = $this->calculate_variance($body, $low, $priority);
-                $max_variance = $varience;
-                $ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);
+                $max_variance = $varience;                
             } else {#tight
                 if ($body > $high && $body < $mid_of_high_max) { #high max 1st half    
                     $status = $this->status['first_half_high_mid_max'];
@@ -252,13 +250,9 @@ class Comparison {
                     $status = $this->status['beyond_max'];
                 }
                 $varience = $this->calculate_variance($body, $high, $priority);
-                #$ideal_varience = $this->calculate_variance($body, $avg_low_high, $priority);
-                $ideal_varience = $this->calculate_fit_model_variance($body, $high, $low, $priority);
-                #$ideal_varience =array(9,9,9);
-                $max_variance = $this->calculate_variance($body, $max, $priority);
-                
-            }
-            
+                $max_variance = $this->calculate_variance($body, $max, $priority);                
+            }            
+            $ideal_varience = $this->calculate_fit_model_variance($body, $high, $low, $max, $priority);
             return $this->get_calculated_values_array_element($status, $varience[0], $ideal_varience[0], $max_variance[0], $varience[1], $ideal_varience[1], $max_variance[1], $avg_low_high, $mid_of_high_max);
         }                       
     }
@@ -304,23 +298,22 @@ class Comparison {
     }
      #----------------------------------------------------------
 
-    private function calculate_fit_model_variance($body, $high, $low, $priority) {
+    private function calculate_fit_model_variance($body, $low, $high, $max, $priority) {
         
-        $fit_model = ($high + $low) / 2;
-
+        $fit_model = ($high + $low) / 2;        
+        
         if ($fit_model > 0 && $body > 0) {
             $diff = $fit_model - $body;
             if ($diff == 0) {
                 $v = 0; $dp = 0; $d = 0;
             } else {
-                
-                if ($body > $low && $diff < 0) {
-                    $diff = $diff * -1;
-                }
                 $diff_percent = ($diff / $fit_model) * 100; # how much (in %age of item measurement) the difference is?
                 $d = number_format($diff, 2, '.', '');
                 $dp = number_format($diff_percent, 2, '.', '');
                 $v = number_format(($priority * $diff_percent) / 100, 2, '.', '');
+                if ($diff<0 && $body<=$max && $v<0) {
+                    $v = $v * (-1);
+                }
             }
             return array($v, $d, $dp);
         }else
