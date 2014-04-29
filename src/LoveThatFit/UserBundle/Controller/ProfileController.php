@@ -166,7 +166,7 @@ class ProfileController extends Controller {
      $secretQuestionAnswerForm->bind($request);
      if ($secretQuestionAnswerForm->isValid()) {
             $this->get('user.helper.user')->saveUser($user);      
-            $this->get('session')->setFlash('Successss', 'Secret Question and answer has been update.');
+            $this->get('session')->setFlash('Successss', 'Secret Question and its Answer has been updated.');
         }
      $changeEmailForm = $this->createForm(new ChangeEmailType(), $user);
      $passwordResetForm = $this->createForm(new UserPasswordReset(), $user);
