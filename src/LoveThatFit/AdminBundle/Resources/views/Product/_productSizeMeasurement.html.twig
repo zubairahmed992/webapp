@@ -9,7 +9,9 @@
                     <div class="span3"><h3> Size {{sizetitle}}: {{title|capitalize |replace({'_': ' ', '_': " "}) }} </h3></div>
                     <div style="clear:both;"></div>
                     <div id="pro_detail"> 
-                            
+                            <div class="span3">Min body measurement</div>
+                                    <div class="span3">{{ form_widget(form.min_body_measurement) }}{{ form_errors(form.min_body_measurement) }}</div>
+                                </div>
                             
                             <div id="rise">
                                     <div class="span3">Ideal Body Size Low</div>

@@ -37,6 +37,14 @@ class ProductSizeMeasurement
      * @ORM\Column(name="title", type="string")
      */
     private $title;
+    
+    /**
+     * @var string $min_body_measurement
+     *
+     * @ORM\Column(name="min_body_measurement", type="string")
+     */
+    private $min_body_measurement;
+    
 
     /**
      * @var float $garment_measurement_flat
@@ -337,5 +345,28 @@ class ProductSizeMeasurement
     public function getGarmentMeasurementStretchFit()
     {
         return $this->garment_measurement_stretch_fit;
+    }
+
+    /**
+     * Set min_body_measurement
+     *
+     * @param string $minBodyMeasurement
+     * @return ProductSizeMeasurement
+     */
+    public function setMinBodyMeasurement($minBodyMeasurement)
+    {
+        $this->min_body_measurement = $minBodyMeasurement;
+    
+        return $this;
+    }
+
+    /**
+     * Get min_body_measurement
+     *
+     * @return string 
+     */
+    public function getMinBodyMeasurement()
+    {
+        return $this->min_body_measurement;
     }
 }
