@@ -214,6 +214,7 @@ class ProductSize
                                                    'ideal_body_size_high' => $psm->getIdealBodySizeHigh(), 
                                                    'ideal_body_size_low' => $psm->getIdealBodySizeLow(), 
                                                    'max_body_measurement' => $psm->getMaxBodyMeasurement(),
+                                                    'garment_measurement_flat' => $psm->getGarmentMeasurementFlat(),
                                                    'fit_priority' =>  array_key_exists($psm->getTitle(), $fp)? $fp[$psm->getTitle()]: 0,
                                                    );
          }
