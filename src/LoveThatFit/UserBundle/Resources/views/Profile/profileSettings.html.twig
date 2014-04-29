@@ -140,7 +140,7 @@ return true;
         </div>
    
 {% endif %}   
-    <h5>Change Password</h5>
+    <h5 class="saf_fnt">Change Password</h5>
   <form action="{{ path('user_profile_password_reset_update')}}" method="post" {{ form_enctype(form_password_reset) }} onsubmit="return formPasswordValidates()">
     {{ form_errors(form_password_reset) }}
             
@@ -200,7 +200,7 @@ return true;
           
           <label>Enter Email</label>
             {{ form_widget(form_email_change.email) }}
-              
+              {{ form_rest(form_email_change) }} 
           </div>  
         <input type="submit" value="Update" />
           </form>
@@ -208,13 +208,13 @@ return true;
     </div>
     <div class="clr_bth"></div>
     
-    <div>
+    <div class="acct_second">
     {% if app.session.hasFlash('Successss') %}
        <div class="success_alert">       
         {{ app.session.flash('Successss') }}
         </div>   
 {% endif %}   
-    <h5>Secret Question Answer</h5>
+            <h5 class="saf_fnt">Secret Question Answer</h5>
   <form action="{{ path('user_secret_question_answer')}}" method="post" {{ form_enctype(secret_question_answer) }}>
     {{ form_errors(secret_question_answer) }}            
            <div class="frm_ele acc_set">               
