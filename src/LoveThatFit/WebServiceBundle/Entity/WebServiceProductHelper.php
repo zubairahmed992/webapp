@@ -503,12 +503,21 @@ private function countMyCloset($user_id){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/ipad/';
       $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_product_list/';
       $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_ftting_room_list/';
-     }  else {
+     } 
+     if($deviceType=='iphone4s' ||$deviceType=='iPhone4S'||$deviceType=='4s'){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
       $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
       $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
-      $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_product_list/';
-      $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_ftting_room_list/';
+      $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone4s_product_list/';
+      $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone4s_ftting_room_list/';
+      
+     }
+      if($deviceType=='iphone5' ||$deviceType=='iPhone5'||$deviceType=='5'){
+      $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+      $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+      $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+      $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone5_product_list/';
+      $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iPhone5_ftting_room_list/';
       
      }
      if($deviceType=="ipad"){
