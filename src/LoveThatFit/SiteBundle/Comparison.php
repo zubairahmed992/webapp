@@ -652,6 +652,8 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
     }
 
     #------------------------------------------------
+    //                  Hem Advice 
+    #------------------------------------------------
  
     private function cut_to_natural_waste($hem_length) {
         if ($hem_length == null || $hem_length == 0) {
@@ -711,8 +713,7 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         $body_specs['outseam_knee'] = $body_specs['outseam'] - $knee_height;
         $body_specs['outseam_mid_calf'] = $body_specs['outseam'] - $mid_calf_height;
         $body_specs['outseam_ankle'] = $body_specs['outseam'] - $ankle_height;
-
-        $str = '';
+        
         $hem_length = $item_specs['hem_length']['garment_measurement_flat'];
         $actual_hem_length = $hem_length;
         $clothing_type=$this->product->getClothingType();
@@ -720,41 +721,8 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
           if($clothing_type->getName()=='skirt'){
           $hem_length = $this->cut_to_natural_waste($hem_length);
           }
-        
-        $level=0;
-        if ($hem_length < $body_specs['outseam_knee']) {
-            $str = 'less than knee';$level=1;
-        } elseif ($hem_length == $body_specs['outseam_knee']) {
-            $str = 'about knee high';$level=1;
-        } else {
-            if ($hem_length < $body_specs['outseam_mid_calf']) {
-                $str = 'between knee & mid calf';$level=2;
-            } elseif ($hem_length == $body_specs['outseam_mid_calf']) {
-                $str = 'mid calf';$level=2;
-            } else {
-                if ($hem_length < $body_specs['outseam_ankle']) {
-                    $str = 'between calf & ankle';$level=3;
-                } elseif ($hem_length == $body_specs['outseam_ankle']) {
-                    $str = 'ankle length';$level=3;
-                } else {
-                    $diff = $hem_length - $body_specs['outseam'];
-                    $level=4;
-                    if (4.5 < $diff) {
-                        $str = 'too long, hem';
-                    } elseif (3.25 <= $diff && $diff <= 4.5) {
-                        $str = 'very long, hem or wear with 4” – 5” heels';
-                    } elseif (2.25 <= $diff && $diff <= 3.5) {
-                        $str = 'long, hem or wear with 3” – 4" heels';
-                    } elseif (1.25 <= $diff && $diff <= 2.5) {
-                        $str = 'long, hem or wear with 2" - 3” heels';
-                    } elseif (0 <= $diff && $diff <= 1.5) {
-                        $str = 'long, hem or wear with 1” – 2” heels';
-                    } elseif (-1 <= $diff && $diff <= -0.5) {
-                        $str = 'perfect fit wear with flats or heels';
-                    }
-                }
-            }
-        }
+                
+        $str = $this->get_hem_message($hem_length, $body_specs, 'outseam');
         
             return array('fit_point' => 'hem_advice',
             'label' =>  'Hem Advice',            
@@ -788,24 +756,38 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         $body_specs['inseam_mid_calf'] = $body_specs['inseam'] - $mid_calf_height;
         $body_specs['inseam_ankle'] = $body_specs['inseam'] - $ankle_height;
 
-        $level=0;
         $inseam=$item_specs['inseam']['garment_measurement_flat'];
-        if ($inseam < $body_specs['inseam_knee']) {
+          $str = $this->get_hem_message($inseam, $body_specs, 'inseam');
+        
+            return array('fit_point' => 'hem_advice',
+            'label' =>  'Hem Advice',
+            'body_inseam' => $body_specs['inseam'],                                    
+            'item_inseam' => $inseam,                        
+            'knee' => $body_specs['inseam_knee'],
+            'mid_calf' => $body_specs['inseam_mid_calf'],
+            'ankle' => $body_specs['inseam_ankle'],
+            'message' => $str,            
+        );
+        
+    }
+    function get_hem_message($item_measure, $body_specs, $fit_point){
+        $str = '';
+        if ($item_measure < $body_specs[$fit_point.'_knee']) {
             $str = 'less than knee';$level=1;
-        } elseif ($inseam == $body_specs['inseam_knee']) {
+        } elseif ($item_measure == $body_specs[$fit_point.'_knee']) {
             $str = 'about knee high';$level=1;
         } else {
-            if ($inseam < $body_specs['inseam_mid_calf']) {
+            if ($item_measure < $body_specs[$fit_point.'_mid_calf']) {
                 $str = 'between knee & mid calf';$level=2;
-            } elseif ($inseam == $body_specs['inseam_mid_calf']) {
+            } elseif ($item_measure == $body_specs[$fit_point.'_mid_calf']) {
                 $str = 'mid calf';$level=2;
             } else {
-                if ($inseam < $body_specs['inseam_ankle']) {
+                if ($item_measure < $body_specs[$fit_point.'_ankle']) {
                     $str = 'between calf & ankle';$level=3;
-                } elseif ($inseam == $body_specs['inseam_ankle']) {
+                } elseif ($item_measure == $body_specs[$fit_point.'_ankle']) {
                     $str = 'ankle length';$level=3;
                 } else {
-                    $diff = $inseam - $body_specs['inseam'];
+                    $diff = $item_measure - $body_specs[$fit_point];
                     $level=4;
                     if (4.5 < $diff) {
                         $str = 'too long, hem';
@@ -823,17 +805,6 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
                 }
             }
         }
-        
-            return array('fit_point' => 'hem_advice',
-            'label' =>  'Hem Advice',
-            'body_inseam' => $body_specs['inseam'],                                    
-            'item_inseam' => $inseam,                        
-            'knee' => $body_specs['inseam_knee'],
-            'mid_calf' => $body_specs['inseam_mid_calf'],
-            'ankle' => $body_specs['inseam_ankle'],
-            'message' => $str,            
-        );
-        
+        return $str;
     }
-    
 }
