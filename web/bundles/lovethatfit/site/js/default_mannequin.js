@@ -66,6 +66,17 @@ $(document).ready(function() {
 
         $("#default_dummy_hldr #default_dummy_inner").width(full_body_width);
 
+        
+        //var torso_inseam = (82.51*actual_user_height)/100
+        
+        var dm_torso = (40.73*actual_user_height)/100;
+        var dm_inseam = (41.78*actual_user_height)/100;
+        
+        //console.log("torso: " + dm_torso);
+        //console.log("actual_user_height " + actual_user_height);
+        
+        /*
+        
         $("#dm_part_1 img").height((7*actual_user_height)/100);
         $("#dm_part_2 img").height((46.78*actual_user_height)/100);
         $("#dm_part_3 img").height((18.83*actual_user_height)/100);
@@ -74,7 +85,18 @@ $(document).ready(function() {
         $("#dm_part_6 img").height(29);
         $("#dm_part_7 img").height((7.7*actual_user_height)/100);
         $("#dm_part_8").height((13.74*actual_user_height)/100);   
-        $("#dm_part_8 img").height((13.74*actual_user_height)/100);    
+        $("#dm_part_8 img").height((13.74*actual_user_height)/100); */
+        
+        
+        $("#dm_part_1 img").height((7*actual_user_height)/100);
+        $("#dm_part_2 img").height(dm_inseam);
+        $("#dm_part_3 img").height((52.69*dm_torso)/100);
+        $("#dm_part_4 img").height((19.44*dm_torso)/100);
+        $("#dm_part_5 img").height((8.81*dm_torso)/100);
+        $("#dm_part_6 img").height((19*dm_torso)/100);
+        $("#dm_part_7 img").height((7.7*actual_user_height)/100);
+        $("#dm_part_8").height((13.74*actual_user_height)/100);   
+        $("#dm_part_8 img").height((13.74*actual_user_height)/100);
 
 
 

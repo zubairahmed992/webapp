@@ -827,10 +827,10 @@ a.but_short:visited {
 
 
 .reg_male #extra_hldr {height: 13%;}
-.reg_male #shoulder_mark_hldr {height: 12%; position: relative;}
+.reg_male #shoulder_mark_hldr {height: 10%; position: relative;}
 .reg_male #bust_mark_hldr { height: 7%; position: relative;}
-.reg_male #waist_mark_hldr { height: 9%; position: relative;}
-.reg_male #hip_mark_hldr { height: 18%; position: relative;}
+.reg_male #waist_mark_hldr { height: 18%; position: relative;}
+.reg_male #hip_mark_hldr { height: 16%; position: relative;}
 
 
 
