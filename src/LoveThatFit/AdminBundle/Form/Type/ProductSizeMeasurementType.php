@@ -13,7 +13,8 @@ class ProductSizeMeasurementType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {   
-         if($this->mode=='add'){
+        $builder->add('min_body_measurement');
+        if($this->mode=='add'){
             $builder->add('title','hidden');
         }else{
             $builder->add('title');

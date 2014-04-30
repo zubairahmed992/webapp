@@ -16,6 +16,7 @@ class UserMeasurementType extends AbstractType
         $builder->add('sleeve', 'number', array('precision' => 2,'required'=>false));
         $builder->add('bust', 'number', array('precision' => 2,'required'=>false));
         $builder->add('waist', 'number', array('precision' => 2,'required'=>false));
+         $builder->add('chest', 'number', array('precision' => 2,'required'=>false));
         $builder->add('hip', 'number', array('precision' => 2,'required'=>false));        
         $builder->add('inseam', 'number', array('precision' => 2,'required'=>false));        
         $builder->add('outseam', 'number', array('precision' => 2,'required'=>false));        

@@ -6,6 +6,10 @@
                 <div id="product_content">
                     <div id="pro_detail"> 
                             <div id="rise">
+                                
+                                <div class="span3">Min body measurement</div>
+                                    <div class="span3">{{ form_widget(form.min_body_measurement) }}{{ form_errors(form.min_body_measurement) }}</div>
+                                </div>
                                     <div class="span3">Ideal Body Size Low</div>
                                     <div class="span3">
                                      {{ form_widget(form.ideal_body_size_low) }}{{ form_errors(form.ideal_body_size_low) }}

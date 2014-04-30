@@ -207,6 +207,7 @@ class ProductSize
         foreach ($this->product_size_measurements as $psm) {
             if($psm->getTitle()!='key')
             $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  
+                                                   'min_body_measurement' => $psm->getMinBodyMeasurement(), # will remove after checking usage 
                                                    'title' => $psm->getTitle(), # will remove after checking usage 
                                                    'ideal_body_high' => $psm->getIdealBodySizeHigh(), # will remove 
                                                    'ideal_body_low' => $psm->getIdealBodySizeLow(), # will remove 
@@ -214,6 +215,7 @@ class ProductSize
                                                    'ideal_body_size_high' => $psm->getIdealBodySizeHigh(), 
                                                    'ideal_body_size_low' => $psm->getIdealBodySizeLow(), 
                                                    'max_body_measurement' => $psm->getMaxBodyMeasurement(),
+                                                    'garment_measurement_flat' => $psm->getGarmentMeasurementFlat(),
                                                    'fit_priority' =>  array_key_exists($psm->getTitle(), $fp)? $fp[$psm->getTitle()]: 0,
                                                    );
          }
