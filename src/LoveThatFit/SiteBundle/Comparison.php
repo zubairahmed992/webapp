@@ -664,10 +664,10 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
           $rise = $this->product->getRise();
             switch ($rise) {
                 case 'high_rise':
-                    $hem_length = $hem_length;
+                    $hem_length = $hem_length + 2.25;
                     break;
                 case 'mid_rise':
-                    $hem_length = $hem_length - 4.5;
+                    $hem_length = $hem_length - 3.5;
                     break;
                 case 'low_rise':
                     $hem_length = $hem_length - 6.5;
