@@ -41,7 +41,7 @@ class ProductSizeMeasurement
     /**
      * @var string $min_body_measurement
      *
-     * @ORM\Column(name="min_body_measurement", type="string")
+     * @ORM\Column(name="min_body_measurement", type="string",nullable=true)
      */
     private $min_body_measurement;
     

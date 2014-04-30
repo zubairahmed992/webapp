@@ -197,8 +197,9 @@ public function indexAction($list_type) {
         $em->flush();
         $this->get('session')->setFlash('success', 'Product Item Successfully Removed.');
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
-        $entity =$this->get('admin.helper.product')->findProductItemByUser($user_id, $page_number = 0, $limit = 0);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+        $entity =$this->get('admin.helper.product')->findProductItemByUser($user_id,$page_number=0,$limit = 0);
+       return $this->redirect($this->generateUrl('ajax_products_by_my_closet',array('product' => $entity)));
+        //return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
     }
  #-----------------------------Delete My Closet at For Ajax---------------------
     public function deleteMyClosetAjaxAction($product_item_id) {
