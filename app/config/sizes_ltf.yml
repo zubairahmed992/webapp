@@ -30,30 +30,36 @@ constants:
         XXL: 
           title: XXL
           index: 7
+        XXXL: 
+          title: XXXL
+          index: 8
+        XXXXL: 
+          title: XXXXL
+          index: 9  
         1XL:
           title: 1XL
-          index: 8
+          index: 10
         2XL:
           title: 2XL
-          index: 9
+          index: 11
         3XL:
           title: 3XL
-          index: 10
+          index: 12
         4XL:
           title: 4XL
-          index: 11
+          index: 13
         1X:
           title: 1X
-          index: 12
+          index: 14
         2X:
           title: 2X
-          index: 13
+          index: 15
         3X:
           title: 3X
-          index: 14
+          index: 16
         4X:
           title: 4X
-          index: 15
+          index: 17
       numbers:
         '00':
           title: '00'
@@ -462,30 +468,36 @@ constants:
         XXL: 
           title: XXL
           index: 7
+        XXXL: 
+          title: XXXL
+          index: 8
+        XXXXL: 
+          title: XXXXL
+          index: 9  
         1XL:
           title: 1XL
-          index: 8
+          index: 10
         2XL:
           title: 2XL
-          index: 9
+          index: 11
         3XL:
           title: 3XL
-          index: 10
+          index: 12
         4XL:
           title: 4XL
-          index: 11
+          index: 13
         1X:
           title: 1X
-          index: 12
+          index: 14
         2X:
           title: 2X
-          index: 13
+          index: 15
         3X:
           title: 3X
-          index: 14
+          index: 16
         4X:
           title: 4X
-          index: 15   
+          index: 17   
       numbers:
         35: 
           title: 35

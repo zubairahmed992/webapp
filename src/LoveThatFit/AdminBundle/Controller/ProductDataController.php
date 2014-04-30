@@ -12,6 +12,7 @@ use LoveThatFit\AdminBundle\Entity\ProductSize;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
 use LoveThatFit\AdminBundle\Entity\ProductCSVHelper;
+use LoveThatFit\AdminBundle\Entity\ProductCSVDataUploader;
 
 class ProductDataController extends Controller {
 
@@ -204,7 +205,8 @@ class ProductDataController extends Controller {
         
         $file = $form->get('csvfile');
         $filename = $file->getData();
-        $pcsv = new ProductCSVHelper($filename);        
+        #$pcsv = new ProductCSVHelper($filename);        
+        $pcsv = new ProductCSVDataUploader($filename);        
         
         if ($preview_only){
             $data = $pcsv->read($row_length);
@@ -329,6 +331,7 @@ class ProductDataController extends Controller {
             $psm->setMaxBodyMeasurement($value['maximum_body_measurement']);
             $psm->setIdealBodySizeHigh($value['ideal_body_size_high']);
             $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
+            $psm->setMinBodyMeasurement($value['min_body_measurement']);
             $em->persist($psm);
             $em->flush();
             }
