@@ -207,6 +207,7 @@ class ProductSize
         foreach ($this->product_size_measurements as $psm) {
             if($psm->getTitle()!='key')
             $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  
+                                                   'min_body_measurement' => $psm->getMinBodyMeasurement(), # will remove after checking usage 
                                                    'title' => $psm->getTitle(), # will remove after checking usage 
                                                    'ideal_body_high' => $psm->getIdealBodySizeHigh(), # will remove 
                                                    'ideal_body_low' => $psm->getIdealBodySizeLow(), # will remove 
