@@ -147,7 +147,7 @@ ajax_cart_remove:
 
 user_mannequin:
     pattern:  /user/profile/mannequin
-    defaults: { _controller: LoveThatFitUserBundle:InnerSite:userMannequin }    
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:userMannequin }    
     
 email_registration:
     pattern:  /email/registration/{id}
