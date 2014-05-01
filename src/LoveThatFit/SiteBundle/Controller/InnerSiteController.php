@@ -330,6 +330,13 @@ public function indexAction($list_type) {
             return new response('success');
         }
     }
+    
+    public function userMannequinAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser(); 
+        $manequin_size=$this->get('admin.helper.user.mannequin')->userMannequin($user);        
+        return new Response(json_encode($manequin_size));
+    }
 }
 ?>
 

@@ -143,7 +143,11 @@ ajax_cart_add:
 
 ajax_cart_remove:
     pattern:  /ajax/cart/remove/{id}
-    defaults: { _controller: LoveThatFitSiteBundle:Cart:removeFromCart}   
+    defaults: { _controller: LoveThatFitSiteBundle:Cart:removeFromCart} 
+
+user_mannequin:
+    pattern:  /user/profile/mannequin
+    defaults: { _controller: LoveThatFitUserBundle:InnerSite:userMannequin }    
     
 email_registration:
     pattern:  /email/registration/{id}

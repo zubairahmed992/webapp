@@ -28,6 +28,17 @@ function set_default_canv(){
 $(document).ready(function() { 
    //set_default_canv();
    
+   var dm_path = $("#hdn_url").html();
+   
+   $.ajax({
+                        url: dm_path,
+                        cache: false,
+                        success: function(dm_data){
+                           //alert(dm_data);
+                            //$(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
+                        }
+                    }); 
+   
    create_default_mannequin(
     );
    
