@@ -1,0 +1,59 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% block left_navigation %}
+<!--/this is left navigation you can remove this following include line and add your own navigation-->
+    {% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation_external.html.twig'%}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+
+
+{% block fitting_room %}
+
+<script type="text/javascript" src="{{ asset('bundles/easy_slider/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/easy_slider/js/easySlider1.7.js')}}"></script>
+<script type="text/javascript">
+$(document).ready(function(){	
+$("#slider1, #slider2,#slider3, #slider4").easySlider({
+auto: true, 
+continuous: true
+});
+
+});	
+</script>
+<link href="{{ asset('bundles/easy_slider/css/screen.css')}}" rel="stylesheet" type="text/css" media="screen" />
+
+
+<div id="boxes_wrapper">
+    <div class="home_box" id="comapre_1">
+     {{ app.session.get('product') }}
+    </div>
+       
+       
+        
+         <ul style="display: block;" id="fchld">
+                 {% for p in product %}
+                  <li>
+                       <span class="cross_icon"></span>
+                       
+                       <a href="#_">{{p}}</a>
+                       
+                    </li>
+                    
+                    {% endfor %}
+                   
+                    </ul>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %} 
