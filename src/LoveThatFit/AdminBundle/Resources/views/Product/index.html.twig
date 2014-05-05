@@ -4,7 +4,11 @@
 {% endblock %}
 
 {% block header_right_links %}
-   <a href="{{ path('admin_product_data') }}" >Product Data</a> | <a href="{{ path('admin_algorithm_comparison') }}" >Comparison</a> | <a href="{{ path('admin_algorithm') }}" >Algorithm</a>
+   <a href="{{ path('admin_algorithm_comparison') }}" >Comparison</a> | <a href="{{ path('admin_algorithm_avg') }}" >Fit Model</a>
+<br>
+    
+     <a href="{{ path('admin_product_data') }}" >Product Data</a> | <a href="{{ path('admin_product_stats') }}" >Product Stats</a> 
+
 {% endblock %}
 
 {% block body %}
@@ -162,8 +166,8 @@ $(document).ready(function(){
      
     
      </div>
-    
-      <a href="{{ path('admin_product_data_csv_index') }}" class="btn">Import CSV</a> <a href="{{ path('admin_product_stats') }}" class="btn">Product Stats</a>  <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
+        <a href="{{ path('admin_product_data_csv_index') }}" class="btn">Import CSV</a> 
+ <a href="{{ path('admin_product_detail_new') }}" class="btn">Add New</a>
      
       </div>
     

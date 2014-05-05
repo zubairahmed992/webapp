@@ -1,0 +1,92 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+    <li class="active"> Algorithm / Comparison</li>
+{% endblock %}
+{% block body %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    
+ 
+ $('a.compare').click(function (event){ 
+     event.preventDefault(); 
+     
+    var user_id = $("#algorithm_User").val();
+    var product_id = $("#algorithm_Product").val();                    
+    var compare_url = "../algorithm/avg_comparison/" + user_id + "/"+ product_id;         
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {
+           $('#summary_ajax').html(response);
+        }
+     })
+     return false; //for good measure
+});
+
+$('a.json').click(function (event){ 
+     event.preventDefault(); 
+     
+    var user_id = $("#algorithm_User").val();
+    var product_id = $("#algorithm_Product").val();                    
+    var compare_url = "../algorithm/avg_comparison/" + user_id + "/"+ product_id + "/"+true;         
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {
+           
+           window.open(compare_url);
+        }
+     })
+     return false; //for good measure
+});
+
+
+$( "select[id='algorithm_User']" ).change(function() {
+    var user_id = $("select[id='algorithm_User']").val();
+    var url= '../user/'+ user_id +'/edit';
+    $('#user_edit_link').attr("href", url);    
+});
+$( "select[id='algorithm_Product']" ).change(function() {
+    var product_id= $("select[id='algorithm_Product']").val();
+    var url= '../productdetail/'+product_id+'';
+    $('#product_edit_link').attr("href", url);    
+});
+
+var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
+
+
+});        
+
+    </script>
+
+<span id='product_id' style="display: block"></span>
+<span id='size_id' style="display: none"></span>
+<span id='user_id' style="display: block"></span>
+
+<div class="p_listing">     
+    <h3>Fit Model based comparison</h3>
+    <div style="float: left">
+        
+        
+        <a id="user_edit_link" name='user_edit_link' href="#" target="_blank">User</a>
+        <form id="userForm" method="post" {{ form_enctype(userForm) }}>
+        {{ form_errors(userForm) }}                                  
+        {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
+        {{ form_rest(userForm) }}
+        </form>                 
+    </div>
+    <div style="float: left">
+        <a id="product_edit_link" name='user_edit_link' href="#" target="_blank">Product</a>
+        <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
+        {{ form_errors(productForm) }}                                            
+        {{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            
+        {{ form_rest(productForm) }}
+        </form>      
+    </div>
+    <a id='compare' class='compare' href="#">Compare</a> | 
+    <a id='json' class='json' href="#">JSON</a>
+    <br>
+    <div id="summary_ajax" style="float: none">
+    </div>
+</div> 
+
+{% endblock %}

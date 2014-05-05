@@ -1,25 +1,12 @@
 
+admin_algorithm_avg:
+    pattern:  /admin/algorithm/avg
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:avg}
 
-admin_algorithm:
-    pattern:  /admin/algorithm
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:index}
-
-admin_algoritm_user_url:
-    pattern:  /admin/algorithm/user/{id}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getUserForTestAlgorithm}
-    
-admin_algoritm_product_url:
-    pattern:  /admin/algorithm/product/{id}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getProductForTestAlgorithm}    
-
-admin_algorithm_product_size:    
-    pattern:  /admin/algorithm/product/size/{id}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getProductSizeForTestAlgorithm}    
-    
-admin_algorithm_feedback:
-    pattern:  /admin/algorithm/feedback/{user_id}/{size_id}
-    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:getFeedback, user_id: 0, size_id: 0}
-
+admin_algorithm_avg_comparison:
+    pattern:  /admin/algorithm/avg_comparison/{user_id}/{product_id}/{json}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:avgComparison, user_id: 0, product_id: 0, json:false}
+#-------------------------------------------------------
 admin_algorithm_comparison:
     pattern:  /admin/algorithm/comparison
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:comparison}
@@ -27,7 +14,7 @@ admin_algorithm_comparison:
 admin_algorithm_compare:
     pattern:  /admin/algorithm/compare/{user_id}/{product_id}/{json}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:compare, user_id: 0, product_id: 0, json:false}
-
+#-------------------------------------------------------
 admin_algorithm_foo:
     pattern:  /admin/algorithm/foo/{user_id}/{product_id}/{size_id}
     defaults: { _controller: LoveThatFitAdminBundle:Algorithm:foo, user_id: 0, product_id: 0, size_id: 0}
