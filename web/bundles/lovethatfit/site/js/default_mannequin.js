@@ -29,7 +29,8 @@ $(document).ready(function() {
    //set_default_canv();
    
    var dm_path = $("#hdn_url_1").html();
-   
+   var json;
+   var dm_shoulder;
    //alert(dm_path);
    
    $.ajax({
@@ -37,21 +38,31 @@ $(document).ready(function() {
                         cache: false,
                         success: function(dm_data){
                            //alert(dm_data);
-                          var json = $.parseJSON(dm_data);  
+                          json = $.parseJSON(dm_data);  
+                          
+                          //console.log("Name: " + json.user_measurement.shoulder_across_back);
+                          
+                          dm_shoulder = json.user_measurement.shoulder_across_back * 6;
                             
-                            //alert(json.neck);
+                          console.log("from_inside: "+dm_shoulder);
+                          
+                          create_default_mannequin();
                             
-                            //$(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
                         }
                     }); 
    
-   create_default_mannequin(
-    );
+
    
    function create_default_mannequin() {
+       
+       $("#default_dummy_hldr").fadeIn(200);
+       
         var actual_user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
+        
+//        console.log(dm_shoulder);
    
-        var mid_width_final = 64;
+        //var mid_width_final = 64;
+        var mid_width_final = dm_shoulder - 20;
         var lft_width_final = 10;
         var rgt_width_final = 10;
 

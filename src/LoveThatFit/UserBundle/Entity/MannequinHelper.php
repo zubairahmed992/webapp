@@ -26,11 +26,11 @@ class MannequinHelper {
         $mannequinBottom=$this->_compare($mannequin['sizes'], 'shoulder_across_back', $usermeasurements);
         return array(
             'name'=>$user->getFirstName()." ".$user->getLastName(),         
-            'user measurement'=>$usermeasurements,
-            'mannequin top size'=>$mannequinTop,
-            'mannequin top measurement'=>$mannequin['sizes'][$mannequinTop],
-            'mannequin bottom size'=>$mannequinBottom,
-            'mannequinbottom measurement'=>$mannequin['sizes'][$mannequinBottom]
+            'user_measurement'=>$usermeasurements,
+            'mannequin_top_size'=>$mannequinTop,
+            'mannequin_top_measurement'=>$mannequin['sizes'][$mannequinTop],
+            'mannequin_bottom_size'=>$mannequinBottom,
+            'mannequin_bottom_measurement'=>$mannequin['sizes'][$mannequinBottom]
            );
     }
       
