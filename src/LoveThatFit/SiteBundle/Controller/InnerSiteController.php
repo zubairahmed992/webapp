@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class InnerSiteController extends Controller {
+      var $compare = array();
 #-------------------------------------------------------------------------------
 public function indexAction($list_type) {
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
@@ -337,6 +338,67 @@ public function indexAction($list_type) {
         $manequin_size=$this->get('admin.helper.user.mannequin')->userMannequin($user);        
         return new Response(json_encode($manequin_size));
     }
+
+#------------------------------------------Compare Product -------------------#
+   public function compareProductAction($item_id){
+       $productItem = $this->get('admin.helper.productitem')->getProductItemById($item_id);
+       $product=$productItem->getProduct();
+       $totalPro=count($this->addNewProducts($product));
+       
+       if($totalPro<=3){
+        return $this->render('LoveThatFitSiteBundle:InnerSite:compareProduct.html.twig',
+        array('product' => $this->addNewProducts($product)));
+     }else{
+           $this->removeSession();
+           return $this->render('LoveThatFitSiteBundle:InnerSite:compareProduct.html.twig',
+           array('product' => $this->addNewProducts($product),));
+        } 
+   }
+   
+   //---------------------------------------------------------------------
+    private function addNewProducts($product) {
+     $session = $this->get("session");
+     $compare=array();
+     if($session->has('product')){
+         $compare=$session->get("product");
+     }  
+     $user = $this->get('security.context')->getToken()->getUser(); 
+     $fit = new Comparison($user, $product);
+     
+     $compare[$product->getId()]=array(
+            "id" => $product->getId(),
+            "title" => $product->getName(),
+            "brand" => $product->getBrand()->getName(),
+            "clothingType" => $product->getClothingType()->getName(),
+          //  "image"=>$product->getdisplayProductColor()->getWebPath(),
+           // 'fittingAlert'=>$fit->getStrippedFeedBack()
+             );
+   
+     $session->set("product", $compare);
+    return $compare;
+    
+     
+    }
+   #-------------------- Get Session of product ----------------------------#
+     private function getProductSession() {
+          $compare=array();
+        $session = $this->get("session");
+        if ($session->has('product')) {
+            $product = $compare;
+        } else{
+            $product = null;
+        }
+        return $product;
+    }
+    
+  #-----------------------Remove Session -------------------------------#
+  public function removeSession(){
+      $session = $this->get("session");
+      $session->remove('product');
+      return  array('status'=>true);
+  }
+    
+ 
 }
 ?>
 

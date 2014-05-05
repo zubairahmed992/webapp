@@ -29,23 +29,29 @@ continuous: true
 
 <div id="boxes_wrapper">
     <div class="home_box" id="comapre_1">
-     {{ app.session.get('product') }}
+    <ul style="display: block;" id="fchld">
+        
+                 {% for p in product %}
+                  <li>
+                      <span class="arw">  <h1>Product:</h1> <a href="#_">{{p.title}}</a></span>
+                  </li>
+                  <li>
+                      <span class="arw"> Brand:</span>
+                      <span class="arw">{{p.brand}}</span>
+                      
+                  </li>  
+                  <li>
+                      <span> Clothing Type:</span>
+                      <span>{{p.clothingType}}</span>
+                  </li>
+                  
+                    {% endfor %}
+                   
+                    </ul>
     </div>
        
        
         
-         <ul style="display: block;" id="fchld">
-                 {% for p in product %}
-                  <li>
-                       <span class="cross_icon"></span>
-                       
-                       <a href="#_">{{p}}</a>
-                       
-                    </li>
-                    
-                    {% endfor %}
-                   
-                    </ul>
 </div>
 
 

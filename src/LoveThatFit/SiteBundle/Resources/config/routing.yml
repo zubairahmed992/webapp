@@ -30,6 +30,11 @@ what_we_do:
 comming_soon:
     pattern:  /comming_soon
     defaults: { _controller: LoveThatFitSiteBundle:Home:commingSoon}        
+  
+compare_product:
+    pattern:  /inner_site/compare_product/{item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:compareProduct, item_id: null}
+    
     
 ajax_brand_list:
     pattern:  /ajax/brands
