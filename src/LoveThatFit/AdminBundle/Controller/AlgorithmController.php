@@ -32,7 +32,7 @@ class AlgorithmController extends Controller {
         if ($json) {
             return new Response(json_encode($fb));
         } else {
-            return $this->render('LoveThatFitAdminBundle:Algoritm:_summary.html.twig', array(
+            return $this->render('LoveThatFitAdminBundle:Algoritm:_avg_comparison.html.twig', array(
                         'product' => $product, 'user' => $user, 'data' => $fb,
                     ));
         }

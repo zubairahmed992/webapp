@@ -1,0 +1,142 @@
+<div style="clear: both">
+    <h3>{{product.name }}</h3>
+
+    <div style="clear: both"></div>
+{% if data.message is defined %}
+    <div  style="color:red"> {{data.message}}</div>
+{% endif %}
+    
+{% if data.recommendation is defined %}
+    <b>Recommendation</b> 
+        {% for size, size_specs in data.recommendation %}     
+            &nbsp;|&nbsp;{{size}} 
+        {% endfor %}
+{% endif %}
+    
+{% if data.feedback is defined %}
+    <h5>Feedback</h5>
+    <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
+    {% for size, size_specs in data.feedback %} 
+            <tr>
+                <td style="width: 50px;background-color: #FFFFDF"><b>
+                        <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
+                    
+                    </b>| <i>{{size_specs.message}}</i> 
+                    {% if size_specs.fit_points is defined %}
+                        
+                        | Fit-Index:<b>{{size_specs.fit_index}} </b>
+                    {% endif %}
+
+                        </td>            
+                    </tr>
+            {% if size_specs.fit_points is defined %}
+                    <tr>
+                        <td>
+                            <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
+                                <b>
+                                    <tr>
+                                        <td></td>
+                                        <td>User</td>
+                                        <td style="font-weight: bold;" colspan="5">Product</td>
+                                        <td style="font-weight: bold; border-bottom: solid 1px #CCCCCC; padding-left: 30px;" colspan="3">Variance </td>
+                                        
+
+                                        <td></td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Body</td>                                        
+                                        <td>min</td>
+                                        <td>low</td>
+                                        <td>avg</td>
+                                        <td>high</td>
+                                        <td>max</td>
+
+                                        <td>body | {{size_specs.variance}}</td>
+                                        <td>min  | {{size_specs.max_variance}}</td>
+                                        <td>max  | {{size_specs.max_variance}}</td>
+                                        
+
+                                        <td></td>
+
+
+                                    </tr>
+                                </b>
+
+                            {% for fp, fp_specs in size_specs.fit_points %} 
+
+                                    {%if (fp_specs.status ==0) %}
+                                        <tr  style="color:#003300">
+                                    {%elseif (fp_specs.status ==4) %}
+                                        <tr  style="color:#336699">
+                                    {%elseif (fp_specs.status ==3) %}
+                                        <tr  style="color:#99CCFF">
+                                    {%elseif (fp_specs.status ==2) %}
+                                        <tr  style="color:#6699CC">
+                                    {%elseif (fp_specs.status ==1) %}
+                                        <tr  style="color:#336699">
+                                    {%elseif (fp_specs.status ==-1) %}
+                                        <tr  style="color:#006600">
+                                    {%elseif (fp_specs.status ==-2) %}
+                                        <tr  style="color:#006633">
+                                    {%elseif (fp_specs.status ==-3) %}
+                                        <tr  style="color:#666666">
+                                    {%elseif (fp_specs.status <-3) %}
+                                        <tr  style="color:red">
+                                            
+                                    {% else %}
+                                    <tr>
+                                    {% endif %}
+                                
+                                    <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
+                                    <td><b>{{fp_specs.body_measurement}}</b></td>
+                                    <td>{{fp_specs.min_body_measurement}}</td>
+                                    <td>{{fp_specs.ideal_body_size_low}}</td>
+                                    <td><b>{{fp_specs.mid_low_high}}</b></td>
+                                    <td>{{fp_specs.ideal_body_size_high}}</td>
+                                    <td>{{fp_specs.max_body_measurement}}</td>                                
+                                    <td>{{fp_specs.variance}} </td>
+                                    <td>{{fp_specs.min_variance}}</td>                 
+                                    <td>{{fp_specs.max_variance}}</td>                 
+                                    <td>{{fp_specs.message}} | {{fp_specs.fit_index}} </td>
+                                    
+                                </tr>
+
+                            {% endfor %}
+                            {% if size_specs.hem_advice is defined %}
+                                    <tr>
+                                        <td colspan="10">
+                                            <b>Hem Advice :</b> {{size_specs.hem_advice.message}}
+                                            
+                                            <br>
+                                            <span  style="background-color: #FFFFFF; font-size:11px;">
+                                                    <b>Body</b>&nbsp;
+                                                    (&nbsp;
+                                                    {{ (size_specs.hem_advice.body_outseam is defined)? 'outseam:'~size_specs.hem_advice.body_outseam~' , ' }}
+                                                    {{ (size_specs.hem_advice.body_inseam is defined)? 'inseam:'~size_specs.hem_advice.body_inseam~' , ' }}                                             
+                                                    {{ (size_specs.hem_advice.knee is defined)? 'knee:'~size_specs.hem_advice.knee~' , ' }}
+                                                    {{ (size_specs.hem_advice.mid_calf is defined)? 'mid calf:'~size_specs.hem_advice.mid_calf~' , ' }}
+                                                    {{ (size_specs.hem_advice.ankle is defined)? 'ankle:'~size_specs.hem_advice.ankle~' , ' }}
+                                                    &nbsp;)
+                                            </span>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span  style="background-color: #FFFFFF; font-size:11px;">
+                                                    <b>Item</b> &nbsp;
+                                                    (&nbsp;
+                                                    {{ (size_specs.hem_advice.item_hem_length is defined) ? 'hem length:'~size_specs.hem_advice.item_hem_length~' , '}}
+                                                    {{ (size_specs.hem_advice.item_inseam is defined) ? 'hem length:'~size_specs.hem_advice.item_inseam~' , '}}                                             
+                                                    &nbsp;)
+                                            </span>
+                                        </td>            
+                                    </tr>
+                            {% endif %}
+                            </table>
+                        </td>   
+                    </tr>
+                {% endif%}
+   {% endfor %}
+                </table>
+{% endif %}
+            </div>     
