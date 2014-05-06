@@ -33,7 +33,11 @@ continuous: true
         
                  {% for p in product %}
                   <li>
-                      <span class="arw">  <h1>Product:</h1> <a href="#_">{{p.title}}</a></span>
+                      <span class="arw">  <h1>Product:</h1>
+                          {% if(p.image is defined )%}
+                            <div><img src="{{ asset(p.image) }}" style="opacity:0.2;"/> </div>
+                           {%endif%} 
+                          <a href="#_">{{p.title}}</a></span>
                   </li>
                   <li>
                       <span class="arw"> Brand:</span>

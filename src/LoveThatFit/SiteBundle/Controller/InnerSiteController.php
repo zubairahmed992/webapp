@@ -361,6 +361,7 @@ public function indexAction($list_type) {
      $compare=array();
      if($session->has('product')){
          $compare=$session->get("product");
+      
      }  
      $user = $this->get('security.context')->getToken()->getUser(); 
      $fit = new Comparison($user, $product);
@@ -370,7 +371,7 @@ public function indexAction($list_type) {
             "title" => $product->getName(),
             "brand" => $product->getBrand()->getName(),
             "clothingType" => $product->getClothingType()->getName(),
-          //  "image"=>$product->getdisplayProductColor()->getWebPath(),
+           "image"=>$product->getdisplayProductColor()->getWebPath(),
            // 'fittingAlert'=>$fit->getStrippedFeedBack()
              );
    
