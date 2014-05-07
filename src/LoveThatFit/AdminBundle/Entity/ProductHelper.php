@@ -792,8 +792,8 @@ $allSizes=$this->container->get('admin.helper.size')->getAllSizes();
 public function productDetailColorAdd($entity){
     $allSizes=$this->container->get('admin.helper.size')->getAllSizes();
     $sizes_letter=$allSizes['women_letter_sizes'];   
-    $sizes_number=$allSizes['man_number_sizes'];
-    $sizes_top_man_numbers=$allSizes['man_number_sizes'];;
+    $sizes_number=$allSizes['man_chest_sizes'];
+    $sizes_top_man_numbers=$allSizes['man_chest_sizes'];;
     $sizes_bottom_man_numbers=$allSizes['man_waist_sizes'];;
     $sizes_women_waist=$allSizes['woman_waist_sizes'];
        if(strtolower($entity->getSizeTitleType())=='letters' and strtolower($entity->getGender())=='f')
