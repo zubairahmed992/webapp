@@ -822,7 +822,7 @@ public function productDetailColorAdd($entity){
            $sizes['women_waist'] =Null;         
             return $sizes;
        }
-       if($entity->getSizeTitleType()=='letter' and strtolower($entity->getGender())=='m'  and (strtolower($entity->getClothingType()->getTarget())=='bottom') )
+       if($entity->getSizeTitleType()=='letters' and strtolower($entity->getGender())=='m'  and (strtolower($entity->getClothingType()->getTarget())=='bottom') )
        {
            
           $sizes['petite'] = Null;
