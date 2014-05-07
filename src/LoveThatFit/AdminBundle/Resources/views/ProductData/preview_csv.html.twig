@@ -1,0 +1,83 @@
+ {% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active"> Product CSV / Preview</li>
+{% endblock %}        
+{% block body %}        
+    <table width="518" border="0">
+        <tr>
+            <td colspan="2"><h3>Product Detail</h3>
+            </td>
+        </tr>      
+ {%for p,key in product%}         
+        {% if (p!='product_color' and p!='fabric_content'  and p!='fit_priority' and p!='sizes')%}
+        <tr>
+            <td width="240"> <b> {{p}} :</b></td>
+            <td width="268"><strong>{{key}}</strong></td>
+        </tr>  
+        {% endif%}
+
+{%endfor%}  
+        <tr>
+            <td colspan="2"><h5>Product Color</h5>
+            </td>
+        </tr> 
+  {% for pc,key in product.product_color %}
+        <tr>
+            <td width="240"> <b> product_color :</b></td>
+            <td width="268"><strong>{{key}}</strong></td>
+        </tr>
+{%endfor%}
+
+        <tr>
+            <td colspan="2"><h5>Fit priority</h5>
+            </td>
+        </tr> 
+{%for fp,key in product.fit_priority %}
+        <tr>
+            <td width="240"> <b> {{fp}} :</b></td>
+            <td width="268"><strong>{{key}}</strong></td>
+        </tr>
+
+{%endfor%}
+
+
+        <tr>
+            <td colspan="2"><h5>Fabric content</h5>
+            </td>
+        </tr> 
+{%for fc,key in product.fabric_content%}
+        <tr>
+            <td width="240"> <b> {{fc}} :</b></td>
+            <td width="268"><strong>{{key}}</strong></td>
+        </tr>
+{%endfor%}
+
+        <tr>
+            <td colspan="2"><h5>Product Sizes</h5>
+            </td>
+        </tr>
+{% for size,key in product.sizes %}
+        <tr>
+            <td   colspan="2" > <b> {{size}} :</b></td>
+        </tr>        
+        <td width="268" colspan="2"><strong>
+                {%for ps,keys in key %}
+                        {% if (ps!='key')%}
+                                        <tr>
+                                            <td colspan="2">
+                                                <b>{{ps}} :</b></td>
+                                        <tr/>
+
+                                    </td>
+                                </tr>       
+                            {%endif%}
+                  {%endfor%}
+    </strong></td>
+</tr>
+{%endfor%}        
+    </strong></td>
+</tr>
+
+</table>
+
+{% endblock %}
