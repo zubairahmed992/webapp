@@ -9,6 +9,7 @@ class ProductRawType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('fit_priority');
+        $builder->add('fabric_content');
     }
 
     public function getDefaultOptions(array $options) {

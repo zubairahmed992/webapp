@@ -96,10 +96,24 @@ class ProductCSVDataUploader {
                 $this->product['body_type'] = $data[0];                
                 break;
             case 27:
-                $this->readColors($data); //['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
+                if ($this->product['gender'] == 'f' ){
+                    $this->readColors($data); //['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
+                }
                 break;
             case 29:             
-                $this->readFabricContent($data);
+                if ($this->product['gender'] == 'f' ){
+                    $this->readFabricContent($data);
+                }
+                break;
+            case 39:
+                if ($this->product['gender'] == 'm' ){
+                    $this->readColors($data); //['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
+                }
+                break;
+            case 41:
+                if ($this->product['gender'] == 'm' ){
+                   $this->readFabricContent($data);
+                }
                 break;
         }
 
