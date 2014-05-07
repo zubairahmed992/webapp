@@ -4,7 +4,7 @@ sizes:
     bust: 34.25
     waist: 24
     hips: 33.75
-    shoulder_across_back: 13.25
+    shoulder_across_back: 13
     thigh: 18
     knee: 13
     calf: 12.5
@@ -18,7 +18,7 @@ sizes:
     bust: 34.75
     waist: 24.5
     hips: 34.25
-    shoulder_across_back: 13.75
+    shoulder_across_back: 13.50
     thigh: 18.5
     knee: 13
     calf: 13.5
@@ -32,7 +32,7 @@ sizes:
     bust: 35.25
     waist: 25
     hips: 34.75
-    shoulder_across_back: 14.25
+    shoulder_across_back: 14
     thigh: 19
     knee: 14
     calf: 13.5
@@ -46,7 +46,7 @@ sizes:
     bust: 35.75
     waist: 25.5
     hips: 35.25
-    shoulder_across_back: 14.75
+    shoulder_across_back: 14.50
     thigh: 19.5
     knee: 14.5
     calf: 14
@@ -60,7 +60,7 @@ sizes:
     bust: 36.25
     waist: 26
     hips: 35.75
-    shoulder_across_back: 15.25
+    shoulder_across_back: 15
     thigh: 20
     knee: 15
     calf: 15.5
@@ -74,7 +74,7 @@ sizes:
     bust: 36.75
     waist: 26.5
     hips: 36.25
-    shoulder_across_back: 15.75
+    shoulder_across_back: 15.50
     thigh: 20.5
     knee: 15.5
     calf: 16
@@ -88,7 +88,7 @@ sizes:
     bust: 37.25
     waist: 27
     hips: 36.75
-    shoulder_across_back: 16.25
+    shoulder_across_back: 16
     thigh: 21
     knee: 16
     calf: 16.5
@@ -102,7 +102,7 @@ sizes:
     bust: 37.75
     waist: 28
     hips: 37.25
-    shoulder_across_back: 16.75
+    shoulder_across_back: 16.50
     thigh: 21.5
     knee: 16.5
     calf: 17
