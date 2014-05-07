@@ -252,13 +252,16 @@ class ProductDataController extends Controller {
         $return_ar = array();
         $return_ar['msg'] = '';
         $return_ar['obj'] = null;
-        if ($clothingType == Null) {
+        if ($data['gender'] == Null) {
+            $return_ar['msg'] = 'Gender did not match or provided';
+            $return_ar['success'] = false;
+        }elseif ($clothingType == Null) {
             $return_ar['msg'] = "Clothing Type did not match";
             $return_ar['success'] = false;
         } elseif ($brand == Null) {
             $return_ar['msg'] = 'Brand name did not match';
             $return_ar['success'] = false;
-        } else {
+        }  else{
             
             $em = $this->getDoctrine()->getManager();
             $product = $pcsv->fillProduct($data);

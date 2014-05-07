@@ -52,7 +52,14 @@ class ProductCSVDataUploader {
                 $this->readSize($data);
                 break;
             case 1:
-                $this->product['gender'] = strtolower($data[1])=='male'?'m':'f';
+                if(strtolower($data[1])=='male'){
+                    $this->product['gender'] = 'm';
+                }elseif(strtolower($data[1])=='female'){
+                    $this->product['gender'] = 'f';
+                }else{
+                    $this->product['gender'] =null;
+                }                
+                    
                 break;
             case 4:
                 $this->readClothingType($data);
@@ -128,7 +135,7 @@ class ProductCSVDataUploader {
         $this->previous_row = '';
 
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, $row_length, ",")) !== FALSE) {
                 //$this->readProduct($data);
                 $str = $this->row . '  ';
                 for ($i=0;$i<=$col;$i++){
