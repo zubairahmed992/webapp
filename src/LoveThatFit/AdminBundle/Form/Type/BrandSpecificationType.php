@@ -25,12 +25,19 @@ class BrandSpecificationType extends AbstractType {
                     'multiple' => true,'required'  => true,));
         
         
-        $builder->add('male_numbers', 'choice', array('choices'=> $this->allSizes['man_number_sizes'],'expanded' => true,
+        $builder->add('male_chest', 'choice', array('choices'=> $this->allSizes['man_chest_sizes'],'expanded' => true,
                     'multiple' => true,'required'  => true,));
         
         $builder->add(
                 'male_letters', 'choice', 
                 array('choices'=>$this->allSizes['man_letter_sizes'],
+                       'multiple'  => true,
+                       'expanded'  => true, 
+                ));
+       
+        $builder->add(
+                'male_shirt', 'choice', 
+                array('choices'=>$this->allSizes['man_shirt_sizes'],
                        'multiple'  => true,
                        'expanded'  => true, 
                 ));

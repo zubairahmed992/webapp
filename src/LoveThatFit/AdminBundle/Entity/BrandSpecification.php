@@ -53,7 +53,13 @@ class BrandSpecification {
      * @var string $male_numbers
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
-    protected $male_numbers;
+    protected $male_chest;
+    
+    /**
+     * @var string $male_shirt
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    protected $male_shirt;
     
     /**
      * @var string $male_letters
@@ -167,29 +173,7 @@ class BrandSpecification {
         return $this->size_title_type;
     }
 
-    /**
-     * Set male_numbers
-     *
-     * @param string $maleNumbers
-     * @return BrandSpecification
-     */
-    public function setMaleNumbers($maleNumbers)
-    {
-        $this->male_numbers = $maleNumbers;
     
-        return $this;
-    }
-
-    /**
-     * Get male_numbers
-     *
-     * @return string 
-     */
-    public function getMaleNumbers()
-    {
-        return $this->male_numbers;
-    }
-
     /**
      * Set male_letters
      *
@@ -329,4 +313,50 @@ class BrandSpecification {
     }
 
     
+
+    /**
+     * Set male_chest
+     *
+     * @param string $maleChest
+     * @return BrandSpecification
+     */
+    public function setMaleChest($maleChest)
+    {
+        $this->male_chest = $maleChest;
+    
+        return $this;
+    }
+
+    /**
+     * Get male_chest
+     *
+     * @return string 
+     */
+    public function getMaleChest()
+    {
+        return $this->male_chest;
+    }
+
+    /**
+     * Set male_shirt
+     *
+     * @param string $maleShirt
+     * @return BrandSpecification
+     */
+    public function setMaleShirt($maleShirt)
+    {
+        $this->male_shirt = $maleShirt;
+    
+        return $this;
+    }
+
+    /**
+     * Get male_shirt
+     *
+     * @return string 
+     */
+    public function getMaleShirt()
+    {
+        return $this->male_shirt;
+    }
 }

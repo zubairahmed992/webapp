@@ -60,7 +60,7 @@ constants:
         4X:
           title: 4X
           index: 17
-      numbers:
+      number:
         '00':
           title: '00'
           index: 1
@@ -149,7 +149,7 @@ constants:
         36: 
           title: 36
           index: 14
-      Bra_Measurement:
+      bra:
         28a:
             size: 28 
             cup: a 
@@ -498,7 +498,7 @@ constants:
         4X:
           title: 4X
           index: 17   
-      numbers:
+      chest:
         35: 
           title: 35
           index: 1
@@ -589,678 +589,870 @@ constants:
          index: 15
       shirt:
          14-32:
+           title: 14-32
            neck: 14
            arm_length: 23.75
            half_shoulder: 8.25
            shoulder: 16.5
            sleeve_size: 32
            index: 1
+           
          14-33:  
+           title: 14-33
            neck: 14
            arm_length: 24.75
            half_shoulder: 8.25
            shoulder: 16.5
            sleeve_size: 33
            index: 2
+          
          14-34:  
+           title: 14-34
            neck: 14
            arm-length: 25.75
            half_shoulder: 8.25
            shoulder: 16.5  
            sleeve_size: 34
            index: 3
-         14-35:  
+          
+         14-35:
+           title: 14-35
            neck: 14
            arm_length: 26.75
            half_shoulder: 8.25
            shoulder: 16.5 
            sleeve_size: 35
            index: 4
-         14-36:  
+           
+         14-36: 
+           title: 14-36
            neck: 14
            arm_length: 27.75
            half_shoulder: 8.25
            shoulder: 16.5 
            sleeve_size: 36
            index: 5
-         14-37:  
+           
+         14-37: 
+           title: 14-37
            neck: 14
            arm_length: 28.75
            half_shoulder: 8.25
            shoulder: 16.5 
            sleeve_size: 37
            index: 6
-         14-38:  
+          
+         14-38: 
+           title: 14-38
            neck: 14
            arm_length: 29.75
            half_shoulder: 8.25
            shoulder: 16.5 
            sleeve_size: 38
            index: 7
-         14-39:  
+           
+         14-39:
+           title: 14-39
            neck: 14
            arm_length: 30.75
            half_shoulder: 8.25
            shoulder: 16.5
            sleeve_size: 39
            index: 8
+          
          14.5-32:
+           title: 14.5-32
            neck: 14.5
            arm_length: 23.5
            half_shoulder: 8.5
            shoulder: 17
            sleeve_size: 32
            index: 9
+           
          14.5-33:
+           title: 14.5-33
            neck: 14.5
            arm_length: 24.5
            half_shoulder: 8.5
            shoulder: 17 
            sleeve_size: 33
            index: 10
+           
          14.5-34:
+           title: 14.5-34
            neck: 14.5
            arm_length: 25.5
            half_shoulder: 8.5
            shoulder: 17 
            sleeve_size: 34
            index: 11
+          
          14.5-35:
+           title: 14.5-35
            neck: 14.5
            arm_length: 26.5
            half_shoulder: 8.5
            shoulder: 17 
            sleeve_size: 35
            index: 12
+           
          14.5-36:
+           title: 14.5-36
            neck: 14.5
            arm_length: 27.5
            half_shoulder: 8.5
            shoulder: 17 
            sleeve_size: 36
            index: 13
+           
          14.5-37:
+           title: 14.5-37
            neck: 14.5
            arm_length: 28.5
            half_shoulder: 8.5
            shoulder: 17
            sleeve_size: 37
            index: 14
+           
          14.5-38:
+           title: 14.5-38
            neck: 14.5
            arm_length: 29.5
            half_shoulder: 8.5
            shoulder: 17 
            sleeve_size: 38
            index: 15
+           
          14.5-39:
+           title: 14.5-39
            neck: 14.5
            arm_length: 30.5
            half_shoulder: 8.5
            shoulder: 17  
            sleeve_size: 39
            index: 16
+           
          15-32:
+           title: 15-32
            neck: 15
            arm_length: 23.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 32
            index: 17
+           
          15-33:
+           title: 15-33
            neck: 15
            arm_length: 24.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 33
            index: 17
+           
          15-34:
+           title: 15-34
            neck: 15
            arm_length: 25.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 34
            index: 18
+           
          15-35:
+           title: 15-35
            neck: 15
            arm_length: 26.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 36
            index: 19
+           
          15-36:
+           title: 15-36
            neck: 15
            arm_length: 27.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 37
            index: 20
+           
          15-37:
+           title: 15-37
            neck: 15
            arm_length: 28.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 37
            index: 21  
+           
          15-38:
+           title: 15-38
            neck: 15
            arm_length: 29.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 38
            index: 22
+           
          15-39:
+           title: 15-39
            neck: 15
            arm_length: 30.25
            half_shoulder: 8.75
            shoulder: 17.5  
            sleeve_size: 39
            index: 23
+           
          16-32:
+           title: 16-32
            neck: 16
            arm_length: 22.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 32
            index: 24
+           
          16-33:
+           title: 16-33
            neck: 16
            arm_length: 23.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 33
            index: 25
+           
          16-34:
+           title: 16-34
            neck: 16
            arm_length: 24.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 34
            index: 26
+           
          16-35:
+           title: 16-35
            neck: 16
            arm_length: 25.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 35
            index: 27
+           
          16-36:
+           title: 16-36
            neck: 16
            arm_length: 26.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 36
            index: 28
+           
          16-37:
+           title: 16-37
            neck: 16
            arm_length: 27.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 37
            index: 29
+           
          16-38:
+           title: 16-38
            neck: 16
            arm_length: 28.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 38
            index: 30
+           
          16-39:
+           title: 16-39
            neck: 16
            arm_length: 29.75
            half_shoulder: 9.25
            shoulder: 18.5  
            sleeve_size: 39
            index: 31
+           
          16.5-32:
+           title: 16.5-32
            neck: 16.5
            arm_length: 22.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 32
            index: 32
+           
          16.5-33:
+           title: 16.5-33
            neck: 16.5
            arm_length: 23.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 33
            index: 33
+           
          16.5-34:
+           title: 16.5-34
            neck: 16.5
            arm_length: 24.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 34
            index: 34
+           
          16.5-35:
+           title: 16.5-35
            neck: 16.5
            arm_length: 25.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 35
            index: 35
+           
          16.5-36:
+           title: 16.5-36
            neck: 16.5
            arm_length: 26.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 36
            index: 36
+           
          16.5-37:
+           title: 16.5-37
            neck: 16.5
            arm_length: 27.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 37
            index: 37
+           
          16.5-38:
+           title: 16.5-38
            neck: 16.5
            arm_length: 28.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 38
            index: 38
+           
          16.5-39:
+           title: 16.5-39
            neck: 16.5
            arm_length: 29.5
            half_shoulder: 9.5
            shoulder: 19  
            sleeve_size: 39
            index: 39
+           
          17-32:
+           title: 17-32
            neck: 17
            arm_length: 22.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 32
            index: 40
+           
          17-33:
+           title: 17-33
            neck: 17
            arm_length: 23.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 33
            index: 41
+           
          17-34:
+           title: 17-34
            neck: 17
            arm_length: 24.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 34
            index: 42
+           
          17-35:
+           title: 17-35
            neck: 17
            arm_length: 25.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 35
            index: 43
+           
          17-36:
+           title: 17-36
            neck: 17
            arm_length: 26.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 36
            index: 44
+           
          17-37:
+           title: 17-37
            neck: 17
            arm_length: 27.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 37
            index: 45
+           
          17-38:
+           title: 17-38
            neck: 17
            arm_length: 28.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 38
            index: 46
+           
          17-39:
+           title: 17-39
            neck: 17
            arm_length: 29.25
            half_shoulder: 9.75
            shoulder: 19.5  
            sleeve_size: 39
            index: 47
+           
          17.5-32:
+           title: 17.5-32
            neck: 17.5
            arm_length: 22
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 32
            index: 48
+           
          17.5-33:
+           title: 17.5-33
            neck: 17.5
            arm_length: 23
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 33
            index: 49
+           
          17.5-34:
+           title: 17.5-34
            neck: 17.5
            arm_length: 24
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 34
            index: 50
+           
          17.5-35:
+           title: 17.5-35
            neck: 17.5
            arm_length: 25
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 35
            index: 51
+           
          17.5-36:
+           title: 17.5-36
            neck: 17.5
            arm_length: 26
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 36
            index: 52
+           
          17.5-37:
+           title: 17.5-37
            neck: 17.5
            arm_length: 27
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 37
            index: 53
+           
          17.5-38:
+           title: 17.5-38
            neck: 17.5
            arm_length: 28
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 38
            index: 54
+           
          17.5-39:
+           title: 17.5-39
            neck: 17.5
            arm_length: 29
            half_shoulder: 10
            shoulder: 20
            sleeve_size: 39
            index: 55
+           
          18-32:
+           title: 18-32
            neck: 18
            arm_length: 21.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 32
            index: 56
+           
          18-33:
+           title: 18-33
            neck: 18
            arm_length: 22.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 33
            index: 57
+           
          18-34:
+           title: 18-34
            neck: 18
            arm_length: 23.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 34
            index: 58
+           
          18-35:
+           title: 18-35
            neck: 18
            arm_length: 24.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 35
            index: 59
+           
          18-36:
+           title: 18-36
            neck: 18
            arm_length: 25.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 36
            index: 60
+           
          18-37:
+           title: 18-37
            neck: 18
            arm_length: 26.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 37
            index: 61
+           
          18-38:
+           title: 18-38
            neck: 18
            arm_length: 27.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 38
            index: 62
+           
          18-39:
+           title: 18-39
            neck: 18
            arm_length: 28.75
            half_shoulder: 10.25
            shoulder: 20.5
            sleeve_size: 39
            index: 63
+           
          18.5-32:
+           title: 18.5-32
            neck: 18.5
            arm_length: 21.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 32
            index: 64
+           
          18.5-33:
+           title: 18.5-33
            neck: 18.5
            arm_length: 22.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 33
            index: 65
+           
          18.5-34:
+           title: 18.5-34
            neck: 18.5
            arm_length: 23.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 34
            index: 66
+           
          18.5-35:
+           title: 18.5-35
            neck: 18.5
            arm_length: 24.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 35
            index: 67
+           
          18.5-36:
+           title: 18.5-36
            neck: 18.5
            arm_length: 25.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 36
            index: 68
+           
          18.5-37:
+           title: 18.5-37
            neck: 18.5
            arm_length: 26.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 37
            index: 69
+           
          18.5-38:
+           title: 18.5-38
            neck: 18.5
            arm_length: 28.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 38
            index: 70
+           
          18.5-39:
+           title: 18.5-39
            neck: 18.5
            arm_length: 29.5
            half_shoulder: 10.5
            shoulder: 21
            sleeve_size: 39
            index: 71
+           
          19-32:
+           title: 19-32
            neck: 19
            arm_length: 21.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 32
            index: 72
+           
          19-33:
+           title: 19-32
            neck: 19
            arm_length: 22.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 33
            index: 73
+           
          19-34:
+           title: 19-34
            neck: 19
            arm_length: 23.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 34
            index: 74
+           
          19-35:
+           title: 19-35
            neck: 19
            arm_length: 24.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 35
            index: 75
+           
          19-36:
+           title: 19-36
            neck: 19
            arm_length: 25.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 36
            index: 75
+           
          19-37:
+           title: 19-37
            neck: 19
            arm_length: 26.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 37
            index: 76
+           
          19-38:
+           title: 19-38
            neck: 19
            arm_length: 27.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 38
            index: 77
+           
          19-39:
+           title: 19-39
            neck: 19
            arm_length: 28.25
            half_shoulder: 10.75
            shoulder: 21.5
            sleeve_size: 39
            index: 78
+           
          20-32:
+           title: 20-32
            neck: 20
            arm_length: 20.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 32
            index: 79
+           
          20-33:
+           title: 20-33
            neck: 20
            arm_length: 21.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 33
            index: 80
+           
          20-34:
+           title: 20-34
            neck: 20
            arm_length: 22.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 34
            index: 81
+           
          20-35:
+           title: 20-35
            neck: 20
            arm_length: 23.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 35
            index: 82
+           
          20-36:
+           title: 20-36
            neck: 20
            arm_length: 24.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 36
            index: 83
+           
          20-37:
+           title: 20-37
            neck: 20
            arm_length: 25.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 37
            index: 84
+           
          20-38:
+           title: 20-38
            neck: 20
            arm_length: 26.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 38
            index: 85
+           
          20-39:
+           title: 20-39
            neck: 20
            arm_length: 27.75
            half_shoulder: 11.25
            shoulder: 22.5
            sleeve_size: 39
            index: 86
+           
          22-32:
+           title: 22-32
            neck: 22
            arm_length: 20.25
            half_shoulder: 11.75
            shoulder: 23.5
            sleeve_size: 32
            index: 87
+           
          22-33:
+           title: 22-33
            neck: 22
            arm_length: 21.25
            half_shoulder: 11.75
            shoulder: 23.5
            sleeve_size: 33
            index: 88
+           
          22-34:
+           title: 22-34
            neck: 22
            arm_length: 22.25
            half_shoulder: 11.75
            shoulder: 23.5
            sleeve_size: 34
            index: 89
+           
          22-35:
+           title: 22-35
            neck: 22
            arm_length: 23.25
            half_shoulder: 11.75
            shoulder: 23.5
            sleeve_size: 35
            index: 90
+           
          22-36:
+           title: 22-36
            neck: 22
            arm_length: 24.25
            half_shoulder: 11.75
            shoulder: 23.5
            sleeve_size: 36
            index: 91
+           
          22-37:
+           title: 22-37
            neck: 22
            arm_length: 25.25
            half_shoulder: 11.75
            shoulder: 23.5
            sleeve_size: 37
            index: 92
+           
          22-38:
+           title: 22-38
            neck: 22
            arm_length: 26.25
            half_shoulder: 11.75
            shoulder: 24.5
            sleeve_size: 38
            index: 93
+           
          22-39:
+           title: 22-39
            neck: 22
            arm_length: 27.25
            half_shoulder: 11.75
            shoulder: 24.5
            sleeve_size: 39
            index: 94
-      neck_sizes:
+           
+      neck:
           14: 14 
           '14.5': 14.5
           15: 15
@@ -1273,7 +1465,7 @@ constants:
           19: 19
           20: 20
           22: 22
-      sleeve_size:
+      sleeve:
          33: 33
          34: 34
          35: 35

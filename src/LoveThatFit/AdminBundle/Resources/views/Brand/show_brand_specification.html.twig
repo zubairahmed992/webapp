@@ -34,13 +34,13 @@ document.getElementById("brand_size_title_type").innerHTML=s;
    
     
     {% autoescape false %} 
-    var json = {{brand.getBrandspecification.maleNumbers}};
+    var json = {{brand.getBrandspecification.maleChest}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
-document.getElementById("brand_male_numbers").innerHTML=s; 
+document.getElementById("brand_male_chest").innerHTML=s; 
    {% endautoescape %}  
     
     
@@ -65,8 +65,18 @@ document.getElementById("brand_male_letters").innerHTML=s;
 }
 document.getElementById("brand_male_waists").innerHTML=s; 
    {% endautoescape %} 
-       
-       
+  
+  {% autoescape false %} 
+    var json = {{brand.getBrandspecification.maleShirt}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_male_shirt").innerHTML=s; 
+   {% endautoescape %}
+      
+      
     {% autoescape false %} 
     var json = {{brand.getBrandspecification.femaleNumbers}};
  s="";
@@ -85,6 +95,7 @@ document.getElementById("brand_female_numbers").innerHTML=s;
  for(var key in json) {
  s+= ''+json[key]+',';
 }
+
 document.getElementById("brand_female_letters").innerHTML=s; 
    {% endautoescape %}      
      
@@ -132,14 +143,24 @@ document.getElementById("brand_female_waists").innerHTML=s;
     </div> 
           {%endif%}    
              <div style="clear:both;"></div>
-             {%if brand.getBrandspecification.maleNumbers%} 
+             {%if brand.getBrandspecification.maleChest%} 
    <div>
      <div style="float:left">
-     <strong>Male Numbers:</strong>
-     <span style="padding-left: 20px" id="brand_male_numbers"></span>            
+     <strong>Male Chest:</strong>
+     <span style="padding-left: 20px" id="brand_male_chest"></span>            
      </div>   
     </div> 
           {%endif%}    
+             
+         <div style="clear:both;"></div>
+             {%if brand.getBrandspecification.maleShirt%} 
+   <div>
+     <div style="float:left">
+     <strong>Male Shirt:</strong>
+     <span style="padding-left: 20px" id="brand_male_shirt"></span>            
+     </div>   
+    </div> 
+          {%endif%}         
              <div style="clear:both;"></div>
              {%if brand.getBrandspecification.maleLetters%} 
     <div>

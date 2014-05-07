@@ -772,7 +772,7 @@ $allSizes=$this->container->get('admin.helper.size')->getAllSizes();
             return $allSizes['woman_number_sizes'];
             break;
          case 'male_number':
-            return   $allSizes['man_number_sizes'];
+            return   $allSizes['man_chest_sizes'];
             break;
         case 'male_waist':
             return $allSizes['man_waist_sizes'];
@@ -924,8 +924,8 @@ public function productDetailColorAdd($entity){
 
                if($product->getSizeTitleType()=='numbers' and (strtolower($product->getGender())=='m' ) and (strtolower($product->getClothingType()->getTarget())=='top' ))
                {  
-                  if($brandSpecification->getMaleNumbers()!="null"){
-                      $male_numbers=$this->getArray($brandSpecification->getMaleNumbers());
+                  if($brandSpecification->getMaleChest()!="null"){
+                      $male_numbers=$this->getArray($brandSpecification->getMaleChest());
                   }else{
                       $male_numbers=null;
                   }
@@ -934,8 +934,8 @@ public function productDetailColorAdd($entity){
                }
                if($product->getSizeTitleType()=='numbers' and (strtolower($product->getGender())=='m'  ))
                { 
-                   if($brandSpecification->getMaleNumbers()!="null"){
-                      $male_numbers=$this->getArray($brandSpecification->getMaleNumbers()); 
+                   if($brandSpecification->getMaleChest()!="null"){
+                      $male_numbers=$this->getArray($brandSpecification->getMaleChest()); 
                    }else{
                       $male_numbers=null; 
                    }

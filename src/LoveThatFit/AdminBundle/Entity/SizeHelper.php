@@ -17,8 +17,8 @@ class SizeHelper {
 #-------------------Fetch All Sizes -------------------------------------------#
 public function getAllSizes(){
   return array('women_letter_sizes'=>$this->getWomanLetterSizes(),'woman_number_sizes'=>$this->getWomanNumberSizes()
-          ,'woman_waist_sizes'=>$this->getWomanWaistSizes(),'man_letter_sizes'=>$this->getManLetterSizes(),'man_number_sizes'=>$this->getManNumberSizes()
-          ,'man_waist_sizes'=>$this->getManWaistSizes());
+          ,'woman_waist_sizes'=>$this->getWomanWaistSizes(),'man_letter_sizes'=>$this->getManLetterSizes(),'man_chest_sizes'=>$this->getManChestSizes()
+          ,'man_waist_sizes'=>$this->getManWaistSizes(),'man_shirt_sizes'=>$this->getManShirtSizes());
 }
 #--------------------Woman Sizes Start Here-------------------------------------#
 
@@ -28,7 +28,7 @@ public function getAllSizes(){
 }
 #-----------------------Get Woman Number Sizes----------------------------------#
 public function getWomanNumberSizes(){
-     return $this->getArray($this->constant['size_titles']['women']['numbers']);
+     return $this->getArray($this->constant['size_titles']['women']['number']);
     
 }
 #------------------------Get Woman Waist Sizes---------------------------------#
@@ -40,18 +40,23 @@ public function getWomanWaistSizes(){
   public function getManLetterSizes(){
         return $this->getArray($this->constant['size_titles']['man']['letter']);
 }
-#-----------------------Get Woman Number Sizes----------------------------------#
-public function getManNumberSizes(){
-     return $this->getArray($this->constant['size_titles']['man']['numbers']);
+#-----------------------Get Man Number Sizes----------------------------------#
+public function getManChestSizes(){
+     return $this->getArray($this->constant['size_titles']['man']['chest']);
     
 }
-#------------------------Get Woman Waist Sizes---------------------------------#
+#------------------------Get Man Waist Sizes---------------------------------#
 public function getManWaistSizes(){
      return $this->getArray($this->constant['size_titles']['man']['waist']);
+}
+#--------------------Get Man Shirt Sizes---------------------------------------#
+public function getManShirtSizes(){
+     return $this->getArray($this->constant['size_titles']['man']['shirt']);
 }
 
 #---------------------------Sorting Of Array----------------------------------#
 public function getArray($arr){
+   
     $new_arr=array();
     foreach($arr as $key){
         $new_arr[$key['title']]=$key['title'];
