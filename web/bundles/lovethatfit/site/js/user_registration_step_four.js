@@ -567,7 +567,7 @@ function call_settings(responseText, statusText, xhr, $form){
         
         $(".step_4_tip").fadeIn(50);
         $(".reg_next_step2").attr("value","Save Photo");
-        document.getElementById("hdn_skip_flag").value="process";
+        //document.getElementById("hdn_skip_flag").value="process";
     }
 
     $('#user_file').live('change', function()
