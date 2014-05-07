@@ -210,7 +210,7 @@ class ProductDataController extends Controller {
         
         if ($preview_only){
             $data = $pcsv->read($row_length);
-            return new Response(json_encode($data));
+           return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read($row_length)));        
         }elseif ($raw_only){
             $data = $pcsv->map($row_length);
             return new Response(json_encode($data));
