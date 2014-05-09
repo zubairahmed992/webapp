@@ -265,6 +265,7 @@ class ProductCSVDataUploader {
   
     #---------------------------------------------------------------
     private function fitPoint($i){
+        if ($this->product['gender']=='f'){
         if($i==5) return 'central_front_waist';
         if($i==6) return 'back_waist';
         if($i==7)return 'waist_to_hip';
@@ -291,6 +292,28 @@ class ProductCSVDataUploader {
         if($i==20)return 'knee';
         if($i==21)return 'calf';
         if($i==22)return 'ankle';
+        }else{
+        if($i==5) return 'central_front_waist';
+        if($i==6) return 'back_waist';
+        if($i==7)return 'waist_to_hip';
+        if($i==8)return 'inseam';
+        if($i==9)return 'rise';
+        if($i==10)return 'arm_length';
+        if($i==11)return 'neck';
+        if($i==12)return 'chest';
+        if($i==13)return 'waist';
+        if($i==14)return 'hip';
+        if($i==15)return 'thigh';
+        if($i==16)return 'shoulder_across_front';
+        if($i==17)return 'shoulder_across_back';
+        if($i==18)return 'shoulder_height';
+        if($i==19)return 'tricep';
+        if($i==20)return 'bicep';
+        if($i==21)return 'wrist';
+        if($i==22)return 'knee';
+        if($i==23)return 'calf';
+        if($i==24)return 'ankle';
+        }
     }
     
     #===================================================================
