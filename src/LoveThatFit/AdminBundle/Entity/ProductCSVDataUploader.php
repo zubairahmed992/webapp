@@ -238,7 +238,7 @@ class ProductCSVDataUploader {
     #---------------------------------------------------------------
 
     private function readMeasurement($data) {
-        if ($this->row >= 5 && $this->row <= 22) {
+        if ($this->row >= 5 && $this->row <= 24) {
             $sm = array();
             foreach ($this->product['sizes'] as $k => $v) {
                 # if flat measurement or (high & low measurements available then pic the data )
