@@ -34,6 +34,7 @@ constants:
     triceps : Triceps
     wrist: Wrist
     bust: Bust
+    chest: Chest
     back_waist: Back Waist
     waist: Waist
     cf_waist: CF Waist
@@ -50,6 +51,7 @@ constants:
     triceps : Triceps
     wrist: Wrist
     bust: Bust
+    chest: Chest
     back_waist: Back Waist
     waist: Waist
     cf_waist: CF Waist
@@ -62,6 +64,7 @@ constants:
     shoulder_across_back: Shoulder across back
     shoulder_length: Shoulder length
     bust: Bust
+    chest: Chest
     back_waist: Back Waist
     waist: Waist
     cf_waist: CF Waist
@@ -78,6 +81,7 @@ constants:
     triceps : Triceps
     wrist: Wrist
     bust: Bust
+    chest: Chest
     back_waist: Back Waist
     waist: Waist
     cf_waist: CF Waist
@@ -94,6 +98,7 @@ constants:
     triceps : Triceps
     wrist: Wrist
     bust: Bust
+    chest: Chest
     back_waist: Back Waist
     waist: Waist
     cf_waist: CF Waist
@@ -161,6 +166,7 @@ constants:
     triceps : Triceps
     wrist: Wrist
     bust: Bust
+    chest: Chest
     back_waist: Back Waist
     waist: Waist
     cf_waist: CF Waist
