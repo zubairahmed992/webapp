@@ -3,7 +3,7 @@
 <li class="active"> Product CSV / Preview</li>
 {% endblock %}        
 {% block body %}        
-    <table width="800px" border="0">
+    <table width="1024" border="0">
         <tr>
             <td colspan="2"><h3>Product Detail</h3>
             </td>
@@ -14,61 +14,70 @@
             <td  colspan="2"> <b> {{p}} :</b> &nbsp; {{key}}</td>
         </tr>  
         {% endif%}
-
-{%endfor%}  
-  
+{%endfor%}    
 <tr>
-            <td colspan="2"  width="100%">
+            <td colspan="2">
                 <b>Colors: </b> &nbsp;
             {% for pc,key in product.product_color %}
                     <span>{{key}}</span>  &nbsp;|&nbsp;
             {%endfor%}        
             </td>            
         </tr>
-
 <tr>
-            <td colspan="2"  width="100%">
+            <td colspan="2">
                 <b>Fit Priority</b>  &nbsp;&nbsp;
             {%for fp,key in product.fit_priority %}
                     <span><span><b> {{fp}} :</b> </span>  <span>{{key}}</span>  </span>    &nbsp;|&nbsp;
             {%endfor%}        
             </td>            
-        </tr>
-
-        
+        </tr>       
         <tr>
-            <td colspan="2"  width="100%">
-                <h5>Fabric content</h5>
+            <td colspan="2">
+                <span><strong>Fabric content:</strong></span>
             {%for fc,key in product.fabric_content%}
                     <span><span><b> {{fc}} :</b> </span>  <span>{{key}}</span>  </span>  
             {%endfor%}        
             </td>            
         </tr>
-
-
         <tr>
-            <td colspan="2"><h5>Product Sizes</h5>
+            <td colspan="2"><span><strong>Product Sizes:</strong></span>
             </td>
         </tr>
+<tr>
+  <td colspan="2">
+ <table width="1213" border="1">
+ <tr>
+    <td width="203"></td>
+    <td width="115"><span><strong>garment flat</strong></span></td>
+    <td width="172"><span><strong>stretch percentage</strong></span></td>
+    <td width="133"><span><strong>stretch fit</strong></span></td>
+    <td width="169"><span><strong>max measurement</strong></span></td>
+    <td width="110"><span><strong>ideal high</strong></span></td>
+    <td width="112"><span><strong>ideal low</strong></span></td>
+    <td width="165"><span><strong>min measurement</strong></span></td>
+  </tr>
 {% for size,key in product.sizes %}
-        <tr>
-            <td   colspan="2" > <b> {{size}} :</b></td>
-        </tr>        
-        <td width="268" colspan="2"><strong>
-                {%for ps,keys in key %}
-                        {% if (ps!='key')%}
-                                        <tr>
-                                            <td colspan="2">
-                                                <b>{{ps}} :</b></td>
-                                        <tr/>
-
-                                    </td>
-                                </tr>       
-                            {%endif%}
-                  {%endfor%}
+  <tr>
+      <td colspan="8" style="margin-top:5px;"><span><strong>{{size}}</strong></span></td>
+  </tr>   
+   {%for ps,keys in key %} 
+   {% if (ps!='key')%}  
+  <tr>
+    <td><span><strong>{{ps}}</strong></span></td>  
+    {%endif%}
+   {%for pss,keys in keys %}        
+    <td>{{keys}}</td>
+    {%endfor%}                                    
+    </tr>
+    
+ {%endfor%}
+  </td>  
+  </tr>
+         <tr><td colspan="8" style="height:20px;"></td></tr>                       
     </strong></td>
 </tr>
-{%endfor%}        
+{%endfor%}    
+ </table>
     </strong></td>
 </tr>
 
