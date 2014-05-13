@@ -45,25 +45,25 @@ document.getElementById("brand_male_chest").innerHTML=s;
     
     
     {% autoescape false %} 
-    var json = {{brand.getBrandspecification.maleLetters}};
+    var json = {{brand.getBrandspecification.maleLetter}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
-document.getElementById("brand_male_letters").innerHTML=s; 
+document.getElementById("brand_male_letter").innerHTML=s; 
    {% endautoescape %}  
     
     
     
   {% autoescape false %} 
-    var json = {{brand.getBrandspecification.maleWaists}};
+    var json = {{brand.getBrandspecification.maleWaist}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
-document.getElementById("brand_male_waists").innerHTML=s; 
+document.getElementById("brand_male_waist").innerHTML=s; 
    {% endautoescape %} 
   
   {% autoescape false %} 
@@ -75,39 +75,57 @@ document.getElementById("brand_male_waists").innerHTML=s;
 }
 document.getElementById("brand_male_shirt").innerHTML=s; 
    {% endautoescape %}
-      
-      
-    {% autoescape false %} 
-    var json = {{brand.getBrandspecification.femaleNumbers}};
+      {% autoescape false %} 
+    var json = {{brand.getBrandspecification.maleNeck}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
-document.getElementById("brand_female_numbers").innerHTML=s; 
+document.getElementById("brand_male_neck").innerHTML=s; 
+   {% endautoescape %}
+      
+    {% autoescape false %} 
+    var json = {{brand.getBrandspecification.femaleNumber}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_female_number").innerHTML=s; 
    {% endautoescape %}    
        
        
    {% autoescape false %} 
-    var json = {{brand.getBrandspecification.femaleLetters}};
+    var json = {{brand.getBrandspecification.femaleLetter}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
 
-document.getElementById("brand_female_letters").innerHTML=s; 
+document.getElementById("brand_female_letter").innerHTML=s; 
    {% endautoescape %}      
      
    
    {% autoescape false %} 
-    var json = {{brand.getBrandspecification.femaleWaists}};
+    var json = {{brand.getBrandspecification.femaleWaist}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
-document.getElementById("brand_female_waists").innerHTML=s; 
+document.getElementById("brand_female_waist").innerHTML=s; 
+   {% endautoescape %}   
+       
+        {% autoescape false %} 
+    var json = {{brand.getBrandspecification.femaleBra}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_female_bra").innerHTML=s; 
    {% endautoescape %}   
     
    });    
@@ -162,52 +180,71 @@ document.getElementById("brand_female_waists").innerHTML=s;
     </div> 
           {%endif%}         
              <div style="clear:both;"></div>
-             {%if brand.getBrandspecification.maleLetters%} 
+             {%if brand.getBrandspecification.maleLetter%} 
     <div>
      <div style="float:left">
-     <strong>Male Letters:</strong>
-     <span style="padding-left: 20px" id="brand_male_letters"></span>            
+     <strong>Male Letter:</strong>
+     <span style="padding-left: 20px" id="brand_male_letter"></span>            
      </div>   
     </div> 
               {%endif%}    
              <div style="clear:both;"></div>
-        {%if brand.getBrandspecification.maleWaists%}  
+        {%if brand.getBrandspecification.maleWaist%}  
     <div>
      <div style="float:left">
-     <strong>Male Waists:</strong>
-     <span style="padding-left: 20px" id="brand_male_waists"></span>            
+     <strong>Male Waist:</strong>
+     <span style="padding-left: 20px" id="brand_male_waist"></span>            
      </div>   
     </div>
               {%endif%}    
              <div style="clear:both;"></div>
-         {%if brand.getBrandspecification.femaleNumbers%} 
+             
+          {%if brand.getBrandspecification.maleNeck %}  
     <div>
      <div style="float:left">
-     <strong>Female Numbers:</strong>
-     <span style="padding-left: 20px" id="brand_female_numbers"></span>            
+     <strong>Male Neck:</strong>
+     <span style="padding-left: 20px" id="brand_male_neck"></span>            
+     </div>   
+    </div>
+              {%endif%}    
+             <div style="clear:both;"></div>    
+         {%if brand.getBrandspecification.femaleNumber%} 
+    <div>
+     <div style="float:left">
+     <strong>Female Number:</strong>
+     <span style="padding-left: 20px" id="brand_female_number"></span>            
      </div>   
     </div> 
           {%endif%}    
              <div style="clear:both;"></div>
-             {%if brand.getBrandspecification.femaleLetters%} 
+             {%if brand.getBrandspecification.femaleLetter%} 
     <div>
      <div style="float:left">
-     <strong>Female Letters:</strong>
-     <span style="padding-left: 20px" id="brand_female_letters"></span>            
+     <strong>Female Letter:</strong>
+     <span style="padding-left: 20px" id="brand_female_letter"></span>            
      </div>   
     </div> 
               {%endif%}    
              <div style="clear:both;"></div>
          
      <div>
-     {%if brand.getBrandspecification.femaleWaists%}    
+     {%if brand.getBrandspecification.femaleWaist%}    
      <div style="float:left">
-     <strong>Female Waists:</strong>
-     <span style="padding-left: 20px" id="brand_female_waists"></span>            
+     <strong>Female Waist:</strong>
+     <span style="padding-left: 20px" id="brand_female_waist"></span>            
      </div>   
      {%endif%}        
     </div>   
           <div style="clear:both;"></div>
+        <div>
+     {%if brand.getBrandspecification.femaleBra%}    
+     <div style="float:left">
+     <strong>Female Bra:</strong>
+     <span style="padding-left: 20px" id="brand_female_bra"></span>            
+     </div>   
+     {%endif%}        
+    </div>   
+          <div style="clear:both;"></div>  
          </div>
  
  <a href="{{ path('admin_brand_specificationabs_edit', {'id': brand.getBrandspecification.Id,'brand_id':brand.Id}) }}" class="btn">Edit</a>      

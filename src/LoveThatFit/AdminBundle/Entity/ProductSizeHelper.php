@@ -93,16 +93,25 @@ class ProductSizeHelper {
           $sizes['body_type']= $body_type['body_type']   ;
           $sizes[]= $body_type['title']   ;
        if($sizes['body_type']=='Petite'){
-           $sizes_bodyType['Petite'][]= strtoupper($body_type['title']); 
+           $sizes_bodyType['Petite'][]= ($body_type['title']); 
        }
        if($sizes['body_type']=='Regular'){
-           $sizes_bodyType['Regular'][]= strtoupper($body_type['title']); 
+           $sizes_bodyType['Regular'][]= ($body_type['title']); 
        }
         if($sizes['body_type']=='Tall'){
-           $sizes_bodyType['Tall'][]= strtoupper($body_type['title']); 
+           $sizes_bodyType['Tall'][]= ($body_type['title']); 
        }
        if($sizes['body_type']=='Waist'){
-           $sizes_bodyType['Waist'][]= strtoupper($body_type['title']); 
+           $sizes_bodyType['Waist'][]= ($body_type['title']); 
+       }
+       if($sizes['body_type']=='Plus'){
+           $sizes_bodyType['Plus'][]= ($body_type['title']); 
+       }
+        if($sizes['body_type']=='Potley'){
+           $sizes_bodyType['Potley'][]= ($body_type['title']); 
+       }
+        if($sizes['body_type']=='Athletic'){
+           $sizes_bodyType['Athletic'][]= ($body_type['title']); 
        }
        }
        
@@ -163,12 +172,21 @@ class ProductSizeHelper {
                 }
        }  
  }
-    
-    
+ 
+ public function keyReturn($all_sizes){
+   $arr= array();
+   foreach($all_sizes as $size=>$key){
+       $arr[]=$size;
+   }
+   
+ }
 #----------------Product Create Sizes------------------------------------------#    
  public function createSizeItemForBodyTypes($product, $p_color, $all_sizes){
-  if($all_sizes->getPetiteSizes()!=NULL){
-        $sizesForPetiteBodyType=$all_sizes->getPetiteSizes();
+   
+     
+   
+         if($all_sizes->petite!=NULL){
+        $sizesForPetiteBodyType=$all_sizes->petite;
         $bodyTypePetite="Petite";
 #-------------------- For Petite BodyType--------------------------------------#
         foreach ($sizesForPetiteBodyType as $s) {
@@ -192,9 +210,12 @@ class ProductSizeHelper {
             }
         }
 }   
+         
+     
+     
 #-------------------End of Petite Size-----------------------------------------# 
-    if($all_sizes->getRegularSizes()!=Null){
-       $sizesForRegularBodyType=$all_sizes->getRegularSizes();
+    if($all_sizes->regular!=Null){
+       $sizesForRegularBodyType=$all_sizes->regular;
         $bodyTypeRegular="Regular";
  #---------------- For Regular BodyType--------------------------------------#
         foreach ($sizesForRegularBodyType as $s) {
@@ -219,8 +240,8 @@ class ProductSizeHelper {
         }
     }   
 #-----------------End of Regular Size Size-------------------------------------# 
-     if($all_sizes->getTallSizes()!=Null){
-    $sizesForTallBodyType=$all_sizes->getTallSizes();
+     if($all_sizes->tall!=Null){
+    $sizesForTallBodyType=$all_sizes->tall;
     $bodyTypeTall="Tall";
  #---------------- For Tall BodyType--------------------------------------#
         foreach ($sizesForTallBodyType as $s) {
@@ -244,34 +265,90 @@ class ProductSizeHelper {
             }
         }
      }
- #-----------------End of Tall  Size Size-----------------------------------------#      
-    
+ #-----------------End of Tall  Size Size-----------------------------------------# 
      
-     if($all_sizes->getwomenWaistSizes()!=NULL){
-        $sizesForWaistBodyType=$all_sizes->getwomenWaistSizes();
-        $bodyTypePetite="Waist";
-#-------------------- For Petite BodyType--------------------------------------#
-        foreach ($sizesForWaistBodyType as $s) {
-               $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypePetite);
-                $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
-
+  
+     if($all_sizes->plus!=Null){
+    $sizesForTallBodyType=$all_sizes->plus;
+    $bodyTypeTall="Plus";
+ #---------------- For Plus BodyType--------------------------------------#
+        foreach ($sizesForTallBodyType as $s) {
+ #-----------The Method used for matching size title and body type ------------#
+            $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeTall);
+             $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
             if (!$p_size) {
                 $p_size = new ProductSize();
                 $p_size->setProduct($product);
                 $p_size->setTitle($s);
-                $p_size->setbodyType($bodyTypePetite);
+                $p_size->setbodyType($bodyTypeTall);
                 $p_size->setIndexValue($indexValue);
                 $this->em->persist($p_size);
                 $this->em->flush();
-              $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
+                $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
             } else {
                 $p_item = $product->getThisItem($p_color, $p_size);
-                 if (!$p_item) {
-                $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);        
+                if (!$p_item) {
+                     $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
                 }
             }
         }
-}   
+     }
+ #-----------------End of Plus  Size Size-----------------------------------------#       
+    
+     
+      if($all_sizes->athletic!=Null){
+    $sizesForTallBodyType=$all_sizes->athletic;
+    $bodyTypeTall="Athletic";
+ #---------------- For Atheletic BodyType--------------------------------------#
+        foreach ($sizesForTallBodyType as $s) {
+ #-----------The Method used for matching size title and body type ------------#
+            $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeTall);
+             $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
+            if (!$p_size) {
+                $p_size = new ProductSize();
+                $p_size->setProduct($product);
+                $p_size->setTitle($s);
+                $p_size->setbodyType($bodyTypeTall);
+                $p_size->setIndexValue($indexValue);
+                $this->em->persist($p_size);
+                $this->em->flush();
+                $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
+            } else {
+                $p_item = $product->getThisItem($p_color, $p_size);
+                if (!$p_item) {
+                     $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
+                }
+            }
+        }
+     }
+     
+   
+       if($all_sizes->potley!=Null){
+    $sizesForTallBodyType=$all_sizes->potley;
+    $bodyTypeTall="Potley";
+ #---------------- For Atheletic BodyType--------------------------------------#
+        foreach ($sizesForTallBodyType as $s) {
+ #-----------The Method used for matching size title and body type ------------#
+            $p_size = $product->getSizeByTitleBaseBodyType($s,$bodyTypeTall);
+             $indexValue=$this->getSizeIndexValue($product->getSizeTitleType(),$product->getGender(),$s,$product);
+            if (!$p_size) {
+                $p_size = new ProductSize();
+                $p_size->setProduct($product);
+                $p_size->setTitle($s);
+                $p_size->setbodyType($bodyTypeTall);
+                $p_size->setIndexValue($indexValue);
+                $this->em->persist($p_size);
+                $this->em->flush();
+                $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
+            } else {
+                $p_item = $product->getThisItem($p_color, $p_size);
+                if (!$p_item) {
+                     $this->container->get('admin.helper.productitem')->addItem($product, $p_color, $p_size);  
+                }
+            }
+        }
+     }
+     
  }
  
  #--------Fetching Neck and Sleeve Size for Measruemt setp 2 combo box---------#

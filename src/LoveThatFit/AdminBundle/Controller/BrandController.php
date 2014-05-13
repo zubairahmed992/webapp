@@ -90,11 +90,12 @@ class BrandController extends Controller {
  public function newBrandSpecificationAction($id)
  {
      $allSizes=$this->get('admin.helper.size')->getAllSizes();
-  //   return new response(json_encode($allSizes['man_shirt_sizes']));
+     
+    //return new response(json_encode($allSizes));
      $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
      $entity = $specs['entity'];       
      $brandspecification=new BrandSpecification();
-     $form=$this->createForm(new BrandSpecificationType($allSizes),$brandspecification);
+     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()),$brandspecification);
       return $this->render('LoveThatFitAdminBundle:Brand:new_brand_specification.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -106,13 +107,13 @@ public function createBrandSpecificationAction($id,Request $request)
     $allSizes=$this->get('admin.helper.size')->getAllSizes();
     $entity = $this->get('admin.helper.brand')->find($id);     
     $brandspecification=new BrandSpecification();    
-    $form=$this->createForm(new BrandSpecificationType($allSizes),$brandspecification);
+    $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()),$brandspecification);
     $form->bind($request);     
     $brandspecification->setBrand($entity);
     $data = $request->request->all();    
     
     $brandArray= $this->get('admin.helper.brand.specification')->brandDetailArray($data,$brandspecification);         
-    
+  
     $this->get('session')->setFlash($brandArray['message_type'], $brandArray['message']);
      return $this->redirect($this->generateUrl('admin_brand_show', array('id' => $entity->getId())));
 }
@@ -153,15 +154,18 @@ public function showBrandSpecificationAction($id)
      $size_title_type=json_encode(json_decode($brandspecification->getSizeTitleType()));
      $male_chest=json_encode(json_decode($brandspecification->getMaleChest()));
      $male_shirt=json_encode(json_decode($brandspecification->getMaleShirt()));
-     $male_letters=json_encode(json_decode($brandspecification->getMaleLetters()));
-     $male_waists=json_encode(json_decode($brandspecification->getMaleWaists()));
-     $female_numbers=json_encode(json_decode($brandspecification->getFemaleNumbers()));
-     $female_letters=json_encode(json_decode($brandspecification->getFemaleLetters()));
-     $female_waists=json_encode(json_decode($brandspecification->getFemaleWaists()));    
+     $male_letter=json_encode(json_decode($brandspecification->getMaleLetter()));
+     $male_waist=json_encode(json_decode($brandspecification->getMaleWaist()));
+     $male_neck=json_encode(json_decode($brandspecification->getMaleNeck()));
+     
+     $female_number=json_encode(json_decode($brandspecification->getFemaleNumber()));
+     $female_letter=json_encode(json_decode($brandspecification->getFemaleLetter()));
+     $female_waist=json_encode(json_decode($brandspecification->getFemaleWaist()));    
+     $female_bra=json_encode(json_decode($brandspecification->getFemaleBra()));    
     // $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));
 
      $allSizes=$this->get('admin.helper.size')->getAllSizes();
-     $form=$this->createForm(new BrandSpecificationType($allSizes));
+     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()));
      if (isset($gender)) {
             $form->get('gender')->setData(json_decode($gender));
         } 
@@ -175,24 +179,30 @@ public function showBrandSpecificationAction($id)
             $form->get('male_chest')->setData(json_decode($male_chest));
         }
         
-     if (isset($male_letters)) {
-            $form->get('male_letters')->setData(json_decode($male_letters));
+     if (isset($male_letter)) {
+            $form->get('male_letter')->setData(json_decode($male_letter));
         }
      if (isset($male_shirt)) {
             $form->get('male_shirt')->setData(json_decode($male_shirt));
         }   
-     if (isset($male_waists)) {
-            $form->get('male_waists')->setData(json_decode($male_waists));
+     if (isset($male_waist)) {
+            $form->get('male_waist')->setData(json_decode($male_waist));
         }
-     if (isset($female_numbers)) {
-            $form->get('female_numbers')->setData(json_decode($female_numbers));
+    if (isset($male_neck)) {
+            $form->get('male_neck')->setData(json_decode($male_neck));
+        }    
+     if (isset($female_number)) {
+            $form->get('female_number')->setData(json_decode($female_number));
         }
-     if (isset($female_letters)) {
-            $form->get('female_letters')->setData(json_decode($female_letters));
+     if (isset($female_letter)) {
+            $form->get('female_letter')->setData(json_decode($female_letter));
         }        
-     if (isset($female_waists)) {
-            $form->get('female_waists')->setData(json_decode($female_waists));
+     if (isset($female_waist)) {
+            $form->get('female_waist')->setData(json_decode($female_waist));
         }
+    if (isset($female_bra)) {
+            $form->get('female_bra')->setData(json_decode($female_bra));
+        }    
      return $this->render('LoveThatFitAdminBundle:Brand:brand_specification_edit_detail.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -205,7 +215,7 @@ public function showBrandSpecificationAction($id)
      $allSizes=$this->get('admin.helper.size')->getAllSizes();
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
      $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
-     $form=$this->createForm(new BrandSpecificationType($allSizes));
+     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()));
      $form->bind($request);     
      $brandspecification->setBrand($entity);
      $data = $request->request->all();    

@@ -108,7 +108,7 @@ class BrandSpecificationHelper {
   }
 
  public function brandDetailArray($data,$entity){
-     
+    
         // $data=$request->request->all
         // ();                     
             if(isset($data['brand_specification']['gender'])){$entity->setGender($this->getJsonForFields($data['brand_specification']['gender']));}else{$entity->setGender('null');}
@@ -116,26 +116,32 @@ class BrandSpecificationHelper {
             if(isset($data['brand_specification']['size_title_type'])){$entity->setSizeTitleType($this->getJsonForFields($data['brand_specification']['size_title_type']));}else{$entity->setSizeTitleType('null');}
             if(isset($data['brand_specification']['male_chest'])){$entity->setMaleChest($this->getJsonForFields($data['brand_specification']['male_chest']));}else{$entity->setMaleChest('null');}
             if(isset($data['brand_specification']['male_shirt'])){$entity->setMaleShirt($this->getJsonForFields($data['brand_specification']['male_shirt']));}else{$entity->setMaleShirt('null');}
-            if(isset($data['brand_specification']['male_letters'])){$entity->setMaleLetters($this->getJsonForFields($data['brand_specification']['male_letters']));}else{$entity->setMaleLetters('null');}
-            if(isset($data['brand_specification']['male_waists'])){$entity->setMaleWaists($this->getJsonForFields($data['brand_specification']['male_waists']));}else{$entity->setMaleWaists('null');}
-            if(isset($data['brand_specification']['female_numbers'])){$entity->setFemaleNumbers($this->getJsonForFields($data['brand_specification']['female_numbers']));}else{$entity->setFemaleNumbers('null');}
-            if(isset($data['brand_specification']['female_letters'])){$entity->setFemaleLetters($this->getJsonForFields($data['brand_specification']['female_letters']));}else{$entity->setFemaleLetters('null');}
-            if(isset($data['brand_specification']['female_waists'])){$entity->setFemaleWaists($this->getJsonForFields($data['brand_specification']['female_waists']));}else{$entity->setFemaleWaists('null');}
+            if(isset($data['brand_specification']['male_letter'])){$entity->setMaleLetter($this->getJsonForFields($data['brand_specification']['male_letter']));}else{$entity->setMaleLetter('null');}
+            if(isset($data['brand_specification']['male_waist'])){$entity->setMaleWaist($this->getJsonForFields($data['brand_specification']['male_waist']));}else{$entity->setMaleWaist('null');}
+            if(isset($data['brand_specification']['male_neckt'])){$entity->setMaleNeck($this->getJsonForFields($data['brand_specification']['male_neck']));}else{$entity->setMaleNeck('null');}
+            
+            if(isset($data['brand_specification']['female_number'])){$entity->setFemaleNumber($this->getJsonForFields($data['brand_specification']['female_number']));}else{$entity->setFemaleNumber('null');}
+            if(isset($data['brand_specification']['female_letter'])){$entity->setFemaleLetter($this->getJsonForFields($data['brand_specification']['female_letter']));}else{$entity->setFemaleLetter('null');}
+            if(isset($data['brand_specification']['female_waist'])){$entity->setFemaleWaist($this->getJsonForFields($data['brand_specification']['female_waist']));}else{$entity->setFemaleWaist('null');}
+            if(isset($data['brand_specification']['female_bra'])){$entity->setFemaleBra($this->getJsonForFields($data['brand_specification']['female_bra']));}else{$entity->setFemaleBra('null');}
             return $this->save($entity);
 }   
 
 public function brandSpscificationDetailArray($data,$entity){
         // $data=$request->request->all();                     
-            if(isset($data['brand_specification']['gender'])){$entity->setGender($this->getJsonForFields($data['brand_specification']['gender']));}else{$entity->setGender('null');}
+             if(isset($data['brand_specification']['gender'])){$entity->setGender($this->getJsonForFields($data['brand_specification']['gender']));}else{$entity->setGender('null');}
             if(isset($data['brand_specification']['fit_type'])){$entity->setFitType($this->getJsonForFields($data['brand_specification']['fit_type']));}else{$entity->setFitType('null');}
             if(isset($data['brand_specification']['size_title_type'])){$entity->setSizeTitleType($this->getJsonForFields($data['brand_specification']['size_title_type']));}else{$entity->setSizeTitleType('null');}
             if(isset($data['brand_specification']['male_chest'])){$entity->setMaleChest($this->getJsonForFields($data['brand_specification']['male_chest']));}else{$entity->setMaleChest('null');}
             if(isset($data['brand_specification']['male_shirt'])){$entity->setMaleShirt($this->getJsonForFields($data['brand_specification']['male_shirt']));}else{$entity->setMaleShirt('null');}
-            if(isset($data['brand_specification']['male_letters'])){$entity->setMaleLetters($this->getJsonForFields($data['brand_specification']['male_letters']));}else{$entity->setMaleLetters('null');}
-            if(isset($data['brand_specification']['male_waists'])){$entity->setMaleWaists($this->getJsonForFields($data['brand_specification']['male_waists']));}else{$entity->setMaleWaists('null');}
-            if(isset($data['brand_specification']['female_numbers'])){$entity->setFemaleNumbers($this->getJsonForFields($data['brand_specification']['female_numbers']));}else{$entity->setFemaleNumbers('null');}
-            if(isset($data['brand_specification']['female_letters'])){$entity->setFemaleLetters($this->getJsonForFields($data['brand_specification']['female_letters']));}else{$entity->setFemaleLetters('null');}
-            if(isset($data['brand_specification']['female_waists'])){$entity->setFemaleWaists($this->getJsonForFields($data['brand_specification']['female_waists']));}else{$entity->setFemaleWaists('null');}
+            if(isset($data['brand_specification']['male_letter'])){$entity->setMaleLetter($this->getJsonForFields($data['brand_specification']['male_letter']));}else{$entity->setMaleLetter('null');}
+            if(isset($data['brand_specification']['male_waist'])){$entity->setMaleWaist($this->getJsonForFields($data['brand_specification']['male_waist']));}else{$entity->setMaleWaist('null');}
+            if(isset($data['brand_specification']['male_neckt'])){$entity->setMaleNeck($this->getJsonForFields($data['brand_specification']['male_neck']));}else{$entity->setMaleNeck('null');}
+            
+            if(isset($data['brand_specification']['female_number'])){$entity->setFemaleNumber($this->getJsonForFields($data['brand_specification']['female_number']));}else{$entity->setFemaleNumber('null');}
+            if(isset($data['brand_specification']['female_letter'])){$entity->setFemaleLetter($this->getJsonForFields($data['brand_specification']['female_letter']));}else{$entity->setFemaleLetter('null');}
+            if(isset($data['brand_specification']['female_waist'])){$entity->setFemaleWaist($this->getJsonForFields($data['brand_specification']['female_waist']));}else{$entity->setFemaleWaist('null');}
+            if(isset($data['brand_specification']['female_bra'])){$entity->setFemaleBra($this->getJsonForFields($data['brand_specification']['female_bra']));}else{$entity->setFemaleBra('null');}
             return $this->update($entity);
 }  
     

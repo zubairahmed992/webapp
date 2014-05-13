@@ -10,8 +10,9 @@ class ProductDetailType extends AbstractType
 {
     
     private $container;
+    private $sizeTitleType;
     private $stretch_type;
-    public function __construct($container)             
+    public function __construct($container,$sizeTitleType)             
     {
         $this->container= $container;
         $this->stretch_type=$this->container->getWomenStretchType();
@@ -21,6 +22,7 @@ class ProductDetailType extends AbstractType
         $this->layering=$this->container->getLayering(); 
         $this->fabric_content=$this->container->getFabricContent(); 
         $this->garment_detail=$this->container->getGarmentDetail(); 
+        $this->sizeTitleType=$sizeTitleType;
         
     }
     
@@ -69,7 +71,7 @@ class ProductDetailType extends AbstractType
                     'property' => 'name',
                     'empty_value' => 'Select Clothing Type'
                 ));
-        $builder->add('size_title_type', 'choice', array('choices'=> array('letters'=>'Letters','numbers'=>'Numbers','Waist'=>'Waist'),'expanded' => true,
+        $builder->add('size_title_type', 'choice', array('choices'=>$this->sizeTitleType,'expanded' => true,
                     'multiple' => false,'required'  => true,));
         
         $builder->add('disabled', 'checkbox',array('label' =>'','required'=> false,));

@@ -175,6 +175,23 @@ constants:
     hip: Hip
     inseam: inseam
     hem_length: hem_length
+ shirt:
+    neck: Neck
+    shoulder_across_front: Shoulder across front
+    shoulder_across_back: Shoulder across back
+    shoulder_length: Shoulder length
+    arm_length: Arm length
+    bicep: Bicep
+    triceps : Triceps
+    wrist: Wrist
+    bust: Bust
+    chest: Chest
+    back_waist: Back Waist
+    waist: Waist
+    cf_waist: CF Waist
+    back_waist: Back Waist
+    waist_to_hip  : Waist to Hip  
+    hip: Hip   
  product_specification: 
   fit_priority:
       man:

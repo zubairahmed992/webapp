@@ -69,12 +69,12 @@ class ProductController extends Controller {
      * *********************************************************************** */
 
     public function productDetailNewAction() {
-
-
+        
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
+        
         $clothingTypes = $this->get('admin.helper.product.specification')->getWomenClothingType();
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
-        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper));
+        $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType()));
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
                     'form' => $productForm->createView(),
                     'productSpecification' => $this->get('admin.helper.product.specification')->getProductSpecification(),
@@ -89,7 +89,8 @@ class ProductController extends Controller {
         $data = $request->request->all();
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
         $entity = new Product();
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
+        
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
         $form->bindRequest($request);
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
         $this->get('session')->setFlash($productArray['message_type'], $productArray['message']);
@@ -102,7 +103,7 @@ class ProductController extends Controller {
         $entity = $this->get('admin.helper.product')->find($id);
         $entity->setGender(strtolower($entity->getGender()));
         $productSpecification = $this->get('admin.helper.product.specification')->getProductSpecification();
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
         $deleteForm = $this->getDeleteForm($id);
         
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
@@ -147,7 +148,7 @@ class ProductController extends Controller {
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification')), $entity);
+        $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
         $form->bind($request);
         $data = $request->request->all();
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
@@ -202,13 +203,19 @@ class ProductController extends Controller {
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
 
     public function productDetailColorAddNewAction($id) {
+        
+        // $allSizes=$this->container->get('admin.helper.size')->getAllSizes();
+        // return new response(json_encode($allSizes));
         $entity = $this->getProduct($id);
         $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         if (!$entity) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
         $sizes=$this->get('admin.helper.product')->getBrandSpecifications($entity);
-      // return new response(json_encode($sizes));
+       $fitType=$this->container->get('admin.helper.size')->getAllFitType();
+       
+        //return new response(json_encode($sizes));
+      //
        // $sizes = $this->get('admin.helper.product')->productDetailColorAdd($entity);
        
         $colorform = $this->createForm(new ProductColorType($sizes));
@@ -220,6 +227,7 @@ class ProductController extends Controller {
                     'imageUploadForm' => $imageUploadForm->createView(),
                     'patternUploadForm' => $patternUploadForm->createView(),
                     'productItems'=>$productItems,
+                    'allSizes'=>$sizes,
                 ));
     }
 
@@ -231,6 +239,7 @@ class ProductController extends Controller {
         $productColor = new ProductColor();
         $productColor->setProduct($product);
         $sizes=$this->get('admin.helper.product')->getBrandSpecifications($product);
+        //return new response(json_encode($sizes));
         
         //$sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
        
@@ -244,8 +253,8 @@ class ProductController extends Controller {
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
             }
-            
-          $this->createSizeItemForBodyTypes($product, $productColor,$colorform->getData()); //--creating sizes & item records
+         //  return new response(json_encode($colorform->getData()));
+       $this->createSizeItemForBodyTypes($product, $productColor,$colorform->getData()); //--creating sizes & item records
             $this->get('session')->setFlash('success', 'Product Detail color has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } else {
@@ -260,26 +269,42 @@ class ProductController extends Controller {
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
+      //  $sizeTitle=array("Regular"=>array("28A"=>"28A","28B"=>"28B","38B"=>"38B"),"Petite"=>array("28A"=>"28A","28B"=>"28B","38B"=>"38B"));
+
+            
+        
         $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $productColor = $this->getProductColor($color_id);
         $sizeTitle = $this->get('admin.helper.productsizes')->getSizeArrayBaseOnProduct($id);
-        // return new response(json_encode($sizeTitle));
+        //return new response(json_encode($sizeTitle));
          $sizes=$this->get('admin.helper.product')->getBrandSpecifications($product);
         //$sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
+        // return new response(json_encode($sizes));
+        $colorform = $this->createForm(new ProductColorType($sizes),$productColor);
         
-        $colorform = $this->createForm(new ProductColorType($sizes), $productColor);
         if (isset($sizeTitle['Petite'])) {
-            $colorform->get('petiteSizes')->setData($sizeTitle['Petite']);
+            $colorform->get('petite')->setData($sizeTitle['Regular']);
         }
         if (isset($sizeTitle['Regular'])) {
-            $colorform->get('regularSizes')->setData($sizeTitle['Regular']);
+            $colorform->get('regular')->setData($sizeTitle['Regular']);
         }
         if (isset($sizeTitle['Tall'])) {
-            $colorform->get('tallSizes')->setData($sizeTitle['Tall']);
+            $colorform->get('tall')->setData($sizeTitle['Tall']);
         }
-        if (isset($sizeTitle['Waist'])) {
-            $colorform->get('womenWaistSizes')->setData($sizeTitle['Waist']);
+        if (isset($sizeTitle['Plus'])) {
+            $colorform->get('plus')->setData($sizeTitle['Plus']);
         }
+        if (isset($sizeTitle['Athletic'])) {
+            $colorform->get('athletic')->setData($sizeTitle['Athletic']);
+        }
+        if (isset($sizeTitle['Potley'])) {
+            $colorform->get('potley')->setData($sizeTitle['Potley']);
+            
+        }
+          
+        
+    //   return new response(json_encode(var_dump($colorform)));
+        
         $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
         $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
@@ -302,6 +327,7 @@ class ProductController extends Controller {
 
         $productColor = $this->getProductColor($color_id);
          $sizes=$this->get('admin.helper.product')->getBrandSpecifications($product);
+         
         //$sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
         $colorform = $this->createForm(new ProductColorType($sizes), $productColor);
         $colorform->bind($request);
@@ -722,7 +748,7 @@ class ProductController extends Controller {
 #---------------START OF CREATE SIZE ITEM -------------------------------------#
 
     private function createSizeItemForBodyTypes($product, $p_color, $all_sizes) {
-        $this->get('admin.helper.productsizes')->createSizeItemForBodyTypes($product, $p_color, $all_sizes);
+       return  $this->get('admin.helper.productsizes')->createSizeItemForBodyTypes($product, $p_color, $all_sizes);
     }
 
     private function getProductByBrand() {

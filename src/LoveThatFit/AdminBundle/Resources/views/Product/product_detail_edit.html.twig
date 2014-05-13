@@ -16,6 +16,14 @@
  
 <script>
 $(document).ready(function(){
+    
+     var gender=$('#product_gender').val();
+     if(gender=='m'){
+    showMaleSizeTitleType(); 
+    }else{
+    showFemaleSizeTitleType(); 
+    }
+    
     // Retailer Section 
     var ret_id=$('#product_Retailer').val();
 $("#product_Retailer").change(function(){
@@ -1305,6 +1313,54 @@ function strtolower (str) {
  function capitaliseFirstLetter(string)
 {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+function showMaleSizeTitleType(){
+// Male Size Hide 
+    $('#product_size_title_type_0').show();
+    $('label[for="product_size_title_type_0"]').show();
+    
+    $('#product_size_title_type_1').show();
+    $('label[for="product_size_title_type_1"]').show();
+    $('#product_size_title_type_2').show();
+    $('label[for="product_size_title_type_2"]').show();
+    $('#product_size_title_type_3').show();
+    $('label[for="product_size_title_type_3"]').show();
+    $('#product_size_title_type_4').show();
+    $('label[for="product_size_title_type_4"]').show();
+    
+    
+     // Female Size Hide
+    $('#product_size_title_type_5').hide();
+    $('label[for="product_size_title_type_5"]').hide();
+    $('#product_size_title_type_6').hide();
+    $('label[for="product_size_title_type_6"]').hide();
+    $('#product_size_title_type_7').hide();
+    $('label[for="product_size_title_type_7"]').hide();
+    $('#product_size_title_type_8').hide();
+    $('label[for="product_size_title_type_8"]').hide();
+    
+
+}
+function showFemaleSizeTitleType(){
+    $('#product_size_title_type_0').hide();
+    $('label[for="product_size_title_type_0"]').hide();
+    $('#product_size_title_type_1').hide();
+    $('label[for="product_size_title_type_1"]').hide();
+    $('#product_size_title_type_2').show();
+    $('label[for="product_size_title_type_2"]').show();
+    $('#product_size_title_type_3').show();
+    $('label[for="product_size_title_type_3"]').show();
+    $('#product_size_title_type_4').hide();
+    $('label[for="product_size_title_type_4"]').hide();
+  // Female Size Hide
+    $('#product_size_title_type_5').show();
+    $('label[for="product_size_title_type_5"]').show();
+    $('#product_size_title_type_6').hide();
+    $('label[for="product_size_title_type_6"]').hide();
+    $('#product_size_title_type_7').hide();
+    $('label[for="product_size_title_type_7"]').hide();
+    $('#product_size_title_type_8').show();
+    $('label[for="product_size_title_type_8"]').show();
 }
 </script>
 <span id="retailer_url" style="display:none;">{{path('admin_product_get_retailer_base_brand')}}</span>

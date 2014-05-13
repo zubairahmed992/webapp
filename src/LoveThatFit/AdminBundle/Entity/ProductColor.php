@@ -231,50 +231,17 @@ class ProductColor {
         return $this;
     }
 
-    #----- Petite Sizes-------------#
-    private $petiteSizes;
-     
-    public function getpetiteSizes() {
-        return $this->petiteSizes;
-    }
-    public function setpetiteSizes($petiteSizes) {
-        $this->petiteSizes = $petiteSizes;
-        return $this;
-    }
-    #----End Of Petite Size-------------#
+    #-------------------- Female Sizes------------------------#
+    #---------Start Of Regular Sizes    
+    public $regular;
+    public $petite;
+    public $tall;
+    public $plus;
+    public $athletic;
+    public $potley;
     
-#---------Start Of Regular Sizes    
-    private $regularSizes;
-     public function getregularSizes() {
-        return $this->regularSizes;
-    }
-    public function setregularSizes($regularSizes) {
-        $this->regularSizes = $regularSizes;
-        return $this;
-    }
-#-------End Of Regular Size---------------------#
-#-------Start Of Sizes--------------------------#    
     
-    private $tallSizes;
-    public function gettallSizes() {
-        return $this->tallSizes;
-    }
-    public function settallSizes($tallSizes) {
-        $this->tallSizes = $tallSizes;
-        return $this;
-    }
-   
-#---------Start Of Women Waist Sizes-------------------------------------------#
-    private $womenWaistSizes;
-     public function getwomenWaistSizes() {
-        return $this->womenWaistSizes;
-    }
-    public function setwomenWaistSizes($womenWaistSizes) {
-        $this->womenWaistSizes = $womenWaistSizes;
-        return $this;
-    }
-#-------------------End Of Regular Size----------------------------------------#    
-//---------------------------------------------------------------    
+  //---------------------------------------------------------------    
 
     
     public function getRandomItem() {

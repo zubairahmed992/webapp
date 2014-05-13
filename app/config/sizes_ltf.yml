@@ -151,6 +151,7 @@ constants:
           index: 14
       bra:
         28a:
+            title: 28a
             size: 28 
             cup: a 
             low: 28 
@@ -158,6 +159,7 @@ constants:
             average: 29 
             index_value: 1
         28b:
+            title: 28b
             size: 28 
             cup: b 
             low: 29 
@@ -165,6 +167,7 @@ constants:
             average: 30  
             index_value: 2
         28c:
+            title: 28c
             size: 28 
             cup: c 
             low: 30 
@@ -172,6 +175,7 @@ constants:
             average: 31
             index_value: 3
         28d:
+            title: 28d
             size: 28 
             cup: d 
             low: 31 
@@ -179,6 +183,7 @@ constants:
             average: 32   
             index_value: 4
         28dd:
+            title: 28dd
             size: 28 
             cup: dd 
             low: 32 
@@ -186,6 +191,7 @@ constants:
             average: 33   
             index_value: 5
         28ddd:
+            title: 28ddd
             size: 28 
             cup: ddd 
             low: 33 
@@ -193,6 +199,7 @@ constants:
             average: 34
             index_value: 6
         30a:
+            title: 30a
             size: 30 
             cup: a 
             low: 30 
@@ -200,6 +207,7 @@ constants:
             average: 31
             index_value: 7
         30b:
+            title: 30b
             size: 30 
             cup: b 
             low: 31 
@@ -207,6 +215,7 @@ constants:
             average: 32   
             index_value: 8
         30c:
+            title: 30c
             size: 30 
             cup: c 
             low: 32 
@@ -214,6 +223,7 @@ constants:
             average: 33   
             index_value: 9
         30d:
+            title: 30d
             size: 30 
             cup: d 
             low: 33 
@@ -221,6 +231,7 @@ constants:
             average: 34   
             index_value: 10
         30dd:
+            title: 30dd
             size: 30 
             cup: dd 
             low: 34 
@@ -228,6 +239,7 @@ constants:
             average: 35    
             index_value: 11
         30ddd:
+            title: 30ddd
             size: 30 
             cup: ddd 
             low: 35 
@@ -235,6 +247,7 @@ constants:
             average: 36 
             index_value: 12
         32a:
+            title: 32a
             size: 32 
             cup: a 
             low: 32 
@@ -242,6 +255,7 @@ constants:
             average: 33  
             index_value: 13
         32b:
+            title: 32b
             size: 32 
             cup: b 
             low: 33 
@@ -249,6 +263,7 @@ constants:
             average: 34 
             index_value: 14
         32c:
+            title: 32c
             size: 32 
             cup: c 
             low: 34 
@@ -256,6 +271,7 @@ constants:
             average: 35    
             index_value: 15
         32d:
+            title: 32d
             size: 32 
             cup: d
             low: 35 
@@ -263,6 +279,7 @@ constants:
             average: 36 
             index_value: 16
         32dd:
+            title: 32dd
             size: 32 
             cup: dd
             low: 36 
@@ -270,6 +287,7 @@ constants:
             average: 37
             index_value: 17
         32ddd:
+            title: 32ddd
             size: 32 
             cup: ddd
             low: 37 
@@ -277,6 +295,7 @@ constants:
             average: 38
             index_value: 18
         34a:
+            title: 34a
             size: 34 
             cup: a
             low: 34 
@@ -284,6 +303,7 @@ constants:
             average: 35 
             index_value: 19
         34b:
+            title: 34b
             size: 34 
             cup: b
             low: 35 
@@ -291,6 +311,7 @@ constants:
             average: 36    
             index_value: 20
         34c:
+            title: 34c
             size: 34 
             cup: c
             low: 36 
@@ -298,6 +319,7 @@ constants:
             average: 37 
             index_value: 21
         34d:
+            title: 34d
             size: 34 
             cup: d
             low: 37 
@@ -305,6 +327,7 @@ constants:
             average: 38  
             index_value: 22
         34dd:
+            title: 34dd
             size: 34 
             cup: dd
             low: 38 
@@ -312,6 +335,7 @@ constants:
             average: 39    
             index_value: 23
         34ddd:
+            title: 34ddd
             size: 34 
             cup: ddd
             low: 39 
@@ -319,6 +343,7 @@ constants:
             average: 40
             index_value: 24
         36a:
+            title: 36a
             size: 36 
             cup: a
             low: 36 
@@ -326,6 +351,7 @@ constants:
             average: 37
             index_value: 25
         36b:
+            title: 36b
             size: 36 
             cup: b
             low: 37 
@@ -333,6 +359,7 @@ constants:
             average: 38 
             index_value: 26
         36c:
+            title: 36c
             size: 36 
             cup: c
             low: 38 
@@ -340,6 +367,7 @@ constants:
             average: 39
             index_value: 27
         36d:
+            title: 36d
             size: 36 
             cup: d
             low: 39 
@@ -347,6 +375,7 @@ constants:
             average: 40
             index_value: 28
         36dd:
+            title: 36dd
             size: 36 
             cup: dd
             low: 40 
@@ -354,6 +383,7 @@ constants:
             average: 41 
             index_value: 29
         36ddd:
+            title: 36ddd
             size: 36 
             cup: ddd
             low: 41 
@@ -361,6 +391,7 @@ constants:
             average: 42    
             index_value: 30
         38a:
+            title: 38a
             size: 38 
             cup: a
             low: 38 
@@ -368,6 +399,7 @@ constants:
             average: 39
             index_value: 31
         38b:
+            title: 38b
             size: 38 
             cup: b
             low: 39 
@@ -375,6 +407,7 @@ constants:
             average: 40
             index_value: 32
         38c:
+            title: 38c
             size: 38 
             cup: c
             low: 40 
@@ -382,6 +415,7 @@ constants:
             average: 41 
             index_value: 33
         38d:
+            title: 38d
             size: 38 
             cup: d
             low: 41 
@@ -389,6 +423,7 @@ constants:
             average: 42
             index_value: 34
         38dd:
+            title: 38dd
             size: 38 
             cup: dd
             low: 42 
@@ -396,6 +431,7 @@ constants:
             average: 43 
             index_value: 35
         38ddd:
+            title: 38ddd
             size: 38 
             cup: dd
             low: 43 
@@ -403,6 +439,7 @@ constants:
             average: 44 
             index_value: 36
         40a:
+            title: 40a
             size: 40 
             cup: a
             low: 40 
@@ -410,6 +447,7 @@ constants:
             average: 41 
             index_value: 37
         40b:
+            title: 40b
             size: 40 
             cup: b
             low: 41 
@@ -417,6 +455,7 @@ constants:
             average: 42    
             index_value: 38
         40c:
+            title: 40c
             size: 40 
             cup: c
             low: 42 
@@ -424,6 +463,7 @@ constants:
             average: 43 
             index_value: 39
         40d:
+            title: 40d
             size: 40 
             cup: d
             low: 43 
@@ -431,6 +471,7 @@ constants:
             average: 44
             index_value: 40
         40dd:
+            title: 40dd
             size: 40 
             cup: dd
             low: 44 
@@ -438,6 +479,7 @@ constants:
             average: 45 
             index_value: 41
         40ddd:
+            title: 40ddd
             size: 40 
             cup: ddd
             low: 45 
@@ -1453,18 +1495,30 @@ constants:
            index: 94
            
       neck:
-          14: 14 
-          '14.5': 14.5
-          15: 15
-          16: 16
-          '16.5': 16.5
-          17: 17
-          '17.5': 17.5
-          18: 18
-          '18.5': 18.5
-          19: 19
-          20: 20
-          22: 22
+          14:
+            title: 14 
+          '14.5':
+            title: 14.5
+          15: 
+            title: 15
+          16: 
+            title: 16
+          '16.5':
+            title: 16.5
+          17: 
+            title: 17
+          '17.5':
+             title: 17.5
+          18: 
+            title: 18
+          '18.5':
+             title: 18.5
+          19:
+            title: 19
+          20:
+            title: 20
+          22: 
+            title: 22
       sleeve:
          33: 33
          34: 34
@@ -1486,6 +1540,32 @@ constants:
          37: 37
          38: 38
          39: 39 
+  size_title_type:
+    male:
+      chest: chest
+      shirt: shirt
+      letter: letter
+      waist: waist
+      neck: neck
+    female:
+      number: number
+      letter: letter
+      waist: waist
+      bra: bra
+  fit_type:     
+   male:
+     regular: regular
+     athletic: athletic
+     potley: potley
+     tall: tall
+   female:
+     regular: regular
+     petite: petite
+     tall: tall
+     plus: plus
+     
+      
+    
            
            
            

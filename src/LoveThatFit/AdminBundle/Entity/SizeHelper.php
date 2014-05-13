@@ -16,9 +16,12 @@ class SizeHelper {
 
 #-------------------Fetch All Sizes -------------------------------------------#
 public function getAllSizes(){
-  return array('women_letter_sizes'=>$this->getWomanLetterSizes(),'woman_number_sizes'=>$this->getWomanNumberSizes()
-          ,'woman_waist_sizes'=>$this->getWomanWaistSizes(),'man_letter_sizes'=>$this->getManLetterSizes(),'man_chest_sizes'=>$this->getManChestSizes()
-          ,'man_waist_sizes'=>$this->getManWaistSizes(),'man_shirt_sizes'=>$this->getManShirtSizes());
+  return array('woman_letter_sizes'=>$this->getWomanLetterSizes(),'woman_number_sizes'=>$this->getWomanNumberSizes()
+          ,'woman_waist_sizes'=>$this->getWomanWaistSizes(),
+         'woman_bra_sizes'=>$this->getWomanBraSizes(),
+       'man_letter_sizes'=>$this->getManLetterSizes(),'man_chest_sizes'=>$this->getManChestSizes()
+          ,'man_waist_sizes'=>$this->getManWaistSizes(),'man_shirt_sizes'=>$this->getManShirtSizes(),
+      'man_neck_sizes'=>$this->getManNeckSizes());
 }
 #--------------------Woman Sizes Start Here-------------------------------------#
 
@@ -34,6 +37,10 @@ public function getWomanNumberSizes(){
 #------------------------Get Woman Waist Sizes---------------------------------#
 public function getWomanWaistSizes(){
      return $this->getArray($this->constant['size_titles']['women']['waist']);
+}
+#-----------------------Get Woman Bra Size ------------------------------------#
+public function getWomanBraSizes(){
+     return $this->getArray($this->constant['size_titles']['women']['bra']);
 }
 #------------------------Getting All Male Sizes--------------------------------#
 #---------------------- Get Man Letter Sizes---------------------------------#
@@ -52,6 +59,19 @@ public function getManWaistSizes(){
 #--------------------Get Man Shirt Sizes---------------------------------------#
 public function getManShirtSizes(){
      return $this->getArray($this->constant['size_titles']['man']['shirt']);
+}
+#--------------------Get Man Neck Sizes---------------------------------------#
+public function getManNeckSizes(){
+     return $this->getArray($this->constant['size_titles']['man']['neck']);
+}
+
+#------------------Get Size Title type ----------------------------------------#
+public function getAllSizeTitleType(){
+     return ($this->constant['size_title_type']);
+}
+#----------------Get Fit Type --------------------------------------------------#
+public function getAllFitType(){
+     return ($this->constant['fit_type']);
 }
 
 #---------------------------Sorting Of Array----------------------------------#

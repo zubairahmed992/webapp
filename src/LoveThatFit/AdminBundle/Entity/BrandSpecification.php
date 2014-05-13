@@ -62,35 +62,47 @@ class BrandSpecification {
     protected $male_shirt;
     
     /**
-     * @var string $male_letters
+     * @var string $male_letter
      * @ORM\Column( type="string", length=1000, nullable=true)
      */
-    protected $male_letters;
+    protected $male_letter;
     
     
     /**
-     * @var string $male_waists
+     * @var string $male_waist
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
-    protected $male_waists;
+    protected $male_waist;
     
     /**
-     * @var string $female_numbers
+     * @var string $male_neck
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
-    protected $female_numbers;
+    protected $male_neck;
     
     /**
-     * @var string $female_letters
+     * @var string $female_number
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
-    protected $female_letters;
+    protected $female_number;
     
     /**
-     * @var string $female_waists
+     * @var string $female_letter
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
-    protected $female_waists;
+    protected $female_letter;
+    
+    /**
+     * @var string $female_waist
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    protected $female_waist;
+   
+  /**
+     * @var string $female_bra
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    protected $female_bra;  
 
    
 
@@ -174,120 +186,17 @@ class BrandSpecification {
     }
 
     
-    /**
-     * Set male_letters
-     *
-     * @param string $maleLetters
-     * @return BrandSpecification
-     */
-    public function setMaleLetters($maleLetters)
-    {
-        $this->male_letters = $maleLetters;
+   
+
+   
+
+   
+   
     
-        return $this;
-    }
 
-    /**
-     * Get male_letters
-     *
-     * @return string 
-     */
-    public function getMaleLetters()
-    {
-        return $this->male_letters;
-    }
+   
 
-    /**
-     * Set male_waists
-     *
-     * @param string $maleWaists
-     * @return BrandSpecification
-     */
-    public function setMaleWaists($maleWaists)
-    {
-        $this->male_waists = $maleWaists;
-    
-        return $this;
-    }
 
-    /**
-     * Get male_waists
-     *
-     * @return string 
-     */
-    public function getMaleWaists()
-    {
-        return $this->male_waists;
-    }
-
-    /**
-     * Set female_numbers
-     *
-     * @param string $femaleNumbers
-     * @return BrandSpecification
-     */
-    public function setFemaleNumbers($femaleNumbers)
-    {
-        $this->female_numbers = $femaleNumbers;
-    
-        return $this;
-    }
-
-    /**
-     * Get female_numbers
-     *
-     * @return string 
-     */
-    public function getFemaleNumbers()
-    {
-        return $this->female_numbers;
-    }
-
-    /**
-     * Set female_letters
-     *
-     * @param string $femaleLetters
-     * @return BrandSpecification
-     */
-    public function setFemaleLetters($femaleLetters)
-    {
-        $this->female_letters = $femaleLetters;
-    
-        return $this;
-    }
-
-    /**
-     * Get female_letters
-     *
-     * @return string 
-     */
-    public function getFemaleLetters()
-    {
-        return $this->female_letters;
-    }
-
-    /**
-     * Set female_waists
-     *
-     * @param string $femaleWaists
-     * @return BrandSpecification
-     */
-    public function setFemaleWaists($femaleWaists)
-    {
-        $this->female_waists = $femaleWaists;
-    
-        return $this;
-    }
-
-    /**
-     * Get female_waists
-     *
-     * @return string 
-     */
-    public function getFemaleWaists()
-    {
-        return $this->female_waists;
-    }
 
     /**
      * Set brand
@@ -358,5 +267,166 @@ class BrandSpecification {
     public function getMaleShirt()
     {
         return $this->male_shirt;
+    }
+
+    /**
+     * Set male_letter
+     *
+     * @param string $maleLetter
+     * @return BrandSpecification
+     */
+    public function setMaleLetter($maleLetter)
+    {
+        $this->male_letter = $maleLetter;
+    
+        return $this;
+    }
+
+    /**
+     * Get male_letter
+     *
+     * @return string 
+     */
+    public function getMaleLetter()
+    {
+        return $this->male_letter;
+    }
+
+    /**
+     * Set male_waist
+     *
+     * @param string $maleWaist
+     * @return BrandSpecification
+     */
+    public function setMaleWaist($maleWaist)
+    {
+        $this->male_waist = $maleWaist;
+    
+        return $this;
+    }
+
+    /**
+     * Get male_waist
+     *
+     * @return string 
+     */
+    public function getMaleWaist()
+    {
+        return $this->male_waist;
+    }
+
+    /**
+     * Set male_neck
+     *
+     * @param string $maleNeck
+     * @return BrandSpecification
+     */
+    public function setMaleNeck($maleNeck)
+    {
+        $this->male_neck = $maleNeck;
+    
+        return $this;
+    }
+
+    /**
+     * Get male_neck
+     *
+     * @return string 
+     */
+    public function getMaleNeck()
+    {
+        return $this->male_neck;
+    }
+
+    /**
+     * Set female_number
+     *
+     * @param string $femaleNumber
+     * @return BrandSpecification
+     */
+    public function setFemaleNumber($femaleNumber)
+    {
+        $this->female_number = $femaleNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get female_number
+     *
+     * @return string 
+     */
+    public function getFemaleNumber()
+    {
+        return $this->female_number;
+    }
+
+    /**
+     * Set female_letter
+     *
+     * @param string $femaleLetter
+     * @return BrandSpecification
+     */
+    public function setFemaleLetter($femaleLetter)
+    {
+        $this->female_letter = $femaleLetter;
+    
+        return $this;
+    }
+
+    /**
+     * Get female_letter
+     *
+     * @return string 
+     */
+    public function getFemaleLetter()
+    {
+        return $this->female_letter;
+    }
+
+    /**
+     * Set female_waist
+     *
+     * @param string $femaleWaist
+     * @return BrandSpecification
+     */
+    public function setFemaleWaist($femaleWaist)
+    {
+        $this->female_waist = $femaleWaist;
+    
+        return $this;
+    }
+
+    /**
+     * Get female_waist
+     *
+     * @return string 
+     */
+    public function getFemaleWaist()
+    {
+        return $this->female_waist;
+    }
+
+    /**
+     * Set female_bra
+     *
+     * @param string $femaleBra
+     * @return BrandSpecification
+     */
+    public function setFemaleBra($femaleBra)
+    {
+        $this->female_bra = $femaleBra;
+    
+        return $this;
+    }
+
+    /**
+     * Get female_bra
+     *
+     * @return string 
+     */
+    public function getFemaleBra()
+    {
+        return $this->female_bra;
     }
 }
