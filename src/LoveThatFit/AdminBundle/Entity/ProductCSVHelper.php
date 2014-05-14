@@ -132,8 +132,7 @@ class ProductCSVHelper {
 
 #---------------------------------------------------------------
     private function changeSizeTitleType($str) {
-        if(strtolower($str)=='numeric') return 'numbers';
-        else if(strtolower($str)=='letter') return 'letters';        
+        if(strtolower($str)=='numeric') return 'number';        
         else return strtolower($str);         
     }
 

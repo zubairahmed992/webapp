@@ -42,6 +42,7 @@
     {%endif%}     
     
     {%endfor%}    
+        <br>{#~~~~~~~~~~~~~~~~ Petite ------------#}
 <div class="span1">{{petite}}</div> 
 {% for ps in product.productSizes%} 
  <div id="ret_pro_sizes">
@@ -55,6 +56,7 @@
   {%endif%}
   
 {%endfor%}                        
+<br>{#~~~~~~~~~~~~~~~~ Regular ------------#}         
 <div class="span1">{{regular}}</div> 
 {% for ps in product.productSizes%} 
  
@@ -68,7 +70,7 @@
   {%endif%}
  
 {%endfor%}  
-
+{#~~~~~~~~~~~~~~~~ Tall ------------#}
 <div class="span1">{{tall}}</div> 
 {% for ps in product.productSizes%} 
  
@@ -82,7 +84,7 @@
   {%endif%}
  
 {%endfor%} 
-
+{#~~~~~~~~~~~~~~~~ Plus ------------#}
 <div class="span1">{{plus}}</div> 
 {% for ps in product.productSizes%} 
  
@@ -97,7 +99,7 @@
  
 {%endfor%} 
 
-
+{#~~~~~~~~~~~~~~~~ Portley ------------#}
 <div class="span1">{{portley}}</div> 
 {% for ps in product.productSizes%} 
  
@@ -111,7 +113,7 @@
   {%endif%}
  
 {%endfor%}  
-
+{#~~~~~~~~~~~~~~~~ Athletic ------------#}
 <div class="span1">{{athletic}}</div> 
 {% for ps in product.productSizes%} 
  
