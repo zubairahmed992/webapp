@@ -107,8 +107,8 @@ class ProductSizeHelper {
        if($sizes['body_type']=='Plus'){
            $sizes_bodyType['Plus'][]= ($body_type['title']); 
        }
-        if($sizes['body_type']=='Potley'){
-           $sizes_bodyType['Potley'][]= ($body_type['title']); 
+        if($sizes['body_type']=='Portley'){
+           $sizes_bodyType['Portley'][]= ($body_type['title']); 
        }
         if($sizes['body_type']=='Athletic'){
            $sizes_bodyType['Athletic'][]= ($body_type['title']); 
@@ -323,9 +323,9 @@ class ProductSizeHelper {
      }
      
    
-       if($all_sizes->potley!=Null){
-    $sizesForTallBodyType=$all_sizes->potley;
-    $bodyTypeTall="Potley";
+       if($all_sizes->portley!=Null){
+    $sizesForTallBodyType=$all_sizes->portley;
+    $bodyTypeTall="Portley";
  #---------------- For Atheletic BodyType--------------------------------------#
         foreach ($sizesForTallBodyType as $s) {
  #-----------The Method used for matching size title and body type ------------#

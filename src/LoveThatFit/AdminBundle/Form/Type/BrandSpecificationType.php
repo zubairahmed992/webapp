@@ -7,11 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class BrandSpecificationType extends AbstractType {
    private $allSizes;
-     private $sizeTitleType;
-   public function __construct($allSizes,$sizeTitleType)             
+   private $size_helper;
+   private $size_title_type;
+   private $fit_type;  
+   public function __construct($allSizes,$size_helper)             
     {
         $this->allSizes= $allSizes;
-          $this->sizeTitleType=$sizeTitleType;
+        $this->size_helper=$size_helper;
+        $this->size_title_type=$this->size_helper->getAllSizeTitleType();
+        $this->fit_type= $this->size_helper->getAllFitType();
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,13 +24,13 @@ class BrandSpecificationType extends AbstractType {
                     ,'expanded' => true,
                     'multiple' => true,'required'  => true,));
         
-        $builder->add('fit_type', 'choice', array('choices'=> array('regular'=>'Regular','petite'=>'Petite','tall'=>'Tall'),'expanded' => true,
+        $builder->add('fit_type', 'choice', array('choices'=> $this->fit_type,'expanded' => true,
                     'multiple' => true,'required'  => true,));
        
         //$builder->add('size_title_type', 'choice', array('choices'=> array('letters'=>'Letters','numbers'=>'Numbers','Waist'=>'Waist'),'expanded' => true,
                  //  'multiple' => true,'required'  => true,));
         
-     $builder->add('size_title_type', 'choice', array('choices'=>$this->sizeTitleType,'expanded' => true,
+     $builder->add('size_title_type', 'choice', array('choices'=>$this->size_title_type,'expanded' => true,
                  'multiple' => true,'required'  => true,));
         
         $builder->add('male_chest', 'choice', array('choices'=> $this->allSizes['man_chest_sizes'],'expanded' => true,

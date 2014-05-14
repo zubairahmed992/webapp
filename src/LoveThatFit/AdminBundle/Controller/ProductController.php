@@ -283,7 +283,7 @@ class ProductController extends Controller {
         $colorform = $this->createForm(new ProductColorType($sizes),$productColor);
         
         if (isset($sizeTitle['Petite'])) {
-            $colorform->get('petite')->setData($sizeTitle['Regular']);
+            $colorform->get('petite')->setData($sizeTitle['Petite']);
         }
         if (isset($sizeTitle['Regular'])) {
             $colorform->get('regular')->setData($sizeTitle['Regular']);
@@ -297,8 +297,8 @@ class ProductController extends Controller {
         if (isset($sizeTitle['Athletic'])) {
             $colorform->get('athletic')->setData($sizeTitle['Athletic']);
         }
-        if (isset($sizeTitle['Potley'])) {
-            $colorform->get('potley')->setData($sizeTitle['Potley']);
+        if (isset($sizeTitle['Portley'])) {
+            $colorform->get('portley')->setData($sizeTitle['Portley']);
             
         }
           

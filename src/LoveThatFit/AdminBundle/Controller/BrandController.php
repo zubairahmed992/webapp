@@ -95,7 +95,7 @@ class BrandController extends Controller {
      $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
      $entity = $specs['entity'];       
      $brandspecification=new BrandSpecification();
-     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()),$brandspecification);
+     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')),$brandspecification);
       return $this->render('LoveThatFitAdminBundle:Brand:new_brand_specification.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -107,7 +107,7 @@ public function createBrandSpecificationAction($id,Request $request)
     $allSizes=$this->get('admin.helper.size')->getAllSizes();
     $entity = $this->get('admin.helper.brand')->find($id);     
     $brandspecification=new BrandSpecification();    
-    $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()),$brandspecification);
+    $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')),$brandspecification);
     $form->bind($request);     
     $brandspecification->setBrand($entity);
     $data = $request->request->all();    
@@ -165,7 +165,7 @@ public function showBrandSpecificationAction($id)
     // $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));
 
      $allSizes=$this->get('admin.helper.size')->getAllSizes();
-     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()));
+     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')));
      if (isset($gender)) {
             $form->get('gender')->setData(json_decode($gender));
         } 
@@ -215,7 +215,7 @@ public function showBrandSpecificationAction($id)
      $allSizes=$this->get('admin.helper.size')->getAllSizes();
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
      $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
-     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')->getAllSizeTitleType()));
+     $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')));
      $form->bind($request);     
      $brandspecification->setBrand($entity);
      $data = $request->request->all();    

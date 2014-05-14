@@ -18,7 +18,7 @@
      {%set tall=NULL %}
      {% set plus=NULL %}   
      {% set athletic=NULL %}   
-    {% set potley=NULL %}   
+    {% set portley=NULL %}   
     {% for ps in product.productSizes%} 
     {% if(ps.bodyType=="Petite")%}
         {% set  petite="Petite" %}
@@ -33,8 +33,8 @@
         {% set  athletic="Athletic" %}
     {%endif%}     
     
-        {% if(ps.bodyType=="potley")%}
-        {% set  potley="potley" %}
+        {% if(ps.bodyType=="portley")%}
+        {% set  portley="portley" %}
     {%endif%}     
     
         {% if(ps.bodyType=="Plus")%}
@@ -98,10 +98,10 @@
 {%endfor%} 
 
 
-<div class="span1">{{potley}}</div> 
+<div class="span1">{{portley}}</div> 
 {% for ps in product.productSizes%} 
  
- {% if(ps.bodyType=="Potley")%}
+ {% if(ps.bodyType=="Portley")%}
 <div class="span1">                        
                           
 <a href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":ps.id})}}' >
