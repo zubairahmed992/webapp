@@ -372,8 +372,9 @@ public function indexAction($list_type) {
             "brand" => $product->getBrand()->getName(),
             "clothingType" => $product->getClothingType()->getName(),
            "image"=>$product->getdisplayProductColor()->getWebPath(),
-           // 'fittingAlert'=>$fit->getStrippedFeedBack()
+           "fittingAlert"=>$fit->getStrippedFeedBack()
              );
+    
    
      $session->set("product", $compare);
     return $compare;

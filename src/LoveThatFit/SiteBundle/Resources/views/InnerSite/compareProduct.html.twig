@@ -48,7 +48,11 @@ continuous: true
                       <span> Clothing Type:</span>
                       <span>{{p.clothingType}}</span>
                   </li>
+                  <li>
+                       <span class="arw"> Fitting Alert</span>
+                      <span class="arw">{{ dump(p.fittingAlert.feedback) }}</span>
                   
+                  </li>
                     {% endfor %}
                    
                     </ul>
