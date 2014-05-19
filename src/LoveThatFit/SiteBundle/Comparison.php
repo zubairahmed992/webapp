@@ -35,6 +35,11 @@ class Comparison {
             );
         }
     }  
+#-------------------------------------------
+
+    function getWhatEver(){
+               return $this->array_mix();
+    }    
 #-----------------------------------------------------
     function getStripedFeedBackJSON() {
         return json_encode($this->getStripedFeedBack());
@@ -59,6 +64,8 @@ class Comparison {
             return $this->getFittingSize($cm['feedback']);
         }
     }
+    
+
 #-----------------------------------------------------
     private function array_mix($sizes=null) {
         if ($sizes==null){ 
@@ -138,7 +145,7 @@ class Comparison {
 
     private function array_sort($sizes) {
         $size_titles = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
-        $size_types = $this->getSizeTypes();
+        $size_types = $this->getSizeTypes($this->product->getGender());
         $fb = array();
         $size_identifier = '';
         foreach ($size_types as $stype) {
@@ -619,23 +626,44 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         $gender = strtolower($gender);
         $type = strtolower($type);
 
-        if ($type == 'letters') {//$female_letters
+        if ($type == 'letters' || $type == 'letter') {//$female_letters
             return array('XS', 'S', 'M', 'L', 'X', 'XL', '1XL', '1X', 'XXL', '2X', '2XL', 'XXXL', '3XL', '3X', 'XXXXL', '4XL', '4X');
-        } else if ($gender == 'f' && $type == 'numbers') {//$female_standard
+        } else if ($gender == 'f' && ($type == 'numbers'||$type == 'number')) {//$female_standard
             return array('00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30');
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
             return array('23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36');
-        } else if ($gender == 'm' && $type == 'numbers') {//man Top
+         } else if ($gender == 'm' && $type == 'chest') {//man Chest
             return array('35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48');
-        } else if ($gender == 'm' && $type == 'waist') {//man bottom
+        } else if ($gender == 'm' && $type == 'waist') {//man waist
             return array('28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42');
+        } else if ($gender == 'm' && $type == 'neck') {//man neck
+            return array('14', '14.5', '15', '15.5', '16', '16.5', '17', '17.5', '18', '18.5', '19', '20', '22');
+        }else if ($gender == 'm' && $type == 'shirt') {//man shirt
+            return array('14-32', '14-33', '14-34', '14-35', '14-36',
+'14.5-32', '14.5-33', '14.5-34', '14.5-35', '14.5-36',
+'15-32', '15-33', '15-34', '15-35', '15-36',
+'15.5-32', '15.5-33', '15.5-34', '15.5-35', '15.5-36',
+'16-32', '16-33', '16-34', '16-35', '16-36',
+'16.5-32', '16.5-33', '16.5-34', '16.5-35', '16.5-36',
+'17-32', '17-33', '17-34', '17-35', '17-36',
+'17.5-32', '17.5-33', '17.5-34', '17.5-35', '17.5-36',
+'18-32', '18-33', '18-34', '18-35', '18-36',
+'18.5-32', '18.5-33', '18.5-34', '18.5-35', '18.5-36',
+'19-32', '19-33', '19-34', '19-35', '19-36',
+'20-32', '20-33', '20-34', '20-35', '20-36',
+'22-32', '22-33', '22-34', '22-35', '22-36');
         }
     }
 
     #----------------------------------------------------------       
 
-    private function getSizeTypes() {
-        return array('Regular', 'Petite', 'Tall');
+    private function getSizeTypes($gender='f') {
+        if($gender=='m'){
+            return array('Regular', 'Athletic', 'Tall', 'Portley');
+        }else{
+            return array('Regular', 'Petite', 'Tall', 'Plus');
+        }
+        
     }    
     #----------------------------------------------------------       
     
