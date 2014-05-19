@@ -100,7 +100,7 @@ class AvgAlgorithm {
             $fit_index = 0;
         }
         
-        
+        $status=null;
         $fits = null;
         if ($body >= $low && $body <= $high) { #perfect
             $status = $this->status['between_low_high'];
@@ -274,7 +274,7 @@ class AvgAlgorithm {
 # -----------------------------------------------------
     private function array_sort($sizes) {
         $size_titles = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
-        $size_types = $this->getSizeTypes();
+        $size_types = $this->getSizeTypes($this->product->getGender());
         $fb = array();
         $size_identifier = '';
         foreach ($size_types as $stype) {
@@ -366,9 +366,15 @@ class AvgAlgorithm {
          Woman: letter, number, waist, bra
          */
 
-    #----------------------------------------------------------       
-    private function getSizeTypes() {
-        return array('Regular', 'Petite', 'Tall');
+   #----------------------------------------------------------       
+
+    private function getSizeTypes($gender='f') {
+        if($gender=='m'){
+            return array('Regular', 'Athletic', 'Tall', 'Portley');
+        }else{
+            return array('Regular', 'Petite', 'Tall', 'Plus');
+        }
+        
     }
 
     #----------------------------------------------------------       
