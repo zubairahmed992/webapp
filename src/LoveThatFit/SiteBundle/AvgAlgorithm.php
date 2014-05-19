@@ -71,7 +71,13 @@ class AvgAlgorithm {
                  
             }
             $fb[$size_identifier]['message']=  $this->get_fp_status_text($fb[$size_identifier]['status']);
-            $fb[$size_identifier]['fit_index'] = $this->grade_to_scale($fb[$size_identifier]['variance'], $fb[$size_identifier]['max_variance'], 0);
+            # calculate fit index only if measurement is not beyond_max or below_min
+            if ($fb[$size_identifier]['status']==$this->status['beyond_max']
+                    || $fb[$size_identifier]['status']==$this->status['below_min']){
+                $fb[$size_identifier]['fit_index'] = 0;
+            }else{
+                $fb[$size_identifier]['fit_index'] = $this->grade_to_scale($fb[$size_identifier]['variance'], $fb[$size_identifier]['max_variance'], 0);
+            }
         }
         return array('feedback' => $this->array_sort($fb));
     }
