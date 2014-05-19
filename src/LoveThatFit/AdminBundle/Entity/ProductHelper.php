@@ -916,7 +916,7 @@ public function productDetailColorAdd($entity){
             if($brandSpecification->getFemaleLetter()!=null){
               $female_letter=$this->getArray($brandSpecification->getFemaleLetter());  
              }else{
-              $female_letters=Null;}
+              $female_letter=Null;}
              return  $this->fillArray(null, $female_letter,'f',$this->foo('female_letter'));                   
         }       
                if($product->getSizeTitleType()=='number' and strtolower($product->getGender()=='f'))
