@@ -6779,3 +6779,10 @@ overflow: auto;
     height: 14px;
     width: 12px;
 }
+
+.glyphicon-lock {
+    background-image: url("../images/glyphicons-halflings.png");
+    background-position: -288px -24px;
+    height: 14px;
+    width: 12px;
+}
