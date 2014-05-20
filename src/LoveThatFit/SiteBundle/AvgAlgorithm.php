@@ -28,8 +28,8 @@ class AvgAlgorithm {
             $rc = $this->getFittingSize($cm['feedback']);
             return array(
                 'feedback' => $cm['feedback'],
-                'recommendation' => $rc,
-                'best_fit' => null,
+                'recommendation' => $rc['sizes'],
+                'best_fit' => $rc['size'],
             );
         } else {
             return array(
@@ -54,6 +54,7 @@ class AvgAlgorithm {
             return;
         $lowest_variance = null;
         $fitting_size = null;
+        $best_fit = null;
 
         foreach ($sizes as $size) {
             if ($size['status'] != $this->status['beyond_max']
@@ -61,10 +62,14 @@ class AvgAlgorithm {
                 if ($lowest_variance == null || $lowest_variance > $size['variance']) {
                     $lowest_variance = $size['variance'];
                     $fitting_size = array($size['description'] => $size);
+                    $best_fit = $size;
+                } elseif($lowest_variance == $size['variance']){
+                    $fitting_size = array($size['description'] => $size) + $fitting_size;//array_shift
+                    $best_fit = $size;
                 }
             }
         }
-        return $fitting_size;
+        return array('sizes'=>$fitting_size,'size'=>$best_fit);
     }    
     
 #-----------------------------------------------------
