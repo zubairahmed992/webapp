@@ -25,9 +25,10 @@ class AvgAlgorithm {
     function getFeedBack() {
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->array_mix();
+            $rc = $this->getFittingSize($cm['feedback']);
             return array(
                 'feedback' => $cm['feedback'],
-                'recommendation' => null,
+                'recommendation' => $rc,
                 'best_fit' => null,
             );
         } else {
@@ -37,6 +38,35 @@ class AvgAlgorithm {
         }
     }
 
+#-----------------------------------------------------
+    function getRecommendation($sizes = null) {
+        if ($sizes) {
+            return $this->getFittingSize($sizes);
+        } else {
+            $cm = $this->array_mix();
+            return $this->getFittingSize($cm['feedback']);
+        }
+    }
+    
+#--------------------------------------------------------
+    private function getFittingSize($sizes) {
+        if ($sizes == null)
+            return;
+        $lowest_variance = null;
+        $fitting_size = null;
+
+        foreach ($sizes as $size) {
+            if ($size['status'] != $this->status['beyond_max']
+                    && $size['status'] != $this->status['below_min']) {
+                if ($lowest_variance == null || $lowest_variance > $size['variance']) {
+                    $lowest_variance = $size['variance'];
+                    $fitting_size = array($size['description'] => $size);
+                }
+            }
+        }
+        return $fitting_size;
+    }    
+    
 #-----------------------------------------------------
     private function array_mix($sizes = null) {
         if ($sizes == null) {
