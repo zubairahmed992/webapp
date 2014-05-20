@@ -245,8 +245,9 @@ public function favouriteByUser($user_id,$request){
         if(isset($request_array['date'])){
           $date_format=$this->returnFormattedTime($request_array);
         }
-        $products = $this->repo->newproductListingWebService($gender,$date_format);
-       
+       // return $date_format;
+       $products = $this->repo->newproductListingWebService($gender,$date_format);
+      
         $data = array();
        
         #-------Fetching The Path------------#
@@ -267,14 +268,20 @@ public function favouriteByUser($user_id,$request){
                     $data['data'][$product_id]['productImage'] = $ind_product['product_image'];
                     $data['data'][$product_id]['brandName'] = $ind_product['brand_name'];
                     $data['data'][$product_id]['brandId'] = $ind_product['brandId'];
-                    
-                    $item = $p->getDefaultItem();
-                    if ($item) {
+                  
+                   
+                     $item = $p->getDefaultItem();
+                      if (isset($item)) {
                         $data['data'][$product_id]['fittingRoomImage'] = $item->getImage();
                         $data['data'][$product_id]['sizeId'] = $item->getProductSize()->getId();
                         $data['data'][$product_id]['colorId'] = $item->getProductColor()->getId();
                         $data['data'][$product_id]['sizeTitle'] = $item->getProductSize()->getTitle();
-                    }
+                        }
+                     
+                    
+ 
+               
+                
                 }
             }   
            
@@ -507,7 +514,7 @@ private function countMyCloset($user_id){
      if($deviceType=='iphone4s' ||$deviceType=='iPhone4S'||$deviceType=='4s'){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
       $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
-      $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+      $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
       $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone4s_product_list/';
       $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone4s_ftting_room_list/';
       
@@ -515,7 +522,7 @@ private function countMyCloset($user_id){
       if($deviceType=='iphone5' ||$deviceType=='iPhone5'||$deviceType=='5'){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
       $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
-      $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
+      $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
       $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone5_product_list/';
       $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iPhone5_ftting_room_list/';
       

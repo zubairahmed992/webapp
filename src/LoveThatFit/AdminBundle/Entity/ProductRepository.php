@@ -465,6 +465,7 @@ class ProductRepository extends EntityRepository {
     
     public function newproductListingWebService($gender,$date_format=Null) {
         if($date_format){
+         
             return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('p.id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,b.name as brand_name,b.id as brandId')
@@ -474,6 +475,8 @@ class ProductRepository extends EntityRepository {
                         ->innerJoin('p.brand', 'b')
                         ->where('p.gender=:gender')
                         ->andWhere('p.updated_at>=:update_date')
+                        ->andWhere("p.displayProductColor!=''")
+                        ->andWhere ('p.disabled=0')
                         ->groupBy('p.id')
                         ->setParameters(array('gender' => $gender,'update_date'=>$date_format))
                         ->getQuery()
@@ -481,6 +484,7 @@ class ProductRepository extends EntityRepository {
             
             
         }else{
+         
         return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('p.id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,b.name as brand_name,b.id as brandId')
@@ -489,6 +493,8 @@ class ProductRepository extends EntityRepository {
                         ->innerJoin('p.clothing_type', 'ct')
                         ->innerJoin('p.brand', 'b')
                         ->where('p.gender=:gender')
+                        ->andWhere("p.displayProductColor!=''")
+                        ->andWhere ('p.disabled=0')
                         ->groupBy('p.id')
                         ->setParameters(array('gender' => $gender))
                         ->getQuery()

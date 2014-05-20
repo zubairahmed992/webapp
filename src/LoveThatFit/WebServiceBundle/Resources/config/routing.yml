@@ -146,8 +146,19 @@ ws_get_notification_type:
 ws_run_crone_job:
    pattern:  /web_service/run_crone_job
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:runCroneJob}  
+   
+ws_test_product_syn:
+   pattern:  /web_service/test_product_sync/{authTokenWebService}/{date}
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getTestProductSyn,authTokenWebService:0,date:0}   
 
+ws_test_product_detail_syn:
+   pattern:  /web_service/product_test_detail_sync/{authTokenWebService}/{date}
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getTestProductDetailSyn,authTokenWebService:0,date:0} 
 
+ws_test_brand_syn:
+   pattern:  /web_service/test_brand_sync/{date}
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getTestBrandSync, date:0}   
+   
 
    
    
