@@ -259,8 +259,8 @@ $(document).ready(function(){
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'clothing_type' }}">Type</a></div>
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
             <div class="span1 hds"><a href="{{  path('admin_products')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>                        
-            <div class="span1 hds">Try Count</div>
-           
+            
+            <div class="span1 hds">Created At</div>             
             <div class="span1 hds"></div>  
             <div class="span1 hds">Actions</div>  
             
@@ -274,8 +274,8 @@ $(document).ready(function(){
             <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
             <div class="span1">{{p.Gender}}</div>
             <div class="span1">{{p.Name}}</div>
-            <div class="span1">{{ p.getTryProductCount }}</div>            
-            
+                       
+            <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>    
             <div class="span1">
                 {%if(p.disabled==1)%}
                     

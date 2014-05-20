@@ -30,11 +30,11 @@
 
         <div class="row-fluid">
             <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>
+            <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'name' }}" style=" text-decoration: none;">Name</a></div>            
+            <div class="span1 hds">Created At</div>                  
             <div class="span1 hds"><a href="{{  path('admin_brands')~'/'~ 1~'/'~'image' }}" style=" text-decoration: none;">Logo</a></div>
-            <div class="span1 hds"></div>                  
+            <div class="span1 hds"></div>
             <div class="span1 hds">Actions</div>
-            <div class="span1 hds"></div>            
             <div class="span1 hds"></div>      
             
         </div>  
@@ -44,18 +44,17 @@
         <div class="row-fluid show-grid">
             <div class="span1">{{b.Id}}</div>
             <div class="span1">{{b.Name}}</div>
+            <div class="span1">{{b.createdAt|date('d-m-Y') }}</div>
             <div class="span1"><img src="{{ asset(b.WebPath) }}"/></div>                      
             <div class="span1">{%if(b.disabled==1)%} Disabled {%else%}  {%endif%}</div>            
             <div class="span1">
-            <div>
-                    
+            <div>                    
                     <a href="{{ path('admin_brand_show', {'id': b.Id}) }}" title="Show {{b.name}}"><i class="icon-eye-open"></i></a>
                     <a href="{{ path('admin_brand_edit', {'id': b.Id}) }}" title="Edit {{b.name}}"><i class="icon-edit"></i></a>
                     <a href="#myModal{{b.Id}}" role="button" data-toggle="modal" title="Delete {{b.name}}"><i class="icon-remove"></i></a>
                 </div> 
-            </div>
-                 <div class="span1"></div>
-            <div class="span1"></div> 
+            </div>              
+            
         </div>
         <!-- Modal -->
 <div id="myModal{{b.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

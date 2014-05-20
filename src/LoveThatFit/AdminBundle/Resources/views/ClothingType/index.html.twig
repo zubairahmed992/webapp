@@ -19,7 +19,7 @@
             <div class="span1 hds">Name</div>
             <div class="span1 hds">Target</div>
             <div class="span1 hds">Gender</div>
-            <div class="span1 hds"></div>                  
+            <div class="span1 hds">Created At</div>                  
             <div class="span1 hds"></div> 
              <div class="span1 hds"></div>
             
@@ -32,8 +32,8 @@
             <div class="span1">{{ct.Name|capitalize |replace({'_': ' ', '_': " "}) }}</div>
             <div class="span1">{{ct.Target}}</div>
             <div class="span1">{{ct.Gender}}</div>
-            <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%}  {%endif%}</div>
-                <div class="span1"></div> 
+            <div class="span1">{{ct.createdAt|date('d-m-Y') }}</div>             
+            <div class="span1">{%if(ct.disabled==1)%} Disabled {%else%}  {%endif%}</div>                
                  <div class="span1"></div> 
         </div>
       
