@@ -454,84 +454,7 @@ class Product {
         return $this->product_items;
     }
 
-    //----------------------------------------------------------
-    
-    public function getSizeByTitleBaseBodyType($sizeTitle, $bodyType) {
-        $productSizes = $this->getProductSizes();
-
-        foreach ($productSizes as $ps) {
-            if (strcmp(strtolower($ps->getTitle()),strtolower($sizeTitle))==0 and $ps->getBodyType() == $bodyType) {
-                return $ps;
-            }
-        }
-        return;
-    }
-    //----------------------------------------------------------
-    #----!!! This method used for 
-    public function getSizeByTitle($sizeTitle) {
-        $productSizes = $this->getProductSizes();
-        foreach ($productSizes as $ps) {
-            if ($ps->getTitle() == $sizeTitle) {
-                return $ps;
-            }
-        }
-        return;
-    }
-
-    //----------------------------------------------------------
-    public function getThisItem($color, $size) {
-        $productItems = $this->getProductItems();
-        foreach ($productItems as $pi) {
-            if ($pi->getProductSize()->getId() == $size->getId() && $pi->getProductColor()->getId() == $color->getId()) {
-                return $pi;
-            }
-        }
-        return;
-    }
-
-    //----------------------------------------------------------
-    public function getProductSizeTitleArray() {
-        $productSizes = $this->getProductSizes();
-
-        $sizeTitle = array();
-        foreach ($productSizes as $ps) {
-            array_push($sizeTitle, $ps->getTitle());
-        }
-
-        return $sizeTitle;
-    }
-        //----------------------------------------------------------
-    public function getProductSizeDetailArray() {
-        $productSizes = $this->getProductSizes();
-
-        $sizeTitle = array();
-        foreach ($productSizes as $ps) {
-            $sizeTitle[$ps->getId()] = array('title' => $ps->getTitle(), 'description' => $ps->getTitle(), 'body_type' => $ps->getBodyType());
-        }
-        return $sizeTitle;
-    }
-    //----------------------------------------------------------
-    public function getProductSizesLayeredArray() {
-        $productSizes = $this->getProductSizes();
-
-        $sizeTitle = array();
-        foreach ($productSizes as $ps) {
-            $sizeTitle[$ps->getBodyType()][$ps->getTitle()]=$ps->getTitle(); 
-            }
-        return $sizeTitle;
-    
-    }
-    //----------------------------------------------------------
-    public function getProductSizeTitleFitPointArray($fit_point, $body_type) {
-        $productSizes = $this->getProductSizes();
-        $sizeTitle = array();
-        $body_type=  strtolower($body_type);
-        foreach ($productSizes as $ps) {            
-            if ($body_type==strtolower($ps->getBodyType()))
-                $sizeTitle [$ps->getTitle()] = $ps->getFitPointMeasurements($fit_point);
-        }
-        return $sizeTitle;
-    }
+  
 
 //----------------------------------------------------------
     /**
@@ -577,72 +500,7 @@ class Product {
         return $this->disabled;
     }
 
-    //----------------------------------------------------------
-    public function getProductImagePaths() {
-
-        $ar = array();
-
-        foreach ($this->getProductColors() as $pc) {
-            $ar['path'] = $pc->getUploadRootDir();
-        }
-
-        return $ar;
-    }
-
-//----------------------------------------------------------
-    public function getUserFittingItem($user) {
-
-        $fe = new \LoveThatFit\SiteBundle\FitEngine($user, null);
-        $item = $fe->getFittingItem($this);
-        return $item;
-        
-    }
-//----------------------------------------------------------
-    public function getComparisonUserItem($user) {
-
-        $comp = new \LoveThatFit\SiteBundle\Comparison($user, $this);
-        $fb = $comp->getFeedBack();
-        if (array_key_exists('best_fit', $fb)){            
-            
-            $item=$this->displayProductColor->getItemBySizeId($fb['best_fit']['id']);
-            return $item;
-        }else{
-            return null;
-        }
-        
-    }    
-    #--------Get Default Product Colors----------------#    
-    public function getDefaultItem($user = null) {        
-        $default_item = null;        
-        if ($user != null) {
-            $default_item = $this->getComparisonUserItem($user);
-            #$default_item = $this->getUserFittingItem($user);
-        }
-        if ($user == null || $default_item == null) {
-            $default_item=$this->getDefaultColorFirstItem();
-        }
-        return $default_item;
-    }
-
-          
-
-    //----------------------------------------------------------
-    public function getRandomItem() {
-        return $this->getProductItems()->getIterator()->current();
-    }
-
-    //----------------------------------------------------------
-    public function getDefaultColorRandomItem() {
-        return $this->displayProductColor()->getIterator()->current();
-    }
-
-    //----------------------------------------------------------
-    public function getDefaultColorFirstItem() {
-          $productColor = $this->getDisplayProductColor();
-            foreach ($productColor->getProductItems() as $item) {
-                return $item;
-            }
-    }
+    
     /**
      * Add user_item_try_history
      *
@@ -681,29 +539,7 @@ class Product {
         return $this->displayProductColor->getImagePaths();
     }
 
-    
-#-----------------Get images path for image downloading------------------------#
-
-    public function getColorImagesPaths() {
-        $productColors = $this->getProductColors();
-
-        $imagesPath = array();
-        foreach ($productColors as $color) {
-            $imagesPath[] = $color->getImagePaths();
-            $imagesPath[] = $color->getPatternPaths();
-        }
-        return $imagesPath;
-    }
-
-    public function getItemImagesPaths() {
-        $productItems = $this->getProductItems();
-        $imagesPath = array();
-        foreach ($productItems as $item) {
-            $imagesPath[] = $item->getImagePaths();
-        }
-
-        return $imagesPath;
-    }
+ 
 
     /**
      * Set retailer
@@ -1006,7 +842,7 @@ class Product {
     public function getFitPriorityArray(){
         return json_decode($this->fit_priority, true);
     }
-    
+    #~~~~~~~~~~~~~~~~~~~~~~~>
     public function fitPriorityAvailable(){
         $fps = $this->getFitPriorityArray();
         if (is_array($fps)){
@@ -1114,5 +950,238 @@ class Product {
     public function getSizeTitleType()
     {
         return $this->size_title_type;
+    }
+    
+    
+    
+    
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ public function getDetailArray(){
+        $product=$this->getAttributeArray();
+        $product['sizes']=$this->getProductSizeDetailArray();
+        $product['colors']=$this->getColorArray();
+        $product['items']=$this->getItemArray();
+        return $product;
+    }
+    
+    public function getAttributeArray(){
+        return array(
+            'name' => $this->name,
+            'brand' => $this->brand->getName(),
+            'brand_url' => $this->brand->getImage(),
+            'description' => $this->description,
+            'gender' => $this->gender,
+            'clothing_type' => $this->clothing_type->getName(),
+            'target' => $this->clothing_type->getTarget(),
+            'styling_type' => $this->styling_type,
+            'hem_length' => $this->hem_length,
+            'neckline' => $this->neckline,
+            'sleeve_styling' => $this->sleeve_styling,
+            'rise' => $this->rise,
+            'stretch_type' => $this->stretch_type,
+            'fabric_weight' => $this->fabric_weight,
+            'layering' => $this->layering,
+            'structural_detail' => $this->structural_detail,
+            'fit_type' => $this->fit_type,
+            'size_title_type' => $this->size_title_type,            
+        );
+    }
+        //----------------------------------------------------------
+    public function getItemArray() {
+        $productItems = $this->getProductItems();
+        $items_array = array();
+        foreach ($productItems as $pi) {
+            $items_array[$pi->getId()] = array(
+                'id' => $pi->getId(), 
+                'size_id' => $pi->getProductSize()->getId(), 
+                'color_id' => $pi->getProductColor()->getId(), 
+                'image_url'=>$pi->getImage());
+        }
+        return $items_array;
+    }
+        //----------------------------------------------------------
+    public function getColorArray() {
+        $productColors = $this->getProductColors();
+        $colors_array = array();
+        foreach ($productColors as $pc) {
+            $colors_array[$pc->getId()] = array(
+                'id' => $pc->getId(), 
+                'title' => $pc->getTitle(), 
+                'image' => $pc->getImage(), 
+                'pattern'=>$pc->getPattern());
+        }
+        return $colors_array;
+    }
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+        
+    public function getSizeByTitleBaseBodyType($sizeTitle, $bodyType) {
+        $productSizes = $this->getProductSizes();
+
+        foreach ($productSizes as $ps) {
+            if (strcmp(strtolower($ps->getTitle()),strtolower($sizeTitle))==0 and $ps->getBodyType() == $bodyType) {
+                return $ps;
+            }
+        }
+        return;
+    }
+    //----------------------------------------------------------
+    #----!!! This method used for 
+    public function getSizeByTitle($sizeTitle) {
+        $productSizes = $this->getProductSizes();
+        foreach ($productSizes as $ps) {
+            if ($ps->getTitle() == $sizeTitle) {
+                return $ps;
+            }
+        }
+        return;
+    }
+
+    //----------------------------------------------------------
+    public function getThisItem($color, $size) {
+        $productItems = $this->getProductItems();
+        foreach ($productItems as $pi) {
+            if ($pi->getProductSize()->getId() == $size->getId() && $pi->getProductColor()->getId() == $color->getId()) {
+                return $pi;
+            }
+        }
+        return;
+    }
+
+    //----------------------------------------------------------
+    public function getProductSizeTitleArray() {
+        $productSizes = $this->getProductSizes();
+
+        $sizeTitle = array();
+        foreach ($productSizes as $ps) {
+            array_push($sizeTitle, $ps->getTitle());
+        }
+
+        return $sizeTitle;
+    }
+        //----------------------------------------------------------
+    public function getProductSizeDetailArray() {
+        $productSizes = $this->getProductSizes();
+
+        $sizeTitle = array();
+        foreach ($productSizes as $ps) {
+            $sizeTitle[$ps->getId()] = array('title' => $ps->getTitle(), 'description' => $ps->getTitle(), 'body_type' => $ps->getBodyType());
+        }
+        return $sizeTitle;
+    }
+    //----------------------------------------------------------
+    public function getProductSizesLayeredArray() {
+        $productSizes = $this->getProductSizes();
+
+        $sizeTitle = array();
+        foreach ($productSizes as $ps) {
+            $sizeTitle[$ps->getBodyType()][$ps->getTitle()]=$ps->getTitle(); 
+            }
+        return $sizeTitle;
+    
+    }
+    //----------------------------------------------------------
+    public function getProductSizeTitleFitPointArray($fit_point, $body_type) {
+        $productSizes = $this->getProductSizes();
+        $sizeTitle = array();
+        $body_type=  strtolower($body_type);
+        foreach ($productSizes as $ps) {            
+            if ($body_type==strtolower($ps->getBodyType()))
+                $sizeTitle [$ps->getTitle()] = $ps->getFitPointMeasurements($fit_point);
+        }
+        return $sizeTitle;
+    }
+    
+    //----------------------------------------------------------
+    public function getProductImagePaths() {
+
+        $ar = array();
+
+        foreach ($this->getProductColors() as $pc) {
+            $ar['path'] = $pc->getUploadRootDir();
+        }
+
+        return $ar;
+    }
+
+//----------------------------------------------------------??? if Default color missing
+    public function getUserFittingItem($user) {
+
+        $fe = new \LoveThatFit\SiteBundle\FitEngine($user, null);
+        $item = $fe->getFittingItem($this);
+        return $item;
+        
+    }
+//----------------------------------------------------------??? if Default color missing
+    public function getComparisonUserItem($user) {
+
+        $comp = new \LoveThatFit\SiteBundle\Comparison($user, $this);
+        $fb = $comp->getFeedBack();
+        if (array_key_exists('best_fit', $fb)){            
+            
+            $item=$this->displayProductColor->getItemBySizeId($fb['best_fit']['id']);
+            return $item;
+        }else{
+            return null;
+        }
+        
+    }    
+    #--------Get Default Product Colors----------------#    ???   if Default color missing
+    public function getDefaultItem($user = null) {        
+        $default_item = null;        
+        if ($user != null) {
+            $default_item = $this->getComparisonUserItem($user);
+            #$default_item = $this->getUserFittingItem($user);
+        }
+        if ($user == null || $default_item == null) {
+            $default_item=$this->getDefaultColorFirstItem();
+        }
+        # incase if default color is not available?????
+        return $default_item;
+    }
+
+          
+
+    //----------------------------------------------------------
+    public function getRandomItem() {
+        return $this->getProductItems()->getIterator()->current();
+    }
+
+    //----------------------------------------------------------???  if Default color missing
+    public function getDefaultColorRandomItem() {
+        return $this->displayProductColor()->getIterator()->current();
+    }
+
+    //---------------------------------------------------------- ?? if Default color missing
+    public function getDefaultColorFirstItem() {
+          $productColor = $this->getDisplayProductColor();
+            foreach ($productColor->getProductItems() as $item) {
+                return $item;
+            }
+    }
+    
+       
+#-----------------Get images path for image downloading------------------------#
+
+    public function getColorImagesPaths() {
+        $productColors = $this->getProductColors();
+
+        $imagesPath = array();
+        foreach ($productColors as $color) {
+            $imagesPath[] = $color->getImagePaths();
+            $imagesPath[] = $color->getPatternPaths();
+        }
+        return $imagesPath;
+    }
+#----------------------------------------------------------------
+    public function getItemImagesPaths() {
+        $productItems = $this->getProductItems();
+        $imagesPath = array();
+        foreach ($productItems as $item) {
+            $imagesPath[] = $item->getImagePaths();
+        }
+
+        return $imagesPath;
     }
 }

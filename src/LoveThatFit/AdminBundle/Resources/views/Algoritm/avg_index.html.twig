@@ -22,7 +22,7 @@ $(document).ready(function(){
      })
      return false; //for good measure
 });
-
+//-------------------------------------------------------
 $('a.json').click(function (event){ 
      event.preventDefault(); 
      
@@ -38,8 +38,25 @@ $('a.json').click(function (event){
      })
      return false; //for good measure
 });
+//-------------------------------------------------------
+$('a.waldo').click(function (event){ 
+     event.preventDefault(); 
+     
+    var user_id = $("#algorithm_User").val();
+    var product_id = $("#algorithm_Product").val();                    
+    var waldo_url = "../algorithm/foo/" + user_id + "/"+ product_id;         
+    
+     $.ajax({
+        url: waldo_url
+        ,success: function(response) {
+           
+           window.open(waldo_url);
+        }
+     })
+     return false; //for good measure
+});
 
-
+//-------------------------------------------------------
 $( "select[id='algorithm_User']" ).change(function() {
     var user_id = $("select[id='algorithm_User']").val();
     var url= '../user/'+ user_id +'/edit';
@@ -83,7 +100,8 @@ var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
         </form>      
     </div>
     <a id='compare' class='compare' href="#">Compare</a> | 
-    <a id='json' class='json' href="#">JSON</a>
+    <a id='json' class='json' href="#">JSON</a> | 
+    <a id='waldo' class='waldo' href="#">find waldo</a>
     <br>
     <div id="summary_ajax" style="float: none">
     </div>

@@ -8,9 +8,8 @@
     
 {% if data.recommendation is defined %}
     <b>Recommendation</b> 
-        {% for size, size_specs in data.recommendation %}     
-            &nbsp;|&nbsp;{{size}} 
-        {% endfor %}
+    {{data.recommendation.description }}
+        
 {% endif %}
     
 {% if data.feedback is defined %}

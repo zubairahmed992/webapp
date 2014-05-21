@@ -77,11 +77,18 @@ class AlgorithmController extends Controller {
 
     public function fooAction($user_id, $product_id, $size_id) {
         $product = $this->get('admin.helper.product')->find($product_id);
+        #return new Response(json_encode($product->getDetailArray()));        
+        
         $user = $this->get('user.helper.user')->find($user_id);
-        $fe = new Comparison($user, $product);
+        $fe = new AvgAlgorithm($user, $product);
+        
+        return new Response(json_encode($product->getDetailArray()+$fe->getFeedBack()));
+        /*
         $product_size = $this->get('admin.helper.productsizes')->find($size_id);
         #return new Response($fe->getFeedBackJSON());                                
-        return new Response(json_encode($fe->getSizeFeedBack($product_size)));
+        
+         * 
+         */
     }
 
 }
