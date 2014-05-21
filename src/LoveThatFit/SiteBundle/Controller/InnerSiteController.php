@@ -17,6 +17,7 @@ use LoveThatFit\SiteBundle\Entity\UserItemTryHistory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use LoveThatFit\SiteBundle\AvgAlgorithm;
 
 class InnerSiteController extends Controller {
       var $compare = array();
@@ -343,8 +344,9 @@ public function indexAction($list_type) {
    public function compareProductAction($item_id){
        $productItem = $this->get('admin.helper.productitem')->getProductItemById($item_id);
        $product=$productItem->getProduct();
+      
        $totalPro=count($this->addNewProducts($product));
-       
+      
        if($totalPro<=3){
         return $this->render('LoveThatFitSiteBundle:InnerSite:compareProduct.html.twig',
         array('product' => $this->addNewProducts($product)));
@@ -358,25 +360,18 @@ public function indexAction($list_type) {
    //---------------------------------------------------------------------
     private function addNewProducts($product) {
      $session = $this->get("session");
+     $user = $this->get('security.context')->getToken()->getUser();
      $compare=array();
      if($session->has('product')){
          $compare=$session->get("product");
-      
      }  
-     $user = $this->get('security.context')->getToken()->getUser(); 
-     $fit = new Comparison($user, $product);
      
+     $fe = new AvgAlgorithm($user, $product);
      $compare[$product->getId()]=array(
-            "id" => $product->getId(),
-            "title" => $product->getName(),
-            "brand" => $product->getBrand()->getName(),
-            "clothingType" => $product->getClothingType()->getName(),
-           "image"=>$product->getdisplayProductColor()->getWebPath(),
-           "fittingAlert"=>$fit->getStrippedFeedBack()
-             );
+            'product'=>$product->getDetailArray()+$fe->getFeedBack()
+    );
     
-   
-     $session->set("product", $compare);
+    $session->set("product", $compare);
     return $compare;
     
      

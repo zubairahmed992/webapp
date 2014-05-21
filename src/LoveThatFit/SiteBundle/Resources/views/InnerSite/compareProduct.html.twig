@@ -29,33 +29,18 @@ continuous: true
 
 <div id="boxes_wrapper">
     <div class="home_box" id="comapre_1">
-    <ul style="display: block;" id="fchld">
-        
+   
+          {{dump(product)}}
                  {% for p in product %}
-                  <li>
-                      <span class="arw">  <h1>Product:</h1>
-                          {% if(p.image is defined )%}
-                            <div><img src="{{ asset(p.image) }}" style="opacity:0.2;"/> </div>
-                           {%endif%} 
-                          <a href="#_">{{p.title}}</a></span>
-                  </li>
-                  <li>
-                      <span class="arw"> Brand:</span>
-                      <span class="arw">{{p.brand}}</span>
-                      
-                  </li>  
-                  <li>
-                      <span> Clothing Type:</span>
-                      <span>{{p.clothingType}}</span>
-                  </li>
-                  <li>
-                       <span class="arw"> Fitting Alert</span>
-                      <span class="arw">{{ dump(p.fittingAlert.feedback) }}</span>
-                  
-                  </li>
+                    {% for singlePro in p %}
+                    {% if(singlePro.display_image is defined )%}
+                   <img src="{{asset(singlePro.display_image) }}">
+                    {%endif%}
+                   <div>{{singlePro.name}}</div>
                     {% endfor %}
+                {% endfor %}
                    
-                    </ul>
+                   
     </div>
        
        

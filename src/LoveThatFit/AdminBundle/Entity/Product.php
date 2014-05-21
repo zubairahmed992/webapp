@@ -985,7 +985,8 @@ class Product {
             'layering' => $this->layering,
             'structural_detail' => $this->structural_detail,
             'fit_type' => $this->fit_type,
-            'size_title_type' => $this->size_title_type,            
+            'size_title_type' => $this->size_title_type,   
+            'display_image' => $this->displayProductColor->getWebPath(),
         );
     }
         //----------------------------------------------------------
@@ -997,7 +998,7 @@ class Product {
                 'id' => $pi->getId(), 
                 'size_id' => $pi->getProductSize()->getId(), 
                 'color_id' => $pi->getProductColor()->getId(), 
-                'image_url'=>$pi->getImage());
+                'image_url'=>$pi->getWebPath());
         }
         return $items_array;
     }
@@ -1009,8 +1010,8 @@ class Product {
             $colors_array[$pc->getId()] = array(
                 'id' => $pc->getId(), 
                 'title' => $pc->getTitle(), 
-                'image' => $pc->getImage(), 
-                'pattern'=>$pc->getPattern());
+                'image' => $pc->getWebPath(), 
+                'pattern'=>$pc->getPatternWebPath());
         }
         return $colors_array;
     }
