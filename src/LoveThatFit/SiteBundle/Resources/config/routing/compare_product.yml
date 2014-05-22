@@ -1,0 +1,6 @@
+
+compare_product_index:
+    pattern:  /compare_product/index
+    defaults: { _controller: LoveThatFitSiteBundle:CompareProduct:index}
+
+    

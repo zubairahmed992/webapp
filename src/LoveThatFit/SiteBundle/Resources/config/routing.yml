@@ -1,3 +1,7 @@
+compare_product_routes:
+    resource: "@LoveThatFitSiteBundle/Resources/config/routing/compare_product.yml"
+    prefix:   /
+
 anonymous_user_home:
     pattern:  /home
     defaults: { _controller: LoveThatFitUserBundle:Registration:registration}
