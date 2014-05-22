@@ -44,7 +44,7 @@ class SizeChartController extends Controller {
      
      public function newAction() {        
         $entity = $this->get('admin.helper.sizechart')->createNew();
-        $form = $this->createForm(new SizeChartType('add'), $entity);      
+        $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', 
         array('form' => $form->createView(),'allSizes'=>json_encode($this->get('admin.helper.size')->getAllSizes()),'allMixSizeTitles'=>json_encode($this->get('admin.helper.sizechart')->getMixSizeTitle())));
     }
