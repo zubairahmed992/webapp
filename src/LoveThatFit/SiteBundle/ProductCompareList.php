@@ -2,28 +2,48 @@
 
 namespace LoveThatFit\SiteBundle;
 use LoveThatFit\SiteBundle\AvgAlgorithm;
+use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Entity\ProductItem;
 class ProductCompareList {
 
     //id, title, brand, clothingType, Quantity, price, image
     var $list = array();
+  
 
     public function __construct($list) {
         if ($list)
             $this->list = $list;  
+           
     }
 //---------------------------------------------------------------------
     function getList() {
         return $this->list;
     }
     //---------------------------------------------------------------------
-    function getCompareableList($user) {
+    function getCompareableList($user,$productItem) {
+        $feed_back=array();
+        
+        foreach($this->list as $key=>$value){
+              $item = $productItem->getProductItemById($value['itemid']);
+              $product=$item->getProduct();
+            //$feed_back[$key]=array('product'=>$value['id']);
+            $fe = new AvgAlgorithm($user,$product);
+           $feed_back[$key]=array('product'=>$product->getDetailArray()+$fe->getFeedBack());
+        }
+          return $feed_back;
+     
+            
         #list with feedback
         #loop through list & add feedback from algorithm
         #use for rendering fot to store in session
         $compareable_list=null;
         return $compareable_list;
     }
-
+#-------------------Get Product-------------------#
+function getProduct($item_id,$productItem){
+     $productItem = $productItem->getProductItemById($item_id);
+     return $productItem->getProduct();
+}
 //---------------------------------------------------------------------
     function removeItemFromList($item) {
     #remove this item

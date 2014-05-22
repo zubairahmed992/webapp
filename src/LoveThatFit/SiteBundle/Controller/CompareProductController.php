@@ -12,18 +12,23 @@ class CompareProductController extends Controller {
     //-------------------------------------------------------------------------
 
     public function indexAction() {
-           $compare_list = $this->getCompareList();
-     return new Response(json_encode($compare_list));
+      $compare_list = $this->getCompareList();
+      $user = $this->get('security.context')->getToken()->getUser();
+       $productItem = $this->get('admin.helper.productitem');
+     return new Response(json_encode($compare_list->getCompareableList($user,$productItem)));
     }
 
     private function getCompareList() {
+        
         $session = $this->get("session");
         if ($session->has('product_compare_list')) {
             $product_compare_list = new ProductCompareList($session->get('product_compare_list'));
         } else {
             #temp
             $list=array(
-                5=>array('id'=>5,'itemid'=>24),
+                5=>array('id'=>1,'itemid'=>1),
+                6=>array('id'=>3,'itemid'=>8),
+                7=>array('id'=>4,'itemid'=>14),
             );
             $product_compare_list = new ProductCompareList($list);
         }
