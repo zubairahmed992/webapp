@@ -960,7 +960,7 @@ class Product {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  public function getDetailArray(){
         $product=$this->getAttributeArray();
-        $product['sizes']=$this->getProductSizeDetailArray();
+        $product['sizes']=$this->getProductSizeDescriptionArray();
         $product['colors']=$this->getColorArray();
         $product['items']=$this->getItemArray();
         return $product;
@@ -1014,6 +1014,15 @@ class Product {
                 'pattern'=>$pc->getPatternWebPath());
         }
         return $colors_array;
+    }
+         //----------------------------------------------------------
+    public function getProductSizeDescriptionArray() {
+        $productSizes = $this->getProductSizes();
+        $sizeTitle = array();
+        foreach ($productSizes as $ps) {
+            $sizeTitle[$ps->getBodyType() . ' ' . $ps->getTitle()]=$ps->getId();
+        }
+        return $sizeTitle;
     }
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
         
