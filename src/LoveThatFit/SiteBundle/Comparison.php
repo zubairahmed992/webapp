@@ -553,6 +553,48 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
                 return 'Product measurement missing';
                 break;
             case $this->status['beyond_max'] :
+                return 'Too Small';
+                break;
+            case $this->status['second_half_high_mid_max'] :
+                return 'tight fitting';
+                break;
+            case $this->status['first_half_high_mid_max'] :
+                return 'close fitting';
+                break;
+            case $this->status['between_low_high'] :
+                return 'Love That Fit';
+                break;
+            case $this->status['below_low'] :
+                return 'Loose';
+                break;
+            case $this->status['one_size_below_low'] :
+                return 'Loose Fit';
+                break;
+            case $this->status['two_size_below_low'] :
+                return 'Too Loose';
+                break;
+            case $this->status['more_size_below_low'] :
+                return 'Too Large';
+                break;
+            case $this->status['anywhere_below_max'] :
+                return 'Tight at some points & loose at others';
+                break;
+        }
+        #$str=array_search($id,$this->status);
+        #return str_replace('_', ' ', $str);
+    }
+    private function get_fp_status_text_for_testing($id) {
+        switch ($id) {
+            case $this->status['fit_point_dose_not_match'] :
+                return 'Fitting point dose not exists';
+                break;
+            case $this->status['body_measurement_not_available'] :
+                return 'User measurement not provided';
+                break;
+            case $this->status['product_measurement_not_available'] :
+                return 'Product measurement missing';
+                break;
+            case $this->status['beyond_max'] :
                 return 'Too Small (beyond_max)';
                 break;
             case $this->status['second_half_high_mid_max'] :
@@ -583,7 +625,6 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
         #$str=array_search($id,$this->status);
         #return str_replace('_', ' ', $str);
     }
-
 #----------------------------------------------------------       
     
  var $status = array(
