@@ -6,7 +6,7 @@
     <div  style="color:red"> {{data.message}}</div>
 {% endif %}
     
-{% if data.recommendation is defined %}
+{% if data.recommendation is defined and data.recommendation!=null %}
     <b>Recommendation</b> 
     {{data.recommendation.description }}
         

@@ -68,7 +68,33 @@ class AvgAlgorithm {
         }
         return $best_fit;
     }    
-    
+#-----------------------------------------------------    
+ function getSizeFeedBack($size) {
+       
+        if ($fb == null)
+            return;
+        if ($size == null || !isset($size))
+            return 'no size';
+       $fb = $this->getFeedBack(); 
+       
+        if ($fb['best_fit']['id']==$size->getId()){ # if it matches best fit            
+            return array(
+                'feedback' => $fb['best_fit'],
+                );
+        }
+        
+        foreach ($fb['feedback'] as $size_fb) {            
+            if ($size_fb['id'] ==  $size->getId()){ 
+                #return array($size_fb['description'] => $size_fb);
+                return array(
+                'feedback' => $size_fb,
+                'recommendation' => $fb['best_fit'],
+                );
+            }        
+        }
+               
+        return null;
+    }       
 #-----------------------------------------------------
     private function array_mix($sizes = null) {
         if ($sizes == null) {
@@ -110,6 +136,8 @@ class AvgAlgorithm {
             }else{
                 $fb[$size_identifier]['fit_index'] = $this->grade_to_scale($fb[$size_identifier]['variance'], $fb[$size_identifier]['max_variance'], 0);
             }
+            $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
+            if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
         }
         return array('feedback' => $this->array_sort($fb));
     }
@@ -341,6 +369,41 @@ class AvgAlgorithm {
                 return 'Product measurement missing';
                 break;
             case $this->status['beyond_max'] :
+                return 'Too Small';
+                break;
+            case $this->status['second_half_high_max'] :
+                return 'tight fitting';
+                break;
+            case $this->status['first_half_high_max'] :
+                return 'close fitting';
+                break;
+            case $this->status['between_low_high'] :
+                return 'Love That Fit';
+                break;
+            case $this->status['below_low'] :
+                return 'Loose';
+                break;
+            case $this->status['below_min'] :
+                return 'Extra Loose';
+                break;
+            case $this->status['anywhere_below_max'] :
+                return 'Tight at some points & loose at others';
+                break;
+        }        
+    }
+    
+    private function get_fp_status_raw_text($id) {
+        switch ($id) {
+            case $this->status['fit_point_dose_not_match'] :
+                return 'Fitting point dose not exists';
+                break;
+            case $this->status['body_measurement_not_available'] :
+                return 'User measurement not provided';
+                break;
+            case $this->status['product_measurement_not_available'] :
+                return 'Product measurement missing';
+                break;
+            case $this->status['beyond_max'] :
                 return 'Too Small (beyond_max)';
                 break;
             case $this->status['second_half_high_max'] :
@@ -361,9 +424,7 @@ class AvgAlgorithm {
             case $this->status['anywhere_below_max'] :
                 return 'Tight at some points & loose at others';
                 break;
-        }
-        #$str=array_search($id,$this->status);
-        #return str_replace('_', ' ', $str);
+        }        
     }
 
     #----------------------------------------------------------       
@@ -441,4 +502,161 @@ class AvgAlgorithm {
         'below_min' => 2,
         'anywhere_below_max' => 3,
     );
+    
+        #------------------------------------------------
+    //                  Hem Advice 
+    #------------------------------------------------
+ 
+    private function cut_to_natural_waste($hem_length) {
+        if ($hem_length == null || $hem_length == 0) {
+            return $hem_length;
+        }
+
+        if ($this->product->getClothingType() == 'skirt') {
+          $rise = $this->product->getRise();
+            switch ($rise) {
+                case 'high_rise':
+                    $hem_length = $hem_length + 2.25;
+                    break;
+                case 'mid_rise':
+                    $hem_length = $hem_length - 3.5;
+                    break;
+                case 'low_rise':
+                    $hem_length = $hem_length - 6.5;
+                    break;
+                case 'ultra_low_rise':
+                    $hem_length = $hem_length;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $hem_length;
+    }
+    #------------------------------------------------
+     
+    private function get_hem_advice($item_specs, $body_specs) {
+        $clothing_type = $this->product->getClothingType();
+
+        if ($clothing_type->getName() == 'trouser' ||
+                $clothing_type->getName() == 'jean') {
+            return $this->get_inseam_advice($item_specs, $body_specs);
+        } elseif ($clothing_type->getName() == 'skirt' || $clothing_type->getName() == 'dress' || $clothing_type->getName() == 'coat') {
+            return $this->get_hem_length_advice($item_specs, $body_specs);
+        }
+        
+           
+    }
+    private function get_hem_length_advice($item_specs, $body_specs) {
+
+        if ($body_specs['outseam']==0 && $body_specs['height']==0){
+            return null;
+        }
+        if (!array_key_exists('hem_length', $item_specs) || $item_specs['hem_length']['garment_measurement_flat']==0){
+            return null;
+        }
+        $knee_height = (0.2695 * $body_specs['height']);
+        $mid_calf_height = (0.1888 * $body_specs['height']);
+        $ankle_height = (0.0374 * $body_specs['height']);        
+        
+        if ($body_specs['outseam']==0) {
+            $body_specs['outseam'] = 0.6 * $body_specs['height'];
+        }
+        $body_specs['outseam_knee'] = $body_specs['outseam'] - $knee_height;
+        $body_specs['outseam_mid_calf'] = $body_specs['outseam'] - $mid_calf_height;
+        $body_specs['outseam_ankle'] = $body_specs['outseam'] - $ankle_height;
+        
+        $hem_length = $item_specs['hem_length']['garment_measurement_flat'];
+        $actual_hem_length = $hem_length;
+        $clothing_type=$this->product->getClothingType();
+        
+          if($clothing_type->getName()=='skirt'){
+          $hem_length = $this->cut_to_natural_waste($hem_length);
+          }
+                
+        $str = $this->get_hem_message($hem_length, $body_specs, 'outseam');
+        
+            return array('fit_point' => 'hem_advice',
+            'label' =>  'Hem Advice',            
+            'body_outseam' => $body_specs['outseam'],
+            'item_hem_length' => $hem_length,
+            'item_actual_hem_length' => $actual_hem_length,                
+            'knee' => $body_specs['outseam_knee'],
+            'mid_calf' => $body_specs['outseam_mid_calf'],
+            'ankle' => $body_specs['outseam_ankle'],
+            'message' => $str,            
+        );
+    }
+    private function get_inseam_advice($item_specs, $body_specs) {
+           
+        if ($body_specs['inseam']==0 && $body_specs['height']==0){
+            return null;
+        }
+        if (!array_key_exists('inseam', $item_specs) || $item_specs['inseam']['garment_measurement_flat']==0){
+            return null;
+        }
+        
+        if ($body_specs['inseam']==0) {
+        $body_specs['inseam'] = 0.269 * $body_specs['height'];
+        }
+
+        $knee_height = 0.574 * $body_specs['inseam'];
+        $mid_calf_height = 0.4022 * $body_specs['inseam'];
+        $ankle_height  = 0.0797 * $body_specs['inseam'];
+
+        $body_specs['inseam_knee'] = $body_specs['inseam'] - $knee_height;
+        $body_specs['inseam_mid_calf'] = $body_specs['inseam'] - $mid_calf_height;
+        $body_specs['inseam_ankle'] = $body_specs['inseam'] - $ankle_height;
+
+        $inseam=$item_specs['inseam']['garment_measurement_flat'];
+          $str = $this->get_hem_message($inseam, $body_specs, 'inseam');
+        
+            return array('fit_point' => 'hem_advice',
+            'label' =>  'Hem Advice',
+            'body_inseam' => $body_specs['inseam'],                                    
+            'item_inseam' => $inseam,                        
+            'knee' => $body_specs['inseam_knee'],
+            'mid_calf' => $body_specs['inseam_mid_calf'],
+            'ankle' => $body_specs['inseam_ankle'],
+            'message' => $str,            
+        );
+        
+    }
+    function get_hem_message($item_measure, $body_specs, $fit_point){
+        $str = '';
+        if ($item_measure < $body_specs[$fit_point.'_knee']) {
+            $str = 'less than knee';$level=1;
+        } elseif ($item_measure == $body_specs[$fit_point.'_knee']) {
+            $str = 'about knee high';$level=1;
+        } else {
+            if ($item_measure < $body_specs[$fit_point.'_mid_calf']) {
+                $str = 'between knee & mid calf';$level=2;
+            } elseif ($item_measure == $body_specs[$fit_point.'_mid_calf']) {
+                $str = 'mid calf';$level=2;
+            } else {
+                if ($item_measure < $body_specs[$fit_point.'_ankle']) {
+                    $str = 'between calf & ankle';$level=3;
+                } elseif ($item_measure == $body_specs[$fit_point.'_ankle']) {
+                    $str = 'ankle length';$level=3;
+                } else {
+                    $diff = $item_measure - $body_specs[$fit_point];
+                    $level=4;
+                    if (4.5 < $diff) {
+                        $str = 'too long, hem';
+                    } elseif (3.25 <= $diff && $diff <= 4.5) {
+                        $str = 'very long, hem or wear with 4” – 5” heels';
+                    } elseif (2.25 <= $diff && $diff <= 3.5) {
+                        $str = 'long, hem or wear with 3” – 4" heels';
+                    } elseif (1.25 <= $diff && $diff <= 2.5) {
+                        $str = 'long, hem or wear with 2" - 3” heels';
+                    } elseif (0 <= $diff && $diff <= 1.5) {
+                        $str = 'long, hem or wear with 1” – 2” heels';
+                    } elseif (-1 <= $diff && $diff <= -0.5) {
+                        $str = 'perfect fit wear with flats or heels';
+                    }
+                }
+            }
+        }
+        return $str;
+    }
 }
