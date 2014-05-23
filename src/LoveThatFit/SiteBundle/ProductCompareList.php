@@ -26,9 +26,8 @@ class ProductCompareList {
         foreach($this->list as $key=>$value){
               $item = $productItem->getProductItemById($value['itemid']);
               $product=$item->getProduct();
-            //$feed_back[$key]=array('product'=>$value['id']);
-            $fe = new AvgAlgorithm($user,$product);
-           $feed_back[$key]=array('product'=>$product->getDetailArray()+$fe->getFeedBack());
+              $fe = new AvgAlgorithm($user,$product);
+              $feed_back[$key]=$product->getDetailArray()+$fe->getFeedBack();
         }
           return $feed_back;
      
@@ -39,11 +38,6 @@ class ProductCompareList {
         $compareable_list=null;
         return $compareable_list;
     }
-#-------------------Get Product-------------------#
-function getProduct($item_id,$productItem){
-     $productItem = $productItem->getProductItemById($item_id);
-     return $productItem->getProduct();
-}
 //---------------------------------------------------------------------
     function removeItemFromList($item) {
     #remove this item

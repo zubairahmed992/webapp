@@ -15,7 +15,10 @@ class CompareProductController extends Controller {
       $compare_list = $this->getCompareList();
       $user = $this->get('security.context')->getToken()->getUser();
        $productItem = $this->get('admin.helper.productitem');
-     return new Response(json_encode($compare_list->getCompareableList($user,$productItem)));
+       //return new Response(json_encode($compare_list->getCompareableList($user,$productItem)));
+       return $this->render('LoveThatFitSiteBundle:InnerSite:compareProduct.html.twig',
+        array('product' => $compare_list->getCompareableList($user,$productItem)));
+     
     }
 
     private function getCompareList() {

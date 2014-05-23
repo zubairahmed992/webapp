@@ -1,58 +1,66 @@
-{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
-
-{% block left_navigation %}
-<!--/this is left navigation you can remove this following include line and add your own navigation-->
-    {% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation_external.html.twig'%}
-
-{% endblock %}
-
-{% block left_col_btm %}
-{% endblock %}
-
-
-
-{% block fitting_room %}
-
-<script type="text/javascript" src="{{ asset('bundles/easy_slider/js/jquery.js')}}"></script>
-<script type="text/javascript" src="{{ asset('bundles/easy_slider/js/easySlider1.7.js')}}"></script>
-<script type="text/javascript">
-$(document).ready(function(){	
-$("#slider1, #slider2,#slider3, #slider4").easySlider({
-auto: true, 
-continuous: true
-});
-
-});	
-</script>
-<link href="{{ asset('bundles/easy_slider/css/screen.css')}}" rel="stylesheet" type="text/css" media="screen" />
-
-
 <div id="boxes_wrapper">
     <div class="home_box" id="comapre_1">
    
-          {{dump(product)}}
-                 {% for p in product %}
-                    {% for singlePro in p %}
+        
+                
+                    {% for singlePro in product %}
                     {% if(singlePro.display_image is defined )%}
                    <img src="{{asset(singlePro.display_image) }}">
                     {%endif%}
-                   <div>{{singlePro.name}}</div>
+                   <div>Product Name:{{singlePro.name}}</div>
+                   <div> Brand:{{singlePro.brand}}</div>
+                   <div>Description:{{singlePro.description}}</div>
+                   <div>Gender:{{singlePro.gender}}</div>
+                   <div>Clothing Type:{{singlePro.clothing_type}}</div>
+                   <div>Target:{{singlePro.target}}</div>
+                   <div>Styling Type:{{singlePro.styling_type}}</div>
+                   <div>Length:{{singlePro.hem_length}}</div>
+                   <div>Neckline:{{singlePro.neckline}}</div>
+                   <div>Sleeve Styling:{{singlePro.sleeve_styling}}</div>
+                   <div>Rise:{{singlePro.rise}}</div>
+                   <div>Stretch Type:{{singlePro.stretch_type}}</div>
+                   <div>Fabric Weight:{{singlePro.fabric_weight}}</div>
+                   <div>Layering:{{singlePro.layering}}</div>
+                   <div>Structural Detail:{{singlePro.structural_detail}}</div>
+                   <div>Fit Type:{{singlePro.fit_type}}</div>
+                   <div>
+                       Sizes
+                       <select id="size_title">
+                           <option value="">Sizes</option>
+                    {% for sizes,values in singlePro.sizes%}
+                           <option value="{{values}}">{{sizes}}</option> 
+                     {%endfor%}
+                           </select>           
+                    
+                   </div>
+                   <div>
+                   Colors:
+                   {% for color in singlePro.colors%}
+                    <img src="{{asset(color.pattern) }}">
+                     {%endfor%}
+                   </div> 
+                   <div>
+                   Feed back:
+                   <br>
+                   {% for value,fb in singlePro.feedback%}
+                   <u><b>{{value}}-</b></u> 
+                     <br>
+                     {% for val,key in fb%}
+                       {{val}}- 
+                       {% for vals,keys in val%}
+                       {{key.id}}
+                       {%endfor%}
+                       <br>
+                       {% endfor%}
+                     <br>
+                     {%endfor%}
+                   
+                   </div> 
+                   
+                  
                     {% endfor %}
-                {% endfor %}
+              
                    
                    
     </div>
-       
-       
-        
 </div>
-
-
-
-
-
-
-
-
-
-{% endblock %} 
