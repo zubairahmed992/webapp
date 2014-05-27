@@ -28,7 +28,7 @@ class SizeChartType extends AbstractType
                        'multiple'  =>False,
                        'expanded'  => False, 
                 ) );
-        $builder->add('target', 'choice', array('choices'=> array('Select Target','Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')));        
+        $builder->add('target', 'choice', array('choices'=> array('Top'=>'Top','Bottom'=>'Bottom', 'Dress'=>'Dress')));        
         $builder->add('bodytype', 'choice', array('choices'=> array('Regular'=>'Regular','Petite'=>'Petite', 'Tall'=>'Tall')));
         $builder->add('waist');
         $builder->add('hip');

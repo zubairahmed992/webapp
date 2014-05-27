@@ -15,28 +15,49 @@
     }
    $(document).ready(function() {
        var gender=$('#sizechart_gender').val();
-       var target=$('#sizechart_target').val();
-     if(gender=='m'){   
-            showMaleSizeTitleType(); 
-    }else{    
-            showFemaleSizeTitleType(); 
-    }       
-       
+       var target=strLower($('#sizechart_target').val());
+     if(gender=='m' && target=='top'){
+            showMaleTopSizeTitleType(); 
+    }
+    if(gender=='m' && target=='bottom'){               
+            showMaleBottomSizeTitleType(); 
+    }
+    if(gender=='f' && target=='top'){               
+            showFemaleTopSizeTitleType(); 
+    }
+    if(gender=='f' && target=='bottom'){               
+            showFemaleBottomSizeTitleType(); 
+    }
+    if(gender=='f' && target=='dress'){               
+            showFemaleDressSizeTitleType(); 
+    }  
     
        
 $('#sizechart_gender').change(function() {
 	  var gender=strLower($('#sizechart_gender').val());
+          var seltarget=strLower($('#sizechart_target').val());       
           var sizeTitleType=getSizeTitleType();
-          changeTitle(gender,sizeTitleType);              
-            
+          changeTitle(gender,sizeTitleType);
            /* if(selectValtargets=="" && gender=='m'){
             $('#sizechart_title').empty();
             $('<option>').val('').text("Please Select Target Above").appendTo('#sizechart_title');  
             }*/
                     
             if(gender=='f')
-            {
-            showFemaleSizeTitleType();      
+            {   
+                 if(seltarget=='top'){                      
+                       showFemaleTopSizeTitleType();      
+                 }  
+                 else if(seltarget=='bottom'){                    
+                       showFemaleBottomSizeTitleType();      
+                 }else if(seltarget=='dress')
+                     {
+                       showFemaleDressSizeTitleType();  
+                     } 
+                  else
+                  {
+                      showMaleSizeTitleType();
+                  }
                   $("#bodyType").show();
                   $("#neck").show();
                   $("#shoulder_across_back").show();
@@ -51,8 +72,16 @@ $('#sizechart_gender').change(function() {
                   $("#sizechart_target option[value='Dress']").remove();   
                 }                
             if(gender=='m')
-            {
-                  showMaleSizeTitleType(); 
+            {                 
+                 if(seltarget=='top'){                      
+                       showMaleTopSizeTitleType();      
+                 }  
+                 else if(seltarget=='bottom'){                    
+                       showMaleBottomSizeTitleType();      
+                 }else
+                     {
+                         showMaleSizeTitleType();
+                     } 
                   $("#sizechart_target option[value='Dress']").remove(); 
                   $("#bust").hide();
                   
@@ -60,11 +89,15 @@ $('#sizechart_gender').change(function() {
                     {
                         $("#sizechart_target").append('<option value="Dress">Dress</option>');
                     } 
+                    
+               
+                     
+                     
 	});      
   $('#sizechart_target').change(function() {   
         var gender=$('#sizechart_gender').val(); 
         var target=strLower($('#sizechart_target').val());        
- if((gender=='f' && target=='top') )
+        if((gender=='f' && target=='top'))
                 {                 
                   showFemaleTopSizeTitleType();    
                   $("#neck").show();
