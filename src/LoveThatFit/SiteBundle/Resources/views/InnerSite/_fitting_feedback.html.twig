@@ -27,12 +27,18 @@
                
          {% endfor %}
                 
-                {%if (data.feedback.fit_max_scale is defined and data.feedback.fit_max_scale is not null)%}
+                {%if (data.feedback.fit_ideal_scale is defined and data.feedback.fit_ideal_scale is not null)%}
                 <li><b>
                 Fit Index :  
                     </b>
                     {{data.feedback.fit_ideal_scale}}
                     </li>
+                {%elseif (data.feedback.fit_index is defined and data.feedback.fit_index is not null)%}
+                <li><b>
+                Fit Index :  
+                    </b>
+                    {{data.feedback.fit_index}}
+                    </li>                    
                 {% endif %}
                 
                 

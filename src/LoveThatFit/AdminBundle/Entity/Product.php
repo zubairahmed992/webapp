@@ -1126,15 +1126,23 @@ class Product {
 //----------------------------------------------------------??? if Default color missing
     public function getComparisonUserItem($user) {
 
-        $comp = new \LoveThatFit\SiteBundle\Comparison($user, $this);
+        $comp = new \LoveThatFit\SiteBundle\AvgAlgorithm($user, $this);
         $fb = $comp->getFeedBack();
-        if (array_key_exists('best_fit', $fb)){            
-            
-            $item=$this->displayProductColor->getItemBySizeId($fb['best_fit']['id']);
+        if (array_key_exists('recommendation', $fb)){                        
+            $item=$this->displayProductColor->getItemBySizeId($fb['recommendation']['id']);
             return $item;
         }else{
             return null;
         }
+        
+        /*$comp = new \LoveThatFit\SiteBundle\Comparison($user, $this);
+        $fb = $comp->getFeedBack();
+        if (array_key_exists('best_fit', $fb)){                        
+            $item=$this->displayProductColor->getItemBySizeId($fb['best_fit']['id']);
+            return $item;
+        }else{
+            return null;
+        }*/
         
     }    
     #--------Get Default Product Colors----------------#    ???   if Default color missing

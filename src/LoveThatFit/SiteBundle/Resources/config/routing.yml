@@ -127,8 +127,8 @@ ajax_product_list:
 
 
 ajax_fitting_feedback_json:
-    pattern:  /ajax/fitting_feedback_json/{user_id}/{product_item_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackJSON}
+    pattern:  /ajax/fitting_feedback_json/{user_id}/{product_item_id}/{type}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackJSON,type: null}
 
 ajax_fitting_feedback_list:
     pattern:  /ajax/fitting_feedback_list/{product_item_id}

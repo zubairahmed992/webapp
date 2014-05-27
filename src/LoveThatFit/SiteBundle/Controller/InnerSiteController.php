@@ -238,20 +238,36 @@ public function indexAction($list_type) {
          $session = $this->get("session");
     }
 #-------------------------------------------------------------------------------
-    /*
-    public function getFeedBackJSONAction($user_id, $product_item_id) {
-        $user = $this->get('user.helper.user')->find($user_id);
-        $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);        
-        if (!$user)
-            return new Response("User Not found!");
-        if (!$productItem)
-            return new Response("Product not found!");
-        $fit = new Algorithm($user, $productItem);
-        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('data' => $fit->getFeedBackJson(),
-        ));
+    
+    public function getFeedBackJSONAction($user_id, $product_item_id, $type=null) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
+        if (!is_object($this->get('security.context')->getToken()->getUser())) return new Response("User Not found, Log in required!");
+        if (!$productItem) return new Response("Product not found!");
+        $product_size = $productItem->getProductSize();
+        $product=$productItem->getProduct();
+        
+        if ($type==null || $type=='low-high'){
+            $comp = new Comparison($user,$product);
+            $fb=$comp->getSizeFeedBack($product_size);
+        }elseif ($type=='avg'){
+            $comp = new AvgAlgorithm($user,$product);
+            $fb=$comp->getSizeFeedBack($product_size);
+        }
+        
+        #return new Response(json_encode($fb));  
+        $fits=$fb['feedback']['fits'];        
+        $json_feedback=  json_encode($fb['feedback']);
+        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
+
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', 
+                array('product' => $productItem->getProduct(), 
+                        'product_item' => $productItem, 
+                            'data' => $fb));
+        
     }
 #-------------------------------------------------------------------------------
-    
+    /*
     public function getFeedBackListAction($product_item_id) {
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
@@ -297,7 +313,9 @@ public function indexAction($list_type) {
         
         $product_size = $productItem->getProductSize();
         $product=$productItem->getProduct();
-        $comp = new Comparison($user,$product);
+        #$comp = new Comparison($user,$product);
+        #$fb=$comp->getSizeFeedBack($product_size);
+        $comp = new AvgAlgorithm($user,$product);
         $fb=$comp->getSizeFeedBack($product_size);
         #return new Response(json_encode($fb['feedback']['fits']));  
         

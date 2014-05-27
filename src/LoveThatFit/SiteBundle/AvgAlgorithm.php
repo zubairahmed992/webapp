@@ -71,15 +71,15 @@ class AvgAlgorithm {
 #-----------------------------------------------------    
  function getSizeFeedBack($size) {
        
-        if ($fb == null)
-            return;
         if ($size == null || !isset($size))
             return 'no size';
+        
+       $this->product = $size->getProduct();
        $fb = $this->getFeedBack(); 
        
-        if ($fb['best_fit']['id']==$size->getId()){ # if it matches best fit            
+        if ($fb['recommendation']['id']==$size->getId()){ # if it matches best fit            
             return array(
-                'feedback' => $fb['best_fit'],
+                'feedback' => $fb['recommendation'],
                 );
         }
         
@@ -88,7 +88,7 @@ class AvgAlgorithm {
                 #return array($size_fb['description'] => $size_fb);
                 return array(
                 'feedback' => $size_fb,
-                'recommendation' => $fb['best_fit'],
+                'recommendation' => $fb['recommendation'],
                 );
             }        
         }
