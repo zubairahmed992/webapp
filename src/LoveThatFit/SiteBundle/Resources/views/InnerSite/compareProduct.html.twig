@@ -41,17 +41,51 @@
                    </div> 
                    <div>
                    Feed back:
+                   {%if (singlePro.feedback.fit_points is defined)%}
+                    {% for fp, fp_specs in singlePro.feedback.fit_points %}             
+            <li><b>{{fp_specs.label}}</b>            
+            {%if (fp_specs.status == -5)%}
+               Please provide your measurements <a href="{{ path('user_profile_about_me') }}" > here</a> </li>
+           {%else%}
+            {{' : '~fp_specs.message}}
+            {% endif %}
+               
+         {% endfor %}
+                               {% endif %}
+                
+     {%if (singlePro.feedback.fit_max_scale is defined and singlePro.feedback.fit_max_scale is not null)%}
+                <li><b>
+                Fit Index :  
+                    </b>
+                    {{singlePro.feedback.fit_ideal_scale}}
+                    </li>
+                {% endif %}
+                    
+              {%if (singlePro.recommendation is defined and singlePro.recommendation is not null)%}
+                <li><b>
+                Try size 
+                    </b>
+                    {{singlePro.recommendation.description}}
+                    </li>
+            
+            {% else %}      
+                    <li>Details not found.</li>
+            {% endif %}                 
+                    
+ 
                    <br>
+                   
                    {% for value,fb in singlePro.feedback%}
+                  
                    <u><b>{{value}}-</b></u> 
-                     <br>
-                     {% for val,key in fb%}
-                       {{val}}- 
-                       {% for vals,keys in val%}
-                       {{key.id}}
-                       {%endfor%}
-                       <br>
-                       {% endfor%}
+                   <br>
+                   id={{fb.id}}
+                   <br>
+                    Fits={{fb.fits}}
+                   <br>
+                   Description:{{fb.title}}
+                       
+                     
                      <br>
                      {%endfor%}
                    
