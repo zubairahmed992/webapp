@@ -8,7 +8,7 @@
 <script type="text/javascript">
     {% autoescape false %}
     var allSizeTitle={{allMixSizeTitles}};
-    var allSizes={{allSizes}};
+    var allSizes={{allSizes}};   
     {% endautoescape %}
     function strLower(str){
         return str.toLowerCase()
@@ -23,19 +23,11 @@
     }       
        
     
-       var $radios = $('input:radio[id=sizechart_size_title_type_0]');
-       var $radios1 = $('input:radio[id=sizechart_size_title_type_1]');
-       var $radios2 = $('input:radio[id=sizechart_size_title_type_2]');
-
-if($radios.is(':checked') === false && $radios1.is(':checked') === false && $radios2.is(':checked') === false ) {
-             $radios1.filter('[value=numbers]').prop('checked', true);
-}  
+       
 $('#sizechart_gender').change(function() {
-	  var gender=strLower($('#sizechart_gender').val()); 
-          var selectValtargets=strLower($('#sizechart_target').val());
-          
-            sizeTitleType=getSizeTitleType();
-            changeTitle(gender,sizeTitleType);              
+	  var gender=strLower($('#sizechart_gender').val());
+          var sizeTitleType=getSizeTitleType();
+          changeTitle(gender,sizeTitleType);              
             
            /* if(selectValtargets=="" && gender=='m'){
             $('#sizechart_title').empty();
@@ -67,10 +59,12 @@ $('#sizechart_gender').change(function() {
             }else
                     {
                         $("#sizechart_target").append('<option value="Dress">Dress</option>');
-                    }
-                
-        
-        if((gender=='f' && selectValtargets=='top') )
+                    } 
+	});      
+  $('#sizechart_target').change(function() {   
+        var gender=$('#sizechart_gender').val(); 
+        var target=strLower($('#sizechart_target').val());        
+ if((gender=='f' && target=='top') )
                 {                 
                   showFemaleTopSizeTitleType();    
                   $("#neck").show();
@@ -84,7 +78,7 @@ $('#sizechart_gender').change(function() {
                   $("#chest").hide();
                   $("#thigh").hide();                  
                 }
-            if((gender=='f' && selectValtargets=='bottom'))
+            if((gender=='f' && target=='bottom'))
                 {
                   showFemaleBottomSizeTitleType();    
                   $("#waist").show();
@@ -98,7 +92,7 @@ $('#sizechart_gender').change(function() {
                   $("#sleeve").hide();                  
                   $("#chest").hide();                  
                 }                
-              if((gender=='f' && selectValtargets=='dress'  ))
+              if((gender=='f' && target=='dress'  ))
                 {
                   showFemaleDressSizeTitleType();  
                   $("#neck").show();  
@@ -112,7 +106,7 @@ $('#sizechart_gender').change(function() {
                   $("#inseam").hide();                  
                   $("#chest").hide();                                  
                 }  
-              if((selectValtargets=='top' && gender=='m'))
+              if((gender=='m' && target=='top'))
                 {
                   showMaleTopSizeTitleType();  
                   $("#neck").show();
@@ -126,7 +120,7 @@ $('#sizechart_gender').change(function() {
                   $("#outseam").hide();
                   $("#thigh").hide();                  
                 }
-            if((selectValtargets=='bottom' && gender=='m'))
+            if((gender=='m' && target=='bottom'))
                 {
                   showMaleBottomSizeTitleType();  
                   $("#waist").show();
@@ -140,7 +134,7 @@ $('#sizechart_gender').change(function() {
                   $("#neck").hide();                  
                   $("#chest").hide();                                    
                 }                
-              if((selectValtargets=='dress' &&  gender=='m'))
+              if((target=='dress' &&  gender=='m'))
                 {                 
                   $("#waist").hide();
                   $("#inseam").hide();
@@ -152,35 +146,52 @@ $('#sizechart_gender').change(function() {
                   $("#sleeve").hide();                  
                   $("#neck").hide();                  
                   $("#chest").hide();      
-                }    
-	});      
-        
+                }        
+        }); 
+    
 /*    Clicking on Size title type  change */        
  $('input:radio').click(function() { 
-    var gender=strLower($('#sizechart_gender').val()); 
+    var gender=strLower($('#sizechart_gender').val());        
     changeTitle(gender,$(this).attr('value')); 
+    
 }); 
    });
- 
+   
+
+
  function changeTitle(gender,sizeTitleType){  
- if(gender=="f" && sizeTitleType=='letters'){
-     
-   getWomanLetterSizes();  
-  }
- else if(gender=="f" && sizeTitleType=="numbers" ){
+ if(gender=="f" && sizeTitleType=="number" ){
       getWomanNumberSizes();  
   }
-  else if(gender=="f" && sizeTitleType=="Waist" ){
+  else if(gender=="f" && sizeTitleType=='bra')
+  {
+      getWomanBraSizes(); 
+  }
+ else if(gender=="f" && sizeTitleType=='letter'){     
+   getWomanLetterSizes();  
+  }
+  else if(gender=="f" && sizeTitleType=="waist" ){
       getWomanWaistSizes();
  }
- else if(gender=="m" && sizeTitleType=='letters'){
+ else if(gender=="m" && sizeTitleType=='letter'){
    getManLetterSizes();  
   }
- else if(gender=="m" && sizeTitleType=="numbers" ){
+ else if(gender=="m" && sizeTitleType=="number" ){
       getManNumberSizes();  
   }
-  else if(gender=="m" && sizeTitleType=="Waist" ){
+  else if(gender=="m" && sizeTitleType=="waist" ){
       getManWaistSizes();
+ }else if(gender=="m" && sizeTitleType=="chest")
+     {
+         getManChestSizes();
+     }
+ else if(gender=="m" && sizeTitleType=="shirt")
+     {
+         getManShirtSizes();
+     }
+ else if(gender=="m" && sizeTitleType=="neck")
+ {
+     getManNeckSizes();
  }
  else{
     $('#sizechart_title').empty();
@@ -195,7 +206,17 @@ $('#sizechart_gender').change(function() {
  var womanLetter=allSizes;
   $('#sizechart_title').empty();
  $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
- $.each(womanLetter['women_letter_sizes'], function(k, v) {
+ $.each(womanLetter['woman_letter_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% endautoescape %}
+}
+function getWomanBraSizes(){
+ {% autoescape false %}
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['woman_bra_sizes'], function(k, v) {
  $('<option>').val(k).text(k).appendTo('#sizechart_title');    
  });
  {% endautoescape %}
@@ -234,6 +255,38 @@ function getManLetterSizes(){
  });
  {% endautoescape %}
 }
+function getManChestSizes(){
+     {% autoescape false %}
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['man_chest_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% endautoescape %}
+}
+function getManShirtSizes(){
+     {% autoescape false %}
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['man_shirt_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% endautoescape %}
+}
+
+function getManNeckSizes(){
+     {% autoescape false %}
+ var womanLetter=allSizes;
+  $('#sizechart_title').empty();
+ $('<option>').val('').text("Select Size Title").appendTo('#sizechart_title');    
+ $.each(womanLetter['man_neck_sizes'], function(k, v) {
+ $('<option>').val(k).text(k).appendTo('#sizechart_title');    
+ });
+ {% endautoescape %}
+}
+
 //5- For man number sizes
 function getManNumberSizes(){
  {% autoescape false %}
@@ -260,6 +313,7 @@ function getSizeTitleType(){
       var $radios = $('input:radio[id=sizechart_size_title_type_0]');
        var $radios1 = $('input:radio[id=sizechart_size_title_type_1]');
        var $radios2 = $('input:radio[id=sizechart_size_title_type_2]');
+        var $radios3 = $('input:radio[id=sizechart_size_title_type_3]');       
 var sizeTitleType=null;
     if($radios.is(':checked') === true){
     sizeTitleType=$('#sizechart_size_title_type_0').val();
@@ -269,6 +323,9 @@ var sizeTitleType=null;
     }
     if($radios2.is(':checked') === true){
     sizeTitleType=$('#sizechart_size_title_type_2').val();
+    }
+    if($radios3.is(':checked') === true){
+    sizeTitleType=$('#sizechart_size_title_type_3').val();
     }
 return sizeTitleType;
 }
@@ -289,7 +346,7 @@ function showMaleSizeTitleType(){
     $('label[for="sizechart_size_title_type_4"]').show();
     
     
-     // Female Size Hide
+     // male Size Hide
     $('#sizechart_size_title_type_5').hide();
     $('label[for="sizechart_size_title_type_5"]').hide();
     $('#sizechart_size_title_type_6').hide();
@@ -312,7 +369,7 @@ function showFemaleSizeTitleType(){
     $('label[for="sizechart_size_title_type_3"]').hide();
     $('#sizechart_size_title_type_4').hide();
     $('label[for="sizechart_size_title_type_4"]').hide();
-  // Female Size Hide
+  // male Size Hide
     $('#sizechart_size_title_type_5').show();
     $('label[for="sizechart_size_title_type_5"]').show();
     $('#sizechart_size_title_type_6').show();
@@ -325,19 +382,15 @@ function showFemaleSizeTitleType(){
 
 function showMaleTopSizeTitleType(){
     $('#sizechart_size_title_type_0').show();
-    $('label[for="sizechart_size_title_type_0"]').show();
-    
+    $('label[for="sizechart_size_title_type_0"]').show();    
     $('#sizechart_size_title_type_1').show();
     $('label[for="sizechart_size_title_type_1"]').show();
     $('#sizechart_size_title_type_2').show();
-    $('label[for="sizechart_size_title_type_2"]').show();
-    
+    $('label[for="sizechart_size_title_type_2"]').show();    
     $('#sizechart_size_title_type_4').show();
-    $('label[for="sizechart_size_title_type_4"]').show();
-    
-    
-     // Female Size Hide
-     $('#sizechart_size_title_type_3').hide();
+    $('label[for="sizechart_size_title_type_4"]').show();       
+     // male Size Hide
+    $('#sizechart_size_title_type_3').hide();
     $('label[for="sizechart_size_title_type_3"]').hide();
     $('#sizechart_size_title_type_5').hide();
     $('label[for="sizechart_size_title_type_5"]').hide();
@@ -377,7 +430,7 @@ function showMaleBottomSizeTitleType(){
 }
 
 function showFemaleTopSizeTitleType(){
-$('#sizechart_size_title_type_0').hide();
+    $('#sizechart_size_title_type_0').hide();
     $('label[for="sizechart_size_title_type_0"]').hide();
     $('#sizechart_size_title_type_1').hide();
     $('label[for="sizechart_size_title_type_1"]').hide();
@@ -411,6 +464,8 @@ $('#sizechart_size_title_type_0').hide();
     $('label[for="sizechart_size_title_type_3"]').hide();
     $('#sizechart_size_title_type_4').hide();
     $('label[for="sizechart_size_title_type_4"]').hide();
+    $('#sizechart_size_title_type_8').hide();
+    $('label[for="sizechart_size_title_type_8"]').hide();
   // Female Size Hide
     $('#sizechart_size_title_type_5').show();
     $('label[for="sizechart_size_title_type_5"]').show();
@@ -418,8 +473,7 @@ $('#sizechart_size_title_type_0').hide();
     $('label[for="sizechart_size_title_type_6"]').show();
     $('#sizechart_size_title_type_7').show();
     $('label[for="sizechart_size_title_type_7"]').show();
-    $('#sizechart_size_title_type_8').show();
-    $('label[for="sizechart_size_title_type_8"]').show();
+    
 }
 
 function showFemaleDressSizeTitleType(){
@@ -433,15 +487,17 @@ $('#sizechart_size_title_type_0').hide();
     $('label[for="sizechart_size_title_type_3"]').hide();
     $('#sizechart_size_title_type_4').hide();
     $('label[for="sizechart_size_title_type_4"]').hide();
+    $('#sizechart_size_title_type_7').hide();
+    $('label[for="sizechart_size_title_type_7"]').hide();
+    $('#sizechart_size_title_type_8').hide();
+    $('label[for="sizechart_size_title_type_8"]').hide();
   // Female Size Hide
     $('#sizechart_size_title_type_5').show();
     $('label[for="sizechart_size_title_type_5"]').show();
     $('#sizechart_size_title_type_6').show();
     $('label[for="sizechart_size_title_type_6"]').show();
-    $('#sizechart_size_title_type_7').show();
-    $('label[for="sizechart_size_title_type_7"]').show();
-    $('#sizechart_size_title_type_8').show();
-    $('label[for="sizechart_size_title_type_8"]').show();
+    
+    
 }
 
 

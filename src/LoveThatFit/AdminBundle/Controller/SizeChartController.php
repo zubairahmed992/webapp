@@ -52,7 +52,7 @@ class SizeChartController extends Controller {
     public function createAction(Request $request)
     {       
         $entity = $this->get('admin.helper.sizechart')->createNew();
-        $form = $this->createForm(new SizeChartType('add'), $entity);
+        $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         $form->bindRequest($request);    
         
         if($entity->getTarget()=='Dress' and $entity->getGender()=='m' )

@@ -16,11 +16,14 @@ class SizeHelper {
 
 #-------------------Fetch All Sizes -------------------------------------------#
 public function getAllSizes(){
-  return array('woman_letter_sizes'=>$this->getWomanLetterSizes(),'woman_number_sizes'=>$this->getWomanNumberSizes()
+  return array('woman_letter_sizes'=>$this->getWomanLetterSizes(),
+           'woman_number_sizes'=>$this->getWomanNumberSizes()
           ,'woman_waist_sizes'=>$this->getWomanWaistSizes(),
          'woman_bra_sizes'=>$this->getWomanBraSizes(),
-       'man_letter_sizes'=>$this->getManLetterSizes(),'man_chest_sizes'=>$this->getManChestSizes()
-          ,'man_waist_sizes'=>$this->getManWaistSizes(),'man_shirt_sizes'=>$this->getManShirtSizes(),
+       'man_letter_sizes'=>$this->getManLetterSizes(),
+      'man_chest_sizes'=>$this->getManChestSizes(),
+      'man_waist_sizes'=>$this->getManWaistSizes(),
+      'man_shirt_sizes'=>$this->getManShirtSizes(),
       'man_neck_sizes'=>$this->getManNeckSizes());
 }
 #--------------------Woman Sizes Start Here-------------------------------------#
