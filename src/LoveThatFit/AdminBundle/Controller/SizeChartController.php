@@ -112,17 +112,10 @@ class SizeChartController extends Controller {
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
-        $form = $this->createForm(new SizeChartType('edit'), $entity);
+        $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         return $this->render('LoveThatFitAdminBundle:SizeChart:edit.html.twig', array(
                     'form' => $form->createView(),                   
                     'entity' => $entity,
-            'womanLetterSize'=>$this->get('admin.helper.size')->getWomanLetterSizes(),
-            'womanNumberSize'=>$this->get('admin.helper.size')->getWomanNumberSizes(),
-            'womanWaistSize'=>$this->get('admin.helper.size')->getWomanWaistSizes(),
-            'manLetterSize'=>$this->get('admin.helper.size')->getManLetterSizes(),
-            'manNumberSize'=>$this->get('admin.helper.size')->getManNumberSizes(),
-            'manWaistSize'=>$this->get('admin.helper.size')->getManWaistSizes(),
-            
             'allSizes'=>json_encode($this->get('admin.helper.size')->getAllSizes()),
             
             ));
@@ -133,7 +126,7 @@ class SizeChartController extends Controller {
     {
        $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
        $entity = $specs['entity'];   
-       $form = $this->createForm(new SizeChartType('edit'), $entity);
+      $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         $form->bindRequest($request);
       if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
@@ -160,12 +153,7 @@ class SizeChartController extends Controller {
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity,
                      'allSizes'=>json_encode($this->get('admin.helper.size')->getAllSizes()),
-                      'womanLetterSize'=>$this->get('admin.helper.size')->getWomanLetterSizes(),
-            'womanNumberSize'=>$this->get('admin.helper.size')->getWomanNumberSizes(),
-            'womanWaistSize'=>$this->get('admin.helper.size')->getWomanWaistSizes(),
-            'manLetterSize'=>$this->get('admin.helper.size')->getManLetterSizes(),
-            'manNumberSize'=>$this->get('admin.helper.size')->getManNumberSizes(),
-            'manWaistSize'=>$this->get('admin.helper.size')->getManWaistSizes(),
+                      
             ));
     }
   public function searchSizeChartFormAction(){
