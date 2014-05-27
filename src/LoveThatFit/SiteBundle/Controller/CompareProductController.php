@@ -32,6 +32,13 @@ class CompareProductController extends Controller {
                 5=>array('id'=>1,'itemid'=>1),
                 6=>array('id'=>3,'itemid'=>8),
                 7=>array('id'=>4,'itemid'=>14),
+            /*
+                20=>array('id'=>20,'itemid'=>95),
+                3=>array('id'=>3,'itemid'=>8),
+                7=>array('id'=>7,'itemid'=>36),
+             */
+                
+        
             );
             $product_compare_list = new ProductCompareList($list);
         }

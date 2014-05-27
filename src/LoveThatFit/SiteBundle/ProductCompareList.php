@@ -28,6 +28,7 @@ class ProductCompareList {
               $product=$item->getProduct();
               $fe = new AvgAlgorithm($user,$product);
               $feed_back[$key]=$product->getDetailArray()+$fe->getFeedBack();
+              $feed_back[$key]['current_item']=$value['itemid'];
         }
           return $feed_back;
      

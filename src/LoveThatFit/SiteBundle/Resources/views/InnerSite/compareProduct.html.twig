@@ -1,100 +1,95 @@
 <div id="boxes_wrapper">
     <div class="home_box" id="comapre_1">
-   
-        
-                
+
+
+        <table>
+            <tr>
+
                     {% for singlePro in product %}
-                    {% if(singlePro.display_image is defined )%}
-                   <img src="{{asset(singlePro.display_image) }}">
-                    {%endif%}
-                   <div>Product Name:{{singlePro.name}}</div>
-                   <div> Brand:{{singlePro.brand}}</div>
-                   <div>Description:{{singlePro.description}}</div>
-                   <div>Gender:{{singlePro.gender}}</div>
-                   <div>Clothing Type:{{singlePro.clothing_type}}</div>
-                   <div>Target:{{singlePro.target}}</div>
-                   <div>Styling Type:{{singlePro.styling_type}}</div>
-                   <div>Length:{{singlePro.hem_length}}</div>
-                   <div>Neckline:{{singlePro.neckline}}</div>
-                   <div>Sleeve Styling:{{singlePro.sleeve_styling}}</div>
-                   <div>Rise:{{singlePro.rise}}</div>
-                   <div>Stretch Type:{{singlePro.stretch_type}}</div>
-                   <div>Fabric Weight:{{singlePro.fabric_weight}}</div>
-                   <div>Layering:{{singlePro.layering}}</div>
-                   <div>Structural Detail:{{singlePro.structural_detail}}</div>
-                   <div>Fit Type:{{singlePro.fit_type}}</div>
-                   <div>
-                       Sizes
-                       <select id="size_title">
-                           <option value="">Sizes</option>
-                    {% for sizes,values in singlePro.sizes%}
-                           <option value="{{values}}">{{sizes}}</option> 
-                     {%endfor%}
-                           </select>           
-                    
-                   </div>
-                   <div>
-                   Colors:
-                   {% for color in singlePro.colors%}
-                    <img src="{{asset(color.pattern) }}">
-                     {%endfor%}
-                   </div> 
-                   <div>
-                   Feed back:
-                   {%if (singlePro.feedback.fit_points is defined)%}
-                    {% for fp, fp_specs in singlePro.feedback.fit_points %}             
-            <li><b>{{fp_specs.label}}</b>            
-            {%if (fp_specs.status == -5)%}
-               Please provide your measurements <a href="{{ path('user_profile_about_me') }}" > here</a> </li>
-           {%else%}
-            {{' : '~fp_specs.message}}
-            {% endif %}
-               
-         {% endfor %}
-                               {% endif %}
-                
-     {%if (singlePro.feedback.fit_max_scale is defined and singlePro.feedback.fit_max_scale is not null)%}
-                <li><b>
-                Fit Index :  
-                    </b>
-                    {{singlePro.feedback.fit_ideal_scale}}
-                    </li>
-                {% endif %}
-                    
-              {%if (singlePro.recommendation is defined and singlePro.recommendation is not null)%}
-                <li><b>
-                Try size 
-                    </b>
-                    {{singlePro.recommendation.description}}
-                    </li>
-            
-            {% else %}      
-                    <li>Details not found.</li>
-            {% endif %}                 
-                    
- 
-                   <br>
-                   
-                   {% for value,fb in singlePro.feedback%}
-                  
-                   <u><b>{{value}}-</b></u> 
-                   <br>
-                   id={{fb.id}}
-                   <br>
-                    Fits={{fb.fits}}
-                   <br>
-                   Description:{{fb.title}}
-                       
-                     
-                     <br>
-                     {%endfor%}
-                   
-                   </div> 
-                   
-                  
+
+                <td>
+                        {% if(singlePro.display_image is defined )%}
+                        <img src="{{asset(singlePro.display_image) }}">
+                        {%endif%}
+                        <div style="font-weight: bold">{{singlePro.name}}</div>
+                        <div> {{singlePro.brand}}, 
+                             {{singlePro.description}}, 
+                            {{singlePro.clothing_type}}, 
+                                Styling Type:{{singlePro.styling_type}}, 
+                                Length:{{singlePro.hem_length}},
+                                Neckline:{{singlePro.neckline}},
+                                Sleeve:{{singlePro.sleeve_styling}},
+                                Rise:{{singlePro.rise}}
+                                Stretch Type:{{singlePro.stretch_type}}, 
+                                Fabric Weight:{{singlePro.fabric_weight}}, 
+                                Layering:{{singlePro.layering}}, 
+                                Structural Detail:{{singlePro.structural_detail}}, 
+                                Fit Type:{{singlePro.fit_type}}</div>
+                            <br>
+
+{#~~~~~~~~~~~~~~~~~~~~~~~~~~ SIZE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
+                            <div style="border-top: solid #3EA9F5 1px; padding: 20px; ">
+                                Sizes
+                                <select id="size_title">
+                                    <option value="">Sizes</option>
+                                {% for sizes,values in singlePro.sizes%}
+                                    <option value="{{values}}">{{sizes}}</option> 
+                                 {%endfor%}
+                                </select>           
+
+                            </div>
+{#~~~~~~~~~~~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                            
+                            <div>
+                                Colors:
+                        {% for color in singlePro.colors%}
+                                <img src="{{asset(color.pattern) }}">
+                          {%endfor%}
+                            </div> 
+
+{#~~~~~~~~~~~~~~~~~~~~~~~~~~ FEED BACK ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                            
+                            {%if (singlePro.feedback is defined)%}
+                                {%if (singlePro.recommendation is defined)%}
+                                    {% for key,feedback_item in singlePro.feedback%}
+                            {#singlePro['items'][singlePro.current_item]['id']#}
+
+                                            {%if (feedback_item.id == singlePro['items'][singlePro.current_item]['size_id'])%}
+                            <br>
+                            <div style="border-top: solid #3EA9F5 1px; padding: 20px 0px 20px 0px ; ">
+                                <b>Feedback: </b> {{feedback_item.message}}
+
+                                <ul>
+                                                           {% for fp,fp_specs in feedback_item.fit_points%}
+                                        <li>
+                                            <b>{{fp}} : </b>{{fp_specs.message}}
+                                        </li>
+                                                           {%endfor%}
+                                        <li>
+                                            <b>fit index : </b>{{feedback_item.fit_index}}
+                                        </li>
+                                    </ul>
+                                </div> 
+                                                      {% endif %}
+
+
+                                    {%endfor%}
+                                 {% endif %}
+                            {% endif %}
+
+{#~~~~~~~~~~~~~~~~~~~~~~~~~~ Recommendations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                                                        
+                            {%if (singlePro.recommendation is defined)%}
+                                <br>
+                                <div style="border-top: solid #3EA9F5 1px; padding: 20px 0px 20px 0px ; ">
+                                    <b>Recommendation: </b>try size 
+                                {{ singlePro.recommendation.description }}
+                                </div> 
+                            {% endif %}
+                            </td>
+
                     {% endfor %}
-              
-                   
-                   
-    </div>
-</div>
+
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
