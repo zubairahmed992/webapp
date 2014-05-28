@@ -27,9 +27,15 @@ class ProductColor {
      * @ORM\OneToMany(targetEntity="ProductItem", mappedBy="product_color", orphanRemoval=true)
      */
     protected $product_items;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ProductColorView", mappedBy="product_color", orphanRemoval=true)
+     */
+    protected $product_color_view;
 
     public function __construct() {
         $this->product_items = new ArrayCollection();
+        $this->product_color_view= new ArrayCollection();
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -517,4 +523,37 @@ public function setSizeTitles($sizes)
         }
     }
 
+
+    /**
+     * Add product_color_view
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView
+     * @return ProductColor
+     */
+    public function addProductColorView(\LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView)
+    {
+        $this->product_color_view[] = $productColorView;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_color_view
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView
+     */
+    public function removeProductColorView(\LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView)
+    {
+        $this->product_color_view->removeElement($productColorView);
+    }
+
+    /**
+     * Get product_color_view
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductColorView()
+    {
+        return $this->product_color_view;
+    }
 }
