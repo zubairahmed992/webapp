@@ -968,6 +968,7 @@ class Product {
     
     public function getAttributeArray(){
         return array(
+            'id' => $this->id,
             'name' => $this->name,
             'brand' => $this->brand->getName(),
             'brand_url' => $this->brand->getImage(),

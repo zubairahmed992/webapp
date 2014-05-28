@@ -1,3 +1,53 @@
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+
+function sizeTitle(product_id){
+var size_id = $('#size_title'+product_id).val();
+var size_title = $('#size_title'+product_id+' option:selected').text();
+
+console.log(getFeedBack(size_id,product_id,size_title));
+}
+
+// Getting Feed back base on the  size id 
+function getFeedBack(size_id,product_id,size_title){
+ 
+{% autoescape false %}
+ {% for singlePro in product %}
+    s='';
+var p_id={{singlePro.id}};
+if(p_id==product_id){
+{% for sizes,values in singlePro.sizes%}
+ var s_id={{values}};
+ if(s_id==size_id){
+   
+ {% for key,feedback_item in singlePro.feedback%}
+       key='{{key}}';
+       if(key==size_title){
+        var feedback_item='{{feedback_item.message}}' +'Description'+'{{feedback_item.description}}'+'Body Type:'+'{{feedback_item.body_type}}';
+        return feedback_item;
+           
+   }
+    
+ {% endfor%}
+    
+ }
+
+{%endfor%}
+
+}
+{% endfor%} 
+var product={{ product|json_encode() }};
+  
+  
+  
+{% endautoescape  %}        
+
+
+}
+
+</script>
+
 <div id="boxes_wrapper">
     <div class="home_box" id="comapre_1">
 
@@ -30,7 +80,7 @@
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ SIZE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
                             <div style="border-top: solid #3EA9F5 1px; padding: 20px; ">
                                 Sizes
-                                <select id="size_title">
+                                <select id="size_title{{singlePro.id}}" onchange="sizeTitle('{{singlePro.id}}')">
                                     <option value="">Sizes</option>
                                 {% for sizes,values in singlePro.sizes%}
                                     <option value="{{values}}">{{sizes}}</option> 
@@ -48,7 +98,7 @@
 
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ FEED BACK ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                            
                             {%if (singlePro.feedback is defined)%}
-                                {%if (singlePro.recommendation is defined)%}
+                              {%if (singlePro.recommendation is defined)%}
                                     {% for key,feedback_item in singlePro.feedback%}
                             {#singlePro['items'][singlePro.current_item]['id']#}
 
