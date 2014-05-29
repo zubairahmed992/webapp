@@ -5,45 +5,51 @@
 function sizeTitle(product_id){
 var size_id = $('#size_title'+product_id).val();
 var size_title = $('#size_title'+product_id+' option:selected').text();
+var feedback=getFeedback(product_id,size_title);
+console.log(showFeedBack(feedback,product_id));
 
-console.log(getFeedBack(size_id,product_id,size_title));
+
 }
 
-// Getting Feed back base on the  size id 
-function getFeedBack(size_id,product_id,size_title){
- 
+// Getting single product base on product id
+function getProduct(product_id){
 {% autoescape false %}
- {% for singlePro in product %}
-    s='';
-var p_id={{singlePro.id}};
-if(p_id==product_id){
-{% for sizes,values in singlePro.sizes%}
- var s_id={{values}};
- if(s_id==size_id){
-   
- {% for key,feedback_item in singlePro.feedback%}
-       key='{{key}}';
-       if(key==size_title){
-        var feedback_item='{{feedback_item.message}}' +'Description'+'{{feedback_item.description}}'+'Body Type:'+'{{feedback_item.body_type}}';
-        return feedback_item;
-           
-   }
-    
- {% endfor%}
-    
- }
-
-{%endfor%}
-
-}
-{% endfor%} 
-var product={{ product|json_encode() }};
-  
-  
-  
+var arr= new Array();
+var data={{ product|json_encode() }};
+$.each(data, function(i, obj) {
+    $.each(obj, function(j, key) {
+    if(obj['id']==product_id){
+        arr[j]=key;
+        }
+     })
+});
+return arr;
 {% endautoescape  %}        
+}
 
-
+function getFeedback(product_id,size_title){
+    feed_back_array=new Array();
+    var product=getProduct(product_id);
+    $.each(product.feedback, function(j, key) {
+           if(key.description==size_title){
+           feed_back_array[key.description]=key;
+            }
+        }
+     );
+ return feed_back_array;
+}
+// Simply feedback and print it
+function showFeedBack(feedback,product_id){
+  
+    var feebk_msg=new Array();
+    var feeb_back=$('#feedback_msg'+product_id).html('');
+    var arr= new Array();
+    for(i in feedback){
+        for(j in feedback[i]){
+            arr['']='test';
+        }
+    }
+    return  arr;
 }
 
 </script>
@@ -105,9 +111,9 @@ var product={{ product|json_encode() }};
                                             {%if (feedback_item.id == singlePro['items'][singlePro.current_item]['size_id'])%}
                             <br>
                             <div style="border-top: solid #3EA9F5 1px; padding: 20px 0px 20px 0px ; ">
-                                <b>Feedback: </b> {{feedback_item.message}}
+                                <span id="feedback_msg{{singlePro.id}}"><b>Feedback: </b> {{feedback_item.message}}</span>
 
-                                <ul>
+                                <ul id="feeb_back">
                                                            {% for fp,fp_specs in feedback_item.fit_points%}
                                         <li>
                                             <b>{{fp}} : </b>{{fp_specs.message}}
