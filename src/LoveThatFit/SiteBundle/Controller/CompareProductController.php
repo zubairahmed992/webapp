@@ -15,9 +15,12 @@ class CompareProductController extends Controller {
       $compare_list = $this->getCompareList();
       $user = $this->get('security.context')->getToken()->getUser();
        $productItem = $this->get('admin.helper.productitem');
+       $pl=$compare_list->getCompareableList($user,$productItem);
        //return new Response(json_encode($compare_list->getCompareableList($user,$productItem)));
        return $this->render('LoveThatFitSiteBundle:InnerSite:compareProduct.html.twig',
-        array('product' => $compare_list->getCompareableList($user,$productItem)));
+        array('product' => $pl,
+            'product_json' => json_encode($pl)
+            ));
      
     }
 
@@ -29,14 +32,14 @@ class CompareProductController extends Controller {
         } else {
             #temp
             $list=array(
-                5=>array('id'=>1,'itemid'=>1),
+             /*   5=>array('id'=>1,'itemid'=>1),
                 6=>array('id'=>3,'itemid'=>8),
                 7=>array('id'=>4,'itemid'=>14),
-            /*
+            */
                 20=>array('id'=>20,'itemid'=>95),
                 3=>array('id'=>3,'itemid'=>8),
                 7=>array('id'=>7,'itemid'=>36),
-             */
+             
                 
         
             );

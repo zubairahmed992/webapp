@@ -2,6 +2,18 @@
 
 <script>
 
+
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
 function sizeTitle(product_id){
 var size_id = $('#size_title'+product_id).val();
 var size_title = $('#size_title'+product_id+' option:selected').text();
@@ -53,7 +65,6 @@ function showFeedBack(feedback,product_id){
 }
 
 </script>
-
 <div id="boxes_wrapper">
     <div class="home_box" id="comapre_1">
 
@@ -86,7 +97,7 @@ function showFeedBack(feedback,product_id){
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ SIZE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
                             <div style="border-top: solid #3EA9F5 1px; padding: 20px; ">
                                 Sizes
-                                <select id="size_title{{singlePro.id}}" onchange="sizeTitle('{{singlePro.id}}')">
+                                <select id="size_title{{singlePro.id}}" onchange="change_product_details('{{singlePro.id}}')">
                                     <option value="">Sizes</option>
                                 {% for sizes,values in singlePro.sizes%}
                                     <option value="{{values}}">{{sizes}}</option> 
@@ -149,3 +160,40 @@ function showFeedBack(feedback,product_id){
 
                 </div>
             </div>
+
+<div id='product_data' style="display: none">
+    {{product | json_encode()}}
+        
+</div>
+<script>
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~> 
+ function change_product_details(product_id){
+    var size_id = $('#size_title'+product_id).val();
+    var size_title = $('#size_title'+product_id+' option:selected').text();
+    product= get_product_array();
+    fb = get_feedback_by_size(product, product_id, size_title);
+    fi = product[product_id]['feedback'][size_title]['fit_index']; 
+    fb_message = product[product_id]['feedback'][size_title]['message']; 
+    rc=product[product_id]['recommendation']['description']; 
+    str=product[product_id]['name'] + ' \n '  + size_title + ' \n ' + fb_message + ' \n \n ' + fb + '\n recomendation: Try size ' + rc + '\n \n Fit Index:' + fi;
+    alert(str);
+    
+}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~>set main array
+function get_product_array(){
+    return $.parseJSON($('#product_data').text());
+ }
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~>feedback by size
+ function get_feedback_by_size(product, product_id, size_title){    
+    fb = product[product_id]['feedback'][size_title]['fit_points'];
+    str='';
+    for (var key in fb) {
+        str +=key + ': ' + fb[key].message + ', \n';
+    }
+    return str;
+ }
+ 
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~>recommendation by size
+ 
+ </script>
