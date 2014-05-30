@@ -63,7 +63,9 @@ $(document).ready(function(){
     var gender=$('#gender').text();
    
     $("#measurement_top_brand").change(function(){
-        var body_type=$('#measurement_body_types input:radio:checked').val();
+       
+        var body_type=$('#measurement_body_types').val();
+      
         var checked_option = $(this).attr("value");
         
         $('#measurement_top_size').html('');
@@ -97,7 +99,7 @@ $(document).ready(function(){
     $("#measurement_bottom_brand").change(function(){
  
         var checked_option = $(this).attr("value");
-   var body_type=$('#measurement_body_types input:radio:checked').val();
+   var body_type=$('#measurement_body_types').val();
         $('#measurement_bottom_size').html('');
         $.ajax({
             type:'json',
@@ -126,7 +128,7 @@ $(document).ready(function(){
     // Dress
 
     $("#measurement_dress_brand").change(function(){
- var body_type=$('#measurement_body_types input:radio:checked').val();
+ var body_type=$('#measurement_body_types').val();
         var checked_option = $(this).attr("value");
    
         $('#measurement_dress_size').html('');

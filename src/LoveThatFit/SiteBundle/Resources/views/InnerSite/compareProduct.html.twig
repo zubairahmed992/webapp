@@ -2,18 +2,6 @@
 
 <script>
 
-
- 
- 
- 
- 
-
-
-
-
-
-
-
 function sizeTitle(product_id){
 var size_id = $('#size_title'+product_id).val();
 var size_title = $('#size_title'+product_id+' option:selected').text();
@@ -124,8 +112,8 @@ function showFeedBack(feedback,product_id){
                             <div style="border-top: solid #3EA9F5 1px; padding: 20px 0px 20px 0px ; ">
                                 <span id="feedback_msg{{singlePro.id}}"><b>Feedback: </b> {{feedback_item.message}}</span>
 
-                                <ul id="feeb_back">
-                                                           {% for fp,fp_specs in feedback_item.fit_points%}
+                                <ul id="fit_point{{singlePro.id}}">
+                                {% for fp,fp_specs in feedback_item.fit_points%}
                                         <li>
                                             <b>{{fp}} : </b>{{fp_specs.message}}
                                         </li>
@@ -169,15 +157,21 @@ function showFeedBack(feedback,product_id){
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~> 
  function change_product_details(product_id){
+     
+     
     var size_id = $('#size_title'+product_id).val();
     var size_title = $('#size_title'+product_id+' option:selected').text();
     product= get_product_array();
+   
     fb = get_feedback_by_size(product, product_id, size_title);
     fi = product[product_id]['feedback'][size_title]['fit_index']; 
     fb_message = product[product_id]['feedback'][size_title]['message']; 
     rc=product[product_id]['recommendation']['description']; 
-    str=product[product_id]['name'] + ' \n '  + size_title + ' \n ' + fb_message + ' \n \n ' + fb + '\n recomendation: Try size ' + rc + '\n \n Fit Index:' + fi;
-    alert(str);
+    str= fb_message + ' \n \n ' + fb + '\n recomendation: Try size ' + rc + '\n \n Fit Index:' + fi;
+    $('#feedback_msg'+product_id).html('');
+    $('#feedback_msg'+product_id).html("<b>FeedBack</b>:"+fb_message);
+    $('#fit_point'+product_id).html('');
+    $('#fit_point'+product_id).html(str);
     
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~>set main array
