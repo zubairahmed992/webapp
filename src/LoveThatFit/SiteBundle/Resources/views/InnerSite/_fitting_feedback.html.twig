@@ -41,6 +41,14 @@
                     </li>                    
                 {% endif %}
                 
+                {%if (data.feedback.hem_advice is defined and data.feedback.hem_advice is not null)%}
+                <li><b>
+                hem :  
+                    </b>
+                    {{data.feedback.hem_advice.message}}
+                    </li>
+                {% endif %}
+                
                 
                 {%if (data.recommendation is defined and data.recommendation is not null)%}
                 <li><b>
