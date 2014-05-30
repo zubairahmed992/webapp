@@ -50,6 +50,8 @@ class ProductCompareList {
         $product=$item->getProduct();
         $this->list[$product->getId()]['product_id']=$item->getId();
         $this->list[$product->getId()]['item_id']=$item->getId();
+        $this->list[$product->getId()]['product_name']=$product->getName();
+        $this->list[$product->getId()]['image']=$item->getProductColor()->getWebPath();
         $this->cutExtraItem();
         return $this->list;        
     }

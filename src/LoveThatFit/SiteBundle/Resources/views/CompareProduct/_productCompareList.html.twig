@@ -1,0 +1,7 @@
+<div>
+    <ul>
+        {% for product in app.session.get('product_compare_list') %}
+            <li>{{ product.image }}</li>
+        {% endfor %}
+    </ul>
+</div>
