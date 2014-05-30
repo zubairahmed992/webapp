@@ -29,8 +29,7 @@ class ProfileMeasurementFemaleType extends AbstractType
         $builder->add('centerFrontWaist', 'number', array('precision' => 2,'required'=>false));
         $builder->add('backWaist', 'number', array('precision' => 2,'required'=>false));
         $builder->add('waistHip', 'number', array('precision' => 2,'required'=>false));
-        $builder->add('knee', 'number', array('precision' => 2,'required'=>false));
-        $builder->add('belt', 'number', array('precision' => 2,'required'=>false));
+        $builder->add('knee', 'number', array('precision' => 2,'required'=>false));        
         $builder->add('calf', 'number', array('precision' => 2,'required'=>false));
         $builder->add('ankle', 'number', array('precision' => 2,'required'=>false));
     }
