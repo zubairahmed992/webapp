@@ -585,6 +585,16 @@ class Measurement {
      */
     private $iphone_foot_height=0;
     
+    
+     /**
+     * @var float $belt
+     *
+     * @ORM\Column(name="belt", type="float", nullable=true,options={"default" = 0})
+     * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
+     * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
+     */
+    private $belt=0;
+    
     /**
      * Get id
      *
@@ -1907,5 +1917,28 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getIphoneFootHeight()
     {
         return $this->iphone_foot_height;
+    }
+    
+    /**
+     * Set belt
+     *
+     * @param float $belt
+     * @return Measurement
+     */
+    public function setBelt($belt)
+    {
+        $this->belt = $belt;
+    
+        return $this;
+    }
+
+    /**
+     * Get belt
+     *
+     * @return float 
+     */
+    public function getBelt()
+    {
+        return $this->belt;
     }
 }
