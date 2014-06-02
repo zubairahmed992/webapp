@@ -160,6 +160,26 @@ var  product= get_product_array();
 //~~~~~~~~~~~~~~~~~~~~~~ Product Color ~~~~~~
 function change_product_image(product_id,color_id){
     image_url = "../../"+product[product_id]['colors'][color_id]['image'];
+    current_item=product[product_id]['current_item'];
+    size_id=get_size_id(current_item,product_id);
+    
+    sizes=product[product_id]['colors'][color_id]['sizes'];
+    
+    sizes_combo=$('#size_title'+product_id);
+    sizes_combo.html('');
+    for(key in sizes){
+      sizes_combo.append($("<option />").val(sizes[key]).text(key));
+    }
+     for(key in sizes){
+        if(sizes[key]==size_id){
+            $("option[value='"+sizes[key]+"']").attr('selected','selected');
+        }
+    }
+      
+    // get size id from current item 
+    
+    
+    
      $('#display_image'+product_id).attr('src',  image_url);
   
 }
@@ -197,5 +217,12 @@ function get_product_array(){
  }
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~>recommendation by size
+ 
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~> Get Size Id form current item 
+ function get_size_id(current_item,product_id){
+     product= get_product_array();
+    return product[product_id]['items'][current_item]['size_id'];
+     
+ }
  
  </script>

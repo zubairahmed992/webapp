@@ -270,7 +270,7 @@ public function favouriteByUser($user_id,$request){
                     $data['data'][$product_id]['brandId'] = $ind_product['brandId'];
                   
                    
-                     $item = $p->getDefaultItem();
+                     $item = $p->getDefaultItem($user);
                       if (isset($item)) {
                         $data['data'][$product_id]['fittingRoomImage'] = $item->getImage();
                         $data['data'][$product_id]['sizeId'] = $item->getProductSize()->getId();
