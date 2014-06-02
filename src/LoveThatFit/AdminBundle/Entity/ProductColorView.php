@@ -16,12 +16,22 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ProductColorView {    
     
-     /**
+    /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_color_view")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
+     
+     */    
+    protected $product; 
+    
+    
+    /**
      * @ORM\ManyToOne(targetEntity="ProductColor", inversedBy="product_color_view")
      * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id", onDelete="CASCADE")
      
      */    
     protected $product_color; 
+    
+    
     
     
     public function __construct() {
@@ -133,5 +143,28 @@ class ProductColorView {
     public function getProductColor()
     {
         return $this->product_color;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Product $product
+     * @return ProductColorView
+     */
+    public function setProduct(\LoveThatFit\AdminBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }

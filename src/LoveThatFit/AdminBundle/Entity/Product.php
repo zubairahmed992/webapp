@@ -36,6 +36,11 @@ class Product {
      * @ORM\OneToMany(targetEntity="ProductColor", mappedBy="product", orphanRemoval=true)
      */
     protected $product_colors;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ProductColorView", mappedBy="product", orphanRemoval=true)
+     */
+    protected $product_color_view;
 
     /**
      * @ORM\OneToMany(targetEntity="ProductSize", mappedBy="product", orphanRemoval=true)
@@ -1204,5 +1209,38 @@ class Product {
         }
 
         return $imagesPath;
+    }
+
+    /**
+     * Add product_color_view
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView
+     * @return Product
+     */
+    public function addProductColorView(\LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView)
+    {
+        $this->product_color_view[] = $productColorView;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_color_view
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView
+     */
+    public function removeProductColorView(\LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView)
+    {
+        $this->product_color_view->removeElement($productColorView);
+    }
+
+    /**
+     * Get product_color_view
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductColorView()
+    {
+        return $this->product_color_view;
     }
 }
