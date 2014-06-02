@@ -181,7 +181,7 @@ function chk_dress_applied_loaded(prod_type_applied){
                                     </div>
                                     <div class="action_icons">
                                         <span class="fav_prod">
-                                            <span style="display:none;"> <a href="{{path('compare_product',{'item_id':productItem.id})}}">Comapre</a></span>
+                                            <span style="display:none;"> <a href="{{path('compare_product_add',{'item_id':productItem.id})}}">Comp</a></span>
                                             {% if productItem and productItem%}
                             {%if(app.user.getMyClosetListArray(productItem.id)==productItem.id)%}
   <div class="like_icon1_{{productItem.id}}" style="">

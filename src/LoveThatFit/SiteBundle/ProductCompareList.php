@@ -24,11 +24,11 @@ class ProductCompareList {
         $feed_back=array();
         
         foreach($this->list as $key=>$value){
-              $item = $productItem->getProductItemById($value['itemid']);
+              $item = $productItem->getProductItemById($value['item_id']);
               $product=$item->getProduct();
               $fe = new AvgAlgorithm($user,$product);
               $feed_back[$key]=$product->getDetailArray()+$fe->getFeedBack();
-              $feed_back[$key]['current_item']=$value['itemid'];
+              $feed_back[$key]['current_item']=$value['item_id'];
         }
           return $feed_back;
      
@@ -39,26 +39,38 @@ class ProductCompareList {
         $compareable_list=null;
         return $compareable_list;
     }
-//---------------------------------------------------------------------
-    function removeItemFromList($item) {
-    #remove this item
-        return $this->list;
-    }
     
 //---------------------------------------------------------------------
     function addItemToList($item) {
         $product=$item->getProduct();
-        $this->list[$product->getId()]['product_id']=$item->getId();
-        $this->list[$product->getId()]['item_id']=$item->getId();
-        $this->list[$product->getId()]['product_name']=$product->getName();
-        $this->list[$product->getId()]['image']=$item->getProductColor()->getWebPath();
-        $this->cutExtraItem();
+        if ($this->productDoseNotExist($product->getId(), $item->getId())){            
+            $this->list[$product->getId()]['id']=$product->getId();
+            $this->list[$product->getId()]['item_id']=$item->getId();
+            $this->list[$product->getId()]['product_name']=$product->getName();
+            $this->list[$product->getId()]['image']=$item->getProductColor()->getWebPath();
+            if(count($this->list)>3){
+                #array_shift($this->list);            
+                $keys = array_keys($this->list);
+                unset($this->list[$keys[0]]);
+            }
+            
+        }
         return $this->list;        
     }
-    private function cutExtraItem() {
-        if(count($this->list)>3)
-            return $true;# remove first item
+    //---------------------------------------------------------------------
+    function removeItemFromList($product_id) {        
+        unset($this->list[$product_id]);
+        return $this->list;        
     }
-    
+    #-------------------------------------->
+    private function productDoseNotExist($product_id, $item_id){
+        foreach($this->list as $p) { 
+            if(array_key_exists('id', $p) && $product_id==$p['id']){
+                $this->list[$product_id]['item_id']=$item_id;
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

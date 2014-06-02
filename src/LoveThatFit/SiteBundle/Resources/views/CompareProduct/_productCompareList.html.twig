@@ -1,15 +1,18 @@
 <div>
     <ul>
         {% for product in app.session.get('product_compare_list') %}
+            {% if(product.id) is defined %}
             <li style="float:left">
-                <a href="#">
+                <a href="{{path('compare_product_remove', {'product_id': product.id})}}">
                 <img  width="50" height="60" src="{{asset(product.image) }}">
                 </a>
             
             </li>
+            {% endif %}
         {% endfor %}
     </ul>
      
         
 </div>
-<a href='#'>comapare</a>
+<a href="{{path('compare_product_index')}}">compare</a>
+{# dump(app.session.get('product_compare_list')) #}

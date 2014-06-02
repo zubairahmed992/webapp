@@ -6,4 +6,11 @@ compare_product_index:
 compare_product_list:
     pattern:  /compare_product/list
     defaults: { _controller: LoveThatFitSiteBundle:CompareProduct:list}
-    
+
+compare_product_add:
+    pattern:  /compare_product/add/{item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:CompareProduct:add}
+
+compare_product_remove:
+    pattern:  /compare_product/remove/{product_id}
+    defaults: { _controller: LoveThatFitSiteBundle:CompareProduct:remove}
