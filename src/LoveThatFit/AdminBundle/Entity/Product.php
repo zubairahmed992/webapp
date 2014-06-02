@@ -1012,7 +1012,9 @@ class Product {
                 'id' => $pc->getId(), 
                 'title' => $pc->getTitle(), 
                 'image' => $pc->getWebPath(), 
-                'pattern'=>$pc->getPatternWebPath());
+                'pattern'=>$pc->getPatternWebPath(),
+                'sizes'=> array_flip($pc->getSizeDescriptionArray()),
+                );
         }
         return $colors_array;
     }

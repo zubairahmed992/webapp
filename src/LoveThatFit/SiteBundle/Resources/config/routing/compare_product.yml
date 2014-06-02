@@ -3,4 +3,7 @@ compare_product_index:
     pattern:  /compare_product/index
     defaults: { _controller: LoveThatFitSiteBundle:CompareProduct:index}
 
+compare_product_list:
+    pattern:  /compare_product/list
+    defaults: { _controller: LoveThatFitSiteBundle:CompareProduct:list}
     

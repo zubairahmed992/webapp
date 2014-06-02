@@ -1,7 +1,15 @@
 <div>
     <ul>
         {% for product in app.session.get('product_compare_list') %}
-            <li>{{ product.image }}</li>
+            <li style="float:left">
+                <a href="#">
+                <img  width="50" height="60" src="{{asset(product.image) }}">
+                </a>
+            
+            </li>
         {% endfor %}
     </ul>
+     
+        
 </div>
+<a href='#'>comapare</a>

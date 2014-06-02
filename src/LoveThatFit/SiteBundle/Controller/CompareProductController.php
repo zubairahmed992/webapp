@@ -36,16 +36,22 @@ class CompareProductController extends Controller {
                 6=>array('id'=>3,'itemid'=>8),
                 7=>array('id'=>4,'itemid'=>14),
             */
-                20=>array('id'=>20,'itemid'=>95),
-                3=>array('id'=>3,'itemid'=>8),
-                7=>array('id'=>7,'itemid'=>36),
+                20=>array('id'=>20,'itemid'=>95, 'product_name'=>'OldSchoolShirtdress', 'image'=>'uploads/ltf/products/display/web/5384769876d8b.png'),
+                3=>array('id'=>3,'itemid'=>8, 'product_name'=>'Floral Dress', 'image'=>'uploads/ltf/products/display/web/531706356d344.png'),
+                7=>array('id'=>7,'itemid'=>36, 'product_name'=>'RedStripedDress', 'image'=>'uploads/ltf/products/display/web/531708bf34a6d.png'),
              
-                
-        
             );
+            $session->set('product_compare_list', $list);
             $product_compare_list = new ProductCompareList($list);
         }
         return $product_compare_list;
+    }
+    #-------------------------------------------->
+    
+     public function listAction() {
+       $compare_list = $this->getCompareList();
+       return $this->render('LoveThatFitSiteBundle:CompareProduct:_productCompareList.html.twig');
+     
     }
     
 }
