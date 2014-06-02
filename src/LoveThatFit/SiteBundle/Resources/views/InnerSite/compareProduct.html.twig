@@ -63,8 +63,9 @@ function showFeedBack(feedback,product_id){
                     {% for singlePro in product %}
 
                 <td>
+                        
                         {% if(singlePro.display_image is defined )%}
-                        <img src="{{asset(singlePro.display_image) }}">
+                    <img src="{{asset(singlePro.display_image) }}" id="display_image{{singlePro.id}}">
                         {%endif%}
                         <div style="font-weight: bold">{{singlePro.name}}</div>
                         <div> {{singlePro.brand}}, 
@@ -97,7 +98,7 @@ function showFeedBack(feedback,product_id){
                             <div>
                                 Colors:
                         {% for color in singlePro.colors%}
-                                <img src="{{asset(color.pattern) }}">
+                                <img src="{{asset(color.pattern) }}" onclick="change_product_image({{singlePro.id}},{{color.id}})">
                           {%endfor%}
                             </div> 
 
@@ -155,6 +156,13 @@ function showFeedBack(feedback,product_id){
 </div>
 <script>
 
+var  product= get_product_array();
+//~~~~~~~~~~~~~~~~~~~~~~ Product Color ~~~~~~
+function change_product_image(product_id,color_id){
+    image_url = "../../"+product[product_id]['colors'][color_id]['image'];
+     $('#display_image'+product_id).attr('src',  image_url);
+  
+}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~> 
  function change_product_details(product_id){
      
