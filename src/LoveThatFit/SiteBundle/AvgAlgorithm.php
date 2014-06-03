@@ -141,7 +141,19 @@ class AvgAlgorithm {
         }
         return array('feedback' => $this->array_sort($fb));
     }
-
+    private function get_relevant_body_measurement($fp_specs, $body_specs){
+        $body = 0;
+        if ($fp_specs['fit_point'] == 'waist' && $this->product->getGender() == 'm' && $this->product->getClothingType()->getTarget()=='bottom'){
+            if (array_key_exists('belt', $body_specs) && $body_specs['belt']!=null && $body_specs['belt'] > 0){
+                $body = $body_specs['belt'];
+            }else{
+                $body = array_key_exists($fp_specs['fit_point'], $body_specs) ? $body_specs[$fp_specs['fit_point']] : 0;    
+            }
+        }else{
+            $body = array_key_exists($fp_specs['fit_point'], $body_specs) ? $body_specs[$fp_specs['fit_point']] : 0;
+        }
+        return $body;
+    }
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private function get_fit_point_array($fp_specs, $body_specs) {
 
@@ -149,8 +161,9 @@ class AvgAlgorithm {
         $high = $fp_specs['ideal_body_size_high'];
         $max = $fp_specs['max_body_measurement'];
         $min = $fp_specs['min_body_measurement'];
-
-        $body = array_key_exists($fp_specs['fit_point'], $body_specs) ? $body_specs[$fp_specs['fit_point']] : 0;
+        
+        $body = $this->get_relevant_body_measurement($fp_specs, $body_specs);
+        #$body = array_key_exists($fp_specs['fit_point'], $body_specs) ? $body_specs[$fp_specs['fit_point']] : 0;
         $mid_low_high = ($low + $high) / 2;
         $mid_high_max = ($high + $max) / 2;
         $variance = $this->calculate_variance($body, $mid_low_high, $fp_specs['fit_priority']);

@@ -1329,6 +1329,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
             'weight' => $this->weight,
             'height' => $this->height,
             'waist' => $this->waist,
+            'belt' => $this->belt,
             'hip' => $this->hip,
             'bust' => $this->bust,
             'chest' => $this->chest,

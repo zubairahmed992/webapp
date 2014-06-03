@@ -245,6 +245,7 @@ public function findOneByName($title) {
             if ($bottom_size) {
                 if ($measurement->getWaist() == null || $measurement->getWaist() == 0) {
                     $measurement->setWaist($bottom_size->getWaist());
+                    $measurement->setBelt($bottom_size->getWaist());
                 }
                 if ($measurement->getHip() == null || $measurement->getHip() == 0) {
                     $measurement->setHip($bottom_size->getHip());
