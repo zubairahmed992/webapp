@@ -396,6 +396,30 @@ public function brandListAction() {
             return new response(json_encode(array("Message"=>"No Data Found")));
         }
     }
+    #----------------Get Product Data for user synchorization ----------------#
+     public function getProductForUserSynAction(){
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $request_array = json_decode($jsonInput, true);
+        $user = $this->get('webservice.helper.user');
+        //$request_array=array('authTokenWebService'=>'123','date'=>'1388577600');
+       // $request_array=array('authTokenWebService'=>'123');
+        $authTokenWebService = $request_array['authTokenWebService'];
+    if ($authTokenWebService) {
+            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            if ($tokenResponse['status'] == False) {
+                return new Response(json_encode($tokenResponse));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
+        }
+        //  return new response(json_encode($request_array));
+        $product_helper =  $this->get('webservice.helper.product');
+        $product_response=$product_helper->productListingForUserSync($request,$request_array);
+        return new response(json_encode($product_response));
+        
+    }
  
 #------------------ End of Product Synchronization-----------------------------#
 #----------------- Push notification Start-------------------------------------#
@@ -456,6 +480,8 @@ public function runCroneJobAction(){
         return new response(json_encode($product_response));
         
     }
+    
+    
     #----------------------Get Product Detail Test Service ----------------#
     public function getTestProductDetailSynAction($authTokenWebService,$date) {
         

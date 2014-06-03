@@ -135,6 +135,11 @@ ws_product_detail_syn:
    pattern:  /web_service/product_detail_sync
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductDetailSyn} 
 
+ws_product_for_user_syn:
+   pattern:  /web_service/product_user_sync
+   defaults: { _controller: LoveThatFitWebServiceBundle:Product:getProductForUserSyn} 
+
+
 ws_send_push_notifcation:
    pattern:  /web_service/send_push_notification
    defaults: { _controller: LoveThatFitWebServiceBundle:Product:sendPushNotifcation}  

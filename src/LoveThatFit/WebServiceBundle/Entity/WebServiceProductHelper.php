@@ -293,6 +293,57 @@ public function favouriteByUser($user_id,$request){
      
 }
 
+ public function productListingForUserSync($request,$request_array,$date_format=Null){
+       // $id = $request_array['id'];
+       
+        if($request_array['authTokenWebService']){
+        $user=$this->container->get('user.helper.user')->findByAuthToken($request_array['authTokenWebService']);
+        $device_path=$this->getDeviceTypeByUser($user->getId());   
+        }
+        
+       if(!$user){
+           return array('Message' => 'We cannot find User');  
+            
+        }
+        $gender = $user->getGender();
+        if(isset($request_array['date'])){
+          $date_format=$this->returnFormattedTime($request_array);
+        }
+       // return $date_format;
+       $products = $this->repo->newproductListingWebService($gender,$date_format);
+      
+        $data = array();
+       
+        #-------Fetching The Path------------#
+        if ($products) {
+         
+         $product_color_array = array();
+          $count=1;
+          //$product_helper =  $this->get('admin.helper.product');
+          foreach ($products as $ind_product) {
+                $product_id = $ind_product['id'];
+                if ($product_id) {
+                    $p = $this->find($product_id);
+                    $data['data'][$product_id]['productId'] = $ind_product['id'];
+                    $data['data'][$product_id]['target'] = $ind_product['target'];
+                    $item = $p->getDefaultItem($user);
+                      if (isset($item)) {
+                        $data['data'][$product_id]['fittingRoomImage'] = $item->getImage();
+                        $data['data'][$product_id]['sizeId'] = $item->getProductSize()->getId();
+                        $data['data'][$product_id]['colorId'] = $item->getProductColor()->getId();
+                        }
+                }
+            }   
+           
+          
+  return $data;
+        } else {
+            return array('Message' => 'We cannot find Product');
+        }
+     
+}
+
+
 
 #----------This is used for saving db all product id with append of detail 
 public function newproductDetailWebService($request,$request_array,$date_format=Null){
