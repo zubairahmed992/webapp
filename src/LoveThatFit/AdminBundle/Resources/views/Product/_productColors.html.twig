@@ -193,7 +193,7 @@
 
 
 
-            
+                        
 {% if imageUploadForm is defined %}
   <div id="pro_color" style="overflow:auto;">
     <form id="imageform" method="post" enctype="multipart/form-data" action="{{ path('admin_product_detail_color_image_upload',{'id': product.Id }) }}">
@@ -296,6 +296,7 @@
    {% for pc in product.productColors %}  
    {% if color_id is defined and  color_id %}
    {% if color_id == pc.id %}
+            
    <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
    
    <form action="{{ path('admin_product_detail_color_update',{'id': product.Id,'color_id':color_id }) }}" method="post" {{ form_enctype(colorform) }} onsubmit="return validate();">
@@ -396,7 +397,9 @@
 
                                  {% else %}
                                 <tr>
-                                    <td style="text-align:'center'; font-weight: bold; padding-right: 20px;">{{pc.title}}</td>
+                                    <td style="text-align:'center'; font-weight: bold; padding-right: 20px;">
+<a href="{{path('admin_product_color_view_list',{'product_color_id': pc.id })}}">views</a>
+{{pc.title}}</td>
                                     <td width="20%"><img width="24" height="24" src="{{asset(pc.PatternWebPath)}}"></td>
                                     <td> 
                                         <a href='{{path("admin_product_detail_color_edit",{"id":product.id, "color_id":pc.id})}}' class="btn">Edit</a>

@@ -1,0 +1,26 @@
+admin_product_color_view_list:
+    pattern:  /admin/product_color_view/{product_color_id}
+    defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:list }     
+
+admin_product_color_view_new:
+     pattern:  /admin/product_color_view/new
+     defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:new }
+
+admin_product_color_view_create:
+     pattern:  /admin/product_color_view/create
+     defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:create}
+
+admin_product_color_view_edit:
+    pattern:  /admin/product_color_view/{id}/edit
+    defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:edit }
+
+admin_product_color_view_update:
+   pattern:  /admin/product_color_view/{id}/update
+   defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:update }
+
+admin_product_color_view_delete:
+   pattern:  /admin/product_color_view/{id}/delete
+   defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:delete }
+      
+
+      

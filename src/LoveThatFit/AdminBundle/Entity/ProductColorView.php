@@ -167,4 +167,42 @@ class ProductColorView {
     {
         return $this->product;
     }
+
+    #----------------------------------------------------------------------------
+    #-----------------image related --------------------------------
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
+    
+    //-------------------------------------------------------1
+    public function getWebPath() {
+        return null === $this->image ? null : $this->getUploadDir() . '/web/' . $this->image;
+    }
+    
+//-------------------------------------------------------2
+    public function getAbsolutePath() {
+        return null === $this->image ? null : $this->getUploadRootDir() . '/web/' . $this->image;
+    }
+
+//-------------------------------------------------------3
+    public function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+//-------------------------------------------------------4
+    protected function getUploadDir() {        
+        return 'uploads/ltf/products/display';
+    }
+//-------------------------------------------------------    
+ public function upload() {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
+        
+       $ih=new ImageHelper('product', $this);
+        $ih->upload();
+    }
 }

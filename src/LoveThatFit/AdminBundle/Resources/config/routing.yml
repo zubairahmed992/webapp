@@ -12,6 +12,11 @@ admin_product_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/product.yml"
     prefix:   /
 
+#-------------- PRODUCT COLOR VIEW------------------------
+    
+admin_product_color_view_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/product_color_view.yml"
+    prefix:   /
 #-------------- BRAND ------------------------
 
 admin_brand_routes:
