@@ -1,4 +1,30 @@
-<a href="{{path('admin_product_color_view_new',{'product_color_id': product_color_id}) }}" class="btn">Add New</a>
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Color View</li>
+{% endblock %}
+
+
+
+{% block body %}
+  
+<div class="p_listing">     
+    <h1>Color View</h1>
+    
+ 
+    
+    <div class="btn_wrapper2">
+     
+     
+    
+     <a href="{{path('admin_product_color_view_new',{'product_color_id': product_color_id}) }}" class="btn">Add New</a>
+     
+      </div>
+    
+     <div class="clearfix"></div> 
+
 {%for color in color_view%}
-<img src="{{ asset(color.WebPath) }}"/><a href="{{path('admin_product_color_view_edit',{'id': color.id}) }}" class="btn">Edit</a>
+<img src="{{ asset(color.WebPath) }}"/><a href="{{path('admin_product_color_view_edit',{'id': color.id}) }}"><i class="icon-edit"></i></a>
 {%endfor%}
+
+
+{% endblock %}
