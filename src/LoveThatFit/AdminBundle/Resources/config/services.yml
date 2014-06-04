@@ -122,6 +122,13 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\ProductItemPiece
+            
+     admin.helper.product.color.view:
+        class: LoveThatFit\AdminBundle\Entity\ProductColorViewHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\ProductColorView      
         
      admin.helper.color:
         class: LoveThatFit\AdminBundle\Entity\ColorHelper  

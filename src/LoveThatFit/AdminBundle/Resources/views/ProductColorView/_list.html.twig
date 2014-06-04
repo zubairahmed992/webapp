@@ -1,1 +1,4 @@
-This is list
+<a href="{{path('admin_product_color_view_new',{'product_color_id': product_color_id}) }}" class="btn">Add New</a>
+{%for color in color_view%}
+<img src="{{ asset(color.WebPath) }}"/><a href="{{path('admin_product_color_view_edit',{'id': color.id}) }}" class="btn">Edit</a>
+{%endfor%}

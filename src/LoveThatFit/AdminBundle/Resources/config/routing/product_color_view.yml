@@ -3,11 +3,11 @@ admin_product_color_view_list:
     defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:list }     
 
 admin_product_color_view_new:
-     pattern:  /admin/product_color_view/new
+     pattern:  /admin/product_color_view/{product_color_id}/new
      defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:new }
 
 admin_product_color_view_create:
-     pattern:  /admin/product_color_view/create
+     pattern:  /admin/product_color_view/{product_color_id}/create
      defaults: { _controller: LoveThatFitAdminBundle:ProductColorView:create}
 
 admin_product_color_view_edit:

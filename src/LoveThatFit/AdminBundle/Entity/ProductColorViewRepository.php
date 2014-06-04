@@ -12,6 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductColorViewRepository extends EntityRepository {
 
-    
+    public function findProductColorViewByColor($color_id) {
+            $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT pcv FROM LoveThatFitAdminBundle:ProductColorView pcv          
+      WHERE
+      pcv.product_color = :color_id"                         
+                        )->setParameters(array('color_id' => $color_id)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
 }
