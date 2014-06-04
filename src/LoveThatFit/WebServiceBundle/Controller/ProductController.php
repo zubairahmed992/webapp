@@ -404,7 +404,8 @@ public function brandListAction() {
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
         //$request_array=array('authTokenWebService'=>'123','date'=>'1388577600');
-       // $request_array=array('authTokenWebService'=>'123');
+       // $request_array=array('authTokenWebService'=>'e4c997f574be6c6e3f8dc6bd4286ff60');
+        
         $authTokenWebService = $request_array['authTokenWebService'];
     if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);

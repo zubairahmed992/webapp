@@ -209,7 +209,7 @@ public function userProfileAction()
         
         $request_array = json_decode($jsonInput, true);
        // $request_array= array();
-      // $request_array=array('email'=>'iphone@gmail.com','authTokenWebService'=>'123','deviceType'=>'4s','heightPerInch'=>'6','weight'=>'100','thigh'=>10);
+     //  $request_array=array('email'=>'kamran@hotmail.com','authTokenWebService'=>'97fc8d115394f3f1947f315783e29e0e','deviceType'=>'4s','heightPerInch'=>'6','weight'=>'100','thigh'=>10);
         $email = $request_array['email'];
        
 #------------------------------Authentication of Token--------------------------------------------#

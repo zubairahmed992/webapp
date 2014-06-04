@@ -331,6 +331,7 @@ public function favouriteByUser($user_id,$request){
                         $data['data'][$product_id]['fittingRoomImage'] = $item->getImage();
                         $data['data'][$product_id]['sizeId'] = $item->getProductSize()->getId();
                         $data['data'][$product_id]['colorId'] = $item->getProductColor()->getId();
+                        $data['data'][$product_id]['sizeTitle'] = $item->getProductSize()->getTitle();
                         }
                 }
             }   
