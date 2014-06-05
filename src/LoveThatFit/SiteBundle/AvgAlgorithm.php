@@ -55,8 +55,8 @@ class AvgAlgorithm {
         $best_fit = null;
 
         foreach ($sizes as $size) {
-            if ($size['status'] != $this->status['beyond_max']
-                    && $size['status'] != $this->status['below_min']) {
+            #if ($size['status'] != $this->status['beyond_max'] && $size['status'] != $this->status['below_min']) {
+            if (!($size['status'] <= $this->status['beyond_max']) && $size['status'] != $this->status['below_min']) {
                 if ($lowest_variance == null || $lowest_variance > $size['variance']) {
                     $lowest_variance = $size['variance'];
                     $fitting_size = array($size['description'] => $size);
@@ -102,6 +102,58 @@ class AvgAlgorithm {
         }
         $body_specs = $this->user->getMeasurement()->getArray();
         $fb = array();
+        $fpwp = $this->product->getFitPointsWithPriority();
+        foreach ($sizes as $size) {
+            $size_specs = $size->getMeasurementArray(); #~~~~~~~~>
+            $size_identifier = $size->getDescription();
+            $fb[$size_identifier]['id'] = $size->getId();
+            $fb[$size_identifier]['fits'] = true;
+            $fb[$size_identifier]['description'] = $size_identifier;
+            $fb[$size_identifier]['title'] = $size->getTitle();
+            $fb[$size_identifier]['body_type'] = $size->getBodyType();
+            $fb[$size_identifier]['variance'] = 0;
+            $fb[$size_identifier]['max_variance'] = 0;            
+            $fb[$size_identifier]['status'] =0;
+            if (is_array($size_specs)) {
+             foreach($fpwp as $pfp_key=>$pfp_value){
+                    if (array_key_exists($pfp_key, $size_specs)) {
+                        $fb[$size_identifier]['fit_points'][$pfp_key] =
+                                $this->get_fit_point_array($size_specs[$pfp_key], $body_specs);
+                        
+                        $accumulated = $this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key],
+                                        $fb[$size_identifier]['variance']);
+                        $fb[$size_identifier]['variance'] = $accumulated['variance'] ;
+                        $fb[$size_identifier]['max_variance'] = $fb[$size_identifier]['max_variance'] + $accumulated['max_variance'];
+                        $fb[$size_identifier]['status'] = $this->get_accumulated_status($fb[$size_identifier]['status'], $fb[$size_identifier]['fit_points'][$pfp_key]['status']);
+                    }else{
+                        $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
+                    
+                        #$fb[$size_identifier]['status'] =  json_encode($fpwp);
+                    }
+             }
+                 
+            }
+            $fb[$size_identifier]['message']=  $this->get_fp_status_text($fb[$size_identifier]['status']);
+            # calculate fit index only if measurement is not beyond_max or below_min
+            if ($fb[$size_identifier]['status']==$this->status['beyond_max']
+                    || $fb[$size_identifier]['status']==$this->status['below_min']){
+                $fb[$size_identifier]['fit_index'] = 0;
+            }else{
+                $fb[$size_identifier]['fit_index'] = $this->grade_to_scale($fb[$size_identifier]['variance'], $fb[$size_identifier]['max_variance'], 0);
+            }
+            $hem_bits = $this->get_hem_advice($size_specs, $body_specs);
+            if ($hem_bits) $fb[$size_identifier]['hem_advice'] = $hem_bits;
+        }
+        return array('feedback' => $this->array_sort($fb));
+    }
+    
+    #--------------- its an oldy, keeping it just for a wee while ~~~~~~~~~~~~~~~~~~~~>*
+    private function _array_mix($sizes = null) {
+        if ($sizes == null) {
+            $sizes = $this->product->getProductSizes();
+        }
+        $body_specs = $this->user->getMeasurement()->getArray();
+        $fb = array();
 
         foreach ($sizes as $size) {
             $size_specs = $size->getMeasurementArray(); #~~~~~~~~>
@@ -141,6 +193,11 @@ class AvgAlgorithm {
         }
         return array('feedback' => $this->array_sort($fb));
     }
+    
+    
+    
+    
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private function get_relevant_body_measurement($fp_specs, $body_specs){
         $body = 0;
         if ($fp_specs['fit_point'] == 'waist' && $this->product->getGender() == 'm' && $this->product->getClothingType()->getTarget()=='bottom'){
@@ -154,6 +211,7 @@ class AvgAlgorithm {
         }
         return $body;
     }
+    
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     private function get_fit_point_array($fp_specs, $body_specs) {
 
@@ -223,6 +281,7 @@ class AvgAlgorithm {
             'fit_index'=> $fit_index,
         );
     }
+    
 
     #----------------------------------------------------------
 

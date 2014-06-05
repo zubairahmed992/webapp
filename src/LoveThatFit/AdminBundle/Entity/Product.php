@@ -847,6 +847,18 @@ class Product {
     public function getFitPriorityArray(){
         return json_decode($this->fit_priority, true);
     }
+    public function getFitPointsWithPriority(){
+        $fps = $this->getFitPriorityArray();
+        $fpa=array();
+        if (is_array($fps)){
+            foreach ($fps as $k=>$v){
+                if($v>0){
+                $fpa[$k]=$v;    
+                }
+            }
+        }
+        return $fpa;
+    }
     #~~~~~~~~~~~~~~~~~~~~~~~>
     public function fitPriorityAvailable(){
         $fps = $this->getFitPriorityArray();
