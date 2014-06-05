@@ -4260,7 +4260,7 @@ width: 160px;
 }
 
 .lft_col{
-    width: 50px;
+    width: 58px;
     float: left;
 }
 
@@ -4273,7 +4273,22 @@ width: 160px;
 }
 
 .prod_price{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    color: #426EB6;
+    font-size: 0.6em;
+    margin-left: 5px;
+    overflow: hidden;
+    padding: 1px;
     text-align: center;
+}
+
+
+.prod_price a{    
+    color: #426EB6;
+    display: block;
+    text-decoration: none;
+   
 }
 
 .action_icons{
@@ -4751,3 +4766,136 @@ margin-left: 4px;
 .saf_fnt{
     font-family: MyCustomFontb;
 }
+
+
+
+#compare_list ul li{    
+    list-style: none; 
+    background: url("../images/hanger.png") 0 18px no-repeat;
+}
+
+#compare_list ul li img{       
+    width:40px;
+    height: 50px;
+    border:1px solid #ccc;
+    padding:3px;
+    margin-right: 10px;
+    position: relative;
+    top:35px;
+}
+
+#compare_list ul li:last-child img{  
+    margin-right: 0px!important;
+}
+
+#compare_wrap{
+    margin-top:20px;
+    position: relative;
+}
+
+#compare_prod_no{
+    font-size: 0.8em;
+    left: 8px;
+    position: absolute;
+    top: 1px;
+    
+}
+
+#compare_ico{
+    position: relative;
+    float: right;
+}
+
+#ralling{
+    position:absolute;
+    top:10px;
+    left:5px;
+    z-index: -2;
+}
+
+
+
+.panel {
+    float: left;
+    font-size: 0.8em;
+    height: 200px;
+    margin: 0px 20px 0px 20px;
+    perspective: 600px;
+    position: relative;
+    width: 15px;
+}
+
+.panel .front {
+		float: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 900;		
+		text-align: center;	
+
+		-webkit-transform: rotateX(0deg) rotateY(0deg);
+			 -moz-transform: rotateX(0deg) rotateY(0deg);
+						transform: rotateX(0deg) rotateY(0deg);
+
+		-webkit-transform-style: preserve-3d;
+			 -moz-transform-style: preserve-3d;
+						transform-style: preserve-3d;
+
+		-webkit-backface-visibility: hidden;
+			 -moz-backface-visibility: hidden;
+						backface-visibility: hidden;
+
+		/* -- transition is the magic sauce for animation -- */
+		-webkit-transition: all .4s ease-in-out;
+						transition: all .4s ease-in-out;
+	}
+	.panel.flip .front {
+		z-index: 900;		
+		-webkit-transform: rotateY(180deg);
+			 -moz-transform: rotateY(180deg);
+						transform: rotateY(180deg);
+	}
+
+	.panel .back {
+		float: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 800;
+		
+		-webkit-transform: rotateY(-180deg);
+			 -moz-transform: rotateY(-179deg); /* setting to 180 causes an unnatural-looking half-flip */
+						transform: rotateY(-179deg);
+
+		-webkit-transform-style: preserve-3d;
+			 -moz-transform-style: preserve-3d;
+						transform-style: preserve-3d;
+
+		-webkit-backface-visibility: hidden;
+			 -moz-backface-visibility: hidden;
+						backface-visibility: hidden;
+
+		/* -- transition is the magic sauce for animation -- */
+		-webkit-transition: all .4s ease-in-out;
+						transition: all .4s ease-in-out;
+	}
+
+	.panel.flip .back {
+		z-index: 1000;
+		
+
+		-webkit-transform: rotateX(0deg) rotateY(0deg);
+			 -moz-transform: rotateX(0deg) rotateY(0deg);
+						transform: rotateX(0deg) rotateY(0deg);
+
+		
+	}
+
+
+
+
+
+.panel .pad {
+    padding: 0 15px;
+}
+
