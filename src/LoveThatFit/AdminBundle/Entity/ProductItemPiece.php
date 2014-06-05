@@ -38,6 +38,12 @@ class ProductItemPiece
     protected $piece_type;
 
     /**
+     * @var string  $view_title;  
+     * @ORM\Column(name="view_title", type="string", length=255)
+     */
+    protected $view_title;
+    
+    /**
      * @var string $image 
      * @ORM\Column(name="image", type="string",length=255, nullable=true)
      */
@@ -187,4 +193,27 @@ public function deleteImages()
     
   }
 }
+
+    /**
+     * Set view_title
+     *
+     * @param string $viewTitle
+     * @return ProductItemPiece
+     */
+    public function setViewTitle($viewTitle)
+    {
+        $this->view_title = $viewTitle;
+    
+        return $this;
+    }
+
+    /**
+     * Get view_title
+     *
+     * @return string 
+     */
+    public function getViewTitle()
+    {
+        return $this->view_title;
+    }
 }
