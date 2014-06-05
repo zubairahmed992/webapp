@@ -1336,7 +1336,21 @@ $(".share_but_new").click(
   }
 );
   
-
+// Functionalty for getting product comapring 
+function get_compare_list(){
+    var compare_url=$('#comapre_url').text();
+    $('#compare_wrap').html('');
+     $.ajax({
+                url: compare_url,
+                cache: false,
+                success: function(new_prod_details){
+                   
+                   $('#compare_wrap').html(new_prod_details);
+                   
+                    }
+              });   
+ 
+}
 
 </script>
 
