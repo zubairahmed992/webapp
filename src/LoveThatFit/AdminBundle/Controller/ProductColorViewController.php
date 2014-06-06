@@ -47,7 +47,8 @@ class ProductColorViewController extends Controller {
         $entity->setProduct($product);        
         $message_array=$this->get('admin.helper.product.color.view')->save($entity);        
         $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-        return $this->redirect($this->generateUrl('admin_product_color_view_list', array('product_color_id' => $product_color_id)));
+        return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $product->getId())));
+        //return $this->redirect($this->generateUrl('admin_product_color_view_list', array('product_color_id' => $product_color_id)));
         }
     }
     
@@ -70,7 +71,8 @@ class ProductColorViewController extends Controller {
        $entity->setProduct($entity->getProduct());
        $message_array=$this->get('admin.helper.product.color.view')->update($entity);      
        $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-       return $this->redirect($this->generateUrl('admin_product_color_view_list', array('product_color_id' => $entity->getProductColor()->getId())));
+      return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getProduct()->getId())));
+       
        }
     }
     

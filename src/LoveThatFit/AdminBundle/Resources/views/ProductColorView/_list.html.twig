@@ -1,13 +1,13 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
-function getProductColorViewAddForm(){
-  var admin_product_color_view_new = "../product_color_view/"+{{product_color_id}}+"/new";    
+function getProductColorViewAddForm(product_color_id){  
+  var admin_product_color_view_new = "../product_color_view/"+product_color_id+"/new";    
   jQuery.ajax({
    type: "GET",
    url: admin_product_color_view_new, 
    //data : str, // our data object
    success: function(response){
-       $('#product_color_view_form').html(response);           
+       $('#product_color_view_form_'+product_color_id).html(response);           
    }
  });
 }
@@ -16,17 +16,16 @@ function getProductColorViewAddForm(){
 
 
 <script>
-function getProductColorViewEditForm(id){
+function getProductColorViewEditForm(product_color_id,id){
  var admin_product_color_view_edit = "../product_color_view/"+id+"/edit";    
   jQuery.ajax({
    type: "GET",
    url: admin_product_color_view_edit, 
    //data : str, // our data object
    success: function(response){
-       $('#product_color_view_form').html(response);           
+       $('#product_color_view_form_'+product_color_id).html(response);           
    }
- });
-  
+ });  
 }
     
 </script>
@@ -35,12 +34,12 @@ function getProductColorViewEditForm(id){
         <b>Additional views</b> 
         <ul>
             {%for color in color_view%}
-                <i><a onclick="return getProductColorViewEditForm({{color.id}});"><img width="50px" height="50px" src="{{ asset(color.WebPath) }}"/></a></i>    
+                <i><a onclick="return getProductColorViewEditForm({{product_color_id}},{{color.id}});"><img width="50px" height="50px" src="{{ asset(color.WebPath) }}"/></a></i>    
             {%endfor%}
         </ul>
     </div>
-    <a  class="btn" onclick="return getProductColorViewAddForm()">Add New</a>
-   <div id="product_color_view_form">            
+    <a  class="btn" onclick="return getProductColorViewAddForm({{product_color_id}})">Add New</a>
+   <div id="product_color_view_form_{{product_color_id}}">            
    </div>
     
     
