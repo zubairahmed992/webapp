@@ -32,13 +32,13 @@ class CompareProductController extends Controller {
         if ($session->has('product_compare_list')) {
             $list = $session->get('product_compare_list');            
         } 
-        if ($list==null || (is_array($list) && count($list)==0)){
+       /* if ($list==null || (is_array($list) && count($list)==0)){
             $list=array(
                 20=>array('id'=>20,'item_id'=>95, 'product_name'=>'OldSchoolShirtdress', 'image'=>'uploads/ltf/products/display/web/5384769876d8b.png'),
                 3=>array('id'=>3,'item_id'=>8, 'product_name'=>'Floral Dress', 'image'=>'uploads/ltf/products/display/web/531706356d344.png'),
                 7=>array('id'=>7,'item_id'=>36, 'product_name'=>'RedStripedDress', 'image'=>'uploads/ltf/products/display/web/531708bf34a6d.png'),             
             );
-        }
+        }*/
         
         $session->set('product_compare_list', $list);
         $product_compare_list = new ProductCompareList($list);        
