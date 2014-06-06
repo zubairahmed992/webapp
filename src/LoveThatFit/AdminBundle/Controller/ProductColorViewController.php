@@ -83,7 +83,8 @@ class ProductColorViewController extends Controller {
        try {
             $message_array = $this->get('admin.helper.product.color.view')->delete($id);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-          return $this->redirect($this->generateUrl('admin_product_color_view_list', array('product_color_id' => $entity->getProductColor()->getId())));
+          
+            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $entity->getProduct()->getId())));            
            
         } catch (\Doctrine\DBAL\DBALException $e) {
 

@@ -27,11 +27,16 @@ return true;
 }    
 </script> 
 
-
+<script>
+function cancelAddAction(product_color_id)
+{    
+    document.getElementById('product_color_view_form_'+product_color_id).innerHTML = "";       
+ 
+}
+</script>
 
 
 <div>      
-<b>Add new product view </b><a href="" class="btn">back</a>     
 <div class="clearfix"></div>   
 <form action="{{ path('admin_product_color_view_create',{'product_color_id': product_color_id}) }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
 {{ form_errors(form) }}
@@ -39,8 +44,9 @@ return true;
 <div class="span3">{{ form_widget(form.title) }}{{ form_errors(form.title) }}</div>
 <div class="span3">View image</div>
 <div class="span3">{{ form_widget(form.file) }}{{ form_errors(form.file) }}</div>
-<div class="span3">{{ form_rest(form) }} <input type="submit" value="ADD" class="btn btn-primary"/>                                     
-<a href="" class="btn btn-primary">Cancel    </a>
+<div class="span3">{{ form_rest(form) }} 
+<input type="submit" value="ADD" class="btn"/>                                     
+<a onclick="return cancelAddAction({{product_color_id}})" class="btn">Cancel</a>
 </div>
 </form>    
 </div>  

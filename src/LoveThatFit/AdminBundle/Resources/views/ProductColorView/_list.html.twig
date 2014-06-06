@@ -17,6 +17,7 @@ function getProductColorViewAddForm(product_color_id){
 
 <script>
 function getProductColorViewEditForm(product_color_id,id){
+
  var admin_product_color_view_edit = "../product_color_view/"+id+"/edit";    
   jQuery.ajax({
    type: "GET",
@@ -28,6 +29,14 @@ function getProductColorViewEditForm(product_color_id,id){
  });  
 }
     
+</script>
+
+<script>
+function cancelEditAction(product_color_id)
+{    
+    $('#product_color_view_form_'+product_color_id).hide();   
+ 
+}
 </script>
 <div id="product_color_view_{{product_color_id}}">
     <div id="color_view_list">

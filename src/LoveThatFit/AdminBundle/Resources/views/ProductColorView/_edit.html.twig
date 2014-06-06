@@ -26,6 +26,19 @@ return false;
 return true;
 }    
 </script>    
+<script>
+function cancelEditAction(product_color_id)
+{    
+    document.getElementById('product_color_view_form_'+product_color_id).innerHTML = "";       
+ 
+}
+</script>
+<div class="btn_wrapper">     
+{%if entity.id %}      
+      <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
+      {% endif %}
+      </div>
+      <div class="clearfix"></div>  
 {%if entity.id %}
     <form action="{{ path('admin_product_color_view_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
  {{ form_errors(form) }}
@@ -35,8 +48,21 @@ return true;
     {{ form_widget(form.file) }}
     {{ form_rest(form) }}
            <br/>
-    <input type="submit" value="ADD" />                                     
-    <a href="">Cancel    </a>
+    <input type="submit" value="ADD" class="btn" />                                     
+    <a onclick="return cancelEditAction({{product_color_id}})" class="btn">Cancel</a>
    </form> 
    {% endif %}
-  
+  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Product color view</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Product color view <b>{{entity.title }}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_product_color_view_delete', {'id': entity.id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>   
