@@ -69,7 +69,7 @@ function showFeedBack(feedback,product_id){
                         {%endif%}
                         <div style="font-weight: bold">{{singlePro.name}}</div>
                         <div> {{singlePro.brand}}, 
-                             {{singlePro.description}}, 
+                              {% if(singlePro.description)%}  {{singlePro.description}}, {%endif%} 
                             {{singlePro.clothing_type}}, 
                                 Styling Type:{{singlePro.styling_type}}, 
                                 Length:{{singlePro.hem_length}},
@@ -136,7 +136,7 @@ function showFeedBack(feedback,product_id){
                                 <br>
                                 <div style="border-top: solid #3EA9F5 1px; padding: 20px 0px 20px 0px ; ">
                                     <b>Recommendation: </b>try size 
-                                {{ singlePro.recommendation.description }}
+                            {% if(singlePro.recommendation.description  is defined)%}     {{ singlePro.recommendation.description }} {% endif%}
                                 </div> 
                             {% endif %}
                             </td>
