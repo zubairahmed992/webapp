@@ -1,14 +1,4 @@
-{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
 
-{% block breadcrumb %}
- 
-<li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span><span class="divider">/</span></li>
-<li class="active">Edit</li>
-          
-
-{% block h1 %}Product{% endblock %}
-
-{% block title %}Product{% endblock %}
 <script>
 function validates()
 {
@@ -36,112 +26,39 @@ return false;
 }
 return true;
 }    
-</script> 
-{% endblock %}
-{% block body %}
-
-    
+</script>     
   
-    <div>      
-    <h1 style="float:left;">New Two Piece Item</h1>
-     <div class="btn_wrapper">     
-<a href="{{ path('admin_products') }}" class="btn">back</a>
-             
+    <script>
+function cancelAddEditAction(item_id)
+{    
+    document.getElementById('product_item_view_form_'+item_id).innerHTML = "";       
+ 
+}
+</script>
+   
 {%if piece.id %}
       
-      <a href="#myModal3" role="button" data-toggle="modal" class="btn">Delete</a>
+      <a href="{{path("admin_product_detail_item_two_piece_delete",{"id":entity.id, "item_id":item_id,'piece_id':piece.id})}}" class="btn">Delete</a>
       {% endif %}
-      </div>
-      <div class="clearfix"></div>   
       {%if entity.id %}
     <form action="{{ path('admin_product_detail_item_two_piece_update', {'id':entity.id, 'item_id': item_id,'piece_id':piece_id }) }}" method="post" enctype="multipart/form-data" onsubmit="return validates();">
- {{ form_errors(form) }}
-
-            <div id="detail_wrapper">      
-                <div id="p_hd">Prodcut Item Piece</div>
-                
-                 <div class="clearfix"></div>
-                <div style="width: 400px; margin:10px auto auto auto; background: #f6f4f4;  box-shadow: 0px 0px 2px 2px #999;">
-                <div style="width:290px; margin: auto auto auto 90px;">                  
-                    
-                    <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
-                    <div class="span3">
-                        <strong><br/>  Upload piece Image</strong>
-                    </div> 
-                     <div class="clearfix"></div>
-                    <div><img src="{{ asset(piece.WebPath) }}" />
-                    </div><!--/.well -->
-
-                    <div class="clearfix"></div>
-                    <div style="margin-top:20px; margin-left:5px;">
+    {{ form_errors(form) }}
+    <img src="{{ asset(piece.WebPath) }}" />
+    <br/>
     {{ form_errors(form.file) }}
     {{ form_widget(form.file) }}
-                        </div> 
-                    
-                    
-                    
-                    <div id="product_content">
-                        <div id="pro_detail">
-                            <div class="edt_container edt_new">         
-                                <div style="width:220px; overflow: hidden;">
-                                    <div>Piece Type</div>
-                                    <div class="span3">{{ form_widget(form.piece_type) }}{{ form_errors(form.piece_type) }}</div>
-                                   
-                               
-                                
-                                <div>
-                                   
-                                    <div class="span3">&nbsp;</div>
-                                          {{ form_rest(form) }}
-                                    <div style="margin:10px auto auto auto; width:97px;">
-				
-                                            <div style="margin:0 auto; width: 97px;"> <input type="submit" value="SAVE" class="btn btn-primary"/>                                     
-                           
-                                            </div>                                    
-                                    </div>
-                                </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                </div> 
-                                    
-                                
-                                </div>                                    
-
-
-                                </div>      
-                            </div><!-- End pro_detail --> 
-                    
-                     </div>     
-                 </div>
-
-                 
-                        </div><!-- End product_content --> 
-                    </div> <!-- End detail_wrapper -->
-                </form> 
-      
-          {% endif %}
-            </div> 
+    <br/>
+    Views:
+{{ form_errors(form.product_color_view) }}
+{{ form_widget(form.product_color_view) }}       
+<br>
+    Piece Type:
+   {{ form_widget(form.piece_type) }}{{ form_errors(form.piece_type) }}
+   {{ form_rest(form) }}
+    <input type="submit" value="SAVE"/>  
+<a onclick="return cancelAddEditAction({{item_id}})" class="btn">Cancel</a>
+   </form> 
+   {% endif %}
+        
     
     
-<!-- Modal -->
-<div id="myModal3" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete Product Item Piece</h3>
-    </div>
-    <div class="modal-body">
-        <p>Are you sure you want to Delete this View  {{piece.pieceType}} Piece</b>?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <a href="{{path("admin_product_detail_item_two_piece_delete",{"id":entity.id, "item_id":item_id,'piece_id':piece.id})}}"  class="btn btn-primary">Delete</a>
-
-    </div>
-</div>
-
-{% endblock %}
-

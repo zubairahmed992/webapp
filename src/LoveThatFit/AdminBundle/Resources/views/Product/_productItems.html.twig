@@ -65,6 +65,21 @@ function addPieceView(id,item_id){
 }
     
  </script>
+ 
+ <script>
+function editPieceView(product_id,item_id,id){
+  var admin_product_item_piece_edit = "../productdetail/"+product_id+"/item/"+item_id+"/piece/"+id+"/edit";    
+  jQuery.ajax({
+   type: "GET",
+   url: admin_product_item_piece_edit, 
+   //data : str, // our data object
+   success: function(response){
+        $('#product_item_view_form_'+item_id).html(response);           
+   }
+ });  
+}
+    
+</script>
 <style>
         #detail_wrapper .row-fluid .span2:not(.hds) {
     width: 15%;
@@ -168,7 +183,7 @@ function addPieceView(id,item_id){
                   <div class="span2">
                    {%for pp in pi.productitempiece%}
                     <span>
-                            <a href='{{path("admin_product_detail_item_two_piece_edit",{"id":product.id, "item_id":pi.id,'piece_id':pp.id})}}'>{{pp.pieceType}}</a>
+                            <a  onclick="return editPieceView({{product.id}},{{pi.id}},{{pp.id}});">{{pp.pieceType}}</a>
                             
                     </span>
                           

@@ -547,8 +547,9 @@ class ProductController extends Controller {
     
     public function productDetailItemPieceEditAction($id,$item_id,$piece_id)
     {
+        $item=$this->getProductItem($item_id);
         $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
-        $form = $this->createForm(new ProductItemPieceType('edit'), $entity);
+        $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()), $entity);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_edit.html.twig', array(
                     'form' => $form->createView(),
                     'item_id' => $item_id,     
@@ -562,7 +563,7 @@ class ProductController extends Controller {
     {
          $item=$this->getProductItem($item_id);
          $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
-         $form = $this->createForm(new ProductItemPieceType('edit'), $entity);
+         $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()), $entity);
          $form->bind($request);
          $em = $this->getDoctrine()->getManager();
             $entity->setProductitem($item);
