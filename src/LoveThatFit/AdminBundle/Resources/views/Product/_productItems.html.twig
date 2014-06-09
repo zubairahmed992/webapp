@@ -152,32 +152,17 @@ return true;
                   <div class="span2">
                    {%for pp in pi.productitempiece%}
                     <span>
-                      {{pp.pieceType}}
-                            <a href='{{path("admin_product_detail_item_two_piece_edit",{"id":product.id, "item_id":pi.id,'piece_id':pp.id})}}'><i class="icon-edit"></i></a>
-                            <a href="#myModal3{{pp.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                            <a href='{{path("admin_product_detail_item_two_piece_edit",{"id":product.id, "item_id":pi.id,'piece_id':pp.id})}}'>{{pp.pieceType}}</a>
+                            
                     </span>
                           
-                          <div id="myModal3{{pp.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete Product Item Piece</h3>
-    </div>
-    <div class="modal-body">
-        <p>Are you sure you want to Delete this Product <b>{{product.name }} - Size {{pi.productSize.title}} Item  {{pp.pieceType}} Piece</b>?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <a href="{{path("admin_product_detail_item_two_piece_delete",{"id":product.id, "item_id":pi.id,'piece_id':pp.id})}}"  class="btn btn-primary">Delete</a>
-
-    </div>
-</div>
-                    {%endfor%}                  
+                                     {%endfor%}                  
                   </div>
                     <div class="span2">
 
                        <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' name="item"><i class="icon-edit"></i></a>
                        <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-                       <a href="{{path("admin_product_detail_item_two_piece_new",{"id":product.id,"item_id":pi.id})}}">views</a>
+                       <a href="{{path("admin_product_detail_item_two_piece_new",{"id":product.id,"item_id":pi.id})}}">add views</a>
                        {%if(pi.rawImage )%}
                        <a href="{{path("admin_product_detail_item_raw_image_download",{"id":product.id, "item_id":pi.id})}}" role="button" data-toggle="modal" class="icon-download-alt"></i></a>
                        {%endif%}                        
