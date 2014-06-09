@@ -33,8 +33,13 @@ return true;
 
 <form action="{{ path('admin_product_detail_item_two_piece_create', {'id':entity.id, 'item_id': item_id }) }}" method="post" enctype="multipart/form-data" onsubmit="return validates();" >
 {{ form_errors(form) }}
+        
 {{ form_errors(form.file) }}
-{{ form_widget(form.file) }}
+{{ form_widget(form.file) }}       
+        <br>       
+Views:
+{{ form_errors(form.product_color_view) }}
+{{ form_widget(form.product_color_view) }}       
 <br>
 Piece Type:
 {{ form_widget(form.piece_type) }}

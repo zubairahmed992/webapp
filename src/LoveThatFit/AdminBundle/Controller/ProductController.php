@@ -502,28 +502,32 @@ class ProductController extends Controller {
 //-----------------------------Product Item two piece add new-----------------------------
     public function productDetailItemPieceAddNewAction($id,$item_id)
     {
-        $twopiece=new ProductItemPiece();
-        $pieceitemform = $this->createForm(new ProductItemPieceType(),$twopiece);
-        return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_new.html.twig', array(
+       $item=$this->getProductItem($item_id);
+       $piece=new ProductItemPiece();          
+       $piece->setProductItem($item);
+       $pieceitemform = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()),$piece);
+       return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_new.html.twig', array(
                     'form' => $pieceitemform->createView(),
                     'item_id' => $item_id,     
                     'entity'=>$this->getProduct($id),
+                     'product_item_piece'=>$piece,
                 ));
+       
     }
     
     public function productDetailItemPieceCreateAction(Request $request,$id,$item_id)
     {
-        $item=$this->getProductItem($item_id);
-        $piece=new ProductItemPiece();
-        $form = $this->createForm(new ProductItemPieceType(),$piece);         
-        $form->bind($request);      
-            $em = $this->getDoctrine()->getManager();            
-            $piece->setProductitem($item);
-            $piece->upload();
-            $em->persist($piece);
-            $em->flush();
-            $this->get('session')->setFlash('success', 'Product Detail size has been update.');           
-            return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));         
+       $item=$this->getProductItem($item_id);
+       $piece=new ProductItemPiece();
+       $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()),$piece);         
+       $form->bind($request);
+       $em = $this->getDoctrine()->getManager();            
+       $piece->setProductitem($item);
+       $piece->upload();
+       $em->persist($piece);
+       $em->flush();
+       $this->get('session')->setFlash('success', 'Product Detail size has been update.');           
+       return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));         
     }
     
     public function productDetailItemPieceDeleteAction($id,$piece_id)
