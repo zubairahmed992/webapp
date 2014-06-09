@@ -25,18 +25,20 @@ return false;
 }
 return true;
 }    
-</script> 
-
-
+</script>
+<script>
+function cancelAddViewAction(item_id)
+{    
+    document.getElementById('product_item_view_form_'+item_id).innerHTML = "";       
+ 
+}
+</script>
 <b>Additional Views & Pieces</b>
-
-
 <form action="{{ path('admin_product_detail_item_two_piece_create', {'id':entity.id, 'item_id': item_id }) }}" method="post" enctype="multipart/form-data" onsubmit="return validates();" >
-{{ form_errors(form) }}
-        
+{{ form_errors(form) }}        
 {{ form_errors(form.file) }}
 {{ form_widget(form.file) }}       
-        <br>       
+<br>       
 Views:
 {{ form_errors(form.product_color_view) }}
 {{ form_widget(form.product_color_view) }}       
@@ -46,7 +48,8 @@ Piece Type:
 {{ form_errors(form.piece_type) }}
 <br>
 {{ form_rest(form) }}
-<input type="submit" value="SAVE" class="btn btn-large btn-primary"/>                                     
+<input type="submit" value="SAVE"/>  
+<a onclick="return cancelAddViewAction({{item_id}})" class="btn">Cancel</a>
 </form>    
 
 
