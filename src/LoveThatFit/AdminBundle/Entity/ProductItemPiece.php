@@ -22,7 +22,13 @@ class ProductItemPiece
       */
     protected $productitem;      
    
-    
+    /**     
+     * Bidirectional (OWNING SIDE - FK)
+     *  
+     * @ORM\ManyToOne(targetEntity="ProductColorView", inversedBy="product_item_piece")    
+     * @ORM\JoinColumn(name="product_color_view_id", referencedColumnName="id", onDelete="CASCADE")
+      */
+    protected $product_color_view;   
     
     /**
      * @ORM\Id
@@ -37,11 +43,7 @@ class ProductItemPiece
      */
     protected $piece_type;
 
-    /**
-     * @var string  $view_title;  
-     * @ORM\Column(name="view_title", type="string", length=255)
-     */
-    protected $view_title;
+    
     
     /**
      * @var string $image 
@@ -194,26 +196,27 @@ public function deleteImages()
   }
 }
 
+    
     /**
-     * Set view_title
+     * Set product_color_view
      *
-     * @param string $viewTitle
+     * @param \LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView
      * @return ProductItemPiece
      */
-    public function setViewTitle($viewTitle)
+    public function setProductColorView(\LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView = null)
     {
-        $this->view_title = $viewTitle;
+        $this->product_color_view = $productColorView;
     
         return $this;
     }
 
     /**
-     * Get view_title
+     * Get product_color_view
      *
-     * @return string 
+     * @return \LoveThatFit\AdminBundle\Entity\ProductColorView 
      */
-    public function getViewTitle()
+    public function getProductColorView()
     {
-        return $this->view_title;
+        return $this->product_color_view;
     }
 }

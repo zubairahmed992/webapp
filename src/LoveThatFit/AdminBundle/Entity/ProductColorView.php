@@ -31,6 +31,14 @@ class ProductColorView {
      */    
     protected $product_color; 
     
+    /**
+     * Bidirectional (INVERSE SIDE)
+     * 
+     * @ORM\OneToMany(targetEntity="ProductItemPiece", mappedBy="product_color_view")
+     * */
+    private $product_item_piece;
+    
+    
     
     
     
@@ -204,5 +212,38 @@ class ProductColorView {
         
        $ih=new ImageHelper('product', $this);
         $ih->upload();
+    }
+
+    /**
+     * Add product_item_piece
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $productItemPiece
+     * @return ProductColorView
+     */
+    public function addProductItemPiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productItemPiece)
+    {
+        $this->product_item_piece[] = $productItemPiece;
+    
+        return $this;
+    }
+
+    /**
+     * Remove product_item_piece
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $productItemPiece
+     */
+    public function removeProductItemPiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productItemPiece)
+    {
+        $this->product_item_piece->removeElement($productItemPiece);
+    }
+
+    /**
+     * Get product_item_piece
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductItemPiece()
+    {
+        return $this->product_item_piece;
     }
 }
