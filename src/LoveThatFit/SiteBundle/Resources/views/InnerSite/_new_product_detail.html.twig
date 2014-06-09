@@ -136,8 +136,8 @@ function chk_dress_applied_loaded(prod_type_applied){
 <div class="but_remove_prod" onclick="remove_prod_details(this)"><img onclick="" src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
                       <div class="lft_col">
                           <div class="prod_price">
-          <a  onclick="get_compare_list()" href="javascript:void(0)" id="comapre_product">Compare</a>
-          <span id="comapre_url" style="display: none;">{{path('compare_product_add',{'item_id':productItem.id})}}</span> 
+          <a  onclick="get_compare_list('{{productItem.id}}')" href="javascript:void(0)" id="comapre_product">Compare</a>
+          <span id="comapre_url{{productItem.id}}" style="display:none; ">{{path('compare_product_add',{'item_id':productItem.id})}}</span> 
                           </div>
                                     <div class="prod_share"><img class="share_but_new" onclick="" src="{{ asset('bundles/lovethatfit/site/images/share_icon.png') }}">
                                         <div class="share_inner">

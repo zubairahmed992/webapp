@@ -4768,6 +4768,33 @@ margin-left: 4px;
 }
 
 
+#compare_list{   
+    position: absolute;
+    width: 200px;   
+}
+
+
+#patchh{  
+    
+   display: inline-block;
+    height: 109px;
+    left: 158px;
+    overflow: auto;
+    position: absolute;
+    width: 43px;
+    z-index: 954; 
+  
+   background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1)));
+background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
+}
+
+
+
 
 #compare_list ul li{    
     list-style: none; 
@@ -4804,6 +4831,7 @@ margin-left: 4px;
 #compare_ico{
     position: relative;
     float: right;
+    z-index: 1000;
 }
 
 #ralling{
@@ -4880,22 +4908,72 @@ margin-left: 4px;
 						transition: all .4s ease-in-out;
 	}
 
-	.panel.flip .back {
-		z-index: 1000;
-		
-
-		-webkit-transform: rotateX(0deg) rotateY(0deg);
-			 -moz-transform: rotateX(0deg) rotateY(0deg);
-						transform: rotateX(0deg) rotateY(0deg);
-
-		
+.panel.flip .back {
+z-index: 1000;
+-webkit-transform: rotateX(0deg) rotateY(0deg);
+-moz-transform: rotateX(0deg) rotateY(0deg);
+transform: rotateX(0deg) rotateY(0deg);	
 	}
-
-
-
-
 
 .panel .pad {
     padding: 0 15px;
 }
+
+.compare_bx{
+    width:230px;
+    float:left;
+    font-size: 0.9em;
+    margin-right:20px;     
+}
+
+.com_label{
+    font-weight: bold;
+    margin-top: 15px;    
+}
+
+.patter_box{
+    max-width:20px;
+    height: 20px;
+    display: inline-block;
+    min-width: 20px;   
+    text-align: center;
+}
+
+.comp_pro{    
+    min-width: 190px;
+    text-align: center;
+    display: inline-block;
+    min-height: 110px;    
+}
+
+.com_container{
+    border-top: solid #ccc 1px; 
+    padding: 10px 0px 10px 0px;
+}
+
+#compare_wrapper{
+        padding-top: 35px; 
+        padding-left:30px;
+        overflow: hidden;
+}
+
+.com_container ul li{
+    list-style: none;
+    font-size: 0.9em;
+}
+
+.com_container ul li b{
+    max-width: 100px; 
+    min-width: 100px; 
+    font-size: 12px;
+    display: inline-block;
+}
+
+.com_container:nth-child(4n){
+   padding: 0px;     
+}
+
+
+
+
 

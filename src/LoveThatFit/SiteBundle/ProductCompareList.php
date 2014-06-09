@@ -25,7 +25,8 @@ class ProductCompareList {
         
         foreach($this->list as $key=>$value){
               $item = $productItem->getProductItemById($value['item_id']);
-              $product=$item->getProduct();
+             
+             $product=$item->getProduct();
               $fe = new AvgAlgorithm($user,$product);
               $feed_back[$key]=$product->getDetailArray()+$fe->getFeedBack();
               $feed_back[$key]['current_item']=$value['item_id'];
@@ -42,7 +43,7 @@ class ProductCompareList {
     
 //---------------------------------------------------------------------
     function addItemToList($item) {
-        $product=$item->getProduct();
+      $product= $item->getProduct();
         if ($this->productDoseNotExist($product->getId(), $item->getId())){            
             $this->list[$product->getId()]['id']=$product->getId();
             $this->list[$product->getId()]['item_id']=$item->getId();

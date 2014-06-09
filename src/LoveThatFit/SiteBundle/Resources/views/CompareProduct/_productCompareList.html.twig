@@ -43,10 +43,11 @@
      
         
 </div>
+<span id="patchh"></span>
 <span id="ralling">
 <img src="{{ asset('bundles/lovethatfit/site/images/compare_ralling.png') }}" />
 </span>
-<a href="" id="compare_ico">
+<a href="{{path('compare_product_index')}}" id="compare_ico">
 <span id="compare_prod_no">
 {{app.session.get('product_compare_list')|length}}
 </span>
@@ -98,7 +99,7 @@ $('#compare_ico img').click(function(){
 			$(this).removeClass('flip');
 		});
   
-    return false;
+   
   
 
 });

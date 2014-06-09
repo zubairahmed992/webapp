@@ -1,3 +1,16 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% block left_navigation %}
+
+{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+{% block product_slider %}
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script>
@@ -53,39 +66,34 @@ function showFeedBack(feedback,product_id){
 }
 
 </script>
-<div id="boxes_wrapper">
-    <div class="home_box" id="comapre_1">
+<div id="compare_wrapper">
+    <div id="comapre_1">
 
 
-        <table>
-            <tr>
+        <div>
+            
 
                     {% for singlePro in product %}
 
-                <td>
+            <div class="compare_bx">
                         
                         {% if(singlePro.display_image is defined )%}
-                    <img src="{{asset(singlePro.display_image) }}" id="display_image{{singlePro.id}}">
+                <span class="comp_pro">
+                    <img src="{{asset(singlePro.display_image) }}" id="display_image{{singlePro.id}}"></span>
                         {%endif%}
-                        <div style="font-weight: bold">{{singlePro.name}}</div>
-                        <div> {{singlePro.brand}}, 
+                    <div class="com_label">Product Name</div>
+                        <div >{{singlePro.name}}</div>
+                        
+                         <div class="com_label">Brand</div>
+                        <div> {{singlePro.brand}} 
                               {% if(singlePro.description)%}  {{singlePro.description}}, {%endif%} 
-                            {{singlePro.clothing_type}}, 
-                                Styling Type:{{singlePro.styling_type}}, 
-                                Length:{{singlePro.hem_length}},
-                                Neckline:{{singlePro.neckline}},
-                                Sleeve:{{singlePro.sleeve_styling}},
-                                Rise:{{singlePro.rise}}
-                                Stretch Type:{{singlePro.stretch_type}}, 
-                                Fabric Weight:{{singlePro.fabric_weight}}, 
-                                Layering:{{singlePro.layering}}, 
-                                Structural Detail:{{singlePro.structural_detail}}, 
-                                Fit Type:{{singlePro.fit_type}}</div>
-                            <br>
+                           
+                                </div>
+                            
 
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ SIZE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}
-                            <div style="border-top: solid #3EA9F5 1px; padding: 20px; ">
-                                Sizes
+                            <div>
+                                <div class="com_label">Sizes</div>
                                 <select id="size_title{{singlePro.id}}" onchange="change_product_details('{{singlePro.id}}')">
                                     <option value="">Sizes</option>
                                 {% for sizes,values in singlePro.sizes%}
@@ -96,9 +104,9 @@ function showFeedBack(feedback,product_id){
                             </div>
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                            
                             <div>
-                                Colors:
+                                 <div class="com_label">Colors</div>
                         {% for color in singlePro.colors%}
-                                <img src="{{asset(color.pattern) }}" onclick="change_product_image({{singlePro.id}},{{color.id}})">
+                                 <span class="patter_box">  <img src="{{asset(color.pattern) }}" onclick="change_product_image({{singlePro.id}},{{color.id}})"></span>
                           {%endfor%}
                             </div> 
 
@@ -110,19 +118,43 @@ function showFeedBack(feedback,product_id){
 
                                             {%if (feedback_item.id == singlePro['items'][singlePro.current_item]['size_id'])%}
                             <br>
-                            <div style="border-top: solid #3EA9F5 1px; padding: 20px 0px 20px 0px ; ">
-                                <span id="feedback_msg{{singlePro.id}}"><b>Feedback: </b> {{feedback_item.message}}</span>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <div class="com_container">
+             
+                                <span id="feedback_msg{{singlePro.id}}"><b>Feedback: </b><br>
+                                     {% if(feedback_item.message is defined )%}
+ {{feedback_item.message}}
+                                        {%endif%}
+                                    
+                                    </span>
+                                
+                                
+                            </div>
+                            <div class="com_container">
 
                                 <ul id="fit_point{{singlePro.id}}">
+                                      {% if(feedback_item.fit_points is defined )%}
                                 {% for fp,fp_specs in feedback_item.fit_points%}
+                                       
                                         <li>
                                             <b>{{fp}} : </b>{{fp_specs.message}}
                                         </li>
-                                                           {%endfor%}
+                                        
+                                         {%endfor%}
                                         <li>
                                             <b>fit index : </b>{{feedback_item.fit_index}}
                                         </li>
                                     </ul>
+                                {%endif%}
                                 </div> 
                                                       {% endif %}
 
@@ -134,18 +166,18 @@ function showFeedBack(feedback,product_id){
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ Recommendations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                                                        
                             {%if (singlePro.recommendation is defined)%}
                                 <br>
-                                <div style="border-top: solid #3EA9F5 1px; padding: 20px 0px 20px 0px ; ">
-                                    <b>Recommendation: </b>try size 
+                                <div class="com_container">
+                                    <div class="com_label">Recommendation</div>try size 
                             {% if(singlePro.recommendation.description  is defined)%}     {{ singlePro.recommendation.description }} {% endif%}
                                 </div> 
                             {% endif %}
-                            </td>
+                            </div>
 
                     {% endfor %}
 
 
-                        </tr>
-                    </table>
+                        
+                    </div>
 
                 </div>
             </div>
@@ -226,3 +258,5 @@ function get_product_array(){
  }
  
  </script>
+ 
+ {% endblock %}

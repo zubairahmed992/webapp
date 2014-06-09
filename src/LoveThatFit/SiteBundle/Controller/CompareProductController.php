@@ -16,8 +16,9 @@ class CompareProductController extends Controller {
       $compare_list = $this->getCompareList();
       $user = $this->get('security.context')->getToken()->getUser();
       $productItem = $this->get('admin.helper.productitem');
+      
       $pl=$compare_list->getCompareableList($user,$productItem);
-      #return new Response(json_encode($compare_list->getCompareableList($user,$productItem)));
+     // return new Response(json_encode($compare_list->getCompareableList($user,$productItem)));
        return $this->render('LoveThatFitSiteBundle:InnerSite:compareProduct.html.twig',
         array('product' => $pl,
             'product_json' => json_encode($pl)
@@ -32,11 +33,13 @@ class CompareProductController extends Controller {
         if ($session->has('product_compare_list')) {
             $list = $session->get('product_compare_list');            
         } 
-       /* if ($list==null || (is_array($list) && count($list)==0)){
-            $list=array(
-                20=>array('id'=>20,'item_id'=>95, 'product_name'=>'OldSchoolShirtdress', 'image'=>'uploads/ltf/products/display/web/5384769876d8b.png'),
-                3=>array('id'=>3,'item_id'=>8, 'product_name'=>'Floral Dress', 'image'=>'uploads/ltf/products/display/web/531706356d344.png'),
-                7=>array('id'=>7,'item_id'=>36, 'product_name'=>'RedStripedDress', 'image'=>'uploads/ltf/products/display/web/531708bf34a6d.png'),             
+       
+      /* if ($list==null || (is_array($list) && count($list)==0)){
+            /*$list=array(
+                29=>array('id'=>29,'item_id'=>181, 'product_name'=>'OldSchoolShirtdress', 'image'=>'uploads/ltf/products/display/web/5384769876d8b.png'),
+                 30=>array('id'=>30,'item_id'=>230, 'product_name'=>'OldSchoolShirtdress', 'image'=>'uploads/ltf/products/display/web/5384769876d8b.png'),
+                 31=>array('id'=>31,'item_id'=>236, 'product_name'=>'OldSchoolShirtdress', 'image'=>'uploads/ltf/products/display/web/5384769876d8b.png'),
+              
             );
         }*/
         
