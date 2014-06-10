@@ -47,25 +47,25 @@
 <span id="ralling">
 <img src="{{ asset('bundles/lovethatfit/site/images/compare_ralling.png') }}" />
 </span>
-<a href="{{path('compare_product_index')}}" id="compare_ico">
-<span id="compare_prod_no">
+<div id="compare_ico">
+
+    
+   
+    
+    
+    
+    
+    <span id="compare_prod_no">
 {{app.session.get('product_compare_list')|length}}
 </span>
+    
+    <span style="position: absolute; top:60px; right:0px; font-size: 0.70em; text-align: center;">
+       <a href="{{path('compare_product_index')}}">Compare<br>Now</a>
+    </span>
 <img src="{{ asset('bundles/lovethatfit/site/images/compare_icon.png') }}" />
 
-</a>
+</div>
 {# dump(app.session.get('product_compare_list')) #}
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>
@@ -74,35 +74,23 @@ $(document).ready(function(){
 
 $('#compare_list').hide();
 $('#ralling').hide();
+$('#go_link').hide();
 }); 
 
-$('#compare_ico img').click(function(){
+$('#compare_ico').click(function(){
   
   
   $('#ralling').toggle('slide', {
             direction: 'right'
-        }, 1000);
-        
-        
+        }, 1000)        
+        ;
+               
         $('#compare_list').toggle('slide', {
-            direction: 'left'
-        }, 1000);
-  
-
-  
-  
-  
- 
-		$('.hover').hover(function(){
-			$(this).addClass('flip');
-		},function(){
-			$(this).removeClass('flip');
-		});
-  
-   
-  
+            direction: 'right'
+        }, 1000);        
 
 });
+
     </script>
     
     

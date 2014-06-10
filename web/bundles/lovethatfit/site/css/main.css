@@ -4832,6 +4832,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
     position: relative;
     float: right;
     z-index: 1000;
+    text-decoration: none;
 }
 
 #ralling{
@@ -4971,6 +4972,27 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .com_container:nth-child(4n){
    padding: 0px;     
+}
+
+.com_container:nth-child(6n){
+   padding: 0px;     
+}
+
+#go_link a{
+    border-radius: 25px; 
+    background:#406DB5; 
+    font-size: 9.5px; 
+    color:#fff!important; 
+    left: 27px; 
+    position: relative; 
+    top:-37px; 
+    padding: 4px;
+    
+    
+}
+
+#go_link a{    
+    text-decoration: none;
 }
 
 

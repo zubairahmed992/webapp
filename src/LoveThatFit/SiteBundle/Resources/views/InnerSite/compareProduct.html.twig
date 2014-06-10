@@ -76,7 +76,10 @@ function showFeedBack(feedback,product_id){
                     {% for singlePro in product %}
 
             <div class="compare_bx">
-                        
+                
+                <div style="min-height: 330px; max-height: 330px;">
+                
+                
                         {% if(singlePro.display_image is defined )%}
                 <span class="comp_pro">
                     <img src="{{asset(singlePro.display_image) }}" id="display_image{{singlePro.id}}"></span>
@@ -109,6 +112,8 @@ function showFeedBack(feedback,product_id){
                                  <span class="patter_box">  <img src="{{asset(color.pattern) }}" onclick="change_product_image({{singlePro.id}},{{color.id}})"></span>
                           {%endfor%}
                             </div> 
+                         
+                         </div>
 
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ FEED BACK ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                            
                             {%if (singlePro.feedback is defined)%}
@@ -133,14 +138,11 @@ function showFeedBack(feedback,product_id){
                                 <span id="feedback_msg{{singlePro.id}}"><b>Feedback: </b><br>
                                      {% if(feedback_item.message is defined )%}
  {{feedback_item.message}}
-                                        {%endif%}
-                                    
-                                    </span>
-                                
+                                        {%endif%}                                    
+                                    </span>                                
                                 
                             </div>
                             <div class="com_container">
-
                                 <ul id="fit_point{{singlePro.id}}">
                                       {% if(feedback_item.fit_points is defined )%}
                                 {% for fp,fp_specs in feedback_item.fit_points%}
