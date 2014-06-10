@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new LoveThatFit\UserBundle\LoveThatFitUserBundle(),
             new LoveThatFit\WebServiceBundle\LoveThatFitWebServiceBundle(),
             new LoveThatFit\RetailerAdminBundle\LoveThatFitRetailerAdminBundle(),
+            new LoveThatFit\ShopifyBundle\LoveThatFitShopifyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

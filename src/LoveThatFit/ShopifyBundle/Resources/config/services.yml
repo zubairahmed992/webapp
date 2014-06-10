@@ -1,0 +1,7 @@
+parameters:
+#    love_that_fit_shopify.example.class: LoveThatFit\ShopifyBundle\Example
+
+services:
+#    love_that_fit_shopify.example:
+#        class: %love_that_fit_shopify.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
