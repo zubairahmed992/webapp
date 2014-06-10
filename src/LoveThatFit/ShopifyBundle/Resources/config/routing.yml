@@ -1,3 +1,3 @@
-love_that_fit_shopify_homepage:
-    pattern:  /hello/{name}
+shopify_index:
+    pattern:  /shopify/index
     defaults: { _controller: LoveThatFitShopifyBundle:Default:index }
