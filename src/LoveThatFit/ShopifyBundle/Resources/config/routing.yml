@@ -1,3 +1,7 @@
 shopify_index:
     pattern:  /shopify/index
     defaults: { _controller: LoveThatFitShopifyBundle:Default:index }
+
+shopify_granted:
+    pattern:  /shopify/granted
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:granted }
