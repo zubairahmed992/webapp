@@ -16,6 +16,7 @@
 <script>
 
 function sizeTitle(product_id){
+   
 var size_id = $('#size_title'+product_id).val();
 var size_title = $('#size_title'+product_id+' option:selected').text();
 var feedback=getFeedback(product_id,size_title);
@@ -137,14 +138,15 @@ function showFeedBack(feedback,product_id){
              
                                 <span id="feedback_msg{{singlePro.id}}"><b>Feedback: </b><br>
                                      {% if(feedback_item.message is defined )%}
- {{feedback_item.message}}
+                                         {{feedback_item.message}}
                                         {%endif%}                                    
                                     </span>                                
                                 
                             </div>
                             <div class="com_container">
+                                {% if(feedback_item.fit_points is defined )%}
                                 <ul id="fit_point{{singlePro.id}}">
-                                      {% if(feedback_item.fit_points is defined )%}
+                                      
                                 {% for fp,fp_specs in feedback_item.fit_points%}
                                        
                                         <li>
@@ -169,8 +171,10 @@ function showFeedBack(feedback,product_id){
                             {%if (singlePro.recommendation is defined)%}
                                 <br>
                                 <div class="com_container">
-                                    <div class="com_label">Recommendation</div>try size 
+                                    <div class="com_label">Recommendation</div>
+                                    <span id="recmon{{singlePro.id}}">try size 
                             {% if(singlePro.recommendation.description  is defined)%}     {{ singlePro.recommendation.description }} {% endif%}
+                                        </span>      
                                 </div> 
                             {% endif %}
                             </div>
@@ -219,21 +223,37 @@ function change_product_image(product_id,color_id){
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~> 
  function change_product_details(product_id){
+    
      
      
     var size_id = $('#size_title'+product_id).val();
     var size_title = $('#size_title'+product_id+' option:selected').text();
     product= get_product_array();
-   
+  
     fb = get_feedback_by_size(product, product_id, size_title);
+    
+   
+    if(fb){
     fi = product[product_id]['feedback'][size_title]['fit_index']; 
     fb_message = product[product_id]['feedback'][size_title]['message']; 
-    rc=product[product_id]['recommendation']['description']; 
-    str= fb_message + ' \n \n ' + fb + '\n recomendation: Try size ' + rc + '\n \n Fit Index:' + fi;
-    $('#feedback_msg'+product_id).html('');
-    $('#feedback_msg'+product_id).html("<b>FeedBack</b>:"+fb_message);
+    
+      
+     
+    //str= fb_message + ' \n \n ' + fb + '\n recomendation: Try size ' + rc + '\n \n Fit Index:' + fi;
+     if(product[product_id]['feedback'][size_title]['message']){
+        $('#feedback_msg'+product_id).html('');
+        $('#feedback_msg'+product_id).html("<b>FeedBack</b><br>"+fb_message);
+     }
+    
     $('#fit_point'+product_id).html('');
-    $('#fit_point'+product_id).html(str);
+    $('#fit_point'+product_id).html(fb+'<li> <b>Fit index</b>'+fi+'<li>');
+    if(product[product_id]['recommendation']){
+    $('#recmon'+product_id).html();
+    $('#recmon'+product_id).html(product[product_id]['recommendation']);
+    }
+    
+   
+   }
     
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~>set main array
@@ -242,12 +262,16 @@ function get_product_array(){
  }
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~>feedback by size
  function get_feedback_by_size(product, product_id, size_title){    
+     if(product[product_id]['feedback']){
     fb = product[product_id]['feedback'][size_title]['fit_points'];
     str='';
     for (var key in fb) {
-        str +=key + ': ' + fb[key].message + ', \n';
+        str+='<li>'+'<b>'+key+'</b>'+ ': ' + fb[key].message + '</li>';
     }
-    return str;
+    return str;}
+  else{
+  return null;
+  }
  }
  
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~>recommendation by size
