@@ -4971,7 +4971,7 @@ transform: rotateX(0deg) rotateY(0deg);
 }
 
 .com_container:nth-child(4n){
-   padding: 0px;     
+   min-height: 85px;
 }
 
 .com_container:nth-child(6n){

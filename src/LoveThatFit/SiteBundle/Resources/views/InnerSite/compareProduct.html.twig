@@ -169,9 +169,9 @@ function showFeedBack(feedback,product_id){
 
 {#~~~~~~~~~~~~~~~~~~~~~~~~~~ Recommendations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#}                                                        
                             {%if (singlePro.recommendation is defined)%}
-                                <br>
+                                
                                 <div class="com_container">
-                                    <div class="com_label">Recommendation</div>
+                                    <b>Recommendation</b>
                                     <span id="recmon{{singlePro.id}}">try size 
                             {% if(singlePro.recommendation.description  is defined)%}     {{ singlePro.recommendation.description }} {% endif%}
                                         </span>      
