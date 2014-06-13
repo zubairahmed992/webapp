@@ -52,8 +52,7 @@ function cancelAddEditAction(item_id)
 {{ form_errors(form.product_color_view) }}
 {{ form_widget(form.product_color_view) }}       
 <br>
-    Piece Type:
-   {{ form_widget(form.piece_type) }}{{ form_errors(form.piece_type) }}
+    
    {{ form_rest(form) }}
     <input type="submit" value="SAVE"/>  
 <a onclick="return cancelAddEditAction({{item_id}})" class="btn">Cancel</a>

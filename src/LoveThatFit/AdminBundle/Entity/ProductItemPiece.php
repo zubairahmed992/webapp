@@ -39,7 +39,7 @@ class ProductItemPiece
 
     /**
      * @var string  $piece_type  
-     * @ORM\Column(name="piece_type", type="string", length=255)
+     * @ORM\Column(name="piece_type", type="string", length=255,nullable=true)
      */
     protected $piece_type;
 

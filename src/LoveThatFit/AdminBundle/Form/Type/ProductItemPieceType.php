@@ -30,11 +30,7 @@ class ProductItemPieceType extends AbstractType {
               ));       
        
         
-        $builder->add('piece_type', 'choice', array('choices'=> array('suit'=>'Suit','pant'=>'Pant','coat'=>'Coat')
-                    ,'expanded' => false,
-                     'multiple' => false,'required'  => true,
-                      'empty_value' => 'Select Piece Type'
-              ));        
+        
             $builder->add('file');   
     }
 
