@@ -38,16 +38,16 @@ function cancelEditAction(product_color_id)
  
 }
 </script>
-<div id="product_color_view_{{product_color_id}}">
+<div id="product_color_view_{{product_color_id}}" class="veiw_lst">
     <div id="color_view_list">
-        <b>Additional views</b> 
+      
         <ul>
             {%for color in color_view%}
                 <i><a onclick="return getProductColorViewEditForm({{product_color_id}},{{color.id}});"><img width="50px" height="50px" src="{{ asset(color.WebPath) }}"/></a></i>    
             {%endfor%}
         </ul>
     </div>
-    <a  class="btn" onclick="return getProductColorViewAddForm({{product_color_id}})">Add New</a>
+   <span> <a class="add_clr_views" onclick="return getProductColorViewAddForm({{product_color_id}})"></a></span>
    <div id="product_color_view_form_{{product_color_id}}">            
    </div>
     

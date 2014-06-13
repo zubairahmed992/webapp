@@ -1,4 +1,4 @@
-<div id="pro_clr">  
+<div id="pro_clr2">  
     <h2> Product Color
         <div style="float:right; margin-top: -1px; margin-right: 5px;"><a href="{{path('admin_product_detail_color_add',{'id': product.Id})}}#item" class="btn" name="item">Add New</a></div>
     </h2>
@@ -292,7 +292,7 @@
   </form>
 {% else %}
 {#--------------------------------------  Edit Form ------------------------------------#}
-    <table width="50%">
+    <table width="50%" cellpadding="2" cellspacing="2">
    {% for pc in product.productColors %}  
    {% if color_id is defined and  color_id %}
    {% if color_id == pc.id %}
@@ -396,21 +396,25 @@
 
 
                                  {% else %}
-                                <tr>
-                                    <td style="text-align:'center'; font-weight: bold; padding-right: 20px;">
-
-{% render 'LoveThatFitAdminBundle:ProductColorView:list' with {'product_color_id': pc.id } %}
-{{pc.title}}</td>
-                                    <td width="20%"><img width="24" height="24" src="{{asset(pc.PatternWebPath)}}"></td>
-                                    <td> 
-                                        <a href='{{path("admin_product_detail_color_edit",{"id":product.id, "color_id":pc.id})}}' class="btn">Edit</a>
-                                       <a href="#myModal{{pc.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
-                                        
-                                        
-                                    </td>
-                                </tr>
-                                
-                                <div id="myModal{{pc.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   
+   <tr >
+    <td align="right" width="160" style="padding-right:10px;"><b>{{pc.title}}</b></td>
+    <td width="30" style="padding:5px; border: 1px solid #ccc;"><img width="24" height="24" src="{{asset(pc.PatternWebPath)}}"></td>
+    <td>
+        <a href='{{path("admin_product_detail_color_edit",{"id":product.id, "color_id":pc.id})}}' class="icon-edit"></a>
+        <a href="#myModal{{pc.id}}" role="button" data-toggle="modal" class="icon-remove"></a></td>
+   </tr>
+   
+   <tr>
+   <td>&nbsp;</td> 
+   <td colspan="2" align="left" style="border-top:1px solid #ccc; padding-top: 5px;">{% render 'LoveThatFitAdminBundle:ProductColorView:list' with {'product_color_id': pc.id } %}</td>  
+   </tr>
+   <tr>
+       <td colspan="3" style="height:10px; border-bottom:1px solid #ccc;"></td></tr>
+   <tr>
+       <td colspan="3" style="height:10px;"></td></tr>
+        
+ <div id="myModal{{pc.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
         <h3 id="myModalLabel">Delete Product</h3>
@@ -428,16 +432,7 @@
                                 
                               
                                 
-                                                                <tr>
-                                     <td height="9"></td>
-                                   <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                                                
       {%endfor%} 
 
 

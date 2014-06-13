@@ -6387,6 +6387,10 @@ height:40px;
         display: block;
 }
 
+#pro_clr2 table{        
+	padding:0px 20px;        
+}
+
 #product_info_left{
     float:left;
     overflow: auto;
@@ -6786,3 +6790,56 @@ overflow: auto;
     height: 14px;
     width: 12px;
 }
+
+#color_view_list ul i a img{
+ border:1px solid #ccc; 
+ width: 50px;
+ height: 50px;    
+}
+
+#color_view_list ul{
+   margin:0px!important;
+   
+}
+
+#color_view_list{
+    float:left
+}
+
+
+
+#color_view_list ul a{
+    cursor: pointer;
+    display: inline-block;
+}
+
+#color_view_list span{
+    float:right;
+    
+}
+
+.veiw_lst span{
+    background: none repeat scroll 0 0 #CCCCCC;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    float: right;
+    margin-top: -5px;
+    padding: 7px;
+    
+}
+
+.add_clr_views{   
+
+background-image: url("../images/glyphicons-halflings.png");
+    background-position: 0px -96px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    margin-top: 1px;
+    vertical-align: text-top;
+    width: 14px;
+    
+    }
+    
+   
