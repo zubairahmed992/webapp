@@ -183,7 +183,9 @@ function editPieceView(product_id,item_id,id){
                   <div class="span2">
                    {%for pp in pi.productitempiece%}
                     <span>
-                            <a  onclick="return editPieceView({{product.id}},{{pi.id}},{{pp.id}});">{{pp.image}}</a>
+                        
+                        <a data-toggle="modal" href="{{path("admin_product_detail_item_two_piece_edit",{"id":product.id, "item_id":pi.id,"piece_id":pp.id})}}"  data-target="#{{pi.id}}Modal">{{pp.image}}</a>
+                        
                             
                     </span>
                           
@@ -193,15 +195,29 @@ function editPieceView(product_id,item_id,id){
 
                        <a href='{{path("admin_product_detail_item_edit",{"id":product.id, "item_id":pi.id})}}#item' name="item"><i class="icon-edit"></i></a>
                        <a href="#myModal2{{pi.id}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-                       <a onclick="return addPieceView({{product.id}},{{pi.id}});">add views</a>
+                      <button data-toggle="modal" href="{{path("admin_product_detail_item_two_piece_new",{"id":product.id, "item_id":pi.id})}}"  data-target="#{{pi.id}}Modal">Add Views</button>
+                       
+                       
                        {%if(pi.rawImage )%}
                        <a  href="{{path("admin_product_detail_item_raw_image_download",{"id":product.id, "item_id":pi.id})}}" role="button" data-toggle="modal" class="icon-download-alt"></i></a>
-                       {%endif%}                        
-                                  
-                       </div>
-                    
+                       {%endif%}  
+                       </div>                    
                     </div>
-      <div id="product_item_view_form_{{pi.id}}"> 
+      
+      <div class="modal_ad fade" id="{{pi.id}}Modal" tabindex="-1" role="dialog" aria-labelledby="{{pi.id}}ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+   {# <h4 class="modal-title" id="myModalLabel">{{key|capitalize |replace({'_': ' ', '_': " "}) }}</h4>#}
+    </div>
+    <div class="modal-body">
+      
+    </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+    
 
                 </div>
                 
