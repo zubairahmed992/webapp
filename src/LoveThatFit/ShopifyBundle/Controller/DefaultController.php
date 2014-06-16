@@ -46,4 +46,12 @@ class DefaultController extends Controller
         $products = $shopify('GET', '/admin/products.json', array('published_status'=>'published'));
         return new Response(json_encode($products));
      }
+      
+     public function fittingRoomAction()
+    {
+        #$str='/admin/themes/launchpad/assets.json?asset[key]=templates/product.liquid&theme_id=828155753';
+        #return $this->redirect($str);
+
+         return $this->render('LoveThatFitShopifyBundle:Default:fitting_room.html.twig');
+     }
 }

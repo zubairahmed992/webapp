@@ -9,3 +9,7 @@ shopify_granted:
 shopify_products:
     pattern:  /shopify/products
     defaults: { _controller: LoveThatFitShopifyBundle:Default:products }
+
+shopify_fitting_room:
+    pattern:  /shopify/fitting_room
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:fittingRoom }
