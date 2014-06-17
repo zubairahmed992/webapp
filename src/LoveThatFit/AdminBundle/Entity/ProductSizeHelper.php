@@ -363,7 +363,7 @@ class ProductSizeHelper {
          return $shirtSizes;
      }
      if($waist==1){
-            $shirtSizes= $this->conf['constants']['size_title_revamp']['man']['waist'];
+            return $shirtSizes=  $this->container->get('admin.helper.size')->getManWaistSizes();//$this->conf['constants']['size_title_revamp']['man']['waist'];
             $counter=28;
             foreach($shirtSizes as $waistSize){
                 $waistSizes[$counter]=$waistSize['title'];

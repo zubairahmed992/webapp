@@ -629,6 +629,34 @@ constants:
         42: 
          title: 42
          index: 15
+        43: 
+         title: 43
+         index: 16
+        44: 
+         title: 44
+         index: 16
+        45: 
+         title: 45
+         index: 17
+        47: 
+         title: 47
+         index: 18
+        48: 
+         title: 48
+         index: 19
+        49: 
+         title: 49
+         index: 20
+        50: 
+         title: 50
+         index: 21
+        51: 
+         title: 51
+         index: 22
+        52: 
+         title: 52
+         index: 23  
+         
       shirt:
          14-32:
            title: 14-32
