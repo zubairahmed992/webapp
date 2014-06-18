@@ -60,6 +60,9 @@ class DefaultController extends Controller
       
      public function fittingRoomAction()
     {
+         return new Response('Hooaa!');
+         return $this->render('LoveThatFitShopifyBundle:Default:fitting_room.html.twig');
+         
           $api_key = '584e96437b334b01028908e63a602204';
         $shared_secret = '0d694e4a176838a97fa10d3dd81491dd';
         $access_token = '8b14eb6efcf7c5fa7b0c76e9b329d06e';

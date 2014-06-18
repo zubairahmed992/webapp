@@ -12,4 +12,4 @@ shopify_products:
 
 shopify_fitting_room:
     pattern:  /shopify/fitting_room
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:fittingRoom }
+    defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:show }
