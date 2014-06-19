@@ -4999,3 +4999,10 @@ transform: rotateX(0deg) rotateY(0deg);
 
 
 
+/*///////// Masking ///////////*/
+
+#canv_mask {
+    position: absolute;
+    z-index: 9000;
+    display:block;
+}
