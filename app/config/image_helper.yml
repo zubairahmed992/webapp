@@ -1,5 +1,27 @@
 image_category:
 
+  retailer:    
+    original:
+      prefix: 
+      dir:  'uploads/ltf/retailers'  
+
+    web:
+      height: 80
+      width: 205
+      prefix:  
+      dir:  'uploads/ltf/retailers/web'  
+
+    iphone:
+      width: 100
+      height: 106      
+      prefix:  
+      dir:  'uploads/ltf/retailers/iphone'  
+   
+    ipad:
+        width: 230 
+        height: 145      
+        prefix:  
+        dir:  'uploads/ltf/retailers/ipad'      
   brand:    
     original:
       prefix: 

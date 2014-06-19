@@ -13,7 +13,13 @@ class RetailerType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('title', 'text');    
+         if($this->mode=='add'){
+            $builder->add('file');
+        }else{
+            $builder->add('file',null,array('required'=>false));
+        }
         
+        $builder->add('disabled', 'checkbox', array('label' => 'Disabled', 'required' => false));
     }
 
     public function getDefaultOptions(array $options) {

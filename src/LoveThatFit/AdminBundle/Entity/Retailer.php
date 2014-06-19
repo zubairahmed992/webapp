@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use LoveThatFit\SiteBundle\Algorithm;
+use LoveThatFit\AdminBundle\ImageHelper;
 /**
  *
  * 
@@ -49,12 +50,26 @@ class Retailer
      */
     private $title;
 
+      
+     /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $image;
+    
+    /**
+     * @var string $disabled
+     *
+     * @ORM\Column(name="disabled", type="boolean")
+     */
+    private $disabled;
+    
     
     /**
      * @var dateTime $createdAt
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
+    
     private $createdAt;
     
     /**
@@ -64,6 +79,12 @@ class Retailer
      */
     private $updatedAt;
 
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     * @Assert\NotBlank(groups={"add"}, message = "must upload Retailer logo image!") 
+     */
+    public $file;
     
     /**
      * Get id
@@ -284,4 +305,102 @@ class Retailer
     
     
     
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Retailer
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set disabled
+     *
+     * @param boolean $disabled
+     * @return Retailer
+     */
+    public function setDisabled($disabled)
+    {
+        $this->disabled = $disabled;
+    
+        return $this;
+    }
+
+    /**
+     * Get disabled
+     *
+     * @return boolean 
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
+    }
+    
+    
+      //-------------------------------------------------
+    //-------------- Image Upload ---------------------
+    //-------------------------------------------------
+    
+    public function upload() {
+        if (null === $this->file) {
+            return;
+        }        
+       $ih=new ImageHelper('retailer', $this);
+        $ih->upload();
+    }
+//---------------------------------------------------
+    
+  public function getAbsolutePath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadRootDir().'/'.$this->image;
+    }
+//---------------------------------------------------
+    public function getWebPath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadDir().'/'.$this->image;
+    }
+//---------------------------------------------------
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+//---------------------------------------------------
+    protected function getUploadDir()
+    {
+        return 'uploads/ltf/retailers/web';
+    }
+    //---------------------------------------------------
+       public function getImagePaths() {
+        $ih = new ImageHelper('retailer', $this);        
+        return $ih->getImagePaths();
+    }
+    
+ /**
+ * @ORM\PostRemove
+ */
+public function deleteImages()
+{
+     $ih=new ImageHelper('retailer', $this);
+     $ih->deleteImages($this->image);
+}
 }

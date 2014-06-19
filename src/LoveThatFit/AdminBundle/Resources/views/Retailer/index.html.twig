@@ -33,7 +33,8 @@
           {% for r in retailers %}         
         <div class="row-fluid show-grid space_wrap_rt_ad">
             <div class="span1">{{r.id}}</div>
-            <div class="span1">{{r.title}}</div>                                                   
+            <div class="span1">{{r.title}}  
+            <img src="{{ asset(r.WebPath) }}"></div> 
             <div class="span3">{{r.getBrandNames}}</div>  
            
             <div class="span1">

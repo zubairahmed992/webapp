@@ -23,7 +23,21 @@
 
             <div id="detail_wrapper">      
                 <div id="p_hd">Update Retailer Detail</div>
-                
+                  <div class="span3">
+
+                        <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+                        <div class="span3">
+                            <strong><br/>  Upload Retailer Logo</strong>
+                        </div>  
+                        <div id="pro_img"><img src="{{ asset(entity.WebPath) }}">
+                        </div><!--/.well -->
+
+                        <div class="clearfix"></div>
+                        <div style="margin-top:20px; margin-left:5px;">
+
+    {{ form_errors(form.file) }}
+    {{ form_widget(form.file) }}
+                        </div>
                     <div class="clearfix"></div>
                   
                     
@@ -51,14 +65,14 @@
                                    
                                     <div class="span3">
 				{{ form_rest(form) }}
-                                            <div style="margin:0px 0px 0px 0px;"> <input type="submit" value="Update" class="btn btn-primary"/> <a  href="{{ path('admin_retailers') }}" class="btn btn-primary">Cancel</a>                                     
+                                            <div style="margin:0px 0px 0px 0px;">                                      
                                     </div>                                    
                                     </div>
                                 </div>
                                 </div> 
                                      
 
-
+<input type="submit" value="Update" class="btn btn-primary"/> <a  href="{{ path('admin_retailers') }}" class="btn btn-primary">Cancel</a>
 
                                 </div>      
                             </div><!-- End pro_detail -->      

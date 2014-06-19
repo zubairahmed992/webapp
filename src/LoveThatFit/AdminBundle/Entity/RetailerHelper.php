@@ -53,7 +53,8 @@ class RetailerHelper {
         //$msg_array = $this->validateForCreate($retailerTitle);
         if ($msg_array == null) {      
             $entity->setCreatedAt(new \DateTime('now'));
-            $entity->setUpdatedAt(new \DateTime('now'));             
+            $entity->setUpdatedAt(new \DateTime('now'));    
+            $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
             return array('message' => 'Retailer succesfully created.',
