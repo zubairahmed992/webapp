@@ -66,6 +66,11 @@ registrationSizechart:
    
 
 #----------------------------- Product Routes----------------------------------#    
+ws_brand_retailer:
+    pattern:  /web_service/brand_retailer
+    defaults: { _controller: LoveThatFitWebServiceBundle:Product:brandRetailerList,_format: json}
+
+
 ws_brands:
     pattern:  /web_service/brands
     defaults: { _controller: LoveThatFitWebServiceBundle:Product:brandList,_format: json}

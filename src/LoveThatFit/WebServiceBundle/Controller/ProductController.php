@@ -31,6 +31,13 @@ public function imagesUrlAction(){
     $product_response =  $this->get('webservice.helper.product')->imagesUrl($request,$request_array);
      return new response(json_encode($product_response));
 }
+#-------------------- Brand With Retailer -------------------------------------#
+public function brandRetailerListAction(){
+    return new response(json_encode($this->get('admin.helper.brand')->getBrandRetailerList()));
+    
+}
+
+
 #----------------------Brand List-----------------------------------------------#
 public function brandListAction() {
         $request = $this->getRequest();

@@ -285,6 +285,10 @@ public function getRetailerBrandById($id)
    public function getBrandIdBaseOnBrandName($brandName){
        return $this->repo->getBrandIdBaseOnBrandName($brandName);
    } 
-    
+   
+   #------Get All Retailer  and Brand List ---------------------------------------#
+public function getBrandRetailerList(){
+    return $this->repo->getBrandRetailerList();
+}
     
 }
