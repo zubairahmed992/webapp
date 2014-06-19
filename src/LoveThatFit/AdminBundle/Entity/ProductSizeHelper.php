@@ -355,7 +355,9 @@ class ProductSizeHelper {
  public function manSizeList($neck,$sleeve,$waist,$inseam){
      
      if($neck==1){
-         $shirtSizes= $this->conf['constants']['size_title_revamp']['man']['neck_sizes'];
+         $shirtSizes=array(14=>14,15=>15,16=>16,17=>17,18=>18,19=>19,20=>20,21=>21,22=>22,);
+         
+//$this->conf['constants']['size_title_revamp']['man']['neck_sizes'];
      return $shirtSizes;  
      }
      if($sleeve==1){
