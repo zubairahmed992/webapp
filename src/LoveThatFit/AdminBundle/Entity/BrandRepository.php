@@ -321,9 +321,11 @@ class BrandRepository extends EntityRepository {
    public function getBrandRetailerList(){
       $query = $this->getEntityManager()
                ->createQuery("
- SELECT b.id as brand_id,b.name as brand_name,r.id as ret_id,r.title as title
+ SELECT b.id as brand_id,b.name as brand_name,r.id as ret_id,r.title as title,r.image as image
  FROM LoveThatFitAdminBundle:Brand b
- LEFT  JOIN b.retailers r");
+ LEFT  JOIN b.retailers r
+ 
+");
  try {
   return $query->getResult();
  } catch (\Doctrine\ORM\NoResultException $e) {

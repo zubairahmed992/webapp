@@ -288,7 +288,23 @@ public function getRetailerBrandById($id)
    
    #------Get All Retailer  and Brand List ---------------------------------------#
 public function getBrandRetailerList(){
-    return $this->repo->getBrandRetailerList();
+    $data=$this->repo->getBrandRetailerList();
+    
+    foreach($data as $key){
+    if($key['title']!=null){
+      $arr[]=$key;
+    }
+     if($key['brand_name']){
+       $arr2[$key['brand_id']]=array('brand_id'=>$key['brand_id'],'brand_name'=>$key['brand_name'],'ret_id'=>$key['ret_id']);
+     }
+       
+
+
+    
+    }
+    $ret['retailer']=$arr;
+    $ret['brand']=$arr2;
+    return $ret;
 }
     
 }
