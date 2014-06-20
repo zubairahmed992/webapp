@@ -74,6 +74,8 @@ class RetailerHelper {
         $msg_array = $this->validateForUpdate($entity);
 
         if ($msg_array == null) {            
+            $entity->setUpdatedAt(new \DateTime('now'));    
+            $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
 
