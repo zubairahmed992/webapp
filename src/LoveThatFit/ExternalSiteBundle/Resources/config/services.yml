@@ -1,0 +1,7 @@
+parameters:
+#    love_that_fit_external_site.example.class: LoveThatFit\ExternalSiteBundle\Example
+
+services:
+#    love_that_fit_external_site.example:
+#        class: %love_that_fit_external_site.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

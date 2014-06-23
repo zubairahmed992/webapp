@@ -1,0 +1,41 @@
+external_registration:
+    pattern:  /external/registration
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registration }
+
+external_registration_user_create :
+    pattern:  /external/registration/create
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registrationCreate }
+external_registration_measurement_create:
+    pattern:  /external/measurement/create
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:measurementCreate }
+external_step_four_measurement_update:
+    pattern:  /external/step_four_measurement_update/{id}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourMeasurementUpdate}
+    requirements: 
+          _method: post     
+external_measurement_vertical_position_update:
+    pattern:  /external/measurement_vertical_position_update/{id}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourVerticalMeasurementUpdate}
+    
+    requirements: 
+          _method: post  
+external_measurement_horizontal_position_update:
+    pattern:  /external/measurement_horizontal_position_update/{id}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourHorizontalMeasurementUpdate}
+    requirements: 
+          _method: post            
+external_parent_child:
+    pattern:  /external/parent/child/{id}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:parentChildEmail }
+external_parent_child_update:   
+    pattern:  /external/parent/update/child/{id}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:parentChildUpdateEmail }
+external_step_four_edit:
+    pattern:  /external/step_four_edit
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourEdit }    
+    
+    
+    
+   
+  
+    

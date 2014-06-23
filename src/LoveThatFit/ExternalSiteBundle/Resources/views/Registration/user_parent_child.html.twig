@@ -1,0 +1,145 @@
+
+
+{% block action_block_content %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script>
+
+ function Validate(){
+ var user_email=document.getElementById("user_email").value;
+ var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+ if(user_email=='' || !filter.test(user_email))
+     {
+  document.getElementById('emailvalidate').style.display="block";
+ }else
+ {
+  var registration_parent_child_create= "../parent/child/"+ {{app.user.id}};  
+ var str = $('#parentemail').serialize();
+ jQuery.ajax({
+   type: "POST",
+   url: registration_parent_child_create, 
+   data : str, // our data object
+   success: function(response){                            
+       $('#cityAjax').html(response);   
+       $('#parentemailcheck').hide();   
+   }
+ });
+           
+ }
+}
+          
+    </script>
+    
+    <script>
+    function Validates()
+    {
+       var user_email=document.getElementById("user_email").value;
+       var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+       if(user_email=='' || !filter.test(user_email))
+     {
+        document.getElementById('emailvalidate1').style.display="block";
+ }else
+ {
+  var registration_parent_child_update= "../registration/parent/update/child/"+ {{app.user.id}};  
+ var str = $('#parentemail2').serialize();
+ jQuery.ajax({
+   type: "POST",
+   url: registration_parent_child_update, 
+   data : str, // our data object
+   success: function(response){                            
+       $('#cityAjax').html(response);   
+       $('#changeparentemail').hide();   
+       $('#parentemailcheckfitting').hide(); 
+       $('#parentdisapprove').hide(); 
+   }
+ });
+            
+ }
+    }
+        </script> 
+    
+    
+    
+    <script>
+    function ChangeEmail()
+    {
+        document.getElementById('parentemailcheckfitting').style.display="none";
+        document.getElementById('changeparentemail').style.display="block";   
+        document.getElementById('parentdisapprove').style.display="none";   
+    }
+        
+    function ChangeEmails()
+    {
+        document.getElementById('parentdisapprove').style.display="none";
+        document.getElementById('changeparentemail').style.display="block";   
+        
+    }    
+    </script>
+    
+<section class="reg_blk">  
+    <div class="action_cnt">
+          {%if(edit_type=='disaprove')%}    
+           <div class="steps step_4" id="parentdisapprove">            
+            <h7>Your parent has disapproved you</h7>
+             <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
+                 <a class="reg_next_step"  onclick="return ChangeEmails();">Change Email</a>          
+                <!--/.step_4--></div>     
+         {%endif%}
+        
+        {%if(edit_type=='fitting_room')%}       
+             <div class="steps step_4" id="parentemailcheckfitting" style="text-align:center;">            
+                 <div id="parent_label">Your parent has not approved yet</div>
+             <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
+                 <a class="reg_next_step"  onclick="return ChangeEmail();">Change Email</a>          
+                <!--/.step_4--></div>
+         {%endif%}
+        {%if(edit_type=='registration')%}            
+            <div class="steps step_4" id="parentemailcheck" style="text-align:center;">            
+            <div id="parent_label">Enter parent email</div>
+            <form id="parentemail"  method="POST" action="" {{ form_enctype(form) }} >
+                       
+{{ form_errors(form) }}
+                <div>
+                    {{ form_errors(form.email) }}
+                        
+                    </div>
+                   
+                    
+                    {{ form_rest(form) }} 
+                    <div id="emailvalidate" style="display:none">Please enter email address</div>
+                     <div class="frm_ele" style="float:none;">
+                      <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
+                      <input class="reg_next_step" type="button" value="Submit"  onclick="return Validate();" />
+                     </div>
+                </form>
+               
+                <!--/.step_4--></div>
+             
+         {%endif%}
+            
+           
+            
+            <div id="changeparentemail" style="display:none; text-align: center;">
+                <div id="parent_label">Enter parent email</div>
+            <form id="parentemail2"  method="POST" action="" {{ form_enctype(form) }} >
+           {{ form_errors(form) }}
+                <div>
+                    {{ form_errors(form.email) }}
+                    </div>
+                    
+                    {{ form_rest(form) }} 
+                    <div id="emailvalidate1" style="display:none">Please enter email address</div>
+                     <div class="frm_ele" style="float:none;">
+                      <a class="reg_next_step" href="{{path('inner_site_index')}}">Cancel</a>
+                      <input class="reg_next_step" type="button" value="Send"  onclick="return Validates();" />
+                     </div>
+                </form>
+            </div>
+            
+        <div id="cityAjax">                
+                </div>
+                
+            <!--/.action_cnt--></div>
+        <!--/.action_blk--></section>
+{% endblock %}
+

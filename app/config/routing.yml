@@ -1,3 +1,7 @@
+love_that_fit_external_site:
+    resource: "@LoveThatFitExternalSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
 love_that_fit_shopify:
     resource: "@LoveThatFitShopifyBundle/Resources/config/routing.yml"
     prefix:   /
