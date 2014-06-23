@@ -23,8 +23,22 @@ class FittingRoomController extends Controller
     
     public function showAction()
     {
-        return new Response('Hooaa!');
        return $this->render('LoveThatFitShopifyBundle:FittingRoom:fitting_room.html.twig');
     }
     
+    public function appProxyAction()
+    {
+        $response = new Response();        
+        #$response->headers->set('Content-Type', 'application/liquid');        
+        $response->setContent('Hoooaa the boy is alive!');
+        return $response; 
+    }
+    
+    public function ajaxAction()
+    {
+        $url='https://24e7b01f.ngrok.com/webapp/web/app_dev.php/shopify/app_proxy';
+        return new Response(file_get_contents($url));
+        
+        
+    }
 }

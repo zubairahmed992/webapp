@@ -1,3 +1,45 @@
-<div style="width: 250px; background-color: #EEEEEE; height: 500px;">
-                fitting room should be here ...
-</div>
+
+    <span id='ajax_url'>{{path('shopify_app_proxy') }}</span>
+    <div id='ajax_request'>
+        <input type="button" onclick="loadXMLDoc()" value="go"></input> 
+
+    </div>
+
+    <div id='fitting_room' style="width: 250px; background-color: #EEEEEE; height: 500px;">
+        fitting room should be here ...
+    </div>
+    
+    
+<script type="text/javascript">
+function loadXMLDoc() {
+    
+var xmlhttp;
+var url=document.getElementById("ajax_url").innerHTML;
+alert ('hooo  ' + url);
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+               document.getElementById("fitting_room").innerHTML = xmlhttp.responseText;
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400')
+           }
+           else {
+               alert('something else other than 200 was returned')
+           }
+        }
+    }
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
+
+    </script>

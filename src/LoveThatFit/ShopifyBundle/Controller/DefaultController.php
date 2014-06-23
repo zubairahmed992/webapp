@@ -60,6 +60,11 @@ class DefaultController extends Controller
       
      public function fittingRoomAction()
     {
+         
+        $response = new Response();        
+        $response->headers->set('Content-Type', 'application/liquid');        
+        $response->setContent('Hoooaa the boy is alive!');
+        return $response; 
          return new Response('Hooaa!');
          return $this->render('LoveThatFitShopifyBundle:Default:fitting_room.html.twig');
          

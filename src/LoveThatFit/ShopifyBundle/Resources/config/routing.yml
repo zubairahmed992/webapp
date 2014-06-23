@@ -13,3 +13,11 @@ shopify_products:
 shopify_fitting_room:
     pattern:  /shopify/fitting_room
     defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:show }
+
+shopify_ajax:
+    pattern:  /shopify/ajax
+    defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:ajax }
+
+shopify_app_proxy:
+    pattern:  /shopify/app_proxy/
+    defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:appProxy }

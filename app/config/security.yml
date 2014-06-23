@@ -67,6 +67,7 @@ security:
         - { path: /admin/, roles: ROLE_ADMIN }
         - { path: /admin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: ^/shopify/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: ^/registration/step_one, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /email/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /registration/user/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
