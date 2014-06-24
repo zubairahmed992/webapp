@@ -98,6 +98,13 @@ class ProductItem
      * @ORM\Column(name="raw_image", type="string", nullable=true)
      */
     private $raw_image;
+
+    /**
+     * @var string $sku
+     *
+     * @ORM\Column(name="sku", type="string", nullable=true)
+     */
+    private $sku;
     
     /**
      * Get id
@@ -444,5 +451,28 @@ class ProductItem
     public function getProductitempiece()
     {
         return $this->productitempiece;
+    }
+
+    /**
+     * Set sku
+     *
+     * @param string $sku
+     * @return ProductItem
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+    
+        return $this;
+    }
+
+    /**
+     * Get sku
+     *
+     * @return string 
+     */
+    public function getSku()
+    {
+        return $this->sku;
     }
 }

@@ -55,9 +55,21 @@ class DefaultController extends Controller
         $shop_domain = 'lovethatfit-2.myshopify.com';                  
         $shopify = \sandeepshetty\shopify_api\client($shop_domain, $access_token, $api_key, $shared_secret);
         $products = $shopify('GET', '/admin/products.json');
-        return new Response(json_encode($products));
+        return new Response($this->foo($products));
      }
       
+     
+     private function foo($product_json){
+         #return $product_json;
+         $products=  json_decode($product_json,true);
+         $str='';
+         foreach ($products['products'] as $p=>$key) {
+            $str = $str .' __________ '. $key['title'];    
+         }
+         return $str;
+     }
+     
+     
      public function fittingRoomAction()
     {
          
@@ -93,4 +105,6 @@ class DefaultController extends Controller
          $product=$this->get('admin.helper.product')->find($product_id);
          return $this->render('LoveThatFitShopifyBundle:Default:fitting_room.html.twig', array('product'=>$product));
     }
+    
+    
 }
