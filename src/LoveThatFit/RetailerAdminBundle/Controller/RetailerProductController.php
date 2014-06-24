@@ -28,14 +28,14 @@ use LoveThatFit\AdminBundle\Form\Type\ProductItemRawImageType;
 class RetailerProductController extends Controller {
 
 //---------------------------------------------------------------------
-protected $container;
+//protected $container;
 
     /**
      * {@inheritDoc}
      */
-    public function setContainer(ContainerInterface $container = null) {
+  /*  public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
-    }
+    }*/
 #------------------------------------------------------------------------------#    
     public function indexAction($page_number, $sort = 'id') {
         $retaileruser = $this->get('security.context')->getToken()->getUser()->getId();        

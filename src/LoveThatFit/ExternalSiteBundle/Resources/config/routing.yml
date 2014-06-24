@@ -1,6 +1,7 @@
 external_registration:
     pattern:  /external/registration
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registration }
+  
 
 external_registration_user_create :
     pattern:  /external/registration/create
@@ -41,6 +42,7 @@ external_fitting_room_show:
     pattern:  /external/fitting_room
     defaults: { _controller: LoveThatFitExternalSiteBundle:FittingRoom:show }    
 
-   
-  
+external_index:
+    pattern:  /external/index/{list_type}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:FittingRoom:index, list_type: null}
     

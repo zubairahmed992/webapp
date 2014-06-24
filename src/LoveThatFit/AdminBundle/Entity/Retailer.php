@@ -49,10 +49,48 @@ class Retailer
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
-
-      
+    
+    /**
+     * @var string $apiKey
+     *
+     * @ORM\Column(name="api_key", type="string", length=255)
+     */
+     private $apiKey;
+     
      /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @var string $sharedSecret
+     *
+     * @ORM\Column(name="shared_secret", type="string", length=255,nullable=true)
+     */
+     private $sharedSecret;
+
+     
+     /**
+     * @var string $shopDomain
+     *
+     * @ORM\Column(name="shop_domain", type="string", length=255,nullable=true)
+     */
+     private $shopDomain;
+     
+     /**
+     * @var string $accessToken
+     *
+     * @ORM\Column(name="access_token", type="string", length=255,nullable=true)
+     */
+     private $accessToken;
+     
+     /**
+     * @var string $retailerType
+     *
+     * @ORM\Column(name="retailer_type", type="string", length=255 ,nullable=true)
+     */
+     private $retailerType;
+     
+     
+     
+     
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $image;
     
@@ -403,4 +441,119 @@ public function deleteImages()
      $ih=new ImageHelper('retailer', $this);
      $ih->deleteImages($this->image);
 }
+
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     * @return Retailer
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+    
+        return $this;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string 
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * Set sharedSecret
+     *
+     * @param string $sharedSecret
+     * @return Retailer
+     */
+    public function setSharedSecret($sharedSecret)
+    {
+        $this->sharedSecret = $sharedSecret;
+    
+        return $this;
+    }
+
+    /**
+     * Get sharedSecret
+     *
+     * @return string 
+     */
+    public function getSharedSecret()
+    {
+        return $this->sharedSecret;
+    }
+
+    /**
+     * Set shopDomain
+     *
+     * @param string $shopDomain
+     * @return Retailer
+     */
+    public function setShopDomain($shopDomain)
+    {
+        $this->shopDomain = $shopDomain;
+    
+        return $this;
+    }
+
+    /**
+     * Get shopDomain
+     *
+     * @return string 
+     */
+    public function getShopDomain()
+    {
+        return $this->shopDomain;
+    }
+
+    /**
+     * Set accessToken
+     *
+     * @param string $accessToken
+     * @return Retailer
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+    
+        return $this;
+    }
+
+    /**
+     * Get accessToken
+     *
+     * @return string 
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Set retailerType
+     *
+     * @param string $retailerType
+     * @return Retailer
+     */
+    public function setRetailerType($retailerType)
+    {
+        $this->retailerType = $retailerType;
+    
+        return $this;
+    }
+
+    /**
+     * Get retailerType
+     *
+     * @return string 
+     */
+    public function getRetailerType()
+    {
+        return $this->retailerType;
+    }
 }

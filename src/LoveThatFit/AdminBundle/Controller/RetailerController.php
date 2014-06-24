@@ -12,14 +12,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RetailerController extends Controller {
 
-    protected $container;
+  //  protected $container;
 
     /**
      * {@inheritDoc}
      */
-    public function setContainer(ContainerInterface $container = null) {
+    /*public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
-    }
+    }*/
 
     //------------------------------------------------------------------------------------------
     public function indexAction($page_number, $sort = 'id') {
