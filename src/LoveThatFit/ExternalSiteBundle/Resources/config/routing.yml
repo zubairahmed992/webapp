@@ -35,7 +35,12 @@ external_step_four_edit:
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourEdit }    
     
     
-    
+#--------------------------------------------------------------------
+
+external_fitting_room_show:
+    pattern:  /external/fitting_room
+    defaults: { _controller: LoveThatFitExternalSiteBundle:FittingRoom:show }    
+
    
   
     
