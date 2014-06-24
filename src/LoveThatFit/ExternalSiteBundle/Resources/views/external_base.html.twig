@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Love That Fit</title>
+        <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/lovethatfit/site/css/main_1.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/lovethatfit/site/css/product_detail_css.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery.form.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/custom.js') }}"></script>  
+         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/modernizr.min.js') }}"></script>
+        
+        
+       
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_one.js') }}"></script>       
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+    
+    <script>
+  // For IE11. May we one day live without your BS.
+  Modernizr.addTest('preserve3d', function(){return Modernizr.testAllProps('transformStyle', 'preserve-3d');});
+
+           
+    
+</script>
+
+
+
+
+    
+    </head>
+ 
+    <body>
+   {% set class_url=path(app.request.attributes.get('_route'))%}
+   {%set my_route="/webapp/web/app_dev.php/inner_site/index"%}            
+{% if (class_url ==my_route)  %}
+    {% set class="main" %}
+    {% else%}
+    {% set class="" %}
+            
+{%endif%}
+        
+
+      <div class="{{class}} full_wrapper ">
+        <div class="holder">
+            {%if app.user %}
+           
+                <div id="header">
+                    <div id="top_nav">
+               {% block top_nav %}
+                    {% include 'LoveThatFitSiteBundle::_topNavigation.html.twig'%}
+                {% endblock %} 
+                </div>
+                
+            <div class="welcome_box">                
+              <div id="toprightrow">
+               
+                </div>  
+                
+            </div>
+                
+                
+               </div> 
+                
+                
+                <div style="clear:both;">&nbsp;</div>
+               
+                {% endif %}
+            <section class="site_container">
+                <div class="left_column">
+                    <div class="logo">
+                        <a href="{{path('inner_site_home')}}"><img src="{{ asset('bundles/lovethatfit/site/images/logo_inner.png') }}" width="177" height="108"></a>
+                    </div>
+                    
+                <!--/.left_menu--></div>     
+                    
+                {% block product_slider %}
+                {% endblock %}
+                    
+                {% block fitting_room %}
+                {% endblock %}
+                    
+                    
+            <!--/.site_container--></section>
+                
+                
+                
+                
+                <div class="clr_bth"></div>
+                <!--/.holder--></div>
+            <footer class="footer">
+                <div class="ftr_logo"></div>
+                <div id="copyrights_txt">Copyright 2010-2013.  All rights reserved LoveThatFit</div>
+               {% block bottom_left_nav %}
+                                {% include 'LoveThatFitSiteBundle::_bottomNavigation.html.twig'%}
+                {% endblock %} 
+                    <!--/.footer--></footer>
+                <!--/.full_wrapper--></div>
+            {% block bottom_random_content %}
+            {% endblock %} 
+        </body>
+    </html>
