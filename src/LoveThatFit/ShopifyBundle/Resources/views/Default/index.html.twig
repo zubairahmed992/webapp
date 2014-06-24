@@ -1,4 +1,29 @@
 
 shopify rocks
 <br>
-{{data}}
+
+<div style="float: left">
+    
+{% for p in products %}
+        {{p.id}}
+        {%if p.displayProductColor %}      
+                <a  onclick="show_fitting_room('{{p.id}}')"  href='#'><img src='{{asset(p.displayProductColor.WebPath)}}'></a> 
+        {% endif %}
+           <br>
+{% endfor %}
+</div>
+
+<div style="float: right">
+fitting room
+<iframe id='ext_fitting_room' name='ext_fitting_room'></iframe>
+
+</div>
+
+<script type="text/javascript">
+function show_fitting_room(id) {
+    alert(id);
+    window.frames['ext_fitting_room'].location = 'http://localhost/webapp/web/app_dev.php/shopify/fitting_room_show/'+id;
+    //window.frames['ext_fitting_room'].location = 'http://slowrobot.com/';
+}
+
+    </script>
