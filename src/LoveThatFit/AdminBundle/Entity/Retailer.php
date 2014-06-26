@@ -53,7 +53,7 @@ class Retailer
     /**
      * @var string $apiKey
      *
-     * @ORM\Column(name="api_key", type="string", length=255)
+     * @ORM\Column(name="api_key", type="string", length=255,nullable=true)
      */
      private $apiKey;
      
@@ -100,6 +100,13 @@ class Retailer
      * @ORM\Column(name="disabled", type="boolean")
      */
     private $disabled;
+    
+     /**
+     * @var string $sizeTitleDisabled
+     *
+     * @ORM\Column(name="size_title_disabled", type="boolean")
+     */
+    private $sizeTitleDisabled;
     
     
     /**
@@ -555,5 +562,28 @@ public function deleteImages()
     public function getRetailerType()
     {
         return $this->retailerType;
+    }
+
+    /**
+     * Set sizeTitleDisabled
+     *
+     * @param boolean $sizeTitleDisabled
+     * @return Retailer
+     */
+    public function setSizeTitleDisabled($sizeTitleDisabled)
+    {
+        $this->sizeTitleDisabled = $sizeTitleDisabled;
+    
+        return $this;
+    }
+
+    /**
+     * Get sizeTitleDisabled
+     *
+     * @return boolean 
+     */
+    public function getSizeTitleDisabled()
+    {
+        return $this->sizeTitleDisabled;
     }
 }
