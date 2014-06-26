@@ -32,12 +32,25 @@ class DefaultController extends Controller
     
      public function grantedAction()
     {
-         $api_key = '584e96437b334b01028908e63a602204';
-         $shared_secret = '0d694e4a176838a97fa10d3dd81491dd';
-         $code = $this->getRequest()->query->get('code');          
-         $shop_domain = $this->getRequest()->query->get('shop');        
-         $access_token = \sandeepshetty\shopify_api\oauth_access_token($shop_domain, $api_key, $shared_secret, $code);
-         return new Response('code :  ' .$code .'   access token: '. $access_token);
+         $specs= $this->get('shopify.helper')->appSpecs();
+         return new Response(json_encode($specs));
+         #$specs['api_key'] = '584e96437b334b01028908e63a602204';
+         #$specs['shared_secret'] = '0d694e4a176838a97fa10d3dd81491dd';
+         #$specs['temp_code'] = $this->getRequest()->query->get('code');          
+         #$specs['shop_domain'] = $this->getRequest()->query->get('shop');        
+         
+         #$specs['access_token'] = \sandeepshetty\shopify_api\oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
+         
+         $specs['api_key'] = '584e96437b334b01028908e63a602204';
+         $specs['shared_secret'] = '0d694e4a176838a97fa10d3dd81491dd';
+         $specs['temp_code'] = 'davinci_code';          
+         $specs['shop_domain'] = 'lovethatfit-2.myshopify.com';
+         $specs['access_token'] = 'hush hush hush';
+         
+        # update in ltf database
+         $this->get('admin.helper.retailer')->updateRetailShopSpecs($specs);
+         return new Response(json_encode($specs));
+         
      }
 
      public function productsAction()
