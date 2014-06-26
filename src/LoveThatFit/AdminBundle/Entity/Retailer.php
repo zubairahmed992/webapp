@@ -53,7 +53,7 @@ class Retailer
     /**
      * @var string $apiKey
      *
-     * @ORM\Column(name="api_key", type="string", length=255)
+     * @ORM\Column(name="api_key", type="string", length=255, length=255,nullable=true)
      */
      private $apiKey;
      
@@ -97,7 +97,7 @@ class Retailer
     /**
      * @var string $disabled
      *
-     * @ORM\Column(name="disabled", type="boolean")
+     * @ORM\Column(name="disabled", type="boolean", nullable=true)
      */
     private $disabled;
     

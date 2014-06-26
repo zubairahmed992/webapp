@@ -127,6 +127,20 @@ class RetailerRepository extends EntityRepository
             return null;
         }
     }
+    
+    //--------------------------------------------------------------------------
+
+    public function findOneByDomain($domain) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT r FROM LoveThatFitAdminBundle:Retailer r     
+                                WHERE r.domain = $domain")
+                        ->setParameters(array('domain' => $domain));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 
     //---------------------------------------------------------------------------
 
