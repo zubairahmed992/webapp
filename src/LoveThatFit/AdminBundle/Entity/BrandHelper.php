@@ -287,23 +287,39 @@ public function getRetailerBrandById($id)
    } 
    
    #------Get All Retailer  and Brand List ---------------------------------------#
+ public function super_unique($array)
+{
+  $result = array_map("unserialize", array_unique(array_map("serialize", $array)));
+
+  foreach ($result as $key => $value)
+  {
+    if ( is_array($value) )
+    {
+      $result[$key] = $this->super_unique($value);
+    }
+  }
+
+  return $result;
+}
 public function getBrandRetailerList(){
     $data=$this->repo->getBrandRetailerList();
     
     foreach($data as $key){
     if($key['title']!=null){
-      $arr[]=$key;
+      $arr[]=(array('retId'=>$key['ret_id'],'name'=>$key['title'],'image'=>$key['ret_image']));
+    
+   
     }
-     if($key['brand_name']){
-       $arr2[$key['brand_id']]=array('brand_id'=>$key['brand_id'],'brand_name'=>$key['brand_name'],'ret_id'=>$key['ret_id']);
-     }
-       
+    if($key['brand_id']!=null){
+    $arr2[]=array('brandId'=>$key['brand_id'],'name'=>$key['brand_name'],'image'=>$key['brand_image'],'retId'=>$key['ret_id']);
+    }
+     
 
 
     
     }
-    $ret['retailer']=$arr;
-    $ret['brand']=$arr2;
+    $ret['retailer']=$this->super_unique($arr);
+   $ret['brand']=($arr2);
     return $ret;
 }
     
