@@ -1,14 +1,14 @@
-shopify_index:
-    pattern:  /shopify/index
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:index }
+shopify_install:
+    pattern:  /shopify/install
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:install }
 
 shopify_granted:
     pattern:  /shopify/granted
     defaults: { _controller: LoveThatFitShopifyBundle:Default:granted }
 
-shopify_products:
-    pattern:  /shopify/products
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:products }
+shopify_sync_products:
+    pattern:  /shopify/sync_products
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:syncProducts }
 
 shopify_fitting_room:
     pattern:  /shopify/fitting_room

@@ -9,81 +9,71 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    #   temp-code = '8d9e6d19e48e3e002af09b19ea016081' 
-    #   $api_key = '1464612a653803d72f4d6d998e59d785';
-    #    $shared_secret = '497d438714a4fc95f688850fc476caa5';
-    #    $shop_domain = 'lovethatfit-2.myshopify.com';    
-    #    $access_token = '019860835bfd8ac1c5259702c5b953a9';
-#Non embedded app    
-#----------------------------------------------------------
-    #    $api_key = '584e96437b334b01028908e63a602204';
-    #    $shared_secret = '0d694e4a176838a97fa10d3dd81491dd';
-    #    $shop_domain = 'lovethatfit-2.myshopify.com';    
-    #    $access_token = '8b14eb6efcf7c5fa7b0c76e9b329d06e';
     
-   public function indexAction()
+    
+   public function installAction()
     {
-        $api_key='584e96437b334b01028908e63a602204';
-        $shop_domain = 'lovethatfit-2.myshopify.com';        
-        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $api_key, array('read_products', 'write_content', 'write_themes', 'read_customer'));        
+        $app_specs= $this->get('shopify.helper')->appSpecs();
+        $shop_domain = 'lovethatfit-2.myshopify.com';
+        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products', 'write_content', 'write_themes', 'read_customer'));        
         return new Response($str);
         return $this->redirect($str);
     }
-    
+    #-------------------------------------->
      public function grantedAction()
     {
-         $specs= $this->get('shopify.helper')->appSpecs();
-         return new Response(json_encode($specs));
-         #$specs['api_key'] = '584e96437b334b01028908e63a602204';
-         #$specs['shared_secret'] = '0d694e4a176838a97fa10d3dd81491dd';
+         $app_specs= $this->get('shopify.helper')->appSpecs();
+         $specs['api_key'] = $app_specs['api_key'];
+         $specs['shared_secret'] = $app_specs['shared_secret'];
+         
+         # to serve the shopify server app install request :--------------------
          #$specs['temp_code'] = $this->getRequest()->query->get('code');          
-         #$specs['shop_domain'] = $this->getRequest()->query->get('shop');        
-         
+         #$specs['shop_domain'] = $this->getRequest()->query->get('shop');                 
          #$specs['access_token'] = \sandeepshetty\shopify_api\oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
-         
-         $specs['api_key'] = '584e96437b334b01028908e63a602204';
-         $specs['shared_secret'] = '0d694e4a176838a97fa10d3dd81491dd';
+         #~~~~~~>testing
          $specs['temp_code'] = 'davinci_code';          
          $specs['shop_domain'] = 'lovethatfit-2.myshopify.com';
-         $specs['access_token'] = 'hush hush hush';
-         
-        # update in ltf database
+         $specs['access_token'] = 'hush hush';         
+         #----------------------------------------------------------------------
+         # update in ltf database
          $this->get('admin.helper.retailer')->updateRetailShopSpecs($specs);
-         return new Response(json_encode($specs));
-         
+         return new Response(json_encode($specs));         
      }
-
-     public function productsAction()
+    #-------------------------------------->
+     public function syncProductsAction()
     {
-        #$api_key = '1464612a653803d72f4d6d998e59d785';
-        #$shared_secret = '497d438714a4fc95f688850fc476caa5';
-        #$access_token = '019860835bfd8ac1c5259702c5b953a9';
-    
-        #------------ unembedded -------------- 
-        $api_key = '584e96437b334b01028908e63a602204';
-        $shared_secret = '0d694e4a176838a97fa10d3dd81491dd';
-        $access_token = '8b14eb6efcf7c5fa7b0c76e9b329d06e';
-               
-        
-        $shop_domain = 'lovethatfit-2.myshopify.com';                  
-        $shopify = \sandeepshetty\shopify_api\client($shop_domain, $access_token, $api_key, $shared_secret);
+        $app_specs= $this->get('shopify.helper')->appSpecs();        
+        $access_token = '8b14eb6efcf7c5fa7b0c76e9b329d06e';        
+        $shop_domain = 'lovethatfit-2.myshopify.com';        
+        $shopify = \sandeepshetty\shopify_api\client($shop_domain, $access_token, $app_specs['api_key'], $app_specs['shared_secret']);
         $products = $shopify('GET', '/admin/products.json');
         return new Response($this->foo($products));
      }
       
      
-     private function foo($product_json){
-         #return $product_json;
-         $products=  json_decode($product_json,true);
-         $str='';
-         foreach ($products['products'] as $p=>$key) {
-            $str = $str .' __________ '. $key['title'];    
-         }
-         return $str;
-     }
-     
-     
-     public function fittingRoomAction()
+      private function foo($product_json) {
+        #return $product_json;
+        return $product_json;
+        $products = json_decode($product_json, true);
+        $str = '';
+        foreach ($products['products'] as $p => $key) {
+            $str = $str . ' __________ ' . $key['title'];
+            foreach ($products['products'] as $pk => $pv) {
+                $str = $str . '  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ';
+                $str = $str . '  Title:' . $pv['title'];
+                $str = $str . '  Id:' . $pv['id'];
+                $str = $str . ',  variants: ';
+                foreach ($pv['variants'] as $vk => $vv) {
+                    $str = $str . $vv['option2'] . ' ' . $vv['option3'] . ' ' . $vv['option1'];
+                    $str = $str . ' id:' . $vv['id'] . ' sku:' . $vv['sku'];
+                }
+            }
+
+            return $str;
+        }
+    }
+
+    public function fittingRoomAction()
     {
          
         $response = new Response();        
