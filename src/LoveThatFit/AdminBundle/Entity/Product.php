@@ -197,6 +197,13 @@ class Product {
      * @ORM\Column(name="disabled", type="boolean", nullable=true)
      */
     private $disabled;
+    
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     */
+    protected $retailer_reference_id;
 
     //----------------------------------------------------------
     /**
@@ -1254,5 +1261,28 @@ class Product {
     public function getProductColorView()
     {
         return $this->product_color_view;
+    }
+
+    /**
+     * Set retailer_reference_id
+     *
+     * @param integer $retailerReferenceId
+     * @return Product
+     */
+    public function setRetailerReferenceId($retailerReferenceId)
+    {
+        $this->retailer_reference_id = $retailerReferenceId;
+    
+        return $this;
+    }
+
+    /**
+     * Get retailer_reference_id
+     *
+     * @return integer 
+     */
+    public function getRetailerReferenceId()
+    {
+        return $this->retailer_reference_id;
     }
 }
