@@ -1,0 +1,16 @@
+
+shopify rocks
+<br>
+
+<div style="float: left">
+    
+{% for p in products %}
+        {{p.id}}
+        {%if p.displayProductColor %}      
+                <a  onclick="show_fitting_room('{{p.id}}')"  href='#'><img src='{{asset(p.displayProductColor.WebPath)}}'></a> 
+        {% endif %}
+           <br>
+{% endfor %}
+</div>
+  
+ {% include 'LoveThatFitShopifyBundle:default:_iframe.html.twig'%}   

@@ -22,9 +22,9 @@ shopify_app_proxy:
     pattern:  /shopify/app_proxy/
     defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:appProxy }
 
-shopify_list:
-    pattern:  /shopify/list
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:list }
+shopify_simulator:
+    pattern:  /shopify/simulator
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:shopifySimulator }
 
 shopify_fitting_room_show:
     pattern:  /shopify/fitting_room_show/{product_id}

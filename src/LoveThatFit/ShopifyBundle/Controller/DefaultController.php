@@ -96,10 +96,10 @@ class DefaultController extends Controller
          return $this->render('LoveThatFitShopifyBundle:Default:fitting_room.html.twig');
      }
      
-     public function listAction()
+     public function shopifySimulatorAction()
     {
         $latest = $this->get('admin.helper.product')->listByType(array('limit'=>5, 'list_type'=>'latest'));
-         return $this->render('LoveThatFitShopifyBundle:Default:index.html.twig', array('products'=> $latest));
+         return $this->render('LoveThatFitShopifyBundle:Default:shopify_simulator.html.twig', array('products'=> $latest));
     }
     
        public function fittingRoomShowAction($product_id=0)
