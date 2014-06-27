@@ -108,6 +108,18 @@ class DefaultController extends Controller
          $product=$this->get('admin.helper.product')->find($product_id);
          return $this->render('LoveThatFitShopifyBundle:Default:fitting_room.html.twig', array('product'=>$product));
     }
+ // User Sku ---------------------
+    public function userCheckAction(Request $request){ 
+        $data = $request->request->all();
+        $user_id=117;//$data['user_id'];
+        $sku=5;//$data['sku'];
+        $userDetail=$this->get('admin.helper.retailer.site.user')->findSiteUserByUserId($user_id);
+        print_r($userDetail);
+        $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
+       
+        return new response(json_encode($userDetail));
+        
+    }
     
     
 }

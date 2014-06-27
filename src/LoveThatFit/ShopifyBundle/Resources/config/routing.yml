@@ -29,3 +29,7 @@ shopify_simulator:
 shopify_fitting_room_show:
     pattern:  /shopify/fitting_room_show/{product_id}
     defaults: { _controller: LoveThatFitShopifyBundle:Default:fittingRoomShow, product_id:0 }
+ 
+shopify_user_check:
+    pattern:  /shopify/user_check
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:userCheck }    

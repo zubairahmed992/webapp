@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class RetailerSiteUserRepository extends EntityRepository
 {
+    public function findSiteUserByUserId($user_id){
+         $query = $this->getEntityManager()
+                    ->createQuery("SELECT rs FROM LoveThatFitAdminBundle:RetailerSiteUser rs
+                    WHERE rs.user =:user_id")
+                   ->setParameters(array('user_id' => $user_id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
+        
+    }
 }

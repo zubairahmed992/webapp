@@ -97,4 +97,9 @@ public function addItem($product, $p_color, $p_size) {
         return $this->repo->getAllItemBaseProduct($product_id);
         
     }
+#------------------------------Find item by SKU--------------------------------#    
+    public function findItemBySku($sku){
+        return $this->repo->findItemBySku($sku);
+        
+    }
 }

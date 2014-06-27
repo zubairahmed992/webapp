@@ -137,6 +137,14 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Color  
             container: "@service_container"
+       
+     admin.helper.retailer.site.user:
+        class: LoveThatFit\AdminBundle\Entity\RetailerSiteUserHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\AdminBundle\Entity\RetailerSiteUser  
+            container: "@service_container"        
      
      admin.helper.user.mannequin:
         class: LoveThatFit\UserBundle\Entity\MannequinHelper

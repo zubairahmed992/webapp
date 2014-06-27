@@ -11,6 +11,20 @@ shopify rocks
         {% endif %}
            <br>
 {% endfor %}
+           
+           
 </div>
+<div id="user_sku" style="float: right;">
+    <form action="{{path('shopify_user_check')}}" method="post">
+               User:<input type="text" name="user_id">
+               <br>
+               sku:<input type="text" name="sku">
+               <br>
+               <input type="submit" value="Submit">
+    
+    </form>
+           
+           
+           </div>
   
  {% include 'LoveThatFitShopifyBundle:default:_iframe.html.twig'%}   
