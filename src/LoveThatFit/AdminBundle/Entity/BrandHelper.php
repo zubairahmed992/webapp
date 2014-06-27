@@ -301,8 +301,8 @@ public function getRetailerBrandById($id)
 
   return $result;
 }
-public function getBrandRetailerList(){
-    $data=$this->repo->getBrandRetailerList();
+public function getBrandRetailerList($date_fromat){
+    $data=$this->repo->getBrandRetailerList($date_fromat);
     
     foreach($data as $key){
     if($key['title']!=null){
@@ -311,6 +311,9 @@ public function getBrandRetailerList(){
    
     }
     if($key['brand_id']!=null){
+        if($key['ret_id']==null){
+            $key['ret_id']=0;
+        }
     $arr2[]=array('brandId'=>$key['brand_id'],'name'=>$key['brand_name'],'image'=>$key['brand_image'],'retId'=>$key['ret_id']);
     }
      

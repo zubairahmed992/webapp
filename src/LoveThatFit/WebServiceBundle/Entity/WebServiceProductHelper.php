@@ -560,11 +560,13 @@ private function countMyCloset($user_id){
      $data=array();
      if($deviceType=='ipad' ||$deviceType=='ipad_retina'){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/ipad/';
+      $data['retailerPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/retailers/ipad/';
       $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_product_list/';
       $data['productFittingRoomPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/ipad_ftting_room_list/';
      } 
      if($deviceType=='iphone4s' ||$deviceType=='iPhone4S'||$deviceType=='4s'){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+      $data['retailerPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/retailers/iphone/';
       $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
       $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
       $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone4s_product_list/';
@@ -573,6 +575,7 @@ private function countMyCloset($user_id){
      }
       if($deviceType=='iphone5' ||$deviceType=='iPhone5'||$deviceType=='5'){
       $data['brandPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/brands/iphone/';
+      $data['retailerPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/retailers/iphone/';
       $data['patternPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/pattern/iphone/';
       $data['productPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone/';
       $data['productDashboardPath'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/display/iphone5_product_list/';
