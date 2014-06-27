@@ -5006,3 +5006,16 @@ transform: rotateX(0deg) rotateY(0deg);
     z-index: 9000;
     display:block;
 }
+
+
+/*//////////// External Site ////////////*/
+
+.ext_site_hldr .holder {
+    margin: 0 10px;
+    width: auto;
+    padding:10px;
+    border: none;
+}
+.ext_site_hldr .holder .reg_blk {
+    min-height: 350px;
+}

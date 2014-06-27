@@ -55,7 +55,9 @@
                 
             <div class="welcome_box">                
               <div id="toprightrow">
-               
+               {% block toprightrow %}
+                    {% include 'LoveThatFitSiteBundle::_welcomeNavigation.html.twig'%}
+                {% endblock %} 
                 </div>  
                 
             </div>
@@ -72,7 +74,10 @@
                     <div class="logo">
                         <a href="{{path('inner_site_home')}}"><img src="{{ asset('bundles/lovethatfit/site/images/logo_inner.png') }}" width="177" height="108"></a>
                     </div>
-                    
+                    {% block left_navigation %}
+                    {% endblock %}
+                    {% block left_col_btm %}
+                    {% endblock %}
                 <!--/.left_menu--></div>     
                     
                 {% block product_slider %}
@@ -81,6 +86,8 @@
                 {% block fitting_room %}
                 {% endblock %}
                     
+                    {% block message_block %}
+                    {% endblock %}
                     
             <!--/.site_container--></section>
                 
