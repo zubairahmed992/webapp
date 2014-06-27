@@ -9,19 +9,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ltf_user_retailer")
- * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\UserRetailerRepository")
+ * @ORM\Table(name="ltf_retailer_site_user")
+ * @ORM\Entity(repositoryClass="LoveThatFit\AdminBundle\Entity\RetailerSiteUserRepository")
  */
-class UserRetailer {
+class RetailerSiteUser {
 
    /**
-     * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", inversedBy="UserRetailer")
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", inversedBy="retailer_site_users")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;
     /**
-     * @ORM\ManyToOne(targetEntity="Retailer", inversedBy="user_retailer")
-     * @ORM\JoinColumn(name="retailer_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Retailer", inversedBy="retailer_site_users")
+     * @ORM\JoinColumn(name="retailer_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $retailer;
 

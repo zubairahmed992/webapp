@@ -58,6 +58,11 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="User")
      */
     private $useritemtryhistory;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\RetailerSiteUser", mappedBy="user")
+     */
+    private $retailer_site_users;
 
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -1260,5 +1265,38 @@ class User implements UserInterface, \Serializable {
     public function getSecretAnswer()
     {
         return $this->secretAnswer;
+    }
+
+    /**
+     * Add retailer_site_users
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers
+     * @return User
+     */
+    public function addRetailerSiteUser(\LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers)
+    {
+        $this->retailer_site_users[] = $retailerSiteUsers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove retailer_site_users
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers
+     */
+    public function removeRetailerSiteUser(\LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers)
+    {
+        $this->retailer_site_users->removeElement($retailerSiteUsers);
+    }
+
+    /**
+     * Get retailer_site_users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetailerSiteUsers()
+    {
+        return $this->retailer_site_users;
     }
 }

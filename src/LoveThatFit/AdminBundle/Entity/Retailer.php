@@ -33,6 +33,10 @@ class Retailer
      */
     protected $products;
     
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\RetailerSiteUser", mappedBy="retailer")
+     */
+    private $retailer_site_users;
     
     /**
      * @var integer
@@ -50,20 +54,6 @@ class Retailer
      */
     private $title;
     
-    /**
-     * @var string $apiKey
-     *
-     * @ORM\Column(name="api_key", type="string", length=255,nullable=true)
-     */
-     private $apiKey;
-     
-     /**
-     * @var string $sharedSecret
-     *
-     * @ORM\Column(name="shared_secret", type="string", length=255,nullable=true)
-     */
-     private $sharedSecret;
-
      
      /**
      * @var string $shopDomain
@@ -450,52 +440,6 @@ public function deleteImages()
 }
 
     /**
-     * Set apiKey
-     *
-     * @param string $apiKey
-     * @return Retailer
-     */
-    public function setApiKey($apiKey)
-    {
-        $this->apiKey = $apiKey;
-    
-        return $this;
-    }
-
-    /**
-     * Get apiKey
-     *
-     * @return string 
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * Set sharedSecret
-     *
-     * @param string $sharedSecret
-     * @return Retailer
-     */
-    public function setSharedSecret($sharedSecret)
-    {
-        $this->sharedSecret = $sharedSecret;
-    
-        return $this;
-    }
-
-    /**
-     * Get sharedSecret
-     *
-     * @return string 
-     */
-    public function getSharedSecret()
-    {
-        return $this->sharedSecret;
-    }
-
-    /**
      * Set shopDomain
      *
      * @param string $shopDomain
@@ -585,5 +529,38 @@ public function deleteImages()
     public function getSizeTitleDisabled()
     {
         return $this->sizeTitleDisabled;
+    }
+
+    /**
+     * Add retailer_site_users
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers
+     * @return Retailer
+     */
+    public function addRetailerSiteUser(\LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers)
+    {
+        $this->retailer_site_users[] = $retailerSiteUsers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove retailer_site_users
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers
+     */
+    public function removeRetailerSiteUser(\LoveThatFit\AdminBundle\Entity\RetailerSiteUser $retailerSiteUsers)
+    {
+        $this->retailer_site_users->removeElement($retailerSiteUsers);
+    }
+
+    /**
+     * Get retailer_site_users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetailerSiteUsers()
+    {
+        return $this->retailer_site_users;
     }
 }
