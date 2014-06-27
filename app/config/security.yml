@@ -57,6 +57,20 @@ security:
             logout:
                path:   /logout
                target: /login       
+
+        external_site:
+            provider: user_db
+            pattern:    ^/external
+            anonymous: ~
+            form_login:
+                login_path:  /external/login
+                check_path:  /external/login_check
+                username_parameter: _username
+                password_parameter: _password
+                
+            logout:
+               path:   /external/logout
+               target: /external/login       
                
 #               success_handler: authentication_handler
             #http_basic:
@@ -68,6 +82,12 @@ security:
         - { path: /admin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: ^/shopify/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        
+        - { path: /external/registration/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: ^/external/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: ^/external/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: /external/, roles: ROLE_USER }
+        
         - { path: ^/registration/step_one, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /email/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /registration/user/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
@@ -76,7 +96,7 @@ security:
         - { path: /registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /inner_site, roles: ROLE_USER }
         - { path: /ajax, roles: ROLE_USER }
-        
+                
         - { path: ^/retailer/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /retailer/, roles: ROLE_RETAILER }
         - { path: /retailer, roles: IS_AUTHENTICATED_ANONYMOUSLY }

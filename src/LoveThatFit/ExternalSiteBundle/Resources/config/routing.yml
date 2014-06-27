@@ -1,8 +1,17 @@
+external_login:
+    pattern:   /external/login
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registration }
+    
+external_login_check:
+    pattern:   /external/login_check
+
+external_logout:
+    pattern:   /external/logout
+    
+#--------------------------------------------------------------------
 external_registration:
     pattern:  /external/registration
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registration }
-  
-
 external_registration_user_create :
     pattern:  /external/registration/create
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registrationCreate }
@@ -17,7 +26,6 @@ external_step_four_measurement_update:
 external_measurement_vertical_position_update:
     pattern:  /external/measurement_vertical_position_update/{id}
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourVerticalMeasurementUpdate}
-    
     requirements: 
           _method: post  
 external_measurement_horizontal_position_update:

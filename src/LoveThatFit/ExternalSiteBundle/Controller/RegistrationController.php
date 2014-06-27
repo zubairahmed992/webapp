@@ -24,13 +24,10 @@ class RegistrationController extends Controller
         
         $request = $this->getRequest();
         $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
-
         $referer = $request->headers->get('referer');
         $url_bits = explode('/', $referer);
         $security_context['referer'] = $url_bits[sizeof($url_bits) - 1];
-
         $routeName = $request->get('_route');
-
 
         if (array_key_exists('error', $security_context) and $security_context['error']) {
             $security_context['referer'] = "login";
