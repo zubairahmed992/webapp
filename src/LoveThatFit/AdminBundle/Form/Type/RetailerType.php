@@ -18,8 +18,7 @@ class RetailerType extends AbstractType {
         }else{
             $builder->add('file',null,array('required'=>false));
         }
-        $builder->add('api_key','text',array('required'=>false));    
-        $builder->add('shared_secret','text',array('required'=>false));    
+        
         $builder->add('shop_domain','text',array('required'=>false));    
         $builder->add('access_token','text',array('required'=>false));    
         $builder->add('retailer_type','text',array('required'=>false));    
