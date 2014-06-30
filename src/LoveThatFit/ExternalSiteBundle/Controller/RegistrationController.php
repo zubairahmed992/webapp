@@ -71,6 +71,21 @@ class RegistrationController extends Controller
                  
                 $u = $user_helper->registerUser($user);
                 $user = $user_helper->find($u->getId());
+                 // For Site user form session ---------------
+                $session = $this->get("session");
+                if ($session->has('shopify_user')) {
+                  $shopify_user=$session->get('shopify_user');
+                  $site_user=$shopify_user['site_user'];
+                  $retailer=$shopify_user['retailer'];
+                  //$user = $this->get('user.helper.user')->find(53);
+                  $user_id=$user->getId();
+                  $retailer = $this->get('admin.helper.retailer')->find(1);
+                  $site_user=$this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $user_id);
+                  
+
+              } 
+
+           // End of Session----------------------------------------------------
                 $measurement = $user->getMeasurement();
                 $user_helper->getLoggedInById($user);
                 $users=$this->get('user.helper.parent.child')->findUserByParentEmail($user->getEmail());              
