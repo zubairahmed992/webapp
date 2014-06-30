@@ -204,7 +204,7 @@ function onMouseDrag(event) {
             <li class="active"><span>4</span></li>
         </ul>
     </div>-->
-    <span style="display:none" id='spn_image_update_url'>"{{ path('external_step_four_measurement_update')}}"</span>    
+    <span style="display:none" id='spn_image_update_url'>"{{ path('external_measurement_horizontal_position_update', { 'id': entity.id })}}"</span>    
         
     <div class="action_cnt">
         <div class="steps step_4">
@@ -215,7 +215,7 @@ function onMouseDrag(event) {
             <form id="frmUserImage" action="{{ path('external_registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
-                <input type="hidden" id="hdn_image_update_url" value="{{ path('external_step_four_measurement_update')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('external_measurement_horizontal_position_update', { 'id': entity.id })}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 
@@ -280,7 +280,7 @@ function onMouseDrag(event) {
             <div class="frm_ele step4_btns">
                   
                   {% if(edit_type=="registration")%}
-                  <a class="reg_next_step reg_second" href="{{path('external_measurement_edit')}}">Back</a>
+                  <a class="reg_next_step reg_second" href="{{path('external_registration_measurement_edit')}}">Back</a>
                   <a class="reg_next_step" href="{{path('inner_site_index')}}">Skip</a>
                  {% else %}
                   <a class="reg_next_step" href="{{path('inner_site_index')}}">Back</a>                 

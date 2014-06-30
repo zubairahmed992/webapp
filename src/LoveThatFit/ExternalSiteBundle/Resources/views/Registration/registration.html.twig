@@ -1,5 +1,6 @@
+{% extends 'LoveThatFitExternalSiteBundle::external_base_reg.html.twig' %}
 {% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
-{% block action_block_content %}
+{% block reg_fitting_room %}
 
 <section class="reg_blk">
    
@@ -136,7 +137,48 @@ function formValidates()
                 }
 }
     
-</script>                                
+</script>   
+
+<script>
+    function active_login_blk(){
+        $(".main_log_box").removeClass('reg_active');
+        $(".main_log_box").addClass('log_active');
+    }
+    function active_reg_blk(){
+        $(".main_log_box").removeClass('log_active');
+        $(".main_log_box").addClass('reg_active');
+    }
+    $(document).ready(function(){
+ 
+        //incase of error , preselection of tab
+        {%if referer is defined and referer=='login'%}
+            $(".main_log_box").removeClass('reg_active');
+            $(".main_log_box").addClass('log_active');        
+        {%else%}
+            $(".main_log_box").removeClass('log_active');
+            $(".main_log_box").addClass('reg_active');
+        {%endif%}
+ 
+        $('#lg_btn').click(function(){
+            active_login_blk();        
+       })
+       
+       $('#reg_btn').click(function(){
+           active_reg_blk();
+       })
+              
+        $('.login_section a').click(function(){
+            active_login_blk();
+       })
+       
+        $('#crt_reg a').click(function(){
+            active_reg_blk();
+       })
+      
+      
+    })
+    
+</script>
                                         
                                         
 

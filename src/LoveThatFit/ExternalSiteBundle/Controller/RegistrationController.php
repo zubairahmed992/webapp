@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\ExternalSiteBundle\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use LoveThatFit\UserBundle\Entity\Measurement;
 use LoveThatFit\UserBundle\Entity\UserParentChildLink;

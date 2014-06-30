@@ -15,6 +15,10 @@ external_registration:
 external_registration_user_create :
     pattern:  /external/registration/create
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registrationCreate }
+external_registration_measurement_edit :
+    pattern:  /external/registration/measurement/edit
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:measurementEdit }
+
 external_registration_measurement_create:
     pattern:  /external/measurement/create
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:measurementCreate }
