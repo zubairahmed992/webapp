@@ -49,7 +49,7 @@ class DefaultController extends Controller
         $products = $shopify('GET', '/admin/products.json');
         return new Response($this->foo($products));
      }
-      
+    #---------------------------------------------------------------  
      
       private function foo($product_json) {
         #return $product_json;
@@ -72,7 +72,7 @@ class DefaultController extends Controller
             return $str;
         }
     }
-
+#---------------------------------------------------------------
     public function fittingRoomAction()
     {
          
@@ -95,13 +95,13 @@ class DefaultController extends Controller
            return new Response(json_encode($products));
          return $this->render('LoveThatFitShopifyBundle:Default:fitting_room.html.twig');
      }
-     
+    #--------------------------------------------------------------- 
      public function shopifySimulatorAction()
     {
         $latest = $this->get('admin.helper.product')->listByType(array('limit'=>5, 'list_type'=>'latest'));
          return $this->render('LoveThatFitShopifyBundle:Default:shopify_simulator.html.twig', array('products'=> $latest));
     }
-    
+    #---------------------------------------------------------------
        public function fittingRoomShowAction($product_id=0)
     {
         #$product=$product_id!=0?$this->get('admin.helper.product')->find($product_id):null;
@@ -111,13 +111,19 @@ class DefaultController extends Controller
  // User Sku ---------------------
     public function userCheckAction(Request $request){ 
         $data = $request->request->all();
-        $user_id=117;//$data['user_id'];
+        $user_id=53;//$data['user_id'];
         $sku=5;//$data['sku'];
-        $userDetail=$this->get('admin.helper.retailer.site.user')->findSiteUserByUserId($user_id);
-        print_r($userDetail);
-        $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
+        $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
+        
+        return new response(var_dump($site_user[0]->getUserReferenceId()));
+        if (!$site_user){
+            $user = $this->get('user.helper.user')->find(53);
+            $retailer = $this->get('admin.helper.retailer')->find(1);
+            $site_user=$this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $user_id);
+        }
+        #$itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
        
-        return new response(json_encode($userDetail));
+        return new response($site_user->getUserReferenceId());
         
     }
     

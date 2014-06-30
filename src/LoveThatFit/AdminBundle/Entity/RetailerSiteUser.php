@@ -35,11 +35,11 @@ class RetailerSiteUser {
     private $id;
 
      /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="user_site_id", type="integer")
+     * @ORM\Column(name="user_reference_id", type="string")
      */
-    private $user_site_id;
+    private $user_reference_id;
 
  
 
@@ -58,13 +58,9 @@ class RetailerSiteUser {
     private $updatedAt;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
     private $isActive;
-
-   
-
-  
 
     /**
      * Get id
@@ -146,7 +142,7 @@ class RetailerSiteUser {
     }
 
     /**
-     * Set user
+     * Set user0
      *
      * @param \LoveThatFit\UserBundle\Entity\User $user
      * @return UserRetailer
@@ -168,28 +164,7 @@ class RetailerSiteUser {
         return $this->user;
     }
 
-    /**
-     * Set user_site_id
-     *
-     * @param integer $userSiteId
-     * @return UserRetailer
-     */
-    public function setUserSiteId($userSiteId)
-    {
-        $this->user_site_id = $userSiteId;
     
-        return $this;
-    }
-
-    /**
-     * Get user_site_id
-     *
-     * @return integer 
-     */
-    public function getUserSiteId()
-    {
-        return $this->user_site_id;
-    }
 
     /**
      * Set retailer
@@ -212,5 +187,28 @@ class RetailerSiteUser {
     public function getRetailer()
     {
         return $this->retailer;
+    }
+
+    /**
+     * Set user_reference_id
+     *
+     * @param string $userReferenceId
+     * @return RetailerSiteUser
+     */
+    public function setUserReferenceId($userReferenceId)
+    {
+        $this->user_reference_id = $userReferenceId;
+    
+        return $this;
+    }
+
+    /**
+     * Get user_reference_id
+     *
+     * @return string 
+     */
+    public function getUserReferenceId()
+    {
+        return $this->user_reference_id;
     }
 }
