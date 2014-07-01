@@ -33,3 +33,12 @@ shopify_fitting_room_show:
 shopify_user_check:
     pattern:  /shopify/user_check
     defaults: { _controller: LoveThatFitShopifyBundle:Default:userCheck }    
+
+#-------------------------------------------------------------------
+shopify_data_index:
+    pattern:  /shopify/data/index
+    defaults: { _controller: LoveThatFitShopifyBundle:Data:index }    
+
+shopify_data_sku_upload:
+    pattern:  /shopify/data/sku_upload
+    defaults: { _controller: LoveThatFitShopifyBundle:Data:skuUpload }    
