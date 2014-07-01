@@ -31,8 +31,8 @@ shopify_fitting_room_show:
     defaults: { _controller: LoveThatFitShopifyBundle:Default:fittingRoomShow, product_id:0 }
  
 shopify_user_check:
-    pattern:  /shopify/user_check
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:userCheck }    
+    pattern:  /shopify/user_check/{user_id}/{sku}
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:userCheck ,user_id:0,sku:0}    
 
 #-------------------------------------------------------------------
 shopify_data_index:
