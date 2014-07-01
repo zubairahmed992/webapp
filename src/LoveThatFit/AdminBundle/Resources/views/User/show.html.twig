@@ -339,7 +339,42 @@
                                     </div>
                                     </div>      
                                    
-                                          
+                                       
+                                        
+                                  <div class="span8">
+                                    <div class="span3">Retailer Site Users</div>
+                                    <div> 
+                                    <table width="100%" border="0">
+                                    <tr>
+                                    <td>CreatedAt</td>
+                                    <td>UpdatedAt</td>
+                                    <td></td>
+                                    <td>Actions</td>
+                                   </tr>
+                                      {% for ret in user.getRetailerSiteUsers %}
+                                   <tr>
+                                    <td> {{ret.createdAt|date('d-m-Y')}}</td>
+                                    <td> {{ret.updatedAt|date('d-m-Y')}}</td>
+                                    <td></td>
+                                    <td><a href="{{ path('admin_retailer_site_user_edit', {'id': ret.Id}) }}"><i class="icon-edit"></i></a> <a href="#myModal1{{ret.Id}}" role="button" data-toggle="modal" title="Delete"><i class="icon-remove"></i></a> </td>
+                                   </tr>
+                                   
+                                   <div id="myModal1{{ret.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Retailer Site User</h3>
+  </div>  
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_retailer_site_user_delete', {'id': ret.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>
+                                        {%endfor%}
+                                    </table>
+                                    </div>
+                                    </div>        
+                                        
                                
                                 </div> 
                                      
@@ -366,6 +401,9 @@
 
     </div>
 </div>  
+                
+                
+                
             </div>      
 
 {% endblock %}

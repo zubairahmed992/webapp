@@ -80,4 +80,26 @@ public function findByReferenceId($retailer_id, $user_reference_id=null){
             );
     }
 
+    
+   //-------------------------------------------------------
+    
+    public function delete($id) {
+        $entity = $this->repo->find($id);        
+        if ($entity) {
+            $this->em->remove($entity);
+            $this->em->flush();
+            return array('retailer' => $entity,
+                'message' => 'The Retailer has been Deleted!',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+
+            return array('retailers' => $entity,
+                'message' => 'Retailer not found!',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+  } 
 }
