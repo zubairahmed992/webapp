@@ -111,8 +111,8 @@ class DefaultController extends Controller
  // User Sku ---------------------
     public function userCheckAction(Request $request){ 
         $data = $request->request->all();
-        $user_id=117;//$data['user_id'];
-        $sku=5;//$data['sku'];
+        $user_id=$data['user_id'];
+        $sku=$data['sku'];
         $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
       //  return new response(var_dump($site_user[0]->getUserReferenceId()));
         if (!$site_user){
@@ -124,6 +124,7 @@ class DefaultController extends Controller
         }else{
             $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
             # render fitting room with alerts
+            return new Response(var_dump($site_user));
         }
         
        

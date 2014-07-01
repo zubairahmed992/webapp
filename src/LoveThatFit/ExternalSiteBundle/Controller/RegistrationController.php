@@ -44,7 +44,6 @@ class RegistrationController extends Controller
                     'last_username' => $security_context['last_username'],
                     'error' => $security_context['error'],
                     'referer' => $security_context['referer'],
-                   
                 ));
     }
     
@@ -54,47 +53,38 @@ class RegistrationController extends Controller
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $brandHelper=$this->get('admin.helper.brand');
         $user_helper = $this->get('user.helper.user');
+        $user = new User();  
+        
         try {
-            $user = new User();
-           
+            
             #---------Start of CRF Protection----------------------------------#
-            if ($this->getRequest()->getMethod() == 'POST') {
-           
+            if ($this->getRequest()->getMethod() == 'POST') {           
             $form = $this->createForm(new RegistrationType(), $user);
             $form->bind($this->getRequest());
 
             if ($user_helper->isDuplicateEmail(Null, $user->getEmail())) {
-                $form->get('email')->addError(new FormError('This email address has already been taken.'));
+                $form->get('email')->addError(new FormError('This email address has already been registered.'));
             }
 
-            if ($form->isValid()) {
-                 
-                $user =  $user_helper->registerUser($user);
-                
+            if ($form->isValid()) {                 
+                $user =  $user_helper->registerUser($user);    
+               
                  // For Site user form session ---------------
                 $session = $this->get("session");
+                
+                
                 if ($session->has('shopify_user')) {
-                  $shopify_user=$session->get('shopify_user');
+                  $shopify_user = $session->get('shopify_user');
                   $site_user_id=$shopify_user['site_user_id'];
-                  $retailer_id=$shopify_user['retailer_id'];
-                  
-                  //$user = $this->get('user.helper.user')->find(53);
-                  
+                  $retailer_id=$shopify_user['retailer_id'];                                    
                   $retailer = $this->get('admin.helper.retailer')->find($retailer_id);
-                  $site_user = $this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $site_user_id);
-                  
-
+                  $this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $site_user_id);
               } 
 
            // End of Session----------------------------------------------------
                 $measurement = $user->getMeasurement();
                 $user_helper->getLoggedInById($user);
-                $users=$this->get('user.helper.parent.child')->findUserByParentEmail($user->getEmail());              
-                foreach($users as $parent)
-                {
-                    $userParentChilds=$this->get('user.helper.parent.child')->find($parent->getId());
-                    $this->get('user.helper.parent.child')->updateParent($userParentChilds,$user);
-                }              
+                
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($user);
 
