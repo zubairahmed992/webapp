@@ -196,8 +196,7 @@ return true;
   
     <form action="{{ path('user_profile_change_email')}}" method="post" {{ form_enctype(form_email_change) }} onsubmit="return ChangeEmail()">
    
-         <div class="frm_ele acc_set">   
-          
+         <div class="frm_ele acc_set">             
           <label>Enter Email</label>
             {{ form_widget(form_email_change.email) }}
               {{ form_rest(form_email_change) }} 
@@ -238,8 +237,13 @@ return true;
     </div>
     <script>
     function ChangeEmail()
+    {    
+    var email=document.getElementById('user_email').value; 
+    if(email == '{{app.user.email}}')
     {
-       var r=confirm("Your user name and email {{app.user.email}} will be changed \n You will be logged out");
+        return false;
+    }else{
+    var r=confirm("Your user name and email {{app.user.email}} will be changed \n You will be logged out");
     if (r==true)
     {
       return true;
@@ -247,8 +251,9 @@ return true;
     {
       return false;
     }
+    }
     }   
-    </script>
+</script>
     
       <script>
      function formPasswordValidates(){

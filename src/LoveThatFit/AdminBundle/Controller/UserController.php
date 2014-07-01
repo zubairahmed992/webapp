@@ -205,6 +205,27 @@ class UserController extends Controller {
                     'form' => $form->createView(),                   
          ));
     }
+   
+    public function deleteRetailerSiteUserAction($id)
+    {
+        try {
+            $message_array = $this->get('admin.helper.retailer.site.user')->delete($id);
+            $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+
+            return $this->redirect($this->generateUrl('admin_users'));
+        } catch (\Doctrine\DBAL\DBALException $e) {
+
+            $this->get('session')->setFlash('warning', 'This Site user cannot be deleted!');
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+    }
     
+    
+   public function editRetailerSiteUserAction($id)
+   {
+       $entity=$this->get('admin.helper.retailer.site.user')->find($id);
+       
+       
+   }
     
 }
