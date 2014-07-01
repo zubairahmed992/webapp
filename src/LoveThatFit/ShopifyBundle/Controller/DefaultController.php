@@ -114,26 +114,28 @@ class DefaultController extends Controller
         $user_id=117;//$data['user_id'];
         $sku=5;//$data['sku'];
         $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
-       
-        
       //  return new response(var_dump($site_user[0]->getUserReferenceId()));
         if (!$site_user){
-          
-            $user = $this->get('user.helper.user')->find(53);
             $retailer = $this->get('admin.helper.retailer')->find(1);
-            $site_user=$this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $user_id);
-             return $this->redirectLogin($site_user,$retailer);
+            $this->setNewUserSession($user_id, $retailer->getId(), $sku);
+            #$user = $this->get('user.helper.user')->find(53);            
+            #$site_user=$this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $user_id);
+            return $this->redirect($this->generateUrl('external_login'), 301);             
+        }else{
+            $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
+            # render fitting room with alerts
         }
-        #$itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
-       return $this->redirectLogin($site_user,$retailer=Null);
-       return new response($site_user->getUserReferenceId());
+        
+       
+       
         
     }
     //-----------------------------------------
-    public function redirectLogin($site_user,$retailer=Null){
+    public function setNewUserSession($site_user_id,$retailer_id, $sku){
          $session = $this->get("session");    
-         $session->set('shopify_user', array('site_user'=>'1','retailer'=>'2'));
-         return $this->redirect($this->generateUrl('external_login'), 301); 
+         $session->set('shopify_user', array('site_user_id'=>$site_user_id,
+                    'retailer_id'=>$retailer_id, 
+                    'sku'=>$sku));         
     }
     
     
