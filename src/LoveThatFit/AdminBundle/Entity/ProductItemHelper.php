@@ -60,6 +60,10 @@ class ProductItemHelper {
         return $entity;
     }
 
+    public function findDetailsByVariants($variants) {
+        $entity = $this->repo->findDetailsByVariants($variants);
+        return $entity;
+    }
 
     //-------------------------------------------------------
 

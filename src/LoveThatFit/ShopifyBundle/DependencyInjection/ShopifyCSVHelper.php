@@ -1,20 +1,20 @@
 <?php
 
 namespace LoveThatFit\ShopifyBundle\DependencyInjection;
+
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
 use LoveThatFit\AdminBundle\Entity\ProductSizeMeasurement;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
 
-
 class ShopifyCSVHelper {
 
-    private $product;
+    private $products;
     private $row;
     private $previous_row;
     private $path;
-    
+
 //--------------------------------------------------------------------
     public function __construct($path) {
         $this->path = $path;
@@ -22,20 +22,31 @@ class ShopifyCSVHelper {
 
     //------------------------------------------------------
 
-    public function read($row_length=100) {
-        if($row_length==null)$row_length=100;
+    public function convertToArray($row_length = 100) {
+        if ($row_length == null)
+            $row_length = 100;
         $this->row = 0;
         $this->previous_row = '';
-
+        $this->products = array();
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, $row_length, ",")) !== FALSE) {
-                $this->readProduct($data);
-                $this->previous_row = $data;
+            while (($data = fgetcsv($handle, 800, ",")) !== FALSE) {
+                if ($this->row > 0) {
+                    if (strlen($data[1]) > 0) {
+                        $this->products[$data[0]]['title'] = $data[1];
+                        $this->products[$data[0]]['vendor'] = $data[3];
+                        $this->products[$data[0]]['type'] = $data[4];
+                        $this->products[$data[0]]['tags'] = $data[5];
+                        $this->products[$data[0]]['published'] = $data[6];
+                    }
+                        $this->products[$data[0]]['variant'][$data[13]][$data[7]] = $data[8];
+                        $this->products[$data[0]]['variant'][$data[13]][$data[9]] = $data[10];
+                        $this->products[$data[0]]['variant'][$data[13]]['variant_sku'] = $data[13];
+                }
                 $this->row++;
             }
             fclose($handle);
-            
-            return $this->product;
+
+            return $this->products;
         }
         return;
     }
@@ -62,7 +73,6 @@ class ShopifyCSVHelper {
         $this->product['variant_inventory_qty'] = $data[16];
         $this->product['variant_inventory_policy'] = $data[15];
         $this->product['variant_fulfillment_service'] = $data[18];
-        return;
         $this->product['variant_price'] = $data[19];
         $this->product['variant_compare_at_price'] = $data[20];
         $this->product['variant_requires_shipping'] = $data[21];
@@ -83,44 +93,6 @@ class ShopifyCSVHelper {
         $this->product['gs_custom_product'] = $data[36];
     }
 
-#---------------------------------------------------------------
-    public function map($row_length=1000, $col=20) {
-
-        $this->row = 0;
-        $this->previous_row = '';
-
-        if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 300, ",")) !== FALSE) {
-                //$this->readProduct($data);
-                $str = $this->row . '  ';
-                for ($i=0;$i<=$col;$i++){
-                    $str.=$data[$i].', ';
-                }
-                $this->product[$this->row] = $str;
-                $this->row++;
-            }
-            fclose($handle);
-            
-            return $this->product;
-        }
-        return;
-    }
-
-
-//-------------------------------------------------------
-    private function initialCap($str){        
-        return str_replace('\' ', '\'', ucwords(str_replace('\'', '\' ', strtolower($str))));
-    }
-    
-//-------------------------------------------------------
-    private function makeSnake($str){                
-        return str_replace(' ', '_', strtolower($str));
-    }
-    
-    //-------------------------------------------------------
-      private function removePercent($str){
-        return str_replace('%', '', $str);
-    }
 }
 
 ?>

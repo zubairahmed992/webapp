@@ -108,5 +108,23 @@ class ProductItemRepository extends EntityRepository
         }  
   }
    
+  public function findDetailsByVariants($variants){
+       $query = $this->getEntityManager()
+                    ->createQuery("SELECT pi,ps,pc,p,b FROM LoveThatFitAdminBundle:ProductItem pi
+                        JOIN pi.product_size ps
+                        JOIN pi.product_color pc
+                        JOIN pi.product p
+                        JOIN p.brand b
+                        WHERE
+                        p.name = :product_name
+                        
+                        "                         
+       )->setParameters(array('product_name' => $variants['product_name'])) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }  
+  }
     
 }

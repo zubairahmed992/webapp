@@ -214,7 +214,25 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
+//-----------------------------------------------------------------
 
+    public function findByTitleBrandName($product_title, $brand_name) {
+        
+        $query = $this->getEntityManager()
+                            ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.brand b
+            WHERE b.name = :brand_name
+            AND p.title = :product_title AND p.disabled=0 AND p.disabled=0"
+                            )->setParameters(array('brand_name' => $brand_name, 'product_title' => $product_title));
+        
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 //-----------------------------------------------------------------
     public function productList() {
 

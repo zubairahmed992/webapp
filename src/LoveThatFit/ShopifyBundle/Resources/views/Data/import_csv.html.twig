@@ -8,14 +8,8 @@
           
           <div id="detail_wrapper">      
               <div id="product_content">
-                          <form action="{{path('admin_product_data_csv_upload')}}" method="post" {{ form_enctype(form) }}>        
+                          <form action="{{path('shopify_data_sku_upload')}}" method="post" {{ form_enctype(form) }}>        
                           <div class="edt_container">     
-                                    {% if product is defined and product is not empty%}
-                                        <div class="row-fluid show-grid">
-                                                  <div class="span3"></div>
-                                                  <div class="span3"><a href="{{path('admin_product_detail_show', {'id':product.id})}}">{{product.name}}</a> has been added to the system.</div>
-                                        </div>           
-                                    {% endif %}
                                <div class="row-fluid show-grid">
                                   <div class="span3">Select CSV File</div>
                                   <div class="span3">{{ form_widget(form.csvfile) }}{{ form_errors(form.csvfile) }}</div>
