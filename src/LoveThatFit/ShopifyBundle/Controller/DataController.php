@@ -13,7 +13,7 @@ class DataController extends Controller
     
     
     public function indexAction() {
-        $variants=array('product_name'=>'Teired swirl dress');
+        $variants=array('product_name'=>'Gingham Blouse', 'brand_name'=>'New York and Co');
         $data=  $this->get('admin.helper.productitem')->findDetailsByVariants($variants);
         return new Response(json_encode($data));
         $form = $this->createFormBuilder()
