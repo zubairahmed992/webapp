@@ -110,18 +110,21 @@ class DefaultController extends Controller
     }
  // User Sku ---------------------
     public function userCheckAction(Request $request,$user_id,$sku){ 
+       
         $data = $request->request->all();
        // $user_id=$data['user_id'];
         //$sku=$data['sku'];
         $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
       //  return new response(var_dump($site_user[0]->getUserReferenceId()));
         if (!$site_user){
+          ;
             $retailer = $this->get('admin.helper.retailer')->find(1);
             $this->setNewUserSession($user_id, $retailer->getId(), $sku);
             #$user = $this->get('user.helper.user')->find(53);            
             #$site_user=$this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $user_id);
             return $this->redirect($this->generateUrl('external_login'), 301);             
         }else{
+           
             $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
             # render fitting room with alerts
             return new Response(var_dump($site_user));

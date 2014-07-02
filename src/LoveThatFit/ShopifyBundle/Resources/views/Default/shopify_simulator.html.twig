@@ -1,7 +1,7 @@
 
-shopify rocks
-<br>
+{% extends 'LoveThatFitShopifyBundle::shopify_base_reg.html.twig' %}
 
+{% block reg_fitting_room %}
 <div style="float: left">
     
 {% for p in products %}
@@ -47,5 +47,7 @@ function checkUser(){
                <input type="button" value="Submit" onclick="checkUser()">
    
 </div>
-  
- {% include 'LoveThatFitShopifyBundle:default:_iframe.html.twig'%}   
+
+
+ {% include 'LoveThatFitShopifyBundle:default:_iframe.html.twig'%}  
+ {% endblock %}
