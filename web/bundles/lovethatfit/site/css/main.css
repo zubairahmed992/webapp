@@ -1277,9 +1277,7 @@ input[type=email]{
 	z-index:4000;
 	display:block;
 }
-.play_area_hldr {
-	
-	
+.play_area_hldr {	
 	height:505px;
 	margin-left:8px;
 }
@@ -5019,3 +5017,48 @@ transform: rotateX(0deg) rotateY(0deg);
 .ext_site_hldr .holder .reg_blk {
     min-height: 350px;
 }
+
+#how_it_works{
+    width:300px;
+    margin:0 auto;
+}
+
+
+.ext_site_hldr .fitting_step{
+    position:absolute; 
+    top:140px; 
+    left: 499px; 
+    width: 366px;    
+}
+
+.ext_site_hldr .play_area_hldr {	
+	height:410px;	
+        width:500px;
+        
+}
+
+
+.ext_site_hldr #rotate_move_box{
+    width:90px;
+    background: url("../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
+    position: absolute;
+    top:225px;
+    left:864px;
+    height: 210px;
+    padding: 0px 0px 20px 10px;
+}
+
+.ext_site_hldr .play_area {
+    width:364px;
+    height:505px;
+    overflow: hidden;
+    position:relative;
+    float:right;
+    margin: -125px -356px 0px 0px;
+    background:#fff;
+    border:1px dotted #ccc;
+    z-index: 0;
+}
+
+
+

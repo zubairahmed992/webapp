@@ -466,6 +466,7 @@ $(".hiw_step_3").css("display","none");
 $(".hiw_step_1").fadeIn(200);
 
 $("#play_area").removeClass("hide");
+$("#how_it_works").removeClass("hide");
 $(".int_fitting_room").addClass("hide");
 $(".upload_again_hldr").css("display","block");
 $(".action_buts_bar").fadeIn(500);
@@ -577,6 +578,7 @@ function call_settings(responseText, statusText, xhr, $form){
         var photo_file_name = $("#user_file").val();
         $("#inp_txt_file_name").val(photo_file_name);
         $("#play_area").removeClass("hide");
+        $("#how_it_works").removeClass("hide");
         $(".int_fitting_room").addClass("hide");
         $("#play_area").prepend('<div class="uploading_in_progress"></div>');
         $(".input_file_hldr").css("display","none");
