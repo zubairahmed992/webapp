@@ -10,10 +10,12 @@ use LoveThatFit\AdminBundle\Form\Type\UserMeasurementType;
 use LoveThatFit\AdminBundle\Form\Type\UserProfileSettingsType;
 use LoveThatFit\AdminBundle\Form\Type\MannequinTestType;
 use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
-use LoveThatFit\AdminBundle\Entity\Product;
+use LoveThatFit\AdminBundle\Form\Type\RetailerSiteUserType;
+use LoveThatFit\AdminBundle\Entity\RetailerSiteUser;
 use LoveThatFit\AdminBundle\Entity\ProductColor;
 use LoveThatFit\AdminBundle\Entity\ProductSize;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
+use LoveThatFit\AdminBundle\Entity\Product;
 
 class UserController extends Controller {
 
@@ -205,6 +207,58 @@ class UserController extends Controller {
                     'form' => $form->createView(),                   
          ));
     }
+    
+    
+   public function newRetailerSiteUserAction($id)
+   {
+       $entity = $this->get('user.helper.user')->find($id);
+       $RetailerSiteUser = $this->get('admin.helper.retailer.site.user')->createNew();
+       $RetailerSiteUserForm=$this->createForm(new RetailerSiteUserType('add'), $RetailerSiteUser);
+       return $this->render('LoveThatFitAdminBundle:User:new_retailer_site_user.html.twig', array(
+                    'user' => $entity,                   
+                    'form' => $RetailerSiteUserForm->createView(),
+                ));
+
+   }
+   
+   
+   public function createRetailerSiteUserAction(Request $request,$id)
+   {        
+       $data = $request->request->all();    
+       $retailerId=$data['retailer_site_user']['Retailer'];
+       $user_reference_id=$data['retailer_site_user']['user_reference_id'];
+       $retailer=$this->get('admin.helper.retailer')->find($retailerId);       
+       $entity= $this->get('user.helper.user')->find($id);
+       $this->get('admin.helper.retailer.site.user')->addNew($retailer,$entity,$user_reference_id);
+        return $this->redirect($this->generateUrl('admin_user_detail_show', array('id' => $entity->getId())));
+   }
+   
+   
+   public function editRetailerSiteUserAction($user_id,$id)
+   {
+       $entity=$this->get('admin.helper.retailer.site.user')->find($id);
+       if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Retailer Site User.');
+        }
+        $user=$this->get('user.helper.user')->find($user_id);
+        $form = $this->createForm(new RetailerSiteUserType('edit'), $entity);
+        return $this->render('LoveThatFitAdminBundle:User:edit_retailer_site_user.html.twig', array(
+                    'user' => $user,                   
+                    'form' => $form->createView(),
+                    'entity'=>$entity, 
+                ));
+   }   
+   public function updateRetailerSiteUserAction(Request $request,$user_id,$id)
+   {
+       $data = $request->request->all();    
+       $retailerId=$data['retailer_site_user']['Retailer'];
+       $user_reference_id=$data['retailer_site_user']['user_reference_id'];
+       $retailer=$this->get('admin.helper.retailer')->find($retailerId);       
+       $entity= $this->get('user.helper.user')->find($user_id);
+       $retailerSiteUser=$this->get('admin.helper.retailer.site.user')->find($id);
+       $this->get('admin.helper.retailer.site.user')->update($retailerSiteUser,$retailer,$entity,$user_reference_id);
+        return $this->redirect($this->generateUrl('admin_user_detail_show', array('id' => $entity->getId())));
+   }
    
     public function deleteRetailerSiteUserAction($id)
     {
@@ -221,11 +275,6 @@ class UserController extends Controller {
     }
     
     
-   public function editRetailerSiteUserAction($id)
-   {
-       $entity=$this->get('admin.helper.retailer.site.user')->find($id);
-       
-       
-   }
+   
     
 }

@@ -1,0 +1,16 @@
+<form action="{{ path('admin_retailer_site_user_update', {'user_id':user.Id,'id':entity.Id})}}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}     
+    <div class="span3">Retailer</div>
+<div class="span3">{{ form_widget(form.Retailer) }}{{ form_errors(form.Retailer) }}</div>
+<div class="span3">Reference</div>
+<div class="span3">{{ form_widget(form.user_reference_id) }}{{ form_errors(form.user_reference_id) }}</div>
+<div class="span3">{{ form_rest(form) }} 
+       <div class="clr_bth"></div> 
+       <input type="submit" value="Update" />
+       <a href="{{ path('admin_users') }}" class="btn">Cancel</a>    
+       </form>                          
+                                
+                                
+                                
+                                
+    

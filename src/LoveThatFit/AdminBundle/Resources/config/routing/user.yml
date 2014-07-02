@@ -43,10 +43,22 @@ admin_user_size_compare:
     pattern:  /admin/user/compare/size/mannequin
     defaults: { _controller: LoveThatFitAdminBundle:User:comapareUserSize}
 
+admin_retailer_site_user_new:
+    pattern:  /admin/retailer/site/user/{id}/new
+    defaults: { _controller: LoveThatFitAdminBundle:User:newRetailerSiteUser}
+    
+admin_retailer_site_user_create:
+    pattern:  /admin/retailer/site/user/{id}/create
+    defaults: { _controller: LoveThatFitAdminBundle:User:createRetailerSiteUser}
+
 admin_retailer_site_user_delete:
-    pattern:  /admin/retailer/site/user/delete/{{id}}
+    pattern:  /admin/retailer/site/user/delete/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:deleteRetailerSiteUser}
 
 admin_retailer_site_user_edit:
-    pattern:  /admin/retailer/site/user/edit/{{id}}
+    pattern:  /admin/retailer/site/user/{user_id}/edit/{id}
     defaults: { _controller: LoveThatFitAdminBundle:User:editRetailerSiteUser}
+
+admin_retailer_site_user_update:
+    pattern:  /admin/retailer/site/user/{user_id}/update/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:User:updateRetailerSiteUser}

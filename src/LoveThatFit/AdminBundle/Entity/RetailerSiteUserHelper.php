@@ -66,6 +66,21 @@ public function findByReferenceId($retailer_id, $user_reference_id=null){
         return $entity;
     }
 
+  public function update($entity,$retailer, $user, $user_reference_id)
+  {
+        $entity->setRetailer($retailer);
+        $entity->setUser($user);
+        $entity->setUserReferenceId($user_reference_id);        
+         $entity->setUpdatedAt(new \DateTime('now'));
+        $this->em->persist($entity);
+        $this->em->flush();
+        return array('message' => 'User Id for retailer succesfully update.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+  }
+    
     //-------------------------------------------------------
 
     public function save($entity) {
