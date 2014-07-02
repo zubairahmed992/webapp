@@ -10,10 +10,10 @@ class ProductItemType extends AbstractType
 {
     
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-      
+    {    
         
-        $builder->add('line_number');
+       
+        $builder->add('sku');
         $builder->add('file');
         
                 
