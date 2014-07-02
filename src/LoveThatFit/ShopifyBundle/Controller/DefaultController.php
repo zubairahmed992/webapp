@@ -5,7 +5,10 @@ namespace LoveThatFit\ShopifyBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
+use LoveThatFit\SiteBundle\Comparison;
+use LoveThatFit\SiteBundle\Algorithm;
+use LoveThatFit\SiteBundle\FitEngine;
+use LoveThatFit\SiteBundle\AvgAlgorithm;
 
 class DefaultController extends Controller
 {
@@ -115,9 +118,10 @@ class DefaultController extends Controller
        // $user_id=$data['user_id'];
         //$sku=$data['sku'];
         $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
-      //  return new response(var_dump($site_user[0]->getUserReferenceId()));
+        
+      // return new response(var_dump($site_user));
         if (!$site_user){
-          ;
+          
             $retailer = $this->get('admin.helper.retailer')->find(1);
             $this->setNewUserSession($user_id, $retailer->getId(), $sku);
             #$user = $this->get('user.helper.user')->find(53);            
@@ -126,8 +130,8 @@ class DefaultController extends Controller
         }else{
            
             $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
-            # render fitting room with alerts
-            return new Response(var_dump($site_user));
+            return $this->redirect($this->generateUrl('external_fitting_room_show'), 301);             
+            //return new Response(var_dump($site_user));
         }
         
        
@@ -140,6 +144,28 @@ class DefaultController extends Controller
          $session->set('shopify_user', array('site_user_id'=>$site_user_id,
                     'retailer_id'=>$retailer_id, 
                     'sku'=>$sku));         
+    }
+  //------------------------------------------------------------
+    public function getFittingAlertAction(){
+        $sku=5;
+        $user = 117;
+        $productItem = $this->get('admin.helper.productitem')->findItemBySku($sku);
+        //return new response(json_encode(var_dump($productItem)));
+        
+        if (!$productItem) return new Response("Product not found!");
+        
+        $product_size = $productItem->getProductSize();
+        $product=$productItem->getProduct();
+        $comp = new AvgAlgorithm($user,$product);
+        $fb=$comp->getSizeFeedBack($product_size);
+        $fits=$fb['feedback']['fits'];        
+        $json_feedback=  json_encode($fb['feedback']);
+        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
+
+        return $this->render('LoveThatFitShopifyBundle:Default:_fitting_feedback.html.twig', 
+                array('product' => $productItem->getProduct(), 
+                        'product_item' => $productItem, 
+                            'data' => $fb));
     }
     
     

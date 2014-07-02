@@ -33,6 +33,11 @@ shopify_fitting_room_show:
 shopify_user_check:
     pattern:  /shopify/user_check/{user_id}/{sku}
     defaults: { _controller: LoveThatFitShopifyBundle:Default:userCheck ,user_id:0,sku:0}    
+ 
+shopify_fitting_alerts:
+    pattern:  /shopify/fitting_alerts
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:getFittingAlert }    
+   
 
 #-------------------------------------------------------------------
 shopify_data_index:
