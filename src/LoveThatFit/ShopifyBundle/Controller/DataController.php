@@ -13,6 +13,9 @@ class DataController extends Controller
     
     
     public function indexAction() {
+        $variants=array('product_name'=>'Teired swirl dress');
+        $data=  $this->get('admin.helper.productitem')->findDetailsByVariants($variants);
+        return new Response(json_encode($data));
         $form = $this->createFormBuilder()
                 ->add('csvfile', 'file')
                 ->getForm();
@@ -21,6 +24,7 @@ class DataController extends Controller
     }
     
     public function skuUploadAction(Request $request) {
+        
         $form = $this->createFormBuilder()
                 ->add('csvfile', 'file')
                 ->getForm();

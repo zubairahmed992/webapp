@@ -38,11 +38,23 @@ security:
                 login_path:  /retailer/login
                 check_path:  /retailer/login_check
                 username_parameter: _username
-                password_parameter: _password
-                
+                password_parameter: _password                
             logout:
                path:   /retailer/logout
                target: /retailer/login
+        
+        external_site:
+            provider: user_db
+            pattern:    ^/external
+            anonymous: ~
+            form_login:
+                login_path:  /external/login
+                check_path:  /external/login_check
+                username_parameter: _username
+                password_parameter: _password                
+            logout:
+               path:   /external/logout
+               target: /external/login       
         
         secured_area:
             provider: user_db
@@ -58,19 +70,7 @@ security:
                path:   /logout
                target: /login       
 
-        external_site:
-            provider: user_db
-            pattern:    ^/external
-            anonymous: ~
-            form_login:
-                login_path:  /external/login
-                check_path:  /external/login_check
-                username_parameter: _username
-                password_parameter: _password
-                
-            logout:
-               path:   /external/logout
-               target: /external/login       
+
                
 #               success_handler: authentication_handler
             #http_basic:

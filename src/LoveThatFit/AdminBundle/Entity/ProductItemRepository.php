@@ -110,6 +110,15 @@ class ProductItemRepository extends EntityRepository
    
   public function findDetailsByVariants($variants){
        $query = $this->getEntityManager()
+                    ->createQuery("SELECT p FROM LoveThatFitAdminBundle:Product p") ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }  
+  }
+  public function _findDetailsByVariants($variants){
+       $query = $this->getEntityManager()
                     ->createQuery("SELECT pi,ps,pc,p,b FROM LoveThatFitAdminBundle:ProductItem pi
                         JOIN pi.product_size ps
                         JOIN pi.product_color pc
