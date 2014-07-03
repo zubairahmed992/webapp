@@ -108,8 +108,8 @@ class ProductItemRepository extends EntityRepository
         }  
   }
    
-  public function findDetailsByVariants($variants){
-       $query = $this->getEntityManager()
+  public function findDetailsByVariants($variants=null){
+      $query = $this->getEntityManager()
                     ->createQuery("SELECT p.id,p.name as product_title, b.name as brand_name,
                         pi.id as item_id, 
                         ps.id as size_id, ps.title as size_title, ps.body_type as body_type,
