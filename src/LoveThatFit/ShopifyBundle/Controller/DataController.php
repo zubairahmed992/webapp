@@ -36,7 +36,7 @@ class DataController extends Controller
         $pcsv = new ShopifyCSVHelper($filename);        
         $csv_data = $pcsv->convertToArray();
         $pp=$this->fillMatched($csv_data);
-        
+        return $this->render('LoveThatFitShopifyBundle:Data:_summary.html.twig', array('data' => $pp));
         return new Response(json_encode($pp));
         
      }
@@ -46,6 +46,7 @@ class DataController extends Controller
             $variants=array('product_name'=>$value['title'], 'brand_name'=>$value['vendor']);
             $dbp=  $this->get('admin.helper.productitem')->findDetailsByVariants($variants);
             array_push($tt, $this->match($value, $dbp));    
+            #$tt[$value['title']]=$this->match($value, $dbp);
          }
          return $tt;
      }
@@ -54,9 +55,9 @@ class DataController extends Controller
          foreach ($csvp['variant'] as $vk=>$vv){
              $item_id=$this->findItemByVariant($vv, $dbp);
              if($item_id){
-                 $tt[$csvp['vendor']." - ".$csvp['title']." - ".$vv['Size'] ." - ". $vv['Color'] ." - ". $vv['variant_sku']]=$item_id;
+                 $tt[$csvp['vendor']." -> ".$csvp['title']." ->Color:(" . $vv['Color'] .") ->Size:(". $vv['Size'] .") ->(". $vv['variant_sku'].")"] = 'Updated';
              }else{
-                 $tt[$csvp['vendor']." - ".$csvp['title']." - ".$vv['Size'] ." - ". $vv['Color'] ." - ". $vv['variant_sku']]='not matched';
+                 $tt[$csvp['vendor']." -> ".$csvp['title']." ->Color:(".$vv['Color'] .") ->Size:(". $vv['Size'] .") ->(". $vv['variant_sku'].")"] = 'not matched';                 
              }
          }
          return $tt;

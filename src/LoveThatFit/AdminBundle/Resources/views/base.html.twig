@@ -24,7 +24,10 @@
           <a class="brand" href="#"><img src="{{ asset('bundles/lovethatfit/admin/images/ltf_logo-f29cf3839961bcee3cb58b93121e379d.png') }}"></a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">{{ app.user.username }}</a>
+                {% if app.user %}
+                       Logged in as <a href="#" class="navbar-link">{{ app.user.username }}</a>
+                {% endif %}
+           
             </p>
             <!-- Top Navigation Start -->
             <ul class="nav">
