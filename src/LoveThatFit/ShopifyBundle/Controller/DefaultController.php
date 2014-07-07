@@ -9,6 +9,7 @@ use LoveThatFit\SiteBundle\Comparison;
 use LoveThatFit\SiteBundle\Algorithm;
 use LoveThatFit\SiteBundle\FitEngine;
 use LoveThatFit\SiteBundle\AvgAlgorithm;
+use LoveThatFit\UserBundle\Entity\User;
 
 class DefaultController extends Controller
 {
@@ -116,7 +117,7 @@ class DefaultController extends Controller
        
         $data = $request->request->all();
        // $user_id=$data['user_id'];
-        //$sku=$data['sku'];
+        
         $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
         
       // return new response(var_dump($site_user));
@@ -148,19 +149,21 @@ class DefaultController extends Controller
   //------------------------------------------------------------
     public function getFittingAlertAction(){
         $sku=5;
-        $user = 117;
+        $user_id=117;
+        $user = $this->get('user.helper.user')->find($user_id);
         $productItem = $this->get('admin.helper.productitem')->findItemBySku($sku);
-        //return new response(json_encode(var_dump($productItem)));
+       // return new response(json_encode($productItem->getId()));
         
         if (!$productItem) return new Response("Product not found!");
         
         $product_size = $productItem->getProductSize();
+        //return new response(json_encode($product_size->getId()));
         $product=$productItem->getProduct();
         $comp = new AvgAlgorithm($user,$product);
         $fb=$comp->getSizeFeedBack($product_size);
         $fits=$fb['feedback']['fits'];        
         $json_feedback=  json_encode($fb['feedback']);
-        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
+        //$this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
 
         return $this->render('LoveThatFitShopifyBundle:Default:_fitting_feedback.html.twig', 
                 array('product' => $productItem->getProduct(), 

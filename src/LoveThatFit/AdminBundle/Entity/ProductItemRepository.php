@@ -93,16 +93,15 @@ class ProductItemRepository extends EntityRepository
     }
 #----------------------------------Find Item By SKU---------------------------#
   public function findItemBySku($sku){
+      
+      
        $query = $this->getEntityManager()
-                    ->createQuery("SELECT pi,ps,pc FROM LoveThatFitAdminBundle:ProductItem pi
-                        JOIN pi.product_size ps
-                        JOIN pi.product_color pc
-                        JOIN pi.product p
+                    ->createQuery("SELECT pi FROM LoveThatFitAdminBundle:ProductItem pi
                         WHERE
                         pi.sku = :sku "                         
        )->setParameters(array('sku' => $sku)) ;
         try {
-            return $query->getResult();
+            return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }  
