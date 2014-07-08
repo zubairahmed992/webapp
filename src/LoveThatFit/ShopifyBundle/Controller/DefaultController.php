@@ -102,6 +102,8 @@ class DefaultController extends Controller
     #--------------------------------------------------------------- 
      public function shopifySimulatorAction()
     {
+         
+
         $latest = $this->get('admin.helper.product')->listByType(array('limit'=>5, 'list_type'=>'latest'));
          return $this->render('LoveThatFitShopifyBundle:Default:shopify_simulator.html.twig', array('products'=> $latest));
     }
@@ -114,7 +116,7 @@ class DefaultController extends Controller
     }
  // User Sku ---------------------
     public function userCheckAction(Request $request,$user_id,$sku){ 
-       
+      
         $data = $request->request->all();
        // $user_id=$data['user_id'];
         
@@ -169,6 +171,19 @@ class DefaultController extends Controller
                 array('product' => $productItem->getProduct(), 
                         'product_item' => $productItem, 
                             'data' => $fb));
+    }
+    
+    // ------------------Create HTML File ----------------------------
+    public function createHTMLDocAction(){
+        
+        $stringData = "<p>whatever you want inside the html file</p>";
+        $fullPath =  "fileName.html";
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment;filename="'.$fullPath);
+        $response->setContent($stringData);
+        return $response;
+        exit(); 
     }
     
     

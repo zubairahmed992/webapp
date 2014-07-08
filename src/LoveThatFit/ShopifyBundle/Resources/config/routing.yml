@@ -36,7 +36,11 @@ shopify_user_check:
  
 shopify_fitting_alerts:
     pattern:  /shopify/fitting_alerts
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:getFittingAlert }    
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:getFittingAlert } 
+ 
+hopify_create_html:
+    pattern:  /shopify/create_html
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:createHTMLDoc }     
    
 
 #-------------------------------------------------------------------
