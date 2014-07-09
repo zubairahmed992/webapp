@@ -64,7 +64,7 @@ class DefaultController extends Controller
     try{
       $request = array(
           "asset" => array(
-            "key" => "assets/".$name,
+            "key" => "snippets/".$name,
             "value" => $contents
           )
       );

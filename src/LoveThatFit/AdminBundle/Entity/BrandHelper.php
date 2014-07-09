@@ -295,7 +295,7 @@ public function getRetailerBrandById($id)
   {
     if ( is_array($value) )
     {
-      $result[$key] = $this->super_unique($value);
+      $result[] = $this->super_unique($value);
     }
   }
 
@@ -307,8 +307,6 @@ public function getBrandRetailerList($date_fromat){
     foreach($data as $key){
     if($key['title']!=null){
       $arr[]=array('retId'=>$key['ret_id'],'name'=>$key['title'],'image'=>$key['ret_image']);
-    
-   
     }
     if($key['brand_id']!=null){
         if($key['ret_id']==null){
