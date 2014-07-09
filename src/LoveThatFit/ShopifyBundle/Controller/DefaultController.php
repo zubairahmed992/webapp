@@ -50,14 +50,35 @@ class DefaultController extends Controller
         $access_token = '8b14eb6efcf7c5fa7b0c76e9b329d06e';        
         $shop_domain = 'lovethatfit-2.myshopify.com';        
         $shopify = \sandeepshetty\shopify_api\client($shop_domain, $access_token, $app_specs['api_key'], $app_specs['shared_secret']);
+        #return new Response(json_encode($shopify('GET', '/admin/themes.json')));
+        
+        
+        $contents="<div id='ajax_request'>Its not Time in the development but its development in the time that counts</div>";
+        $response=$this->shopifyAPI_assets($shopify, '8753791', $contents, 'formulaone.liquid');
+        return new Response($response);
         $products = $shopify('GET', '/admin/products.json');
         return new Response($this->foo($products));
      }
+     
+     private function shopifyAPI_assets($shopify,$id,$contents,$name){
+    try{
+      $request = array(
+          "asset" => array(
+            "key" => "assets/".$name,
+            "value" => $contents
+          )
+      );
+      $response = $shopify("PUT","/admin/themes/{$id}/assets.json",$request);
+      return var_dump($response);
+    }catch (ShopifyApiException $e){
+      return $e;
+    }
+  }
     #---------------------------------------------------------------  
      
       private function foo($product_json) {
         #return $product_json;
-        return $product_json;
+        return json_encode($product_json, true);
         $products = json_decode($product_json, true);
         $str = '';
         foreach ($products['products'] as $p => $key) {
@@ -116,15 +137,17 @@ class DefaultController extends Controller
     }
  // User Sku ---------------------
     public function userCheckAction(Request $request,$user_id,$sku){ 
-      
+    
         $data = $request->request->all();
        // $user_id=$data['user_id'];
-        
+       
         $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
-        
-      // return new response(var_dump($site_user));
-        if (!$site_user){
-          
+       if($user_id==null){
+           return $this->redirect($this->generateUrl('external_login'), 301);             
+       } 
+      //return new response(var_dump($site_user));
+        if (!empty($site_user)){
+         
             $retailer = $this->get('admin.helper.retailer')->find(1);
             $this->setNewUserSession($user_id, $retailer->getId(), $sku);
             #$user = $this->get('user.helper.user')->find(53);            
@@ -132,7 +155,11 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('external_login'), 301);             
         }else{
            
+           
             $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
+            if($itemBySku==null || empty($itemBySku)){
+                return new response('Unable to find product ');
+            }
             return $this->redirect($this->generateUrl('external_fitting_room_show'), 301);             
             //return new Response(var_dump($site_user));
         }
