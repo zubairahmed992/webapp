@@ -148,6 +148,7 @@ $(".next_step3").click(function(){
 
 
 $(".next_step2").click(function(){
+    
     submit_all_step_3 = false;
     submit_step_3_first = true;
     submit_step_3_second = false;
@@ -201,7 +202,7 @@ $("#step_one_a").mousedown(function(){
 
 var req_deg = 0;
 function rotate_me_to(rotate_side, deg_to_rotate){
-    
+
 if(rotate_side == "cw" || rotate_side == "acw"){
 
 if(rotate_side == "cw"){
@@ -241,7 +242,7 @@ if(rotate_side == "just_shift"){
    
 
 shift_to_canvas(req_deg,calculated_x,calculated_y);
-
+    
 }
 
 
@@ -265,7 +266,9 @@ $('.reg_next_step2').click(function(){
    $(".action_buts_bar").hide();
 });
 $('.next_step2').click(function(){
+    
    rotate_me_to("just_shift");
+   
    $(".action_buts_bar").hide();
 
     $(".hiw_step_1").fadeOut(200);
@@ -533,7 +536,7 @@ if(chk_no_img_path == false){
 
 function call_settings(responseText, statusText, xhr, $form){
     
-          
+         // alert("Check");
         $(".zoom_edit").hide();
         
    var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
@@ -689,6 +692,7 @@ function post_content_of_canvas(){
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;
     var img_update_url = document.getElementById('hdn_image_update_url').value;
+alert(img_update_url);
 
     var data = document.getElementById('cnv_img_crop').toDataURL();
     
@@ -696,6 +700,8 @@ function post_content_of_canvas(){
                       imageData : data,
                       id : entity_id
               }, function(data) {
+                  
+                  alert(data);
   
               var obj_url = jQuery.parseJSON( data );
                

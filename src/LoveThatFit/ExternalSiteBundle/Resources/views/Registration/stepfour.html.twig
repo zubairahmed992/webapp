@@ -4,11 +4,9 @@
 
 
 
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_four.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/external/ext_user_registration_step_four.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/step_3_new.js') }}"></script>
-
-
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/external/ext_step_3_new.js') }}"></script>
 
 
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
@@ -17,7 +15,7 @@
     
 
     
-          <form id="frmUserMeasurement" action="{{ path('external_measurement_vertical_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_vertical_form) }}>
+          <form id="frmUserMeasurement" action="{{ path('measurement_vertical_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_vertical_form) }}>
                 {{ form_errors(measurement_vertical_form) }}
                 {{ form_widget(measurement_vertical_form.shoulder_height) }}
                 {{ form_widget(measurement_vertical_form.bust_height) }}
@@ -28,7 +26,7 @@
            </form>
     
     
-           <form id="frmUserMeasurement_2" action="{{ path('external_measurement_horizontal_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_horizontal_form) }}>
+           <form id="frmUserMeasurement_2" action="{{ path('measurement_horizontal_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_horizontal_form) }}>
              {{ form_errors(measurement_horizontal_form) }}
                 {{ form_widget(measurement_horizontal_form.shoulder_width) }}
                 {{ form_widget(measurement_horizontal_form.bust_width) }}
@@ -53,7 +51,7 @@
             <li class="active"><span>4</span></li>
         </ul>
     </div>-->
-    <span style="display:none" id='spn_image_update_url'>"{{ path('external_measurement_horizontal_position_update', { 'id': entity.id })}}"</span>    
+    <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span>    
         
     <div class="action_cnt">
         <div class="steps step_4">
@@ -61,11 +59,11 @@
             <p  id="sizeerror" style="color:#d14; size:10; display:none;">Image Size is very large</p>
             <h2>Upload Photo</h2>
 
-            <form id="frmUserImage" action="{{ path('external_registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
+            <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
-                <input type="hidden" id="hdn_image_update_url" value="{{ path('external_measurement_horizontal_position_update', { 'id': entity.id })}}"/>
-                <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
+                <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('external_fitting_room_show')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 
                 
@@ -90,7 +88,7 @@
                     </div>
                 
                 {% if(edit_type=="registration")%}
-                    <div class="upload_again_hldr"><a href="{{ path('external_step_four_edit') }}">Try Another Photo</a></div>
+                    <div class="upload_again_hldr"><a href="{{ path('registration_step_four_edit') }}">Try Another Photo</a></div>
                  {% else %}
                   <div class="upload_again_hldr"><a href="{{ path('fitting_room_image_edit') }}">Try Another Photo</a></div>
                  {% endif%} 
@@ -129,7 +127,7 @@
             <div class="frm_ele step4_btns">
                   
                   {% if(edit_type=="registration")%}
-                  <a class="reg_next_step reg_second" href="{{path('external_registration_measurement_edit')}}">Back</a>
+                  <a class="reg_next_step reg_second" href="{{path('registration_measurement_edit')}}">Back</a>
                   <a class="reg_next_step" href="{{path('inner_site_index')}}">Skip</a>
                  {% else %}
                   <a class="reg_next_step" href="{{path('inner_site_index')}}">Back</a>                 
@@ -139,7 +137,53 @@
             <!--/.action_cnt--></div>
     
     
-  
+    <div class="how_it_works">
+        <h2>How It Works</h2>
+        <ol class="hiw_upload_photo">
+            <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>
+            <li>For photo - Stand straight, arms relaxed by side, shoulders back and feet shoulder width apart.<br> <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
+            <li>Do not forget to smile!</li>
+            <li>Click browse to upload photo</li>
+            
+            <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        </ol>
+        <ol class="hiw_step_1">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'">here</a> </li>
+        
+        <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        
+        </ol>
+        <ol class="hiw_step_2">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'">here</a> </li>
+       <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        
+        
+        </ol>
+        
+         <ol class="hiw_step_3">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'">here</a> </li>
+        
+              <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+         
+         </ol>
+        
+        
+        
+        
+        
+        
+    </div>
         <!--/.action_blk--></section>
 {% endblock %}
 
@@ -472,6 +516,7 @@
                         <div id="play_area" class="play_area hide">
                             
                             
+                            <canvas id="canv_mask" resize></canvas>
                             
                             <div class="center_mark"></div>
                             <div class="height_top_mark"></div>
@@ -501,61 +546,7 @@
                             
                             <div id="uploaded_photo" class="uploaded_photo full_opacity"></div>
                         </div>
-                        
-                          
-                        
-                        
                         <!--/.play_area_hldr--></div>
-            
-            <div id="how_it_works" class="how_it_works hide">
-        <h2>How It Works</h2>
-        <ol class="hiw_upload_photo">
-            <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>
-            <li>For photo - Stand straight, arms relaxed by side, shoulders back and feet shoulder width apart.<br> <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
-            <li>Do not forget to smile!</li>
-            <li>Click browse to upload photo</li>
-            
-            <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        </ol>
-        <ol class="hiw_step_1">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'">here</a> </li>
-        
-        <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        
-        </ol>
-        <ol class="hiw_step_2">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'">here</a> </li>
-       <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        
-        
-        </ol>
-        
-         <ol class="hiw_step_3">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'">here</a> </li>
-        
-              <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-         
-         </ol>
-        
-        
-        
-        
-        
-        
-    </div>
-            
-            
             
             <div class="next_btn_4">
                 <div class="frm_ele">
@@ -573,3 +564,4 @@
             
 </section>
 {% endblock %}
+

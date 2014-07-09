@@ -35,8 +35,7 @@ external_measurement_vertical_position_update:
 external_measurement_horizontal_position_update:
     pattern:  /external/measurement_horizontal_position_update/{id}
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourHorizontalMeasurementUpdate}
-    requirements: 
-          _method: post            
+             
 external_parent_child:
     pattern:  /external/parent/child/{id}
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:parentChildEmail }
@@ -47,7 +46,10 @@ external_step_four_edit:
     pattern:  /external/step_four_edit
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourEdit }    
     
-    
+external_registration_step_four_create:
+    pattern:  /external/step_four_create/{id}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:stepFourCreate }
+      
 #--------------------------------------------------------------------
 
 external_fitting_room_show:

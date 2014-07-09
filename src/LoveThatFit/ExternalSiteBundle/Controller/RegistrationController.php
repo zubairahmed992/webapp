@@ -86,7 +86,7 @@ class RegistrationController extends Controller
                 $user_helper->getLoggedInById($user);
                 
                 //send registration email ....            
-                $this->get('mail_helper')->sendRegistrationEmail($user);
+                //$this->get('mail_helper')->sendRegistrationEmail($user);
 
                 if ($user->getGender() == 'm') {
 
@@ -342,11 +342,11 @@ class RegistrationController extends Controller
         $form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $form->bind($request);
 
-        if ($form->isValid()) {
+       if ($form->isValid()) {
             $this->get('user.helper.measurement')->saveMeasurement($measurement);
             return new Response('Measurement Updated');
         } else {
-            return new Response('Measurement has not been updated!');
+          return new Response('Measurement has not been updated!');
         }
     }
 
