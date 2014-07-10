@@ -581,6 +581,7 @@ function call_settings(responseText, statusText, xhr, $form){
         var photo_file_name = $("#user_file").val();
         $("#inp_txt_file_name").val(photo_file_name);
         $("#play_area").removeClass("hide");
+        $(".ext_btns").hide();
         $("#how_it_works").removeClass("hide");
         $(".int_fitting_room").addClass("hide");
         $("#play_area").prepend('<div class="uploading_in_progress"></div>');

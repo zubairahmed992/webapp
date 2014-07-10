@@ -5042,7 +5042,7 @@ transform: rotateX(0deg) rotateY(0deg);
     width:90px;
     background: url("../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
     position: absolute;
-    top:225px;
+    top:185px;
     left:864px;
     height: 210px;
     padding: 0px 0px 20px 10px;
@@ -5060,5 +5060,25 @@ transform: rotateX(0deg) rotateY(0deg);
     z-index: 0;
 }
 
+.hw_works{ 
+    left: -195px;
+    position: absolute;
+    top: 170px;
+    width:250px;
+}
+
+#hw_works_img{
+    float:none;
+}
+
+.step4opt{
+    
+    margin-top: -165px!important;
+}
+
+.ext_site_hldr .next_btn_4{
+    left: 760px;
+    top: 700px;
+}
 
 
