@@ -67,24 +67,24 @@ $oauth_signature = base64_encode(hash_hmac('sha1', $base_info, $composite_key, t
 $oauth['oauth_signature'] = $oauth_signature;
 
 // Make Requests
-$header = array($this->buildAuthorizationHeader($oauth), 'Expect:');
-$options = array( CURLOPT_HTTPHEADER => $header,
+//$header = array($this->buildAuthorizationHeader($oauth), 'Expect:');
+//$options = array( CURLOPT_HTTPHEADER => $header,
                   //CURLOPT_POSTFIELDS => $postfields,
-                  CURLOPT_HEADER => false,
-                   CURLOPT_URL => $url.'?screen_name=LoveThatFit&count=10', 
-                  CURLOPT_RETURNTRANSFER => true,
-                  CURLOPT_SSL_VERIFYPEER => false);
+//                  CURLOPT_HEADER => false,
+  //                 CURLOPT_URL => $url.'?screen_name=LoveThatFit&count=10', 
+    //              CURLOPT_RETURNTRANSFER => true,
+      //            CURLOPT_SSL_VERIFYPEER => false);
 
 
 
-$feed = curl_init();
-curl_setopt_array($feed, $options);
-$json = curl_exec($feed);
-curl_close($feed);
+//$feed = curl_init();
+//curl_setopt_array($feed, $options);
+//$json = curl_exec($feed);
+//curl_close($feed);
 
-$twitter_data = json_decode($json);
+//$twitter_data = json_decode($json);
 
-return $twitter_data;
+//return $twitter_data;
 }
 
 #---------------------------CAll Tweet--------------------------------------#

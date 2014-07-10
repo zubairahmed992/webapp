@@ -1,4 +1,1365 @@
+{% extends 'LoveThatFitExternalSiteBundle::ext_base.html.twig' %}
 
-<div style="background-color: #eeeeee; width: 300px; height: 700px;">
-fitting room
-</div>
+{% block left_navigation %}
+
+{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+{% block product_slider %}
+{% if (app.user.measurement)%}
+
+
+
+<input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
+<input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
+<input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
+<span id="hdn_url_1" style="display: none">{{path('user_mannequin')}}</span>
+
+
+
+
+{% endif %}
+
+
+
+
+<section class="products">
+    
+    <div id="fitting_alerts">
+        <div class="arrow_img_alerts"></div>
+        <h2>Fitting Alerts</h2>
+        <div class="fitting_alerts_cnt">
+            <div id="curr_top_alerts"></div>
+            <div id="curr_bottom_alerts"></div>
+            <div id="curr_dress_alerts"></div>
+        <!--/.fitting_alerts_cnt--></div>
+    <!--/#fitting_alerts--></div>
+    
+    <div class="prod_slider_hldr">
+        <div class="slider_but_top click_able_top"></div>
+        <div class="prod_sliding_area">
+            
+          <div id="ltf_fitting_room">
+              <img id="patch_btm" src="{{ asset('bundles/lovethatfit/site/images/bottom_patch.png') }}" />
+          <div class="but_opn_fr">
+                  Fitting Room
+              </div>
+              <div class="but_cls_fr">
+                  Products
+              </div>
+           <div class="ltf_fitting_room_inner">
+          
+               <div id="recent_prods_area">
+                   <div class="recent_head">
+                       Recently Tried
+                   </div>
+                   <div class="recent_prods_slider_hldr">
+                       <div id="rece_up_but"><span class="click_able_top"></span></div>
+                       <div id="recent_prods">
+                           {% render 'LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList' with {'list_type' : 'recently_tried_on'} %}
+                       </div>
+                       <div>{# render 'LoveThatFitSiteBundle:CompareProduct:list' #}</div>
+                       <div id="rece_down_but"><span class="click_able_btm"></span></div>
+                   </div>
+               </div> 
+               
+               
+               
+          <!-- ---- New Product Detail Show Here  -->  
+          
+          
+           <div id="products_details">
+               <div id='top_type_select_color'></div>
+               <div id='bottom_type_select_color'></div>
+               <div id='dress_type_select_color'></div>
+               <!--    
+               <div id="select_size" class="ele_row select_size">
+                      
+                   </div>
+                   <div id="select_color" class="ele_row select_color">
+                      
+                   </div>
+               -->
+                   <div id="prod_accordion">
+                       <div id="prod_type_top_hlder" class="prod_row">
+                            <div class="prod_handle">
+                                <div class="lft_col">
+                                    <div class="small_thumb">
+                                        <img class="small_thumb_img" src="{{ asset('bundles/lovethatfit/site/images/pattern.png') }}">
+                                    </div>
+                                </div>
+                                <div class="rgt_col">
+                                    <h3>Product Name Here</h3>
+                                </div>
+                            </div>
+                            <div class="prod_applied_detail">
+                                <div class="but_remove_prod"><img src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
+                                <div class="lft_col">
+                                    <div class="small_thumb"></div>
+                                    <div class="prod_price">Compare</div>
+                                    <div class="prod_share"></div>
+                                    <div class="action_icons">
+                                        <span class="fav_prod"><img src="{{ asset('bundles/lovethatfit/site/images/like_icon.png') }}"></span>
+                                        <span class="cart_prod"><img src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}"></span>
+                                    </div>
+                                </div>
+                                <div class="rgt_col">
+                                    <h3>This</h3>
+                                    <ul>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                    </ul>
+                                    <div class="rec_tip">
+                                        <span class="bolder">Tip:</span> Try Size 4.
+                                    </div>
+                                </div>
+                            </div>
+                           <!--/.prod_row--></div>
+                           <div id="prod_type_bottom_hlder" class="prod_row">
+                            <div class="prod_handle">
+                                <div class="lft_col">
+                                    <div class="small_thumb">
+                                        <img class="small_thumb_img" src="{{ asset('bundles/lovethatfit/site/images/pattern.png') }}">
+                                    </div>
+                                </div>
+                                <div class="rgt_col">
+                                    <h3>Product Name Here</h3>
+                                </div>
+                            </div>
+                            <div class="prod_applied_detail">
+                                <div class="but_remove_prod"></div>
+                                <div class="lft_col">
+                                    <div class="small_thumb"></div>
+                                    <div class="prod_price">Compare</div>
+                                    <div class="prod_share"></div>
+                                    <div class="action_icons">
+                                        <span class="fav_prod"></span>
+                                        <span class="cart_prod"></span>
+                                    </div>
+                                </div>
+                                <div class="rgt_col">
+                                    <h3>This</h3>
+                                    <ul>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                    </ul>
+                                    <div class="rec_tip">
+                                        <span class="bolder">Tip:</span> Try Size 4.
+                                    </div>
+                                </div>
+                            </div>
+                           <!--/.prod_row--></div>
+                           <div id="prod_type_dress_hlder" class="prod_row">
+                            <div class="prod_handle">
+                                <div class="lft_col">
+                                    <div class="small_thumb">
+                                        <img class="small_thumb_img" src="{{ asset('bundles/lovethatfit/site/images/pattern.png') }}">
+                                    </div>
+                                </div>
+                                <div class="rgt_col">
+                                    <h3>Product Name Here</h3>
+                                </div>
+                            </div>
+                            <div class="prod_applied_detail">
+                                <div class="but_remove_prod"></div>
+                                <div class="lft_col">
+                                    <div class="small_thumb"></div>
+                                    <div class="prod_price">Compare</div>
+                                    <div class="prod_share"></div>
+                                    <div class="action_icons">
+                                        <span class="fav_prod"></span>
+                                        <span class="cart_prod"></span>
+                                    </div>
+                                </div>
+                                <div class="rgt_col">
+                                    <h3>This</h3>
+                                    <ul>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                        <li>Loose</li>
+                                    </ul>
+                                    <div class="rec_tip">
+                                        <span class="bolder">Tip:</span> Try Size 4.
+                                    </div>
+                                </div>
+                            </div>
+                           <!--/.prod_row--></div>
+                   <!--/#prod_accordion--></div>
+               
+               
+               <div id="compare_wrap">
+               {% render 'LoveThatFitSiteBundle:CompareProduct:list' %}
+               </div>
+               
+               
+               
+               <!--/#products_details--></div>
+              
+              
+
+          
+               
+              
+            <div class="int_fitting_room">
+                <div id="fitting_tab">
+                    <a href="{{ path('fitting_room_image_edit') }}">Edit/Upload Photo</a>
+                </div>
+                <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
+                <div id="full_dropable" class="hide"></div>
+                <div id="top_dropable" class="hide"></div>
+                <div id="bottom_dropable" class="hide"></div>
+                
+                
+                
+                
+                {% if app.user.image != null %}
+                <input id="hdn_dm_status" type="hidden" value="user" />
+                <div id="user_dummy_img_hldr">
+                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123">
+                </div>
+                {%else%}
+                <input id="hdn_dm_status" type="hidden" value="default" />
+                        
+                
+                <div id="default_dummy_hldr">
+                    <div id="default_dummy_inner">
+                        <div id="dm_rgt_arm_hldr">
+                            <div id="dm_rgt_arm_part_1"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_1.png') }}" /></div>
+                            <div id="dm_rgt_arm_part_2"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_2.png') }}" /></div>
+                        </div>
+                        
+                        <div id="dm_mid_body_hldr">
+                            <div id="dm_part_8" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_8.png') }}" /></div>
+                            <div id="dm_part_7" class="dm_part_div">
+                                
+                                <img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_7.png') }}" />
+                                
+                            </div>
+                            <div id="dm_part_6" class="dm_part_div">
+                                <div id="dm_part_6_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_lft.png') }}" /></div>
+                                <div id="dm_part_6_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_mid.png') }}" /></div>
+                                <div id="dm_part_6_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_rgt.png') }}" /></div>
+                            </div>    
+                            <div id="dm_part_5" class="dm_part_div">
+                                <div id="dm_part_5_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_lft.png') }}" /></div>
+                                <div id="dm_part_5_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_mid.png') }}" /></div>
+                                <div id="dm_part_5_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_rgt.png') }}" /></div>
+                            </div>
+                            <div id="dm_part_4" class="dm_part_div">
+                                <div id="dm_part_4_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_lft.png') }}" /></div>
+                                <div id="dm_part_4_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_mid.png') }}" /></div>
+                                <div id="dm_part_4_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_rgt.png') }}" /></div>
+                            </div>
+                            <div id="dm_part_3" class="dm_part_div">
+                                <div id="dm_part_3_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_lft.png') }}" /></div>
+                                <div id="dm_part_3_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_mid.png') }}" /></div>
+                                <div id="dm_part_3_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_rgt.png') }}" /></div>
+                            </div>
+                            <div id="dm_part_2" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_2.png') }}" /></div>
+                            <div id="dm_part_1" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_1.png') }}" /></div>
+                        </div>
+                        <div id="dm_lft_arm_hldr">
+                            <div id="dm_lft_arm_part_1"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_1.png') }}" /></div>
+                            <div id="dm_lft_arm_part_2"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_2.png') }}" /></div>
+                        </div>
+                        <!--<canvas id="default_m_canv" width="364" height="510"></canvas>-->
+                    </div>
+                </div>
+                    <div class="upload_pic_msg">Please <a href="{{ path('fitting_room_image_edit') }}">Upload Your Photo</a> to try cloths on you.</div>
+                    <div id="user_dummy_img_hldr">
+                    </div>
+                {% endif %}
+            </div> 
+               
+           <!---/#ltf_fitting_room_inner--></div>  
+          <!---/#ltf_fitting_room-->
+          
+         
+           
+          
+              </div>   
+            
+            
+            
+            
+            
+            
+            
+            <div class="play_area_hldr hide">
+                <div id="play_area" class="play_area">
+                    <div id="top_layer"></div>
+                    <div id="dummy_mark"></div>
+                    <div id="uploaded_photo" class="full_opacity"></div>
+                </div>
+                <!--/.play_area_hldr--></div>
+
+          <div class="loading_now">
+              <div class="loading_inner">
+                  <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}">
+              </div>
+          </div>
+          <div id="slider_dis_canv">
+            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
+            <!--.prod_sliding_area--></div>
+           
+        <!---/#dis canv---></div>
+        
+       
+        
+        <div class="slider_but_btm click_able_btm"></div>
+        <!--/.prod_slider_hldr--></div>
+</section>
+
+{% endblock %}
+
+{% block fitting_room %}
+<script>
+    
+function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id ){
+
+    open_fr();
+
+    if(prod_thumb){
+        //alert($(prod_thumb).attr("class"));
+            details_base_url = $(prod_thumb).parent().find(".curr_prod_full_url").html();
+            new_prod_id=$(prod_thumb).attr("id");
+            //alert("fffff: " + new_prod_id);
+        }
+        else{
+            //alert("Else");
+            details_base_url = $('#ajax_product_base_url').text();
+            //details_base_url = "http://dev.lovethatfit.com/ajax/product/";
+          
+            //alert(details_base_url);
+           
+            
+            //details_base_url = "/webapp/web/app_dev.php/ajax/product/";
+            details_base_url = details_base_url + new_prod_id + "/" + new_color_id + "/" + new_size_id;
+            //alert(details_base_url);
+            }
+            $.ajax({
+                url: details_base_url,
+                cache: false,
+                success: function(new_prod_details){
+                    
+                  
+                    var curr_prod_type = $(new_prod_details).find('.current_product_type').html();
+                    var curr_prod_apply = $(new_prod_details).find('.apply_img').attr("href");
+                    var curr_prod_feedback =$(new_prod_details).find('.fitting_alerts_feeback_'+new_prod_id).html();
+                   
+                    //alert(curr_prod_feedback);
+                    
+                    var main_container_hldr;
+                    var main_dropable;
+                    var main_select_color;
+                    
+                    if(curr_prod_type == "top"){
+                        //alert("Top");
+                        if($("#prod_accordion").find("#prod_type_top_hlder")){
+                           $("#prod_accordion").find("#prod_type_top_hlder").fadeOut(200, function(){this.remove();});
+                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           //$("#products_details").prepend("<div id='top_type_select_color'></div>");
+                        }else{
+                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           //$("#products_details").prepend("<div id='top_type_select_color'></div>");
+                        }
+                        main_container_hldr = "#prod_type_top_hlder";
+                        main_dropable = "#top_dropable";
+                        main_select_color = "#top_type_select_color";
+                    }
+                    if(curr_prod_type == "bottom"){
+                    //alert("Bottom");
+                        if($("#prod_accordion").find("#prod_type_bottom_hlder")){
+                           $("#prod_accordion").find("#prod_type_bottom_hlder").fadeOut(200, function(){this.remove();});
+                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           //$("#products_details").prepend("<div id='bottom_type_select_color'></div>");
+                        }else{
+                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                          // $("#products_details").prepend("<div id='bottom_type_select_color'></div>");
+                        }
+                        main_container_hldr = "#prod_type_bottom_hlder";
+                        main_dropable = "#bottom_dropable";
+                        main_select_color = "#bottom_type_select_color";
+                    }
+                    if(curr_prod_type == "dress"){
+                     //alert("Dress");
+                        if($("#prod_accordion").find("#prod_type_dress_hlder")){
+                           $("#prod_accordion").find("#prod_type_dress_hlder").fadeOut(200, function(){this.remove();});
+                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
+                        }else{
+                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
+                        }
+                        main_container_hldr = "#prod_type_dress_hlder";
+                        main_dropable = "#full_dropable";
+                        main_select_color = "#dress_type_select_color";
+                    }
+                    set_select_color(curr_prod_type);
+                    
+                    
+                     $.ajax({
+                        url: curr_prod_feedback,
+                        cache: false,
+                        success: function(curr_prod_alerts){
+                           $(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
+                        }
+                    });  
+                    
+                    $(main_container_hldr + ' .prod_handle').html($(new_prod_details).find('.prod_handle').html());
+                    $(main_container_hldr + ' .prod_applied_detail').html($(new_prod_details).find('.prod_applied_detail').html());
+                    
+                    //alert($(new_prod_details).find('.hldr_of_size_color').html());
+                    $(main_select_color).html($(new_prod_details).find('.hldr_of_size_color').html());
+                    
+                    //$('#select_size').html($(new_prod_details).find('div#hdn_sizes_hldr').html());
+                    //$('#select_color').html($(new_prod_details).find('div#hdn_color_hldr').html());
+                    
+                    $(main_container_hldr).fadeIn(300, function(){$( "#prod_accordion" ).accordion("refresh");});
+                    $("#prod_accordion" ).accordion("refresh");
+                    $("#prod_accordion").accordion({ active: 0}); 
+                    
+                    
+                    
+                    $(main_dropable).fadeOut("200", function (){
+                        $(main_dropable).html("<img class='curr_prod' src='" + curr_prod_apply + "' />").fadeIn();
+                        //$(main_dropable).prepend("<div class='uploading_in_progress set_width_chg'></div>").fadeIn(100);
+                        
+                        //chk_prod_img_load =  document.getElementById(prod_type_applied).width;
+
+                        //chk_applied_loaded(main_dropable);
+                        
+                        $(main_dropable + " img").draggable({
+                                    start: function(){
+                                    },
+                                    drag: function(){
+                                        product_drag_limit_check(this);
+                                    },
+                                    stop: function() {
+                                        
+                                        remove_product_applied(this);
+
+                                    }
+                             
+                                });
+                        
+                      });
+                    
+                    
+                                
+                    
+                     // Ajax for fitting alerts
+                 
+                }
+            }); 
+            
+            //my_curr_prod_apply;
+    }
+    
+// Code for love and unlove, like
+
+function loveItem(item_id)
+{  
+   // alert("test");
+base_url_love=$('#ajax_product_love_url'+item_id).html();
+url_load= "../ajax/user_product_item/create/"+ item_id;
+var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+url_load= "../../ajax/user_product_item/create/"+ item_id;
+}
+
+var jqXHR = $.ajax({
+ 
+  type: "POST",
+  url:url_load,
+success: function (XMLHttpRequest, textStatus, errorThrown) {
+if(jqXHR.responseText.trim()== "success")
+{
+    $("#like_icon_"+item_id).html('');
+    $(".like_icon1_"+item_id).html('');
+  
+    $("#like_icon_"+item_id).replaceWith(' <div class="like_icon1_'+item_id+'"><a href="javascript:void(0);" onclick="lovedItems('+item_id+')" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a><span id="ajax_product_loved_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':'item_id'})}}</span> </div>');
+}else{
+ alert('Sorry .. You are overlimit please delete some of your loved products ');
+  }
+         }
+        });
+}
+
+function lovedItems(item_id)
+{  
+  base_url_loved=$('#ajax_product_loved_url'+item_id).text();
+  url_load= "../ajax/user_product_item/delete/"+ item_id;
+  var pathname = window.location.pathname;
+var urlsplit = pathname.split("/");
+var username_lattest_url = urlsplit[6];
+
+if(username_lattest_url){
+ url_load= "../../ajax/user_product_item/delete/"+ item_id;
+}
+  var jqXHR = $.ajax({
+  //url: base_url+"/app_dev.php/ajax/products/my_closet/delete/"+ item_id,
+   url: url_load,
+  success: function (XMLHttpRequest, textStatus, errorThrown) {
+if(jqXHR.responseText.trim()== "success")
+{
+    $("#like_icon_"+item_id).html('');
+    $(".like_icon1_"+item_id).html('');
+    $(".like_icon1_"+item_id).replaceWith(' <div id="like_icon_'+item_id+'"><a href="javascript:void(0);"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}" onclick=loveItem('+item_id+')></a><span id="ajax_product_love_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':'item_id'})}}</span></div>'); 
+}               
+   }
+ });
+}
+
+
+
+
+//--Slider--//
+    
+function set_slider_buttons(){
+  if($("#slider_dis_canv").scrollTop() == 0){
+      $(".slider_but_top").removeClass("click_able_top").addClass("disable_me_top");
+      //alert("top_disabled now");
+  }
+  else {
+      $(".slider_but_top").removeClass("disable_me_top").addClass("click_able_top");
+  }
+  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 500){
+      $(".slider_but_btm").removeClass("click_able_btm").addClass("disable_me_btm");
+      //alert("bottom_disabled now");
+  }
+  else {
+      $(".slider_but_btm").removeClass("disable_me_btm").addClass("click_able_btm");
+  }
+}
+
+
+function set_short_slider_buttons(){
+  if($("#recent_prods").scrollTop() == 0){
+      $("#rece_up_but span").removeClass("click_able_top").addClass("disable_me_top");
+      //alert("top_disabled now");
+  }
+  else {
+      $("#rece_up_but span").removeClass("disable_me_top").addClass("click_able_top");
+  }
+  
+  var chk_it_height = $("#recent_prods ul.prod_wrapper").height();
+  chk_it_height = chk_it_height -380;
+  if($("#recent_prods").scrollTop() >= chk_it_height){
+      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
+      //console.log(chk_it_height);
+  }
+  else {
+      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
+  }
+}
+
+
+function set_droppables(){
+    
+  if($("#hdn_dm_status").attr("value") != "default"){
+    var top_pos_drop = parseInt($("#hdn_prod_top_pos").attr("value"));
+    
+    console.log("Top value = " + top_pos_drop);
+    
+    //top_pos_drop = top_pos_drop * 6;
+    
+    var user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
+    
+    var top_marg = user_height * 13;
+    
+    top_marg = top_marg / 100;
+    
+    top_pos_drop = Math.round(top_marg + top_pos_drop + 1);
+    
+    final_top_pos = top_pos_drop - 1;
+    
+    $("#top_dropable").css("top", final_top_pos + "px");
+    
+    var bottom_pos_drop = parseInt($("#hdn_prod_bottom_pos").attr("value"));
+    
+    //bottom_pos_drop = bottom_pos_drop * 6;
+    
+    var top_marg_btm = user_height * 48;
+    
+    top_marg_btm = top_marg_btm / 100;
+    
+    bottom_pos_drop = Math.round(top_marg_btm + bottom_pos_drop + 23);
+    
+    console.log("Check Botom = " + bottom_pos_drop);
+    
+    bottom_final_pos = bottom_pos_drop - 99;
+    
+    $("#bottom_dropable").css({top: bottom_final_pos + "px"});
+    
+    var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");
+    
+    //dress_pos_drop = dress_pos_drop * 6;
+    
+    $("#full_dropable").css({top: top_pos_drop + "px"});
+  }
+  else {
+      var user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
+    $("#top_dropable").css("top",((21.44*user_height)/100)-24);
+    $("#bottom_dropable").css("top", ((37*user_height)/100));
+    $("#full_dropable").css("top", ((21.44*user_height)/100)-24);
+  }
+}
+$(document).ready(function(){
+  set_droppables();
+  set_slider_buttons();
+  set_short_slider_buttons();
+  set_drag_drop_ele();
+  ///--- Fitting Alert ---///
+              
+            $(".fitting_alert_link").toggle(
+                function () {
+                  $("#fitting_alerts").fadeIn(300);
+                },
+                function () {
+                  $("#fitting_alerts").fadeOut(300);
+                }
+              );
+
+});
+var scroll_heighting = 506;
+    $(".click_a ble_top").click(function (){
+        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        
+    });
+    $(".click _able_btm").click(function (){
+        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        
+    });
+    
+    var short_scroll_heighting = 386;
+    $(".click_able_top").click(function (){
+        $("#recent_prods").animate({"scrollTop" : "-=" + short_scroll_heighting}, 1200, "swing", function (){set_short_slider_buttons();} );
+        
+    });
+    $(".click_able_btm").click(function (){
+        $("#recent_prods").animate({"scrollTop" : "+=" + short_scroll_heighting}, 1200, "swing", function (){set_short_slider_buttons();} );
+        //alert("asfasd");
+    });
+    
+    
+    
+    
+    //---Function to check drag limit and set revert---//
+    
+    function product_drag_limit_check(prod_type){
+        var prod_axis = $(prod_type).offset();
+
+        if(prod_axis.left < $(prod_type).parent().offset().left - 30 || prod_axis.left > $(prod_type).parent().offset().left + 30 || prod_axis.top < $(prod_type).parent().offset().top - 30 || prod_axis.top > $(prod_type).parent().offset().top + 30){
+            $( prod_type ).draggable( "option", "revert", false );
+        }
+        else{
+            $( prod_type ).draggable( "option", "revert", true );
+        }
+    }
+    
+    function remove_alert_box(){
+        if($(".fitting_alerts_cnt ul") != true)
+            {
+                $("#fitting_alerts").fadeOut();
+            }
+    }
+    function remove_fitting_alerts(prod_type){
+        if($( prod_type ).parent().attr('id') == "top_dropable")
+            {
+                $("#curr_top_alerts ul").fadeOut();
+                $("#curr_top_alerts h3").fadeOut();
+            }
+        if($( prod_type ).parent().attr('id') == "bottom_dropable")
+            {
+                $("#curr_bottom_alerts ul").fadeOut();
+                $("#curr_bottom_alerts h3").fadeOut();
+            }
+        if($( prod_type ).parent().attr('id') == "full_dropable")
+            {
+                $("#curr_dress_alerts ul").fadeOut();
+                $("#curr_dress_alerts h3").fadeOut();
+            }
+            
+    };
+    
+    
+    function remove_prod_details (prod_type){
+        //alert($(prod_type).parent().parent().attr("id"));
+        if($(prod_type).parent().attr("id") == "top_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_top_hlder"){
+            $("#prod_type_top_hlder").fadeOut(300);
+            $("#top_dropable").fadeOut(300);
+        }
+        if($(prod_type).parent().attr("id") == "bottom_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_bottom_hlder"){
+            $("#prod_type_bottom_hlder").fadeOut(300);
+            $("#bottom_dropable").fadeOut(300);
+        }
+        if($(prod_type).parent().attr("id") == "full_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_dress_hlder"){
+            $("#prod_type_dress_hlder").fadeOut(300);
+            $("#full_dropable").fadeOut(300);
+        }
+    }
+    
+    
+    //---Function to check position and remove applied product---//
+    function remove_product_applied (prod_type){
+        //alert($( prod_type ).css("left"));
+        if($( prod_type ).css("left") != "0px" || $( prod_type ).css("top") != "0px" ){
+            $( prod_type).fadeOut(300, function (){$(prod_type).parent().addClass("hide").css("display","none")});
+            
+            remove_prod_details(prod_type);
+            
+            remove_fitting_alerts(prod_type);
+        }
+    }
+    
+    
+    var fr_indicator;
+     function open_fr(){
+        
+        fr_indicator = "opened";
+        $("#slider_dis_canv ul.prod_wrapper li").fadeOut(200);
+        $("#ltf_fitting_room").animate({ width: 780 }, 500, function() { });
+        $("#ltf_fitting_room .ltf_fitting_room_inner").fadeIn(300);
+        $("#ltf_fitting_room .but_opn_fr").fadeOut(250);
+        $("#ltf_fitting_room .but_cls_fr").fadeIn(250);
+        //alert(fr_indicator);
+       //$('#ltf_fitting_room').css( "top", '0px');
+       //$('.holder').height(800);
+        $('#slider_dis_canv').css('height',$('.holder').height()-105);
+       //$('.full_wrapper').css('height','400px'); 
+       
+        //$('#ltf_fitting_room').css({"width":"780","border":"1px solid red"});
+        
+        
+       
+        sst = 700;
+        $('.holder').css({"height":sst,"overflow":"hidden"});
+         $('#ltf_fitting_room').addClass("addwidth");
+       
+        
+  
+    }
+    
+    function close_fr(){
+        fr_indicator = "closed";
+        $("#slider_dis_canv ul.prod_wrapper li").fadeIn(200);
+        $("#ltf_fitting_room").animate({ width: 35 }, 500, function() { });
+        $("#ltf_fitting_room .ltf_fitting_room_inner").fadeOut(300);
+        $("#ltf_fitting_room .but_opn_fr").fadeIn(250);
+        $("#ltf_fitting_room .but_cls_fr").fadeOut(250);
+        //alert(fr_indicator);
+        $('#ltf_fitting_room').removeClass("addwidth");
+        $('#ltf_fitting_room').addClass("showtab");
+        $('.holder').css({"height":"auto"});
+        
+                var $scrollingDiv = $("#ltf_fitting_room");			
+		$(window).scroll(function(){
+			var top_check=window.scrollY;
+			if(top_check>=20){
+			     $scrollingDiv
+                             .stop()                                        
+			     .animate({"top": ($(window).scrollTop()-6) + "px"}, "slow" );
+			     }
+			else {$scrollingDiv
+			.stop()
+			.animate({"top": 0 + "px"}, "slow" );}	
+                    
+                     
+		});
+                
+         
+       
+                
+          }
+    
+    $(".but_opn_fr").click(
+        function(){
+            open_fr();
+            
+        }
+    );
+    $(".but_cls_fr").click(
+        function(){            
+            close_fr();
+            
+             
+            
+        }        
+    );
+    
+    function set_drag_drop_ele(){
+    
+    
+    
+    $( ".prod_wrapper li .prod_node .prod_top" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            $(".int_fitting_room").zIndex("-10");
+            $("#fitting_alerts").zIndex("-8");
+            open_fr();
+            var prod_h = 160;
+            var prod_w = 264;
+            var left_pos_drop = 182;
+            
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+        
+        
+        
+        
+        $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+           
+        },
+        drag:function(){
+        },
+        stop:function (){
+            //alert($('.ui-draggable-dragging')._parent());
+            $( "#top_dropable").removeClass("top_active");
+            $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
+        }
+    });
+    
+
+    
+    
+    
+    /// Dropable ///
+    $( "#top_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .prod_top",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            
+            //alert(ui.draggable);
+            
+            new_product_control(ui.draggable);
+ 
+    }
+    });
+    
+    
+    $( ".prod_wrapper li .prod_node .featured_img .prod_bottom" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            
+            var prod_h = 200;
+            var prod_w = 264;
+            var left_pos_drop = 182;
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            $(".int_fitting_room").zIndex("-1");
+           // $("#fitting_alerts").zIndex("-8");
+           open_fr();
+            
+        $( "#bottom_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+            
+        },
+        drag:function(){
+        },
+        stop:function (){
+            $( "#bottom_dropable").removeClass("top_active");
+            $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
+        }
+    });
+    
+    /// Dropable ///
+    $( "#bottom_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_bottom",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            new_product_control(ui.draggable);
+     }
+    });
+    
+    
+    $( ".prod_wrapper li .prod_node .featured_img .prod_dress" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            
+            var prod_h = 300;
+            var prod_w = 264;
+            var left_pos_drop = 182;
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            $(".int_fitting_room").zIndex("-1");
+          //  $("#fitting_alerts").zIndex("-8");
+          open_fr();
+            
+        $( "#full_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+            
+        },
+        drag:function(){
+        },
+        stop:function (){
+            
+            var my_ccc = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_ccc);
+            $( "#full_dropable").removeClass("top_active");
+            $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
+        }
+    });
+    
+    /// Dropable ///
+    $( "#full_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_dress",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            
+            new_product_control(ui.draggable);
+ 
+    }
+    });
+    
+    
+    
+    
+    }
+    
+    </script>
+    
+   <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/default_mannequin.js') }}"></script>
+    
+    
+    <div class="pro_cart">
+    
+    
+    <nav>
+    <ul>
+        
+        <li ><a href="#"><span></span>Applied Items<span class="mnu"></span></a>
+            
+            
+            <ul style="display: block;" id="fchld">
+                  <li>
+                       <span class="cross_icon"></span>
+                  
+                       <a href="">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li>
+                    
+                    <li>
+                       <span class="cross_icon"></span>
+            
+                       <a href="#_">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li>
+                    
+                    <li>
+                       <span class="cross_icon"></span>
+                     
+                       <a href="#_">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li>
+                    
+                    <div id="total_cart">
+                <span>Total<span>
+                        <span id="totalamount">$1334</span> 
+            </div>
+                    </ul>
+            
+            
+            
+            
+            
+            </li>
+          <!-- <li><a href="#"><span></span>Twitter Notes<span class="mnu"></span></a>
+                    
+                <ul style="display: block;">
+
+                  <li style="padding:0px;">
+                    <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="308997517008306176">Tweets by @LoveThatFit</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+ 
+                    </li> 
+
+                    </ul>
+                
+                
+                </li>
+            <li><a href="#"><span></span>Facebook Updates<span class="mnu"></span></a>
+                   
+                   <ul style="display: block;">
+                  <li>
+                    {% include 'LoveThatFitSiteBundle::InnerSite/_facebookpage.html.twig'%}  
+                    </li> 
+                    </ul>  
+                    
+                    
+                </li>-->
+         
+         
+         
+         
+            </ul>
+     </nav>
+    
+    </div>
+    
+    
+    <script>
+    $(document).ready(function(){
+        
+        sst = $('.holder').height();
+        $('#ltf_fitting_room').css( "height", sst );
+       
+
+////////// To apply active class on current list item /////////
+
+//var chk_active_url = $(".left_column nav ul li ul a").attr("href");
+        //var curr_url = window.location.pathname;
+        
+       // if(chk_active_url == curr_url){
+       //     alert("asdf");
+        //}
+
+
+        close_fr();
+
+
+        $(".pro_cart nav ul li ul").parent().addClass("sub_menu");
+        $(".pro_cart nav ul li ul").css("display","none");
+        
+        $("#fchld").css("display","block");
+        
+        $(".pro_cart nav ul li").css("display","block");
+        $(".pro_cart nav > ul > li > a").click(function (){
+            
+            $(".pro_cart nav ul li ul").slideUp().parent().removeClass("opn_link");
+             
+            var chk_curr_ele = $(this).parent().find("ul").css("display");
+            if(chk_curr_ele == "none" ){
+                $(this).parent().find("ul").slideDown().parent().addClass("opn_link");
+                //$(this).parent().find("span").removeClass("mnu");
+               // $(this).parent().find("span").addClass("opn_link");
+               
+            }
+        });
+        
+        $(".pro_cart nav ul li a").click(
+            function (){
+                if($(this).parent().hasClass("sub_menu")){
+                    return false;
+                }
+                else {
+                    
+                    
+                    var clicked_url = $(this).attr("href");
+                    //alert(clicked_url);
+                        $(".pro_cart nav ul li a").parent().removeClass("active");
+                        $(this).parent().addClass("active");
+                        
+                        $(".loading_now").fadeIn(100);
+                        
+                        $.ajax({
+                        url: clicked_url,
+                        cache: false,
+                        success: function(html){
+                        $("#slider_dis_canv").html(html).animate({scrollTop : "0px"}, 200, "swing", function (){set_drag_drop_ele();set_slider_buttons();$(".loading_now").fadeOut(100);});
+                        //$("#slider_dis_canv ul").remove();
+                          
+                          
+                          
+                        }
+                      });
+                    
+                    
+                    
+                    
+                    return false;
+                }
+                
+            }
+        );
+        
+        
+        
+        
+        
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    });
+    
+    
+   //script for redirection to login page incase if the session timed out 
+   //-----------------------------------------------------------------------------
+    $(document).ready(function() {
+    $(document).ajaxError(function (event, jqXHR) {
+        if (403 === jqXHR.status) {
+            window.location.reload();
+        }
+    });
+});
+
+function accordianCall(){
+    $("#prod_accordion").accordion({
+      collapsible: true,
+      heightStyle: "content",
+      header: "> div > div.prod_handle"
+    });
+  }
+  
+accordianCall();
+
+
+
+function updateSizeColorCombo(product_id){
+    new_product_control(false,product_id,7,this.value)
+     
+//alert(product_id);
+//data=$('.prod_row_'+product_id);
+//alert(data);
+//$('#select_size').html($(data).find('div#hdn_sizes_hldr').html());
+//$('#select_color').html($(data).find('div#hdn_color_hldr').html());
+ 
+}
+
+function chk_applied_loaded(chk_main_dropable){
+    
+    //alert(chk_main_dropable );
+    
+    chk_prod_img_load =  $(chk_main_dropable + " .curr_prod").width();
+     
+     
+     
+    if(chk_prod_img_load == 0){
+        
+       // setTimeout(chk_applied_loaded(chk_main_dropable), 200);
+        
+        
+        //alert("If: "+chk_prod_img_load);
+    }else{
+       // alert("Else: "+chk_prod_img_load);
+    }
+    
+        }
+
+function chk_bottom_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_bottom_applied_loaded(prod_type_applied), 200);
+                return false;
+            }else {
+                $("#bottom_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#applied_prod_bottom").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+            }
+        }
+        
+        
+function chk_dress_applied_loaded(prod_type_applied){
+    photo_width_a =  document.getElementById(prod_type_applied).width;
+            if(photo_width_a == null){
+                //alert("not loaded yet");
+                setTimeout(chk_dress_applied_loaded(prod_type_applied), 200);
+                return false;
+            }else {
+                $("#full_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#applied_prod_dress").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+            }
+        }
+
+function apply_prod(size_id,product_id,color_id){
+    //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
+    
+   // var apply_img_url = $('.dynamic_data'+product_id+' .featured_img a.apply_img').attr('href');
+    var apply_img_url = $('.ui-accordion-content-active a.apply_img').attr('href');
+    var prod_type_top = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_top');
+    var prod_type_bottom = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_bottom');
+    var prod_type_dress = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_dress');
+    
+    alert(apply_img_url);
+    
+    if(prod_type_top) {
+        
+        //$("#play_area").prepend('<div class="uploading_in_progress"></div>');
+        
+        
+        
+        
+        
+        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
+//        var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_top_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });  
+    }
+    if(prod_type_bottom) {
+        
+        $("#bottom_dropable").fadeOut("200", function (){
+            $("#bottom_dropable").html("<img id='applied_prod_bottom' src='"+apply_img_url+"'/>")
+            chk_bottom_applied_loaded('applied_prod_bottom');
+          });
+        
+        //$("#bottom_dropable").fadeOut("500").html("<img src='"+apply_img_url+"'/>").fadeIn("500").addClass("disp_blk");
+        
+        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_bottom_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });
+    }
+    if(prod_type_dress) {
+        
+        $("#full_dropable").fadeOut("200", function (){
+            $("#full_dropable").html("<img id='applied_prod_dress' src='"+apply_img_url+"'/>")
+            chk_dress_applied_loaded('applied_prod_dress');
+          });
+        
+        
+        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_dress_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });
+    }
+}
+
+
+function pattern_select(color_id,product_id,size_id)
+{
+   //base_url=$('#base_url').text();
+   base_url = $('#ajax_product_base_url').text();
+      // size_id =$('#hidden_size_id').text();
+      // $('.featured_box'+product_id+' .transp_list').removeClass("hide").addClass("disp_blk");
+     
+        $.ajax({
+            //url: base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" +  color_id + "/" +size_id,
+            url: base_url + product_id+ "/" +  color_id + "/" +size_id,
+          
+            success: function (data) {
+              
+              $('.featured_box'+product_id+' .transp_list').removeClass("disp_blk").addClass("hide");
+              $('.featured_box'+product_id+' .dynamic_data'+product_id ).html(data).addClass("disp_blk");
+              $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass("hide");
+              set_drag_drop_ele();
+              apply_prod(size_id,product_id,color_id);
+            }
+        });
+
+}
+
+function remove_handler(){
+$('#prod_type_dress_hlder').remove();
+
+}
+
+function set_select_color(curr_prod_clicked_id){
+    
+        if(curr_prod_clicked_id == "top"){
+         $('#top_type_select_color').show();
+         $('#bottom_type_select_color').hide();
+         $('#dress_type_select_color').hide();
+         }
+         if(curr_prod_clicked_id == "bottom"){
+         $('#top_type_select_color').hide();
+         $('#bottom_type_select_color').show();
+         $('#dress_type_select_color').hide();
+         }
+         if(curr_prod_clicked_id == "dress"){
+         $('#top_type_select_color').hide();
+         $('#bottom_type_select_color').hide();
+         $('#dress_type_select_color').show();
+         }
+}
+  
+  
+$(".share_but_new").click(
+  function() {
+      $(".share_inner").show();
+  }
+);
+  
+// Functionalty for getting product comapring 
+function get_compare_list(compare_item_id){
+    
+    var compare_url=$('#comapre_url'+compare_item_id).text();
+    
+    $('#compare_wrap').html('');
+     $.ajax({
+                url: compare_url,
+                cache: false,
+                success: function(new_prod_details){
+                   
+                   
+                   $('#compare_wrap').html(new_prod_details);
+                   
+                    }
+              });   
+ 
+}
+
+</script>
+
+
+        
+        
+
+ 
+{% endblock %} 
