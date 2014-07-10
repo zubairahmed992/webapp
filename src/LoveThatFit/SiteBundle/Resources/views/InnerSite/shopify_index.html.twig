@@ -1,10 +1,6 @@
-{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+{% extends 'LoveThatFitExternalSiteBundle::ext_base.html.twig' %}
 
-{% block left_navigation %}
 
-{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
-
-{% endblock %}
 
 {% block left_col_btm %}
 {% endblock %}
@@ -29,15 +25,7 @@
 
 <section class="products">
     
-    <div id="fitting_alerts">
-        <div class="arrow_img_alerts"></div>
-        <h2>Fitting Alerts</h2>
-        <div class="fitting_alerts_cnt">
-            <div id="curr_top_alerts"></div>
-            <div id="curr_bottom_alerts"></div>
-            <div id="curr_dress_alerts"></div>
-        <!--/.fitting_alerts_cnt--></div>
-    <!--/#fitting_alerts--></div>
+   
     
     <div class="prod_slider_hldr">
         <div class="slider_but_top click_able_top"></div>
@@ -53,19 +41,7 @@
               </div>
            <div class="ltf_fitting_room_inner">
           
-               <div id="recent_prods_area">
-                   <div class="recent_head">
-                       Recently Tried
-                   </div>
-                   <div class="recent_prods_slider_hldr">
-                       <div id="rece_up_but"><span class="click_able_top"></span></div>
-                       <div id="recent_prods">
-                           {% render 'LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList' with {'list_type' : 'recently_tried_on'} %}
-                       </div>
-                       <div>{# render 'LoveThatFitSiteBundle:CompareProduct:list' #}</div>
-                       <div id="rece_down_but"><span class="click_able_btm"></span></div>
-                   </div>
-               </div> 
+                
                
                
                
@@ -196,9 +172,7 @@
                    <!--/#prod_accordion--></div>
                
                
-               <div id="compare_wrap">
-               {% render 'LoveThatFitSiteBundle:CompareProduct:list' %}
-               </div>
+               
                
                
                
