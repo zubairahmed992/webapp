@@ -49,9 +49,9 @@ class ProductItem
     /**
      * Bidirectional (INVERSE SIDE)
      * 
-     * @ORM\OneToMany(targetEntity="ProductItemPiece", mappedBy="productitem")
+     * @ORM\OneToMany(targetEntity="ProductItemPiece", mappedBy="product_item")
      * */
-    private $productitempiece;
+    private $product_item_pieces;
     
 
     public function __construct() {
@@ -421,26 +421,26 @@ class ProductItem
     
 
     /**
-     * Add productitempiece
+     * Add product_item_piece
      *
-     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $product_item_piece
      * @return ProductItem
      */
-    public function addProductitempiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece)
+    public function addProductItemPiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $product_item_piece)
     {
-        $this->productitempiece[] = $productitempiece;
+        $this->product_item_pieces[] = $product_item_piece;
     
         return $this;
     }
 
     /**
-     * Remove productitempiece
+     * Remove product_item_piece
      *
-     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece
+     * @param \LoveThatFit\AdminBundle\Entity\ProductItemPiece $product_item_piece
      */
-    public function removeProductitempiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productitempiece)
+    public function removeProductItemPiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $product_item_piece)
     {
-        $this->productitempiece->removeElement($productitempiece);
+        $this->product_item_pieces->removeElement($product_item_piece);
     }
 
     /**
@@ -448,9 +448,9 @@ class ProductItem
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProductitempiece()
+    public function getProductItemPieces()
     {
-        return $this->productitempiece;
+        return $this->product_item_pieces;
     }
 
     /**

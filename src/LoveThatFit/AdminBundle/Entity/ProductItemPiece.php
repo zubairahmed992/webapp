@@ -17,15 +17,15 @@ class ProductItemPiece
      /**     
      * Bidirectional (OWNING SIDE - FK)
      *  
-     * @ORM\ManyToOne(targetEntity="ProductItem", inversedBy="productitemtwopieces")    
-     * @ORM\JoinColumn(name="item_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="ProductItem", inversedBy="product_item_pieces")    
+     * @ORM\JoinColumn(name="product_item_id", referencedColumnName="id", onDelete="CASCADE")
       */
-    protected $productitem;      
+    protected $product_item;      
    
     /**     
      * Bidirectional (OWNING SIDE - FK)
      *  
-     * @ORM\ManyToOne(targetEntity="ProductColorView", inversedBy="product_item_piece")    
+     * @ORM\ManyToOne(targetEntity="ProductColorView", inversedBy="product_item_pieces")    
      * @ORM\JoinColumn(name="product_color_view_id", referencedColumnName="id", onDelete="CASCADE")
       */
     protected $product_color_view;   
@@ -94,10 +94,9 @@ class ProductItemPiece
      * @param \LoveThatFit\AdminBundle\Entity\ProductItem $productitem
      * @return ProductItemPiece
      */
-    public function setProductitem(\LoveThatFit\AdminBundle\Entity\ProductItem $productitem = null)
+    public function setProductitem(\LoveThatFit\AdminBundle\Entity\ProductItem $product_item = null)
     {
-        $this->productitem = $productitem;
-    
+        $this->product_item = $product_item;
         return $this;
     }
 
@@ -108,7 +107,7 @@ class ProductItemPiece
      */
     public function getProductitem()
     {
-        return $this->productitem;
+        return $this->product_item;
     }
     
     

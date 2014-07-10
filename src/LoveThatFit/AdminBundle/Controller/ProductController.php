@@ -505,7 +505,7 @@ class ProductController extends Controller {
        $item=$this->getProductItem($item_id);
        $piece=new ProductItemPiece();          
        $piece->setProductItem($item);
-       $pieceitemform = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()),$piece);
+       $pieceitemform = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()),$piece);
        return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_new.html.twig', array(
                     'form' => $pieceitemform->createView(),
                     'item_id' => $item_id,     
@@ -519,7 +519,7 @@ class ProductController extends Controller {
     {
        $item=$this->getProductItem($item_id);
        $piece=new ProductItemPiece();
-       $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()),$piece);         
+       $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()),$piece);         
        $form->bind($request);
        $em = $this->getDoctrine()->getManager();            
        $piece->setProductitem($item);
@@ -549,7 +549,7 @@ class ProductController extends Controller {
     {
         $item=$this->getProductItem($item_id);
         $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
-        $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()), $entity);
+        $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()), $entity);
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_item_two_piece_edit.html.twig', array(
                     'form' => $form->createView(),
                     'item_id' => $item_id,     
@@ -563,7 +563,7 @@ class ProductController extends Controller {
     {
          $item=$this->getProductItem($item_id);
          $entity=$this->get('admin.helper.product.item.piece')->find($piece_id);
-         $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorView()), $entity);
+         $form = $this->createForm(new ProductItemPieceType($item->getProductColor()->getProductColorViews()), $entity);
          $form->bind($request);
          $em = $this->getDoctrine()->getManager();
             $entity->setProductitem($item);

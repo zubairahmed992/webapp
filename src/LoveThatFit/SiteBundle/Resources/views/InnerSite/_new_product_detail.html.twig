@@ -129,10 +129,23 @@ function chk_dress_applied_loaded(prod_type_applied){
       {%endfor%}
     </div> 
      
+             <div id="hdn_views_hldr" class="hdn_views_hldr select_views"  style="display:none;" >
+                    <label class="lbl_views">Views:</label>
+                    {%for key, pcsa in productColor.getProductColorViews%}  
+                            <span id="color_id_view" style="display:none;">{{pcsa.id}}</span>  
+                            <span id="item_url_view" style="display:none;">{{pcsa.id}}</span>  
+                        <a href="#"><img width="16" height="16" src="{{asset(pcsa.WebPath)}}" >
+                        </a>
+                    {%endfor%}
+                </div>
+
+        
+        
      </div>
      
      </div>
-                   
+        
+                                
 <div class="but_remove_prod" onclick="remove_prod_details(this)"><img onclick="" src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
                       <div class="lft_col">
                           <div class="prod_price">

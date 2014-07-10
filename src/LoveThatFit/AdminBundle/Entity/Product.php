@@ -40,7 +40,7 @@ class Product {
     /**
      * @ORM\OneToMany(targetEntity="ProductColorView", mappedBy="product", orphanRemoval=true)
      */
-    protected $product_color_view;
+    protected $product_color_views;
 
     /**
      * @ORM\OneToMany(targetEntity="ProductSize", mappedBy="product", orphanRemoval=true)

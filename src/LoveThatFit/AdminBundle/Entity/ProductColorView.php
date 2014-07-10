@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class ProductColorView {    
     
     /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_color_view")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="product_color_views")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      
      */    
@@ -25,7 +25,7 @@ class ProductColorView {
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="ProductColor", inversedBy="product_color_view")
+     * @ORM\ManyToOne(targetEntity="ProductColor", inversedBy="product_color_views")
      * @ORM\JoinColumn(name="product_color_id", referencedColumnName="id", onDelete="CASCADE")
      
      */    
@@ -36,7 +36,7 @@ class ProductColorView {
      * 
      * @ORM\OneToMany(targetEntity="ProductItemPiece", mappedBy="product_color_view")
      * */
-    private $product_item_piece;
+    private $product_item_pieces;
     
     
     
@@ -222,7 +222,7 @@ class ProductColorView {
      */
     public function addProductItemPiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productItemPiece)
     {
-        $this->product_item_piece[] = $productItemPiece;
+        $this->product_item_pieces[] = $productItemPiece;
     
         return $this;
     }
@@ -234,16 +234,17 @@ class ProductColorView {
      */
     public function removeProductItemPiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $productItemPiece)
     {
-        $this->product_item_piece->removeElement($productItemPiece);
+        $this->product_item_pieces->removeElement($productItemPiece);
     }
 
     /**
-     * Get product_item_piece
+     * Get product_item_pieces
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProductItemPiece()
+    public function getProductItemPieces()
     {
-        return $this->product_item_piece;
+        return $this->product_item_pieces;
     }
+    
 }

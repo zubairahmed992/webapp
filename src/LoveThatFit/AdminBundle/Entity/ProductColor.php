@@ -31,11 +31,11 @@ class ProductColor {
     /**
      * @ORM\OneToMany(targetEntity="ProductColorView", mappedBy="product_color", orphanRemoval=true)
      */
-    protected $product_color_view;
+    protected $product_color_views;
 
     public function __construct() {
         $this->product_items = new ArrayCollection();
-        $this->product_color_view= new ArrayCollection();
+        $this->product_color_views= new ArrayCollection();
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -306,6 +306,16 @@ class ProductColor {
         return $size->getId();
     }
 #----------------------------------------------------------------
+     public function getViewsArray() {
+        $pcvs = $this->product_color_views;
+        $pcva = array();
+        foreach ($pcvs as $pcv) {
+           $pcva[$pcv->getId()] = array('title'=>$pcv->getTitle(), 'image_url'=>$pcv->getWebPath());
+        }
+        
+        return $pcva;
+    }
+#----------------------------------------------------------------
      public function getSizeTitleArrayBodyType() {
         $items = $this->product_items;
         $size_titles = array();
@@ -539,28 +549,28 @@ public function setSizeTitles($sizes)
      */
     public function addProductColorView(\LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView)
     {
-        $this->product_color_view[] = $productColorView;
+        $this->product_color_views[] = $productColorView;
     
         return $this;
     }
 
     /**
-     * Remove product_color_view
+     * Remove product_color_views
      *
      * @param \LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView
      */
     public function removeProductColorView(\LoveThatFit\AdminBundle\Entity\ProductColorView $productColorView)
     {
-        $this->product_color_view->removeElement($productColorView);
+        $this->product_color_views->removeElement($productColorView);
     }
 
     /**
-     * Get product_color_view
+     * Get product_color_views
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProductColorView()
+    public function getProductColorViews()
     {
-        return $this->product_color_view;
+        return $this->product_color_views;
     }
 }
