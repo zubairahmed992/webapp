@@ -14,6 +14,11 @@ inner_site_index:
     pattern:  /inner_site/index/{list_type}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index, list_type: null}
 
+inner_shopify_index:
+    pattern:  /inner_site/shopify_index/{list_type}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyIndex, list_type: null}
+
+
 about_us:
     pattern:  /about_us
     defaults: { _controller: LoveThatFitSiteBundle:Home:aboutUs}

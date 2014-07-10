@@ -27,6 +27,13 @@ public function indexAction($list_type) {
             'list_type'=>$list_type,
            ));
  }
+ 
+#-------------------------------------------------------------------------------
+public function shopifyIndexAction($list_type) {
+        return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
+            'list_type'=>$list_type,
+           ));
+ } 
 #-------------------------------------------------------------------------------
  public function homeAction($page_number = 0, $limit = 0) {
        $gender= $this->get('security.context')->getToken()->getUser()->getGender();

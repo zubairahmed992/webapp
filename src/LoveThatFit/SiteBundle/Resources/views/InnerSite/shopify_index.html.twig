@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitExternalSiteBundle::external_base.html.twig' %}
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
 
 {% block left_navigation %}
 
@@ -43,7 +43,7 @@
         <div class="slider_but_top click_able_top"></div>
         <div class="prod_sliding_area">
             
-          <div id="ltf_fitting_room">
+            <div id="ltf_fitting_room" class="showtab">
               <img id="patch_btm" src="{{ asset('bundles/lovethatfit/site/images/bottom_patch.png') }}" />
           <div class="but_opn_fr">
                   Fitting Room
@@ -308,7 +308,7 @@
               </div>
           </div>
           <div id="slider_dis_canv">
-            {# render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} #}
+            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
             <!--.prod_sliding_area--></div>
            
         <!---/#dis canv---></div>
@@ -618,8 +618,6 @@ function set_droppables(){
   }
 }
 $(document).ready(function(){
-    new_product_control(false,5,6,31);
-
   set_droppables();
   set_slider_buttons();
   set_short_slider_buttons();

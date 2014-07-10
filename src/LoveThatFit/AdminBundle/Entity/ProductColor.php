@@ -347,7 +347,8 @@ class ProductColor {
     public function getSizeDescriptionArray() {
         $items = $this->product_items;
         $retailer = $this->product->getRetailer();
-        $st_disabled = $retailer->getSizeTitleDisabled();
+        #$st_disabled = $retailer->getSizeTitleDisabled();
+        $st_disabled =null;
         $size_titles = array();
         foreach ($items as $i) {
         if(!$st_disabled){
