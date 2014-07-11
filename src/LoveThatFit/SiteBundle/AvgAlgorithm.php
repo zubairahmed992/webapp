@@ -69,32 +69,42 @@ class AvgAlgorithm {
         return $best_fit;
     }    
 #-----------------------------------------------------    
- function getSizeFeedBack($size) {
-       
+    function getSizeFeedBack($size) {
+
         if ($size == null || !isset($size))
             return 'no size';
-        
-       $this->product = $size->getProduct();
-       $fb = $this->getFeedBack(); 
-       
-        if ($fb['recommendation']['id']==$size->getId()){ # if it matches best fit            
-            return array(
-                'feedback' => $fb['recommendation'],
-                );
-        }
-        
-        foreach ($fb['feedback'] as $size_fb) {            
-            if ($size_fb['id'] ==  $size->getId()){ 
-                #return array($size_fb['description'] => $size_fb);
+
+        $this->product = $size->getProduct();
+        $fb = $this->getFeedBack();
+        if (array_key_exists('recommendation', $fb)) {
+            if ($fb['recommendation']['id'] == $size->getId()) { # if it matches best fit            
                 return array(
-                'feedback' => $size_fb,
-                'recommendation' => $fb['recommendation'],
+                    'feedback' => $fb['recommendation'],
                 );
-            }        
+            }
         }
-               
+
+        foreach ($fb['feedback'] as $size_fb) {
+            if ($size_fb['id'] == $size->getId()) {
+                #return array($size_fb['description'] => $size_fb);
+                  if (array_key_exists('recommendation', $fb)) {
+                        return array(
+                            'feedback' => $size_fb,
+                            'recommendation' => $fb['recommendation'],
+                        );      
+                  }else{
+                    return array(
+                          'feedback' => $size_fb,
+                      );
+                  }
+      
+                
+            }
+        }
+
         return null;
-    }       
+    }
+
 #-----------------------------------------------------
     private function array_mix($sizes = null) {
         if ($sizes == null) {

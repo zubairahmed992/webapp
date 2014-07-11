@@ -347,19 +347,15 @@ class ProductColor {
     public function getSizeDescriptionArray() {
         $items = $this->product_items;
         $retailer = $this->product->getRetailer();
-        #$st_disabled = $retailer->getSizeTitleDisabled();
-        $st_disabled =null;
         $size_titles = array();
         foreach ($items as $i) {
-        if(!$st_disabled){
-            $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getDescription();
-        }else{
-            $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getTitle();
-        }
-            
+            if ($retailer != null && $retailer->getSizeTitleDisabled()) {
+                $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getTitle();
+            }else{
+                $size_titles[$i->getProductSize()->getId()] = $i->getProductSize()->getDescription();
             }
-            
-      // array_multisort($size_titles, SORT_ASC);
+        }
+        // array_multisort($size_titles, SORT_ASC);
         natsort($size_titles);
         return $size_titles;
     }
