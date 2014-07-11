@@ -295,7 +295,7 @@ public function getRetailerBrandById($id)
   {
     if ( is_array($value) )
     {
-      $result[] = $this->super_unique($value);
+      $result[$key] = $this->super_unique($value);
     }
   }
 
