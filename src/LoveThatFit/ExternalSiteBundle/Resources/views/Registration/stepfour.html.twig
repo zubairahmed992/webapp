@@ -59,7 +59,7 @@
             <p  id="sizeerror" style="color:#d14; size:10; display:none;">Image Size is very large</p>
             <h2>Upload Photo</h2>
 
-            <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
+            <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();" class="">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
@@ -137,7 +137,7 @@
             <!--/.action_cnt--></div>
     
     
-    <div class="how_it_works hw_works">
+    <div class="how_it_works hw_works" id="hwworks">
         <h2>How It Works</h2>
         <ol class="hiw_upload_photo">
             <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>

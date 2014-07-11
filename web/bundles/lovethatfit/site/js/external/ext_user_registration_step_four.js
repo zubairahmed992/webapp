@@ -583,6 +583,7 @@ function call_settings(responseText, statusText, xhr, $form){
         $("#play_area").removeClass("hide");
         $(".ext_btns").hide();
         $("#how_it_works").removeClass("hide");
+        $("#hwworks").removeClass("hw_works").addClass("hw_works2");        
         $(".int_fitting_room").addClass("hide");
         $("#play_area").prepend('<div class="uploading_in_progress"></div>');
         $(".input_file_hldr").css("display","none");
@@ -591,6 +592,11 @@ function call_settings(responseText, statusText, xhr, $form){
         $(".fitting_step").removeClass("hide");
         $("#rotate_move_box").removeClass("hide");
         $(".next_btn_4").css("display","block");
+        $("#frmUserImage").addClass("frmext");
+        $(".steps h2").hide();
+        
+         
+        
         
         $(".hiw_step_1").css("display","none");
         $(".hiw_step_2").css("display","none");

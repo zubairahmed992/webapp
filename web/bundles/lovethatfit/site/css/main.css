@@ -5026,7 +5026,7 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .ext_site_hldr .fitting_step{
     position:absolute; 
-    top:140px; 
+    top:39px; 
     left: 499px; 
     width: 366px;    
 }
@@ -5042,7 +5042,7 @@ transform: rotateX(0deg) rotateY(0deg);
     width:90px;
     background: url("../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
     position: absolute;
-    top:185px;
+    top:115px;
     left:864px;
     height: 210px;
     padding: 0px 0px 20px 10px;
@@ -5061,9 +5061,16 @@ transform: rotateX(0deg) rotateY(0deg);
 }
 
 .hw_works{ 
-    left: -195px;
+    left: 0px;
     position: absolute;
     top: 170px;
+    width:250px;
+}
+
+.hw_works2{ 
+    left: -210px;
+    position: absolute;
+    top: 100px;
     width:250px;
 }
 
@@ -5073,12 +5080,34 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .step4opt{
     
-    margin-top: -165px!important;
+    margin-top: -270px!important;
 }
 
 .ext_site_hldr .next_btn_4{
     left: 760px;
-    top: 700px;
+    top: 590px;
+}
+
+.frmext{
+   position:absolute;
+   left: -220px;
+   top: 20px;
+   
+    
+}
+
+.frmext .zoom_in .slider_wrap{
+    width: 210px!important;
+}
+
+.frmext .zoom_in .main_slider{
+    width:190px!important;
+}
+
+.frmext .zoom_in label{
+    position: absolute;
+    top: 15px;
+    left: 0px;
 }
 
 
