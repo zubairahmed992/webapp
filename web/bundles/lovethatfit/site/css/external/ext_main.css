@@ -5026,7 +5026,7 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .ext_site_hldr .fitting_step{
     position:absolute; 
-    top:39px; 
+    top:9px; 
     left: 499px; 
     width: 366px;    
 }
@@ -5042,7 +5042,7 @@ transform: rotateX(0deg) rotateY(0deg);
     width:90px;
     background: url("../../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
     position: absolute;
-    top:115px;
+    top:50px;
     left:864px;
     height: 210px;
     padding: 0px 0px 20px 10px;
@@ -5080,12 +5080,18 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .step4opt{
     
-    margin-top: -270px!important;
+    margin-top: -300px!important;
 }
 
 .ext_site_hldr .next_btn_4{
     left: 760px;
-    top: 590px;
+    top: 560px;
+}
+
+.ext_site_hldr .reg_next_step2{
+   left: -468px;
+   top: 40px; 
+  
 }
 
 .frmext{
