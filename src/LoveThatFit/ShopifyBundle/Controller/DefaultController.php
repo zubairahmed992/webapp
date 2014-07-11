@@ -137,31 +137,26 @@ class DefaultController extends Controller
     }
  // User Sku ---------------------
     public function userCheckAction(Request $request,$user_id,$sku){ 
-    
-        $data = $request->request->all();
-       // $user_id=$data['user_id'];
-       
-        $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
+     // $user_id=$data['user_id'];
        if($user_id==null){
            return $this->redirect($this->generateUrl('external_login'), 301);             
        } 
+        
+       $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
+     
       //return new response(var_dump($site_user));
         if (!empty($site_user)){
-         
-            $retailer = $this->get('admin.helper.retailer')->find(1);
-            $this->setNewUserSession($user_id, $retailer->getId(), $sku);
-            #$user = $this->get('user.helper.user')->find(53);            
-            #$site_user=$this->get('admin.helper.retailer.site.user')->addNew($retailer, $user, $user_id);
-            return $this->redirect($this->generateUrl('external_login'), 301);             
-        }else{
-           
-           
             $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
             if($itemBySku==null || empty($itemBySku)){
-                return new response('Unable to find product ');
+               return new response('Unable to find product ');
             }
-            return $this->redirect($this->generateUrl('external_fitting_room_show'), 301);             
-            //return new Response(var_dump($site_user));
+         
+            return $this->redirect($this->generateUrl('inner_shopify_index',array('sku'=>$sku,'user_id'=>$site_user->getId())), 301);             
+        }else{
+            //$retailer = $this->get('admin.helper.retailer')->find(1);
+            $this->setNewUserSession($user_id, $sku);
+           return $this->redirect($this->generateUrl('external_login'), 301); 
+            
         }
         
        
@@ -169,10 +164,9 @@ class DefaultController extends Controller
         
     }
     //-----------------------------------------
-    public function setNewUserSession($site_user_id,$retailer_id, $sku){
+    public function setNewUserSession($site_user_id,$sku){
          $session = $this->get("session");    
          $session->set('shopify_user', array('site_user_id'=>$site_user_id,
-                    'retailer_id'=>$retailer_id, 
                     'sku'=>$sku));         
     }
   //------------------------------------------------------------

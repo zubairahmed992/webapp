@@ -23,15 +23,18 @@ class InnerSiteController extends Controller {
       var $compare = array();
 #-------------------------------------------------------------------------------
 public function indexAction($list_type) {
+    
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
             'list_type'=>$list_type,
            ));
  }
  
 #-------------------------------------------------------------------------------
-public function shopifyIndexAction($list_type) {
+public function shopifyIndexAction($sku,$user_id) {
+   
+         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
-            'list_type'=>$list_type,
+            'item'=>$itemBySku,
            ));
  } 
 #-------------------------------------------------------------------------------
