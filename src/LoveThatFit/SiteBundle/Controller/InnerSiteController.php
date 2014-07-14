@@ -30,11 +30,12 @@ public function indexAction($list_type) {
  }
  
 #-------------------------------------------------------------------------------
-public function shopifyIndexAction($sku,$user_id) {
+public function shopifyIndexAction($sku = null,$user_id=null) {
    
          $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
+            'list_type'=>null,
            ));
  } 
 #-------------------------------------------------------------------------------

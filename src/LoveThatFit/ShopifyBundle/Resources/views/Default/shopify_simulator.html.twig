@@ -10,6 +10,19 @@
                 <a  onclick="show_fitting_room('{{p.id}}')"  href='#'><img src='{{asset(p.displayProductColor.WebPath)}}'></a> 
         {% endif %}
            <br>
+           <div>
+            {% for pc in p.ProductColors %}
+                   <div style="float: left"> {{pc.title}}</div>
+                <div  style="float: left; padding-left: 30px;">
+                        {% for pi in p.ProductItems %}
+                        <a href="#">{{pi.ProductSize.title}}</a> &nbsp;|&nbsp;
+                        {% endfor %}
+                </div>
+                   <br>
+           {% endfor %}
+          
+         </div>
+           
 {% endfor %}
            
            
