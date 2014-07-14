@@ -957,8 +957,11 @@ var scroll_heighting = 506;
      </nav>
     
     </div>
-    
-    
+   {% if (item != null) %}
+   <span id='ext_product_id'>{{item.product.id}}</span>
+   <span  id='ext_color_id'>{{item.productColor.id}}</span>
+   <span  id='ext_size_id'>{{item.productSize.id}}</span>
+    {% endif %}
     <script>
     $(document).ready(function(){
         
