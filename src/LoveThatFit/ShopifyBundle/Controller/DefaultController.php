@@ -138,21 +138,24 @@ class DefaultController extends Controller
  // User Sku ---------------------
     public function userCheckAction(Request $request,$user_id,$sku){ 
      // $user_id=$data['user_id'];
+       
        if($user_id==null){
            return $this->redirect($this->generateUrl('external_login'), 301);             
        } 
         
        $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
-       return new response($site_user->getId());
-     
-     
-        if (is_object($site_user)){
-            $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
+       
+       if (is_object($site_user)){
+           
+       $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
             if($itemBySku==null || empty($itemBySku)){
                return new response('Unable to find product ');
             }
-         
-            return $this->redirect($this->generateUrl('inner_shopify_index',array('sku'=>$sku,'user_id'=>$site_user->getId())), 301);             
+
+ return $this->redirect($this->generateUrl('inner_shopify_index',array('sku'=>$sku,'user_id'=>$site_user->getId())), 301);             
+           
+       
+          
         }else{
             //$retailer = $this->get('admin.helper.retailer')->find(1);
             $this->setNewUserSession($user_id, $sku);
