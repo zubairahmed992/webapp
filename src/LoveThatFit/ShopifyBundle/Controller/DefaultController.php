@@ -143,9 +143,10 @@ class DefaultController extends Controller
        } 
         
        $site_user=$this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
+       return new response($site_user->getId());
      
-      //return new response(var_dump($site_user));
-        if (!empty($site_user)){
+     
+        if (is_object($site_user)){
             $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
             if($itemBySku==null || empty($itemBySku)){
                return new response('Unable to find product ');

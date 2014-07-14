@@ -37,7 +37,7 @@ public function brandRetailerListAction(){
       $handle = fopen('php://input', 'r');
       $jsonInput = fgets($handle);
       $request_array = json_decode($jsonInput, true);
-      // $request_array=array('date'=>'1388577600.000000');
+       $request_array=array('date'=>'1388577600.000000');
         if($request_array){
        $date_fromat=$this->get('webservice.helper.product')->returnFormattedTime($request_array);
        
