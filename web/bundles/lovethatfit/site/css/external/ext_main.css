@@ -5265,3 +5265,10 @@ transform: rotateX(0deg) rotateY(0deg);
  min-height: 0!important;   
 }
 */
+
+
+.ext_error_msg {
+    display: none;
+    color: red;
+    text-align: center;
+}

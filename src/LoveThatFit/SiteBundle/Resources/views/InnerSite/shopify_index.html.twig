@@ -182,9 +182,10 @@
                
               
             <div class="int_fitting_room">
-                <div id="fitting_tab">
-                    <a href="{{ path('fitting_room_image_edit') }}">Edit/Upload Photo</a>
+                <div class="ext_error_msg">
+                    Requested product not availalbe.
                 </div>
+                
                 <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
                 <div id="full_dropable" class="hide"></div>
                 <div id="top_dropable" class="hide"></div>
@@ -958,15 +959,26 @@ var scroll_heighting = 506;
     
     </div>
    {% if (item != null) %}
-   <span id='ext_product_id'>{{item.product.id}}</span>
-   <span  id='ext_color_id'>{{item.productColor.id}}</span>
-   <span  id='ext_size_id'>{{item.productSize.id}}</span>
-    {% endif %}
+   <input id="ext_product_id" type="hidden" value="{{item.product.id}}" />
+   <input id="ext_color_id" type="hidden" value="{{item.productColor.id}}" />
+   <input id="ext_size_id" type="hidden" value="{{item.productSize.id}}" />
+   {% endif %}
     <script>
     $(document).ready(function(){
         
         //office// new_product_control(false,7,8,25)
-        new_product_control(false,20,46,66)
+        
+        var ext_product_id = parseInt($("#ext_product_id").attr("value"));
+        var ext_color_id = parseInt($("#ext_color_id").attr("value"));
+        var ext_size_id = parseInt($("#ext_size_id").attr("value"));
+        //alert("safas");
+        if(ext_product_id){
+            new_product_control(false,ext_product_id,ext_color_id,ext_size_id);
+        }else{
+          $(".ext_error_msg").fadeIn(500);
+        }
+        
+        
         
         sst = $('.holder').height();
         $('#ltf_fitting_room').css( "height", sst );
