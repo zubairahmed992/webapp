@@ -36,9 +36,7 @@
           <div class="but_opn_fr">
                   Fitting Room
               </div>
-              <div class="but_cls_fr">
-                  Products
-              </div>
+              
            <div class="ltf_fitting_room_inner">
           
                 
@@ -282,7 +280,7 @@
               </div>
           </div>
           <div id="slider_dis_canv">
-            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}
+            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}    
             <!--.prod_sliding_area--></div>
            
         <!---/#dis canv---></div>
@@ -520,25 +518,7 @@ function set_slider_buttons(){
 }
 
 
-function set_short_slider_buttons(){
-  if($("#recent_prods").scrollTop() == 0){
-      $("#rece_up_but span").removeClass("click_able_top").addClass("disable_me_top");
-      //alert("top_disabled now");
-  }
-  else {
-      $("#rece_up_but span").removeClass("disable_me_top").addClass("click_able_top");
-  }
-  
-  var chk_it_height = $("#recent_prods ul.prod_wrapper").height();
-  chk_it_height = chk_it_height -380;
-  if($("#recent_prods").scrollTop() >= chk_it_height){
-      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
-      //console.log(chk_it_height);
-  }
-  else {
-      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
-  }
-}
+
 
 
 function set_droppables(){
@@ -594,7 +574,6 @@ function set_droppables(){
 $(document).ready(function(){
   set_droppables();
   set_slider_buttons();
-  set_short_slider_buttons();
   set_drag_drop_ele();
   ///--- Fitting Alert ---///
               
@@ -739,20 +718,7 @@ var scroll_heighting = 506;
         $('#ltf_fitting_room').addClass("showtab");
         $('.holder').css({"height":"auto"});
         
-                var $scrollingDiv = $("#ltf_fitting_room");			
-		$(window).scroll(function(){
-			var top_check=window.scrollY;
-			if(top_check>=20){
-			     $scrollingDiv
-                             .stop()                                        
-			     .animate({"top": ($(window).scrollTop()-6) + "px"}, "slow" );
-			     }
-			else {$scrollingDiv
-			.stop()
-			.animate({"top": 0 + "px"}, "slow" );}	
-                    
-                     
-		});
+        
                 
          
        
@@ -996,7 +962,8 @@ var scroll_heighting = 506;
     <script>
     $(document).ready(function(){
         
-        new_product_control(false,7,8,25)
+        //office// new_product_control(false,7,8,25)
+        new_product_control(false,20,46,66)
         
         sst = $('.holder').height();
         $('#ltf_fitting_room').css( "height", sst );
