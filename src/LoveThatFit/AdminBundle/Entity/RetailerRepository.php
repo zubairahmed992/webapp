@@ -356,6 +356,18 @@ public function getRetailerBrandParticular($id)
                 }
    }
    
-
+#-------------------------------------------------------------------------------#
+   //--Find all retailer for web service -----------//
+   public function reatailerListService(){
+      
+      $query = $this->getEntityManager()
+              ->createQuery('SELECT r.id as retId,r.title as title,r.image as image FROM LoveThatFitAdminBundle:Retailer r WHERE r.disabled=0');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        } 
+       
+   }
 
 }

@@ -3,6 +3,7 @@
 namespace LoveThatFit\AdminBundle\Entity;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
@@ -362,5 +363,9 @@ public function findBrandBaseOnRetailer($retailer_id){
 
 public function BrandBaseOnRetailer($id){
   return $this->repo->getRetailerBrandParticular($id);
+}
+#--------------Retailer List For Web SErvice-----------------------------------#
+public function reatailerListService(){
+    return $this->repo->reatailerListService();
 }
 }

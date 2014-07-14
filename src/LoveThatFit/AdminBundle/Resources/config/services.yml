@@ -19,6 +19,7 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Brand
+            container: "@service_container"
      admin.helper.sizechart:
         class: LoveThatFit\AdminBundle\Entity\SizeChartHelper
         arguments:
@@ -98,6 +99,7 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\AdminBundle\Entity\Retailer
+            container: "@service_container"
             
      admin.helper.retailer.user:
         class: LoveThatFit\AdminBundle\Entity\RetailerUserHelper

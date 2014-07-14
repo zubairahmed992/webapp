@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -9,6 +9,7 @@ use Symfony\Component\Yaml\Parser;
 use \Symfony\Component\EventDispatcher\EventDispatcher;
 use \Symfony\Component\EventDispatcher\Event;
 use LoveThatFit\AdminBundle\Event\BrandEvent;
+use LoveThatFit\AdminBundle\Entity\Retailer;
 
 class BrandHelper {
 
@@ -29,13 +30,15 @@ class BrandHelper {
      */
     protected $class;
 
-    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class) {
+     private $container;
+
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class,Container $container) {
+         $this->container = $container;
         $this->dispatcher = $dispatcher;
         $this->em = $em;
         $this->class = $class;
         $this->repo = $em->getRepository($class);
     }
-
     //---------------------------------------------------------------------   
 
     public function createNew() {
@@ -305,21 +308,20 @@ public function getBrandRetailerList($date_fromat){
     $data=$this->repo->getBrandRetailerList($date_fromat);
     
     foreach($data as $key){
-    if($key['title']!=null){
-      $arr[]=array('retId'=>$key['ret_id'],'name'=>$key['title'],'image'=>$key['ret_image']);
-    }
+   // if($key['title']!=null){
+     // $arr[]=array('retId'=>$key['ret_id'],'name'=>$key['title'],'image'=>$key['ret_image']);
+    //}
     if($key['brand_id']!=null){
         if($key['ret_id']==null){
             $key['ret_id']=0;
         }
-    $arr2[]=array('brandId'=>$key['brand_id'],'name'=>$key['brand_name'],'image'=>$key['brand_image'],'retId'=>$key['ret_id']);
+      $arr2[]=array('brandId'=>$key['brand_id'],'name'=>$key['brand_name'],'image'=>$key['brand_image'],'retId'=>$key['ret_id']);
     }
-     
-
-
-    
-    }
-    $ret['retailer']=$this->super_unique($arr);
+   
+  }
+    $retList=$this->container->get('admin.helper.retailer')->reatailerListService();
+    //$ret['retailer']=$this->super_unique($arr);
+    $ret['retailer']=$retList;
    $ret['brand']=$arr2;
     return $ret;
 }
