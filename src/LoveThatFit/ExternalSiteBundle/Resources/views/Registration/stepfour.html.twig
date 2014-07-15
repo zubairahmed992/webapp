@@ -63,7 +63,7 @@
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
                 <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
-                <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('external_fitting_room_show')}}"/>
+                <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_shopify_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 
                 
@@ -87,12 +87,7 @@
                         <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
                     </div>
                 
-                {% if(edit_type=="registration")%}
-                    <div class="upload_again_hldr"><a href="{{ path('registration_step_four_edit') }}">Try Another Photo</a></div>
-                 {% else %}
-                  <div class="upload_again_hldr"><a href="{{ path('fitting_room_image_edit') }}">Try Another Photo</a></div>
-                 {% endif%} 
-                
+                    <div class="upload_again_hldr"><a href="{{ path('external_step_four_edit') }}">Try Another Photo</a></div>
                 
                     {{ form_rest(form) }}
 
@@ -127,10 +122,10 @@
             <div class="frm_ele step4_btns ext_btns">
                   
                   {% if(edit_type=="registration")%}
-                  <a class="reg_next_step reg_second" href="{{path('registration_measurement_edit')}}">Back</a>
-                  <a class="reg_next_step" href="{{path('inner_site_index')}}">Skip</a>
+                  <a class="reg_next_step reg_second" href="{{path('external_registration_measurement_edit')}}">Back</a>
+                  <a class="reg_next_step" href="{{path('inner_shopify_index')}}">Skip</a>
                  {% else %}
-                  <a class="reg_next_step" href="{{path('inner_site_index')}}">Back</a>                 
+                  <a class="reg_next_step" href="{{path('inner_shopify_index')}}">Back</a>                 
                  {% endif%}    
                  </div>
                 <!--/.step_4--></div>

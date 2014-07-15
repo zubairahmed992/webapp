@@ -82,12 +82,13 @@ class RegistrationController extends Controller
               } 
 
            // End of Session----------------------------------------------------
-                $measurement = $user->getMeasurement();
+                
                 $user_helper->getLoggedInById($user);
                 
                 //send registration email ....            
                 //$this->get('mail_helper')->sendRegistrationEmail($user);
-
+                /*
+                 $measurement = $user->getMeasurement();
                 if ($user->getGender() == 'm') {
 
                     $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
@@ -105,6 +106,9 @@ class RegistrationController extends Controller
                             'measurement' => $measurement,
                             'entity' => $user,
                         ));
+              * 
+              */
+               return $this->redirect($this->generateUrl('external_registration_measurement_edit'));
             } else {
 
 
@@ -172,7 +176,8 @@ class RegistrationController extends Controller
         $user->setBirthDate($measurement->birthdate);
         $this->get('user.helper.user')->saveUser($user);        
        
-         $form = $this->createForm(new RegistrationStepFourType(), $user);
+     /*
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
          $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
          $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
          $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
@@ -185,7 +190,10 @@ class RegistrationController extends Controller
                     'measurement' => $measurement,
                     'edit_type' => 'registration',            
                 ));
-        
+       *
+      * 
+      */ 
+        return $this->redirect($this->generateUrl('external_step_four_edit'));
     }
   }
  //-----------------------------------------------------------------------------
@@ -363,7 +371,6 @@ class RegistrationController extends Controller
         return new Response($response);
     }
     
-    
     public function stepFourVerticalMeasurementUpdateAction(Request $request, $id) {
 
         $entity = $this->get('user.helper.user')->find($id);
@@ -379,9 +386,6 @@ class RegistrationController extends Controller
             return new Response('Vertical Position Measurement has not been updated!');
         }
     }
-    
-    
-    
     
     public function stepFourHorizontalMeasurementUpdateAction(Request $request, $id) {
 
