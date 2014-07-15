@@ -53,7 +53,174 @@ class DefaultController extends Controller
         #return new Response(json_encode($shopify('GET', '/admin/themes.json')));
         
         
-        $contents="<div id='ajax_request'><input type='button' onclick='loadXMLDoc()' value='go'></input><input type='button' onclick='loadhtmliniframe()' value='FR'></input>{% unless customer %}{% if template contains 'customers' %}{% assign send_to_login = false %}{% else %}{% assign send_to_login = true %}{% endif %}{% endunless %}{% if send_to_login %}<meta content='0; url=/account/login?checkout_url={{ shop.url }}' http-equiv='refresh' />{% else %}<input type='button' onclick='loadfittingroom()' value='Fitting Room'></input>{% endif %}</div><div id='fitting_room' style='display:none;'><iframe id='ext_fitting_room' name='ext_fitting_room'></iframe></div><script type='text/javascript'>function loadfittingroom(){ $('#fitting_room').toggle();loadhtmliniframe();}function loadhtmliniframe() {var json_product ={{ product | json }}var product_select=$('#product-select').val();var curnt_sku=$('#sku'+product_select).text();var user_id={{ customer.id | json }}var url= 'shopify/user_check'+'/'+user_id+'/'+curnt_sku;window.frames['ext_fitting_room'].location = 'https://e003298.ngrok.com/webapp/web/app_dev.php/'+url;}function loadXMLDoc() {var xmlhttp;var url='/apps/fitting_room';if (window.XMLHttpRequest) {xmlhttp = new XMLHttpRequest();} else {xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');}xmlhttp.onreadystatechange = function() {if (xmlhttp.readyState == 4 ) {if(xmlhttp.status == 200){document.getElementById('fitting_room').innerHTML = xmlhttp.responseText;}else if(xmlhttp.status == 400) { alert('There was an error 400')}else {alert('something else other than 200 was returned')}}}xmlhttp.open('GET', url, true);xmlhttp.send();}</script>";
+        $contents="<style>
+        .full_screen {
+
+	text-align:center;
+
+	width:100%;
+
+	height:100%;
+
+	position:fixed;
+
+	left:0;
+
+	top:0;
+
+	z-index:80000;
+
+    background:url({{ 'trans_dot.png' | asset_url }}) 0 0 repeat;
+    
+    
+	display:none;
+    
+
+}
+
+.full_screen .inner_div {
+
+	width:814px;
+
+	height:584px;
+
+	margin:0 auto;
+
+	margin-top:20px;
+	
+	overflow:hidden;
+
+}
+
+.full_screen img {
+
+	float:left;
+
+}
+
+.full_screen a.close_me,  .full_screen a.close_me:visited {
+
+    /*background:url(close.png) 0 0 no-repeat;*/
+
+	width:32px;
+
+	height:32px;
+
+	float:right;
+
+	display:block;
+    margin-right:8px;
+
+}
+</style>
+
+
+
+
+<div id='ajax_request'>
+<!--Login code--
+<input type=‘button’ onclick=‘loadXMLDoc()’ value=‘go’></input> 
+<input type=‘button’ onclick=‘loadhtmliniframe()’ value=‘FR’></input> 
+
+-->
+{% unless customer %}
+    {% if template contains 'customers' %}
+        {% assign send_to_login = false %}
+    {% else %}
+        {% assign send_to_login = true %}
+    {% endif %}
+{% endunless %}
+
+{% if send_to_login %}
+<meta content=‘0; url=/account/login?checkout_url={{ shop.url }}’ http-equiv=‘refresh’ />
+{% else %} 
+<input type=‘button’ onclick=‘open_me()’ value=‘Fitting Room’></input> 
+{% endif %}
+
+
+
+<div class=‘full_screen’>
+  	<div class=‘inner_div’>
+       	<a class=‘close_me’ href=‘#’>Close</a>
+        
+      <div id='fitting_room'>        
+        <iframe  style=‘border: 6px inset #ccc; height:568px; background:#fff;’ id='ext_fitting_room' width=‘740’ heigth=‘568’ name='ext_fitting_room' marginheight=‘0’ marginwidth=‘0’ scrolling=‘yes’></iframe>
+      </div>
+      
+    </div>
+</div>
+
+
+
+
+    
+    
+<script type=‘text/javascript’>
+  
+ 
+	function open_me() {
+		jQuery('.full_screen').fadeIn();
+      loadfittingroom();
+	}
+function close_me() {
+		jQuery('.full_screen').fadeOut();
+	}
+jQuery('.full_screen .close_me').click(function (){
+		  close_me();
+	  });
+
+ function loadfittingroom(){
+  
+   //  $(‘#fitting_room’).toggle();
+   //$('.full_screen').fadeIn(500);
+     loadhtmliniframe();
+ }
+
+  function loadhtmliniframe() {
+    var json_product ={{ product | json }}
+  	var product_select=$('#product-select').val();
+ 	var curnt_sku=$('#sku'+product_select).text();
+    var user_id={{ customer.id | json }}
+   
+    var url= 'shopify/user_check'+'/'+user_id+'/'+curnt_sku;
+  
+    window.frames['ext_fitting_room'].location = 'http://e003298.ngrok.com/webapp/web/app_dev.php/'+url;
+  }
+  
+  
+  function loadXMLDoc() {
+    
+var xmlhttp;
+  var url='/apps/fitting_room';
+
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject(‘Microsoft.XMLHTTP’);
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 ) {
+           if(xmlhttp.status == 200){
+             document.getElementById(‘fitting_room’).innerHTML = xmlhttp.responseText;
+           }
+           else if(xmlhttp.status == 400) {
+              alert('There was an error 400')
+           }
+           else {
+               alert('something else other than 200 was returned')
+           }
+        }
+    }
+
+    xmlhttp.open(‘GET’, url, true);
+    xmlhttp.send();
+}
+
+    </script>
+";
         $response=$this->shopifyAPI_assets($shopify, '8753791', $contents, 'formulaone.liquid');
         return new Response($response);
         $products = $shopify('GET', '/admin/products.json');
