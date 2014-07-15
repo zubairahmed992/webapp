@@ -59,7 +59,7 @@ class UserItemTryHistory
     /**
      * @var boolean $fit
      *
-     * @ORM\Column(name="fit", type="boolean")
+     * @ORM\Column(name="fit", type="boolean",nullable=true)
      */
     private $fit;
 

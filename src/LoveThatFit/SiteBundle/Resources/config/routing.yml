@@ -15,8 +15,8 @@ inner_site_index:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index, list_type: null}
 
 inner_shopify_index:
-    pattern:  /inner_site/shopify_index/{list_type}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyIndex, list_type: null}
+    pattern:  /inner_site/shopify_index/{sku}/{user_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyIndex, sku: null, user_id: null}
 
 
 about_us:

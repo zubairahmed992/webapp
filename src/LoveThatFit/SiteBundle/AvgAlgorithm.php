@@ -83,7 +83,7 @@ class AvgAlgorithm {
                 );
             }
         }
-
+        if (array_key_exists('feedback', $fb)) {
         foreach ($fb['feedback'] as $size_fb) {
             if ($size_fb['id'] == $size->getId()) {
                 #return array($size_fb['description'] => $size_fb);
@@ -101,7 +101,7 @@ class AvgAlgorithm {
                 
             }
         }
-
+        }
         return null;
     }
 
