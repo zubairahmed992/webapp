@@ -3246,7 +3246,8 @@ padding-bottom: 0px;
 
 .qust{
     font-weight: bold;
-    padding-bottom: 10px;    
+    padding-bottom: 10px; 
+    font-family: MyCustomFontb;
 }
 
 .ans{    
@@ -5260,3 +5261,11 @@ transform: rotateX(0deg) rotateY(0deg);
  min-height: 0!important;   
 }
 */
+
+
+.compare h1 {
+    color: #426eb6;
+    font-size: 2em;
+    font-weight: normal;
+    padding: 0 0 20px;
+}
