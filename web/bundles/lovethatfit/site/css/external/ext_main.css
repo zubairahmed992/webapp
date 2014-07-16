@@ -173,7 +173,7 @@ body {
 }
 .full_wrapper {
 	background:none;
-	padding-top:10px;
+	
 }
 .holder {
 	margin:0 auto;
@@ -2338,7 +2338,7 @@ text-align: left;
 
 .next_btn_4 {
     position: absolute;
-    right:10px;
+    right:0px;
     top:525px;
     display:block;
 }
@@ -5009,9 +5009,10 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .ext_site_hldr .holder {
     margin: 0 10px;
-    width: auto;
-    padding:10px;
+    width: 730px;   
     border: none;
+    height: 568px;
+    overflow: hidden;
 }
 .ext_site_hldr .holder .reg_blk {
     min-height: 350px;
@@ -5025,8 +5026,8 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .ext_site_hldr .fitting_step{
     position:absolute; 
-    top:9px; 
-    left: 499px; 
+    top:4px; 
+    left: 259px; 
     width: 366px;    
 }
 
@@ -5041,8 +5042,8 @@ transform: rotateX(0deg) rotateY(0deg);
     width:90px;
     background: url("../../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
     position: absolute;
-    top:50px;
-    left:864px;
+    top:45px;
+    left:624px;
     height: 210px;
     padding: 0px 0px 20px 10px;
 }
@@ -5053,7 +5054,7 @@ transform: rotateX(0deg) rotateY(0deg);
     overflow: hidden;
     position:relative;
     float:right;
-    margin: -125px -356px 0px 0px;
+    margin: -120px -117px 0px 0px;
     background:#fff;
     border:1px dotted #ccc;
     z-index: 0;
@@ -5067,7 +5068,7 @@ transform: rotateX(0deg) rotateY(0deg);
 }
 
 .hw_works2{ 
-    left: -210px;
+    left: -194px;
     position: absolute;
     top: 100px;
     width:250px;
@@ -5083,8 +5084,7 @@ transform: rotateX(0deg) rotateY(0deg);
 }
 
 .ext_site_hldr .next_btn_4{
-    left: 760px;
-    top: 560px;
+   
 }
 
 .ext_site_hldr .reg_next_step2{
@@ -5095,7 +5095,7 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .frmext{
    position:absolute;
-   left: -220px;
+   left: -194px;
    top: 20px;
    
     
