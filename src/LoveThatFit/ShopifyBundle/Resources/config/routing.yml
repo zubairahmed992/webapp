@@ -1,3 +1,4 @@
+#~~~~~~~~~~~~~~~~> Default
 shopify_install:
     pattern:  /shopify/install
     defaults: { _controller: LoveThatFitShopifyBundle:Default:install }
@@ -6,44 +7,20 @@ shopify_granted:
     pattern:  /shopify/granted
     defaults: { _controller: LoveThatFitShopifyBundle:Default:granted }
 
-shopify_sync_products:
-    pattern:  /shopify/sync_products
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:syncProducts }
-
-shopify_fitting_room:
-    pattern:  /shopify/fitting_room
-    defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:show }
-
-shopify_ajax:
-    pattern:  /shopify/ajax
-    defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:ajax }
-
-shopify_app_proxy:
-    pattern:  /shopify/app_proxy/
-    defaults: { _controller: LoveThatFitShopifyBundle:FittingRoom:appProxy }
+shopify_foo:
+    pattern:  /shopify/foo
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:foo }
 
 shopify_simulator:
     pattern:  /shopify/simulator
     defaults: { _controller: LoveThatFitShopifyBundle:Default:shopifySimulator }
-
-shopify_fitting_room_show:
-    pattern:  /shopify/fitting_room_show/{product_id}
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:fittingRoomShow, product_id:0 }
  
 shopify_user_check:
     pattern:  /shopify/user_check/{user_id}/{sku}
     defaults: { _controller: LoveThatFitShopifyBundle:Default:userCheck ,user_id:0,sku:0}    
  
-shopify_fitting_alerts:
-    pattern:  /shopify/fitting_alerts
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:getFittingAlert } 
- 
-hopify_create_html:
-    pattern:  /shopify/create_html
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:createHTMLDoc }     
-   
 
-#-------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~> Data 
 shopify_data_index:
     pattern:  /shopify/data/index
     defaults: { _controller: LoveThatFitShopifyBundle:Data:index }    
