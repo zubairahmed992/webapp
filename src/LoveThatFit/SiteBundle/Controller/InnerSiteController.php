@@ -31,15 +31,34 @@ public function indexAction($list_type) {
  
 #-------------------------------------------------------------------------------
 public function shopifyIndexAction($sku=null,$user_id=null) {
-            #$sku='4233';
+        $user = $this->get('security.context')->getToken()->getUser();
+        $session = $this->get("session");
+        if ($sku == null && $session->has('shopify_user')) {                  
+                  $sku = $session->get('sku');                  
+              } 
         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);
-            #return new response($sku);            
-         
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
             'list_type'=>null,
            ));
- } 
+ }
+ #-------------------------------------------------------------------------------
+public function shopifyAfterLoginAction($sku=null,$user_id=null) {
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        $session = $this->get("session");
+        if ($session->has('shopify_user')) {
+                  $shopify_user = $session->get('shopify_user');                  
+                  $sku = $session->get('sku');
+                  $this->get('admin.helper.retailer.site.user')->addNew($user, $shopify_user['site_user_id']);
+                  
+              } 
+        $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
+        return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
+            'item'=>$itemBySku,
+            'list_type'=>null,            
+           ));
+ }
 #-------------------------------------------------------------------------------
  public function homeAction($page_number = 0, $limit = 0) {
        $gender= $this->get('security.context')->getToken()->getUser()->getGender();

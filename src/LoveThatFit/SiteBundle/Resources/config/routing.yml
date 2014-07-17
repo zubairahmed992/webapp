@@ -18,6 +18,10 @@ inner_shopify_index:
     pattern:  /inner_site/shopify_index/{sku}/{user_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyIndex, sku: null, user_id: null}
 
+inner_shopify_after_login:
+    pattern:  /inner_site/shopify_after_login/{sku}/{user_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyAfterLogin, sku: null, user_id: null}
+
 
 about_us:
     pattern:  /about_us
