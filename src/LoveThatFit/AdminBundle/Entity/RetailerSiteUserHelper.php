@@ -55,14 +55,13 @@ public function findByReferenceId( $user_reference_id=null){
  
 //-------------------------------------------------------
 
-    public function addNew($user, $user_reference_id) {
+    public function addNew($user,$retailer, $user_reference_id) {
         $entity = $this->createNew();    
-        //$entity->setRetailer($retailer);
+        $entity->setRetailer($retailer);
         $entity->setUser($user);
         $entity->setUserReferenceId($user_reference_id);
         $entity->setCreatedAt(new \DateTime('now'));
-        $this->save($entity);
-        
+        $this->save($entity);        
         return $entity;
     }
 

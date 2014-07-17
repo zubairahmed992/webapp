@@ -227,10 +227,10 @@ class UserController extends Controller {
        $data = $request->request->all();    
        $retailerId=$data['retailer_site_user']['Retailer'];
        $user_reference_id=$data['retailer_site_user']['user_reference_id'];
-       $retailer=$this->get('admin.helper.retailer')->find($retailerId);       
-       $entity= $this->get('user.helper.user')->find($id);
-       $this->get('admin.helper.retailer.site.user')->addNew($retailer,$entity,$user_reference_id);
-        return $this->redirect($this->generateUrl('admin_user_detail_show', array('id' => $entity->getId())));
+       $retailer=$this->get('admin.helper.retailer')->find($retailerId);         
+       $user= $this->get('user.helper.user')->find($id);
+       $this->get('admin.helper.retailer.site.user')->addNew($user,$retailer,$user_reference_id);
+        return $this->redirect($this->generateUrl('admin_user_detail_show', array('id' => $user->getId())));
    }
    
    
