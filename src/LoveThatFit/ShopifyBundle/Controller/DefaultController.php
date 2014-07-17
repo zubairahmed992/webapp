@@ -66,7 +66,7 @@ class DefaultController extends Controller {
         if (is_object($site_user)) {
             $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
             if ($itemBySku == null || empty($itemBySku)) {
-                return new response('Unable to find product ');
+                return new response("Product not found");
             }
             return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId())), 301);
         } else {
@@ -153,6 +153,16 @@ class DefaultController extends Controller {
             return $e;
         }
     }
+#---------------------------------Check Sku ---------------------------#
+public function checkSkuAction($sku=null){
+  $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
+    if ($itemBySku == null || empty($itemBySku)) {
+       return new response("one");
+    }   else{
+        return new response("two");
+    }
+}
+    
 
 #-----------------------------------------------------------------------
 
