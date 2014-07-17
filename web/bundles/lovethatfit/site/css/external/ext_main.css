@@ -2331,7 +2331,7 @@ text-align: left;
 
 .save_btn_4{
     position: absolute;
-    right:10px;
+    right:0px;
     top:525px;
     display:none;
 }
@@ -5009,7 +5009,7 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .ext_site_hldr .holder {
     margin: 0 10px;
-    width: 730px;   
+    width: 790px;   
     border: none;
     height: 568px;
     overflow: hidden;
@@ -5026,14 +5026,14 @@ transform: rotateX(0deg) rotateY(0deg);
 
 .ext_site_hldr .fitting_step{
     position:absolute; 
-    top:4px; 
-    left: 259px; 
+    top:9px; 
+    left: 302px; 
     width: 366px;    
 }
 
 .ext_site_hldr .play_area_hldr {	
 	height:410px;	
-        width:500px;
+        width:540px;
         
 }
 
@@ -5042,8 +5042,8 @@ transform: rotateX(0deg) rotateY(0deg);
     width:90px;
     background: url("../../images/rotate_bar2.png") repeat-y scroll 0 0 transparent;
     position: absolute;
-    top:45px;
-    left:624px;
+    top:50px;
+    left:665px;
     height: 210px;
     padding: 0px 0px 20px 10px;
 }
