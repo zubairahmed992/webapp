@@ -4038,7 +4038,7 @@ width: 160px;
     position: absolute;
     right: 0;
     top:0;
-    width: 35px;
+    width: 780px;
     z-index: 5000;
     border:none;
     border-left: none;
@@ -4078,7 +4078,7 @@ width: 160px;
 }
 
 #ltf_fitting_room .ltf_fitting_room_inner {
-    display:none;
+    display:block;
     
 }
 
@@ -4168,7 +4168,7 @@ width: 160px;
     border-bottom:1px solid #ccc;
     background: #fff;
     position: relative;
-    overflow: auto;
+    float:left;
     
 }
 

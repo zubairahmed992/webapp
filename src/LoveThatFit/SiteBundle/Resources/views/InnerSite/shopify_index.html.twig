@@ -32,10 +32,7 @@
         <div class="prod_sliding_area">
             
             <div id="ltf_fitting_room" class="showtab">
-              <img id="patch_btm" src="{{ asset('bundles/lovethatfit/site/images/bottom_patch.png') }}" />
-          <div class="but_opn_fr">
-                  Fitting Room
-              </div>
+             
               
            <div class="ltf_fitting_room_inner">
           
@@ -281,7 +278,8 @@
               </div>
           </div>
           <div id="slider_dis_canv">
-            {% render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} %}    
+              <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>
+            {# render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} #}
             <!--.prod_sliding_area--></div>
            
         <!---/#dis canv---></div>
@@ -299,7 +297,7 @@
     
 function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id ){
 
-    open_fr();
+    //open_fr();
 
     if(prod_thumb){
         //alert($(prod_thumb).attr("class"));
@@ -308,8 +306,9 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
             //alert("fffff: " + new_prod_id);
         }
         else{
-            //alert("Else");
+            
             details_base_url = $('#ajax_product_base_url').text();
+            //alert("Else: "+details_base_url);
             //details_base_url = "http://dev.lovethatfit.com/ajax/product/";
           
             //alert(details_base_url);
@@ -612,7 +611,7 @@ var scroll_heighting = 506;
     
     
     //---Function to check drag limit and set revert---//
-    
+        
     function product_drag_limit_check(prod_type){
         var prod_axis = $(prod_type).offset();
 
@@ -681,65 +680,7 @@ var scroll_heighting = 506;
     
     
     var fr_indicator;
-     function open_fr(){
-        
-        fr_indicator = "opened";
-        $("#slider_dis_canv ul.prod_wrapper li").fadeOut(200);
-        $("#ltf_fitting_room").animate({ width: 780 }, 500, function() { });
-        $("#ltf_fitting_room .ltf_fitting_room_inner").fadeIn(300);
-        $("#ltf_fitting_room .but_opn_fr").fadeOut(250);
-        $("#ltf_fitting_room .but_cls_fr").fadeIn(250);
-        //alert(fr_indicator);
-       //$('#ltf_fitting_room').css( "top", '0px');
-       //$('.holder').height(800);
-        $('#slider_dis_canv').css('height',$('.holder').height()-105);
-       //$('.full_wrapper').css('height','400px'); 
-       
-        //$('#ltf_fitting_room').css({"width":"780","border":"1px solid red"});
-        
-        
-       
-        sst = 700;
-        $('.holder').css({"height":sst,"overflow":"hidden"});
-         $('#ltf_fitting_room').addClass("addwidth");
-       
-        
-  
-    }
-    
-    function close_fr(){
-        fr_indicator = "closed";
-        $("#slider_dis_canv ul.prod_wrapper li").fadeIn(200);
-        $("#ltf_fitting_room").animate({ width: 35 }, 500, function() { });
-        $("#ltf_fitting_room .ltf_fitting_room_inner").fadeOut(300);
-        $("#ltf_fitting_room .but_opn_fr").fadeIn(250);
-        $("#ltf_fitting_room .but_cls_fr").fadeOut(250);
-        //alert(fr_indicator);
-        $('#ltf_fitting_room').removeClass("addwidth");
-        $('#ltf_fitting_room').addClass("showtab");
-        $('.holder').css({"height":"auto"});
-        
-        
-                
-         
-       
-                
-          }
-    
-    $(".but_opn_fr").click(
-        function(){
-            open_fr();
-            
-        }
-    );
-    $(".but_cls_fr").click(
-        function(){            
-            close_fr();
-            
-             
-            
-        }        
-    );
+     
     
     function set_drag_drop_ele(){
     
@@ -966,7 +907,8 @@ var scroll_heighting = 506;
     <script>
     $(document).ready(function(){
         
-        //office// new_product_control(false,7,8,25)
+        //office// 
+        new_product_control(false,7,10,38);
         
         var ext_product_id = parseInt($("#ext_product_id").attr("value"));
         var ext_color_id = parseInt($("#ext_color_id").attr("value"));
