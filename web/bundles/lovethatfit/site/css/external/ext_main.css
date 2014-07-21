@@ -810,7 +810,7 @@ a.but_short:visited {
 #adj_markers_hldr {
     background: none repeat scroll 0 0 ;
     height: 390px;
-    left: 499px;
+    left: 300px;
     margin: 23px 0 0;
     position: absolute;
     top: 51px;
@@ -5272,3 +5272,4 @@ transform: rotateX(0deg) rotateY(0deg);
     color: red;
     text-align: center;
 }
+
