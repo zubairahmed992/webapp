@@ -356,9 +356,9 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         break;
     
         case "recently_tried_on":        
-        $list = $this->findRecentlyTriedOnByUser($options['user_id']);
-        break;
-    
+        //$list = $this->findRecentlyTriedOnByUser($options['user_id']);
+        $list = $this->findRecentlyTriedOnByUserForRetailer($options['retailer_id'],$options['user_id']);            
+        break;    
         case "most_faviourite":        
         $list = $this->findMostFavoriteProducts($options['gender']);        
         break ;      
@@ -399,8 +399,8 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         return $this->repo->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
    }
    #---------------------------------------------------
-    public function findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id, $page_number=0, $limit=0) {
-        return $this->repo->findRecentlyTriedOnByUser($retailer_id, $user_id, $page_number, $limit);        
+    public function findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id, $page_number=0, $limit=0) {       
+        return $this->repo->findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id, $page_number, $limit);        
    }
    #---------------------------------------------------
     

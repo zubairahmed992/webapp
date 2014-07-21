@@ -820,8 +820,8 @@ class ProductRepository extends EntityRepository {
                             ->createQuery("
             SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
-            AND p.retailer=:retailer_id
+            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
+             
             ORDER BY uih.count DESC"
                             )->setParameters(array('user_id' =>$user_id, 'retailer_id' =>$retailer_id));
         } else {
@@ -829,8 +829,7 @@ class ProductRepository extends EntityRepository {
                     ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
-            WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
-            AND p.retailer=:retailer_id
+            WHERE p.retailer=:retailer_id AND uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!='' 
             ORDER BY uih.count DESC "
                     )->setParameters(array('user_id' =>$user_id, 'retailer_id' =>$retailer_id))
                     ->setFirstResult($limit * ($page_number - 1))

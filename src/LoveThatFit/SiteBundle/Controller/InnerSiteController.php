@@ -103,8 +103,10 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
     public function fittingRoomProductsListAction($list_type='recently_tried_on', $page_number = 0, $limit = 0)
     {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $retailer_id=1;
         $gender = $this->get('security.context')->getToken()->getUser()->getGender();
-        $options = array('gender' => $gender, 'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);
+        $options = array('gender' => $gender, 'retailer_id' => $retailer_id,'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);
+        //$options = array('gender' => $gender, 'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);
         $entity = $this->get('admin.helper.product')->listByType($options);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_products_short.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
     }
