@@ -155,12 +155,16 @@ class DefaultController extends Controller {
     }
 #---------------------------------Check Sku ---------------------------#
 public function checkSkuAction($sku=null){
-  $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
+     $responseHeaders = new Response();
+        $responseHeaders->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
+        $responseHeaders->set('Access-Control-Allow-Origin', '*');
+        $responseHeaders->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE OPTIONS');
+    $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
     if ($itemBySku == null || empty($itemBySku)) {
-       return new response("one");
-    }   else{
-        return new response("two");
-    }
+       return new response(array('status' => 'success'), 200, array('Access-Control-Allow-Origin' => '*'));
+    }else{
+      return new response(array('status' => 'success'), 200, array('Access-Control-Allow-Origin' => '*'));
+    }   
 }
     
 
