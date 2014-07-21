@@ -810,6 +810,38 @@ class ProductRepository extends EntityRepository {
             return null;
         }
     }
+    //-------------------------------------------------------------------------------------    
+    
+    
+    public function findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id, $page_number = 0, $limit = 20)
+    {
+        if ($page_number <= 0 || $limit <= 0) {
+            $query = $this->getEntityManager()
+                            ->createQuery("
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
+            AND p.retailer=:retailer_id
+            ORDER BY uih.count DESC"
+                            )->setParameters(array('user_id' =>$user_id, 'retailer_id' =>$retailer_id));
+        } else {
+            $query = $this->getEntityManager()
+                    ->createQuery("
+            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
+            AND p.retailer=:retailer_id
+            ORDER BY uih.count DESC "
+                    )->setParameters(array('user_id' =>$user_id, 'retailer_id' =>$retailer_id))
+                    ->setFirstResult($limit * ($page_number - 1))
+                    ->setMaxResults($limit);
+        }
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 //-------------------------------------------------------------------------------------    
     public function findOneByName($name) {
         $record = $this->getEntityManager()

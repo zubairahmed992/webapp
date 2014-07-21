@@ -399,6 +399,10 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         return $this->repo->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
    }
    #---------------------------------------------------
+    public function findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id, $page_number=0, $limit=0) {
+        return $this->repo->findRecentlyTriedOnByUser($retailer_id, $user_id, $page_number, $limit);        
+   }
+   #---------------------------------------------------
     
    public function findMostTriedOnByGender($gender='F', $page_number=0, $limit=0) {
         return $this->repo->findMostTriedOnByGender($gender, $page_number, $limit);        

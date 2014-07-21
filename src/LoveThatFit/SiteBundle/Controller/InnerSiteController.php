@@ -136,6 +136,12 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $entity = $this->get('admin.helper.product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
+#------------------------------------------------------------------------------- 
+    public function productsRecentlyTriedOnByUserForRetailerAction($retailer_id, $page_number = 0, $limit = 0) {
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $entity = $this->get('admin.helper.product')->findRecentlyTriedOnByUserForRetailer($user_id, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+    }    
 #-------------------------------------------------------------------------------  
     public function productsMostFavoriteAction($gender, $page_number = 0, $limit = 0) {
         $user_id= $this->get('security.context')->getToken()->getUser()->getId();
