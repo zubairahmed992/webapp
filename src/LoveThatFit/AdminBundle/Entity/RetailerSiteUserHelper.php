@@ -55,7 +55,7 @@ public function findByReferenceId( $user_reference_id=null){
  
 //-------------------------------------------------------
 
-    public function addNew($user,$retailer, $user_reference_id) {
+    public function addNew($user, $user_reference_id, $retailer=null) {
         $entity = $this->createNew();    
         $entity->setRetailer($retailer);
         $entity->setUser($user);

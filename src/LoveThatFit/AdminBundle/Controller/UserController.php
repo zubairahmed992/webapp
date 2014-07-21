@@ -229,7 +229,7 @@ class UserController extends Controller {
        $user_reference_id=$data['retailer_site_user']['user_reference_id'];
        $retailer=$this->get('admin.helper.retailer')->find($retailerId);         
        $user= $this->get('user.helper.user')->find($id);
-       $this->get('admin.helper.retailer.site.user')->addNew($user,$retailer,$user_reference_id);
+       $this->get('admin.helper.retailer.site.user')->addNew($user, $user_reference_id, $retailer);
         return $this->redirect($this->generateUrl('admin_user_detail_show', array('id' => $user->getId())));
    }
    
