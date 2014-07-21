@@ -68,6 +68,7 @@ class DefaultController extends Controller {
             if ($itemBySku == null || empty($itemBySku)) {
                 return new response("Product not found");
             }
+            $this->get('user.helper.user')->getLoggedInById($site_user->getUser());
             return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId())), 301);
         } else {
             //$retailer = $this->get('admin.helper.retailer')->find(1);
