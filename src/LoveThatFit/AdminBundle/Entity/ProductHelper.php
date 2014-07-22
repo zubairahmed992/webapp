@@ -356,13 +356,16 @@ public function findProductItemByUser($user_id, $page_number, $limit){
         break;
     
         case "recently_tried_on":        
-        //$list = $this->findRecentlyTriedOnByUser($options['user_id']);
-        $list = $this->findRecentlyTriedOnByUserForRetailer($options['retailer_id'],$options['user_id']);            
+        $list = $this->findRecentlyTriedOnByUser($options['user_id']);
         break;    
+        
         case "most_faviourite":        
         $list = $this->findMostFavoriteProducts($options['gender']);        
         break ;      
         
+        case "recently_tried_on_for_retailer":                
+        $list = $this->findRecentlyTriedOnByUserForRetailer($options['retailer_id'],$options['user_id']);            
+        break;            
             
         default:
        $list = $this->findByGenderLatest($options['gender'],$options['page_number'],$options['limit']);
