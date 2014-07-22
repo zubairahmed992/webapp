@@ -87,14 +87,14 @@ class Retailer
     /**
      * @var string $disabled
      *
-     * @ORM\Column(name="disabled", type="boolean")
+     * @ORM\Column(name="disabled", type="boolean", nullable=true)
      */
     private $disabled;
     
      /**
      * @var string $sizeTitleDisabled
      *
-     * @ORM\Column(name="size_title_disabled", type="boolean")
+     * @ORM\Column(name="size_title_disabled", type="boolean",nullable=true)
      */
     private $sizeTitleDisabled;
     

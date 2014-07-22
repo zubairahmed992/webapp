@@ -97,7 +97,7 @@ class RetailerHelper {
 
         $entity = $this->repo->findOneByShopDomain($specs['shop_domain']);
         if ($entity) {
-        $entity->setSharedSecret($specs['shared_secret']);
+        //$entity->setSharedSecret($specs['shared_secret']);
         $entity->setAccessToken($specs['access_token']);
         $entity->setRetailerType('shopify');
         return $this->update($entity);
@@ -105,7 +105,7 @@ class RetailerHelper {
             $entity=$this->createNew();
             $entity->setTitle($specs['shop_domain']);
             $entity->setShopDomain($specs['shop_domain']);
-            $entity->setSharedSecret($specs['shared_secret']);
+           // $entity->setSharedSecret($specs['shared_secret']);
             $entity->setAccessToken($specs['access_token']);
             $entity->setRetailerType('shopify');
             return $this->save($entity);
