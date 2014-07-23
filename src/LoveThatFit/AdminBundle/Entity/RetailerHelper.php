@@ -99,15 +99,14 @@ class RetailerHelper {
         if ($entity) {
         //$entity->setSharedSecret($specs['shared_secret']);
         $entity->setAccessToken($specs['access_token']);
-        $entity->setRetailerType('shopify');
+        $entity->setRetailerType($specs['shop_type']);
         return $this->update($entity);
         }else{
             $entity=$this->createNew();
             $entity->setTitle($specs['shop_domain']);
-            $entity->setShopDomain($specs['shop_domain']);
-           // $entity->setSharedSecret($specs['shared_secret']);
+            $entity->setShopDomain($specs['shop_domain']);           
             $entity->setAccessToken($specs['access_token']);
-            $entity->setRetailerType('shopify');
+            $entity->setRetailerType($specs['shop_type']);
             return $this->save($entity);
         }
       

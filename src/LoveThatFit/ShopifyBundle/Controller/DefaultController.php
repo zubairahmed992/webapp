@@ -28,6 +28,7 @@ class DefaultController extends Controller {
         $specs['temp_code'] = $this->getRequest()->query->get('code');          
         $specs['shop_domain'] = $this->getRequest()->query->get('shop');                 
         $specs['access_token'] = \sandeepshetty\shopify_api\oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
+        $specs['shop_type'] = 'shopify';          
        //return new response(json_encode($specs));
 //1- access token ,shop domain in retailer table
 //        
