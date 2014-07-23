@@ -16,8 +16,8 @@ shopify_simulator:
     defaults: { _controller: LoveThatFitShopifyBundle:Default:shopifySimulator }
  
 shopify_user_check:
-    pattern:  /shopify/user_check/{user_id}/{sku}
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:userCheck ,user_id:0,sku:0}    
+    pattern:  /shopify/user_check/{access_token}/{user_id}/{sku}
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Default:proxyFittingRoom ,access_token:0,user_id:0,sku:0}    
  
 shopify_check_sku:
     pattern:  /shopify/check_sku/{sku}

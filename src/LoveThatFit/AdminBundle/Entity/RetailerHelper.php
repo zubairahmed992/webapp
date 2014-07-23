@@ -367,4 +367,9 @@ public function BrandBaseOnRetailer($id){
 public function reatailerListService(){
     return $this->repo->reatailerListService();
 }
+#------------------Find Retailer base on Access Token-------------------------#
+public function getRetailerBaseToken($access_token=null){
+    return $this->repo->getRetailerBaseToken($access_token);
+    
+}
 }

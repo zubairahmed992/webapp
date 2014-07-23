@@ -1,8 +1,9 @@
 <?php
 
 namespace LoveThatFit\ExternalSiteBundle\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -10,11 +11,30 @@ class DefaultController extends Controller
     {
         return $this->render('LoveThatFitExternalSiteBundle:Default:index.html.twig', array('name' => $name));
     }
-    public function proxyFittingRoomAction($token, $user_id, $sku)
+    public function proxyFittingRoomAction($access_token,$user_id,$sku)
     {
+        
         # get retailer by token
-        # check user against retailer & Reference User Id
-        # check product available against sku + retailer
+        $retailer=$this->getRetailerBaseToken($access_token);
+        if($retailer)
+        {
+           return new response($this->userCheck($user_id,$sku));
+            
+        }else
+        {
+            return new response("Retailer not found..");
+        }
+        
+    }
+    
+    #------------Get Retailer base on  Access Token------------------------------#
+    public function getRetailerBaseToken($access_token=null){
+       if($this->get('admin.helper.retailer')->getRetailerBaseToken($access_token)){
+           return $this->get('admin.helper.retailer')->getRetailerBaseToken($access_token);
+       }else{
+           return false;
+       }
+      
     }
     
     public function userCheck($user_id, $sku) {
@@ -28,12 +48,12 @@ class DefaultController extends Controller
         if (is_object($site_user)) {            
           /*
            * Dont need to chek this here, deal with it in fitting room::::
-           * 
+           **/ 
             $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);           
             if ($itemBySku == null || empty($itemBySku)|| !isset($itemBySku)){
              return new response("Product not found"); 
             }
-            */
+            
              $this->get('user.helper.user')->getLoggedInById($site_user->getUser());
             return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId())), 301);
         } else {

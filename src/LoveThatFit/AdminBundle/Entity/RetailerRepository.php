@@ -369,5 +369,16 @@ public function getRetailerBrandParticular($id)
         } 
        
    }
-
+ #------------------------------------------------------------------------#  
+public function getRetailerBaseToken($access_token){
+      $record = $this->getEntityManager()
+                        ->createQuery("SELECT r FROM LoveThatFitAdminBundle:Retailer r     
+                                WHERE r.accessToken = :access_token")
+                        ->setParameters(array('access_token' => $access_token));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+}
 }

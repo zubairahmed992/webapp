@@ -11,7 +11,7 @@ class DefaultController extends Controller {
 
     public function installAction() {
         $app_specs = $this->get('shopify.helper')->appSpecs();
-        $shop_domain = 'bicycles-122.myshopify.com';
+        $shop_domain = 'lovethatfit-2.myshopify.com';
         $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content'));
        //return new Response($str);
         return $this->redirect($str);
@@ -40,7 +40,10 @@ class DefaultController extends Controller {
         # update in ltf database
         
         if($this->get('admin.helper.retailer')->updateRetailShopSpecs($specs)){
-          return new response($this->foo());
+            $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($option_array)));
+            $resp=json_encode($this->writeFile('snippets/foo.liquid', $content));
+            return new Response($resp);
+          
         }else{
             return new Response("Some thing went wrong!");
         }
@@ -49,11 +52,11 @@ class DefaultController extends Controller {
 
 #-------------------------------------->
 
-    public function foo() {
-        
+    public function fooAction($option_array=null) {
+        $option_array['acess_token']='8b14eb6efcf7c5fa7b0c76e9b329d06e';
          //return new response(json_encode($this->getShopMainTheme()));
         #$resp=json_encode($this->getShopProducts());
-        $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent()));
+        $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($option_array)));
         
         $resp=json_encode($this->writeFile('snippets/foo.liquid', $content));
         return new Response($resp);
@@ -68,7 +71,8 @@ class DefaultController extends Controller {
 
     #--------------------------------------------------------------- 
 
-    public function userCheckAction(Request $request, $user_id, $sku) {
+    public function userCheckAction(Request $request,$access_token,$user_id, $sku) {
+        
        
         if ($user_id == null) {
             return $this->redirect($this->generateUrl('external_login'), 301);
@@ -107,12 +111,20 @@ class DefaultController extends Controller {
 
     private function getShopMainTheme() {
         $themes = $this->getShopThemes();
-        $th_array=json_decode($themes, true);
         
+       if(is_array( $themes)){
+            $is_arr=$themes;
+           
+        }else{
+            $th_array=json_decode($themes, true);
+            $is_arr=$th_array['themes'];
+        }
         $main_theme = null;
-        foreach ($th_array['themes'] as $t) {
+        foreach ($is_arr as $t) {
             $main_theme = $t['role'] == 'main' ? $t : $main_theme;
         }
+        
+        
         return $main_theme;
     }
 
@@ -138,9 +150,9 @@ class DefaultController extends Controller {
         $app_specs = $this->get('shopify.helper')->appSpecs();
        
         //$access_token = '8b14eb6efcf7c5fa7b0c76e9b329d06e';
-       $access_token='f4042684c617709540ed837ce30aea98';
+       $access_token='8b14eb6efcf7c5fa7b0c76e9b329d06e';
         
-        $shop_domain = 'bicycles-122.myshopify.com';
+        $shop_domain = 'lovethatfit-2.myshopify.com';
         $shopify = \sandeepshetty\shopify_api\client($shop_domain, $access_token, $app_specs['api_key'], $app_specs['shared_secret']);
         return $shopify;
     }
@@ -148,8 +160,9 @@ class DefaultController extends Controller {
     #-------------------------------------->
 
     private function writeFile($full_name, $content) {
-        $main_theme = $this->getShopMainTheme();
-        $shopify = $this->getShopifyObject();
+       
+       $main_theme=$this->getShopMainTheme();
+      $shopify = $this->getShopifyObject();
 
         try {
             $request = array(
@@ -176,7 +189,7 @@ public function checkSkuAction($sku=null){
     
 
 #-----------------------------------------------------------------------
-  private function getContent() {
+  private function getContent($option_array=null) {
        return "<style>
 .full_screen {text-align:center;width:100%;height:100%;position:fixed;left:0;top:0;z-index:80000; background:url({{ 'trans_dot.png' | asset_url }}) 0 0 repeat;display:none;}
 .full_screen .inner_div {width:814px;height:584px;margin:0 auto;margin-top:36px;overflow:hidden;}
@@ -225,8 +238,9 @@ function loadfittingroom(){
 var product_select=$('#product-select').val();
  var curnt_sku=$('#sku'+product_select).text();
  var user_id={{ customer.id | json }}
- var url= 'shopify/user_check'+'/'+user_id+'/'+curnt_sku;
- window.frames['ext_fitting_room'].location = 'http://26830d5c.ngrok.com/webapp/web/app_dev.php/'+url;
+ var access_token='".$option_array['acess_token']."';
+ var url= 'shopify/user_check/'+access_token+'/'+user_id+'/'+curnt_sku;
+ window.frames['ext_fitting_room'].location = 'http://474ec863.ngrok.com/webapp/web/app_dev.php/'+url;
   }
   function loadXMLDoc() {
   var xmlhttp;
