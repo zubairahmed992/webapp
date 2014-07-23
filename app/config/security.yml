@@ -45,7 +45,7 @@ security:
         
         external_site:
             provider: user_db
-            pattern:    ^/
+            pattern:    ^/external
             anonymous: ~
             form_login:
                 login_path:  /external/login

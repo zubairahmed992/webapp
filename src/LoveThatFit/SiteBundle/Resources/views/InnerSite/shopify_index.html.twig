@@ -13,7 +13,7 @@
 <input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
 <input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
 <input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
-<span id="hdn_url_1" style="display: none">{{path('user_mannequin')}}</span>
+<span id="hdn_url_1" style="display: none">{{path('external_user_mannequin')}}</span>
 
 
 
@@ -42,8 +42,9 @@
                    </div>
                    <div class="recent_prods_slider_hldr">
                        <div id="rece_up_but"><span class="click_able_top"></span></div>
+                       
                        <div id="recent_prods">
-                           {% render 'LoveThatFitSiteBundle:InnerSite:productsRecentlyTriedOnByUserForRetailer' with {'retailer_id' : (retailer!=null)?retailer.id:null} %}
+                           {% render 'LoveThatFitSiteBundle:InnerSite:productsRecentlyTriedOnByUserForRetailer' with {'retailer_id' : (retailer is not defined or retailer is null)?null:retailer.id} %}
                        </div>
                        <div>{# render 'LoveThatFitSiteBundle:CompareProduct:list' #}</div>
                        <div id="rece_down_but"><span class="click_able_btm"></span></div>

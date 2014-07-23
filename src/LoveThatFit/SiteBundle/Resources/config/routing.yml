@@ -14,15 +14,6 @@ inner_site_index:
     pattern:  /inner_site/index/{list_type}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index, list_type: null}
 
-inner_shopify_index:
-    pattern:  /inner_site/shopify_index/{sku}/{user_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyIndex, sku: null, user_id: null}
-
-inner_shopify_after_login:
-    pattern:  /inner_site/shopify_after_login/{sku}/{user_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyAfterLogin, sku: null, user_id: null}
-
-
 about_us:
     pattern:  /about_us
     defaults: { _controller: LoveThatFitSiteBundle:Home:aboutUs}
@@ -171,3 +162,15 @@ email_registration:
     pattern:  /email/registration/{id}
     defaults: { _controller: LoveThatFitSiteBundle:Home:emailRegistration}    
     
+#----------------- external sites
+inner_shopify_index:
+    pattern:  /external/shopify_index/{sku}/{user_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyIndex, sku: null, user_id: null}
+
+inner_shopify_after_login:
+    pattern:  /external/shopify_after_login/{sku}/{user_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:shopifyAfterLogin, sku: null, user_id: null}
+
+external_user_mannequin:
+    pattern:  /external/profile/mannequin
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:userMannequin }    

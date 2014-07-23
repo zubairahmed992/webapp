@@ -55,8 +55,10 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
                   
               } 
         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
+        $retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
+            'retailer'=>$retailer,
             'list_type'=>null,            
            ));
  }
