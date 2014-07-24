@@ -73,6 +73,14 @@ registration_parent_child_update:
 fitting_room_image_edit:
     pattern:  /registration/fitting_room_image_edit
     defaults: { _controller: LoveThatFitUserBundle:Registration:fittingRoomImageEdit }
+    
+    
+    #----------------------- masked marker related 
+registration_step_image_edit:
+    pattern:  /registration/step_image_edit
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepImageEdit }    
+    
+    
 #----------------------------- Profile ---------------------------------------------
 
 user_profile_about_me:

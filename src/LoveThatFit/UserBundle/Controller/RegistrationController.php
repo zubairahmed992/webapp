@@ -350,7 +350,6 @@ class RegistrationController extends Controller {
     }
 
 #---------------------------Profile Edit Image ---------------#
-
     public function fittingRoomImageEditAction() {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -492,8 +491,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
         return new Response($response);
     }
-    
-    
+        
     public function stepFourVerticalMeasurementUpdateAction(Request $request, $id) {
 
         $entity = $this->get('user.helper.user')->find($id);
@@ -509,10 +507,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
             return new Response('Vertical Position Measurement has not been updated!');
         }
     }
-    
-    
-    
-    
+        
     public function stepFourHorizontalMeasurementUpdateAction(Request $request, $id) {
 
         $entity = $this->get('user.helper.user')->find($id);
@@ -544,7 +539,33 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
    return $response;
     }
     
-    
+    #---------------------------------------------------------------------------
+    #--------------------- Masked Marker - new registration
+    #---------------------------------------------------------------------------
+      public function stepImageEditAction() {
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->get('user.helper.user')->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+        $measurement = $user->getMeasurement();
+        
+        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+
+        return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'form' => $form->createView(),
+                        'measurement_form' => $measurement_form->createView(),                   
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                    'entity' => $user,
+                    'measurement' => $measurement,
+                    'edit_type' => 'registration',
+                ));
+    }
 
 }
 
