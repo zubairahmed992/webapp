@@ -13,7 +13,6 @@ class DefaultController extends Controller {
         $app_specs = $this->get('shopify.helper')->appSpecs();
         $shop_domain = 'lovethatfit-2.myshopify.com';
         $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content'));
-       //return new Response($str);
         return $this->redirect($str);
     }
 
@@ -29,9 +28,7 @@ class DefaultController extends Controller {
         $specs['shop_domain'] = $this->getRequest()->query->get('shop');                 
         $specs['access_token'] = \sandeepshetty\shopify_api\oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
         $specs['shop_type'] = 'shopify';          
-       //return new response(json_encode($specs));
-//1- access token ,shop domain in retailer table
-//        
+       
 #~~~~~~>testing
       // $specs['temp_code'] = '0de3b3fb61b001da821e81883b453537';
       //  $specs['shop_domain'] = 'bicycles-122.myshopify.com';
@@ -40,8 +37,10 @@ class DefaultController extends Controller {
         # update in ltf database
         
         if($this->get('admin.helper.retailer')->updateRetailShopSpecs($specs)){
-            $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($option_array)));
-            $resp=json_encode($this->writeFile('snippets/foo.liquid', $content));
+            
+            $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+            $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
+            $resp=json_encode($this->writeFile('snippets/foo.liquid', $content,$shopify));
             return new Response($resp);
           
         }else{
@@ -54,10 +53,7 @@ class DefaultController extends Controller {
 
     public function fooAction($option_array=null) {
         $option_array['acess_token']='8b14eb6efcf7c5fa7b0c76e9b329d06e';
-         //return new response(json_encode($this->getShopMainTheme()));
-        #$resp=json_encode($this->getShopProducts());
         $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($option_array)));
-        
         $resp=json_encode($this->writeFile('snippets/foo.liquid', $content));
         return new Response($resp);
     }
@@ -69,48 +65,10 @@ class DefaultController extends Controller {
         return $this->render('LoveThatFitShopifyBundle:Default:shopify_simulator.html.twig', array('products' => $latest));
     }
 
-    #--------------------------------------------------------------- 
-
-    public function userCheckAction(Request $request,$access_token,$user_id, $sku) {
-        
-       
-        if ($user_id == null) {
-            return $this->redirect($this->generateUrl('external_login'), 301);
-        }
-
-        $site_user = $this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
-      
-       
-        if (is_object($site_user)) {
-            
-            $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
-           
-            if ($itemBySku == null || empty($itemBySku)|| !isset($itemBySku)){
-             return new response("Product not found"); 
-            }
-             $this->get('user.helper.user')->getLoggedInById($site_user->getUser());
-            return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId())), 301);
-        } else {
-            
-            //$retailer = $this->get('admin.helper.retailer')->find(1);
-            $this->setNewUserSession($user_id, $sku);
-            return $this->redirect($this->generateUrl('external_login'), 301);
-        }
-    }
-
-    //-----------------------------------------
-    public function setNewUserSession($site_user_id, $sku) {
-        $session = $this->get("session");
-        $session->set('shopify_user', array('site_user_id' => $site_user_id,
-            'sku' => $sku));
-    }
-
-  
-
     #~~~~~~~~~~~~~~~~~~~~~~ PRIVATES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-    private function getShopMainTheme() {
-        $themes = $this->getShopThemes();
+    private function getShopMainTheme($shopify) {
+        $themes = $this->getShopThemes($shopify);
         
        if(is_array( $themes)){
             $is_arr=$themes;
@@ -130,39 +88,25 @@ class DefaultController extends Controller {
 
     #--------------------------------------->
 
-    private function getShopThemes() {
-      $shopify = $this->getShopifyObject();
+    private function getShopThemes($shopify) {
+      //$shopify = $this->getShopifyObject($shop_specs);
         $themes = $shopify('GET', '/admin/themes.json');
         return $themes;
     }
 
     #--------------------------------------->
 
-    private function getShopProducts() {
-        $shopify = $this->getShopifyObject();
+    private function getShopProducts($shopify) {
+      //  $shopify = $this->getShopifyObject();
         $themes = $shopify('GET', '/admin/products.json');
         return $themes;
     }
 
-    #--------------------------------------->
-
-    private function getShopifyObject() {
-        $app_specs = $this->get('shopify.helper')->appSpecs();
-       
-        //$access_token = '8b14eb6efcf7c5fa7b0c76e9b329d06e';
-       $access_token='8b14eb6efcf7c5fa7b0c76e9b329d06e';
-        
-        $shop_domain = 'lovethatfit-2.myshopify.com';
-        $shopify = \sandeepshetty\shopify_api\client($shop_domain, $access_token, $app_specs['api_key'], $app_specs['shared_secret']);
-        return $shopify;
-    }
-
     #-------------------------------------->
-
-    private function writeFile($full_name, $content) {
+    private function writeFile($full_name, $content,$shopify) {
        
-       $main_theme=$this->getShopMainTheme();
-      $shopify = $this->getShopifyObject();
+      $main_theme=$this->getShopMainTheme($shopify);
+      //$shopify = $this->getShopifyObject();
 
         try {
             $request = array(

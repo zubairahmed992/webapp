@@ -36,8 +36,13 @@ public function shopifyIndexAction($sku=null,$user_id=null) {
         if ($sku == null && $session->has('shopify_user')) {                  
                   $sku = $session->get('sku');                  
               } 
-        $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
-        $retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
+        $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku); 
+        
+          if ($itemBySku == null || empty($itemBySku)|| !isset($itemBySku)){
+            $retailer=null;
+            }
+            
+        //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
             'retailer'=>$retailer,

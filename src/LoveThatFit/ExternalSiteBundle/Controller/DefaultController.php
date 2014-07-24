@@ -46,14 +46,6 @@ class DefaultController extends Controller
         $site_user = $this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
         
         if (is_object($site_user)) {            
-          /*
-           * Dont need to chek this here, deal with it in fitting room::::
-           **/ 
-            $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);           
-            if ($itemBySku == null || empty($itemBySku)|| !isset($itemBySku)){
-             return new response("Product not found"); 
-            }
-            
              $this->get('user.helper.user')->getLoggedInById($site_user->getUser());
             return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId())), 301);
         } else {
