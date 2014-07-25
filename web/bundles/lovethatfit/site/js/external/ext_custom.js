@@ -71,7 +71,7 @@ $(document).ready(function(){
         $('#measurement_top_size').html('');
         $.ajax({
             type:'json',
-            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Top/"+body_type,
+            url: "../../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Top/"+body_type,
             success: function (data) {
    
                 var top_brand = JSON.parse(data);
@@ -103,7 +103,7 @@ $(document).ready(function(){
         $('#measurement_bottom_size').html('');
         $.ajax({
             type:'json',
-            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Bottom/"+body_type,
+            url: "../../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Bottom/"+body_type,
             success: function (data) {
    
                 var bottom_brand = JSON.parse(data);
@@ -134,7 +134,7 @@ $(document).ready(function(){
         $('#measurement_dress_size').html('');
         $.ajax({
             type:'json',
-            url: "../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Dress/"+body_type,
+            url: "../../../ajax/size_chart_title/" + checked_option + "/" + gender + "/" + "Dress/"+body_type,
             success: function (data) {
    
                 var dress_brand = JSON.parse(data);
