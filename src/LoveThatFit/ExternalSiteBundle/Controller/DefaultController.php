@@ -18,7 +18,7 @@ class DefaultController extends Controller
         $retailer=$this->getRetailerBaseToken($access_token);
         if($retailer)
         {
-           return new response($this->userCheck($user_id,$sku));
+           return new response($this->userCheck($user_id,$sku,$retailer));
             
         }else
         {
@@ -37,13 +37,12 @@ class DefaultController extends Controller
       
     }
     
-    public function userCheck($user_id, $sku) {
+    public function userCheck($user_id, $sku,$retailer=null) {
        
         if ($user_id == null) {
             return $this->redirect($this->generateUrl('external_login'), 301);
         }
-        
-        $site_user = $this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id);
+        $site_user = $this->get('admin.helper.retailer.site.user')->findByReferenceId($user_id,$retailer->getId());
         
         if (is_object($site_user)) {            
              $this->get('user.helper.user')->getLoggedInById($site_user->getUser());
@@ -51,16 +50,18 @@ class DefaultController extends Controller
         } else {
             
             //$retailer = $this->get('admin.helper.retailer')->find(1);
-            $this->setNewUserSession($user_id, $sku);
+            $this->setNewUserSession($user_id, $sku,$retailer->getId());
             return $this->redirect($this->generateUrl('external_login'), 301);
         }
     }
 
     //-----------------------------------------
-    public function setNewUserSession($site_user_id, $sku) {
+    public function setNewUserSession($site_user_id, $sku,$retailer_id) {
         $session = $this->get("session");
         $session->set('shopify_user', array('site_user_id' => $site_user_id,
-            'sku' => $sku));
+            'sku' => $sku,
+            'retailer_id'=>$retailer_id
+            ));
     }
     
 }

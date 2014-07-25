@@ -12,12 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class RetailerSiteUserRepository extends EntityRepository
 {
-    public function findByReferenceId($user_reference_id){
+    public function findByReferenceId($user_reference_id,$retailer_id){
         $query = $this->getEntityManager()
                     ->createQuery("SELECT rsu FROM LoveThatFitAdminBundle:RetailerSiteUser rsu
-                                    WHERE rsu.user_reference_id =:user_reference_id")
-            
-                 ->setParameters(array('user_reference_id' => $user_reference_id));
+                                    WHERE rsu.user_reference_id =:user_reference_id
+                                    and rsu.retailer=:retailer_id")
+             ->setParameters(array('user_reference_id' => $user_reference_id,'retailer_id'=>$retailer_id));
                      try {
                      return $query->getSingleResult();
                 } catch (\Doctrine\ORM\NoResultException $e) {

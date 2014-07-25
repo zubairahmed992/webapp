@@ -76,9 +76,9 @@ class RegistrationController extends Controller
                 if ($session->has('shopify_user')) {
                   $shopify_user = $session->get('shopify_user');
                   $site_user_id=$shopify_user['site_user_id'];
-                  //$retailer_id=$shopify_user['retailer_id'];                                    
+                  $retailer=$shopify_user['retailer'];                                    
                   //$retailer = $this->get('admin.helper.retailer')->find($retailer_id);
-                  $this->get('admin.helper.retailer.site.user')->addNew($user, $site_user_id);
+                  $this->get('admin.helper.retailer.site.user')->addNew($user, $site_user_id,$retailer);
               } 
 
            // End of Session----------------------------------------------------
