@@ -40,6 +40,13 @@ class ProductItem
      * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="productitem")
      */
     private $user_item_try_history;
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="productitem")
+     */
+    private $user_fitting_room_ittem;
+    
     /**
      * @ORM\ManyToMany(targetEntity="LoveThatFit\UserBundle\Entity\User", mappedBy="product_items")
      **/
@@ -474,5 +481,38 @@ class ProductItem
     public function getSku()
     {
         return $this->sku;
+    }
+
+    /**
+     * Add user_fitting_room_ittem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem
+     * @return ProductItem
+     */
+    public function addUserFittingRoomIttem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem)
+    {
+        $this->user_fitting_room_ittem[] = $userFittingRoomIttem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_fitting_room_ittem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem
+     */
+    public function removeUserFittingRoomIttem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem)
+    {
+        $this->user_fitting_room_ittem->removeElement($userFittingRoomIttem);
+    }
+
+    /**
+     * Get user_fitting_room_ittem
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserFittingRoomIttem()
+    {
+        return $this->user_fitting_room_ittem;
     }
 }

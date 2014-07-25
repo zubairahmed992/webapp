@@ -55,9 +55,16 @@ class User implements UserInterface, \Serializable {
     private $product_items;
 
     /**
-     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserItemTryHistory", mappedBy="User")
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="User")
      */
     private $useritemtryhistory;
+    
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="User")
+     */
+    private $userfittingroomitem;
     
     /**
      * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\RetailerSiteUser", mappedBy="user")
@@ -1298,5 +1305,38 @@ class User implements UserInterface, \Serializable {
     public function getRetailerSiteUsers()
     {
         return $this->retailer_site_users;
+    }
+
+    /**
+     * Add userfittingroomitem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userfittingroomitem
+     * @return User
+     */
+    public function addUserfittingroomitem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userfittingroomitem)
+    {
+        $this->userfittingroomitem[] = $userfittingroomitem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove userfittingroomitem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userfittingroomitem
+     */
+    public function removeUserfittingroomitem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userfittingroomitem)
+    {
+        $this->userfittingroomitem->removeElement($userfittingroomitem);
+    }
+
+    /**
+     * Get userfittingroomitem
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserfittingroomitem()
+    {
+        return $this->userfittingroomitem;
     }
 }
