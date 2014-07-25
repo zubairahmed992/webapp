@@ -47,6 +47,7 @@ security:
             provider: user_db
             pattern:    ^/external
             anonymous: ~
+            context: primary_auth
             form_login:
                 login_path:  /external/login
                 check_path:  /external/login_check
@@ -60,6 +61,7 @@ security:
             provider: user_db
             pattern:    ^/
             anonymous: ~
+            context: primary_auth
             form_login:
                 login_path:  /login
                 check_path:  /login_check
