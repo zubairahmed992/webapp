@@ -46,7 +46,7 @@ class DefaultController extends Controller
         
         if (is_object($site_user)) {            
              $this->get('user.helper.user')->getLoggedInById($site_user->getUser());
-            return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId())), 301);
+            return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId(),'retailer'=>$retailer)), 301);
         } else {
             
             //$retailer = $this->get('admin.helper.retailer')->find(1);

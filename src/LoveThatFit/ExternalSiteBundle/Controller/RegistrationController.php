@@ -76,38 +76,14 @@ class RegistrationController extends Controller
                 if ($session->has('shopify_user')) {
                   $shopify_user = $session->get('shopify_user');
                   $site_user_id=$shopify_user['site_user_id'];
-                  $retailer=$shopify_user['retailer'];                                    
-                  //$retailer = $this->get('admin.helper.retailer')->find($retailer_id);
+                  $retailer_id=$shopify_user['retailer_id'];                                    
+                  $retailer = $this->get('admin.helper.retailer')->find($retailer_id);
                   $this->get('admin.helper.retailer.site.user')->addNew($user, $site_user_id,$retailer);
               } 
 
            // End of Session----------------------------------------------------
                 
                 $user_helper->getLoggedInById($user);
-                
-                //send registration email ....            
-                //$this->get('mail_helper')->sendRegistrationEmail($user);
-                /*
-                 $measurement = $user->getMeasurement();
-                if ($user->getGender() == 'm') {
-
-                    $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
-                    $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
-                    $waist_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
-                    $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
-                    
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size,$brandHelper), $measurement);
-                } else {
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching(),$brandHelper), $measurement);
-                }
-
-                return $this->render('LoveThatFitExternalSiteBundle:Registration:_measurement.html.twig', array(
-                            'form' => $registrationMeasurementform->createView(),
-                            'measurement' => $measurement,
-                            'entity' => $user,
-                        ));
-              * 
-              */
                return $this->redirect($this->generateUrl('external_registration_measurement_edit'));
             } else {
 
@@ -176,23 +152,6 @@ class RegistrationController extends Controller
         $user->setBirthDate($measurement->birthdate);
         $this->get('user.helper.user')->saveUser($user);        
        
-     /*
-        $form = $this->createForm(new RegistrationStepFourType(), $user);
-         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
-         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
-         return $this->render('LoveThatFitExternalSiteBundle:Registration:stepfour.html.twig', array(
-                    'form' => $form->createView(),
-                    'measurement_form' => $measurement_form->createView(),
-                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
-                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
-                    'entity' => $user,
-                    'measurement' => $measurement,
-                    'edit_type' => 'registration',            
-                ));
-       *
-      * 
-      */ 
         return $this->redirect($this->generateUrl('external_step_four_edit'));
     }
   }

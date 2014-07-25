@@ -30,7 +30,7 @@ public function indexAction($list_type) {
  }
  
 #-------------------------------------------------------------------------------
-public function shopifyIndexAction($sku=null,$user_id=null) {
+public function shopifyIndexAction($sku=null,$user_id=null,$retailer=null) {
         $user = $this->get('security.context')->getToken()->getUser();
         $session = $this->get("session");
         if ($sku == null && $session->has('shopify_user')) {                  
@@ -40,6 +40,8 @@ public function shopifyIndexAction($sku=null,$user_id=null) {
         
           if ($itemBySku == null || empty($itemBySku)|| !isset($itemBySku)){
             $retailer=null;
+            }else{
+                
             }
             
         //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
