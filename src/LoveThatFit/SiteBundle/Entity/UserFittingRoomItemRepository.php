@@ -12,16 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserFittingRoomItemRepository extends EntityRepository
 {
-    public function findUserItemAllTryHistory($user,$product,$productItem)
+    public function findUserFittingRommItem($user,$product,$productItem)
 	 {
 	  $total_record= $this->getEntityManager()
-                        ->createQuery("SELECT ut FROM LoveThatFitSiteBundle:UserItemTryHistory ut
+                        ->createQuery("SELECT ut FROM LoveThatFitSiteBundle:UserFittingRoomItem ut
      WHERE
      ut.user=:user_id
      AND ut.productitem=:product_item_id
-     AND
-     ut.product=:product_id"
-              )->setParameters(array('user_id' =>$user,'product_item_id'=>$productItem,'product_id'=>$product));
+     "
+              )->setParameters(array('user_id' =>$user,'product_item_id'=>$productItem));
  	  try 
 	    {
 		 return $total_record->getResult();
@@ -31,4 +30,7 @@ class UserFittingRoomItemRepository extends EntityRepository
 		   return null;
 		 }						
 	  }  
+          
+          
+          
 }

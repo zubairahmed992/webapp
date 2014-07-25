@@ -41,20 +41,8 @@ class UserFittingRoomItem
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var int $count
-     *
-     * @ORM\Column(name="count", type="integer", length=11)
-     */
-    private $count;
-
-    /**
-     * @var boolean $fit
-     *
-     * @ORM\Column(name="fit", type="boolean",nullable=true)
-     */
-    private $fit;
+    
+   
 
     /**
      * @var \DateTime $created_at
@@ -70,12 +58,7 @@ class UserFittingRoomItem
      */
     private $updated_at;
 
-    /**
-     * @var string $feedback
-     *
-     * @ORM\Column(name="feedback", type="text")
-     */
-    private $feedback;
+   
 
 
     /**
@@ -88,51 +71,9 @@ class UserFittingRoomItem
         return $this->id;
     }
 
-    /**
-     * Set count
-     *
-     * @param int $count
-     * @return UserItemTryHistory
-     */
-    public function setCount($count)
-    {
-        $this->count = $count;
     
-        return $this;
-    }
 
-    /**
-     * Get count
-     *
-     * @return int 
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    /**
-     * Set fit
-     *
-     * @param boolean $fit
-     * @return UserItemTryHistory
-     */
-    public function setFit($fit)
-    {
-        $this->fit = $fit;
-    
-        return $this;
-    }
-
-    /**
-     * Get fit
-     *
-     * @return boolean 
-     */
-    public function getFit()
-    {
-        return $this->fit;
-    }
+   
 
     /**
      * Set created_at
@@ -180,28 +121,7 @@ class UserFittingRoomItem
         return $this->updated_at;
     }
 
-    /**
-     * Set feedback
-     *
-     * @param string $feedback
-     * @return UserItemTryHistory
-     */
-    public function setFeedback($feedback)
-    {
-        $this->feedback = $feedback;
-    
-        return $this;
-    }
-
-    /**
-     * Get feedback
-     *
-     * @return string 
-     */
-    public function getFeedback()
-    {
-        return $this->feedback;
-    }
+   
    
 
     /**

@@ -14,4 +14,12 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\SiteBundle\Entity\UserItemTryHistory
             container: "@service_container"
-    
+  
+  site.helper.userfittingroomitem:
+        class: LoveThatFit\SiteBundle\Entity\UserFittingRoomItemHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\SiteBundle\Entity\UserFittingRoomItem
+            container: "@service_container"
+      
