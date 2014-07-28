@@ -148,7 +148,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $entity = $this->get('admin.helper.product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }
-#------------------------------------------------------------------------------- 
+#--------- Shifted to external ---------------------------------------------------------------------- 
     public function productsRecentlyTriedOnByUserForRetailerAction($retailer_id, $page_number = 0, $limit = 0) {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
         $entity = $this->get('admin.helper.product')->findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id);
@@ -316,6 +316,13 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
                         'product_item' => $productItem, 
                             'data' => $fb));
         
+    }
+    #--------------------------------------------------------
+    //
+    public function removeFittingRoomItem($user_id, $item_id){
+      $t=  $this->get('admin.helper.userfittingroomitem')->deleteFittingRoomItem($user_id,$item_id);
+    
+      return new Response(var_dump($t));
     }
 #-------------------------------------------------------------------------------
     /*

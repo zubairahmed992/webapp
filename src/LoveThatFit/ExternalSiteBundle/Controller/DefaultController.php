@@ -64,4 +64,15 @@ class DefaultController extends Controller
             ));
     }
     
+    #--------------------------------------------------
+    
+    #------------------------------------------------------------------------------- 
+    public function recentlyTriedOnItemsAction($retailer_id, $page_number = 0, $limit = 0) {
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $entity = $this->get('admin.helper.product')->findRecentlyTriedOnByUserForRetailer(1, $user_id);
+        if (count($entity)==0) return new Response('no products');
+            return $this->render('LoveThatFitExternalSiteBundle:Default:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
+    }    
+
+    
 }

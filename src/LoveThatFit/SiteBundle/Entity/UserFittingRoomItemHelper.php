@@ -79,9 +79,13 @@ public function createUserFittingRoomItem($user,$productItem){
       
 }   
 
-public function deleteFittingRoomItem($user,$productItem)
+public function findByUserItemId($user_id,$Item_id){
+    return $this->repo->findByUserItemId($user_id,$Item_id);
+}
+        
+public function deleteFittingRoomItem($user_id,$Item_id)
 {
-    $entity= $this->repo->findUserFittingRommItem($user,$productItem);
+    $entity= $this->repo->findUserFittingRommItem($user_id,$Item_id);
     if($entity)
     {
         $this->em->remove($entity);
