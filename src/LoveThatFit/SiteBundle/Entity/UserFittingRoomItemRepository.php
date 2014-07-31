@@ -22,6 +22,20 @@ class UserFittingRoomItemRepository extends EntityRepository {
                                         "
                         )->setParameters(array('user_id' => $user_id, 'product_item_id' => $item_id));
         try {
+            return $total_record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
+    public function findByUserId($user_id) {
+        $total_record = $this->getEntityManager()
+                        ->createQuery("SELECT ut 
+                                        FROM LoveThatFitSiteBundle:UserFittingRoomItem ut
+                                        WHERE
+                                        ut.user=:user_id"
+                        )->setParameters(array('user_id' => $user_id));
+        try {
             return $total_record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;

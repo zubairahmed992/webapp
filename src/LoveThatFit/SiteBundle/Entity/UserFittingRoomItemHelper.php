@@ -67,8 +67,34 @@ class UserFittingRoomItemHelper{
 public function find($id) {
         return $this->repo->find($id);
     }
+#------------------------------------------------------
+public function add($user_id,$item_id){
+     $fris=  $this->findByUserId($user_id);
+     $ar=array();
+            foreach($fris as $fri){
+                #$item=$this->container->get('admin.helper.productitem')->find($item_id);
+                 
+                #$ar[$fri->getId()]=$item->getProduct()->getclothingType()->getTarget().'=='.$fri->getProductItem()->getProduct()->getclothingType()->getTarget();    
+                if ($item_id==$fri->getProductItem()->getId())
+                    $ar[$fri->getId()]='matching item';
+                else{
+                    $item=$this->container->get('admin.helper.productitem')->find($item_id);
+                    
+                    if($item->getProduct()->getclothingType()->getTarget()==$fri->getProductItem()->getProduct()->getclothingType()->getTarget())
+                        $ar[$fri->getId()]='matching target';
+                    
+                    if($item->getProduct()->getId()==$fri->getProductItem()->getProduct()->getId())
+                        $ar[$fri->getId()]='matching product';
+                    else
+                        $ar[$fri->getId()]=$fri;
+                }
+                
+            }
+            return $ar;
+            
+}   
          
-#--------------------Site Bundle Refactoring--------------------/
+#------------------------------------------------------
 public function createUserFittingRoomItem($user,$productItem){
             $userFittingRoomitem = new UserFittingRoomItem();           
             $userFittingRoomitem->setCreatedAt(new \DateTime('now'));
@@ -78,14 +104,16 @@ public function createUserFittingRoomItem($user,$productItem){
           return  $this->save($userFittingRoomitem);      
       
 }   
+#------------------------------------------------------
 
 public function findByUserItemId($user_id,$Item_id){
     return $this->repo->findByUserItemId($user_id,$Item_id);
 }
+#------------------------------------------------------
         
-public function deleteFittingRoomItem($user_id,$Item_id)
+public function deleteByUserItem($user_id,$Item_id)
 {
-    $entity= $this->repo->findUserFittingRommItem($user_id,$Item_id);
+    $entity= $this->repo->findByUserItemId($user_id,$Item_id);
     if($entity)
     {
         $this->em->remove($entity);
@@ -93,7 +121,11 @@ public function deleteFittingRoomItem($user_id,$Item_id)
     }
     return true;    
 }
+#------------------------------------------------------
 
+public function findByUserId($user_id){
+    return $this->repo->findByUserId($user_id);
+}
 
 
 }

@@ -138,21 +138,14 @@ ajax_product_ajax:
     pattern:  /ajax/{id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax, id:0}
     
+ajax_user_fitting_room_item_remove:
+    pattern:  /ajax/user_fitting_room_item_remove/{user_id}/{item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:userFittingRoomItemRemove}
+
+
 email:
     pattern:  /email/{id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:email, id:0}
-    
-ajax_cart:
-    pattern:  /ajax/cart
-    defaults: { _controller: LoveThatFitSiteBundle:Cart:index}    
-    
-ajax_cart_add:
-    pattern:  /ajax/cart/add/{id}
-    defaults: { _controller: LoveThatFitSiteBundle:Cart:addToCart}    
-
-ajax_cart_remove:
-    pattern:  /ajax/cart/remove/{id}
-    defaults: { _controller: LoveThatFitSiteBundle:Cart:removeFromCart} 
 
 user_mannequin:
     pattern:  /user/profile/mannequin

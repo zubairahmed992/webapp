@@ -155,9 +155,23 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         return $this->renderProductTemplate($entity, $page_number, $limit);
     }    
 #-------------------------------------------------------------------------------  
+    
+    public function userFittingRoomItemRemoveAction($user_id, $item_id) {
+        $this->get('site.helper.userfittingroomitem')->deleteByUserItem($user_id, $item_id);
+        return new Response('true');
+    }        
+    
+    #-------------------------------------------------------------------------------
+    public function ajaxAction($id=0) {
+       $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $fris  = $this->get('site.helper.userfittingroomitem')->add($user_id, $id);
+       return new Response(json_encode($fris));
+    }
+
+#-------------------------------------------------------------------------------  
     public function productsMostFavoriteAction($gender, $page_number = 0, $limit = 0) {
         $user_id= $this->get('security.context')->getToken()->getUser()->getId();
-        $entity = $this->get('admin.helper.product')->findProductItemByUser($user_id,$gender, $page_number, $limit);
+        $entity = $this->get('admin.helper.productitem')->findProductItemByUser($user_id,$gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     
         //$user= $this->get('security.context')->getToken()->getUser();
@@ -264,23 +278,6 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $em->persist($user);
         $em->flush();
        return new response('success');   
-    }
-#-------------------------------------------------------------------------------
-    public function ajaxAction($id=0) {
-        //return new Response(json_encode($this->get('admin.helper.utility')->getSizeTitleArray($this->get('security.context')->getToken()->getUser()->getGender(),'standard')));       
-        if ($id==0) 
-            {$id=11;}
-        $product_item = $this->get('admin.helper.productitem')->getProductItemById($id);        
-        $fe = new FitEngine($this->get('security.context')->getToken()->getUser(),$product_item);   
-        return new Response(json_encode($fe->getFittingItem()));
-        $fs = $fe->getFittingSize();
-        return new Response(json_encode($fs[0]['id']));
-        //return new Response($fe->getFeedBackJSON());
-        //array('item'=>$product_item, 'data' => $fe->fit()
-        //
-        return $this->render('LoveThatFitSiteBundle:InnerSite:determine.html.twig', array('item'=>$product_item, 'data' => $fe->getBasicFeedback(),
-        ));
-//return $this->render('LoveThatFitSiteBundle:InnerSite:ajax.html.twig');
     }
  //-----------------------------------------------------------------------------
     public function emailAction($id) {
