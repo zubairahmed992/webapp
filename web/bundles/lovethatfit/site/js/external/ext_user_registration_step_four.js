@@ -699,7 +699,7 @@ function post_content_of_canvas(){
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;
     var img_update_url = document.getElementById('hdn_image_update_url').value;
-alert(img_update_url);
+//alert(img_update_url);
 
     var data = document.getElementById('cnv_img_crop').toDataURL();
     
@@ -708,7 +708,7 @@ alert(img_update_url);
                       id : entity_id
               }, function(data) {
                   
-                  alert(data);
+                 // alert(data);
   
               var obj_url = jQuery.parseJSON( data );
                

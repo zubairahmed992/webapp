@@ -1269,6 +1269,27 @@ function get_compare_list(compare_item_id){
  
 }
 
+function set_short_slider_buttons(){
+  if($("#recent_prods").scrollTop() == 0){
+      $("#rece_up_but span").removeClass("click_able_top").addClass("disable_me_top");
+      //alert("top_disabled now");
+  }
+  else {
+      $("#rece_up_but span").removeClass("disable_me_top").addClass("click_able_top");
+  }
+  
+  var chk_it_height = $("#recent_prods ul.prod_wrapper").height();
+  chk_it_height = chk_it_height -380;
+  if($("#recent_prods").scrollTop() >= chk_it_height){
+      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
+      //console.log(chk_it_height);
+  }
+  else {
+      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
+  }
+}
+
+
 </script>
 
 
