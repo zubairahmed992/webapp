@@ -49,7 +49,10 @@
                        <div>{# render 'LoveThatFitSiteBundle:CompareProduct:list' #}</div>
                        <div id="rece_down_but"><span class="click_able_btm"></span></div>
                    </div>
-               </div>     
+               </div>  
+               
+               
+               
                
                   
                
@@ -1279,9 +1282,9 @@ function set_short_slider_buttons(){
   }
   
   var chk_it_height = $("#recent_prods ul.prod_wrapper").height();
-  chk_it_height = chk_it_height -380;
+  chk_it_height = chk_it_height -280;
   if($("#recent_prods").scrollTop() >= chk_it_height){
-      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
+      $("#rece_down_but span").removeClass("click_me_btm").addClass("disable_me_btm");
       //console.log(chk_it_height);
   }
   else {
