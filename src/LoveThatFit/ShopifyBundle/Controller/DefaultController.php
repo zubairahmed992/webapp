@@ -54,7 +54,11 @@ class DefaultController extends Controller {
             $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
             $resp=json_encode($this->writeFile('snippets/foo.liquid', $content,$shopify));
            // return new Response($resp);
-            return new response("Congratulation! The LTF app has been successfully installed at your store .");
+             return new Response("<html><body>Congratulation! The LTF app has been successfully installed at your store .
+             <br>
+             <a href=http://".$specs['shop_domain']." >Click here </a>
+            </body></html>");
+            
           
         }else{
             return new Response("Some thing went wrong!");
