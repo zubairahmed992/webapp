@@ -146,6 +146,10 @@ class RetailerHelper {
   public function findAll(){
   return $this->repo->findAll();      
     }
+#---------------------------------------------------------
+    public function findOneByShopDomain($shop_domain){
+        return $this->repo->findOneByShopDomain($shop_domain);
+    }
 
     //-------------------------------------------------------
 

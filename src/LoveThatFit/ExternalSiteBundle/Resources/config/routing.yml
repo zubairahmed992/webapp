@@ -61,7 +61,7 @@ external_index:
     defaults: { _controller: LoveThatFitExternalSiteBundle:FittingRoom:index, list_type: null}
  
 external_checksku:
-    pattern:  /external/check_sku
+    pattern:  /external/check_sku/
     defaults: { _controller: LoveThatFitExternalSiteBundle:Default:checkSku }    
     
     

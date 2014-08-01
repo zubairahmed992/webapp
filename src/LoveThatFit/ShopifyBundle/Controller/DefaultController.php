@@ -128,11 +128,17 @@ class DefaultController extends Controller {
     }
 #---------------------------------Check Sku ---------------------------#
 public function checkSkuAction($sku=null){
+   
+ if($this->get('admin.helper.retailer')->findOneByShopDomain($_REQUEST['shop'])){
   $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
     if ($itemBySku == null || empty($itemBySku)) {
-       return new response("one");
+       return new response("no");
     }   else{
-        return new response("two");
+        return new response("Available");
+    }
+    }else{
+        return new response("no");
+        
     }
 }
     

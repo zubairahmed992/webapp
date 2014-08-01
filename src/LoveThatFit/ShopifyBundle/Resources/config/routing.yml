@@ -19,9 +19,9 @@ shopify_user_check:
     pattern:  /shopify/user_check/{access_token}/{user_id}/{sku}
     defaults: { _controller: LoveThatFitExternalSiteBundle:Default:proxyFittingRoom ,access_token:0,user_id:0,sku:0}    
  
-shopify_check_sku:
-    pattern:  /shopify/check_sku/{sku}
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:checkSku ,sku:0}    
+shopify_app_proxy:
+    pattern:  /shopify/app_proxy/{sku}
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:checkSku,sku:0}    
 
 #~~~~~~~~~~~~~~~~> Data 
 shopify_data_index:
