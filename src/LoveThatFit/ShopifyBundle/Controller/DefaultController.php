@@ -23,7 +23,7 @@ class DefaultController extends Controller {
 
     public function installAction() {
         $app_specs = $this->get('shopify.helper')->appSpecs();
-        $shop_domain = 'lovethatfit-2.myshopify.com';
+        $shop_domain = 'bicycles-122.myshopify.com';
         $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content'));
         return $this->redirect($str);
     }
@@ -64,7 +64,7 @@ class DefaultController extends Controller {
 #-------------------------------------->
 
     public function fooAction($option_array=null) {
-        $option_array['acess_token']='8b14eb6efcf7c5fa7b0c76e9b329d06e';
+        $option_array['access_token']='8b14eb6efcf7c5fa7b0c76e9b329d06e';
         $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($option_array)));
         $resp=json_encode($this->writeFile('snippets/foo.liquid', $content));
         return new Response($resp);
@@ -193,7 +193,7 @@ function loadfittingroom(){
 var product_select=$('#product-select').val();
  var curnt_sku=$('#sku'+product_select).text();
  var user_id={{ customer.id | json }}
- var access_token='".$option_array['acess_token']."';
+ var access_token='".$option_array['access_token']."';
  var url= 'shopify/user_check/'+access_token+'/'+user_id+'/'+curnt_sku;
  window.frames['ext_fitting_room'].location = 'http://474ec863.ngrok.com/webapp/web/app_dev.php/'+url;
   }
@@ -226,6 +226,36 @@ var product_select=$('#product-select').val();
     xmlhttp.open('GET', url, true);
     xmlhttp.send();
 }
+
+$( document ).ready(function() {
+      var product_select=$('#product-select').val();
+  var curnt_sku=$('#sku'+product_select).text();
+ var xmlhttp;
+    var url='/apps/fitting_room/'+curnt_sku;
+ if (window.XMLHttpRequest) {
+ xmlhttp = new XMLHttpRequest();
+ } else {
+ xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+ }
+ xmlhttp.onreadystatechange = function() {
+ if (xmlhttp.readyState == 4 ) {
+ if(xmlhttp.status == 200){
+   if(xmlhttp.responseText=='no'){
+   	$('#fr_button').hide();
+   }
+ }
+ else if(xmlhttp.status == 400) {
+ alert('There was an error 400')
+ }
+ else {
+ alert('something else other than 200 was returned')
+ }
+ }
+ }
+ xmlhttp.open('GET', url, true);
+ xmlhttp.send();
+   
+});
 </script>
 ";
     }
