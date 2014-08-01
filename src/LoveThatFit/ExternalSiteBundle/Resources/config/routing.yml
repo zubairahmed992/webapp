@@ -59,4 +59,9 @@ external_fitting_room_show:
 external_index:
     pattern:  /external/index/{list_type}
     defaults: { _controller: LoveThatFitExternalSiteBundle:FittingRoom:index, list_type: null}
+ 
+external_checksku:
+    pattern:  /external/check_sku
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Default:checkSku }    
+    
     

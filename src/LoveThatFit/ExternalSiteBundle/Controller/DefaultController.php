@@ -74,6 +74,11 @@ class DefaultController extends Controller
         if (count($entity)==0) return new Response('no products');
             return $this->render('LoveThatFitExternalSiteBundle:Default:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
     }    
+ 
+ #---------------------------------------------------------------------------#
+  public function checkSkuAction(){
+      return new response("TEST");
+  }
 
     
 }
