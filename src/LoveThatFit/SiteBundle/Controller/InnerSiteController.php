@@ -163,9 +163,9 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
     
     #-------------------------------------------------------------------------------
     public function ajaxAction($id=0) {
-       $user_id = $this->get('security.context')->getToken()->getUser()->getId();
-        $fris  = $this->get('site.helper.userfittingroomitem')->add($user_id, $id);
-       return new Response(json_encode($fris));
+        $user= $this->get('security.context')->getToken()->getUser();
+        $fris  = $this->get('site.helper.userfittingroomitem')->add($user, $id);
+        return new Response(json_encode($fris));
     }
 
 #-------------------------------------------------------------------------------  
