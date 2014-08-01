@@ -23,7 +23,7 @@ class DefaultController extends Controller {
 
     public function installAction() {
         $app_specs = $this->get('shopify.helper')->appSpecs();
-        $shop_domain = 'bicycles-122.myshopify.com';
+        $shop_domain = 'lovethatfit-2.myshopify.com';
         $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content'));
         return $this->redirect($str);
     }
@@ -53,7 +53,8 @@ class DefaultController extends Controller {
             $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
             $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
             $resp=json_encode($this->writeFile('snippets/foo.liquid', $content,$shopify));
-            return new Response($resp);
+           // return new Response($resp);
+            return new response("Congratulation! The LTF app has been successfully installed at your store .");
           
         }else{
             return new Response("Some thing went wrong!");
