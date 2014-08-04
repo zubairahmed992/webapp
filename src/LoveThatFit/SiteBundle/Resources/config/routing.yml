@@ -139,8 +139,12 @@ ajax_product_ajax:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax, id:0}
     
 ajax_user_fitting_room_item_remove:
-    pattern:  /ajax/user_fitting_room_item_remove/{user_id}/{item_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:userFittingRoomItemRemove}
+    pattern:  /ajax/fitting_room_item_remove/{user_id}/{item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:removeFittingRoomItem}
+
+ajax_user_fitting_room_item_ids:
+    pattern:  /ajax/fitting_room_item_ids/{user_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFittingRoomItemIds}
 
 
 email:

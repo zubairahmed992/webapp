@@ -43,12 +43,13 @@ public function shopifyIndexAction($sku=null,$user_id=null,$retailer=null) {
             }else{
                 
             }
-            
+            $fitting_room_items=$this->get('site.helper.userfittingroomitem')->add($user,$itemBySku);
         //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
             'retailer'=>$retailer,
             'list_type'=>null,            
+            'items'=>$fitting_room_items,
            ));
  }
  #-------------------------------------------------------------------------------
@@ -65,9 +66,11 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
               } 
         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
         $retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
+        $fitting_room_items=$this->get('site.helper.userfittingroomitem')->add($user,$itemBySku);
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
             'retailer'=>$retailer,
+            'items'=>$fitting_room_items,
             'list_type'=>null,            
            ));
  }
@@ -317,10 +320,16 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
     }
     #--------------------------------------------------------
     //
-    public function removeFittingRoomItem($user_id, $item_id){
-      $t=  $this->get('admin.helper.userfittingroomitem')->deleteFittingRoomItem($user_id,$item_id);
-    
-      return new Response(var_dump($t));
+    public function removeFittingRoomItemAction($user_id, $item_id){
+      $t =  $this->get('site.helper.userfittingroomitem')->deleteFittingRoomItem($user_id,$item_id);    
+      return new Response($t);
+    }
+    #--------------------------------------------------------
+    //
+    public function getFittingRoomItemIdsAction($user_id){
+        $user =  $this->get('user.helper.user')->find($user_id);    
+      $t =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user);    
+      return new Response(json_encode($t));
     }
 #-------------------------------------------------------------------------------
     /*
