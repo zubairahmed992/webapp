@@ -70,6 +70,13 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToMany(targetEntity="LoveThatFit\AdminBundle\Entity\RetailerSiteUser", mappedBy="user")
      */
     private $retailer_site_users;
+    
+    
+    /**
+     * @ORM\OneToOne(targetEntity="User", mappedBy="user")
+     * */
+    private $user_marker; 
+    
 
 //---------------------------------------  implement the UserInterface
     public function __construct() {
@@ -1338,5 +1345,28 @@ class User implements UserInterface, \Serializable {
     public function getUserfittingroomitem()
     {
         return $this->userfittingroomitem;
+    }
+
+    /**
+     * Set user_marker
+     *
+     * @param \LoveThatFit\UserBundle\Entity\User $userMarker
+     * @return User
+     */
+    public function setUserMarker(\LoveThatFit\UserBundle\Entity\User $userMarker = null)
+    {
+        $this->user_marker = $userMarker;
+    
+        return $this;
+    }
+
+    /**
+     * Get user_marker
+     *
+     * @return \LoveThatFit\UserBundle\Entity\User 
+     */
+    public function getUserMarker()
+    {
+        return $this->user_marker;
     }
 }

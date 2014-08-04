@@ -34,6 +34,14 @@ services:
             dispatcher: "@event_dispatcher"
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\UserBundle\Entity\UserParentChildLink
+            container: "@service_container"  
+            
+  user.marker.helper:
+        class: LoveThatFit\UserBundle\Entity\UserMarkerHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\UserBundle\Entity\UserMarker
             container: "@service_container"          
   
   twitter_helper:
