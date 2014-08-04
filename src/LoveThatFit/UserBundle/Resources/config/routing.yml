@@ -129,8 +129,11 @@ user_family:
     
 user_child_approve:
     pattern:  /user/profile/child/aprrove/{id}/{approve}
-    defaults: { _controller: LoveThatFitUserBundle:Profile:userParentChildApprove }    
+    defaults: { _controller: LoveThatFitUserBundle:Profile:userParentChildApprove }   
     
+user_maker_save:    
+    pattern:  /user/marker
+    defaults: { _controller: LoveThatFitUserBundle:MaskedMarker:saveUserMarker }   
 #---------------------------------------------- Login ------------------------------------------
 
 admin_login:

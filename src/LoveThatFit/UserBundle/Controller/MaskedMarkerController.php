@@ -20,6 +20,30 @@ class MaskedMarkerController extends Controller {
     }
     
     
+    //--------------------------Save User Marker in database if exists then update if not then add-------------------------------
+    public function saveUserMarker(Request $request)
+    {
+        
+        
+    }
+    
+    //-------------------------Add New User Marker in database----------------------------------------------
+    
+    public function addUserMarker()
+    {
+        
+    }
+    
+    //-------------------------update user Marker----------------------------------------------
+    public function updateUserMarker()
+    {
+        
+    }
+    
+    
+    
+    
+    
 
 }
 

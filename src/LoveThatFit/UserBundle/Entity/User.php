@@ -73,7 +73,7 @@ class User implements UserInterface, \Serializable {
     
     
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="UserMarker", mappedBy="user")
      * */
     private $user_marker; 
     
