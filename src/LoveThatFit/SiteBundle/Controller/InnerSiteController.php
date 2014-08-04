@@ -306,7 +306,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $fits=$fb['feedback']['fits'];        
         $json_feedback=  json_encode($fb['feedback']);
         $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
-      $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
+        #$this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
+        $this->get('site.helper.userfittingroomitem')->add($user,$productItem);    
 //$this->get('site.helper.userfittingroomitem')->createNew();
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', 
                 array('product' => $productItem->getProduct(), 
@@ -378,7 +379,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $fits=$fb['feedback']['fits'];        
         $json_feedback=  json_encode($fb['feedback']);
         $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
-        $this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
+        #$this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
+        $this->get('site.helper.userfittingroomitem')->add($user,$productItem);    
         // $this->get('site.helper.userfittingroomitem')->createNew();    
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', 
                 array('product' => $productItem->getProduct(), 
