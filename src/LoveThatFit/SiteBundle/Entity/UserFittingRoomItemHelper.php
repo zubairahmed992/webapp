@@ -70,21 +70,31 @@ class UserFittingRoomItemHelper {
 
     public function add($user, $item) {        
         $fris = $this->findByUserId($user->getId());        
+        $state_updated = false;
         $already_existed = false;
+        
         foreach ($fris as $fri) {
             $current_item = $fri->getProductItem();
-            if ($current_item && $item->getId() != $current_item->getId() &&
-                    $item->getProduct()->getclothingType()->getTarget() == $current_item->getProduct()->getclothingType()->getTarget()) {
-                $this->delete($fri);
+            if ($item->getId() != $current_item->getId()) {
+                    if ($item->getProduct()->getclothingType()->getTarget() == $current_item->getProduct()->getclothingType()->getTarget()) {
+                        #$this->delete($fri);
+                        $fri->setProductitem($item);
+                        $this->save($fri);
+                        $state_updated = true;
+                    #update
+                    }
             } else {
                 $already_existed = true;
             }
         }
-        if (!$already_existed) {
-            $this->createUserFittingRoomItem($user, $item);
-            return true;
-        }else
-            return false; #$this->getArrayByUser($user);
+        
+        
+        if(!$state_updated && !$already_existed){
+            $this->createUserFittingRoomItem($user, $item);        
+            $state_updated=true;
+        }
+        return $state_updated;        
+            #$this->getArrayByUser($user);
     }
 
     #------------------------------------------------------   
