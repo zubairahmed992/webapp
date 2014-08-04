@@ -121,6 +121,17 @@ class Retailer
      */
     public $file;
     
+    
+    
+   /**
+     * @var string $token_timestamp
+     *
+     * @ORM\Column(name="token_timestamp", type="string", length=255 ,nullable=true)
+     */
+     private $token_timestamp;
+    
+    
+    
     /**
      * Get id
      *
@@ -562,5 +573,28 @@ public function deleteImages()
     public function getRetailerSiteUsers()
     {
         return $this->retailer_site_users;
+    }
+
+    /**
+     * Set token_timestamp
+     *
+     * @param string $tokenTimestamp
+     * @return Retailer
+     */
+    public function setTokenTimestamp($tokenTimestamp)
+    {
+        $this->token_timestamp = $tokenTimestamp;
+    
+        return $this;
+    }
+
+    /**
+     * Get token_timestamp
+     *
+     * @return string 
+     */
+    public function getTokenTimestamp()
+    {
+        return $this->token_timestamp;
     }
 }

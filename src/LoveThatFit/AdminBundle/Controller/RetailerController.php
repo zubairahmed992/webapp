@@ -3,6 +3,7 @@
 namespace LoveThatFit\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\RetailerType;
@@ -337,6 +338,15 @@ class RetailerController extends Controller {
     }
 
 
+//------------------------------Generate Access Token For Retailer------------------------------
+    
+ public function generateRetailerAccessTokenAction($id)
+ {   
+     $retailer=$this->get('admin.helper.retailer')->find($id);
+     $accesstoken=md5($retailer->getId().strtotime('now')); 
+     return new Response($accesstoken);     
+ }
+    
     
 //-------------------------------- Methods ---------------------------------------------------
 //-------------------------------- Methods ---------------------------------------------------
@@ -346,6 +356,9 @@ class RetailerController extends Controller {
         return $this->encodeThisPassword($retailerUser, $retailerUser->getPassword());
     }
 
+//    
+    
+    
     //---------------------------Brand List-------------------
     private function getBrandList() {
         $brand = $this->get('admin.helper.brand')->getBrnadList();

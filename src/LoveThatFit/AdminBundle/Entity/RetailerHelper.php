@@ -46,6 +46,8 @@ class RetailerHelper {
 
 //-------------------------------------------------------
 
+    
+    
     public function save($entity) {
         $msg_array =null;
         //$msg_array = ;
@@ -54,7 +56,8 @@ class RetailerHelper {
         //$msg_array = $this->validateForCreate($retailerTitle);
         if ($msg_array == null) {      
             $entity->setCreatedAt(new \DateTime('now'));
-            $entity->setUpdatedAt(new \DateTime('now'));    
+            $entity->setUpdatedAt(new \DateTime('now'));   
+            $entity->setTokenTimestamp(strtotime('now'));
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
@@ -76,6 +79,7 @@ class RetailerHelper {
 
         if ($msg_array == null) {            
             $entity->setUpdatedAt(new \DateTime('now'));    
+            $entity->setTokenTimestamp(strtotime('now'));
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
@@ -136,6 +140,13 @@ class RetailerHelper {
             );
         }
     }
+    
+    
+    public function generateRetailerAccessToken($retailer)
+    {
+       return $retailer->setAccessToken(md5($retailer->getId().strtotime('now')));       
+    }
+    
 
 //-------------------------------------------------------
 
