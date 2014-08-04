@@ -56,19 +56,36 @@ class UserMarkerHelper {
        $maskMarker = new $class();
        return $maskMarker;
      }
-
-    public function saveMaskMarker(maskMarker $maskMarker) {                
-        $this->em->persist($maskMarker);
+     
+     
+     public function saveUserMarker($user) {
+        $class = $this->class;
+        $usermarker = new $class();
+        $usermarker->setCreatedAt(new \DateTime('now'));    
+        $usermarker->setUpdatedAt(new \DateTime('now'));            
+        $usermarker->setUser($user);       
+        $this->em->persist($usermarker);
         $this->em->flush();
     }  
     
-    public function update($maskMarker)
+    public function updateUserMarker($user,$usermarker)
     {
-        $this->em->persist($maskMarker);
+        $usermarker->setCreatedAt(new \DateTime('now'));    
+        $usermarker->setUpdatedAt(new \DateTime('now'));            
+        $usermarker->setUser($user);               
+        $this->em->persist($usermarker);
         $this->em->flush();
     }
     
+
     
+    
+    
+    public function findMarkerByUser($user)
+    {
+        return $this->repo->findMarkerByUser($user);
+    }
+
 
     
     public function findByUser($user)
@@ -82,7 +99,14 @@ class UserMarkerHelper {
     } 
     
     
-    
+    private function getJsonForFields($fields){
+        $f=array();
+        foreach ($fields as $key => $value) {
+        $f[$key]=$value;
+        }
+        return json_encode($f);
+        
+    }
    
      
     

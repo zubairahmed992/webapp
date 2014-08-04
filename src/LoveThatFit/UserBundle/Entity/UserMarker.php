@@ -48,11 +48,11 @@ class UserMarker
     
     
     /**
-     * @var string $masks_json
+     * @var string $marker_json
      *
-     * @ORM\Column(name="masks_json", type="text", nullable=true)
+     * @ORM\Column(name="marker_json", type="text", nullable=true)
      */
-    private $masks_json;
+    private $marker_json;
     
 
    
@@ -115,28 +115,7 @@ class UserMarker
         return $this->updated_at;
     }
 
-    /**
-     * Set masks_json
-     *
-     * @param string $masksJson
-     * @return UserMarker
-     */
-    public function setMasksJson($masksJson)
-    {
-        $this->masks_json = $masksJson;
     
-        return $this;
-    }
-
-    /**
-     * Get masks_json
-     *
-     * @return string 
-     */
-    public function getMasksJson()
-    {
-        return $this->masks_json;
-    }
 
     /**
      * Set user
@@ -159,5 +138,28 @@ class UserMarker
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set marker_json
+     *
+     * @param string $markerJson
+     * @return UserMarker
+     */
+    public function setMarkerJson($markerJson)
+    {
+        $this->marker_json = $markerJson;
+    
+        return $this;
+    }
+
+    /**
+     * Get marker_json
+     *
+     * @return string 
+     */
+    public function getMarkerJson()
+    {
+        return $this->marker_json;
     }
 }

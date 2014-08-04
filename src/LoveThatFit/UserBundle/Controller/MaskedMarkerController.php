@@ -16,29 +16,37 @@ class MaskedMarkerController extends Controller {
 
     public function userMarkerAction()
     {
-        
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->get('user.helper.user')->find($id);
+        $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
+        if(count($maskMarker)>0){
+        return new Response(json_encode($maskMarker->getMarkerJson()));
+        }else
+        {
+            return new response('not exists');
+        }
     }
     
     
     //--------------------------Save User Marker in database if exists then update if not then add-------------------------------
-    public function saveUserMarker(Request $request)
+    public function saveUserMarkerAction(Request $request)
     {
-        
+        $usermaker=$request->request->all();
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->get('user.helper.user')->find($id);
+        $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
+        if(count($maskMarker)>0)
+        {
+            //return new response('already exists');
+            return $this->get('user.marker.helper')->updateUserMarker($user,$maskMarker);
+        }else
+        { 
+            //return new response('not exists please add');
+            return $this->get('user.marker.helper')->saveUserMarker($user,$usermaker);
+        }
         
     }
     
-    //-------------------------Add New User Marker in database----------------------------------------------
-    
-    public function addUserMarker()
-    {
-        
-    }
-    
-    //-------------------------update user Marker----------------------------------------------
-    public function updateUserMarker()
-    {
-        
-    }
     
     
     

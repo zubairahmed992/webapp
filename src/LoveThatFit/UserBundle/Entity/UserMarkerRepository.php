@@ -13,5 +13,18 @@ use Doctrine\ORM\EntityRepository;
 class UserMarkerRepository extends EntityRepository
 {
    
+    public function findMarkerByUser($user)
+    {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT m FROM LoveThatFitUserBundle:UserMarker m                                           
+                                       WHERE m.user=:user_id")
+                        ->setParameters(array('user_id' => $user));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+    
     
 }
