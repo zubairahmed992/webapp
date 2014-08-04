@@ -37,12 +37,12 @@ class MaskedMarkerController extends Controller {
         $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
         if(count($maskMarker)>0)
         {
-            //return new response('already exists');
-            return $this->get('user.marker.helper')->updateUserMarker($user,$maskMarker);
+            $this->get('user.marker.helper')->updateUserMarker($user,$maskMarker);
+            return new response('updated');
         }else
-        { 
-            //return new response('not exists please add');
+        {             
             return $this->get('user.marker.helper')->saveUserMarker($user,$usermaker);
+            return new response('added');
         }
         
     }

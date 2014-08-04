@@ -65,7 +65,7 @@ class UserMarkerHelper {
         $usermarker->setUpdatedAt(new \DateTime('now'));            
         $usermarker->setUser($user);       
         $this->em->persist($usermarker);
-        $this->em->flush();
+        $this->em->flush();      
     }  
     
     public function updateUserMarker($user,$usermarker)
@@ -74,7 +74,7 @@ class UserMarkerHelper {
         $usermarker->setUpdatedAt(new \DateTime('now'));            
         $usermarker->setUser($user);               
         $this->em->persist($usermarker);
-        $this->em->flush();
+        $this->em->flush();       
     }
     
 
