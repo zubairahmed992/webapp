@@ -230,7 +230,7 @@ class ProductCSVDataUploader {
         while (isset($data[$i]) > 0) {
             $s = explode(" ", $data[$i]);
             if(array_key_exists(1,$s)) $this->product['sizes'][$s[1]]['key'] = $i;
-            $i = $i + 9;
+            $i = $i + 10;
         }
     }
 
@@ -257,8 +257,9 @@ class ProductCSVDataUploader {
             'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 3]),
             'maximum_body_measurement' => $data[$i + 4],
             'ideal_body_size_high' => $data[$i + 5],
-            'ideal_body_size_low' => $data[$i + 6],
-            'min_body_measurement' => $data[$i + 7],
+            'fit_model' => $data[$i + 6],
+            'ideal_body_size_low' => $data[$i + 7],
+            'min_body_measurement' => $data[$i + 8],
         );
     }
   
