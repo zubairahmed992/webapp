@@ -31,3 +31,15 @@ shopify_data_index:
 shopify_data_sku_upload:
     pattern:  /shopify/data/sku_upload
     defaults: { _controller: LoveThatFitShopifyBundle:Data:skuUpload }    
+    
+ #------------------Test Controller ----------
+shopify_test_start:
+    pattern:  /shopify/test/install
+    defaults: { _controller: LoveThatFitShopifyBundle:Test:install }    
+
+shopify_granted:
+    pattern:  /shopify/test/granted
+    defaults: { _controller: LoveThatFitShopifyBundle:Test:granted }
+    
+
+ 

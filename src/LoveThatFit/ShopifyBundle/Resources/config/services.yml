@@ -4,3 +4,6 @@ parameters:
 services:
      shopify.helper:
         class: LoveThatFit\ShopifyBundle\DependencyInjection\ShopifyHelper
+      
+     shopifylib.helper:
+        class: LoveThatFit\ShopifyBundle\DependencyInjection\ShopifyLibHelper    
