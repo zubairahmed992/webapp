@@ -13,7 +13,6 @@ class DefaultController extends Controller
     }
     public function proxyFittingRoomAction($access_token,$user_id,$sku)
     {
-        
         # get retailer by token
         $retailer=$this->getRetailerBaseToken($access_token);
         if($retailer)
@@ -38,6 +37,7 @@ class DefaultController extends Controller
     }
     
     public function userCheck($user_id, $sku,$retailer=null) {
+        
        
         if ($user_id == null) {
             return $this->redirect($this->generateUrl('external_login'), 301);
@@ -75,10 +75,6 @@ class DefaultController extends Controller
             return $this->render('LoveThatFitExternalSiteBundle:Default:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
     }    
  
- #---------------------------------------------------------------------------#
-  public function checkSkuAction(){
-      return new response("TEST");
-  }
-
+ 
     
 }

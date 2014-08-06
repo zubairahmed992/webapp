@@ -22,6 +22,10 @@ shopify_user_check:
 shopify_app_proxy:
     pattern:  /shopify/app_proxy/{sku}
     defaults: { _controller: LoveThatFitShopifyBundle:Default:checkSku,sku:0}    
+    
+shopify_customer_list:
+    pattern:  /shopify/customer_list
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:getCustomerList}    
 
 #~~~~~~~~~~~~~~~~> Data 
 shopify_data_index:
@@ -37,7 +41,7 @@ shopify_test_start:
     pattern:  /shopify/test/install
     defaults: { _controller: LoveThatFitShopifyBundle:Test:install }    
 
-shopify_granted:
+shopify_test_granted:
     pattern:  /shopify/test/granted
     defaults: { _controller: LoveThatFitShopifyBundle:Test:granted }
     

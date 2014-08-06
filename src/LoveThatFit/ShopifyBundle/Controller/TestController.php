@@ -10,8 +10,8 @@ class TestController extends Controller {
 
     public function installAction() {
         
-        //$app_specs = $this->get('shopify.helper')->appSpecs();
-        $app_specs['api_key']='c3fdd1592f0d8152d11d8b3aa039fa56';
+        $app_specs = $this->get('shopify.helper')->appSpecs();
+        //$app_specs['api_key']='c3fdd1592f0d8152d11d8b3aa039fa56';
         $app_specs['shop_domain']='bicycles-122.myshopify.com';// Dont use http or https prefix 
         $str=$this->get('shopifylib.helper')->install($app_specs);
         //$str = $this->permission_url($app_specs['shop_domain'], $app_specs['api_key'], array('read_products','write_themes','write_content'));

@@ -24,13 +24,14 @@ class DefaultController extends Controller {
     public function installAction() {
         $app_specs = $this->get('shopify.helper')->appSpecs();
         $shop_domain = 'lovethatfit-2.myshopify.com';
-        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content'));
+        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content','read_customers','read_orders'));
         return $this->redirect($str);
     }
 
     #-------------------------------------->
 
     public function grantedAction() {
+       
         $app_specs = $this->get('shopify.helper')->appSpecs();
         $specs['api_key'] = $app_specs['api_key'];
         $specs['shared_secret'] = $app_specs['shared_secret'];
@@ -52,13 +53,12 @@ class DefaultController extends Controller {
             
             $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
             $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
-            $resp=json_encode($this->writeFile('snippets/foo.liquid', $content,$shopify));
+            $resp=json_encode($this->writeFile('snippets/foo1.liquid', $content,$shopify));
            // return new Response($resp);
              return new Response("<html><body>Congratulation! The LTF app has been successfully installed at your store .
              <br>
              <a href=http://".$specs['shop_domain']." >Click here </a>
             </body></html>");
-            
           
         }else{
             return new Response("Some thing went wrong!");
@@ -111,7 +111,21 @@ class DefaultController extends Controller {
         $themes = $shopify('GET', '/admin/products.json');
         return $themes;
     }
-
+    
+    #--------------------------------------------->
+    public function getCustomerListAction(){
+        $shopify=$this->getShopifyObject();
+        $customerOrders = $shopify('GET','/admin/customers/240179475.json');
+        return new response(json_encode($customerOrders));  
+    }
+ private function getShopifyObject(){
+        $app_specs = $this->get('shopify.helper')->appSpecs();
+        $specs['api_key'] = $app_specs['api_key'];
+        $specs['shared_secret'] = $app_specs['shared_secret'];
+        $specs['shop_domain']='lovethatfit-2.myshopify.com';
+        $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
+       return $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+ }
     #-------------------------------------->
     private function writeFile($full_name, $content,$shopify) {
        

@@ -61,6 +61,13 @@ class RetailerSiteUser {
      * @ORM\Column(name="is_active", type="boolean", nullable=true)
      */
     private $isActive;
+    
+    /**
+      * @var string $customerOrder
+     * @ORM\Column(name="customer_order", type="string", nullable=true)
+     */
+    private $customerOrder;
+    
 
     /**
      * Get id
@@ -210,5 +217,28 @@ class RetailerSiteUser {
     public function getUserReferenceId()
     {
         return $this->user_reference_id;
+    }
+
+    /**
+     * Set customerOrder
+     *
+     * @param string $customerOrder
+     * @return RetailerSiteUser
+     */
+    public function setCustomerOrder($customerOrder)
+    {
+        $this->customerOrder = $customerOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Get customerOrder
+     *
+     * @return string 
+     */
+    public function getCustomerOrder()
+    {
+        return $this->customerOrder;
     }
 }
