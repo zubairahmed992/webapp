@@ -83,6 +83,14 @@ class UserItemTryHistory
      * @ORM\Column(name="feedback", type="text")
      */
     private $feedback;
+    
+    
+    /**
+     * @var string $fit_index
+     *
+     * @ORM\Column(name="fit_index", type="text")
+     */
+    private $fit_index;
 
 
     /**
@@ -278,5 +286,28 @@ class UserItemTryHistory
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set fit_index
+     *
+     * @param string $fitIndex
+     * @return UserItemTryHistory
+     */
+    public function setFitIndex($fitIndex)
+    {
+        $this->fit_index = $fitIndex;
+    
+        return $this;
+    }
+
+    /**
+     * Get fit_index
+     *
+     * @return string 
+     */
+    public function getFitIndex()
+    {
+        return $this->fit_index;
     }
 }

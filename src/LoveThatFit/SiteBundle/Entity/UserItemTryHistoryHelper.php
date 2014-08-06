@@ -70,7 +70,7 @@ public function find($id) {
     }
          
 #--------------------Site Bundle Refactoring--------------------/
-public function createUserItemTryHistory($user,$product_id,$productItem, $json_feedback, $fits){
+public function createUserItemTryHistory($user,$product_id,$productItem, $json_feedback, $fits,$fit_index){
     $product_helper = $this->container->get('admin.helper.product');
     
       $product=  $product_helper->find($product_id);
@@ -101,6 +101,7 @@ public function createUserItemTryHistory($user,$product_id,$productItem, $json_f
             $useritemtryhistory->setProduct($product);            
             $useritemtryhistory->setUser($user);
             $useritemtryhistory->setFeedback($json_feedback);
+            $useritemtryhistory->setFitIndex($fit_index);
             $this->save($useritemtryhistory);
            // $em = $this->getDoctrine()->getManager();
            // $em->persist($useritemtryhistory);

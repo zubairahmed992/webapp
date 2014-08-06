@@ -306,9 +306,10 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         }
         
         #return new Response(json_encode($fb));  
-        $fits=$fb['feedback']['fits'];        
+        $fits=$fb['feedback']['fits'];    
+        $fit_index=$fb['feedback']['fit_index'];
         $json_feedback=  json_encode($fb['feedback']);
-        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
+        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits,$fit_index);    
         #$this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
         $this->get('site.helper.userfittingroomitem')->add($user,$productItem);    
 //$this->get('site.helper.userfittingroomitem')->createNew();
@@ -386,8 +387,9 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         
                 
         $fits=$fb['feedback']['fits'];        
+        $fit_index=$fb['feedback']['fit_index'];    
         $json_feedback=  json_encode($fb['feedback']);
-        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits);    
+        $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $json_feedback, $fits,$fit_index);    
         #$this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
         $this->get('site.helper.userfittingroomitem')->add($user,$productItem);    
         // $this->get('site.helper.userfittingroomitem')->createNew();    
