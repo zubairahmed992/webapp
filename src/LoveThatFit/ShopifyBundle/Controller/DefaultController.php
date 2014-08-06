@@ -112,7 +112,13 @@ class DefaultController extends Controller {
         return $themes;
     }
     
-    
+    #--------------------------------------------->
+    public function getCustomerListAction(){
+        $shopify=$this->get('shopifylib.helper')->getShopifyObject();
+        $customerOrders = $shopify('GET','/admin/customers/240179475.json');
+        return new response(json_encode($customerOrders));  
+    }
+ 
     #-------------------------------------->
     private function writeFile($full_name, $content,$shopify) {
        
