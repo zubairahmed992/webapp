@@ -112,20 +112,7 @@ class DefaultController extends Controller {
         return $themes;
     }
     
-    #--------------------------------------------->
-    public function getCustomerListAction(){
-        $shopify=$this->getShopifyObject();
-        $customerOrders = $shopify('GET','/admin/customers/240179475.json');
-        return new response(json_encode($customerOrders));  
-    }
- private function getShopifyObject(){
-        $app_specs = $this->get('shopify.helper')->appSpecs();
-        $specs['api_key'] = $app_specs['api_key'];
-        $specs['shared_secret'] = $app_specs['shared_secret'];
-        $specs['shop_domain']='lovethatfit-2.myshopify.com';
-        $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
-       return $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
- }
+    
     #-------------------------------------->
     private function writeFile($full_name, $content,$shopify) {
        
