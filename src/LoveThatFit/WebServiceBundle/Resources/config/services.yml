@@ -6,8 +6,8 @@ services:
 #        class: %love_that_fit_web_service.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 
-    webservice_helper:
-          class:  LoveThatFit\WebServiceBundle\WebServiceHelper
+    webservice.helper:
+          class:  LoveThatFit\WebServiceBundle\Entity\WebServiceHelper
    
     push_notification_helper:
           class:  LoveThatFit\WebServiceBundle\PushNotificationHelper

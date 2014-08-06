@@ -1,3 +1,6 @@
+service_interface_routes:
+    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/service_interface.yml"
+    prefix:   /
 #----------------------------- User Routes--------------------------------------#
 ws_login:
     pattern:  /web_service/login
