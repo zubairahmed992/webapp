@@ -355,7 +355,7 @@ $( document ).ready(function() {
         $specs['shared_secret'] = $app_specs['shared_secret'];
       //  $specs['shop_domain']='lovethatfit-2.myshopify.com';
        // $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
-       return $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+       return $shopify =$this->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
  }
  #--------------------------------------------->
     public function getCustomerList($specs){
