@@ -36,7 +36,6 @@ class TestController extends Controller {
             $shopify = $this->get('shopifylib.helper')->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
             $content = trim(preg_replace('/\s\s+/', '\n ', $this->get('shopifylib.helper')->getContent($specs)));
             $resp=json_encode($this->get('shopifylib.helper')->writeFile('snippets/foo.liquid', $content,$shopify));
-           // return new Response($resp);
              return new Response("<html><body>Congratulation! The LTF app has been successfully installed at your store .
              <br>
              <a href=http://".$specs['shop_domain']." >Click here </a>

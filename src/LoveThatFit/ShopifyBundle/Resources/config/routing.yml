@@ -3,6 +3,11 @@ shopify_install:
     pattern:  /shopify/install
     defaults: { _controller: LoveThatFitShopifyBundle:Default:install }
 
+shopify_create:
+    pattern:  /shopify/create
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:create }
+
+
 shopify_granted:
     pattern:  /shopify/granted
     defaults: { _controller: LoveThatFitShopifyBundle:Default:granted }

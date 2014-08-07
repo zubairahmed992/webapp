@@ -21,11 +21,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller {
 
-    public function installAction() {
-        $app_specs = $this->get('shopify.helper')->appSpecs();
-        $shop_domain = 'lovethatfit-2.myshopify.com';
+    
+    public function installAction(){
+         return $this->render('LoveThatFitShopifyBundle:Default:install_form.html.twig');
+    }
+    
+    public function createAction() {
+       
+        //$shop_domain = 'lovethatfit-2.myshopify.com';
         #$str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content','read_customers','read_orders'));
-        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], $app_specs['app_scopes']);
+       // $str = \sandeepshetty\shopify_api\permission_url($_POST['shop_domain'], $app_specs['api_key'], $app_specs['app_scopes']);
+        $str=$this->get('shopify.helper')->install($_POST['shop_domain']);
         return $this->redirect($str);
     }
 
@@ -40,21 +46,16 @@ class DefaultController extends Controller {
         # to serve the shopify server app install request :--------------------
         $specs['temp_code'] = $this->getRequest()->query->get('code');          
         $specs['shop_domain'] = $this->getRequest()->query->get('shop');                 
-        $specs['access_token'] = \sandeepshetty\shopify_api\oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
+        //$specs['access_token'] = \sandeepshetty\shopify_api\oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
+        $specs['access_token'] =  $this->get('shopify.helper')->oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
         $specs['shop_type'] = 'shopify';          
        
-#~~~~~~>testing
-      // $specs['temp_code'] = '0de3b3fb61b001da821e81883b453537';
-      //  $specs['shop_domain'] = 'bicycles-122.myshopify.com';
-      // $specs['access_token'] = '3874b59ffd8c7c42bc18f28cc04d3e71';
-        #----------------------------------------------------------------------
-        # update in ltf database
-        
         if($this->get('admin.helper.retailer')->updateRetailShopSpecs($specs)){
             
-            $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+           // $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+            $shopify = $this->get('shopify.helper')->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
             $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
-            $resp=json_encode($this->writeFile('snippets/foo1.liquid', $content,$shopify));
+            $resp=json_encode($this->get('shopify.helper')->writeFile('snippets/foo1.liquid', $content,$shopify));
            // return new Response($resp);
              return new Response("<html><body>Congratulation! The LTF app has been successfully installed at your store .
              <br>
@@ -78,7 +79,7 @@ class DefaultController extends Controller {
 
     #~~~~~~~~~~~~~~~~~~~~~~ PRIVATES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-    private function getShopMainTheme($shopify) {
+ /*   private function getShopMainTheme($shopify) {
         $themes = $this->getShopThemes($shopify);
         
        if(is_array( $themes)){
@@ -96,32 +97,34 @@ class DefaultController extends Controller {
         
         return $main_theme;
     }
-
+*/
     #--------------------------------------->
 
-    private function getShopThemes($shopify) {
+  /*  private function getShopThemes($shopify) {
       //$shopify = $this->getShopifyObject($shop_specs);
         $themes = $shopify('GET', '/admin/themes.json');
         return $themes;
-    }
+    }*/
 
     #--------------------------------------->
 
-    private function getShopProducts($shopify) {
+    /*private function getShopProducts($shopify) {
       //  $shopify = $this->getShopifyObject();
         $themes = $shopify('GET', '/admin/products.json');
         return $themes;
     }
+     * */
+     
     
     #--------------------------------------------->
-    public function getCustomerListAction(){
+   /* public function getCustomerListAction(){
         $shopify=$this->get('shopifylib.helper')->getShopifyObject();
         $customerOrders = $shopify('GET','/admin/customers/240179475.json');
         return new response(json_encode($customerOrders));  
-    }
+    }*/
  
     #-------------------------------------->
-    private function writeFile($full_name, $content,$shopify) {
+   /* private function writeFile($full_name, $content,$shopify) {
        
       $main_theme=$this->getShopMainTheme($shopify);
       //$shopify = $this->getShopifyObject();
@@ -138,9 +141,9 @@ class DefaultController extends Controller {
         } catch (ShopifyApiException $e) {
             return $e;
         }
-    }
+    }*/
      #-------------------------------------->
-    
+   
     private function defineAllWebHooks(){
       $shopify = $this->getShopifyObject();  
       $app_specs = $this->get('shopify.helper')->appSpecs();
@@ -155,6 +158,7 @@ class DefaultController extends Controller {
       return $response_array;
       
     }
+    
     private function defineWebHook($shopify, $address, $topic) {
        
         try {

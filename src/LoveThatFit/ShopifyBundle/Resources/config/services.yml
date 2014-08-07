@@ -4,6 +4,8 @@ parameters:
 services:
      shopify.helper:
         class: LoveThatFit\ShopifyBundle\DependencyInjection\ShopifyHelper
+        arguments:
+            container: "@service_container"
       
      shopifylib.helper:
         class: LoveThatFit\ShopifyBundle\DependencyInjection\ShopifyLibHelper    
