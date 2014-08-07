@@ -47,6 +47,14 @@ class UserMarker
     protected $updated_at;
     
     
+    
+    /**
+     * @var string $svg_paths
+     *
+     * @ORM\Column(name="svg_paths", type="text", nullable=true)     
+     */
+    private $svg_paths;
+    
     /**
      * @var string $marker_json
      *
@@ -161,5 +169,28 @@ class UserMarker
     public function getMarkerJson()
     {
         return $this->marker_json;
+    }
+
+    /**
+     * Set svg_paths
+     *
+     * @param string $svgPaths
+     * @return UserMarker
+     */
+    public function setSvgPaths($svgPaths)
+    {
+        $this->svg_paths = $svgPaths;
+    
+        return $this;
+    }
+
+    /**
+     * Get svg_paths
+     *
+     * @return string 
+     */
+    public function getSvgPaths()
+    {
+        return $this->svg_paths;
     }
 }
