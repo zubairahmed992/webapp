@@ -72,7 +72,7 @@ class UserFittingRoomItemHelper {
         $fris = $this->findByUserId($user->getId());
         $state_updated = false;
         $already_existed = false;
-        if ($item->getId()) {
+        if ($item) {
             foreach ($fris as $fri) {
                 $current_item = $fri->getProductItem();
                 if ($current_item) {
