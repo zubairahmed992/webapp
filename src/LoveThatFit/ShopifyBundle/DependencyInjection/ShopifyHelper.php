@@ -38,6 +38,28 @@ class ShopifyHelper {
    $app_specs = $this->appSpecs();
    return $this->permission_url($shop_domain, $app_specs['api_key'], array('read_products', 'write_themes', 'write_content'));
   }
+  public function granted($specs){
+      $app_specs = $this->appSpecs();
+      $specs['api_key'] = $app_specs['api_key'];
+      $specs['shared_secret'] = $app_specs['shared_secret'];
+      $specs['access_token'] =  $this->oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
+      $specs['shop_type'] = 'shopify';  
+      if($this->container->get('admin.helper.retailer')->updateRetailShopSpecs($specs)){
+            $shopify = $this->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+            $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
+            $resp=json_encode($this->writeFile('snippets/foo2.liquid', $content,$shopify));
+           return ("<html><body>Congratulation! The LTF app has been successfully installed at your store .
+             <br>
+             <a href=http://".$specs['shop_domain']." >Click here </a>
+            </body></html>");
+          
+        }else{
+            return ("Some thing went wrong!");
+        }
+       
+
+      
+  }
   
   #-----------App installation Api calls-------------------------------------#
     private function permission_url($shop, $api_key, $scope = array(), $redirect_uri = '') {

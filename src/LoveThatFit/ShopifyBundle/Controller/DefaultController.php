@@ -38,34 +38,9 @@ class DefaultController extends Controller {
     #-------------------------------------->
 
     public function grantedAction() {
-       
-        $app_specs = $this->get('shopify.helper')->appSpecs();
-        $specs['api_key'] = $app_specs['api_key'];
-        $specs['shared_secret'] = $app_specs['shared_secret'];
-
-        # to serve the shopify server app install request :--------------------
         $specs['temp_code'] = $this->getRequest()->query->get('code');          
-        $specs['shop_domain'] = $this->getRequest()->query->get('shop');                 
-        //$specs['access_token'] = \sandeepshetty\shopify_api\oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
-        $specs['access_token'] =  $this->get('shopify.helper')->oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
-        $specs['shop_type'] = 'shopify';          
-       
-        if($this->get('admin.helper.retailer')->updateRetailShopSpecs($specs)){
-            
-           // $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
-            $shopify = $this->get('shopify.helper')->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
-            $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
-            $resp=json_encode($this->get('shopify.helper')->writeFile('snippets/foo1.liquid', $content,$shopify));
-           // return new Response($resp);
-             return new Response("<html><body>Congratulation! The LTF app has been successfully installed at your store .
-             <br>
-             <a href=http://".$specs['shop_domain']." >Click here </a>
-            </body></html>");
-          
-        }else{
-            return new Response("Some thing went wrong!");
-        }
-        
+        $specs['shop_domain'] = $this->getRequest()->query->get('shop'); 
+       return new response( $this->get('shopify.helper')->granted($specs));
     }
 
 #-------------------------------------->
