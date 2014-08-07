@@ -78,6 +78,8 @@ class RegistrationController extends Controller
                   $site_user_id=$shopify_user['site_user_id'];
                   $retailer_id=$shopify_user['retailer_id'];                                    
                   $retailer = $this->get('admin.helper.retailer')->find($retailer_id);
+                  #------------------------------------------------------------#
+                 // $shop_spec=array('user_id'=>$site_user_id,'shop_domain'=>$retailer->getShopDomain(),'access_token'=>$retailer->getAccessToken());
                   $this->get('admin.helper.retailer.site.user')->addNew($user, $site_user_id,$retailer);
               } 
 

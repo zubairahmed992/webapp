@@ -1,0 +1,119 @@
+login:
+    pattern:  /web_service/login
+
+registration_create:
+   pattern:  /web_service/register
+
+measurement_edit:
+   pattern:  /web_service/measurement_edit
+
+change_password:
+   pattern:  /web_service/change_password
+
+forget_password:
+    pattern:  /web_service/forget_password
+   
+edit_profile:
+   pattern:  /web_service/edit_profile
+    
+user_profile:
+   pattern:  /web_service/user_profile
+   
+iphone_shoulder_outseam:
+   pattern:  /web_service/iphone_shoulder_outseam
+
+image_upload:
+   pattern:  /web_service/image_upload
+
+check_token__forget_password:
+    pattern:  /web_service/check_token_forget_password
+
+update__forget_password:
+    pattern:  /web_service/check_update_password
+
+checkEmail:
+   pattern:  /web_service/checkemail
+
+avatarUpload:
+   pattern:  /web_service/upload_avatar
+   
+constantValue:
+   pattern:  /web_service/constant_values
+   
+registrationSizechart:
+   pattern:  /web_service/registration_sizechart
+
+brand_retailer:
+    pattern:  /web_service/brand_retailer
+
+brands:
+    pattern:  /web_service/brands
+    
+new_products:
+    pattern:  /web_service/newproducts
+
+new_products_detail:
+    pattern:  /web_service/newproducts_detail
+
+products:
+    pattern:  /web_service/products
+
+clothingtype_brand:
+    pattern:  /web_service/clothingtype_brands
+
+product_detail:
+    pattern:  /web_service/product_detail
+
+brand_list_size_chart:
+   pattern:  /web_service/brand_list_size_chart
+
+size_chart:
+   pattern:  /web_service/size_chart
+   
+default_fittng_alert:
+   pattern:  /web_service/default_fitting_alerts
+   
+fittng_alert:
+   pattern:  /web_service/fitting_alerts
+
+love_item:
+   pattern:  /web_service/love_item
+   
+try_history:
+   pattern:  /web_service/user_try_history
+
+userFavouriteList:
+   pattern:  /web_service/user_favourite_list
+ 
+images_ul:
+   pattern:  /web_service/images_url
+   
+product_syn:
+   pattern:  /web_service/product_sync
+   
+brand_syn:
+   pattern:  /web_service/brand_sync
+   
+product_detail_syn:
+   pattern:  /web_service/product_detail_sync
+
+product_for_user_syn:
+   pattern:  /web_service/product_user_sync
+
+send_push_notifcation:
+   pattern:  /web_service/send_push_notification
+
+get_notification_type:
+5   pattern:  /web_service/get_notification_type
+
+run_crone_job:
+   pattern:  /web_service/run_crone_job
+   
+test_product_syn:
+   pattern:  /web_service/test_product_sync/{authTokenWebService}/{date}
+
+test_product_detail_syn:
+   pattern:  /web_service/product_test_detail_sync/{authTokenWebService}/{date}
+
+test_brand_syn:
+   pattern:  /web_service/test_brand_sync/{date}

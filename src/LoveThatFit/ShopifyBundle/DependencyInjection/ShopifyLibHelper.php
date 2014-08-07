@@ -4,16 +4,21 @@ namespace LoveThatFit\ShopifyBundle\DependencyInjection;
 
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 
 class ShopifyLibHelper {
 
     protected $conf;
-
+    private $container;
     //--------------------------------------------------------------------
-    public function __construct() {
+   public function __construct( Container $container)
+    {
+        $this->container = $container;
+       
         
     }
+    
 
     public function install($app_specs) {
         return $this->permission_url($app_specs['shop_domain'], $app_specs['api_key'], array('read_products', 'write_themes', 'write_content'));
@@ -347,6 +352,23 @@ $( document ).ready(function() {
 
         return $response_headers;
     }
+    
+  #---------------------------Customer ---------------------------------------#
+    public function getShopifyObject($specs=null){
+        $app_specs = $this->container->get('shopify.helper')->appSpecs();
+       $specs['api_key'] = $app_specs['api_key'];
+       $specs['shared_secret'] = $app_specs['shared_secret'];
+        $specs['shop_domain']='lovethatfit-2.myshopify.com';
+        $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
+       return $shopify =$this->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+ }
+ #--------------------------------------------->
+    public function getCustomerList($specs){
+        $shopify=$this->getShopifyObject($specs);
+        $customerOrders = $shopify('GET','/admin/customers/'.$specs['customer_id'].'.json');
+        return new response(json_encode($customerOrders));  
+    }
+ 
 
 }
 

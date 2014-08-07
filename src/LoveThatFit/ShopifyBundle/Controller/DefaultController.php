@@ -24,13 +24,15 @@ class DefaultController extends Controller {
     public function installAction() {
         $app_specs = $this->get('shopify.helper')->appSpecs();
         $shop_domain = 'lovethatfit-2.myshopify.com';
-        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content'));
+        #$str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content','read_customers','read_orders'));
+        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], $app_specs['app_scopes']);
         return $this->redirect($str);
     }
 
     #-------------------------------------->
 
     public function grantedAction() {
+       
         $app_specs = $this->get('shopify.helper')->appSpecs();
         $specs['api_key'] = $app_specs['api_key'];
         $specs['shared_secret'] = $app_specs['shared_secret'];
@@ -52,13 +54,12 @@ class DefaultController extends Controller {
             
             $shopify = \sandeepshetty\shopify_api\client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
             $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
-            $resp=json_encode($this->writeFile('snippets/foo.liquid', $content,$shopify));
+            $resp=json_encode($this->writeFile('snippets/foo1.liquid', $content,$shopify));
            // return new Response($resp);
              return new Response("<html><body>Congratulation! The LTF app has been successfully installed at your store .
              <br>
              <a href=http://".$specs['shop_domain']." >Click here </a>
             </body></html>");
-            
           
         }else{
             return new Response("Some thing went wrong!");
@@ -111,7 +112,14 @@ class DefaultController extends Controller {
         $themes = $shopify('GET', '/admin/products.json');
         return $themes;
     }
-
+    
+    #--------------------------------------------->
+    public function getCustomerListAction(){
+        $shopify=$this->get('shopifylib.helper')->getShopifyObject();
+        $customerOrders = $shopify('GET','/admin/customers/240179475.json');
+        return new response(json_encode($customerOrders));  
+    }
+ 
     #-------------------------------------->
     private function writeFile($full_name, $content,$shopify) {
        
@@ -126,6 +134,38 @@ class DefaultController extends Controller {
                 )
             );
             $response = $shopify("PUT", "/admin/themes/{$main_theme['id']}/assets.json", $request);
+            return $response;
+        } catch (ShopifyApiException $e) {
+            return $e;
+        }
+    }
+     #-------------------------------------->
+    
+    private function defineAllWebHooks(){
+      $shopify = $this->getShopifyObject();  
+      $app_specs = $this->get('shopify.helper')->appSpecs();
+      $response_array=array();
+      #complete base url
+      $base_url=$this->getRequest()->getSchemeAndHttpHost().$this->getRequest()->getBaseURL();
+      foreach($app_specs['webhooks'] as $k=>$v){
+        $response_array[$k] = $this->defineWebHook($shopify, $base_url.$v['address'], $v['topic']);
+      #$response_array[$k]=$v['address'].'   @  '. $v['topic'];
+          
+      } 
+      return $response_array;
+      
+    }
+    private function defineWebHook($shopify, $address, $topic) {
+       
+        try {
+            $request = array(
+                "webhook" => array(
+                    "topic" => $topic,
+                    "address" => $address,
+                    "format" => "json",
+                )
+            );
+            $response = $shopify("POST", "/admin/webhooks.json", $request);
             return $response;
         } catch (ShopifyApiException $e) {
             return $e;

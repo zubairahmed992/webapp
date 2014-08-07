@@ -22,6 +22,10 @@ shopify_user_check:
 shopify_app_proxy:
     pattern:  /shopify/app_proxy/{sku}
     defaults: { _controller: LoveThatFitShopifyBundle:Default:checkSku,sku:0}    
+    
+shopify_customer_list:
+    pattern:  /shopify/customer_list
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:getCustomerList}    
 
 #~~~~~~~~~~~~~~~~> Data 
 shopify_data_index:
@@ -32,12 +36,23 @@ shopify_data_sku_upload:
     pattern:  /shopify/data/sku_upload
     defaults: { _controller: LoveThatFitShopifyBundle:Data:skuUpload }    
     
+ #------------------Webhooks Controller ----------
+shopify_wh_order_create:
+    pattern:  /shopify/webhook/order_create
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCreate }    
+
+shopify_wh_cart_create:
+    pattern:  /shopify/webhook/cart_create
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreate }    
+
+
+ 
  #------------------Test Controller ----------
 shopify_test_start:
     pattern:  /shopify/test/install
     defaults: { _controller: LoveThatFitShopifyBundle:Test:install }    
 
-shopify_granted:
+shopify_test_granted:
     pattern:  /shopify/test/granted
     defaults: { _controller: LoveThatFitShopifyBundle:Test:granted }
     

@@ -7,3 +7,5 @@ services:
       
      shopifylib.helper:
         class: LoveThatFit\ShopifyBundle\DependencyInjection\ShopifyLibHelper    
+        arguments:
+            container: "@service_container"
