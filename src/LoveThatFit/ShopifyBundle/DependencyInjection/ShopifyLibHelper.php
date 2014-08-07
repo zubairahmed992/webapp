@@ -5,7 +5,6 @@ namespace LoveThatFit\ShopifyBundle\DependencyInjection;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use LoveThatFit\ShopifyBundle\ShopifyHelper;
 
 
 class ShopifyLibHelper {

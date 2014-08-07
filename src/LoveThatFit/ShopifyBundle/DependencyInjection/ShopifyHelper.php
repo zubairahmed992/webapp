@@ -14,6 +14,17 @@ class ShopifyHelper {
         return $yaml->parse(file_get_contents('../src/LoveThatFit/ShopifyBundle/Resources/config/shopify_app.yml'));
         
     }
+    //--------------------------------------------------------------------
+    
+    public function appScopes(){
+        $specs = $this->appSpecs();
+        return $specs['app_scopes'];
+    }
+    //--------------------------------------------------------------------
+     public function appWebHooks(){
+        $specs = $this->appSpecs();
+        return $specs['webhooks'];
+    }
 }
 
 ?>

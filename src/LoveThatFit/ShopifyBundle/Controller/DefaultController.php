@@ -24,7 +24,8 @@ class DefaultController extends Controller {
     public function installAction() {
         $app_specs = $this->get('shopify.helper')->appSpecs();
         $shop_domain = 'lovethatfit-2.myshopify.com';
-        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content','read_customers','read_orders'));
+        #$str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], array('read_products','write_themes','write_content','read_customers','read_orders'));
+        $str = \sandeepshetty\shopify_api\permission_url($shop_domain, $app_specs['api_key'], $app_specs['app_scopes']);
         return $this->redirect($str);
     }
 
@@ -133,6 +134,38 @@ class DefaultController extends Controller {
                 )
             );
             $response = $shopify("PUT", "/admin/themes/{$main_theme['id']}/assets.json", $request);
+            return $response;
+        } catch (ShopifyApiException $e) {
+            return $e;
+        }
+    }
+     #-------------------------------------->
+    
+    private function defineAllWebHooks(){
+      $shopify = $this->getShopifyObject();  
+      $app_specs = $this->get('shopify.helper')->appSpecs();
+      $response_array=array();
+      #complete base url
+      $base_url=$this->getRequest()->getSchemeAndHttpHost().$this->getRequest()->getBaseURL();
+      foreach($app_specs['webhooks'] as $k=>$v){
+        $response_array[$k] = $this->defineWebHook($shopify, $base_url.$v['address'], $v['topic']);
+      #$response_array[$k]=$v['address'].'   @  '. $v['topic'];
+          
+      } 
+      return $response_array;
+      
+    }
+    private function defineWebHook($shopify, $address, $topic) {
+       
+        try {
+            $request = array(
+                "webhook" => array(
+                    "topic" => $topic,
+                    "address" => $address,
+                    "format" => "json",
+                )
+            );
+            $response = $shopify("POST", "/admin/webhooks.json", $request);
             return $response;
         } catch (ShopifyApiException $e) {
             return $e;

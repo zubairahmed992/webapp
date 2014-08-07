@@ -36,6 +36,17 @@ shopify_data_sku_upload:
     pattern:  /shopify/data/sku_upload
     defaults: { _controller: LoveThatFitShopifyBundle:Data:skuUpload }    
     
+ #------------------Webhooks Controller ----------
+shopify_wh_order_create:
+    pattern:  /shopify/webhook/order_create
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCreate }    
+
+shopify_wh_cart_create:
+    pattern:  /shopify/webhook/cart_create
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreate }    
+
+
+ 
  #------------------Test Controller ----------
 shopify_test_start:
     pattern:  /shopify/test/install
