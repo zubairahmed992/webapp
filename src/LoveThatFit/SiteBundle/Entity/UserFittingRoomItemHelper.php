@@ -68,33 +68,35 @@ class UserFittingRoomItemHelper {
 
 #------------------------------------------------------
 
-    public function add($user, $item) {        
-        $fris = $this->findByUserId($user->getId());        
+    public function add($user, $item) {
+        $fris = $this->findByUserId($user->getId());
         $state_updated = false;
         $already_existed = false;
-        
-        foreach ($fris as $fri) {
-            $current_item = $fri->getProductItem();
-            if ($item->getId() != $current_item->getId()) {
-                    if ($item->getProduct()->getclothingType()->getTarget() == $current_item->getProduct()->getclothingType()->getTarget()) {
-                        #$this->delete($fri);
-                        $fri->setProductitem($item);
-                        $this->save($fri);
-                        $state_updated = true;
-                    #update
+        if ($item->getId()) {
+            foreach ($fris as $fri) {
+                $current_item = $fri->getProductItem();
+                if ($current_item) {
+                    if ($item->getId() != $current_item->getId()) {
+                        if ($item->getProduct()->getclothingType()->getTarget() == $current_item->getProduct()->getclothingType()->getTarget()) {
+                            #$this->delete($fri);
+                            $fri->setProductitem($item);
+                            $this->save($fri);
+                            $state_updated = true;
+                            #update
+                        }
+                    } else {
+                        $already_existed = true;
                     }
-            } else {
-                $already_existed = true;
+                }
             }
         }
-        
-        
-        if(!$state_updated && !$already_existed){
-            $this->createUserFittingRoomItem($user, $item);        
-            $state_updated=true;
+
+        if (!$state_updated && !$already_existed) {
+            $this->createUserFittingRoomItem($user, $item);
+            $state_updated = true;
         }
-        return $state_updated;        
-            #$this->getArrayByUser($user);
+        return $state_updated;
+        #$this->getArrayByUser($user);
     }
 
     #------------------------------------------------------   
