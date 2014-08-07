@@ -358,15 +358,15 @@ $( document ).ready(function() {
         $app_specs = $this->container->get('shopify.helper')->appSpecs();
        $specs['api_key'] = $app_specs['api_key'];
        $specs['shared_secret'] = $app_specs['shared_secret'];
-        $specs['shop_domain']='lovethatfit-2.myshopify.com';
-        $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
+       // $specs['shop_domain']='lovethatfit-2.myshopify.com';
+       // $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
        return $shopify =$this->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
  }
  #--------------------------------------------->
     public function getCustomerList($specs){
         $shopify=$this->getShopifyObject($specs);
         $customerOrders = $shopify('GET','/admin/customers/'.$specs['customer_id'].'.json');
-        return new response(json_encode($customerOrders));  
+        return $customerOrders;  
     }
  
 

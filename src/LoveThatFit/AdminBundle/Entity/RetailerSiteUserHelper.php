@@ -52,25 +52,37 @@ class RetailerSiteUserHelper {
 public function findByReferenceId($user_reference_id=null,$retailer_id=null){
     return $this->repo->findByReferenceId($user_reference_id,$retailer_id);
 }    
- 
+//--------------------------------------------------------
+public function findByUserIdRetId($user_id,$ret_id){
+    return $this->repo->findByUserIdRetId($user_id,$ret_id);
+} 
 //-------------------------------------------------------
 
-    public function addNew($user, $user_reference_id, $retailer=null) {
+    public function addNew($user, $user_reference_id, $retailer=null,$customer_order=null) {
+        
+        $site_user_object=$this->findByUserIdRetId($user->getId(),$retailer->getId());
+        if($site_user_object){
+            //update
+            $this->update($site_user_object,$retailer,$user,$user_reference_id,$customer_order);
+        }else{
         $entity = $this->createNew();    
         $entity->setRetailer($retailer);
         $entity->setUser($user);
         $entity->setUserReferenceId($user_reference_id);
+        $entity->setCustomerOrder($customer_order);
         $entity->setCreatedAt(new \DateTime('now'));
         $this->save($entity);        
         return $entity;
+        }
     }
 
-  public function update($entity,$retailer, $user, $user_reference_id)
+  public function update($entity,$retailer, $user, $user_reference_id,$customer_order=null)
   {
         $entity->setRetailer($retailer);
         $entity->setUser($user);
-        $entity->setUserReferenceId($user_reference_id);        
-         $entity->setUpdatedAt(new \DateTime('now'));
+        $entity->setUserReferenceId($user_reference_id); 
+        $entity->setCustomerOrder($customer_order);
+        $entity->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($entity);
         $this->em->flush();
         return array('message' => 'User Id for retailer succesfully update.',

@@ -23,8 +23,18 @@ class RetailerSiteUserRepository extends EntityRepository
                 } catch (\Doctrine\ORM\NoResultException $e) {
                 return null;
                 }
-            
-       
-        
+    }
+    
+    public function findByUserIdRetId($user_id,$retailer_id){
+        $query = $this->getEntityManager()
+                    ->createQuery("SELECT rsu FROM LoveThatFitAdminBundle:RetailerSiteUser rsu
+                                    WHERE rsu.user =:user_id
+                                    and rsu.retailer=:retailer_id")
+             ->setParameters(array('user_id' => $user_id,'retailer_id'=>$retailer_id));
+                     try {
+                     return $query->getSingleResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                }
     }
 }

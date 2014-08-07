@@ -60,8 +60,12 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         if ($session->has('shopify_user')) {
                   $shopify_user = $session->get('shopify_user');                  
                   $sku = $session->get('sku');
+                   $site_user_id=$shopify_user['site_user_id'];
                   $retailer = $this->get('admin.helper.retailer')->find($shopify_user['retailer_id']);
-                  $this->get('admin.helper.retailer.site.user')->addNew($user, $shopify_user['site_user_id'],$retailer);
+                  $shop_spec=array('customer_id'=>$site_user_id,'shop_domain'=>$retailer->getShopDomain(),'access_token'=>$retailer->getAccessToken());
+                 $customer_order=($this->get('shopifylib.helper')->getCustomerList($shop_spec));
+                 $this->get('admin.helper.retailer.site.user')->addNew($user, $site_user_id,$retailer,$customer_order['orders_count']);
+                 
                   
               } 
         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
