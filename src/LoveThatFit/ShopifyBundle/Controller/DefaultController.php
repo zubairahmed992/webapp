@@ -47,7 +47,8 @@ class DefaultController extends Controller {
 
     public function fooAction($option_array=null) {
         
-        return new response(json_encode($this->get('shopify.helper')->getArrayCustomerCount(8)));
+        return new response(json_encode($this->get('shopify.helper')->getRetailerProducts(3)));
+        #return new response(json_encode($this->get('shopify.helper')->getArrayCustomerCount(3)));
         $option_array['access_token']='8b14eb6efcf7c5fa7b0c76e9b329d06e';
         $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($option_array)));
         $resp=json_encode($this->writeFile('snippets/foo.liquid', $content));
