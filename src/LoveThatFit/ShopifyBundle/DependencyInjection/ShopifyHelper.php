@@ -98,15 +98,16 @@ class ShopifyHelper {
         }
 
         $response = json_decode($response, true);
-        // print_r($response);
-        ///  die();
+    //    print_r($response);
+        // die();
 
         if (isset($response['errors']) or ($response_headers['http_status_code'] >= 400))
-            throw new Exception(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
-        //  throw new ApiException(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
+        throw new Exception(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
+        // throw new ApiException(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
 
         return (is_array($response) and !empty($response)) ? array_shift($response) : $response;
     }
+   
      #--------------------------------------->
 
     private function getShopThemes($shopify) {
@@ -387,8 +388,8 @@ $( document ).ready(function() {
         $app_specs = $this->appSpecs();
        $specs['api_key'] = $app_specs['api_key'];
        $specs['shared_secret'] = $app_specs['shared_secret'];
-       // $specs['shop_domain']='lovethatfit-2.myshopify.com';
-       // $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
+    //   $specs['shop_domain']='lovethatfit-2.myshopify.com';
+      // $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
        return $shopify =$this->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
  }
  #--------------------------------------------->
@@ -397,8 +398,55 @@ $( document ).ready(function() {
         $customerOrders = $shopify('GET','/admin/customers/'.$specs['customer_id'].'.json');
         return $customerOrders;  
     }
- 
+    private function getCustomerCount($specs=null){
+        $shopify=$this->getShopifyObject($specs);
+        $customerCount = $shopify('GET','/admin/customers/count.json');
+        return $customerCount;
+        
+    }
+    public function getArrayCustomerCount($ret_id=null){
+        if(!$ret_id){
+             return array('status'=>FALSE,
+                          'msg'=>'Reatiler id not found');
+        }
+        $retailer= $this->container->get('admin.helper.retailer')->find($ret_id) ;
+          if($retailer){
+              
+                $specs['shop_domain']=$retailer->getShopDomain();
+                $specs['access_token']=$retailer->getAccessToken();
+                $customer_count=$this->getCustomerCount($specs);
+              if($customer_count['errors']){
+                  return "There is api permission problems";
+              }      
+                
+                return 
+                array(
+                    'customer_count'=>$this->getCustomerCount($specs),
+                    'status'=>true,
+                    'msg'=>'Total number of Customer we found'
+                        );
+           }
+        else{
+            return array('status'=>FALSE,
+                          'msg'=>'Reatiler not found');
+        }
+    }
   
 }
+ class CurlException extends \Exception { }
+        class ApiException extends \Exception { }
+	class Exception extends \Exception
+	{
+		protected $info;
+
+		function __construct($info)
+		{
+			$this->info = $info;
+			parent::__construct($info['response_headers']['http_status_message'], $info['response_headers']['http_status_code']);
+		}
+
+		function getInfo() { $this->info; }
+	}
+
 
 ?>
