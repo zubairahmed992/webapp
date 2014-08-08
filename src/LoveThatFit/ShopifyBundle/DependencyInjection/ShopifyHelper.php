@@ -98,8 +98,8 @@ class ShopifyHelper {
         }
 
         $response = json_decode($response, true);
-    //    print_r($response);
-        // die();
+     // print_r($response);
+       //  die();
 
         if (isset($response['errors']) or ($response_headers['http_status_code'] >= 400))
         throw new Exception(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
@@ -399,8 +399,14 @@ $( document ).ready(function() {
         return $customerOrders;  
     }
     private function getCustomerCount($specs=null){
-        $shopify=$this->getShopifyObject($specs);
-        $customerCount = $shopify('GET','/admin/customers/count.json');
+       
+         try {
+              $shopify=$this->getShopifyObject($specs);
+              $customerCount = $shopify('GET','/admin/customers/count.json');
+        } catch (Exception $e) {
+              $customerCount['error'] = true;
+        }
+      
         return $customerCount;
         
     }
@@ -410,15 +416,20 @@ $( document ).ready(function() {
                           'msg'=>'Reatiler id not found');
         }
         $retailer= $this->container->get('admin.helper.retailer')->find($ret_id) ;
+        
+        
           if($retailer){
               
                 $specs['shop_domain']=$retailer->getShopDomain();
                 $specs['access_token']=$retailer->getAccessToken();
                 $customer_count=$this->getCustomerCount($specs);
-              if($customer_count['errors']){
-                  return "There is api permission problems";
-              }      
+                if($customer_count['error']){
+                    return 
+                    array('msg'=>"Problem with app installtaion or api permission",
+                          'status'=>false);
+                }
                 
+              
                 return 
                 array(
                     'customer_count'=>$this->getCustomerCount($specs),
