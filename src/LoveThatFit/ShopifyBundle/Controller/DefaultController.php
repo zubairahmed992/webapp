@@ -46,6 +46,8 @@ class DefaultController extends Controller {
 #-------------------------------------->
 
     public function fooAction($option_array=null) {
+        
+        return new response(json_encode($this->get('shopify.helper')->getArrayCustomerCount(8)));
         $option_array['access_token']='8b14eb6efcf7c5fa7b0c76e9b329d06e';
         $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($option_array)));
         $resp=json_encode($this->writeFile('snippets/foo.liquid', $content));
@@ -168,7 +170,7 @@ public function checkSkuAction($sku=null){
     
 
 #-----------------------------------------------------------------------
-  private function getContent($option_array=null) {
+ /* private function getContent($option_array=null) {
        return "<style>
 .full_screen {text-align:center;width:100%;height:100%;position:fixed;left:0;top:0;z-index:80000; background:url({{ 'trans_dot.png' | asset_url }}) 0 0 repeat;display:none;}
 .full_screen .inner_div {width:814px;height:584px;margin:0 auto;margin-top:36px;overflow:hidden;}
@@ -282,6 +284,6 @@ $( document ).ready(function() {
 });
 </script>
 ";
-    }
+    }*/
 
 }
