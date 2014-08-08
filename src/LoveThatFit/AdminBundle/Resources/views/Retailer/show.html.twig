@@ -25,7 +25,7 @@
       {%if retailer.id %}
       <a href="{{ path('admin_retailer_edit', {'id': retailer.id}) }}" class="btn">Edit</a>      
       <a href="#myModal2{{retailer.id}}" role="button" data-toggle="modal" class="btn">Delete</a>
-      <a href="{{ path('admin_count_retailer_user',{retailer.id}) }}" class="btn">Count Users</a>
+      <a href="{{ path('admin_count_retailer_user',{'id':retailer.id}) }}" class="btn">Count Users</a>
       {% endif %}      
       </div>
       <div class="clearfix"></div>

@@ -74,5 +74,5 @@ admin_retailer_access_token_generate:
     defaults: { _controller: LoveThatFitAdminBundle:Retailer:generateRetailerAccessToken }
 
 admin_count_retailer_user:    
-    pattern:  /admin/retailer/{{id}}/users
-    defaults: { _controller: LoveThatFitAdminBundle:Retailer:countRetailerUsers }
+    pattern:  /admin/retailer/users/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:countRetailerUsers,id: 0 }

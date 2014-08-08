@@ -350,9 +350,9 @@ class RetailerController extends Controller {
  //----------------------Count Retailer Users---------------------------------------
  
  public function countRetailerUsersAction($id)
- {
+ {    
      $totaluser=$this->get('shopify.helper')->getArrayCustomerCount($id);
-     return new response($totaluser);
+     return $totaluser['customer_count'];
  }
  
  
