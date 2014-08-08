@@ -72,3 +72,7 @@ admin_retailer_user_delete:
 admin_retailer_access_token_generate:
     pattern:  /admin/retailer/{id}/access_token/generate
     defaults: { _controller: LoveThatFitAdminBundle:Retailer:generateRetailerAccessToken }
+
+admin_count_retailer_user:    
+    pattern:  /admin/retailer/{{id}}/users
+    defaults: { _controller: LoveThatFitAdminBundle:Retailer:countRetailerUsers }
