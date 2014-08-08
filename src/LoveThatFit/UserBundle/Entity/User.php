@@ -957,7 +957,7 @@ class User implements UserInterface, \Serializable {
              {
             $accuracy=$accuracy+1;
         } 
-        return $accuracy;
+        return round(($accuracy/38)*100,2);
     }
     
 
