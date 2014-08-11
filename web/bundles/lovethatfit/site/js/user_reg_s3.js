@@ -538,8 +538,6 @@ function call_settings(responseText, statusText, xhr, $form){
         
    var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
    
-   $("#img_path_paper").attr("value", url);
-   
   $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
         
         
@@ -552,13 +550,10 @@ function call_settings(responseText, statusText, xhr, $form){
             photo_height = document.getElementById('img_to_upload').height;		 
             photo_width =  document.getElementById('img_to_upload').style.width = photo_width + "px";
             
-            //alert(uploaded_img_obj.width);
-            //checking_bhai();
         };
-        
         uploaded_img_obj.src = uploaded_img_src.src;
+
         chk_overall();
-        
 }
 
 
@@ -569,7 +564,7 @@ function call_settings(responseText, statusText, xhr, $form){
         $(".reg_next_step2").css("display","block");
         $(".uploading_in_progress").fadeOut(300).remove();
         
-        //$(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
+        $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
         
         $(".step_4_tip").fadeIn(50);
         $(".reg_next_step2").attr("value","Save Photo");
@@ -600,6 +595,7 @@ function call_settings(responseText, statusText, xhr, $form){
         $("#stella_box").css("display","none");
         $("#pic_step_1").css("display","none");
         $("#pic_step_2").css("display","none");
+        
         $("#frmUserImage").ajaxForm(
         {
             target: '#uploaded_photo',
