@@ -27,6 +27,7 @@ class ProductSizeMeasurementType extends AbstractType
         $builder->add('ideal_body_size_high');
         $builder->add('ideal_body_size_low');   
         $builder->add('garment_measurement_stretch_fit');
+        $builder->add('fit_model_measurement');
     }
 
 
