@@ -200,7 +200,7 @@ class RegistrationController extends Controller {
          $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
          $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
          $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
-         return $this->render('LoveThatFitUserBundle:Registration:stepfour.html.twig', array(
+         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                     'form' => $form->createView(),
                     'measurement_form' => $measurement_form->createView(),
             'measurement_vertical_form' => $measurement_vertical_form->createView(),

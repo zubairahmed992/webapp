@@ -55,10 +55,11 @@
     <td width="110"><span><strong>ideal high</strong></span></td>
     <td width="112"><span><strong>ideal low</strong></span></td>
     <td width="165"><span><strong>min measurement</strong></span></td>
+    <td width="165"><span><strong>fit model</strong></span></td>
   </tr>
 {% for size,key in product.sizes %}
   <tr>
-      <td colspan="8" style="margin-top:5px;"><span><strong>{{size}}</strong></span></td>
+      <td colspan="9" style="margin-top:5px;"><span><strong>{{size}}</strong></span></td>
   </tr>   
    {%for ps,keys in key %} 
    {% if (ps!='key')%}  
@@ -73,7 +74,7 @@
  {%endfor%}
   </td>  
   </tr>
-         <tr><td colspan="8" style="height:20px;"></td></tr>                       
+         <tr><td colspan="9" style="height:20px;"></td></tr>                       
     </strong></td>
 </tr>
 {%endfor%}    

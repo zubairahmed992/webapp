@@ -54,6 +54,13 @@ class ProductSizeMeasurement
      */
     private $garment_measurement_flat=0;
     /**
+     * @var float $fit_model_measurement
+     *
+     * @ORM\Column(name="fit_model_measurement", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $fit_model_measurement=0;
+    /**
      * @var float $max_body_measurement
      *
      * @ORM\Column(name="max_body_measurement", type="float",nullable=true)
@@ -368,5 +375,30 @@ class ProductSizeMeasurement
     public function getMinBodyMeasurement()
     {
         return $this->min_body_measurement;
+    }
+    
+    
+    
+    /**
+     * Set fit_model_measurement
+     *
+     * @param string $fit_model_measurement
+     * @return ProductSizeMeasurement
+     */
+    public function setFitModelMeasurement($fit_model_measurement)
+    {
+        $this->fit_model_measurement = $fit_model_measurement;
+    
+        return $this;
+    }
+
+    /**
+     * Get fit_model_measurement
+     *
+     * @return string 
+     */
+    public function getFitModelMeasurement()
+    {
+        return $this->fit_model_measurement;
     }
 }

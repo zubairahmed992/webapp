@@ -958,43 +958,7 @@ a.but_short:visited {
     top: 0px;
 }
 
-.center_mark {
-    position: absolute;
-    top: 16px;
-    left: 181px; /*--Based on user shoulders--*/
-    width:1px;
-    height:900px; /*--Based on user height--*/ 
-    background: #999;
-    font-size: 0px;
-    line-height: 1px;
-    overflow: hidden;
-    z-index: 5000;
-}
 
-.height_top_mark {
-    position: absolute;
-    top: 16px;
-    left: 51px;
-    width:261px;
-    height:1px;
-    background: #000000;
-    font-size: 0px;
-    line-height: 1px;
-    overflow: hidden;
-    z-index: 5000;
-}
-.height_bottom_mark {
-    position: absolute;
-    top: 16px;
-    left: 51px;
-    width:261px;
-    height:1px;
-    background: #000000;
-    font-size: 0px;
-    line-height: 1px;
-    overflow: hidden;
-    z-index: 5000;
-}
 
 .fitting_step{
     position:absolute; 
@@ -1061,16 +1025,7 @@ a.but_short:visited {
 .step_4 .btm_buttons {
     bottom: -36px;
 }
-.uploading_in_progress {
-    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
-    height: 72px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    z-index: 5000;
-    top:0;
-    left:0;
-}
+
 
 .int_fitting_room {
 	width:364px;
@@ -1236,13 +1191,7 @@ input[type=email]{
     -webkit-box-shadow: inset 0 0 10px #000000;
    box-shadow: inset 0 0 10px #000000;
 }
-#uploaded_photo {
-	position:absolute;
-	top:0;
-	left:0;
-	z-index:2000;
-	display:block;
-}
+
 .img_hldr {
 	text-align:center;
 	padding:4px;
@@ -5003,7 +4952,14 @@ transform: rotateX(0deg) rotateY(0deg);
 #canv_mask {
     position: absolute;
     z-index: 9000;
+    display:none;
+}
+#rect_mask {
+    position: absolute;
+    z-index: 9010;
     display:block;
+    left:0px;
+    top:0px;
 }
 
 
@@ -5268,4 +5224,86 @@ transform: rotateX(0deg) rotateY(0deg);
     font-size: 2em;
     font-weight: normal;
     padding: 0 0 20px;
+}
+
+
+#paper_step_1 {
+    width: 100px;
+    height: 30px;
+    position: absolute;
+    right:0px;
+    top:0px;
+    background:#ffcc00;
+}
+
+.preview {
+    max-width: 364px;
+    max-height: 505px;
+}
+#uploaded_photo {
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:2000;
+	display:block;
+        
+        /**********/
+        text-align: center;
+        width:364px;
+        height: 505px;
+}
+#img_to_upload {
+    position: relative;
+}
+
+.center_mark {
+    position: absolute;
+    top: 16px;
+    left: 181px; /*--Based on user shoulders--*/
+    width:1px;
+    height:900px; /*--Based on user height--*/ 
+    background: #999;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 10000;
+    display: none;
+}
+
+.height_top_mark {
+    position: absolute;
+    top: 16px;
+    left: 51px;
+    width:261px;
+    height:1px;
+    background: #000000;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 10000;
+    display: none;
+}
+.height_bottom_mark {
+    position: absolute;
+    top: 16px;
+    left: 51px;
+    width:261px;
+    height:1px;
+    background: #000000;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 10000;
+    display: none;
+}
+
+.uploading_in_progress {
+    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
+    height: 72px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 10000;
+    top:0;
+    left:0;
 }

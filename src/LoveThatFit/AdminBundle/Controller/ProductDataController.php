@@ -338,6 +338,7 @@ class ProductDataController extends Controller {
             $psm->setIdealBodySizeHigh($value['ideal_body_size_high']);
             $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
             $psm->setMinBodyMeasurement($value['min_body_measurement']);
+            $psm->setFitModelMeasurement($value['fit_model']);
             $em->persist($psm);
             $em->flush();
             }
