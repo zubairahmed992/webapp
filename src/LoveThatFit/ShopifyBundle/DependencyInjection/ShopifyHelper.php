@@ -164,7 +164,9 @@ class ShopifyHelper {
 {% if send_to_login %}
 <meta content='0; url=/account/login?checkout_url={{ shop.url }}' http-equiv='refresh' />
 {% else %} 
+{% if customer %} 
 <input id='fr_button' type='button' onclick='open_me()' value='Fitting Room'></input> 
+{% endif %}
 {% endif %}
 <div class='full_screen'>
 <div class='inner_div'>
