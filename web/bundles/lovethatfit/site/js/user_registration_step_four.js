@@ -23,13 +23,13 @@ function fade_in_func(ele_one){
 function set_vertical_step(){
 
     
-    $('.rotate_buts').animate({ opacity: 0, height: 0 }, 500, function() { $('.rotate_buts').css("display","none") });
+    //$('.rotate_buts').animate({ opacity: 0, height: 0 }, 500, function() { $('.rotate_buts').css("display","none") });
     
     
     $('.left_move').animate({ top: 20 }, 500, function() { });    
     $('.right_move').animate({ top: 20 }, 500, function() { });
     
-    $('#rotate_move_box').fadeOut(300);
+    //$('#rotate_move_box').fadeOut(300);
     
     $(".hiw_upload_photo").css("display","none");
     
@@ -56,7 +56,7 @@ function set_vertical_step(){
     $("#step_two").addClass("active");
     $("#step_one").addClass("make_clickable");
     
-    $("#adj_markers_hldr").fadeIn(500);
+    $("#adj_markers_hldr").fadeOut(500);
     
    
     
@@ -84,7 +84,7 @@ function set_horizontal_step(){
     $("#step_two").removeClass("active");
 
     
-    $("#rotate_move_box").fadeOut(200);
+    //$("#rotate_move_box").fadeOut(200);
     
     $(".next_btn_4").fadeOut(200, function(){$(".save_btn_4").fadeIn(200);});
     
@@ -142,15 +142,18 @@ $(".next_step3").click(function(){
     submit_step_3_first = false;
     submit_step_3_second = true;
     set_horizontal_step();
+    
 });
 
 
 
 
 $(".next_step2").click(function(){
+    
     submit_all_step_3 = false;
     submit_step_3_first = true;
     submit_step_3_second = false;
+    $('.rotate_buts').fadeIn();
 });
 
 
@@ -267,7 +270,7 @@ $('.reg_next_step2').click(function(){
 $('.next_step2').click(function(){
    rotate_me_to("just_shift");
    $(".action_buts_bar").hide();
-
+$("#paper_step_1").trigger("click");
     $(".hiw_step_1").fadeOut(200);
     $(".hiw_step_3").fadeOut(200);
     $(".hiw_step_2").fadeIn(200);
@@ -718,6 +721,8 @@ function post_content_of_canvas(){
                               
                               $('.zoomed_img').html("<img class='zoomed_img_inner' src='"+ $("#hdn_serverpath").attr("value") + obj_url.url+"' width='728' height='1010'>");
                                 set_vertical_step();
+                                //set_horizontal_step();
+                                $("#adj_markers_hldr").fadeOut(500);
                                 console.log("Setp two path variable: "+ obj_url.url );
                           }
                           

@@ -3345,32 +3345,10 @@ hiw_step_3 {
     margin-left: 4px;
 }
 
-.action_buts_bar .img_acw_min {
-    width:24px;
-    height:25px;
-    float:left;
-    background: url("../images/left_arrow_2.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-}
-
-.action_buts_bar .img_cw_min {
-    width:24px;
-    height:25px;
-    float:left;
-    background: url("../images/right_arrow_2.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-}
 
 
-.action_buts_bar .rotate_label {    
-    font-size: 13px;
-    display: block;   
-    color:#666;
-    font-weight: bold;
-    padding-bottom: 5px;
-    margin-top: 20px;
-    text-align: center;
-}
+
+
 
 #slider1{    
     overflow:hidden;
@@ -3446,47 +3424,7 @@ hiw_step_3 {
     padding: 0px 0px 20px 10px;
 }
 
-.action_buts_bar .top_move {
-    width:24px;
-    height:24px;    
-    background: url("../images/move_top_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:22px;
-    left: 15px;
-}
-.action_buts_bar .left_move {
-    width:24px;
-    height:24px;
-    float:left;
-    background: url("../images/move_left_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:46px;
-    left: 0px;
-}
 
-.action_buts_bar .right_move {
-    width:24px;
-    height:24px;
-    float:left;
-    background: url("../images/move_right_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:46px;
-    left: 30px;
-}
-
-.action_buts_bar .bottom_move {
-    width:24px;
-    height:24px;
-    float:left;
-    background: url("../images/move_bottom_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:70px;
-    left: 15px;
-}
 
 .new_nav ul{    
     margin:0px;
@@ -5234,6 +5172,7 @@ transform: rotateX(0deg) rotateY(0deg);
     right:0px;
     top:0px;
     background:#ffcc00;
+    display:none;
 }
 
 .preview {
@@ -5249,8 +5188,6 @@ transform: rotateX(0deg) rotateY(0deg);
         
         /**********/
         text-align: center;
-        width:364px;
-        height: 505px;
 }
 #img_to_upload {
     position: relative;
@@ -5306,4 +5243,79 @@ transform: rotateX(0deg) rotateY(0deg);
     z-index: 10000;
     top:0;
     left:0;
+}
+
+.action_buts_bar .img_acw_min {
+    width:24px;
+    height:25px;
+    float:left;
+    background: url("../images/left_arrow_2.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    display:none;
+}
+
+.action_buts_bar .img_cw_min {
+    width:24px;
+    height:25px;
+    float:left;
+    background: url("../images/right_arrow_2.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    display:none;
+}
+
+.action_buts_bar .top_move {
+    width:24px;
+    height:24px;    
+    background: url("../images/move_top_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:22px;
+    left: 15px;
+    display:none;
+}
+.action_buts_bar .left_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_left_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:46px;
+    left: 0px;
+    display:none;
+}
+
+.action_buts_bar .right_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_right_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:46px;
+    left: 30px;
+    display:none;
+}
+
+.action_buts_bar .bottom_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_bottom_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:70px;
+    left: 15px;
+    display:none;
+}
+
+.action_buts_bar .rotate_label {    
+    font-size: 13px;
+    display: block;   
+    color:#666;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    text-align: center;
+    display:none;
 }

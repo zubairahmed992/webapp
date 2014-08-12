@@ -448,7 +448,7 @@ $( document ).ready(function() {
     }
   
 }
- class CurlException extends \Exception { }
+ /*class CurlException extends \Exception { }
         class ApiException extends \Exception { }
 	class Exception extends \Exception
 	{
@@ -461,6 +461,6 @@ $( document ).ready(function() {
 		}
 
 		function getInfo() { $this->info; }
-	}
+	}*/
 
 ?>
