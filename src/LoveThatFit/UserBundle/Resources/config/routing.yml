@@ -138,6 +138,10 @@ user_maker_save:
 user_maker_show:    
     pattern:  /user/marker/show
     defaults: { _controller: LoveThatFitUserBundle:MaskedMarker:userMarker }   
+user_marker_default:    
+    pattern:  /user/marker/default
+    defaults: { _controller: LoveThatFitUserBundle:MaskedMarker:getDefaultMarker }   
+    
 #---------------------------------------------- Login ------------------------------------------
 
 admin_login:

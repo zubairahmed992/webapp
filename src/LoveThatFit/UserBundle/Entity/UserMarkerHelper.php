@@ -76,11 +76,23 @@ class UserMarkerHelper {
         $this->em->persist($usermarker);
         $this->em->flush();       
     }
-    
-
-    
-    
-    
+    public function setArray($specs,$user_marker){
+        if($specs['svg_path']){$user_marker->setSvgPaths($specs['svg_path']);}
+        if($specs['rect_x']){$user_marker->setRectX($specs['rect_x']);}
+        if($specs['rect_y']){$user_marker->setRectY($specs['rect_y']);}
+        if($specs['rect_height']){$user_marker->setRectHeight($specs['rect_height']);}
+        if($specs['rect_width']){$user_marker->setRectWidth($specs['rect_width']);}
+    }
+   public function getArray($user_marker) {
+       $specs['svg_path']=$user_marker->getSvgPaths();
+       $specs['rect_x']=$user_marker->getRectX();
+       $specs['rect_y']=$user_marker->getRectY();
+       $specs['rect_height']=$user_marker->getRectHeight();
+        $specs['rect_width']=$user_marker->getRectWidth();
+        return ($specs);
+   }
+   
+   
     public function findMarkerByUser($user)
     {
         return $this->repo->findMarkerByUser($user);
