@@ -47,13 +47,44 @@ class UserMarker
     protected $updated_at;
     
     
-    
     /**
      * @var string $svg_paths
      *
      * @ORM\Column(name="svg_paths", type="text", nullable=true)     
      */
     private $svg_paths;
+    
+    
+    /**
+     * @var string $rect_x
+     *
+     * @ORM\Column(name="rect_x", type="float", nullable=true)     
+     */
+    private $rect_x;
+    
+    
+    /**
+     * @var string $rect_y
+     *
+     * @ORM\Column(name="rect_y", type="float", nullable=true)     
+     */
+    private $rect_y;
+    
+    
+    /**
+     * @var string $rect_height 
+     *
+     * @ORM\Column(name="rect_height ", type="float", nullable=true)     
+     */
+    private $rect_height;
+    
+    
+    /**
+     * @var string $rect_width
+     *
+     * @ORM\Column(name="rect_width ", type="float", nullable=true)     
+     */
+    private $rect_width;
     
     /**
      * @var string $marker_json
@@ -64,6 +95,8 @@ class UserMarker
     
 
    
+
+    
 
     
 
@@ -123,29 +156,119 @@ class UserMarker
         return $this->updated_at;
     }
 
-    
-
     /**
-     * Set user
+     * Set svg_paths
      *
-     * @param \LoveThatFit\UserBundle\Entity\User $user
+     * @param string $svgPaths
      * @return UserMarker
      */
-    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null)
+    public function setSvgPaths($svgPaths)
     {
-        $this->user = $user;
+        $this->svg_paths = $svgPaths;
     
         return $this;
     }
 
     /**
-     * Get user
+     * Get svg_paths
      *
-     * @return \LoveThatFit\UserBundle\Entity\User 
+     * @return string 
      */
-    public function getUser()
+    public function getSvgPaths()
     {
-        return $this->user;
+        return $this->svg_paths;
+    }
+
+    /**
+     * Set rect_x
+     *
+     * @param float $rectX
+     * @return UserMarker
+     */
+    public function setRectX($rectX)
+    {
+        $this->rect_x = $rectX;
+    
+        return $this;
+    }
+
+    /**
+     * Get rect_x
+     *
+     * @return float 
+     */
+    public function getRectX()
+    {
+        return $this->rect_x;
+    }
+
+    /**
+     * Set rect_y
+     *
+     * @param float $rectY
+     * @return UserMarker
+     */
+    public function setRectY($rectY)
+    {
+        $this->rect_y = $rectY;
+    
+        return $this;
+    }
+
+    /**
+     * Get rect_y
+     *
+     * @return float 
+     */
+    public function getRectY()
+    {
+        return $this->rect_y;
+    }
+
+    /**
+     * Set rect_height
+     *
+     * @param float $rectHeight
+     * @return UserMarker
+     */
+    public function setRectHeight($rectHeight)
+    {
+        $this->rect_height = $rectHeight;
+    
+        return $this;
+    }
+
+    /**
+     * Get rect_height
+     *
+     * @return float 
+     */
+    public function getRectHeight()
+    {
+        return $this->rect_height;
+    }
+
+    /**
+     * Set rect_width
+     *
+     * @param float $rectWidth
+     * @return UserMarker
+     */
+    public function setRectWidth($rectWidth)
+    {
+        $this->rect_width = $rectWidth;
+    
+        return $this;
+    }
+
+    /**
+     * Get rect_width
+     *
+     * @return float 
+     */
+    public function getRectWidth()
+    {
+        return $this->rect_width;
     }
 
     /**
@@ -172,25 +295,25 @@ class UserMarker
     }
 
     /**
-     * Set svg_paths
+     * Set user
      *
-     * @param string $svgPaths
+     * @param \LoveThatFit\UserBundle\Entity\User $user
      * @return UserMarker
      */
-    public function setSvgPaths($svgPaths)
+    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null)
     {
-        $this->svg_paths = $svgPaths;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Get svg_paths
+     * Get user
      *
-     * @return string 
+     * @return \LoveThatFit\UserBundle\Entity\User 
      */
-    public function getSvgPaths()
+    public function getUser()
     {
-        return $this->svg_paths;
+        return $this->user;
     }
 }
