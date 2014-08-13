@@ -635,6 +635,7 @@ header.reg .strip_rgt {
 	color:#fff;
 	border:none;
         padding:5px 15px;
+        display: none;
 }
 
 
@@ -3516,6 +3517,7 @@ hiw_step_3 {
 #step_three{
     padding:10px 0px 0px 20px;
     text-indent: 6px;
+    display:none;
 }
 
 .fitting_step .active span{
@@ -5166,13 +5168,11 @@ transform: rotateX(0deg) rotateY(0deg);
 
 
 #paper_step_1 {
-    width: 100px;
-    height: 30px;
-    position: absolute;
-    right:0px;
-    top:0px;
-    background:#ffcc00;
-    display:none;
+        background: #888888;
+	font-size:1em;
+	color:#fff;
+	border:none;
+        padding:5px 15px;
 }
 
 .preview {
@@ -5317,5 +5317,15 @@ transform: rotateX(0deg) rotateY(0deg);
     padding-bottom: 5px;
     margin-top: 20px;
     text-align: center;
+    display:block;
+}
+.action_buts_bar .move_label {    
+    font-size: 13px;   
+    color:#666;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    text-align: center;
     display:none;
+    width: 60px;
 }
