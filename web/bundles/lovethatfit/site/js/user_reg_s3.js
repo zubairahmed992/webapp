@@ -23,13 +23,13 @@ function fade_in_func(ele_one){
 function set_vertical_step(){
 
     
-    //$('.rotate_buts').animate({ opacity: 0, height: 0 }, 500, function() { $('.rotate_buts').css("display","none") });
+    $('.rotate_buts').animate({ opacity: 0, height: 0 }, 500, function() { $('.rotate_buts').css("display","none") });
     
     
-    //$('.left_move').animate({ top: 20 }, 500, function() { });    
-    //$('.right_move').animate({ top: 20 }, 500, function() { });
+    $('.left_move').animate({ top: 20 }, 500, function() { });    
+    $('.right_move').animate({ top: 20 }, 500, function() { });
     
-    //$('#rotate_move_box').fadeOut(300);
+    $('#rotate_move_box').fadeOut(300);
     
     $(".hiw_upload_photo").css("display","none");
     
@@ -37,7 +37,7 @@ function set_vertical_step(){
     $("#pic_step_1").css("display","none");
     $("#pic_step_2").css("display","none");
     
-    $(".next_step2").fadeOut(200, function(){$(".save_btn_4").fadeIn(200);});
+    $(".next_step2").fadeOut(200, function(){$(".next_step3").fadeIn(200);});
     
         
     $("#adj_popout_top").fadeIn(500);
@@ -56,7 +56,7 @@ function set_vertical_step(){
     $("#step_two").addClass("active");
     $("#step_one").addClass("make_clickable");
     
-    $("#adj_markers_hldr").fadeOut(500);
+    $("#adj_markers_hldr").fadeIn(500);
     
    
     
@@ -84,7 +84,7 @@ function set_horizontal_step(){
     $("#step_two").removeClass("active");
 
     
-    //$("#rotate_move_box").fadeOut(200);
+    $("#rotate_move_box").fadeOut(200);
     
     $(".next_btn_4").fadeOut(200, function(){$(".save_btn_4").fadeIn(200);});
     
@@ -142,18 +142,15 @@ $(".next_step3").click(function(){
     submit_step_3_first = false;
     submit_step_3_second = true;
     set_horizontal_step();
-    
 });
 
 
 
 
 $(".next_step2").click(function(){
-    
     submit_all_step_3 = false;
     submit_step_3_first = true;
     submit_step_3_second = false;
-    $('.rotate_buts').fadeIn();
 });
 
 
@@ -266,14 +263,10 @@ $('.img_acw_min').click(function(){
 });
 $('.reg_next_step2').click(function(){
    $(".action_buts_bar").hide();
-    //submit_all_step_3 = false;
-    submit_step_3_first = true;
-    //submit_step_3_second = false;
-   rotate_me_to("just_shift");
 });
 $('.next_step2').click(function(){
    rotate_me_to("just_shift");
-   //$(".action_buts_bar").hide();
+   $(".action_buts_bar").hide();
 
     $(".hiw_step_1").fadeOut(200);
     $(".hiw_step_3").fadeOut(200);
@@ -283,7 +276,7 @@ $('.next_step2').click(function(){
 
 $('.next_step3').click(function(){
    rotate_me_to("just_shift");
-   //$(".action_buts_bar").hide();
+   $(".action_buts_bar").hide();
 
     $(".hiw_step_2").fadeOut(200);
     $(".hiw_step_3").fadeIn(200);
@@ -477,6 +470,7 @@ $("#how_it_works").removeClass("hide");
 $(".int_fitting_room").addClass("hide");
 $(".upload_again_hldr").css("display","block");
 $(".action_buts_bar").fadeIn(500);
+$(".action_buts_bar").fadeIn(500);
 
 set_zoom_slider_edit();
 set_things();
@@ -544,8 +538,6 @@ function call_settings(responseText, statusText, xhr, $form){
         
    var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
    
-   $("#img_path_paper").attr("value", url);
-   
   $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
         
         
@@ -558,13 +550,10 @@ function call_settings(responseText, statusText, xhr, $form){
             photo_height = document.getElementById('img_to_upload').height;		 
             photo_width =  document.getElementById('img_to_upload').style.width = photo_width + "px";
             
-            //alert(uploaded_img_obj.width);
-            //checking_bhai();
         };
-        
         uploaded_img_obj.src = uploaded_img_src.src;
+
         chk_overall();
-        
 }
 
 
@@ -575,7 +564,7 @@ function call_settings(responseText, statusText, xhr, $form){
         $(".reg_next_step2").css("display","block");
         $(".uploading_in_progress").fadeOut(300).remove();
         
-        //$(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
+        $(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
         
         $(".step_4_tip").fadeIn(50);
         $(".reg_next_step2").attr("value","Save Photo");
@@ -606,6 +595,7 @@ function call_settings(responseText, statusText, xhr, $form){
         $("#stella_box").css("display","none");
         $("#pic_step_1").css("display","none");
         $("#pic_step_2").css("display","none");
+        
         $("#frmUserImage").ajaxForm(
         {
             target: '#uploaded_photo',
@@ -714,7 +704,6 @@ function post_content_of_canvas(){
                       if(obj_url.status === "check"){
                 
                           if(submit_all_step_3 == true){
-                              
                               console.log("Chalo bhai chalo");
                               go_to_index();
                           }
@@ -725,8 +714,6 @@ function post_content_of_canvas(){
                               
                               $('.zoomed_img').html("<img class='zoomed_img_inner' src='"+ $("#hdn_serverpath").attr("value") + obj_url.url+"' width='728' height='1010'>");
                                 set_vertical_step();
-                                //set_horizontal_step();
-                                //$("#adj_markers_hldr").fadeIn(500);
                                 console.log("Setp two path variable: "+ obj_url.url );
                           }
                           

@@ -9,8 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class ShopifyLibHelper {
 
+  
     protected $conf;
-    private $container;
+     private $container;
     //--------------------------------------------------------------------
    public function __construct( Container $container)
     {
@@ -18,24 +19,63 @@ class ShopifyLibHelper {
        
         
     }
-    
-
-    public function install($app_specs) {
-        return $this->permission_url($app_specs['shop_domain'], $app_specs['api_key'], array('read_products', 'write_themes', 'write_content'));
+    public function appSpecs(){
+        $yaml = new Parser();
+        return $yaml->parse(file_get_contents('../src/LoveThatFit/ShopifyBundle/Resources/config/shopify_app.yml'));
+        
     }
+    //--------------------------------------------------------------------
+    
+    public function appScopes(){
+        $specs = $this->appSpecs();
+        return $specs['app_scopes'];
+    }
+    //--------------------------------------------------------------------
+     public function appWebHooks(){
+        $specs = $this->appSpecs();
+        return $specs['webhooks'];
+    }
+    
+    
+  #------------Shopify App installation ----------------------------------------#
+   public function install($shop_domain) {
+   $app_specs = $this->appSpecs();
+   return $this->permission_url($shop_domain, $app_specs['api_key'], array('read_products', 'write_themes', 'write_content'));
+  }
+  public function granted($specs){
+      $app_specs = $this->appSpecs();
+      $specs['api_key'] = $app_specs['api_key'];
+      $specs['shared_secret'] = $app_specs['shared_secret'];
+      $specs['access_token'] =  $this->oauth_access_token($specs['shop_domain'], $specs['api_key'], $specs['shared_secret'], $specs['temp_code']);
+      $specs['shop_type'] = 'shopify';  
+      if($this->container->get('admin.helper.retailer')->updateRetailShopSpecs($specs)){
+            $shopify = $this->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
+            $content = trim(preg_replace('/\s\s+/', '\n ', $this->getContent($specs)));
+            $resp=json_encode($this->writeFile('snippets/foo2.liquid', $content,$shopify));
+           return ("<html><body>Congratulation! The LTF app has been successfully installed at your store .
+             <br>
+             <a href=http://".$specs['shop_domain']." >Click here </a>
+            </body></html>");
+          
+        }else{
+            return ("Some thing went wrong!");
+        }
+       
 
-    #------------Cleint.php-----------------------------------------------#
-
+      
+  }
+  
+  #-----------App installation Api calls-------------------------------------#
     private function permission_url($shop, $api_key, $scope = array(), $redirect_uri = '') {
         $scope = empty($scope) ? '' : '&scope=' . implode(',', $scope);
         $redirect_uri = empty($redirect_uri) ? '' : '&redirect_uri=' . urlencode($redirect_uri);
         return "https://$shop/admin/oauth/authorize?client_id=$api_key$scope$redirect_uri";
-    }
-
+    } 
+ #------------------------------------------------------------
     public function oauth_access_token($shop, $api_key, $shared_secret, $code) {
         return $this->_api('POST', "https://$shop/admin/oauth/access_token", NULL, array('client_id' => $api_key, 'client_secret' => $shared_secret, 'code' => $code));
     }
-
+ #-------------------------------------------------------------   
     public function client($shop, $shops_token, $api_key, $shared_secret, $private_app = false) {
         $password = $shops_token;
         $baseurl = "https://$shop/";
@@ -53,10 +93,8 @@ class ShopifyLibHelper {
                     return $this->_api($method, $url, $query, $payload, $request_headers, $response_headers);
                 };
     }
-
-#-------------------------------------------------------------------------------#
-
-    function _api($method, $url, $query = '', $payload = '', $request_headers = array(), &$response_headers = array()) {
+#-------------------------------------------------------
+     function _api($method, $url, $query = '', $payload = '', $request_headers = array(), &$response_headers = array()) {
         try {
             $response = wcurl($method, $url, $query, $payload, $request_headers, $response_headers);
         } catch (WcurlException $e) {
@@ -64,45 +102,42 @@ class ShopifyLibHelper {
         }
 
         $response = json_decode($response, true);
-        // print_r($response);
-        ///  die();
+     // print_r($response);
+       //  die();
 
         if (isset($response['errors']) or ($response_headers['http_status_code'] >= 400))
-            throw new Exception(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
-        //  throw new ApiException(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
+        throw new Exception(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
+        // throw new ApiException(compact('method', 'path', 'params', 'response_headers', 'response', 'shops_myshopify_domain', 'shops_token'));
 
         return (is_array($response) and !empty($response)) ? array_shift($response) : $response;
     }
-
-    #----------------------------------------------------------------------------#
-    #~~~~~~~~~~~~~~~~~~~~~~ PRIVATES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
-
-    private function getShopMainTheme($shopify) {
-        $themes = $this->getShopThemes($shopify);
-
-        if (is_array($themes)) {
-            $is_arr = $themes;
-        } else {
-            $th_array = json_decode($themes, true);
-            $is_arr = $th_array['themes'];
-        }
-        $main_theme = null;
-        foreach ($is_arr as $t) {
-            $main_theme = $t['role'] == 'main' ? $t : $main_theme;
-        }
-
-
-        return $main_theme;
-    }
-
-    #--------------------------------------->
+   
+     #--------------------------------------->
 
     private function getShopThemes($shopify) {
         //$shopify = $this->getShopifyObject($shop_specs);
         $themes = $shopify('GET', '/admin/themes.json');
         return $themes;
     }
-
+  #-------------------------------------------------------  
+    private function getShopMainTheme($shopify) {
+        $themes = $this->getShopThemes($shopify);
+        
+       if(is_array( $themes)){
+            $is_arr=$themes;
+           
+        }else{
+            $th_array=json_decode($themes, true);
+            $is_arr=$th_array['themes'];
+        }
+        $main_theme = null;
+        foreach ($is_arr as $t) {
+            $main_theme = $t['role'] == 'main' ? $t : $main_theme;
+        }
+        
+        
+        return $main_theme;
+    }
     #--------------------------------------->
 
     private function getShopProducts($shopify) {
@@ -265,8 +300,7 @@ $( document ).ready(function() {
 </script>
 ";
     }
-
-    #----------------------wcurlp.hp---------------------------------------#
+     #----------------------wcurlp.hp---------------------------------------#
 
     function wcurl($method, $url, $query = '', $payload = '', $request_headers = array(), &$response_headers = array(), $curl_opts = array()) {
         $ch = curl_init(wcurl_request_uri($url, $query));
@@ -355,11 +389,11 @@ $( document ).ready(function() {
     
   #---------------------------Customer ---------------------------------------#
     public function getShopifyObject($specs=null){
-        $app_specs = $this->container->get('shopify.helper')->appSpecs();
+        $app_specs = $this->appSpecs();
        $specs['api_key'] = $app_specs['api_key'];
        $specs['shared_secret'] = $app_specs['shared_secret'];
-       // $specs['shop_domain']='lovethatfit-2.myshopify.com';
-       // $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
+    //   $specs['shop_domain']='lovethatfit-2.myshopify.com';
+      // $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd';
        return $shopify =$this->client($specs['shop_domain'], $specs['access_token'], $specs['api_key'], $specs['shared_secret']);
  }
  #--------------------------------------------->
@@ -368,8 +402,65 @@ $( document ).ready(function() {
         $customerOrders = $shopify('GET','/admin/customers/'.$specs['customer_id'].'.json');
         return $customerOrders;  
     }
- 
-
+    private function getCustomerCount($specs=null){
+       
+         try {
+              $shopify=$this->getShopifyObject($specs);
+              $customerCount = $shopify('GET','/admin/customers/count.json');
+        } catch (Exception $e) {
+              $customerCount['error'] = true;
+        }
+      
+        return $customerCount;
+        
+    }
+    public function getArrayCustomerCount($ret_id=null){
+        if(!$ret_id){
+             return array('status'=>FALSE,
+                          'msg'=>'Reatiler id not found');
+        }
+        $retailer= $this->container->get('admin.helper.retailer')->find($ret_id) ;
+        
+        
+          if($retailer){
+              
+                $specs['shop_domain']=$retailer->getShopDomain();
+                $specs['access_token']=$retailer->getAccessToken();
+                $customer_count=$this->getCustomerCount($specs);
+                if($customer_count['error']){
+                    return 
+                    array('msg'=>"Problem with app installtaion or api permission",
+                          'status'=>false);
+                }
+                
+              
+                return 
+                array(
+                    'customer_count'=>$this->getCustomerCount($specs),
+                    'status'=>true,
+                    'msg'=>'Total number of Customer we found'
+                        );
+           }
+        else{
+            return array('status'=>FALSE,
+                          'msg'=>'Reatiler not found');
+        }
+    }
+  
 }
+ /*class CurlException extends \Exception { }
+        class ApiException extends \Exception { }
+	class Exception extends \Exception
+	{
+		protected $info;
+
+		function __construct($info)
+		{
+			$this->info = $info;
+			parent::__construct($info['response_headers']['http_status_message'], $info['response_headers']['http_status_code']);
+		}
+
+		function getInfo() { $this->info; }
+	}*/
 
 ?>

@@ -141,9 +141,10 @@ class ProductHelper{
 
     public function delete($id) {
         $entity = $this->repo->find($id);
-        $entity_name = $entity->getName();
+        $entity_name = '';
 
         if ($entity) {
+            $entity_name = $entity->getName();
             $this->em->remove($entity);
             $this->em->flush();
 

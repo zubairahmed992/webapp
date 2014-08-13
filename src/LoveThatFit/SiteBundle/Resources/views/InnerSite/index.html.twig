@@ -211,7 +211,8 @@
               
             <div class="int_fitting_room">
                 <div id="fitting_tab">
-                    <a href="{{ path('fitting_room_image_edit') }}">Edit/Upload Photo</a>
+                    <!--path('fitting_room_image_edit)-->
+                    <a href="{{ path('registration_step_image_edit') }}">Edit/Upload Photo</a>
                 </div>
                 <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
                 <div id="full_dropable" class="hide"></div>
@@ -586,7 +587,7 @@ function set_droppables(){
     
     final_top_pos = top_pos_drop - 1;
     
-    $("#top_dropable").css("top", final_top_pos + "px");
+    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px");
     
     var bottom_pos_drop = parseInt($("#hdn_prod_bottom_pos").attr("value"));
     
@@ -602,13 +603,13 @@ function set_droppables(){
     
     bottom_final_pos = bottom_pos_drop - 99;
     
-    $("#bottom_dropable").css({top: bottom_final_pos + "px"});
+    $("#bottom_dropable").css({top: parseInt($("#hdn_prod_bottom_pos").attr("value")) + "px"});
     
     var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");
     
     //dress_pos_drop = dress_pos_drop * 6;
     
-    $("#full_dropable").css({top: top_pos_drop + "px"});
+    $("#full_dropable").css({top: parseInt($("#hdn_prod_top_pos").attr("value")) + "px"});
   }
   else {
       var user_height = parseInt($("#hdn_user_height").attr("value")) * 6;

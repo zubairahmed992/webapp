@@ -9,7 +9,7 @@ webhooks:
     topic: "orders/create"
     address: "/shopify/webhook/order_create"
   cart_create:
-    topic: "cart/create"
+    topic: "carts/create"
     address:  "/shopify/webhook/cart_create"
 
 

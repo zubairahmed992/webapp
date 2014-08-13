@@ -635,6 +635,7 @@ header.reg .strip_rgt {
 	color:#fff;
 	border:none;
         padding:5px 15px;
+        display: none;
 }
 
 
@@ -958,43 +959,7 @@ a.but_short:visited {
     top: 0px;
 }
 
-.center_mark {
-    position: absolute;
-    top: 16px;
-    left: 181px; /*--Based on user shoulders--*/
-    width:1px;
-    height:900px; /*--Based on user height--*/ 
-    background: #999;
-    font-size: 0px;
-    line-height: 1px;
-    overflow: hidden;
-    z-index: 5000;
-}
 
-.height_top_mark {
-    position: absolute;
-    top: 16px;
-    left: 51px;
-    width:261px;
-    height:1px;
-    background: #000000;
-    font-size: 0px;
-    line-height: 1px;
-    overflow: hidden;
-    z-index: 5000;
-}
-.height_bottom_mark {
-    position: absolute;
-    top: 16px;
-    left: 51px;
-    width:261px;
-    height:1px;
-    background: #000000;
-    font-size: 0px;
-    line-height: 1px;
-    overflow: hidden;
-    z-index: 5000;
-}
 
 .fitting_step{
     position:absolute; 
@@ -1061,16 +1026,7 @@ a.but_short:visited {
 .step_4 .btm_buttons {
     bottom: -36px;
 }
-.uploading_in_progress {
-    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
-    height: 72px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    z-index: 5000;
-    top:0;
-    left:0;
-}
+
 
 .int_fitting_room {
 	width:364px;
@@ -1236,13 +1192,7 @@ input[type=email]{
     -webkit-box-shadow: inset 0 0 10px #000000;
    box-shadow: inset 0 0 10px #000000;
 }
-#uploaded_photo {
-	position:absolute;
-	top:0;
-	left:0;
-	z-index:2000;
-	display:block;
-}
+
 .img_hldr {
 	text-align:center;
 	padding:4px;
@@ -3396,32 +3346,10 @@ hiw_step_3 {
     margin-left: 4px;
 }
 
-.action_buts_bar .img_acw_min {
-    width:24px;
-    height:25px;
-    float:left;
-    background: url("../images/left_arrow_2.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-}
-
-.action_buts_bar .img_cw_min {
-    width:24px;
-    height:25px;
-    float:left;
-    background: url("../images/right_arrow_2.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-}
 
 
-.action_buts_bar .rotate_label {    
-    font-size: 13px;
-    display: block;   
-    color:#666;
-    font-weight: bold;
-    padding-bottom: 5px;
-    margin-top: 20px;
-    text-align: center;
-}
+
+
 
 #slider1{    
     overflow:hidden;
@@ -3497,47 +3425,7 @@ hiw_step_3 {
     padding: 0px 0px 20px 10px;
 }
 
-.action_buts_bar .top_move {
-    width:24px;
-    height:24px;    
-    background: url("../images/move_top_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:22px;
-    left: 15px;
-}
-.action_buts_bar .left_move {
-    width:24px;
-    height:24px;
-    float:left;
-    background: url("../images/move_left_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:46px;
-    left: 0px;
-}
 
-.action_buts_bar .right_move {
-    width:24px;
-    height:24px;
-    float:left;
-    background: url("../images/move_right_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:46px;
-    left: 30px;
-}
-
-.action_buts_bar .bottom_move {
-    width:24px;
-    height:24px;
-    float:left;
-    background: url("../images/move_bottom_icon.png") no-repeat scroll 0 0 transparent;
-    margin-left: 4px;
-    position: absolute;
-    top:70px;
-    left: 15px;
-}
 
 .new_nav ul{    
     margin:0px;
@@ -3629,6 +3517,7 @@ hiw_step_3 {
 #step_three{
     padding:10px 0px 0px 20px;
     text-indent: 6px;
+    display:none;
 }
 
 .fitting_step .active span{
@@ -5003,7 +4892,14 @@ transform: rotateX(0deg) rotateY(0deg);
 #canv_mask {
     position: absolute;
     z-index: 9000;
+    display:none;
+}
+#rect_mask {
+    position: absolute;
+    z-index: 9010;
     display:block;
+    left:0px;
+    top:0px;
 }
 
 
@@ -5268,4 +5164,168 @@ transform: rotateX(0deg) rotateY(0deg);
     font-size: 2em;
     font-weight: normal;
     padding: 0 0 20px;
+}
+
+
+#paper_step_1 {
+        background: #888888;
+	font-size:1em;
+	color:#fff;
+	border:none;
+        padding:5px 15px;
+}
+
+.preview {
+    max-width: 364px;
+    max-height: 505px;
+}
+#uploaded_photo {
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:2000;
+	display:block;
+        
+        /**********/
+        text-align: center;
+}
+#img_to_upload {
+    position: relative;
+}
+
+.center_mark {
+    position: absolute;
+    top: 16px;
+    left: 181px; /*--Based on user shoulders--*/
+    width:1px;
+    height:900px; /*--Based on user height--*/ 
+    background: #999;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 10000;
+    display: none;
+}
+
+.height_top_mark {
+    position: absolute;
+    top: 16px;
+    left: 51px;
+    width:261px;
+    height:1px;
+    background: #000000;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 10000;
+    display: none;
+}
+.height_bottom_mark {
+    position: absolute;
+    top: 16px;
+    left: 51px;
+    width:261px;
+    height:1px;
+    background: #000000;
+    font-size: 0px;
+    line-height: 1px;
+    overflow: hidden;
+    z-index: 10000;
+    display: none;
+}
+
+.uploading_in_progress {
+    background: url("../images/uploading.gif") no-repeat scroll center center transparent;
+    height: 72px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 10000;
+    top:0;
+    left:0;
+}
+
+.action_buts_bar .img_acw_min {
+    width:24px;
+    height:25px;
+    float:left;
+    background: url("../images/left_arrow_2.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    display:none;
+}
+
+.action_buts_bar .img_cw_min {
+    width:24px;
+    height:25px;
+    float:left;
+    background: url("../images/right_arrow_2.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    display:none;
+}
+
+.action_buts_bar .top_move {
+    width:24px;
+    height:24px;    
+    background: url("../images/move_top_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:22px;
+    left: 15px;
+    display:none;
+}
+.action_buts_bar .left_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_left_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:46px;
+    left: 0px;
+    display:none;
+}
+
+.action_buts_bar .right_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_right_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:46px;
+    left: 30px;
+    display:none;
+}
+
+.action_buts_bar .bottom_move {
+    width:24px;
+    height:24px;
+    float:left;
+    background: url("../images/move_bottom_icon.png") no-repeat scroll 0 0 transparent;
+    margin-left: 4px;
+    position: absolute;
+    top:70px;
+    left: 15px;
+    display:none;
+}
+
+.action_buts_bar .rotate_label {    
+    font-size: 13px;
+    display: block;   
+    color:#666;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    text-align: center;
+    display:block;
+}
+.action_buts_bar .move_label {    
+    font-size: 13px;   
+    color:#666;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    text-align: center;
+    display:none;
+    width: 60px;
 }

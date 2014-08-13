@@ -60,6 +60,11 @@ shopify_test_start:
 shopify_test_granted:
     pattern:  /shopify/test/granted
     defaults: { _controller: LoveThatFitShopifyBundle:Test:granted }
-    
+ 
+#---------------------Web Hooks-------------------------------------#
+shopify_webhook:
+    pattern:  /shopify/web_hook
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:defineAllWebHooks }
+
 
  
