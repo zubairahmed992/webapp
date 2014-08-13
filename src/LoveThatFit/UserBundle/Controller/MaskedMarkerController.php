@@ -21,8 +21,7 @@ class MaskedMarkerController extends Controller {
         $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
         if(count($maskMarker)>0){
         return new Response(json_encode($this->get('user.marker.helper')->getArray($maskMarker)));
-        }else
-        {
+        }else{
             return new response($this->getDefaultMarkerValue());
         }
     }
@@ -44,23 +43,11 @@ class MaskedMarkerController extends Controller {
     public function saveUserMarkerAction(Request $request)
     {
         $usermaker=$request->request->all();
-       
         $id = $this->get('security.context')->getToken()->getUser()->getId();
-        
         $user = $this->get('user.helper.user')->find($id);
-        $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
-      
-        if(count($maskMarker)>0)
-        {
-            $this->get('user.marker.helper')->setArray($usermaker,$maskMarker);
-            $this->get('user.marker.helper')->updateUserMarker($user,$maskMarker);
-            return new response('updated');
-        }else
-        {             
-            $this->get('user.marker.helper')->setArray($usermaker,$maskMarker);
-            return $this->get('user.marker.helper')->saveUserMarker($user,$usermaker);
-            return new response('added');
-        }
+        return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
+        
+       
         
     }
     

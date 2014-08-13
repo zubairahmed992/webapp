@@ -58,9 +58,9 @@ class UserMarkerHelper {
      }
      
      
-     public function saveUserMarker($user) {
-        $class = $this->class;
-        $usermarker = new $class();
+     public function saveUserMarker($user,$usermarker) {
+        //$class = $this->class;
+       // $usermarker = new $class();
         $usermarker->setCreatedAt(new \DateTime('now'));    
         $usermarker->setUpdatedAt(new \DateTime('now'));            
         $usermarker->setUser($user);       
@@ -88,8 +88,22 @@ class UserMarkerHelper {
        $specs['rect_x']=$user_marker->getRectX();
        $specs['rect_y']=$user_marker->getRectY();
        $specs['rect_height']=$user_marker->getRectHeight();
-        $specs['rect_width']=$user_marker->getRectWidth();
+       $specs['rect_width']=$user_marker->getRectWidth();
         return ($specs);
+   }
+   public function fillMarker($user,$usermaker){
+        $maskMarker=$this->findMarkerByUser($user);
+      
+        if(count($maskMarker)>0){
+            $this->setArray($usermaker,$maskMarker);
+            $this->updateUserMarker($user,$maskMarker);
+            return 'updated';
+        }else{  
+           $maskMarker=$this->createNew();
+           $this->setArray($usermaker,$maskMarker);
+           $this->saveUserMarker($user,$maskMarker);
+            return 'added';
+        }
    }
    
    
