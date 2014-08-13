@@ -475,15 +475,20 @@ $(".hiw_step_1").fadeIn(200);
 $("#play_area").removeClass("hide");
 $("#how_it_works").removeClass("hide");
 $(".int_fitting_room").addClass("hide");
-$(".upload_again_hldr").css("display","block");
+//$(".upload_again_hldr").css("display","block");
 $(".action_buts_bar").fadeIn(500);
 
-set_zoom_slider_edit();
+//set_zoom_slider_edit();
 set_things();
 $(".zoom_in").hide();
-$(".zoom_edit").fadeIn(500, function(){$(".zoom_edit").removeClass("hide");})
-
-
+//$(".zoom_edit").fadeIn(500, function(){$(".zoom_edit").removeClass("hide");});
+$(".input_file_hldr").css("display","none");
+$(".step4_btns").css("display","none");
+$(".step_4 h2").css("display","none");
+$(".save_btn_4").fadeIn();
+$("#step_one").removeClass("active");
+$("#step_two").addClass("active");
+$("#paper_step_1").trigger("click");
 }
 
 
@@ -493,7 +498,7 @@ $(".zoom_edit").fadeIn(500, function(){$(".zoom_edit").removeClass("hide");})
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 
-var chk_no_img_path = false;
+chk_no_img_path = false;
 
 if(croped_img_path == "/webapp/web/"){
     chk_no_img_path = true;
@@ -503,10 +508,10 @@ if(croped_img_path == "/webapp/web/"){
 }
 
 if(chk_no_img_path == false){
+    $(document).ready(function() { 
     load_set_pre_img();
-
+    });
 }else{
-
     $("#measurement_shoulder_height").attr("value", 20);
     $("#measurement_bust_height").attr("value", 24);
     $("#measurement_waist_height").attr("value", 15);
@@ -577,7 +582,7 @@ function call_settings(responseText, statusText, xhr, $form){
         
         //$(".zoom_in").fadeIn(500, function(){$(".zoom_in").removeClass("hide");})
         
-        $(".step_4_tip").fadeIn(50);
+        //$(".step_4_tip").fadeIn(50);
         $(".reg_next_step2").attr("value","Save Photo");
         //document.getElementById("hdn_skip_flag").value="process";
     }
