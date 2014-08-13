@@ -67,4 +67,7 @@ shopify_webhook:
     defaults: { _controller: LoveThatFitShopifyBundle:Default:defineAllWebHooks }
 
 
+shopify_data_foo:
+    pattern:  /shopify/data/foo
+    defaults: { _controller: LoveThatFitShopifyBundle:Data:foo }
  

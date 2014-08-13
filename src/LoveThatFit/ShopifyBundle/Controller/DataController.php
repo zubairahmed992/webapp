@@ -11,7 +11,10 @@ use LoveThatFit\ShopifyBundle\DependencyInjection\ShopifyCSVHelper;
 class DataController extends Controller
 {
     
-    
+    public function fooAction() {
+        return $this->render('LoveThatFitShopifyBundle:Data:foo.html.twig');
+    }
+    #------------------------------------------------
     public function indexAction() {
         #$variants=array('product_name'=>'Gingham Blouse', 'brand_name'=>'New York and Co');
         $variants=array('product_name'=>'purple Top', 'brand_name'=>'Gap');
@@ -24,7 +27,7 @@ class DataController extends Controller
         return $this->render('LoveThatFitShopifyBundle:Data:import_csv.html.twig', array('form' => $form->createView())
         );
     }
-    
+    #------------------------------------------------
     public function skuUploadAction(Request $request) {
         
         $form = $this->createFormBuilder()
@@ -40,6 +43,7 @@ class DataController extends Controller
         return new Response(json_encode($pp));
         
      }
+     #------------------------------------------------
      private function fillMatched($csv_data){
          $tt=array();
          foreach ($csv_data as $key=>$value){
@@ -50,6 +54,7 @@ class DataController extends Controller
          }
          return $tt;
      }
+     #------------------------------------------------
      private function match($csvp, $dbp){
          $tt=array();
          foreach ($csvp['variant'] as $vk=>$vv){
@@ -62,7 +67,7 @@ class DataController extends Controller
          }
          return $tt;
      }
-     
+     #------------------------------------------------
      private function findItemByVariant($csv_v, $dbp){
          foreach ($dbp as $v){
              if ($csv_v['Size'] == $v['size_title'] && $csv_v['Color']==$v['color']){
