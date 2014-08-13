@@ -106,6 +106,16 @@ constants:
         24: 
           title: 24
           index: 15
+        26: 
+          title: 26
+          index: 16
+        28:
+          title: 28
+          index: 17
+        30: 
+          title: 30
+          index: 18        
+          
       waist:
         23: 
           title: 23
