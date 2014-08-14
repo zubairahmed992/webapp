@@ -488,6 +488,7 @@ $(".step_4 h2").css("display","none");
 $(".save_btn_4").fadeIn();
 $("#step_one").removeClass("active");
 $("#step_two").addClass("active");
+$(".reg_next_step2").attr("value","Update");
 $("#paper_step_1").trigger("click");
 }
 
@@ -766,7 +767,8 @@ function next_button_click()
         
         var step_3_final = $("#frmUserMeasurement_2").attr('action');
         $("#frmUserMeasurement_2").ajaxSubmit({url: step_3_final, type: 'post'})
-        setTimeout(go_to_index,'3500');
+        upload();
+        
     
     
 }
