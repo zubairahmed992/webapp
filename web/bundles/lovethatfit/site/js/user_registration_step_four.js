@@ -550,7 +550,7 @@ function call_settings(responseText, statusText, xhr, $form){
         
    var url = document.getElementById('hdn_serverpath').value + responseText.imageurl;
    
-   $("#img_path_paper").attr("value", url);
+   //$("#img_path_paper").attr("value", url);
    
   $('#uploaded_photo').html("<img id='img_to_upload' src='"+url+"' class='preview'>");
         

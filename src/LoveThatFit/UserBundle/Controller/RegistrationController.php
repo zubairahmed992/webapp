@@ -559,6 +559,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $marker = $this->get('user.marker.helper')->getByUser($user);
         #return new response($marker->getRectHeight());   
         $edit_type=$edit_type==null?'registration':'fitting_room';
+        
         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                     'form' => $form->createView(),
                     'form' => $form->createView(),
