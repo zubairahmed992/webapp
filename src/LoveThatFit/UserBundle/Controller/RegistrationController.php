@@ -544,7 +544,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
     #---------------------------------------------------------------------------
     #--------------------- Masked Marker - new registration
     #---------------------------------------------------------------------------
-      public function stepImageEditAction() {
+      public function stepImageEditAction($edit_type=null) {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         if (!$user) {
@@ -558,6 +558,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $marker = $this->get('user.marker.helper')->getByUser($user);
         #return new response($marker->getRectHeight());   
+        $edit_type=$edit_type==null?'registration':'fitting_room';
         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                     'form' => $form->createView(),
                     'form' => $form->createView(),
@@ -566,7 +567,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
                     'measurement' => $measurement,
-                    'edit_type' => 'registration',
+                    'edit_type' => $edit_type,
                     'marker' => $marker,
             ));
     }

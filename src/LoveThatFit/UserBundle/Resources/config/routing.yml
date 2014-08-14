@@ -77,8 +77,8 @@ fitting_room_image_edit:
     
     #----------------------- masked marker related 
 registration_step_image_edit:
-    pattern:  /registration/step_image_edit
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepImageEdit }    
+    pattern:  /registration/step_image_edit/{edit_type}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepImageEdit, edit_type:null }    
     
     
 #----------------------------- Profile ---------------------------------------------
