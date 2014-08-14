@@ -554,7 +554,8 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+        #return new response($marker->getRectHeight());   
         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                     'form' => $form->createView(),
                     'form' => $form->createView(),
@@ -564,7 +565,8 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => 'registration',
-                ));
+                    'marker' => $marker,
+            ));
     }
 
 }
