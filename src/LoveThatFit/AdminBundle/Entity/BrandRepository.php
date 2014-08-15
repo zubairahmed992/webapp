@@ -325,7 +325,7 @@ class BrandRepository extends EntityRepository {
  SELECT b.id as brand_id,b.name as brand_name,b.image as brand_image,r.id as ret_id,r.title as title,r.image as ret_image
  FROM LoveThatFitAdminBundle:Brand b
  LEFT  JOIN b.retailers r 
- WHERE  b.updated_at>=:date_format") ->setParameters(array('date_format' => $date_format));
+ WHERE b.disabled=0 and  b.updated_at>=:date_format") ->setParameters(array('date_format' => $date_format));
  try {
   return $query->getResult();
  } catch (\Doctrine\ORM\NoResultException $e) {
@@ -335,9 +335,10 @@ class BrandRepository extends EntityRepository {
     
 $query = $this->getEntityManager()
                ->createQuery("
- SELECT b.id as brand_id,b.name as brand_name,b.image as brand_image,r.id as ret_id,r.title as title,r.image as ret_image
+  SELECT b.id as brand_id,b.name as brand_name,b.image as brand_image,r.id as ret_id,r.title as title,r.image as ret_image
  FROM LoveThatFitAdminBundle:Brand b
  LEFT  JOIN b.retailers r 
+ WHERE b.disabled=0 
 ");
  try {
   return $query->getResult();

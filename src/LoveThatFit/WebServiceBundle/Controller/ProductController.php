@@ -37,16 +37,16 @@ public function brandRetailerListAction(){
       $handle = fopen('php://input', 'r');
       $jsonInput = fgets($handle);
       $request_array = json_decode($jsonInput, true);
-       $request_array=array('date'=>'1388577600.000000');
-        if($request_array){
-       $date_fromat=$this->get('webservice.helper.product')->returnFormattedTime($request_array);
-       
-       
-        return new response(json_encode($this->get('admin.helper.brand')->getBrandRetailerList($date_fromat)));
-     }
-     else{
-            return new response(json_encode(array("Message"=>"No Data Found")));
-        }
+      // $request_array=array('date'=>'1388577600.000000');
+      
+      if($request_array){
+            $date_fromat=$this->get('webservice.helper.product')->returnFormattedTime($request_array);
+      }else{
+          $date_fromat=null;
+      }
+   return new response(json_encode($this->get('admin.helper.brand')->getBrandRetailerList($date_fromat)));
+     
+     
 }
 
 
