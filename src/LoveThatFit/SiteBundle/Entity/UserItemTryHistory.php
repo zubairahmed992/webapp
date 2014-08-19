@@ -80,7 +80,7 @@ class UserItemTryHistory
     /**
      * @var string $feedback
      *
-     * @ORM\Column(name="feedback", type="text")
+     * @ORM\Column(name="feedback", type="text",nullable=true)
      */
     private $feedback;
     
@@ -88,13 +88,37 @@ class UserItemTryHistory
     /**
      * @var string $fit_index
      *
-     * @ORM\Column(name="fit_index", type="text")
+     * @ORM\Column(name="fit_index", type="text",nullable=true)
      */
     private $fit_index;
+    
+    
+    /**
+     * @var string $recommended_size
+     *
+     * @ORM\Column(name="recommended_size", type="string", length=40,nullable=true)
+     */
+    private $recommended_size;
+    
+    
+    /**
+     * @var string $recommended_fit
+     *
+     * @ORM\Column(name="recommended_fit", type="string", length=40,nullable=true)
+     */
+    private $recommended_fit;
+    
+    
+    /**
+     * @var string $recommended_index
+     *
+     * @ORM\Column(name="recommended_index", type="string", length=40,nullable=true)
+     */
+    private $recommended_index;
 
 
     /**
-     * Get id
+     * Get id 
      *
      * @return integer 
      */
@@ -309,5 +333,74 @@ class UserItemTryHistory
     public function getFitIndex()
     {
         return $this->fit_index;
+    }
+
+    /**
+     * Set recommended_size
+     *
+     * @param string $recommendedSize
+     * @return UserItemTryHistory
+     */
+    public function setRecommendedSize($recommendedSize)
+    {
+        $this->recommended_size = $recommendedSize;
+    
+        return $this;
+    }
+
+    /**
+     * Get recommended_size
+     *
+     * @return string 
+     */
+    public function getRecommendedSize()
+    {
+        return $this->recommended_size;
+    }
+
+    /**
+     * Set recommended_fit
+     *
+     * @param string $recommendedFit
+     * @return UserItemTryHistory
+     */
+    public function setRecommendedFit($recommendedFit)
+    {
+        $this->recommended_fit = $recommendedFit;
+    
+        return $this;
+    }
+
+    /**
+     * Get recommended_fit
+     *
+     * @return string 
+     */
+    public function getRecommendedFit()
+    {
+        return $this->recommended_fit;
+    }
+
+    /**
+     * Set recommended_index
+     *
+     * @param string $recommendedIndex
+     * @return UserItemTryHistory
+     */
+    public function setRecommendedIndex($recommendedIndex)
+    {
+        $this->recommended_index = $recommendedIndex;
+    
+        return $this;
+    }
+
+    /**
+     * Get recommended_index
+     *
+     * @return string 
+     */
+    public function getRecommendedIndex()
+    {
+        return $this->recommended_index;
     }
 }

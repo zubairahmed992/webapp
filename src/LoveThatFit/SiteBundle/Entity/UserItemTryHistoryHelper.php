@@ -70,38 +70,56 @@ public function find($id) {
     }
          
 #--------------------Site Bundle Refactoring--------------------/
-public function createUserItemTryHistory($user,$product_id,$productItem, $json_feedback, $fits,$fit_index){
-    $product_helper = $this->container->get('admin.helper.product');
-    
+public function createUserItemTryHistory($user,$product_id,$productItem, $fb){
+      $product_helper = $this->container->get('admin.helper.product');
+      if($fb && array_key_exists('recommendation', $fb) ){
+          $recommended_size=$fb['recommendation']['title'];
+          $recommended_index=$fb['recommendation']['fit_index'];
+          $recommended_fit=$fb['recommendation']['fits'];
+      }else
+      {
+          $recommended_size=$fb['feedback']['title'];
+          $recommended_index=$fb['feedback']['fit_index'];
+          $recommended_fit=$fb['feedback']['fits'];
+      }
+      
       $product=  $product_helper->find($product_id);
-      $rec_count = $this->countUserItemTryHistory($user,$product,$productItem);      
-        if ($rec_count>0) {
+      $rec_count = $this->countUserItemTryHistory($user,$product,$productItem);  
+       if ($rec_count>0) {
         //$em = $this->getDoctrine()->getEntityManager();
         $userItemTry = $this->repo->findby(array('product'=>$product,'productitem' => $productItem, 'user' => $user));
         foreach ($userItemTry as $userTryItem) {
             $usertryItemId = $userTryItem->getId();
             $counts= $userTryItem->getCount();            
             $userItemTryId = $this->repo->find($usertryItemId);
-        }       
+        }  
+        
         $count=$counts+1;
         $userItemTryId->setCount($count);
-        $userItemTryId->setFeedback($json_feedback);
-        $userItemTryId->setFit($fits);
-        $userItemTryId->setUpdatedAt(new \DateTime('now'));
+        $userItemTryId->setFeedback(json_encode($fb['feedback']));
+        $userItemTryId->setFit($fb['feedback']['fits']);
+        $userItemTryId->setFitIndex($fb['feedback']['fit_index']);
+        $userItemTryId->setRecommendedIndex($recommended_index);
+        $userItemTryId->setRecommendedFit($recommended_fit);
+        $userItemTryId->setRecommendedSize($recommended_size);
+        $userItemTryId->setUpdatedAt(new \DateTime('now'));      
         $this->save($userItemTryId);
         //$em->persist($userItemTryId);
         //$em->flush();
         } else {            
             $useritemtryhistory = new UserItemTryHistory();
-            $useritemtryhistory->setCount(1);
-            $useritemtryhistory->setFit($fits);
+            $useritemtryhistory->setCount(1);            
             $useritemtryhistory->setCreatedAt(new \DateTime('now'));
             $useritemtryhistory->setUpdatedAt(new \DateTime('now'));
             $useritemtryhistory->setProductitem($productItem);
             $useritemtryhistory->setProduct($product);            
             $useritemtryhistory->setUser($user);
-            $useritemtryhistory->setFeedback($json_feedback);
-            $useritemtryhistory->setFitIndex($fit_index);
+            $useritemtryhistory->setFeedback(json_encode($fb['feedback']));
+            $useritemtryhistory->setFit($fb['feedback']['fits']);
+            $useritemtryhistory->setFitIndex($fb['feedback']['fit_index']);
+            $useritemtryhistory->setRecommendedIndex($recommended_index);
+            $useritemtryhistory->setRecommendedFit($recommended_fit);
+            $useritemtryhistory->setRecommendedSize($recommended_size);
             $this->save($useritemtryhistory);
            // $em = $this->getDoctrine()->getManager();
            // $em->persist($useritemtryhistory);
