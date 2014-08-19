@@ -229,6 +229,13 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
+    
+     /**
+     * @var dateTime $timeSpent
+     *
+     * @ORM\Column(name="time_spent", type="datetime", nullable=true)
+     */
+    private $timeSpent;
 
     /**
      * @Assert\File()
@@ -1368,5 +1375,28 @@ class User implements UserInterface, \Serializable {
     public function getUserMarker()
     {
         return $this->user_marker;
+    }
+
+    /**
+     * Set timeSpent
+     *
+     * @param \DateTime $timeSpent
+     * @return User
+     */
+    public function setTimeSpent($timeSpent)
+    {
+        $this->timeSpent = $timeSpent;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeSpent
+     *
+     * @return \DateTime 
+     */
+    public function getTimeSpent()
+    {
+        return $this->timeSpent;
     }
 }
