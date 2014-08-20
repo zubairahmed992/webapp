@@ -46,12 +46,13 @@ public function shopifyIndexAction($sku=null,$user_id=null,$retailer=null) {
                 
             }
             $fitting_room_items=$this->get('site.helper.userfittingroomitem')->add($user,$itemBySku);
+            $fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
         //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
             'retailer'=>$retailer,
             'list_type'=>null,            
-            'items'=>$fitting_room_items,
+            'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
            ));
  }
  #-------------------------------------------------------------------------------
@@ -73,10 +74,11 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
         $retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
         $fitting_room_items=$this->get('site.helper.userfittingroomitem')->add($user,$itemBySku);
+        $fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
             'retailer'=>$retailer,
-            'items'=>$fitting_room_items,
+            'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
             'list_type'=>null,            
            ));
  }
