@@ -12,7 +12,8 @@ class DataController extends Controller
 {
     
     public function fooAction() {
-        return $this->render('LoveThatFitShopifyBundle:Data:foo.html.twig');
+        #return $this->render('LoveThatFitShopifyBundle:Data:foo.html.twig');
+return new response(json_encode($this->get('shopify.helper')->getOrders(3)));        
     }
     #------------------------------------------------
     public function indexAction() {

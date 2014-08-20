@@ -23,9 +23,11 @@ class InnerSiteController extends Controller {
       var $compare = array();
 #-------------------------------------------------------------------------------
 public function indexAction($list_type) {
-    
+        $user = $this->get('security.context')->getToken()->getUser();
+        $fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
             'list_type'=>$list_type,
+            'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
            ));
  }
  
@@ -314,11 +316,13 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $fb);    
         #$this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
         $this->get('site.helper.userfittingroomitem')->add($user,$productItem);    
-//$this->get('site.helper.userfittingroomitem')->createNew();
+
+        #$fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', 
                 array('product' => $productItem->getProduct(), 
                         'product_item' => $productItem, 
                             'data' => $fb));
+                    #'fitting_room_item_ids' => json_encode($fitting_room_item_ids)));
         
     }
     #--------------------------------------------------------
@@ -329,9 +333,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
     }
     #--------------------------------------------------------
     //
-    public function getFittingRoomItemIdsAction($user_id){
-        $user =  $this->get('user.helper.user')->find($user_id);    
-      $t =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user);    
+    public function getFittingRoomItemIdsAction($user_id){        
+      $t =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user_id);    
       return new Response(json_encode($t));
     }
 #-------------------------------------------------------------------------------
@@ -387,16 +390,15 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         $fb=$comp->getSizeFeedBack($product_size);
         #return new Response(json_encode($fb['feedback']['fits']));  
         
-                
-        
         $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $fb);    
         #$this->get('site.helper.userfittingroomitem')->createUserFittingRoomItem($user,$productItem);    
         $this->get('site.helper.userfittingroomitem')->add($user,$productItem);    
-        // $this->get('site.helper.userfittingroomitem')->createNew();    
+        #$fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
         return $this->render('LoveThatFitSiteBundle:InnerSite:_fitting_feedback.html.twig', 
                 array('product' => $productItem->getProduct(), 
                         'product_item' => $productItem, 
                             'data' => $fb));
+                        #'fitting_room_item_ids' => json_encode($fitting_room_item_ids)));
     }
 #-------------------------------------------------------------------------------
     public function addToCloestAction($product_item_id) {

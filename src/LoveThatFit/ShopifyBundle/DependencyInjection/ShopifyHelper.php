@@ -38,6 +38,7 @@ class ShopifyHelper {
    $app_specs = $this->appSpecs();
    return permission_url($shop_domain, $app_specs['api_key'], array('read_products', 'write_themes', 'write_content','read_customers','read_orders'));
   }
+       #--------------------------------------->
   public function granted($specs){
       $app_specs = $this->appSpecs();
       $specs['api_key'] = $app_specs['api_key'];
@@ -60,10 +61,8 @@ class ShopifyHelper {
 
       
   }
-  
- 
+   
      #--------------------------------------->
-
     private function getShopThemes($shopify) {
         //$shopify = $this->getShopifyObject($shop_specs);
         $themes = $shopify('GET', '/admin/themes.json');
@@ -90,19 +89,40 @@ class ShopifyHelper {
     }
     #--------------------------------------->
 
+    public function getRetailerShopifySpecsArray($id){
+       $retailer = $this->container->get('admin.helper.retailer')->find($id) ;
+       $app_specs = $this->appSpecs();
+       $specs['shop_domain'] = $retailer->getShopDomain();
+       $specs['access_token'] = $retailer->getAccessToken();  
+       $specs['api_key'] = $app_specs['api_key'];
+       $specs['shared_secret'] = $app_specs['shared_secret'];       
+       return $specs;
+ }
+    #--------------------------------------->
+    
     public function getRetailerProducts($id){
-        $retailer= $this->container->get('admin.helper.retailer')->find($id) ;
-        $specs['shop_domain']=$retailer->getShopDomain();
-        $specs['access_token']=$retailer->getAccessToken();                
-        $shopify=$this->getShopifyObject($specs);
+        $shopify = $this->getShopifyObject($this->getRetailerShopifySpecsArray($id));
         return $this->getShopProducts($shopify);
     }
+    #--------------------------------------->
+    
+    public function getOrders($id){
+        $shopify = $this->getShopifyObject($this->getRetailerShopifySpecsArray($id));
+        return $this->getShopOrders($shopify);
+    }
 
+    #--------------------------------------->
 
-    private function getShopProducts($shopify) {
-        //  $shopify = $this->getShopifyObject();
+    public function getShopProducts($shopify=null) {
+        
         $themes = $shopify('GET', '/admin/products.json');
         return $themes;
+    }
+    
+    public function getShopOrders($shopify=null) {
+        
+        $orders = $shopify('GET', '/admin/orders.json');
+        return $orders;
     }
 
     #-------------------------------------->

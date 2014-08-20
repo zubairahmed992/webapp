@@ -1121,6 +1121,8 @@ var scroll_heighting = 506;
    //script for redirection to login page incase if the session timed out 
    //-----------------------------------------------------------------------------
     $(document).ready(function() {
+    var str='{{fitting_room_item_ids}}';
+    alert(str);
     $(document).ajaxError(function (event, jqXHR) {
         if (403 === jqXHR.status) {
             window.location.reload();

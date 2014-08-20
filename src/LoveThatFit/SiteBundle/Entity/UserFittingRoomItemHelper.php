@@ -111,11 +111,17 @@ class UserFittingRoomItemHelper {
         return $ar;
     }
 #------------------------------------------------------
-    public function getItemIdsArrayByUser($user) {
-        $fris = $this->findByUserId($user->getId());
+    public function getItemIdsArrayByUser($user_id) {
+        $fris = $this->findByUserId($user_id);
         $ar = array();
         foreach ($fris as $fri) {
-            array_push($ar, $fri->getProductItem()->getId());
+            array_push($ar, 
+            array(  'product_id'=>$fri->getProductItem()->getProduct()->getId(),
+                    'color_id'=>$fri->getProductItem()->getProductSize()->getId(),
+                    'size_id'=>$fri->getProductItem()->getProductColor()->getId(),
+                    'item_id'=>$fri->getProductItem()->getId()
+            )
+                    );
         }
         return $ar;
     }
