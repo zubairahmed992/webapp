@@ -33,7 +33,45 @@ if(!year_select){
 return true;
 
 }
-    </script>
+// Time duration count functionality-------------------------->>>
+jQuery(document).ready(function ($) { 
+
+     var typingTimer;    //timer identifier
+     var doneTypingInterval = 1000;  //time in ms, 5 second for example
+
+     var checktime = 0;
+
+     jQuery('form#RegistrationMeasurement').find(':input').each(function(){
+        jQuery(this).keyup(function(){
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+         
+
+        jQuery(this).keydown(function(){
+            clearTimeout(typingTimer);
+        });
+
+    });
+
+jQuery('form#RegistrationMeasurement').find('select').each(function(){
+        jQuery(this).change(function(){
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+    });
+
+
+    function doneTyping () {
+        checktime = typingTimer;
+        return checktime;
+    } 
+    jQuery('form#RegistrationMeasurement').submit(function() {
+        checktime = doneTyping ();
+       $('#measurement_timespent').val(checktime);
+        
+    });
+
+});
+ </script>
 <section class="reg_blk">
     <div id="popout_blk" class="popout_blk">
         <h2>Welcome!</h2>
@@ -496,9 +534,10 @@ return true;
                <span id="error_content4" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; left:55px;">Please select your dress measurement.</span>
             </span>
            
-      {% endif %}              
+      {% endif %}             
 #}
                                 <!-- END WEIGHT !-->   
+                                  {{ form_widget(form.timespent)}}  
                                         <div class="row">
                                                 <div class="row" style="width: 156px; margin: 0 auto;">
                                                     <div class="frm_ele" style="float:none;">

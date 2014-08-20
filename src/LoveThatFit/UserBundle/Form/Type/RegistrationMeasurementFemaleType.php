@@ -18,7 +18,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
     private $bra_numbers;
     private $bra_letters;   
     private $brandHelper;
-
+    private $timespent;
      public function __construct($container,$body_shape,$bra_letters,$bra_numbers,$body_types,$brandHelper)             
     {
         $this->container= $container;
@@ -39,7 +39,7 @@ class RegistrationMeasurementFemaleType extends AbstractType
         $builder->add('bra_numbers', 'choice', array('choices' => $this->bra_numbers, 'required' => false,'empty_value' => 'size',));
         $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => false,'data'=>'Regular'));
         //$builder->add('top_brand', 'choice', array('choices' => $this->top_brands, 'required' => false,'empty_value' => 'Brand',));
-        
+        $builder->add('timespent', 'hidden');
         
          $builder->add('top_brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
