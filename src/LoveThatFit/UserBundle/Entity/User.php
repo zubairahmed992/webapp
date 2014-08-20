@@ -39,6 +39,12 @@ class User implements UserInterface, \Serializable {
     protected $survey;
     
     
+    /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack", mappedBy="user")
+     */
+    protected $retailer_order_track;
+    
+    
      /**
      * @ORM\OneToMany(targetEntity="UserDevices", mappedBy="user", orphanRemoval=true)
      */
@@ -1398,5 +1404,40 @@ class User implements UserInterface, \Serializable {
     public function getTimeSpent()
     {
         return $this->timeSpent;
+    }
+
+    
+
+    /**
+     * Add retailer_order_track
+     *
+     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
+     * @return User
+     */
+    public function addRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
+    {
+        $this->retailer_order_track[] = $retailerOrderTrack;
+    
+        return $this;
+    }
+
+    /**
+     * Remove retailer_order_track
+     *
+     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
+     */
+    public function removeRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
+    {
+        $this->retailer_order_track->removeElement($retailerOrderTrack);
+    }
+
+    /**
+     * Get retailer_order_track
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetailerOrderTrack()
+    {
+        return $this->retailer_order_track;
     }
 }
