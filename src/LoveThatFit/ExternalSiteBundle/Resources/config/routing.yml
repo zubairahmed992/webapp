@@ -1,3 +1,7 @@
+external_sim_routes:
+    resource: "@LoveThatFitExternalSiteBundle/Resources/config/routing/simulator.yml"
+    prefix:   /
+
 external_login:
     pattern:   /external/login
     defaults: { _controller: LoveThatFitExternalSiteBundle:Registration:registration }
