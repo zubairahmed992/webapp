@@ -147,16 +147,18 @@ class RegistrationController extends Controller {
     }
 
 //--------------------------------------------------------------------------------
-    public function measurementCreateAction() {
+    public function measurementCreateAction(Request $request) {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $brandHelper=$this->get('admin.helper.brand');
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
+        $data = $request->request->all();
         
    #---------Start OF CRF Protection--------------------------------------#
  if ($this->getRequest()->getMethod() == 'POST') {
+     
         if ($user->getGender() == 'm') {
     $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
     $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
@@ -182,8 +184,11 @@ class RegistrationController extends Controller {
         
         //$birthDate=date("Y-m-d",strtotime());
                 
-        $this->get('user.helper.measurement')->saveMeasurement($measurement);
         $user->setBirthDate($measurement->birthdate);
+        if($data['measurement']['timespent']){
+        $user_reg_time=$user->getTimeSpent()+$data['measurement']['timespent'];
+         $user->setTimeSpent($user_reg_time);
+        }
         $this->get('user.helper.user')->saveUser($user);        
         if($user->getAge()<15 and $user->isApproved!=1)
         {        // Rendering step four
@@ -204,8 +209,8 @@ class RegistrationController extends Controller {
          return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                     'form' => $form->createView(),
                     'measurement_form' => $measurement_form->createView(),
-            'measurement_vertical_form' => $measurement_vertical_form->createView(),
-            'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => 'registration',            

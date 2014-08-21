@@ -15,6 +15,7 @@ class Measurement {
     public $bra_letters;
     public $bra_numbers;
     public $birthdate;
+    public $timespent;
     
     /**
      * Bidirectional (OWNING SIDE - FK)

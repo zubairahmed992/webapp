@@ -17,6 +17,7 @@ class RegistrationType extends AbstractType {
             'type' => 'password',
             'invalid_message' => 'The password fields must match.',
         ));
+        $builder->add('timeSpent', 'hidden');
         
         $builder->add('gender', new GenderType(), array(
             'multiple' => false,

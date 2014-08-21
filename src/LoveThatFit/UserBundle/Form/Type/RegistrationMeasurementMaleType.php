@@ -17,6 +17,7 @@ private $sleeve;
 private $waist;
 private $inseam;
 private $brandHelper;
+private $timespent;
      public function __construct($container,$neck,$sleeve,$waist,$inseam,$brandHelper)             
     {
         $this->container= $container;
@@ -35,6 +36,7 @@ private $brandHelper;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('timespent', 'hidden');
         $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => false,'data'=>'Regular'));
         $builder->add('top_brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',

@@ -6,10 +6,96 @@
 
 
 {% block action_block_content %}
+<script>
+    
 
-<section class="reg_blk">
+jQuery(document).ready(function ($) { 
+
+     var typingTimer;    //timer identifier
+     var doneTypingInterval = 1000;  //time in ms, 5 second for example
+
+     var checktime = 0;
+
+     jQuery('form#registration').find(':input').each(function(){
+        jQuery(this).keyup(function(){
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+
+        jQuery(this).keydown(function(){
+            clearTimeout(typingTimer);
+        });
+
+    });
+
+
+
+    function doneTyping () {
+        checktime = typingTimer;
+        return checktime;
+    } 
+    jQuery('form#registration').submit(function() {
+        checktime = doneTyping ();
+      
+       $('#user_timeSpent').val(checktime);
+        
+    });
+
+});
+    
+    /*
+    var timerId=0;
+    var preTimerId=0;
    
-    <div class="action_cnt">
+$( document ).ready(function() {
+    $("#user_email").keydown(function() {
+    preTimerId=parseInt(preTimerId)+parseInt(clockStart());
+   })
+   $("#user_email").focusout(function() {
+   alert(preTimerId);
+   })
+    
+   
+   
+  
+});
+
+    function totalTimeSpent(){
+       alert((preTimerId));
+   }
+ function clockStart() {  
+  if (timerId) return
+  timerId = setInterval(update, 1000)
+  update()  // (*)
+  return timerId;
+  
+}
+
+function clockStop() {
+   
+  clearInterval(timerId);
+ timerId = null;
+}
+function update() {
+   
+  var date = new Date();
+
+  var hours = date.getHours();
+  if (hours < 10) hours = '0'+hours
+  document.getElementById('hour').innerHTML = hours
+
+  var minutes = date.getMinutes()
+  if (minutes < 10) minutes = '0'+minutes
+  document.getElementById('min').innerHTML = minutes
+
+  var seconds = date.getSeconds()
+  if (seconds < 10) seconds = '0'+seconds
+  document.getElementById('sec').innerHTML = seconds
+}
+*/
+</script>
+<section class="reg_blk">
+  
+ <div class="action_cnt">
         <div class="steps step_1">  
             <h2>Let's Get Started!</h2>
             <p>Try Clothes On. See Look, Fit &amp; Size. Social.</p>
@@ -71,6 +157,8 @@
 {{ form_errors(form.gender) }}
         </div>
                                                     </div>
+                            {{ form_widget(form.timeSpent)}}  
+                            
                                                 </div>
 
                                                 <div style="clear:both;"></div>

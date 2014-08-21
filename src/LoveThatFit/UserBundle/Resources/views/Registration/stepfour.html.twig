@@ -181,9 +181,42 @@ function onMouseDrag(event) {
 
 	
 }
+
+
 </script>
 
+<script>
+// Script for time spent on page 
+/*
+jQuery(document).ready(function ($) { 
+alert("test");
+     var typingTimer;    //timer identifier
+     var doneTypingInterval = 1000;  //time in ms, 5 second for example
+     var checktime = 0;
+     typingTimer = setTimeout(doneTyping, doneTypingInterval);
+       
+         
 
+            clearTimeout(typingTimer);
+
+    function doneTyping () {
+        checktime = typingTimer;
+        return checktime;
+    } 
+    jQuery('#paper_step_1').click(function() {
+       alet('clik');
+        checktime = doneTyping ();
+       pre_time=$('#user_timeSpent').val();
+       checktime+=pre_time;
+        alert(pre_time);
+         alert(checktime);
+       $('#user_timeSpent').val(checktime);
+        
+    });
+
+});
+*/
+    </script>
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
 <input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
 <div>
@@ -258,7 +291,8 @@ function onMouseDrag(event) {
                 <div class="input_file_hldr">
                     {{ form_errors(form.file) }}
                             {{ form_widget(form.file, { 'attr': {'class': 'input_file'} }) }}
-
+                            {{ form_widget(form.timeSpent) }}
+                        
                         <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
                     </div>
                 
