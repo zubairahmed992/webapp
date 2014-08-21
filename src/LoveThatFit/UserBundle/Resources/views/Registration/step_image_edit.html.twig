@@ -56,9 +56,22 @@ rect_path = new Path(pathData);
 trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 1000));
 trans_bg.style = {
 	fillColor: '#000',
-	stroke: 2,
+	stroke: 1,
 	strokeColor: '#ffcc00'
 };
+//rect_add_top = new Path.Rectangle(new Point(0, 84), new Size(364, 0));
+//rect_add_top.style = {
+//	fillColor: '#000',
+//	stroke: 0.5,
+//	strokeColor: '#666'
+//};
+//rect_add_bottom = new Path.Rectangle(new Point(-50, 423), new Size(464, 0));
+//rect_add_bottom.style = {
+//	fillColor: '#000',
+//	stroke: 0.5,
+//	strokeColor: '#666'
+//};
+
 
 //console.log(parseInt($('#user_height_frm_3').attr('value'))+ 5);
 
@@ -70,7 +83,7 @@ var path = new CompoundPath({
                 trans_bg
     ],
     fillColor: '#666',
-    selected: true
+    selected: false
 	//strokeColor: '#ffcc00'
 });
 
@@ -94,6 +107,7 @@ function onMouseDown(event) {
 
 	if (event.modifiers.shift) {
 		if (hitResult.type == 'segment') {
+                
 			//hitResult.segment.remove();
 			
 		};
@@ -116,6 +130,7 @@ function onMouseDown(event) {
 function onMouseMove(event) {
 	//project.activeLayer.selected = false;
         project.activeLayer.selected = true;
+        event.item.selected = true;
 	if (event.item)
 		event.item.selected = true;
 	
@@ -164,6 +179,8 @@ function onMouseDrag(event) {
                      
                      rec_selected_h(set_seg_bwt_v_mid);
                      
+                     //rect_add_top.position.y = path.segments[0].point.y + 30;
+                     
                 }
                 if(segment == path.segments[5]){
                     segment.point.y += event.delta.y;
@@ -175,6 +192,8 @@ function onMouseDrag(event) {
                      path.segments[3].point.y = set_seg_bwt_v_mid /2 + path.segments[4].point.y;
                      
                      rec_selected_h(set_seg_bwt_v_mid);
+                     
+                     //rect_add_bottom.position.y = path.segments[5].point.y - 30;
                 }
                 if(segment == path.segments[3]){
                     segment.point.x += event.delta.x;
