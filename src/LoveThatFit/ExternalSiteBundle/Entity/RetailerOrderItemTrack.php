@@ -106,6 +106,11 @@ class RetailerOrderItemTrack
     
    
 
+   
+
+
+   
+
     /**
      * Get id
      *
@@ -322,8 +327,6 @@ class RetailerOrderItemTrack
     {
         return $this->retailer_order_track;
     }
-
-    
 
     /**
      * Set product_items
