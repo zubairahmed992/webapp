@@ -23,13 +23,17 @@ class RetailerOrderTrack
     protected $retailer_order_item_track;
     
     
-     /* 
-    * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Retailer", mappedBy="retailer_order_track")
+     /** 
+    * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Retailer", inversedBy="retailer_order_track")
     *@ORM\JoinColumn(name="retailer_id", onDelete="CASCADE", referencedColumnName="id")
     */
-    private $retailer;
+    protected $retailer;
     
-    
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", inversedBy="retailer_order_track")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $user;
     
     
      public function __construct() {        
@@ -311,5 +315,51 @@ class RetailerOrderTrack
     public function getRetailerOrderItemTrack()
     {
         return $this->retailer_order_item_track;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \LoveThatFit\UserBundle\Entity\User $user
+     * @return RetailerOrderTrack
+     */
+    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \LoveThatFit\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set retailer
+     *
+     * @param \LoveThatFit\AdminBundle\Entity\Retailer $retailer
+     * @return RetailerOrderTrack
+     */
+    public function setRetailer(\LoveThatFit\AdminBundle\Entity\Retailer $retailer = null)
+    {
+        $this->retailer = $retailer;
+    
+        return $this;
+    }
+
+    /**
+     * Get retailer
+     *
+     * @return \LoveThatFit\AdminBundle\Entity\Retailer 
+     */
+    public function getRetailer()
+    {
+        return $this->retailer;
     }
 }

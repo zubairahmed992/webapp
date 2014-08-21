@@ -73,6 +73,14 @@ class User implements UserInterface, \Serializable {
     
     
     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack", mappedBy="user")
+     */
+    private $retailer_order_track;
+    
+    
+    
+    
+    /**
      * @ORM\OneToOne(targetEntity="UserMarker", mappedBy="user")
      * */
     private $user_marker; 
@@ -1383,7 +1391,7 @@ class User implements UserInterface, \Serializable {
     /**
      * Set timeSpent
      *
-     * @param \DateTime $timeSpent
+     * @param \string $timeSpent
      * @return User
      */
     public function setTimeSpent($timeSpent)
@@ -1396,10 +1404,43 @@ class User implements UserInterface, \Serializable {
     /**
      * Get timeSpent
      *
-     * @return \DateTime 
+     * @return \string
      */
     public function getTimeSpent()
     {
         return $this->timeSpent;
+    }
+
+    /**
+     * Add retailer_order_track
+     *
+     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
+     * @return User
+     */
+    public function addRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
+    {
+        $this->retailer_order_track[] = $retailerOrderTrack;
+    
+        return $this;
+    }
+
+    /**
+     * Remove retailer_order_track
+     *
+     * @param \LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack
+     */
+    public function removeRetailerOrderTrack(\LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack $retailerOrderTrack)
+    {
+        $this->retailer_order_track->removeElement($retailerOrderTrack);
+    }
+
+    /**
+     * Get retailer_order_track
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRetailerOrderTrack()
+    {
+        return $this->retailer_order_track;
     }
 }
