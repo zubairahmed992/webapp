@@ -1,7 +1,23 @@
 parameters:
 #    love_that_fit_external_site.example.class: LoveThatFit\ExternalSiteBundle\Example
 
-services:
-#    love_that_fit_external_site.example:
-#        class: %love_that_fit_external_site.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+services:    
+     kernel.listener.accessDenied:
+        class: LoveThatFit\AdminBundle\Component\Event\AccessDeniedListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.exception, method: onAccessDeniedException }
+          
+     retailer.order.track.helper:
+        class: LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrackHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderTrack
+            container: "@service_container"
+     retailer.order.item.track.helper:
+        class: LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderItemTrackHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\ExternalSiteBundle\Entity\RetailerOrderItemTrack
+            container: "@service_container"       
