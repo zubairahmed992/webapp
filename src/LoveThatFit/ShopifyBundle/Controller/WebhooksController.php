@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 class WebhooksController extends Controller {
 
         public function orderCreateAction(Request $request) {
-            return json_encode($request);
+            $this->get('site.helper.usertryitemhistory')->updateJSON(1, json_encode($request));
+            return new Response(json_encode($request));
         }
         #----------------------------------------------------------
         public function cartCreateAction(Request $request) {
-            return json_encode($request);
+            $this->get('site.helper.usertryitemhistory')->updateJSON(1, json_encode($request));
+            return new Response(json_encode($request));
         }
 
 }

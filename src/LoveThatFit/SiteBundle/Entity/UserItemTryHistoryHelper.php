@@ -133,5 +133,9 @@ public function countUserItemTryHistory($user,$product,$productItem)
         $rec_count = count($this->repo->findUserItemAllTryHistory($user,$product,$productItem));
         return $rec_count;
    } 
-
+    public function updateJSON($id, $str){
+       $entity = $this->repo->find($id);
+       $entity->setFeedback($str);
+       $this->save($entity);
+    }
 }

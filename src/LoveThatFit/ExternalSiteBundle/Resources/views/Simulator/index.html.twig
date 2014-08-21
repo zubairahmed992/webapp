@@ -7,7 +7,8 @@
 function checkUser(){
     var user_id=$('#user_id').val();
     var sku=$('#sku').val();
-    var url= $('#check_user_url').text()+'/'+user_id+'/'+sku;
+    var token=$('#token').val();
+    var url= $('#check_user_url').text()+'/'+ token+'/'+user_id+'/'+sku;
      alert(url);
      $.ajax({
            type:'POST',
@@ -28,7 +29,9 @@ function checkUser(){
 <div id="user_sku" style="float: right;">
     
     <span id="check_user_url" style="display:none;">{{path('shopify_user_check')}}</span>
-        User:<input type="text" name="user_id" id="user_id">
+    Token :<input type="text" name="token" id="token">
+               <br>    
+    User:<input type="text" name="user_id" id="user_id">
                <br>
                sku:<input type="text" name="sku" id="sku">
                <br>
