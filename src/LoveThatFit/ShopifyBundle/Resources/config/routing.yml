@@ -65,6 +65,18 @@ shopify_test_granted:
 shopify_webhook:
     pattern:  /shopify/web_hook
     defaults: { _controller: LoveThatFitShopifyBundle:Default:defineAllWebHooks }
+    
+shopify_webhook_call:
+    pattern:  /shopify/web_hook_call
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:webHookCall }
+    
+shopify_webhook_list:
+    pattern:  /shopify/web_hook_list
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:getWebHooksList }
+
+shopify_webhook_delete:
+    pattern:  /shopify/web_hook_delete
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:deleteWebHook }
 
 
 shopify_data_foo:

@@ -55,79 +55,39 @@ class DefaultController extends Controller {
         return new Response($resp);
     }
 
-    #~~~~~~~~~~~~~~~~~~~~~~ PRIVATES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
-
- /*   private function getShopMainTheme($shopify) {
-        $themes = $this->getShopThemes($shopify);
-        
-       if(is_array( $themes)){
-            $is_arr=$themes;
-           
-        }else{
-            $th_array=json_decode($themes, true);
-            $is_arr=$th_array['themes'];
-        }
-        $main_theme = null;
-        foreach ($is_arr as $t) {
-            $main_theme = $t['role'] == 'main' ? $t : $main_theme;
-        }
-        
-        
-        return $main_theme;
+    #------------------------------------------------------------------------#
+    public function webHookCallAction(){
+        return new response(json_encode($this->defineAllWebHooks()));
     }
-*/
-    #--------------------------------------->
-
-  /*  private function getShopThemes($shopify) {
-      //$shopify = $this->getShopifyObject($shop_specs);
-        $themes = $shopify('GET', '/admin/themes.json');
-        return $themes;
-    }*/
-
-    #--------------------------------------->
-
-    /*private function getShopProducts($shopify) {
-      //  $shopify = $this->getShopifyObject();
-        $themes = $shopify('GET', '/admin/products.json');
-        return $themes;
+    public function getCartAction(){
+        
     }
-     * */
-     
-    
-    #--------------------------------------------->
-   /* public function getCustomerListAction(){
-        $shopify=$this->get('shopifylib.helper')->getShopifyObject();
-        $customerOrders = $shopify('GET','/admin/customers/240179475.json');
-        return new response(json_encode($customerOrders));  
-    }*/
- 
-    #-------------------------------------->
-   /* private function writeFile($full_name, $content,$shopify) {
-       
-      $main_theme=$this->getShopMainTheme($shopify);
-      //$shopify = $this->getShopifyObject();
-
-        try {
-            $request = array(
-                "asset" => array(
-                    "key" => $full_name,
-                    "value" => $content,
-                )
-            );
-            $response = $shopify("PUT", "/admin/themes/{$main_theme['id']}/assets.json", $request);
-            return $response;
-        } catch (ShopifyApiException $e) {
-            return $e;
-        }
-    }*/
+    public function getWebHooksListAction(){
+         $shopify = $this->getShopifyObject();
+         $response = $shopify("GET", "/admin/webhooks.json");
+         return new response(json_encode($response));
+    }
+    public function deleteWebHookAction(){
+        $shopify = $this->getShopifyObject();
+        
+         $response = $shopify("DELETE", "/admin/webhooks/6845471.json");
+         return new response(json_encode($response));
+    }
      #-------------------------------------->
    
+    private function getShopifyObject(){
+       $specs['shop_domain']='lovethatfit-2.myshopify.com';
+       $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd'; 
+       return $this->get('shopify.helper')->getShopifyObject($specs); 
+    }
     private function defineAllWebHooks(){
-      $shopify = $this->getShopifyObject();  
+        
       $app_specs = $this->get('shopify.helper')->appSpecs();
+      $shopify = $this->getShopifyObject();//$this->get('shopify.helper')->getShopifyObject($specs);  
       $response_array=array();
       #complete base url
-      $base_url=$this->getRequest()->getSchemeAndHttpHost().$this->getRequest()->getBaseURL();
+      //$base_url=$this->getRequest()->getSchemeAndHttpHost().$this->getRequest()->getBaseURL();
+      $base_url='http://6e8df6eb.ngrok.com/webapp/web/app_dev.php';
       foreach($app_specs['webhooks'] as $k=>$v){
         $response_array[$k] = $this->defineWebHook($shopify, $base_url.$v['address'], $v['topic']);
       #$response_array[$k]=$v['address'].'   @  '. $v['topic'];
