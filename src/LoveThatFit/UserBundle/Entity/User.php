@@ -39,8 +39,6 @@ class User implements UserInterface, \Serializable {
     protected $survey;
     
     
-  
-    
      /**
      * @ORM\OneToMany(targetEntity="UserDevices", mappedBy="user", orphanRemoval=true)
      */
@@ -232,12 +230,7 @@ class User implements UserInterface, \Serializable {
      */
     private $updatedAt;
     
-     /**
-     * @var dateTime $timeSpent
-     *
-     * @ORM\Column(name="time_spent", type="datetime", nullable=true)
-     */
-    private $timeSpent;
+     
 
     /**
      * @Assert\File()
@@ -1379,30 +1372,5 @@ class User implements UserInterface, \Serializable {
         return $this->user_marker;
     }
 
-    /**
-     * Set timeSpent
-     *
-     * @param \DateTime $timeSpent
-     * @return User
-     */
-    public function setTimeSpent($timeSpent)
-    {
-        $this->timeSpent = $timeSpent;
-    
-        return $this;
-    }
-
-    /**
-     * Get timeSpent
-     *
-     * @return \DateTime 
-     */
-    public function getTimeSpent()
-    {
-        return $this->timeSpent;
-    }
-
-    
-
-    
+   
 }

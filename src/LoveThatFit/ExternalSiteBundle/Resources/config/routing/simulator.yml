@@ -1,0 +1,6 @@
+
+
+sim_index:
+    pattern:   /external_sim/index
+    defaults: { _controller: LoveThatFitExternalSiteBundle:Simulator:index}
+    

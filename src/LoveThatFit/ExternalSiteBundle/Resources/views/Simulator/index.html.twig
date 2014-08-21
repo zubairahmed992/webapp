@@ -1,0 +1,41 @@
+
+{% extends 'LoveThatFitShopifyBundle::shopify_base_reg.html.twig' %}
+
+{% block reg_fitting_room %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+function checkUser(){
+    var user_id=$('#user_id').val();
+    var sku=$('#sku').val();
+    var url= $('#check_user_url').text()+'/'+user_id+'/'+sku;
+     alert(url);
+     $.ajax({
+           type:'POST',
+           url: url,
+           data: {user_id: user_id,sku:sku},
+           success: function(data) {
+               console.log(data);
+               window.frames['ext_fitting_room'].location=url;
+               //var s = document.getElementById('ext_fitting_room');
+               // s.contentDocument.write(data);
+
+            }
+     });
+       
+ }
+
+</script>
+<div id="user_sku" style="float: right;">
+    
+    <span id="check_user_url" style="display:none;">{{path('shopify_user_check')}}</span>
+        User:<input type="text" name="user_id" id="user_id">
+               <br>
+               sku:<input type="text" name="sku" id="sku">
+               <br>
+               <input type="button" value="Submit" onclick="checkUser()">
+   
+</div>
+
+
+ {% include 'LoveThatFitShopifyBundle:default:_iframe.html.twig'%}  
+ {% endblock %}

@@ -30,11 +30,6 @@ class RetailerOrderTrack
     private $retailer;
     
     
-    /* 
-    * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", mappedBy="retailer_order_track")
-    *@ORM\JoinColumn(name="user_id", onDelete="CASCADE", referencedColumnName="id")
-    */
-    private $user;
     
     
      public function __construct() {        
