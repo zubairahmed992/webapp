@@ -276,6 +276,15 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(name="secret_answer", type="string", length=50, nullable=true)  
      */
     private $secretAnswer;
+    
+    
+    /**
+     * @var dateTime $timeSpent
+     *
+     * @ORM\Column(name="time_spent", type="datetime", nullable=true)
+     * @ORM\Column(name="time_spent", type="string", nullable=true)
+     */
+    private $timeSpent;
 
     /**
      * Get id
@@ -1372,5 +1381,26 @@ class User implements UserInterface, \Serializable {
         return $this->user_marker;
     }
 
-   
+    /**
+     * Set timeSpent
+     *
+     * @param \DateTime $timeSpent
+     * @return User
+     */
+    public function setTimeSpent($timeSpent)
+    {
+        $this->timeSpent = $timeSpent;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeSpent
+     *
+     * @return \DateTime 
+     */
+    public function getTimeSpent()
+    {
+        return $this->timeSpent;
+    }
 }
