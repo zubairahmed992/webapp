@@ -281,7 +281,6 @@ class User implements UserInterface, \Serializable {
     /**
      * @var dateTime $timeSpent
      *
-     * @ORM\Column(name="time_spent", type="datetime", nullable=true)
      * @ORM\Column(name="time_spent", type="string", nullable=true)
      */
     private $timeSpent;
