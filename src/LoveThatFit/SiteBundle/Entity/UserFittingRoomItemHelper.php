@@ -117,8 +117,8 @@ class UserFittingRoomItemHelper {
         foreach ($fris as $fri) {
             array_push($ar, 
             array(  'product_id'=>$fri->getProductItem()->getProduct()->getId(),
-                    'color_id'=>$fri->getProductItem()->getProductSize()->getId(),
-                    'size_id'=>$fri->getProductItem()->getProductColor()->getId(),
+                    'size_id'=>$fri->getProductItem()->getProductSize()->getId(),
+                    'color_id'=>$fri->getProductItem()->getProductColor()->getId(),
                     'item_id'=>$fri->getProductItem()->getId()
             )
                     );
