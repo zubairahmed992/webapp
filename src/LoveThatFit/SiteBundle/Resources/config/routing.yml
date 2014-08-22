@@ -146,6 +146,9 @@ ajax_user_fitting_room_item_ids:
     pattern:  /ajax/fitting_room_item_ids/{user_id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFittingRoomItemIds}
 
+ajax_fitting_room_product_recently_tried_on:
+    pattern:  /ajax/fitting_room/recently_tried_on/{list_type}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList, page_number: 0, limit: 0}
 
 email:
     pattern:  /email/{id}

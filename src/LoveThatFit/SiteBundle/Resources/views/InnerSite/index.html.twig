@@ -24,10 +24,21 @@
 {% endif %}
 
 
-
-
+<script>
+function refreshdiv() {
+   
+    $.ajax({
+        type:'POST',
+        url: $('#recently_tried_on').text(),
+       success: function(data) {
+           $('#recent_prods').html('');
+            $('#recent_prods').html(data);
+           
+        }})
+}
+</script>
 <section class="products">
-    
+
     <div id="fitting_alerts">
         <div class="arrow_img_alerts"></div>
         <h2>Fitting Alerts</h2>
@@ -51,13 +62,20 @@
                   Products
               </div>
            <div class="ltf_fitting_room_inner">
-          
+        
+
+
+
                <div id="recent_prods_area">
                    <div class="recent_head">
                        Recently Tried
+                            
+                       <input type="button" id="test123" value="refresh Div"  onclick="refreshdiv()">
+                       <span id="removeFittingRommProduct"> /ajax/fitting_room_item_remove/{{app.user.id}}/{item_id}</span>
                    </div>
                    <div class="recent_prods_slider_hldr">
                        <div id="rece_up_but"><span class="click_able_top"></span></div>
+                       <span id="recently_tried_on" style="display: none;">{{path('ajax_fitting_room_product_recently_tried_on',{ 'list_type' : 'recently_tried_on'}) }}</span>
                        <div id="recent_prods">
                            {% render 'LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList' with {'list_type' : 'recently_tried_on'} %}
                        </div>
