@@ -15,7 +15,7 @@
 <input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
 <span id="hdn_url_1" style="display: none">{{path('external_user_mannequin')}}</span>
 
-
+<input id="json_prod_data_apply" type="hidden" value="{{fitting_room_item_ids}}" />
 
 
 {% endif %}
@@ -1035,6 +1035,17 @@ var scroll_heighting = 506;
    //script for redirection to login page incase if the session timed out 
    //-----------------------------------------------------------------------------
     $(document).ready(function() {
+    
+    var total_prods_apply;
+    var prods_to_apply = JSON.parse($("#json_prod_data_apply").attr("value"));
+   
+    
+    $.each( prods_to_apply, function( key, value ) {
+        
+        new_product_control(false,parseInt(value.product_id),parseInt(value.color_id),parseInt(value.size_id));
+        
+      });
+    
     $(document).ajaxError(function (event, jqXHR) {
         if (403 === jqXHR.status) {
             window.location.reload();
