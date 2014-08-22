@@ -42,15 +42,21 @@ shopify_data_sku_upload:
     defaults: { _controller: LoveThatFitShopifyBundle:Data:skuUpload }    
     
  #------------------Webhooks Controller ----------
-shopify_wh_order_create:
-    pattern:  /shopify/webhook/order_create
-    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCreate }    
+shopify_webhook_order_create_callback:
+    pattern:  /shopify/webhook/order_create_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCreateCallback }    
 
-shopify_wh_cart_create:
-    pattern:  /shopify/webhook/cart_create
-    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreate }    
+shopify_webhook_cart_create_callback:
+    pattern:  /shopify/webhook/cart_create_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreateCallback }    
 
-
+shopify_webhook_list_all:
+    pattern:  /shopify/webhook/list_all/{retailer_id}
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:listAll }
+    
+shopify_webhook_create_all:
+    pattern:  /shopify/webhook/create_all/{retailer_id}
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:createAll }    
  
  #------------------Test Controller ----------
 shopify_test_start:

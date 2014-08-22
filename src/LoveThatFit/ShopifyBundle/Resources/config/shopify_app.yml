@@ -7,10 +7,10 @@ app_scopes:
 webhooks:
   orders_create:
     topic: "orders/create"
-    address: "/shopify/webhook/order_create"
+    address: "/shopify/webhook/order_create_callback"
   cart_create:
     topic: "carts/create"
-    address:  "/shopify/webhook/cart_create"
+    address:  "/shopify/webhook/cart_create_callback"
 
 
     #    $api_key = '584e96437b334b01028908e63a602204';
