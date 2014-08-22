@@ -791,7 +791,8 @@ class ProductRepository extends EntityRepository {
             SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
             WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
-            ORDER BY uih.count DESC"
+            ORDER BY uih.updated_at DESC"
+            //ORDER BY uih.count DESC"
                             )->setParameters(array('user_id' =>$user_id));
         } else {
             $query = $this->getEntityManager()
@@ -799,7 +800,7 @@ class ProductRepository extends EntityRepository {
             SELECT p FROM LoveThatFitAdminBundle:Product p 
             JOIN p.user_item_try_history uih
             WHERE p.disabled=0 AND p.displayProductColor!='' AND uih.user=:user_id
-            ORDER BY uih.count DESC "
+             ORDER BY uih.updated_at DESC "
                     )->setParameters(array('user_id' =>$user_id))
                     ->setFirstResult($limit * ($page_number - 1))
                     ->setMaxResults($limit);
