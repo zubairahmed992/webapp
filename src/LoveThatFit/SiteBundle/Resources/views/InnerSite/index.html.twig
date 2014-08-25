@@ -21,6 +21,10 @@
 
 <input id="json_prod_data_apply" type="hidden" value="{{fitting_room_item_ids}}" />
 
+<input id="remove_top_prod_id" type="hidden" value="" />
+<input id="remove_bottom_prod_id" type="hidden" value="" />
+<input id="remove_dress_prod_id" type="hidden" value="" />
+
 {% endif %}
 
 
@@ -33,6 +37,23 @@ function refreshdiv() {
        success: function(data) {
            $('#recent_prods').html('');
             $('#recent_prods').html(data);
+           set_drag_drop_ele();
+        }})
+}
+function remove_prod_state(remove_prod_item_id) {
+   
+   //if(remove_prod_type._parent().attr("id") == "prod_top"
+   //alert(remove_item);
+   
+   //alert(remove_prod_item_id);
+   
+    $.ajax({
+        type:'POST',
+        url: $('#removeFittingRommProduct').text() + remove_prod_item_id,
+       success: function(data) {
+           //alert(data);
+           //$('#recent_prods').html('');
+           //$('#recent_prods').html(data);
            
         }})
 }
@@ -70,8 +91,7 @@ function refreshdiv() {
                    <div class="recent_head">
                        Recently Tried
                             
-                       <input type="button" id="test123" value="refresh Div"  onclick="refreshdiv()">
-                       <span id="removeFittingRommProduct"> /ajax/fitting_room_item_remove/{{app.user.id}}/{item_id}</span>
+                       <span style="display:none;" id="removeFittingRommProduct">{{ app.request.getBaseURL() }}/ajax/fitting_room_item_remove/{{app.user.id}}/</span>
                    </div>
                    <div class="recent_prods_slider_hldr">
                        <div id="rece_up_but"><span class="click_able_top"></span></div>
@@ -375,8 +395,9 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     var curr_prod_type = $(new_prod_details).find('.current_product_type').html();
                     var curr_prod_apply = $(new_prod_details).find('.apply_img').attr("href");
                     var curr_prod_feedback =$(new_prod_details).find('.fitting_alerts_feeback_'+new_prod_id).html();
-                   
-                    //alert(curr_prod_feedback);
+                    
+                    var curr_prod_item_id = $(new_prod_details).find('#current_item_id').attr("value");
+                    //alert(curr_prod_item_id);
                     
                     var main_container_hldr;
                     var main_dropable;
@@ -387,6 +408,9 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         if($("#prod_accordion").find("#prod_type_top_hlder")){
                            $("#prod_accordion").find("#prod_type_top_hlder").fadeOut(200, function(){this.remove();});
                            $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           
+                           $("#remove_top_prod_id").attr("value",curr_prod_item_id);                           
+                           
                            //$("#products_details").prepend("<div id='top_type_select_color'></div>");
                         }else{
                            $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
@@ -401,6 +425,8 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         if($("#prod_accordion").find("#prod_type_bottom_hlder")){
                            $("#prod_accordion").find("#prod_type_bottom_hlder").fadeOut(200, function(){this.remove();});
                            $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           
+                           $("#remove_bottom_prod_id").attr("value",curr_prod_item_id);
                            //$("#products_details").prepend("<div id='bottom_type_select_color'></div>");
                         }else{
                            $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
@@ -415,6 +441,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         if($("#prod_accordion").find("#prod_type_dress_hlder")){
                            $("#prod_accordion").find("#prod_type_dress_hlder").fadeOut(200, function(){this.remove();});
                            $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           $("#remove_dress_prod_id").attr("value",curr_prod_item_id);
                            //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
                         }else{
                            $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
@@ -432,6 +459,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         cache: false,
                         success: function(curr_prod_alerts){
                            $(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
+                           refreshdiv();
                         }
                     });  
                     
@@ -721,14 +749,17 @@ var scroll_heighting = 506;
         if($(prod_type).parent().attr("id") == "top_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_top_hlder"){
             $("#prod_type_top_hlder").fadeOut(300);
             $("#top_dropable").fadeOut(300);
+            remove_prod_state(parseInt($("#remove_top_prod_id").attr('value')));
         }
         if($(prod_type).parent().attr("id") == "bottom_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_bottom_hlder"){
             $("#prod_type_bottom_hlder").fadeOut(300);
             $("#bottom_dropable").fadeOut(300);
+            remove_prod_state(parseInt($("#remove_bottom_prod_id").attr('value')));
         }
         if($(prod_type).parent().attr("id") == "full_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_dress_hlder"){
             $("#prod_type_dress_hlder").fadeOut(300);
             $("#full_dropable").fadeOut(300);
+            remove_prod_state(parseInt($("#remove_dress_prod_id").attr('value')));
         }
     }
     
@@ -742,6 +773,7 @@ var scroll_heighting = 506;
             remove_prod_details(prod_type);
             
             remove_fitting_alerts(prod_type);
+            
         }
     }
     

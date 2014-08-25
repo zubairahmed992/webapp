@@ -330,8 +330,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
     #--------------------------------------------------------
     //
     public function removeFittingRoomItemAction($user_id, $item_id){
-      $t =  $this->get('site.helper.userfittingroomitem')->deleteFittingRoomItem($user_id,$item_id);    
-      return new Response($t);
+      $t =  $this->get('site.helper.userfittingroomitem')->deleteByUserItem($user_id,$item_id);    
+      return new Response(json_encode("prod_removed"));
     }
     #--------------------------------------------------------
     //
