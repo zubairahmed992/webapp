@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class WebhooksController extends Controller {
 
         public function orderCreateCallbackAction(Request $request) {
+        // return new response(json_encode($this->get('shopify.helper')->parseOrderJson(1)));
          $data = $request->request->all();
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -43,4 +44,5 @@ class WebhooksController extends Controller {
             $webhooks=$this->get('shopify.helper')->createRetailerWebhooks($retailer_id);
             return new response(json_encode($webhooks));         
         }
+       
 }
