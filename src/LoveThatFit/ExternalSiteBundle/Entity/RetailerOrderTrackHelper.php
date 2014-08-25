@@ -51,28 +51,22 @@ class RetailerOrderTrackHelper {
 
     
     
-    public function save() {
-        
+    public function save($retailer_order,$retailer,$user) {
+        $entity=new RetailerOrderTrack();
+        $entity->setCartToken($retailer_order['cart_token']);
+        $entity->setClosedAt(new \DateTime('now'));
+        $entity->setCreatedAt(new \DateTime('now'));
+        $entity->setUpdatedAt(new \DateTime('now'));
+        $entity->setOrderNumber($retailer_order['order_number']);
+        $entity->setOrderStatus($retailer_order['order_status']);
+        $entity->setToken($retailer_order['token']);        
+        $entity->setRetailer($retailer);
+        $entity->setUser($user);
+        $this->em->persist($entity);
+        $this->em->flush();        
     }
 
-    //-------------------------------------------------------
-
-    public function update() {
-
-        
-    }
-
-//-------------------------------------------------------
-
-    
-  
-
-//-------------------------------------------------------
-    
-    public function delete() {
-
-      
-    }
+   
     
 //-------------------------------------------------------
 
