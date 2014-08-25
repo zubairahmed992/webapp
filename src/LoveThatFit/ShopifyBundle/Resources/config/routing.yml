@@ -81,8 +81,8 @@ shopify_webhook_list:
     defaults: { _controller: LoveThatFitShopifyBundle:Default:getWebHooksList }
 
 shopify_webhook_delete:
-    pattern:  /shopify/web_hook_delete
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:deleteWebHook }
+    pattern:  /shopify/web_hook_delete/{id}
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:deleteWebHook,id:0 }
 
 
 shopify_data_foo:

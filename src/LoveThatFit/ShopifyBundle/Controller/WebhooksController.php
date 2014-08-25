@@ -9,20 +9,25 @@ use Symfony\Component\HttpFoundation\Request;
 class WebhooksController extends Controller {
 
         public function orderCreateCallbackAction(Request $request) {
-             $data = $request->request->all();
-            $this->get('site.helper.usertryitemhistory')->updateJSON(1, json_encode($data));
+         $data = $request->request->all();
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+             
+            $this->get('site.helper.usertryitemhistory')->updateJSON(2, json_encode($decoded));
             return new Response(json_encode($request));
         }
         #----------------------------------------------------------
         public function cartCreateCallbackAction(Request $request) {
-             $data = $request->request->all();
-            $request = $this->getRequest();
+        $data = $request->request->all();
+        $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
              
              
-             $this->get('site.helper.usertryitemhistory')->updateJSON(1, json_encode($decoded));
+             $this->get('site.helper.usertryitemhistory')->updateJSON(2, json_encode($decoded));
             return new Response(json_encode($request));
         }
 

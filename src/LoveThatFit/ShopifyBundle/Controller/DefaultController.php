@@ -67,11 +67,11 @@ class DefaultController extends Controller {
          $response = $shopify("GET", "/admin/webhooks.json");
          return new response(json_encode($response));
     }
-    public function deleteWebHookAction(){
+    public function deleteWebHookAction($id){
         $shopify = $this->getShopifyObject();
         
-         $response = $shopify("DELETE", "/admin/webhooks/6845471.json");
-         return new response(json_encode($response));
+         $response = $shopify("DELETE", "/admin/webhooks/$id.json");
+         return new response(json_encode("Delete"));
     }
      #-------------------------------------->
    
@@ -87,7 +87,7 @@ class DefaultController extends Controller {
       $response_array=array();
       #complete base url
       //$base_url=$this->getRequest()->getSchemeAndHttpHost().$this->getRequest()->getBaseURL();
-      $base_url='http://6e8df6eb.ngrok.com/webapp/web/app_dev.php';
+      $base_url='http://24474d38.ngrok.com/webapp/web/app_dev.php';
       foreach($app_specs['webhooks'] as $k=>$v){
         $response_array[$k] = $this->defineWebHook($shopify, $base_url.$v['address'], $v['topic']);
       #$response_array[$k]=$v['address'].'   @  '. $v['topic'];

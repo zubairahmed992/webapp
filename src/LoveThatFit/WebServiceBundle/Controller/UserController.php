@@ -23,7 +23,7 @@ class UserController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-      // $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'ipad');
+     //  $decoded=array('email'=>'','password'=>'Apple2013','deviceType'=>'');
         $user_helper = $this->get('webservice.helper.user');
         $user_info = $user_helper->loginWebService($decoded,$request);
       // $user_info = $user_helper->loginWebService($decoded,$request);
