@@ -76,8 +76,9 @@ function remove_prod_state(remove_prod_item_id) {
                    <div class="recent_prods_slider_hldr">
                        <div id="rece_up_but"><span class="click_able_top"></span></div>
                        
-                       <div id="recent_prods">
-                           {% render 'LoveThatFitExternalSiteBundle:Default:recentlyTriedOnItems' with {'retailer_id' : (retailer is not defined or retailer is null)?null:retailer.id} %}
+                       
+<div id="recent_prods">
+                           {% render 'LoveThatFitExternalSiteBundle:Default:recentlyTriedOnItemsForRetailer' with {'retailer_id' : (retailer_id is not defined or retailer_id is null)?null:retailer_id} %}
                        </div>
                        <div>{# render 'LoveThatFitSiteBundle:CompareProduct:list' #}</div>
                        <div id="rece_down_but"><span class="click_able_btm"></span></div>
