@@ -1,3 +1,9 @@
+user_profile:
+   pattern:  /web_service/user_profile
+
+
+
+#------------------------------------------------------------
 login:
     pattern:  /web_service/login
 
@@ -16,8 +22,6 @@ forget_password:
 edit_profile:
    pattern:  /web_service/edit_profile
     
-user_profile:
-   pattern:  /web_service/user_profile
    
 iphone_shoulder_outseam:
    pattern:  /web_service/iphone_shoulder_outseam
@@ -104,16 +108,20 @@ send_push_notifcation:
    pattern:  /web_service/send_push_notification
 
 get_notification_type:
-5   pattern:  /web_service/get_notification_type
+   pattern:  /web_service/get_notification_type
 
 run_crone_job:
    pattern:  /web_service/run_crone_job
    
 test_product_syn:
-   pattern:  /web_service/test_product_sync/{authTokenWebService}/{date}
+   pattern:  /web_service/test_product_sync
+   params: {authTokenWebService, date}
+
 
 test_product_detail_syn:
-   pattern:  /web_service/product_test_detail_sync/{authTokenWebService}/{date}
+   pattern:  /web_service/product_test_detail_sync
+   params: {authTokenWebService, date}
 
 test_brand_syn:
-   pattern:  /web_service/test_brand_sync/{date}
+   pattern:  /web_service/test_brand_sync
+   params: date

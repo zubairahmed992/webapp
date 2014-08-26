@@ -1,4 +1,63 @@
- <form action="{{ path('si_hit') }}" method="post">
- {{ form_errors(form) }}
- {{ form_rest(form) }}
-<input type="submit" value="Hit" />                                     
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
+
+<form action="{{ path('si_hit') }}" method="post">
+     <select  id="service_name">
+         <option>Select Service</option>
+     {% for k,v in service_conf  %}
+             <option value="{{v['pattern']}}">{{ k }}</option>
+    {% endfor %}
+     </select>
+        <br>
+        <h2 id='service_name_header'></h2>
+        <h4 id='service_path_header'></h4>
+        <br>
+        <textarea style="width: 500px; height: 200px" id='service_json'></textarea>
+<input id='hit' type="submit" value="Hit" />                                     
+     </form>
+
+
+<br>
+<script  type='text/javascript'>
+var js_array = '{{ service_conf|json_encode()}}';
+//alert(js_array);
+
+$( "#hit" ).click(function() {
+  upload();
+  return false;
+})
+
+
+$("#service_name").change(function() {  
+  $("#service_name_header").text( $('option:selected', this).html() );
+  $("#service_path_header").text( this.value );
+  get_params($('option:selected', this).html());
+});
+
+function get_params(service_name){
+    $("#service_json").text( service_name );
+}
+
+
+function upload(){
+    var email_user=$.trim('gravrun@julieapple.com');
+var value_ar = {
+email:email_user,
+type: 'type'
+};
+
+ $.ajax({
+        type: "POST",
+        url: "../web_service/user_profile",
+        data: value_ar,  
+       success: function(data){
+     $('#service_json').html(data)
+     
+    },
+        failure: function(errMsg) {
+            alert(errMsg);
+        }
+  });
+
+//$('#ajaxdv').html(JSON.stringify(value_ar));
+}
+</script>

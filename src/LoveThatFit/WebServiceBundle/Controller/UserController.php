@@ -121,6 +121,7 @@ public function userProfileAction()
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
         $target_array = $request->request->all();
+      
        
          if(isset($target_array['type'])=='type'){
              $email = $target_array['email'];
@@ -131,9 +132,10 @@ public function userProfileAction()
       //  return new response(json_encode($email));
         $user = $this->get('webservice.helper.user');
          $chk_email = $user->findOneBy($email);
-           if (count($chk_email) > 0) {
+         //return new response(json_encode(count($chk_email)));
+           if (count($chk_email)>0) {
         $entity = $user->getArrayByEmail($email);
-       $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $entity['id'] . "/";
+       $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $entity['userId'] . "/";
         $entity['path'] = $baseurl;
             return new Response(json_encode($entity));
         } else {
