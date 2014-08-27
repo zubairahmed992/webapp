@@ -116,12 +116,18 @@ class RetailerOrderTrackHelper {
             $recommended_index=$fb['feedback']['fit_index'];            
           }
       } 
+       $user_tried=$this->container->get('site.helper.usertryitemhistory')->countUserItemTryHistory($user,$product,$product_item);
        $order_item->setCreatedAt(new \DateTime('now'));
        $order_item->setUpdatedAt(new \DateTime('now'));       
        $order_item->setPurchasedFitIndex($fb['feedback']['fit_index']);
        $order_item->setPurchasedFitSize($fb['feedback']['title']);  
        $order_item->setRecommendedFitIndex($recommended_index);
        $order_item->setRecommendedFitSize($recommended_size);  
+       if($user_tried>0){
+         $order_item->setTriedOn(1);    
+       }else{
+         $order_item->setTriedOn(0);  
+       }
        $order_item->setRetailerOrderTrack($entity);
        $order_item->setProductItems($product_item);
        $this->em->persist($order_item);
@@ -135,6 +141,8 @@ class RetailerOrderTrackHelper {
  public function find($id) {
         return $this->repo->find($id);
     }
+    
+    
 #-----------------------------------------------------
   public function findAll(){
   return $this->repo->findAll();      
