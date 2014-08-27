@@ -8,9 +8,22 @@ webhooks:
   orders_create:
     topic: "orders/create"
     address: "/shopify/webhook/order_create_callback"
+  orders_updated:
+    topic: "orders/updated"
+    address: "/shopify/webhook/order_updated_callback"
+  orders_paid:
+    topic: "orders/paid"
+    address: "/shopify/webhook/order_paid_callback"
+  orders_fulfilled:
+    topic: "orders/fulfilled"
+    address: "/shopify/webhook/order_fullfilled_callback"
+  orders_cancelled:
+    topic: "orders/cancelled"
+    address: "/shopify/webhook/order_fullfilled_callback"
   cart_create:
     topic: "carts/create"
     address:  "/shopify/webhook/cart_create_callback"
+    
 
 
     #    $api_key = '584e96437b334b01028908e63a602204';

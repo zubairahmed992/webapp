@@ -46,9 +46,26 @@ shopify_webhook_order_create_callback:
     pattern:  /shopify/webhook/order_create_callback
     defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCreateCallback }    
 
+shopify_webhook_order_updated_callback:
+    pattern:  /shopify/webhook/order_updated_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderUpdatedCallback }    
+
+shopify_webhook_order_paid_callback:
+    pattern:  /shopify/webhook/order_paid_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderPaidCallback }    
+
+shopify_webhook_order_fullfilled_callback:
+    pattern:  /shopify/webhook/order_fullfilled_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderFulfilledCallback }    
+shopify_webhook_order_cancelled_callback:
+    pattern:  /shopify/webhook/order_cancelled_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCancelledCallback }    
+
+
 shopify_webhook_cart_create_callback:
     pattern:  /shopify/webhook/cart_create_callback
-    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreateCallback }    
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreateCallback }  
+    
 
 shopify_webhook_list_all:
     pattern:  /shopify/webhook/list_all/{retailer_id}
@@ -73,8 +90,9 @@ shopify_webhook:
     defaults: { _controller: LoveThatFitShopifyBundle:Default:defineAllWebHooks }
     
 shopify_webhook_call:
-    pattern:  /shopify/web_hook_call
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:webHookCall }
+    pattern:  /shopify/web_hook_call/{base_url}
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:webHookCall,base_url:null}
+   
     
 shopify_webhook_list:
     pattern:  /shopify/web_hook_list
