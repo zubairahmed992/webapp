@@ -10,12 +10,13 @@ class WebhooksController extends Controller {
 
         public function orderCreateCallbackAction(Request $request) {
         // return new response(json_encode($this->get('shopify.helper')->parseOrderJson(1)));
-         $data = $request->request->all();
+        
+        $data = $request->request->all();
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-             
+             $this->get('retailer.order.track.helper')->save($this->get('shopify.helper')->parseOrderJson(1));
             $this->get('site.helper.usertryitemhistory')->updateJSON(2, json_encode($decoded));
             return new Response(json_encode($request));
         }

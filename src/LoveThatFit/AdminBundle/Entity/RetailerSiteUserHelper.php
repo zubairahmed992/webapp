@@ -52,6 +52,12 @@ class RetailerSiteUserHelper {
 public function findByReferenceId($user_reference_id=null,$retailer_id=null){
     return $this->repo->findByReferenceId($user_reference_id,$retailer_id);
 }    
+
+//-------------------------------------------------------
+public function findUserByReferenceId($user_reference_id){
+    return $this->repo->findUserByReferenceId($user_reference_id);
+} 
+
 //--------------------------------------------------------
 public function findByUserIdRetId($user_id,$ret_id){
     return $this->repo->findByUserIdRetId($user_id,$ret_id);

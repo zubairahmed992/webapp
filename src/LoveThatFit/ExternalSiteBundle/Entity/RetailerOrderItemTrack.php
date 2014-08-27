@@ -47,7 +47,7 @@ class RetailerOrderItemTrack
     /**
      * @var string $recommended_fit_size
      *
-     * @ORM\Column(name="recommended_fit_size", type="string", length=255)
+     * @ORM\Column(name="recommended_fit_size", type="string", length=255,nullable=true)
      */
     private $recommended_fit_size;
 
@@ -55,7 +55,7 @@ class RetailerOrderItemTrack
     /**
      * @var string $recommended_fit_index
      *
-     * @ORM\Column(name="recommended_fit_index", type="string", length=255)
+     * @ORM\Column(name="recommended_fit_index", type="string", length=255,nullable=true)
      */
     private $recommended_fit_index;
    
@@ -63,14 +63,14 @@ class RetailerOrderItemTrack
      /**
      * @var float $purchased_fit_index
      *
-     * @ORM\Column(name="purchased_fit_index", type="float", length=255)
+     * @ORM\Column(name="purchased_fit_index", type="float", length=255,nullable=true)
      */
     private $purchased_fit_index;
     
     /**
      * @var string $purchased_fit_size
      *
-     * @ORM\Column(name="purchased_fit_size", type="string", length=255)
+     * @ORM\Column(name="purchased_fit_size", type="string", length=255,nullable=true)
      */
     private $purchased_fit_size;
     
@@ -78,14 +78,14 @@ class RetailerOrderItemTrack
     /**
      * @var boolean $tried_on
      *
-     * @ORM\Column(name="tried_on", type="boolean", length=255)
+     * @ORM\Column(name="tried_on", type="boolean", length=255,nullable=true)
      */
     private $tried_on;
     
  /**
      * @var string $sku
      *
-     * @ORM\Column(name="sku", type="string", length=255)
+     * @ORM\Column(name="sku", type="string", length=255,nullable=true)
      */
     private $sku;
     

@@ -381,4 +381,19 @@ public function getRetailerBaseToken($access_token){
             return null;
         }
 }
+
+
+public function findRetailerBySite($retailer_site) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT r FROM LoveThatFitAdminBundle:Retailer r     
+                                WHERE r.shopDomain = :retailer_site")
+                        ->setParameters(array('retailer_site' => $retailer_site));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+
 }

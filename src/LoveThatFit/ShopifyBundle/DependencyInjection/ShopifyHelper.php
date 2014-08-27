@@ -405,7 +405,7 @@ $( document ).ready(function() {
             }
                 $ar[]=$json_data['email'];
          
-            return $ar;
+           return $json_data;
         }
         
   #---------------------------Saving Data in Cart Table -------------------#

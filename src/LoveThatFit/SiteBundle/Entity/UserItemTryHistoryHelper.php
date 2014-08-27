@@ -72,15 +72,17 @@ public function find($id) {
 #--------------------Site Bundle Refactoring--------------------/
 public function createUserItemTryHistory($user,$product_id,$productItem, $fb){
       $product_helper = $this->container->get('admin.helper.product');
-      if($fb && array_key_exists('recommendation', $fb) ){
+      if($fb && array_key_exists('recommendation', $fb) &&  $fb['recommendation']){
           $recommended_size=$fb['recommendation']['title'];
           $recommended_index=$fb['recommendation']['fit_index'];
           $recommended_fit=$fb['recommendation']['fits'];
       }else
       {
-          $recommended_size=$fb['feedback']['title'];
-          $recommended_index=$fb['feedback']['fit_index'];
-          $recommended_fit=$fb['feedback']['fits'];
+          if($fb['feedback']['fits']){
+            $recommended_size=$fb['feedback']['title'];
+            $recommended_index=$fb['feedback']['fit_index'];
+            $recommended_fit=$fb['feedback']['fits'];
+          }
       }
       
       $product=  $product_helper->find($product_id);
