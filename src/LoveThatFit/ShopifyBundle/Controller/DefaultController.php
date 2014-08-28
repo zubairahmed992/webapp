@@ -56,9 +56,8 @@ class DefaultController extends Controller {
     }
 
     #------------------------------------------------------------------------#
-    public function webHookCallAction($base_url=null){
-        //return new response(json_encode($base_url));
-        return new response(json_encode($this->defineAllWebHooks($base_url)));
+    public function webHookCallAction(Request $request){
+        return new response(json_encode($this->defineAllWebHooks($_POST['base_url'])));
     }
     public function getCartAction(){
         
@@ -87,7 +86,7 @@ class DefaultController extends Controller {
       $response_array=array();
       #complete base url
       //$base_url=$this->getRequest()->getSchemeAndHttpHost().$this->getRequest()->getBaseURL();
-     $base_url='http://24474d38.ngrok.com/webapp/web/app_dev.php';
+     // $base_url='http://17c0dc1d.ngrok.com/webapp/web/app_dev.php';
       foreach($app_specs['webhooks'] as $k=>$v){
         $response_array[$k] = $this->defineWebHook($shopify, $base_url.$v['address'], $v['topic']);
       #$response_array[$k]=$v['address'].'   @  '. $v['topic'];

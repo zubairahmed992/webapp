@@ -90,8 +90,8 @@ shopify_webhook:
     defaults: { _controller: LoveThatFitShopifyBundle:Default:defineAllWebHooks }
     
 shopify_webhook_call:
-    pattern:  /shopify/web_hook_call/{base_url}
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:webHookCall,base_url:null}
+    pattern:  /shopify/web_hook_call
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:webHookCall}
    
     
 shopify_webhook_list:

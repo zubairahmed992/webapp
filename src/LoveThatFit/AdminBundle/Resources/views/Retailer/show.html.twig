@@ -174,6 +174,7 @@
 function callWebHook(){
     $('#loading-indicator').show();
     $('#myModalCreateWebHook').hide();
+    
     var webhook_address=$('#webhook_address').val();
    if($.trim(webhook_address)){
        webhook_address=webhook_address;
@@ -182,20 +183,26 @@ function callWebHook(){
    }
 $.ajax({
         type:'POST',
-        url: $('#call_webhook_url').text()+"/"+webhook_address,
+        url: $('#call_webhook_url').text(),
         data:{base_url:webhook_address},
         success: function(data) {
-         $('#loading-indicator').hide();
+        $('#loading-indicator').hide();
+        location.reload(true);
         $('#json_response').html(data);
+       
        },
        error: function() {
      $('#loading-indicator').hide();
+     location.reload(true);
+     
       $("#json_response").html('Could not contact server. Suggestion your web hooks already created first you have to delete webhook');
   },
         
    })
 }
-
+window.onload = function() {
+  ListWebHook();
+};
 function parseJson(json_data){
    // var json_data={"orders_create":{"address":"http:\/\/24474d38.ngrok.com\/webapp\/web\/app_dev.php\/shopify\/webhook\/order_create_callback","created_at":"2014-08-25T08:33:00-04:00","fields":[],"format":"json","id":6889503,"metafield_namespaces":[],"topic":"orders\/create","updated_at":"2014-08-25T08:33:00-04:00"},"cart_create":{"address":"http:\/\/24474d38.ngrok.com\/webapp\/web\/app_dev.php\/shopify\/webhook\/cart_create_callback","created_at":"2014-08-25T08:33:01-04:00","fields":[],"format":"json","id":6889507,"metafield_namespaces":[],"topic":"carts\/create","updated_at":"2014-08-25T08:33:01-04:00"}};//$('#json_response').html();
     var str=null;
