@@ -1,53 +1,136 @@
 user_profile:
    pattern:  /web_service/user_profile
-   #email
+   params:
+     email: abc@ltf.com
+     type:  type
+     
+    
 #------------------------------------------------------------
 login:
     pattern:  /web_service/login
+    params:
+      email:  example@ltf.com
+      password: ltf123
+      deviceType: iphone5
     # array('email'=>'','password'=>'Apple2013','deviceType'=>'');
 
 registration_create:
    pattern:  /web_service/register
+   params:
+     email:  example@ltf.com
+     password: ltf123
+     gender: f
+     zipcode: 123456
+     weight: 80.00
+     height: 61.00
+     bust: 0.00
+     neck: 0.00
+     chest: 0.00
+     inseam: 0.00
+     hip: 0.00
+     waist: 0.00
+     deviceType: ipad
+     bodyShape: pear
+     braSize: 30 b
+     bodyType: Regular
+     deviceId: tempID
+     sleeve: 0.00
+     targetTop: Banana Republic
+     targetBottom: CARMEN MARC VALVO
+     targetDress: CARMEN MARC VALVO
+     topSize: 0
+     bottomSize: 0
+     dressSize: 4
    #{"email":"kamran@hotmail.com","password":"123456","gender":"f","zipcode":"123456","weight":"80.00","height":"61.00","bust":"0.00","neck":"0.00","chest":"0.00","inseam":"0.00","hip":"0.00","waist":"0.00","deviceType":"ipad","bodyShape":"pear","braSize":"30 b","bodyType":"Regular","deviceId":"tempID","sleeve":"0.00","targetTop":"Banana Republic","targetBottom":"CARMEN MARC VALVO","targetDress":"CARMEN MARC VALVO","topSize":"0","bottomSize":"0","dressSize":"4"}
 
 measurement_edit:
    pattern:  /web_service/measurement_edit
+   params:
+     email: kamran@hotmail.com
+     authTokenWebService: 97fc8d115394f3f1947f315783e29e0e
+     deviceType: 4s
+     heightPerInch: 6
+     weight: 100
+     thigh: 10
    #array('email'=>'kamran@hotmail.com','authTokenWebService'=>'97fc8d115394f3f1947f315783e29e0e','deviceType'=>'4s','heightPerInch'=>'6','weight'=>'100','thigh'=>10);
 
 change_password:
    pattern:  /web_service/change_password
+   params:
+     email: kamran@hotmail.com
+     authTokenWebService: 97fc8d115394f3f1947f315783e29e0e
+     password: 12345
+     old_password: 67890
    #aray('authTokenWebService',email='oldnavywomen0@ltf.com';password='12';old_password='123456';)
+
 forget_password:
     pattern:  /web_service/forget_password
+    params:
+      email: kamran@hotmail.com
   # array(email)  
    
 edit_profile:
    pattern:  /web_service/edit_profile
+   params:
+     email: oldnavywomen0@ltf.com
+     firstName: test
+     password: 123456
+     gender: f
+     zipcode: 123
+     sc_top_id: 2
+     sc_bottom_id: 2
+     sc_dress_id: 2
+     weight: 4
+     neck: 4
+     bust: 5
    # $decoded=array('email'=>'oldnavywomen0@ltf.com','firstName'=>'test','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2','weight'=>4,'neck'=>4,'bust'=>5);
    
 iphone_shoulder_outseam:
    pattern:  /web_service/iphone_shoulder_outseam
+   params:
+     email: iphone@gmail.com
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     deviceType: 4s
+     heightPerInch: 6
    #$request_array=array('email'=>'iphone@gmail.com','authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','deviceType'=>'4s','heightPerInch'=>'6');
 
 image_upload:
    pattern:  /web_service/image_upload
+   params:
+     email: iphone@gmail.com
+     deviceType: 4s
+     heightPerInch: 6
+     file: need file
    # email,deviceType,heightPerInch,file;
 
 check_token__forget_password:
     pattern:  /web_service/check_token_forget_password
+    params:
+      email: iphone@gmail.com
+      authTokenWebService: 121c421783cd4d71d871ec16a1296091
     #email,auth_token
 
 update__forget_password:
     pattern:  /web_service/check_update_password
+    params:
+      email: iphone@gmail.com
+      password: 12345
     #email,password
 
 checkEmail:
    pattern:  /web_service/checkemail
+   params:
+     email: iphone@gmail.com
    #email
 
 avatarUpload:
    pattern:  /web_service/upload_avatar
+   params:
+     email: iphone@gmail.com
+     file: need file
+
    #email,file
+
 constantValue:
    pattern:  /web_service/constant_values
    #
@@ -55,8 +138,11 @@ constantValue:
 registrationSizechart:
    pattern:  /web_service/registration_sizechart
    #
+
 brand_retailer:
     pattern:  /web_service/brand_retailer
+    params:
+      date: 1388577600
     #*date
 
 brands:
@@ -64,58 +150,111 @@ brands:
     #
 new_products:
     pattern:  /web_service/newproducts
+    params:
+      authTokenWebService: 121c421783cd4d71d871ec16a1296091
     #authTokenWebService
 
 new_products_detail:
     pattern:  /web_service/newproducts_detail
+    params:
+      authTokenWebService: 121c421783cd4d71d871ec16a1296091
     #authTokenWebService
 
 products:
     pattern:  /web_service/products
+    params:
+      authTokenWebService: 121c421783cd4d71d871ec16a1296091
+      brand_id: 5
+      type: brand
     #array('authTokenWebService'=>'46ed5a3aa2f09ba0436612289b93aee5','brandId'=>5,'type'=>'brand');
 
 clothingtype_brand:
     pattern:  /web_service/clothingtype_brands
     #
+
 product_detail:
     pattern:  /web_service/product_detail
+    params:
+      authTokenWebService: 121c421783cd4d71d871ec16a1296091
+      id: 123
+      user_id: 34
     #authTokenWebService,'id'=>186,'user_id'=>1
+
 brand_list_size_chart:
    pattern:  /web_service/brand_list_size_chart
    #
+
 size_chart:
    pattern:  /web_service/size_chart
+   params:
+     gender: f
+     body_type: Petite
+     target_top: 1
+     top_size: 1
+     target_bottom: 2
+     bottom_size: 2
+     target_dress: 3
+     dress_size: 3
    #('gender'=>'f','body_type'=>'Petite','target_top'=>1,'top_size'=>1,'target_bottom'=>2,'bottom_size'=>2,'target_dress'=>3,'dress_size'=>3);
    
 default_fittng_alert:
    pattern:  /web_service/default_fitting_alerts
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     product_id: 11
+     user_id: 13
    #array('authTokenWebService'=>'123','productId'=>11,'userId'=>17);
+
 fittng_alert:
    pattern:  /web_service/fitting_alerts
 
 love_item:
    pattern:  /web_service/love_item
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     productItemId: 12
+     user_id: 13
+     like: like
    #array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','productItemId'=>12,'userId'=>17,'like'=>'like');
    
 try_history:
    pattern:  /web_service/user_try_history
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     user_id: 13
    #authTokenWebService,user_id
+
 userFavouriteList:
    pattern:  /web_service/user_favourite_list
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     user_id: 13
   #authTokenWebService,user_id
+
 images_ul:
    pattern:  /web_service/images_url
    #
+
 product_syn:
    pattern:  /web_service/product_sync
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     date: 1388577600
    #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
+
 brand_syn:
    pattern:  /web_service/brand_sync
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     date: 1388577600
    #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
    
 product_detail_syn:
    pattern:  /web_service/product_detail_sync
-   #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     date: 1388577600
+  #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
 
 product_for_user_syn:
    pattern:  /web_service/product_user_sync

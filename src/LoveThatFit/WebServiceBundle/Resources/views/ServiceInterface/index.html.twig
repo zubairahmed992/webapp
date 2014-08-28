@@ -37,7 +37,8 @@ margin: 5px;
         <h4 id='user_token_header'>token</h4>
         <h4 id='service_name_header'>service name</h4>
         <h4 id='service_path_header'>path</h4>
-        <textarea style="width: 500px; height: 200px" id='service_json'></textarea>
+        <textarea style="width: 500px; height: 200px" id='txt_request'></textarea>
+        <textarea style="width: 500px; height: 200px" id='txt_response'></textarea>
         <input id='hit' type="submit" value="Hit" />                                     
     </form>
 </div>
@@ -58,6 +59,17 @@ function find_pattern(service_name){
             return obj[key].pattern;                     
 }
 
+function get_params_json(service_name){    
+    for(var key in obj){
+       if(key==service_name){
+           if(obj[key].hasOwnProperty('params')){
+                return JSON.stringify(obj[key].params);                     
+            }else{
+                return '';
+                }
+        }
+    }
+}
 //-------------------------------------
 $( "#hit" ).click(function() {
   upload();
@@ -69,7 +81,8 @@ $( "#hit" ).click(function() {
 $("#service_name").change(function() {  
   $("#service_name_header").text( $('option:selected', this).html() );
   $("#service_path_header").text( this.value );  
-  $("#service_json").text( find_pattern($('option:selected', this).html()));
+  //$("#service_json").text( find_pattern($('option:selected', this).html()));
+  $("#txt_request").text( get_params_json($('option:selected', this).html()));
 });
 //------------------- user dropdownlist --------------------
 $("#users").change(function() {  
@@ -81,18 +94,20 @@ $("#users").change(function() {
 
 //-------------------------------------
 function upload(){
-    var email_user=$.trim('gravrun@julieapple.com');
-var value_ar = {
+    var email_user=$.trim('admin33@gmail.com');
+var value_ar    = {
 email:email_user,
 type: 'type'
 };
-
+  //  var value_ar = JSON.parse($("#txt_request").text() );
+ //var jj = '{"email":"admin33@gmail.com","type":"type"}';
+ //var ar value_ar = JSON.parse(jj);
  $.ajax({
         type: "POST",
-        url: "../web_service/user_profile",
+        url: ".." + $("#service_path_header").text(),
         data: value_ar,  
        success: function(data){
-     $('#service_json').html(data)
+     $('#txt_response').html(data)
      
     },
         failure: function(errMsg) {
