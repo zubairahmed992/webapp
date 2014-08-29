@@ -58,32 +58,80 @@ function find_pattern(service_name){
        if(key==service_name)
             return obj[key].pattern;                     
 }
-
+//--------------------------------------------
 function get_params_json(service_name){    
+    return service_name;
     for(var key in obj){
        if(key==service_name){
            if(obj[key].hasOwnProperty('params')){
                 return JSON.stringify(obj[key].params);                     
             }else{
-                return '';
+                return ' ';
                 }
         }
     }
 }
+
+
 //-------------------------------------
+function upload(){
+    request_json = $("#txt_request").text();
+    request_json = request_json.trim();
+    
+     //var jj = '{"email":"admin33@gmail.com","type":"type"}';
+    //var ar value_ar = JSON.parse(jj);
+
+    if (request_json.length==0){
+        $.ajax({
+               type: "GET",
+               url: ".." + $("#service_path_header").text(),               
+               success: function(data){
+                    str = JSON.stringify(data);
+                    str = str.split("\\").join("");            
+                    $('#txt_response').html(str);            
+                },
+               failure: function(errMsg) {
+                   alert(errMsg);
+               }
+         });
+    }else{
+        var value_ar = JSON.parse($("#txt_request").text());
+        alert($("#txt_request").text());
+        $.ajax({
+               type: "POST",
+               url: ".." + $("#service_path_header").text(),
+               data: value_ar,  
+               success: function(data){
+                 $('#txt_response').html(data);
+                },
+               failure: function(errMsg) {
+                   alert(errMsg);
+               }
+         });    
+    }
+}
+
+ //-------------------------------------------------------------
+   function replace_text(){
+    var re = /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;   
+}
+    
+ //------------------ events -------------------
 $( "#hit" ).click(function() {
   upload();
   return false;
 })
  
 
-//-------------service dropdownlist --------------------------
+//------------- service dropdownlist --------------------------
+
 $("#service_name").change(function() {  
   $("#service_name_header").text( $('option:selected', this).html() );
   $("#service_path_header").text( this.value );  
   //$("#service_json").text( find_pattern($('option:selected', this).html()));
   $("#txt_request").text( get_params_json($('option:selected', this).html()));
 });
+
 //------------------- user dropdownlist --------------------
 $("#users").change(function() {  
   $("#user_name_header").text( $('option:selected', this).html() );
@@ -91,35 +139,6 @@ $("#users").change(function() {
   
 });
 
-
-//-------------------------------------
-function upload(){
-    var email_user=$.trim('admin33@gmail.com');
-var value_ar    = {
-email:email_user,
-type: 'type'
-};
-  //  var value_ar = JSON.parse($("#txt_request").text() );
- //var jj = '{"email":"admin33@gmail.com","type":"type"}';
- //var ar value_ar = JSON.parse(jj);
- $.ajax({
-        type: "POST",
-        url: ".." + $("#service_path_header").text(),
-        data: value_ar,  
-       success: function(data){
-     $('#txt_response').html(data)
-     
-    },
-        failure: function(errMsg) {
-            alert(errMsg);
-        }
-  });
-
-//$('#ajaxdv').html(JSON.stringify(value_ar));
-}
-   
-    
-    
     
     
     </script>
