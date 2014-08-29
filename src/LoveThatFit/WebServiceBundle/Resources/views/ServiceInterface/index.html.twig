@@ -39,7 +39,7 @@ margin: 5px;
         <h4 id='service_path_header'>path</h4>
         <textarea style="width: 500px; height: 200px" id='txt_request'></textarea>
         <textarea style="width: 500px; height: 200px" id='txt_response'></textarea>
-        <input id='hit' type="submit" value="Hit" />                                     
+        <input id='hit' type="button" value="Hit" />                                     
     </form>
 </div>
 
@@ -75,9 +75,9 @@ function get_params_json(service_name){
 
 //-------------------------------------
 function upload(){
-    request_json = $("#txt_request").text();
-    request_json = request_json.trim();
-    
+    request_json = $.trim($("#txt_request").val());
+    //request_json = request_json.trim();
+    alert(request_json);
      //var jj = '{"email":"admin33@gmail.com","type":"type"}';
     //var ar value_ar = JSON.parse(jj);
 
@@ -125,7 +125,7 @@ $( "#hit" ).click(function() {
 
 //------------- service dropdownlist --------------------------
 
-$("#service_name").change(function() {  
+$("#service_name").click(function() {  
   $("#service_name_header").text( $('option:selected', this).html() );
   $("#service_path_header").text( this.value );  
   //$("#service_json").text( find_pattern($('option:selected', this).html()));
@@ -133,7 +133,7 @@ $("#service_name").change(function() {
 });
 
 //------------------- user dropdownlist --------------------
-$("#users").change(function() {  
+$("#users").click(function() {  
   $("#user_name_header").text( $('option:selected', this).html() );
   $("#user_token_header").text( this.value );
   
