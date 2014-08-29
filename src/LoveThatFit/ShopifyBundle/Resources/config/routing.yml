@@ -66,6 +66,9 @@ shopify_webhook_cart_create_callback:
     pattern:  /shopify/webhook/cart_create_callback
     defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreateCallback }  
     
+shopify_webhook_cart_update_callback:
+    pattern:  /shopify/webhook/cart_update_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartUpdateCallback }  
 
 shopify_webhook_list_all:
     pattern:  /shopify/webhook/list_all/{retailer_id}

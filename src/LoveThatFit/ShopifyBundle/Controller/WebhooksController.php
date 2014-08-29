@@ -31,6 +31,17 @@ class WebhooksController extends Controller {
          $this->get('site.helper.usertryitemhistory')->updateJSON(2, json_encode($decoded));
          return new Response(json_encode($request));
         }
+        #---------------------------------------------------------------
+        public function cartUpdateCallbackAction(Request $request) {
+        $data = $request->request->all();
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+         $this->get('site.helper.usertryitemhistory')->updateJSON(4, json_encode($decoded));
+         return new Response(json_encode($request));
+        }
+        
           #-----------------------------------------------------------
         public function orderUpdatedCallbackAction(Request $request){
         $data = $request->request->all();

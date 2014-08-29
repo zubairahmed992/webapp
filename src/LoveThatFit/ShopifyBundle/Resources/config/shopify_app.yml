@@ -23,6 +23,9 @@ webhooks:
   cart_create:
     topic: "carts/create"
     address:  "/shopify/webhook/cart_create_callback"
+  cart_update:
+    topic: "carts/update"
+    address:  "/shopify/webhook/cart_update_callback"  
     
 
 
