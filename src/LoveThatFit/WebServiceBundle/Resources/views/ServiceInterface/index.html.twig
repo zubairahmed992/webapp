@@ -46,8 +46,24 @@ margin: 5px;
 <br>
 <script  type='text/javascript'>
 
-//var obj = JSON.parse(js_array);
-//var j = '{"user_profile":{"pattern":"/web_service/user_profile"},"login":{"pattern":"/web_service/login"},"registration_create":{"pattern":"/web_service/register"},"measurement_edit":{"pattern":"/web_service/measurement_edit"},"change_password":{"pattern":"/web_service/change_password"},"forget_password":{"pattern":"/web_service/forget_password"},"edit_profile":{"pattern":"/web_service/edit_profile"},"iphone_shoulder_outseam":{"pattern":"/web_service/iphone_shoulder_outseam"},"image_upload":{"pattern":"/web_service/image_upload"},"check_token__forget_password":{"pattern":"/web_service/check_token_forget_password"},"update__forget_password":{"pattern":"/web_service/check_update_password"},"checkEmail":{"pattern":"/web_service/checkemail"},"avatarUpload":{"pattern":"/web_service/upload_avatar"},"constantValue":{"pattern":"/web_service/constant_values"},"registrationSizechart":{"pattern":"/web_service/registration_sizechart"},"brand_retailer":{"pattern":"/web_service/brand_retailer"},"brands":{"pattern":"/web_service/brands"},"new_products":{"pattern":"/web_service/newproducts"},"new_products_detail":{"pattern":"/web_service/newproducts_detail"},"products":{"pattern":"/web_service/products"},"clothingtype_brand":{"pattern":"/web_service/clothingtype_brands"},"product_detail":{"pattern":"/web_service/product_detail"},"brand_list_size_chart":{"pattern":"/web_service/brand_list_size_chart"},"size_chart":{"pattern":"/web_service/size_chart"},"default_fittng_alert":{"pattern":"/web_service/default_fitting_alerts"},"fittng_alert":{"pattern":"/web_service/fitting_alerts"},"love_item":{"pattern":"/web_service/love_item"},"try_history":{"pattern":"/web_service/user_try_history"},"userFavouriteList":{"pattern":"/web_service/user_favourite_list"},"images_ul":{"pattern":"/web_service/images_url"},"product_syn":{"pattern":"/web_service/product_sync"},"brand_syn":{"pattern":"/web_service/brand_sync"},"product_detail_syn":{"pattern":"/web_service/product_detail_sync"},"product_for_user_syn":{"pattern":"/web_service/product_user_sync"},"send_push_notifcation":{"pattern":"/web_service/send_push_notification"},"get_notification_type":{"pattern":"/web_service/get_notification_type"},"run_crone_job":{"pattern":"/web_service/run_crone_job"}}';
+function replace_user_data(){
+          email = $("#user_name_header").text();
+          token = $("#user_token_header").text();             
+  
+    request_json = $.trim($("#txt_request").val());
+    if (request_json.indexOf("authTokenWebService")!=-1 || request_json.indexOf("email")!=-1){
+        var obj1 = JSON.parse(request_json);
+        if (request_json.indexOf("authTokenWebService")!=-1){
+            obj1.authTokenWebService=token;
+        }
+        if (request_json.indexOf("email")!=-1){
+            obj1.email=email;    
+        }
+        $("#txt_request").text(JSON.stringify(obj1));        
+    }
+}
+
+//-------------------------------------------------------
 {% autoescape false %};
 var j = '{{ services_json}}';
 var obj = JSON.parse(j);
@@ -60,7 +76,7 @@ function find_pattern(service_name){
 }
 //--------------------------------------------
 function get_params_json(service_name){    
-    return service_name;
+    
     for(var key in obj){
        if(key==service_name){
            if(obj[key].hasOwnProperty('params')){
@@ -75,11 +91,8 @@ function get_params_json(service_name){
 
 //-------------------------------------
 function upload(){
-    request_json = $.trim($("#txt_request").val());
-    //request_json = request_json.trim();
-    alert(request_json);
-     //var jj = '{"email":"admin33@gmail.com","type":"type"}';
-    //var ar value_ar = JSON.parse(jj);
+    request_json = $.trim($("#txt_request").val());    
+    //alert(request_json);     
 
     if (request_json.length==0){
         $.ajax({
@@ -95,8 +108,7 @@ function upload(){
                }
          });
     }else{
-        var value_ar = JSON.parse($("#txt_request").text());
-        alert($("#txt_request").text());
+        var value_ar = JSON.parse($("#txt_request").val());        
         $.ajax({
                type: "POST",
                url: ".." + $("#service_path_header").text(),
@@ -112,8 +124,13 @@ function upload(){
 }
 
  //-------------------------------------------------------------
-   function replace_text(){
+   function replace_text(str, email){      
+    if (email.trim()==0){
+       return str
+   } else {
     var re = /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;   
+    return str.replace(re,email);
+    }
 }
     
  //------------------ events -------------------
@@ -127,15 +144,21 @@ $( "#hit" ).click(function() {
 
 $("#service_name").click(function() {  
   $("#service_name_header").text( $('option:selected', this).html() );
-  $("#service_path_header").text( this.value );  
-  //$("#service_json").text( find_pattern($('option:selected', this).html()));
-  $("#txt_request").text( get_params_json($('option:selected', this).html()));
+  $("#service_path_header").text( this.value );    
+  $("#txt_request").text(get_params_json($('option:selected', this).html()));       
+  //$("#txt_request").text(replace_text($("#txt_request").val(), $("#user_name_header").text()));
+  
+  replace_user_data();
+  
 });
 
 //------------------- user dropdownlist --------------------
 $("#users").click(function() {  
+    email=$('option:selected', this).html();
   $("#user_name_header").text( $('option:selected', this).html() );
-  $("#user_token_header").text( this.value );
+  $("#user_token_header").text( this.value );  
+  //$("#txt_request").text(replace_text($("#txt_request").val(), email));
+    replace_user_data();
   
 });
 
