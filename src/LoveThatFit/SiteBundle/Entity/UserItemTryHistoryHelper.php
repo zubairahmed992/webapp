@@ -75,16 +75,16 @@ public function createUserItemTryHistory($user,$product_id,$productItem, $fb){
       if($fb && array_key_exists('recommendation', $fb) &&  $fb['recommendation']){
           $recommended_size=$fb['recommendation']['title'];
           $recommended_index=$fb['recommendation']['fit_index'];
-          $recommended_fit=$fb['recommendation']['fits'];
+          $recommended_fit=$fb['recommendation']['body_type'];
       }else
       {
           if($fb['feedback']['fits']){
             $recommended_size=$fb['feedback']['title'];
             $recommended_index=$fb['feedback']['fit_index'];
-            $recommended_fit=$fb['feedback']['fits'];
+            $recommended_fit=$fb['feedback']['body_type'];
           }
       }
-      
+       
       $product=  $product_helper->find($product_id);
       $rec_count = $this->countUserItemTryHistory($user,$product,$productItem);  
        if ($rec_count>0) {
@@ -99,7 +99,7 @@ public function createUserItemTryHistory($user,$product_id,$productItem, $fb){
         $count=$counts+1;
         $userItemTryId->setCount($count);
         $userItemTryId->setFeedback(json_encode($fb['feedback']));
-        $userItemTryId->setFit($fb['feedback']['fits']);
+        $userItemTryId->setFit($fb['feedback']['body_type']);
         $userItemTryId->setFitIndex($fb['feedback']['fit_index']);
         $userItemTryId->setRecommendedIndex($recommended_index);
         $userItemTryId->setRecommendedFit($recommended_fit);

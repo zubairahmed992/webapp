@@ -185,7 +185,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
 #-------------------------------------------------------------------------------  
     public function productsMostFavoriteAction($gender, $page_number = 0, $limit = 0) {
         $user_id= $this->get('security.context')->getToken()->getUser()->getId();
-        $entity = $this->get('admin.helper.productitem')->findProductItemByUser($user_id,$gender, $page_number, $limit);
+        $entity = $this->get('admin.helper.product')->findProductItemByUser($user_id,$gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     
         //$user= $this->get('security.context')->getToken()->getUser();
@@ -193,8 +193,20 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         //return $this->renderProductTemplate($entity, $page_number, $limit);
     }    
     
-#------------------------------------------------------------------------------- 
+    
+    #------------------------------------------------------------------------------- 
     public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
+        $user_id= $this->get('security.context')->getToken()->getUser()->getId();
+        $entity = $this->get('admin.helper.product')->findByGenderLatest($gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+       
+    }
+#----------------------------------- by Brand-----------------------------------
+    
+    
+    
+#------------------------------------------------------------------------------- 
+    public function _productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
         $entity = null;
         return $this->renderProductTemplate($entity, $page_number, $limit, 'Coming Soon');
     }
