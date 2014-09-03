@@ -91,7 +91,7 @@ function get_params_json(service_name){
 
 //-------------------------------------
 function upload(){
-    request_json = $.trim($("#txt_request").val());    
+    request_json = $.trim($("#txt_request").text());    
     //alert(request_json);     
 
     if (request_json.length==0){
@@ -99,30 +99,34 @@ function upload(){
                type: "GET",
                url: ".." + $("#service_path_header").text(),               
                success: function(data){
-                    str = JSON.stringify(data);
-                    str = str.split("\\").join("");            
-                    $('#txt_response').html(str);            
+                    display_response(data);
                 },
                failure: function(errMsg) {
-                   alert(errMsg);
+                   display_response(errMsg);
                }
          });
     }else{
         var value_ar = JSON.parse($("#txt_request").val());        
+        
         $.ajax({
                type: "POST",
                url: ".." + $("#service_path_header").text(),
                data: value_ar,  
+               dataType: "json",
                success: function(data){
-                 $('#txt_response').html(data);
+                   display_response(data);                    
                 },
                failure: function(errMsg) {
-                   alert(errMsg);
+                   display_response(errMsg);
                }
          });    
     }
 }
-
+function display_response(data){
+            str = JSON.stringify(data);
+            str = str.split("\\").join("");
+            $('#txt_response').html(str);
+}
  //-------------------------------------------------------------
    function replace_text(str, email){      
     if (email.trim()==0){
