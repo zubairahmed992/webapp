@@ -61,6 +61,21 @@ function replace_user_data(){
         }
         $("#txt_request").text(JSON.stringify(obj1));        
     }
+      getUserDetail();
+}
+
+function replace_all_user_data(user_detail){
+    var u_obj = JSON.parse(user_detail);
+    var r_obj = JSON.parse($("#txt_request").val());
+    
+    for(var ukey in u_obj){
+        for(var rkey in r_obj){
+            if (rkey==ukey){
+                r_obj[rkey]=u_obj[ukey];
+            }
+        }
+    }
+    $("#txt_request").text(JSON.stringify(r_obj));
 }
 
 //-------------------------------------------------------
@@ -136,8 +151,27 @@ function display_response(data){
     return str.replace(re,email);
     }
 }
-    
- //------------------ events -------------------
+//--------------------------------------------------------------    
+
+//-------------------------------------
+function getUserDetail(){
+        $.ajax({
+               type: "GET",
+               url: "../service_interface/user_detail/" + $("#user_name_header").text(),               
+               success: function(data){
+                    //alert(data);
+                    //var u_obj = JSON.parse(data);
+                     replace_all_user_data(data);
+                    
+                },
+               failure: function(errMsg) {
+                   alert(errMsg);
+               }
+         });
+    }
+
+
+//------------------ events -------------------
 $( "#hit" ).click(function() {
   upload();
   return false;
@@ -163,7 +197,7 @@ $("#users").click(function() {
   $("#user_token_header").text( this.value );  
   //$("#txt_request").text(replace_text($("#txt_request").val(), email));
     replace_user_data();
-  
+    
 });
 
     

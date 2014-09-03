@@ -198,14 +198,20 @@ public function registerUser(User $user) {
         }
         return $measurement;
     }
-#------------------------------------------------------------------------------#
+#------------\------------------------------------------------------------------#
     public function getArrayByEmail($email) {//getUserArrayByEmail
         $entity = $this->repo->findOneBy(array('email' => $email));
         $userinfo = array();
         $userinfo = $this->fillUserArray($entity);
         return $userinfo;
     }
-
+#------------------------------------------------------------------------------#    
+   public function getDetailArrayByEmail($email) {
+        $entity = $this->repo->findOneBy(array('email' => $email));
+        $userinfo = $this->fillUserArray($entity);
+        $user_measurment = $this->fillMeasurementArray($entity->getMeasurement());
+        return array_merge($userinfo, $user_measurment);
+    }
 #--------------------------------User Detail Array -----------------------------#
  private function gettingUserDetailArray($entity, $request) {
         // change name getUserDetailArrayWithRequestArray

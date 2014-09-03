@@ -25,14 +25,14 @@ class ServiceInterfaceController extends Controller {
                     'users'=>$user_list['users'],
                 ));
     }
-
-    public function hitAction() {
-    
-    #$str=json_encode($this->get('webservice.helper')->getServiceDetails());
+    #------------------------------------------------------
+    public function hitAction() {    
         $str=json_encode($this->get('webservice.helper')->stripToNameArray($this->get('webservice.helper')->getServiceDetails()));
-    return new Response($str);
-        return new Response('has been hit');
+        return new Response($str);       
     }
-   
+   #------------------------------------------------------
+     public function userDetailAction($email) {
+         return new Response(json_encode($this->get('webservice.helper.user')->getDetailArrayByEmail($email)));
+    }
 
 }
