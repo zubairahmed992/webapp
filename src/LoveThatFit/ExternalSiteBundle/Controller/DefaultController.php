@@ -13,6 +13,9 @@ class DefaultController extends Controller
     }
     public function proxyFittingRoomAction($access_token,$user_id,$sku)
     {
+        
+        #-------Set New Session for user---------
+        
         # get retailer by token
         $retailer=$this->getRetailerBaseToken($access_token);
         if($retailer)
@@ -63,6 +66,7 @@ class DefaultController extends Controller
             'retailer_id'=>$retailer_id
             ));
     }
+   
     
     #--------------------------------------------------
     

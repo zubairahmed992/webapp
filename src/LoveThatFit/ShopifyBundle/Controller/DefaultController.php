@@ -113,8 +113,9 @@ class DefaultController extends Controller {
         }
     }
 #---------------------------------Check Sku ---------------------------#
-public function checkSkuAction($sku=null){
-   
+public function checkSkuAction($sku = null,$user_id=null){
+    
+    
  if($this->get('admin.helper.retailer')->findOneByShopDomain($_REQUEST['shop'])){
   $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
     if ($itemBySku == null || empty($itemBySku)) {
@@ -127,8 +128,6 @@ public function checkSkuAction($sku=null){
         
     }
 }
-    
-
 
 
 }
