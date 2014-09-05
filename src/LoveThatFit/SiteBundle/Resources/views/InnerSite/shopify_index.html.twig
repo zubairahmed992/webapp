@@ -10,10 +10,14 @@
 
 
 
-<input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
-<input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
-<input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
-<span id="hdn_url_1" style="display: none">{{path('external_user_mannequin')}}</span>
+<input id="hdn_prod_top_pos" type="hidden" 
+value="{{app.user.measurement.getShoulderHeight}}" />
+<input id="hdn_prod_bottom_pos" type="hidden" 
+value="{{app.user.measurement.getHipHeight}}" />
+<input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" 
+/>
+<span id="hdn_url_1" style="display: none">{{path('external_user_mannequin')}}
+</span>
 
 <input id="json_prod_data_apply" type="hidden" value="{{fitting_room_item_ids}}" />
 
@@ -71,16 +75,22 @@ function remove_prod_state(remove_prod_item_id) {
                 <div id="recent_prods_area">
                    <div class="recent_head">
                        Recently Tried
-                       <span style="display:none;" id="removeFittingRommProduct">{{ app.request.getBaseURL()}}/ajax/fitting_room_item_remove/{{app.user.id}}/</span>
+                       <span style="display:none;" id="removeFittingRommProduct">{{ 
+app.request.getBaseURL()}}/ajax/fitting_room_item_remove/{{app.user.id}}/</span>
                    </div>
                    <div class="recent_prods_slider_hldr">
-                       <div id="rece_up_but"><span class="click_able_top"></span></div>
+                       <div id="rece_up_but"><span 
+class="click_able_top"></span></div>
                        
                        <div id="recent_prods">
-                           {% render 'LoveThatFitExternalSiteBundle:Default:recentlyTriedOnItems' with {'retailer_id' : (retailer is not defined or retailer is null)?null:retailer.id} %}
+                              {% render 
+'LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList' with {'list_type' : 
+'recently_tried_on'} %}
                        </div>
-                       <div>{# render 'LoveThatFitSiteBundle:CompareProduct:list' #}</div>
-                       <div id="rece_down_but"><span class="click_able_btm"></span></div>
+                       <div>{# render 'LoveThatFitSiteBundle:CompareProduct:list' 
+#}</div>
+                       <div id="rece_down_but"><span 
+class="click_able_btm"></span></div>
                    </div>
                </div>  
                
@@ -110,7 +120,8 @@ function remove_prod_state(remove_prod_item_id) {
                             <div class="prod_handle">
                                 <div class="lft_col">
                                     <div class="small_thumb">
-                                        <img class="small_thumb_img" src="{{ asset('bundles/lovethatfit/site/images/pattern.png') }}">
+                                        <img class="small_thumb_img" src="{{ asset
+('bundles/lovethatfit/site/images/pattern.png') }}">
                                     </div>
                                 </div>
                                 <div class="rgt_col">
@@ -118,14 +129,17 @@ function remove_prod_state(remove_prod_item_id) {
                                 </div>
                             </div>
                             <div class="prod_applied_detail">
-                                <div class="but_remove_prod"><img src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
+                                <div class="but_remove_prod"><img src="{{ asset
+('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
                                 <div class="lft_col">
                                     <div class="small_thumb"></div>
                                     <div class="prod_price">Compare</div>
                                     <div class="prod_share"></div>
                                     <div class="action_icons">
-                                        <span class="fav_prod"><img src="{{ asset('bundles/lovethatfit/site/images/like_icon.png') }}"></span>
-                                        <span class="cart_prod"><img src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}"></span>
+                                        <span class="fav_prod"><img src="{{ asset
+('bundles/lovethatfit/site/images/like_icon.png') }}"></span>
+                                        <span class="cart_prod"><img src="{{ asset
+('bundles/lovethatfit/site/images/cart_icon_1.png') }}"></span>
                                     </div>
                                 </div>
                                 <div class="rgt_col">
@@ -137,7 +151,8 @@ function remove_prod_state(remove_prod_item_id) {
                                         <li>Loose</li>
                                     </ul>
                                     <div class="rec_tip">
-                                        <span class="bolder">Tip:</span> Try Size 4.
+                                        <span class="bolder">Tip:</span> Try Size 
+4.
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +161,8 @@ function remove_prod_state(remove_prod_item_id) {
                             <div class="prod_handle">
                                 <div class="lft_col">
                                     <div class="small_thumb">
-                                        <img class="small_thumb_img" src="{{ asset('bundles/lovethatfit/site/images/pattern.png') }}">
+                                        <img class="small_thumb_img" src="{{ asset
+('bundles/lovethatfit/site/images/pattern.png') }}">
                                     </div>
                                 </div>
                                 <div class="rgt_col">
@@ -173,7 +189,8 @@ function remove_prod_state(remove_prod_item_id) {
                                         <li>Loose</li>
                                     </ul>
                                     <div class="rec_tip">
-                                        <span class="bolder">Tip:</span> Try Size 4.
+                                        <span class="bolder">Tip:</span> Try Size 
+4.
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +199,8 @@ function remove_prod_state(remove_prod_item_id) {
                             <div class="prod_handle">
                                 <div class="lft_col">
                                     <div class="small_thumb">
-                                        <img class="small_thumb_img" src="{{ asset('bundles/lovethatfit/site/images/pattern.png') }}">
+                                        <img class="small_thumb_img" src="{{ asset
+('bundles/lovethatfit/site/images/pattern.png') }}">
                                     </div>
                                 </div>
                                 <div class="rgt_col">
@@ -209,7 +227,8 @@ function remove_prod_state(remove_prod_item_id) {
                                         <li>Loose</li>
                                     </ul>
                                     <div class="rec_tip">
-                                        <span class="bolder">Tip:</span> Try Size 4.
+                                        <span class="bolder">Tip:</span> Try Size 
+4.
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +252,8 @@ function remove_prod_state(remove_prod_item_id) {
                     Requested product not availalbe.
                 </div>
                 
-                <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
+                <a href="{{ path('registration_step_four_edit') }}" 
+class="edit_photo">Try another photo</a>
                 <div id="full_dropable" class="hide"></div>
                 <div id="top_dropable" class="hide"></div>
                 <div id="bottom_dropable" class="hide"></div>
@@ -244,7 +264,8 @@ function remove_prod_state(remove_prod_item_id) {
                 {% if app.user.image != null %}
                 <input id="hdn_dm_status" type="hidden" value="user" />
                 <div id="user_dummy_img_hldr">
-                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123">
+                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) 
+}}?123">
                 </div>
                 {%else%}
                 <input id="hdn_dm_status" type="hidden" value="default" />
@@ -253,48 +274,89 @@ function remove_prod_state(remove_prod_item_id) {
                 <div id="default_dummy_hldr">
                     <div id="default_dummy_inner">
                         <div id="dm_rgt_arm_hldr">
-                            <div id="dm_rgt_arm_part_1"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_1.png') }}" /></div>
-                            <div id="dm_rgt_arm_part_2"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_2.png') }}" /></div>
+                            <div id="dm_rgt_arm_part_1"><img class="dm_part_img" 
+src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_1.png') }}" 
+/></div>
+                            <div id="dm_rgt_arm_part_2"><img class="dm_part_img" 
+src="{{ asset('bundles/lovethatfit/site/images/dm_parts/rgt_hand_part_2.png') }}" 
+/></div>
                         </div>
                         
                         <div id="dm_mid_body_hldr">
-                            <div id="dm_part_8" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_8.png') }}" /></div>
+                            <div id="dm_part_8" class="dm_part_div"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_8.png') }}" /></div>
                             <div id="dm_part_7" class="dm_part_div">
                                 
-                                <img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_7.png') }}" />
+                                <img class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_7.png') }}" />
                                 
                             </div>
                             <div id="dm_part_6" class="dm_part_div">
-                                <div id="dm_part_6_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_lft.png') }}" /></div>
-                                <div id="dm_part_6_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_mid.png') }}" /></div>
-                                <div id="dm_part_6_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_6_rgt.png') }}" /></div>
+                                <div id="dm_part_6_lft" class="dm_part_lft"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_6_lft.png') }}" /></div>
+                                <div id="dm_part_6_mid" class="dm_part_mid"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_6_mid.png') }}" /></div>
+                                <div id="dm_part_6_rgt" class="dm_part_rgt"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_6_rgt.png') }}" /></div>
                             </div>    
                             <div id="dm_part_5" class="dm_part_div">
-                                <div id="dm_part_5_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_lft.png') }}" /></div>
-                                <div id="dm_part_5_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_mid.png') }}" /></div>
-                                <div id="dm_part_5_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_5_rgt.png') }}" /></div>
+                                <div id="dm_part_5_lft" class="dm_part_lft"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_5_lft.png') }}" /></div>
+                                <div id="dm_part_5_mid" class="dm_part_mid"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_5_mid.png') }}" /></div>
+                                <div id="dm_part_5_rgt" class="dm_part_rgt"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_5_rgt.png') }}" /></div>
                             </div>
                             <div id="dm_part_4" class="dm_part_div">
-                                <div id="dm_part_4_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_lft.png') }}" /></div>
-                                <div id="dm_part_4_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_mid.png') }}" /></div>
-                                <div id="dm_part_4_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_4_rgt.png') }}" /></div>
+                                <div id="dm_part_4_lft" class="dm_part_lft"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_4_lft.png') }}" /></div>
+                                <div id="dm_part_4_mid" class="dm_part_mid"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_4_mid.png') }}" /></div>
+                                <div id="dm_part_4_rgt" class="dm_part_rgt"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_4_rgt.png') }}" /></div>
                             </div>
                             <div id="dm_part_3" class="dm_part_div">
-                                <div id="dm_part_3_lft" class="dm_part_lft"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_lft.png') }}" /></div>
-                                <div id="dm_part_3_mid" class="dm_part_mid"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_mid.png') }}" /></div>
-                                <div id="dm_part_3_rgt" class="dm_part_rgt"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_3_rgt.png') }}" /></div>
+                                <div id="dm_part_3_lft" class="dm_part_lft"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_3_lft.png') }}" /></div>
+                                <div id="dm_part_3_mid" class="dm_part_mid"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_3_mid.png') }}" /></div>
+                                <div id="dm_part_3_rgt" class="dm_part_rgt"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_3_rgt.png') }}" /></div>
                             </div>
-                            <div id="dm_part_2" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_2.png') }}" /></div>
-                            <div id="dm_part_1" class="dm_part_div"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/part_1.png') }}" /></div>
+                            <div id="dm_part_2" class="dm_part_div"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_2.png') }}" /></div>
+                            <div id="dm_part_1" class="dm_part_div"><img 
+class="dm_part_img" src="{{ asset
+('bundles/lovethatfit/site/images/dm_parts/part_1.png') }}" /></div>
                         </div>
                         <div id="dm_lft_arm_hldr">
-                            <div id="dm_lft_arm_part_1"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_1.png') }}" /></div>
-                            <div id="dm_lft_arm_part_2"><img class="dm_part_img" src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_2.png') }}" /></div>
+                            <div id="dm_lft_arm_part_1"><img class="dm_part_img" 
+src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_1.png') }}" 
+/></div>
+                            <div id="dm_lft_arm_part_2"><img class="dm_part_img" 
+src="{{ asset('bundles/lovethatfit/site/images/dm_parts/lft_hand_part_2.png') }}" 
+/></div>
                         </div>
-                        <!--<canvas id="default_m_canv" width="364" height="510"></canvas>-->
+                        <!--<canvas id="default_m_canv" width="364" 
+height="510"></canvas>-->
                     </div>
                 </div>
-                    <div class="upload_pic_msg">Please <a href="{{ path('fitting_room_image_edit') }}">Upload Your Photo</a> to try cloths on you.</div>
+                    <div class="upload_pic_msg">Please <a href="{{ path
+('fitting_room_image_edit') }}">Upload Your Photo</a> to try cloths on you.</div>
                     <div id="user_dummy_img_hldr">
                     </div>
                 {% endif %}
@@ -324,12 +386,15 @@ function remove_prod_state(remove_prod_item_id) {
 
           <div class="loading_now">
               <div class="loading_inner">
-                  <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}">
+                  <img class="prod_top" src="{{ asset
+('bundles/lovethatfit/site/images/uploading.gif') }}">
               </div>
           </div>
           <div id="slider_dis_canv">
-              <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>
-            {# render 'LoveThatFitSiteBundle:InnerSite:productsByType' with {'list_type' : list_type} #}
+              <span id="ajax_product_base_url" style="display:none;">{{path
+('ajax_product_base_url')}}</span>
+            {# render 'LoveThatFitSiteBundle:InnerSite:productsByType' with 
+{'list_type' : list_type} #}
             <!--.prod_sliding_area--></div>
            
         <!---/#dis canv---></div>
@@ -351,7 +416,8 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
 
     if(prod_thumb){
         //alert($(prod_thumb).attr("class"));
-            details_base_url = $(prod_thumb).parent().find(".curr_prod_full_url").html();
+            details_base_url = $(prod_thumb).parent().find
+(".curr_prod_full_url").html();
             new_prod_id=$(prod_thumb).attr("id");
             //alert("fffff: " + new_prod_id);
         }
@@ -365,7 +431,8 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
            
             
             //details_base_url = "/webapp/web/app_dev.php/ajax/product/";
-            details_base_url = details_base_url + new_prod_id + "/" + new_color_id + "/" + new_size_id;
+            details_base_url = details_base_url + new_prod_id + "/" + new_color_id 
++ "/" + new_size_id;
             //alert(details_base_url);
             }
             $.ajax({
@@ -374,11 +441,15 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                 success: function(new_prod_details){
                     
                   
-                    var curr_prod_type = $(new_prod_details).find('.current_product_type').html();
-                    var curr_prod_apply = $(new_prod_details).find('.apply_img').attr("href");
-                    var curr_prod_feedback =$(new_prod_details).find('.fitting_alerts_feeback_'+new_prod_id).html();
+                    var curr_prod_type = $(new_prod_details).find
+('.current_product_type').html();
+                    var curr_prod_apply = $(new_prod_details).find
+('.apply_img').attr("href");
+                    var curr_prod_feedback =$(new_prod_details).find
+('.fitting_alerts_feeback_'+new_prod_id).html();
                     
-                    var curr_prod_item_id = $(new_prod_details).find('#current_item_id').attr("value");
+                    var curr_prod_item_id = $(new_prod_details).find
+('#current_item_id').attr("value");
                     //alert(curr_prod_item_id);
                    
                     //alert(curr_prod_feedback);
@@ -390,14 +461,24 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     if(curr_prod_type == "top"){
                         //alert("Top");
                         if($("#prod_accordion").find("#prod_type_top_hlder")){
-                           $("#prod_accordion").find("#prod_type_top_hlder").fadeOut(200, function(){this.remove();});
-                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           $("#prod_accordion").find
+("#prod_type_top_hlder").fadeOut(200, function(){this.remove();});
+                           $("#prod_accordion").prepend("<div 
+id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div 
+class='prod_applied_detail'><div class='uploading_in_progress 
+set_width_chg'>Loading...</div></div></div>");
                            
-                           $("#remove_top_prod_id").attr("value",curr_prod_item_id);
-                           //$("#products_details").prepend("<div id='top_type_select_color'></div>");
+                           $("#remove_top_prod_id").attr
+("value",curr_prod_item_id);
+                           //$("#products_details").prepend("<div 
+id='top_type_select_color'></div>");
                         }else{
-                           $("#prod_accordion").prepend("<div id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
-                           //$("#products_details").prepend("<div id='top_type_select_color'></div>");
+                           $("#prod_accordion").prepend("<div 
+id='prod_type_top_hlder' class='prod_row'><div class='prod_handle'></div><div 
+class='prod_applied_detail'><div class='uploading_in_progress 
+set_width_chg'>Loading...</div></div></div>");
+                           //$("#products_details").prepend("<div 
+id='top_type_select_color'></div>");
                         }
                         main_container_hldr = "#prod_type_top_hlder";
                         main_dropable = "#top_dropable";
@@ -406,14 +487,24 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     if(curr_prod_type == "bottom"){
                     //alert("Bottom");
                         if($("#prod_accordion").find("#prod_type_bottom_hlder")){
-                           $("#prod_accordion").find("#prod_type_bottom_hlder").fadeOut(200, function(){this.remove();});
-                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           $("#prod_accordion").find
+("#prod_type_bottom_hlder").fadeOut(200, function(){this.remove();});
+                           $("#prod_accordion").prepend("<div 
+id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div 
+class='prod_applied_detail'><div class='uploading_in_progress 
+set_width_chg'>Loading...</div></div></div>");
                            
-                           $("#remove_bottom_prod_id").attr("value",curr_prod_item_id);
-                           //$("#products_details").prepend("<div id='bottom_type_select_color'></div>");
+                           $("#remove_bottom_prod_id").attr
+("value",curr_prod_item_id);
+                           //$("#products_details").prepend("<div 
+id='bottom_type_select_color'></div>");
                         }else{
-                           $("#prod_accordion").prepend("<div id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
-                          // $("#products_details").prepend("<div id='bottom_type_select_color'></div>");
+                           $("#prod_accordion").prepend("<div 
+id='prod_type_bottom_hlder' class='prod_row'><div class='prod_handle'></div><div 
+class='prod_applied_detail'><div class='uploading_in_progress 
+set_width_chg'>Loading...</div></div></div>");
+                          // $("#products_details").prepend("<div 
+id='bottom_type_select_color'></div>");
                         }
                         main_container_hldr = "#prod_type_bottom_hlder";
                         main_dropable = "#bottom_dropable";
@@ -422,14 +513,24 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     if(curr_prod_type == "dress"){
                      //alert("Dress");
                         if($("#prod_accordion").find("#prod_type_dress_hlder")){
-                           $("#prod_accordion").find("#prod_type_dress_hlder").fadeOut(200, function(){this.remove();});
-                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
+                           $("#prod_accordion").find
+("#prod_type_dress_hlder").fadeOut(200, function(){this.remove();});
+                           $("#prod_accordion").prepend("<div 
+id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div 
+class='prod_applied_detail'><div class='uploading_in_progress 
+set_width_chg'>Loading...</div></div></div>");
                            
-                           $("#remove_dress_prod_id").attr("value",curr_prod_item_id);
-                           //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
+                           $("#remove_dress_prod_id").attr
+("value",curr_prod_item_id);
+                           //$("#products_details").prepend("<div 
+id='dress_type_select_color'></div>");
                         }else{
-                           $("#prod_accordion").prepend("<div id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div class='prod_applied_detail'><div class='uploading_in_progress set_width_chg'>Loading...</div></div></div>");
-                           //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
+                           $("#prod_accordion").prepend("<div 
+id='prod_type_dress_hlder' class='prod_row'><div class='prod_handle'></div><div 
+class='prod_applied_detail'><div class='uploading_in_progress 
+set_width_chg'>Loading...</div></div></div>");
+                           //$("#products_details").prepend("<div 
+id='dress_type_select_color'></div>");
                         }
                         main_container_hldr = "#prod_type_dress_hlder";
                         main_dropable = "#full_dropable";
@@ -442,31 +543,42 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         url: curr_prod_feedback,
                         cache: false,
                         success: function(curr_prod_alerts){
-                           $(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
+                           $(main_container_hldr + " 
+#fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
                            refreshdiv();
                         }
                     });  
                     
-                    $(main_container_hldr + ' .prod_handle').html($(new_prod_details).find('.prod_handle').html());
-                    $(main_container_hldr + ' .prod_applied_detail').html($(new_prod_details).find('.prod_applied_detail').html());
+                    $(main_container_hldr + ' .prod_handle').html
+($(new_prod_details).find('.prod_handle').html());
+                    $(main_container_hldr + ' .prod_applied_detail').html
+($(new_prod_details).find('.prod_applied_detail').html());
                     
-                    //alert($(new_prod_details).find('.hldr_of_size_color').html());
-                    $(main_select_color).html($(new_prod_details).find('.hldr_of_size_color').html());
+                    //alert($(new_prod_details).find('.hldr_of_size_color').html
+());
+                    $(main_select_color).html($(new_prod_details).find
+('.hldr_of_size_color').html());
                     
-                    //$('#select_size').html($(new_prod_details).find('div#hdn_sizes_hldr').html());
-                    //$('#select_color').html($(new_prod_details).find('div#hdn_color_hldr').html());
+                    //$('#select_size').html($(new_prod_details).find
+('div#hdn_sizes_hldr').html());
+                    //$('#select_color').html($(new_prod_details).find
+('div#hdn_color_hldr').html());
                     
-                    $(main_container_hldr).fadeIn(300, function(){$( "#prod_accordion" ).accordion("refresh");});
+                    $(main_container_hldr).fadeIn(300, function(){$( 
+"#prod_accordion" ).accordion("refresh");});
                     $("#prod_accordion" ).accordion("refresh");
                     $("#prod_accordion").accordion({ active: 0}); 
                     
                     
                     
                     $(main_dropable).fadeOut("200", function (){
-                        $(main_dropable).html("<img class='curr_prod' src='" + curr_prod_apply + "' />").fadeIn();
-                        //$(main_dropable).prepend("<div class='uploading_in_progress set_width_chg'></div>").fadeIn(100);
+                        $(main_dropable).html("<img class='curr_prod' src='" + 
+curr_prod_apply + "' />").fadeIn();
+                        //$(main_dropable).prepend("<div 
+class='uploading_in_progress set_width_chg'></div>").fadeIn(100);
                         
-                        //chk_prod_img_load =  document.getElementById(prod_type_applied).width;
+                        //chk_prod_img_load =  document.getElementById
+(prod_type_applied).width;
 
                         //chk_applied_loaded(main_dropable);
                         
@@ -522,7 +634,12 @@ if(jqXHR.responseText.trim()== "success")
     $("#like_icon_"+item_id).html('');
     $(".like_icon1_"+item_id).html('');
   
-    $("#like_icon_"+item_id).replaceWith(' <div class="like_icon1_'+item_id+'"><a href="javascript:void(0);" onclick="lovedItems('+item_id+')" title="Loved/Liked"><img src="{{asset('bundles/lovethatfit/site/images/liked.png')}}"></a><span id="ajax_product_loved_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_delete',{'product_item_id':'item_id'})}}</span> </div>');
+    $("#like_icon_"+item_id).replaceWith(' <div class="like_icon1_'+item_id+'"><a 
+href="javascript:void(0);" onclick="lovedItems('+item_id+')" 
+title="Loved/Liked"><img src="{{asset
+('bundles/lovethatfit/site/images/liked.png')}}"></a><span 
+id="ajax_product_loved_url'+item_id+'" style="display:none;">{{path
+('ajax_user_product_item_delete',{'product_item_id':'item_id'})}}</span> </div>');
 }else{
  alert('Sorry .. You are overlimit please delete some of your loved products ');
   }
@@ -549,7 +666,11 @@ if(jqXHR.responseText.trim()== "success")
 {
     $("#like_icon_"+item_id).html('');
     $(".like_icon1_"+item_id).html('');
-    $(".like_icon1_"+item_id).replaceWith(' <div id="like_icon_'+item_id+'"><a href="javascript:void(0);"><img src="{{asset('bundles/lovethatfit/site/images/like.png')}}" onclick=loveItem('+item_id+')></a><span id="ajax_product_love_url'+item_id+'" style="display:none;">{{path('ajax_user_product_item_create',{'product_item_id':'item_id'})}}</span></div>'); 
+    $(".like_icon1_"+item_id).replaceWith(' <div id="like_icon_'+item_id+'"><a 
+href="javascript:void(0);"><img src="{{asset
+('bundles/lovethatfit/site/images/like.png')}}" onclick=loveItem('+item_id+')
+></a><span id="ajax_product_love_url'+item_id+'" style="display:none;">{{path
+('ajax_user_product_item_create',{'product_item_id':'item_id'})}}</span></div>'); 
 }               
    }
  });
@@ -562,18 +683,23 @@ if(jqXHR.responseText.trim()== "success")
     
 function set_slider_buttons(){
   if($("#slider_dis_canv").scrollTop() == 0){
-      $(".slider_but_top").removeClass("click_able_top").addClass("disable_me_top");
+      $(".slider_but_top").removeClass("click_able_top").addClass
+("disable_me_top");
       //alert("top_disabled now");
   }
   else {
-      $(".slider_but_top").removeClass("disable_me_top").addClass("click_able_top");
+      $(".slider_but_top").removeClass("disable_me_top").addClass
+("click_able_top");
   }
-  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 500){
-      $(".slider_but_btm").removeClass("click_able_btm").addClass("disable_me_btm");
+  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv 
+ul.prod_wrapper").height() - 500){
+      $(".slider_but_btm").removeClass("click_able_btm").addClass
+("disable_me_btm");
       //alert("bottom_disabled now");
   }
   else {
-      $(".slider_but_btm").removeClass("disable_me_btm").addClass("click_able_btm");
+      $(".slider_but_btm").removeClass("disable_me_btm").addClass
+("click_able_btm");
   }
 }
 
@@ -649,21 +775,25 @@ $(document).ready(function(){
 });
 var scroll_heighting = 506;
     $(".click_a ble_top").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 
+1200, "swing", function (){set_slider_buttons();} );
         
     });
     $(".click _able_btm").click(function (){
-        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 
+1200, "swing", function (){set_slider_buttons();} );
         
     });
     
     var short_scroll_heighting = 386;
     $(".click_able_top").click(function (){
-        $("#recent_prods").animate({"scrollTop" : "-=" + short_scroll_heighting}, 1200, "swing", function (){set_short_slider_buttons();} );
+        $("#recent_prods").animate({"scrollTop" : "-=" + short_scroll_heighting}, 
+1200, "swing", function (){set_short_slider_buttons();} );
         
     });
     $(".click_able_btm").click(function (){
-        $("#recent_prods").animate({"scrollTop" : "+=" + short_scroll_heighting}, 1200, "swing", function (){set_short_slider_buttons();} );
+        $("#recent_prods").animate({"scrollTop" : "+=" + short_scroll_heighting}, 
+1200, "swing", function (){set_short_slider_buttons();} );
         //alert("asfasd");
     });
     
@@ -675,7 +805,10 @@ var scroll_heighting = 506;
     function product_drag_limit_check(prod_type){
         var prod_axis = $(prod_type).offset();
 
-        if(prod_axis.left < $(prod_type).parent().offset().left - 30 || prod_axis.left > $(prod_type).parent().offset().left + 30 || prod_axis.top < $(prod_type).parent().offset().top - 30 || prod_axis.top > $(prod_type).parent().offset().top + 30){
+        if(prod_axis.left < $(prod_type).parent().offset().left - 30 || 
+prod_axis.left > $(prod_type).parent().offset().left + 30 || prod_axis.top < 
+$(prod_type).parent().offset().top - 30 || prod_axis.top > $(prod_type).parent
+().offset().top + 30){
             $( prod_type ).draggable( "option", "revert", false );
         }
         else{
@@ -711,17 +844,20 @@ var scroll_heighting = 506;
     
     function remove_prod_details (prod_type){
         //alert($(prod_type).parent().parent().attr("id"));
-        if($(prod_type).parent().attr("id") == "top_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_top_hlder"){
+        if($(prod_type).parent().attr("id") == "top_dropable" || 
+$(prod_type).parent().parent().attr("id") == "prod_type_top_hlder"){
             $("#prod_type_top_hlder").fadeOut(300);
             $("#top_dropable").fadeOut(300);
             remove_prod_state(parseInt($("#remove_top_prod_id").attr('value')));
         }
-        if($(prod_type).parent().attr("id") == "bottom_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_bottom_hlder"){
+        if($(prod_type).parent().attr("id") == "bottom_dropable" || 
+$(prod_type).parent().parent().attr("id") == "prod_type_bottom_hlder"){
             $("#prod_type_bottom_hlder").fadeOut(300);
             $("#bottom_dropable").fadeOut(300);
             remove_prod_state(parseInt($("#remove_bottom_prod_id").attr('value')));
         }
-        if($(prod_type).parent().attr("id") == "full_dropable" || $(prod_type).parent().parent().attr("id") == "prod_type_dress_hlder"){
+        if($(prod_type).parent().attr("id") == "full_dropable" || 
+$(prod_type).parent().parent().attr("id") == "prod_type_dress_hlder"){
             $("#prod_type_dress_hlder").fadeOut(300);
             $("#full_dropable").fadeOut(300);
             remove_prod_state(parseInt($("#remove_dress_prod_id").attr('value')));
@@ -732,8 +868,10 @@ var scroll_heighting = 506;
     //---Function to check position and remove applied product---//
     function remove_product_applied (prod_type){
         //alert($( prod_type ).css("left"));
-        if($( prod_type ).css("left") != "0px" || $( prod_type ).css("top") != "0px" ){
-            $( prod_type).fadeOut(300, function (){$(prod_type).parent().addClass("hide").css("display","none")});
+        if($( prod_type ).css("left") != "0px" || $( prod_type ).css("top") != 
+"0px" ){
+            $( prod_type).fadeOut(300, function (){$(prod_type).parent().addClass
+("hide").css("display","none")});
             
             remove_prod_details(prod_type);
             
@@ -749,7 +887,8 @@ var scroll_heighting = 506;
     
     
     
-    $( ".prod_wrapper li .prod_node .prod_top" ).draggable({ revert: "invalid", helper: "clone",
+    $( ".prod_wrapper li .prod_node .prod_top" ).draggable({ revert: "invalid", 
+helper: "clone",
         start:function (){
             $(".int_fitting_room").zIndex("-10");
             $("#fitting_alerts").zIndex("-8");
@@ -759,13 +898,17 @@ var scroll_heighting = 506;
             var left_pos_drop = 182;
             
             
-            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
-            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            //var prod_h = $(this).parent().find(".prod_details 
+.prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr
+("value");
         
         
         
         
-        $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+        $( "#top_dropable").removeClass("hide").css("display","block").addClass
+("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 
+2))});
            
         },
         drag:function(){
@@ -797,20 +940,25 @@ var scroll_heighting = 506;
     });
     
     
-    $( ".prod_wrapper li .prod_node .featured_img .prod_bottom" ).draggable({ revert: "invalid", helper: "clone",
+    $( ".prod_wrapper li .prod_node .featured_img .prod_bottom" ).draggable({ 
+revert: "invalid", helper: "clone",
         start:function (){
             
             var prod_h = 200;
             var prod_w = 264;
             var left_pos_drop = 182;
             
-            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
-            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            //var prod_h = $(this).parent().find(".prod_details 
+.prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr
+("value");
             $(".int_fitting_room").zIndex("-1");
            // $("#fitting_alerts").zIndex("-8");
            open_fr();
             
-        $( "#bottom_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+        $( "#bottom_dropable").removeClass("hide").css("display","block").addClass
+("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 
+2))});
             
         },
         drag:function(){
@@ -833,27 +981,33 @@ var scroll_heighting = 506;
     });
     
     
-    $( ".prod_wrapper li .prod_node .featured_img .prod_dress" ).draggable({ revert: "invalid", helper: "clone",
+    $( ".prod_wrapper li .prod_node .featured_img .prod_dress" ).draggable({ 
+revert: "invalid", helper: "clone",
         start:function (){
             
             var prod_h = 300;
             var prod_w = 264;
             var left_pos_drop = 182;
             
-            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
-            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            //var prod_h = $(this).parent().find(".prod_details 
+.prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr
+("value");
             $(".int_fitting_room").zIndex("-1");
           //  $("#fitting_alerts").zIndex("-8");
           open_fr();
             
-        $( "#full_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+        $( "#full_dropable").removeClass("hide").css("display","block").addClass
+("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 
+2))});
             
         },
         drag:function(){
         },
         stop:function (){
             
-            var my_ccc = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            var my_ccc = $(".ui-draggable-dragging").parent().find
+(".prod_fitting_details a").attr("href");
             //alert(my_ccc);
             $( "#full_dropable").removeClass("top_active");
             $(".int_fitting_room").zIndex("0");
@@ -880,7 +1034,8 @@ var scroll_heighting = 506;
     
     </script>
     
-   <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/default_mannequin.js') }}"></script>
+   <script type="text/javascript" src="{{ asset
+('bundles/lovethatfit/site/js/default_mannequin.js') }}"></script>
     
     
     <div class="pro_cart">
@@ -928,13 +1083,19 @@ var scroll_heighting = 506;
             
             
             </li>
-          <!-- <li><a href="#"><span></span>Twitter Notes<span class="mnu"></span></a>
+          <!-- <li><a href="#"><span></span>Twitter Notes<span 
+class="mnu"></span></a>
                     
                 <ul style="display: block;">
 
                   <li style="padding:0px;">
-                    <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="308997517008306176">Tweets by @LoveThatFit</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    <a class="twitter-timeline"  
+href="https://twitter.com/LoveThatFit"  data-widget-id="308997517008306176">Tweets 
+by @LoveThatFit</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!
+d.getElementById(id)){js=d.createElement
+(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore
+(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 
  
@@ -944,11 +1105,13 @@ var scroll_heighting = 506;
                 
                 
                 </li>
-            <li><a href="#"><span></span>Facebook Updates<span class="mnu"></span></a>
+            <li><a href="#"><span></span>Facebook Updates<span 
+class="mnu"></span></a>
                    
                    <ul style="display: block;">
                   <li>
-                    {% include 'LoveThatFitSiteBundle::InnerSite/_facebookpage.html.twig'%}  
+                    {% include 
+'LoveThatFitSiteBundle::InnerSite/_facebookpage.html.twig'%}  
                     </li> 
                     </ul>  
                     
@@ -1014,7 +1177,8 @@ var scroll_heighting = 506;
              
             var chk_curr_ele = $(this).parent().find("ul").css("display");
             if(chk_curr_ele == "none" ){
-                $(this).parent().find("ul").slideDown().parent().addClass("opn_link");
+                $(this).parent().find("ul").slideDown().parent().addClass
+("opn_link");
                 //$(this).parent().find("span").removeClass("mnu");
                // $(this).parent().find("span").addClass("opn_link");
                
@@ -1040,7 +1204,9 @@ var scroll_heighting = 506;
                         url: clicked_url,
                         cache: false,
                         success: function(html){
-                        $("#slider_dis_canv").html(html).animate({scrollTop : "0px"}, 200, "swing", function (){set_drag_drop_ele();set_slider_buttons();$(".loading_now").fadeOut(100);});
+                        $("#slider_dis_canv").html(html).animate({scrollTop : 
+"0px"}, 200, "swing", function (){set_drag_drop_ele();set_slider_buttons();
+$(".loading_now").fadeOut(100);});
                         //$("#slider_dis_canv ul").remove();
                           
                           
@@ -1088,7 +1254,8 @@ var scroll_heighting = 506;
     
     $.each( prods_to_apply, function( key, value ) {
         
-        new_product_control(false,parseInt(value.product_id),parseInt(value.color_id),parseInt(value.size_id));
+        new_product_control(false,parseInt(value.product_id),parseInt
+(value.color_id),parseInt(value.size_id));
         
       });
     
@@ -1149,7 +1316,8 @@ function chk_bottom_applied_loaded(prod_type_applied){
                 setTimeout(chk_bottom_applied_loaded(prod_type_applied), 200);
                 return false;
             }else {
-                $("#bottom_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#bottom_dropable").fadeIn("500",function ()
+{$("#user_dummy_img_hldr .uploading_in_progress").remove()});
                 $("#applied_prod_bottom").draggable({
                         start: function(){
                         },
@@ -1171,7 +1339,8 @@ function chk_dress_applied_loaded(prod_type_applied){
                 setTimeout(chk_dress_applied_loaded(prod_type_applied), 200);
                 return false;
             }else {
-                $("#full_dropable").fadeIn("500",function (){$("#user_dummy_img_hldr .uploading_in_progress").remove()});
+                $("#full_dropable").fadeIn("500",function ()
+{$("#user_dummy_img_hldr .uploading_in_progress").remove()});
                 $("#applied_prod_dress").draggable({
                         start: function(){
                         },
@@ -1186,13 +1355,18 @@ function chk_dress_applied_loaded(prod_type_applied){
         }
 
 function apply_prod(size_id,product_id,color_id){
-    //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = " +color_id);
+    //alert("size_id =" + size_id + "  product_id = " + product_id + "   color_id = 
+" +color_id);
     
-   // var apply_img_url = $('.dynamic_data'+product_id+' .featured_img a.apply_img').attr('href');
+   // var apply_img_url = $('.dynamic_data'+product_id+' .featured_img 
+a.apply_img').attr('href');
     var apply_img_url = $('.ui-accordion-content-active a.apply_img').attr('href');
-    var prod_type_top = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_top');
-    var prod_type_bottom = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_bottom');
-    var prod_type_dress = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_dress');
+    var prod_type_top = $('.featured_box'+product_id+' .featured_img 
+img').hasClass('prod_top');
+    var prod_type_bottom = $('.featured_box'+product_id+' .featured_img 
+img').hasClass('prod_bottom');
+    var prod_type_dress = $('.featured_box'+product_id+' .featured_img 
+img').hasClass('prod_dress');
     
     //alert(apply_img_url);
     
@@ -1204,52 +1378,62 @@ function apply_prod(size_id,product_id,color_id){
         
         
         
-        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
-//        var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details 
+a').attr('href');
+//        var my_curr_prod = $(".ui-draggable-dragging").parent().find
+(".prod_fitting_details a").attr("href");
             
             
             $.ajax({
                 url: my_curr_prod,
                 cache: false,
                 success: function(curr_prod_alerts){
-                    $("#curr_top_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                    $("#curr_top_alerts").html(curr_prod_alerts).parent().parent
+().fadeIn();
                 }
             });  
     }
     if(prod_type_bottom) {
         
         $("#bottom_dropable").fadeOut("200", function (){
-            $("#bottom_dropable").html("<img id='applied_prod_bottom' src='"+apply_img_url+"'/>")
+            $("#bottom_dropable").html("<img id='applied_prod_bottom' 
+src='"+apply_img_url+"'/>")
             chk_bottom_applied_loaded('applied_prod_bottom');
           });
         
-        //$("#bottom_dropable").fadeOut("500").html("<img src='"+apply_img_url+"'/>").fadeIn("500").addClass("disp_blk");
+        //$("#bottom_dropable").fadeOut("500").html("<img src='"+apply_img_url
++"'/>").fadeIn("500").addClass("disp_blk");
         
-        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
+        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details 
+a').attr('href');
             
             $.ajax({
                 url: my_curr_prod,
                 cache: false,
                 success: function(curr_prod_alerts){
-                    $("#curr_bottom_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                    $("#curr_bottom_alerts").html(curr_prod_alerts).parent
+().parent().fadeIn();
                 }
             });
     }
     if(prod_type_dress) {
         
         $("#full_dropable").fadeOut("200", function (){
-            $("#full_dropable").html("<img id='applied_prod_dress' src='"+apply_img_url+"'/>")
+            $("#full_dropable").html("<img id='applied_prod_dress' 
+src='"+apply_img_url+"'/>")
             chk_dress_applied_loaded('applied_prod_dress');
           });
         
         
-        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details a').attr('href');
+        var my_curr_prod = $('.dynamic_data'+product_id+' .prod_fitting_details 
+a').attr('href');
             
             $.ajax({
                 url: my_curr_prod,
                 cache: false,
                 success: function(curr_prod_alerts){
-                    $("#curr_dress_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                    $("#curr_dress_alerts").html(curr_prod_alerts).parent().parent
+().fadeIn();
                 }
             });
     }
@@ -1261,17 +1445,22 @@ function pattern_select(color_id,product_id,size_id)
    //base_url=$('#base_url').text();
    base_url = $('#ajax_product_base_url').text();
       // size_id =$('#hidden_size_id').text();
-      // $('.featured_box'+product_id+' .transp_list').removeClass("hide").addClass("disp_blk");
+      // $('.featured_box'+product_id+' .transp_list').removeClass
+("hide").addClass("disp_blk");
      
         $.ajax({
-            //url: base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" +  color_id + "/" +size_id,
+            //url: base_url+"/app_dev.php/ajax/product/"+ product_id+ "/" +  
+color_id + "/" +size_id,
             url: base_url + product_id+ "/" +  color_id + "/" +size_id,
           
             success: function (data) {
               
-              $('.featured_box'+product_id+' .transp_list').removeClass("disp_blk").addClass("hide");
-              $('.featured_box'+product_id+' .dynamic_data'+product_id ).html(data).addClass("disp_blk");
-              $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass("hide");
+              $('.featured_box'+product_id+' .transp_list').removeClass
+("disp_blk").addClass("hide");
+              $('.featured_box'+product_id+' .dynamic_data'+product_id ).html
+(data).addClass("disp_blk");
+              $('.featured_box'+product_id+' .nrm_prod_data'+product_id ).addClass
+("hide");
               set_drag_drop_ele();
               apply_prod(size_id,product_id,color_id);
             }
@@ -1331,21 +1520,25 @@ function get_compare_list(compare_item_id){
 
 function set_short_slider_buttons(){
   if($("#recent_prods").scrollTop() == 0){
-      $("#rece_up_but span").removeClass("click_able_top").addClass("disable_me_top");
+      $("#rece_up_but span").removeClass("click_able_top").addClass
+("disable_me_top");
       //alert("top_disabled now");
   }
   else {
-      $("#rece_up_but span").removeClass("disable_me_top").addClass("click_able_top");
+      $("#rece_up_but span").removeClass("disable_me_top").addClass
+("click_able_top");
   }
   
   var chk_it_height = $("#recent_prods ul.prod_wrapper").height();
   chk_it_height = chk_it_height -280;
   if($("#recent_prods").scrollTop() >= chk_it_height){
-      $("#rece_down_but span").removeClass("click_me_btm").addClass("disable_me_btm");
+      $("#rece_down_but span").removeClass("click_me_btm").addClass
+("disable_me_btm");
       //console.log(chk_it_height);
   }
   else {
-      $("#rece_down_but span").removeClass("disable_me_btm").addClass("click_able_btm");
+      $("#rece_down_but span").removeClass("disable_me_btm").addClass
+("click_able_btm");
   }
 }
 
