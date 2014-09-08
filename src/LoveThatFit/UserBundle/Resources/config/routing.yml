@@ -66,6 +66,10 @@ registration_step_four_time_spent:
     pattern:  /registration/time_spent
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourTimeSpent }
     
+registration_step_four_edit_ipad:
+    pattern:  /registration/step_four_edit_ipad
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEditIpad }
+     
     
 registration_parent_child:
     pattern:  /registration/parent/child/{id}
