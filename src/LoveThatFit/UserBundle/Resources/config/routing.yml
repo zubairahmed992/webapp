@@ -61,6 +61,11 @@ registration_step_four_image_update:
 registration_step_four_edit:
     pattern:  /registration/step_four_edit
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEdit }
+  
+registration_step_four_time_spent:
+    pattern:  /registration/time_spent
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourTimeSpent }
+    
     
 registration_parent_child:
     pattern:  /registration/parent/child/{id}

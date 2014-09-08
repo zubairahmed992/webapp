@@ -444,7 +444,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
-
+        
         $form = $this->createForm(new RegistrationStepFourType(), $entity);
         $form->bind($request);
         $response_array = "";
@@ -467,7 +467,14 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
-
+#-----------Registration Step Four TimeSpent Ajax Request--------------------#
+public function stepFourTimeSpentAction(Request $request){
+     $data = $request->request->all();
+     $id = $this->get('security.context')->getToken()->getUser()->getId();
+    $user = $this->get('user.helper.user')->find($id);
+    $user->setTimeSpent($_GET['chk_time']);
+    $this->get('user.helper.user')->saveUser($user); 
+}
 //-------------Updates shoulder height & outseam, input via user move sliders on image, form submit via ajax
 
     public function stepFourMeasurementUpdateAction(Request $request, $id) {

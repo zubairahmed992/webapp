@@ -59,6 +59,8 @@ trans_bg.style = {
 	stroke: 1,
 	strokeColor: '#ffcc00'
 };
+
+    
 //rect_add_top = new Path.Rectangle(new Point(0, 84), new Size(364, 0));
 //rect_add_top.style = {
 //	fillColor: '#000',
@@ -135,6 +137,7 @@ function onMouseMove(event) {
 		event.item.selected = true;
 	
 }
+
 
 
 
@@ -237,12 +240,41 @@ function onMouseDrag(event) {
 	
 }
 </script>
+
 <script type="text/javascript">
    $(document).ready(function() {  
+       
+    $("#paper_step_1_a").click(
+        function(){
+            //alert("Face");
+            //checking_bhai();
+            $("#paper_step_1_a").fadeOut(300,function (){$("#paper_step_1").fadeIn();});
+            //pp_user_height = parseInt($("#user_height_frm_3").attr("value")) * 6;
+            //var head_radio = (pp_user_height / 100) * 7.65;
+            //$("#face_pos").css("height",head_radio);
+            set_face();
+        }
+    ); 
+       
     $("#paper_step_1").click(
         function(){
-            
             p_user_height = parseInt($("#user_height_frm_3").attr("value")) * 6;
+            $("#face_hldr").fadeOut();
+            var face_pos_top = ($("#face_pos").offset().top - $("#face_hldr").offset().top) - $("#p_selected_pic_y").attr('value');
+            var face_pos_left = ($("#face_pos").offset().left - $("#face_hldr").offset().left) - $("#p_selected_pic_x").attr('value');
+            
+            
+           
+            
+            //$("#face_pos").height(20);
+            
+            //alert(face_pos_top);
+            
+            
+            
+            var additanal_value = (p_user_height / 100) * 4.22;
+            
+            //alert(additanal_value);
             
             //p_user_height = ;
             p_curr_pic_h = $("#img_to_upload").height();
@@ -254,7 +286,8 @@ function onMouseDrag(event) {
             //var p_curr_pic_offset_x = $("#img_to_upload").offset().left - $("#play_area").offset().left;
             //var p_curr_pic_offset_y = $("#img_to_upload").offset().top - $("#play_area").offset().top;
             
-            p_selected_h = $("#p_selected_pic_h").attr("value");
+            p_selected_h = ($("#p_selected_pic_h").attr("value") - face_pos_top) - additanal_value;
+            //alert();
             p_selected_w = $("#p_selected_pic_w").attr("value");
             
             p_selected_pic_x = $("#p_selected_pic_x").attr("value");
@@ -288,10 +321,17 @@ function onMouseDrag(event) {
             $(".height_bottom_mark").fadeIn(500);
             //$("#img_to_upload").css("width","auto");
             
+            
             if(chk_no_img_path == true){            
                 $("#img_to_upload").animate({ height:p_apply_zoom_h, width:p_apply_zoom_w }, 400, function() { }); 
-                $("#uploaded_photo").animate({ top: -(p_selected_pic_y*p_zoom_value)+17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
+                $("#uploaded_photo").animate({ top: -((p_selected_pic_y*p_zoom_value) + face_pos_top) + 17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
             }
+            /*
+                if(chk_no_img_path == true){            
+                    $("#img_to_upload").animate({ height:p_apply_zoom_h - additanal_value, width:p_apply_zoom_w }, 400, function() { }); 
+                    $("#uploaded_photo").animate({ top: -(p_selected_pic_y*p_zoom_value)+17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
+                }
+            */
             $("#rect_mask").fadeOut(500);
             $("#canv_mask").fadeIn(500);
             
@@ -319,37 +359,56 @@ function onMouseDrag(event) {
             $("#uploaded_photo").animate({ top: -(p_selected_pic_y*p_zoom_value)+17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
             $("#rect_mask").fadeIn(500);
             $("#canv_mask").fadeOut(500);
+            $("#face_mask").fadeOut(500);
             
             $("#paper_step_1").fadeIn();
             $("#paper_step_1_reload").removeClass("paper_step_1_reload");
             });
+            
+            function set_face(){
+//alert(p_selected_pic_x);
+$("#face_hldr").fadeIn();
+
+$("#face_inner").css({left: parseInt($('#p_selected_pic_x').attr('value')), top: parseInt($('#p_selected_pic_y').attr('value')), width: parseInt($('#p_selected_pic_w').attr('value')), height: parseInt($('#p_selected_pic_h').attr('value'))});
+$( "#face_pos" ).draggable({ containment: "#face_inner", scroll: false });
+
+    //$("#face_mask").css("top", parseInt($('#p_selected_pic_y').attr('value')) + 40);
+    //$("#face_mask").css("left", parseInt($('#p_selected_pic_x').attr('value')) + (parseInt($('#p_selected_pic_w').attr('value'))/2) );
+    //$("#face_mask").fadeIn();
+}
         
     });
-    
-    
-    
+ 
+
+ 
+  function checking_bhaiii() {  
+        $("#face_mask").fadeIn();
+    }
 function checking_bhai() {
         
 		// Get a reference to the canvas object
-		var p1_canvas = document.getElementById('rect_mask');
+		var p2_canvas = document.getElementById('face_mask');
 		// Create an empty project and a view for the canvas:
-		paper.setup(p1_canvas);
+		paper.setup(p2_canvas);
 		// Create a Paper.js Path to draw a line into it:
 		
                 
-               var url = $("#img_path_paper").attr("value");
+               var url = "{{ asset('bundles/lovethatfit/site/images/face-blue.png')}}";
                // alert(url);
                 
-                var raster = new paper.Raster(url);
-                raster.position = new paper.Point(100, 220);
-                raster.scale(0.5, 0.5);
+                var raster_face = new paper.Raster(url);
+                raster_face.position = new paper.Point(parseInt($('#p_selected_pic_x').attr('value')) + (parseInt($('#p_selected_pic_w').attr('value'))/2), parseInt($('#p_selected_pic_y').attr('value')) + 40);
+               // raster.scale(0.5, 0.5);
                 
                 //raster.size = new paper.Size(100, 100)
                 // If you create a Raster using a url, you can use the onLoad
                 // handler to do something once it is loaded:
-                raster.onLoad = function() {
+                raster_face.onLoad = function() {
+                    $("#face_mask").fadeIn();
                     console.log('The image has loaded.');
-                };
+               };
+               
+    
 	}
     </script>
 
@@ -593,7 +652,11 @@ function onMouseDrag(event) {
 
 	
 }
+
 </script>
+
+
+
 
 <script type="text/javascript" >
 $(document).ready(function() {
@@ -630,6 +693,45 @@ svg_path:$('#img_path_paper').attr('value')};
 
 
 </script>
+<script>
+// Script for time spent on page 
+
+jQuery(document).ready(function ($) { 
+
+     var typingTimer;    //timer identifier
+     var doneTypingInterval = 1000;  //time in ms, 5 second for example
+     var checktime = 0;
+     typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      clearTimeout(typingTimer);
+
+    function doneTyping () {
+        checktime = typingTimer;
+        return checktime;
+    } 
+    jQuery('#paper_step_1').click(function() {
+       
+        checktime = doneTyping ();
+       pre_time=$('#user_timeSpent').val();
+       checktime+=pre_time;
+       $('#user_timeSpent').val(checktime);
+        $.ajax({
+               type: "GET",
+               url: $("#time_spent_url").text(), 
+                 data: {chk_time:checktime},  
+               success: function(data){
+                   
+                },
+               failure: function(errMsg) {
+                 
+               }
+         });
+        
+    });
+
+});
+
+ </script>
+ 
 
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
 <input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
@@ -708,7 +810,8 @@ svg_path:$('#img_path_paper').attr('value')};
                 
                 
                 
-                
+                    {{ form_widget(form.timeSpent)}}  
+                    <span id="time_spent_url" style="display:none;">{{path('registration_step_four_time_spent')}}</span>
                 
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
      {{ form_errors(form) }}
@@ -1145,6 +1248,18 @@ svg_path:$('#img_path_paper').attr('value')};
                         <div id="play_area" class="play_area hide">
                             
                             <canvas id="rect_mask" width="364" height="505"></canvas>
+                            
+                            <div id="face_hldr">
+                                <div id="face_inner">
+                                    <img id="face_pos" src="{{ asset('bundles/lovethatfit/site/images/face-blue.png')}}" width="36" height="60" />
+                                    <!--
+                                    <canvas id="face_mask" width="200" height="200"></canvas>
+                                    -->
+                                </div>
+                            </div>
+                            
+                            
+                            
                             <canvas id="canv_mask" width="364" height="505"></canvas>
                             
                             <div class="center_mark"></div>
@@ -1179,6 +1294,7 @@ svg_path:$('#img_path_paper').attr('value')};
             
             <div class="next_btn_4">
                 <div class="frm_ele">
+                    <input id="paper_step_1_a" type="button" value="Next Step" />
                     <input id="paper_step_1" type="button" value="Next Step" />
                     <input class="next_step2" type="button" value="Next Step" />
                     <input class="next_step3" type="button" value="Next Step" />
