@@ -239,6 +239,7 @@ function onMouseDrag(event) {
 </script>
 <script type="text/javascript">
    $(document).ready(function() {  
+      
     $("#paper_step_1").click(
         function(){
             
@@ -630,7 +631,44 @@ svg_path:$('#img_path_paper').attr('value')};
 
 
 </script>
+<script>
+// Script for time spent on page 
 
+jQuery(document).ready(function ($) { 
+
+     var typingTimer;    //timer identifier
+     var doneTypingInterval = 1000;  //time in ms, 5 second for example
+     var checktime = 0;
+     typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      clearTimeout(typingTimer);
+
+    function doneTyping () {
+        checktime = typingTimer;
+        return checktime;
+    } 
+    jQuery('#paper_step_1').click(function() {
+       
+        checktime = doneTyping ();
+       pre_time=$('#user_timeSpent').val();
+       checktime+=pre_time;
+       $('#user_timeSpent').val(checktime);
+        $.ajax({
+               type: "GET",
+               url: $("#time_spent_url").text(), 
+                 data: {chk_time:checktime},  
+               success: function(data){
+                   
+                },
+               failure: function(errMsg) {
+                 
+               }
+         });
+        
+    });
+
+});
+
+ </script>
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
 <input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
 
@@ -709,7 +747,8 @@ svg_path:$('#img_path_paper').attr('value')};
                 
                 
                 
-                
+                {{ form_widget(form.timeSpent)}}  
+                    <span id="time_spent_url" style="display:none;">{{path('registration_step_four_time_spent')}}</span>
                 <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
      {{ form_errors(form) }}
                 <div class="input_file_hldr">
