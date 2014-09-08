@@ -1,4 +1,205 @@
- <form action="{{ path('si_hit') }}" method="post">
- {{ form_errors(form) }}
- {{ form_rest(form) }}
-<input type="submit" value="Hit" />                                     
+<style>
+.c_pannel{
+background-color: #CCC; margin: 10px; padding: 10px; width: 500px;    
+}
+.c_pannel_element{
+margin: 5px; 
+}    
+    </style>
+
+
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
+
+<div class="c_pannel">
+    <div class="c_pannel_element">
+        <select  id="users">
+            <option>Select User</option>
+            {% for k,v in users  %}
+                <option value="{{v.authToken}}">{{ v.email }}</option>
+            {% endfor %}
+        </select>
+    </div>
+        
+    <div class="c_pannel_element">
+        <select  id="service_name">
+            <option>Select Service</option>
+             {% for k,v in services_array  %}
+                <option value="{{v['pattern']}}">{{ k }}</option>
+            {% endfor %}
+        </select>
+
+    </div>
+</div>
+
+<div class="c_pannel">
+    <form action="{{ path('si_hit') }}" method="post">
+        <h4 id='user_name_header'>user name</h4>
+        <h4 id='user_token_header'>token</h4>
+        <h4 id='service_name_header'>service name</h4>
+        <h4 id='service_path_header'>path</h4>
+        <textarea style="width: 500px; height: 200px" id='txt_request'></textarea>
+        <textarea style="width: 500px; height: 200px" id='txt_response'></textarea>
+        <input id='hit' type="button" value="Hit" />                                     
+    </form>
+</div>
+
+<br>
+<script  type='text/javascript'>
+
+function replace_user_data(){
+          email = $("#user_name_header").text();
+          token = $("#user_token_header").text();             
+  
+    request_json = $.trim($("#txt_request").val());
+    if (request_json.indexOf("authTokenWebService")!=-1 || request_json.indexOf("email")!=-1){
+        var obj1 = JSON.parse(request_json);
+        if (request_json.indexOf("authTokenWebService")!=-1){
+            obj1.authTokenWebService=token;
+        }
+        if (request_json.indexOf("email")!=-1){
+            obj1.email=email;    
+        }
+        $("#txt_request").text(JSON.stringify(obj1));        
+    }
+      getUserDetail();
+}
+
+function replace_all_user_data(user_detail){
+    var u_obj = JSON.parse(user_detail);
+    var r_obj = JSON.parse($("#txt_request").val());
+    
+    for(var ukey in u_obj){
+        for(var rkey in r_obj){
+            if (rkey==ukey){
+                r_obj[rkey]=u_obj[ukey];
+            }
+        }
+    }
+    $("#txt_request").text(JSON.stringify(r_obj));
+}
+
+//-------------------------------------------------------
+{% autoescape false %};
+var j = '{{ services_json}}';
+var obj = JSON.parse(j);
+{% endautoescape %}
+
+function find_pattern(service_name){    
+    for(var key in obj)
+       if(key==service_name)
+            return obj[key].pattern;                     
+}
+//--------------------------------------------
+function get_params_json(service_name){    
+    
+    for(var key in obj){
+       if(key==service_name){
+           if(obj[key].hasOwnProperty('params')){
+                return JSON.stringify(obj[key].params);                     
+            }else{
+                return ' ';
+                }
+        }
+    }
+}
+
+
+//-------------------------------------
+function upload(){
+    request_json = $.trim($("#txt_request").text());    
+    //alert(request_json);     
+
+    if (request_json.length==0){
+        $.ajax({
+               type: "GET",
+               url: ".." + $("#service_path_header").text(),               
+               success: function(data){
+                    display_response(data);
+                },
+               failure: function(errMsg) {
+                   display_response(errMsg);
+               }
+         });
+    }else{
+        var value_ar = JSON.parse($("#txt_request").val());        
+        
+        $.ajax({
+               type: "POST",
+               url: ".." + $("#service_path_header").text(),
+               data: value_ar,  
+               dataType: "json",
+               success: function(data){
+                   display_response(data);                    
+                },
+               failure: function(errMsg) {
+                   display_response(errMsg);
+               }
+         });    
+    }
+}
+function display_response(data){
+            str = JSON.stringify(data);
+            str = str.split("\\").join("");
+            $('#txt_response').html(str);
+}
+ //-------------------------------------------------------------
+   function replace_text(str, email){      
+    if (email.trim()==0){
+       return str
+   } else {
+    var re = /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;   
+    return str.replace(re,email);
+    }
+}
+//--------------------------------------------------------------    
+
+//-------------------------------------
+function getUserDetail(){
+        $.ajax({
+               type: "GET",
+               url: "../service_interface/user_detail/" + $("#user_name_header").text(),               
+               success: function(data){
+                    //alert(data);
+                    //var u_obj = JSON.parse(data);
+                     replace_all_user_data(data);
+                    
+                },
+               failure: function(errMsg) {
+                   alert(errMsg);
+               }
+         });
+    }
+
+
+//------------------ events -------------------
+$( "#hit" ).click(function() {
+  upload();
+  return false;
+})
+ 
+
+//------------- service dropdownlist --------------------------
+
+$("#service_name").click(function() {  
+  $("#service_name_header").text( $('option:selected', this).html() );
+  $("#service_path_header").text( this.value );    
+  $("#txt_request").text(get_params_json($('option:selected', this).html()));       
+  //$("#txt_request").text(replace_text($("#txt_request").val(), $("#user_name_header").text()));
+  
+  replace_user_data();
+  
+});
+
+//------------------- user dropdownlist --------------------
+$("#users").click(function() {  
+    email=$('option:selected', this).html();
+  $("#user_name_header").text( $('option:selected', this).html() );
+  $("#user_token_header").text( this.value );  
+  //$("#txt_request").text(replace_text($("#txt_request").val(), email));
+    replace_user_data();
+    
+});
+
+    
+    
+    </script>

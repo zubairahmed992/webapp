@@ -56,8 +56,8 @@ class DefaultController extends Controller {
     }
 
     #------------------------------------------------------------------------#
-    public function webHookCallAction(){
-        return new response(json_encode($this->defineAllWebHooks()));
+    public function webHookCallAction(Request $request){
+        return new response(json_encode($this->defineAllWebHooks($_POST['base_url'])));
     }
     public function getCartAction(){
         
@@ -67,11 +67,10 @@ class DefaultController extends Controller {
          $response = $shopify("GET", "/admin/webhooks.json");
          return new response(json_encode($response));
     }
-    public function deleteWebHookAction(){
+    public function deleteWebHookAction($id){
         $shopify = $this->getShopifyObject();
-        
-         $response = $shopify("DELETE", "/admin/webhooks/6845471.json");
-         return new response(json_encode($response));
+        $response = $shopify("DELETE", "/admin/webhooks/$id.json");
+         return new response("Delete");
     }
      #-------------------------------------->
    
@@ -80,14 +79,14 @@ class DefaultController extends Controller {
        $specs['access_token']='fc2d5efc0b57962219093084ba4c80fd'; 
        return $this->get('shopify.helper')->getShopifyObject($specs); 
     }
-    private function defineAllWebHooks(){
+    private function defineAllWebHooks($base_url){
         
       $app_specs = $this->get('shopify.helper')->appSpecs();
       $shopify = $this->getShopifyObject();//$this->get('shopify.helper')->getShopifyObject($specs);  
       $response_array=array();
       #complete base url
       //$base_url=$this->getRequest()->getSchemeAndHttpHost().$this->getRequest()->getBaseURL();
-      $base_url='http://6e8df6eb.ngrok.com/webapp/web/app_dev.php';
+     // $base_url='http://17c0dc1d.ngrok.com/webapp/web/app_dev.php';
       foreach($app_specs['webhooks'] as $k=>$v){
         $response_array[$k] = $this->defineWebHook($shopify, $base_url.$v['address'], $v['topic']);
       #$response_array[$k]=$v['address'].'   @  '. $v['topic'];
@@ -114,8 +113,9 @@ class DefaultController extends Controller {
         }
     }
 #---------------------------------Check Sku ---------------------------#
-public function checkSkuAction($sku=null){
-   
+public function checkSkuAction($sku = null,$user_id=null){
+    
+    
  if($this->get('admin.helper.retailer')->findOneByShopDomain($_REQUEST['shop'])){
   $itemBySku = $this->get('admin.helper.productitem')->findItemBySku($sku);
     if ($itemBySku == null || empty($itemBySku)) {
@@ -128,123 +128,6 @@ public function checkSkuAction($sku=null){
         
     }
 }
-    
 
-#-----------------------------------------------------------------------
- /* private function getContent($option_array=null) {
-       return "<style>
-.full_screen {text-align:center;width:100%;height:100%;position:fixed;left:0;top:0;z-index:80000; background:url({{ 'trans_dot.png' | asset_url }}) 0 0 repeat;display:none;}
-.full_screen .inner_div {width:814px;height:584px;margin:0 auto;margin-top:36px;overflow:hidden;}
-.full_screen img {float:left;}
-.full_screen a.close_me,  .full_screen a.close_me:visited {width:32px;height:32px;float:right;display:block;margin-right:8px;}
-#fr_button {border:1px solid #666;}
-</style>
-<div id='ajax_request'>
-{% unless customer %}
-    {% if template contains 'customers' %}
-        {% assign send_to_login = false %}
-    {% else %}
-        {% assign send_to_login = true %}
-    {% endif %}
-{% endunless %}
-
-{% if send_to_login %}
-<meta content='0; url=/account/login?checkout_url={{ shop.url }}' http-equiv='refresh' />
-{% else %} 
-<input id='fr_button' type='button' onclick='open_me()' value='Fitting Room'></input> 
-{% endif %}
-<div class='full_screen'>
-<div class='inner_div'>
-<a class='close_me' href='#'>Close</a>
-<div id='fitting_room'>        
-<iframe  style='border: 6px inset #ccc; height:568px; background:#fff;' id='ext_fitting_room' width='820' heigth='568' name='ext_fitting_room' marginheight='0' marginwidth='0' scrolling='yes'></iframe>
-</div>
-</div>
-</div>
-<script type='text/javascript'>
-function open_me() {
-jQuery('.full_screen').fadeIn();
-loadfittingroom();
-}
-function close_me() {
-jQuery('.full_screen').fadeOut();
-}
-jQuery('.full_screen .close_me').click(function (){
-close_me();
-});
-function loadfittingroom(){
-     loadhtmliniframe();
- }
-  function loadhtmliniframe() {
- var json_product ={{ product | json }}
-var product_select=$('#product-select').val();
- var curnt_sku=$('#sku'+product_select).text();
- var user_id={{ customer.id | json }}
- var access_token='".$option_array['access_token']."';
- var url= 'shopify/user_check/'+access_token+'/'+user_id+'/'+curnt_sku;
- window.frames['ext_fitting_room'].location = 'http://474ec863.ngrok.com/webapp/web/app_dev.php/'+url;
-  }
-  function loadXMLDoc() {
-  var xmlhttp;
-  var url='/apps/fitting_room';
-
-    if (window.XMLHttpRequest) {
-      
-        xmlhttp = new XMLHttpRequest();
-    } else {
-       
-        xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-    }
-
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 ) {
-           if(xmlhttp.status == 200){
-             document.getElementById('fitting_room').innerHTML = xmlhttp.responseText;
-           }
-           else if(xmlhttp.status == 400) {
-              alert('There was an error 400')
-           }
-           else {
-               alert('something else other than 200 was returned')
-           }
-        }
-    }
-
-    xmlhttp.open('GET', url, true);
-    xmlhttp.send();
-}
-
-$( document ).ready(function() {
-      var product_select=$('#product-select').val();
-  var curnt_sku=$('#sku'+product_select).text();
- var xmlhttp;
-    var url='/apps/fitting_room/'+curnt_sku;
- if (window.XMLHttpRequest) {
- xmlhttp = new XMLHttpRequest();
- } else {
- xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
- }
- xmlhttp.onreadystatechange = function() {
- if (xmlhttp.readyState == 4 ) {
- if(xmlhttp.status == 200){
-   if(xmlhttp.responseText=='no'){
-   	$('#fr_button').hide();
-   }
- }
- else if(xmlhttp.status == 400) {
- alert('There was an error 400')
- }
- else {
- alert('something else other than 200 was returned')
- }
- }
- }
- xmlhttp.open('GET', url, true);
- xmlhttp.send();
-   
-});
-</script>
-";
-    }*/
 
 }

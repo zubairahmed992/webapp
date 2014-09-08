@@ -54,32 +54,40 @@ class RetailerOrderTrack
     /**
      * @var string $order_number
      *
-     * @ORM\Column(name="order_number", type="string", length=255)
+     * @ORM\Column(name="order_number", type="string", length=255,nullable=true)
      */
     private $order_number;
 
     /**
      * @var string $order_status
      *
-     * @ORM\Column(name="order_status", type="string", length=255)
+     * @ORM\Column(name="order_status", type="string", length=255,nullable=true)
      */
     private $order_status;
 
      /**
      * @var string $token
      *
-     * @ORM\Column(name="token", type="string", length=255)
+     * @ORM\Column(name="token", type="string", length=255,nullable=true)
      */
     private $token;
      
     /**
      * @var string $cart_token
      *
-     * @ORM\Column(name="cart_token", type="string", length=255)
+     * @ORM\Column(name="cart_token", type="string", length=255,nullable=true)
      */
     private $cart_token;   
     
    
+    /**
+     * @var integer $order_reference_id
+     *
+     * @ORM\Column(name="order_reference_id", type="integer",nullable=true)
+     */
+    private $order_reference_id;
+    
+    
     
     /**
      * @var dateTime $createdAt
@@ -361,5 +369,28 @@ class RetailerOrderTrack
     public function getRetailer()
     {
         return $this->retailer;
+    }
+
+    /**
+     * Set order_reference_id
+     *
+     * @param integer $orderReferenceId
+     * @return RetailerOrderTrack
+     */
+    public function setOrderReferenceId($orderReferenceId)
+    {
+        $this->order_reference_id = $orderReferenceId;
+    
+        return $this;
+    }
+
+    /**
+     * Get order_reference_id
+     *
+     * @return integer 
+     */
+    public function getOrderReferenceId()
+    {
+        return $this->order_reference_id;
     }
 }

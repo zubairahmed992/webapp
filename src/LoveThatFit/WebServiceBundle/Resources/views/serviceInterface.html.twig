@@ -62,7 +62,7 @@ function getService(){
     }
     if(param=='_user_profile'){
         email=$('#user_profile_email').val();
-       url="user_profile";
+       url="http://localhost/webapp/web/app_dev.php/web_service/user_profile";
        data =new Array();
        data={'email':email, 'type': 'type'};
     }
@@ -71,15 +71,17 @@ function getService(){
         data=new Array();
         data={'id':3,'type':'brand','gender':'F','test':'test','authTokenWebService':'9fbfe79a5b545d4bba6a1e83418022fe'};
     }
+   
      $.ajax({
-       type:'POST',
-       url: url,
+       type:'GET',
+       url: "../web_service/user_profile",
        data: data,  
        success: function(response) {
+           alert(response);
        $('#json_data').html(response);
         }
     });
-    return false;
+   
   
 }
      </script>       

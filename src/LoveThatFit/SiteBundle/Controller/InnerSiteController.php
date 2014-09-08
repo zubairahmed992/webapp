@@ -32,8 +32,9 @@ public function indexAction($list_type) {
  }
  
 #-------------------------------------------------------------------------------
-public function shopifyIndexAction($sku=null,$user_id=null,$retailer=null) {
-        $user = $this->get('security.context')->getToken()->getUser();
+public function shopifyIndexAction($sku=null,$user_id=null,$retailer_id=null) {
+       
+    $user = $this->get('security.context')->getToken()->getUser();
         $session = $this->get("session");
         if ($sku == null && $session->has('shopify_user')) {                  
                   $sku = $session->get('sku');                  
@@ -41,7 +42,7 @@ public function shopifyIndexAction($sku=null,$user_id=null,$retailer=null) {
         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku); 
         
           if ($itemBySku == null || empty($itemBySku)|| !isset($itemBySku)){
-            $retailer=null;
+            $retailer_id=null;
             }else{
                 
             }
@@ -50,13 +51,13 @@ public function shopifyIndexAction($sku=null,$user_id=null,$retailer=null) {
         //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
-            'retailer'=>$retailer,
+            'retailer_id'=>$retailer_id,
             'list_type'=>null,            
             'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
            ));
  }
  #-------------------------------------------------------------------------------
-public function shopifyAfterLoginAction($sku=null,$user_id=null) {
+public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=null) {
         
         $user = $this->get('security.context')->getToken()->getUser();
         $session = $this->get("session");
@@ -72,16 +73,18 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
                   
               } 
         $itemBySku=$this->get('admin.helper.productitem')->findItemBySku($sku);              
-        $retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
+        //$retailer=  is_object($itemBySku)?$itemBySku->getProduct()->getRetailer():null;
         $fitting_room_items=$this->get('site.helper.userfittingroomitem')->add($user,$itemBySku);
         $fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
         return $this->render('LoveThatFitSiteBundle:InnerSite:shopify_index.html.twig', array(
             'item'=>$itemBySku,
-            'retailer'=>$retailer,
+            'retailer_id'=>$retailer_id,
             'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
             'list_type'=>null,            
            ));
  }
+
+
 #-------------------------------------------------------------------------------
  public function homeAction($page_number = 0, $limit = 0) {
        $gender= $this->get('security.context')->getToken()->getUser()->getGender();
@@ -182,7 +185,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
 #-------------------------------------------------------------------------------  
     public function productsMostFavoriteAction($gender, $page_number = 0, $limit = 0) {
         $user_id= $this->get('security.context')->getToken()->getUser()->getId();
-        $entity = $this->get('admin.helper.productitem')->findProductItemByUser($user_id,$gender, $page_number, $limit);
+        $entity = $this->get('admin.helper.product')->findProductItemByUser($user_id,$gender, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);
     
         //$user= $this->get('security.context')->getToken()->getUser();
@@ -190,8 +193,20 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null) {
         //return $this->renderProductTemplate($entity, $page_number, $limit);
     }    
     
-#------------------------------------------------------------------------------- 
+    
+    #------------------------------------------------------------------------------- 
     public function productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
+        $user_id= $this->get('security.context')->getToken()->getUser()->getId();
+        $entity = $this->get('admin.helper.product')->findByGenderLatest($gender, $page_number, $limit);
+        return $this->renderProductTemplate($entity, $page_number, $limit);
+       
+    }
+#----------------------------------- by Brand-----------------------------------
+    
+    
+    
+#------------------------------------------------------------------------------- 
+    public function _productsLTFRecommendationAction($gender, $page_number = 0, $limit = 0) {
         $entity = null;
         return $this->renderProductTemplate($entity, $page_number, $limit, 'Coming Soon');
     }

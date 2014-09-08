@@ -5,3 +5,7 @@ si_index:
 si_hit:
     pattern:  /service_interface/hit
     defaults: { _controller: LoveThatFitWebServiceBundle:ServiceInterface:hit}
+
+si_user_detail:
+    pattern:  /service_interface/user_detail/{email}
+    defaults: { _controller: LoveThatFitWebServiceBundle:ServiceInterface:userDetail}

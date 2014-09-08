@@ -13,6 +13,9 @@ class DefaultController extends Controller
     }
     public function proxyFittingRoomAction($access_token,$user_id,$sku)
     {
+        
+        #-------Set New Session for user---------
+        
         # get retailer by token
         $retailer=$this->getRetailerBaseToken($access_token);
         if($retailer)
@@ -46,7 +49,7 @@ class DefaultController extends Controller
         
         if (is_object($site_user)) {            
              $this->get('user.helper.user')->getLoggedInById($site_user->getUser());
-            return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId(),'retailer'=>$retailer)), 301);
+            return $this->redirect($this->generateUrl('inner_shopify_index', array('sku' => $sku, 'user_id' => $site_user->getId(),'retailer_id'=>$retailer->getId())), 301);
         } else {
             
             //$retailer = $this->get('admin.helper.retailer')->find(1);
@@ -63,6 +66,7 @@ class DefaultController extends Controller
             'retailer_id'=>$retailer_id
             ));
     }
+   
     
     #--------------------------------------------------
     
@@ -74,6 +78,15 @@ class DefaultController extends Controller
         if (count($entity)==0) return new Response('no products');
             return $this->render('LoveThatFitExternalSiteBundle:Default:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
     }    
+    
+     public function recentlyTriedOnItemsForRetailerAction($retailer_id=null, $page_number = 0, $limit = 0) {        
+         $user_id = $this->get('security.context')->getToken()->getUser()->getId();        
+        $entity = $this->get('admin.helper.product')->findRecentlyTriedOnByUserForRetailer($retailer_id, $user_id);
+        //$entity = $this->get('admin.helper.product')->findRecentlyTriedOnByUser($user_id, $page_number, $limit);
+        if (count($entity)==0) return new Response('no products');
+            return $this->render('LoveThatFitExternalSiteBundle:Default:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
+    }   
+ 
  
  
     

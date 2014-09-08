@@ -51,6 +51,8 @@ class UserController extends Controller {
         return $this->render('LoveThatFitAdminBundle:User:show.html.twig', array(
                     'user' => $entity,
                     'page_number' => $page_number,
+                    'product'=>$this->get('site.helper.usertryitemhistory')->countUserTiredProducts($entity),
+                    'brand'=>$this->get('site.helper.usertryitemhistory')->countUserTiredBrands($entity),
                 ));
     }
 

@@ -1,53 +1,33 @@
 <?php
 namespace LoveThatFit\WebServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use LoveThatFit\UserBundle\Entity\User;
-use LoveThatFit\UserBundle\Entity\Measurement;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use LoveThatFit\AdminBundle\Entity\Brand;
-use LoveThatFit\AdminBundle\Entity\Product;
-use LoveThatFit\AdminBundle\Entity\ClothingType;
-use LoveThatFit\AdminBundle\Entity\SizeChart;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 
-class UserController extends Controller {
+class WSTestController extends Controller {
+    
+    private function process_request(){
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        
+        if($decoded==null) #if null (to be used for web service testing))
+            $decoded  = $request->request->all();
+        
+        return $decoded;
+    }
 
 #--------------------Login User -----------------------------------------------#     
     public function loginAction() {
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-     //  $decoded=array('email'=>'','password'=>'Apple2013','deviceType'=>'');
+        $decoded  = $this->process_request();                 
         $user_helper = $this->get('webservice.helper.user');
-        $user_info = $user_helper->loginWebService($decoded,$request);
-      // $user_info = $user_helper->loginWebService($decoded,$request);
-        return new response(json_encode($user_info));
-      
+        $user_info = $user_helper->loginWebService($decoded, $this->getRequest());
+        return new response(json_encode($user_info));      
     }
-    
-    
-    
-    /* public function login1Action() {
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-       $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'7s');
-        $user_helper = $this->get('webservice.helper.user');
-        $user_info = $user_helper->loginWebService1($decoded,$request);
-      // $user_info = $user_helper->loginWebService($decoded,$request);
-        return new response(json_encode($user_info));
-      
-    }*/
-    
-    
-#----------------------End of Login User---------------------------------------# 
+
 #----------------------Registration--------------------------------------------#
  public function registrationCreateAction() {
         $request = $this->getRequest();
@@ -55,14 +35,6 @@ class UserController extends Controller {
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-        
-     //{"email":"kamran@hotmail.com","password":"123456","gender":"f","zipcode":"123456","weight":"80.00","height":"61.00","bust":"0.00","neck":"0.00","chest":"0.00","inseam":"0.00","hip":"0.00","waist":"0.00","deviceType":"ipad","bodyShape":"pear","braSize":"30 b","bodyType":"Regular","deviceId":"tempID","sleeve":"0.00","targetTop":"Banana Republic","targetBottom":"CARMEN MARC VALVO","targetDress":"CARMEN MARC VALVO","topSize":"0","bottomSize":"0","dressSize":"4"}
-
- //  $request_array=array();
-  //$request_array=array('deviceId'=>'tempID','email'=>'kamrantes32@hotmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','weight'=>40.00, "height"=>"73.000000",
-// 'targetTop'=>'Banana Republic','topSize'=>'6',"inseam"=>"36.000000","hip"=>"0.000000","waist"=>"36.000000","deviceType"=>"ipad",
- // 'neck'=>4,'bust'=>5,'bodyType'=>'Regular','bodyShape'=>'banana','targetBottom'=>'CARMEN MARC VALVO','targetDress'=>'CARMEN MARC VALVO',"braSize"=>"28 a","bottomSize"=>"00","dressSize"=>"0");
-        
         $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));
     }
@@ -120,13 +92,12 @@ public function userProfileAction()
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-        $target_array = $request->request->all();
-      
+        $target_array = $request->request->all();      
        
          if(isset($target_array['type'])=='type'){
              $email = $target_array['email'];
          }else{
-        $email = $decoded['email'];
+            $email = $decoded['email'];
          }
       /*  $email='oldnavywomen0@ltf.com';*/
       //  return new response(json_encode($email));

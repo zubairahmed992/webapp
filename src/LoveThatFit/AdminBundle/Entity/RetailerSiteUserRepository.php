@@ -37,4 +37,6 @@ class RetailerSiteUserRepository extends EntityRepository
                 return null;
                 }
     }
+    
+    
 }

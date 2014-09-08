@@ -25,8 +25,8 @@ shopify_user_check:
     defaults: { _controller: LoveThatFitExternalSiteBundle:Default:proxyFittingRoom ,access_token:0,user_id:0,sku:0}    
  
 shopify_app_proxy:
-    pattern:  /shopify/app_proxy/{sku}
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:checkSku,sku:0}    
+    pattern:  /shopify/app_proxy/{sku}/{user_id}
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:checkSku,sku:0,user_id:0}    
     
 shopify_customer_list:
     pattern:  /shopify/customer_list
@@ -46,9 +46,29 @@ shopify_webhook_order_create_callback:
     pattern:  /shopify/webhook/order_create_callback
     defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCreateCallback }    
 
+shopify_webhook_order_updated_callback:
+    pattern:  /shopify/webhook/order_updated_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderUpdatedCallback }    
+
+shopify_webhook_order_paid_callback:
+    pattern:  /shopify/webhook/order_paid_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderPaidCallback }    
+
+shopify_webhook_order_fullfilled_callback:
+    pattern:  /shopify/webhook/order_fullfilled_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderFulfilledCallback }    
+shopify_webhook_order_cancelled_callback:
+    pattern:  /shopify/webhook/order_cancelled_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:orderCancelledCallback }    
+
+
 shopify_webhook_cart_create_callback:
     pattern:  /shopify/webhook/cart_create_callback
-    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreateCallback }    
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartCreateCallback }  
+    
+shopify_webhook_cart_update_callback:
+    pattern:  /shopify/webhook/cart_update_callback
+    defaults: { _controller: LoveThatFitShopifyBundle:Webhooks:cartUpdateCallback }  
 
 shopify_webhook_list_all:
     pattern:  /shopify/webhook/list_all/{retailer_id}
@@ -74,15 +94,16 @@ shopify_webhook:
     
 shopify_webhook_call:
     pattern:  /shopify/web_hook_call
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:webHookCall }
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:webHookCall}
+   
     
 shopify_webhook_list:
     pattern:  /shopify/web_hook_list
     defaults: { _controller: LoveThatFitShopifyBundle:Default:getWebHooksList }
 
 shopify_webhook_delete:
-    pattern:  /shopify/web_hook_delete
-    defaults: { _controller: LoveThatFitShopifyBundle:Default:deleteWebHook }
+    pattern:  /shopify/web_hook_delete/{id}
+    defaults: { _controller: LoveThatFitShopifyBundle:Default:deleteWebHook,id:0 }
 
 
 shopify_data_foo:

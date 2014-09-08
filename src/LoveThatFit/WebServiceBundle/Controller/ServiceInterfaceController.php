@@ -11,25 +11,28 @@ class ServiceInterfaceController extends Controller {
 
     
     public function indexAction() {
-        $conf=$this->get('webservice.helper')->getServiceDetails();
-        $names=$this->get('webservice.helper')->stripToNameArray($conf);
+        $conf = $this->get('webservice.helper')->getServiceDetails();
+        $names = $this->get('webservice.helper')->stripToNameArray($conf);
         $form = $this->createForm(new ServiceFormType($names), array('message' => 'web service type'));
+        $user_list= $this->get('user.helper.user')->getListWithPagination(0,'email');
         
         #$str=json_encode($this->get('webservice.helper')->getServiceNames());
-        #return new Response($str);
+        #return new Response(json_encode($conf));
          return $this->render('LoveThatFitWebServiceBundle:ServiceInterface:index.html.twig', array(
                     'form' => $form->createView(),
-                    'service_conf'=>$conf,
+                    'services_array'=>$conf,
+                    'services_json'=>json_encode($conf),
+                    'users'=>$user_list['users'],
                 ));
     }
-
-    public function hitAction() {
-    
-    #$str=json_encode($this->get('webservice.helper')->getServiceDetails());
+    #------------------------------------------------------
+    public function hitAction() {    
         $str=json_encode($this->get('webservice.helper')->stripToNameArray($this->get('webservice.helper')->getServiceDetails()));
-    return new Response($str);
-        return new Response('has been hit');
+        return new Response($str);       
     }
-   
+   #------------------------------------------------------
+     public function userDetailAction($email) {
+         return new Response(json_encode($this->get('webservice.helper.user')->getDetailArrayByEmail($email)));
+    }
 
 }
