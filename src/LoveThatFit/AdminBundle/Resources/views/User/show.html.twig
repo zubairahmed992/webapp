@@ -62,10 +62,7 @@
                                     <div class="span3">{{product}}</div>
                                     </div>   
                                         
-                                        <div class="span8">
-                                    <div class="span3">Brand Tried</div>
-                                    <div class="span3">{{brand}}</div>
-                                    </div>
+                                    
                                         
                                         
                                     <div class="span8">
@@ -109,6 +106,9 @@
                                     <div class="span3">Secret Answer</div>
                                     <div class="span3">{{user.secretAnswer}}</div>
                                     </div>  
+                                        
+                                        
+                                    
                                         
                                         
                                         
@@ -327,6 +327,18 @@
                                     <div class="span3">iphone foot height</div>
                                     <div class="span3">{{user.measurement.iphoneFootHeight}}</div>
                                     </div>   
+                                    
+                                        
+                                        
+                                   <div class="span8">
+                                   <div class="span3">Profile completion</div>
+                                   <div class="span3">
+                                    
+                                    
+                                    
+                                    
+                                    </div>
+                                    </div>         
                                         
                                         
                                    <div class="span8">
@@ -348,8 +360,6 @@
                                     </table>
                                     </div>
                                     </div>      
-                                   
-                                       
                                         
                                   <div class="span8">
                                     <div class="span3">Retailer Site Users</div>
@@ -387,7 +397,26 @@
                                     </div>
                                     </div>        
                                         
-                               
+                                        
+                                        
+                                        
+                                 <div class="span8">
+                                    <div class="span3">Brnad Tried</div>
+                                    <div> 
+                                    <table width="100%" border="0">                                    
+                                      {%for b in brand%}
+                                   <tr>
+                                    <td> {{b.name}}</td>
+                                    <td></td>
+                                    <td></td>
+                                   </tr>
+                                        {%endfor%}
+                                    </table>
+                                    </div>
+                                    </div>         
+                                        
+                                        
+                                
                                 </div> 
                                      
 
