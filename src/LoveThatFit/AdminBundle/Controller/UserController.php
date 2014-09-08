@@ -52,7 +52,7 @@ class UserController extends Controller {
                     'user' => $entity,
                     'page_number' => $page_number,
                     'product'=>$this->get('site.helper.usertryitemhistory')->countUserTiredProducts($entity),
-                    'brand'=>$this->get('site.helper.usertryitemhistory')->countUserTiredBrands($entity),
+                    'brand'=>$this->get('site.helper.usertryitemhistory')->findUserTiredBrands($entity),
                 ));
     }
 

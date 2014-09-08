@@ -137,8 +137,8 @@ public function countUserItemTryHistory($user,$product,$productItem)
    } 
    
    
-public function countUserTiredBrands($user){       
-        $rec_count = count($this->repo->findUserTriedBrands($user));
+public function findUserTiredBrands($user){       
+        $rec_count = $this->repo->findUserTriedBrands($user);
         return $rec_count;
 }   
 

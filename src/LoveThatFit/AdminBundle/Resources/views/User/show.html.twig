@@ -326,7 +326,76 @@
                                    <div class="span8">
                                     <div class="span3">iphone foot height</div>
                                     <div class="span3">{{user.measurement.iphoneFootHeight}}</div>
+
+                                    </div> 
+                                        
+                                        
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Profile completion</div>
+                                    <div> 
+                                    <table width="100%" border="0">                                    
+                                      
+                                   <tr>
+                                   <td>Photo uploaded:</td><td>{%if user.image==null%}
+                                    Not Uploaded    
+                                   {%else%}
+                                    Uploaded
+                                   {%endif%}</td>                                    
+                                   </tr>                                        
+                                   <tr>
+                                   <td>Photo marked:</td><td> {%if user.getUserMarker==null%}
+                                    Not     
+                                   {%else%}
+                                    Yes
+                                   {%endif%}</td>
+                                   </tr>
+                                   
+                                   <tr>
+                                       <td>Size Entered</td>
+                                       <td>
+                                       {%if user.gender=='f'%}
+                                       {%if user.measurement.getTopBrand==null and user.measurement.getBottomBrand==null and user.measurement.getDressBrand==null%}
+                                          No sizes Entered
+                                       {%endif%}        
+                                        {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand!=null and user.measurement.getDressBrand==null%}
+                                            Partial sizes Entered
+                                        {%endif%}
+                                        {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand!=null and user.measurement.getDressBrand!=null%}
+                                            All sizes Entered
+                                       {%endif%}  
+                                       {%endif%}
+                                       {%if user.gender=='m'%}
+                                       {%if user.measurement.getTopBrand==null and user.measurement.getBottomBrand==null%}
+                                         No sizes Entered
+                                       {%endif%}        
+                                      {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand==null%}
+                                         Partial sizes Entered
+                                       {%endif%}
+                                       {%if user.measurement.getTopBrand!=null and user.measurement.getBottomBrand!=null%}
+                                        All sizes Entered
+                                       {%endif%} 
+                                        {%endif%}       
+                                       
+                                       </td>
+                                   </tr>
+                                   
+                                   <tr>
+                                   <td>Measurements entered:</td><td> {{ user.getMeasurementStatistics}}%
+                                    </td>
+                                   </tr>
+                                   
+                                   
+                                    </table>
+                                    </div>
+                                    </div> 
+                                        
+                                        
+                                        
+                                        
+
                                     </div>   
+
                                         
                                         
                                    <div class="span8">
@@ -373,7 +442,7 @@
                                    
                                    <div id="myModal1{{ret.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Delete Retailer Site User</h3>
   </div>  
   <div class="modal-footer">
@@ -387,7 +456,26 @@
                                     </div>
                                     </div>        
                                         
-                               
+
+                                        
+                                        
+                                        
+                                 <div class="span8">
+                                    <div class="span3">Brands Tried</div>
+                                    <div> 
+                                    <table width="100%" border="0">                                    
+                                      {%for b in brand%}
+                                   <tr>
+                                    <td> {{b.name}}</td>
+                                    <td></td>
+                                    <td></td>
+                                   </tr>
+                                        {%endfor%}
+                                    </table>
+                                    </div>
+                                    </div>         
+                                        
+
                                 </div> 
                                      
 
@@ -401,7 +489,7 @@
 
                        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Delete User</h3>
     </div>
     <div class="modal-body">
