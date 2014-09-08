@@ -979,6 +979,129 @@ class User implements UserInterface, \Serializable {
     }
     
 
+    
+    public function getMeasurementStatistics()
+    {
+        $accuracy=0;        
+        if($this->measurement->getWeight())
+             {
+            $accuracy=$accuracy+1;
+        } 
+         if($this->measurement->getHeight())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getBustHeight())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getShoulderWidth())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getThigh())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getBodyTypes())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getBodyShape())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getInseam())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getOutseam())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getNeck())
+             {
+            $accuracy=$accuracy+1;
+        } if($this->measurement->getSleeve())
+             {
+            $accuracy=$accuracy+1;
+        } if($this->measurement->getChest())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getWaistHeight())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getHipHeight())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getBustWidth())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getWaistWidth())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getHipWidth())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getShoulderAcrossFront())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getShoulderAcrossBack())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getBicep())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getTricep())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getWrist())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getCenterFrontWaist())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getBackWaist())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getWaistHip())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getKnee())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getCalf())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getAnkle())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        if($this->measurement->getBrasize())
+             {
+            $accuracy=$accuracy+1;
+        } 
+        return round(($accuracy/29)*100,2);
+    }
+    
+    
+    
     public function generateAuthenticationToken() {
         $this->authTokenCreatedAt = new \DateTime('now');
         $this->authToken = md5($this->salt . $this->email . $this->authTokenCreatedAt->format('r'));
