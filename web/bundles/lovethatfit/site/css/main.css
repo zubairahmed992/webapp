@@ -4889,17 +4889,44 @@ transform: rotateX(0deg) rotateY(0deg);
 
 /*///////// Masking ///////////*/
 
-#canv_mask {
-    position: absolute;
-    z-index: 9000;
-    display:none;
-}
 #rect_mask {
     position: absolute;
     z-index: 9010;
     display:block;
     left:0px;
     top:0px;
+}
+#face_hldr {
+    position: absolute;
+    left:0px;
+    top:0px;
+    width:364px;
+    height: 505px;
+    display:none;
+    z-index: 9020;
+}
+#face_inner {
+    position: absolute;
+    left:20px;
+    top:20px;
+    text-align: center;
+}
+#face_pos {
+    width: 40px;
+}
+#face_mask {
+    position: absolute;
+    left:0px;
+    top:0px;
+    display:block;
+    z-index: 9020;
+    width:200px;
+    height:200px;
+}
+#canv_mask {
+    position: absolute;
+    z-index: 9000;
+    display:none;
 }
 
 
@@ -5168,6 +5195,14 @@ transform: rotateX(0deg) rotateY(0deg);
 
 
 #paper_step_1 {
+        background: #888888;
+	font-size:1em;
+	color:#fff;
+	border:none;
+        display:none;
+        padding:5px 15px;
+}
+#paper_step_1_a {
         background: #888888;
 	font-size:1em;
 	color:#fff;

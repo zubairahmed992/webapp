@@ -135,6 +135,19 @@ public function countUserItemTryHistory($user,$product,$productItem)
         $rec_count = count($this->repo->findUserItemAllTryHistory($user,$product,$productItem));
         return $rec_count;
    } 
+   
+   
+public function countUserTiredBrands($user){       
+        $rec_count = count($this->repo->findUserTriedBrands($user));
+        return $rec_count;
+}   
+
+public function countUserTiredProducts($user){       
+        $rec_count = count($this->repo->findUserTriedProdcuts($user));
+        return $rec_count;
+}
+
+   
     public function updateJSON($id, $str){
        $entity = $this->repo->find($id);
        $entity->setFeedback($str);
