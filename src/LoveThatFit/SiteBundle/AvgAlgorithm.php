@@ -249,28 +249,32 @@ class AvgAlgorithm {
         
         $status=null;
         $fits = null;
-        if ($body >= $low && $body <= $high) { #perfect
-            $status = $this->status['between_low_high'];
-            $fits = true;
-        } elseif ($body > $high) { #above high
-            if ($body < $mid_high_max) { #high max 1st half    
-                $status = $this->status['first_half_high_max'];
+        if ($body==0){
+            $status = $this->status['body_measurement_not_available'];
+            $fits = false;
+        }else{
+            if ($body >= $low && $body <= $high) { #perfect
+                $status = $this->status['between_low_high'];
                 $fits = true;
-            } elseif ($body > $mid_high_max && $body <= $max) { #high max 2nd half
-                $status = $this->status['second_half_high_max'];
-                $fits = true;
-            } elseif ($body > $max) { #not fitting
-                $status = $this->status['beyond_max'];
+            } elseif ($body > $high) { #above high
+                if ($body < $mid_high_max) { #high max 1st half    
+                    $status = $this->status['first_half_high_max'];
+                    $fits = true;
+                } elseif ($body > $mid_high_max && $body <= $max) { #high max 2nd half
+                    $status = $this->status['second_half_high_max'];
+                    $fits = true;
+                } elseif ($body > $max) { #not fitting
+                    $status = $this->status['beyond_max'];
+                    $fits = false;
+                }
+            } elseif ($body < $low && $body > $min) {#below low    
+                $status = $this->status['below_low'];
+                $fits = false;
+            } elseif ($body < $min) {
+                $status = $this->status['below_min'];
                 $fits = false;
             }
-        } elseif ($body < $low && $body > $min) {#below low    
-            $status = $this->status['below_low'];
-            $fits = false;
-        } elseif ($body < $min) {
-            $status = $this->status['below_min'];
-            $fits = false;
         }
-
 
         return array('fit_point' => $fp_specs['fit_point'],
             'label' => $this->getFitPointLabel($fp_specs['fit_point']),
