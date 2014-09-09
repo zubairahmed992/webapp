@@ -2,9 +2,6 @@
 
 {% block action_block_content %}
 
-
-
-
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_four.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/step_3_new.js') }}"></script>
 
@@ -244,6 +241,7 @@ function onMouseDrag(event) {
 <script type="text/javascript">
    $(document).ready(function() {  
        
+     
     $("#paper_step_1_a").click(
         function(){
             //alert("Face");
@@ -471,6 +469,9 @@ function createPaths() {
 		path.strokeColor = '#666';
 		
 	};
+        
+        
+        
 }
 
 function createBlob(center, maxRadius, points) {
@@ -552,6 +553,8 @@ path.opacity = 0.6;
 var segment, path;
 var movePath = false;
 function onMouseDown(event) {
+
+
 	segment = path = null;
 	var hitResult = project.hitTest(event.point, hitOptions);
 	if (!hitResult)
@@ -559,6 +562,8 @@ function onMouseDown(event) {
 
 	if (event.modifiers.shift) {
 		if (hitResult.type == 'segment') {
+                
+                
 			//hitResult.segment.remove();
 			
 		};
@@ -566,6 +571,9 @@ function onMouseDown(event) {
 	}
 
 	if (hitResult) {
+        
+        
+        
 		path = hitResult.item;
 		if (hitResult.type == 'segment') {
 			segment = hitResult.segment;
@@ -587,13 +595,30 @@ function onMouseMove(event) {
 
 
 
-//function onMouseUp(event){
-//	raster.clipMask();
-//}
+function onMouseUp(event){
+
+    if (segment) {
+    
+    
+        for(var i = 0; i < path.segments.length; i++) {
+        $("#segments_details").prepend("<div class='sh ort_tip' style='left:" + parseInt(path.segments[i].point.x) +"px; top:" + parseInt(path.segments[i].point.y)+"px'>Segment" + i +": "+path.segments[i].point + "</div>");
+        $("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + i + "</div>");
+        };
+        
+        
+        
+        //$("#play_area").prepend("<div class='short_tip'>Segment: "+ event + "</div>");
+    }    
+        
+}
 
 
 function onMouseDrag(event) {
 	if (segment) {
+        
+        
+        
+        
         
         var export_path_full = path.exportSVG({asString: true});
         export_path_full.toString();
@@ -873,6 +898,8 @@ jQuery(document).ready(function ($) {
     
     
     <div class="how_it_works">
+        <div id="segments_details">
+        </div>
         <h2>How It Works</h2>
         <ol class="hiw_upload_photo">
             <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>

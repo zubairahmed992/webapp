@@ -5364,3 +5364,13 @@ transform: rotateX(0deg) rotateY(0deg);
     display:none;
     width: 60px;
 }
+.short_tip {
+    background:#ffcc00;
+    font-size: 6px;
+    font-family: verdana;
+    position: absolute;
+    z-index: 10000;
+}
+#segments_details{
+    font-size:12px;
+}
