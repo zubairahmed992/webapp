@@ -605,17 +605,22 @@ function onMouseUp(event){
         $("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + i + "</div>");
         };
         
-          var mp_array=[];
-        for(var i = 0; i < path.segments.length; i++) {
-            mp_array.push([path.segments[i].point.x, path.segments[i].point.y]);            
-        };
-        alert(JSON.stringify(mp_array));
+        
         
         //$("#play_area").prepend("<div class='short_tip'>Segment: "+ event + "</div>");
     }    
         
 }
 
+function getPathArrayJson(){
+    
+         var mp_array=[];
+        for(var i = 0; i < path.segments.length; i++) {
+            mp_array.push([path.segments[i].point.x, path.segments[i].point.y]);            
+        };
+    return JSON.stringify(mp_array);
+ 
+}
 
 function onMouseDrag(event) {
 	if (segment) {
@@ -700,7 +705,8 @@ rect_x: $('#p_selected_pic_x').attr('value'),
 rect_y: $('#p_selected_pic_y').attr('value'),
 rect_height: $('#p_selected_pic_h').attr('value'),
 rect_width:$('#p_selected_pic_w').attr('value'),
-svg_path:$('#img_path_paper').attr('value')};
+svg_path:$('#img_path_paper').attr('value'),
+marker_json: getPathArrayJson()};
 
  $.ajax({
         type: "POST",
