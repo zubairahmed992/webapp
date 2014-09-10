@@ -83,6 +83,7 @@ class UserMarkerHelper {
         if($specs['rect_y']){$user_marker->setRectY($specs['rect_y']);}
         if($specs['rect_height']){$user_marker->setRectHeight($specs['rect_height']);}
         if($specs['rect_width']){$user_marker->setRectWidth($specs['rect_width']);}
+        if($specs['marker_json']){$user_marker->setMarkerJson($specs['marker_json']);}
     }
        #----------------------------------------------------------------------------
    public function getArray($user_marker) {
@@ -91,6 +92,7 @@ class UserMarkerHelper {
        $specs['rect_y']=$user_marker->getRectY();
        $specs['rect_height']=$user_marker->getRectHeight();
        $specs['rect_width']=$user_marker->getRectWidth();
+       $specs['marker_json']=$user_marker->getMarkerJson();
         return ($specs);
    }
       #----------------------------------------------------------------------------
