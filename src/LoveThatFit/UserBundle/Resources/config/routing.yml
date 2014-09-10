@@ -70,6 +70,9 @@ registration_step_four_edit_ipad:
     pattern:  /registration/step_four_edit_ipad
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourEditIpad }
      
+registration_step_four_marker_inspection:
+    pattern:  /registration/step_four_marker_inspection
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepFourMarkingInspection }
     
 registration_parent_child:
     pattern:  /registration/parent/child/{id}

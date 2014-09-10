@@ -1,0 +1,1339 @@
+{% extends 'LoveThatFitUserBundle::base_reg_s3.html.twig' %}
+
+{% block action_block_content %}
+
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/user_registration_step_four.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/step_3_new.js') }}"></script>
+
+
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/paper.js') }}"></script>
+<script type="text/paperscript" canvas="rect_mask">
+    
+//settings.applyMatrix = true;
+
+	var values = {
+	paths: 1,
+	minPoints: 5,
+	maxPoints: 15,
+	minRadius: 30,
+	maxRadius: 90
+};
+
+var hitOptions = {
+	segments: true,
+	stroke: false,
+	fill: true,
+	tolerance: 5
+};
+
+createPaths();
+
+function createPaths() {
+	var radiusDelta = values.maxRadius - values.minRadius;
+	var pointsDelta = values.maxPoints - values.minPoints;
+	for (var i = 0; i < values.paths; i++) {
+		var radius = values.minRadius + Math.random() * radiusDelta;
+		var points = values.minPoints + Math.floor(Math.random() * pointsDelta);
+		var path = createBlob(view.size * Point.random(), radius, points);
+		var lightness = (Math.random() - 0.5) * 0.4 + 0.4;
+		var hue = Math.random() * 360;
+		//path.fillColor = { hue: hue, saturation: 1, lightness: lightness };
+		//path.fillColor = "red";
+		path.strokeColor = '#666';
+	};
+}
+
+function createBlob(center, maxRadius, points) {
+	// Old path before setting foot and head marks//var pathData = 'M41.571,229.813c-0.503-0.016-1.896,4.743-1.986,15.255c-0.182,21.305-0.934,55.532-5.251,76.514c-0.2,3.241,2.574,16.961,1.5,31.256c-2.333,31.059-4.038,37.798-5.251,66.012c-0.145,3.356,1.435,5.929,0.75,8.501c-1.275,4.791-3.228,7.806-4,13.504c-0.81,5.969-1.123,9.932-1.5,12.502c-6.021,8.176-8.606,6.501-12.752,6.501c-5.017,0-6.951-2.563-6.001-6.501c2.673-6.654,3.436-8.324,5.251-12.502c2.378-5.475,2.542-7.51,4-13.754c1.05-6.317,1.063-26.026,0.5-32.255c-10.131-54.678-5.501-67.667-5.501-71.263c2.639-17.797,0.775,1.458,1-15.253c-0.5-7.167-0.75-10.836-1.25-18.003c-4.74-19.523-9.961-58.019-10.502-60.761c-1.48-7.424,0.234-35.2,1.25-44.758c1.192-11.212,3.543-13.02,5.251-19.004c0.685-2.399,3.1-7.774,3-17.003c-0.043-4.041-1.088-11.012-2-15.253c-1.208-5.613-2.083-15.503-2-20.254c0.083-2.153-0.5-7.348-2.25-8.751c0-8.846,0-14.159-2-29.255c0.547-0.097,22.041-5.237,25.255-10.002c1.122-1.664,1.757-7.281,2.25-10.002c-0.027,0.15,0.055-2.198-1-5.751c-0.868-2.921-1.562-3.614-2.5-10.002c-0.68,0.002-1.149-0.01-1.5-0.25c-1.752-1.89-3.446-8.406-3.501-12.002c0.51-0.256,1.199-0.476,1.5-1c-1.186-1.288-1.028-2.899-1.5-5.001C18.748,12,23.911,5.844,29.083,2.773c8.895-5.281,25.883-2.694,31.006,5.001c1.776,2.667,3.64,10.436,2.25,15.253c-0.354,1.227-1.148,2.428-1.5,3.75c1.613,0.103,1.599,0.784,1.5,2.5c-0.312,2.222-1.698,6.535-3.5,10.252c-0.976-0.007-1.625,0.376-2,1c-1.026,5.523-2.13,8.696-2,9.001c-0.81,1.601-1.297,3.233-0.75,5.751c0,1.25,0,2.5,0,3.751c0.431,1.865,0.696,4.83,1.75,6.251c3.5,4.722,22.504,9.156,25.504,10.002c-1.838,2.544-1.496,28.794-2,29.255c-2.346,2.04-2.239,7.379-2.25,8.751c0,4.205-1.277,17.371-2,20.254c-1.278,5.097-1.969,12.621-2,15.253c-0.067,5.705,0.074,11.168,2.75,17.003c1.595,3.477,4.856,12.074,5.501,19.254c2.712,30.204,1,47.138,1.25,44.508c-0.627,6.602-8.085,48.397-10.502,60.761c-0.167,3.667-0.771,12.586-1,17.753c-0.1,7.301,0.133,9.453,0.75,15.503c3.129,30.686-2.504,47.345-5.501,71.263c-1.369,10.927,0,23.687-0.25,29.005c4.876,22.321,10.909,27.912,10.251,31.756c-1.035,3.527-3.232,4.251-7.501,4.251c-6.486,0-6.588-1.329-11.502-6.501c-0.67-4.559-1.25-13.09-1.25-12.502c-1.168-5.057-3.156-8.884-4.251-13.754c-0.6-2.668,1.152-6.176,1-8.251c-2.039-27.809-5.001-55.678-5.501-66.012c-1.281-13.919,3.152-25.277,1.75-31.256c-4.905-20.928-5.285-55.214-5.751-76.514C43.105,234.559,42.11,229.821,41.571,229.813z';
+        var pathData = 'M48,42.565h150h150v200v200H198H48v-200V42.565z';
+        
+        
+        
+rect_path = new Path(pathData);
+trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 1000));
+trans_bg.style = {
+	fillColor: '#000',
+	stroke: 1,
+	strokeColor: '#ffcc00'
+};
+
+    
+//rect_add_top = new Path.Rectangle(new Point(0, 84), new Size(364, 0));
+//rect_add_top.style = {
+//	fillColor: '#000',
+//	stroke: 0.5,
+//	strokeColor: '#666'
+//};
+//rect_add_bottom = new Path.Rectangle(new Point(-50, 423), new Size(464, 0));
+//rect_add_bottom.style = {
+//	fillColor: '#000',
+//	stroke: 0.5,
+//	strokeColor: '#666'
+//};
+
+
+//console.log(parseInt($('#user_height_frm_3').attr('value'))+ 5);
+
+rect_path.position = view.center;
+
+var path = new CompoundPath({
+    children: [
+		rect_path,
+                trans_bg
+    ],
+    fillColor: '#666',
+    selected: false
+	//strokeColor: '#ffcc00'
+});
+
+
+//var path = new Path(pathData);
+//var start = new Point(600, 600);
+//path.moveTo(start);
+//path.strokeColor = '#ccc';
+path.opacity = 0.6;
+//path.scale(1, 0.9);
+	return path;
+}
+ 
+var segment, path;
+var movePath = false;
+function onMouseDown(event) {
+	segment = path = null;
+	var hitResult = project.hitTest(event.point, hitOptions);
+	if (!hitResult)
+		return;
+
+	if (event.modifiers.shift) {
+		if (hitResult.type == 'segment') {
+                
+			//hitResult.segment.remove();
+			
+		};
+		return;
+	}
+
+	if (hitResult) {
+		path = hitResult.item;
+		if (hitResult.type == 'segment') {
+			segment = hitResult.segment;
+		} else if (hitResult.type == 'stroke') {
+			
+		}
+	}
+	//movePath = hitResult.type == 'fill';
+	//if (movePath)
+		//project.activeLayer.addChild(hitResult.item);
+}
+
+function onMouseMove(event) {
+	//project.activeLayer.selected = false;
+        project.activeLayer.selected = true;
+        event.item.selected = true;
+	if (event.item)
+		event.item.selected = true;
+	
+}
+
+
+
+
+//function onMouseUp(event){
+//	raster.clipMask();
+//}
+
+function rec_selected_x_y(){
+
+    //alert(path.point);
+
+    $("#p_selected_pic_x").attr("value", path.segments[0].point.x);
+    $("#p_selected_pic_y").attr("value", path.segments[0].point.y);
+    console.log($("#p_selected_pic_x").attr('value'));
+    console.log($("#p_selected_pic_y").attr('value'));
+}
+function rec_selected_h(curr_set_h){
+    $("#p_selected_pic_h").attr("value", path.segments[4].point.y - path.segments[2].point.y);
+    //alert($("#p_selected_pic_h").attr('value'));
+}
+function rec_selected_w(curr_set_w){
+    $("#p_selected_pic_w").attr("value", path.segments[2].point.x - path.segments[0].point.x);
+    console.log(path.segments[0].point.x);
+}
+    
+function onMouseDrag(event) {
+    
+	if (segment) {
+        
+        rec_selected_x_y();
+	
+        
+        
+                if(segment == path.segments[1]){
+                    segment.point.y += event.delta.y;
+                    path.segments[0].point.y += event.delta.y;
+                    path.segments[2].point.y += event.delta.y;
+                    
+                     var set_seg_bwt_v_mid = path.segments[4].point.y - path.segments[2].point.y;
+                     path.segments[3].point.y = set_seg_bwt_v_mid /2 + path.segments[2].point.y;
+                     path.segments[7].point.y = set_seg_bwt_v_mid /2 + path.segments[2].point.y;
+                     
+                     rec_selected_h(set_seg_bwt_v_mid);
+                     
+                     //rect_add_top.position.y = path.segments[0].point.y + 30;
+                     
+                }
+                if(segment == path.segments[5]){
+                    segment.point.y += event.delta.y;
+                    path.segments[4].point.y += event.delta.y;
+                    path.segments[6].point.y += event.delta.y;
+                    
+                     var set_seg_bwt_v_mid = path.segments[2].point.y - path.segments[4].point.y;
+                     path.segments[7].point.y = set_seg_bwt_v_mid /2 + path.segments[4].point.y;
+                     path.segments[3].point.y = set_seg_bwt_v_mid /2 + path.segments[4].point.y;
+                     
+                     rec_selected_h(set_seg_bwt_v_mid);
+                     
+                     //rect_add_bottom.position.y = path.segments[5].point.y - 30;
+                }
+                if(segment == path.segments[3]){
+                    segment.point.x += event.delta.x;
+                    path.segments[2].point.x += event.delta.x;
+                    path.segments[4].point.x += event.delta.x;
+                    
+                     var set_seg_bwt_h_mid = path.segments[2].point.x - path.segments[0].point.x;
+                     path.segments[1].point.x = set_seg_bwt_h_mid /2 + path.segments[0].point.x;
+                     path.segments[5].point.x = set_seg_bwt_h_mid /2 + path.segments[0].point.x;
+                     
+                     rec_selected_w();
+                }
+                if(segment == path.segments[7]){
+                    segment.point.x += event.delta.x;
+                    path.segments[0].point.x += event.delta.x;
+                    path.segments[6].point.x += event.delta.x;
+                    
+                     var set_seg_bwt_h_mid = path.segments[2].point.x - path.segments[0].point.x;
+                     path.segments[1].point.x = set_seg_bwt_h_mid /2 + path.segments[0].point.x;
+                     path.segments[5].point.x = set_seg_bwt_h_mid /2 + path.segments[0].point.x;
+                     
+                     rec_selected_w();
+                }
+                
+		//path.smooth();
+		
+		
+		
+		console.log("Me Hit!");
+	} else if (path) {
+		//path.position += event.delta;
+		//rec_selected_x_y();
+                
+                //$("#p_selected_pic_y").attr("value", path.position);
+                
+               // console.log($("#p_selected_pic_y").attr("value"));
+		
+	}
+	
+
+	
+}
+</script>
+
+<script type="text/javascript">
+   $(document).ready(function() {  
+       
+     
+    $("#paper_step_1_a").click(
+        function(){
+            //alert("Face");
+            //checking_bhai();
+            $("#paper_step_1_a").fadeOut(300,function (){$("#paper_step_1").fadeIn();});
+            //pp_user_height = parseInt($("#user_height_frm_3").attr("value")) * 6;
+            //var head_radio = (pp_user_height / 100) * 7.65;
+            //$("#face_pos").css("height",head_radio);
+            set_face();
+        }
+    ); 
+       
+    $("#paper_step_1").click(
+        function(){
+            p_user_height = parseInt($("#user_height_frm_3").attr("value")) * 6;
+            $("#face_hldr").fadeOut();
+            var face_pos_top = ($("#face_pos").offset().top - $("#face_hldr").offset().top) - $("#p_selected_pic_y").attr('value');
+            var face_pos_left = ($("#face_pos").offset().left - $("#face_hldr").offset().left) - $("#p_selected_pic_x").attr('value');
+            
+            
+           
+            
+            //$("#face_pos").height(20);
+            
+            //alert(face_pos_top);
+            
+            
+            
+            var additanal_value = (p_user_height / 100) * 4.22;
+            
+            //alert(additanal_value);
+            
+            //p_user_height = ;
+            p_curr_pic_h = $("#img_to_upload").height();
+            p_curr_pic_w = $("#img_to_upload").width();
+            
+            p_curr_pic_x = $("#uploaded_photo").css("left");
+            p_curr_pic_y = $("#uploaded_photo").css("top");
+            
+            //var p_curr_pic_offset_x = $("#img_to_upload").offset().left - $("#play_area").offset().left;
+            //var p_curr_pic_offset_y = $("#img_to_upload").offset().top - $("#play_area").offset().top;
+            
+            p_selected_h = ($("#p_selected_pic_h").attr("value") - face_pos_top) - additanal_value;
+            //alert();
+            p_selected_w = $("#p_selected_pic_w").attr("value");
+            
+            p_selected_pic_x = $("#p_selected_pic_x").attr("value");
+            p_selected_pic_y = $("#p_selected_pic_y").attr("value");
+            
+            p_zoom_value = p_user_height / p_selected_h;
+            
+            p_apply_zoom_h = p_curr_pic_h * p_zoom_value;
+            p_apply_zoom_w = p_curr_pic_w * p_zoom_value;
+            
+            //var p_apply_y = p_selected_pic_y*p_zoom_value;
+            //var p_apply_x = p_selected_pic_x*p_zoom_value;
+            
+            //var p_zoom_selected_w = p_selected_w*p_zoom_value;
+            //var p_zoom_selected_h = p_selected_h*p_zoom_value;
+            
+            final_x = parseInt(p_selected_w) / 2;
+            final_x = final_x + parseInt(p_selected_pic_x);
+            final_x = final_x * p_zoom_value;
+            final_x -= 182;
+            
+            console.log(p_zoom_value);
+            //console.log("p_curr_pic_offset_x" + p_curr_pic_offset_x);
+            //console.log("p_curr_pic_offset_y" + p_curr_pic_offset_y);
+            
+            //alert(p_zoom_value);
+            
+            $("#img_to_upload").removeClass("preview");
+            $(".center_mark").fadeIn(500);
+            $(".height_top_mark").fadeIn(500);
+            $(".height_bottom_mark").fadeIn(500);
+            //$("#img_to_upload").css("width","auto");
+            
+            
+            if(chk_no_img_path == true){            
+                $("#img_to_upload").animate({ height:p_apply_zoom_h, width:p_apply_zoom_w }, 400, function() { }); 
+                $("#uploaded_photo").animate({ top: -((p_selected_pic_y*p_zoom_value) + face_pos_top) + 17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
+            }
+            /*
+                if(chk_no_img_path == true){            
+                    $("#img_to_upload").animate({ height:p_apply_zoom_h - additanal_value, width:p_apply_zoom_w }, 400, function() { }); 
+                    $("#uploaded_photo").animate({ top: -(p_selected_pic_y*p_zoom_value)+17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
+                }
+            */
+            $("#rect_mask").fadeOut(500);
+            $("#canv_mask").fadeIn(500);
+            
+            $("#paper_step_1").fadeOut();
+            $("#paper_1_reload").addClass("paper_1_reload");
+            $(".move_buttons").fadeIn();
+            $(".move_buttons a").fadeIn();
+            $(".move_buttons .move_label").fadeIn();
+            $(".img_acw").fadeOut();
+            $(".img_cw").fadeOut();
+            $(".img_acw_min").fadeIn();
+            $(".img_cw_min").fadeIn();
+        }
+        );
+        
+        $(".paper_1_reload").click(
+        function(){
+            //alert("asdf");       
+            $("#img_to_upload").addClass("preview");
+            $(".center_mark").fadeOut(500);
+            $(".height_top_mark").fadeOut(500);
+            $(".height_bottom_mark").fadeOut(500);
+            //$("#img_to_upload").css("width","auto");
+            $("#img_to_upload").animate({ height:p_curr_pic_h, width:p_curr_pic_w }, 400, function() { }); 
+            $("#uploaded_photo").animate({ top: -(p_selected_pic_y*p_zoom_value)+17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
+            $("#rect_mask").fadeIn(500);
+            $("#canv_mask").fadeOut(500);
+            $("#face_mask").fadeOut(500);
+            
+            $("#paper_step_1").fadeIn();
+            $("#paper_step_1_reload").removeClass("paper_step_1_reload");
+            });
+            
+            function set_face(){
+//alert(p_selected_pic_x);
+$("#face_hldr").fadeIn();
+
+$("#face_inner").css({left: parseInt($('#p_selected_pic_x').attr('value')), top: parseInt($('#p_selected_pic_y').attr('value')), width: parseInt($('#p_selected_pic_w').attr('value')), height: parseInt($('#p_selected_pic_h').attr('value'))});
+$( "#face_pos" ).draggable({ containment: "#face_inner", scroll: false });
+
+    //$("#face_mask").css("top", parseInt($('#p_selected_pic_y').attr('value')) + 40);
+    //$("#face_mask").css("left", parseInt($('#p_selected_pic_x').attr('value')) + (parseInt($('#p_selected_pic_w').attr('value'))/2) );
+    //$("#face_mask").fadeIn();
+}
+        
+    });
+ 
+
+ 
+  function checking_bhaiii() {  
+        $("#face_mask").fadeIn();
+    }
+function checking_bhai() {
+        
+		// Get a reference to the canvas object
+		var p2_canvas = document.getElementById('face_mask');
+		// Create an empty project and a view for the canvas:
+		paper.setup(p2_canvas);
+		// Create a Paper.js Path to draw a line into it:
+		
+                
+               var url = "{{ asset('bundles/lovethatfit/site/images/face-blue.png')}}";
+               // alert(url);
+                
+                var raster_face = new paper.Raster(url);
+                raster_face.position = new paper.Point(parseInt($('#p_selected_pic_x').attr('value')) + (parseInt($('#p_selected_pic_w').attr('value'))/2), parseInt($('#p_selected_pic_y').attr('value')) + 40);
+               // raster.scale(0.5, 0.5);
+                
+                //raster.size = new paper.Size(100, 100)
+                // If you create a Raster using a url, you can use the onLoad
+                // handler to do something once it is loaded:
+                raster_face.onLoad = function() {
+                    $("#face_mask").fadeIn();
+                    console.log('The image has loaded.');
+               };
+               
+    
+	}
+    </script>
+
+    <script type="text/paperscript" canvas="canv_mask">
+    
+
+    
+    
+    //alert(url);
+    
+    function just_chking(){
+        alert("asfasfasf");
+    }
+    
+    
+var url = url;
+//alert(url);
+var raster = new Raster(url);
+
+raster.position = new Point(100, 220);
+
+
+// If you create a Raster using a url, you can use the onLoad
+// handler to do something once it is loaded:
+raster.onLoad = function() {
+    console.log('The image has loaded.');
+};
+
+//settings.applyMatrix = true;
+
+	var values = {
+	paths: 1,
+	minPoints: 5,
+	maxPoints: 15,
+	minRadius: 30,
+	maxRadius: 90
+};
+
+var hitOptions = {
+	segments: true,
+	stroke: false,
+	fill: false,
+	tolerance: 5
+};
+
+$(document).ready(function() {
+    createPaths();
+});
+function createPaths() {
+	var radiusDelta = values.maxRadius - values.minRadius;
+	var pointsDelta = values.maxPoints - values.minPoints;
+	for (var i = 0; i < values.paths; i++) {
+		var radius = values.minRadius + Math.random() * radiusDelta;
+		var points = values.minPoints + Math.floor(Math.random() * pointsDelta);
+		var path = createBlob(view.size * Point.random(), radius, points);
+		var lightness = (Math.random() - 0.5) * 0.4 + 0.4;
+		var hue = Math.random() * 360;
+		//path.fillColor = { hue: hue, saturation: 1, lightness: lightness };
+		//path.fillColor = "red";
+		path.strokeColor = '#666';
+		
+	};
+        
+        
+        
+}
+
+function createBlob(center, maxRadius, points) {
+	// Old path before setting foot and head marks//
+        //var pathData = 'M41.571,229.813c-0.503-0.016-1.896,4.743-1.986,15.255c-0.182,21.305-0.934,55.532-5.251,76.514c-0.2,3.241,2.574,16.961,1.5,31.256c-2.333,31.059-4.038,37.798-5.251,66.012c-0.145,3.356,1.435,5.929,0.75,8.501c-1.275,4.791-3.228,7.806-4,13.504c-0.81,5.969-1.123,9.932-1.5,12.502c-6.021,8.176-8.606,6.501-12.752,6.501c-5.017,0-6.951-2.563-6.001-6.501c2.673-6.654,3.436-8.324,5.251-12.502c2.378-5.475,2.542-7.51,4-13.754c1.05-6.317,1.063-26.026,0.5-32.255c-10.131-54.678-5.501-67.667-5.501-71.263c2.639-17.797,0.775,1.458,1-15.253c-0.5-7.167-0.75-10.836-1.25-18.003c-4.74-19.523-9.961-58.019-10.502-60.761c-1.48-7.424,0.234-35.2,1.25-44.758c1.192-11.212,3.543-13.02,5.251-19.004c0.685-2.399,3.1-7.774,3-17.003c-0.043-4.041-1.088-11.012-2-15.253c-1.208-5.613-2.083-15.503-2-20.254c0.083-2.153-0.5-7.348-2.25-8.751c0-8.846,0-14.159-2-29.255c0.547-0.097,22.041-5.237,25.255-10.002c1.122-1.664,1.757-7.281,2.25-10.002c-0.027,0.15,0.055-2.198-1-5.751c-0.868-2.921-1.562-3.614-2.5-10.002c-0.68,0.002-1.149-0.01-1.5-0.25c-1.752-1.89-3.446-8.406-3.501-12.002c0.51-0.256,1.199-0.476,1.5-1c-1.186-1.288-1.028-2.899-1.5-5.001C18.748,12,23.911,5.844,29.083,2.773c8.895-5.281,25.883-2.694,31.006,5.001c1.776,2.667,3.64,10.436,2.25,15.253c-0.354,1.227-1.148,2.428-1.5,3.75c1.613,0.103,1.599,0.784,1.5,2.5c-0.312,2.222-1.698,6.535-3.5,10.252c-0.976-0.007-1.625,0.376-2,1c-1.026,5.523-2.13,8.696-2,9.001c-0.81,1.601-1.297,3.233-0.75,5.751c0,1.25,0,2.5,0,3.751c0.431,1.865,0.696,4.83,1.75,6.251c3.5,4.722,22.504,9.156,25.504,10.002c-1.838,2.544-1.496,28.794-2,29.255c-2.346,2.04-2.239,7.379-2.25,8.751c0,4.205-1.277,17.371-2,20.254c-1.278,5.097-1.969,12.621-2,15.253c-0.067,5.705,0.074,11.168,2.75,17.003c1.595,3.477,4.856,12.074,5.501,19.254c2.712,30.204,1,47.138,1.25,44.508c-0.627,6.602-8.085,48.397-10.502,60.761c-0.167,3.667-0.771,12.586-1,17.753c-0.1,7.301,0.133,9.453,0.75,15.503c3.129,30.686-2.504,47.345-5.501,71.263c-1.369,10.927,0,23.687-0.25,29.005c4.876,22.321,10.909,27.912,10.251,31.756c-1.035,3.527-3.232,4.251-7.501,4.251c-6.486,0-6.588-1.329-11.502-6.501c-0.67-4.559-1.25-13.09-1.25-12.502c-1.168-5.057-3.156-8.884-4.251-13.754c-0.6-2.668,1.152-6.176,1-8.251c-2.039-27.809-5.001-55.678-5.501-66.012c-1.281-13.919,3.152-25.277,1.75-31.256c-4.905-20.928-5.285-55.214-5.751-76.514C43.105,234.559,42.11,229.821,41.571,229.813z';
+        
+        //var pathData = 'M151.614,270.262c-6.62,4.646-8.099,4.489-4.747-10.494c-0.07-4.79-5.163-12.409-1.999-24.485c0.053-1.571-5.985-16.437-12.714-50.684c-2.128-10.832-6.178-62.905-8.273-61.248c-2.726,2.157-2.236,7.373-2.248,8.745c-0.001,4.201-1.526,17.356-2.249,20.237c-1.276,5.093-1.967,12.611-1.998,15.241c-0.067,5.701,0.677,11.159,2.998,16.99c1.413,3.551,4.748,12.075,5.496,19.238c2.862,27.388,1.294,43.984,1.249,44.723c-0.766,7.277-8.104,48.245-10.493,60.464c-0.167,3.664-0.771,12.576-0.999,17.739c-0.101,7.295-0.117,9.695,0.499,15.74c3.127,30.661-2.252,47.058-5.246,70.957c-0.837,6.674-0.327,16.709-0.5,23.985c-0.118,4.974,1.984,8.982,2.498,11.493c13.695,19.154,3.199,18.183-2.748,18.988c-15.116,2.045-9.75-7.721-14.241-18.988c-1.546-3.879,1.579-9.416,1.499-11.493c-1.072-27.787-4.997-55.634-5.497-65.96c-0.91-12.801,2.903-25.788,1.749-30.981c-4.307-19.38-3.932-42.688-5.496-83.449c-0.066-1.712,0.872-8.745-1.999-8.745c-2.71-0.063-1.956,7.194-1.999,8.745c-1.117,40.668-1.433,62.483-5.746,83.449c-0.78,3.238,2.805,16.614,1.999,30.981c-1.673,29.808-5.862,49.721-5.497,65.96c0.071,3.174,2.115,5.71,1.749,11.493c-0.763,12.052,2.375,21.236-14.741,18.738c-12.492-3.439-7.897-9.562-3.117-18.841c1.692-3.285,3.032-6.67,2.867-11.391c0.334-9.011,0.106-20.041-0.121-23.914c-9.755-54.432-5.811-61.274-5.375-71.278c0.898-6.056,0.668-9.235,0.75-15.241c-0.5-7.161-0.75-10.827-1.249-17.988c-4.736-19.508-9.953-57.974-10.494-60.714c-1.479-7.418,0.483-35.172,1.499-44.722c1.191-11.204,3.291-13.009,4.997-18.989c0.684-2.397,2.549-3.177,3.248-16.99c0.204-4.032-1.087-11.003-1.999-15.241c-1.207-5.608-2.332-15.49-2.249-20.237c0.083-2.152,0.233-6.398-2.499-8.745c-1.91-0.397-6.483,53.751-8.042,61.36c-8.189,39.967-12.969,50.416-12.508,50.628c2.855,11.759-1.935,19.697-2.005,24.489c3.362,14.985,1.878,15.142-4.762,10.495c-17.464-12.221-2.39-22.442-2.004-35.484c0.366-12.408,0.802-42.319,4.761-67.221c0.833-5.236,5.724-38.381,6.245-44.461c2.396-27.968,10.081-25.894,16.567-29.039c0.546-0.097,22.023-5.233,25.235-9.994c2.171-2.912,2.273-8.37,2.499-13.242c-0.457-1.17-2.579-5.746-3.498-12.493c-2.62,1.118-3.647-5.756-3.998-5.996c-2.605-8.126-0.082-6.169,0.25-6.746c-3.309-10.197-3.853-26.484,19.238-26.484c27.639,0,20.271,24.2,19.238,26.484c2.799-0.126,0.349,5.03,0.25,6.746c-2.335,8.929-3.287,4.813-3.998,5.996c-0.942,5.645-1.337,8.107-3.497,12.493c0.102,2.303-0.061,10.189,2.248,13.242c3.509,4.639,22.114,9.061,25.39,9.968c7.817,2.822,13.714,2.715,16.835,29.258c1.473,12.527,5.361,39.249,6.246,44.223c4.414,24.818,4.382,54.803,4.747,67.209C153.997,247.822,169.026,258.043,151.614,270.262z';
+        var pathData = $("#img_path_paper").attr("value");
+        if(chk_no_img_path == true){
+            pathData = $("#user_path").html();
+        }
+        //var pathData = $("#user_path").attr("value");
+        var left_arm_pathData = 'M346.574,265.37c0,0,0.352-30.387,2.001-29.255c2.917,2,14.959-0.022,16.753,29.255c0.772,12.6,5.366,39.28,6.252,44.258c4.416,24.838,4.385,54.847,4.75,67.263c0.385,13.05,15.426,23.278-2,35.507c-6.625,4.648-8.105,4.492-4.751-10.503c-0.07-4.794-5.167-12.419-2.001-24.504c0.461-0.212-4.066-9.134-12.729-50.66C352.596,315.927,349.075,263.182,346.574,265.37z';
+        var right_arm_pathData = 'M262.56,326.731c-8.662,41.525-13.189,50.447-12.729,50.66c3.167,12.085-1.931,19.71-2.001,24.504c3.354,14.995,1.875,15.151-4.751,10.502c-17.426-12.229-2.385-22.457-2-35.506c0.366-12.417,0.334-42.425,4.751-67.263c0.885-4.979,5.479-31.658,6.251-44.258c1.794-29.278,13.836-27.255,16.753-29.255c1.65-1.131,2.001,29.255,2.001,29.255C268.333,263.182,264.813,315.927,262.56,326.731z';
+        
+        
+mid_area_path = new Path(pathData);
+left_arm_path = new Path(left_arm_pathData);
+right_arm_path = new Path(right_arm_pathData);
+trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 1000));
+trans_bg.style = {
+	fillColor: '#666666',
+	stroke: 2,
+	strokeColor: '#ffcc00'
+};
+
+//console.log(parseInt($('#user_height_frm_3').attr('value'))+ 5);
+
+var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
+
+
+p_user_height = p_user_height * 6;
+
+var p_user_height_px = p_user_height;
+
+p_user_height = p_user_height * 100 / 450;
+
+p_user_height = p_user_height / 100;
+
+
+console.log(p_user_height);
+
+if(chk_no_img_path == true){
+    //alert("in side");
+    mid_area_path.scale(1,p_user_height);
+    mid_area_path.position = new Point(181,p_user_height_px/2+18);
+    left_arm_path.position = new Point(238,p_user_height_px/2-30);
+    right_arm_path.position = new Point(125,p_user_height_px/2-30);
+   }
+    mid_area_path.position = new Point(181,p_user_height_px/2+18);
+    left_arm_path.position = new Point(238,p_user_height_px/2-30);
+    right_arm_path.position = new Point(125,p_user_height_px/2-30);
+   
+
+    
+console.log(mid_area_path.height);
+//Rectangle(x, y, width, height)
+
+var path = new CompoundPath({
+    children: [
+		trans_bg,
+                mid_area_path
+    ],
+    fillColor: '#666666',
+    selected: true
+	//strokeColor: '#ffcc00'
+});
+
+
+//var path = new Path(pathData);
+//var start = new Point(600, 600);
+//path.moveTo(start);
+//path.strokeColor = '#ccc';
+path.opacity = 0.6;
+//path.scale(1, 0.9);
+	return path;
+}
+
+var segment, path;
+var movePath = false;
+function onMouseDown(event) {
+
+
+	segment = path = null;
+	var hitResult = project.hitTest(event.point, hitOptions);
+	if (!hitResult)
+		return;
+
+	if (event.modifiers.shift) {
+		if (hitResult.type == 'segment') {
+                
+                
+			//hitResult.segment.remove();
+			
+		};
+		return;
+	}
+
+	if (hitResult) {
+        
+        
+        
+		path = hitResult.item;
+		if (hitResult.type == 'segment') {
+			segment = hitResult.segment;
+		} else if (hitResult.type == 'stroke') {
+			
+		}
+	}
+	//movePath = hitResult.type == 'fill';
+	//if (movePath)
+		//project.activeLayer.addChild(hitResult.item);
+}
+
+function onMouseMove(event) {
+            project.activeLayer.selected = false;
+	if (event.item)
+		event.item.selected = true;
+	
+}
+
+
+
+function onMouseUp(event){
+
+    if (segment) {
+    
+    
+        for(var i = 0; i < path.segments.length; i++) {
+        $("#segments_details").prepend("<div class='sh ort_tip' style='left:" + parseInt(path.segments[i].point.x) +"px; top:" + parseInt(path.segments[i].point.y)+"px'>Segment" + i +": "+path.segments[i].point + "</div>");
+        $("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + i + "</div>");
+        };
+        
+        
+        
+        //$("#play_area").prepend("<div class='short_tip'>Segment: "+ event + "</div>");
+    }    
+        
+}
+
+
+function onMouseDrag(event) {
+	if (segment) {
+        
+        
+        
+        
+        
+        var export_path_full = path.exportSVG({asString: true});
+        export_path_full.toString();
+        var export_path_remove_start = export_path_full.substr(44);
+        
+        var export_path_final = export_path_remove_start.substr(0, export_path_remove_start.length - 29);
+        
+        //$("#user_path").html(export_path_final);
+        
+        $("#img_path_paper").attr("value", export_path_final);
+       // alert(export_path_final);
+        
+       // var import_path_full = project.importSVG(export_path_full);
+        
+       // alert(import_path_full);
+        
+		segment.point += event.delta;
+                
+               
+                var sholder_left = path.segments[3].point.y - 22;
+                var sholder_right = path.segments[15].point.y - 22;
+                
+                //alert(sholder_right);
+                
+                if(sholder_left <= sholder_right){
+                    $("#measurement_shoulder_height").attr("value", sholder_left);
+                }else{
+                    $("#measurement_shoulder_height").attr("value", sholder_right);
+                }
+                
+                
+                var bottom_left = path.segments[55].point.y - 66;
+                var bottom_right = path.segments[29].point.y - 66;
+                
+                //alert(sholder_right);
+                
+                if(bottom_left <= bottom_right){
+                    $("#measurement_hip_height").attr("value", bottom_left);
+                }else{
+                    $("#measurement_hip_height").attr("value", bottom_right);
+                }
+                
+                
+                
+		//path.smooth();
+		
+		
+		
+		console.log("Me Hit!");
+	} else if (path) {
+		path.position += event.delta;
+		
+		
+	}
+	
+
+	
+}
+
+</script>
+
+
+
+
+<script type="text/javascript" >
+$(document).ready(function() {
+    $("#btn_send_params").click(function(){
+        upload();
+    }); 
+});
+function upload(){
+var $url=$('#marker_update_url').attr('value');
+var value_ar = {
+rect_x: $('#p_selected_pic_x').attr('value'),
+rect_y: $('#p_selected_pic_y').attr('value'),
+rect_height: $('#p_selected_pic_h').attr('value'),
+rect_width:$('#p_selected_pic_w').attr('value'),
+svg_path:$('#img_path_paper').attr('value')};
+
+ $.ajax({
+        type: "POST",
+        url: $url,//"http://localhost/webapp/web/app_dev.php/user/marker/save",
+        data: value_ar,  
+       success: function(data){//alert(data);
+     console.log(data);    
+    },
+        failure: function(errMsg) {
+            setTimeout(go_to_index,'500');
+            //alert(errMsg);
+        }
+  });
+
+//alert(JSON.stringify(value_ar));
+
+
+}
+
+
+</script>
+<script>
+// Script for time spent on page 
+
+jQuery(document).ready(function ($) { 
+
+     var typingTimer;    //timer identifier
+     var doneTypingInterval = 1000;  //time in ms, 5 second for example
+     var checktime = 0;
+     typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      clearTimeout(typingTimer);
+
+    function doneTyping () {
+        checktime = typingTimer;
+        return checktime;
+    } 
+    jQuery('#paper_step_1').click(function() {
+       
+        checktime = doneTyping ();
+       pre_time=$('#user_timeSpent').val();
+       checktime+=pre_time;
+       $('#user_timeSpent').val(checktime);
+        $.ajax({
+               type: "GET",
+               url: $("#time_spent_url").text(), 
+                 data: {chk_time:checktime},  
+               success: function(data){
+                   
+                },
+               failure: function(errMsg) {
+                 
+               }
+         });
+        
+    });
+
+});
+
+ </script>
+ 
+
+<input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
+<input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
+
+<input id="p_selected_pic_h" type="hidden" value="{{marker.rectHeight}}" />
+<input id="p_selected_pic_w" type="hidden" value="{{marker.rectWidth}}" />
+<input id="p_selected_pic_x" type="hidden" value="{{marker.rectX}}" />
+<input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
+<input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
+<input id="marker_update_url" type="hidden" value="{{ path('user_maker_save')}}" />
+<input id="btn_send_params" type="hidden" value="send" />
+<div style="display:none;" id="user_path">M151.614,270.262c-6.62,4.646-8.099,4.489-4.747-10.494c-0.07-4.79-5.163-12.409-1.999-24.485c0.053-1.571-5.985-16.437-12.714-50.684c-2.128-10.832-6.178-62.905-8.273-61.248c-2.726,2.157-2.236,7.373-2.248,8.745c-0.001,4.201-1.526,17.356-2.249,20.237c-1.276,5.093-1.967,12.611-1.998,15.241c-0.067,5.701,0.677,11.159,2.998,16.99c1.413,3.551,4.748,12.075,5.496,19.238c2.862,27.388,1.294,43.984,1.249,44.723c-0.766,7.277-8.104,48.245-10.493,60.464c-0.167,3.664-0.771,12.576-0.999,17.739c-0.101,7.295-0.117,9.695,0.499,15.74c3.127,30.661-2.252,47.058-5.246,70.957c-0.837,6.674-0.327,16.709-0.5,23.985c-0.118,4.974,1.984,8.982,2.498,11.493c13.695,19.154,3.199,18.183-2.748,18.988c-15.116,2.045-9.75-7.721-14.241-18.988c-1.546-3.879,1.579-9.416,1.499-11.493c-1.072-27.787-4.997-55.634-5.497-65.96c-0.91-12.801,2.903-25.788,1.749-30.981c-4.307-19.38-3.932-42.688-5.496-83.449c-0.066-1.712,0.872-8.745-1.999-8.745c-2.71-0.063-1.956,7.194-1.999,8.745c-1.117,40.668-1.433,62.483-5.746,83.449c-0.78,3.238,2.805,16.614,1.999,30.981c-1.673,29.808-5.862,49.721-5.497,65.96c0.071,3.174,2.115,5.71,1.749,11.493c-0.763,12.052,2.375,21.236-14.741,18.738c-12.492-3.439-7.897-9.562-3.117-18.841c1.692-3.285,3.032-6.67,2.867-11.391c0.334-9.011,0.106-20.041-0.121-23.914c-9.755-54.432-5.811-61.274-5.375-71.278c0.898-6.056,0.668-9.235,0.75-15.241c-0.5-7.161-0.75-10.827-1.249-17.988c-4.736-19.508-9.953-57.974-10.494-60.714c-1.479-7.418,0.483-35.172,1.499-44.722c1.191-11.204,3.291-13.009,4.997-18.989c0.684-2.397,2.549-3.177,3.248-16.99c0.204-4.032-1.087-11.003-1.999-15.241c-1.207-5.608-2.332-15.49-2.249-20.237c0.083-2.152,0.233-6.398-2.499-8.745c-1.91-0.397-6.483,53.751-8.042,61.36c-8.189,39.967-12.969,50.416-12.508,50.628c2.855,11.759-1.935,19.697-2.005,24.489c3.362,14.985,1.878,15.142-4.762,10.495c-17.464-12.221-2.39-22.442-2.004-35.484c0.366-12.408,0.802-42.319,4.761-67.221c0.833-5.236,5.724-38.381,6.245-44.461c2.396-27.968,10.081-25.894,16.567-29.039c0.546-0.097,22.023-5.233,25.235-9.994c2.171-2.912,2.273-8.37,2.499-13.242c-0.457-1.17-2.579-5.746-3.498-12.493c-2.62,1.118-3.647-5.756-3.998-5.996c-2.605-8.126-0.082-6.169,0.25-6.746c-3.309-10.197-3.853-26.484,19.238-26.484c27.639,0,20.271,24.2,19.238,26.484c2.799-0.126,0.349,5.03,0.25,6.746c-2.335,8.929-3.287,4.813-3.998,5.996c-0.942,5.645-1.337,8.107-3.497,12.493c0.102,2.303-0.061,10.189,2.248,13.242c3.509,4.639,22.114,9.061,25.39,9.968c7.817,2.822,13.714,2.715,16.835,29.258c1.473,12.527,5.361,39.249,6.246,44.223c4.414,24.818,4.382,54.803,4.747,67.209C153.997,247.822,169.026,258.043,151.614,270.262z</div>
+<div>
+    
+
+    
+          <form id="frmUserMeasurement" action="{{ path('measurement_vertical_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_vertical_form) }}>
+                {{ form_errors(measurement_vertical_form) }}
+                {{ form_widget(measurement_vertical_form.shoulder_height) }}
+                {{ form_widget(measurement_vertical_form.bust_height) }}
+                {{ form_widget(measurement_vertical_form.waist_height) }}
+                {{ form_widget(measurement_vertical_form.hip_height) }}
+                {{ form_rest(measurement_vertical_form) }}          
+          
+           </form>
+    
+    
+           <form id="frmUserMeasurement_2" action="{{ path('measurement_horizontal_position_update', { 'id': entity.id })}}" method="post"   {{ form_enctype(measurement_horizontal_form) }}>
+             {{ form_errors(measurement_horizontal_form) }}
+                {{ form_widget(measurement_horizontal_form.shoulder_width) }}
+                {{ form_widget(measurement_horizontal_form.bust_width) }}
+                {{ form_widget(measurement_horizontal_form.waist_width) }}
+                {{ form_widget(measurement_horizontal_form.hip_width) }}
+                {{ form_rest(measurement_horizontal_form) }}
+            </form>
+
+    
+    
+</div>
+<script>
+        
+    </script>
+    
+<section {% if(entity.gender=='f') %} class="reg_blk reg_female" {%else%} class="reg_blk reg_male" {%endif%}>
+    <!--<div class="reg_steps">
+        <ul>
+            <li><span>1</span></li>
+            <li><span>2</span></li>
+            <li><span>3</span></li>
+            <li class="active"><span>4</span></li>
+        </ul>
+    </div>-->
+    <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span>    
+        
+    <div class="action_cnt">
+        <div class="steps step_4">
+            <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
+            <p  id="sizeerror" style="color:#d14; size:10; display:none;">Image Size is very large</p>
+            <h2>Upload Photo</h2>
+
+            <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
+
+                <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
+                <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
+                <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
+                
+                
+                  {% if(edit_type=="fitting_room")%}
+                    <input type="hidden" id="hdn_user_cropped_image_url" value="/webapp/web/" />
+                 {% endif %}
+                 {% if(edit_type=="registration")%}
+                    <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+                 {% endif%}    
+                 
+                
+                
+                
+                    {{ form_widget(form.timeSpent)}}  
+                    <span id="time_spent_url" style="display:none;">{{path('registration_step_four_time_spent')}}</span>
+                
+                <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
+     {{ form_errors(form) }}
+                <div class="input_file_hldr">
+                    {{ form_errors(form.file) }}
+                            {{ form_widget(form.file, { 'attr': {'class': 'input_file'} }) }}
+
+                        <input id="inp_txt_file_name" class="input_text" type="text" value="Click Browse button" />
+                    </div>
+                
+                {% if(edit_type=="registration")%}
+                    <div class="upload_again_hldr"><a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' }) }}">Try Another Photo</a></div>
+                 {% else %}
+                  <div class="upload_again_hldr"><a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">Try Another Photo</a></div>
+                 {% endif%} 
+                
+                
+                    {{ form_rest(form) }}
+
+
+                    <div class="clr_bth"></div>
+                    <div class="frm_ele zoom_in hide">
+                        <label>Zoom In/Out</label>
+                        <div class="slider_wrap">
+                            <input id="slider_result_photo" class="slider_result short_inp" type="number" value="100" />
+                            <div id="slider_scale_photo" class="main_slider"></div>
+                            
+                            <!--/.slider_wrap--></div></div>
+                    
+               
+                    
+                    <div class="frm_ele zoom_edit hide">
+                        <label>Zoom In/Out</label>
+                        <div class="slider_wrap">
+                            <input id="slider_result_photo_edit" class="slider_result short_inp hide" type="number" value="100" />
+                            <div id="slider_scale_photo_edit" class="main_slider"></div>
+                            
+                            <!--/.slider_wrap--></div></div>
+        
+                    
+                    
+                    <div class="clr_bth"></div>
+                        <canvas id="cnv_img_crop" width="364" height="505" class="cnv_img_crop_style"></canvas>
+
+                </form>  
+            
+         
+            <div class="frm_ele step4_btns">
+                  
+                  {% if(edit_type=="registration")%}
+                  <a class="reg_next_step reg_second" href="{{path('registration_measurement_edit')}}">Back</a>
+                  <a class="reg_next_step" href="{{path('inner_site_index')}}">Skip</a>
+                 {% else %}
+                  <a class="reg_next_step" href="{{path('inner_site_index')}}">Back</a>                 
+                 {% endif%}    
+                 </div>
+                <!--/.step_4--></div>
+            <!--/.action_cnt--></div>
+    
+    
+    <div class="how_it_works">
+        <div id="segments_details">
+        </div>
+        <h2>How It Works</h2>
+        <ol class="hiw_upload_photo">
+            <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>
+            <li>For photo - Stand straight, arms relaxed by side, shoulders back and feet shoulder width apart.<br> <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
+            <li>Do not forget to smile!</li>
+            <li>Click browse to upload photo</li>
+            
+            <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        </ol>
+        <ol class="hiw_step_1">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'">here</a> </li>
+        
+        <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        
+        </ol>
+        <ol class="hiw_step_2">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'">here</a> </li>
+       <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+        
+        
+        </ol>
+        
+         <ol class="hiw_step_3">
+            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
+             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'">here</a> </li>
+        
+              <div id="exp_sml">
+            <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
+        </div>
+         
+         </ol>
+        
+        
+        
+        
+        
+        
+    </div>
+        <!--/.action_blk--></section>
+{% endblock %}
+
+
+{% block reg_fitting_room %}
+        <section {% if(entity.gender=='f') %} class="reg_female" {%else%} class="reg_male" {%endif%}>
+    <div id="stella_box">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('stella_box').style.display='none'">x</a></span>
+        </div>
+        <div id="pic_step_1">
+            <img src="{{ asset('bundles/lovethatfit/site/images/1_top_bottom.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_1').style.display='none'">x</a></span>
+        </div>
+                
+              <div id="pic_step_2">
+            <img src="{{ asset('bundles/lovethatfit/site/images/1_vert.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_2').style.display='none'">x</a></span>
+        </div>
+        <div id="pic_step_3">
+            <img src="{{ asset('bundles/lovethatfit/site/images/pic_step_2_2.png') }}">
+            <span class="popup_cross"><a href="javascript:;" style="text-decoration:none; color:#fff;" onclick="document.getElementById('pic_step_3').style.display='none'">x</a></span>
+        </div>
+            <style>
+                    #load_current_pic {
+                        position: absolute;
+                        top:100px;
+                        left: 550px;
+                        background: #fff;
+                        padding:22px;
+                        border:1px solid #444;
+                    }
+                    #load_current_pic a,
+                    #load_current_pic a:visited {
+                        color:darkgreen;
+                        font-size: 20px;
+                    }
+            </style>
+            
+            <div id="load_current_pic" class="hide">
+                <a id="load_current_pic_clicked" href="#">Load Current Photo</a>
+            </div>
+                    <div class="play_area_hldr">
+                        
+                        
+                        
+                      <div id="rotate_move_box">
+                      
+                     <div class="action_buts_bar rotate_buts">
+                         <span class="rotate_label">Rotate</span>       
+                            <a href="#" class="but_rotate img_acw_min"></a>   
+                            <a href="#" class="but_rotate img_cw_min"></a>
+                            <a href="#" class="but_rotate img_acw"></a>   
+                            <a href="#" class="but_rotate img_cw"></a>
+                            
+                     </div>
+                          
+                          <div class="clr_bth"></div>
+                          
+                     <div class="action_buts_bar move_buttons">
+                         <div class="move_label">Move</div>       
+                            <a href="#" class="but_move top_move"></a>   
+                            <a href="#" class="but_move left_move"></a> 
+                            <a href="#" class="but_move right_move"></a>  
+                            <a href="#" class="but_move bottom_move"></a>  
+                     </div>
+                      
+                      
+                      </div>  
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+                        
+                        
+                        <div id="adj_popout_bottom" class="adj_popout_msg">
+                            <div class="arrow_img_alerts"></div>
+                            <span>Move so it lies at your natural waist</span>
+                            <div class="step_2_example">
+                               <img class="step_2_exam_1" src="{{ asset('bundles/lovethatfit/site/images/img_step_2.png') }}" />
+                            </div>
+                        <!--/.adj_popout_msg--></div>
+
+                        <div class="tip tt_arrow step_4_tip">
+                            <!--- Tootip wrapper Start  !-->
+                            <div class="grad"></div>
+                            
+                            <div class="grad"></div>
+                            <!--- Tootip wrapper End  !-->
+                        </div>
+                            
+                        <div class="int_fitting_room"></div>
+                        
+                        <div class="fitting_step">
+                            
+                            
+                            
+                            <div class="active" id="step_one">
+                               
+                                <a id="paper_step_1_reload" href="#">Step 1<span></span></a>
+                     
+                            </div>
+                            
+                            <div id="step_two">
+                                <span id="prev"></span>
+                                Step 2<span></span><span class="shd"></span>
+                            </div> 
+                            
+                            
+                        </div>
+                        
+                        <div id="adj_markers_hldr">
+                            
+                            <div class="chk_it_out" style="display:none; background: #ffcc00;">CHECK</div>
+                            <div id="verti_shoulder" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Click and drag bar to set top of shoulders</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <div class="step_2_exam_1"></div>
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            <div id="verti_bust" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Click and drag bar to set {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%} at fullest point</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <div class="step_2_exam_2"></div>
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            <div id="verti_waist" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Click and drag bar to set natural waist at narrowest point</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <div class="step_2_exam_3"></div>
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            <div id="verti_hip" class="adj_popout_msg_verti adj_popout_tip_verti hide">
+                                <span class="arrow_img"></span>
+                                <div class="arrow_img_alerts"></div>
+                                <span>Click and drag bar to set hips at fullest point</span>
+                                <div class="label_tip">Example:</div>
+                                <div class="step_2_example">
+                                    <div class="step_2_exam_4"></div>
+                                </div>
+                            <!--/.adj_popout_tip_verti--></div>
+                            
+                            
+                            
+                            <div id="extra_hldr"></div>            
+                            <div id="shoulder_mark_hldr">
+                                            
+                                            
+                                            
+                                            <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Click and drag to set the width of your shoulders</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="shoulder_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="shoulder_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                <div class="edt_link example_link">Example</div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                <div class="step_1_example">
+                                   
+                                                    <div class="step_1_exam_1"></div>
+                                </div>
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="shoulder_mark_h" class="inner_slider_hldr">
+                                                   
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#shoulder_mark_h--></div>
+                                            </div>
+                                         <div id="shoulder_mark_v" class="v_pos"></div>
+                                         
+                                         
+                                         
+                                         
+                                         
+                                           </div>
+                                        <div id="bust_mark_hldr">
+                                            
+                                            
+                                            <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Click and drag to set the width of your {%if(entity.gender == 'f')%} bust {%else%} chest{%endif%}</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="bust_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="bust_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                 <div class="edt_link example_link"><a href="">Example</a></div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                
+                                                <div class="step_1_example">
+                                                    <div class="step_1_exam_2"></div>
+                                    
+                                </div>
+                                                
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="bust_mark_h" class="inner_slider_hldr">
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#bust_mark_h--></div>
+                                            </div>
+                                         <div id="bust_mark_v" class="v_pos"></div>
+                                    
+                                        </div>
+                                        
+                            
+                                    <div id="waist_mark_hldr">
+                                           
+                                        <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Adjust slider to set the width of your waist</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="waist_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="waist_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                 <div class="edt_link example_link"><a href="">Example</a></div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                
+                                                <div class="step_1_example">
+                                    
+                                                    <div class="step_1_exam_3"></div>
+                                </div>
+                                                
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="waist_mark_h" class="inner_slider_hldr">
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#waist_mark_h--></div>
+                                            </div>
+                                         <div id="waist_mark_v" class="v_pos"></div>
+                                        
+                                        </div>
+                                        <div id="hip_mark_hldr">
+                                            
+                                            <div class="adj_popout_msg adj_popout_tip">
+                                                <span class="arrow_img"></span>
+                                                <div class="arrow_img_alerts"></div>
+                                                <span>Adjust slider to set the width of your hip</span>
+                                                <div class="zoom_slider_hldr">
+                                                    <div id="hip_slider_set" class="tip_slider"></div>
+                                                </div>
+                                                <div class="zoom_canvas_area">
+                                                    <div id="hip_mark_h_zoom" class="inner_slider_hldr_zoom">
+                                                        <span class="bdr_range"></span>
+                                                        <span class="rgt_side"></span>
+                                                        <span class="lft_side"></span>
+                                                    </div>
+                                                    <div class="zoomed_img"></div>
+                                                </div>
+                                                <div class="clr_bth"></div>
+                                                 <div class="edt_link example_link"><a href="">Example</a></div>
+                                                <div class="edt_link"><a href="">Edit Photo</a></div>
+                                                
+                                                <div class="step_1_example">
+                                                    <div class="step_1_exam_4"></div>
+                                </div>
+                                                
+                                            <!--/.adj_popout_tip--></div>
+                                            
+                                            
+                                            <div class="h_pos">
+                                                <div id="hip_mark_h" class="inner_slider_hldr">
+                                                    <span class="rgt_side"></span>
+                                                    <span class="lft_side"></span>
+                                                <!--/#hip_mark_h--></div>
+                                            </div>
+                                         <div id="hip_mark_v" class="v_pos"></div>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                        
+                        <div id="play_area" class="play_area hide">
+                            
+                            <canvas id="rect_mask" width="364" height="505"></canvas>
+                            
+                            <div id="face_hldr">
+                                <div id="face_inner">
+                                    <img id="face_pos" src="{{ asset('bundles/lovethatfit/site/images/face-blue.png')}}" width="36" height="60" />
+                                    <!--
+                                    <canvas id="face_mask" width="200" height="200"></canvas>
+                                    -->
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            <canvas id="canv_mask" width="364" height="505"></canvas>
+                            
+                            <div class="center_mark"></div>
+                            <div class="height_top_mark"></div>
+                            <div class="height_bottom_mark"></div>
+                            
+                            <div id="top_layer"></div>
+                            <div id="dummy_mark">
+                                
+                                
+                                
+                                <div id="user_body_marks">
+                                    <div id="adj_top_hldr">
+                                        <div id="top_adj_marks">
+                                            <div id="top_moveable"></div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div id="adj_belt_hldr">
+                                        <div id="bottom_adj_marks">
+                                            <div id="bottom_moveable"></div>
+                                        </div>
+                                    </div>
+                                    <div id="lages_marks"></div>                                 
+                                </div>
+                            </div>
+                            
+                            
+                            <div id="uploaded_photo" class="uploaded_photo full_opacity"></div>
+                        </div>
+                        <!--/.play_area_hldr--></div>
+            
+            <div class="next_btn_4">
+                <div class="frm_ele">
+                    <input id="paper_step_1_a" type="button" value="Next Step" />
+                    <input id="paper_step_1" type="button" value="Next Step" />
+                    <input class="next_step2" type="button" value="Next Step" />
+                    <input class="next_step3" type="button" value="Next Step" />
+                </div>
+           </div>
+            
+            <div class="btm_buttons row save_btn_4">
+                        <div class="frm_ele">
+                            <input onClick="next_button_click(); return false;" class="reg_next_step2" type="button" value="" />
+                        </div>
+                       
+                    </div>
+            
+</section>
+{% endblock %}
