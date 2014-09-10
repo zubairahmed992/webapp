@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,300,700' rel='stylesheet' type='text/css'>
+
+<script>
+$(document).ready(function(){
+$("#file").change(function(){
+var src=$("#file").val();
+if(src!="")
+{
+formdata= new FormData();
+var numfiles=this.files.length;
+var i, file, progress, size;
+for(i=0;i<numfiles;i++)
+{
+file = this.files[i];
+size = this.files[i].size;
+name = this.files[i].name;
+if (!!file.type.match(/image.*/))
+{
+if((Math.round(size))<=(1024*1024))
+{
+var reader = new FileReader();
+reader.readAsDataURL(file);
+$("#preview").show();
+$('#preview').html("");
+reader.onloadend = function(e){
+var image = $('<img>').attr('src',e.target.result);
+$(image).appendTo('#preview');
+};
+formdata.append("file[]", file);
+if(i==(numfiles-1))
+{
+$("#info").html("wait a moment to complete upload");
+$.ajax({
+	url: "{{path('admin_product_detail_multiple_images_uploading')}}",
+	type: "POST",
+	data: formdata,
+	processData: false,
+	contentType: false,
+	success: function(res){
+	if(res!="0")
+	$("#info").html("Successfully Uploaded");
+	else
+	$("#info").html("Error in upload. Retry");
+	}
+	});
+}
+}
+else
+{
+$("#info").html(name+"Size limit exceeded");
+$("#preview").hide();
+return;
+}
+}
+else
+{
+$("#info").html(name+"Not image file");
+$("#preview").hide();
+return;
+}
+}
+}
+else
+{
+$("#info").html("Select an image file");
+$("#preview").hide();
+return;
+}
+return false;
+});
+});
+</script>
+<style type="text/css">
+	.but {
+		width: 250px;
+		height: 20px;
+		color: #000;
+		background: #fff;
+		text-decoration: none;
+		outline: none;
+		border: solid 5px #6f8075;
+		margin: 0 120px;
+		padding: 10px 5px;
+	}
+	#container{
+		width:500px;
+		height: 200px;
+		margin: auto;
+	}
+	.title {
+	font-size: 20px;
+	text-align:center;
+}
+	#info {
+		width:200px;
+		height: 50px;
+		margin: auto;
+		text-align:center;
+	}
+	#preview {
+		margin: 0 3%;
+	}
+       
+
+.osbnavbar {
+	height: 50px;
+	width: 100%;
+	background-color: #fff;
+	border-bottom: solid 1px #9b9b9b;
+	box-shadow: 1px 0px 2px rgba(0,0,0,0.2);
+	line-height: 50px;
+}
+
+.osbnavbar a {
+	color: #545454;
+	font-size: 12px;
+	margin: 15px;
+	padding-top: 10px;
+}
+
+.osbnavbar :hover {
+	color:#e94e1b;
+}
+.osbnavbar .right {
+	float:right;
+}
+
+</style>
+    <div id="container">
+    <h1 class="title">Multiple image upload using ajax and php</h1>
+<div id="uploaded"></div>
+<div  id="upload_progress"></div>
+<form enctype="multipart/form-data" method="POST">
+<input class="but" type="file" id="file" multiple name="file"/>
+</form>
+<div id="info"></div>
+</div>
+<div id="preview"></div>

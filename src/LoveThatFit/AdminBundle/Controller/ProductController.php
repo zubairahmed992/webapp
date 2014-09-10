@@ -1062,4 +1062,30 @@ class ProductController extends Controller {
         $target_array = $request->request->all();
         return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
     }
+#-----------------------------------------------------------------------------
+    #---------------Multiple Image Uploading --------------------------#
+public function multplieImageUploadAction(Request $request){
+    
+     $em = $this->getDoctrine()->getManager();
+     $entity_item = $em->getRepository('LoveThatFitAdminBundle:ProductItem')->find(1);
+     
+    foreach ($_FILES["file"]["error"] as $key => $error){
+        if ($error == UPLOAD_ERR_OK){
+	    $time=time();  // time on creation
+	  $random_num=rand(00,99);  // random number
+        $name = $time.$random_num.$_FILES["file"]["name"][$key]; // avoid same file name collision
+       
+        if(move_uploaded_file($_FILES["file"]["tmp_name"][$key],'D:/wamp/www/webapp/web/uploads/ltf/products/fitting_room/web/'.$name)){
+              //$entity_item->upload(); //----- file upload method 
+            $em->persist($entity_item);
+            $em->flush();
+	  return new response( "1");
+	}
+	else{
+	return new response("0");
+         }
+    }
+    
+   }
+}
 }
