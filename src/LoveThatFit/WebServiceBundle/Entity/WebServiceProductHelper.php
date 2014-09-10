@@ -517,9 +517,9 @@ public function getUserTryHistoryWebService($request,$user_id){
         $device_path=$this->getDeviceTypeByUser($user_id);   
         if(!$device_path)
         $data=array();
-        $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
+       // $fitting_room = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/products/fitting_room/'.$device_path.'/';
         $data['data']=$entity;
-        $data['image_path']=$fitting_room;
+        //$data['image_path']=$fitting_room;
         $count_rec=count($entity);
         if($count_rec>0)
         {

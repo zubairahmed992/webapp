@@ -668,7 +668,7 @@ class ProductRepository extends EntityRepository {
          
   return $this->getEntityManager()
                         ->createQueryBuilder()
-                        ->select('pi.id as product_id ,p.name as product_name,b.name as brand_name,ps.title as size, pc.title as color ,pi.image as item_image')
+                        ->select('pi.id as productId ,p.name as productName,b.name as brandName,ps.title as size, pc.title as color ,pi.image as itemImage, pi.id as itemId')
                         ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
                         ->innerJoin('pi.product','p')
                         ->innerJoin('p.brand', 'b')

@@ -291,7 +291,7 @@ public function brandListAction() {
         $request_array = json_decode($jsonInput, true);
  #------------------------------Authentication of Token-------------------------#
         $user = $this->get('user.helper.user');
-      $authTokenWebService = $request_array['authTokenWebService'];
+      $authTokenWebService = $request_array['authTokenWebService'];//'e4c997f574be6c6e3f8dc6bd4286ff60';
         if ($authTokenWebService) {
             $tokenResponse = $user->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
@@ -301,8 +301,8 @@ public function brandListAction() {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
 #------------------------------End Of Authentication Token---------------------#
-        $user_id = $request_array['user_id'];
-       // $user_id=1;
+        $user_id = $request_array['userId'];
+      //  $user_id=117;
         $product_helper =  $this->get('webservice.helper.product');
         $msg=$product_helper->getUserTryHistoryWebService($request,$user_id);
         return new Response(json_encode($msg));
