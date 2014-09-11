@@ -1071,7 +1071,11 @@ public function productDetailColorAdd($entity){
        }
              
               
-        
+  #------------------------Find Item for Multiple Images Uploading--------------#
+ public function findItemMultipleImpagesUploading($request_array){
+   $request_array=array('product_id'=>1,'color_title'=>'Black','body_type'=>'Tall','size_title'=>'00');
+     return $this->repo->findItemMultipleImpagesUploading($request_array);
+ }      
     
   
 }

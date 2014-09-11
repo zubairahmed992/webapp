@@ -289,7 +289,9 @@ public function userProfileAction()
 #----------------------Avatar Image Uploading ----------------------------------#
 public function avatarUploadAction() {
     $request = $this->getRequest();
-
+        if(!isset($_POST['email'])){
+            return new response(json_encode(array('Message' => 'Email Not Found')));
+        }
         $email = $_POST['email'];
         $user_helper = $this->get('webservice.helper.user');
         $email_chk = $user_helper ->findOneBy(array('email' => $email));

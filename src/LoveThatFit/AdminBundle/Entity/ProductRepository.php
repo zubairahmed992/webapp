@@ -810,7 +810,7 @@ class ProductRepository extends EntityRepository {
             ORDER BY uih.updated_at DESC"
             //ORDER BY uih.count DESC"
                             )->setParameters(array('user_id' =>$user_id));
-        } else {
+       } else {
             $query = $this->getEntityManager()
                     ->createQuery("
             SELECT p FROM LoveThatFitAdminBundle:Product p 
@@ -1152,6 +1152,25 @@ class ProductRepository extends EntityRepository {
             return null;
         }      
     }
+#------------------------Find Item for Multiple Images Uploading--------------#
+ public function findItemMultipleImpagesUploading($request_array){
+      return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('pi.id')
+                        ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
+                        ->innerJoin('pi.product','p')
+                        ->innerJoin('pi.product_color','pc')
+                        ->innerJoin('pi.product_size','ps')
+                        ->where('p.id = :product_id')
+                        ->andwhere('pc.title = :color_title')
+                        ->andwhere('ps.body_type = :body_type')
+                        ->andwhere('ps.title = :size_title')
+                        ->setParameters(array('product_id'=>$request_array['product_id'],'color_title'=>$request_array['color_title'],'body_type'=>$request_array['body_type'],'size_title'=>$request_array['size_title']))
+                        ->getQuery()
+                        ->getSingleResult(); 
+     
+ }   
+    
  
  
 }
