@@ -1063,48 +1063,28 @@ class ProductController extends Controller {
         return new response(json_encode($this->get('admin.helper.retailer')->findBrandBaseOnRetailer($target_array['retailer_id'])));
     }
 #-----------------------------------------------------------------------------
+
   #---------------Multiple Image Uploading --------------------------#
 public function multplieImageUploadAction(Request $request){
-   
-    $itemId=$this->get('admin.helper.product')->findItemMultipleImpagesUploading(true);
-    if(isset($itemId)){
-        $em = $this->getDoctrine()->getManager();
-        $productItem = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:ProductItem')
-                ->find($itemId);
-        return new response($productItem->getImage());
-    }
-     
-           $name="Tall_00_Black.jpg";
-           $explode_array=explode("_",$name);
-          
-           return new response($product->getProductItems()->getId());
-           $productItem->setImage($name);
-           $productSize->setTitle($explode_array[0]);
-           $productSize->setBodyType($explode_array[1]);
-           $em->persist($product);
-           $em->flush();
-            return new response("tesT");
-    foreach ($_FILES["file"]["error"] as $key => $error){
-        if ($error == UPLOAD_ERR_OK){
-	  $time=time();  // time on creation
+   $em = $this->getDoctrine()->getManager();
+   foreach ($_FILES["file"]["error"] as $key => $error){
+     if ($error == UPLOAD_ERR_OK){
 	  $random_num=rand(00,99);  // random number
           $name = $_FILES["file"]["name"][$key]; // avoid same file name collision
-   if(move_uploaded_file($_FILES["file"]["tmp_name"][$key],'D:/wamp/www/webapp/web/uploads/ltf/products/fitting_room/web/'.$name)){
-            $name="Tall_00.jpg";
-           $explode_array=explode("_",$name);
-           $entity_item->setImage($name);
-           $entity_item->setProductColor($explode_array[0]);
-           $entity_item->setProductSize($explode_array[1]);
-           
-            $em->persist($entity_item);
-            $em->flush();
-	}
-	else{
-	return new response("0");
-         }
-    }
-    
-   }
+          
+          $itemId=$this->get('admin.helper.product')->findItemMultipleImpagesUploading($name,$_POST['product_id']);
+          if(!empty($itemId)){
+            $productItem = $this->get('admin.helper.productitem')->find($itemId);
+            $productItem->file=$request->files->get('file')[$key];//$_FILES["file"]["tmp_name"][0];
+            $productItem->upload();
+        }
+       }
+     
+  }
+  if(!empty($productItem)){
+  $em->persist($productItem);
+  $em->flush();
+  }
+  return new response(json_encode("Done"));
 }
 }

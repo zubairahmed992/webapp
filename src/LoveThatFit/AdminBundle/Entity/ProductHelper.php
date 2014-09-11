@@ -1072,9 +1072,37 @@ public function productDetailColorAdd($entity){
              
               
   #------------------------Find Item for Multiple Images Uploading--------------#
- public function findItemMultipleImpagesUploading($request_array){
-   $request_array=array('product_id'=>1,'color_title'=>'Black','body_type'=>'Tall','size_title'=>'00');
-     return $this->repo->findItemMultipleImpagesUploading($request_array);
+ public function findItemMultipleImpagesUploading($request_array,$product_id){
+   //  $request_array='Red_Regular_00.jpg';
+   $explode_array=explode("_",$request_array);
+   if (isset($explode_array[0])) {
+            $request_arrays['color_title'] = $explode_array[0];
+        }else{
+               $request_arrays['color_title'] =NULL;
+        }
+        if (isset($explode_array[1])) {
+            $request_arrays['body_type'] = $explode_array[1];
+        } else {
+            $request_arrays['body_type'] =  'Regular';
+        }
+         if (isset($explode_array[2])) {
+             $sizeTitle=explode(".",$explode_array[2]);
+            $request_arrays['size_title'] =$sizeTitle[0];
+        } else{
+            $request_arrays['size_title'] =NULL;
+        }
+         if (isset($request_array)) {
+            $request_arrays['product_id'] =$product_id;
+        }
+
+
+       // $request_array=array('product_id'=>1,'color_title'=>'Black','body_type'=>'Tall','size_title'=>'00');
+        $return_value= $this->repo->findItemMultipleImpagesUploading($request_arrays);
+        if($return_value){
+            return $return_value;
+        }else{
+            return false;
+        }
  }      
     
   

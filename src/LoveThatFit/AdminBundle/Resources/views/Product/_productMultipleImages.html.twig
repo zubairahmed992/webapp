@@ -4,9 +4,23 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,300,700' rel='stylesheet' type='text/css'>
 
 <script>
+    function splitStr(str){
+    var myStr=str.split("_");   
+  var flag="1";
+   if((myStr[0]) && (typeof myStr[0] != 'undefined')){
+       flag+="1";
+   } if((myStr[1]) && (typeof myStr[1] != 'undefined')){
+       flag+="1";
+   }
+    if((myStr[2]) && (typeof myStr[2] != 'undefined')){
+       flag+="1";
+   }
+  return flag; 
+ }
 $(document).ready(function(){
 $("#file").change(function(){
 var src=$("#file").val();
+var product_id=$('#product_id').val();
 if(src!="")
 {
 formdata= new FormData();
@@ -15,6 +29,11 @@ var i, file, progress, size;
 for(i=0;i<numfiles;i++)
 {
 file = this.files[i];
+
+if(splitStr(file.name)!="1111"){
+    alert("Invalid Image Format");
+    return false;
+}
 size = this.files[i].size;
 name = this.files[i].name;
 if (!!file.type.match(/image.*/))
@@ -32,6 +51,7 @@ $(image).appendTo('#preview');
 formdata.append("file[]", file);
 if(i==(numfiles-1))
 {
+    formdata.append("product_id", product_id);
 $("#info").html("wait a moment to complete upload");
 $.ajax({
 	url: "{{path('admin_product_detail_multiple_images_uploading')}}",
@@ -135,6 +155,7 @@ return false;
 <div  id="upload_progress"></div>
 <form enctype="multipart/form-data" method="POST">
 <input class="but" type="file" id="file" multiple name="file"/>
+<input type="hidden" id="product_id" name="product_id" value="{{product.id}}">
 </form>
 <div id="info"></div>
 </div>

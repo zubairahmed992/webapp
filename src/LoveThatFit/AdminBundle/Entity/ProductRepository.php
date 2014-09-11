@@ -1175,7 +1175,7 @@ class ProductRepository extends EntityRepository {
     }
 #------------------------Find Item for Multiple Images Uploading--------------#
  public function findItemMultipleImpagesUploading($request_array){
-      return $this->getEntityManager()
+   try{   return $this->getEntityManager()
                         ->createQueryBuilder()
                         ->select('pi.id')
                         ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
@@ -1188,8 +1188,11 @@ class ProductRepository extends EntityRepository {
                         ->andwhere('ps.title = :size_title')
                         ->setParameters(array('product_id'=>$request_array['product_id'],'color_title'=>$request_array['color_title'],'body_type'=>$request_array['body_type'],'size_title'=>$request_array['size_title']))
                         ->getQuery()
-                        ->getSingleResult(); 
-     
+                        ->getSingleResult();
+   
+   }catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }                
  }   
     
  
