@@ -19,6 +19,7 @@ class MaskedMarkerController extends Controller {
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
+        return new response($this->getDefaultMarkerValue());
         if(count($maskMarker)>0){
         return new Response(json_encode($this->get('user.marker.helper')->getArray($maskMarker)));
         }else{
