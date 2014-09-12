@@ -21,4 +21,23 @@ class ColorRepository extends EntityRepository
             return null;
         }
     }
+    
+    
+    //-------------------------------------------------------------------------------------    
+    public function findOneByName($name) {
+        $record = $this->getEntityManager()
+                        ->createQuery("SELECT c FROM LoveThatFitAdminBundle:Color c                               
+                             WHERE c.name = :name")
+                        ->setParameters(array('name' => $name));
+        try {
+            return $record->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+//-------------------------------------------------------------------------------------  
+    
+    
+    
+    
 }

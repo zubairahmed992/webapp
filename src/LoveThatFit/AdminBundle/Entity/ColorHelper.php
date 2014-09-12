@@ -37,8 +37,21 @@ class ColorHelper {
 
     //---------------------------------------------------------------------   
 
-    
+     public function save($name) {         
+        $msg_array = $this->validateForCreate($name);
+        if ($msg_array == null) {
+            $entity=new Color();
+            $entity->setName($name);
+            $this->em->persist($entity);
+            $this->em->flush();
+            return true;           
+        } else {
+            return false;
+        }
 
+    }
+
+ 
 //-------------------------------------------------------
 
  public function find($id) {
@@ -49,6 +62,24 @@ class ColorHelper {
   return $this->repo->findAll();      
     }
    
+    
+ public function findOneByName($name)
+ {
+     return $this->repo->findOneByName($name);
+ }
+    
+ //-------------------------------------------------------------------------
+    
+    private function validateForCreate($name) {
+        if (count($this->findOneByName($name))>0) {
+            return array('message' => 'Color Name already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+        return;
+    }
     
     
     
