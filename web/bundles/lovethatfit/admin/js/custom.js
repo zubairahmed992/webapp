@@ -55,7 +55,7 @@ if(i==(numfiles-1))
     formdata.append("product_id", product_id);
 $("#info").html("wait a moment to complete upload");
 $.ajax({
-	url: "{{path('admin_product_detail_multiple_images_uploading')}}",
+	url: $('#multiple_uplaod_url').text(),
 	type: "POST",
 	data: formdata,
 	processData: false,

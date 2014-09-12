@@ -186,7 +186,17 @@ public function getJsonForFields($fields){
         }
         return $f;
         
+}
+#-------------------------------------------------------------------------------#
+public function isBodyType($user_body_type){
+    $bodyTypes=$this->getJsonForFields($this->getBodyTypesSearching());
+    
+    if(in_array($user_body_type,$bodyTypes)){
+        return true;
+    }else{
+        return false;
     }
+}
 
 
 }

@@ -1066,6 +1066,7 @@ class ProductController extends Controller {
 
   #---------------Multiple Image Uploading --------------------------#
 public function multplieImageUploadAction(Request $request){
+   // return new response(json_encode($this->get('admin.helper.product')->findItemMultipleImpagesUploading(true,true)));
    $em = $this->getDoctrine()->getManager();
    foreach ($_FILES["file"]["error"] as $key => $error){
      if ($error == UPLOAD_ERR_OK){
@@ -1073,9 +1074,12 @@ public function multplieImageUploadAction(Request $request){
           $name = $_FILES["file"]["name"][$key]; // avoid same file name collision
           
           $itemId=$this->get('admin.helper.product')->findItemMultipleImpagesUploading($name,$_POST['product_id']);
+          //return new response(json_encode($itemId));
           if(!empty($itemId)){
             $productItem = $this->get('admin.helper.productitem')->find($itemId);
-            $productItem->file=$request->files->get('file')[$key];//$_FILES["file"]["tmp_name"][0];
+            
+            $imageFile=$request->files->get('file');
+            $productItem->file=$imageFile[$key];//$_FILES["file"]["tmp_name"][0];
             $productItem->upload();
         }
        }
