@@ -1,0 +1,8 @@
+admin_mask_marker_inspect_index:
+    pattern:  /admin/mask_marker_inspect/index
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:index}
+
+admin_mask_marker_inspect_user:
+    pattern:  /admin/mask_marker_inspect/user/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:user}
+

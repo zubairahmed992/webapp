@@ -41,17 +41,17 @@ admin_user_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/user.yml"
     prefix:   /
 
-    #-------------- Product Wizard Route By Azeem ------------------------
+    #-------------- Product Wizard Route ------------------------
 admin_product_wizard_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/productwizard.yml"
     prefix:   /
     
-    #-------------- Retailer User Route By Azeem ------------------------
+    #-------------- Retailer User Route ------------------------
 admin_retailer_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/retailer.yml"
     prefix:   /
     
-     #-------------- Algorithm Route By Azeem ------------------------
+     #-------------- Algorithm Route ------------------------
 admin_algoritm_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/algorithm.yml"
     prefix:   /
@@ -63,3 +63,9 @@ admin_product_data_routes:
 admin_push_notification:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/push_notification.yml"
     prefix:   /       
+    
+#-------------- Masked Marker ------------------------
+    
+admin_mask_marker_inspect_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/mask_marker_inspect.yml"
+    prefix:   /

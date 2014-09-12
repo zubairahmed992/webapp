@@ -1,0 +1,18 @@
+<div style="clear: both">
+    <h3>{{user.fullName }}</h3>
+    <ul>
+{% for fp, seg in specs.masked_marker %} 
+            <li>
+                <span>{{fp}}</span> 
+                <span>{{seg[2][0]}}</span>-<span>{{seg[2][1]}}</span> 
+                 | 
+                {% if seg[3] is defined %}
+                <span>{{seg[3][0]}}</span>-<span>{{seg[3][1]}}</span> 
+                {% endif %}    
+                | 
+                    {% if body_measurement[fp] is defined %}
+                        <span>{{body_measurement[fp]}}</span> 
+                    {% endif %}    
+            </li>
+ {% endfor %}   
+    </ul>

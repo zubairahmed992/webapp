@@ -1,0 +1,37 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+<li class="active">Masked Marker Inspection</li>
+{% endblock %}
+
+{% block body %}
+<form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }}>
+    <div class="row-fluid show-grid">
+        <div class="span3">User</div>
+        <div class="span3">{{ form_widget(form.User) }}{{ form_errors(form.User) }}</div>
+    </div>
+</form>                               
+
+<div id ='summary_ajax'></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+       
+$(document).ready(function(){
+    
+$( "select[id='user_User']" ).change(function() {
+var user_id = $("#user_User").val();   
+var user_url = "../mask_marker_inspect/user/" + user_id;         
+$.ajax({
+     url: user_url
+     ,success: function(response) {
+        $('#summary_ajax').html(response);
+     }
+  })
+  return false; 
+    
+});
+
+});        
+
+    </script>
+{% endblock %}
