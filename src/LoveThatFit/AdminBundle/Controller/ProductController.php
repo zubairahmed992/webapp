@@ -332,6 +332,7 @@ class ProductController extends Controller {
         $colorform = $this->createForm(new ProductColorType($sizes), $productColor);
         $colorform->bind($request);
         if ($colorform->isValid()) {
+            $this->get('admin.helper.color')->save(strtolower($productColor->getTitle())); 
             $this->get('admin.helper.productcolor')->uploadSave($productColor);
             $this->get('admin.helper.product')->updatedAt($product);
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
