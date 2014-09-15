@@ -4,7 +4,7 @@
 
 
 //---------------------------------------------------------------------------
-function splitStr(str){
+    function splitStr(str){
   var myStr=str.split("_");   
   var flag="1";
    if((myStr[0]) && (typeof myStr[0] != 'undefined')){
