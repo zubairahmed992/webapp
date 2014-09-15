@@ -46,7 +46,7 @@ reader.readAsDataURL(file);
 $("#preview").show();
 $('#preview').html("");
 reader.onloadend = function(e){
-var image = $('<img>').attr('src',e.target.result);
+var image = $('<img>').attr({'src':e.target.result,'width':'100px', 'height':'100px'});
 $(image).appendTo('#preview');
 };
 formdata.append("file[]", file);
