@@ -1,5 +1,20 @@
 
 masked_marker:
+  bust: [x, single, [[24,60]]]
+  chest:  [x, single, [[24,60]]]
+  shoulder_across_front: [x, single, [[16,2]]]
+  waist: [x, single, [[27,57]]]
+  hip: [x, single, [[29,55]]]
+  inseam: [y, single, [[42,38]]]
+  thigh: [x, pair, [[30,41],[43,54]]]
+  shoulder_length: [y, pair, [[15,36],[3,48]]]
+  bicep:  [x, pair, [[17,22],[1,62]]]
+  wrist:  [x, pair, [[0,63],[18,21]]]
+  knee: [x, pair, [[31,40],[44,53]]]
+  calf: [x, pair, [[32,39],[45,52]]]
+  ankle:  [x, pair, [[34,38],[46,50]]]
+  
+masked_marker5:
   bust: [x, single, [24,60]]
   chest:  [x, single, [24,60]]
   shoulder_across_front: [x, single, [16,2]]
