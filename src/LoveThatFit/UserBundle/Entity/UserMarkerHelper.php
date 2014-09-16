@@ -78,12 +78,12 @@ class UserMarkerHelper {
     }
        #----------------------------------------------------------------------------
     public function setArray($specs,$user_marker){
-        if($specs['svg_path']){$user_marker->setSvgPaths($specs['svg_path']);}
-        if($specs['rect_x']){$user_marker->setRectX($specs['rect_x']);}
-        if($specs['rect_y']){$user_marker->setRectY($specs['rect_y']);}
-        if($specs['rect_height']){$user_marker->setRectHeight($specs['rect_height']);}
-        if($specs['rect_width']){$user_marker->setRectWidth($specs['rect_width']);}
-        if($specs['marker_json']){$user_marker->setMarkerJson($specs['marker_json']);}
+        if(array_key_exists('svg_path', $specs) && $specs['svg_path']){$user_marker->setSvgPaths($specs['svg_path']);}
+        if(array_key_exists('rect_x', $specs) && $specs['rect_x']){$user_marker->setRectX($specs['rect_x']);}
+        if(array_key_exists('rect_y', $specs) && $specs['rect_y']){$user_marker->setRectY($specs['rect_y']);}
+        if(array_key_exists('rect_height', $specs) && $specs['rect_height']){$user_marker->setRectHeight($specs['rect_height']);}
+        if(array_key_exists('rect_width', $specs) && $specs['rect_width']){$user_marker->setRectWidth($specs['rect_width']);}
+        if(array_key_exists('marker_json', $specs) && $specs['marker_json']){$user_marker->setMarkerJson($specs['marker_json']);}
     }
        #----------------------------------------------------------------------------
    public function getArray($user_marker) {
