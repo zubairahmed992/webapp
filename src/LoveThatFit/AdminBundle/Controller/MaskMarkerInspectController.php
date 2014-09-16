@@ -16,13 +16,16 @@ class MaskMarkerInspectController extends Controller {
                 ));
     }   
     
-    public function userAction($id){
+    public function userAction($id, $mode=null){
         $user = $this->get('user.helper.user')->find($id);
         $mm_specs=$this->getMaskedMarkerSpecs();
         $ub_specs=$user->getMeasurement()->getArray();
         $user_mm_comparison = $this->get('user.marker.helper')->getComparisionArray($user, $mm_specs);
-        #return new Response(json_encode($user_mm_comparison));
-        #return new Response(json_encode($mm_specs['masked_marker']));
+        
+        if ($mode && $mode=='json'){
+            return new Response(json_encode($user_mm_comparison));
+        }
+                
         return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:_summary.html.twig', array(
                     'user' => $user,                    
                     'specs'=>$mm_specs,
