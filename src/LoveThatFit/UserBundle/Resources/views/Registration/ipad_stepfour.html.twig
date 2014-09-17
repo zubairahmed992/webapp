@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitUserBundle::base_reg_s3.html.twig' %}
+{% extends 'LoveThatFitUserBundle::base_reg_ipad.html.twig' %}
 
 {% block action_block_content %}
 
@@ -449,7 +449,7 @@ var hitOptions = {
 	segments: true,
 	stroke: false,
 	fill: false,
-	tolerance: 5
+	tolerance: 10
 };
 
 $(document).ready(function() {
@@ -597,7 +597,7 @@ function onMouseMove(event) {
 
 function onMouseUp(event){
 
-    if (segment) {
+    if (segment4) {
     
     
         for(var i = 0; i < path.segments.length; i++) {
@@ -800,7 +800,7 @@ jQuery(document).ready(function ($) {
         
     </script>
     
-<section {% if(entity.gender=='f') %} class="reg_blk reg_female" {%else%} class="reg_blk reg_male" {%endif%}>
+<section {% if(entity.gender=='f') %} class="reg_blk reg_female" {%else%} class="reg_blk reg_male" {%endif%} style="display:none;">
     <!--<div class="reg_steps">
         <ul>
             <li><span>1</span></li>
@@ -897,55 +897,7 @@ jQuery(document).ready(function ($) {
             <!--/.action_cnt--></div>
     
     
-    <div class="how_it_works">
-        <div id="segments_details">
-        </div>
-        <h2>How It Works</h2>
-        <ol class="hiw_upload_photo">
-            <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>
-            <li>For photo - Stand straight, arms relaxed by side, shoulders back and feet shoulder width apart.<br> <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
-            <li>Do not forget to smile!</li>
-            <li>Click browse to upload photo</li>
-            
-            <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        </ol>
-        <ol class="hiw_step_1">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'">here</a> </li>
-        
-        <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        
-        </ol>
-        <ol class="hiw_step_2">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'">here</a> </li>
-       <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        
-        
-        </ol>
-        
-         <ol class="hiw_step_3">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'">here</a> </li>
-        
-              <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-         
-         </ol>
-        
-        
-        
-        
-        
-        
-    </div>
+    
         <!--/.action_blk--></section>
 {% endblock %}
 
@@ -992,29 +944,7 @@ jQuery(document).ready(function ($) {
                         
                         
                         
-                      <div id="rotate_move_box">
-                      
-                     <div class="action_buts_bar rotate_buts">
-                         <span class="rotate_label">Rotate</span>       
-                            <a href="#" class="but_rotate img_acw_min"></a>   
-                            <a href="#" class="but_rotate img_cw_min"></a>
-                            <a href="#" class="but_rotate img_acw"></a>   
-                            <a href="#" class="but_rotate img_cw"></a>
-                            
-                     </div>
-                          
-                          <div class="clr_bth"></div>
-                          
-                     <div class="action_buts_bar move_buttons">
-                         <div class="move_label">Move</div>       
-                            <a href="#" class="but_move top_move"></a>   
-                            <a href="#" class="but_move left_move"></a> 
-                            <a href="#" class="but_move right_move"></a>  
-                            <a href="#" class="but_move bottom_move"></a>  
-                     </div>
-                      
-                      
-                      </div>  
+                        
                         
                         
                         
@@ -1046,23 +976,7 @@ jQuery(document).ready(function ($) {
                             
                         <div class="int_fitting_room"></div>
                         
-                        <div class="fitting_step">
-                            
-                            
-                            
-                            <div class="active" id="step_one">
-                               
-                                <a id="paper_step_1_reload" href="#">Step 1<span></span></a>
-                     
-                            </div>
-                            
-                            <div id="step_two">
-                                <span id="prev"></span>
-                                Step 2<span></span><span class="shd"></span>
-                            </div> 
-                            
-                            
-                        </div>
+                        
                         
                         <div id="adj_markers_hldr">
                             
@@ -1273,6 +1187,47 @@ jQuery(document).ready(function ($) {
                                     </div>
                         
                         <div id="play_area" class="play_area hide">
+                            <div id="rotate_move_box">
+                      
+                     <div class="action_buts_bar rotate_buts">
+                         <span class="rotate_label">Rotate</span>       
+                            <a href="#" class="but_rotate img_acw_min"></a>   
+                            <a href="#" class="but_rotate img_cw_min"></a>
+                            <a href="#" class="but_rotate img_acw"></a>   
+                            <a href="#" class="but_rotate img_cw"></a>
+                            
+                     </div>
+                          
+                          <div class="clr_bth"></div>
+                          
+                     <div class="action_buts_bar move_buttons">
+                         <div class="move_label">Move</div>       
+                            <a href="#" class="but_move top_move"></a>   
+                            <a href="#" class="but_move left_move"></a> 
+                            <a href="#" class="but_move right_move"></a>  
+                            <a href="#" class="but_move bottom_move"></a>  
+                     </div>
+                      
+                      
+                      </div>
+                            <div class="fitting_step">
+                            
+                            
+                            
+                            <div class="active" id="step_one">
+                               
+                                <a id="paper_step_1_reload" href="#">Step 1<span></span></a>
+                     
+                            </div>
+                            
+                            <div id="step_two">
+                                <span id="prev"></span>
+                                Step 2<span></span><span class="shd"></span>
+                            </div> 
+                            
+                            
+                        </div>
+                            
                             
                             <canvas id="rect_mask" width="364" height="505"></canvas>
                             

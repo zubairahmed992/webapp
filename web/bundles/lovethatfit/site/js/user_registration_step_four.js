@@ -766,7 +766,8 @@ function next_button_click()
         $("#frmUserMeasurement").ajaxSubmit({url: act_final, type: 'post'})
         
         var step_3_final = $("#frmUserMeasurement_2").attr('action');
-        $("#frmUserMeasurement_2").ajaxSubmit({url: step_3_final, type: 'post'})
+        $("#frmUserMeasurement_2").ajaxSubmit({url: step_3_final, type: 'post'});
+        
         upload();
         
     
