@@ -48,6 +48,7 @@ class ProductCSVDataUploader {
             case 0:
                 $this->product['garment_name'] = $data[1];
                 $this->product['retailer_name'] = $data[4]; #~~~~~ Retailer
+                $this->product['brand_name'] = $data[10]; #~~~~~ Brand
                 $this->product['style'] = $data[7]; #~~~~~ Style
                 $this->readSize($data);
                 break;

@@ -251,7 +251,7 @@ class ProductDataController extends Controller {
 
         $retailer = $this->get('admin.helper.retailer')->findOneByName($data['retailer_name']);
         $clothingType = $this->get('admin.helper.clothingtype')->findOneByGenderName(strtolower($data['gender']), strtolower($data['clothing_type']));
-        $brand = $this->get('admin.helper.brand')->findOneByName($data['retailer_name']);
+        $brand = $this->get('admin.helper.brand')->findOneByName($data['brand_name']);
         $return_ar = array();
         $return_ar['msg'] = '';
         $return_ar['obj'] = null;
