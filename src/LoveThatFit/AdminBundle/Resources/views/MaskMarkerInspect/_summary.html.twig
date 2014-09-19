@@ -1,5 +1,6 @@
-<div style="clear: both">
+<div class='col-md-9'>
     <h3>{{user.fullName }}</h3>
+    
     <table class="table table-condensed table-hover table-bordered">
             <tr>
                 <th></th>    
@@ -24,18 +25,18 @@
             </tr>
 {% for fp, seg in specs_comparison %} 
             
-            {% set px_dist1 =  seg[4]['px1']>0?seg[4]['px1'] |  number_format(2):'-' %}
-            {% set inch_dist1 = seg[4]['px1']>0?(px_dist1/6) |  number_format(2):'-' %}
+            {% set px_dist1 =  seg.pixels.s1>0?seg.pixels.s1 |  number_format(2):'-' %}
+            {% set inch_dist1 = seg.pixels.s1>0?(px_dist1/6) |  number_format(2):'-' %}            
             
-            {% set px_dist2 = seg[4]['px2']>0?seg[4]['px2'] |  number_format(2):'-' %}            
-            {% set inch_dist2 = seg[4]['px2']>0?(px_dist2/6) |  number_format(2):'-' %}
+            {% set px_dist2 = seg.pixels.s2>0?seg.pixels.s2 |  number_format(2):'-' %}            
+            {% set inch_dist2 = seg.pixels.s2>0?(px_dist2/6) |  number_format(2):'-' %}
             
             {% set avg = (inch_dist2>0?(inch_dist2+inch_dist1)/2:inch_dist1)|  number_format(2) %}
             {% set avg = avg>0?avg:'-' %}
-            {% set body = seg[3]>0?seg[3]:'-' %}
-            {% set diff = seg[3]>0?(body-avg)|  number_format(2):'-' %}
-            {% set seg1= '('~seg[2][0][0] ~', '~ seg[2][0][1]~')'%}                
-            {% set seg2= px_dist2>0? '('~seg[2][1][0] ~', '~ seg[2][1][1]~')':'-' %}                
+            {% set body = seg.body>0?seg.body:'-' %}
+            {% set diff = seg.body>0?(body-avg)|  number_format(2):'-' %}
+            {% set seg1= '('~seg.segments.s1.a ~', '~ seg.segments.s1.b~')'%}                
+            {% set seg2= px_dist2>0? '('~seg.segments.s2.a ~', '~ seg.segments.s2.b~')':'-' %}                
             
             <tr>
                 <th>{{fp}}</th> 
@@ -57,3 +58,8 @@
   
   
 </table>
+    </div>
+<div>
+    <img src="{{asset(user.webPath)}}" >
+    
+    </div>

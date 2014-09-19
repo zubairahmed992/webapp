@@ -169,8 +169,60 @@ class UserMarkerHelper {
        $specs['rect_width']=300;
         return $specs;
     }
+    #---------------------------------------------------------------------------
     #----------------------------------------------------------------------------
+    
     public function getComparisionArray($user, $mm_specs){
+        
+        $mm=$this->getByUser($user);
+        $mm_array = json_decode($mm->getMarkerJson());
+        
+        $ubm=$user->getMeasurement()->getArray();
+        $comp=array();
+        #$m1=0;
+        foreach ($mm_specs['masked_marker'] as $mms_k=>$mms_v) {
+            $user_fitpoint_measurement =  array_key_exists($mms_k, $ubm)?$ubm[$mms_k]:'';
+            $m1 = $this->calculate_distance($mms_v, $mm_array);
+            
+            $comp[$mms_k] = array(  'axis'=>$mms_v['axis'], 
+                                    'type'=>$mms_v['type'], 
+                                    'segments'=>$mms_v['segments'], 
+                                    'body'=>$user_fitpoint_measurement, 
+                                    'pixels'=>$m1);                
+        }
+        return $comp;
+        
+    }
+    #----------------------------------------------------------------------------
+    private function calculate_distance($mms_v, $mm_array){
+        $p1 = $mms_v['segments']['s1']['a'];
+        $p2 = $mms_v['segments']['s1']['b'];
+        $x1=round($mm_array[$p1][0],2);
+        $y1=round($mm_array[$p1][1],2);
+        $x2=round($mm_array[$p2][0],2);
+        $y2=round($mm_array[$p2][1],2);        
+        #single measurement
+        $dst_px1 =   sqrt(pow(($x2-$x1),2) + pow(($y2-$y1),2));        
+        
+        #pair measurements
+        $dst_px2 =   0;
+        
+        if($mms_v['type']=='pair'){
+            $p3 = $mms_v['segments']['s2']['a'];
+            $p4 = $mms_v['segments']['s2']['b'];
+            $x3=round($mm_array[$p3][0],2);
+            $y3=round($mm_array[$p3][1],2);
+            $x4=round($mm_array[$p4][0],2);
+            $y4=round($mm_array[$p4][1],2);        
+            $dst_px2 =   sqrt(pow(($x4-$x3),2) + pow(($y4-$y3),2));                                        
+        }
+        
+        return array('s1'=>$dst_px1,
+                        's2'=>$dst_px2,
+            );
+    }
+    #----------------------------------------------------------------------------
+    public function _getComparisionArray($user, $mm_specs){
         $mm=$this->getByUser($user);
         $mm_array = json_decode($mm->getMarkerJson());
         
@@ -185,34 +237,7 @@ class UserMarkerHelper {
         return $comp;
         
     }
-    #----------------------------------------------------------------------------
-    private function calculate_distance($mms_v, $mm_array){
-        $p1 = $mms_v[2][0][0];
-        $p2 = $mms_v[2][0][1];
-        $x1=round($mm_array[$p1][0],2);
-        $y1=round($mm_array[$p1][1],2);
-        $x2=round($mm_array[$p2][0],2);
-        $y2=round($mm_array[$p2][1],2);        
-        #single measurement
-        $dst_px1 =   sqrt(pow(($x2-$x1),2) + pow(($y2-$y1),2));        
-        
-        #pair measurements
-        $dst_px2 =   0;
-        
-        if($mms_v[1]=='pair'){
-            $p3 = $mms_v[2][1][0];
-            $p4 = $mms_v[2][1][1];
-            $x3=round($mm_array[$p3][0],2);
-            $y3=round($mm_array[$p3][1],2);
-            $x4=round($mm_array[$p4][0],2);
-            $y4=round($mm_array[$p4][1],2);        
-            $dst_px2 =   sqrt(pow(($x4-$x3),2) + pow(($y4-$y3),2));                                        
-        }
-        
-        return array('px1'=>$dst_px1,
-                        'px2'=>$dst_px2,
-            );
-    }
+   
     
 }
     
