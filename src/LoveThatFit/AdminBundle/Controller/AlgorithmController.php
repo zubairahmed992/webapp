@@ -75,20 +75,18 @@ class AlgorithmController extends Controller {
     #defaults: { _controller: LoveThatFitAdminBundle:Algorithm:foo, user_id: 0, product_id: 0, size_id: 0}
 
 
-    public function fooAction($user_id, $product_id, $size_id) {
+    public function fooAction($user_id, $product_id, $size_id=0) {
         $product = $this->get('admin.helper.product')->find($product_id);
-        #return new Response(json_encode($product->getDetailArray()));        
-        
         $user = $this->get('user.helper.user')->find($user_id);
-        $fe = new AvgAlgorithm($user, $product);
+        #~~~~~~~~~~~~~ comparision strip
+        //$comp = new Comparison($user, $product);        
+        //return new Response($comp->getStrippedFeedBack());
+        #~~~~~~~~~~~~~ avg strip
+        $comp = new AvgAlgorithm($user, $product);                
+        return new Response($comp->getStrippedFeedBackJSON());
         
-        return new Response(json_encode($product->getDetailArray()+$fe->getFeedBack()));
-        /*
-        $product_size = $this->get('admin.helper.productsizes')->find($size_id);
-        #return new Response($fe->getFeedBackJSON());                                
+        //return new Response(json_encode($product->getDetailArray()+$fe->getFeedBack()));
         
-         * 
-         */
     }
 
 }

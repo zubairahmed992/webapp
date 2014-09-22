@@ -326,12 +326,7 @@ function onMouseDrag(event) {
                 $("#img_to_upload").animate({ height:p_apply_zoom_h, width:p_apply_zoom_w }, 400, function() { }); 
                 $("#uploaded_photo").animate({ top: -((p_selected_pic_y*p_zoom_value) + face_pos_top) + 17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
             }
-            /*
-                if(chk_no_img_path == true){            
-                    $("#img_to_upload").animate({ height:p_apply_zoom_h - additanal_value, width:p_apply_zoom_w }, 400, function() { }); 
-                    $("#uploaded_photo").animate({ top: -(p_selected_pic_y*p_zoom_value)+17, left:-(final_x) }, 500, function() {$(".next_step2").trigger("click");});
-                }
-            */
+           
             $("#rect_mask").fadeOut(500);
             $("#canv_mask").fadeIn(500);
             

@@ -32,7 +32,7 @@ class AvgAlgorithm {
             );
         } else {
             return array(
-                'message' => 'Fit Priority is not set, please update the product detail.',
+                'message' => 'Fit Priority is not set for this product.',
             );
         }
     }
@@ -619,8 +619,7 @@ class AvgAlgorithm {
         }
         return $hem_length;
     }
-    #------------------------------------------------
-     
+    #------------------------------------------------     
     private function get_hem_advice($item_specs, $body_specs) {
         $clothing_type = $this->product->getClothingType();
 
@@ -633,6 +632,7 @@ class AvgAlgorithm {
         
            
     }
+    #-----------------------------------------------------
     private function get_hem_length_advice($item_specs, $body_specs) {
 
         if ($body_specs['outseam']==0 && $body_specs['height']==0){
@@ -673,6 +673,7 @@ class AvgAlgorithm {
             'message' => $str,            
         );
     }
+    #-----------------------------------------------------
     private function get_inseam_advice($item_specs, $body_specs) {
            
         if ($body_specs['inseam']==0 && $body_specs['height']==0){
@@ -708,6 +709,7 @@ class AvgAlgorithm {
         );
         
     }
+    #-----------------------------------------------------
     function get_hem_message($item_measure, $body_specs, $fit_point){
         $str = '';
         if ($item_measure < $body_specs[$fit_point.'_knee']) {
@@ -745,4 +747,63 @@ class AvgAlgorithm {
         }
         return $str;
     }
+    #-----------------------------------------------------
+    // ___________ Web Services ------------
+    #-----------------------------------------------------
+    function getStrippedFeedBackJSON() {
+        return json_encode($this->getStrippedFeedBack());
+    }
+    
+    #-----------------------------------------------------    
+    
+    function getStrippedFeedBack() {
+        if ($this->product->fitPriorityAvailable()) {
+            $cm = $this->getFeedBack();
+            return array('feedback' => $this->strip_for_services($cm['feedback'], $cm['recommendation']),
+            );
+        }
+        return;
+    }
+    
+    # -----------------------------------------------------
+
+    private function strip_for_services($sizes, $recomendation) {
+        foreach ($sizes as $key => $value) {
+            unset($sizes[$key]['max_variance']);
+            unset($sizes[$key]['variance']);
+            unset($sizes[$key]['description']);
+            if ($recomendation['id']==$sizes[$key]['id']){
+                $sizes[$key]['recommended'] = true;
+            }else{
+                $sizes[$key]['recommended'] = false;
+            }
+            if (array_key_exists('fit_points', $sizes[$key])) {
+                $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]['fit_points']);
+            }
+            unset($sizes[$key]['fit_points']);
+        }
+
+        return $sizes;
+    }
+    
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private function strip_fit_point_alerts($fit_points) {
+        $arr = array();
+        foreach ($fit_points as $key => $value) {
+            #$str.=$this->snakeToNormal($key) . ':' . $value['message'] . ', ';
+            $arr[$key]=$value['message'];
+        }
+        return $arr;
+    }
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private function add_recomended_flag($sizes, $recomendation) {
+        $arr = array();
+        foreach ($sizes as $key => $value) {
+            
+        }
+        return $arr;
+    }
+
 }

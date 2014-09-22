@@ -38,4 +38,16 @@ class MaskMarkerInspectController extends Controller {
         $yaml = new Parser();
         return $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
     }
+     
+    public function simAction($id=6){
+        $user = $this->get('user.helper.user')->find($id);
+        $measurement = $user->getMeasurement();
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+                        
+        return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:_masked_marker_sim.html.twig', array(
+                    'entity' => $user,
+                    'measurement' => $measurement,                    
+                    'marker' => $marker,
+                ));
+    }   
 }
