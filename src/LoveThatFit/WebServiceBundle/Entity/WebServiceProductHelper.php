@@ -18,6 +18,8 @@ use LoveThatFit\SiteBundle\Algorithm;
 use LoveThatFit\SiteBundle\Comparison;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\ImageHelper;
+use LoveThatFit\SiteBundle\FitEngine;
+use LoveThatFit\SiteBundle\AvgAlgorithm;
 
 class WebServiceProductHelper{
 
@@ -113,14 +115,39 @@ public function loveItem($request_array){
             return array('Message' => 'User/Item Missing');
         }
 }
+#----------------Check the recommended Item -----------------------------------#
+public function chkRecomendedItem($feedback){
+    //return $feedback;
+    foreach($feedback as $key=>$value){
+       foreach($value as $fb){
+           if($fb['recommended']){
+               return $fb['id'];
+           }else{
+               if(min($value)){
+                   return $fb['id'];
+               }
+           }
+       }
+    }
+}
 #------------------------------------------------------------------------------#
+// chk recomend itm
+// smallest item default color 
+
 public function getDefaultFittingAlerts($request_array)
 {      
           if ($request_array['productId']) { 
               $user=$this->container->get('user.helper.user')->find($request_array['userId']);
               $product=$this->find($request_array['productId']);
-           $fit = new Comparison($user, $product);
+              $fit = new AvgAlgorithm($user, $product);
+              $product_item_id=$this->chkRecomendedItem($fit->getStrippedFeedBack());
+              $productItem = $this->container->get('admin.helper.productitem')->getProductItemById($product_item_id);
+              $product_size = $productItem->getProductSize();
+              $comp = new AvgAlgorithm($user,$product);
+              $fb=$comp->getSizeFeedBack($product_size);
+     $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $fb);    
           $data = array();
+         
           $data['data'] = $fit->getStrippedFeedBack();
           $data['productId']=$request_array['productId'];
           return $data;
