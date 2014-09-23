@@ -794,7 +794,7 @@ function shift_to_canvas (rotate_deg, x1, y1){
     imageObj.onload = function() {
         context.clearRect(0,0,364,505);
         context.save();
-        context.translate(x + width/2, y + 1 + height/2);
+        context.translate(x + width/2, y + height/2);
         
         context.rotate(0);
         context.rotate(rotate_deg * 0.0174532925);

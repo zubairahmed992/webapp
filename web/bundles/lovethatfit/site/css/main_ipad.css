@@ -4923,6 +4923,13 @@ transform: rotateX(0deg) rotateY(0deg);
     z-index: 9000;
     display:none;
 }
+#canv_mask_zoom {
+    position: absolute;
+    z-index: 9100;
+    display:block;
+    top:0px;
+    left:400px;
+}
 
 
 /*//////////// External Site ////////////*/
