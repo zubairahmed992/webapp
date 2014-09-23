@@ -759,7 +759,8 @@ class AvgAlgorithm {
     function getStrippedFeedBack() {
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->getFeedBack();
-            return array('feedback' => $this->strip_for_services($cm['feedback'], $cm['recommendation']),
+            $recom=array_key_exists('recommendation', $cm)?$cm['recommendation']:null;
+            return array('feedback' => $this->strip_for_services($cm['feedback'], $recom),
             );
         }
         return;
@@ -767,15 +768,17 @@ class AvgAlgorithm {
     
     # -----------------------------------------------------
 
-    private function strip_for_services($sizes, $recomendation) {
+    private function strip_for_services($sizes, $recommendation) {
         foreach ($sizes as $key => $value) {
             unset($sizes[$key]['max_variance']);
             unset($sizes[$key]['variance']);
             unset($sizes[$key]['description']);
-            if ($recomendation['id']==$sizes[$key]['id']){
-                $sizes[$key]['recommended'] = true;
-            }else{
-                $sizes[$key]['recommended'] = false;
+            if ($recommendation!=null && array_key_exists('id', $recommendation)){
+                if ($recommendation['id']==$sizes[$key]['id']){
+                    $sizes[$key]['recommended'] = true;
+                }else{
+                    $sizes[$key]['recommended'] = false;
+                }
             }
             if (array_key_exists('fit_points', $sizes[$key])) {
                 $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]['fit_points']);
@@ -796,14 +799,6 @@ class AvgAlgorithm {
         }
         return $arr;
     }
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    private function add_recomended_flag($sizes, $recomendation) {
-        $arr = array();
-        foreach ($sizes as $key => $value) {
-            
-        }
-        return $arr;
-    }
+   
 
 }
