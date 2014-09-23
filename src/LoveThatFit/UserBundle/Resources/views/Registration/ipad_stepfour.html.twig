@@ -448,7 +448,7 @@ raster.onLoad = function() {
 var hitOptions = {
 	segments: true,
 	stroke: false,
-	fill: false,
+	fill: true,
 	tolerance: 10
 };
 
@@ -497,6 +497,8 @@ trans_bg.style = {
 	stroke: 2,
 	strokeColor: '#ffcc00'
 };
+
+
 
 //console.log(parseInt($('#user_height_frm_3').attr('value'))+ 5);
 
@@ -550,6 +552,19 @@ path.opacity = 0.6;
 	return path;
 }
 
+var rectangle = new Rectangle(new Point(20, 20), new Size(60, 60));
+var cornerSize = new Size(10, 10);
+var but_zoom = new Shape.Rectangle(rectangle, cornerSize);
+but_zoom.strokeColor = 'black';
+but_zoom.fillColor = '#ffcc00';
+
+var rectangle2 = new Rectangle(new Point(20, 230), new Size(60, 60));
+var cornerSize2 = new Size(10, 10);
+var but_zoom_out = new Shape.Rectangle(rectangle2, cornerSize2);
+but_zoom_out.strokeColor = 'black';
+but_zoom_out.fillColor = '#cc0000';
+
+
 var segment, path;
 var movePath = false;
 function onMouseDown(event) {
@@ -581,6 +596,34 @@ function onMouseDown(event) {
 			
 		}
 	}
+        
+        if(hitResult.item == but_zoom){
+        
+            var iteminger = project.getItem({
+            class: Path,
+            segments: function(segments) {
+                   return segments.length > 20;
+            }
+           });
+           
+           iteminger.scale(2,2);
+           
+        }
+        
+        if(hitResult.item == but_zoom_out){
+        
+            var iteminger = project.getItem({
+            class: Path,
+            segments: function(segments) {
+                   return segments.length > 20;
+            }
+           });
+           
+           iteminger.scale(0.5,0.5);
+           
+        }
+        
+        
 	//movePath = hitResult.type == 'fill';
 	//if (movePath)
 		//project.activeLayer.addChild(hitResult.item);
@@ -597,10 +640,10 @@ function onMouseMove(event) {
 
 function onMouseUp(event){
 
-if (item.[0]){
-path.scale(3,3);
-hitOptions.fill = true;
-}
+//if (shape){
+//path.scale(3,3);
+//hitOptions.fill = true;
+//}
 
     if (segment4) {
     
