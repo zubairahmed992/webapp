@@ -596,12 +596,12 @@ function onMouseMove(event) {
 
 
 function onMouseUp(event){
-    if (segment) {
-    
+    if (segment) {    
         for(var i = 0; i < path.segments.length; i++) {
-        $("#segments_details").prepend("<div class='sh ort_tip' style='left:" + parseInt(path.segments[i].point.x) +"px; top:" + parseInt(path.segments[i].point.y)+"px'>Segment" + i +": "+path.segments[i].point + "</div>");
-        $("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + i + "</div>");
+            //$("#segments_details").prepend("<div class='sh ort_tip' style='left:" + parseInt(path.segments[i].point.x) +"px; top:" + parseInt(path.segments[i].point.y)+"px'>Segment" + i +": "+path.segments[i].point + "</div>");
+            //$("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + i + "</div>");
         };
+        
         //generating json array of markers cordinates ~~~~~~~~~~~~~~~~~~>
         $("#img_path_json").attr("value", getPathArrayJson());
     }   
@@ -893,53 +893,24 @@ jQuery(document).ready(function ($) {
             <!--/.action_cnt--></div>
     
     
-    <div class="how_it_works">
-        <div id="segments_details">
-        </div>
-        <h2>How It Works</h2>
-        <ol class="hiw_upload_photo">
-            <li>Take full body photo of yourself using any smartphone, camera or webcam. Make sure camera is aiming straight at your body.</li>
-            <li>For photo - Stand straight, arms relaxed by side, shoulders back and feet shoulder width apart.<br> <a href="javascript:;" onclick="document.getElementById('stella_box').style.display='block'">See here</a> </li>
-            <li>Do not forget to smile!</li>
-            <li>Click browse to upload photo</li>
-            
-            <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        </ol>
-        <ol class="hiw_step_1">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'">here</a> </li>
-        
-        <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_1').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        
-        </ol>
-        <ol class="hiw_step_2">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-            <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'">here</a> </li>
-       <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_2').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-        
-        
-        </ol>
-        
-         <ol class="hiw_step_3">
-            <li>Zoom in/out until the crown of your head touches the top line and your are standing on the bottom line.</li>
-             <li>See example <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'">here</a> </li>
-        
-              <div id="exp_sml">
-            <a href="javascript:;" onclick="document.getElementById('pic_step_3').style.display='block'"><img src="{{ asset('bundles/lovethatfit/site/images/example_small.png') }}"></a>
-        </div>
-         
-         </ol>
-        
-        
-        
-        
-        
+    <div class="mask_measurements">
+        <table>
+            <tr>
+                <th></th><th>Pixel</th><th>Inch</th>               
+            </tr>
+            <tr>
+                <th>Shoulder</th><td></td><td></td>               
+            </tr>
+            <tr>
+                <th>Bust</th><td></td><td></td>                
+            </tr>
+            <tr>
+                <th>Waist</th><td></td><td></td>                
+            </tr>
+            <tr>
+                <th>Hip</th><td></td><td></td>
+            </tr>
+        </table>
         
     </div>
         <!--/.action_blk--></section>
