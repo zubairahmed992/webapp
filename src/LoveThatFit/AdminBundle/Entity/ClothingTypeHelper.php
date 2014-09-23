@@ -201,8 +201,9 @@ class ClothingTypeHelper {
 
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
-        $clothing_types = $this->findClothingTypeByName($entity->getName());
-        if ($clothing_types && $clothing_types->getId() != $entity->getId()) {
+        //$clothing_types = $this->findClothingTypeByName($entity->getName());
+        $clothing_type = $this->findOneByGenderName($entity->getGender(), $entity->getName());
+        if ($clothing_type && $clothing_type->getId() != $entity->getId()) {
             return array('message' => 'Clothing Type Name already exists!',
                 'field' => 'name',
                 'message_type' => 'warning',

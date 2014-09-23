@@ -154,7 +154,7 @@ param:limit, page_number,limit,sort
                                 WHERE c.name = :name")
                         ->setParameters(array('name' =>$name));
         try {
-            return $record->getSingleResult();
+            return $record->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }

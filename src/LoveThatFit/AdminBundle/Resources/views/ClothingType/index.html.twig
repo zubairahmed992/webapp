@@ -28,7 +28,9 @@
           {% for ct in clothing_types %}
 
         <div class="row-fluid show-grid space_wrap">
-            <div class="span1">{{ct.Id}}</div>
+            <div class="span1">
+            <a href="{{ path('admin_clothing_type_edit', {'id': ct.Id}) }}">{{ct.Id}}</a>      
+</div>
             <div class="span1">{{ct.Name|capitalize |replace({'_': ' ', '_': " "}) }}</div>
             <div class="span1">{{ct.Target}}</div>
             <div class="span1">{{ct.Gender}}</div>

@@ -106,7 +106,8 @@ class ClothingTypeController extends Controller {
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
 
             if ($message_array['success'] == true) {
-                return $this->redirect($this->generateUrl('admin_clothing_type_show', array('id' => $entity->getId())));
+                #return $this->redirect($this->generateUrl('admin_clothing_type_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('admin_clothing_types'));
             }
         } else {
             $this->get('session')->setFlash('warning', 'Unable to update Clothing Type!');
