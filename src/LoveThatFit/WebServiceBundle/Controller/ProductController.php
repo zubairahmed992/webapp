@@ -63,14 +63,14 @@ public function brandListAction() {
         
         return new Response($this->json_view($total_record, $data));
     }
-#------ Gieving new product listing of product table for sotring in ipone 
+#------ Giving new product listing of product table for sotring in ipone 
     public function newproductListingAction(){
          $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-      // $request_array=array('authTokenWebService'=>'123');
+      //$request_array=array('authTokenWebService'=>'e4c997f574be6c6e3f8dc6bd4286ff60');
      //  $request_array=array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091');
         $authTokenWebService = $request_array['authTokenWebService'];
     if ($authTokenWebService) {

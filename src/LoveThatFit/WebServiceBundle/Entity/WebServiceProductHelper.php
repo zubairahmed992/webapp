@@ -295,14 +295,16 @@ public function favouriteByUser($user_id,$request){
                     $data['data'][$product_id]['productImage'] = $ind_product['product_image'];
                     $data['data'][$product_id]['brandName'] = $ind_product['brand_name'];
                     $data['data'][$product_id]['brandId'] = $ind_product['brandId'];
-                  
-                   
-                     $item = $p->getDefaultItem($user);
+                    $data['data'][$product_id]['Retailer'] =$this->container->get('admin.helper.brand')->getRetailertitleBrandById($ind_product['brandId']);
+                    
+                    
+                    $item = $p->getDefaultItem($user);
                       if (isset($item)) {
                         $data['data'][$product_id]['fittingRoomImage'] = $item->getImage();
                         $data['data'][$product_id]['sizeId'] = $item->getProductSize()->getId();
                         $data['data'][$product_id]['colorId'] = $item->getProductColor()->getId();
                         $data['data'][$product_id]['sizeTitle'] = $item->getProductSize()->getTitle();
+                        $data['data'][$product_id]['colorTitle'] = $item->getProductColor()->getTitle();
                         }
                      
                     
