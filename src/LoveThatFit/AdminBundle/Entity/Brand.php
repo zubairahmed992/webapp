@@ -33,21 +33,7 @@ class Brand {
      * @ORM\ManyToMany(targetEntity="Retailer", mappedBy="brands")
      **/
     private $retailers;
-    
-     /**
-     * @ORM\ManyToMany(targetEntity="LoveThatFit\UserBundle\Entity\Measurement", mappedBy="top_brand")
-     **/
-    protected $top_brand;
-    
-     /**
-     * @ORM\ManyToMany(targetEntity="LoveThatFit\UserBundle\Entity\Measurement", mappedBy="bottom_brand")
-     **/
-    protected $bottom_brand;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="LoveThatFit\UserBundle\Entity\Measurement", mappedBy="dress_brand")
-     **/
-    protected $dress_brand;
+  
     
     /**
      * @ORM\Id

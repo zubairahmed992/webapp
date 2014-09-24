@@ -24,7 +24,7 @@ class Measurement {
      * @ORM\JoinColumn(name="user_id", onDelete="CASCADE", referencedColumnName="id")
      * */
     private $user;
-
+#-------------------------------------------------------------------------------------
  /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart",inversedBy="measurement")
      * @ORM\JoinColumn(name="top_fitting_size_chart_id", referencedColumnName="id", onDelete="CASCADE")
@@ -42,23 +42,21 @@ class Measurement {
  * @ORM\JoinColumn(name="dress_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
  */
     private $dress_fitting_size_chart;
- 
+ #-------------------------------------------------------------------------------------
  /**
-     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="measurement")
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand")
      * @ORM\JoinColumn(name="top_brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $top_brand;
     
 /**
-     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="measurement")
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand")
      * @ORM\JoinColumn(name="bottom_brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $bottom_brand;    
-    
-
 
 /**
-     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand", inversedBy="measurement")
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand")
      * @ORM\JoinColumn(name="dress_brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $dress_brand;    
