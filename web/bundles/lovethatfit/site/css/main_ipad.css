@@ -4926,7 +4926,7 @@ transform: rotateX(0deg) rotateY(0deg);
 #canv_mask_zoom {
     position: absolute;
     z-index: 9100;
-    display:block;
+    display:none;
     top:0px;
     left:400px;
 }
