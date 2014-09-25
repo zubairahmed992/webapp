@@ -170,7 +170,21 @@ class BrandRepository extends EntityRepository {
                 return null;
                 } 
  }
-  
+ 
+ #-----------Get Reatiler Title for product Web Service---------------------#
+ public function getRetailerTitleByBrandId($id)
+ { $query = $this->getEntityManager()
+                    ->createQuery("SELECT r.title as title FROM LoveThatFitAdminBundle:Brand b
+                    JOIN b.retailers r   
+                    WHERE b.id =:brand")
+                   ->setParameters(array('brand' => $id));
+                     try {
+                     return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+                } 
+ }
+ #-----------------------------------------------------------------------------#
  public function getBrnadList()
  {
      $query = $this->getEntityManager()

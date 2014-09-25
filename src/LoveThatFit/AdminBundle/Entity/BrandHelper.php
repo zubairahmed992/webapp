@@ -325,5 +325,22 @@ public function getBrandRetailerList($date_fromat){
    $ret['brand']=$arr2;
     return $ret;
 }
+#------------------Get Retailer base on Brand id -----------------------------#
+#---------Get Brand id Base On Brand Name for Web SErvice---------------------#
+   public function getRetailerTitleByBrandId($brandId){
+      $ret=$this->repo->getRetailerTitleByBrandId($brandId);
+      $rets=array();
+      //return print_r($ret);
+      foreach($ret as $key=>$value){
+           foreach($value as $re){
+               $rets[]=$re;
+           }
+       }
+    
+       return $rets;
+       
+        
+   } 
+   
     
 }

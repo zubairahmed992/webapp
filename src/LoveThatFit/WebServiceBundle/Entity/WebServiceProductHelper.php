@@ -295,7 +295,7 @@ public function favouriteByUser($user_id,$request){
                     $data['data'][$product_id]['productImage'] = $ind_product['product_image'];
                     $data['data'][$product_id]['brandName'] = $ind_product['brand_name'];
                     $data['data'][$product_id]['brandId'] = $ind_product['brandId'];
-                    $data['data'][$product_id]['Retailer'] =$this->container->get('admin.helper.brand')->getRetailertitleBrandById($ind_product['brandId']);
+                    $data['data'][$product_id]['retailer'] =$this->container->get('admin.helper.brand')->getRetailerTitleByBrandId($ind_product['brandId']);
                     
                     
                     $item = $p->getDefaultItem($user);
