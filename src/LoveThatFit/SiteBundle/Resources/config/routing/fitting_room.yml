@@ -1,0 +1,30 @@
+
+ajax_fitting_room_product_list:
+    pattern:  /ajax/fitting_room_product/{gender}/list/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:fittingRoomProductsList, page_number: 0, limit: 0}
+  
+ajax_fitting_feedback_json:
+    pattern:  /ajax/fitting_feedback_json/{user_id}/{product_item_id}/{type}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:getFeedBackJSON,type: null}   
+
+ajax_fitting_feedback_list:
+    pattern:  /ajax/fitting_feedback_list/{product_item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:getFeedBackList}
+    
+
+ajax_fitting_room_product_recently_tried_on:
+    pattern:  /ajax/fitting_room/recently_tried_on/{list_type}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:fittingRoomProductsList, page_number: 0, limit: 0}
+
+ajax_user_fitting_room_item_remove:
+    pattern:  /ajax/fitting_room_item_remove/{user_id}/{item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:removeFittingRoomItem}  
+ 
+ajax_user_fitting_room_item_ids:
+    pattern:  /ajax/fitting_room_item_ids/{user_id}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:getFittingRoomItemIds}
+    
+    
+    
+
+

@@ -125,15 +125,15 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
     }
     
 #-------------------------------------------------------------------------------
-
-    public function fittingRoomProductsListAction($list_type='recently_tried_on', $page_number = 0, $limit = 0)
+#-----1-Moved
+   /* public function fittingRoomProductsListssAction($list_type='recently_tried_on', $page_number = 0, $limit = 0)
     {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
         $gender = $this->get('security.context')->getToken()->getUser()->getGender();
         $options = array('gender' => $gender, 'user_id' => $user_id, 'list_type' => $list_type, 'page_number' => $page_number, 'limit' => $limit);
         $entity = $this->get('admin.helper.product')->listByType($options);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_products_short.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity)));
-    }
+    }*/
 
 
 #-------------------------------------------------------------------------------
@@ -311,8 +311,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
          $session = $this->get("session");
     }
 #-------------------------------------------------------------------------------
-    
-    public function getFeedBackJSONAction($user_id, $product_item_id, $type=null) {
+   #-2 Moved 
+  /*  public function getFeedBackJSONAction($user_id, $product_item_id, $type=null) {
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
         if (!is_object($this->get('security.context')->getToken()->getUser())) return new Response("User Not found, Log in required!");
@@ -341,19 +341,21 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
                             'data' => $fb));
                     #'fitting_room_item_ids' => json_encode($fitting_room_item_ids)));
         
-    }
+    }*/
     #--------------------------------------------------------
     //
-    public function removeFittingRoomItemAction($user_id, $item_id){
+   #---- Moved
+    /*public function removeFittingRoomItemAction($user_id, $item_id){
       $t =  $this->get('site.helper.userfittingroomitem')->deleteByUserItem($user_id,$item_id);    
       return new Response(json_encode("prod_removed"));
-    }
+    }*/
     #--------------------------------------------------------
     //
-    public function getFittingRoomItemIdsAction($user_id){        
+    #-- Moved
+    /*public function getFittingRoomItemIdsAction($user_id){        
       $t =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user_id);    
       return new Response(json_encode($t));
-    }
+    }*/
 #-------------------------------------------------------------------------------
     /*
     public function getFeedBackListAction($product_item_id) {
@@ -392,6 +394,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
                             'data' => $bfb));
     }*/
     
+    #--------------Moved
+     /*
      public function getFeedBackListAction($product_item_id) {         
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
@@ -417,6 +421,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
                             'data' => $fb));
                         #'fitting_room_item_ids' => json_encode($fitting_room_item_ids)));
     }
+    */
 #-------------------------------------------------------------------------------
     public function addToCloestAction($product_item_id) {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();

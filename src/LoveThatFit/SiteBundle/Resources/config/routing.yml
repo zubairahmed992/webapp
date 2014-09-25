@@ -2,6 +2,11 @@ compare_product_routes:
     resource: "@LoveThatFitSiteBundle/Resources/config/routing/compare_product.yml"
     prefix:   /
 
+fitting_room_routes:
+    resource: "@LoveThatFitSiteBundle/Resources/config/routing/fitting_room.yml"
+    prefix:   /
+
+
 anonymous_user_home:
     pattern:  /home
     defaults: { _controller: LoveThatFitUserBundle:Registration:registration}
@@ -100,9 +105,10 @@ ajax_product_hotest:
     pattern:  /ajax/products/{gender}/hotest/{page_number}/{limit}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsHotest, page_number: 0, limit: 0}
 
-ajax_fitting_room_product_list:
-    pattern:  /ajax/fitting_room_product/{gender}/list/{page_number}/{limit}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList, page_number: 0, limit: 0}
+#-----Moved---
+#ajax_fitting_room_product_list:
+ ##   pattern:  /ajax/fitting_room_product/{gender}/list/{page_number}/{limit}
+ ##   defaults: { _controller: LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList, page_number: 0, limit: 0}
 
 
 ajax_product_by_brand:
@@ -126,29 +132,29 @@ ajax_product_list:
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:products, page_number: 0, limit: 0}
 
 
-ajax_fitting_feedback_json:
-    pattern:  /ajax/fitting_feedback_json/{user_id}/{product_item_id}/{type}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackJSON,type: null}
+#ajax_fitting_feedback_json:
+ #   pattern:  /ajax/fitting_feedback_json/{user_id}/{product_item_id}/{type}
+ #   defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackJSON,type: null}
 
-ajax_fitting_feedback_list:
-    pattern:  /ajax/fitting_feedback_list/{product_item_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackList}
+#ajax_fitting_feedback_list:
+#    pattern:  /ajax/fitting_feedback_list/{product_item_id}
+#    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackList}
     
 ajax_product_ajax:
     pattern:  /ajax/{id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax, id:0}
     
-ajax_user_fitting_room_item_remove:
-    pattern:  /ajax/fitting_room_item_remove/{user_id}/{item_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:removeFittingRoomItem}
+#ajax_user_fitting_room_item_remove:
+#    pattern:  /ajax/fitting_room_item_remove/{user_id}/{item_id}
+#    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:removeFittingRoomItem}
 
-ajax_user_fitting_room_item_ids:
-    pattern:  /ajax/fitting_room_item_ids/{user_id}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFittingRoomItemIds}
+#ajax_user_fitting_room_item_ids:
+#    pattern:  /ajax/fitting_room_item_ids/{user_id}
+#    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFittingRoomItemIds}
 
-ajax_fitting_room_product_recently_tried_on:
-    pattern:  /ajax/fitting_room/recently_tried_on/{list_type}/{page_number}/{limit}
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList, page_number: 0, limit: 0}
+#ajax_fitting_room_product_recently_tried_on:
+ #   pattern:  /ajax/fitting_room/recently_tried_on/{list_type}/{page_number}/{limit}
+ #   defaults: { _controller: LoveThatFitSiteBundle:InnerSite:fittingRoomProductsList, page_number: 0, limit: 0}
 
 email:
     pattern:  /email/{id}
