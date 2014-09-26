@@ -54,6 +54,21 @@ class UserMarker
      */
     private $svg_paths;
     
+    /**
+     * @var float $mask_x
+     *
+     * @ORM\Column(name="mask_x", type="float", nullable=true)     
+     */
+    private $mask_x;
+    
+    
+    /**
+     * @var float $mask_y
+     *
+     * @ORM\Column(name="mask_y", type="float", nullable=true)     
+     */
+    private $mask_y;
+    
     
     /**
      * @var string $rect_x
@@ -178,6 +193,53 @@ class UserMarker
     {
         return $this->svg_paths;
     }
+    
+     /**
+     * Set mask_x
+     *
+     * @param float $maskX
+     * @return UserMarker
+     */
+    public function setMaskX($maskX)
+    {
+        $this->mask_x = $maskX;
+    
+        return $this;
+    }
+
+    /**
+     * Get mask_x
+     *
+     * @return float 
+     */
+    public function getMaskX()
+    {
+        return $this->mask_x;
+    }
+
+    /**
+     * Set mask_y
+     *
+     * @param float $maskY
+     * @return UserMarker
+     */
+    public function setMaskY($maskY)
+    {
+        $this->mask_y = $maskY;
+    
+        return $this;
+    }
+
+    /**
+     * Get mask_y
+     *
+     * @return float 
+     */
+    public function getMaskY()
+    {
+        return $this->mask_y;
+    }
+
 
     /**
      * Set rect_x

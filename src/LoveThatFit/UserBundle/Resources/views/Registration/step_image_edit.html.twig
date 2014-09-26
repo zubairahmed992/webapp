@@ -676,6 +676,8 @@ rect_x: $('#p_selected_pic_x').attr('value'),
 rect_y: $('#p_selected_pic_y').attr('value'),
 rect_height: $('#p_selected_pic_h').attr('value'),
 rect_width:$('#p_selected_pic_w').attr('value'),
+mask_x: $('#mask_x').attr('value'),
+mask_y: $('#mask_y').attr('value'),
 marker_json:$('#img_path_json').attr('value'),
 svg_path:$('#img_path_paper').attr('value')};
 
@@ -739,6 +741,8 @@ jQuery(document).ready(function ($) {
 <input id="p_selected_pic_w" type="hidden" value="{{marker.rectWidth}}" />
 <input id="p_selected_pic_x" type="hidden" value="{{marker.rectX}}" />
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
+<input id="mask_x" type="hidden" value="{{marker.maskX}}" />
+<input id="mask_y" type="hidden" value="{{marker.maskY}}" />
 <input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="marker_update_url" type="hidden" value="{{ path('user_maker_save')}}" />
