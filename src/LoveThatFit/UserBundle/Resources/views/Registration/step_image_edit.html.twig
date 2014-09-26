@@ -513,11 +513,11 @@ console.log(p_user_height);
 if(chk_no_img_path == true){
     //alert("in side");
     mid_area_path.scale(1,p_user_height);
-    mid_area_path.position = new Point(181,p_user_height_px/2+18);
+    mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_x').attr('value')));
     left_arm_path.position = new Point(238,p_user_height_px/2-30);
     right_arm_path.position = new Point(125,p_user_height_px/2-30);
    }
-    mid_area_path.position = new Point(181,p_user_height_px/2+18);
+    mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_x').attr('value')));
     left_arm_path.position = new Point(238,p_user_height_px/2-30);
     right_arm_path.position = new Point(125,p_user_height_px/2-30);
    
@@ -615,6 +615,18 @@ function onMouseDrag(event) {
         
        // alert(import_path_full);
         
+       
+       main_path = project.getItem({
+            class: Path,
+            segments: function(segments) {
+                   return segments.length > 20;
+            }
+            });
+            
+            $("#mask_x").attr("value", main_path.position.x);
+            $("#mask_y").attr("value", main_path.position.y);
+       
+       
 		segment.point += event.delta;
                 
                
