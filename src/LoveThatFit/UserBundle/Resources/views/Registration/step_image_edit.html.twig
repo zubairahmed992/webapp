@@ -511,16 +511,18 @@ p_user_height = p_user_height / 100;
 console.log(p_user_height);
 
 if(chk_no_img_path == true){
-    //alert("in side");
+    alert("in side");
     mid_area_path.scale(1,p_user_height);
-    mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_x').attr('value')));
+    mid_area_path.position = new Point(181,p_user_height_px/2+17);
     left_arm_path.position = new Point(238,p_user_height_px/2-30);
     right_arm_path.position = new Point(125,p_user_height_px/2-30);
    }
-    mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_x').attr('value')));
+   else{
+   
+    mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
     left_arm_path.position = new Point(238,p_user_height_px/2-30);
     right_arm_path.position = new Point(125,p_user_height_px/2-30);
-   
+   }
 
     
 console.log(mid_area_path.height);
@@ -753,8 +755,8 @@ jQuery(document).ready(function ($) {
 <input id="p_selected_pic_w" type="hidden" value="{{marker.rectWidth}}" />
 <input id="p_selected_pic_x" type="hidden" value="{{marker.rectX}}" />
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
-<input id="mask_x" type="hidden" value="{{marker.maskX}}" />
-<input id="mask_y" type="hidden" value="{{marker.maskY}}" />
+<input id="mask_x" type="visible" value="{{marker.maskX}}" />
+<input id="mask_y" type="visible" value="{{marker.maskY}}" />
 <input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="marker_update_url" type="hidden" value="{{ path('user_maker_save')}}" />
