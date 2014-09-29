@@ -782,6 +782,7 @@ class AvgAlgorithm {
             }
             if (array_key_exists('fit_points', $sizes[$key])) {
                 $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]['fit_points']);
+                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]['fit_points']);
             }
             unset($sizes[$key]['fit_points']);
         }
@@ -792,12 +793,20 @@ class AvgAlgorithm {
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private function strip_fit_point_alerts($fit_points) {
-        $arr = array();
-        foreach ($fit_points as $key => $value) {
-            #$str.=$this->snakeToNormal($key) . ':' . $value['message'] . ', ';
-            $arr[$key]=$value['message'];
+        $arr = array();        
+        foreach ($fit_points as $key => $value) {     
+            $arr[$key]=$value['message'];            
         }
         return $arr;
+    }
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private function strip_fit_point_summary($fit_points) {
+        $str = '';
+        foreach ($fit_points as $key => $value) {
+            $str.=$this->snakeToNormal($key) . ':' . $value['message'] . ', ';
+        }
+        return trim($str, ", ");
     }
    
 
