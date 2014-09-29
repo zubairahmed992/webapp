@@ -66,10 +66,16 @@ class UtilityHelper {
        return $this->conf["constants"]["target"];
  }
  #---------------Body Type----------------------------#
- public function getBodyTypes()
+ public function getBodyTypes($gender=null)
  {
-    return $this->conf["constants"]["body_types"];
+     if ($gender==null || $gender=='women'){
+            return $this->conf["constants"]["body_types"]["women"];
+     }  else if ($gender=='men'){
+            return $this->conf["constants"]["body_types"]["men"];
+     }  
+     return;
  }
+  #---------------Body Type----------------------------#
  
  
          

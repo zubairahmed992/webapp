@@ -39,7 +39,14 @@ constants:
      dress: dress
      
   body_types:
-     ({regular, petite,tall})
+    women:
+      regular: Regular
+      petite: Petite      
+    men:
+      regular:  Regular
+      athletic: Athletic
+      tall: Tall
+      big:  Big
  
   body_types_search:
       regular: Regular
@@ -51,6 +58,7 @@ constants:
     banana: banana
     hourglass: hourglass
     pear: pear
+    triangle: triangle
     
   
   size_titles:

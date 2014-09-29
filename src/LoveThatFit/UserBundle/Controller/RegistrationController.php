@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use \DateTime;
+use Symfony\Component\Yaml\Parser;
 
 class RegistrationController extends Controller {
 
@@ -240,7 +241,7 @@ class RegistrationController extends Controller {
             $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size,$brandHelper), $measurement);
        } else {
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching(),$brandHelper), $measurement);
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShape(),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypes("women"),$brandHelper), $measurement);
            
             $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   
             $registrationMeasurementform->get('bra_letters')->setData($measurement->getBraCup());   
@@ -485,9 +486,8 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $edit_type=$edit_type==null?'registration':'fitting_room';
         
         return $this->render('LoveThatFitUserBundle:Registration:ipad_stepfour.html.twig', array(
-                    'form' => $form->createView(),
-                    'form' => $form->createView(),
-                        'measurement_form' => $measurement_form->createView(),                   
+                    'form' => $form->createView(),                    
+                    'measurement_form' => $measurement_form->createView(),                   
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
@@ -505,25 +505,30 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
             throw $this->createNotFoundException('Unable to find User.');
         }
         $measurement = $user->getMeasurement();
+        #-----------------------------------------
+        $yaml = new Parser();
+        $mm_specs = $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));        
+        $user_mm_comparison = $this->get('user.marker.helper')->getComparisionArray($user, $mm_specs);
+        #-----------------------------------------
+        
         
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $marker = $this->get('user.marker.helper')->getByUser($user);
-        #return new response($marker->getRectHeight());   
         $edit_type=$edit_type==null?'registration':'fitting_room';
-        
+        #return new Response(json_encode($user_mm_comparison));
         return $this->render('LoveThatFitUserBundle:Registration:step_four_marker_inspection.html.twig', array(
                     'form' => $form->createView(),
-                    'form' => $form->createView(),
-                        'measurement_form' => $measurement_form->createView(),                   
+                    'measurement_form' => $measurement_form->createView(),                   
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
                     'entity' => $user,
                     'measurement' => $measurement,
                     'edit_type' => $edit_type,
                     'marker' => $marker,
+                     'mesurement_segs'=>$user_mm_comparison,
             ));
    }
 #-----------Registration Step Four TimeSpent Ajax Request--------------------#
