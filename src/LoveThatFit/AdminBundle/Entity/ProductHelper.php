@@ -958,74 +958,68 @@ public function productDetailColorAdd($entity){
                  return  $this->fillArray(null, $female_bra,'f',$this->foo('female_bra'));
                }             
                
-               if(strtolower($product->getSizeTitleType())=='letter'  and strtolower($product->getGender())=='m'  and (strtolower($product->getClothingType()->getTarget())=='top'))
-               {
-                    if($brandSpecification->getMaleLetter()!=null){
-                     $male_letter=$this->getArray($brandSpecification->getMaleLetter());   
-                    }else{
-                     $male_letter=null;   
-                    }
+      if(strtolower($product->getSizeTitleType())=='letter'  and strtolower($product->getGender())=='m'  and (strtolower($product->getClothingType()->getTarget())=='top' or strtolower($product->getClothingType()->getTarget())=='dress'))
+      {
+       if($brandSpecification->getMaleLetter()!=null){
+         $male_letter=$this->getArray($brandSpecification->getMaleLetter());   
+         }else{
+         $male_letter=null;   
+         }
                    
-                return  $this->fillArray(null, $male_letter,'m',$this->foo('male_letter'));
-               }
-               if($product->getSizeTitleType()=='letter' and strtolower($product->getGender())=='m'  and (strtolower($product->getClothingType()->getTarget())=='bottom') )
-               {
-                   if($brandSpecification->getMaleLetter()!=null){
-                       $male_letter=$this->getArray($brandSpecification->getMaleLetter());
-                   }else{
-                       $male_letter=null;
-                   }
+      return  $this->fillArray(null, $male_letter,'m',$this->foo('male_letter'));
+      }
+       if($product->getSizeTitleType()=='letter' and strtolower($product->getGender())=='m'  and (strtolower($product->getClothingType()->getTarget())=='bottom') )
+       {
+        if($brandSpecification->getMaleLetter()!=null){
+         $male_letter=$this->getArray($brandSpecification->getMaleLetter());
+         }else{
+           $male_letter=null;
+         }
                 
-                return  $this->fillArray(null, $male_letter,'m',$this->foo('male_letter'));
-               } 
+        return  $this->fillArray(null, $male_letter,'m',$this->foo('male_letter'));
+        } 
 
-               if($product->getSizeTitleType()=='chest' and (strtolower($product->getGender())=='m' ) and (strtolower($product->getClothingType()->getTarget())=='top' ))
-               {  
-                  if($brandSpecification->getMaleChest()!=null){
-                      $male_chest=$this->getArray($brandSpecification->getMaleChest());
-                  }else{
-                      $male_chest=null;
-                  }
+     if($product->getSizeTitleType()=='chest' and (strtolower($product->getGender())=='m' ) and (strtolower($product->getClothingType()->getTarget())=='top' or strtolower($product->getClothingType()->getTarget())=='dress' ))
+     {  
+        if($brandSpecification->getMaleChest()!=null){
+        $male_chest=$this->getArray($brandSpecification->getMaleChest());
+         }else{
+         $male_chest=null;
+        }
                    
-                  return  $this->fillArray(null, $male_chest,'m',$this->foo('male_chest'));
-               }
-               if($product->getSizeTitleType()=='shirt' and (strtolower($product->getGender())=='m'  ))
-               { 
-                   if($brandSpecification->getMaleShirt()!=null){
-                      $male_shirt=$this->getArray($brandSpecification->getMaleShirt()); 
-                   }else{
-                      $male_shirt=null; 
-                   }
+        return  $this->fillArray(null, $male_chest,'m',$this->foo('male_chest'));
+      }
+      if($product->getSizeTitleType()=='shirt' and (strtolower($product->getGender())=='m'  ))
+         { 
+          if($brandSpecification->getMaleShirt()!=null){
+             $male_shirt=$this->getArray($brandSpecification->getMaleShirt()); 
+           }else{
+              $male_shirt=null; 
+           }
                    
-                  return  $this->fillArray(null, $male_shirt,'m',$this->foo('male_shirt'));
-               } 
-                if((strtolower($product->getSizeTitleType())=='waist' )and (strtolower($product->getGender())=='m'))
-               {
-                
-                  if($brandSpecification->getMaleWaist()!=null){
-                       $male_waist=$this->getArray($brandSpecification->getMaleWaist());   
-                  }else{
-                      $male_waist=null;
-                  }
-                  
-                  return $this->fillArray(null,$male_waist,'m',$this->foo('male_waist'));
-               } 
+        return  $this->fillArray(null, $male_shirt,'m',$this->foo('male_shirt'));
+       } 
+     if((strtolower($product->getSizeTitleType())=='waist' )and (strtolower($product->getGender())=='m'))
+        {
+          if($brandSpecification->getMaleWaist()!=null){
+          $male_waist=$this->getArray($brandSpecification->getMaleWaist());   
+           }else{
+           $male_waist=null;
+          }
+         return $this->fillArray(null,$male_waist,'m',$this->foo('male_waist'));
+        } 
               
-                if((strtolower($product->getSizeTitleType())=='neck' )and (strtolower($product->getGender())=='m'))
-               {
-                   
-                  if($brandSpecification->getMaleNeck()!=null){
+        if((strtolower($product->getSizeTitleType())=='neck' )and (strtolower($product->getGender())=='m'))
+         {  if($brandSpecification->getMaleNeck()!=null){
                       $male_neck=$this->getArray($brandSpecification->getMaleNeck());   
                   }else{
-                      $male_neck=null;
-                  }
-                  
-                  return $this->fillArray(null,$male_neck,'m',$this->foo('male_neck'));
-               } 
+            $male_neck=null;
+          }
+         return $this->fillArray(null,$male_neck,'m',$this->foo('male_neck'));
+        } 
        
    }else{
-       
-       return $this->productDetailColorAdd($product);
+        return $this->productDetailColorAdd($product);
    }
         
      }  
