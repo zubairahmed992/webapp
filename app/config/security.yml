@@ -109,8 +109,8 @@ security:
         in_memory:
             memory:
                 users:
-                    waq:  { password: 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8, roles: 'ROLE_ADMIN' }
-                    admin: { password: d033e22ae348aeb5660fc2140aec35850c4da997, roles: 'ROLE_ADMIN' }
+                    waq:  { password: d43051a23a3d69631f01fc55dbaa2ec62dff1720, roles: 'ROLE_ADMIN' }
+                    admin: { password: d9d36ff8334e0347da346125bd5ddf89265c074e, roles: 'ROLE_ADMIN' }
         user_db:                      
             entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
         
