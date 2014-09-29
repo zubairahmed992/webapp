@@ -670,7 +670,7 @@ class ProductRepository extends EntityRepository {
          
   return $this->getEntityManager()
                         ->createQueryBuilder()
-                        ->select("pi.id as productId ,p.name as productName,b.id as brandId,pc.id as colorId,ps.id as sizeId,ps.title as sizeTitle, pc.title as colorTitle,p.name as name,p.description as des,ct.target as target,pi.image as productImage,b.name as brandName, pi.image as fittingRoomImage, pi.id as itemId, 'null' as retailer ")
+                        ->select("pi.id as productId ,p.name as productName,b.id as brandId,pc.id as colorId,ps.id as sizeId,ps.title as sizeTitle, pc.title as colorTitle,p.name as name,p.description as des,ct.target as target,pi.image as productImage,b.name as brandName, pi.image as fittingRoomImage, pi.id as itemId, 'null' as retailer,uih.updated_at ")
                         ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
                         ->innerJoin('pi.product','p')
                         ->innerJoin('p.brand', 'b')
@@ -679,7 +679,7 @@ class ProductRepository extends EntityRepository {
                         ->innerJoin('pi.user_item_try_history','uih')
                         ->innerJoin('p.clothing_type','ct')
                         ->where('uih.user = :id')
-                        ->orderBy('uih.count','DESC')
+                        ->orderBy('uih.updated_at','DESC')
                         ->setMaxResults(20)
                         ->setParameter('id', $user_id)
                         ->getQuery()
