@@ -666,11 +666,12 @@ class ProductRepository extends EntityRepository {
     }
 
 //-------------------------------------------------------------------------------------    
-     public function tryOnHistoryWebService($user_id) {
+    
+ public function tryOnHistoryWebService($user_id) {
          
   return $this->getEntityManager()
                         ->createQueryBuilder()
-                        ->select("pi.id as productId ,p.name as productName,b.id as brandId,pc.id as colorId,ps.id as sizeId,ps.title as sizeTitle, pc.title as colorTitle,p.name as name,p.description as des,ct.target as target,pi.image as productImage,b.name as brandName, pi.image as fittingRoomImage, pi.id as itemId, 'null' as retailer,uih.updated_at ")
+                        ->select("p.id as productId ,p.name as productName,b.id as brandId,pc.id as colorId,ps.id as sizeId,ps.title as sizeTitle, pc.title as colorTitle,p.name as name,p.description as des,ct.target as target,pi.image as productImage,b.name as brandName, pi.image as fittingRoomImage, pi.id as itemId, 'null' as retailer,uih.updated_at ")
                         ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
                         ->innerJoin('pi.product','p')
                         ->innerJoin('p.brand', 'b')
