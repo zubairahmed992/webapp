@@ -146,31 +146,24 @@ jQuery('form#RegistrationMeasurement').find('select').each(function(){
 
                     <span id="gender" style="display: none;">{{entity.gender}}</span>
                 
-                {% if( entity.gender=='m') %}
-                    <span id="body_type" style="display: none;">{{ form_widget(form.body_types) }}</span>
-                {%endif%}
-
-                    
-                    
-                    
-                {% if( entity.gender=='f') %}
-                    
-                    
+                                   
                     
                     <div style="margin-bottom: 25px; clear:both;"></div>    
                     
              
-                    <div style="float:left; margin-right: 10px;">
+                    <div style="float:left; margin-right: 0px;">
                         <div id="height_wrapper">
                             <span class="boxlable2" id="height_box2">Clothing Fit</span>                             
                         </div>                           
                         <span id="clg_sel">{{ form_widget(form.body_types) }}</span>
                        </div>    
-                       {%endif%} 
-                   
+                    
+                  
                    <div style="overflow: auto;">
                        
-                   <div class="boxlable2" id="weight_box2">Birth Date</div>  
+                   
+                       
+                  <div class="boxlable2" id="weight_box2">Birth Date</div>  
                   
                    
                     {% if( entity.gender=='f') %}
@@ -182,12 +175,8 @@ jQuery('form#RegistrationMeasurement').find('select').each(function(){
                     {{ form_widget(form.birthdate.year) }}
                   </div>
                     {%endif%}
-                   
-                   
-                    {% if( entity.gender=='m') %}
-                   
-                   
-                   <div id="dob" class="male_dob">                 
+                    {% if( entity.gender=='m') %}                                      
+                   <div id="dob">                 
                     {{ form_widget(form.birthdate.month) }}                 
                     {{ form_widget(form.birthdate.day) }}                           
                     {{ form_widget(form.birthdate.year) }}

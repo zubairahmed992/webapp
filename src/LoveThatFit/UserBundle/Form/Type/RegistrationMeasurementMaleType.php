@@ -18,10 +18,10 @@ private $waist;
 private $inseam;
 private $brandHelper;
 private $timespent;
-     public function __construct($container,$neck,$sleeve,$waist,$inseam,$brandHelper)             
+     public function __construct($container,$neck,$sleeve,$waist,$inseam,$body_types,$brandHelper)             
     {
         $this->container= $container;
-        $this->body_types=array('Regular'=>'Regular','Petite'=>'Petite'); 
+        $this->body_types=$body_types;
         $this->neck=$neck;
         $this->sleeve=$sleeve;
         $this->waist=$waist;
