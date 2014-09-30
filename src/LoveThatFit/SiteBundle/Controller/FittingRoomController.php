@@ -71,6 +71,58 @@ class FittingRoomController extends Controller {
       $t =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user_id);    
       return new Response(json_encode($t));
     }
+#-----------Added to closet method---------------------------------------------#
+    #-------------------------------------------------------------------------------
+    public function addToCloestAction($product_item_id) {
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $entity =  $this->get('admin.helper.product')->countMyCloset($user_id);
+        $rec_count = count($entity );
+        if ($rec_count >= 25) {
+            $this->get('session')->setFlash('warning', 'Please Remove Some Like You can not like more than 25.');
+            return new response(0);
+        } else {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $product_item = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
+            $em = $this->getDoctrine()->getManager();
+            $product_item->addUser($user);
+            $user->addProductItem($product_item);
+            $em->persist($product_item);
+            $em->persist($user);
+            $em->flush();
+            return new response('success');
+        }
+    }
+    #---------------------------------------------------------------------------#
+    #-----------------------------Delete My Closet at For Ajax---------------------
+    public function deleteMyClosetAjaxAction($product_item_id) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $product_item = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
+        $em = $this->getDoctrine()->getManager();
+        $product_item->removeUser($user);
+        $user->removeProductItem($product_item);
+        $em->persist($product_item);
+        $em->persist($user);
+        $em->flush();
+       return new response('success');   
+    }
+    #--------------------------------------------------------------------------#
+    public function deleteMyClosetAction($id) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $product_item = $this->get('admin.helper.productitem')->getProductItemById($id);
+        $em = $this->getDoctrine()->getManager();
+        $product_item->removeUser($user);
+        $user->removeProductItem($product_item);
+        $em->persist($product_item);
+        $em->persist($user);
+        $em->flush();
+        $this->get('session')->setFlash('success', 'Product Item Successfully Removed.');
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $entity =$this->get('admin.helper.product')->findProductItemByUser($user_id,$page_number=0,$limit = 0);
+       return $this->redirect($this->generateUrl('ajax_products_by_my_closet',array('product' => $entity)));
+        //return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+    }
+    
 }
 ?>
 

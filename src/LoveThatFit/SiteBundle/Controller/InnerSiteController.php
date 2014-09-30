@@ -180,6 +180,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         $user= $this->get('security.context')->getToken()->getUser();
         $fris  = $this->get('site.helper.userfittingroomitem')->add($user, $id);
         return new Response(json_encode($fris));
+      
     }
 
 #-------------------------------------------------------------------------------  
@@ -276,7 +277,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         $rec_count = count($this->get('admin.helper.product')->countMyCloset($user_id));
         return new Response($rec_count);
     }
-
+/*#---------Moved
 //------------------------------------------------------------------------------
     public function deleteMyClosetAction($id) {
         $user = $this->get('security.context')->getToken()->getUser();
@@ -293,7 +294,9 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
        return $this->redirect($this->generateUrl('ajax_products_by_my_closet',array('product' => $entity)));
         //return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
     }
- #-----------------------------Delete My Closet at For Ajax---------------------
+  */  
+ /*   #!!--Moved
+ #-----------------------------Delete My Closet at For Ajax---------------------#
     public function deleteMyClosetAjaxAction($product_item_id) {
         $user = $this->get('security.context')->getToken()->getUser();
         $product_item = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
@@ -304,7 +307,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         $em->persist($user);
         $em->flush();
        return new response('success');   
-    }
+    }*/
  //-----------------------------------------------------------------------------
     public function emailAction($id) {
         $product = $this->get('admin.helper.product')->find($id);
@@ -422,6 +425,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
                         #'fitting_room_item_ids' => json_encode($fitting_room_item_ids)));
     }
     */
+  /*!! Moved
 #-------------------------------------------------------------------------------
     public function addToCloestAction($product_item_id) {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -442,7 +446,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
             $em->flush();
             return new response('success');
         }
-    }
+    }*/
     
     public function userMannequinAction()
     {

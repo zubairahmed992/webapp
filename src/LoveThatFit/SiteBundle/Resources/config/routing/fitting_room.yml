@@ -23,6 +23,20 @@ ajax_user_fitting_room_item_remove:
 ajax_user_fitting_room_item_ids:
     pattern:  /ajax/fitting_room_item_ids/{user_id}
     defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:getFittingRoomItemIds}
+
+ajax_user_product_item_create:
+    pattern:  /ajax/user_product_item/create/{product_item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:addToCloest}
+  
+ajax_user_product_item_delete:
+    pattern:  /ajax/user_product_item/delete/{product_item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:deleteMyClosetAjax}       
+ajax_my_closet_delete:
+    pattern:  /ajax/products/my_closet/delete/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:deleteMyCloset}  
+
+    
+    
     
     
     
