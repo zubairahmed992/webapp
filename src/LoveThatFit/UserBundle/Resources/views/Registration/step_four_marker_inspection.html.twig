@@ -589,11 +589,8 @@ function onMouseDown(event) {
 function onMouseMove(event) {
             project.activeLayer.selected = false;
 	if (event.item)
-		event.item.selected = true;
-	
+		event.item.selected = true;	
 }
-
-
 
 function onMouseUp(event){
     if (segment) {    
@@ -601,18 +598,17 @@ function onMouseUp(event){
             //$("#segments_details").prepend("<div class='sh ort_tip' style='left:" + parseInt(path.segments[i].point.x) +"px; top:" + parseInt(path.segments[i].point.y)+"px'>Segment" + i +": "+path.segments[i].point + "</div>");
             //$("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + i + "</div>");
         };
-        
         //generating json array of markers cordinates ~~~~~~~~~~~~~~~~~~>
         $("#img_path_json").attr("value", getPathArrayJson());
     }   
 }
 
-function getPathArrayJson(){
-    var mp_array=[];
+var path_array=[];
+function getPathArrayJson(){    
     for(var i = 0; i < path.segments.length; i++) {
-        mp_array.push([path.segments[i].point.x, path.segments[i].point.y]);            
+        path_array.push([path.segments[i].point.x, path.segments[i].point.y]);            
     };
-    return JSON.stringify(mp_array);
+    return JSON.stringify(path_array);
 }
 
 function onMouseDrag(event) {
@@ -695,6 +691,8 @@ var value_ar = {
     rect_height: $('#p_selected_pic_h').attr('value'),
     rect_width:$('#p_selected_pic_w').attr('value'),
     svg_path:$('#img_path_paper').attr('value'),
+    mask_x: $('#mask_x').attr('value'),
+    mask_y: $('#mask_y').attr('value'),
     marker_json: $('#img_path_json').attr('value')};
 
  $.ajax({
@@ -760,7 +758,9 @@ jQuery(document).ready(function ($) {
 <input id="p_selected_pic_x" type="hidden" value="{{marker.rectX}}" />
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
 <input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
-<input id="img_path_json" type="hidden"  />
+<input id="mask_x" type="hidden" value="{{marker.maskX}}" />
+<input id="mask_y" type="hidden" value="{{marker.maskY}}" />
+<input id="img_path_json"  type="hidden" value="{{marker.MarkerJson}}"   />
 <input id="marker_update_url" type="hidden" value="{{ path('user_maker_save')}}" />
 <input id="btn_send_params" type="button"  type="hidden" value="send" />
 
@@ -793,7 +793,20 @@ jQuery(document).ready(function ($) {
     
 </div>
 <script>
+    
+    function get_coordinates(p){
         
+    }
+    function dist(p1,p2){
+        
+     }
+     function cal_dist(x1,y1,x2,y2){
+        return (Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2))).toFixed(2);
+     }
+     //alert (cal_dist(2,2,8,8));
+     json={{marker.markerJson}};
+     var arr = json.keys(o).map(function(k) { return o[k] });
+     alert ({{marker.markerJson}});
     </script>
     
 <section {% if(entity.gender=='f') %} class="reg_blk reg_female" {%else%} class="reg_blk reg_male" {%endif%}>
@@ -893,23 +906,19 @@ jQuery(document).ready(function ($) {
             <!--/.action_cnt--></div>
     
     
-    <div class="mask_measurements">
-        <table>
+    <div style="font-size:x-small">
+        <table class="table">
             <tr>
-                <th></th><th>Pixel</th><th>Inch</th>               
+                <th></th><th>Body</th><th>Pixel</th><th>Inch</th>               
             </tr>
-            <tr>
-                <th>Shoulder</th><td></td><td></td>               
-            </tr>
-            <tr>
-                <th>Bust</th><td></td><td></td>                
-            </tr>
-            <tr>
-                <th>Waist</th><td></td><td></td>                
-            </tr>
-            <tr>
-                <th>Hip</th><td></td><td></td>
-            </tr>
+            {% for fp, mm_specs in  mesurement_segs%} 
+                <tr>
+                    <th>{{fp}}</th>
+                    <td>{{mm_specs.body |  number_format(2)}}</td>
+                    <td id='{{fp~'_pixel'}}'>  {{mm_specs.pixels.s1 |  number_format(2)}} </td>
+                    <td id='{{fp~'_inch'}}'>    {{(mm_specs.pixels.s1/6) |  number_format(2)}}</td>               
+                </tr>
+            {% endfor %}   
         </table>
         
     </div>
@@ -1295,7 +1304,7 @@ jQuery(document).ready(function ($) {
                 </div>
            </div>
             
-            <div class="btm_buttons row save_btn_4">
+                <div class="btm_buttons row save_btn_4">
                         <div class="frm_ele">
                             <input onClick="next_button_click(); return false;" class="reg_next_step2" type="button" value="" />
                         </div>
