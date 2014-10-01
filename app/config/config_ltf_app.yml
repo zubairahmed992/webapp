@@ -369,258 +369,651 @@ constants:
             high: 35 
             average: 34
             index_value: 6
+        28dddd:           
+            size: 28 
+            cup: dddd 
+            low: 34 
+            high: 36 
+            average: 35
+            index_value: 7
+        28h:           
+            size: 28 
+            cup: h 
+            low: 35 
+            high: 37 
+            average: 36
+            index_value: 8    
+        28i:            
+            size: 28 
+            cup: i 
+            low: 36 
+            high: 38 
+            average: 37
+            index_value: 9
+        28j:            
+            size: 28 
+            cup: j 
+            low: 37 
+            high: 39 
+            average: 38
+            index_value: 10
+        28k:            
+            size: 28 
+            cup: h 
+            low: 38 
+            high: 40 
+            average: 39
+            index_value: 11
+        28l:            
+            size: 28 
+            cup: l 
+            low: 39 
+            high: 41 
+            average: 40
+            index_value: 12
+        28m:            
+            size: 28 
+            cup: m
+            low: 40 
+            high: 42 
+            average: 41
+            index_value: 13
+        28n:           
+            size: 28 
+            cup: n
+            low: 41 
+            high: 43 
+            average: 42
+            index_value: 14          
         30a:
             size: 30 
             cup: a 
             low: 30 
             high: 32 
             average: 31
-            index_value: 7
+            index_value: 15
         30b:
             size: 30 
             cup: b 
             low: 31 
             high: 33 
             average: 32   
-            index_value: 8
+            index_value: 16
         30c:
             size: 30 
             cup: c 
             low: 32 
             high: 34 
             average: 33   
-            index_value: 9
+            index_value: 17
         30d:
             size: 30 
             cup: d 
             low: 33 
             high: 35 
             average: 34   
-            index_value: 10
+            index_value: 18
         30dd:
             size: 30 
             cup: dd 
             low: 34 
             high: 36 
             average: 35    
-            index_value: 11
+            index_value: 19
         30ddd:
             size: 30 
             cup: ddd 
             low: 35 
             high: 37 
             average: 36 
-            index_value: 12
+            index_value: 20
+        30dddd:           
+            size: 30 
+            cup: dddd 
+            low: 36 
+            high: 38 
+            average: 37
+            index_value: 21    
+        30h:            
+            size: 30 
+            cup: h 
+            low: 37 
+            high: 39 
+            average: 38 
+            index_value: 22
+        30i:           
+            size: 30 
+            cup: i 
+            low: 38 
+            high: 40 
+            average: 39
+            index_value: 23
+        30j:           
+            size: 30 
+            cup: j
+            low: 39 
+            high: 41 
+            average: 40
+            index_value: 24
+        30k:           
+            size: 30 
+            cup: k 
+            low: 40 
+            high: 42 
+            average: 41
+            index_value: 25
+        30l:           
+            size: 30 
+            cup: l
+            low: 41 
+            high: 43 
+            average: 42
+            index_value: 26
+        30m:            
+            size: 30 
+            cup: m
+            low: 42 
+            high: 44 
+            average: 43
+            index_value: 27
+        30n:           
+            size: 30 
+            cup: n
+            low: 43 
+            high: 45 
+            average: 44 
+            index_value: 28    
         32a:
             size: 32 
             cup: a 
             low: 32 
             high: 34 
             average: 33  
-            index_value: 13
+            index_value: 29
         32b:
             size: 32 
             cup: b 
             low: 33 
             high: 35 
             average: 34 
-            index_value: 14
+            index_value: 30
         32c:
             size: 32 
             cup: c 
             low: 34 
             high: 36 
             average: 35    
-            index_value: 15
+            index_value: 31
         32d:
             size: 32 
             cup: d
             low: 35 
             high: 37 
             average: 36 
-            index_value: 16
+            index_value: 32
         32dd:
             size: 32 
             cup: dd
             low: 36 
             high: 38 
             average: 37
-            index_value: 17
+            index_value: 33
         32ddd:
             size: 32 
             cup: ddd
             low: 37 
             high: 39 
             average: 38
-            index_value: 18
+            index_value: 34
+        32dddd:          
+            size: 32 
+            cup: dddd
+            low: 38 
+            high: 40 
+            average: 39
+            index_value: 35
+        32h:          
+            size: 32 
+            cup: h
+            low: 39 
+            high: 41 
+            average: 40
+            index_value: 36
+        32i:           
+            size: 32 
+            cup: i
+            low: 40 
+            high: 42 
+            average: 41
+            index_value: 37
+        32j:          
+            size: 32 
+            cup: j
+            low: 41 
+            high: 43 
+            average: 42
+            index_value: 38
+        32k:           
+            size: 32 
+            cup: k
+            low: 42 
+            high: 44 
+            average: 43
+            index_value: 39
+        32l:          
+            size: 32 
+            cup: l
+            low: 43 
+            high: 45 
+            average: 44
+            index_value: 40
+        32m:           
+            size: 32 
+            cup: m
+            low: 44 
+            high: 46 
+            average: 45
+            index_value: 41
+        32n:           
+            size: 32 
+            cup: n
+            low: 45 
+            high: 47 
+            average: 46
+            index_value: 42     
         34a:
             size: 34 
             cup: a
             low: 34 
             high: 36 
             average: 35 
-            index_value: 19
+            index_value: 43
         34b:
             size: 34 
             cup: b
             low: 35 
             high: 37 
             average: 36    
-            index_value: 20
+            index_value: 44
         34c:
             size: 34 
             cup: c
             low: 36 
             high: 38 
             average: 37 
-            index_value: 21
+            index_value: 45
         34d:
             size: 34 
             cup: d
             low: 37 
             high: 39 
             average: 38  
-            index_value: 22
+            index_value: 46
         34dd:
             size: 34 
             cup: dd
             low: 38 
             high: 40 
             average: 39    
-            index_value: 23
+            index_value: 47
         34ddd:
             size: 34 
             cup: ddd
             low: 39 
             high: 41 
             average: 40
-            index_value: 24
+            index_value: 48
+        34dddd:
+            size: 34 
+            cup: dddd
+            low: 40 
+            high: 42 
+            average: 41
+            index_value: 49
+        34h:
+            size: 34 
+            cup: h
+            low: 41 
+            high: 43 
+            average: 42
+            index_value: 50  
+        34i:
+            size: 34 
+            cup: i
+            low: 42 
+            high: 44 
+            average: 43
+            index_value: 51
+        34j:
+            size: 34 
+            cup: j
+            low: 43 
+            high: 45 
+            average: 44
+            index_value: 52
+        34k:
+            size: 34 
+            cup: k
+            low: 44 
+            high: 46 
+            average: 45
+            index_value: 53
+        34l:
+            size: 34 
+            cup: l
+            low: 45 
+            high: 47 
+            average: 46
+            index_value: 54
+        34m:
+            size: 34 
+            cup: m
+            low: 46 
+            high: 48 
+            average: 47
+            index_value: 55   
+        34n:
+            size: 34 
+            cup: n
+            low: 47
+            high: 49
+            average: 48
+            index_value: 56        
         36a:
             size: 36 
             cup: a
             low: 36 
             high: 38 
             average: 37
-            index_value: 25
+            index_value: 57
         36b:
             size: 36 
             cup: b
             low: 37 
             high: 39 
             average: 38 
-            index_value: 26
+            index_value: 58
         36c:
             size: 36 
             cup: c
             low: 38 
             high: 40 
             average: 39
-            index_value: 27
+            index_value: 59
         36d:
             size: 36 
             cup: d
             low: 39 
             high: 41 
             average: 40
-            index_value: 28
+            index_value: 60
         36dd:
             size: 36 
             cup: dd
             low: 40 
             high: 42 
             average: 41 
-            index_value: 29
+            index_value: 61
         36ddd:
             size: 36 
             cup: ddd
             low: 41 
             high: 43 
             average: 42    
-            index_value: 30
+            index_value: 62
+        36dddd:
+            size: 36 
+            cup: dddd
+            low: 42 
+            high: 44 
+            average: 43    
+            index_value: 63
+        36h:
+            size: 36 
+            cup: h
+            low: 43 
+            high: 45 
+            average: 44    
+            index_value: 64
+        36i:
+            size: 36 
+            cup: i
+            low: 44 
+            high: 46 
+            average: 45    
+            index_value: 65
+        36j:
+            size: 36 
+            cup: j
+            low: 45 
+            high: 47 
+            average: 46    
+            index_value: 66
+        36k:
+            size: 36 
+            cup: k
+            low: 46 
+            high: 48 
+            average: 47    
+            index_value: 67
+        36l:
+            size: 36 
+            cup: l
+            low: 47 
+            high: 49 
+            average: 48    
+            index_value: 68
+        36m:
+            size: 36 
+            cup: m
+            low: 48 
+            high: 50 
+            average: 49    
+            index_value: 69
+        36n:
+            size: 36 
+            cup: n
+            low: 49 
+            high: 51 
+            average: 50    
+            index_value: 70       
         38a:
             size: 38 
             cup: a
             low: 38 
             high: 40
             average: 39
-            index_value: 31
+            index_value: 71
         38b:
             size: 38 
             cup: b
             low: 39 
             high: 41
             average: 40
-            index_value: 32
+            index_value: 72
         38c:
             size: 38 
             cup: c
             low: 40 
             high: 42
             average: 41 
-            index_value: 33
+            index_value: 73
         38d:
             size: 38 
             cup: d
             low: 41 
             high: 43
             average: 42
-            index_value: 34
+            index_value: 74
         38dd:
             size: 38 
             cup: dd
             low: 42 
             high: 44
             average: 43 
-            index_value: 35
+            index_value: 75
         38ddd:
             size: 38 
             cup: dd
             low: 43 
             high: 45
             average: 44 
-            index_value: 36
+            index_value: 76
+        38dddd:
+            size: 38 
+            cup: dddd
+            low: 44 
+            high: 46
+            average: 45 
+            index_value: 77
+        38h:
+            size: 38 
+            cup: h
+            low: 45 
+            high: 47
+            average: 46 
+            index_value: 78
+        38i:
+            size: 38 
+            cup: i
+            low: 46 
+            high: 48
+            average: 47 
+            index_value: 79
+        38j:
+            size: 38 
+            cup: j
+            low: 47 
+            high: 49
+            average: 48
+            index_value: 80
+        38k:
+            size: 38 
+            cup: k
+            low: 48 
+            high: 50
+            average: 49 
+            index_value: 81
+        38l:
+            size: 38 
+            cup: l
+            low: 49 
+            high: 51
+            average: 50 
+            index_value: 82
+        38m:
+            size: 38 
+            cup: m
+            low: 50 
+            high: 52
+            average: 51 
+            index_value: 83
+        38n:
+            size: 38 
+            cup: n
+            low: 51 
+            high: 53
+            average: 52 
+            index_value: 84       
         40a:
             size: 40 
             cup: a
             low: 40 
             high: 42
             average: 41 
-            index_value: 37
+            index_value: 85
         40b:
             size: 40 
             cup: b
             low: 41 
             high: 43
             average: 42    
-            index_value: 38
+            index_value: 86
         40c:
             size: 40 
             cup: c
             low: 42 
             high: 44
             average: 43 
-            index_value: 39
+            index_value: 87
         40d:
             size: 40 
             cup: d
             low: 43 
             high: 45
             average: 44
-            index_value: 40
+            index_value: 88
         40dd:
             size: 40 
             cup: dd
             low: 44 
             high: 46
             average: 45 
-            index_value: 41
+            index_value: 89
         40ddd:
             size: 40 
             cup: ddd
             low: 45 
             high: 47
             average: 46  
-            index_value: 42
+            index_value: 90            
+        40dddd:
+            size: 40 
+            cup: dddd
+            low: 46 
+            high: 48
+            average: 47  
+            index_value: 91   
+        40h:
+            size: 40 
+            cup: h
+            low: 47 
+            high: 49
+            average: 48  
+            index_value: 92    
+        40i:
+            size: 40 
+            cup: i
+            low: 48 
+            high: 50
+            average: 49  
+            index_value: 93   
+        40j:
+            size: 40 
+            cup: j
+            low: 49 
+            high: 51
+            average: 50  
+            index_value: 94  
+        40k:
+            size: 40 
+            cup: k
+            low: 50 
+            high: 52
+            average: 51  
+            index_value: 95    
+        40l:
+            size: 40 
+            cup: l
+            low: 51 
+            high: 53
+            average: 52  
+            index_value: 96    
+        40m:
+            size: 40 
+            cup: m
+            low: 52 
+            high: 54
+            average: 53  
+            index_value: 97    
+        40n:
+            size: 40 
+            cup: n
+            low: 53 
+            high: 55
+            average: 54  
+            index_value: 98   
+            
 
     man:
       letter:
