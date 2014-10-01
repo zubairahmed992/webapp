@@ -1507,38 +1507,102 @@ constants:
     28c: 28c
     28d: 28d
     28dd: 28dd
+    28ddd: 28ddd
+    28dddd: 28dddd
+    28h: 28h
+    28i: 28i
+    28j: 28j
+    28k: 28k
+    28l: 28l
+    28m: 28m
+    28n: 28n
     30a: 30a
     30b: 30b
     30c: 30c
     30d: 30d
     30dd: 30dd
+    30ddd: 30ddd
+    30dddd: 30dddd
+    30h: 30h
+    30i: 30i
+    30j: 30j
+    30k: 30k
+    30l: 30l
+    30m: 30m
+    30n: 30n
     32a: 32a
     32b: 32b
     32c: 32c
     32d: 32d
     32dd: 32dd
+    32ddd: 32ddd
+    32dddd: 32dddd
+    32h: 32h
+    32i: 32i
+    32j: 32j
+    32k: 32k
+    32l: 32l
+    32m: 32m
+    32n: 32n
     34a: 34a
     34b: 34b
     34c: 34c
     34d: 34d
     34dd: 34dd
+    34ddd: 34ddd
+    34dddd: 34dddd
+    34h: 34h
+    34i: 34i
+    34j: 34j
+    34k: 34k
+    34l: 34l
+    34m: 34m
+    34n: 34n
     36a: 36a
     36b: 36b
     36c: 36c
     36d: 36d
     36dd: 36dd
     36ddd: 36ddd
+    36ddd: 36ddd
+    36dddd: 36dddd
+    36h: 36h
+    36i: 36i
+    36j: 36j
+    36k: 36k
+    36l: 36l
+    36m: 36m
+    36n: 36n
     38a: 38a
     38b: 38b
     38c: 38c
     38d: 38d
     38dd: 38dd
     38ddd: 38ddd
+    38ddd: 38ddd
+    38dddd: 38dddd
+    38h: 38h
+    38i: 38i
+    38j: 38j
+    38k: 38k
+    38l: 38l
+    38m: 38m
+    38n: 38n
     40a: 40a
     40b: 40b
     40c: 40c
     40d: 40d
     40dd: 40dd
+    40ddd: 40ddd
+    40ddd: 40ddd
+    40dddd: 40dddd
+    40h: 40h
+    40i: 40i
+    40j: 40j
+    40k: 40k
+    40l: 40l
+    40m: 40m
+    40n: 40n
     
   bra_numbers:
     28: 28         
@@ -1550,13 +1614,24 @@ constants:
     40: 40
   
   bra_letters:
+    aa: aa
     a: a         
     b: b
     c: c
     d: d
     dd: dd
-    ddd: ddd    
+    ddd: ddd
+    dddd: dddd
+    h: h
+    i: i
+    j: j
+    k: k
+    l: l
+    m: m
+    n: n
 
+
+    
 Bust_Measurement:
   28a:
       size: 28 
