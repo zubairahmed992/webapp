@@ -269,6 +269,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         $entity =  $entity = $this->get('admin.helper.product')->findProductItemByUser($user_id, $page_number, $limit);
         return $this->renderProductTemplate($entity, $page_number, $limit);        
     }
+    
+    /* Moved
 #-------------------------------------------------------------------------------
     public function countMyColosetAction() {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
@@ -277,6 +279,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         $rec_count = count($this->get('admin.helper.product')->countMyCloset($user_id));
         return new Response($rec_count);
     }
+     * 
+     */
 /*#---------Moved
 //------------------------------------------------------------------------------
     public function deleteMyClosetAction($id) {
@@ -448,12 +452,15 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         }
     }*/
     
+    /* Moved..
     public function userMannequinAction()
     {
         $user = $this->get('security.context')->getToken()->getUser(); 
         $manequin_size=$this->get('admin.helper.user.mannequin')->userMannequin($user);        
         return new Response(json_encode($manequin_size));
     }
+     * 
+     */
 
 #------------------------------------------Compare Product -------------------#
    public function compareProductAction($item_id){

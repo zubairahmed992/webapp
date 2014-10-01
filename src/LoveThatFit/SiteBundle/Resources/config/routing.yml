@@ -81,9 +81,9 @@ ajax_products_by_my_closet:
 #    pattern:  /ajax/products/my_closet/delete/{id}
 #    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:deleteMyCloset}  
 
-ajax_my_closet_count:
-    pattern:  /ajax/products/my_closet/count
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:countMyColoset}
+#ajax_my_closet_count:
+#    pattern:  /ajax/products/my_closet/count
+ #   defaults: { _controller: LoveThatFitSiteBundle:InnerSite:countMyColoset}
 
 ajax_product_latest:
     pattern:  /ajax/products/{gender}/latest/{page_number}/{limit}
@@ -160,9 +160,9 @@ email:
     pattern:  /email/{id}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:email, id:0}
 
-user_mannequin:
-    pattern:  /user/profile/mannequin
-    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:userMannequin }    
+#user_mannequin:
+#    pattern:  /user/profile/mannequin
+#    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:userMannequin }    
     
 email_registration:
     pattern:  /email/registration/{id}

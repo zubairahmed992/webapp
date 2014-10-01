@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\SiteBundle\AvgAlgorithm;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FittingRoomController extends Controller {
    
@@ -121,6 +122,23 @@ class FittingRoomController extends Controller {
         $entity =$this->get('admin.helper.product')->findProductItemByUser($user_id,$page_number=0,$limit = 0);
        return $this->redirect($this->generateUrl('ajax_products_by_my_closet',array('product' => $entity)));
         //return $this->render('LoveThatFitSiteBundle:InnerSite:_closet_products.html.twig', array('product' => $entity));
+    }
+    
+    #-------------------------------------------------------------------------------
+    public function countMyColosetAction() {
+        $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $entity = $this->get('admin.helper.product')->countMyCloset($user_id);
+        $rec_count = count($this->get('admin.helper.product')->countMyCloset($user_id));
+        return new Response($rec_count);
+    }
+
+   #---------------------------User Manquine------------------------------------# 
+     public function userMannequinAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser(); 
+        $manequin_size=$this->get('admin.helper.user.mannequin')->userMannequin($user);        
+        return new Response(json_encode($manequin_size));
     }
     
 }
