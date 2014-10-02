@@ -59,7 +59,9 @@ class FittingRoomController extends Controller {
         return $this->render('LoveThatFitSiteBundle:FittingRoom:_fitting_feedback.html.twig', 
                 array('product' => $productItem->getProduct(), 
                         'product_item' => $productItem, 
-                            'data' => $fb));
+                            'data' => $fb,
+                    'product'=>$product,
+                    ));
        
     }  
 #----------------------------Remove Fitting Room -----------------------------#

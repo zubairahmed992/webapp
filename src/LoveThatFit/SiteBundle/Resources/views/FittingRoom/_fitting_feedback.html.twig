@@ -15,7 +15,7 @@
          {% endfor %}
     
 #}
-
+<input id='selected_brand' type="hidden" value="{{product.brand.name}}">
 {%if (data.feedback.fit_points is defined)%}
          {% for fp, fp_specs in data.feedback.fit_points %}             
             <li><b>{{fp_specs.label}}</b>            
