@@ -118,9 +118,10 @@ public function loveItem($request_array){
 #----------------Check the recommended Item -----------------------------------#
 public function chkRecomendedItem($feedback){
     //return $feedback;
+   if($feedback){
     foreach($feedback as $key=>$value){
        foreach($value as $fb){
-           if($fb['recommended']){
+           if(isset($fb['recommended'])){
                return $fb['id'];
            }else{
                if(min($value)){
@@ -129,6 +130,9 @@ public function chkRecomendedItem($feedback){
            }
        }
     }
+   }else{
+       return false;
+   }
 }
 #------------------------------------------------------------------------------#
 // chk recomend itm
@@ -141,6 +145,10 @@ public function getDefaultFittingAlerts($request_array)
               $product=$this->find($request_array['productId']);
               $fit = new AvgAlgorithm($user, $product);
               $product_item_id=$this->chkRecomendedItem($fit->getStrippedFeedBack());
+              //return $product_item_id;
+              if(!$product_item_id){
+                 return (array('Message' => ' Product Can not find'));
+              }
               $productItem = $this->container->get('admin.helper.productitem')->getProductItemById($product_item_id);
               $product_size = $productItem->getProductSize();
               $comp = new AvgAlgorithm($user,$product);
