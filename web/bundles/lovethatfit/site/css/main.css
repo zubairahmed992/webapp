@@ -4099,7 +4099,8 @@ width: 160px;
 #prod_accordion .prod_applied_detail {
     float:left;
     width:240px;
-    clear:both;    
+    clear:both;  
+    min-height:80px;
 }
 
 .select_size{
@@ -4130,6 +4131,11 @@ width: 160px;
 
 #prod_accordion .ui-state-active .prod_row .lft_col .small_thumb {
     padding: 3px 0px 0px 3px;
+}
+
+.prod_row{
+    
+    overflow: hidden!important;
 }
 
 .rec_tip{
@@ -5274,10 +5280,10 @@ transform: rotateX(0deg) rotateY(0deg);
     height: 72px;
     position: absolute;
     text-align: center;
-    width: 100%;
+    width: 57%;
     z-index: 10000;
     top:0;
-    left:0;
+    left:75px;
 }
 
 .action_buts_bar .img_acw_min {
