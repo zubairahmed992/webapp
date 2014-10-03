@@ -259,11 +259,12 @@
             <div class="span3"> Athletic Sizes</div>
             <div>{{ form_widget(colorform.athletic) }}</div>
             </div> 
-
+            {% if(colorform.portley is defined)%}
             <div class="row-fluid show-grid">    
             <div class="span3"> Portley Sizes</div>
             <div>{{ form_widget(colorform.portley) }}</div>
             </div>     
+            {%endif%}
 
                 <div class="row-fluid show-grid">    
             <div class="span3"> Tall Sizes</div>
