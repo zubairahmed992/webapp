@@ -397,7 +397,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     var curr_prod_feedback =$(new_prod_details).find('.fitting_alerts_feeback_'+new_prod_id).html();
                     
                     var curr_prod_item_id = $(new_prod_details).find('#current_item_id').attr("value");
-                    //alert(curr_prod_item_id);
+                    
                     
                     var main_container_hldr;
                     var main_dropable;
@@ -459,6 +459,23 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         cache: false,
                         success: function(curr_prod_alerts){
                            $(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
+
+                           //-------- Quick fix pixcel adjustmanets for some products
+                           px_variance=$(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).find('.pixel_variance').attr('value');
+                           if(curr_prod_type=='top'){
+                                if(px_variance==0){
+                                    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px");
+                                }else{
+                                    $("#top_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value")) + parseInt(px_variance)) + "px");
+                                }
+                           }
+                           if(curr_prod_type=='dress'){
+                               if(px_variance==0){
+                                   $("#full_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px");
+                                   }else{
+                                       $("#full_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value"))+ parseInt(px_variance)) + "px");                                        
+                                       }
+                           }
                            refreshdiv();
                         }
                     });  

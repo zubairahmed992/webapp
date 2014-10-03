@@ -61,9 +61,67 @@ class FittingRoomController extends Controller {
                         'product_item' => $productItem, 
                             'data' => $fb,
                     'product'=>$product,
+                    'pixel_variance'=>  $this->get_pixel_variance($product),
                     ));
        
     }  
+    #--------------------------------------------------------------
+    private function get_pixel_variance($product){
+        $product_pixel = array ('Arch Logo Zip Hoodie'  => 3,
+                        'D624'  => -1,
+                        'D568'  => -3,
+                        '6646'  => -2,
+                        'D586'  => -2,
+                        'Mens PJ Top' => -4,
+                        'Mens Royal Robe' => -4,
+                        'Mens Tee'  => -4,
+                        'Mens Henley'  => -4,
+                        'Old School Button Down'  => -5,
+                        'Old School Button Down'  => -5,
+                        'Vantage Polo Tee'  => -5,
+                        'Vantage Polo Tee'  => -5,
+                        'Heat Gear Polo'  => -5,
+                        'Heat Gear Polo'  => -5,
+                        'Long Sleeve VA Tee'  => -5,
+                        'One HellUVA School Tee'  => -5,
+                        'Chamion Short Sleeve Shirt'  => -5,
+                        'Under Armor Raglan Short Sleeve Shirt'  => -5,
+                        'JanSport Long Sleeve Shirt'  => -5,
+                        'JanSport Short Sleeve Shirt Crew Neck'  => -5,
+                        'JanSport Short Sleeve Shirt Crew Neck'  => -5,
+                        'Velocity Polo'  => -5,
+                        'Vantage Sleeveless Vest'  => -6,
+                        'Colleseum Sleeveless Jacket'  => -6,
+                        'Colleseum Sleeveless Jacket'  => -6,
+                        'JanSport Hoodie'  => -6,
+                        'Champion Hoodie'  => -6,
+                        'Champion Crew Neck Sweathshirt'  => 3,
+                        'Under Armor Zip Pullover'  => -6,                        
+                        'JanSport Pullover Crew Neck'  => -6,
+                        'JanSport Zip Pullover'  => -6,
+                        'Under Armor Hoodie'  => -6,
+                        'Champion Hoodie'  => -7,
+                        'CAMP DAVID HOODIE'  => -3,
+                        'New Agenda Crew-Neck Short Sleeve Shirt'  => -3,
+                        'JanSport Long Sleeve Shirt'  => -3,
+                        'Under Armor Hoodie'  => -3,
+                        'Champion Unisex Hoodie'  => -3,
+                        'JansPort Unisex Hoodie'  => -3,
+                        'Under Armor Unisex Hoodie'  => -3,
+                        'Gear for Sports V-Neck Long Sleeve Shirt'  => -3,
+                        'Under Armor Short Sleeve Shirt'  => -3,
+                        'New Agenda V-Neck Short Sleeve Shirt'  => -3,
+                        'MV Sport Hoodie'  => -3,
+                        'Under Armor Hoodie'  => -3,
+                        );
+            
+            if (array_key_exists($product->getName(), $product_pixel)) {
+                return $product_pixel[$product->getName()];
+            }else{
+                return 0;
+            }         
+    }
+   
 #----------------------------Remove Fitting Room -----------------------------#
     public function removeFittingRoomItemAction($user_id, $item_id){
       $t =  $this->get('site.helper.userfittingroomitem')->deleteByUserItem($user_id,$item_id);    
