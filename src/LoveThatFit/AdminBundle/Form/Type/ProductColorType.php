@@ -25,7 +25,7 @@ class ProductColorType extends AbstractType
         $builder->add('title');
         $builder->add('tempImage','hidden');
         $builder->add('tempPattern','hidden');
-        
+        if(count($this->allSizes)>0){
          foreach( $this->allSizes as $fitType=>$key){
             $builder->add(
             $fitType, 'choice', 
@@ -35,7 +35,7 @@ class ProductColorType extends AbstractType
                     ));
            
            }
-      
+        }
       
          $builder ->add('displayProductColor', 'choice', array(
                     'choices'   => array('1'=>' '),
