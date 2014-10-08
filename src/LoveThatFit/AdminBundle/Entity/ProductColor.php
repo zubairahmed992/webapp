@@ -245,6 +245,7 @@ class ProductColor {
     public $plus;
     public $athletic;
     public $portley;
+    public $big;
     
     
   //---------------------------------------------------------------    

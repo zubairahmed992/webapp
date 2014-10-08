@@ -269,9 +269,6 @@ class ProductController extends Controller {
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
-      //  $sizeTitle=array("Regular"=>array("28A"=>"28A","28B"=>"28B","38B"=>"38B"),"Petite"=>array("28A"=>"28A","28B"=>"28B","38B"=>"38B"));
-
-            
         
         $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $productColor = $this->getProductColor($color_id);
@@ -298,10 +295,12 @@ class ProductController extends Controller {
             $colorform->get('athletic')->setData($sizeTitle['Athletic']);
         }
         if (isset($sizeTitle['Portley'])) {
-            $colorform->get('portley')->setData($sizeTitle['Portley']);
-            
+            $colorform->get('portley')->setData($sizeTitle['Portley']);            
         }
-          
+         if (isset($sizeTitle['Big'])) {
+            $colorform->get('big')->setData($sizeTitle['Big']);
+            
+        }  
         
     //   return new response(json_encode(var_dump($colorform)));
         
@@ -339,7 +338,6 @@ class ProductController extends Controller {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
             }
            
-            
             
             $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData());
             $this->get('session')->setFlash(
