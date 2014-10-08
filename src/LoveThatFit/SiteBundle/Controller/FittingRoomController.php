@@ -95,7 +95,7 @@ class FittingRoomController extends Controller {
                         'Colleseum Sleeveless Jacket'  => -6,
                         'JanSport Hoodie'  => -6,
                         'Champion Hoodie'  => -6,
-                        'Champion Crew Neck Sweathshirt'  => 3,
+                        'Champion Crew Neck Sweathshirt'  => -6,
                         'Under Armor Zip Pullover'  => -6,                        
                         'JanSport Pullover Crew Neck'  => -6,
                         'JanSport Zip Pullover'  => -6,
