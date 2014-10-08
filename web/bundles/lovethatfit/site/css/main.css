@@ -1578,7 +1578,8 @@ input[type=email]{
     float:left;
     z-index: 50;
     width:256px;
-    margin:6px 0 -10px 15px;
+    /*margin:6px 0 -10px 15px;*/
+    margin:6px 0 0px 15px;
 }
 .prod_slider_hldr {
     width:790px;

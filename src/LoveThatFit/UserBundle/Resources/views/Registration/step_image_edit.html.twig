@@ -483,7 +483,7 @@ function createBlob(center, maxRadius, points) {
         var left_arm_pathData = 'M346.574,265.37c0,0,0.352-30.387,2.001-29.255c2.917,2,14.959-0.022,16.753,29.255c0.772,12.6,5.366,39.28,6.252,44.258c4.416,24.838,4.385,54.847,4.75,67.263c0.385,13.05,15.426,23.278-2,35.507c-6.625,4.648-8.105,4.492-4.751-10.503c-0.07-4.794-5.167-12.419-2.001-24.504c0.461-0.212-4.066-9.134-12.729-50.66C352.596,315.927,349.075,263.182,346.574,265.37z';
         var right_arm_pathData = 'M262.56,326.731c-8.662,41.525-13.189,50.447-12.729,50.66c3.167,12.085-1.931,19.71-2.001,24.504c3.354,14.995,1.875,15.151-4.751,10.502c-17.426-12.229-2.385-22.457-2-35.506c0.366-12.417,0.334-42.425,4.751-67.263c0.885-4.979,5.479-31.658,6.251-44.258c1.794-29.278,13.836-27.255,16.753-29.255c1.65-1.131,2.001,29.255,2.001,29.255C268.333,263.182,264.813,315.927,262.56,326.731z';
         
-default_path = new Path($("#user_path").html());
+//default_path = new Path($("#user_path").html());
 
 mid_area_path = new Path(pathData);
 left_arm_path = new Path(left_arm_pathData);
@@ -514,17 +514,17 @@ console.log(p_user_height);
 if(chk_no_img_path == true){
     //alert("in side");
     mid_area_path.scale(1,p_user_height);
-    default_path.scale(1,p_user_height);
+    //default_path.scale(1,p_user_height);
     mid_area_path.position = new Point(181,p_user_height_px/2+17);
     left_arm_path.position = new Point(238,p_user_height_px/2-30);
     right_arm_path.position = new Point(125,p_user_height_px/2-30);
    }
    else{
    
-    default_path.scale(1,p_user_height);
-    default_path.position = new Point(181,p_user_height_px/2+18);
-    //default_path.stroke = false;
-    //default_path.opacity = 0.5;
+   // default_path.scale(1,p_user_height);
+   // default_path.position = new Point(181,p_user_height_px/2+18);
+    ////default_path.stroke = false;
+    ////default_path.opacity = 0.5;
    
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
     left_arm_path.position = new Point(238,p_user_height_px/2-30);
@@ -538,22 +538,22 @@ console.log(mid_area_path.height);
 var path = new CompoundPath({
     children: [
 		trans_bg,
-                default_path,
+                //default_path,
                 mid_area_path
     ],
     fillColor: '#666666',
     selected: true
 	//strokeColor: '#ffcc00'
 });
-var d_path = new CompoundPath({
-    children: [
-                default_path             
-    ],
-    fillColor: '#666666',
-    selected: false,
-    opacity: 0
-	//strokeColor: '#ffcc00'
-});
+//var d_path = new CompoundPath({
+  //  children: [
+    //            default_path             
+    //],
+    //fillColor: '#666666',
+    //selected: false,
+    //opacity: 0
+//	//strokeColor: '#ffcc00'
+//});
 
 
 
