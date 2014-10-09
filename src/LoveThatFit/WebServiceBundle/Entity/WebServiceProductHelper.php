@@ -118,18 +118,16 @@ public function loveItem($request_array){
 #----------------Check the recommended Item -----------------------------------#
 public function chkRecomendedItem($feedback){
     //return $feedback;
-   if($feedback){
-    foreach($feedback as $key=>$value){
-       foreach($value as $fb){
+   if($feedback){       
+       foreach($feedback['feedback'] as $fb){
            if(isset($fb['recommended'])){
                return $fb['id'];
            }else{
-               if(min($value)){
+               if(min($feedback['feedback'])){
                    return $fb['id'];
                }
            }
-       }
-    }
+       }    
    }else{
        return false;
    }
@@ -144,13 +142,18 @@ public function getDefaultFittingAlerts($request_array)
               $user=$this->container->get('user.helper.user')->find($request_array['userId']);
               $product=$this->find($request_array['productId']);
               $fit = new AvgAlgorithm($user, $product);
+                  //return $fit->getStrippedFeedBack();
               $product_item_id=$this->chkRecomendedItem($fit->getStrippedFeedBack());
               //return $product_item_id;
               if(!$product_item_id){
                  return (array('Message' => ' Product Can not find'));
               }
-              $productItem = $this->container->get('admin.helper.productitem')->getProductItemById($product_item_id);
-              $product_size = $productItem->getProductSize();
+              $product_size = $this->container->get('admin.helper.productsizes')->find($product_item_id);
+              $productItem = $product->displayProductColor->getItemBySizeId($product_item_id);
+              
+              #$productItem = $this->container->get('admin.helper.productitem')->getProductItemById($product_item_id);
+              #$product_size = $productItem->getProductSize();
+              
               $comp = new AvgAlgorithm($user,$product);
               $fb=$comp->getSizeFeedBack($product_size);
      $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $fb);    
