@@ -1,40 +1,61 @@
 <script>
 $(document).ready(function(){
+  
  {% autoescape false %} 
-   
-    var json = {{brand.getBrandspecification.gender}};
-   
- s="";
+   var json = {{brand.getBrandspecification.gender}};
+    s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
+
 document.getElementById("brand_gender").innerHTML=s; 
    {% endautoescape %} 
        
  {% autoescape false %} 
-    var json = {{brand.getBrandspecification.fitType}};
+    var json = {{brand.getBrandspecification.femaleFitType}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
-document.getElementById("brand_fitType").innerHTML=s; 
+
+document.getElementById("brand_femalefitType").innerHTML=s; 
    {% endautoescape %}  
        
-   {% autoescape false %} 
-    var json = {{brand.getBrandspecification.sizeTitleType}};
+ 
+{% autoescape false %} 
+    var json = {{brand.getBrandspecification.maleFitType}};
  s="";
 
  for(var key in json) {
  s+= ''+json[key]+',';
 }
-document.getElementById("brand_size_title_type").innerHTML=s; 
+
+document.getElementById("brand_malefitType").innerHTML=s; 
+   {% endautoescape %}  
+ 
+  {% autoescape false %} 
+    var json = {{brand.getBrandspecification.femaleSizeTitleType}};
+ s="";
+
+ for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_female_size_title_type").innerHTML=s; 
    {% endautoescape %}  
    
-    
-    {% autoescape false %} 
-    var json = {{brand.getBrandspecification.maleChest}};
+  
+{% autoescape false %} 
+ var json = {{brand.getBrandspecification.maleSizeTitleType}};
+ s="";
+for(var key in json) {
+ s+= ''+json[key]+',';
+}
+document.getElementById("brand_male_size_title_type").innerHTML=s; 
+{% endautoescape %}  
+{% autoescape false %} 
+ var json = {{brand.getBrandspecification.maleChest}};
  s="";
 
  for(var key in json) {
@@ -143,23 +164,42 @@ document.getElementById("brand_female_bra").innerHTML=s;
     </div>
           {%endif%}    
            <div style="clear:both;"></div>  
-       {%if brand.getBrandspecification.fitType%}   
+       {%if brand.getBrandspecification.femaleFitType%}   
       <div>
      <div style="float:left">
-     <strong>Fit Type:</strong>
-     <span style="padding-left: 20px" id="brand_fitType"></span>            
+     <strong>Female Fit Type:</strong>
+     <span style="padding-left: 20px" id="brand_femalefitType"></span>            
+     </div>   
+    </div> 
+            {%endif%}    
+           
+           <div style="clear:both;"></div>  
+       {%if brand.getBrandspecification.MaleFitType%}   
+      <div>
+     <div style="float:left">
+     <strong>Male Fit Type:</strong>
+     <span style="padding-left: 20px" id="brand_malefitType"></span>            
      </div>   
     </div> 
             {%endif%}    
             <div style="clear:both;"></div> 
-            {%if brand.getBrandspecification.sizeTitleType%} 
+            {%if brand.getBrandspecification.femaleSizeTitleType%} 
     <div>
      <div style="float:left">
-     <strong>Size Title Type:</strong>
-     <span style="padding-left: 20px" id="brand_size_title_type"></span>            
+     <strong>Female Size Title Type:</strong>
+     <span style="padding-left: 20px" id="brand_female_size_title_type"></span>            
      </div>   
     </div> 
-          {%endif%}    
+          {%endif%}   
+            <div style="clear:both;"></div> 
+            {%if brand.getBrandspecification.maleSizeTitleType%} 
+    <div>
+     <div style="float:left">
+     <strong>Male Size Title Type:</strong>
+     <span style="padding-left: 20px" id="brand_male_size_title_type"></span>            
+     </div>   
+    </div> 
+          {%endif%}   
              <div style="clear:both;"></div>
              {%if brand.getBrandspecification.maleChest%} 
    <div>

@@ -24,16 +24,22 @@ class BrandSpecificationType extends AbstractType {
                     ,'expanded' => true,
                     'multiple' => true,'required'  => true,));
         
-        $builder->add('fit_type', 'choice', array('choices'=> $this->fit_type,'expanded' => true,
+        $builder->add('female_fit_type', 'choice', array('choices'=> $this->fit_type['female'],'expanded' => true,
                     'multiple' => true,'required'  => true,));
        
-        //$builder->add('size_title_type', 'choice', array('choices'=> array('letters'=>'Letters','numbers'=>'Numbers','Waist'=>'Waist'),'expanded' => true,
+        $builder->add('male_fit_type', 'choice', array('choices'=> $this->fit_type['male'],'expanded' => true,
+                    'multiple' => true,'required'  => true,));
+       
+//$builder->add('size_title_type', 'choice', array('choices'=> array('letters'=>'Letters','numbers'=>'Numbers','Waist'=>'Waist'),'expanded' => true,
                  //  'multiple' => true,'required'  => true,));
         
-     $builder->add('size_title_type', 'choice', array('choices'=>$this->size_title_type,'expanded' => true,
+     $builder->add('female_size_title_type', 'choice', array('choices'=>$this->size_title_type['female'],'expanded' => true,
                  'multiple' => true,'required'  => true,));
         
-        $builder->add('male_chest', 'choice', array('choices'=> $this->allSizes['man_chest_sizes'],'expanded' => true,
+     $builder->add('male_size_title_type', 'choice', array('choices'=>$this->size_title_type['male'],'expanded' => true,
+                 'multiple' => true,'required'  => true,));
+     
+     $builder->add('male_chest', 'choice', array('choices'=> $this->allSizes['man_chest_sizes'],'expanded' => true,
                     'multiple' => true,'required'  => true,));
         
         $builder->add(

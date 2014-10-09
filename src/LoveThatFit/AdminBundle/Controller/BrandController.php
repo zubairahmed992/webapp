@@ -40,6 +40,7 @@ class BrandController extends Controller {
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
+        //return new response(json_encode($entity->getBrandSpecification()->getMaleFitType()));
         return $this->render('LoveThatFitAdminBundle:Brand:show.html.twig', array(
                     'brand' => $entity,
                     'page_number' => $page_number,
@@ -93,6 +94,7 @@ class BrandController extends Controller {
      
     //return new response(json_encode($allSizes));
      $specs = $this->get('admin.helper.brand')->findWithSpecs($id);
+     //return new response(json_encode($specs));
      $entity = $specs['entity'];       
      $brandspecification=new BrandSpecification();
      $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')),$brandspecification);
@@ -121,6 +123,7 @@ public function createBrandSpecificationAction($id,Request $request)
 public function showBrandSpecificationAction($id)
 {
      $entity = $this->get('admin.helper.brand')->find($id);        
+     return new response($entity->getBrandspecification());
      return $this->render('LoveThatFitAdminBundle:Brand:show_brand_specification.html.twig', array(
                     'brand' => $entity,                    
         ));
@@ -150,8 +153,10 @@ public function showBrandSpecificationAction($id)
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
      $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
       $gender=json_encode(json_decode($brandspecification->getGender()));
-     $fit_type=json_encode(json_decode($brandspecification->getFitType()));
-     $size_title_type=json_encode(json_decode($brandspecification->getSizeTitleType()));
+     $female_fit_type=json_encode(json_decode($brandspecification->getFemaleFitType()));
+     $male_fit_type=json_encode(json_decode($brandspecification->getMaleFitType()));
+     $female_size_title_type=json_encode(json_decode($brandspecification->getFemaleSizeTitleType()));
+     $male_size_title_type=json_encode(json_decode($brandspecification->getMaleSizeTitleType()));
      $male_chest=json_encode(json_decode($brandspecification->getMaleChest()));
      $male_shirt=json_encode(json_decode($brandspecification->getMaleShirt()));
      $male_letter=json_encode(json_decode($brandspecification->getMaleLetter()));
@@ -169,12 +174,18 @@ public function showBrandSpecificationAction($id)
      if (isset($gender)) {
             $form->get('gender')->setData(json_decode($gender));
         } 
-     if (isset($fit_type)) {
-            $form->get('fit_type')->setData(json_decode($fit_type));
+     if (isset($female_fit_type)) {
+            $form->get('female_fit_type')->setData(json_decode($female_fit_type));
         }
-     if (isset($size_title_type)) {
-            $form->get('size_title_type')->setData(json_decode($size_title_type));
+    if (isset($male_fit_type)) {
+            $form->get('male_fit_type')->setData(json_decode($male_fit_type));
+        }    
+     if (isset($female_size_title_type)) {
+            $form->get('female_size_title_type')->setData(json_decode($female_size_title_type));
         }
+     if (isset($male_size_title_type)) {
+            $form->get('male_size_title_type')->setData(json_decode($male_size_title_type));
+        }   
      if (isset($male_chest)) {
             $form->get('male_chest')->setData(json_decode($male_chest));
         }
