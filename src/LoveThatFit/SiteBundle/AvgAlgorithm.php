@@ -785,9 +785,13 @@ class AvgAlgorithm {
                 }
             }
             if (array_key_exists('fit_points', $sizes[$key])) {
-                $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]['fit_points']);
-                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]['fit_points']);
+                $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
+                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]);
             }
+            if (array_key_exists('hem_advice', $sizes[$key])) {
+                unset($sizes[$key]['hem_advice']);
+            }
+            
             unset($sizes[$key]['fit_points']);
         }
 
@@ -796,22 +800,42 @@ class AvgAlgorithm {
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private function strip_fit_point_alerts($fit_points) {
+    private function strip_fit_point_alerts($size) {
         $arr = array();        
-        foreach ($fit_points as $key => $value) {     
+        foreach ($size['fit_points'] as $key => $value) {     
             $arr[$key]=$value['message'];            
+        }
+        
+        $hem_advice=$this->strip_size_hem_advice($size);
+        if ($hem_advice!=null){            
+               $arr["hem"]=$hem_advice;            
         }
         return $arr;
     }
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private function strip_fit_point_summary($fit_points) {
+    private function strip_fit_point_summary($size) {
         $str = '';
-        foreach ($fit_points as $key => $value) {
+        foreach ($size['fit_points'] as $key => $value) {
             $str.=$this->snakeToNormal($key) . ':' . $value['message'] . ', ';
+        }
+        
+        $hem_advice=$this->strip_size_hem_advice($size);
+        if ($hem_advice!=null){
+            $str.="Hem:".$hem_advice;
+        }else{
+            $str=trim($str, ", ");
         }
         return trim($str, ", ");
     }
-   
+    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+   private function strip_size_hem_advice($size) {
+        if (array_key_exists('hem_advice', $size) && array_key_exists('message', $size['hem_advice'])){
+            return $size['hem_advice']['message'];
+        }
+        return null;
+    }
 
 }
