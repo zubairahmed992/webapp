@@ -43,12 +43,34 @@ class BrandSpecification {
      */
     private $fit_type;
 
+        /**    
+     * @var string $male_fit_type
+     * @ORM\Column(type="string", length=1000 , nullable=true)
+     */
+    protected $male_fit_type;
+        /**    
+     * @var string $female_fit_type
+     * @ORM\Column(type="string", length=1000 , nullable=true)
+     */
+    protected $female_fit_type;
     /**     
      * @var string $size_title_type
      *  @ORM\Column(type="string", length=1000, nullable=true)
      */
     protected $size_title_type;
 
+        /**     
+     * @var string $male_size_title_type
+     *  @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    protected $male_size_title_type;
+    
+    
+        /**     
+     * @var string $female_size_title_type
+     *  @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    protected $female_size_title_type;
     /**
      * @var string $male_numbers
      * @ORM\Column(type="string", length=1000, nullable=true)
@@ -428,5 +450,97 @@ class BrandSpecification {
     public function getFemaleBra()
     {
         return $this->female_bra;
+    }
+
+    /**
+     * Set male_fit_type
+     *
+     * @param string $maleFitType
+     * @return BrandSpecification
+     */
+    public function setMaleFitType($maleFitType)
+    {
+        $this->male_fit_type = $maleFitType;
+    
+        return $this;
+    }
+
+    /**
+     * Get male_fit_type
+     *
+     * @return string 
+     */
+    public function getMaleFitType()
+    {
+        return $this->male_fit_type;
+    }
+
+    /**
+     * Set female_fit_type
+     *
+     * @param string $femaleFitType
+     * @return BrandSpecification
+     */
+    public function setFemaleFitType($femaleFitType)
+    {
+        $this->female_fit_type = $femaleFitType;
+    
+        return $this;
+    }
+
+    /**
+     * Get female_fit_type
+     *
+     * @return string 
+     */
+    public function getFemaleFitType()
+    {
+        return $this->female_fit_type;
+    }
+
+    /**
+     * Set male_size_title_type
+     *
+     * @param string $maleSizeTitleType
+     * @return BrandSpecification
+     */
+    public function setMaleSizeTitleType($maleSizeTitleType)
+    {
+        $this->male_size_title_type = $maleSizeTitleType;
+    
+        return $this;
+    }
+
+    /**
+     * Get male_size_title_type
+     *
+     * @return string 
+     */
+    public function getMaleSizeTitleType()
+    {
+        return $this->male_size_title_type;
+    }
+
+    /**
+     * Set female_size_title_type
+     *
+     * @param string $femaleSizeTitleType
+     * @return BrandSpecification
+     */
+    public function setFemaleSizeTitleType($femaleSizeTitleType)
+    {
+        $this->female_size_title_type = $femaleSizeTitleType;
+    
+        return $this;
+    }
+
+    /**
+     * Get female_size_title_type
+     *
+     * @return string 
+     */
+    public function getFemaleSizeTitleType()
+    {
+        return $this->female_size_title_type;
     }
 }
