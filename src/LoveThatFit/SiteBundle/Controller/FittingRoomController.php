@@ -67,7 +67,7 @@ class FittingRoomController extends Controller {
     }  
     #--------------------------------------------------------------
     private function get_pixel_variance($product){
-        $product_pixel = array ('Arch Logo Zip Hoodie'  => 3,
+        $product_pixel = array ('Arch Logo Zip Hoodie'  => 1,
                         'D624'  => -1,
                         'D568'  => -3,
                         '6646'  => -2,
@@ -101,18 +101,25 @@ class FittingRoomController extends Controller {
                         'JanSport Zip Pullover'  => -8,
                         'Under Armor Hoodie'  => -6,
                         'Champion Hoodie'  => -7,
-                        'CAMP DAVID HOODIE'  => -3,
+                        'CAMP DAVID HOODIE'  => -7,
                         'New Agenda Crew-Neck Short Sleeve Shirt'  => -3,
-                        'JanSport Long Sleeve Shirt'  => -1,
-                        'Under Armor Hoodie'  => -6,
+                        'JanSport Long Sleeve Shirt'  => -6,                      
                         'Champion Unisex Hoodie'  => -3,
                         'JansPort Unisex Hoodie'  => -3,
                         'Under Armor Unisex Hoodie'  => -3,
-                        'Gear for Sports V-Neck Long Sleeve Shirt'  => -3,
+                        'Gear for Sports V-Neck Long Sleeve Shirt'  => -2,
                         'Under Armor Short Sleeve Shirt'  => -3,
                         'New Agenda V-Neck Short Sleeve Shirt'  => -3,
-                        'MV Sport Hoodie'  => -3,
-                        'Under Armor Hoodie'  => -3,
+                        'MV Sport Hoodie'  => -3,                       
+                        'Black Leather Dress'  => -3,
+                        'Lux Light Cardigan'  => -2,
+                        'Ladies Robe'  => -3,
+                        'Ladies Henley'  => -2,
+                        'Ladies Tunic'  => -5,
+                        'Ladies Tee'  => -2,
+                        'Ladies Royal Robe'  => -3,
+                        'Sleeveless Sweater'  => -6,
+                       
                         );
             
             if (array_key_exists($product->getName(), $product_pixel)) {
