@@ -787,9 +787,12 @@ class AvgAlgorithm {
             if (array_key_exists('fit_points', $sizes[$key])) {
                 $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
                 $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]);
+            }else{
+                $sizes[$key]['fitting_alerts'] = null;
+                $sizes[$key]['summary'] = null;
             }
             if (array_key_exists('hem_advice', $sizes[$key])) {
-                unset($sizes[$key]['hem_advice']);
+                unset($sizes[$key]['hem_advice']);                
             }
             
             unset($sizes[$key]['fit_points']);
