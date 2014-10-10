@@ -12,13 +12,14 @@ private $top_brands;
 private $bottom_brands;
 private $body_types;
 private $container;
+private $body_shape;
 private $neck;
 private $sleeve;
 private $waist;
 private $inseam;
 private $brandHelper;
 private $timespent;
-     public function __construct($container,$neck,$sleeve,$waist,$inseam,$body_types,$brandHelper)             
+     public function __construct($container,$neck,$sleeve,$waist,$inseam,$body_shape,$body_types,$brandHelper)             
     {
         $this->container= $container;
         $this->body_types=$body_types;
@@ -29,6 +30,7 @@ private $timespent;
         $this->brandHelper=$brandHelper;
         $this->top_brands=$this->brandHelper->getTopBrandForMaleBaseOnSizeChart();
         $this->bottom_brands=$this->brandHelper->getBottomBrandForMaleBaseOnSizeChart();
+        $this->body_shape=$body_shape; 
        
         
         
@@ -36,6 +38,7 @@ private $timespent;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('body_shape', 'choice', array('choices' => $this->body_shape, 'required' => false,'empty_value' => 'Body Shape',));      
         $builder->add('timespent', 'hidden');
         $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => false,'data'=>'Regular'));
         $builder->add('top_brand', 'entity', array(

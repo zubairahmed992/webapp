@@ -75,6 +75,23 @@ class UtilityHelper {
      }  
      return;
  }
+ 
+ 
+ 
+ 
+ #---------------Body Type----------------------------#
+ public function getBodyShapes($gender=null)
+ {
+     if ($gender==null || $gender=='women'){
+            return $this->conf["constants"]["body_shape"]["women"];
+     }  else if ($gender=='men'){
+            return $this->conf["constants"]["body_shape"]["men"];
+     }  
+     return;
+ }
+ 
+ 
+ 
   #---------------Body Type----------------------------#
  
  
@@ -158,7 +175,7 @@ public function setSizeTitles($sizes)
 #-----------------Reading Body Shape ------------------------------------------#
 public function getBodyShape(){
     
-     return $this->conf["constants"]["body_shape"];
+     return $this->conf["constants"]["body_shape"]['women'];
 }
 #--------------Reading Bra Sizes--------------------------------------#
 public function getBraSize(){

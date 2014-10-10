@@ -229,7 +229,7 @@ jQuery('form#RegistrationMeasurement').find('select').each(function(){
                     
 
 
-{% if( entity.gender=='f') %}
+
                         <!-- START CODE FOR BODY SHAPE AND BRA SIZE --->    
                         <div class="m_option" style="display: table;">   
                             <div class="body_shape" id="body_shape">
@@ -238,16 +238,17 @@ jQuery('form#RegistrationMeasurement').find('select').each(function(){
                                     <label style="display:block; float: none; width: auto;">Body Shape</label>
                                     {{ form_widget(form.body_shape) }}
                                 </div>
+{% if( entity.gender=='f') %}
                                 <div style="float: left;">                   
                                     <label style="display:block; float: none; width: auto;">Bra Size</label>
                                     {{ form_widget(form.bra_numbers) }}
                                     {{ form_widget(form.bra_letters) }}                            
                                 </div>
-
+   {%endif%} 
                             </div>
                         </div>
             
-               {%endif%}    
+               
                         <!-- END  CODE FOR BODY SHAPE AND BRA SIZE --->    
                         <div class="sep"></div>
 

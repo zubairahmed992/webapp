@@ -2050,6 +2050,12 @@ constants:
       hourglass: hourglass
       pear: pear
       triangle: triangle
+    men:
+      regular: regular
+      athletic: athletic
+      slim: slim
+      big: big   
+     
       
   fit_type:     
    male:
