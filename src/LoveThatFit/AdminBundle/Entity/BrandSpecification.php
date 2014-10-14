@@ -543,4 +543,53 @@ class BrandSpecification {
     {
         return $this->female_size_title_type;
     }
+    #------------------------------------------------------
+    
+   public function getArray() {
+        return array(
+            'id' => $this->id,
+            'gender' => $this->gender,
+            'male_fit_type' => $this->male_fit_type,
+            'female_fit_type' => $this->female_fit_type,            
+            'male_size_title_type' => $this->male_size_title_type,
+            'female_size_title_type' => $this->female_size_title_type,
+            'male_chest' => $this->male_chest,
+            'male_shirt' => $this->male_shirt,
+            'male_letter' => $this->male_letter,
+            'male_waist' => $this->male_waist,
+            'male_neck' => $this->male_neck,
+            'female_number' => $this->female_number,
+            'female_letter' => $this->female_letter,
+            'female_waist' => $this->female_waist,
+            'female_bra' => $this->female_bra,
+        );
+    }
+    #------------------------------------------------------
+    public function getSpecsArray() {
+        return array(            
+            'genders' => $this->gender,
+            'fit_types' => array(
+                'male' => $this->male_fit_type,
+                'female' => $this->female_fit_type,            
+                ),        
+            'size_title_types' => array(
+                'male' => $this->male_size_title_type,            
+                'female' => $this->female_size_title_type,
+                ),
+            'sizes' => array(
+                'male' => array(
+                    'chest' => $this->male_chest,
+                    'shirt' => $this->male_shirt,
+                    'letter' => $this->male_letter,
+                    'waist' => $this->male_waist,
+                    'neck' => $this->male_neck,
+                    ),
+                'female' => array(
+                    'number' => $this->female_number,
+                    'letter' => $this->female_letter,
+                    'waist' => $this->female_waist,
+                    'bra' => $this->female_bra,
+            )),
+        );
+    }
 }
