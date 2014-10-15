@@ -198,16 +198,16 @@ class UserMarkerHelper {
                 $mask_type = $mask_type_array['mask_type']['woman'];
             }
         }
-         $bodyTypes = $this->getBodyTypeTitle($mask_type);
+         $bodyShapes = $this->getBodyShapeTitle($mask_type);
 
-        if (in_array($user->getMeasurement()->getBodyTypes(), $bodyTypes)) {
-            return $mask_type[$user->getMeasurement()->getBodyTypes()];
+        if (in_array($user->getMeasurement()->getBodyShape(),$bodyShapes)) {
+            return $mask_type[$user->getMeasurement()->getBodyShape()];
         } else {
             return $mask_type['regular'];
         }
     }
  #------------------------------------------------------------------------------# 
-  public function getBodyTypeTitle($mask_type) {
+  public function getBodyShapeTitle($mask_type) {
         foreach ($mask_type as $key => $value) {
             $mask[] = $key;
         }
