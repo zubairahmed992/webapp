@@ -1034,13 +1034,13 @@ public function productDetailColorAdd($entity){
            }
            if ($size_type==null){
                     if($gender=='m'){
-                        foreach($fitType['male'] as $maleFitType)
+                        foreach($fitType['man'] as $maleFitType)
                         {
                          $data[$maleFitType] = $array;
                         }    
                         
                     }else{
-                  foreach($fitType['female'] as $femaleFitType)
+                  foreach($fitType['woman'] as $femaleFitType)
                         {
                          $data[$femaleFitType] = $array;
                         } 
