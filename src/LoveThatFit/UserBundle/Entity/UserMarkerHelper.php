@@ -191,9 +191,12 @@ class UserMarkerHelper {
   public function getDefaultValuesBaseOnBodyType($user){
       $mask_type_array=$this->getMaskedMarkerSpecs();
       if ($user->getGender() == "f") {
-           $mask_type = $mask_type_array['mask_type']['female'];
+           $mask_type = $mask_type_array['mask_type']['woman'];
         } else {
-            $mask_type =$mask_type_array['mask_type']['male'];
+            $mask_type =$mask_type_array['mask_type']['man'];
+            if(!$mask_type){
+                $mask_type = $mask_type_array['mask_type']['woman'];
+            }
         }
          $bodyTypes = $this->getBodyTypeTitle($mask_type);
 
