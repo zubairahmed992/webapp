@@ -108,20 +108,20 @@ public function getAllFitType(){
      return ($this->constant['fit_type']);
 }
 public function getManFitType(){
-     return ($this->constant['fit_type']['man']);
+     return ($this->constant['fit_type']['male']);
 }
 public function getWomanFitType(){
-     return ($this->constant['fit_type']['woman']);
+     return ($this->constant['fit_type']['female']);
 }
 #----------------Get body shape --------------------------------------------------#
 public function getAllBodyShape(){
      return ($this->constant['body_shape']);
 }
 public function getManBodyShape(){
-     return ($this->constant['body_shape']['man']);
+     return ($this->constant['body_shape']['men']);
 }
 public function getWomanBodyShape(){
-     return ($this->constant['body_shape']['woman']);
+     return ($this->constant['body_shape']['women']);
 }
 #---------------------------Sorting Of Array----------------------------------#
 public function getArray($arr){

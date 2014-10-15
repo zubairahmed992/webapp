@@ -341,6 +341,15 @@ public function getBrandRetailerList($date_fromat){
        
         
    } 
-   
+#----------------------------------------------------
+     public function getBrandSpecificationArray($id){
+         $brand=$this->find($id);
+         $bSpecs = $brand->getBrandSpecification();
+         if ($bSpecs!=null){
+            return $bSpecs->getSpecsArray();
+         }else{
+             return $this->container->get('admin.helper.size')->getDefaultArray();
+         }
+   }
     
 }
