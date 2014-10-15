@@ -7,7 +7,7 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
   size_titles:
-    women:
+    woman:
       letter:
         XXS:
           title: XXS
@@ -2031,26 +2031,26 @@ constants:
          38: 38
          39: 39 
   size_title_type:
-    male:
+    man:
       chest: chest
       shirt: shirt
       letter: letter
       waist: waist
       neck: neck
-    female:
+    woman:
       number: number
       letter: letter
       waist: waist
       bra: bra
   
   body_shape:
-    women:
+    woman:
       apple: apple
       banana: banana
       hourglass: hourglass
       pear: pear
       triangle: triangle
-    men:
+    man:
       regular: regular
       athletic: athletic
       slim: slim
@@ -2058,12 +2058,12 @@ constants:
      
       
   fit_type:     
-   male:
+   man:
      regular: regular
      athletic: athletic
      big: big
      tall: tall
-   female:
+   woman:
      regular: regular
      petite: petite
      tall: tall

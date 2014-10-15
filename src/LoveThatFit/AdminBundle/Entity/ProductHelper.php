@@ -829,28 +829,28 @@ public function productDetailColorAdd($entity){
     
        if(strtolower($entity->getSizeTitleType())=='letter' and strtolower($entity->getGender())=='f')
        {
-           foreach($fitType['female'] as $femaleFitType){
+           foreach($fitType['woman'] as $femaleFitType){
             $sizes[$femaleFitType] = $sizes_letter_woman;
            }  
           return $sizes;
        }       
        if($entity->getSizeTitleType()=='number' and strtolower($entity->getGender()=='f'))
        {
-           foreach($fitType['female'] as $femaleFitType){
+           foreach($fitType['woman'] as $femaleFitType){
             $sizes[$femaleFitType] = $sizes_number_woman;
            }  
           return $sizes;
        }
        if($entity->getSizeTitleType()=='waist' and strtolower($entity->getGender()=='f'))
        {
-           foreach($fitType['female'] as $femaleFitType){
+           foreach($fitType['woman'] as $femaleFitType){
             $sizes[$femaleFitType] = $sizes_waist_woman;
            }  
           return $sizes;
        }
        if($entity->getSizeTitleType()=='bra' and strtolower($entity->getGender()=='f'))
        {
-           foreach($fitType['female'] as $femaleFitType){
+           foreach($fitType['woman'] as $femaleFitType){
             $sizes[$femaleFitType] = $sizes_bra_woman;
            }  
           return $sizes;
@@ -858,7 +858,7 @@ public function productDetailColorAdd($entity){
        if(strtolower($entity->getSizeTitleType())=='letter'  and strtolower($entity->getGender())=='m')
        {
            
-           foreach($fitType['male'] as $maleFitType){
+           foreach($fitType['man'] as $maleFitType){
             $sizes[$maleFitType] = $sizes_letter_man;
            }  
           return $sizes;
@@ -867,28 +867,28 @@ public function productDetailColorAdd($entity){
        
        if($entity->getSizeTitleType()=='chest' and (strtolower($entity->getGender())=='m' ))
        {
-          foreach($fitType['male'] as $maleFitType){
+          foreach($fitType['man'] as $maleFitType){
             $sizes[$maleFitType] = $sizes_chest_man;
            }  
           return $sizes;
        }
        if($entity->getSizeTitleType()=='shirt' and (strtolower($entity->getGender())=='m'  ))
        {
-            foreach($fitType['male'] as $maleFitType){
+            foreach($fitType['man'] as $maleFitType){
             $sizes[$maleFitType] = $sizes_shirt_man;
            }  
           return $sizes;
        } 
         if((strtolower($entity->getSizeTitleType())=='waist' )and (strtolower($entity->getGender())=='m' ))
        {
-           foreach($fitType['male'] as $maleFitType){
+           foreach($fitType['man'] as $maleFitType){
             $sizes[$maleFitType] = $sizes_waist_man;
            }  
           return $sizes;
        } 
      if((strtolower($entity->getSizeTitleType())=='neck' )and (strtolower($entity->getGender())=='m' ))
        {
-           foreach($fitType['male'] as $maleFitType){
+           foreach($fitType['man'] as $maleFitType){
             $sizes[$maleFitType] = $sizes_neck_man;
            }  
           return $sizes;

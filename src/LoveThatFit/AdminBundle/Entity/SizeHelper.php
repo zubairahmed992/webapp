@@ -61,20 +61,20 @@ public function getAllSizes(){
 
 #---------------------- Get Woman Letter Sizes---------------------------------#
   public function getWomanLetterSizes(){
-        return $this->getArray($this->constant['size_titles']['women']['letter']);
+        return $this->getArray($this->constant['size_titles']['woman']['letter']);
 }
 #-----------------------Get Woman Number Sizes----------------------------------#
 public function getWomanNumberSizes(){
-     return $this->getArray($this->constant['size_titles']['women']['number']);
+     return $this->getArray($this->constant['size_titles']['woman']['number']);
     
 }
 #------------------------Get Woman Waist Sizes---------------------------------#
 public function getWomanWaistSizes(){
-     return $this->getArray($this->constant['size_titles']['women']['waist']);
+     return $this->getArray($this->constant['size_titles']['woman']['waist']);
 }
 #-----------------------Get Woman Bra Size ------------------------------------#
 public function getWomanBraSizes(){
-     return $this->getArray($this->constant['size_titles']['women']['bra']);
+     return $this->getArray($this->constant['size_titles']['woman']['bra']);
 }
 #------------------------Getting All Male Sizes--------------------------------#
 #---------------------- Get Man Letter Sizes---------------------------------#
@@ -108,20 +108,20 @@ public function getAllFitType(){
      return ($this->constant['fit_type']);
 }
 public function getManFitType(){
-     return ($this->constant['fit_type']['male']);
+     return ($this->constant['fit_type']['man']);
 }
 public function getWomanFitType(){
-     return ($this->constant['fit_type']['female']);
+     return ($this->constant['fit_type']['woman']);
 }
 #----------------Get body shape --------------------------------------------------#
 public function getAllBodyShape(){
      return ($this->constant['body_shape']);
 }
 public function getManBodyShape(){
-     return ($this->constant['body_shape']['men']);
+     return ($this->constant['body_shape']['man']);
 }
 public function getWomanBodyShape(){
-     return ($this->constant['body_shape']['women']);
+     return ($this->constant['body_shape']['woman']);
 }
 #---------------------------Sorting Of Array----------------------------------#
 public function getArray($arr){
