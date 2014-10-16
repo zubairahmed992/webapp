@@ -592,4 +592,70 @@ class BrandSpecification {
             )),
         );
     }
+    
+    #------------------------------------------------------
+    public function getSizeArray($gender, $type) {        
+        $fit_type=  $this->get_fit_type_array($gender);
+        $size_array=  $this->get_size_array($gender, $type);
+        $body_type_sizes=array();
+        if (count($fit_type)>0){
+            foreach ($fit_type as $ft => $v) {
+                $body_type_sizes[$v]=$size_array;        
+            }  
+        }
+        return $body_type_sizes;
+    }
+    #----------------------------------------------
+    private function get_fit_type_array($gender){
+        if ($gender=='m') return  json_decode ($this->male_fit_type);
+        if ($gender=='f') return json_decode ($this->female_fit_type);
+        return null;
+    }
+    #----------------------------------------------
+    private function get_size_array($gender, $type){
+        switch ($gender){
+            case 'm':
+                switch ($type){
+                    case 'chest':          
+                        return json_decode ($this->male_chest);
+                        break;
+                    case 'shirt':         
+                        return json_decode ($this->male_shirt);
+                        break;
+                    case 'letter':        
+                        return json_decode ($this->male_letter);
+                        break;
+                    case 'waist':          
+                        return json_decode ($this->male_waist);
+                        break;
+                    case 'neck':          
+                        return json_decode ($this->male_neck);
+                        break;
+                    default :                
+                        break;
+                }
+                break;
+            case 'f':
+                switch ($type){
+                    case 'number':       
+                        return json_decode ($this->female_number);
+                        break;
+                    case 'letter':                
+                        return json_decode ($this->female_letter);
+                        break;
+                    case 'waist':            
+                        json_decode ($this->female_waist);
+                        break;
+                    case 'bra':             
+                        return json_decode ($this->female_bra);
+                        break;
+                    default :                
+                        break;                    
+                }
+                break;
+            default:
+                break;
+        }
+        return null;
+    }
 }
