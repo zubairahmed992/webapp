@@ -203,7 +203,12 @@ class UserMarkerHelper {
         if (in_array($user->getMeasurement()->getBodyShape(),$bodyShapes)) {
             return $mask_type[$user->getMeasurement()->getBodyShape()];
         } else {
-            return $mask_type['regular'];
+            if ($user->getGender() == "f") {
+                return $mask_type['apple'];
+            }else{
+                return $mask_type['regular'];
+            }
+            
         }
     }
  #------------------------------------------------------------------------------# 
