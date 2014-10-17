@@ -133,4 +133,69 @@ public function getArray($arr){
     return $new_arr;
     
 }
+ #------------------------------------------------------
+    public function getSizeArray($gender, $type) {        
+        $fit_type=  $this->get_fit_type_array($gender);
+        $size_array=  $this->get_size_array($gender, $type);
+        $body_type_sizes=array();
+        if (count($fit_type)>0){
+            foreach ($fit_type as $ft => $v) {
+                $body_type_sizes[$v]=$size_array;        
+            }  
+        }
+        return $body_type_sizes;
+    }
+    #----------------------------------------------
+    private function get_fit_type_array($gender){
+        if ($gender=='m') return  $this->getManFitType();
+        if ($gender=='f') return $this->getWomanFitType();
+        return null;
+    }
+    #----------------------------------------------
+    private function get_size_array($gender, $type){
+        switch ($gender){
+            case 'm':
+                switch ($type){
+                    case 'chest':          
+                        return $this->getManChestSizes();
+                        break;
+                    case 'shirt':         
+                        return $this->getManShirtSizes();
+                        break;
+                    case 'letter':        
+                        return $this->getManLetterSizes();
+                        break;
+                    case 'waist':          
+                        return $this->getManWaistSizes();
+                        break;
+                    case 'neck':          
+                        return $this->getManNeckSizes();
+                        break;
+                    default :                
+                        break;
+                }
+                break;
+            case 'f':
+                switch ($type){
+                    case 'number':       
+                        return $this->getWomanNumberSizes();
+                        break;
+                    case 'letter':                
+                        return $this->getWomanLetterSizes();
+                        break;
+                    case 'waist':            
+                        $this->getWomanWaistSizes();
+                        break;
+                    case 'bra':             
+                        return $this->getWomanBraSizes();
+                        break;
+                    default :                
+                        break;                    
+                }
+                break;
+            default:
+                break;
+        }
+        return null;
+    }
 }
