@@ -5381,3 +5381,9 @@ transform: rotateX(0deg) rotateY(0deg);
 #segments_details{
     font-size:12px;
 }
+
+#measurement_dress_size{
+    
+    width:126px!important;
+}
+
