@@ -2060,8 +2060,6 @@ constants:
   fit_type:     
    man:
      regular: regular
-     athletic: athletic
-     big: big
      tall: tall
    woman:
      regular: regular
