@@ -3,7 +3,7 @@
        <img src="{{asset(app.user.AvatarWebPath)}}">
       {% else %}
       {% if( app.user.gender=='m') %}
-       <div align="center"><a href="{{path('user_profile_settings')}}">Upload Avatar Image</a></div>
+       <div align="center" style="font-size: 0.9em; margin-bottom: 10px; text-align: center;"><a href="{{path('user_profile_settings')}}">Upload Avatar Image</a></div>
        <img src="{{asset("bundles/lovethatfit/site/images/man_icon.jpg")}}" >
        {% else %}
      <div align="center"><a href="{{path('user_profile_settings')}}">Upload Avatar Image</a></div>
