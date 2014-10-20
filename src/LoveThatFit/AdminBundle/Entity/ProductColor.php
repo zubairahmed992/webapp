@@ -33,7 +33,8 @@ class ProductColor {
      */
     protected $product_color_views;
 
-    public function __construct() {
+    public function __construct($product=null) {
+        $this->product = $product;
         $this->product_items = new ArrayCollection();
         $this->product_color_views= new ArrayCollection();
     }

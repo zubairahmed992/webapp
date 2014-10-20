@@ -1023,9 +1023,16 @@ public function productDetailColorAdd($entity){
    }
         
      }  
-        
-       
-         #------------Get Associative Array------------------#
+#------------------------------#
+    public function getSizeArray($product) {
+        if ($product && $product->getBrand()->getBrandSpecification()) {
+            return $product->getBrand()->getBrandSpecification()->getSizeArray($product->getGender(), $product->getSizeTitleType());
+        } else {
+            return $this->container->get('admin.helper.size')->getSizeArray($product->getGender(), $product->getSizeTitleType());
+        }        
+    }
+
+    #------------Get Associative Array------------------#
        public function fillArray($size_type, $array,$gender=Null,$default_array){ #public function fillArray($size_type, $array, $default_array){ 
           $data=array();
           $fitType=$this->container->get('admin.helper.size')->getAllFitType();

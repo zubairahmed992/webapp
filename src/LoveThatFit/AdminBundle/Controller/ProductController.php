@@ -40,8 +40,6 @@ class ProductController extends Controller {
 //---------------------------------------------------------------------
 
     public function indexAction($page_number, $sort = 'id') {
-        //$this->productSaveYaml();
-
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
@@ -57,8 +55,7 @@ class ProductController extends Controller {
     private function getBrand($id) {
         $em = $this->getDoctrine()->getManager();
         $brand = $em->getRepository('LoveThatFitAdminBundle:Brand')->find($id);
-
-        if (!$entity) {
+        if (!$brand) {
             $this->get('session')->setFlash('warning', 'Unable to find Brand.');
         }
         return $brand;
@@ -71,8 +68,6 @@ class ProductController extends Controller {
     public function productDetailNewAction() {
         
         $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        
-        $clothingTypes = $this->get('admin.helper.product.specification')->getWomenClothingType();
         $brandObj = json_encode($this->get('admin.helper.brand')->getBrandNameId());
         $productForm = $this->createForm(new ProductDetailType($productSpecificationHelper,$this->get('admin.helper.size')->getAllSizeTitleType()));
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_new.html.twig', array(
@@ -87,9 +82,7 @@ class ProductController extends Controller {
     public function productDetailCreateAction(Request $request) {
 
         $data = $request->request->all();
-        $productSpecificationHelper = $this->get('admin.helper.product.specification');
-        $entity = new Product();
-        
+        $entity = new Product();        
         $form = $this->createForm(new ProductDetailType($this->get('admin.helper.product.specification'),$this->get('admin.helper.size')->getAllSizeTitleType()), $entity);
         $form->bindRequest($request);
         $productArray = $this->get('admin.helper.product')->productDetailArray($data, $entity);
@@ -202,27 +195,19 @@ class ProductController extends Controller {
 
 #------------------------ PRODUCT DETAIL COLOR --------------------------------#
 
-    public function productDetailColorAddNewAction($id) {
+    public function productDetailColorAddNewAction($id) {        
         
-        // $allSizes=$this->container->get('admin.helper.size')->getAllSizes();
-        // return new response(json_encode($allSizes));
-        $entity = $this->getProduct($id);
-        $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
-        if (!$entity) {
+        $product = $this->get('admin.helper.product')->find($id);        
+        if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
-        }
-        $sizes=$this->get('admin.helper.product')->getBrandSpecifications($entity);
-       $fitType=$this->container->get('admin.helper.size')->getAllFitType();
-       
-        //return new response(json_encode($sizes));
-      //
-       // $sizes = $this->get('admin.helper.product')->productDetailColorAdd($entity);
-       
+        }        
+        $sizes=$this->get('admin.helper.product')->getSizeArray($product);       
+        $productItems = $this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
         $colorform = $this->createForm(new ProductColorType($sizes));
         $imageUploadForm = $this->createForm(new ProductColorImageType());
         $patternUploadForm = $this->createForm(new ProductColorPatternType());
         return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
-                    'product' => $entity,
+                    'product' => $product,
                     'colorform' => $colorform->createView(),
                     'imageUploadForm' => $imageUploadForm->createView(),
                     'patternUploadForm' => $patternUploadForm->createView(),
@@ -236,25 +221,18 @@ class ProductController extends Controller {
     public function productDetailColorCreateAction(Request $request, $id) {
 
         $product = $this->getProduct($id);
-        $productColor = new ProductColor();
-        $productColor->setProduct($product);
-        $sizes=$this->get('admin.helper.product')->getBrandSpecifications($product);
-        //return new response(json_encode($sizes));
-        
-        //$sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
-       
+        $productColor = new ProductColor($product);
+        $sizes = $this->get('admin.helper.product')->getSizeArray($product);
+
         $colorform = $this->createForm(new ProductColorType($sizes), $productColor);
         $colorform->bind($request);
         if ($colorform->isValid()) {
-
             $this->get('admin.helper.productcolor')->uploadSave($productColor);
             $this->get('admin.helper.product')->updatedAt($product);
-
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
                 $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
             }
-         //  return new response(json_encode($colorform->getData()));
-       $this->createSizeItemForBodyTypes($product, $productColor,$colorform->getData()); //--creating sizes & item records
+            $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData()); //--creating sizes & item records
             $this->get('session')->setFlash('success', 'Product Detail color has been created.');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } else {
@@ -731,10 +709,7 @@ class ProductController extends Controller {
 #--------------------------------Products Stats--------------------------------#
 
     public function productStatsAction() {
-        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');
-        $products = $this->getDoctrine()
-                ->getRepository('LoveThatFitAdminBundle:Product')
-                ->findListAllProduct();
+        $productObj = $this->getDoctrine()->getRepository('LoveThatFitAdminBundle:Product');        
         $rec_count = count($productObj->countAllRecord());
 
         $entity = $this->getProductByBrand();
