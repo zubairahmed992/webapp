@@ -86,6 +86,7 @@ class UserMarkerHelper {
         if(array_key_exists('mask_x', $specs) && $specs['mask_x']){$user_marker->setMaskX($specs['mask_x']);}
         if(array_key_exists('mask_y', $specs) && $specs['mask_y']){$user_marker->setMaskY($specs['mask_y']);}
         if(array_key_exists('marker_json', $specs) && $specs['marker_json']){$user_marker->setMarkerJson($specs['marker_json']);}
+        if(array_key_exists('default_marker_json', $specs) && $specs['default_marker_json']){$user_marker->setDefaultMarkerJson($specs['default_marker_json']);}
     }
        #----------------------------------------------------------------------------
    public function getArray($user_marker) {
@@ -97,6 +98,7 @@ class UserMarkerHelper {
        $specs['mask_x']=$user_marker->getMaskX();
        $specs['mask_y']=$user_marker->getMaskY();
        $specs['marker_json']=$user_marker->getMarkerJson();
+       $specs['default_marker_json']=$user_marker->getDefaultMarkerJson();
         return ($specs);
    }
       #----------------------------------------------------------------------------

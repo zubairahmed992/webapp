@@ -107,11 +107,14 @@ class UserMarker
      * @ORM\Column(name="marker_json", type="text", nullable=true)
      */
     private $marker_json;
-    
-
-   
 
     
+    /**
+     * @var string $default_marker_json
+     *
+     * @ORM\Column(name="default_marker_json", type="text", nullable=true)
+     */
+    private $default_marker_json;
 
     
 
@@ -377,5 +380,28 @@ class UserMarker
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set default_marker_json
+     *
+     * @param string $defaultMarkerJson
+     * @return UserMarker
+     */
+    public function setDefaultMarkerJson($defaultMarkerJson)
+    {
+        $this->default_marker_json = $defaultMarkerJson;
+    
+        return $this;
+    }
+
+    /**
+     * Get default_marker_json
+     *
+     * @return string 
+     */
+    public function getDefaultMarkerJson()
+    {
+        return $this->default_marker_json;
     }
 }
