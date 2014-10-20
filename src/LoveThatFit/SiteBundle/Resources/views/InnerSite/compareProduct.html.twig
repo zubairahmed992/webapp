@@ -72,6 +72,7 @@ function showFeedBack(feedback,product_id){
     <div class="compare">
     
     <h1>Product Comparison</h1>
+    <div id="fitting_link"><a href="{{path('inner_site_index')}}">< Back to Fitting Room</a></div>
     </div>
     <div id="comapre_1">
 
@@ -90,10 +91,10 @@ function showFeedBack(feedback,product_id){
                 <span class="comp_pro">
                     <img src="{{asset(singlePro.display_image) }}" id="display_image{{singlePro.id}}"></span>
                         {%endif%}
-                    <div class="com_label">Product Name</div>
+                    <div class="com_label">Product Name:</div>
                         <div >{{singlePro.name}}</div>
                         
-                         <div class="com_label">Brand</div>
+                         <div class="com_label">Brand:</div>
                         <div> {{singlePro.brand}} 
                               {% if(singlePro.description)%}  {{singlePro.description}}, {%endif%} 
                            
@@ -176,7 +177,7 @@ function showFeedBack(feedback,product_id){
                             {%if (singlePro.recommendation is defined)%}
                                 
                                 <div class="com_container">
-                                    <b>Recommendation</b>
+                                    <b>Recommendation:</b>
                                     <span id="recmon{{singlePro.id}}">try size 
                             {% if(singlePro.recommendation.description  is defined)%}     {{ singlePro.recommendation.description }} {% endif%}
                                         </span>      
