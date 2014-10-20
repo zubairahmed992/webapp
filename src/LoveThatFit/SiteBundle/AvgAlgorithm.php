@@ -425,18 +425,24 @@ class AvgAlgorithm {
     }
 # -----------------------------------------------------
     private function array_sort($sizes) {
-        $size_titles = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
-        $size_types = $this->getSizeTypes($this->product->getGender());
-        $fb = array();
-        $size_identifier = '';
-        foreach ($size_types as $stype) {
-            foreach ($size_titles as $stitle) {
-                $size_identifier = $stype . ' ' . $stitle;
-                if (array_key_exists($size_identifier, $sizes))
-                    $fb[$size_identifier] = $sizes[$size_identifier];
+        if ($this->product){
+            $size_titles = $this->getSizeTitleArray($this->product->getGender(), $this->product->getSizeTitleType());
+            $size_types = $this->getSizeTypes($this->product->getGender());
+            $fb = array();
+            $size_identifier = '';
+            if (is_array($size_titles) && count($size_titles) > 0) {
+                if (is_array($size_titles) && count($size_titles) > 0) {
+                    foreach ($size_types as $stype) {
+                        foreach ($size_titles as $stitle) {
+                            $size_identifier = $stype . ' ' . $stitle;
+                            if (array_key_exists($size_identifier, $sizes))
+                                $fb[$size_identifier] = $sizes[$size_identifier];
+                        }
+                    }
+                }
             }
+            return $fb;
         }
-        return $fb;
     }
     #----------------------------------------------------------       
     private function snakeToNormal($str) {
@@ -559,7 +565,7 @@ class AvgAlgorithm {
 
     private function getSizeTypes($gender='f') {
         if($gender=='m'){
-            return array('Regular', 'Athletic', 'Tall', 'Portley');
+            return array('Regular', 'Athletic', 'Tall', 'Big');
         }else{
             return array('Regular', 'Petite', 'Tall', 'Plus');
         }
