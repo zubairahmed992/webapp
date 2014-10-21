@@ -89,18 +89,18 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
  public function homeAction($page_number = 0, $limit = 0) {
        $gender= $this->get('security.context')->getToken()->getUser()->getGender();
        $user_id= $this->get('security.context')->getToken()->getUser()->getId();
-       $latest = $this->get('admin.helper.product')->listByType(array('limit'=>5, 'list_type'=>'latest'));
-        if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_faviourite'))) > 0) {
-            $favourite = $this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_faviourite'));
+       $latest = $this->get('admin.helper.product')->listByType(array('limit'=>5, 'list_type'=>'latest','gender'=>$gender));
+       if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_faviourite','gender'=>$gender))) > 0) {
+            $favourite = $this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_faviourite','gender'=>$gender));
         } else {
             $favourite = $this->get('admin.helper.product')->findByGenderRandom('F', 3);
         }
-        if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_tried_on'))) > 0) {
-            $tried_on =$this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_tried_on'));
+        if (count($this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_tried_on','gender'=>$gender))) > 0) {
+            $tried_on =$this->get('admin.helper.product')->listByType(array('limit' => 3, 'list_type' => 'most_tried_on','gender'=>$gender));
         } else {
-            $tried_on =$this->get('admin.helper.product')->findByGenderRandom('F', 3);
+            $tried_on =$this->get('admin.helper.product')->findByGenderRandom($gender, 3);
         }
-       $recomended = $this->get('admin.helper.product')->findByGenderBrandName($gender,'H&M' ,$page_number, $limit);        
+       $recomended = $this->get('admin.helper.product')->findByGenderBrandName('H&M' ,$page_number, $limit);        
       // var_dump($favourite);
     //   return new response($favourite);
        return $this->render('LoveThatFitSiteBundle:InnerSite:home.html.twig', array(
