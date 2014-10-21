@@ -151,69 +151,57 @@ public function showBrandSpecificationAction($id)
     public function editBrandSpecificationAction($id,$brand_id)
     {
      $entity = $this->get('admin.helper.brand')->find($brand_id);  
-     $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
-      $gender=json_encode(json_decode($brandspecification->getGender()));
-     $female_fit_type=json_encode(json_decode($brandspecification->getFemaleFitType()));
-     $male_fit_type=json_encode(json_decode($brandspecification->getMaleFitType()));
-     $female_size_title_type=json_encode(json_decode($brandspecification->getFemaleSizeTitleType()));
-     $male_size_title_type=json_encode(json_decode($brandspecification->getMaleSizeTitleType()));
-     $male_chest=json_encode(json_decode($brandspecification->getMaleChest()));
-     $male_shirt=json_encode(json_decode($brandspecification->getMaleShirt()));
-     $male_letter=json_encode(json_decode($brandspecification->getMaleLetter()));
-     $male_waist=json_encode(json_decode($brandspecification->getMaleWaist()));
-     $male_neck=json_encode(json_decode($brandspecification->getMaleNeck()));
+    // $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
+     $specArray=$this->get('admin.helper.brand.specification')->getArrayBrandSpecifcation($this->get('admin.helper.brand.specification')->find($id));
      
-     $female_number=json_encode(json_decode($brandspecification->getFemaleNumber()));
-     $female_letter=json_encode(json_decode($brandspecification->getFemaleLetter()));
-     $female_waist=json_encode(json_decode($brandspecification->getFemaleWaist()));    
-     $female_bra=json_encode(json_decode($brandspecification->getFemaleBra()));    
-    // $form=$this->createForm(new BrandSpecificationType($gender,$fit_type,$size_title_type,$size_title_type,$male_numbers,$male_letters,$male_waists,$female_numbers,$female_letters,$female_waists));
-
      $allSizes=$this->get('admin.helper.size')->getAllSizes();
      $form=$this->createForm(new BrandSpecificationType($allSizes,$this->get('admin.helper.size')));
-     if (isset($gender)) {
-            $form->get('gender')->setData(json_decode($gender));
-        } 
-     if (isset($female_fit_type)) {
-            $form->get('female_fit_type')->setData(json_decode($female_fit_type));
+     
+     
+        if (array_key_exists('gender', $specArray)) {
+            $form->get('gender')->setData(json_decode($specArray['gender']));
         }
-    if (isset($male_fit_type)) {
-            $form->get('male_fit_type')->setData(json_decode($male_fit_type));
-        }    
-     if (isset($female_size_title_type)) {
-            $form->get('female_size_title_type')->setData(json_decode($female_size_title_type));
+        if (array_key_exists('female_fit_type', $specArray)) {
+            $form->get('female_fit_type')->setData(json_decode($specArray['female_fit_type']));
         }
-     if (isset($male_size_title_type)) {
-            $form->get('male_size_title_type')->setData(json_decode($male_size_title_type));
-        }   
-     if (isset($male_chest)) {
-            $form->get('male_chest')->setData(json_decode($male_chest));
+        if (array_key_exists('male_fit_type', $specArray)) {
+            $form->get('male_fit_type')->setData(json_decode($specArray['male_fit_type']));
+        }
+        if (array_key_exists('female_size_title_type', $specArray)) {
+            $form->get('female_size_title_type')->setData(json_decode($specArray['female_size_title_type']));
+        }
+        if (array_key_exists('male_size_title_type', $specArray)) {
+            $form->get('male_size_title_type')->setData(json_decode($specArray['male_size_title_type']));
+        }
+        if (array_key_exists('male_chest', $specArray)) {
+            $form->get('male_chest')->setData(json_decode($specArray['male_chest']));
+        }
+        if (array_key_exists('male_letter', $specArray)) {
+            $form->get('male_letter')->setData(json_decode($specArray['male_letter']));
+        }
+        if (array_key_exists('male_shirt', $specArray)) {
+            $form->get('male_shirt')->setData(json_decode($specArray['male_shirt']));
+        }
+        if (array_key_exists('male_waist', $specArray)) {
+            $form->get('male_waist')->setData(json_decode($specArray['male_waist']));
+        }
+
+        if (array_key_exists('male_neck', $specArray)) {
+            $form->get('male_neck')->setData(json_decode($specArray['male_neck']));
+        }
+        if (array_key_exists('female_number', $specArray)) {
+            $form->get('female_number')->setData(json_decode($specArray['female_number']));
+        }
+        if (array_key_exists('female_letter', $specArray)) {
+            $form->get('female_letter')->setData(json_decode($specArray['female_letter']));
+        }
+        if (array_key_exists('female_waist', $specArray)) {
+            $form->get('female_waist')->setData(json_decode($specArray['female_waist']));
+        }
+        if (array_key_exists('female_bra', $specArray)) {
+            $form->get('female_bra')->setData(json_decode($specArray['female_bra']));
         }
         
-     if (isset($male_letter)) {
-            $form->get('male_letter')->setData(json_decode($male_letter));
-        }
-     if (isset($male_shirt)) {
-            $form->get('male_shirt')->setData(json_decode($male_shirt));
-        }   
-     if (isset($male_waist)) {
-            $form->get('male_waist')->setData(json_decode($male_waist));
-        }
-    if (isset($male_neck)) {
-            $form->get('male_neck')->setData(json_decode($male_neck));
-        }    
-     if (isset($female_number)) {
-            $form->get('female_number')->setData(json_decode($female_number));
-        }
-     if (isset($female_letter)) {
-            $form->get('female_letter')->setData(json_decode($female_letter));
-        }        
-     if (isset($female_waist)) {
-            $form->get('female_waist')->setData(json_decode($female_waist));
-        }
-    if (isset($female_bra)) {
-            $form->get('female_bra')->setData(json_decode($female_bra));
-        }    
      return $this->render('LoveThatFitAdminBundle:Brand:brand_specification_edit_detail.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
