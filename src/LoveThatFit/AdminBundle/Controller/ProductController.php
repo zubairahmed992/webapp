@@ -220,17 +220,18 @@ class ProductController extends Controller {
 
     public function productDetailColorCreateAction(Request $request, $id) {
 
-        $product = $this->getProduct($id);
+        $product = $this->get('admin.helper.product')->find($id); 
         $productColor = new ProductColor($product);
         $sizes = $this->get('admin.helper.product')->getSizeArray($product);
 
         $colorform = $this->createForm(new ProductColorType($sizes), $productColor);
         $colorform->bind($request);
         if ($colorform->isValid()) {
-            $this->get('admin.helper.productcolor')->uploadSave($productColor);
-            $this->get('admin.helper.product')->updatedAt($product);
+            $this->get('admin.helper.productcolor')->uploadSave($productColor);            
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
-                $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
+                $this->get('admin.helper.product')->updateDisplayColor($product, $productColor); //--add  product  default color 
+            }else{
+                $this->get('admin.helper.product')->updatedAt($product);
             }
             $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData()); //--creating sizes & item records
             $this->get('session')->setFlash('success', 'Product Detail color has been created.');
@@ -243,7 +244,7 @@ class ProductController extends Controller {
 #----------------------------Product Color Edit--------------------------------#
 
     public function productDetailColorEditAction($id, $color_id, $temp_img_path = null) {
-        $product = $this->getProduct($id);
+        $product = $this->get('admin.helper.product')->find($id); 
         if (!$product) {
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
         }
@@ -298,43 +299,39 @@ class ProductController extends Controller {
 
     public function productDetailColorUpdateAction(Request $request, $id, $color_id) {
         $product = $this->getProduct($id);
-        if (!$product) {
+        if (!$product) 
             $this->get('session')->setFlash('warning', 'Unable to find Product.');
-        }
-
+        
         $productColor = $this->getProductColor($color_id);
-         $sizes=$this->get('admin.helper.product')->getBrandSpecifications($product);
-         
-        //$sizes = $this->get('admin.helper.product')->productDetailColorAdd($product);
+        $sizes = $this->get('admin.helper.product')->getBrandSpecifications($product);        
         $colorform = $this->createForm(new ProductColorType($sizes), $productColor);
         $colorform->bind($request);
         if ($colorform->isValid()) {
-            $this->get('admin.helper.color')->save(strtolower($productColor->getTitle())); 
+            $this->get('admin.helper.color')->save(strtolower($productColor->getTitle())); //Save new color names
             $this->get('admin.helper.productcolor')->uploadSave($productColor);
-            $this->get('admin.helper.product')->updatedAt($product);
             if ($productColor->displayProductColor or $product->displayProductColor == NULL) {
-                $this->createDisplayDefaultColor($product, $productColor); //--add  product  default color 
+                $this->get('admin.helper.product')->updateDisplayColor($product, $productColor); //--add  product  default color 
+            } else {
+                $this->get('admin.helper.product')->updatedAt($product);
             }
-           
-            
-            $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData());
-            $this->get('session')->setFlash(
-                    'success', 'Product Color Detail has been updated!'
-            );
-
+            $this->createSizeItemForBodyTypes($product, $productColor, $colorform->getData()); #Create Items against color & selected sizes            
+            $this->get('session')->setFlash('success', 'Product Color Detail has been updated!');
             return $this->redirect($this->generateUrl('admin_product_detail_show', array('id' => $id)));
         } else {
 
-            $this->get('session')->setFlash(
-                    'warning', 'Unable to update Product Color Detail!'
-            );
-
+            $this->get('session')->setFlash('warning', 'Unable to update Product Color Detail!');
+            $productItems=$this->get('admin.helper.productitem')->getAllItemBaseProduct($id);
             $imageUploadForm = $this->createForm(new ProductColorImageType(), $productColor);
+            $patternUploadForm = $this->createForm(new ProductColorPatternType(), $productColor);
             return $this->render('LoveThatFitAdminBundle:Product:product_detail_show.html.twig', array(
                         'product' => $product,
-                        'colorform' => $colorForm->createView(),
+                        'colorform' => $colorform->createView(),
                         'color_id' => $color_id,
+                        'imageUploadForm' => $imageUploadForm->createView(),
+                        'patternUploadForm' => $patternUploadForm->createView(),
+                        'productItems'=>$productItems,
                     ));
+            
         }
     }
 

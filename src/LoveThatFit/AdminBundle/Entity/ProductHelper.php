@@ -136,7 +136,16 @@ class ProductHelper{
             return $msg_array;
         }
     }
+  //-------------------------------------------------------
 
+    public function updateDisplayColor($product, $productColor) {
+        $product->setUpdatedAt(new \DateTime('now'));
+        $product->setDisplayProductColor($productColor);
+        $this->em->persist($product);
+        $this->em->flush();
+
+     
+    }
 //-------------------------------------------------------
 
     public function delete($id) {
