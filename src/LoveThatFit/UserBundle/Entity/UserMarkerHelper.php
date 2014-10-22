@@ -87,7 +87,9 @@ class UserMarkerHelper {
         if(array_key_exists('mask_y', $specs) && $specs['mask_y']){$user_marker->setMaskY($specs['mask_y']);}
         if(array_key_exists('marker_json', $specs) && $specs['marker_json']){$user_marker->setMarkerJson($specs['marker_json']);}
         if(array_key_exists('default_marker_json', $specs) && $specs['default_marker_json']){$user_marker->setDefaultMarkerJson($specs['default_marker_json']);}
-    }
+        if(array_key_exists('default_marker_svg', $specs) && $specs['default_marker_svg']){$user_marker->setDefaultMarkerSvg($specs['default_marker_svg']);}
+        
+        }
        #----------------------------------------------------------------------------
    public function getArray($user_marker) {
        $specs['svg_path']=$user_marker->getSvgPaths();
@@ -99,6 +101,7 @@ class UserMarkerHelper {
        $specs['mask_y']=$user_marker->getMaskY();
        $specs['marker_json']=$user_marker->getMarkerJson();
        $specs['default_marker_json']=$user_marker->getDefaultMarkerJson();
+       $specs['default_marker_svg']=$user_marker->getDefaultMarkerSvg();
         return ($specs);
    }
       #----------------------------------------------------------------------------

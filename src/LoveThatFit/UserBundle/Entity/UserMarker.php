@@ -115,8 +115,14 @@ class UserMarker
      * @ORM\Column(name="default_marker_json", type="text", nullable=true)
      */
     private $default_marker_json;
-
     
+    
+    /**
+     * @var string $default_marker_svg
+     *
+     * @ORM\Column(name="default_marker_svg", type="text", nullable=true)
+     */
+    private $default_marker_svg;
 
     /**
      * Get id
@@ -403,5 +409,28 @@ class UserMarker
     public function getDefaultMarkerJson()
     {
         return $this->default_marker_json;
+    }
+
+    /**
+     * Set default_marker_svg
+     *
+     * @param string $defaultMarkerSvg
+     * @return UserMarker
+     */
+    public function setDefaultMarkerSvg($defaultMarkerSvg)
+    {
+        $this->default_marker_svg = $defaultMarkerSvg;
+    
+        return $this;
+    }
+
+    /**
+     * Get default_marker_svg
+     *
+     * @return string 
+     */
+    public function getDefaultMarkerSvg()
+    {
+        return $this->default_marker_svg;
     }
 }
