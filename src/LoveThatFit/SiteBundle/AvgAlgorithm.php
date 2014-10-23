@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\SiteBundle;
-
+use LoveThatFit\AdminBundle\Entity\SizeHelper;
 class AvgAlgorithm {
 
     private $user;
@@ -520,6 +520,34 @@ class AvgAlgorithm {
     }
 
     #----------------------------------------------------------       
+    private function _getSizeTitleArray($gender = 'f', $type = 'numbers') {
+        $gender = strtolower($gender);
+        $type = strtolower($type);
+        $sh = new SizeHelper();
+
+        if ($gender == 'f' && ($type == 'letters' || $type == 'letter')) {//letters
+            #return $sh->getSizeArrayByGenderType($gender, 'letter') ;
+        } else if ($gender == 'f' && ($type == 'number' || $type == 'numbers')) {//$female_standard
+            #return $sh->getSizeArrayByGenderType($gender, 'letter') ;
+        } else if ($gender == 'f' && $type == 'waist') {//$female_waist
+            return ;
+        }
+        else if ($gender == 'f' && $type == 'bra') {//$female_bra
+            return ;
+        } 
+        else if ($gender == 'm' && ($type == 'letters' || $type == 'letter')) {//letters
+            return ;
+        }
+        else if ($gender == 'm' && $type == 'chest') {//man Chest
+            return ;
+        } else if ($gender == 'm' && $type == 'waist') {//man bottom
+            return ;
+        } else if ($gender == 'm' && $type == 'neck') {//man neck
+            return ;
+        }else if ($gender == 'm' && $type == 'shirt') {//man shirt
+            return ;
+        }
+    }
     private function getSizeTitleArray($gender = 'f', $type = 'numbers') {
         $gender = strtolower($gender);
         $type = strtolower($type);

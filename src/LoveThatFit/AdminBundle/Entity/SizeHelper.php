@@ -74,7 +74,31 @@ public function getWomanWaistSizes(){
 }
 #-----------------------Get Woman Bra Size ------------------------------------#
 public function getWomanBraSizes(){
-     return $this->getArray($this->constant['size_titles']['woman']['bra']);
+     return $this->getWomanBraSizesParsed();    
+}
+public function getWomanBraCups(){
+     return $this->getWomanBraSizesParsed('cup');
+}
+public function getWomanBraBands(){
+    return $this->getWomanBraSizesParsed('band');    
+}
+
+private function getWomanBraSizesParsed($type=null){
+     $new_arr=array();
+     $arr=$this->constant['size_titles']['woman']['bra'];
+    foreach($arr as $key){
+        $element='';
+        if ($type=='cup'){
+            $element=trim(str_replace(range(0,9),'',$key['title']));
+        }elseif($type=='band'){
+            $cup=trim(str_replace(range(0,9),'',$key['title']));
+            $element=trim(str_replace($cup,'',$key['title']));
+        }else{
+            $element=$key['title'];
+        }        
+        $new_arr[$element]=$element;   
+    }
+    return $new_arr;
 }
 #------------------------Getting All Male Sizes--------------------------------#
 #---------------------- Get Man Letter Sizes---------------------------------#
@@ -103,6 +127,12 @@ public function getManNeckSizes(){
 public function getAllSizeTitleType(){
      return ($this->constant['size_title_type']);
 }
+public function getManSizeTitleType(){
+     return ($this->constant['size_title_type']['man']);
+}
+public function getWomanSizeTitleType(){
+     return ($this->constant['size_title_type']['woman']);
+}
 #----------------Get Fit Type --------------------------------------------------#
 public function getAllFitType(){
      return ($this->constant['fit_type']);
@@ -113,6 +143,15 @@ public function getManFitType(){
 public function getWomanFitType(){
      return ($this->constant['fit_type']['woman']);
 }
+  
+private function get_fit_type_array($gender) {
+        if ($gender == 'm')
+            return $this->getManFitType();
+        if ($gender == 'f')
+            return $this->getWomanFitType();
+        return null;
+    }
+
 #----------------Get body shape --------------------------------------------------#
 public function getAllBodyShape(){
      return ($this->constant['body_shape']);
@@ -145,12 +184,7 @@ public function getArray($arr){
         }
         return $body_type_sizes;
     }
-    #----------------------------------------------
-    private function get_fit_type_array($gender){
-        if ($gender=='m') return  $this->getManFitType();
-        if ($gender=='f') return $this->getWomanFitType();
-        return null;
-    }
+  
     #----------------------------------------------
     private function get_size_array($gender, $type){
         switch ($gender){
@@ -184,7 +218,7 @@ public function getArray($arr){
                         return $this->getWomanLetterSizes();
                         break;
                     case 'waist':            
-                        $this->getWomanWaistSizes();
+                        return $this->getWomanWaistSizes();
                         break;
                     case 'bra':             
                         return $this->getWomanBraSizes();
