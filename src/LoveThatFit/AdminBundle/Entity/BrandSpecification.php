@@ -617,19 +617,19 @@ class BrandSpecification {
             case 'm':
                 switch ($type){
                     case 'chest':          
-                        return json_decode ($this->male_chest);
+                        return $this->json_decoded_array ($this->male_chest);
                         break;
                     case 'shirt':         
-                        return json_decode ($this->male_shirt);
+                        return $this->json_decoded_array ($this->male_shirt);
                         break;
                     case 'letter':        
-                        return json_decode ($this->male_letter);
+                        return $this->json_decoded_array ($this->male_letter);
                         break;
                     case 'waist':          
-                        return json_decode ($this->male_waist);
+                        return $this->json_decoded_array ($this->male_waist);
                         break;
                     case 'neck':          
-                        return json_decode ($this->male_neck);
+                        return $this->json_decoded_array ($this->male_neck);
                         break;
                     default :                
                         break;
@@ -638,16 +638,16 @@ class BrandSpecification {
             case 'f':
                 switch ($type){
                     case 'number':       
-                        return json_decode ($this->female_number);
+                        return $this->json_decoded_array($this->female_number);
                         break;
                     case 'letter':                
-                        return json_decode ($this->female_letter);
+                        return $this->json_decoded_array ($this->female_letter);
                         break;
                     case 'waist':            
-                        json_decode ($this->female_waist);
+                        return $this->json_decoded_array ($this->female_waist);
                         break;
                     case 'bra':             
-                        return json_decode ($this->female_bra);
+                        return $this->json_decoded_array ($this->female_bra);
                         break;
                     default :                
                         break;                    
@@ -658,4 +658,14 @@ class BrandSpecification {
         }
         return null;
     }
+ #-------------------------------------------------------
+    private function json_decoded_array($json) {
+        $arr = json_decode($json);
+        $new_arr = array();
+        foreach ($arr as $key) {
+            $new_arr[$key] = $key;
+        }
+        return $new_arr;
+    }
+    
 }
