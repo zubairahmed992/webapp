@@ -200,14 +200,14 @@
 <div id="myModal1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete Product</h3>
+        <h3 id="myModalLabel">Delete Product Size {{sizetitle }}</h3>
     </div>
     <div class="modal-body">
         <p>Are you sure you want to Delete this Product Size <b> {{sizetitle }}</b>?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <a href="{{ path('admin_product_detail_delete', {'id': product.Id}) }}"  class="btn btn-primary">Delete</a>
+        <a href="{{ path('admin_product_detail_size_delete',{'id':product.Id,'size_id':size_id}) }}"  class="btn btn-primary">Delete</a>
     </div>
 </div> 
     </div>
