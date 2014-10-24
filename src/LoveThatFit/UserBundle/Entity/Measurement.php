@@ -442,7 +442,7 @@ class Measurement {
     /**
      * @var string $bodyShape
      *
-     * @ORM\Column(name="body_shape", type="string", length=50, nullable=true)
+     * @ORM\Column(name="body_shape", type="string", length=50, nullable=false)
      * 
      */
     private $body_shape;

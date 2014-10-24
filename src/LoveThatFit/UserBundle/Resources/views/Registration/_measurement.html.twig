@@ -4,11 +4,19 @@
 <script>
 function validate(){
 
-
+        
 var month_select=$('#measurement_birthdate_month').val();
 var day_select=$('#measurement_birthdate_day').val();
 var year_select=$('#measurement_birthdate_year').val();
-
+var measurement_body_shape=$('#measurement_body_shape').val();
+if(!measurement_body_shape)
+    {
+      $('#measurement_body_shape_display').html('Please Enter body shape.');
+      $('#measurement_body_shape_display').show();
+       return false;
+    }else{
+       $('#measurement_body_shape_display').html('');
+}
 if(!month_select){
    $('#date_error').html('Please Enter Month.');
    $('#date_error').show();
@@ -246,8 +254,20 @@ jQuery('form#RegistrationMeasurement').find('select').each(function(){
                                 </div>
    {%endif%} 
                             </div>
+                                
+                                
+                                
                         </div>
-            
+            <span id="measurement_body_shape_display" style="background: none repeat scroll 0 0 white;
+    border: 1px solid #ccc;
+    color: red;
+    display: none;
+    font-size: 0.6em;
+    left: 0px;
+    padding: 3px;
+    position: absolute;
+    top: 235px;
+    z-index: 2000;"></span>
                
                         <!-- END  CODE FOR BODY SHAPE AND BRA SIZE --->    
                         <div class="sep"></div>
