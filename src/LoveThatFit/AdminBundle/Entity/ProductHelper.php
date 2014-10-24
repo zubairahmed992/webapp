@@ -787,7 +787,7 @@ $allSizes=$this->container->get('admin.helper.size')->getAllSizes();
             return $allSizes['woman_number_sizes'];
             break;
         case 'female_waist':
-            return $allSizes['women_waist_sizes'];
+            return $allSizes['woman_waist_sizes'];
             break;
         case 'female_bra':
             return $allSizes['woman_bra_sizes'];
