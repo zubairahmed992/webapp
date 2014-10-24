@@ -168,6 +168,7 @@ constants:
             high: 30 
             average: 29 
             index_value: 1
+            shoulder_across_back: 13.5
         28b:
             title: 28b
             size: 28 
@@ -176,6 +177,7 @@ constants:
             high: 31 
             average: 30  
             index_value: 2
+            shoulder_across_back: 13.675
         28c:
             title: 28c
             size: 28 
@@ -183,6 +185,7 @@ constants:
             low: 30 
             high: 32 
             average: 31
+            shoulder_across_back: 13.875
             index_value: 3
         28d:
             title: 28d
@@ -191,6 +194,7 @@ constants:
             low: 31 
             high: 33 
             average: 32   
+            shoulder_across_back: 14.375
             index_value: 4
         28dd:
             title: 28dd
@@ -198,7 +202,8 @@ constants:
             cup: dd 
             low: 32 
             high: 34 
-            average: 33   
+            average: 33      
+            shoulder_across_back: 14.625
             index_value: 5
         28ddd:
             title: 28ddd
@@ -206,7 +211,8 @@ constants:
             cup: ddd 
             low: 33 
             high: 35 
-            average: 34
+            average: 34   
+            shoulder_across_back: 15
             index_value: 6
         28dddd:
             title: 28dddd
@@ -214,7 +220,8 @@ constants:
             cup: dddd 
             low: 34 
             high: 36 
-            average: 35
+            average: 35   
+            shoulder_across_back: 
             index_value: 7
         28h:
             title: 28h
@@ -222,7 +229,8 @@ constants:
             cup: h 
             low: 35 
             high: 37 
-            average: 36
+            average: 36   
+            shoulder_across_back: 
             index_value: 8    
         28i:
             title: 28i
@@ -230,7 +238,8 @@ constants:
             cup: i 
             low: 36 
             high: 38 
-            average: 37
+            average: 37   
+            shoulder_across_back: 
             index_value: 9
         28j:
             title: 28j
@@ -238,7 +247,8 @@ constants:
             cup: j 
             low: 37 
             high: 39 
-            average: 38
+            average: 38   
+            shoulder_across_back: 
             index_value: 10
         28k:
             title: 28k
@@ -246,7 +256,8 @@ constants:
             cup: h 
             low: 38 
             high: 40 
-            average: 39
+            average: 39   
+            shoulder_across_back: 
             index_value: 11
         28l:
             title: 28l
@@ -254,7 +265,8 @@ constants:
             cup: l 
             low: 39 
             high: 41 
-            average: 40
+            average: 40   
+            shoulder_across_back: 
             index_value: 12
         28m:
             title: 28m
@@ -262,7 +274,8 @@ constants:
             cup: m
             low: 40 
             high: 42 
-            average: 41
+            average: 41   
+            shoulder_across_back: 
             index_value: 13
         28n:
             title: 28n
@@ -270,7 +283,8 @@ constants:
             cup: n
             low: 41 
             high: 43 
-            average: 42
+            average: 42   
+            shoulder_across_back: 
             index_value: 14         
         30a:
             title: 30a
@@ -278,7 +292,8 @@ constants:
             cup: a 
             low: 30 
             high: 32 
-            average: 31
+            average: 31   
+            shoulder_across_back: 13.875
             index_value: 15
         30b:
             title: 30b
@@ -286,7 +301,8 @@ constants:
             cup: b 
             low: 31 
             high: 33 
-            average: 32   
+            average: 32      
+            shoulder_across_back: 14.375
             index_value: 16
         30c:
             title: 30c
@@ -294,7 +310,8 @@ constants:
             cup: c 
             low: 32 
             high: 34 
-            average: 33   
+            average: 33      
+            shoulder_across_back: 14.625
             index_value: 17
         30d:
             title: 30d
@@ -302,7 +319,8 @@ constants:
             cup: d 
             low: 33 
             high: 35 
-            average: 34   
+            average: 34      
+            shoulder_across_back: 15
             index_value: 18
         30dd:
             title: 30dd
@@ -310,7 +328,8 @@ constants:
             cup: dd 
             low: 34 
             high: 36 
-            average: 35    
+            average: 35       
+            shoulder_across_back: 14.375
             index_value: 19
         30ddd:
             title: 30ddd
@@ -318,7 +337,8 @@ constants:
             cup: ddd 
             low: 35 
             high: 37 
-            average: 36 
+            average: 36    
+            shoulder_across_back: 15.75
             index_value: 20
         30dddd:
             title: 30dddd
@@ -326,7 +346,8 @@ constants:
             cup: dddd 
             low: 36 
             high: 38 
-            average: 37
+            average: 37   
+            shoulder_across_back: 
             index_value: 21    
         30h:
             title: 30h
@@ -334,7 +355,8 @@ constants:
             cup: h 
             low: 37 
             high: 39 
-            average: 38 
+            average: 38    
+            shoulder_across_back: 
             index_value: 22
         30i:
             title: 30i
@@ -342,7 +364,8 @@ constants:
             cup: i 
             low: 38 
             high: 40 
-            average: 39
+            average: 39   
+            shoulder_across_back: 
             index_value: 23
         30j:
             title: 30j
@@ -350,7 +373,8 @@ constants:
             cup: j
             low: 39 
             high: 41 
-            average: 40
+            average: 40   
+            shoulder_across_back: 
             index_value: 24
         30k:
             title: 30k
@@ -358,7 +382,8 @@ constants:
             cup: k 
             low: 40 
             high: 42 
-            average: 41
+            average: 41   
+            shoulder_across_back: 
             index_value: 25
         30l:
             title: 30l
@@ -366,7 +391,8 @@ constants:
             cup: l
             low: 41 
             high: 43 
-            average: 42
+            average: 42   
+            shoulder_across_back: 
             index_value: 26
         30m:
             title: 30m
@@ -374,7 +400,8 @@ constants:
             cup: m
             low: 42 
             high: 44 
-            average: 43
+            average: 43   
+            shoulder_across_back: 
             index_value: 27
         30n:
             title: 30n
@@ -382,7 +409,8 @@ constants:
             cup: n
             low: 43 
             high: 45 
-            average: 44 
+            average: 44    
+            shoulder_across_back: 
             index_value: 28
         32a:
             title: 32a
@@ -390,7 +418,8 @@ constants:
             cup: a 
             low: 32 
             high: 34 
-            average: 33  
+            average: 33     
+            shoulder_across_back: 14.625
             index_value: 29
         32b:
             title: 32b
@@ -398,7 +427,8 @@ constants:
             cup: b 
             low: 33 
             high: 35 
-            average: 34 
+            average: 34    
+            shoulder_across_back: 15
             index_value: 30
         32c:
             title: 32c
@@ -406,7 +436,8 @@ constants:
             cup: c 
             low: 34 
             high: 36 
-            average: 35    
+            average: 35       
+            shoulder_across_back: 14.375
             index_value: 31
         32d:
             title: 32d
@@ -414,7 +445,8 @@ constants:
             cup: d
             low: 35 
             high: 37 
-            average: 36 
+            average: 36    
+            shoulder_across_back: 15.75
             index_value: 32
         32dd:
             title: 32dd
@@ -422,7 +454,8 @@ constants:
             cup: dd
             low: 36 
             high: 38 
-            average: 37
+            average: 37   
+            shoulder_across_back: 16
             index_value: 33
         32ddd:
             title: 32ddd
@@ -430,7 +463,8 @@ constants:
             cup: ddd
             low: 37 
             high: 39 
-            average: 38
+            average: 38   
+            shoulder_across_back: 16.125
             index_value: 34
         32dddd:
             title: 32dddd
@@ -438,7 +472,8 @@ constants:
             cup: dddd
             low: 38 
             high: 40 
-            average: 39
+            average: 39   
+            shoulder_across_back: 
             index_value: 35
         32h:
             title: 32h
@@ -446,7 +481,8 @@ constants:
             cup: h
             low: 39 
             high: 41 
-            average: 40
+            average: 40   
+            shoulder_across_back: 
             index_value: 36
         32i:
             title: 32i
@@ -454,7 +490,8 @@ constants:
             cup: i
             low: 40 
             high: 42 
-            average: 41
+            average: 41   
+            shoulder_across_back: 
             index_value: 37
         32j:
             title: 32j
@@ -462,7 +499,8 @@ constants:
             cup: j
             low: 41 
             high: 43 
-            average: 42
+            average: 42   
+            shoulder_across_back: 
             index_value: 38
         32k:
             title: 32k
@@ -470,7 +508,8 @@ constants:
             cup: k
             low: 42 
             high: 44 
-            average: 43
+            average: 43   
+            shoulder_across_back: 
             index_value: 39
         32l:
             title: 32l
@@ -478,7 +517,8 @@ constants:
             cup: l
             low: 43 
             high: 45 
-            average: 44
+            average: 44   
+            shoulder_across_back: 
             index_value: 40
         32m:
             title: 32m
@@ -486,7 +526,8 @@ constants:
             cup: m
             low: 44 
             high: 46 
-            average: 45
+            average: 45   
+            shoulder_across_back: 
             index_value: 41
         32n:
             title: 32n
@@ -494,7 +535,8 @@ constants:
             cup: n
             low: 45 
             high: 47 
-            average: 46
+            average: 46   
+            shoulder_across_back: 
             index_value: 42 
             
         34a:
@@ -503,7 +545,8 @@ constants:
             cup: a
             low: 34 
             high: 36 
-            average: 35 
+            average: 35    
+            shoulder_across_back: 14.375
             index_value: 43
         34b:
             title: 34b
@@ -511,7 +554,8 @@ constants:
             cup: b
             low: 35 
             high: 37 
-            average: 36    
+            average: 36       
+            shoulder_across_back: 15.75
             index_value: 44
         34c:
             title: 34c
@@ -519,7 +563,8 @@ constants:
             cup: c
             low: 36 
             high: 38 
-            average: 37 
+            average: 37    
+            shoulder_across_back: 16
             index_value: 45
         34d:
             title: 34d
@@ -527,7 +572,8 @@ constants:
             cup: d
             low: 37 
             high: 39 
-            average: 38  
+            average: 38     
+            shoulder_across_back: 16.125
             index_value: 46
         34dd:
             title: 34dd
@@ -535,7 +581,8 @@ constants:
             cup: dd
             low: 38 
             high: 40 
-            average: 39    
+            average: 39       
+            shoulder_across_back: 16.675
             index_value: 47
         34ddd:
             title: 34ddd
@@ -543,7 +590,8 @@ constants:
             cup: ddd
             low: 39 
             high: 41 
-            average: 40
+            average: 40   
+            shoulder_across_back: 16.875
             index_value: 48
         34dddd:
             title: 34dddd
@@ -551,7 +599,8 @@ constants:
             cup: dddd
             low: 40 
             high: 42 
-            average: 41
+            average: 41   
+            shoulder_across_back: 
             index_value: 49
         34h:
             title: 34h
@@ -559,7 +608,8 @@ constants:
             cup: h
             low: 41 
             high: 43 
-            average: 42
+            average: 42   
+            shoulder_across_back: 
             index_value: 50  
         34i:
             title: 34i
@@ -567,7 +617,8 @@ constants:
             cup: i
             low: 42 
             high: 44 
-            average: 43
+            average: 43   
+            shoulder_across_back: 
             index_value: 51
         34j:
             title: 34j
@@ -575,7 +626,8 @@ constants:
             cup: j
             low: 43 
             high: 45 
-            average: 44
+            average: 44   
+            shoulder_across_back: 
             index_value: 52
         34k:
             title: 34k
@@ -583,7 +635,8 @@ constants:
             cup: k
             low: 44 
             high: 46 
-            average: 45
+            average: 45   
+            shoulder_across_back: 
             index_value: 53
         34l:
             title: 34l
@@ -591,7 +644,8 @@ constants:
             cup: l
             low: 45 
             high: 47 
-            average: 46
+            average: 46   
+            shoulder_across_back: 
             index_value: 54
         34m:
             title: 34m
@@ -599,14 +653,16 @@ constants:
             cup: m
             low: 46 
             high: 48 
-            average: 47
+            average: 47   
+            shoulder_across_back: 
             index_value: 55   
         34n:
             title: 34n
             size: 34 
             cup: n
             low: 47
-            high: 49
+            high: 49   
+            shoulder_across_back: 
             average: 48
             index_value: 56        
         36a:
@@ -615,7 +671,8 @@ constants:
             cup: a
             low: 36 
             high: 38 
-            average: 37
+            average: 37   
+            shoulder_across_back: 16
             index_value: 57
         36b:
             title: 36b
@@ -623,7 +680,8 @@ constants:
             cup: b
             low: 37 
             high: 39 
-            average: 38 
+            average: 38    
+            shoulder_across_back: 16.5
             index_value: 58
         36c:
             title: 36c
@@ -631,7 +689,8 @@ constants:
             cup: c
             low: 38 
             high: 40 
-            average: 39
+            average: 39   
+            shoulder_across_back: 16.25
             index_value: 59
         36d:
             title: 36d
@@ -639,7 +698,8 @@ constants:
             cup: d
             low: 39 
             high: 41 
-            average: 40
+            average: 40   
+            shoulder_across_back: 16.5
             index_value: 60
         36dd:
             title: 36dd
@@ -647,7 +707,8 @@ constants:
             cup: dd
             low: 40 
             high: 42 
-            average: 41 
+            average: 41    
+            shoulder_across_back: 16.875
             index_value: 61
         36ddd:
             title: 36ddd
@@ -655,7 +716,8 @@ constants:
             cup: ddd
             low: 41 
             high: 43 
-            average: 42    
+            average: 42       
+            shoulder_across_back: 17
             index_value: 62
         36dddd:
             title: 36dddd
@@ -663,7 +725,8 @@ constants:
             cup: dddd
             low: 42 
             high: 44 
-            average: 43    
+            average: 43       
+            shoulder_across_back: 
             index_value: 63
         36h:
             title: 36h
@@ -671,7 +734,8 @@ constants:
             cup: h
             low: 43 
             high: 45 
-            average: 44    
+            average: 44       
+            shoulder_across_back: 
             index_value: 64
         36i:
             title: 36i
@@ -679,7 +743,8 @@ constants:
             cup: i
             low: 44 
             high: 46 
-            average: 45    
+            average: 45       
+            shoulder_across_back: 
             index_value: 65
         36j:
             title: 36j
@@ -687,7 +752,8 @@ constants:
             cup: j
             low: 45 
             high: 47 
-            average: 46    
+            average: 46       
+            shoulder_across_back: 
             index_value: 66
         36k:
             title: 36k
@@ -695,7 +761,8 @@ constants:
             cup: k
             low: 46 
             high: 48 
-            average: 47    
+            average: 47       
+            shoulder_across_back: 
             index_value: 67
         36l:
             title: 36l
@@ -703,7 +770,8 @@ constants:
             cup: l
             low: 47 
             high: 49 
-            average: 48    
+            average: 48       
+            shoulder_across_back: 
             index_value: 68
         36m:
             title: 36m
@@ -711,7 +779,8 @@ constants:
             cup: m
             low: 48 
             high: 50 
-            average: 49    
+            average: 49       
+            shoulder_across_back: 
             index_value: 69
         36n:
             title: 36n
@@ -719,7 +788,8 @@ constants:
             cup: n
             low: 49 
             high: 51 
-            average: 50    
+            average: 50       
+            shoulder_across_back: 
             index_value: 70   
         38a:
             title: 38a
@@ -727,7 +797,8 @@ constants:
             cup: a
             low: 38 
             high: 40
-            average: 39
+            average: 39   
+            shoulder_across_back: 16.675
             index_value: 71
         38b:
             title: 38b
@@ -735,7 +806,8 @@ constants:
             cup: b
             low: 39 
             high: 41
-            average: 40
+            average: 40   
+            shoulder_across_back: 16.875
             index_value: 72
         38c:
             title: 38c
@@ -743,7 +815,8 @@ constants:
             cup: c
             low: 40 
             high: 42
-            average: 41 
+            average: 41    
+            shoulder_across_back: 16
             index_value: 73
         38d:
             title: 38d
@@ -751,7 +824,8 @@ constants:
             cup: d
             low: 41 
             high: 43
-            average: 42
+            average: 42   
+            shoulder_across_back: 16.5
             index_value: 74
         38dd:
             title: 38dd
@@ -759,7 +833,8 @@ constants:
             cup: dd
             low: 42 
             high: 44
-            average: 43 
+            average: 43    
+            shoulder_across_back: 16.25
             index_value: 75
         38ddd:
             title: 38ddd
@@ -767,7 +842,8 @@ constants:
             cup: dd
             low: 43 
             high: 45
-            average: 44 
+            average: 44    
+            shoulder_across_back: 16.5
             index_value: 76
         38dddd:
             title: 38dddd
@@ -775,7 +851,8 @@ constants:
             cup: dddd
             low: 44 
             high: 46
-            average: 45 
+            average: 45    
+            shoulder_across_back: 
             index_value: 77
         38h:
             title: 38h
@@ -783,7 +860,8 @@ constants:
             cup: h
             low: 45 
             high: 47
-            average: 46 
+            average: 46    
+            shoulder_across_back: 
             index_value: 78
         38i:
             title: 38i
@@ -791,7 +869,8 @@ constants:
             cup: i
             low: 46 
             high: 48
-            average: 47 
+            average: 47    
+            shoulder_across_back: 
             index_value: 79
         38j:
             title: 38j
@@ -799,7 +878,8 @@ constants:
             cup: j
             low: 47 
             high: 49
-            average: 48
+            average: 48   
+            shoulder_across_back: 
             index_value: 80
         38k:
             title: 38k
@@ -807,7 +887,8 @@ constants:
             cup: k
             low: 48 
             high: 50
-            average: 49 
+            average: 49    
+            shoulder_across_back: 
             index_value: 81
         38l:
             title: 38l
@@ -815,7 +896,8 @@ constants:
             cup: l
             low: 49 
             high: 51
-            average: 50 
+            average: 50    
+            shoulder_across_back: 
             index_value: 82
         38m:
             title: 38m
@@ -823,7 +905,8 @@ constants:
             cup: m
             low: 50 
             high: 52
-            average: 51 
+            average: 51    
+            shoulder_across_back: 
             index_value: 83
         38n:
             title: 38n
@@ -831,7 +914,8 @@ constants:
             cup: n
             low: 51 
             high: 53
-            average: 52 
+            average: 52    
+            shoulder_across_back: 
             index_value: 84    
         40a:
             title: 40a
@@ -839,7 +923,8 @@ constants:
             cup: a
             low: 40 
             high: 42
-            average: 41 
+            average: 41    
+            shoulder_across_back: 16.875
             index_value: 85
         40b:
             title: 40b
@@ -847,7 +932,8 @@ constants:
             cup: b
             low: 41 
             high: 43
-            average: 42    
+            average: 42       
+            shoulder_across_back: 17
             index_value: 86
         40c:
             title: 40c
@@ -855,7 +941,8 @@ constants:
             cup: c
             low: 42 
             high: 44
-            average: 43 
+            average: 43    
+            shoulder_across_back: 17.375
             index_value: 87
         40d:
             title: 40d
@@ -863,7 +950,8 @@ constants:
             cup: d 
             low: 43 
             high: 45
-            average: 44
+            average: 44   
+            shoulder_across_back: 17.625
             index_value: 88
         40dd:
             title: 40dd
@@ -871,7 +959,8 @@ constants:
             cup: dd
             low: 44 
             high: 46
-            average: 45 
+            average: 45    
+            shoulder_across_back: 17.875
             index_value: 89
         40ddd:
             title: 40ddd
@@ -879,7 +968,8 @@ constants:
             cup: ddd
             low: 45 
             high: 47
-            average: 46  
+            average: 46     
+            shoulder_across_back: 18.125
             index_value: 90
         40dddd:
             title: 40dddd
@@ -887,7 +977,8 @@ constants:
             cup: dddd
             low: 46 
             high: 48
-            average: 47  
+            average: 47     
+            shoulder_across_back: 
             index_value: 91   
         40h:
             title: 40h
@@ -895,7 +986,8 @@ constants:
             cup: h
             low: 47 
             high: 49
-            average: 48  
+            average: 48     
+            shoulder_across_back: 
             index_value: 92    
         40i:
             title: 40i
@@ -903,7 +995,8 @@ constants:
             cup: i
             low: 48 
             high: 50
-            average: 49  
+            average: 49     
+            shoulder_across_back: 
             index_value: 93   
         40j:
             title: 40j
@@ -919,7 +1012,8 @@ constants:
             cup: k
             low: 50 
             high: 52
-            average: 51  
+            average: 51     
+            shoulder_across_back: 
             index_value: 95    
         40l:
             title: 40l
@@ -927,7 +1021,8 @@ constants:
             cup: l
             low: 51 
             high: 53
-            average: 52  
+            average: 52     
+            shoulder_across_back: 
             index_value: 96    
         40m:
             title: 40m
@@ -935,7 +1030,8 @@ constants:
             cup: m
             low: 52 
             high: 54
-            average: 53  
+            average: 53     
+            shoulder_across_back: 
             index_value: 97    
         40n:
             title: 40n
@@ -943,9 +1039,63 @@ constants:
             cup: n
             low: 53 
             high: 55
-            average: 54  
+            average: 54     
+            shoulder_across_back: 
             index_value: 98        
-         
+        42a:
+            title: 42a
+            size: 42 
+            cup: a
+            low: 42 
+            high: 44
+            average: 41     
+            shoulder_across_back: 18.375
+            index_value: 99        
+        42b:
+            title: 42b
+            size: 42 
+            cup: b
+            low: 43 
+            high: 45
+            average: 44     
+            shoulder_across_back: 17.625
+            index_value: 100         
+        42c:
+            title: 42c
+            size: 42 
+            cup: c
+            low: 44 
+            high: 46
+            average: 45     
+            shoulder_across_back: 17.875
+            index_value: 100
+        42d:
+            title: 42d
+            size: 42 
+            cup: d
+            low: 45 
+            high: 46
+            average: 47     
+            shoulder_across_back: 18.375
+            index_value: 100
+        42dd:
+            title: 42dd
+            size: 42 
+            cup: dd
+            low: 46 
+            high: 47
+            average: 48     
+            shoulder_across_back: 18.625
+            index_value: 100            
+        42ddd:
+            title: 42ddd
+            size: 42 
+            cup: ddd
+            low: 47 
+            high: 48
+            average: 49     
+            shoulder_across_back: 18.875
+            index_value: 100            
     man:
       letter:
         XXS: 
