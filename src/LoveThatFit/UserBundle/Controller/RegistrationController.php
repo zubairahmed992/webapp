@@ -660,7 +660,8 @@ public function stepFourTimeSpentAction(Request $request){
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $marker = $this->get('user.marker.helper')->getByUser($user);
-        #return new response($marker->getRectHeight());   
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+                
         $edit_type=$edit_type==null?'registration':'fitting_room';
         
         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
@@ -673,6 +674,7 @@ public function stepFourTimeSpentAction(Request $request){
                     'measurement' => $measurement,
                     'edit_type' => $edit_type,
                     'marker' => $marker,
+                    'default_marker' => $default_marker,
             ));
     }
 

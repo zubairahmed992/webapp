@@ -100,6 +100,24 @@ private function getWomanBraSizesParsed($type=null){
     }
     return $new_arr;
 }
+public function getWomanBraSpecs($bra_size){    
+     $arr=$this->constant['size_titles']['woman']['bra'];
+    foreach($arr as $key=>$val){
+        if($key==$bra_size){            
+            return array(
+                    'title' => array_key_exists('title', $val)?$val['title']:null,
+                    'size' => array_key_exists('size', $val)?$val['size']:null,
+                    'cup' => array_key_exists('cup', $val)?$val['cup']:null,
+                    'low' => array_key_exists('low', $val)?$val['low']:null,
+                    'high' => array_key_exists('high', $val)?$val['high']:null,
+                    'average' => array_key_exists('average', $val)?$val['average']:null,
+                    'shoulder_across_back' => array_key_exists('shoulder_across_back', $val)?$val['shoulder_across_back']:null,
+                );
+            break;
+        }
+    }
+    return null;
+}
 #------------------------Getting All Male Sizes--------------------------------#
 #---------------------- Get Man Letter Sizes---------------------------------#
   public function getManLetterSizes(){
