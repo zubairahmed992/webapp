@@ -175,7 +175,12 @@ class RegistrationController extends Controller {
        
         $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
        
-        $measurement->setBraSize($measurement->bra_numbers." ".$measurement->bra_letters);
+        $measurement->setBraSize($measurement->bra_numbers.$measurement->bra_letters);
+        $bra_size_spec = $this->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
+        if ($bra_size_spec!=null){
+            $measurement->setShoulderAcrossBack($bra_size_spec['shoulder_across_back']);
+            #return new Response(json_encode($bra_size_spec));
+        }
         if(isset($request_array['neck'])!=0 and isset($request_array['sleeve'])!=0){
             $sizeBaseOnSleeveNeck=$this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve($request_array['neck'],$request_array['sleeve']);
             $measurement->setArm($sizeBaseOnSleeveNeck['arm_length']);
