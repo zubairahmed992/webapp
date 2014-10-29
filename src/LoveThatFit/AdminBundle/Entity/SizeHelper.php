@@ -16,15 +16,19 @@ class SizeHelper {
 
 #-------------------Fetch All Sizes -------------------------------------------#
 public function getAllSizes(){
-  return array('woman_letter_sizes'=>$this->getWomanLetterSizes(),
-           'woman_number_sizes'=>$this->getWomanNumberSizes()
-          ,'woman_waist_sizes'=>$this->getWomanWaistSizes(),
-         'woman_bra_sizes'=>$this->getWomanBraSizes(),
-       'man_letter_sizes'=>$this->getManLetterSizes(),
+  return array(
+      'woman_letter_sizes'=>$this->getWomanLetterSizes(),
+      'woman_number_sizes'=>$this->getWomanNumberSizes(),
+      'woman_waist_sizes'=>$this->getWomanWaistSizes(),
+      'woman_bra_sizes'=>$this->getWomanBraSizes(),
+      'man_letter_sizes'=>$this->getManLetterSizes(),
       'man_chest_sizes'=>$this->getManChestSizes(),
       'man_waist_sizes'=>$this->getManWaistSizes(),
       'man_shirt_sizes'=>$this->getManShirtSizes(),
-      'man_neck_sizes'=>$this->getManNeckSizes());
+      'man_neck_sizes'=>$this->getManNeckSizes(),
+      'sleeve' => $this->getManSleeveSizes(),
+      'inseam' => $this->getManInseamSizes(),
+      );
 }
 
 
@@ -52,6 +56,8 @@ public function getAllSizes(){
                     'waist' => $this->getManWaistSizes(),
                     'shirt' => $this->getManShirtSizes(),
                     'neck' => $this->getManNeckSizes(),
+                    'sleeve' => $this->getManSleeveSizes(),
+                    'inseam' => $this->getManInseamSizes(),
                 ),
             ),
         );
@@ -136,6 +142,15 @@ public function getManWaistSizes(){
 public function getManShirtSizes(){
      return $this->getArray($this->constant['size_titles']['man']['shirt']);
 }
+#------------------------------------------------
+public function getManSleeveSizes(){
+     return $this->constant['size_titles']['man']['sleeve'];
+}
+#------------------------------------------------
+public function getManInseamSizes(){
+     return $this->constant['size_titles']['man']['inseam'];
+}
+
 #--------------------Get Man Neck Sizes---------------------------------------#
 public function getManNeckSizes(){
      return $this->getArray($this->constant['size_titles']['man']['neck']);
