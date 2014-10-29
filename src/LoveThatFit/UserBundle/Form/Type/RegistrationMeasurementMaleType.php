@@ -19,18 +19,18 @@ private $waist;
 private $inseam;
 private $brandHelper;
 private $timespent;
-     public function __construct($container,$neck,$sleeve,$waist,$inseam,$body_shape,$body_types,$brandHelper)             
+     public function __construct($container,$sizes,$brandHelper)             
     {
         $this->container= $container;
-        $this->body_types=$body_types;
-        $this->neck=$neck;
-        $this->sleeve=$sleeve;
-        $this->waist=$waist;
-        $this->inseam=$inseam;
+        $this->body_types=$sizes['fit_types']['man'];
+        $this->neck=$sizes['sizes']['man']['neck'];//$neck;
+        $this->sleeve=$sizes['sizes']['man']['sleeve'];//$sleeve;
+        $this->waist=$sizes['sizes']['man']['waist'];//$waist;
+        $this->inseam=$sizes['sizes']['man']['inseam'];//$inseam;
         $this->brandHelper=$brandHelper;
         $this->top_brands=$this->brandHelper->getTopBrandForMaleBaseOnSizeChart();
         $this->bottom_brands=$this->brandHelper->getBottomBrandForMaleBaseOnSizeChart();
-        $this->body_shape=$body_shape; 
+        $this->body_shape=$sizes['body_shapes']['man'];//$body_shape; 
        
         
         

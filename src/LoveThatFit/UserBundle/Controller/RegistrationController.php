@@ -67,6 +67,7 @@ class RegistrationController extends Controller {
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $brandHelper=$this->get('admin.helper.brand');
         $user_helper = $this->get('user.helper.user');
+          $sizes = $this->get('admin.helper.size')->getDefaultArray();
         try {
             $user = new User();
            
@@ -98,12 +99,7 @@ class RegistrationController extends Controller {
                 $this->get('mail_helper')->sendRegistrationEmail($user);
 
                 if ($user->getGender() == 'm') {
-
-                    $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
-                    $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
-                    $waist_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
-                    $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);                    
-                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size,$this->get('admin.helper.utility')->getBodyShapes("men"),$this->get('admin.helper.utility')->getBodyTypes("men"),$brandHelper), $measurement);
+                   $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper, $sizes, $brandHelper), $measurement);
                 } else {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShapes("women"),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching(),$brandHelper), $measurement);
                 }
@@ -151,81 +147,74 @@ class RegistrationController extends Controller {
 
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $size_chart_helper = $this->get('admin.helper.sizechart');
-        $brandHelper=$this->get('admin.helper.brand');
+        $brandHelper = $this->get('admin.helper.brand');
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
         $data = $request->request->all();
         $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
-   #---------Start OF CRF Protection--------------------------------------#
- if ($this->getRequest()->getMethod() == 'POST') {
-     
-        if ($user->getGender() == 'm') {
-    $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
-    $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
-    $waist_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
-    $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);   
-    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size,$this->get('admin.helper.utility')->getBodyShapes("men"),$this->get('admin.helper.utility')->getBodyTypes("men"),$brandHelper), $measurement);
-   } else {
-      $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShapes("women"),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypesSearching(),$brandHelper), $measurement);
+        $sizes = $this->get('admin.helper.size')->getDefaultArray();
+
+        #---------Start OF CRF Protection--------------------------------------#
+        if ($this->getRequest()->getMethod() == 'POST') {
+            if ($user->getGender() == 'm') {
+                $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper, $sizes, $brandHelper), $measurement);
+            } else {
+                $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper, $this->get('admin.helper.utility')->getBodyShapes("women"), $this->get('admin.helper.utility')->getBraLetters(), $this->get('admin.helper.utility')->getBraNumbers(), $this->get('admin.helper.utility')->getBodyTypesSearching(), $brandHelper), $measurement);
+            }
+            $registrationMeasurementform->bind($this->getRequest());
+            #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
+
+            $request_array = $this->getRequest()->get('measurement');
+
+            $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
+
+            $measurement->setBraSize($measurement->bra_numbers . $measurement->bra_letters);
+            $bra_size_spec = $this->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
+            if ($bra_size_spec != null) {
+                $measurement->setShoulderAcrossBack($bra_size_spec['shoulder_across_back']);
+                #return new Response(json_encode($bra_size_spec));
+            }
+            if (isset($request_array['neck']) != 0 and isset($request_array['sleeve']) != 0) {
+                $sizeBaseOnSleeveNeck = $this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve($request_array['neck'], $request_array['sleeve']);
+                $measurement->setArm($sizeBaseOnSleeveNeck['arm_length']);
+                $measurement->setShoulderAcrossBack($sizeBaseOnSleeveNeck['shoulder']);
+            }
+
+            //$birthDate=date("Y-m-d",strtotime());
+
+            $user->setBirthDate($measurement->birthdate);
+            if ($data['measurement']['timespent']) {
+                $user_reg_time = $user->getTimeSpent() + $data['measurement']['timespent'];
+                $user->setTimeSpent($user_reg_time);
+            }
+            $this->get('user.helper.user')->saveUser($user);
+            if ($user->getAge() < 15 and $user->isApproved != 1) {        // Rendering step four
+                $form = $this->createForm(new UserParentChildLinkType());
+                return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
+                            'form' => $form->createView(),
+                            'entity' => $user,
+                            'edit_type' => 'registration',
+                            'isapproved' => $user->isApproved,
+                        ));
+            } else {
+                $form = $this->createForm(new RegistrationStepFourType(), $user);
+                $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+                $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+                $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+                $marker = $this->get('user.marker.helper')->getByUser($user);
+                return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
+                            'form' => $form->createView(),
+                            'measurement_form' => $measurement_form->createView(),
+                            'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                            'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                            'entity' => $user,
+                            'measurement' => $measurement,
+                            'edit_type' => 'registration',
+                            'marker' => $marker,
+                            'default_marker' => $default_marker,
+                        ));
+            }
         }
-        $registrationMeasurementform->bind($this->getRequest());
-        #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
-        
-        $request_array = $this->getRequest()->get('measurement');     
-       
-        $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
-       
-        $measurement->setBraSize($measurement->bra_numbers.$measurement->bra_letters);
-        $bra_size_spec = $this->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
-        if ($bra_size_spec!=null){
-            $measurement->setShoulderAcrossBack($bra_size_spec['shoulder_across_back']);
-            #return new Response(json_encode($bra_size_spec));
-        }
-        if(isset($request_array['neck'])!=0 and isset($request_array['sleeve'])!=0){
-            $sizeBaseOnSleeveNeck=$this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve($request_array['neck'],$request_array['sleeve']);
-            $measurement->setArm($sizeBaseOnSleeveNeck['arm_length']);
-            $measurement->setShoulderAcrossBack($sizeBaseOnSleeveNeck['shoulder']);
-        }
-        
-        //$birthDate=date("Y-m-d",strtotime());
-                
-        $user->setBirthDate($measurement->birthdate);
-        if($data['measurement']['timespent']){
-        $user_reg_time=$user->getTimeSpent()+$data['measurement']['timespent'];
-         $user->setTimeSpent($user_reg_time);
-        }
-        $this->get('user.helper.user')->saveUser($user);        
-        if($user->getAge()<15 and $user->isApproved!=1)
-        {        // Rendering step four
-        $form = $this->createForm(new UserParentChildLinkType());
-            return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
-                    'form' => $form->createView(),                    
-                    'entity' => $user,      
-                    'edit_type' => 'registration',
-                    'isapproved'=>$user->isApproved,
-               
-                ));
-        }else
-        {
-         $form = $this->createForm(new RegistrationStepFourType(), $user);
-         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
-         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
-         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
-         $marker = $this->get('user.marker.helper')->getByUser($user);
-         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
-                    'form' => $form->createView(),
-                    'measurement_form' => $measurement_form->createView(),
-                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
-                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
-                    'entity' => $user,
-                    'measurement' => $measurement,
-                    'edit_type' => 'registration',            
-                    'marker' => $marker,
-             'default_marker' => $default_marker,
-             
-             ));
-        }
-    }
   }
 
 //-----------------------------------------------------------------------------
@@ -240,13 +229,11 @@ class RegistrationController extends Controller {
         
         $brandHelper=$this->get('admin.helper.brand');
        // $shirtSizesBaseNeckSleeve = $this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve(14,32);
-        
+        $sizes=$this->get('admin.helper.size')->getDefaultArray();
+       
         if ($user->getGender() == 'm') {
-            $neck_size=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
-            $sleeve_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
-            $waist_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
-            $inseam_size=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);            
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$neck_size,$sleeve_size,$waist_size,$inseam_size,$this->get('admin.helper.utility')->getBodyShapes("men"),$this->get('admin.helper.utility')->getBodyTypes("men"),$brandHelper), $measurement);
+         
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$sizes,$brandHelper), $measurement);
        } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$this->get('admin.helper.utility')->getBodyShapes("women"),$this->get('admin.helper.utility')->getBraLetters(),$this->get('admin.helper.utility')->getBraNumbers(),$this->get('admin.helper.utility')->getBodyTypes("women"),$brandHelper), $measurement);           
             $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   
