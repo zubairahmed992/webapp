@@ -1,0 +1,307 @@
+general_measurements:
+  man:
+    xs_min:
+        neck: 13
+        chest: 32
+        waist: 26
+        regular_sleeve_length: 32.5
+        tall_sleeve_length: 34
+        height: 71
+        neck_base: 14.50
+        neck_middle: 13.67
+        cf_waist: 13.75
+        back_waist: 16.17 
+        total_crotch: 26.88
+        inseam: 29.85 
+        chest_actual: 34.25 
+        waist_actual: 28 
+        hip_actual: 35.0 
+        shoulder_across_front: 16.00
+        shoulder_across_back: 15.3 
+        shoulder_length: 5.5625
+        max_thigh: 21.0625
+        knee: 14.375 
+        calf: 13.4375
+        ankle: 9.0625
+
+    xs_max:
+        neck: 13.5
+        chest: 32
+        waist: 28
+        regular_sleeve_length: 32.5
+        tall_sleeve_length: 34
+        height: 71
+        neck_base: 14.50
+        neck_middle: 13.67
+        cf_waist: 13.75
+        back_waist: 16.17 
+        total_crotch: 26.88
+        inseam: 29.85 
+        chest_actual: 34.25 
+        waist_actual: 28 
+        hip_actual: 35.0 
+        shoulder_across_front: 16.00
+        shoulder_across_back: 15.3 
+        shoulder_length: 5.5625
+        max_thigh: 21.0625
+        knee: 14.375 
+        calf: 13.4375
+        ankle: 9.0625   
+
+    s_min:
+        neck: 14
+        chest: 34
+        waist: 28
+        regular_sleeve_length: 32.5
+        tall_sleeve_length: 34
+        height: 71
+        neck_base: 15
+        neck_middle: 14.17
+        cf_waist: 14
+        back_waist: 16.54 
+        total_crotch: 27.88
+        inseam: 30.05 
+        chest_actual: 36.25 
+        waist_actual: 30 
+        hip_actual: 37
+        shoulder_across_front: 16.5
+        shoulder_across_back: 15.75 
+        shoulder_length: 5.68
+        max_thigh: 21.9375
+        knee: 14.875 
+        calf: 14.0625
+        ankle: 9.4375       
+
+    s_max:
+        neck: 14.5
+        chest: 36
+        waist: 30
+        regular_sleeve_length: 32.5
+        tall_sleeve_length: 34
+        height: 71
+        neck_base: 15.50
+        neck_middle: 14.67
+        cf_waist: 14.25
+        back_waist: 16.92 
+        total_crotch: 28.88
+        inseam: 30.25 
+        chest_actual: 38.25 
+        waist_actual: 32 
+        hip_actual: 39
+        shoulder_across_front: 17
+        shoulder_across_back: 16.25 
+        shoulder_length: 5.81
+        max_thigh: 22.81
+        knee: 15.38 
+        calf: 14.69
+        ankle: 9.81      
+
+    m_min:
+        neck: 15
+        chest: 38
+        waist: 32
+        regular_sleeve_length: 33.5
+        tall_sleeve_length: 35
+        height: 71
+        neck_base: 16.00
+        neck_middle: 15.17
+        cf_waist: 14.50
+        back_waist: 17.17
+        total_crotch: 29.88
+        inseam: 30.41 
+        chest_actual: 40.25
+        waist_actual: 34.00
+        hip_actual: 41.00
+        shoulder_across_front: 17.50
+        shoulder_across_back: 16.75 
+        shoulder_length: 6.00
+        max_thigh: 23.75
+        knee: 15.88
+        calf: 15.19
+        ankle: 10.19  
+
+    m_max:
+        neck: 15.50
+        chest: 40
+        waist: 34
+        regular_sleeve_length: 33.5
+        tall_sleeve_length: 35
+        height: 71
+        neck_base: 16.50
+        neck_middle: 15.67
+        cf_waist: 14.75
+        back_waist: 17.42
+        total_crotch: 30.88
+        inseam: 30.56 
+        chest_actual: 42.25
+        waist_actual: 36
+        hip_actual: 43.00
+        shoulder_across_front: 18
+        shoulder_across_back: 17.25
+        shoulder_length: 6.19
+        max_thigh: 24.75
+        knee: 16.44
+        calf: 15.75
+        ankle: 10.56
+
+    l_min:
+        neck: 16
+        chest: 42
+        waist: 36
+        regular_sleeve_length: 34.5
+        tall_sleeve_length: 36
+        height: 71
+        neck_base: 17.00
+        neck_middle: 16.17
+        cf_waist: 15
+        back_waist: 17.67
+        total_crotch: 31.88
+        inseam: 30.81 
+        chest_actual: 44.25
+        waist_actual: 38
+        hip_actual: 45.00
+        shoulder_across_front: 18.50
+        shoulder_across_back: 17.75
+        shoulder_length: 6.38
+        max_thigh: 25.75
+        knee: 17
+        calf: 16.31
+        ankle: 10.94 
+
+    l_max:
+        neck: 16.5
+        chest: 44
+        waist: 38
+        regular_sleeve_length: 34.5
+        tall_sleeve_length: 36
+        height: 71
+        neck_base: 17.50
+        neck_middle: 16.67
+        cf_waist: 15.25
+        back_waist: 17.92
+        total_crotch: 32.88
+        inseam: 31.06 
+        chest_actual: 45.38
+        waist_actual: 40
+        hip_actual: 47.00
+        shoulder_across_front: 19
+        shoulder_across_back: 18.25
+        shoulder_length: 6.56
+        max_thigh: 26.75
+        knee: 17.56
+        calf: 16.88
+        ankle: 11.31 
+        
+    xl_min:
+        neck: 17
+        chest: 46
+        waist: 40
+        regular_sleeve_length: 35
+        tall_sleeve_length: 37
+        height: 71
+        neck_base: 18
+        neck_middle: 17.17
+        cf_waist: 15.50
+        back_waist: 18.17
+        total_crotch: 33.88
+        inseam: 31.31
+        chest_actual: 46.50
+        waist_actual: 42
+        hip_actual: 49
+        shoulder_across_front: 19.50
+        shoulder_across_back: 18.75
+        shoulder_length: 6.75
+        max_thigh: 27.75
+        knee: 18.13
+        calf: 17.44
+        ankle: 11.69
+        
+    xl_max:
+        neck: 17.50
+        chest: 48
+        waist: 42
+        regular_sleeve_length: 35
+        tall_sleeve_length: 37
+        height: 71
+        neck_base: 18.5
+        neck_middle: 17.375
+        cf_waist: 15.75
+        back_waist: 18.25
+        total_crotch: 34.88
+        inseam: 31.625 
+        chest_actual: 48.50
+        waist_actual: 44
+        hip_actual: 51
+        shoulder_across_front: 20
+        shoulder_across_back: 19
+        shoulder_length: 6.875
+        max_thigh: 28.75
+        knee: 19
+        calf: 18.25
+        ankle: 12 
+        
+    xxl_min:
+        neck: 18
+        chest: 50
+        waist: 44
+        regular_sleeve_length: 36.5
+        tall_sleeve_length: 38
+        height: 71
+        neck_base: 19
+        neck_middle: 17.63
+        cf_waist: 16.00
+        back_waist: 18.5
+        total_crotch: 35.88
+        inseam: 32 
+        chest_actual: 49.50
+        waist_actual: 46
+        hip_actual: 53
+        shoulder_across_front: 20.5
+        shoulder_across_back: 19.25
+        shoulder_length: 7
+        max_thigh: 29.75
+        knee: 19.75
+        calf: 19
+        ankle: 12.38   
+
+    xxl_max:
+        neck: 18.5
+        chest: 52
+        waist: 46
+        regular_sleeve_length: 36.5
+        tall_sleeve_length: 38
+        height: 71
+        neck_base: 19.5
+        neck_middle: 18.00
+        cf_waist: 16.25
+        back_waist: 19
+        total_crotch: 36.88
+        inseam: 32.5 
+        chest_actual: 50.50
+        waist_actual: 48.00
+        hip_actual: 55
+        shoulder_across_front: 21
+        shoulder_across_back: 19.5
+        shoulder_length: 7.25
+        max_thigh: 30.75
+        knee: 20.50
+        calf: 19.75
+        ankle: 12.63
+
+      
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+

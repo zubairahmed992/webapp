@@ -10,6 +10,9 @@ services:
      admin.helper.utility:
         class: LoveThatFit\AdminBundle\Entity\UtilityHelper
      
+     admin.helper.general_measurements:
+        class: LoveThatFit\AdminBundle\Entity\GeneralMeasurementsHelper    
+     
      admin.helper.size:
         class: LoveThatFit\AdminBundle\Entity\SizeHelper    
         
