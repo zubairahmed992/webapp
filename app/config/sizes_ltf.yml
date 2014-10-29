@@ -6,6 +6,7 @@ services:
 #        class: %love_that_fit_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
+  
   size_titles:
     woman:
       letter:
@@ -114,8 +115,7 @@ constants:
           index: 17
         30: 
           title: 30
-          index: 18        
-          
+          index: 18                  
       waist:
         23: 
           title: 23
@@ -1267,8 +1267,7 @@ constants:
          index: 24
         52: 
          title: 52
-         index: 25  
-         
+         index: 25           
       shirt:
          14-32:
            title: 14-32
@@ -2132,8 +2131,7 @@ constants:
            half_shoulder: 11.75
            shoulder: 24.5
            sleeve_size: 39
-           index: 94
-           
+           index: 94           
       neck:
           14:
             title: 14 
@@ -2180,6 +2178,8 @@ constants:
          37: 37
          38: 38
          39: 39 
+         
+         
   size_title_type:
     man:
       chest: chest
@@ -2192,6 +2192,7 @@ constants:
       letter: letter
       waist: waist
       bra: bra
+  
   
   body_shape:
     woman:

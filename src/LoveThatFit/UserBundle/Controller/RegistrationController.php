@@ -155,7 +155,7 @@ class RegistrationController extends Controller {
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
         $data = $request->request->all();
-        
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
    #---------Start OF CRF Protection--------------------------------------#
  if ($this->getRequest()->getMethod() == 'POST') {
      
@@ -175,7 +175,12 @@ class RegistrationController extends Controller {
        
         $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
        
-        $measurement->setBraSize($measurement->bra_numbers." ".$measurement->bra_letters);
+        $measurement->setBraSize($measurement->bra_numbers.$measurement->bra_letters);
+        $bra_size_spec = $this->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
+        if ($bra_size_spec!=null){
+            $measurement->setShoulderAcrossBack($bra_size_spec['shoulder_across_back']);
+            #return new Response(json_encode($bra_size_spec));
+        }
         if(isset($request_array['neck'])!=0 and isset($request_array['sleeve'])!=0){
             $sizeBaseOnSleeveNeck=$this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve($request_array['neck'],$request_array['sleeve']);
             $measurement->setArm($sizeBaseOnSleeveNeck['arm_length']);
@@ -198,6 +203,7 @@ class RegistrationController extends Controller {
                     'entity' => $user,      
                     'edit_type' => 'registration',
                     'isapproved'=>$user->isApproved,
+               
                 ));
         }else
         {
@@ -215,6 +221,8 @@ class RegistrationController extends Controller {
                     'measurement' => $measurement,
                     'edit_type' => 'registration',            
                     'marker' => $marker,
+             'default_marker' => $default_marker,
+             
              ));
         }
     }
@@ -228,7 +236,7 @@ class RegistrationController extends Controller {
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
          
-        
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
         
         $brandHelper=$this->get('admin.helper.brand');
        // $shirtSizesBaseNeckSleeve = $this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve(14,32);
@@ -262,6 +270,7 @@ class RegistrationController extends Controller {
                     'dress_size_chart_id' => $retaining_array['dressSizeChartId'],
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+            'default_marker' => $default_marker,
                    
                 ));
     }
@@ -660,7 +669,8 @@ public function stepFourTimeSpentAction(Request $request){
         $form = $this->createForm(new RegistrationStepFourType(), $user);
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $marker = $this->get('user.marker.helper')->getByUser($user);
-        #return new response($marker->getRectHeight());   
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+                
         $edit_type=$edit_type==null?'registration':'fitting_room';
         
         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
@@ -673,6 +683,7 @@ public function stepFourTimeSpentAction(Request $request){
                     'measurement' => $measurement,
                     'edit_type' => $edit_type,
                     'marker' => $marker,
+                    'default_marker' => $default_marker,
             ));
     }
 
