@@ -49,6 +49,9 @@ public function getAllSizes(){
                     'number' => $this->getWomanNumberSizes(),
                     'waist' => $this->getWomanWaistSizes(),
                     'bra' => $this->getWomanBraSizes(),
+                    'bra_cup' => $this->getWomanBraCups(),
+                    'bra_band' => $this->getWomanBraBands(),
+                    
                 ),
                 'man' => array(
                     'letter' => $this->getManLetterSizes(),

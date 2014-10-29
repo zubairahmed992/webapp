@@ -19,18 +19,18 @@ class RegistrationMeasurementFemaleType extends AbstractType
     private $bra_letters;   
     private $brandHelper;
     private $timespent;
-     public function __construct($container,$body_shape,$bra_letters,$bra_numbers,$body_types,$brandHelper)             
+     public function __construct($container,$sizes,$brandHelper)             
     {
         $this->container= $container;
         $this->brandHelper=$brandHelper;
-        $this->body_types=$body_types;
+        $this->body_types=$sizes['fit_types']['woman'];//$body_types;
         
         $this->top_brands=$this->brandHelper->getTopBrandForFemaleBaseOnSizeChart();
         $this->bottom_brands=$this->brandHelper->getBottomBrandForFemaleBaseOnSizeChart();
         $this->dress_brands=$this->brandHelper->getDressBrandForFemaleBaseOnSizeChart();
-        $this->body_shape=$body_shape;        
-        $this->bra_letters=$bra_letters;  
-        $this->bra_numbers=$bra_numbers;  
+        $this->body_shape=$sizes['body_shapes']['woman'];        
+        $this->bra_letters=$sizes['sizes']['woman']['bra_cup'];//$bra_letters;  
+        $this->bra_numbers=$sizes['sizes']['woman']['bra_band'];//$bra_numbers;  
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
