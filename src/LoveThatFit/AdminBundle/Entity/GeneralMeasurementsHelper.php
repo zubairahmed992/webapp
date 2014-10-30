@@ -27,8 +27,11 @@ class GeneralMeasurementsHelper {
                 $averageArray['key'] = $key;
             }
         }
-
-        return $this->getmeasurementByKey($averageArray['key']);
+        if($averageArray['key']){
+        return $this->getmeasurementByKey($averageArray['key']);}
+        else{
+        return false;    
+        }
     }
 
 #----------------------------------------------------------------------------
