@@ -526,26 +526,26 @@ class AvgAlgorithm {
         $sh = new SizeHelper();
 
         if ($gender == 'f' && ($type == 'letters' || $type == 'letter')) {//letters
-            #return $sh->getSizeArrayByGenderType($gender, 'letter') ;
+            return $sh->getWomanLetterSizes(false);
         } else if ($gender == 'f' && ($type == 'number' || $type == 'numbers')) {//$female_standard
-            #return $sh->getSizeArrayByGenderType($gender, 'letter') ;
+            return $sh->getWomanNumberSizes(false);
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
-            return ;
+            return $sh->getWomanWaistSizes(false);
         }
         else if ($gender == 'f' && $type == 'bra') {//$female_bra
-            return ;
+            return $sh->getWomanBraSizes(false);
         } 
         else if ($gender == 'm' && ($type == 'letters' || $type == 'letter')) {//letters
-            return ;
+            return $sh->getManLetterSizes(false);    
         }
         else if ($gender == 'm' && $type == 'chest') {//man Chest
-            return ;
+            return $sh->getManChestSizes(false);
         } else if ($gender == 'm' && $type == 'waist') {//man bottom
-            return ;
+            return $sh->getManWaistSizes(false);
         } else if ($gender == 'm' && $type == 'neck') {//man neck
-            return ;
+            return $sh->getManNeckSizes(false);
         }else if ($gender == 'm' && $type == 'shirt') {//man shirt
-            return ;
+            return $sh->getManShirtSizes(false);
         }
     }
     private function getSizeTitleArray($gender = 'f', $type = 'numbers') {
@@ -592,6 +592,16 @@ class AvgAlgorithm {
    #----------------------------------------------------------       
 
     private function getSizeTypes($gender='f') {
+        if($gender=='m'){
+            return array('Regular', 'Athletic', 'Tall', 'Big');
+        }else{
+            return array('Regular', 'Petite', 'Tall', 'Plus');
+        }
+        
+    }
+    private function _getSizeTypes($gender='f') {
+        $sh = new SizeHelper();
+        
         if($gender=='m'){
             return array('Regular', 'Athletic', 'Tall', 'Big');
         }else{

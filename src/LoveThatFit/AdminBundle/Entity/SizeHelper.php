@@ -69,30 +69,30 @@ public function getAllSizes(){
 #--------------------Woman Sizes Start Here-------------------------------------#
 
 #---------------------- Get Woman Letter Sizes---------------------------------#
-  public function getWomanLetterSizes(){
-        return $this->getArray($this->constant['size_titles']['woman']['letter']);
+  public function getWomanLetterSizes($key_pair=true){
+    return $this->getArray($this->constant['size_titles']['woman']['letter'], $key_pair);  
 }
 #-----------------------Get Woman Number Sizes----------------------------------#
-public function getWomanNumberSizes(){
-     return $this->getArray($this->constant['size_titles']['woman']['number']);
+public function getWomanNumberSizes($key_pair=true){
+     return $this->getArray($this->constant['size_titles']['woman']['number'], $key_pair);
     
 }
 #------------------------Get Woman Waist Sizes---------------------------------#
-public function getWomanWaistSizes(){
-     return $this->getArray($this->constant['size_titles']['woman']['waist']);
+public function getWomanWaistSizes($key_pair=true){
+     return $this->getArray($this->constant['size_titles']['woman']['waist'], $key_pair);
 }
 #-----------------------Get Woman Bra Size ------------------------------------#
-public function getWomanBraSizes(){
-     return $this->getWomanBraSizesParsed();    
+public function getWomanBraSizes($key_pair=true){
+     return $this->getWomanBraSizesParsed(null, $key_pair);    
 }
-public function getWomanBraCups(){
-     return $this->getWomanBraSizesParsed('cup');
+public function getWomanBraCups($key_pair=true){
+     return $this->getWomanBraSizesParsed('cup', $key_pair);
 }
-public function getWomanBraBands(){
-    return $this->getWomanBraSizesParsed('band');    
+public function getWomanBraBands($key_pair=true){
+    return $this->getWomanBraSizesParsed('band', $key_pair);    
 }
 
-private function getWomanBraSizesParsed($type=null){
+private function getWomanBraSizesParsed($type=null, $key_pair=true){
      $new_arr=array();
      $arr=$this->constant['size_titles']['woman']['bra'];
     foreach($arr as $key){
@@ -104,8 +104,12 @@ private function getWomanBraSizesParsed($type=null){
             $element=trim(str_replace($cup,'',$key['title']));
         }else{
             $element=$key['title'];
-        }        
-        $new_arr[$element]=$element;   
+        } 
+        if($key_pair)
+            $new_arr[$element]=$element;   
+        else
+            array_push ($new_arr, $element);
+        
     }
     return $new_arr;
 }
@@ -129,21 +133,21 @@ public function getWomanBraSpecs($bra_size){
 }
 #------------------------Getting All Male Sizes--------------------------------#
 #---------------------- Get Man Letter Sizes---------------------------------#
-  public function getManLetterSizes(){
-        return $this->getArray($this->constant['size_titles']['man']['letter']);
+  public function getManLetterSizes($key_pair=true){
+        return $this->getArray($this->constant['size_titles']['man']['letter'], $key_pair);
 }
 #-----------------------Get Man Number Sizes----------------------------------#
-public function getManChestSizes(){
-     return $this->getArray($this->constant['size_titles']['man']['chest']);
+public function getManChestSizes($key_pair=true){
+     return $this->getArray($this->constant['size_titles']['man']['chest'], $key_pair);
     
 }
 #------------------------Get Man Waist Sizes---------------------------------#
-public function getManWaistSizes(){
-     return $this->getArray($this->constant['size_titles']['man']['waist']);
+public function getManWaistSizes($key_pair=true){
+     return $this->getArray($this->constant['size_titles']['man']['waist'], $key_pair);
 }
 #--------------------Get Man Shirt Sizes---------------------------------------#
-public function getManShirtSizes(){
-     return $this->getArray($this->constant['size_titles']['man']['shirt']);
+public function getManShirtSizes($key_pair=true){
+     return $this->getArray($this->constant['size_titles']['man']['shirt'], $key_pair);
 }
 
 public function getManShirtSpecs($neck, $sleeve){
@@ -173,8 +177,8 @@ public function getManInseamSizes(){
 }
 
 #--------------------Get Man Neck Sizes---------------------------------------#
-public function getManNeckSizes(){
-     return $this->getArray($this->constant['size_titles']['man']['neck']);
+public function getManNeckSizes($key_pair=true){
+     return $this->getArray($this->constant['size_titles']['man']['neck'], $key_pair);
 }
 
 #------------------Get Size Title type ----------------------------------------#
@@ -217,11 +221,14 @@ public function getWomanBodyShape(){
      return ($this->constant['body_shape']['woman']);
 }
 #---------------------------Sorting Of Array----------------------------------#
-public function getArray($arr){
+public function getArray($arr, $key_pair=true){
    
     $new_arr=array();
     foreach($arr as $key){
-        $new_arr[$key['title']]=$key['title'];
+        if ($key_pair)
+            $new_arr[$key['title']]=$key['title'];
+        else
+            array_push ($new_arr, $key['title']);
     }
     return $new_arr;
     
