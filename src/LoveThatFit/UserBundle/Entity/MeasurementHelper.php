@@ -134,5 +134,33 @@ class MeasurementHelper {
         }
         //return array('bustRange'=>$bustRange);
     }
+    #----------------------------------------------------------
+    
+    public function evaluateRegistration($user, $data){
+        $measurement = $user->getMeasurement();
+        $m_measure_ele = array('sleeve', 'neck', 'waist', 'inseam');
+        $f_measure_ele = array('bust', 'waist', 'hip', 'bra_numbers', 'bra_letters');
+        $f_size_chart_ele = array('top_brand','top_size','bottom_brand','bottom_size','dress_brand','dress_size');
+        $m_size_chart_ele = array('top_brand','top_size','bottom_brand','bottom_size');
+        
+        if (is_array($data)){
+            if($this->check_elements_value($data, $m_measure_ele)) {
+
+            }   
+            
+        
+        
+        }
+    }
+    #~~~~~~~~~~~~~~~~~~~~
+    private function check_elements_value($data, $elements){
+        $all_available=true;
+        foreach ($elements as $e){
+            if(!array_key_exists($data, $e) && strlen($data[$e])==0){
+                $all_available = false;
+            }
+        }        
+        return $all_available;
+    }
     
 }
