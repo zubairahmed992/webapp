@@ -145,6 +145,24 @@ public function getManWaistSizes(){
 public function getManShirtSizes(){
      return $this->getArray($this->constant['size_titles']['man']['shirt']);
 }
+
+public function getManShirtSpecs($neck, $sleeve){
+    $arr=$this->constant['size_titles']['man']['shirt'];
+    foreach($arr as $key=>$val){
+        if($val['neck']==$neck && $val['sleeve_size']==$sleeve){            
+            return array(
+                    'title' => array_key_exists('title', $val)?$val['title']:null,
+                    'neck' => array_key_exists('neck', $val)?$val['neck']:null,
+                    'arm_length' => array_key_exists('arm_length', $val)?$val['arm_length']:null,
+                    'half_shoulder' => array_key_exists('half_shoulder', $val)?$val['half_shoulder']:null,
+                    'shoulder_across_back' => array_key_exists('shoulder', $val)?$val['shoulder']:null,
+                    'sleeve_size' => array_key_exists('sleeve_size', $val)?$val['sleeve_size']:null,                  
+                );
+            break;
+        }
+    }
+    return null;
+}
 #------------------------------------------------
 public function getManSleeveSizes(){
      return $this->constant['size_titles']['man']['sleeve'];
