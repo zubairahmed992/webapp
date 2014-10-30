@@ -1,6 +1,6 @@
 <?php
 namespace LoveThatFit\AdminBundle\Entity;
-
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -34,9 +34,12 @@ class SizeChartHelper{
      * @var string
      */
     protected $class;
+    
+    private $container;
 
-    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class)
-    {
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class,Container $container)
+    {  
+        $this->container = $container;
         $this->dispatcher = $dispatcher;
         $this->em = $em;
         $this->class = $class;
@@ -298,8 +301,17 @@ public function findOneByName($title) {
         // Temporary hack for the back just to have the slider in step 4 in proper place if back not provided
         // As currently we are not comparing back measurement in fitting algorithm
         if ($measurement->getShoulderAcrossBack() == null || $measurement->getShoulderAcrossBack() == 0) {
-                    $measurement->setShoulderAcrossBack(14.5);
-                }
+            
+            
+            #---Get from Size Helper---------
+          $genrealMeasurements=$this->container->get('admin.helper.general_measurements')->getMeasurementByNeck($measurement->getNeck());
+            if($genrealMeasurements){
+                 $measurement->setShoulderAcrossBack($genrealMeasurements['shoulder_across_back']);
+            }else{
+                $measurement->setShoulderAcrossBack(14.5); 
+            }
+          
+           }
                 $braSize=$measurement->getBraSize();
                 $findAverage=$this->getBustAverage($braSize);
                 if($findAverage){
