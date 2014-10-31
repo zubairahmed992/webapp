@@ -230,16 +230,17 @@ class RegistrationController extends Controller {
         $brandHelper=$this->get('admin.helper.brand');
        // $shirtSizesBaseNeckSleeve = $this->get('admin.helper.productsizes')->shirtSizeBaseOnNeckSleeve(14,32);
         $sizes=$this->get('admin.helper.size')->getDefaultArray();
-       
+       //return new response(json_encode($user->getBirthDate()));
         if ($user->getGender() == 'm') {
-         
-            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$sizes,$brandHelper), $measurement);
+          $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$sizes,$brandHelper), $measurement);
+          $registrationMeasurementform->get('birthdate')->setData($user->getBirthDate());
        } else {
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$sizes,$brandHelper), $measurement);           
             $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   
             $registrationMeasurementform->get('bra_letters')->setData($measurement->getBraCup());   
             $registrationMeasurementform->get('bra_numbers')->setData($measurement->getBraNumberSize());
             $registrationMeasurementform->get('body_shape')->setData($measurement->getBodyShape());
+            $registrationMeasurementform->get('birthdate')->setData($user->getBirthDate());
         }
         $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);

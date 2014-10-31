@@ -27,7 +27,7 @@ class GeneralMeasurementsHelper {
                 $averageArray['key'] = $key;
             }
         }
-        if($averageArray['key']){
+        if(isset($averageArray['key'])){
         return $this->getmeasurementByKey($averageArray['key']);}
         else{
         return false;    
