@@ -65,7 +65,7 @@ public function getAllSizes(){
             ),
         );
     }
-
+#############################################################################
 #--------------------Woman Sizes Start Here-------------------------------------#
 
 #---------------------- Get Woman Letter Sizes---------------------------------#
@@ -85,13 +85,15 @@ public function getWomanWaistSizes($key_pair=true){
 public function getWomanBraSizes($key_pair=true){
      return $this->getWomanBraSizesParsed(null, $key_pair);    
 }
+#------------------------------------------
 public function getWomanBraCups($key_pair=true){
      return $this->getWomanBraSizesParsed('cup', $key_pair);
 }
+#------------------------------------------
 public function getWomanBraBands($key_pair=true){
     return $this->getWomanBraSizesParsed('band', $key_pair);    
 }
-
+#------------------------------------------
 private function getWomanBraSizesParsed($type=null, $key_pair=true){
      $new_arr=array();
      $arr=$this->constant['size_titles']['woman']['bra'];
@@ -113,6 +115,7 @@ private function getWomanBraSizesParsed($type=null, $key_pair=true){
     }
     return $new_arr;
 }
+#------------------------------------------
 public function getWomanBraSpecs($bra_size){    
      $arr=$this->constant['size_titles']['woman']['bra'];
     foreach($arr as $key=>$val){
@@ -131,7 +134,8 @@ public function getWomanBraSpecs($bra_size){
     }
     return null;
 }
-#------------------------Getting All Male Sizes--------------------------------#
+#############################################################################
+
 #---------------------- Get Man Letter Sizes---------------------------------#
   public function getManLetterSizes($key_pair=true){
         return $this->getArray($this->constant['size_titles']['man']['letter'], $key_pair);
@@ -149,7 +153,7 @@ public function getManWaistSizes($key_pair=true){
 public function getManShirtSizes($key_pair=true){
      return $this->getArray($this->constant['size_titles']['man']['shirt'], $key_pair);
 }
-
+#------------------------------------------
 public function getManShirtSpecs($neck, $sleeve){
     $arr=$this->constant['size_titles']['man']['shirt'];
     foreach($arr as $key=>$val){
@@ -181,27 +185,50 @@ public function getManNeckSizes($key_pair=true){
      return $this->getArray($this->constant['size_titles']['man']['neck'], $key_pair);
 }
 
+
+#############################################################################
 #------------------Get Size Title type ----------------------------------------#
 public function getAllSizeTitleType(){
      return ($this->constant['size_title_type']);
 }
-public function getManSizeTitleType(){
-     return ($this->constant['size_title_type']['man']);
+#-----------------
+public function getSizeTitleType($gender='f',$key_pair=true){
+    if ($gender=='f')
+        return ($this->getWomanSizeTitleType($key_pair));
+    else
+        return ($this->getManSizeTitleType($key_pair));
 }
-public function getWomanSizeTitleType(){
-     return ($this->constant['size_title_type']['woman']);
+#-----------------
+public function getManSizeTitleType($key_pair=true){
+    return $this->transformArray($this->constant['size_title_type']['man'], $key_pair);
 }
+#-----------------
+public function getWomanSizeTitleType($key_pair=true){
+    return $this->transformArray($this->constant['size_title_type']['woman'], $key_pair);    
+}
+
+
+#############################################################################
 #----------------Get Fit Type --------------------------------------------------#
 public function getAllFitType(){
      return ($this->constant['fit_type']);
 }
-public function getManFitType(){
-     return ($this->constant['fit_type']['man']);
+#-----------------
+public function getFitType($gender='f',$key_pair=true){
+    if ($gender=='f')
+        return ($this->getWomanFitType($key_pair));
+    else
+        return ($this->getManFitType($key_pair));
 }
-public function getWomanFitType(){
-     return ($this->constant['fit_type']['woman']);
+#-----------------
+public function getManFitType($key_pair=true){
+    return $this->transformArray($this->constant['fit_type']['man'], $key_pair);    
 }
-  
+#-----------------
+public function getWomanFitType($key_pair=true){
+    return $this->transformArray($this->constant['fit_type']['woman'], $key_pair);    
+}
+#-----------------  
 private function get_fit_type_array($gender) {
         if ($gender == 'm')
             return $this->getManFitType();
@@ -209,29 +236,47 @@ private function get_fit_type_array($gender) {
             return $this->getWomanFitType();
         return null;
     }
-
+    
+    
+#############################################################################
 #----------------Get body shape --------------------------------------------------#
 public function getAllBodyShape(){
      return ($this->constant['body_shape']);
 }
-public function getManBodyShape(){
-     return ($this->constant['body_shape']['man']);
+#-------------------------
+public function getBodyShape($gender='f',$key_pair=true){
+    if ($gender=='f')
+        return ($this->getWomanBodyShape($key_pair));
+    else
+        return ($this->getManBodyShape($key_pair));
 }
-public function getWomanBodyShape(){
-     return ($this->constant['body_shape']['woman']);
+#--------------------------------
+public function getManBodyShape($key_pair=true){
+     return  $this->transformArray($this->constant['body_shape']['man'], $key_pair);
 }
+#--------------------------------
+public function getWomanBodyShape($key_pair=true){
+     return  $this->transformArray($this->constant['body_shape']['woman'], $key_pair);
+}
+
+#############################################################################
 #---------------------------Sorting Of Array----------------------------------#
-public function getArray($arr, $key_pair=true){
-   
+public function getArray($arr, $key_pair=true){   
     $new_arr=array();
     foreach($arr as $key){
         if ($key_pair)
             $new_arr[$key['title']]=$key['title'];
         else
-            array_push ($new_arr, $key['title']);
+            array_push ($new_arr, strval($key['title']));
     }
-    return $new_arr;
-    
+    return $new_arr;    
+}
+#-------------------------------
+public function transformArray($arr, $key_pair=true){
+    if($key_pair)
+        return $arr;
+    else
+        return array_keys($arr);
 }
  #------------------------------------------------------
     public function getSizeArray($gender, $type) {        

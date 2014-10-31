@@ -6,12 +6,13 @@ class AvgAlgorithm {
 
     private $user;
     private $product;
-
+    private $size_helper;
 #-----------------------------------------------------
 
     function __construct($user = null, $product = null) {
         $this->user = $user;
         $this->product = $product;
+        $this->size_helper = new SizeHelper();
     }
 
 #-----------------------------------------------------
@@ -434,7 +435,7 @@ class AvgAlgorithm {
                 if (is_array($size_titles) && count($size_titles) > 0) {
                     foreach ($size_types as $stype) {
                         foreach ($size_titles as $stitle) {
-                            $size_identifier = $stype . ' ' . $stitle;
+                            $size_identifier = ucfirst($stype) . ' ' . $stitle;
                             if (array_key_exists($size_identifier, $sizes))
                                 $fb[$size_identifier] = $sizes[$size_identifier];
                         }
@@ -520,35 +521,34 @@ class AvgAlgorithm {
     }
 
     #----------------------------------------------------------       
-    private function _getSizeTitleArray($gender = 'f', $type = 'numbers') {
+    public function getSizeTitleArray($gender = 'f', $type = 'numbers') {
         $gender = strtolower($gender);
         $type = strtolower($type);
-        $sh = new SizeHelper();
-
+        
         if ($gender == 'f' && ($type == 'letters' || $type == 'letter')) {//letters
-            return $sh->getWomanLetterSizes(false);
+            return $this->size_helper->getWomanLetterSizes(false);
         } else if ($gender == 'f' && ($type == 'number' || $type == 'numbers')) {//$female_standard
-            return $sh->getWomanNumberSizes(false);
+            return $this->size_helper->getWomanNumberSizes(false);
         } else if ($gender == 'f' && $type == 'waist') {//$female_waist
-            return $sh->getWomanWaistSizes(false);
+            return $this->size_helper->getWomanWaistSizes(false);
         }
         else if ($gender == 'f' && $type == 'bra') {//$female_bra
-            return $sh->getWomanBraSizes(false);
+            return $this->size_helper->getWomanBraSizes(false);
         } 
         else if ($gender == 'm' && ($type == 'letters' || $type == 'letter')) {//letters
-            return $sh->getManLetterSizes(false);    
+            return $this->size_helper->getManLetterSizes(false);    
         }
         else if ($gender == 'm' && $type == 'chest') {//man Chest
-            return $sh->getManChestSizes(false);
+            return $this->size_helper->getManChestSizes(false);
         } else if ($gender == 'm' && $type == 'waist') {//man bottom
-            return $sh->getManWaistSizes(false);
+            return $this->size_helper->getManWaistSizes(false);
         } else if ($gender == 'm' && $type == 'neck') {//man neck
-            return $sh->getManNeckSizes(false);
+            return $this->size_helper->getManNeckSizes(false);
         }else if ($gender == 'm' && $type == 'shirt') {//man shirt
-            return $sh->getManShirtSizes(false);
+            return $this->size_helper->getManShirtSizes(false);
         }
     }
-    private function getSizeTitleArray($gender = 'f', $type = 'numbers') {
+    public function _getSizeTitleArray($gender = 'f', $type = 'numbers') {
         $gender = strtolower($gender);
         $type = strtolower($type);
 
@@ -591,7 +591,7 @@ class AvgAlgorithm {
 
    #----------------------------------------------------------       
 
-    private function getSizeTypes($gender='f') {
+    public function ____getSizeTypes($gender='f') {
         if($gender=='m'){
             return array('Regular', 'Athletic', 'Tall', 'Big');
         }else{
@@ -599,15 +599,9 @@ class AvgAlgorithm {
         }
         
     }
-    private function _getSizeTypes($gender='f') {
-        $sh = new SizeHelper();
-        
-        if($gender=='m'){
-            return array('Regular', 'Athletic', 'Tall', 'Big');
-        }else{
-            return array('Regular', 'Petite', 'Tall', 'Plus');
-        }
-        
+    #------------------------------------------------
+    public function getSizeTypes($gender='f') {
+        return $this->size_helper->getFitType($gender, false);        
     }
 
     #----------------------------------------------------------       
