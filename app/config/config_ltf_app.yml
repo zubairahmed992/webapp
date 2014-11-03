@@ -60,10 +60,10 @@ constants:
       pear: pear
       triangle: triangle
     men:
-      regular: regular
-      athletic: athletic
-      slim: slim
-      big: big
+      regular: Regular
+      athletic: Athletic
+      slim: Slim
+      big: Big
     
   
   size_titles:
