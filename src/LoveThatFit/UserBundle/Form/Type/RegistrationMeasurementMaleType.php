@@ -40,7 +40,7 @@ private $timespent;
     {
         $builder->add('body_shape', 'choice', array('choices' => $this->body_shape, 'required' => false,'empty_value' => 'Body Shape',));      
         $builder->add('timespent', 'hidden');
-        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => false,'data'=>'Regular'));
+        $builder->add('body_types', 'choice', array('choices' => $this->body_types,'expanded' => false,'empty_value' => 'Select'));
         $builder->add('top_brand', 'entity', array(
                     'class' => 'LoveThatFitAdminBundle:Brand',
                     'expanded' => false,

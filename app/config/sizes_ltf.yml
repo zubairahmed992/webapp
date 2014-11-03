@@ -2210,13 +2210,13 @@ constants:
       
   fit_type:     
    man:
-     regular: regular
-     tall: tall
+     regular: Regular
+     tall: Tall
    woman:
-     regular: regular
-     petite: petite
-     tall: tall
-     plus: plus
+     regular: Regular
+     petite: Petite
+     tall: Tall
+     plus: Plus
      
       
     
