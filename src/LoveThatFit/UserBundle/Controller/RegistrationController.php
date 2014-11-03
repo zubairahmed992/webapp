@@ -68,6 +68,12 @@ class RegistrationController extends Controller {
         $brandHelper=$this->get('admin.helper.brand');
         $user_helper = $this->get('user.helper.user');
         $sizes = $this->get('admin.helper.size')->getDefaultArray();
+        $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
+        $twitter_helper = $this->get('twitter_helper');
+                $twitters = array();
+                $twitters = $twitter_helper->twitter_latest();
+              
+                 $user = new User();
         try {
             $user = new User();
            
@@ -84,7 +90,7 @@ class RegistrationController extends Controller {
             if ($form->isValid()) {
                 
                
-                
+              
                 $u = $user_helper->registerUser($user);
                 $user = $user_helper->find($u->getId());
                 $measurement = $user->getMeasurement();
@@ -97,25 +103,21 @@ class RegistrationController extends Controller {
                 }              
                 //send registration email ....            
                 $this->get('mail_helper')->sendRegistrationEmail($user);
-
+                  
                 if ($user->getGender() == 'm') {
                    $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$sizes, $brandHelper), $measurement);
                 } else {
                     $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$sizes,$brandHelper), $measurement);
                 }
-
+                  
                 return $this->render('LoveThatFitUserBundle:Registration:_measurement.html.twig', array(
                             'form' => $registrationMeasurementform->createView(),
                             'measurement' => $measurement,
                             'entity' => $user,
                         ));
             } else {
-
-
-
-                $twitter_helper = $this->get('twitter_helper');
-                $twitters = array();
-                $twitters = $twitter_helper->twitter_latest();
+                
+              
 
                 $security_context = $this->get('user.helper.user')->getRegistrationSecurityContext($this->getRequest());
                 return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
@@ -137,8 +139,13 @@ class RegistrationController extends Controller {
             $form->addError(new FormError('Some thing went wrong'));
 
             return $this->render('LoveThatFitUserBundle:Registration:registration.html.twig', array(
-                        'form' => $form->createView(),
-                        'entity' => $user));
+                            'form' => $form->createView(),
+                            'entity' => $user,
+                            'last_username' => $security_context['last_username'],
+                            'error' => $security_context['error'],
+                            'referer' => 'registration',
+                            'twitters' => $twitters,
+                        ));
         }
     }
 
