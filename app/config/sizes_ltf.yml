@@ -2196,27 +2196,27 @@ constants:
   
   body_shape:
     woman:
-      apple: Apple
-      banana: Banana
-      hourglass: Hourglass
-      pear: Pear
-      triangle: Triangle
+      apple: apple
+      banana: banana
+      hourglass: hourglass
+      pear: pear
+      triangle: triangle
     man:
-      regular: Regular
-      athletic: Athletic
-      slim: Slim
-      big: Big   
+      regular: regular
+      athletic: athletic
+      slim: slim
+      big: big   
      
       
   fit_type:     
    man:
-     regular: Regular
-     tall: Tall
+     regular: regular
+     tall: tall
    woman:
-     regular: Regular
-     petite: Petite
-     tall: Tall
-     plus: Plus
+     regular: regular
+     petite: petite
+     tall: tall
+     plus: plus
      
       
     
