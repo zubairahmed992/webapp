@@ -654,7 +654,8 @@ header.reg .strip_rgt {
 	color:#fff;
 	border:none;
         padding:5px 15px;
-        display:none
+        display:none;
+        text-align:center;
 }
 .reg_blk select {
 	width:68px;
