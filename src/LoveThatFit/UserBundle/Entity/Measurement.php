@@ -1801,7 +1801,8 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getBraNumberSize()// The name changed getBraSizes to getBraNumberSize
     {
         if ($this->bra_size==null) return null;
-      $bra_letters=  explode(' ',$this->bra_size);      
+     // $bra_letters=  explode(' ',$this->bra_size);      
+        $bra_letters=preg_split('#(?<=\d)(?=[a-z])#i', $this->bra_size);
       return $bra_letters[0];
     }
     /**
@@ -1813,7 +1814,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     public function getBraCup()
     {
         if ($this->bra_size==null) return null;
-        $bra_cup=  explode(' ',$this->bra_size);      
+        
+       $bra_cup=preg_split('#(?<=\d)(?=[a-z])#i', $this->bra_size);
+        //$bra_cup=  explode(' ',$this->bra_size);      
         if (array_key_exists(1, $bra_cup)) {
         return $bra_cup[1];}
         else{

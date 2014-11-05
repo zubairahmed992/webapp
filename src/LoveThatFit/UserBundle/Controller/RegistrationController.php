@@ -241,11 +241,12 @@ class RegistrationController extends Controller {
         if ($user->getGender() == 'm') {
             
             
-          $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$sizes,$brandHelper), $measurement);
-          $registrationMeasurementform->get('birthdate')->setData($user->getBirthDate());
+            $registrationMeasurementform = $this->createForm(new RegistrationMeasurementMaleType($size_chart_helper,$sizes,$brandHelper), $measurement);
+            $registrationMeasurementform->get('birthdate')->setData($user->getBirthDate());
             $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   
           
        } else {
+              //  return new response(json_encode($measurement->getBraCup()));
             $registrationMeasurementform = $this->createForm(new RegistrationMeasurementFemaleType($size_chart_helper,$sizes,$brandHelper), $measurement);           
             $registrationMeasurementform->get('body_types')->setData($measurement->getBodyTypes());   
             $registrationMeasurementform->get('bra_letters')->setData($measurement->getBraCup());   
