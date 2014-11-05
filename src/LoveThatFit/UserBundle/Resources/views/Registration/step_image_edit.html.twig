@@ -783,7 +783,7 @@ jQuery(document).ready(function ($) {
             <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
-                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_updatereg_next_step2reg_next_step2')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 
