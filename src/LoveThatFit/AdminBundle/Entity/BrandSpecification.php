@@ -662,8 +662,10 @@ class BrandSpecification {
     private function json_decoded_array($json) {
         $arr = json_decode($json);
         $new_arr = array();
+        if (is_array($arr)){
         foreach ($arr as $key) {
             $new_arr[$key] = $key;
+        }
         }
         return $new_arr;
     }

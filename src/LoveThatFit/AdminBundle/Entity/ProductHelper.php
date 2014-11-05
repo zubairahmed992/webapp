@@ -1074,9 +1074,11 @@ public function productDetailColorAdd($entity){
        public function getArray($array){
            $arr=json_decode($array);
            $data=array();
+            if (is_array($arr)){
            foreach($arr as $key){
                $data[$key]=$key;
            }
+            }
            return $data;
        }
              
