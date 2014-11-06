@@ -36,8 +36,8 @@ what_we_do:
     pattern:  /what_we_do
     defaults: { _controller: LoveThatFitSiteBundle:Home:whatWeDo}    
 
-comming_soon:
-    pattern:  /comming_soon
+coming_soon:
+    pattern:  /coming_soon
     defaults: { _controller: LoveThatFitSiteBundle:Home:commingSoon}        
   
 compare_product:
