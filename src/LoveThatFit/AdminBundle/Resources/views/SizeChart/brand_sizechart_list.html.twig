@@ -1,0 +1,87 @@
+<table width="100%" style="border: solid 1px #CCCCCC;" align="center">   
+        <tr>
+                <td style="width: 50px;background-color: #FFFFDF"><b>
+                    </b><i> {{brand}}</i> 
+                        </td>            
+                    </tr>
+{%for sc in sizechart%}
+{%if sc.gender=='f'%}
+
+<tr>
+                <td style="width: 50px;background-color: #FFFFDF"><b>
+                    </b><i> Women</i> <br/>                    
+                    {%if sc.target =='Top' %}
+                    Top
+                    <br/>
+                     {{sc.bodytype}} {{sc.title}}
+                    <br/>
+                    Neck:
+                     <br/>
+                    Shoulder across back:{{sc.shoulderAcrossBack}}
+                     <br/>
+                    Bust:{{sc.bust}}
+                    <br/>
+                    Waist:{{sc.waist}}
+                    <br/>
+                    Hip:{{sc.hip}}
+                    {%elseif sc.target =='Bottom'%}
+                    Bottom
+                    <br/>
+                     {{sc.bodytype}} {{sc.title}}
+                     <br/>                    
+                     Shoulder across back:{{sc.shoulderAcrossBack}}
+                     <br/>
+                     Waist:{{sc.waist}}
+                     <br/>
+                     Hip:{{sc.hip}}
+                     <br/>
+                     Thigh:{{sc.thigh}}
+                     <br/>
+                     Out Seam:{{sc.outseam}}
+                     <br/>
+                     Inseam:{{sc.inseam}}
+                     <br/>
+                    {%elseif sc.target =='Dress'%}
+                    Dress 
+                    <br/>
+                     {{sc.bodytype}}  {{sc.title}}
+                     <br/> 
+                     Neck:{{sc.neck}}
+                     <br/>
+                     Shoulder across back:{{sc.shoulderAcrossBack}}
+                     <br/>
+                     Bust:{{sc.bust}}
+                     <br/>
+                     Sleeve:{{sc.sleeve}}
+                     <br/>
+                     Waist:{{sc.waist}}
+                     <br/>
+                     Hip:{{sc.hip}}
+                     <br/>
+                    
+                    
+                    {%endif%}
+                    
+                        </td>            
+                    </tr>
+{%endif%}
+{%if sc.gender=='m'%}
+<tr>
+                <td style="width: 50px;background-color: #FFFFDF"><b>
+                    </b><i>Men</i> <br/>
+                    {%if sc.target =='Top' %}
+                    Top
+                    <br/>
+                    {{sc.bodytype}} {{sc.title}}
+                     <br/>                  
+                    {%elseif sc.target =='Bottom'%}
+                    Bottom                    
+                    <br/>                    
+                    {{sc.bodytype}}  {{sc.title}}
+                   {%endif%}
+                        </td>            
+                    </tr>
+{%endif%}
+{%endfor%}
+
+</table>

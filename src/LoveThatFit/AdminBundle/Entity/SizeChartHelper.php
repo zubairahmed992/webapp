@@ -675,4 +675,14 @@ public function getBrandSizeTitleArray() {
     return $this->repo->findSizeTitleTarget();
   }
   
+//---------------------------get Size Chart By Brand----------------------------
+  
+ public function getSizeChartByBrand($brand)
+ {
+     return $this->repo->findSizeChartByBrand($brand);     
+ }
+  
+  
+  
+  
 }
