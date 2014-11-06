@@ -428,6 +428,7 @@ var hitOptions = {
 
 $(document).ready(function() {
     createBlob();
+    
 });
 
 function createBlob() {
@@ -465,20 +466,44 @@ console.log(p_user_height);
 
 if(chk_no_img_path == true){
     //alert("in side");
+    
+   //def_shape_h = p_user_height;
+   //def_head_h = (14.66 * def_shape_h) / 100;
+   //def_torso_h = (35.96 * def_shape_h) / 100;
+   //def_inseam_h = (47.61 * def_shape_h) / 100;
+   
+   //def_head_base_point = mid_area_path.segments[head_segments[i]].point.y
+   
+   
+//   mid_area_path.segments[0].point.y = 
+    
+    
+    
+    
+//    var head_segments = {0,1,2,3,4,5};
+//    function foo(){
+//        for(var i = 0; i < head_segments.length; i++) {
+//            mid_area_path.segments[head_segments[i]].point.y += 60;
+//        };
+//    }
+//    function get_foo_height(){
+//
+//    }
+    
+    
+    
+    
+    
+    
     mid_area_path.scale(1,p_user_height);
-    mid_area_path.scale(1,1);
+    //mid_area_path.scale(1,1);
     mid_area_path.position = new Point(181,p_user_height_px/2+17);
     
    }
    else{
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
-    
-    
-    
    }
 
-    
-console.log(mid_area_path.height);
 
 //mid_area_path.segments[0].point.x = 20;
 
