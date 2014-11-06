@@ -41,4 +41,10 @@ admin_size_chart_search_from:
      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartForm}    
 admin_size_chart_search_result:  
       pattern:  /admin/admin_size_charts/searchResult
-      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartResult}    
+      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartResult}   
+admin_brand_size_chart:      
+      pattern: /admin/admin_size_charts/brand
+      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChart }
+admin_brand_size_chart_list:      
+      pattern: /admin/admin_size_charts/brand/list
+      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChartList }

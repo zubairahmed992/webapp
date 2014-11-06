@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\SizeChartType;
+use LoveThatFit\AdminBundle\Form\Type\BrandSizeChartType;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -15,8 +16,6 @@ class SizeChartController extends Controller {
         $size_with_pagination = $this->get('admin.helper.sizechart')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', $size_with_pagination);
     }
-    
-    
     
     public function showAction($id) {
 
@@ -186,5 +185,31 @@ $searchResult=$this->get('admin.helper.sizechart')->searchSizeChartPagination($b
 return $this->render('LoveThatFitAdminBundle:SizeChart:sizeChartSearchResult.html.twig',$searchResult);    
  }
 
+//------------------Brand List Of Size Charts----------------------------------------------- 
+ 
+public function getBrandSizeChartAction()
+{
+        $form = $this->createForm(new BrandSizeChartType());      
+        return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart.html.twig', 
+        array('form' => $form->createView()));
+}
+
+public function getBrandSizeChartListAction(Request $request)
+{
+        $data = $request->request->all();        
+        $brand=$this->get('admin.helper.brand')->find($data['brand_sizechart']['Brand']);         
+        $sizechart=$this->get('admin.helper.sizechart')->getSizeChartByBrand($brand);     
+        if($sizechart){
+        return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart_list.html.twig',array('sizechart'=>$sizechart,'brand'=>$brand->getName()));
+        }else{
+           $this->get('session')->setFlash('warning', 'Unable to find size chart.');
+           $form = $this->createForm(new BrandSizeChartType());    
+           return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart.html.twig', 
+        array('form' => $form->createView()));
+        }
+        
+}
+
+ 
 }
 
