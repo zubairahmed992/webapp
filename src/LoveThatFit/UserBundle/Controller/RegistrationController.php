@@ -158,7 +158,8 @@ class RegistrationController extends Controller {
         $user = $this->get('user.helper.user')->find($id);
         $measurement = $user->getMeasurement();
         $data = $request->request->all();
-        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+      
+      
         $sizes = $this->get('admin.helper.size')->getDefaultArray();
 
         #---------Start OF CRF Protection--------------------------------------#
@@ -178,7 +179,9 @@ class RegistrationController extends Controller {
 
             $measurement->setBraSize($measurement->bra_numbers . $measurement->bra_letters);
             if ($user->getGender() == 'f') {
-            $measurement->setBust($request_array['bust']);}
+            $measurement->setBust($request_array['bust']);
+          
+                 }
             
             $bra_size_spec = $this->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
             if ($bra_size_spec != null) {
@@ -208,11 +211,13 @@ class RegistrationController extends Controller {
                             'isapproved' => $user->isApproved,
                         ));
             } else {
+                  $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
                 $form = $this->createForm(new RegistrationStepFourType(), $user);
                 $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
                 $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
                 $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
                 $marker = $this->get('user.marker.helper')->getByUser($user);
+               
                 return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                             'form' => $form->createView(),
                             'measurement_form' => $measurement_form->createView(),
@@ -674,6 +679,7 @@ public function stepFourTimeSpentAction(Request $request){
         $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $marker = $this->get('user.marker.helper')->getByUser($user);
         $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+       // return new response(json_encode($default_marker));
                 
         $edit_type=$edit_type==null?'registration':'fitting_room';
         
