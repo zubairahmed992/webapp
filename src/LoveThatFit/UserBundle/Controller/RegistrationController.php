@@ -172,10 +172,14 @@ class RegistrationController extends Controller {
             #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
 
             $request_array = $this->getRequest()->get('measurement');
+           
 
             $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
 
             $measurement->setBraSize($measurement->bra_numbers . $measurement->bra_letters);
+            if ($user->getGender() == 'f') {
+            $measurement->setBust($request_array['bust']);}
+            
             $bra_size_spec = $this->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
             if ($bra_size_spec != null) {
                 $measurement->setShoulderAcrossBack($bra_size_spec['shoulder_across_back']);
@@ -584,7 +588,7 @@ public function stepFourTimeSpentAction(Request $request){
 
         $form = $this->createForm(new MeasurementStepFourType(), $measurement);
         $form->bind($request);
-
+        
         if ($form->isValid()) {
             $this->get('user.helper.measurement')->saveMeasurement($measurement);
             return new Response('Measurement Updated');
