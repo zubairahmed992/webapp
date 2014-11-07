@@ -436,8 +436,9 @@ function createBlob() {
         var pathData = $("#img_path_paper").attr("value");
         if(chk_no_img_path == true){
             pathData = $("#default_user_path").html();
-            $("#measurement_shoulder_height").attr("value", "64");
-            $("#measurement_hip_height").attr("value", "161");
+            $("#measurement_shoulder_height").attr("value", "66.6");
+            $("#measurement_hip_height").attr("value", "159.4");
+
         }
         
 mid_area_path = new Path(pathData);
@@ -598,6 +599,8 @@ if(chk_no_img_path == true){
                 var bottom_left = mid_area_path.segments[21].point.y - 66;
                 var bottom_right = mid_area_path.segments[49].point.y - 66;
                 
+                
+                
                 //alert(sholder_right);
                 
                 if(bottom_left <= bottom_right){
@@ -738,10 +741,12 @@ function onMouseDrag(event) {
 		segment.point += event.delta;
                 
                
-                var sholder_left = path.segments[3].point.y - 22;
-                var sholder_right = path.segments[15].point.y - 22;
+                var sholder_left = path.segments[6].point.y - 22;
+                var sholder_right = path.segments[62].point.y - 22;
                 
-                //alert(sholder_right);
+                
+                
+                //alert(sholder_left);
                 
                 if(sholder_left <= sholder_right){
                     $("#measurement_shoulder_height").attr("value", sholder_left);
@@ -750,10 +755,10 @@ function onMouseDrag(event) {
                 }
                 
                 
-                var bottom_left = path.segments[55].point.y - 66;
-                var bottom_right = path.segments[29].point.y - 66;
-                
-                //alert(sholder_right);
+                var bottom_left = path.segments[20].point.y - 66;
+                var bottom_right = path.segments[48].point.y - 66;
+                                
+                //alert(bottom_right);
                 
                 if(bottom_left <= bottom_right){
                     $("#measurement_hip_height").attr("value", bottom_left);
