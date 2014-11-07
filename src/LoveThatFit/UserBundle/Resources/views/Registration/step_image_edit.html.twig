@@ -450,9 +450,9 @@ trans_bg.style = {
 };
 
 
-//var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
+var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
 
-var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+//var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
 p_user_height = p_user_height * 6;
 //alert(p_user_height);
@@ -465,8 +465,11 @@ p_user_height = p_user_height / 100;
 
 console.log(p_user_height);
 
+alert(p_user_height);
+
 if(chk_no_img_path == true){
-mid_area_path.scale(1,p_user_height);
+
+    mid_area_path.scale(1,p_user_height);
     //alert("in side");
    mid_area_path.position = new Point(181,(p_user_height_px/2)+17);
    
@@ -481,12 +484,13 @@ mid_area_path.scale(1,p_user_height);
   // alert("Head base: " + def_head_base_point + " User Height: "+def_shape_h);
    
   if(parseInt($('#user_height_frm_3').attr('value')) >= 75){
+    def_head_p_incr = (parseInt($('#user_height_frm_3').attr('value')) - 75)/5;
   }
   else{
     def_head_p_incr = (75 - parseInt($('#user_height_frm_3').attr('value')))/6;
   }
 
-  var head_segments = [1,2,3,4,5,69,68,67,66,65];
+  var head_segments = [1,2,3,4,5,6,7,69,68,67,66,65,64,63];
   function adj_head_points(){
       for(var i = 0; i < head_segments.length; i++) {
           if(head_segments[i] == 5 || head_segments[i] == 65) {
@@ -500,13 +504,13 @@ mid_area_path.scale(1,p_user_height);
   }
   adj_head_points();
   
-  var torso_adj_segments = [16,17,54,53];
+  var torso_adj_segments = [16,17,18,19,20,21,35,54,53,52,51,50,49];
   function adj_torso_points(){
         
   //var arm_pit_dis = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
   var arm_pit_dis = 43;
   var arm_pit_dis_curr = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
-  var final_arm_pit_dis = arm_pit_dis - arm_pit_dis_curr;
+  var final_arm_pit_dis = (arm_pit_dis - arm_pit_dis_curr) + def_head_p_incr;
   
       for(var i = 0; i < torso_adj_segments.length; i++) {
           if(false) {
@@ -518,6 +522,27 @@ mid_area_path.scale(1,p_user_height);
       };
   }
   adj_torso_points();
+  
+  
+  var inseam_adj_segments = [22,23,24,25,48,47,46,45,44];
+  function adj_inseam_points(){
+        
+  var arm_pit_dis = 43;
+  var arm_pit_dis_curr = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
+  var final_arm_pit_dis = (arm_pit_dis - arm_pit_dis_curr) + def_head_p_incr;
+  
+      for(var i = 0; i < inseam_adj_segments.length; i++) {
+          if(false) {
+            mid_area_path.segments[inseam_adj_segments[i]].point.y = (mid_area_path.segments[64].point.y + arm_pit_dis);
+          }
+          else {
+            mid_area_path.segments[inseam_adj_segments[i]].point.y += final_arm_pit_dis;
+          }
+      };
+  }
+  adj_inseam_points();
+  
+  
    //mid_area_path.segments[1].point.y = mid_area_path.segments[69].point.y += def_head_p_incr;
     
     
