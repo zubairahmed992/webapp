@@ -861,6 +861,34 @@ waist==0) && (dressmeasurement=='' || hip==0))
                     return letter.toUpperCase();
                 }));
                     });
+                    
+                    
+                    
+                    ///////////////
+                                //Sorting of Body types
+                    var options = $('#measurement_body_types option');
+                    var arr = options.map(function(_, o) {
+                       return {
+                            t: $(o).text(),
+                            v: o.value
+                        };
+                    }).get();
+                    //arr.sort(function(o1, o2) {
+                        //return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+                    //});
+                    options.each(function(i, o) {
+                        //console.log(i);
+                        //o.value = arr[i].v;
+                        $(o).text(arr[i].t.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                    return letter.toUpperCase();
+                }));
+                    });
+                   
+    
+    
+    
+                   
+    
     
     
     
@@ -1008,10 +1036,14 @@ $( "#tabs" ).tabs();
 }); 
 
 
+ {% if( entity.gender=='f') %}
+
  $(function() {
+     var bust_slider='{{form.vars.value.bust}}';
+   
     $( ".bustt_slider" ).slider({
     range: "min",
-    value: 37,
+    value: bust_slider,
     min: 20,
     max: 100,
     slide: function( event, ui ) {
@@ -1023,11 +1055,12 @@ $( "#tabs" ).tabs();
 
 
  $(function() {
+  var waist_slider='{{form.vars.value.waist}}';
    var gender=$('#gender').text();
    if(gender=='f' || gender=='F' ){
     $( ".waistt_slider" ).slider({
     range: "min",
-    value: 37,
+    value: waist_slider,
     min: 20,
     max: 100,
     slide: function( event, ui ) {
@@ -1041,9 +1074,10 @@ $( "#tabs" ).tabs();
 
 
 $(function() {
+var hip_slider='{{form.vars.value.hip}}';
     $( ".hipp_slider" ).slider({
     range: "min",
-    value: 37,
+    value: hip_slider,
     min: 20,
     max: 100,
     slide: function( event, ui ) {
@@ -1057,6 +1091,7 @@ $(function() {
 
                                 </script> 
 
+{%endif%}
 
 
 {% endblock %} 
