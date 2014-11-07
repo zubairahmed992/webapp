@@ -35,6 +35,10 @@ public function getAllSizes(){
 #-------------------#-------------------#-------------------#-------------------
     public function getDefaultArray() {
         return array(
+            'genders' => array(
+                'titles' => $this->getGenders(),
+                'descriptions' => $this->getGenderDescriptionArray(),
+            ),
             'body_shapes' => array(
                 'man' => $this->getManBodyShape(),
                 'woman' => $this->getWomanBodyShape(),
@@ -65,6 +69,20 @@ public function getAllSizes(){
             ),
         );
     }
+#############################################################################
+public function getGenders($key_pair=true){
+     return $this->getArray($this->constant['genders'], $key_pair);    
+}
+#------------------------------------
+public function getGenderDescriptionArray(){
+    $arr=$this->constant['genders'];
+    $new_arr=array();
+    foreach($arr as $key){        
+            $new_arr[$key['title']]=$key['description'];        
+    }
+    return $new_arr;   
+}
+
 #############################################################################
 #--------------------Woman Sizes Start Here-------------------------------------#
 
@@ -261,18 +279,19 @@ public function getWomanBodyShape($key_pair=true){
 
 #############################################################################
 #---------------------------Sorting Of Array----------------------------------#
-public function getArray($arr, $key_pair=true){   
+
+private function getArray($arr, $key_pair=true, $field='title'){   
     $new_arr=array();
     foreach($arr as $key){
         if ($key_pair)
-            $new_arr[$key['title']]=$key['title'];
+            $new_arr[$key[$field]]=$key[$field];
         else
-            array_push ($new_arr, strval($key['title']));
+            array_push ($new_arr, strval($key[$field]));
     }
     return $new_arr;    
 }
 #-------------------------------
-public function transformArray($arr, $key_pair=true){
+private function transformArray($arr, $key_pair=true){
     if($key_pair)
         return $arr;
     else
