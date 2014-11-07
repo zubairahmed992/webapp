@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use LoveThatFit\AdminBundle\Form\Type\DeleteType;
 use LoveThatFit\AdminBundle\Form\Type\SizeChartType;
+use LoveThatFit\AdminBundle\Form\Type\SizeChartDynamicType;
 use LoveThatFit\AdminBundle\Form\Type\BrandSizeChartType;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,6 +47,17 @@ class SizeChartController extends Controller {
         $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', 
         array('form' => $form->createView(),'allSizes'=>json_encode($this->get('admin.helper.size')->getAllSizes()),'allMixSizeTitles'=>json_encode($this->get('admin.helper.sizechart')->getMixSizeTitle())));
+    }
+    
+      public function dynamicNewAction() {                  
+         $size_specs=$this->get('admin.helper.size')->getDefaultArray(); 
+         #return new Response(json_encode($size_specs));
+        $entity = $this->get('admin.helper.sizechart')->createNew();
+        $form = $this->createForm(new SizeChartDynamicType($size_specs), $entity);      
+        return $this->render('LoveThatFitAdminBundle:SizeChart:dynamic_new.html.twig', 
+                array('form' => $form->createView(),
+                    'size_specs'=>$size_specs,
+                    ));
     }
     
     public function createAction(Request $request)
