@@ -450,11 +450,12 @@ trans_bg.style = {
 };
 
 
-var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
+//var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
 
+var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
 p_user_height = p_user_height * 6;
-
+//alert(p_user_height);
 var p_user_height_px = p_user_height;
 
 p_user_height = p_user_height * 100 / 450;
@@ -465,18 +466,59 @@ p_user_height = p_user_height / 100;
 console.log(p_user_height);
 
 if(chk_no_img_path == true){
+mid_area_path.scale(1,p_user_height);
     //alert("in side");
-    
-   //def_shape_h = p_user_height;
-   //def_head_h = (14.66 * def_shape_h) / 100;
-   //def_torso_h = (35.96 * def_shape_h) / 100;
-   //def_inseam_h = (47.61 * def_shape_h) / 100;
+   mid_area_path.position = new Point(181,(p_user_height_px/2)+17);
    
-   //def_head_base_point = mid_area_path.segments[head_segments[i]].point.y
+   def_shape_h = p_user_height; //65in
    
+   def_head_h = (14.66 * def_shape_h) / 100;
+   def_torso_h = (35.96 * def_shape_h) / 100;
+   def_inseam_h = (47.61 * def_shape_h) / 100;
    
-//   mid_area_path.segments[0].point.y = 
-    
+   def_head_base_point = mid_area_path.segments[0].point.y;
+   
+  // alert("Head base: " + def_head_base_point + " User Height: "+def_shape_h);
+   
+  if(parseInt($('#user_height_frm_3').attr('value')) >= 75){
+  }
+  else{
+    def_head_p_incr = (75 - parseInt($('#user_height_frm_3').attr('value')))/6;
+  }
+
+  var head_segments = [1,2,3,4,5,69,68,67,66,65];
+  function adj_head_points(){
+      for(var i = 0; i < head_segments.length; i++) {
+          if(head_segments[i] == 5 || head_segments[i] == 65) {
+            mid_area_path.segments[head_segments[i]].point.y += def_head_p_incr * 1.5;
+          }
+          
+          else {
+            mid_area_path.segments[head_segments[i]].point.y +=  def_head_p_incr;
+          }
+      };
+  }
+  adj_head_points();
+  
+  var torso_adj_segments = [16,17,54,53];
+  function adj_torso_points(){
+        
+  //var arm_pit_dis = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
+  var arm_pit_dis = 43;
+  var arm_pit_dis_curr = mid_area_path.segments[54].point.y - mid_area_path.segments[64].point.y;
+  var final_arm_pit_dis = arm_pit_dis - arm_pit_dis_curr;
+  
+      for(var i = 0; i < torso_adj_segments.length; i++) {
+          if(false) {
+            mid_area_path.segments[torso_adj_segments[i]].point.y = (mid_area_path.segments[64].point.y + arm_pit_dis);
+          }
+          else {
+            mid_area_path.segments[torso_adj_segments[i]].point.y += final_arm_pit_dis;
+          }
+      };
+  }
+  adj_torso_points();
+   //mid_area_path.segments[1].point.y = mid_area_path.segments[69].point.y += def_head_p_incr;
     
     
     
@@ -495,9 +537,10 @@ if(chk_no_img_path == true){
     
     
     
-    mid_area_path.scale(1,p_user_height);
+    //mid_area_path.scale(1,p_user_height);
     //mid_area_path.scale(1,1);
-    mid_area_path.position = new Point(181,p_user_height_px/2+17);
+    //mid_area_path.position = new Point(181,p_user_height_px/2+17);
+    
     
    }
    else{
@@ -1292,7 +1335,7 @@ jQuery(document).ready(function ($) {
                             
                             
                             
-                            <canvas id="canv_mask" width="364" height="505"></canvas>
+                            <canvas id="canv_mask" width="364" height="505" style="display:block;z-index:12000"></canvas>
                             
                             <div class="center_mark"></div>
                             <div class="height_top_mark"></div>

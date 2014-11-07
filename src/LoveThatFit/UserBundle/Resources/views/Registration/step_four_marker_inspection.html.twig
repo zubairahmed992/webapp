@@ -600,8 +600,9 @@ function onMouseMove(event) {
 function onMouseUp(event){
     if (segment) {    
         for(var i = 0; i < path.segments.length; i++) {
+        kkk = i+1;
             $("#segments_details").prepend("<div class='sh ort_tip' style='left:" + parseInt(path.segments[i].point.x) +"px; top:" + parseInt(path.segments[i].point.y)+"px'>Segment" + i +": "+path.segments[i].point + "</div>");
-            $("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + i + "</div>");
+            $("#play_area").prepend("<div class='short_tip' style='left:" + (parseInt(path.segments[i].point.x)+1) +"px; top:" + (parseInt(path.segments[i].point.y)+1)+"px'>" + kkk + "</div>");
         };
         //generating json array of markers cordinates ~~~~~~~~~~~~~~~~~~>
         $("#img_path_json").attr("value", getPathArrayJson());
