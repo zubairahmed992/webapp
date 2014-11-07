@@ -1,87 +1,103 @@
-<table width="100%" style="border: solid 1px #CCCCCC;" align="center">   
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %} 
+<link rel="stylesheet" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/colorpicker.css')}}" type="text/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/layout.css')}}" />
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/colorpicker.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/eye.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
+{% endblock %}
+{% block body %}
+
+<div id="detail_wrapper">
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="retailor_pro_size">
         <tr>
-                <td style="width: 50px;background-color: #FFFFDF"><b>
-                    </b><i> {{brand}}</i> 
-                        </td>            
-                    </tr>
-{%for sc in sizechart%}
-{%if sc.gender=='f'%}
+            <td class="retailor_det_key">{{brand}}
+            </td>
+        </tr>
+        {#order by gender, clothing type, body type #}
+        {% set current_gender=null %}
+        {% set current_target=null %}
+        {% set current_bodytype=null %}
+        {% set current_sizetitle=null %}
+        {% set first_line=1 %}
 
-<tr>
-                <td style="width: 50px;background-color: #FFFFDF"><b>
-                    </b><i> Women</i> <br/>                    
-                    {%if sc.target =='Top' %}
-                    Top
-                    <br/>
-                     {{sc.bodytype}} {{sc.title}}
-                    <br/>
-                    Neck:
-                     <br/>
-                    Shoulder across back:{{sc.shoulderAcrossBack}}
-                     <br/>
-                    Bust:{{sc.bust}}
-                    <br/>
-                    Waist:{{sc.waist}}
-                    <br/>
-                    Hip:{{sc.hip}}
-                    {%elseif sc.target =='Bottom'%}
-                    Bottom
-                    <br/>
-                     {{sc.bodytype}} {{sc.title}}
-                     <br/>                    
-                     Shoulder across back:{{sc.shoulderAcrossBack}}
-                     <br/>
-                     Waist:{{sc.waist}}
-                     <br/>
-                     Hip:{{sc.hip}}
-                     <br/>
-                     Thigh:{{sc.thigh}}
-                     <br/>
-                     Out Seam:{{sc.outseam}}
-                     <br/>
-                     Inseam:{{sc.inseam}}
-                     <br/>
-                    {%elseif sc.target =='Dress'%}
-                    Dress 
-                    <br/>
-                     {{sc.bodytype}}  {{sc.title}}
-                     <br/> 
-                     Neck:{{sc.neck}}
-                     <br/>
-                     Shoulder across back:{{sc.shoulderAcrossBack}}
-                     <br/>
-                     Bust:{{sc.bust}}
-                     <br/>
-                     Sleeve:{{sc.sleeve}}
-                     <br/>
-                     Waist:{{sc.waist}}
-                     <br/>
-                     Hip:{{sc.hip}}
-                     <br/>
-                    
-                    
-                    {%endif%}
-                    
-                        </td>            
-                    </tr>
-{%endif%}
-{%if sc.gender=='m'%}
-<tr>
-                <td style="width: 50px;background-color: #FFFFDF"><b>
-                    </b><i>Men</i> <br/>
-                    {%if sc.target =='Top' %}
-                    Top
-                    <br/>
-                    {{sc.bodytype}} {{sc.title}}
-                     <br/>                  
-                    {%elseif sc.target =='Bottom'%}
-                    Bottom                    
-                    <br/>                    
-                    {{sc.bodytype}}  {{sc.title}}
-                   {%endif%}
-                        </td>            
-                    </tr>
-{%endif%}
-{%endfor%}
+   {% for sc in sizechart %}        
+              {% if sc.gender!=current_gender%} 
+        <tr>             
+            <td class="retailor_det_key">                
+                    {{sc.gender=='f'?'Woman':'Man'}}                    
+            </td>      
+            </tr>
+         {% set current_gender=sc.gender %} 
+            {%endif%}           
+             {% if sc.target!=current_target %}   
+            <tr>                               
+                <td class="retailor_det_key">
+                     {{sc.target}}                       
+                </td>                
+           </tr>
+          {% set current_target=sc.target %}   
+          {%else%}
+           <tr>
+            {% if sc.bodytype!=current_bodytype %}
+               {% set current_bodytype=sc.bodytype %}   
+              {% if first_line==1 %}
+              {% set first_line=0 %}
+               {% else%}
+                 </table>
+                 </td>
+              </tr>
+                {% endif %}
+                    <td class="retailor_det_key">
+                   {{sc.bodytype}}
+                    </td>
+                </tr>
+                 <tr>
+                     <td>       
+                            <table cellpadding="5" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td>&nbsp;</td>                                     
+                                    <td>Waist</td>
+                                    <td>Hip</td>
+                                    <td>Bust</td>
+                                    <td>Chest</td>
+                                    <td>Inseam</td>
+                                    <td>Outseam</td>
+                                    <td>Neck</td>
+                                    <td>Sleeve</td>        
+                                    <td>Thigh</td>
+                                    <td>Shoulder Across Back</td>        
+                                </tr>  
+                 {%else%}
+                   
+                                <tr>
+                                    <td>  {{sc.sizeTitleType}}     {{sc.title}} </td>
+                                    <td>{{sc.waist}}</td>
+                                    <td>{{sc.hip}}</td>
+                                    <td>{{sc.bust}}</td>
+                                    <td>{{sc.chest}}</td>
+                                    <td>{{sc.inseam}}</td>
+                                    <td>{{sc.outseam}}</td>
+                                    <td>{{sc.neck}}</td>
+                                    <td>{{sc.sleeve}}</td>        
+                                    <td>{{sc.thigh}}</td>
+                                    <td>{{sc.shoulderAcrossBack}}</td>         
+                                </tr>
+                        
+                {%endif%}
+         
+              {%endif%}
+     {%endfor%}
 
-</table>
+ </table>
+
+      
+
+      
+   
+</div>
+{% endblock %}
