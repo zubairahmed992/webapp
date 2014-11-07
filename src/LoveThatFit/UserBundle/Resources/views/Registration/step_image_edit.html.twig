@@ -465,7 +465,7 @@ p_user_height = p_user_height / 100;
 
 console.log(p_user_height);
 
-alert(p_user_height);
+//alert(p_user_height);
 
 if(chk_no_img_path == true){
 
@@ -581,6 +581,34 @@ if(chk_no_img_path == true){
 
 
 
+////////////////////////////////
+
+    /*
+                var sholder_left = mid_area_path.segments[6].point.y;
+                var sholder_right = mid_area_path.segments[62].point.y;
+                
+                
+                if(sholder_left <= sholder_right){
+                    $("#measurement_shoulder_height").attr("value", sholder_left);
+                }else{
+                    $("#measurement_shoulder_height").attr("value", sholder_right);
+                }
+                
+                
+                var bottom_left = mid_area_path.segments[21].point.y - 66;
+                var bottom_right = mid_area_path.segments[49].point.y - 66;
+                
+                //alert(sholder_right);
+                
+                if(bottom_left <= bottom_right){
+                    $("#measurement_hip_height").attr("value", bottom_left);
+                }else{
+                    $("#measurement_hip_height").attr("value", bottom_right);
+                }
+                
+          */      
+////////////////////////////////////////////////////////////// 
+
 
 var path = new CompoundPath({
     children: [
@@ -596,7 +624,7 @@ var path = new CompoundPath({
 
 path.opacity = 0.6;
 
-
+               
         
       export_svg_data(path);
 
@@ -606,6 +634,7 @@ path.opacity = 0.6;
 }
 
 function export_svg_data(path){
+
 
 
 
