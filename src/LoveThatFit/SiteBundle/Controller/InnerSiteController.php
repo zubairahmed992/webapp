@@ -223,7 +223,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
     }
 #------------------------------------------- render method ---------------------
     private function renderProductTemplate($entity, $page_number, $limit, $status=null) {
-            if (count($entity)==0) return new Response('Products are currently not available');
+            if (count($entity)==0) return new Response('<span style="margin: 0px auto; display: block; width: 380px;">Products are currently not available</span>');
             return $this->render('LoveThatFitSiteBundle:InnerSite:_products.html.twig', array('products' => $entity, 'page_number' => $page_number, 'limit' => $limit, 'row_count' => count($entity), 'functionality_status' => $status));
     }
 #----------------------------------- Sample Clothing Type-----------------------
