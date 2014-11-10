@@ -64,10 +64,10 @@ private $timespent;
         
         $builder->add('top_size', 'choice', array('required' => false));
         $builder->add('bottom_size', 'choice', array('required' => false));
-        $builder->add('neck', 'choice', array('choices' => $this->neck, 'required' => true,'empty_value' => 'Neck',));
-        $builder->add('sleeve', 'choice', array('choices' => $this->sleeve, 'required' => true,'empty_value' => 'Sleeve',));
-        $builder->add('waist', 'choice', array('choices' => $this->waist, 'required' => true,'empty_value' => 'Waist',));
-        $builder->add('inseam', 'choice', array('choices' => $this->inseam, 'required' => true,'empty_value' => 'Inseam',));
+        $builder->add('neck', 'choice', array('choices' => $this->neck, 'required' => false,'empty_value' => 'Neck',));
+        $builder->add('sleeve', 'choice', array('choices' => $this->sleeve, 'required' => false,'empty_value' => 'Sleeve',));
+        $builder->add('waist', 'choice', array('choices' => $this->waist, 'required' => false,'empty_value' => 'Waist',));
+        $builder->add('inseam', 'choice', array('choices' => $this->inseam, 'required' => false,'empty_value' => 'Inseam',));
         //$builder->add('inseam');
         $builder->add('weight');
         $builder->add('chest');

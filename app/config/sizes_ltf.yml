@@ -1301,7 +1301,7 @@ constants:
          14-34:  
            title: 14-34
            neck: 14
-           arm-length: 25.75
+           arm_length: 25.75
            half_shoulder: 8.25
            shoulder: 16.5  
            sleeve_size: 34

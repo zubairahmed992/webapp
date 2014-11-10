@@ -4,7 +4,14 @@
 <script>
 function validate(){
 
-        
+var measurement_sleeve=document.getElementById('measurement_sleeve').value;
+var measurement_neck=$('#measurement_neck').val();
+var measurement_waist=$('#measurement_waist').val();
+var measurement_inseam=$('#measurement_inseam').val();
+var measurement_top_brand=$('#measurement_top_brand').val();
+var measurement_bottom_brand=$('#measurement_bottom_brand').val();
+var measurement_bottom_size=$('#measurement_bottom_size').val();
+var measurement_top_size=$('#measurement_top_size').val();
 var month_select=$('#measurement_birthdate_month').val();
 var day_select=$('#measurement_birthdate_day').val();
 var year_select=$('#measurement_birthdate_year').val();
@@ -17,6 +24,14 @@ if(!measurement_body_shape)
     }else{
        $('#measurement_body_shape_display').html('');
 }
+if((measurement_sleeve=='' || measurement_neck=='' || measurement_waist=='' || measurement_inseam=='') && (measurement_top_brand=='' || measurement_bottom_brand=='' || measurement_top_size=='' || measurement_bottom_size=='')){
+    $('#male_measurement_display').html('Please select measurements.');
+      $('#male_measurement_display').show();     
+     return false;
+}else
+    {
+         $('#male_measurement_display').html('');
+    }
 if(!month_select){
    $('#date_error').html('Please Enter Month.');
    $('#date_error').show();
@@ -288,6 +303,11 @@ zero.</span>
 <li><a href="#tabs-2">I don’t know</a></li>
 </ul>
             </div>
+                                  
+                                  
+  {% if entity.gender=='m'%}
+  <span id="male_measurement_display" style="display:none;background: none repeat scroll 0 0 white;border: 1px solid #ccc;color: red;font-size: 0.8em;left: -13px;position: absolute;top: 359px;"></span>
+    {%endif%}
                                   
                                   <div style="clear:both; margin-bottom: 15px;"></div>
                               
