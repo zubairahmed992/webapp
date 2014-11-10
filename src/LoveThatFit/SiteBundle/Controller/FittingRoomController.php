@@ -105,7 +105,7 @@ class FittingRoomController extends Controller {
                        //'Champion Hoodie'  => -7,
                         'CAMP DAVID HOODIE'  => -7,
                         'New Agenda Crew-Neck Short Sleeve Shirt'  => -3,
-                        'JanSport Long Sleeve Shirt'  => -6,                      
+                        //'JanSport Long Sleeve Shirt'  => -6,                      
                         'Champion Unisex Hoodie'  => -3,
                         'JansPort Unisex Hoodie'  => -3,
                         'Under Armor Unisex Hoodie'  => -3,
