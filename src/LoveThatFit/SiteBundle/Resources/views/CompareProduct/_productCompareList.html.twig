@@ -10,7 +10,7 @@
             
              <li style="float:left">
                
-                <img src="{{asset(product.image) }}">
+                <img src="{{asset(product.image) }}" title="{{product.product_name}}">
                
             
             </li>
@@ -62,7 +62,7 @@
     <span style="position: absolute; top:60px; right:0px; font-size: 0.75em; text-align: center;">
        <a href="{{path('compare_product_index')}}">Compare<br>Now</a>
     </span>
-<img src="{{ asset('bundles/lovethatfit/site/images/compare_icon.png') }}" />
+    <img src="{{ asset('bundles/lovethatfit/site/images/compare_icon.png') }}" />
 
 </div>
 {# dump(app.session.get('product_compare_list')) #}
