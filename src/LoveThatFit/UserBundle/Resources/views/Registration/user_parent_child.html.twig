@@ -40,7 +40,7 @@
         document.getElementById('emailvalidate1').style.display="block";
  }else
  {
-  var registration_parent_child_update= "../registration/parent/update/child/"+ {{app.user.id}};  
+  var registration_parent_child_update= "../parent/update/child/"+ {{app.user.id}};  
  var str = $('#parentemail2').serialize();
  jQuery.ajax({
    type: "POST",

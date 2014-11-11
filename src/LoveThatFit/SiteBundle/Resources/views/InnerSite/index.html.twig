@@ -330,7 +330,7 @@ function remove_prod_state(remove_prod_item_id) {
                         <!--<canvas id="default_m_canv" width="364" height="510"></canvas>-->
                     </div>
                 </div>
-                    <div class="upload_pic_msg">Please <a href="{{ path('fitting_room_image_edit') }}">Upload Your Photo</a> to try clothes on you.</div>
+                    <div class="upload_pic_msg">Please <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">Upload Your Photo</a> to try clothes on you.</div>
                     <div id="user_dummy_img_hldr">
                     </div>
                 {% endif %}
