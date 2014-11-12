@@ -44,6 +44,7 @@ class SizeChartController extends Controller {
      
      public function newAction() {        
         $entity = $this->get('admin.helper.sizechart')->createNew();
+        $getDefaultArray=$this->get('admin.helper.sizet')->getDefaultArray();
         $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         return $this->render('LoveThatFitAdminBundle:SizeChart:new.html.twig', 
         array('form' => $form->createView(),'allSizes'=>json_encode($this->get('admin.helper.size')->getAllSizes()),'allMixSizeTitles'=>json_encode($this->get('admin.helper.sizechart')->getMixSizeTitle())));
@@ -63,6 +64,7 @@ class SizeChartController extends Controller {
     public function createAction(Request $request)
     {       
         $entity = $this->get('admin.helper.sizechart')->createNew();
+         $getDefaultArray=$this->get('admin.helper.sizet')->getDefaultArray();
         $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         $form->bindRequest($request);    
        // return new response(json_encode($form->getErrorsAsString()));
@@ -121,6 +123,7 @@ class SizeChartController extends Controller {
     {
         $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
         $entity = $specs['entity'];
+        $getDefaultArray=$this->get('admin.helper.sizet')->getDefaultArray();
         if ($specs['success'] == false) {
             $this->get('session')->setFlash($specs['message_type'], $specs['message']);
         }
@@ -138,6 +141,7 @@ class SizeChartController extends Controller {
     {
        $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
        $entity = $specs['entity'];   
+      $getDefaultArray=$this->get('admin.helper.sizet')->getDefaultArray();
       $form = $this->createForm(new SizeChartType($this->get('admin.helper.size')->getAllSizeTitleType()), $entity);      
         $form->bindRequest($request);
       if ($specs['success'] == false) {
