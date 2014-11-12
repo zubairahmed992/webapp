@@ -56,8 +56,9 @@ class SizeChartType extends AbstractType
      {
              return array(
             'data_class' => 'LoveThatFit\AdminBundle\Entity\SizeChart',
-            'cascade_validation' => true,
-            'validation_groups' => array('size_chart'),
+           // 'cascade_validation' => true,
+           //'validation_groups' => array('size_chart'),
+           
              );
       } 
  

@@ -52,8 +52,7 @@ class SizeChart
     /**
      * @var string $title
      *
-     * @ORM\Column(name="title", type="string", length=255)
-     * @Assert\NotBlank(groups={"size_chart"})
+     * @ORM\Column(name="title", type="string",nullable=true)
      */
     private $title;
 
