@@ -67,6 +67,13 @@ public function getAllSizes(){
                     'inseam' => $this->getManInseamSizes(),
                 ),
             ),
+          'size_title_type'=>array(
+                'man'=>$this->getSizeTitleType('m'),
+                'woman'=>$this->getSizeTitleType('f'),
+                
+              
+              
+          ),
         );
     }
 #############################################################################
