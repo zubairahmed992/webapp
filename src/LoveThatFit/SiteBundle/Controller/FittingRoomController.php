@@ -68,12 +68,12 @@ class FittingRoomController extends Controller {
     #--------------------------------------------------------------
     private function get_pixel_variance($product){
         $product_pixel = array ('Arch Logo Zip Hoodie'  => 1,
-                        'D624'  => 1,
-                        'D568'  => 2,
-                        'D522'  => -3,
-                        '6646'  => -5,
-                        'D586'  => -3,
-                        '2882'  => -4,
+                        'D624'  => 2,
+                        'D568'  => 3,
+                        'D522'  => 1,
+                        '6646'  => 0,
+                        'D586'  => 0,
+                        '2882'  => -3,
                         'Ladies Tank' => -2,
                         'Ladies Strap Gown' => -3,
                        // 'Mens PJ Top' => -6,
