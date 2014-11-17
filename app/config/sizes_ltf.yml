@@ -7,6 +7,15 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
 constants:
   
+  targets:
+    man:
+      top:  top
+      bottom: bottom      
+    woman:  
+      top:  top
+      bottom: bottom
+      dress: dress
+
   genders:
     m:
       title:  m

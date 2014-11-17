@@ -47,6 +47,10 @@ public function getAllSizes(){
                 'man' => $this->getManFitType(),
                 'woman' => $this->getWomanFitType(),
             ),
+            'targets' => array(
+                'man' => $this->getManTarget(),
+                'woman' => $this->getWomanTarget(),
+            ),
             'sizes' => array(
                 'woman' => array(
                     'letter' => $this->getWomanLetterSizes(),
@@ -282,6 +286,27 @@ public function getManBodyShape($key_pair=true){
 #--------------------------------
 public function getWomanBodyShape($key_pair=true){
      return  $this->transformArray($this->constant['body_shape']['woman'], $key_pair);
+}
+
+#############################################################################
+
+public function getAllTarget(){
+     return ($this->constant['targets']);
+}
+#-------------------------
+public function getTarget($gender='f',$key_pair=true){
+    if ($gender=='f')
+        return ($this->getWomanTarget($key_pair));
+    else
+        return ($this->getManTarget($key_pair));
+}
+#--------------------------------
+public function getManTarget($key_pair=true){
+     return  $this->transformArray($this->constant['targets']['man'], $key_pair);
+}
+#--------------------------------
+public function getWomanTarget($key_pair=true){
+     return  $this->transformArray($this->constant['targets']['woman'], $key_pair);
 }
 
 #############################################################################
