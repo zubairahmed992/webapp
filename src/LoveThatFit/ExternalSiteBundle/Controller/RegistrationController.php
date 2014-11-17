@@ -342,7 +342,7 @@ class RegistrationController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            $this->get('user.helper.measurement')->saveVerticalPositonMeasurement($measurement);
+            $this->get('user.helper.measurement')->saveMeasurement($measurement);
             return new Response('Measurement Updated');
         } else {
             return new Response('Vertical Position Measurement has not been updated!');
@@ -358,7 +358,7 @@ class RegistrationController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            $this->get('user.helper.measurement')->savehorizontalMeasurement($measurement);
+            $this->get('user.helper.measurement')->saveMeasurement($measurement);
             return new Response('Measurement Updated');
         } else {
             return new Response('Horizontal Position Measurement has not been updated!');

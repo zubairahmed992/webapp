@@ -65,17 +65,17 @@ class MeasurementHelper {
         $this->em->flush();
     }   
 
-    public function saveVerticalPositonMeasurement(Measurement $measurement) {
+  /*  public function saveVerticalPositonMeasurement(Measurement $measurement) {
         $measurement->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($measurement);
         $this->em->flush();
-    }
+    }*/
     
-    public function savehorizontalMeasurement(Measurement $measurement) {
+   /* public function savehorizontalMeasurement(Measurement $measurement) {
         $measurement->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($measurement);
         $this->em->flush();
-    }
+    }*/
 
 #----------------------Code For Value Retaing ------------------------------------------------------------------------# 
     public function measurementRetain($measurement) {
@@ -119,7 +119,7 @@ class MeasurementHelper {
         return $retaining_array;
     }
 #----------------Get  Bust measurment Range------------------------------------#   
-    public function getBustMeasurementRange($bra_num) {
+  /*  public function getBustMeasurementRange($bra_num) {
         $yaml = new Parser();
         $bustMeasurement = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         $bustRange = $bustMeasurement["Bust_Measurement"];
@@ -133,7 +133,7 @@ class MeasurementHelper {
             
         }
         //return array('bustRange'=>$bustRange);
-    }
+    }*/
     #----------------------------------------------------------
     
     public function evaluateRegistration($user, $data){
