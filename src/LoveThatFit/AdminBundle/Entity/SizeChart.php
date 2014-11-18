@@ -575,4 +575,30 @@ class SizeChart
     {
         return $this->size_title_type;
     }
+    
+    public function toArray(){
+        return array(
+        'id' => $this->id,        
+        'title' => $this->title,
+        'gender' => $this->gender,
+        'target' => $this->target,
+        'waist' => $this->waist,
+        'hip' => $this->hip,
+        'bust' => $this->bust,
+        'chest' => $this->chest,
+        'inseam' => $this->inseam,
+        'neck' => $this->neck,
+        'sleeve' => $this->sleeve,
+        'brand' => $this->brand->getName(),
+        'disabled' => $this->disabled,
+        'bodytype' => $this->bodytype,
+        'outseam' => $this->outseam,
+        'title' => $this->title,
+        'gender' => $this->gender,
+        'size_title_type' => $this->size_title_type,
+        'thigh' => $this->thigh,
+        'shoulder_across_back' => $this->shoulder_across_back,           
+        
+        );
+    }
 }

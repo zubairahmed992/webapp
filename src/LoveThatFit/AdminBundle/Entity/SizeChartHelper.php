@@ -83,8 +83,31 @@ public function save($entity) {
             return $msg_array;
         }
     }
+#----------------------------------------------------------
+    public function fillInRequest($data) {
+        $new_size_chart = $this->createNew();
+        $brand = $this->container->get('admin.helper.brand')->find($data['Brand']);        
+        $new_size_chart->setBrand($brand);
+        $new_size_chart->setGender($data['gender']);
+        $new_size_chart->setTarget($data['target']);
+        $new_size_chart->setBodytype($data['bodytype']);
+        $new_size_chart->setSizeTitleType($data['size_title_type']);
+        $new_size_chart->setTitle($data['title']);
+        $new_size_chart->setNeck($data['neck']);
+        $new_size_chart->setShoulderAcrossBack($data['shoulder_across_back']);
+        $new_size_chart->setBust($data['bust']);
+        $new_size_chart->setSleeve($data['sleeve']);
+        $new_size_chart->setWaist($data['waist']);
+        $new_size_chart->setHip($data['hip']);
+        $new_size_chart->setThigh($data['thigh']);
+        $new_size_chart->setOutseam($data['outseam']);
+        $new_size_chart->setInseam($data['inseam']);
+        $new_size_chart->setChest($data['chest']);
+        $new_size_chart->setDisabled(array_key_exists('disabled', $data));
+        return $new_size_chart;
+    }
 
-    
+#----------------------------------------------------------
 public function countAllSizeChartRecord(){
   return count($this->repo->countAllSizeChartRecord());      
     }    
