@@ -5,11 +5,34 @@
 <script>
 function validate(){
 
-
+var measurement_sleeve=document.getElementById('measurement_sleeve').value;
+var measurement_neck=$('#measurement_neck').val();
+var measurement_waist=$('#measurement_waist').val();
+var measurement_inseam=$('#measurement_inseam').val();
+var measurement_top_brand=$('#measurement_top_brand').val();
+var measurement_bottom_brand=$('#measurement_bottom_brand').val();
+var measurement_bottom_size=$('#measurement_bottom_size').val();
+var measurement_top_size=$('#measurement_top_size').val();
 var month_select=$('#measurement_birthdate_month').val();
 var day_select=$('#measurement_birthdate_day').val();
 var year_select=$('#measurement_birthdate_year').val();
-
+var measurement_body_shape=$('#measurement_body_shape').val();
+if(!measurement_body_shape)
+    {
+      $('#measurement_body_shape_display').html('Please select Body Shape.');
+      $('#measurement_body_shape_display').show();
+       return false;
+    }else{
+       $('#measurement_body_shape_display').html('');
+}
+if((measurement_sleeve=='' || measurement_neck=='' || measurement_waist=='' || measurement_inseam=='') && (measurement_top_brand=='' || measurement_bottom_brand=='' || measurement_top_size=='' || measurement_bottom_size=='')){
+    $('#male_measurement_display').html('Please select measurements.');
+      $('#male_measurement_display').show();     
+     return false;
+}else
+    {
+         $('#male_measurement_display').html('');
+    }
 if(!month_select){
    $('#date_error').html('Please Enter Month.');
    $('#date_error').show();
@@ -34,7 +57,7 @@ if(!year_select){
 return true;
 
 }
-    </script>
+ </script>
 <section class="reg_blk">
     
     <div class="action_cnt">
@@ -43,11 +66,12 @@ return true;
             <div id="inst">Put all values in inches.</div>          
             <form  onsubmit="return validate();"id="RegistrationMeasurement" action="{{ path('external_registration_measurement_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }}>
                 {{ form_errors(form) }}
-                    <div>
+                  <div>
                      {{ form_errors(form.height) }}
                         <div id="height_wrapper">
                             <span class="boxlable" id="height_box">Height (inch)</span>  
-                            <span class="boxlable" id="height_box" style="margin-left:115px;"><a onclick="showfeet()" href="javascript:void(0);" style="color: #426EB6; font-weight: bold;">In Feet?</a></span>
+                            <span class="boxlable" id="height_box" style="margin-left:115px;"><a onclick="showfeet()" href="javascript:void(0);" 
+style="color: #426EB6; font-weight: bold;">In Feet?</a></span>
                         </div>
                         {{ form_widget(form.height) }}
 
@@ -61,7 +85,8 @@ return true;
                                 <option value="7">7</option>
                             </select>
                             <span class="boxlable" id="height_box" style="left:81px;">in</span>
-                            <span class="boxlable" id="height_box" style="margin-left:101px;"><a onclick="hidefeet()" href="javascript:void(0);" style="color: #929707; font-weight: bold;">In Inches?</a></span>
+                            <span class="boxlable" id="height_box" style="margin-left:101px;"><a onclick="hidefeet()" href="javascript:void(0);" 
+style="color: #929707; font-weight: bold;">In Inches?</a></span>
                             <select name="height_in_inches" id="height_in_inches" style="width:78px;">
                                 <option value="0">0</option>    
                                 <option value="1">1</option>
@@ -89,41 +114,36 @@ return true;
 
                     <span>
                         <span id="error_content0" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">Height can not be null.</span>
-                        <span id="error_content10" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">Height must be greater than zero.</span>
+                        <span id="error_content10" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">Height must be greater than 
+zero.</span>
                     </span>
 
                     <span>
                         <span id="error_content1" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">Weight can not be null.</span>
-                        <span id="error_content11" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">weight must be greater than zero.</span>
+                        <span id="error_content11" style="display:none;color: #DD1144;font-size: 0.7em; text-align:left">weight must be greater than 
+zero.</span>
                     </span>
 
                     <span id="gender" style="display: none;">{{entity.gender}}</span>
                 
-                {% if( entity.gender=='m') %}
-                    <span id="body_type" style="display: none;">{{ form_widget(form.body_types) }}</span>
-                {%endif%}
-
-                    
-                    
-                    
-                {% if( entity.gender=='f') %}
-                    
-                    
+                                   
                     
                     <div style="margin-bottom: 25px; clear:both;"></div>    
                     
              
-                    <div style="float:left; margin-right: 10px;">
+                    <div style="float:left; margin-right: 0px;">
                         <div id="height_wrapper">
                             <span class="boxlable2" id="height_box2">Clothing Fit</span>                             
                         </div>                           
                         <span id="clg_sel">{{ form_widget(form.body_types) }}</span>
                        </div>    
-                       {%endif%} 
-                   
+                    
+                  
                    <div style="overflow: auto;">
                        
-                   <div class="boxlable2" id="weight_box2">Birth Date</div>  
+                   
+                       
+                  <div class="boxlable2" id="weight_box2">Birth Date</div>  
                   
                    
                     {% if( entity.gender=='f') %}
@@ -135,12 +155,8 @@ return true;
                     {{ form_widget(form.birthdate.year) }}
                   </div>
                     {%endif%}
-                   
-                   
-                    {% if( entity.gender=='m') %}
-                   
-                   
-                   <div id="dob" class="male_dob">                 
+                    {% if( entity.gender=='m') %}                                      
+                   <div id="dob">                 
                     {{ form_widget(form.birthdate.month) }}                 
                     {{ form_widget(form.birthdate.day) }}                           
                     {{ form_widget(form.birthdate.year) }}
@@ -193,7 +209,7 @@ return true;
                     
 
 
-{% if( entity.gender=='f') %}
+
                         <!-- START CODE FOR BODY SHAPE AND BRA SIZE --->    
                         <div class="m_option" style="display: table;">   
                             <div class="body_shape" id="body_shape">
@@ -202,16 +218,29 @@ return true;
                                     <label style="display:block; float: none; width: auto;">Body Shape</label>
                                     {{ form_widget(form.body_shape) }}
                                 </div>
+{% if( entity.gender=='f') %}
                                 <div style="float: left;">                   
                                     <label style="display:block; float: none; width: auto;">Bra Size</label>
                                     {{ form_widget(form.bra_numbers) }}
                                     {{ form_widget(form.bra_letters) }}                            
                                 </div>
-
+   {%endif%} 
                             </div>
+                                
+                                
+                                
                         </div>
-            
-               {%endif%}    
+            <span id="measurement_body_shape_display" style="background: none repeat scroll 0 0 white;
+    border: 1px solid #ccc;
+    color: red;
+    display: none;
+    font-size: 0.6em;
+    left: 0px;
+    padding: 3px;
+    position: absolute;
+    top: 235px;
+    z-index: 2000;"></span>
+               
                         <!-- END  CODE FOR BODY SHAPE AND BRA SIZE --->    
                         <div class="sep"></div>
 
@@ -226,6 +255,11 @@ return true;
 <li><a href="#tabs-2">I don’t know</a></li>
 </ul>
             </div>
+                                  
+                                  
+  {% if entity.gender=='m'%}
+  <span id="male_measurement_display" style="display:none;background: none repeat scroll 0 0 white;border: 1px solid #ccc;color: red;font-size: 0.8em;left: -13px;position: absolute;top: 359px;"></span>
+    {%endif%}
                                   
                                   <div style="clear:both; margin-bottom: 15px;"></div>
                               
@@ -389,7 +423,8 @@ return true;
 
                                 </div>
                         <span>
-                                    <span id="error_content2" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; left:55px;">Please select your top measurement.</span>
+                                    <span id="error_content2" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; 
+left:55px;">Please select your top measurement.</span>
                                 </span>
     
 </div>
@@ -442,14 +477,16 @@ return true;
 
                         </div>
                          {% if( entity.gender=='f') %}
-                        <div class="shuf_icon pant_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
+                        <div class="shuf_icon pant_shuf"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset
+('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
                           {% endif%}
                         <!---  pant section close  !-->
                         
 
                     </div><!-- m option close  !--> #}
           {#  <span>
-               <span id="error_content3" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; left:55px;">Please select your bottom measurement.</span>
+               <span id="error_content3" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; 
+left:55px;">Please select your bottom measurement.</span>
             </span>
         #}
 {#
@@ -479,17 +516,20 @@ return true;
                         </div>
                        
 
-                        <div class="shuf_icon"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
+                        <div class="shuf_icon"><a class="switch_button" href="javascript:void(0);"><img src="{{ asset
+('bundles/lovethatfit/site/images/shuffle_icon.png') }}" title="Toggle for other options"></a></div>
 
                         </div>
                     
                      <span>
-               <span id="error_content4" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; left:55px;">Please select your dress measurement.</span>
+               <span id="error_content4" style="display:none; color: #DD1144;font-size: 0.7em; text-align:left; position:relative; top:-15px; 
+left:55px;">Please select your dress measurement.</span>
             </span>
            
-      {% endif %}              
+      {% endif %}             
 #}
                                 <!-- END WEIGHT !-->   
+                                  {{ form_widget(form.timespent)}}  
                                         <div class="row">
                                                 <div class="row" style="width: 156px; margin: 0 auto;">
                                                     <div class="frm_ele" style="float:none;">
@@ -500,7 +540,8 @@ return true;
 
 
                                                 <div id="profile_measurement_link_reg">
-                                                    Need a measuring tape? <br><a target="_blank" href="{{ path('measurement_tape_pdf')}}">Download &amp; print ours here.</a></div>
+                                                    Need a measuring tape? <br><a target="_blank" href="{{ path('measurement_tape_pdf')}}">Download &amp; print 
+ours here.</a></div>
                                                 <div class="clr_bth"></div>
                                                 </div>               
                                                 <!--/.step_3--></div>
@@ -578,7 +619,7 @@ return true;
 
                                                var top_brand_id={{top_brand_id}};
                                                 $('#measurement_top_brand').val({{top_brand_id}}).change().ajaxStop(function() {
-                                                   {%if(top_size_chart_id is defined)%}
+                                                   {%if(top_size_chart_id is not empty)%}
                                                   $('#measurement_top_size').val({{top_size_chart_id}}).change();
                                                   {%endif%}
                                                    });
@@ -588,7 +629,7 @@ return true;
                                
                                             {# ---------------  Bottom Brand & Size ------------------ #}
                                                  
-                                                 {%if(bottom_brand_id is defined)%}   
+                                                 {%if(bottom_brand_id  is not empty)%}   
                                                  $('#measurement_bottom_brand').val({{bottom_brand_id}}).change().ajaxStop(function() {
                                                 {%if(bottom_size_chart_id is defined)%}     
                                                 $('#measurement_bottom_size').val({{bottom_size_chart_id}}).change(); 
@@ -599,7 +640,7 @@ return true;
                  
                                          {# --------------- Dress Brand & Size ------------------ #}
                                                  
-                                                 {%if(dress_brand_id is defined)%}     
+                                                 {%if(dress_brand_id  is not empty)%}     
                                                  $('#measurement_dress_brand').val({{dress_brand_id}}).change().ajaxStop(function() {
                                                  {%if(dress_size_chart_id is defined)%}    
                                                  $('#measurement_dress_size').val({{dress_size_chart_id}}).change(); 
@@ -612,6 +653,10 @@ return true;
                             
                        
                       });
+                        
+                          
+                          
+                          
     </script>
 
 
@@ -620,13 +665,140 @@ return true;
 {% block how_it_works_content %}
                         <section class="cnt_btm">
                             <h3>Measurements</h3>
-                            <p>Get a friend to help you or take them yourself.  Make sure to fill them all out.  This will allow for the perfect fit every time!   If something changes you can allows come back to this step.  Any questions, watch our demonstrational videos.</p>
+                            <p>Get a friend to help you or take them yourself.  Make sure to fill them all out.  This will allow for the perfect fit every time!   If 
+something changes you can allows come back to this step.  Any questions, watch our demonstrational videos.</p>
                         </section>
 {% endblock %}
 
 
 
 {% block bottom_random_content %} 
+                        <script>
+             {# $( "#RegistrationMeasurement" ).submit(function( event ) {
+              var height=document.getElementById('measurement_height').value;
+              var weight=document.getElementById('measurement_weight').value;
+              var bottommeasurement=document.getElementById('measurement_bottom_size').value;    
+              var shirtmeasurement=document.getElementById('measurement_top_size').value;  
+              {% if(entity.gender=='f')%}
+              var dressmeasurement=document.getElementById('measurement_dress_size').value;
+              {%endif%}
+              var slevee=document.getElementById('measurement_sleeve').value;
+              {% if(entity.gender=='f')%}
+              var Bust=document.getElementById('measurement_bust').value;
+              var shoulder_across_back=document.getElementById('measurement_shoulder_across_back').value;  
+              {%endif%}            
+              var waist=document.getElementById('measurement_waist').value;
+              {% if(entity.gender=='f')%}
+              var hip=document.getElementById('measurement_hip').value;
+              {%endif%}
+                  {% if(entity.gender=='f')%}
+              if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0 || Bust==0 || shoulder_across_back==0) && (bottommeasurement=='' || 
+waist==0) && (dressmeasurement=='' || hip==0))
+                      {
+                         document.getElementById('error_content0').style.display="none";
+                         document.getElementById('error_content10').style.display="block"
+                         document.getElementById('error_content1').style.display="none";
+                         document.getElementById('error_content11').style.display="block";
+                         document.getElementById('error_content2').style.display="block";
+                         document.getElementById('error_content3').style.display="block";
+                         document.getElementById('error_content4').style.display="block";
+                         return false;
+                      }
+                      {%else%}
+                        if((height==0 || weight==0) && (shirtmeasurement=='' || slevee==0) && (bottommeasurement=='' || waist==0))
+                      {
+                         document.getElementById('error_content0').style.display="none";
+                         document.getElementById('error_content10').style.display="block"
+                         document.getElementById('error_content1').style.display="none";
+                         document.getElementById('error_content11').style.display="block";
+                         document.getElementById('error_content2').style.display="block";
+                         document.getElementById('error_content3').style.display="block";
+            
+                         return false;
+                      }  
+                      {%endif%}
+              if((height=='' && weight=='' && shirtmeasurement=='' && slevee=='' && Bust=='' && shoulder_across_back==''&& bottommeasurement=='' 
+&& waist=='' && dressmeasurement=='' && hip==''))
+                      {
+             
+                         document.getElementById('error_content10').style.display="none"             
+                         document.getElementById('error_content11').style.display="none";
+                         document.getElementById('error_content2').style.display="block";
+                         document.getElementById('error_content3').style.display="block";
+                         document.getElementById('error_content4').style.display="block";
+                         document.getElementById('error_content0').style.display="block";
+                         document.getElementById('error_content1').style.display="block";
+                         return false;
+                      }      
+  
+              if(height=='')
+                  {
+                      document.getElementById('error_content0').style.display="block";
+                      document.getElementById('error_content10').style.display="none";
+                      return false;
+                  }
+              if(height==0)
+                  {
+                      document.getElementById('error_content10').style.display="block";
+                      document.getElementById('error_content0').style.display="none";
+                      return false;
+                  }  
+              if(weight=='')
+                  {
+                      document.getElementById('error_content0').style.display="none";
+                      document.getElementById('error_content10').style.display="none"
+                      document.getElementById('error_content1').style.display="block";
+                      return false;
+                  }   
+              if(weight==0)
+                  {
+                      document.getElementById('error_content0').style.display="none";
+                      document.getElementById('error_content10').style.display="none"
+                      document.getElementById('error_content1').style.display="none";
+                      document.getElementById('error_content11').style.display="block";
+                      return false;
+                  }  
+  
+              if((shirtmeasurement=='') && (slevee==0 || Bust==0))
+                  {
+                      document.getElementById('error_content0').style.display="none";
+                      document.getElementById('error_content10').style.display="none"
+                      document.getElementById('error_content1').style.display="none";
+                      document.getElementById('error_content11').style.display="none";
+                      document.getElementById('error_content2').style.display="block";
+                      return false;
+                  }
+               if((bottommeasurement=='') && (waist==0))
+                  {
+                      document.getElementById('error_content0').style.display="none";
+                      document.getElementById('error_content10').style.display="none"
+                      document.getElementById('error_content1').style.display="none";
+                      document.getElementById('error_content11').style.display="none";
+                      document.getElementById('error_content2').style.display="none";
+                      document.getElementById('error_content3').style.display="block";
+                      return false;
+                  }
+               if((dressmeasurement=='') && hip==0)
+                  {
+                      document.getElementById('error_content0').style.display="none";
+                      document.getElementById('error_content10').style.display="none"
+                      document.getElementById('error_content1').style.display="none";
+                      document.getElementById('error_content11').style.display="none";
+                      document.getElementById('error_content2').style.display="none";
+                      document.getElementById('error_content3').style.display="none";
+                      document.getElementById('error_content4').style.display="block";
+                      return false;
+                  }
+      
+  
+          
+    
+  
+  
+      
+        
+            }); #}
+                            </script>
                             <script type="text/javascript">
                             $(document).ready(function(){    
                                 var gender=$('#gender').text();
@@ -656,6 +828,34 @@ return true;
                     return letter.toUpperCase();
                 }));
                     });
+                    
+                    
+                    
+                    ///////////////
+                                //Sorting of Body types
+                    var options = $('#measurement_body_types option');
+                    var arr = options.map(function(_, o) {
+                       return {
+                            t: $(o).text(),
+                            v: o.value
+                        };
+                    }).get();
+                    //arr.sort(function(o1, o2) {
+                        //return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0;
+                    //});
+                    options.each(function(i, o) {
+                        //console.log(i);
+                        //o.value = arr[i].v;
+                        $(o).text(arr[i].t.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                    return letter.toUpperCase();
+                }));
+                    });
+                   
+    
+    
+    
+                   
+    
     
     
     
@@ -668,7 +868,8 @@ return true;
 
 
                              //Slider Height
-                              $("#slider_height").slider({ animate: true, range: "min", value: {{ measurement.height }}, min: 20, max: 96, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_height").slider({ animate: true, range: "min", value: {{ measurement.height }}, min: 20, max: 96, step: 0.25, slide: 
+function( event, ui ) {
                                               $( "#slider_result_height" ).html( ui.value + '"' );
                               },
                               change: function(event, ui) {	
@@ -677,7 +878,8 @@ return true;
                               });
 
                               //Slider Bust
-                              $("#slider_bust").slider({ animate: true, range: "min", value: {{ measurement.bust }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_bust").slider({ animate: true, range: "min", value: {{ measurement.bust }}, min: 10, max: 70, step: 0.25, slide: 
+function( event, ui ) {
                                               $( "#slider_result_bust" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
@@ -686,7 +888,8 @@ return true;
                               });
                       
                                //Slider Chest
-                              $("#slider_chest").slider({ animate: true, range: "min", value: {{ measurement.chest }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_chest").slider({ animate: true, range: "min", value: {{ measurement.chest }}, min: 10, max: 70, step: 0.25, slide: 
+function( event, ui ) {
                                               $( "#slider_result_chest" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
@@ -695,7 +898,8 @@ return true;
                               });
 
                               //Slider Waist
-                              $("#slider_waist").slider({ animate: true, range: "min", value: {{ measurement.waist }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_waist").slider({ animate: true, range: "min", value: {{ measurement.waist }}, min: 10, max: 70, step: 0.25, slide: 
+function( event, ui ) {
                                               $( "#slider_result_waist" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
@@ -704,7 +908,8 @@ return true;
                               });
 
                               //Slider Hips
-                              $("#slider_hips").slider({ animate: true, range: "min", value: {{ measurement.hip }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_hips").slider({ animate: true, range: "min", value: {{ measurement.hip }}, min: 10, max: 70, step: 0.25, slide: function( 
+event, ui ) {
                                               $( "#slider_result_hips" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
@@ -712,7 +917,8 @@ return true;
                               }	
                               });
                                 //Slider Neck
-                              $("#slider_neck").slider({ animate: true, range: "min", value: {{ measurement.neck }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_neck").slider({ animate: true, range: "min", value: {{ measurement.neck }}, min: 10, max: 70, step: 0.25, slide: 
+function( event, ui ) {
                                               $( "#slider_result_neck" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
@@ -720,7 +926,8 @@ return true;
                               }	
                               });
                                //Slider Sleeve
-                              $("#slider_sleeve").slider({ animate: true, range: "min", value: {{ measurement.sleeve }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_sleeve").slider({ animate: true, range: "min", value: {{ measurement.sleeve }}, min: 10, max: 70, step: 0.25, slide: 
+function( event, ui ) {
                                               $( "#slider_result_sleeve" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
@@ -728,21 +935,28 @@ return true;
                               }	
                               });  
                                //Slider Outseam
-                              $("#slider_outseam").slider({ animate: true, range: "min", value: {{ measurement.outseam }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_outseam").slider({ animate: true, range: "min", value: {{ measurement.outseam }}, min: 10, max: 70, step: 0.25, slide: 
+function( event, ui ) {
                                               $( "#slider_result_outseam" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
                             $(this).parent().find("input").attr('value', ui.value);	
                               }	
-                              });   
+                              }); 
+                              
+                              
+                              {% if (measurement.shoulderAcrossBack is defined) %}
+                              
                                //Slider Back
-                              $("#slider_shoulder_across_back").slider({ animate: true, range: "min", value: {{ measurement.shoulderAcrossBack }}, min: 10, max: 70, step: 0.25, slide: function( event, ui ) {
+                              $("#slider_shoulder_across_back").slider({ animate: true, range: "min", value: {{measurement.shoulderAcrossBack }}, min: 10, 
+max: 70, step: 0.25, slide: function( event, ui ) {
                                               $( "#slider_result_shoulder_across_back" ).html( ui.value + '"');
                               },
                               change: function(event, ui) { 
                              $(this).parent().find("input").attr('value', ui.value);	
                               }	
                               });
+                              {%endif%}
                             
                             });
                             function show_tip(ele){
@@ -763,7 +977,8 @@ return true;
 
                                                                             $(ele).find("div.tip").removeClass("tip").addClass("show_my_tip");
                                                                             $(".tip").hide(20, function (){
-                                                                                            $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find("div.show_my_tip").stop().animate({"left": "267px"}).removeClass("show_my_tip").addClass("tip");});
+                                                                                            $("div.show_my_tip").fadeIn(20, function (){$(".action_cnt").find
+("div.show_my_tip").stop().animate({"left": "267px"}).removeClass("show_my_tip").addClass("tip");});
                                                                             });			
                                                              }
 
@@ -788,16 +1003,18 @@ return true;
 
                             ///////////////////////////////////////////
 
-$(function() { 
-   
+$(function() {    
 $( "#tabs" ).tabs();
 }); 
 
 
+
  $(function() {
+     var bust_slider=$('#measurement_bust').val();
+   
     $( ".bustt_slider" ).slider({
     range: "min",
-    value: 37,
+    value: bust_slider,
     min: 20,
     max: 100,
     slide: function( event, ui ) {
@@ -809,11 +1026,12 @@ $( "#tabs" ).tabs();
 
 
  $(function() {
+  var waist_slider=$('#measurement_waist').val();;
    var gender=$('#gender').text();
    if(gender=='f' || gender=='F' ){
     $( ".waistt_slider" ).slider({
     range: "min",
-    value: 37,
+    value: waist_slider,
     min: 20,
     max: 100,
     slide: function( event, ui ) {
@@ -826,12 +1044,11 @@ $( "#tabs" ).tabs();
  
 
 
-
-
 $(function() {
+var hip_slider=$('#measurement_hip').val();
     $( ".hipp_slider" ).slider({
     range: "min",
-    value: 37,
+    value: hip_slider,
     min: 20,
     max: 100,
     slide: function( event, ui ) {
@@ -844,6 +1061,7 @@ $(function() {
 
 
                                 </script> 
+
 
 
 

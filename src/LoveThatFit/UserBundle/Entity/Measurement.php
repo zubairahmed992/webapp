@@ -1944,4 +1944,20 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     {
         return $this->belt;
     }
+    
+    #--------------------------------------------------------------------------#
+        #--------------------------------------------------#
+    public function getMeasurmentArray(){
+        $arr=array();
+        
+       $arr['id']=$this->id;
+       $arr['topSizeChartId']= $this->top_fitting_size_chart? $this->top_fitting_size_chart->getId(): null;
+       $arr['bottomSizeChartId']= $this->bottom_fitting_size_chart ? $this->bottom_fitting_size_chart->getId(): null;
+       $arr['dressSizeChartId']= $this->dress_fitting_size_chart ? $this->dress_fitting_size_chart->getId(): null;
+       $arr['top_brand_id']= $this->top_brand ? $this->top_brand->getId(): null;
+       $arr['bottom_brand_id']= $this->bottom_brand ? $this->bottom_brand->getId(): null;
+       $arr['dress_brand_id']= $this->dress_brand ? $this->dress_brand->getId(): null;
+       return $arr;
+        
+    }
 }

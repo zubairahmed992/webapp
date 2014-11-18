@@ -263,7 +263,10 @@ class RegistrationController extends Controller {
             $registrationMeasurementform->get('body_shape')->setData($measurement->getBodyShape());
             $registrationMeasurementform->get('birthdate')->setData($user->getBirthDate());
         }
-        $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
+     //  $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
+          $retaining_array = $measurement->getMeasurmentArray();
+        
+       //return new response(json_encode($retaining_array));
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);      
         #-----------End of Retaining BodyType----------------------------------#
@@ -279,7 +282,7 @@ class RegistrationController extends Controller {
                     'dress_size_chart_id' => $retaining_array['dressSizeChartId'],
                     'measurement_vertical_form' => $measurement_vertical_form->createView(),
                     'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
-            'default_marker' => $default_marker,
+                    'default_marker' => $default_marker,
                    
                 ));
     }

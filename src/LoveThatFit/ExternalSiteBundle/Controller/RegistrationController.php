@@ -185,7 +185,9 @@ class RegistrationController extends Controller
             $registrationMeasurementform->get('bra_numbers')->setData($measurement->getBraNumberSize());
             $registrationMeasurementform->get('body_shape')->setData($measurement->getBodyShape());
         }
-        $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
+     //   $retaining_array = $this->get('user.helper.measurement')->measurementRetain($measurement);
+           $retaining_array = $measurement->getMeasurmentArray();
+        
         $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
         $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);      
         #-----------End of Retaining BodyType----------------------------------#

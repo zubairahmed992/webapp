@@ -78,10 +78,10 @@ class MeasurementHelper {
     }*/
 
 #----------------------Code For Value Retaing ------------------------------------------------------------------------# 
-    public function measurementRetain($measurement) {
-        $retaining_array = array();
-
-        $top_size_chart = $measurement->getTopFittingSizeChart();
+   /* public function measurementRetain($measurement) {
+       // return $measurement->getMeasurmentArray();
+        
+      $top_size_chart = $measurement->getTopFittingSizeChart();
         $bottom_size_chart = $measurement->getBottomFittingSizeChart();
         $dress_size_chart = $measurement->getDressFittingSizeChart();
 
@@ -117,7 +117,7 @@ class MeasurementHelper {
             $retaining_array['dressSizeChartId'] = Null;
         }
         return $retaining_array;
-    }
+    }*/
 #----------------Get  Bust measurment Range------------------------------------#   
   /*  public function getBustMeasurementRange($bra_num) {
         $yaml = new Parser();

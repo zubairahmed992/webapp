@@ -667,7 +667,7 @@ ours here.</a></div>
 
                                                var top_brand_id={{top_brand_id}};
                                                 $('#measurement_top_brand').val({{top_brand_id}}).change().ajaxStop(function() {
-                                                   {%if(top_size_chart_id is defined)%}
+                                                   {%if(top_size_chart_id is not empty)%}
                                                   $('#measurement_top_size').val({{top_size_chart_id}}).change();
                                                   {%endif%}
                                                    });
@@ -677,7 +677,7 @@ ours here.</a></div>
                                
                                             {# ---------------  Bottom Brand & Size ------------------ #}
                                                  
-                                                 {%if(bottom_brand_id is defined)%}   
+                                                 {%if(bottom_brand_id  is not empty)%}   
                                                  $('#measurement_bottom_brand').val({{bottom_brand_id}}).change().ajaxStop(function() {
                                                 {%if(bottom_size_chart_id is defined)%}     
                                                 $('#measurement_bottom_size').val({{bottom_size_chart_id}}).change(); 
@@ -688,7 +688,7 @@ ours here.</a></div>
                  
                                          {# --------------- Dress Brand & Size ------------------ #}
                                                  
-                                                 {%if(dress_brand_id is defined)%}     
+                                                 {%if(dress_brand_id  is not empty)%}     
                                                  $('#measurement_dress_brand').val({{dress_brand_id}}).change().ajaxStop(function() {
                                                  {%if(dress_size_chart_id is defined)%}    
                                                  $('#measurement_dress_size').val({{dress_size_chart_id}}).change(); 
