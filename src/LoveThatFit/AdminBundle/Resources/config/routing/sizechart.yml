@@ -3,8 +3,8 @@ admin_size_chart_dynamic_new:
     defaults: { _controller: LoveThatFitAdminBundle:SizeChart:dynamicNew }
 
 admin_size_charts:
-    pattern: /admin/size_charts/{page_number}/{sort}
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:index , page_number: 1, sort:id }
+    pattern: /admin/size_charts
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:index  }
     
 admin_size_chart_show:
     pattern: /admin/admin_size_charts/{id}/show
@@ -46,8 +46,8 @@ admin_size_chart_search_result:
       pattern:  /admin/admin_size_charts/searchResult
       defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartResult}   
 admin_brand_size_chart:      
-      pattern: /admin/admin_size_charts/brand
-      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChart }
+      pattern: /admin/admin_size_charts/brand/{page_number}/{sort}
+      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChart , page_number: 1, sort:id }
 admin_brand_size_chart_list:      
-      pattern: /admin/admin_size_charts/brand/list
+      pattern: /admin/size_charts/brand/list/{brand_id}
       defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChartList }

@@ -1,21 +1,9 @@
-{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
-
-{% block breadcrumb %} 
-<link rel="stylesheet" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/colorpicker.css')}}" type="text/css" />
-<link rel="stylesheet" media="screen" type="text/css" href="{{ asset('bundles/lovethatfit/admin/colorpicker/css/layout.css')}}" />
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/jquery.js')}}"></script>
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/colorpicker.js')}}"></script>
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/eye.js')}}"></script>
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/utils.js')}}"></script>
-<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/layout.js?ver=1.0.2')}}"></script>
-{% endblock %}
-{% block body %}
         {% set current_gender=null %}
         {% set current_target=null %}
         {% set current_bodytype=null %}
         {% set current_sizetitle=null %}
         {% set first_line=1 %}
-<div id="detail_wrapper">
+
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="retailor_pro_size">
        <tr>
            <td colspan='11' class="retailor_det_key">
@@ -56,6 +44,7 @@
                                     <td style='font-weight:bold'>Sleeve</td>        
                                     <td style='font-weight:bold'>Thigh</td>
                                     <td style='font-weight:bold'>Shoulder Across Back</td>        
+                                 
                                     
                         </tr>  
                 {%endif%}
@@ -64,7 +53,7 @@
                
                     
         <tr>        
-            <td> <a href="{{path('admin_size_chart_edit',{'id': sc.Id}) }}" title="Edit {{sc.sizeTitleType}} {{sc.title}}"><b> {{sc.sizeTitleType}}     {{sc.title}} </b></a></td>
+            <td>  {{sc.sizeTitleType}}     {{sc.title}}</a></td>
             <td>{{sc.waist}}</td>
             <td>{{sc.hip}}</td>
             <td>{{sc.bust}}</td>
@@ -74,13 +63,30 @@
             <td>{{sc.neck}}</td>
             <td>{{sc.sleeve}}</td>        
             <td>{{sc.thigh}}</td>
-            <td>{{sc.shoulderAcrossBack}}</td>         
+            <td>{{sc.shoulderAcrossBack}}
+            <span style="float:right"><a href="{{path('admin_size_chart_edit',{'id': sc.Id}) }}" title="Edit {{sc.sizeTitleType}}     {{sc.title}}"><i class="icon-edit"></i></a>
+                <a href="#myModal{{sc.Id}}" role="button" data-toggle="modal" title="Delte {{sc.sizeTitleType}}     {{sc.title}}"><i class="icon-remove"></i></a>
+            </span>
+            </td>         
+          
+                
         </tr>
         
+        
+        <div id="myModal{{sc.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Size Chart</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Size Chart <b>{{sc.title ~ ', ' ~ sc.brand.name}}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_size_chart_delete', {'id': sc.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>
 {% endfor%}
         
 </table>
-
-
-</div>
-{% endblock %}

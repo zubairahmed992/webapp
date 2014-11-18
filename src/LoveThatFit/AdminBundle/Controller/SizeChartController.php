@@ -13,7 +13,37 @@ use Symfony\Component\HttpFoundation\Response;
 class SizeChartController extends Controller {
 //---------------------------------------------------------------------
     
-    public function indexAction($page_number, $sort = 'id') {
+   
+    public function indexAction()
+    {
+        $form = $this->createForm(new BrandSizeChartType());      
+        return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', 
+        array('form' => $form->createView(),      
+        'rec_count' => $this->get('admin.helper.sizechart')->countAllSizeChartRecord(), 
+        'maleSizeChart'=>$this->get('admin.helper.sizechart')->getSizeChartByGender('m'),
+        'femaleSizeChart'=>$this->get('admin.helper.sizechart')->getSizeChartByGender('f'),
+        'topSizeChart'=>$this->get('admin.helper.sizechart')->getSizeChartByTarget('Top'),
+        'bottomSizeChart'=>$this->get('admin.helper.sizechart')->getSizeChartByTarget('Bottom'),
+        'dressSizeChart'=>$this->get('admin.helper.sizechart')->getSizeChartByTarget('Dress'),
+                
+         ));
+    }
+    
+    
+    
+    public function getBrandSizeChartListAction($brand_id)
+{
+        $brand=$this->get('admin.helper.brand')->find($brand_id);         
+        $sizechart=$this->get('admin.helper.sizechart')->getSizeChartByBrand($brand);     
+        if($sizechart){
+        return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart_list.html.twig',array('sizechart'=>$sizechart,'brand'=>$brand->getName()));
+        }else{
+         return new Response('Unable to find size chart');
+        }
+        
+}
+    
+    public function _indexAction($page_number, $sort = 'id') {
         $size_with_pagination = $this->get('admin.helper.sizechart')->getListWithPagination($page_number, $sort);
         return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', $size_with_pagination);
     }
@@ -204,28 +234,14 @@ return $this->render('LoveThatFitAdminBundle:SizeChart:sizeChartSearchResult.htm
 
 //------------------Brand List Of Size Charts----------------------------------------------- 
  
-public function getBrandSizeChartAction()
+public function getBrandSizeChartAction($page_number, $sort = 'id')
 {
-        $form = $this->createForm(new BrandSizeChartType());      
-        return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart.html.twig', 
-        array('form' => $form->createView()));
+    $size_with_pagination = $this->get('admin.helper.sizechart')->getListWithPagination($page_number, $sort);
+    return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart.html.twig', $size_with_pagination);   
+    
 }
 
-public function getBrandSizeChartListAction(Request $request)
-{
-        $data = $request->request->all();        
-        $brand=$this->get('admin.helper.brand')->find($data['brand_sizechart']['Brand']);         
-        $sizechart=$this->get('admin.helper.sizechart')->getSizeChartByBrand($brand);     
-        if($sizechart){
-        return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart_list.html.twig',array('sizechart'=>$sizechart,'brand'=>$brand->getName()));
-        }else{
-           $this->get('session')->setFlash('warning', 'Unable to find size chart.');
-           $form = $this->createForm(new BrandSizeChartType());    
-           return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart.html.twig', 
-        array('form' => $form->createView()));
-        }
-        
-}
+
 
  
 }
