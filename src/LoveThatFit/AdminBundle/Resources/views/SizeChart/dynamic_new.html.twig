@@ -10,34 +10,32 @@
     var size_specs={{size_specs|json_encode()}};
     
     $(document).ready(function() {        
-        fill_target(size_specs.targets.woman);
-        fill_body_type(size_specs.fit_types.woman);
-        fill_title(size_specs.sizes.woman.letter);
-        fill_size_title_type(size_specs.size_title_type.woman);
-    });
+        
+    
+$('#sizechart_gender').change(function() {
+   var gender = $(this).find(":selected").text();
+        fill_list('#sizechart_target', size_specs.targets[gender]);
+        fill_list('#sizechart_bodytype', size_specs.fit_types[gender]);
+        fill_list('#sizechart_size_title_type', size_specs.size_title_type[gender]);
+   });
+
        
-           
-function fill_target(options){        
-    fill_list('#sizechart_target', options);        
- }
- function fill_body_type(options){        
-    fill_list('#sizechart_bodytype', options);        
- }
- function fill_title(options){        
-    fill_list('#sizechart_title', options);        
- }
- function fill_size_title_type(options){        
-    fill_list('#sizechart_size_title_type', options);        
- }
- function fill_list(ele, choices){        
+$('#sizechart_size_title_type').change(function() {
+    var size_title_type = $(this).find(":selected").text();
+    var gender = $('#sizechart_gender').find(":selected").text();   
+    fill_list('#sizechart_title', size_specs.sizes[gender][size_title_type]);            
+   });
+   
+   function fill_list(ele, choices){        
         $(ele).empty();
         $('<option>').val('').text("Select").appendTo(ele);    
         $.each(choices, function(k, v) {
-        $('<option>').val(k).text(k).appendTo(ele);    
- });
+        $('<option>').val(k).text(k).appendTo(ele);            
+        });  
+ }
+});       
 
-  
-}
+ 
 
   {% endautoescape %}
 

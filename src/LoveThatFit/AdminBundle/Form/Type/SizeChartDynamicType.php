@@ -43,7 +43,7 @@ class SizeChartDynamicType extends AbstractType
                     'multiple' => false,
                     'property' => 'name',
                 ));
-      $builder->add('size_title_type', 'choice', array('expanded' => true,
+      $builder->add('size_title_type', 'choice', array('expanded' => false,
                     'multiple' => false,'required'  => true,));
        $builder->add('disabled', 'checkbox',array('label' =>'Disabled','required'=> false,));
        
