@@ -9,22 +9,33 @@
   {% autoescape false %}
     var size_specs={{size_specs|json_encode()}};
     
-    $(document).ready(function() {
-        alert(size_specs.genders.descriptions.m);
-        fill_target(size_specs.genders.descriptions);
+    $(document).ready(function() {        
+        fill_target(size_specs.targets.woman);
+        fill_body_type(size_specs.fit_types.woman);
+        fill_title(size_specs.sizes.woman.letter);
+        fill_size_title_type(size_specs.size_title_type.woman);
     });
        
            
-function fill_target(targets){        
-    fill_list('#sizechart_target', targets);        
+function fill_target(options){        
+    fill_list('#sizechart_target', options);        
  }
- 
+ function fill_body_type(options){        
+    fill_list('#sizechart_bodytype', options);        
+ }
+ function fill_title(options){        
+    fill_list('#sizechart_title', options);        
+ }
+ function fill_size_title_type(options){        
+    fill_list('#sizechart_size_title_type', options);        
+ }
  function fill_list(ele, choices){        
         $(ele).empty();
         $('<option>').val('').text("Select").appendTo(ele);    
         $.each(choices, function(k, v) {
         $('<option>').val(k).text(k).appendTo(ele);    
  });
+
   
 }
 

@@ -408,7 +408,7 @@ public function findProductItemByUser($user_id, $page_number, $limit){
    }
     #---------------------------------------------------
     
-    public function findRecentlyTriedOnByUser($user_id, $page_number=0, $limit=0) {
+    public function findRecentlyTriedOnByUser($user_id, $page_number=1, $limit=10) {
         return $this->repo->findRecentlyTriedOnByUser($user_id, $page_number, $limit);        
    }
    #---------------------------------------------------

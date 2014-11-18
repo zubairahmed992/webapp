@@ -96,7 +96,7 @@ param:limit, page_number,limit,sort
     public function findAllRecord()
     {
       $query = $this->getEntityManager()
-                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c order by c.gender, c.target, c.name');
+                ->createQuery('SELECT c FROM LoveThatFitAdminBundle:ClothingType c order by c.id,c.gender, c.target, c.name');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
