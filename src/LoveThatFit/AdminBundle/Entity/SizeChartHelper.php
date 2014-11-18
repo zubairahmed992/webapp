@@ -84,6 +84,11 @@ public function save($entity) {
         }
     }
 
+    
+public function countAllSizeChartRecord(){
+  return count($this->repo->countAllSizeChartRecord());      
+    }    
+    
 public function saveSizeChart(SizeChart $size_chart)
 {
     $this->em->persist($size_chart);
@@ -542,13 +547,13 @@ public function getBrandArraySizeChart() {
     
     //-----------------------Get Size Chart By Gender----------------------------------------------------------------------------
     
-    private function getSizeChartByGender($gender)
+    public function getSizeChartByGender($gender)
     {
         $rec_count =count($this->repo->findSizeChartByGender($gender));
         return $rec_count;
     }
     //-----------------------------Get Size Chart By Target--------------------------------------------------------
-    private function getSizeChartByTarget($target)
+    public function getSizeChartByTarget($target)
     {
         $rec_count= count($this->repo->findSizeChartByTarget($target));
         return $rec_count;

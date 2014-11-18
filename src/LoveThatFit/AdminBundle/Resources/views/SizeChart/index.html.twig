@@ -5,12 +5,27 @@
        
        {% block header_right_links %}
    <a href="{{ path('admin_brand_size_chart') }}" >Brand SizeChart</a>
-<br>
-    
-     
+<br> 
 {% endblock %}
 {% block body %}
-  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){    
+$('#brand_sizechart_Brand').change(function() {
+	 var brand_id = $("#brand_sizechart_Brand").val();  
+         var compare_url = "size_charts/brand/list/" + brand_id;         
+         $.ajax({
+         url: compare_url
+         ,success: function(response) {
+           $('#size_chart_list').html(response);             
+        }
+     })         
+        return false;
+     
+	});  
+});        
+
+    </script>
 <div class="p_listing">     
     <h1>Size Chart</h1>
  <div class="btn_wrapper2">
@@ -32,66 +47,33 @@
      <a href="{{ path('admin_size_chart_new') }}" class="btn">Add New</a>
      
       </div>
-    
      <div class="clearfix"></div> 
-     
-    <div class="bs-docs-grid">
-        <div class="row-fluid">
-            <div class="span1 hds"><a href="{{  path('admin_size_charts')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;"> ID</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_size_charts')~'/'~ 1~'/'~'brand' }}" style=" text-decoration: none;">Brand</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_size_charts')~'/'~ 1~'/'~'target' }}" style=" text-decoration: none;">Clothing Type</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_size_charts')~'/'~ 1~'/'~'title' }}" style=" text-decoration: none;">Body Type</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_size_charts')~'/'~ 1~'/'~'gender' }}" style=" text-decoration: none;">Gender</a></div>
-            <div class="span1 hds"><a href="{{  path('admin_size_charts')~'/'~ 1~'/'~'title' }}" style=" text-decoration: none;">Size</a></div>            
-            <div class="span1 hds">Actions</div>
-        </div>  
-
-          {% for sc in sizechart %}
-        <div class="row-fluid show-grid space_wrap">
-            <div class="span1">{{sc.Id}}</div>
-            <div class="span1">{{sc.brand.name}}</div>
-            <div class="span1">{{sc.target}}</div>
-            <div class="span1">{{sc.bodytype}} {%if(sc.disabled==1)%} Disabled {%else%}  {%endif%}</div> 
-            <div class="span1">{{sc.gender}}</div>
-            <div class="span1">{{sc.title}}</div>            
-                       
-            
-            <div class="span1">             
-            <div>
-                <a href="{{path('admin_size_chart_show',{'id': sc.Id}) }}" title="Show {{sc.title}}"><i class="icon-eye-open"></i></a>
-                    <a href="{{path('admin_size_chart_edit',{'id': sc.Id}) }}" title="Edit {{sc.title}}"><i class="icon-edit"></i></a>
-                    <a href="#myModal{{sc.Id}}" role="button" data-toggle="modal" title="Delte {{sc.title}}"><i class="icon-remove"></i></a>
-                </div> 
-            </div>
-                
-        </div>
-        <!-- Modal -->
-<div id="myModal{{sc.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete Size Chart</h3>
-  </div>
-  <div class="modal-body">
-      <p>Are you sure you want to Delete this Size Chart <b>{{sc.title ~ ', ' ~ sc.brand.name}}</b>?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <a href="{{ path('admin_size_chart_delete', {'id': sc.Id}) }}"  class="btn btn-primary">Delete</a>
+    <div id="detail_wrapper">      
+                    <div id="product_content">
+                        
+                                                         
+                            <div class="edt_container">         
+                                <form  method="post" {{form_enctype(form)}}>
+                                    {{ form_errors(form) }}
+                                <div class="row-fluid show-grid">
+                                  <div class="span3">Brand</div>
+                                  <div class="span3">{{ form_widget(form.Brand) }}{{ form_errors(form.Brand) }}</div>
+                                </div>                                
+				{{ form_rest(form) }}
+                                         </form>    
+                            </div>
+                        <div id="size_chart_list">   </div>
+                        
+                                </div>      
+                            </div><!-- End pro_detail -->      
+                        </div>
     
-  </div>
-</div>
-{% endfor %}
-
-   
-
- </div> 
+    
+     
+    
 
     </div>
-   
- {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
-  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
-,'controller_name':'admin_size_charts','sort':sort}
- %}  
+ 
 </div>
 
 
