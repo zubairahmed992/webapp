@@ -10,6 +10,29 @@
 {% block title %}Clothing Type{% endblock %}
 
 {% block body %}
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){         
+     var gender= $('input[type="radio"]:checked').val();
+      if(gender=='m')
+      {
+        $("#ClothingType_target option[value='dress']").prop('disabled', true);      
+      }else
+      {
+        $("#ClothingType_target option[value='dress']").prop('disabled', false);        
+      }
+    $("#ClothingType_gender_0, #ClothingType_gender_1").change(function () {
+      var gender= $('input[type="radio"]:checked').val();
+      if(gender=='m')
+      {
+        $("#ClothingType_target option[value='dress']").prop('disabled', true);      
+      }else
+      {
+        $("#ClothingType_target option[value='dress']").prop('disabled', false);        
+      }
+   });    
+});    
+</script>
 
 <div>      
     <h1 style="float:left;">Edit Clothing Type</h1>
@@ -18,7 +41,7 @@
              <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
       </div>
       <div class="clearfix"></div>   
-   <form action="{{ path('admin_clothing_type_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+   <form id="clothyingForm" name="clothyingForm" action="{{ path('admin_clothing_type_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
  {{ form_errors(form) }}
 
             <div id="detail_wrapper">      
