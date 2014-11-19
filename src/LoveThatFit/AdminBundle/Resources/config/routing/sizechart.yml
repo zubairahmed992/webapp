@@ -1,6 +1,3 @@
-admin_size_chart_dynamic_new:
-    pattern: /admin/admin_size_charts/dynamic_new
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:dynamicNew }
 
 admin_size_charts:
     pattern: /admin/size_charts

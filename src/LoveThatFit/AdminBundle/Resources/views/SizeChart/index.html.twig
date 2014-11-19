@@ -10,7 +10,9 @@
 {% block body %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
-$(document).ready(function(){    
+$(document).ready(function(){  
+    
+    
 $('#brand_sizechart_Brand').change(function() {
 	 var brand_id = $("#brand_sizechart_Brand").val();  
          var compare_url = "size_charts/brand/list/" + brand_id;         
@@ -26,6 +28,7 @@ $('#brand_sizechart_Brand').change(function() {
 });        
 
     </script>
+   
 <div class="p_listing">     
     <h1>Size Chart</h1>
  <div class="btn_wrapper2">
