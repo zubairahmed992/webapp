@@ -104,7 +104,10 @@ class SizeChartController extends Controller {
 #------------------------------------------------------------
     public function updateAction(Request $request, $id) {
        $specs = $this->get('admin.helper.sizechart')->findWithSpecs($id);
+       $data = $request->request->all();
+      
        $size_chart = $specs['entity'];
+       $size_chart = $this->get('admin.helper.sizechart')->fillInRequest($data['sizechart'],$size_chart);
        $size_specs = $this->get('admin.helper.size')->getDefaultArray();
         if ($size_chart->getTarget() == 'Dress' and $size_chart->getGender() == 'm') {
             $this->get('session')->setFlash('warning', 'Dresses can not be selected  for Male');

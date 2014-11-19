@@ -85,8 +85,11 @@ public function delete($id) {
         }
     }    
 #----------------------------------------------------------
-public function fillInRequest($data) {
+public function fillInRequest($data,$new_size_chart=null) {
+        
+       if($new_size_chart==Null){
         $new_size_chart = $this->createNew();
+        }
         $brand = $this->container->get('admin.helper.brand')->find($data['Brand']);        
         $new_size_chart->setBrand($brand);
         $new_size_chart->setGender($data['gender']);
