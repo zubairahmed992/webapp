@@ -13,11 +13,13 @@
 $(document).ready(function(){    
 $('#brand_sizechart_Brand').change(function() {
 	 var brand_id = $("#brand_sizechart_Brand").val();  
-         var compare_url = "size_charts/brand/list/" + brand_id;         
+         var compare_url = "size_charts/brand/list/" + brand_id;    
+          $('#loading-indicator').show();
          $.ajax({
          url: compare_url
          ,success: function(response) {
-           $('#size_chart_list').html(response);             
+           $('#size_chart_list').html(response);   
+            $('#loading-indicator').hide();
         }
      })         
         return false;
@@ -26,6 +28,13 @@ $('#brand_sizechart_Brand').change(function() {
 });        
 
     </script>
+    <style>
+ #loading-indicator {
+  left: 290px;
+    position: absolute;
+    top: 310px;
+}
+     </style> 
 <div class="p_listing">     
     <h1>Size Chart</h1>
  <div class="btn_wrapper2">
@@ -62,6 +71,7 @@ $('#brand_sizechart_Brand').change(function() {
 				{{ form_rest(form) }}
                                          </form>    
                             </div>
+                        <img src="{{asset('bundles/lovethatfit/site/images/loading.gif')}}" id="loading-indicator"  style="display:none;" /> 
                         <div id="size_chart_list">   </div>
                         
                                 </div>      
