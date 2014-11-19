@@ -10,9 +10,9 @@
     var size_specs={{size_specs|json_encode()}};
     
     $(document).ready(function() {        
-        fill_list('#sizechart_target', size_specs.targets['woman']);
-        fill_list('#sizechart_bodytype', size_specs.fit_types['woman']);
-        fill_list('#sizechart_size_title_type', size_specs.size_title_type['woman']);
+        fill_list('#sizechart_target', size_specs.targets['man']);
+        fill_list('#sizechart_bodytype', size_specs.fit_types['man']);
+        fill_list('#sizechart_size_title_type', size_specs.size_title_type['man']);
     
 $('#sizechart_gender').change(function() {
    var gender = $(this).find(":selected").text();
