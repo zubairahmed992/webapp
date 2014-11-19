@@ -5,32 +5,22 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
-use \Symfony\Component\EventDispatcher\EventDispatcher;
-use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\SizeChartEvent;
-
 
 
 class SizeChartHelper{
 
-     /**
-     * Holds the Symfony2 event dispatcher service
-     */
     protected $dispatcher;
      /**
-     * Holds the Doctrine entity manager for database interaction
      * @var EntityManager 
      */
     protected $em;
 
     /**
-     * Entity-specific repo, useful for finding entities, for example
      * @var EntityRepository
      */
     protected $repo;
 
     /**
-     * The Fully-Qualified Class Name for our entity
      * @var string
      */
     protected $class;
@@ -48,43 +38,54 @@ class SizeChartHelper{
         $this->conf = $conf_yml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
         
     }
- //---------------------------------------------------------------------   
-    public function createNewSizeChart()
-{
-    $class = $this->class;
-    $sizechart = new $class();
-    return $sizechart;
-}
-    
-    public function createNew()
-{
-    $class = $this->class;
-    $size_chart = new $class();
-    return $size_chart;
-}
+ //------------------------------------------------------    
+ public function createNew() {
+        $class = $this->class;
+        $size_chart = new $class();
+        return $size_chart;
+    }    
 //-------------------------------------------------------
-
-public function save($entity) {
-        $title = $entity->getTitle();
-       $brand = $entity->getBrand()->getId();       
-       $gender = $entity->getGender();       
-       $target = $entity->getTarget();
-       $bodytype=$entity->getBodytype();       
-        $msg_array = $this->validateForCreate($brand,$title,$gender,$target,$bodytype);
-        if ($msg_array == null) {          
+ public function save($entity) {
+        $this->em->persist($entity);
+        $this->em->flush();
+        return array('message' => 'Size Chart succesfully saved.',
+            'field' => 'all',
+            'message_type' => 'success',
+            'success' => true,
+        );
+    }
+//-------------------------------------------------------
+    public function update($entity) {
             $this->em->persist($entity);
             $this->em->flush();
-            return array('message' => 'Size Chart succesfully created.',
+            return array('message' => 'sizechart ' . $entity->getTitle() . ' succesfully updated!',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
             );
+  }
+//-------------------------------------------------------
+public function delete($id) {
+        $entity = $this->repo->find($id);
+        if ($entity) {
+            $entity_name = $entity->getTitle();
+            $this->em->remove($entity);
+            $this->em->flush();            
+            return array('sizechart' => $entity,
+                'message' => 'The Size Chart ' . $entity_name . ' has been Deleted!',
+                'message_type' => 'success',
+                'success' => true,
+            );
         } else {
-            return $msg_array;
+            return array('sizechart' => $entity,
+                'message' => 'Sizechart not found!',
+                'message_type' => 'warning',
+                'success' => false,
+            );
         }
-    }
+    }    
 #----------------------------------------------------------
-    public function fillInRequest($data) {
+public function fillInRequest($data) {
         $new_size_chart = $this->createNew();
         $brand = $this->container->get('admin.helper.brand')->find($data['Brand']);        
         $new_size_chart->setBrand($brand);
@@ -108,66 +109,22 @@ public function save($entity) {
     }
 
 #----------------------------------------------------------
+#----------------------------------------------------------
+#----------------------------------------------------------
+
+    
 public function countAllSizeChartRecord(){
   return count($this->repo->countAllSizeChartRecord());      
     }    
-    
-public function saveSizeChart(SizeChart $size_chart)
-{
-    $this->em->persist($size_chart);
-    $this->em->flush();  
-}
-//-------------------------------------------------------
-
-public function update($entity) {
-        $msg_array = '';
-        //$msg_array = $this->validateForUpdate($entity);
-        if ($msg_array == null) {
-            $this->em->persist($entity);
-            $this->em->flush();
-            return array('message' => 'sizechart ' . $entity->getTitle() . ' succesfully updated!',
-                'field' => 'all',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        } else {
-            return $msg_array;
-        }
-    }
-
-public function delete($id) {
-
-        $entity = $this->repo->find($id);
-        $entity_name = $entity->getTitle();
-
-        if ($entity) {
-            $this->em->remove($entity);
-            $this->em->flush();
-
-            return array('sizechart' => $entity,
-                'message' => 'The Size Chart ' . $entity_name . ' has been Deleted!',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        } else {
-
-            return array('sizechart' => $entity,
-                'message' => 'Sizechart not found!',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-    }
-
-public function find($id)
-{
+#----------------------------------------------------------   
+public function find($id){
     return $this->repo->find($id);
 }
-
+#----------------------------------------------------------
 public function findWithSpecs($id) {
         $entity = $this->repo->find($id);
         if (!$entity) {
-            $entity = $this->createNewSizeChart();
+            $entity = $this->createNew();
             return array(
                 'entity' => $entity,
                 'message' => 'Size Chart not found.',
@@ -183,27 +140,20 @@ public function findWithSpecs($id) {
             );
         }
     }  
-
-
-public function findOneById($id)
-{
-    return $this->repo->findOneById($id);
-    
+#----------------------------------------------------------
+public function findOneById($id){
+    return $this->repo->findOneById($id);    
 }
 #-------------------------------------------------------------------------
-
 public function findOneByName($title) {
         return $this->repo->findOneByName($title);
     }
-    
-
-
 
 
 #-------------------------Evaluate Size Chart ------------------------------------------------------------------------#
 
     public function calculateMeasurements($entity, $request_array) {
-    $measurement = $this->setMeasurementSizes($entity, $request_array);
+        $measurement = $this->setMeasurementSizes($entity, $request_array);
         return $this->evaluateWithSizeChart($measurement);
     }
 #-------------------------------------------------------------------------
@@ -348,6 +298,7 @@ public function findOneByName($title) {
                     
         return $measurement;
     }
+    
 #------------------------------------------------------------------------------#
 private function getBustAverage($bra_num){
     
@@ -678,19 +629,7 @@ $no_of_paginations = ceil($countSearchSizeChart /$per_page);
 return array('searchResult'=>$searchResult,'countRecord'=>$countRecord,'first_btn'=>$first_btn,'cur_page'=>$cur_page,'previous_btn'=>$previous_btn,'last_btn'=>$last_btn,'start_loop'=>$start_loop,'end_loop'=>$end_loop,'next_btn'=>$next_btn,'no_of_paginations'=>$no_of_paginations);    
     
 }
-#--- Getting All mix size title-----------------------------------------------#
-public function getMixSizeTitle(){
-     return $this->conf["constants"]["size_titles"]["mix"];
-}
-public function getMixSizeTitleForMenTop(){
-     return $this->conf["constants"]["size_titles"]["mix"]["man_top"];
-}
-public function getMixSizeTitleForMenBottom(){
-     return $this->conf["constants"]["size_titles"]["mix"]["man_bottom"];
-}
-public function getMixSizeTitleForWoman(){
-     return $this->conf["constants"]["size_titles"]["mix"]["woman"];
-}
+
 #--- get size chart id base on brand, gender, target for web services
 public function  getIdBaseOnTargetGender($brand_id,$gender,$target,$size_title,$body_type){
     
