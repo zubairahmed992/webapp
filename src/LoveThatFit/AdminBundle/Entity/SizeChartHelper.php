@@ -48,22 +48,13 @@ class SizeChartHelper{
  public function save($entity) {
         $this->em->persist($entity);
         $this->em->flush();
-        return array('message' => 'Size Chart succesfully saved.',
+        return array('message' => 'Size Chart for size  ' . $entity->getTitle() . ' has been saved.',
             'field' => 'all',
             'message_type' => 'success',
             'success' => true,
         );
     }
-//-------------------------------------------------------
-    public function update($entity) {
-            $this->em->persist($entity);
-            $this->em->flush();
-            return array('message' => 'sizechart ' . $entity->getTitle() . ' succesfully updated!',
-                'field' => 'all',
-                'message_type' => 'success',
-                'success' => true,
-            );
-  }
+
 //-------------------------------------------------------
 public function delete($id) {
         $entity = $this->repo->find($id);
@@ -302,6 +293,24 @@ public function findOneByName($title) {
         return $measurement;
     }
     
+    private function getPriorityArray($gender) {
+        $priority_arr= array('man' => array(
+                'neck' => array('shirt', 'top'),
+                'chest' => 'top',
+                'sleeve' => array('shirt', 'top'),
+                'back shoulder' => array('shirt', 'top'),
+                'waist' => array('pant', 'bottom'),
+                'inseam' => array('pant', 'bottom'),
+            ),
+            'woman' => array(
+                'bust' => array('raw', 'bra', 'top', 'dress'),
+                'back shoulder' => array('bra', 'top', 'dress'),
+                'waist' => array('raw', 'bottom', 'dress', 'top'),
+                'hip' => array('raw', 'dress', 'bottom')));
+    
+        return $priority_arr[$gender];
+    }
+
 #------------------------------------------------------------------------------#
 private function getBustAverage($bra_num){
     
