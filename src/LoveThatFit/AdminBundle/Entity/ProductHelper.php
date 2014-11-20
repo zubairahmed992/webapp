@@ -68,9 +68,9 @@ class ProductHelper{
         //$msg_array =null;
         //$msg_array = ;
 
-        $productName = $entity->getName();
-        $msg_array = $this->validateForCreate($productName);
-        if ($msg_array == null) {
+      //  $productName = $entity->getName();
+       // $msg_array = $this->validateForCreate($productName);
+       // if ($msg_array == null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
 
@@ -84,9 +84,9 @@ class ProductHelper{
                 'message_type' => 'success',
                 'success' => true,
             );
-        } else {
-            return $msg_array;
-        }
+       // } else {
+        //    return $msg_array;
+       // }
     }
     
 #--------------Updated when color,item and sizes created and updated .---------#
@@ -94,9 +94,9 @@ class ProductHelper{
         //$msg_array =null;
         //$msg_array = ;
 
-        $productName = $entity->getName();
-        $msg_array = $this->validateForCreate($productName);
-        if ($msg_array == null) {
+      //  $productName = $entity->getName();
+       // $msg_array = $this->validateForCreate($productName);
+      //  if ($msg_array == null) {
            // $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
 
@@ -109,9 +109,9 @@ class ProductHelper{
                 'message_type' => 'success',
                 'success' => true,
             );
-        } else {
-            return $msg_array;
-        }
+      ///  } else {
+          //  return $msg_array;
+       // }
     }
 
     //-------------------------------------------------------
@@ -217,10 +217,11 @@ class ProductHelper{
          
       #---------------------Start Searching---------------------#
       $brandList=$this->container->get('admin.helper.brand')->findAll();
-      $genders=$this->container->get('admin.helper.utility')->getGenders();
-      $target=$this->container->get('admin.helper.utility')->getTargets();
-      $bodyType=$this->container->get('admin.helper.utility')->getBodyTypes();
-      $category=$this->container->get('admin.helper.clothing_type')->findAll();
+     // $genders=$this->container->get('admin.helper.utility')->getGenders();
+    //  $target=$this->container->get('admin.helper.utility')->getTargets();
+     // $bodyType=$this->container->get('admin.helper.utility')->getBodyTypes();
+      $sizeSpecs=$this->container->get('admin.helper.size')->getDefaultArray();
+      $category=$this->container->get('admin.helper.clothing_type')->findAllDistinct();
       #-------------End Of Searching------------------------------#
      
         return array('products' => $entity,
@@ -235,16 +236,17 @@ class ProductHelper{
             'dressProduct'=>$this->countProductsByType('Dress'),
             'sort'=>$sort,
             'brandList'=>$brandList,
-            'genders'=>$genders,
-            'target'=>$target,
-            'bodyType'=>$bodyType,
+           //'genders'=>$genders,
+          //'target'=>$target,
+          //'bodyType'=>$bodyType,
             'category'=>$category,
+            'size_specs'=>$sizeSpecs,
         );
     }
 
 //Private Methods    
 //----------------------------------------------------------
-    private function validateForCreate($name) {
+   /* private function validateForCreate($name) {
         if (count($this->findOneByName($name)) > 0) {
             return array('message' => 'Product Name already exists!',
                 'field' => 'name',
@@ -253,7 +255,7 @@ class ProductHelper{
             );
         }
         return;
-    }
+    }*/
 
 //----------------------------------------------------------
     private function validateForUpdate($entity) {
@@ -300,10 +302,10 @@ public function find($id) {
       return $this->repo->findByGender($gender, $page_number, $limit);  
     }
  #------------------------------------------------------------------------------
- public function findProductByEllieHM($brand,$gender,$page_number, $limit){
+/* public function findProductByEllieHM($brand,$gender,$page_number, $limit){
      
      return $this->repo->findProductByEllieHM($brand,$gender,$page_number, $limit);
- } 
+ }*/ 
 
 #---------------------------------------------------------------------------------
  public function findOneByName($brand){
@@ -676,8 +678,8 @@ public function searchProduct($data){
         }
  $page=1;//$data['page']; 
 
- #--------Pagination Started-------------------#
- $cur_page = $page;
+#--------Pagination Started-------------------#
+$cur_page = $page;
 $page -= 1;
 $per_page = 10; // Per page records
 $previous_btn = true;
@@ -685,13 +687,9 @@ $next_btn = true;
 $first_btn = true;
 $last_btn = true;
 $start = $page * $per_page;
-
-  
-        $entity = $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page);
-        
-        
-        $countSearchProduct = count($this->repo->countSearchProduct($brand_id,$male,$female,$target,$category_id));
-        $countRecord=count($entity);
+$entity = $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page);
+$countSearchProduct = count($this->repo->countSearchProduct($brand_id,$male,$female,$target,$category_id));
+$countRecord=count($entity);
        
      $no_of_paginations = ceil($countSearchProduct /$per_page);
   if ($cur_page >= 7) {

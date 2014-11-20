@@ -926,7 +926,7 @@ class ProductRepository extends EntityRepository {
     }    
     
 //-------------------------------------------------------------------------------------    
-    public function findProductByEllieHM($brand,$gender,$page_number, $limit)
+  /*  public function findProductByEllieHM($brand,$gender,$page_number, $limit)
     {      if ($page_number <= 0 || $limit <= 0) {
             $query = $this->getEntityManager()
                             ->createQuery("
@@ -953,7 +953,7 @@ class ProductRepository extends EntityRepository {
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }  
-    }
+    }*/
 //-------------------------------------------------------------------------------------    
     
     public function findTryProductHistory($user_id , $page_number , $limit)
@@ -1050,37 +1050,9 @@ class ProductRepository extends EntityRepository {
  #-----------------------------------------------------------------------------#
         #---------Searching Quries-------------------------------#
   public function searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page){
-
-      
-      
-     /* $query= $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->select('p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image')
-                        ->from('LoveThatFitAdminBundle:Product', 'p')
-                        ->innerJoin('p.product_colors', 'pc')
-                        ->innerJoin('p.clothing_type', 'ct')
-                        ->innerJoin('p.brand', 'b')
-                        ->Where('b.id=:brand_id')
-                        ->orWhere('p.gender=:female')
-                        ->orWhere('p.gender=:male')
-                        ->setParameters(array('brand_id' => $brand_id,'female'=>$female,'male'=>$male))
-                                  
-                        ->orWhere('ct.name IN(:category_id)')
-                        ->orWhere('ct.target IN(:target)')
-                        ->groupBy('p.id')
-                        ->setParameter('category_id',$category_id)
-                        ->setParameter('target',$target)
-                        ->setFirstResult($start)
-                        ->setMaxResults($per_page)
-                        ->getQuery();
-             return $query->getResult();            
-*/
-  
-      $str = "SELECT p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image  FROM LoveThatFitAdminBundle:Product p Join p.product_colors pc Join p.clothing_type ct Join p.brand b";
-             
+         $str = "SELECT p.id,p.name,b.name as brand_name,ct.name as clothing_name,p.description,p.gender,ct.target as target,p.disabled,pc.image as product_image  FROM LoveThatFitAdminBundle:Product p Join p.product_colors pc Join p.clothing_type ct Join p.brand b";
              if($brand_id){
                  $str=$str." WHERE b.id = ". $brand_id;
-               
              }
              if($male || $female){
                  $str=$str." AND ";

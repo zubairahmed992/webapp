@@ -175,7 +175,13 @@ class ClothingTypeHelper {
    public function findAll(){
         return $this->repo->findAllRecord();      
     }
-   #-----------------Find By Gender---------------------------------# 
+ 
+#--------------------------------------------------------------------------
+    public function findAllDistinct(){
+        return $this->repo->findAllRecordDistinct();      
+    }
+     
+#-----------------Find By Gender---------------------------------# 
     public function findByGender($gender){
         return $this->repo->findByGender($gender);      
     }

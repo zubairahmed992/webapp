@@ -66,6 +66,8 @@ var target = []
    $("#target:checked").each(function() {
        target.push($(this).val());
    });
+  
+   
     if(target!==null){
        $.ajax({
        type:'POST',
@@ -87,8 +89,6 @@ var target = []
       $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#category_empty');
     }else{
        $("#category").attr("disabled", true);
-       alert(playlist[i]['id']);
-       
     }
     }
     
@@ -197,19 +197,35 @@ $(document).ready(function(){
           </div>
           
           <div class="frm_wrap">
-            <div class="adv_srch_hd">Gender</div>           
-            <div class="frm_ele">
+            <div class="adv_srch_hd">Gender</div>   
+            
+           {# <div class="frm_ele">
            {% for g in genders %}
           <span class="adv_radio">
          <input type="checkbox" name="genders" id="genders" value="{{g|capitalize}}" ></span>
           <span class="adv_gdr">{{g|capitalize}}</span>
           {%endfor%}
+           </div>#}
+            
+            
+            
+            
+          <div class="frm_ele">
+            {% for gender in size_specs['genders']['titles'] %}
+            <span class="adv_radio"><input type="checkbox" name="genders" id="genders" value="{{gender|capitalize}}" ></span>
+            <span class="adv_gdr">{{gender|capitalize}}</span>
+          {%endfor%}
            </div>
+            
+            
+            
+            
+            
            </div>         
           
           <div class="frm_wrap">
-            <div class="adv_srch_hd">Clothing Type</div>           
-            <div class="frm_ele">
+            <div class="adv_srch_hd">Clothing Type Target</div>           
+           {# <div class="frm_ele">
            {% for t in target %}
          <span class="adv_radio">
                 <input type="checkbox" name="target" id="target" value="{{t|capitalize }}" onclick="getTargetCategory()">
@@ -217,33 +233,42 @@ $(document).ready(function(){
               <span class="adv_gdr">{{t|capitalize }}
               </span>
               {%endfor%}       
+            </div>#}
+            
+            
+            <div class="frm_ele">
+                {% for target in size_specs['targets']['woman'] %}
+                <span class="adv_radio">
+                 <input type="checkbox" name="target" id="target" value="{{target }}" onclick="getTargetCategory()">
+                </span>
+                <span class="adv_gdr">{{target|capitalize}}</span>
+              {%endfor%}
             </div>
-            </div>
+            
+          </div>
             
           <div class="frm_wrap">
             <div class="adv_srch_hd">Categories</div>           
              <span id="all_category" style="display:none;">
-            {% for c in category %}
-                     
-                      <span class="adv_radio" id="category_empty_span">
-                          <input type="checkbox" name="category" id="category" value="{{c.id}}"></span>
-                           <span class="adv_gdr" id="category_empty_label">
-{{c.name}}
             
-                      </span>
+                {% for c in category %}
+             <span class="adv_radio" id="category_empty_span">
+             <input type="checkbox" name="category" id="category" value="{{c.id}}"></span>
+             <span class="adv_gdr" id="category_empty_label">{{c.name}}</span>
             {%endfor%}        
              </span>
+            
             <div class="frm_ele" id="category_empty">
            {% for c in category %}
-            <span class="adv_radio" id="category_empty_span">
-             <input type="checkbox" name="category_select" id="category_select" value="{{c.id}}">
-             </span>
-              <span class="adv_gdr" id="category_empty_label">
-                  {{c.name}}</span>
-              {%endfor%}  
+                <span class="adv_radio" id="category_empty_span">
+                 <input type="checkbox" name="category_select" id="category_select" value="{{c.id}}">
+                 </span>
+                  <span class="adv_gdr" id="category_empty_label">{{c.name|capitalize}}</span>
+                  {%endfor%}  
                     
             </div>
-           </div>
+           
+          </div>
             
           <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#demo" onclick="SearchForm()">
         Search Product
