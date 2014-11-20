@@ -3,8 +3,7 @@
 {% block action_block_content %}
 <script>
 function validate(){
-
-var measurement_sleeve=document.getElementById('measurement_sleeve').value;
+var measurement_neck=$('#measurement_sleeve').val();
 var measurement_neck=$('#measurement_neck').val();
 var measurement_waist=$('#measurement_waist').val();
 var measurement_inseam=$('#measurement_inseam').val();
@@ -24,6 +23,7 @@ if(!measurement_body_shape)
     }else{
        $('#measurement_body_shape_display').html('');
 }
+{%if(entity.gender=='m')%}
 if((measurement_sleeve=='' || measurement_neck=='' || measurement_waist=='' || measurement_inseam=='') && (measurement_top_brand=='' || measurement_bottom_brand=='' || measurement_top_size=='' || measurement_bottom_size=='')){
     $('#male_measurement_display').html('Please select measurements.');
       $('#male_measurement_display').show();     
@@ -32,6 +32,7 @@ if((measurement_sleeve=='' || measurement_neck=='' || measurement_waist=='' || m
     {
          $('#male_measurement_display').html('');
     }
+{%endif%}
 if(!month_select){
    $('#date_error').html('Please Enter Month.');
    $('#date_error').show();
