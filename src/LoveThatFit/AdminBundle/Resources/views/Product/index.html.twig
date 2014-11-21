@@ -54,14 +54,21 @@ $.ajax({
     return false;
 }
 
+function getTargetBaseCat(){
+    var category = []
+
+}
 function getTargetCategory(){
-
-var category = []
-
+    var category = []
+    var woman_msg=null;
+    var man_msg=null;
+     count1 =false;
+     count2 =false;
    $("#category:not(:checked)").each(function() {
        category.push($(this).val());
    });
    
+
 var target = []
    $("#target:checked").each(function() {
        target.push($(this).val());
@@ -75,22 +82,43 @@ var target = []
        data: {target:target},  
        dataType: 'json',
        success: function(ar) {
-   
-     $('#category_empty').text('');
+          
+     $('#catwoman').text('');
+     $('#catman').text('');
+    //  $('#category_empty').text('');
      if(ar!='null'){
      var playlist=[];
      playlist.push.apply(playlist, ar);
-     for(i=0;i<playlist.length;i++){
+     $('#all_category').hide();
+      $('#category_empty').addClass('frm_ele');
+    
+        for(i=0;i<playlist.length;i++){
+          if(playlist[i]['gender']=='f'){
+             $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catwoman');
+             $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catwoman');
+          }
+      }
+          $('#catwoman').before('<div class="adv_srch_hd">Woman</div>')
+
+
+           for(i=0;i<playlist.length;i++){
+          if(playlist[i]['gender']=='m'){
+             $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#catman');
+             $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catman');
+          }
+      }
+          $('#catman').before('<div class="adv_srch_hd">Man</div>')
        
-     if(inArray(playlist[i]['id'],category)=="test"){
-         $('#all_category').hide();
-    $('#category_empty').addClass('frm_ele');
-     $('<input />', { type: 'checkbox','class':'check_box_category', id: 'category_select', value: playlist[i]['id'] }).appendTo('#category_empty');
-      $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#category_empty');
-    }else{
-       $("#category").attr("disabled", true);
-    }
-    }
+    // if(inArray(playlist[i]['id'],category)=="yes"){
+       
+       
+      
+    
+    //}else{
+   //    $("#category").attr("disabled", true);
+  //  }
+    
+    
     
     }else{
  $('#category_empty').text('');
@@ -109,8 +137,10 @@ function inArray(needle, haystack) {
     var length = haystack.length;
     
     for(var i = 0; i < length; i++) {
-        if(haystack[i] == needle) 
-        return "test";
+        
+        if(haystack[i] == needle){ 
+        return "yes";
+        }
     }
    
 }
@@ -251,21 +281,38 @@ $(document).ready(function(){
             <div class="adv_srch_hd">Categories</div>           
              <span id="all_category" style="display:none;">
             
-                {% for c in category %}
+                {% for  key,c in category['woman'] %}
              <span class="adv_radio" id="category_empty_span">
-             <input type="checkbox" name="category" id="category" value="{{c.id}}"></span>
-             <span class="adv_gdr" id="category_empty_label">{{c.name}}</span>
-            {%endfor%}        
+             <input type="checkbox" name="category" id="category" value="{{key}}"></span>
+             <span class="adv_gdr" id="category_empty_label">{{c}}</span>
+            {%endfor%} 
+             
+              {% for  key,c in category['man'] %}
+             <span class="adv_radio" id="category_empty_span">
+             <input type="checkbox" name="category" id="category" value="{{key}}"></span>
+             <span class="adv_gdr" id="category_empty_label">{{c}}</span>
+            {%endfor%}
              </span>
             
-            <div class="frm_ele" id="category_empty">
-           {% for c in category %}
+            <div class="frm_ele" id="category_empty">   
+                 <div id="catwoman">
+                <div class="adv_srch_hd">Woman </div> 
+           {% for key,c in category['woman'] %}
                 <span class="adv_radio" id="category_empty_span">
-                 <input type="checkbox" name="category_select" id="category_select" value="{{c.id}}">
+                 <input type="checkbox" name="category_select" id="category_select" value="{{key}}">
                  </span>
-                  <span class="adv_gdr" id="category_empty_label">{{c.name|capitalize}}</span>
+                  <span class="adv_gdr" id="category_empty_label">{{c|capitalize}}</span>
                   {%endfor%}  
-                    
+                 </div>
+                 <div id="catman">   
+                  <div class="adv_srch_hd">Man </div> 
+           {% for key,c in category['man'] %}
+                <span class="adv_radio" id="category_empty_span">
+                 <input type="checkbox" name="category_select" id="category_select" value="{{key}}">
+                 </span>
+                  <span class="adv_gdr" id="category_empty_label">{{c|capitalize}}</span>
+                  {%endfor%}  
+                </div>  
             </div>
            
           </div>

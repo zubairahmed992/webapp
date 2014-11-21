@@ -104,7 +104,7 @@ param:limit, page_number,limit,sort
         }
     }
     #-----------------------------------------------------------------------------
-    public function findAllRecordDistinct(){
+  /*  public function findAllRecordDistinct(){
       $query = $this->getEntityManager()
       ->createQuery('SELECT DISTINCT(c.name) as name,c.id as id,c.target as target FROM LoveThatFitAdminBundle:ClothingType c  group by c.name order by c.id');
         try {
@@ -113,7 +113,7 @@ param:limit, page_number,limit,sort
             return null;
         }  
         
-    }
+    }*/
     
     public function findStatisticsBy($target)
     {

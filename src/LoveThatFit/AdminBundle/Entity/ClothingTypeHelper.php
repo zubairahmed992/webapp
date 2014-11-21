@@ -177,9 +177,9 @@ class ClothingTypeHelper {
     }
  
 #--------------------------------------------------------------------------
-    public function findAllDistinct(){
-        return $this->repo->findAllRecordDistinct();      
-    }
+  /*  public function findAllDistinct(){
+        return $this->repo->findAllRecord();      
+    }*/
      
 #-----------------Find By Gender---------------------------------# 
     public function findByGender($gender){
@@ -227,6 +227,20 @@ class ClothingTypeHelper {
     public function getRecordsCountWithCurrentClothingTYpeLimit($clothing_type){
          return $this->repo->getRecordsCountWithCurrentClothingTYpeLimit($clothing_type); 
     }
-
+#-------------------------------------------------------------------------------#
+    public function getArray(){
+        $cat_list=$this->repo->findAllRecord();
+        $cat_array=array();
+        foreach($cat_list as $key=>$value){
+            if($value->getGender()=='f'){
+                $cat_array['woman'][$value->getId()]=$value->getName();
+             //   $cat_array['woman']['target'][$value->getId()]=$value->getTarget();
+            }else{
+                $cat_array['man'][$value->getId()]=$value->getName();
+              //  $cat_array['man']['target'][$value->getId()]=$value->getTarget();
+           }
+        }
+        return $cat_array;
+    }
     
 }

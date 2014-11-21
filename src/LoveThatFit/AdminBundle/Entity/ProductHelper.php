@@ -221,7 +221,8 @@ class ProductHelper{
     //  $target=$this->container->get('admin.helper.utility')->getTargets();
      // $bodyType=$this->container->get('admin.helper.utility')->getBodyTypes();
       $sizeSpecs=$this->container->get('admin.helper.size')->getDefaultArray();
-      $category=$this->container->get('admin.helper.clothing_type')->findAllDistinct();
+     $category=$this->container->get('admin.helper.clothing_type')->getArray();
+      
       #-------------End Of Searching------------------------------#
      
         return array('products' => $entity,

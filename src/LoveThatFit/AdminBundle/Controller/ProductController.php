@@ -42,7 +42,7 @@ class ProductController extends Controller {
     public function indexAction($page_number, $sort = 'id') {
         $product_with_pagination = $this->get('admin.helper.product')->getListWithPagination($page_number, $sort);
         
-        //return new response(json_encode(var_dump($product_with_pagination)));
+      //return new response(json_encode(($product_with_pagination)));
         return $this->render('LoveThatFitAdminBundle:Product:index.html.twig', $product_with_pagination);
     }
 

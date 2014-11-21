@@ -1107,7 +1107,7 @@ class ProductRepository extends EntityRepository {
  public function searchCategory($target){
     
       $query = $this->getEntityManager()
-                    ->createQuery("SELECT ct.id as id,ct.name as name, ct.target as target FROM LoveThatFitAdminBundle:ClothingType ct WHERE ct.target IN (:target)")
+                    ->createQuery("SELECT ct.id as id,ct.name as name, ct.target as target, ct.gender as gender FROM LoveThatFitAdminBundle:ClothingType ct WHERE ct.target IN (:target)")
                      ->setParameter('target',$target['target']);
                      try {
                      return $query->getResult();
