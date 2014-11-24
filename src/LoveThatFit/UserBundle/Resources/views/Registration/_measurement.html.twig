@@ -1074,6 +1074,11 @@ $( "#tabs" ).tabs();
     }
     });
     $( "#measurement_bust" ).val($( ".bustt_slider" ).slider( "value" ) );
+    
+    $("#measurement_bust").change(function() {
+   bust_sld = $(this).val() ;   
+   $( ".bustt_slider" ).slider( "value",bust_sld )
+   });
 });
 
 
@@ -1092,6 +1097,11 @@ $( "#tabs" ).tabs();
     });
     $( "#measurement_waist" ).val($( ".waistt_slider" ).slider( "value" ) );
     }
+    
+    $("#measurement_waist").change(function() {
+   waist_sld = $(this).val() ;   
+   $( ".waistt_slider" ).slider( "value",waist_sld )
+   });
 });
  
 
@@ -1108,6 +1118,11 @@ var hip_slider=$('#measurement_hip').val();
     }
     });
     $( "#measurement_hip" ).val($( ".hipp_slider" ).slider( "value" ) );
+    
+    $("#measurement_hip").change(function() {
+   hip_sld = $(this).val() ;   
+   $( ".hipp_slider" ).slider( "value",hip_sld )
+   });
 });
 
 
