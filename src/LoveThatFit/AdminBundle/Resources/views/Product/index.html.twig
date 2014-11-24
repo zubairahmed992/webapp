@@ -21,6 +21,7 @@
   if(page==null)
   {page=1;
   } 
+  
 var brand=$('#brand').val();
 
 var category = []
@@ -98,7 +99,7 @@ var target = []
              $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catwoman');
           }
       }
-          $('#catwoman').before('<div class="adv_srch_hd">Woman</div>')
+          $('#catwoman').prepend('<div class="adv_srch_hd">Woman</div>')
 
 
            for(i=0;i<playlist.length;i++){
@@ -107,7 +108,7 @@ var target = []
              $('<span />', { 'for': 'playlist','class':'adv_radio', text:playlist[i]['name'] }).appendTo('#catman');
           }
       }
-          $('#catman').before('<div class="adv_srch_hd">Man</div>')
+          $('#catman').prepend('<div class="adv_srch_hd">Man</div>')
        
     // if(inArray(playlist[i]['id'],category)=="yes"){
        
@@ -161,6 +162,7 @@ $(document).ready(function(){
  //SearchForm(1);  // For first time page load default results
                 $('.pagination li.active').live('click',function(){
                     var page = $(this).attr('p');
+                   
                     SearchForm(page);
                     
                    

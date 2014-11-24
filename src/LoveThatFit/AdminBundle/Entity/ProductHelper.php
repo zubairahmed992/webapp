@@ -677,22 +677,31 @@ public function searchProduct($data){
         } else {
             $target = null;
         }
- $page=1;//$data['page']; 
+        
+         if (isset($data['page'])) {
+            $page = $data['page'];
+        } else {
+            $page = 1;
+        }
+       
+// $page=1;//$data['page']; 
 
 #--------Pagination Started-------------------#
 $cur_page = $page;
 $page -= 1;
-$per_page = 10; // Per page records
+$per_page =20; // Per page records
 $previous_btn = true;
 $next_btn = true;
 $first_btn = true;
 $last_btn = true;
 $start = $page * $per_page;
+
 $entity = $this->repo->searchProduct($brand_id,$male,$female,$target,$category_id,$start,$per_page);
-$countSearchProduct = count($this->repo->countSearchProduct($brand_id,$male,$female,$target,$category_id));
+//$countSearchProduct = count($this->repo->countSearchProduct($brand_id,$male,$female,$target,$category_id));
 $countRecord=count($entity);
-       
-     $no_of_paginations = ceil($countSearchProduct /$per_page);
+//return $countSearchProduct;
+     $no_of_paginations = ceil($countRecord /$per_page);
+  
   if ($cur_page >= 7) {
     $start_loop = $cur_page - 3;
     if ($no_of_paginations > $cur_page + 3)

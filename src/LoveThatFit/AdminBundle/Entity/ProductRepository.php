@@ -1072,8 +1072,10 @@ class ProductRepository extends EntityRepository {
                  $str=$str." AND ct.id IN (".implode(", ", $category_id).") ";                 
              }
                  $str=$str." group by p.id";
-      $query = $this->getEntityManager()
-                        ->createQuery($str);              
+                 $query = $this->getEntityManager()
+                        ->createQuery($str)
+                        ->setFirstResult($start)
+                        ->setMaxResults($per_page);
                      return $query->getResult();
               
   }
