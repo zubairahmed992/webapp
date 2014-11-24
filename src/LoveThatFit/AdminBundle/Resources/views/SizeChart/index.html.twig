@@ -3,10 +3,7 @@
    <li class="active">Size Chart</li>
 {% endblock %}
        
-       {% block header_right_links %}
-   <a href="{{ path('admin_brand_size_chart') }}" >Brand SizeChart</a>
-<br> 
-{% endblock %}
+   
 {% block body %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
@@ -37,30 +34,12 @@ $('#brand_sizechart_Brand').change(function() {
      </style> 
 <div class="p_listing">     
     <h1>Size Chart</h1>
- <div class="btn_wrapper2">
-     
-     <div id="chart_figures">
-         <div class="facts">
-                    <div><span>Total SizCharts:</span>{{rec_count}}</div>
-                    <div><span>Female SizeCharts:</span>{{femaleSizeChart}}</div>
-                    <div><span>Male SizeCharts:</span>{{maleSizeChart}}</div>
-     </div>    
-     
-     <div class="facts">
-                <div><span>Top SizeCharts:</span>{{topSizeChart}}</div>
-                <div><span>Bottom SizeCharts:</span>{{bottomSizeChart}}</div>
-                <div><span>Dress SizeCharts:</span>{{dressSizeChart}}</div>
-     </div>
-     </div>
-    
-     <a href="{{ path('admin_size_chart_new') }}" class="btn">Add New</a>
-     
+ <div class="btn_wrapper2">     
+     <a href="{{ path('admin_size_chart_new') }}" class="btn">Add New</a>     
       </div>
      <div class="clearfix"></div> 
     <div id="detail_wrapper">      
-                    <div id="product_content">
-                        
-                                                         
+                    <div id="product_content">           
                             <div class="edt_container">         
                                 <form  method="post" {{form_enctype(form)}}>
                                     {{ form_errors(form) }}
@@ -77,11 +56,6 @@ $('#brand_sizechart_Brand').change(function() {
                                 </div>      
                             </div><!-- End pro_detail -->      
                         </div>
-    
-    
-     
-    
-
     </div>
  
 </div>

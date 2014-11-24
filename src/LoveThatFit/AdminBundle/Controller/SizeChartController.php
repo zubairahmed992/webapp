@@ -16,13 +16,7 @@ class SizeChartController extends Controller {
 
     public function indexAction() {
         $form = $this->createForm(new BrandSizeChartType());
-        return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', array('form' => $form->createView(),
-                    'rec_count' => $this->get('admin.helper.sizechart')->countAllSizeChartRecord(),
-                    'maleSizeChart' => $this->get('admin.helper.sizechart')->getSizeChartByGender('m'),
-                    'femaleSizeChart' => $this->get('admin.helper.sizechart')->getSizeChartByGender('f'),
-                    'topSizeChart' => $this->get('admin.helper.sizechart')->getSizeChartByTarget('Top'),
-                    'bottomSizeChart' => $this->get('admin.helper.sizechart')->getSizeChartByTarget('Bottom'),
-                    'dressSizeChart' => $this->get('admin.helper.sizechart')->getSizeChartByTarget('Dress'),
+        return $this->render('LoveThatFitAdminBundle:SizeChart:index.html.twig', array('form' => $form->createView(),                   
                 ));
     }
 #------------------------------------------------------------
@@ -128,46 +122,6 @@ class SizeChartController extends Controller {
                      'size_specs' => $size_specs,
                     'delete_form' => $deleteForm->createView(),
                 ));
-    }
-#------------------------------------------------------------
- /*   public function searchSizeChartFormAction() {
-        $brandList = $this->get('admin.helper.brand')->findAll();
-        $genders = $this->get('admin.helper.utility')->getGenders();
-        $target = $this->get('admin.helper.utility')->getTargets();
-        $bodyType = $this->get('admin.helper.utility')->getBodyTypesSearching();
-        return $this->render('LoveThatFitAdminBundle:SizeChart:sizeChartSearchForm.html.twig', array('brandList' => $brandList, 'genders' => $genders, 'target' => $target, 'bodyType' => $bodyType));
-    }*/
-#------------------------------------------------------------
-    public function searchSizeChartResultAction(Request $request) {
-        $data = $request->request->all();
-        $brand_id = $data['brand'];
-        $target = $data['target'];
-        $genders = $data['genders'];
-        // $male=$genders['m'];
-        if (isset($genders['0'])) {
-            $male = $genders['0'];
-        } else {
-            $male = null;
-        }
-        if (isset($genders['1'])) {
-            $female = $genders['1'];
-        } else {
-            $female = null;
-        }
-        $bodyType = $data['bodytype'];
-
-#-----Pagination-----------------------------------#  
-        $page = $data['page'];
-
-        $searchResult = $this->get('admin.helper.sizechart')->searchSizeChartPagination($brand_id, $male, $female, $bodyType, $target, $page);
-        return $this->render('LoveThatFitAdminBundle:SizeChart:sizeChartSearchResult.html.twig', $searchResult);
-    }
-
-//------------------Brand List Of Size Charts----------------------------------------------- 
-
-    public function getBrandSizeChartAction($page_number, $sort = 'id') {
-        $size_with_pagination = $this->get('admin.helper.sizechart')->getListWithPagination($page_number, $sort);
-        return $this->render('LoveThatFitAdminBundle:SizeChart:brand_sizechart.html.twig', $size_with_pagination);
     }
 
 }

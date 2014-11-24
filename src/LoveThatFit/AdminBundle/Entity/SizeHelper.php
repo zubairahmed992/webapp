@@ -163,6 +163,16 @@ public function getWomanBraSpecs($bra_size){
     }
     return null;
 }
+#------------------------------------------------------------------------------#
+public function getBustAverage($bra_size){
+    $bra_specs=$this->getWomanBraSpecs($bra_size);
+    if (is_array($bra_specs)){
+        return $bra_specs['average'];
+    }else{
+        return;
+    }
+    
+}
 #############################################################################
 
 #---------------------- Get Man Letter Sizes---------------------------------#

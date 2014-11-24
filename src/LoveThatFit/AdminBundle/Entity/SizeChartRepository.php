@@ -62,19 +62,9 @@ class SizeChartRepository extends EntityRepository {
         }
     }
     
+ 
     //------------------------------------------------------------------------
-    public function countAllSizeChartRecord() {
-        $total_record = $this->getEntityManager()
-                ->createQuery('SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc');
-        try {
-            return $total_record->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-    //------------------------------------------------------------------------
-    public function findBrandSizeBy($brand, $title, $gender, $target, $bodytype) {      
+    public function findMatchingTitleBrandGenderBodyTypeTarget($title, $brand, $gender, $bodytype, $target) {      
     $query = $this->getEntityManager()
                         ->createQuery("SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc
      WHERE
@@ -346,19 +336,7 @@ class SizeChartRepository extends EntityRepository {
         }
     }
     
-    
-     public function getRecordsCountWithCurrentSizeChartLimit($sizechart_id){
-        
-            $query = $this->getEntityManager()
-                    ->createQuery("SELECT count(sc.id) as id  FROM LoveThatFitAdminBundle:SizeChart sc WHERE sc.id <=:size_chart_id")
-                   ->setParameters(array('size_chart_id' => $sizechart_id));
-                     try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-        } 
-
+ 
 
     //------------------------------------------------------------------------
     public function findSizeByDresses($target) {
@@ -377,34 +355,6 @@ class SizeChartRepository extends EntityRepository {
         }
     }
     
-    public function findSizeChartByGender($gender) {
-        $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc     
-     WHERE     
-     sc.gender = :gender"
-                        )->setParameters(array('gender' =>$gender));
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-    
-    
-    public function findSizeChartByTarget($target) {
-        $query = $this->getEntityManager()
-                        ->createQuery("
-     SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc     
-     WHERE     
-     sc.target = :target"
-                        )->setParameters(array('target' =>$target));
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
     
 
  #---------Size Chart Id 

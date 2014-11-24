@@ -2,10 +2,6 @@
 admin_size_charts:
     pattern: /admin/size_charts
     defaults: { _controller: LoveThatFitAdminBundle:SizeChart:index  }
-    
-admin_size_chart_show:
-    pattern: /admin/admin_size_charts/{id}/show
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:show }
 
 admin_size_chart_new:
     pattern: /admin/admin_size_charts/new
@@ -32,20 +28,7 @@ admin_size_chart_update:
 admin_size_chart_delete:
     pattern: /admin/admin_size_charts/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:SizeChart:delete }
-
-admin_size_chart_test_utility_helper:
-    pattern: /admin/testHelper
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:testHelper } 
     
-#admin_size_chart_search_from:
-#     pattern:  /admin/admin_size_charts/searchForm
-#     defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartForm}    
-#admin_size_chart_search_result:  
-#      pattern:  /admin/admin_size_charts/searchResult
-#      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartResult}   
-admin_brand_size_chart:      
-      pattern: /admin/admin_size_charts/brand/{page_number}/{sort}
-      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChart , page_number: 1, sort:id }
 admin_brand_size_chart_list:      
       pattern: /admin/size_charts/brand/list/{brand_id}
       defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChartList }
