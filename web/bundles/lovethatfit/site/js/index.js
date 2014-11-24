@@ -14,10 +14,7 @@
                     });  
                     
                     
-  set_droppables();
-  set_slider_buttons();
-  set_short_slider_buttons();
-  set_drag_drop_ele();
+ 
               
             $(".fitting_alert_link").toggle(
                 function () {
