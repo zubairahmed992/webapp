@@ -423,7 +423,7 @@ class SizeChartRepository extends EntityRepository {
         }
  }
 #--------------------Searching Size Chart-------------------------------------#
- public function searchSizeChart($brand_id,$male,$female,$bodyType,$target,$start,$per_page){
+ /*public function searchSizeChart($brand_id,$male,$female,$bodyType,$target,$start,$per_page){
      
       return $this->getEntityManager()
                         ->createQueryBuilder()
@@ -442,8 +442,10 @@ class SizeChartRepository extends EntityRepository {
                         ->setMaxResults($per_page)
                         ->getQuery()
                         ->getResult(); 
- }
+ }*/
  
+ 
+ /*
 #-------------Counting Of Size Chart-----------------------------------------#
  public function countSearchSizeChart($brand_id,$male,$female,$bodyType,$target){
      
@@ -463,7 +465,7 @@ class SizeChartRepository extends EntityRepository {
                         ->getQuery()
                         ->getResult(); 
  }
- 
+ */
  
  #-------------Counting Of Size Chart-----------------------------------------#
  public function getIdBaseOnTargetGender($brand_id,$gender,$target,$size_title,$body_type){

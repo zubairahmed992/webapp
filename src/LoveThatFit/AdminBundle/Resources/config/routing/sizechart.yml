@@ -35,13 +35,14 @@ admin_size_chart_delete:
 
 admin_size_chart_test_utility_helper:
     pattern: /admin/testHelper
-    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:testHelper }    
-admin_size_chart_search_from:
-     pattern:  /admin/admin_size_charts/searchForm
-     defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartForm}    
-admin_size_chart_search_result:  
-      pattern:  /admin/admin_size_charts/searchResult
-      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartResult}   
+    defaults: { _controller: LoveThatFitAdminBundle:SizeChart:testHelper } 
+    
+#admin_size_chart_search_from:
+#     pattern:  /admin/admin_size_charts/searchForm
+#     defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartForm}    
+#admin_size_chart_search_result:  
+#      pattern:  /admin/admin_size_charts/searchResult
+#      defaults: { _controller: LoveThatFitAdminBundle:SizeChart:searchSizeChartResult}   
 admin_brand_size_chart:      
       pattern: /admin/admin_size_charts/brand/{page_number}/{sort}
       defaults: { _controller: LoveThatFitAdminBundle:SizeChart:getBrandSizeChart , page_number: 1, sort:id }

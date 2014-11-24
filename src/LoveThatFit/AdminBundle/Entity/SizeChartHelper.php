@@ -604,6 +604,7 @@ public function getBrandArraySizeChart() {
         $rec_count= count($this->repo->findBrandSizeBy($brand,$title,$gender,$target,$bodytype));
         return $rec_count;        
     }  
+  /*  
 #----------------------------Searching -----------------------------------#
 public function searchSizeChartPagination($brand_id,$male,$female,$bodyType,$target,$page){
     
@@ -653,7 +654,7 @@ public function  getIdBaseOnTargetGender($brand_id,$gender,$target,$size_title,$
 public function getBrandSizeTitleArray() {
     return $this->repo->findSizeTitleTarget();
   }
-  
+  */
 //---------------------------get Size Chart By Brand----------------------------
   
  public function getSizeChartByBrand($brand)

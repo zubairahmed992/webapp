@@ -130,13 +130,13 @@ class SizeChartController extends Controller {
                 ));
     }
 #------------------------------------------------------------
-    public function searchSizeChartFormAction() {
+ /*   public function searchSizeChartFormAction() {
         $brandList = $this->get('admin.helper.brand')->findAll();
         $genders = $this->get('admin.helper.utility')->getGenders();
         $target = $this->get('admin.helper.utility')->getTargets();
         $bodyType = $this->get('admin.helper.utility')->getBodyTypesSearching();
         return $this->render('LoveThatFitAdminBundle:SizeChart:sizeChartSearchForm.html.twig', array('brandList' => $brandList, 'genders' => $genders, 'target' => $target, 'bodyType' => $bodyType));
-    }
+    }*/
 #------------------------------------------------------------
     public function searchSizeChartResultAction(Request $request) {
         $data = $request->request->all();
