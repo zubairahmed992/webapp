@@ -243,4 +243,11 @@ class ClothingTypeHelper {
         return $cat_array;
     }
     
+    
+    
+    #-----------------Find By Clothing Type By Gender---------------------------------# 
+    public function findClothingTypsByGender($gender){
+        return $this->repo->findClothingTypsByGender($gender);      
+    }
+    
 }

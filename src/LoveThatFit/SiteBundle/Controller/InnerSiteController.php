@@ -233,7 +233,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
     }
 #--------------------------------------- List Clothing Types--------------------
     public function clothingTypesAction() {
-        $entity = $this->get('admin.helper.clothingtype')->findAll();
+        $gender= $this->get('security.context')->getToken()->getUser()->getGender();
+        $entity = $this->get('admin.helper.clothingtype')->findClothingTypsByGender($gender);
         return $this->render('LoveThatFitSiteBundle:InnerSite:_clothingTypes.html.twig', array('clothing_types' => $entity));
     }
 #---------------------- List Brands---------------------------------------------

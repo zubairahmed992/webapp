@@ -197,6 +197,25 @@ param:limit, page_number,limit,sort
             return null;
         }
   }
+  
+  
+  
+  
+  public function findClothingTypsByGender($gender)
+  {
+      $query = $this->getEntityManager()
+                        ->createQuery("
+     SELECT b FROM LoveThatFitAdminBundle:ClothingType b     
+     WHERE
+     b.gender=:gender   
+    "  )->setParameters(array('gender' => $gender)) ;
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
+  
 #------------------------------------------------------------------------------#  
   public function getRecordsCountWithCurrentClothingTYpeLimit($clothing_type){
      $query = $this->getEntityManager()
