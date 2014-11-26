@@ -488,7 +488,7 @@ $(".step_4 h2").css("display","none");
 $(".save_btn_4").fadeIn();
 $("#step_one").removeClass("active");
 $("#step_two").addClass("active");
-$(".reg_next_step2").attr("value","Update");
+$(".reg_next_step2").attr("value","   Update    ");
 $("#paper_step_1").trigger("click");
 }
 
