@@ -442,7 +442,7 @@ function createBlob() {
         }
         
 mid_area_path = new Path(pathData);
-
+mid_area_path.opacity = 0.6;
 trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 1000));
 trans_bg.style = {
 	fillColor: '#666666',
@@ -544,28 +544,95 @@ if(chk_no_img_path == true){
   adj_inseam_points();
   
   
-   //mid_area_path.segments[1].point.y = mid_area_path.segments[69].point.y += def_head_p_incr;
+  var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
+  
+  user_shoulder_width = user_shoulder_width*6;
+  
+  //alert(user_shoulder_width);
+  
+  var torso_w_adj_left = [54,53,52,51,50,49];
+  var torso_w_adj_right = [16,17,18,19,20,21];
+  
+  var dm_front_shoulder = mid_area_path.segments[7].point.x - mid_area_path.segments[63].point.x;
+  var user_front_shoulder = user_shoulder_width;
+  
+  var front_shoulder_diff = user_front_shoulder - dm_front_shoulder;
+  //alert(front_shoulder_diff/2);
+  mid_area_path.segments[7].point.x += front_shoulder_diff/2;
+  mid_area_path.segments[63].point.x -= front_shoulder_diff/2;
+  
+  //var front_shoulder_diff = 60;
+  
+  var diff_apply = front_shoulder_diff/2;
+
+  function adj_torso_points_w(){
+    for(var i = 0; i < torso_w_adj_left.length; i++) {
+          mid_area_path.segments[torso_w_adj_left[i]].point.x -= diff_apply;
+    };
+    for(var i = 0; i < torso_w_adj_right.length; i++) {
+          mid_area_path.segments[torso_w_adj_right[i]].point.x += diff_apply;
+    };
+  }
+  adj_torso_points_w();
+  
+  
+  var arm_w_adj_out_left = [8,9,10];
+  var arm_w_adj_out_right = [62,61,60];
+  var diff_apply = front_shoulder_diff/4;
+  
+  mid_area_path.segments[8].point.x += (diff_apply*2)+((diff_apply*32)/100);
+  mid_area_path.segments[9].point.x += (diff_apply*2)+((diff_apply*32)/100);
+  mid_area_path.segments[10].point.x += (diff_apply*2)+((diff_apply*32)/100);
+  mid_area_path.segments[62].point.x -= (diff_apply*2)-((diff_apply*32)/100);
+  mid_area_path.segments[61].point.x -= (diff_apply*2)-((diff_apply*32)/100);
+  mid_area_path.segments[60].point.x -= (diff_apply*2)-((diff_apply*32)/100);
+  
+  mid_area_path.segments[14].point.x += diff_apply*2;
+  mid_area_path.segments[15].point.x += diff_apply*2;
+  
+  mid_area_path.segments[14].point.x -= ((diff_apply*32)/100);
+  mid_area_path.segments[15].point.x -= ((diff_apply*32)/100);
+  
+  mid_area_path.segments[56].point.x -= diff_apply*2;
+  mid_area_path.segments[55].point.x -= diff_apply*2;
+  
+  mid_area_path.segments[56].point.x += (diff_apply*32)/100;
+  mid_area_path.segments[55].point.x += (diff_apply*32)/100;
+  
+//var chk_da_lala = front_shoulder_diff*54/100;
+//alert(chk_da_lala);
+  
+  //mid_area_path.segments[48].point.x -= (front_shoulder_diff/2)*54/100;
+  mid_area_path.segments[48].point.x -= front_shoulder_diff*54/100;
+  
+  mid_area_path.segments[47].point.x -= front_shoulder_diff*44/100;
+  mid_area_path.segments[46].point.x -= front_shoulder_diff*44/100;
+  mid_area_path.segments[45].point.x -= front_shoulder_diff*44/100;
+  
+  mid_area_path.segments[44].point.x -= ((front_shoulder_diff*33.5)/100);
+  
+  mid_area_path.segments[43].point.x -= ((diff_apply*33.5)/100);
+
+  mid_area_path.segments[22].point.x += front_shoulder_diff*54/100;
+  mid_area_path.segments[23].point.x += ((front_shoulder_diff*44)/100);
+  mid_area_path.segments[24].point.x += ((front_shoulder_diff*44)/100);
+  mid_area_path.segments[25].point.x += ((front_shoulder_diff*44)/100);
+  
+  mid_area_path.segments[26].point.x += ((front_shoulder_diff*44)/100);
+  
+  mid_area_path.segments[27].point.x += ((diff_apply*33.5)/100);
+  
+  
+ 
+    mid_area_path.segments[34].point.x -= ((front_shoulder_diff*14)/100);
+    mid_area_path.segments[36].point.x += ((front_shoulder_diff*14)/100);
     
+    mid_area_path.segments[33].point.x -= ((front_shoulder_diff*11)/100);
+    mid_area_path.segments[37].point.x += ((front_shoulder_diff*11)/100);
     
-    
-//    var head_segments = {0,1,2,3,4,5};
-//    function foo(){
-//        for(var i = 0; i < head_segments.length; i++) {
-//            mid_area_path.segments[head_segments[i]].point.y += 60;
-//        };
-//    }
-//    function get_foo_height(){
-//
-//    }
-    
-    
-    
-    
-    
-    
-    //mid_area_path.scale(1,p_user_height);
-    //mid_area_path.scale(1,1);
-    //mid_area_path.position = new Point(181,p_user_height_px/2+17);
+    mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
+    mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
+  
     
     
    }
@@ -627,11 +694,19 @@ var path = new CompoundPath({
 
 path.opacity = 0.6;
 
-               
+     if(chk_no_img_path == true){          
         
       export_svg_data(path);
 
-
+    }else {
+        var default_adjusted_path_data = $("#default_marker_svg").attr("value");
+        d_adj_path = new Path(default_adjusted_path_data);
+        d_adj_path.strokeColor = 'black';
+        d_adj_path.position = new Point(-500,(p_user_height_px/2)+17);
+        d_adj_path.opacity = 0;
+        
+        
+    }
 
 	return path;
 }
@@ -653,6 +728,7 @@ var export_path_full = path.exportSVG({asString: true});
         console.log(export_path_final);
         
         $("#img_path_paper").attr("value", export_path_final);
+        $("#default_marker_svg").attr("value", export_path_final);
         
         main_path = project.getItem({
             class: Path,
@@ -715,6 +791,37 @@ function getPathArrayJson(){
 function onMouseDrag(event) {
 	if (segment) {
         
+        
+          main_path = project.getItem({
+            class: Path,
+            segments: function(segments) {
+                   return segments.length > 20;
+            }
+            });
+        
+            
+        
+          //main_path = path;
+            
+            def_path = project.getItem({
+            opacity: function(value) {
+                    return value == 0;
+                }
+            });
+          
+            
+            
+        function get_index_num(){
+            for(var i = 0; i < path.segments.length; i++) {
+                if(segment == path.segments[i]){
+                    return i;
+                }
+            }
+        }
+        curr_dragged_seg = get_index_num();
+        //alert(curr_dragged_seg);
+        
+        
         var export_path_full = path.exportSVG({asString: true});
         export_path_full.toString();
         var export_path_remove_start = export_path_full.substr(44);
@@ -727,20 +834,25 @@ function onMouseDrag(event) {
        
         
        
-       main_path = project.getItem({
-            class: Path,
-            segments: function(segments) {
-                   return segments.length > 20;
-            }
-            });
+       
             
             $("#mask_x").attr("value", main_path.position.x);
             $("#mask_y").attr("value", main_path.position.y);
        
-       
-		segment.point += event.delta;
-                
+            //var def_segment = def_path.segments[curr_dragged_seg].point.x + 10;
+            //var active_segment = segment.point.x;
+            
+           // if(active_segment > def_segment){
+           //         alert("Out of range");
+            //    }else{
+            //        segment.point += event.delta;
+            //    }
+            
                
+               
+                segment.point += event.delta;
+                
+                
                 var sholder_left = path.segments[6].point.y - 22;
                 var sholder_right = path.segments[62].point.y - 22;
                 
@@ -814,11 +926,12 @@ svg_path:$('#img_path_paper').attr('value')};
         url: $url,//"http://localhost/webapp/web/app_dev.php/user/marker/save",
         data: value_ar,  
        success: function(data){//alert(data);
+           setTimeout(go_to_index,'500');
      console.log(data);    
     },
         failure: function(errMsg) {
-            setTimeout(go_to_index,'500');
-            //alert(errMsg);
+            //setTimeout(go_to_index,'500');
+            alert(errMsg);
         }
   });
 
