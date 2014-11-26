@@ -722,7 +722,7 @@ function post_content_of_canvas(){
                           if(submit_all_step_3 == true){
                               
                               console.log("Chalo bhai chalo");
-                              go_to_index();
+                              //go_to_index();
                           }
                           
                           if(submit_step_3_first == true){
