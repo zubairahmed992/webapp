@@ -5,80 +5,83 @@ masked_marker:
     type: single
     segments: 
       s1:  
-        a: 24
-        b: 60
+        a: 17
+        b: 53
     
   chest:  
     axis: x
     type: single
     segments: 
       s1: 
-        a: 24
-        b: 60    
+        a: 17
+        b: 53    
   
   shoulder_across_front: 
     axis: x 
     type: single
     segments: 
       s1:
-        a: 16
-        b: 2    
+        a: 7
+        b: 63    
   
   waist: 
     axis: x 
     type: single
     segments: 
       s1:
-        a: 27
-        b: 57
+        a: 18
+        b: 52
     
   hip: 
     axis: x 
     type: single 
     segments: 
       s1: 
-        a: 29
-        b: 55
+        a: 21
+        b: 49
     
   inseam: 
     axis: y
-    type: single
+    type: pair
     segments: 
       s1:
-        a: 42
-        b: 38
-    
+        a: 35
+        b: 30
+      s2:
+        a: 35
+        b: 40
+        
   thigh: 
     axis: x 
     type: pair
     segments: 
       s1:
-        a: 30
-        b: 41
+        a: 22
+        b: 34
       s2: 
-        a: 43
-        b: 54
+        a: 36
+        b: 48
     
   shoulder_length: 
     axis: y 
     type: pair
     segments: 
       s1:
-        a: 15
-        b: 36
+        a: 6
+        b: 30
       s2:
-        a: 3
-        b: 48
+        a: 63
+        b: 40
     
   bicep:  
     axis: x 
     type: pair 
     segments: 
       s1:
-        a: 17
-        b: 22
+        a: 8
+        b: 15
       s2:
-        a: 1
+        a: 55
         b: 62
     
   wrist:  
@@ -86,44 +89,75 @@ masked_marker:
     type: pair 
     segments: 
       s1:
-        a: 0
-        b: 63
+        a: 10
+        b: 13
       s2:
-        a: 18
-        b: 21
+        a: 57
+        b: 60
   
   knee: 
     axis: x 
     type: pair
     segments: 
       s1:
-        a: 31
-        b: 40
+        a: 24
+        b: 33
       s2:
-        a: 44
-        b: 53
+        a: 37
+        b: 46
     
   calf: 
     axis: x 
     type: pair
     segments: 
       s1:
-        a: 32
-        b: 39
+        a: 25
+        b: 32
       s2:
-        a: 45
-        b: 52
+        a: 38
+        b: 45
     
   ankle:  
     axis: x 
     type: pair
     segments: 
       s1:
-        a: 34
-        b: 38
+        a: 27
+        b: 31
       s2:
-        a: 46
-        b: 50
+        a: 39
+        b: 43
+  elbow:  
+    axis: x 
+    type: pair
+    segments: 
+      s1:
+        a: 9
+        b: 14
+      s2:
+        a: 56
+        b: 61
+  
+  torso:  
+    axis: y 
+    type: pair
+    segments: 
+      s1:
+        a: 6
+        b: 35
+      s2:
+        a: 64
+        b: 35
+  
+  neck:  
+    axis: x 
+    type: single
+    segments: 
+      s1:
+        a: 5
+        b: 65
+              
+        
         
 mask_type:
   woman:
