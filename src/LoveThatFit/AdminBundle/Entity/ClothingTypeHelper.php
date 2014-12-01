@@ -84,29 +84,7 @@ class ClothingTypeHelper {
         }
     }
 
-    //-------------------------------------------------------
-
-    public function findWithSpecs($id) {
-        $entity = $this->repo->find($id);
-
-        if (!$entity) {
-            $entity = $this->createNew();
-            return array(
-                'entity' => $entity,
-                'message' => 'Clothing Type not found.',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        } else {
-            return array(
-                'entity' => $entity,
-                'message' => 'Clothing Type found!',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        }
-    }
-
+    
     public function delete($id) {
         $entity = $this->repo->find($id);
         $entity_name = $entity->getName();

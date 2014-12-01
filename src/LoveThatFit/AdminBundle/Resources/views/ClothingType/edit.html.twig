@@ -37,7 +37,7 @@
 <div>      
     <h1 style="float:left;">Edit Clothing Type</h1>
      <div class="btn_wrapper">     
-     
+     <a href="{{ path('admin_clothing_types') }}" class="btn">back to list</a>
              <a href="#myModal" role="button" data-toggle="modal" class="btn">Delete</a>
       </div>
       <div class="clearfix"></div>   
@@ -66,7 +66,8 @@
                                    {{ form_rest(form) }}
                                     <div class="span3">&nbsp;</div>
                                     <div class="span3"><div style="margin:0px 0px 0px 0px;"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>                                     
-                                    </div>                                    
+                                    <a href="{{ path('admin_clothing_types') }}" class="btn btn-primary">Cancel    </a>
+                                        </div>                                    
                                     </div>
                                 </div>
                                 </div>                                    

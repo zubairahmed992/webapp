@@ -128,17 +128,14 @@ class BrandController extends Controller {
     //---------------------------------------------Brand Specification add new----------------------------
 
     public function newBrandSpecificationAction($id) {
-        $allSizes = $this->get('admin.helper.size')->getAllSizes();
-        //return new response(json_encode($allSizes));
-        $entity = $this->get('admin.helper.brand')->find($id);
-        //return new response(json_encode($specs));
+        $allSizes = $this->get('admin.helper.size')->getAllSizes();        
+        $entity = $this->get('admin.helper.brand')->find($id);      
         if(!$entity){
             $this->get('session')->setFlash('warning', 'This Brand not found!');
         }else{
         $brandspecification = new BrandSpecification();
         $form = $this->createForm(new BrandSpecificationType($allSizes, $this->get('admin.helper.size')), $brandspecification);
-        }
-        
+        }        
         return $this->render('LoveThatFitAdminBundle:Brand:new_brand_specification.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -171,15 +168,11 @@ class BrandController extends Controller {
 
     //-------------------------------------Edit Brand Specification-----------------------------------------------------
     public function editBrandSpecificationAction($id, $brand_id) {
-        $entity = $this->get('admin.helper.brand')->find($brand_id);
-        // $brandspecification=$this->get('admin.helper.brand.specification')->find($id);
+        $entity = $this->get('admin.helper.brand')->find($brand_id);        
         $specArray = $this->get('admin.helper.brand.specification')->getArrayBrandSpecifcation($this->get('admin.helper.brand.specification')->find($id));
-
         $allSizes = $this->get('admin.helper.size')->getAllSizes();
         $form = $this->createForm(new BrandSpecificationType($allSizes, $this->get('admin.helper.size')));
-
-
-        if (array_key_exists('gender', $specArray)) {
+       if (array_key_exists('gender', $specArray)) {
             $form->get('gender')->setData(json_decode($specArray['gender']));
         }
         if (array_key_exists('female_fit_type', $specArray)) {

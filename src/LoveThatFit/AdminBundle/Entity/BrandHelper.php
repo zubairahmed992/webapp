@@ -6,10 +6,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Yaml\Parser;
-use \Symfony\Component\EventDispatcher\EventDispatcher;
-use \Symfony\Component\EventDispatcher\Event;
-use LoveThatFit\AdminBundle\Event\BrandEvent;
-use LoveThatFit\AdminBundle\Entity\Retailer;
 
 class BrandHelper {
 
@@ -39,7 +35,7 @@ class BrandHelper {
         $this->class = $class;
         $this->repo = $em->getRepository($class);
     }
-    //---------------------------------------------------------------------   
+    //-------------------------Create New Brand--------------------------------------------   
 
     public function createNew() {
         $class = $this->class;
@@ -47,22 +43,17 @@ class BrandHelper {
         return $brand;
     }
 
-//-------------------------------------------------------
+//--------------------------Save Brand----------------------------------------------------------------
 
-    public function save($entity) {
-        //$msg_array =null;
-        //$msg_array = ;
-
+    public function save($entity) {       
         $brandName = $entity->getName();
         $msg_array = $this->validateForCreate($brandName);
         if ($msg_array == null) {
             $entity->setCreatedAt(new \DateTime('now'));
             $entity->setUpdatedAt(new \DateTime('now'));
-
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
-
             return array('message' => 'Brand succesfully created.',
                 'field' => 'all',
                 'message_type' => 'success',
@@ -73,15 +64,12 @@ class BrandHelper {
         }
     }
 
-    //-------------------------------------------------------
+    //---------------------------Update Brand-----------------------------------------------------------------------
 
     public function update($entity) {
-
         $msg_array = $this->validateForUpdate($entity);
-
         if ($msg_array == null) {
             $entity->setUpdatedAt(new \DateTime('now'));
-
             $entity->upload();
             $this->em->persist($entity);
             $this->em->flush();
@@ -96,17 +84,15 @@ class BrandHelper {
         }
     }
 
-//-------------------------------------------------------
+//------------------Delete Brand------------------------------------------------------------------------
 
     public function delete($id) {
 
         $entity = $this->repo->find($id);
         $entity_name = $entity->getName();
-
         if ($entity) {
             $this->em->remove($entity);
             $this->em->flush();
-
             return array('brands' => $entity,
                 'message' => 'The Brand ' . $entity_name . ' has been Deleted!',
                 'message_type' => 'success',
@@ -122,25 +108,27 @@ class BrandHelper {
         }
     }
 
-//-------------------------------------------------------
+//----------------------Find Brand By ID----------------------------------------------------------------
 
     public function find($id) {
         return $this->repo->find($id);
     }
-   #-----------------------------------------------------
+   #--------------------Find All Brands---------------------------------------------------------------------------------
   public function findAll(){
   return $this->repo->findAll();      
     }
-//-------------------------------------------------------
+//----------------------Find Brand By name----------------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
 
+    
+//----------------------Remove Brand----------------------------------------------------------------    
     public function removeBrand() {
         return $this->repo->removeBrand();
     }
 
-    //-------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
 
     public function getListWithPagination($page_number, $sort) {
         $yaml = new Parser();
@@ -199,33 +187,7 @@ public function getRetailerBrandById($id)
  }
  
     
-//Private Methods    
-//----------------------------------------------------------
-    private function validateForCreate($name) {
-        if (count($this->findOneByName($name)) > 0) {
-            return array('message' => 'Brand Name already exists!',
-                'field' => 'name',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-        return;
-    }
 
-//----------------------------------------------------------
-    private function validateForUpdate($entity) {
-        $brand = $this->findOneByName($entity->getName());
-
-        if ($brand && $brand->getId() != $entity->getId()) {
-            return array('message' => 'Brand Name already exists!',
-                'field' => 'name',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-        return;
-    }
-   
     #----------------Get Brand and Id ----------------------------------------#
     public function getBrandNameId(){
      return $this->repo->getBrandNameId();   
@@ -328,4 +290,32 @@ public function getBrandRetailerList($date_fromat){
          }
    }
     
+   
+ //Private Methods    
+//------Validate to check brand name exit or not for create new-----------------------------------------
+    private function validateForCreate($name) {
+        if (count($this->findOneByName($name)) > 0) {
+            return array('message' => 'Brand Name already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+        return;
+    }
+
+//------Validate to check brand name exit or not for update-----------------------------------------
+    private function validateForUpdate($entity) {
+        $brand = $this->findOneByName($entity->getName());
+        if ($brand && $brand->getId() != $entity->getId()) {
+            return array('message' => 'Brand Name already exists!',
+                'field' => 'name',
+                'message_type' => 'warning',
+                'success' => false,
+            );
+        }
+        return;
+    }
+     
+   
 }

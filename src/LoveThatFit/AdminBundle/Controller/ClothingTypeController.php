@@ -9,34 +9,30 @@ use LoveThatFit\AdminBundle\Form\Type\ClothingTypes;
 
 class ClothingTypeController extends Controller {
 
-//------------------------------------------------------------------------------------------
+//-----------------------------Clothing Type List-------------------------------------------------------------
 
 
     public function indexAction($page_number, $sort = 'id') {
         $clothing_types = $this->get('admin.helper.clothingtype')->findAll();
-        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types'=>$clothing_types));
+        return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types' => $clothing_types));
     }
 
-//------------------------------------------------------------------------------------------
+//-------------------------------Clothing Type display-----------------------------------------------------------
     public function showAction($id) {
-
-        $specs = $this->get('admin.helper.clothingtype')->findWithSpecs($id);
-        $entity = $specs['entity'];
-        $clothing_type_limit =$this->get('admin.helper.clothingtype')->getRecordsCountWithCurrentClothingTYpeLimit($id);
-        $page_number=ceil($this->get('admin.helper.utility')->getPageNumber($clothing_type_limit[0]['id']));
-        if($page_number==0){
-            $page_number=1;
-        }
-
-        if ($specs['success'] == false) {
-            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
+        $entity = $this->get('admin.helper.clothingtype')->find($id);
+        $clothing_type_limit = $this->get('admin.helper.clothingtype')->getRecordsCountWithCurrentClothingTYpeLimit($id);
+        $page_number = ceil($this->get('admin.helper.utility')->getPageNumber($clothing_type_limit[0]['id']));
+        $page_number = $page_number == 0?1:$page_number;
+        if (!$entity) {
+            $this->get('session')->setFlash('warning', 'Clothing type not found!');
         }
         return $this->render('LoveThatFitAdminBundle:ClothingType:show.html.twig', array(
-                    'clothing_type' => $entity,'page_number'=>$page_number,
+                    'clothing_type' => $entity,
+                    'page_number' => $page_number,
         ));
     }
 
-    //------------------------------------------------------------------------------------------
+    //------------------------------Create New Clothing Type------------------------------------------------------------
     public function newAction() {
 
         $entity = $this->get('admin.helper.ClothingType')->createNew();
@@ -45,7 +41,7 @@ class ClothingTypeController extends Controller {
                     'form' => $form->createView()));
     }
 
-    //------------------------------------------------------------------------------------------
+    //-------------------------------Save Clothing type in database-----------------------------------------------------------
     public function createAction(Request $request) {
         $entity = $this->get('admin.helper.ClothingType')->createNew();
         $form = $this->createForm(new ClothingTypes('add'), $entity);
@@ -66,36 +62,30 @@ class ClothingTypeController extends Controller {
         ));
     }
 
-//------------------------------------------------------------------------------------------
+//----------------------------------------Edit Clothing Type--------------------------------------------------
     public function editAction($id) {
 
-        $specs = $this->get('admin.helper.ClothingType')->findWithSpecs($id);
-        $entity = $specs['entity'];
-
-        if ($specs['success'] == false) {
-            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
-        }
-
+        $entity = $this->get('admin.helper.ClothingType')->find($id);
+        if(!$entity){       
+        $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
+        }else{
         $form = $this->createForm(new ClothingTypes('edit'), $entity);
-
         $deleteForm = $this->createForm(new DeleteType(), $entity);
+        }
         return $this->render('LoveThatFitAdminBundle:ClothingType:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));
     }
 
-//------------------------------------------------------------------------------------------
+//------------------------------------Update Clothing Type------------------------------------------------------
     public function updateAction(Request $request, $id) {
 
-        $specs = $this->get('admin.helper.ClothingType')->findWithSpecs($id);
-        $entity = $specs['entity'];
-
-        if ($specs['success'] == false) {
-            $this->get('session')->setFlash($specs['message_type'], $specs['message']);
-            return $this->redirect($this->generateUrl('admin_clothing_types'));
-        }
-
+        $entity = $this->get('admin.helper.ClothingType')->find($id);
+        if(!$entity)
+        {
+            $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
+        }else{
         $form = $this->createForm(new ClothingTypes('edit'), $entity);
         $form->bind($request);
 
@@ -112,14 +102,15 @@ class ClothingTypeController extends Controller {
         } else {
             $this->get('session')->setFlash('warning', 'Unable to update Clothing Type!');
         }
-        $deleteForm = $this->createForm(new DeleteType(), $entity);
+        $deleteForm = $this->createForm(new DeleteType(), $entity);        
+        }
         return $this->render('LoveThatFitAdminBundle:ClothingType:edit.html.twig', array(
                     'form' => $form->createView(),
                     'delete_form' => $deleteForm->createView(),
                     'entity' => $entity));
     }
 
-    //------------------------------------------------------------------------------------------
+    //----------------------------------------Delete Clothing Type--------------------------------------------------
 
     public function deleteAction($id) {
         try {
