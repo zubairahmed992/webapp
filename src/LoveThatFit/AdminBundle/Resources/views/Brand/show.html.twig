@@ -41,7 +41,22 @@
                                     <div class="span3">Name</div>
                                     <div class="span3">{{brand.name }}
                                     </div>
-                                    </div>                                    
+                                    </div>    
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Created At</div>
+                                    <div class="span3">{{brand.createdAt|date('d-m-Y') }}
+                                    </div>
+                                    </div>      
+                                        
+                                        
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Updated At</div>
+                                    <div class="span3">{{brand.updatedAt|date('d-m-Y') }}
+                                    </div>
+                                    </div>          
+                                        
                                 </div> 
                                     {%if (brand.getBrandspecification!=null)%}
                                      {% include 'LoveThatFitAdminBundle:Brand:show_brand_specification.html.twig'%}

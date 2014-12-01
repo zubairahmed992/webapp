@@ -131,30 +131,6 @@ class BrandHelper {
   public function findAll(){
   return $this->repo->findAll();      
     }
-
-    //-------------------------------------------------------
-
-    public function findWithSpecs($id) {
-        $entity = $this->repo->find($id);
-
-        if (!$entity) {
-            $entity = $this->createNew();
-            return array(
-                'entity' => $entity,
-                'message' => 'Brand not found.',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        } else {
-            return array(
-                'entity' => $entity,
-                'message' => 'Brand found!',
-                'message_type' => 'success',
-                'success' => true,
-            );
-        }
-    }
-
 //-------------------------------------------------------
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
