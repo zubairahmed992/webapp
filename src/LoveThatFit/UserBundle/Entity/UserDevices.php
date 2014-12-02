@@ -54,6 +54,26 @@ class UserDevices  {
      * @ORM\Column(name="device_user_per_inch_pixel_height", type="string", length=60, nullable=true)
      */
     private $deviceUserPerInchPixelHeight; 
+    
+     /**
+     * @var string $deviceImage
+     * @ORM\Column(name="device_image", type="string", length=255, nullable=true)
+    */
+    private $deviceImage; 
+    
+    /**
+     * @var dateTime $createdAt
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var dateTime $updatedAt
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
     /**
      * Get id
      *
@@ -154,5 +174,74 @@ class UserDevices  {
     public function getDeviceUserPerInchPixelHeight()
     {
         return $this->deviceUserPerInchPixelHeight;
+    }
+
+    /**
+     * Set deviceImage
+     *
+     * @param string $deviceImage
+     * @return UserDevices
+     */
+    public function setDeviceImage($deviceImage)
+    {
+        $this->deviceImage = $deviceImage;
+    
+        return $this;
+    }
+
+    /**
+     * Get deviceImage
+     *
+     * @return string 
+     */
+    public function getDeviceImage()
+    {
+        return $this->deviceImage;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return UserDevices
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return UserDevices
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }
