@@ -56,10 +56,10 @@ class UserDevices  {
     private $deviceUserPerInchPixelHeight; 
     
      /**
-     * @var string $deviceImage
+     * @var string $device_image
      * @ORM\Column(name="device_image", type="string", length=255, nullable=true)
     */
-    private $deviceImage; 
+    private $device_image; 
     
     /**
      * @var dateTime $createdAt
@@ -177,26 +177,26 @@ class UserDevices  {
     }
 
     /**
-     * Set deviceImage
+     * Set device_image
      *
-     * @param string $deviceImage
+     * @param string $device_image
      * @return UserDevices
      */
-    public function setDeviceImage($deviceImage)
+    public function setDeviceImage($device_image)
     {
-        $this->deviceImage = $deviceImage;
+        $this->device_image = $device_image;
     
         return $this;
     }
 
     /**
-     * Get deviceImage
+     * Get device_image
      *
      * @return string 
      */
     public function getDeviceImage()
     {
-        return $this->deviceImage;
+        return $this->device_image;
     }
 
     /**
@@ -243,5 +243,66 @@ class UserDevices  {
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+    
+    #-----------------------------------------------------------
+    
+   
+     public function upload() {
+
+      if (null === $this->file) {
+          return;
+      }
+      
+      $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+      $this->device_image = $this->deviceType . $ext;      
+      
+      if (!is_dir($this->getUploadRootDir())) {
+                @mkdir($this->getUploadRootDir(), 0700);
+            }
+      
+      $this->file->move(
+        $this->getUploadRootDir(), $this->device_image
+      );
+      $this->file = null;    
+      return $this->device_image;
+    } 
+    
+     //----------------------------------------------------------
+    public function getAbsolutePath() {
+        return null === $this->device_image ? null : $this->getUploadRootDir() . '/' . $this->device_image;
+    }
+
+//----------------------------------------------------------
+    public function getWebPath() {
+        return null === $this->device_image ? null : $this->getUploadDir() . '/' . $this->device_image;
+    }
+
+    //----------------------------------------------------------
+    public function getDirWebPath() {
+        return $this->getUploadDir() . '/';
+    }
+
+//----------------------------------------------------------
+    public function getUploadRootDir() {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+//----------------------------------------------------------
+    public function getUploadDir() {
+        $user=$this->getUser();
+        return 'uploads/ltf/users/' . $user->getId();
+    }
+#----------------------------------------------------
+    public function toArray(){
+        return array(
+            'id' => $this->id, 
+            'device_name' =>  $this->device_name,
+            'deviceType' => $this->deviceType,
+            'per_inch_pixel_height' => $this->per_inch_pixel_height,
+            'device_image' => $this->device_image,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        );
     }
 }

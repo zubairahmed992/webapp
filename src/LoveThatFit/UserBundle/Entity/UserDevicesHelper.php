@@ -59,6 +59,16 @@ class UserDevicesHelper {
        $this->em->persist($UserDevices);
         $this->em->flush();
     }
+//-------------------------------------------------------
+
+    public function createNew($user=null) {      
+        $class = $this->class;
+        $user_device = new $class();
+        $user_device->setUser($user);
+        $user_device->setCreatedAt(new \DateTime('now'));
+        $user_device->setUpdatedAt(new \DateTime('now'));            
+        return $user_device;
+    }
 
 #-------------- Find Heightper inch base on user id and device type------------#
     public function findHeightPerInchRatio($deviceType,$userId){
@@ -68,8 +78,10 @@ class UserDevicesHelper {
     public function findDeviceTypeBaseOnUserId($userId){
     return $this->repo->findDeviceTypeBaseOnUserId($userId);
     }
-
+    #------------------------------------
+    public function findOneByDeviceTypeAndUser($user_id, $device_type){
+        return $this->repo->findOneBy(array('user' => $user_id, 'device_type' => $device_type));
+    }
  
-
 
 }

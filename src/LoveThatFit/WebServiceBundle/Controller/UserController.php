@@ -335,10 +335,10 @@ public function avatarUploadAction() {
     }   
 #-----------------------------------Upload image in Device Table ---------------#
     public function deviceImageUploadAction() {
-         $request = $this->getRequest();
+        $request = $this->getRequest();
         $email = $_POST['email'];
-        $deviceType=$_POST['deviceType'];
-        $heightPerInch=$_POST['heightPerInch'];
+        $deviceType = $_POST['deviceType'];
+        $heightPerInch = $_POST['heightPerInch'];
 
         if ($email) {
             $em = $this->getDoctrine()->getManager();
@@ -366,7 +366,7 @@ public function avatarUploadAction() {
                  $userinfo = array();
                  $userimage = $entity->getIphoneImage();
                  $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-                $userinfo['heightPerInch']= $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($entity,$deviceType);//$entity->getDeviceUserPerInchPixelHeight();
+                 $userinfo['heightPerInch']= $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($entity,$deviceType);//$entity->getDeviceUserPerInchPixelHeight();
                  $userinfo['iphoneImage'] = $userimage;
                  $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
@@ -377,7 +377,42 @@ public function avatarUploadAction() {
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }  
-    
+    ##~~~~~~~~~~~?? test
+     public function _deviceImageUploadAction() {         
+        $email = $_POST['email'];
+        $device_type=$_POST['deviceType'];
+        $heightPerInch=$_POST['heightPerInch'];
+        
+        $user =$email!=null?$this->get('user.helper.user')->findByEmail($email):null;
+        
+        if (!$user) {
+            return new response(json_encode(array('Message' => 'Email Not Found')));
+        }
+        
+        $user_device = $this->get('user.helper.userdevices')->findOneByDeviceTypeAndUser($user->getId(), $device_type);
+        if(!$user_device){
+            $user_device = $this->get('user.helper.userdevices')->createNew($user);            
+            $user_device->setDeviceType($device_type);            
+        }
+        $user_device->file = $_FILES["file"];
+        
+        if($heightPerInch){
+            $user_device->setDeviceUserPerInchPixelHeight($heightPerInch);
+        }
+        
+        $user_device->upload();
+        $this->get('user.helper.userdevices')->saveUserDevices($user_device);
+        
+         //  $image_path = $entity->getWebPath(); 
+                 $userinfo = array();
+                 $request = $this->getRequest();
+                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . $user_device->getWebPath();
+                 $userinfo['heightPerInch']= '';
+                 $userinfo['iphoneImage'] = $user_device->getDeviceImage();
+                 $userinfo['path'] = $baseurl;
+                return new Response(json_encode($userinfo));
+                
+     }
     
 #--------------------------------------------End Of Image Uploading----------------------------------------#  
 #------------------------Constant Fetching Web Service-----------------------------------------------------#
