@@ -11,13 +11,13 @@ class ClothingTypeController extends Controller {
 
 //-----------------------------Clothing Type List-------------------------------------------------------------
 
-
     public function indexAction($page_number, $sort = 'id') {
         $clothing_types = $this->get('admin.helper.clothingtype')->findAll();
         return $this->render('LoveThatFitAdminBundle:ClothingType:index.html.twig', array('clothing_types' => $clothing_types));
     }
 
 //-------------------------------Clothing Type display-----------------------------------------------------------
+    
     public function showAction($id) {
         $entity = $this->get('admin.helper.clothingtype')->find($id);
         $clothing_type_limit = $this->get('admin.helper.clothingtype')->getRecordsCountWithCurrentClothingTYpeLimit($id);
@@ -84,7 +84,7 @@ class ClothingTypeController extends Controller {
         $entity = $this->get('admin.helper.ClothingType')->find($id);
         if(!$entity)
         {
-            $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
+            $this->get('session')->setFlash('warning', 'The ClothingType not found!');
         }else{
         $form = $this->createForm(new ClothingTypes('edit'), $entity);
         $form->bind($request);
@@ -92,11 +92,8 @@ class ClothingTypeController extends Controller {
         if ($form->isValid()) {
 
             $message_array = $this->get('admin.helper.ClothingType')->update($entity);
-
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-
-            if ($message_array['success'] == true) {
-                #return $this->redirect($this->generateUrl('admin_clothing_type_show', array('id' => $entity->getId())));
+            if ($message_array['success'] == true) {              
                 return $this->redirect($this->generateUrl('admin_clothing_types'));
             }
         } else {
@@ -116,10 +113,8 @@ class ClothingTypeController extends Controller {
         try {
             $message_array = $this->get('admin.helper.ClothingType')->delete($id);
             $this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
-
             return $this->redirect($this->generateUrl('admin_clothing_types'));
         } catch (\Doctrine\DBAL\DBALException $e) {
-
             $this->get('session')->setFlash('warning', 'This Clothing cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
