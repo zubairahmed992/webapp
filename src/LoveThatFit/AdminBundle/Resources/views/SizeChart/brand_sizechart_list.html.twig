@@ -33,7 +33,7 @@
                     
                         <tr>
                             
-                                    <td>&nbsp;</td>                                     
+                                    <td style='font-weight:bold'>Size</td>                                     
                                     <td style='font-weight:bold'>Waist</td>
                                     <td style='font-weight:bold'>Hip</td>
                                     <td style='font-weight:bold'>Bust</td>
@@ -64,8 +64,8 @@
             <td>{{sc.sleeve}}</td>        
             <td>{{sc.thigh}}</td>
             <td>{{sc.shoulderAcrossBack}}
-            <span style="float:right"><a href="{{path('admin_size_chart_edit',{'id': sc.Id}) }}" title="Edit {{sc.sizeTitleType}}     {{sc.title}}"><i class="icon-edit"></i></a>
-                <a href="#myModal{{sc.Id}}" role="button" data-toggle="modal" title="Delte {{sc.sizeTitleType}}     {{sc.title}}"><i class="icon-remove"></i></a>
+            <span style="float:right"><a href="{{path('admin_size_chart_edit',{'id': sc.Id}) }}" title="Edit size{{sc.sizeTitleType}} {{sc.title}}"><i class="icon-edit"></i></a>
+                <a href="#myModal{{sc.Id}}" role="button" data-toggle="modal" title="Delete size{{sc.sizeTitleType}} {{sc.title}}"><i class="icon-remove"></i></a>
             </span>
             </td>         
           

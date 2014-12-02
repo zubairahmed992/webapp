@@ -10,6 +10,11 @@
 $(document).ready(function(){
 $('#brand_sizechart_Brand').change(function() {
 	 var brand_id = $("#brand_sizechart_Brand").val();  
+         if(brand_id==''){
+            $('#loading-indicator').hide();
+            $('#sizechart_form').show();  
+            $('#size_chart_list').html('');  
+         }else{
          var compare_url = "size_charts/brand/list/" + brand_id;         
          $('#loading-indicator').show();
          $.ajax({
@@ -18,7 +23,8 @@ $('#brand_sizechart_Brand').change(function() {
            $('#size_chart_list').html(response);    
            $('#loading-indicator').hide();
         }
-     })         
+     })        
+         }
         return false;
      
 	});  
@@ -40,7 +46,7 @@ $('#brand_sizechart_Brand').change(function() {
      <div class="clearfix"></div> 
     <div id="detail_wrapper">      
                     <div id="product_content">           
-                            <div class="edt_container">         
+                            <div class="edt_container" id="sizechart_form">         
                                 <form  method="post" {{form_enctype(form)}}>
                                     {{ form_errors(form) }}
                                 <div class="row-fluid show-grid">

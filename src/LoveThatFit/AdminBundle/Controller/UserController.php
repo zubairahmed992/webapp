@@ -9,28 +9,13 @@ use LoveThatFit\UserBundle\Entity\User;
 use LoveThatFit\AdminBundle\Form\Type\UserMeasurementType;
 use LoveThatFit\AdminBundle\Form\Type\UserProfileSettingsType;
 use LoveThatFit\AdminBundle\Form\Type\MannequinTestType;
-use LoveThatFit\AdminBundle\Form\Type\ProductItemType;
 use LoveThatFit\AdminBundle\Form\Type\RetailerSiteUserType;
-use LoveThatFit\AdminBundle\Entity\RetailerSiteUser;
-use LoveThatFit\AdminBundle\Entity\ProductColor;
-use LoveThatFit\AdminBundle\Entity\ProductSize;
-use LoveThatFit\AdminBundle\Entity\ProductItem;
-use LoveThatFit\AdminBundle\Entity\Product;
+
 
 class UserController extends Controller {
 
     //------------------------------------------------------------------------------------------
 
-    public function tossAction($id) {
-
-
-        $entity_item = $this->get('admin.helper.productitem')->find($id);
-        if (!$entity_item) {
-            throw $this->createNotFoundException('Unable to find Product Item.');
-        }
-        $str = var_dump($entity_item->getImagePaths());
-        return new Response($str);
-    }
 
     public function indexAction($page_number, $sort = 'id') {
         $size_with_pagination = $this->get('user.helper.user')->getListWithPagination($page_number, $sort);
@@ -275,6 +260,18 @@ class UserController extends Controller {
             $this->get('session')->setFlash('warning', 'This Site user cannot be deleted!');
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
+    }
+    
+    
+    
+    public function tossAction($id) {
+
+        $entity_item = $this->get('admin.helper.productitem')->find($id);
+        if (!$entity_item) {
+            throw $this->createNotFoundException('Unable to find Product Item.');
+        }
+        $str = var_dump($entity_item->getImagePaths());
+        return new Response($str);
     }
     
     
