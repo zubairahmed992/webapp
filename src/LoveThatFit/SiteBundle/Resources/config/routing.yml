@@ -65,6 +65,10 @@ ajax_product_by_type:
     pattern:  /ajax/product/by_type/{list_type}
     defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByType}
     
+ajax_product_fitting_room_detail:
+    pattern:  /ajax/fitting_room/detail/{product_id}/{user_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productFittingDetail,product_id: 0 ,user_id: 0}    
+    
 #ajax_user_product_item_create:
 #    pattern:  /ajax/user_product_item/create/{product_item_id}
 #    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:addToCloest}

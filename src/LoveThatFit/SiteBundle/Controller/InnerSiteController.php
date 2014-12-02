@@ -251,6 +251,19 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
                     'productItem' => $product_detail['product_item'],
         ));
   }
+  
+    #----------------------------------- Product Detail-----------------------------
+    public function productFittingDetailAction($product_id=null,$user_id=null) {
+        $product_item= $this->get('admin.helper.product')->getProductFittingDetail($product_id,$user_id);
+     // return new response(json_encode($product_item->getProductColor->getId()));  
+        $product_detail= $this->get('admin.helper.product')->productDetail($product_id,$product_item->getProductColor()->getId(),$product_item->getProductSize()->getId());
+        return $this->render('LoveThatFitSiteBundle:InnerSite:_new_product_detail.html.twig',
+                array('product' => $product_detail['product'],
+                    'productColor' => $product_detail['product_color'],
+                    'productSize' => $product_detail['product_size'],
+                    'productItem' => $product_detail['product_item'],    ));
+        
+  }
 #-------------------------------------------------------------------------------
 /*    public function productsMostLikedAction($page_number = 0, $limit = 0) {       
         $entity =  $this->get('admin.helper.product')->findMostLikedProducts($page_number, $limit);

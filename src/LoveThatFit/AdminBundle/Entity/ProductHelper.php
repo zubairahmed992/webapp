@@ -18,6 +18,8 @@ use LoveThatFit\SiteBundle\Algorithm;
 use ZipArchive;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\ImageHelper;
+use LoveThatFit\SiteBundle\FitEngine;
+use LoveThatFit\SiteBundle\AvgAlgorithm;
 
 class ProductHelper{
 
@@ -1140,6 +1142,13 @@ public function productDetailColorAdd($entity){
             return false;
         }
  }      
-    
+  #------------------------------------------------------------------------------#
+    public function getProductFittingDetail($product_id,$user_id){
+       $user=$this->container->get('user.helper.user')->find($user_id);
+       $product=$this->find($product_id);
+       return $product->getDefaultItem($user);
+       
+             
+    }  
   
 }
