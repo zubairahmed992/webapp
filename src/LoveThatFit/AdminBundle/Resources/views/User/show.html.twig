@@ -22,7 +22,7 @@
     
 
             <div id="detail_wrapper">      
-                <div id="p_hd">{{user.firstName }}'s Detail</div>
+                <div id="p_hd">{%if(user.firstName!='')%}{{user.firstName }}'s Detail{%else%} User Detail{%endif%}</div>
                 {%if(user.AvatarWebPath!='')%}
                 <div class="span3">
                     <div id="pro_img"> <img src="{{asset(user.AvatarWebPath) }}" />

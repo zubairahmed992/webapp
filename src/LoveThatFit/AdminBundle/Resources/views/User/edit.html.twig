@@ -19,10 +19,10 @@
     
 
             <div id="detail_wrapper">      
-                <div id="p_hd">{{entity.firstName }}'s Detail</div>
+                <div id="p_hd">{%if(entity.firstName!='')%}{{entity.firstName }}'s Detail{%else%} User Detail{%endif%}</div>
                     <div id="product_content">
                         <div id="pro_detail">
-                            <div class="edt_container">  
+                            <div class="edt_container"> 
                                 
 <form action="{{ path('admin_user_detail_update', {'id': entity.Id})}}" method="post" {{ form_enctype(form) }}>
 
