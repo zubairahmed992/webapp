@@ -254,16 +254,17 @@ class UserDevices  {
           return;
       }
       
-      $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-      $this->device_image = $this->deviceType . $ext;      
+      $ext = pathinfo($this->file['name'], PATHINFO_EXTENSION);
+      
+      #$ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+      $this->device_image = $this->deviceType .'.'. $ext;      
       
       if (!is_dir($this->getUploadRootDir())) {
                 @mkdir($this->getUploadRootDir(), 0700);
             }
+        move_uploaded_file($this->file["tmp_name"], $this->getAbsolutePath());
+      #$this->file->move($this->getUploadRootDir(), $this->device_image);
       
-      $this->file->move(
-        $this->getUploadRootDir(), $this->device_image
-      );
       $this->file = null;    
       return $this->device_image;
     } 

@@ -80,7 +80,7 @@ class UserDevicesHelper {
     }
     #------------------------------------
     public function findOneByDeviceTypeAndUser($user_id, $device_type){
-        return $this->repo->findOneBy(array('user' => $user_id, 'device_type' => $device_type));
+        return $this->repo->findOneBy(array('user' => $user_id, 'deviceType' => $device_type));
     }
  
 

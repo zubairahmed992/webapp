@@ -9,3 +9,11 @@ si_hit:
 si_user_detail:
     pattern:  /service_interface/user_detail/{email}
     defaults: { _controller: LoveThatFitWebServiceBundle:ServiceInterface:userDetail}
+
+si_foo:
+    pattern:  /service_interface/foo
+    defaults: { _controller: LoveThatFitWebServiceBundle:ServiceInterface:foo}
+
+si_bar:
+    pattern:  /service_interface/bar
+    defaults: { _controller: LoveThatFitWebServiceBundle:ServiceInterface:bar}

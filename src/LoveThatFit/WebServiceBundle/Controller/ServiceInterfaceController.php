@@ -34,5 +34,15 @@ class ServiceInterfaceController extends Controller {
      public function userDetailAction($email) {
          return new Response(json_encode($this->get('webservice.helper.user')->getDetailArrayByEmail($email)));
     }
-
+    #------------------------------------------------------
+    public function fooAction() {
+         
+        return $this->render('LoveThatFitWebServiceBundle:ServiceInterface:foo.html.twig');
+        #return new Response('oohoeyy');
+    }
+    #------------------------------------------
+    public function barAction() {
+        return new Response('oohoeyy');
+    }
+    
 }

@@ -378,41 +378,39 @@ public function avatarUploadAction() {
         }
     }  
     ##~~~~~~~~~~~?? test
-     public function _deviceImageUploadAction() {         
+    public function _deviceImageUploadAction() {
         $email = $_POST['email'];
-        $device_type=$_POST['deviceType'];
-        $heightPerInch=$_POST['heightPerInch'];
-        
-        $user =$email!=null?$this->get('user.helper.user')->findByEmail($email):null;
-        
+        $device_type = $_POST['deviceType'];
+        $heightPerInch = $_POST['heightPerInch'];
+
+        $user = $email != null ? $this->get('user.helper.user')->findByEmail($email) : null;
+
         if (!$user) {
             return new response(json_encode(array('Message' => 'Email Not Found')));
         }
-        
+
         $user_device = $this->get('user.helper.userdevices')->findOneByDeviceTypeAndUser($user->getId(), $device_type);
-        if(!$user_device){
-            $user_device = $this->get('user.helper.userdevices')->createNew($user);            
-            $user_device->setDeviceType($device_type);            
+        if (!$user_device) {
+            $user_device = $this->get('user.helper.userdevices')->createNew($user);
+            $user_device->setDeviceType($device_type);
         }
         $user_device->file = $_FILES["file"];
-        
-        if($heightPerInch){
+
+        if ($heightPerInch) {
             $user_device->setDeviceUserPerInchPixelHeight($heightPerInch);
         }
-        
+
         $user_device->upload();
         $this->get('user.helper.userdevices')->saveUserDevices($user_device);
+        $userinfo = array();
+        $request = $this->getRequest();
+        $image_path = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() .'/'. $user_device->getWebPath();
+        $userinfo['heightPerInch'] = $user_device->getDeviceUserPerInchPixelHeight();
+        $userinfo['iphoneImage'] = $user_device->getDeviceImage();
+        $userinfo['path'] = $image_path;
         
-         //  $image_path = $entity->getWebPath(); 
-                 $userinfo = array();
-                 $request = $this->getRequest();
-                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . $user_device->getWebPath();
-                 $userinfo['heightPerInch']= '';
-                 $userinfo['iphoneImage'] = $user_device->getDeviceImage();
-                 $userinfo['path'] = $baseurl;
-                return new Response(json_encode($userinfo));
-                
-     }
+        return new Response(json_encode($userinfo));
+    }
     
 #--------------------------------------------End Of Image Uploading----------------------------------------#  
 #------------------------Constant Fetching Web Service-----------------------------------------------------#
