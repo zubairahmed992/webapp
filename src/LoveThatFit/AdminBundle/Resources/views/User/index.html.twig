@@ -45,11 +45,11 @@
         <div class="row-fluid">
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'id' }}" style="text-decoration: none;">ID</a></div>
             <div class="span3 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'firstName' }}" style="text-decoration: none;">Full Name</a></div>
-            <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'gender' }}" style="text-decoration: none;">Gender</a></div>
+            <div class="span2 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'gender' }}" style="text-decoration: none;">Gender</a></div>
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'zipcode' }}" style="text-decoration: none;">Zip Code</a></div>
             <div class="span1 hds"><a href="{{path('admin_users')~'/'~ 1~'/'~'email' }}" style="text-decoration: none;">Email</a></div>
            
-            <div class="span1 hds"></div>
+            <div class="span2 hds" style="width:17.60%!important;"></div>
         </div>  
          
           {% for us in pagination.users %}
@@ -60,7 +60,7 @@
             <div class="span1">{{us.zipcode}}</div>
             <div class="span1">{{us.email}}</div>
                 
-            <div class="span1"><a href="{{ path('admin_user_detail_show', {'id': us.id}) }}" title="Show {{us.firstName}}">
+            <div class="span1" style="width:17.87%!important;"><a href="{{ path('admin_user_detail_show', {'id': us.id}) }}" title="Show {{us.firstName}}">
                   
             <i class="icon-eye-open"></i></a>
             <a href="{{ path('admin_user_detail_edit', {'id': us.Id}) }}" title="Edit {{us.fullName}}"><i class="icon-edit"></i></a>            
