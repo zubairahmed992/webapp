@@ -1566,4 +1566,14 @@ class User implements UserInterface, \Serializable {
     {
         return $this->retailer_order_track;
     }
+    #---------------------------------
+    public function getDefaultDevice(){
+        $us= $this->getUserDevices();
+        if($us){
+            return $us->first();    
+        }else{
+            return null;
+        }
+                
+    }
 }

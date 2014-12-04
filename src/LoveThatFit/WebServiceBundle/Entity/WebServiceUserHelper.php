@@ -473,6 +473,10 @@ private function fillUserArray($entity) {
         if (isset($birth_date)) {
             $userinfo['birthDate'] = $birth_date->format('Y-m-d');
         }else{$userinfo['birthDate'] = Null;}
+        #this needs testing with the device
+        #$user_device=$entity->getDefaultDevice();
+        #if($user_device->getDeviceImage()){$userinfo['iphoneImage'] = $user_device->getDeviceImage();}else{$userinfo['iphoneImage']='';}
+            
         if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
         if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
