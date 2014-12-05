@@ -613,9 +613,10 @@ public function stepFourTimeSpentAction(Request $request){
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
-
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
+        $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
+        
     }
         
     public function stepFourVerticalMeasurementUpdateAction(Request $request, $id) {

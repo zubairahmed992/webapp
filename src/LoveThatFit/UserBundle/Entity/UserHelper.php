@@ -69,6 +69,14 @@ class UserHelper {
         $this->em->flush();
     }
 
+    
+//------------------------------------------------------------
+    
+    public function setImageUpdateTimeToCurrent(User $user) {
+        $user->setImageUpdatedAt(new \DateTime('now'));            
+        $this->saveUser($user);
+    }
+    
 //----------------------------------------------------------
     public function updateProfile(User $user) {
         $user->uploadAvatar();
