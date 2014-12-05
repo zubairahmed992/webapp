@@ -74,6 +74,9 @@ registrationSizechart:
    defaults: { _controller: LoveThatFitWebServiceBundle:User:sizeChartForReg}
 
    
+ws_standard_sizes:
+   pattern:  /web_service/standard_sizes/{gender}
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:standardSizes, gender:f}   
    
 
 #----------------------------- Product Routes----------------------------------#    

@@ -377,40 +377,7 @@ public function avatarUploadAction() {
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }  
-    ##~~~~~~~~~~~?? test
-    public function _deviceImageUploadAction() {
-        $email = $_POST['email'];
-        $device_type = $_POST['deviceType'];
-        $heightPerInch = $_POST['heightPerInch'];
-
-        $user = $email != null ? $this->get('user.helper.user')->findByEmail($email) : null;
-
-        if (!$user) {
-            return new response(json_encode(array('Message' => 'Email Not Found')));
-        }
-
-        $user_device = $this->get('user.helper.userdevices')->findOneByDeviceTypeAndUser($user->getId(), $device_type);
-        if (!$user_device) {
-            $user_device = $this->get('user.helper.userdevices')->createNew($user);
-            $user_device->setDeviceType($device_type);
-        }
-        $user_device->file = $_FILES["file"];
-
-        if ($heightPerInch) {
-            $user_device->setDeviceUserPerInchPixelHeight($heightPerInch);
-        }
-
-        $user_device->upload();
-        $this->get('user.helper.userdevices')->saveUserDevices($user_device);
-        $userinfo = array();
-        $request = $this->getRequest();
-        $image_path = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() .'/'. $user_device->getWebPath();
-        $userinfo['heightPerInch'] = $user_device->getDeviceUserPerInchPixelHeight();
-        $userinfo['iphoneImage'] = $user_device->getDeviceImage();
-        $userinfo['path'] = $image_path;
-        
-        return new Response(json_encode($userinfo));
-    }
+   
     
 #--------------------------------------------End Of Image Uploading----------------------------------------#  
 #------------------------Constant Fetching Web Service-----------------------------------------------------#
@@ -430,14 +397,33 @@ public function avatarUploadAction() {
         $data['fittingStatus']=$this->get('webservice.helper.product')->getFittingStatus();
         return new response(json_encode(($data)));
     }
-    
+    #------------------------------------------------
    public function sizeChartForRegAction(){
        $data['sizeChart']=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
         return new response(json_encode(($data)));
        
    } 
-    
-
+    #------------------------------------------------
+ public function standardSizesAction($gender='f') {
+        $all = $this->get('admin.helper.size')->getDefaultArray();
+        if($gender=='m'){
+            $data['sizes'] = array(
+                'letter' => $all['sizes']['man']['letter'],
+                'chest' => $all['sizes']['man']['chest'],
+                'waist' => $all['sizes']['man']['waist'],
+                'neck' => $all['sizes']['man']['neck'],
+                'sleeve' => $all['sizes']['man']['sleeve'],
+            );
+        }else{
+            $data['sizes'] = array(            
+                'letter' => $all['sizes']['woman']['letter'],
+                'dress' => $all['sizes']['woman']['number'],
+                'waist' => $all['sizes']['woman']['waist'],
+            );
+        }
+        
+        return new response(json_encode(($data)));
+    }
 
 #-----------------------------Check Token -------------------------------------#
  public function  checkTokenforgetPasswordAction(){
@@ -483,6 +469,46 @@ public function avatarUploadAction() {
 
     private function isDuplicateEmail($id, $email) {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
+    }
+    
+    #------------------------------------------------------------
+    //#------------------------------------------------------------
+    #------------------------------------------------------------
+    
+    
+     ##~~~~~~~~~~~?? test
+    public function _deviceImageUploadAction() {
+        $email = $_POST['email'];
+        $device_type = $_POST['deviceType'];
+        $heightPerInch = $_POST['heightPerInch'];
+
+        $user = $email != null ? $this->get('user.helper.user')->findByEmail($email) : null;
+
+        if (!$user) {
+            return new response(json_encode(array('Message' => 'Email Not Found')));
+        }
+
+        $user_device = $this->get('user.helper.userdevices')->findOneByDeviceTypeAndUser($user->getId(), $device_type);
+        if (!$user_device) {
+            $user_device = $this->get('user.helper.userdevices')->createNew($user);
+            $user_device->setDeviceType($device_type);
+        }
+        $user_device->file = $_FILES["file"];
+
+        if ($heightPerInch) {
+            $user_device->setDeviceUserPerInchPixelHeight($heightPerInch);
+        }
+
+        $user_device->upload();
+        $this->get('user.helper.userdevices')->saveUserDevices($user_device);
+        $userinfo = array();
+        $request = $this->getRequest();
+        $image_path = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() .'/'. $user_device->getWebPath();
+        $userinfo['heightPerInch'] = $user_device->getDeviceUserPerInchPixelHeight();
+        $userinfo['iphoneImage'] = $user_device->getDeviceImage();
+        $userinfo['path'] = $image_path;
+        
+        return new Response(json_encode($userinfo));
     }
    
 }

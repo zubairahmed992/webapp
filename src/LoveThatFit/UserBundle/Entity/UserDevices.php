@@ -269,6 +269,7 @@ class UserDevices  {
       
       #$ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
       $this->device_image = $this->deviceType .'.'. $ext;      
+      $this->image_updated_at = new \DateTime('now');
       
       if (!is_dir($this->getUploadRootDir())) {
                 @mkdir($this->getUploadRootDir(), 0700);
