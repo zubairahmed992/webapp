@@ -1610,5 +1610,30 @@ class User implements UserInterface, \Serializable {
     public function getImageUpdatedAt()
     {
         return $this->image_updated_at;
+    }    
+    
+    public function compareUserDevicesDate()
+    {
+         $us= $this->getUserDevices();
+         $image_updated_at=null;
+         $ud=null;        
+         foreach($us as $userdevice)
+         {
+            if($image_updated_at==null or date_timestamp_get($image_updated_at)<date_timestamp_get($userdevice->getImageUpdatedAt())){
+                $image_updated_at=$userdevice->getImageUpdatedAt();                
+                $ud=$userdevice;
+            } 
+         }  
+         if($this->image_updated_at==null or $image_updated_at==null){
+            return false;
+         }else{
+         if(date_timestamp_get($image_updated_at) >  date_timestamp_get($this->getImageUpdatedAt())){
+             return $ud;
+         }else{
+             return false;
+         }
+       }
+         
     }
+    
 }

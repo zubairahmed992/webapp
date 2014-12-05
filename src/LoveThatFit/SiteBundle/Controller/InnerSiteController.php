@@ -24,10 +24,12 @@ class InnerSiteController extends Controller {
 #-------------------------------------------------------------------------------
 public function indexAction($list_type) {
         $user = $this->get('security.context')->getToken()->getUser();
+        $user_device=$user->compareUserDevicesDate();               
         $fitting_room_item_ids =  $this->get('site.helper.userfittingroomitem')->getItemIdsArrayByUser($user->getId());    
         return $this->render('LoveThatFitSiteBundle:InnerSite:index.html.twig', array(
             'list_type'=>$list_type,
             'fitting_room_item_ids' => json_encode($fitting_room_item_ids),
+            'user_device'=>$user_device,
            ));
  }
  
