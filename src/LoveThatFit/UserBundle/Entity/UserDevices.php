@@ -74,6 +74,17 @@ class UserDevices  {
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
+    
+    
+    /**
+     * @var string $image_updated_at
+     *
+     * @ORM\Column(name="image_updated_at", type="datetime", nullable=true)
+     * )
+     */
+    private $image_updated_at;
+
+    
     /**
      * Get id
      *
@@ -305,5 +316,30 @@ class UserDevices  {
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         );
+    }
+
+    
+
+    /**
+     * Set image_updated_at
+     *
+     * @param \DateTime $imageUpdatedAt
+     * @return UserDevices
+     */
+    public function setImageUpdatedAt($imageUpdatedAt)
+    {
+        $this->image_updated_at = $imageUpdatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get image_updated_at
+     *
+     * @return \DateTime 
+     */
+    public function getImageUpdatedAt()
+    {
+        return $this->image_updated_at;
     }
 }
