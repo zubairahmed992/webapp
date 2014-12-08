@@ -65,11 +65,12 @@ class ClothingTypeController extends Controller {
 //----------------------------------------Edit Clothing Type--------------------------------------------------
     public function editAction($id) {
 
-        $entity = $this->get('admin.helper.ClothingType')->find($id);
+        $entity = $this->get('admin.helper.ClothingType')->find($id);      
         if(!$entity){       
         $this->get('session')->setFlash('warning', 'The ClothingType can not be Created!');
         }else{
         $form = $this->createForm(new ClothingTypes('edit'), $entity);
+        $form->get('target')->setData($entity->getTarget());
         $deleteForm = $this->createForm(new DeleteType(), $entity);
         }
         return $this->render('LoveThatFitAdminBundle:ClothingType:edit.html.twig', array(
@@ -87,6 +88,7 @@ class ClothingTypeController extends Controller {
             $this->get('session')->setFlash('warning', 'The ClothingType not found!');
         }else{
         $form = $this->createForm(new ClothingTypes('edit'), $entity);
+        $form->get('target')->setData($entity->getTarget());
         $form->bind($request);
 
         if ($form->isValid()) {
