@@ -266,6 +266,19 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
                     'productItem' => $product_detail['product_item'],    ));
         
   }
+  #----------------------------------------------
+  #gives url for the feedback & fitting item
+    public function productDetailUrlAction($product_id=null,$user_id=null) {
+        $product_item= $this->get('admin.helper.product')->getProductFittingDetail($product_id,$user_id);     
+        $url = $this->generateUrl(
+            'ajax_product_detail',
+            array('id' => $product_item->getId(),
+                'product_color_id' => $product_item->getProductColor()->getId(),
+                'product_size_id' => $product_item->getProductSize()->getId(),
+                )
+        );
+        return new response($url);     
+  }
 #-------------------------------------------------------------------------------
 /*    public function productsMostLikedAction($page_number = 0, $limit = 0) {       
         $entity =  $this->get('admin.helper.product')->findMostLikedProducts($page_number, $limit);
