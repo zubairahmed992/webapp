@@ -14,12 +14,8 @@
   
 {% for p in products %}
     <li>
-        {%  set randon_item = p.getDefaultItem(app.user)%}
                     {#  set randon_item = p.displayProductColor.getSmallestAvailableItem#}
-        {% if(randon_item and randon_item!=null)%}
-            <span id="apply_image_url" style="display:none;">{{asset(randon_item.WebPath)}}
-        </span>    
-        {%endif%}    
+        
             
         <div class="prod_node">
             <span></span>
@@ -36,17 +32,16 @@
                             
                    <div class="featured_img" style="float:left; margin-left: 70px;">                    
                     {%if p.displayProductColor %}      
-                    {% if(randon_item and randon_item!=null)%}            
+                            
                     <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}"/>
-                    <span id="{{'product_'~p.id}}" class="curr_prod_full_url" style="display:none;">{{path('ajax_product_detail', {'id':p.id, 'product_color_id':randon_item.productColor.id, 'product_size_id':randon_item.productSize.id})}}</span>
-                     <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>
-                    <a class="apply_img hide" href="{{asset(randon_item.WebPath)}}">{{asset(randon_item.WebPath)}}</a>
-                      <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : randon_item.id})}}'>feedback</a></span>
-                      <span class="product_feedback" id="" style="display:none;">{{p.id}}</span>
-                       <span id="base_url_new_detail"style="display:none;"></span>
-                        <span id="ajax_product_base_url" style="display:none;"></span>
-                        <a class="apply_img hide" href="{{asset(randon_item.WebPath)}}">{{asset(randon_item.WebPath)}}</a>    
-                    {%endif%}
+                    
+                    <span id="{{'product_'~p.id}}" class="curr_prod_full_url" style="display:none;">{{path("ajax_product_fitting_room_detail", {'product_id' : p.id,'user_id' : app.user.id})}}</span>
+                    <span id="ajax_product_base_url" style="display:none;">{{path('ajax_product_base_url')}}</span>                   
+                    <span class="product_feedback" id="" style="display:none;">{{p.id}}</span>
+                    <span id="base_url_new_detail"style="display:none;"></span>
+                    <span id="ajax_product_base_url" style="display:none;"></span>
+                          
+                   
                     {%endif%} 
                         
                 </div>
