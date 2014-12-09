@@ -52,23 +52,23 @@ return true;
     <form action="{{ path('admin_brand_create') }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
  {{ form_errors(form) }}
 
-            <div id="detail_wrapper">      
+            <div id="detail_wrapper" class="detail_wrap">      
                 <div id="p_hd">Brand Detail</div>
-                <div class="span3">
-                    
+                <div class="span3">                    
                     <p  id="error" style="color:#d14; size:10; display:none;">Please Upload Valid image</p>
                     <div class="span3">
                         <strong><br/>  Upload Brand Logo</strong>
                     </div>  
-                    <div id="pro_img"><img src="../images/pro_img.png">
+                    <div id="pro_img"><img src="{{ asset('bundles/lovethatfit/admin/images/pro_img.png') }}">
                     </div><!--/.well -->
 
                     <div class="clearfix"></div>
-                    <div style="margin-top:20px; margin-left:5px;">
-                        
+                    <div>                        
     {{ form_errors(form.file) }}
     {{ form_widget(form.file) }}
+                        
                         </div>
+                     <div class="clearfix"></div>
                     </div>         
 
                     <div id="product_content">
