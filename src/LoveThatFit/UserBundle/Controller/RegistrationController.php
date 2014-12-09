@@ -711,7 +711,7 @@ public function stepFourTimeSpentAction(Request $request){
         $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
        // return new response(json_encode($default_marker));
                 
-        $edit_type=$edit_type==null?'registration':'fitting_room';
+        $edit_type=$edit_type==null?'registration':$edit_type;
         
         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                     'form' => $form->createView(),
@@ -744,7 +744,7 @@ public function stepFourTimeSpentAction(Request $request){
         $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
        // return new response(json_encode($default_marker));
                 
-        $edit_type=$edit_type==null?'registration':'fitting_room';
+        $edit_type=$edit_type==null?'registration':$edit_type;
         
         return $this->render('LoveThatFitUserBundle:Registration:step_image_edit.html.twig', array(
                     'form' => $form->createView(),               

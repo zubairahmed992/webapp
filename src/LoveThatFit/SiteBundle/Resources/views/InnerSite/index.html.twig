@@ -231,7 +231,7 @@ function remove_prod_state(remove_prod_item_id) {
                     <!--path('registration_step_image_edit')-->
                     
                     {%if (user_device) %}
-                    <a href="{{ path('registration_step_image_edit') }}">Device</a>
+                        <a href="{{ path('registration_step_image_edit', { 'edit_type': 'device' })}}">Device Photo</a>
                     {%endif%}
                     <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">Upload Photo</a>
                     <a href="{{ path('registration_step_image_edit') }}">Edit Shape</a>
