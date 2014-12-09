@@ -6336,6 +6336,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', end
     width:220px;
 }
 
+.detail_wrap select, input[type="file"] {
+    height: 30px;    
+    width:220px;
+    line-height: 0px!important;
+}
+
 .show{
     padding-top: 30px;
     max-height: 93px;
