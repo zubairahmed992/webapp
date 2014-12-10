@@ -438,6 +438,7 @@ function createBlob() {
             pathData = $("#default_user_path").html();
             $("#measurement_shoulder_height").attr("value", "66.6");
             $("#measurement_hip_height").attr("value", "159.4");
+            
 
         }
         
@@ -638,6 +639,7 @@ if(chk_no_img_path == true){
    }
    else{
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
+    //alert("me fine till here");
    }
 
 
@@ -695,7 +697,14 @@ var path = new CompoundPath({
 path.opacity = 0.6;
 
      if(chk_no_img_path == true){          
-        
+      
+     
+     var default_adjusted_path_data = $("#default_marker_svg").attr("value");
+        d_adj_path = new Path(default_adjusted_path_data);
+        d_adj_path.strokeColor = 'black';
+        d_adj_path.position = new Point(-500,(p_user_height_px/2)+17);
+        d_adj_path.opacity = 0.5;
+     
       export_svg_data(path);
 
     }else {
@@ -703,12 +712,9 @@ path.opacity = 0.6;
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
         d_adj_path.position = new Point(-500,(p_user_height_px/2)+17);
-        d_adj_path.opacity = 0;
-        
-        
+        d_adj_path.opacity = 0.5;
     }
-
-	return path;
+      return path;
 }
 
 function export_svg_data(path){
@@ -759,6 +765,7 @@ function onMouseDown(event) {
 	}
 
 	if (hitResult) {
+                
 		path = hitResult.item;
 		if (hitResult.type == 'segment') {
 			segment = hitResult.segment;
@@ -805,11 +812,11 @@ function onMouseDrag(event) {
             
             def_path = project.getItem({
             opacity: function(value) {
-                    return value == 0;
+                    return value == 0.5;
                 }
             });
           
-            
+           
             
         function get_index_num(){
             for(var i = 0; i < path.segments.length; i++) {
@@ -820,6 +827,88 @@ function onMouseDrag(event) {
         }
         curr_dragged_seg = get_index_num();
         //alert(curr_dragged_seg);
+        
+        
+        
+        var def_segment = def_path.segments[curr_dragged_seg].point.x;
+        
+        
+        
+        def_segment = def_segment + 500 + 181;
+        //alert(def_segment);
+        
+        //var def_segment = 200;
+            var px_range = 10;
+            var active_segment = segment.point.x;
+            
+            if(active_segment > (def_segment + px_range)){
+                    path.segments[curr_dragged_seg].point.x = def_segment + px_range;
+               }else{
+                   if(active_segment < (def_segment - px_range)){
+                    path.segments[curr_dragged_seg].point.x = def_segment - px_range;
+                   }else {
+                    segment.point += event.delta;
+                   }
+               }
+               
+        var active_segment_y = path.segments[curr_dragged_seg].point.y;
+        
+        
+            if(curr_dragged_seg == 68 || curr_dragged_seg == 67 || curr_dragged_seg == 66 || curr_dragged_seg == 65 || curr_dragged_seg == 64 || curr_dragged_seg == 63 || curr_dragged_seg == 61 || curr_dragged_seg == 60 || curr_dragged_seg == 52 || curr_dragged_seg == 51 || curr_dragged_seg == 50 || curr_dragged_seg == 49 || curr_dragged_seg == 48 || curr_dragged_seg == 47 || curr_dragged_seg == 46 || curr_dragged_seg == 45 || curr_dragged_seg == 44 || curr_dragged_seg == 43 || curr_dragged_seg == 42 || curr_dragged_seg == 33 || curr_dragged_seg == 32 || curr_dragged_seg == 31 || curr_dragged_seg == 30 || curr_dragged_seg == 14 || curr_dragged_seg == 13 ){
+                    
+                    var active_segment_top = path.segments[curr_dragged_seg - 1].point.y - 5;
+                    var active_segment_bottom = path.segments[curr_dragged_seg + 1].point.y + 5;
+            
+            
+                    if(active_segment_y >= active_segment_top){
+                            path.segments[curr_dragged_seg].point.y = active_segment_top;
+                    }else{
+                    }
+                    if(active_segment_y <= active_segment_bottom){
+                            path.segments[curr_dragged_seg].point.y = active_segment_bottom;
+                    }else{
+                    }
+                    console.log("Not me! " + curr_dragged_seg);
+               }else{
+               
+                        var active_segment_top = path.segments[curr_dragged_seg - 1].point.y + 5;
+                        var active_segment_bottom = path.segments[curr_dragged_seg + 1].point.y - 5;
+                        
+                        
+                        if(curr_dragged_seg == 54 || curr_dragged_seg == 55 || curr_dragged_seg == 38 || curr_dragged_seg == 37 || curr_dragged_seg == 36 || curr_dragged_seg == 35 || curr_dragged_seg == 26 || curr_dragged_seg == 25 || curr_dragged_seg == 24 || curr_dragged_seg == 23 || curr_dragged_seg == 22 || curr_dragged_seg == 21 || curr_dragged_seg == 20 || curr_dragged_seg == 19 || curr_dragged_seg == 18 || curr_dragged_seg == 17 || curr_dragged_seg == 16 || curr_dragged_seg == 8 || curr_dragged_seg == 7 || curr_dragged_seg == 4 || curr_dragged_seg == 3 || curr_dragged_seg == 2 || curr_dragged_seg == 1){
+
+                                if(active_segment_y <= active_segment_top){
+                                        path.segments[curr_dragged_seg].point.y = active_segment_top;
+                                }else{
+                                }
+                                if(active_segment_y >= active_segment_bottom){
+                                        path.segments[curr_dragged_seg].point.y = active_segment_bottom;
+                                }else{
+                                }
+
+                        }else{
+                        
+                                    var def_segment = def_path.segments[curr_dragged_seg].point.y;
+                                    //def_segment = def_segment + 500 + 181;
+                                    var px_range = 20;
+                                    var active_segment = segment.point.y;
+            
+            
+                                if(active_segment > (def_segment + px_range)){
+                                        path.segments[curr_dragged_seg].point.y = def_segment + px_range;
+                                }else{
+                                    if(active_segment < (def_segment - px_range)){
+                                        path.segments[curr_dragged_seg].point.y = def_segment - px_range;
+                                    }else {
+                                        segment.point += event.delta;
+                                    }
+                                }
+                        }
+                        
+                        
+                console.log("Not me! " + curr_dragged_seg);
+               }
+               
         
         
         var export_path_full = path.exportSVG({asString: true});
@@ -839,18 +928,7 @@ function onMouseDrag(event) {
             $("#mask_x").attr("value", main_path.position.x);
             $("#mask_y").attr("value", main_path.position.y);
        
-            //var def_segment = def_path.segments[curr_dragged_seg].point.x + 10;
-            //var active_segment = segment.point.x;
             
-           // if(active_segment > def_segment){
-           //         alert("Out of range");
-            //    }else{
-            //        segment.point += event.delta;
-            //    }
-            
-               
-               
-                segment.point += event.delta;
                 
                 
                 var sholder_left = path.segments[6].point.y - 22;
@@ -923,7 +1001,7 @@ svg_path:$('#img_path_paper').attr('value')};
 
  $.ajax({
         type: "POST",
-        url: $url,//"http://localhost/webapp/web/app_dev.php/user/marker/save",
+        url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,  
        success: function(data){//alert(data);
            setTimeout(go_to_index,'500');
@@ -1047,8 +1125,8 @@ jQuery(document).ready(function ($) {
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 
                 
-                  {% if(edit_type=="fitting_room")%}
-                    <input type="hidden" id="hdn_user_cropped_image_url" value="/webapp/web/" />
+                 {% if(edit_type=="fitting_room")%}
+                    <input type="hidden" id="hdn_user_cropped_image_url" value="/cs-ltf-webapp/web/" />
                  {% endif %}
                  {% if(edit_type=="registration")%}
                     <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
