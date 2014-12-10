@@ -1131,7 +1131,9 @@ jQuery(document).ready(function ($) {
                  {% if(edit_type=="registration")%}
                     <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
                  {% endif%}    
-                 
+                 {% if(edit_type=="device")%}
+                    <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
+                 {% endif %}
                 
                 
                 
