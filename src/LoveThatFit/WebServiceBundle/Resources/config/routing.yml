@@ -2,6 +2,11 @@ ws_test:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/wstest.yml"
     prefix:   /
 
+dws:
+    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/device_services.yml"
+    prefix:   /
+
+
 service_interface_routes:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/service_interface.yml"
     prefix:   /

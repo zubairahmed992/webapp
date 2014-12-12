@@ -32,6 +32,10 @@ class UtilityHelper {
     public function getDeviceBootstrap() {
         return $this->device_bootstrap;
     }
+//--------------------------------------------------------------------------------
+    public function getDeviceResolutionSpecs() {
+        return $this->device_bootstrap['resolution_scale'];
+    }
 #-------------------------------------------------------------------------------
     public function getPageNumber($count){
        return $count/$this->getPaginationLimit();

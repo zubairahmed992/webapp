@@ -1,3 +1,33 @@
+
+brand_retailer:
+    pattern:  /web_service_test/brand_retailer
+    params:
+      date: 1388577600
+    request_type: post
+    #*date
+
+brands:
+    pattern:  /web_service_test/brands
+    request_type: get
+    #
+
+brand_list_size_chart:
+   pattern:  /web_service_test/brand_list_size_chart
+   request_type: get
+
+
+clothingtype_brand:
+    pattern:  /web_service_test/clothingtype_brands
+    request_type: get
+    #
+
+constantValue:
+   pattern:  /web_service/constant_values
+   request_type: get
+   #
+
+
+
 #-------------------- User Login & registration & profile ---------------------------
 login:
     pattern:  /web_service_test/login
@@ -239,31 +269,6 @@ product_detail:
     
 #------------------------------------------------------------
 
-constantValue:
-   pattern:  /web_service_test/constant_values
-   request_type: get
-   #
-
-brand_retailer:
-    pattern:  /web_service_test/brand_retailer
-    params:
-      date: 1388577600
-    request_type: post
-    #*date
-
-brands:
-    pattern:  /web_service_test/brands
-    request_type: get
-    #
-
-clothingtype_brand:
-    pattern:  /web_service_test/clothingtype_brands
-    request_type: get
-    #
-
-brand_list_size_chart:
-   pattern:  /web_service_test/brand_list_size_chart
-   request_type: get
 
 size_chart:
    pattern:  /web_service_test/size_chart

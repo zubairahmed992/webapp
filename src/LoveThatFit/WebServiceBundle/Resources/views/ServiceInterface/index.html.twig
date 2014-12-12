@@ -33,13 +33,15 @@ margin: 5px;
 
 <div class="c_pannel">
     <form action="{{ path('si_hit') }}" method="post">
+        <input id='hit' type="button" value="Result" />
+        <input id='chk_new_window' type="checkbox" /> new window
         <h4 id='user_name_header'>user name</h4>
         <h4 id='user_token_header'>token</h4>
         <h4 id='service_name_header'>service name</h4>
         <h4 id='service_path_header'>path</h4>
         <textarea style="width: 500px; height: 200px" id='txt_request'></textarea>
         <textarea style="width: 500px; height: 200px" id='txt_response'></textarea>
-        <input id='hit' type="button" value="Hit" />                                     
+                                             
     </form>
 </div>
 
@@ -110,6 +112,10 @@ function upload(){
     //alert(request_json);     
 
     if (request_json.length==0){
+        if($('#chk_new_window').is(':checked')){
+                window.open(".." + $("#service_path_header").text());
+            }else{
+            
         $.ajax({
                type: "GET",
                url: ".." + $("#service_path_header").text(),               
@@ -120,6 +126,7 @@ function upload(){
                    display_response(errMsg);
                }
          });
+         }
     }else{
         var value_ar = JSON.parse($("#txt_request").val());        
         

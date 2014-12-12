@@ -80,6 +80,47 @@ public function getAllSizes(){
           ),
         );
     }
+    #==============================================
+    public function getByGender($gender = null) {
+        $specs = array(
+            'man' => array(
+                'body_shapes' => $this->getManBodyShape(),
+                'fit_types' => $this->getManFitType(),
+                'targets' => $this->getManTarget(),
+                'sizes' => array(
+                    'letter' => $this->getManLetterSizes(),
+                    'chest' => $this->getManChestSizes(),
+                    'waist' => $this->getManWaistSizes(),
+                    'shirt' => $this->getManShirtSizes(),
+                    'neck' => $this->getManNeckSizes(),
+                    'sleeve' => $this->getManSleeveSizes(),
+                    'inseam' => $this->getManInseamSizes(),
+                ),
+                'size_title_type' => $this->getSizeTitleType('m'),
+            ),
+            'woman' => array(
+                'body_shapes' => $this->getWomanBodyShape(),
+                'fit_types' => $this->getWomanFitType(),
+                'targets' => $this->getWomanTarget(),
+                'sizes' => array(
+                    'letter' => $this->getWomanLetterSizes(),
+                    'number' => $this->getWomanNumberSizes(),
+                    'waist' => $this->getWomanWaistSizes(),
+                    'bra' => $this->getWomanBraSizes(),
+                    'bra_cup' => $this->getWomanBraCups(),
+                    'bra_band' => $this->getWomanBraBands(),
+                ),
+                'size_title_type' => $this->getSizeTitleType('f'),
+            ),
+        );
+        if ($gender == 'm') {
+            return $specs['man'];
+        } elseif ($gender == 'f') {
+            return $specs['woman'];
+        } else {
+            return $specs;
+        }
+    }
 #############################################################################
 public function getGenders($key_pair=true){
      return $this->getArray($this->constant['genders'], $key_pair);    
