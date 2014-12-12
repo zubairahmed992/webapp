@@ -4053,6 +4053,7 @@ width: 160px;
     float:right;
     width: 242px;
     margin-right:10px;
+    position: relative;
 }
 
 #prod_accordion {
@@ -5396,5 +5397,33 @@ transform: rotateX(0deg) rotateY(0deg);
 #measurement_dress_size{
     
     width:126px!important;
+}
+
+.popover{
+    background-color:#efefef;
+    width:100px;
+    height:100px;
+    text-align:center;
+    font:1.2em Arial;
+    line-height:50px;
+    display:none;
+    position:absolute;
+    z-index:9999;
+}
+
+
+.ppp{
+    background-color:#fff;
+    border:1px solid #ccc;
+    width:100px;
+    height:100px;
+    text-align:center;
+    font:1.2em Arial;
+    line-height:50px;    
+    position:absolute;
+    z-index:9999;
+    top:84px;
+    display:block;
+    box-shadow: 0px 3px 6px -2px #333
 }
 
