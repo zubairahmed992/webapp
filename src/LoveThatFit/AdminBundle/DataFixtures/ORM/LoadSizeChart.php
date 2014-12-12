@@ -32,7 +32,7 @@ class LoadSizeChart extends AbstractFixture implements OrderedFixtureInterface, 
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-
+/*
 
 
         $fixturesPath = realpath(dirname(__FILE__) . '/../fixtures');
@@ -97,6 +97,8 @@ class LoadSizeChart extends AbstractFixture implements OrderedFixtureInterface, 
                
             }
         }
+ * 
+ */
     }
 
     /**

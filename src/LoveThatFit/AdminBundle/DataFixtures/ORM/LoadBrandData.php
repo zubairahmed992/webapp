@@ -31,7 +31,8 @@ class LoadBrandData implements FixtureInterface {
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager) {
-      $dirname = 'uploads';      
+      /*
+        $dirname = 'uploads';      
       $filename = realpath(dirname(__FILE__) . '/../../../../../web').'/'.$dirname;
       if(!file_exists($filename));
       {
@@ -68,6 +69,8 @@ class LoadBrandData implements FixtureInterface {
             $manager->flush();
         }
         $this->copyAllBrandImageFiles($source, $destination, $options = array('folderPermission' => 0755, 'filePermission' => 0755));
+    */
+        
     }
 
     public function deleteAllBrandFiles($path) {
