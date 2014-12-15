@@ -5423,7 +5423,7 @@ transform: rotateX(0deg) rotateY(0deg);
     position:absolute;
     z-index:9999;
     top:84px;
-    display:block;
+    display:none;
     box-shadow: 0px 3px 6px -2px #333
 }
 
