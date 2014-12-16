@@ -199,10 +199,10 @@ public function registerUser(User $user) {
         return $measurement;
     }
 #------------\------------------------------------------------------------------#
-    public function getArrayByEmail($email) {//getUserArrayByEmail
+    public function getArrayByEmail($email, $device_type=null) {//getUserArrayByEmail
         $entity = $this->repo->findOneBy(array('email' => $email));
         $userinfo = array();
-        $userinfo = $this->fillUserArray($entity);
+        $userinfo = $this->fillUserArray($entity, $device_type);
         return $userinfo;
     }
 #------------------------------------------------------------------------------#    
@@ -451,7 +451,7 @@ public function changePasswordWithReqestArray($request_array) {
         }
     }
 #----------------- Getting the User Info ---------------------------------------#
-private function fillUserArray($entity) {  
+private function fillUserArray($entity, $device_type=null) {  
     
    
         $birth_date = $entity->getBirthDate();
@@ -474,12 +474,15 @@ private function fillUserArray($entity) {
             $userinfo['birthDate'] = $birth_date->format('Y-m-d');
         }else{$userinfo['birthDate'] = Null;}
         #this needs testing with the device
-        #$user_device=$entity->getDefaultDevice();
-        #if($user_device->getDeviceImage()){$userinfo['iphoneImage'] = $user_device->getDeviceImage();}else{$userinfo['iphoneImage']='';}
-            
+        if ($user_device){
+        $user_device=$entity->getDeviceSpecs($device_type);
+        $userinfo['iphoneImage'] =$user_device?$user_device->getDeviceImage():'';
+        }else{
+           if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
+        }
         if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
-        if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
+        
      
                   
           //  $userDevice= new UserDevices();

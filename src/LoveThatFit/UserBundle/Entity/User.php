@@ -1577,16 +1577,26 @@ class User implements UserInterface, \Serializable {
         return $this->retailer_order_track;
     }
     #---------------------------------
-    public function getDefaultDevice(){
-        $us= $this->getUserDevices();
-        if($us){
-            return $us->first();    
-        }else{
+    public function getDeviceSpecs($device_type = null) {
+        $us = $this->getUserDevices();
+        
+        if ($device_type == null) {
+            if ($us) {
+                return $us->first();
+            } else {
+                return null;
+            }
+        } else {
+            foreach ($us as $userdevice) {
+                if ($device_type == $userdevice->getDeviceType()) {
+                    return $userdevice;
+                }
+            }
             return null;
         }
-                
     }
 
+#---------------------------------------------------
     
 
     /**

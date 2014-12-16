@@ -92,7 +92,29 @@ image_category:
        height: 100
        prefix:  
        dir:  'uploads/ltf/products/display/iPhone5_ftting_room_list'       
-    
+    iphone6_product_list:
+       width: 320
+       height: 240
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone6_product_list' 
+      
+    iPhone6_ftting_room_list:
+       width: 100
+       height: 100
+       prefix:  
+       dir:  'uploads/ltf/products/display/iPhone6_ftting_room_list'   
+    iphone6p_product_list:
+       width: 320
+       height: 240
+       prefix:  
+       dir:  'uploads/ltf/products/display/iphone6p_product_list' 
+      
+    iPhone6p_ftting_room_list:
+       width: 100
+       height: 100
+       prefix:  
+       dir:  'uploads/ltf/products/display/iPhone6p_ftting_room_list'   
+       
     ipad_product_list:
       width: 290
       height: 415
