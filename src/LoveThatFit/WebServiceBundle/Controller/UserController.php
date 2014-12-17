@@ -17,7 +17,9 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 
 class UserController extends Controller {
 
-#--------------------Login User -----------------------------------------------#     
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+# USER_AUTHENTICATION_URL   /web_service/login
+#----------------------------------------------
     public function loginAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -31,44 +33,28 @@ class UserController extends Controller {
       
     }
     
-    
-    
-    /* public function login1Action() {
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-       $decoded=array('email'=>'iphone@gmail.com','password'=>'Apple2013','deviceType'=>'7s');
-        $user_helper = $this->get('webservice.helper.user');
-        $user_info = $user_helper->loginWebService1($decoded,$request);
-      // $user_info = $user_helper->loginWebService($decoded,$request);
-        return new response(json_encode($user_info));
-      
-    }*/
-    
-    
-#----------------------End of Login User---------------------------------------# 
-#----------------------Registration--------------------------------------------#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    #  USER_REGISTRATION_URL	/web_service/register
+#-----------------------------------------
  public function registrationCreateAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
         $user = $this->get('webservice.helper.user');
-        
-     //{"email":"kamran@hotmail.com","password":"123456","gender":"f","zipcode":"123456","weight":"80.00","height":"61.00","bust":"0.00","neck":"0.00","chest":"0.00","inseam":"0.00","hip":"0.00","waist":"0.00","deviceType":"ipad","bodyShape":"pear","braSize":"30 b","bodyType":"Regular","deviceId":"tempID","sleeve":"0.00","targetTop":"Banana Republic","targetBottom":"CARMEN MARC VALVO","targetDress":"CARMEN MARC VALVO","topSize":"0","bottomSize":"0","dressSize":"4"}
-
- //  $request_array=array();
-  //$request_array=array('deviceId'=>'tempID','email'=>'kamrantes32@hotmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','weight'=>40.00, "height"=>"73.000000",
-// 'targetTop'=>'Banana Republic','topSize'=>'6',"inseam"=>"36.000000","hip"=>"0.000000","waist"=>"36.000000","deviceType"=>"ipad",
- // 'neck'=>4,'bust'=>5,'bodyType'=>'Regular','bodyShape'=>'banana','targetBottom'=>'CARMEN MARC VALVO','targetDress'=>'CARMEN MARC VALVO',"braSize"=>"28 a","bottomSize"=>"00","dressSize"=>"0");
-        
+        //{"email":"kamran@hotmail.com","password":"123456","gender":"f","zipcode":"123456","weight":"80.00","height":"61.00","bust":"0.00","neck":"0.00","chest":"0.00","inseam":"0.00","hip":"0.00","waist":"0.00","deviceType":"ipad","bodyShape":"pear","braSize":"30 b","bodyType":"Regular","deviceId":"tempID","sleeve":"0.00","targetTop":"Banana Republic","targetBottom":"CARMEN MARC VALVO","targetDress":"CARMEN MARC VALVO","topSize":"0","bottomSize":"0","dressSize":"4"}
+        //  $request_array=array();
+        //$request_array=array('deviceId'=>'tempID','email'=>'kamrantes32@hotmail.com','password'=>'123456','gender'=>'f','zipcode'=>'123','weight'=>40.00, "height"=>"73.000000",
+        // 'targetTop'=>'Banana Republic','topSize'=>'6',"inseam"=>"36.000000","hip"=>"0.000000","waist"=>"36.000000","deviceType"=>"ipad",
+        // 'neck'=>4,'bust'=>5,'bodyType'=>'Regular','bodyShape'=>'banana','targetBottom'=>'CARMEN MARC VALVO','targetDress'=>'CARMEN MARC VALVO',"braSize"=>"28 a","bottomSize"=>"00","dressSize"=>"0");
         $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));
     }
-#--------------------------End Of Registration --------------------------------#    
-#-------------------Change Password--------------------------------------------#
- public function changePasswordAction() {
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    # CHANGE_PASSWORD_URL	/web_service/change_password
+#-----------------------------------------------------------
+    public function changePasswordAction() {
         $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
          $request_array  = json_decode($jsonInput,true);
@@ -87,8 +73,10 @@ class UserController extends Controller {
           $msg=$user->changePasswordWithReqestArray($request_array);
          return new response(json_encode($msg));
     }
-#------------------------------End Of Change Password--------------------------#
-    #------------------------------Edit Profile----------------------------------------------------------#    
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+# EDIT_PROFILE_URL	/web_service/edit_profile
+#-----------------------------------------    
 public function editProfileAction()
 {        $request = $this->getRequest();
          $handle = fopen('php://input','r');
@@ -113,7 +101,7 @@ public function editProfileAction()
     if ($entity) {return new Response(json_encode(array('Message' => 'Update Sucessfully')));}
     else {return new Response(json_encode(array('Message' => 'We can not find user')));}
 }        
-#------------------------------End of Edit Profile------------------------------#
+
 #------------------------------User Profile-------------------------------------#
 public function userProfileAction()
 {       $request = $this->getRequest();
@@ -142,8 +130,9 @@ public function userProfileAction()
             return new Response(json_encode(array('Message' => 'Invalid Email')));
         }
 }
-#------------------------------End Of User Profile-----------------------------#
-#--------------------------Shoulder Height and Outseam Ration Edit/Update------#
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+# SAVE_MARKING_URL	/web_service/iphone_shoulder_outseam
  public function shoulderOutseamEditAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -163,8 +152,9 @@ public function userProfileAction()
         $msg=$user->updateMarkingParamWithReqestArray($request,$request_array);
         return new response(json_encode($msg));
     }
-#-------------End Of Outseam Shoulder -----------------------------------------#
-#------------------------Password Forget Services------------------------------#
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+#    FORGET_PASSWORD_SENDEMAIL	/web_service/forget_password
  public function forgetPasswordAction(){
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -182,8 +172,9 @@ public function userProfileAction()
        return new response(json_encode(array("Message"=>$msg)));
       }else{return new response(json_encode(array("Message"=>"This Email doesn't exist")));}
 }
-#---------------------------------End of ofrgot password-----------------------#
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+# EMAIL_VALIDATION_URL	/web_service/checkemail	
     public function emailCheckAction(){
         
         $request = $this->getRequest();
@@ -201,8 +192,9 @@ public function userProfileAction()
         }
     }
   
- #-------------------------Measurement Edit Web Service-----------------------------------------------------------------------------#       
- public function measurementEditAction() {
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+ #EDIT_MEASUREMENT_URL	/web_service/measurement_edit	
+    public function measurementEditAction() {
        $user = $this->get('webservice.helper.user');
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -242,7 +234,9 @@ public function userProfileAction()
         }
     }
 
-#-------------------------------Image Upload-----------------------------------#   
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    #UPLOAD_MANNEQUIN_URL	/web_service/image_upload
+#------------------------    
  public function imageUploadAction() {
          $request = $this->getRequest();
         $email = $_POST['email'];
@@ -286,7 +280,10 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-#----------------------Avatar Image Uploading ----------------------------------#
+    
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    #AVATAR_URL	/web_service/upload_avatar
+#-----------------------------------------
 public function avatarUploadAction() {
     $request = $this->getRequest();
         if(!isset($_POST['email'])){
@@ -333,6 +330,7 @@ public function avatarUploadAction() {
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
+    
 #-----------------------------------Upload image in Device Table ---------------#
     public function deviceImageUploadAction() {
         $request = $this->getRequest();
@@ -379,8 +377,10 @@ public function avatarUploadAction() {
     }  
    
     
-#--------------------------------------------End Of Image Uploading----------------------------------------#  
-#------------------------Constant Fetching Web Service-----------------------------------------------------#
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    # CONSTANT_URL	/web_service/constant_values
+#---------------------------------------------------
     public function ConstantValuesAction() {
         $utility_helper = $this->get('admin.helper.utility');
         $data=array();
@@ -397,13 +397,18 @@ public function avatarUploadAction() {
         $data['fittingStatus']=$this->get('webservice.helper.product')->getFittingStatus();
         return new response(json_encode(($data)));
     }
-    #------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+# SIZE_CHART_URL	/web_service/registration_sizechart	    
+#---------------------------------------------
    public function sizeChartForRegAction(){
        $data['sizeChart']=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
         return new response(json_encode(($data)));
        
    } 
-    #------------------------------------------------
+   
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+#   Standard sizes for search
+#-----------------------------
  public function standardSizesAction($gender='f') {
         $all = $this->get('admin.helper.size')->getDefaultArray();
         if($gender=='m'){
@@ -425,7 +430,10 @@ public function avatarUploadAction() {
         return new response(json_encode(($data)));
     }
 
-#-----------------------------Check Token -------------------------------------#
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    # FORGET_PASSWORD_SENDCODE /web_service/check_token_forget_password
+#---------------------------------------------------------------    
  public function  checkTokenforgetPasswordAction(){
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -440,8 +448,11 @@ public function avatarUploadAction() {
  return new response(json_encode(array("Message"=>"Authenticated Token Missing")));
  }
  }
-#---------------------End of Token forgot password-----------------------------# 
-#----------------------------Update Forget Password----------------------------# 
+ 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+ # FORGET_PASSWORD_NEWPASSWORD	/web_service/check_update_password
+ #-----------------------------------------------------------------
  public function updateForgetPasswordAction(){
       $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -453,6 +464,7 @@ public function avatarUploadAction() {
         return new response(json_encode($updatePassword));
      
  }
+
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
@@ -471,46 +483,5 @@ public function avatarUploadAction() {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
     
-    #------------------------------------------------------------
-    //#------------------------------------------------------------
-    #------------------------------------------------------------
-    
-    
-     ##~~~~~~~~~~~?? test
-    public function _deviceImageUploadAction() {
-        $email = $_POST['email'];
-        $device_type = $_POST['deviceType'];
-        $heightPerInch = $_POST['heightPerInch'];
-
-        $user = $email != null ? $this->get('user.helper.user')->findByEmail($email) : null;
-
-        if (!$user) {
-            return new response(json_encode(array('Message' => 'Email Not Found')));
-        }
-
-        $user_device = $this->get('user.helper.userdevices')->findOneByDeviceTypeAndUser($user->getId(), $device_type);
-        if (!$user_device) {
-            $user_device = $this->get('user.helper.userdevices')->createNew($user);
-            $user_device->setDeviceType($device_type);
-        }
-        $user_device->file = $_FILES["file"];
-
-        if ($heightPerInch) {
-            $user_device->setDeviceUserPerInchPixelHeight($heightPerInch);
-        }
-
-        $user_device->upload();
-        $this->get('user.helper.userdevices')->saveUserDevices($user_device);
-        $userinfo = array();
-        $request = $this->getRequest();
-        $image_path = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() .'/'. $user_device->getWebPath();
-        $userinfo['heightPerInch'] = $user_device->getDeviceUserPerInchPixelHeight();
-        $userinfo['iphoneImage'] = $user_device->getDeviceImage();
-        $userinfo['path'] = $image_path;
-        
-        return new Response(json_encode($userinfo));
-    }
-   
 }
 
-// End of Class

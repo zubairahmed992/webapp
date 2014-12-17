@@ -13,25 +13,24 @@ use LoveThatFit\AdminBundle\Entity\ClothingType;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use LoveThatFit\UserBundle\Form\Type\RegistrationType;
-use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementMaleType;
-use LoveThatFit\UserBundle\Form\Type\RegistrationMeasurementFemaleType;
-use LoveThatFit\SiteBundle\Algorithm;
 use LoveThatFit\WebServiceBundle\Controller\DateTimeZone;
 
 class ProductController extends Controller {
 
 #-----------------Brand List Related To Size Chart For Registration Step2-------#
+   # IMAGES_URL	/web_service/images_url
+#------------------------------------------------------
 public function imagesUrlAction(){
     $request = $this->getRequest();
     $handle = fopen('php://input', 'r');
     $jsonInput = fgets($handle);
     $request_array = json_decode($jsonInput, true);
-   // $request_array=array('deviceType'=>'iphone4s');
     $product_response =  $this->get('webservice.helper.product')->imagesUrl($request,$request_array);
      return new response(json_encode($product_response));
 }
 #-------------------- Brand With Retailer -------------------------------------#
+#2 BRANDS_URL	/web_service/brand_retailer
+#------------------------------------------------------
 public function brandRetailerListAction(){
       $request = $this->getRequest();
       $handle = fopen('php://input', 'r');
@@ -119,6 +118,8 @@ public function brandListAction() {
 
 #-------------Productlist Against Brand or Clothing Type ----------------------#   
 
+#       PRODUCT_TYPE_URL *~~~~~~~~~~>||
+#---------------------------  
     public function productlistAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -219,7 +220,7 @@ public function brandListAction() {
    
 
 #------------------------------Default Fitting Room Alerts --------------------------------------------------#
-
+# FITTING_ALERT_URL	/web_service/default_fitting_alerts
     public function defaultProductFittingAlertAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -252,6 +253,7 @@ public function brandListAction() {
  
     
 #---------------------Like/Love Item-----------------------------------------------------------------------#
+    # MAKE_FAVOURITE_URL	/web_service/love_item	
  public function loveItemAction() {
      
         $request = $this->getRequest();
@@ -284,7 +286,8 @@ public function brandListAction() {
     }
 #------------------------------------------------------------End of Love/Like------------------------------#   
 #--------------------------------------Try On History Service----------------------------------------------#
-     public function userTryHistoryAction()
+#RECENTLY_TRIED_URL	/web_service/user_try_history
+    public function userTryHistoryAction()
     {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -341,6 +344,7 @@ public function brandListAction() {
     
     
  #----- Work for Product Synchronization  -------------------------------------#
+    #DATE_SYNC_URL	/web_service/product_sync
     public function getProductSynAction(){
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -365,6 +369,7 @@ public function brandListAction() {
         
     }
  #--------------------Get product Detail Sunc-----------------------------------#
+    # PRODUCT_DETAIL_URL	/web_service/product_detail_sync
     public function getProductDetailSynAction() {
         
         $request = $this->getRequest();
@@ -393,6 +398,9 @@ public function brandListAction() {
 
   
  #-------------------Get Brand Sync-------------------------------------------#
+# BRANDS_URL	/web_service/brand_sync
+    
+    
  public function getBrandSyncAction() {
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
@@ -418,6 +426,9 @@ public function brandListAction() {
         }
     }
     #----------------Get Product Data for user synchorization ----------------#
+# FITTING_ROOM_PRODUCT_URL	/web_service/product_user_sync
+# PRODUCT_URL	/web_service/product_user_sync
+
      public function getProductForUserSynAction(){
         $request = $this->getRequest();
         $handle = fopen('php://input', 'r');
