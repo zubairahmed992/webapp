@@ -19,7 +19,7 @@ constants:
         pixel_per_inch: 17
         pixel_height : 870
       iphone6:
-        pixel_per_inch: 18.125
+        pixel_per_inch: 17
         pixel_height : 1068
       iphone6p:
         pixel_per_inch: 18.125
