@@ -501,7 +501,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 chk_no_img_path = false;
 
-if(croped_img_path == "/cs-ltf-webapp/web/"){
+if(croped_img_path == "/webapp/web/"){
     chk_no_img_path = true;
 }else{
     if(croped_img_path == "/")
@@ -563,7 +563,6 @@ function call_settings(responseText, statusText, xhr, $form){
             photo_width =  document.getElementById('img_to_upload').width;
             photo_height = document.getElementById('img_to_upload').height;		 
             photo_width =  document.getElementById('img_to_upload').style.width = photo_width + "px";
-            
             //alert(uploaded_img_obj.width);
             //checking_bhai();
         };

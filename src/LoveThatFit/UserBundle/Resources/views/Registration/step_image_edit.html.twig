@@ -696,18 +696,21 @@ var path = new CompoundPath({
 
 path.opacity = 0.6;
 
-     if(chk_no_img_path == true){          
-      
+     if(chk_no_img_path == true){      
      
-     var default_adjusted_path_data = $("#default_marker_svg").attr("value");
+        export_svg_data(path);
+     
+        var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
         d_adj_path.position = new Point(-500,(p_user_height_px/2)+17);
         d_adj_path.opacity = 0.5;
      
-      export_svg_data(path);
+      
 
     }else {
+    
+    
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
@@ -1125,16 +1128,13 @@ jQuery(document).ready(function ($) {
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 
                 
-                 {% if(edit_type=="fitting_room")%}
-                    <input type="hidden" id="hdn_user_cropped_image_url" value="/cs-ltf-webapp/web/" />
-                 {% endif %}
-                 {% if(edit_type=="registration")%}
-                    <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
-                 {% endif%}    
-                 {% if(edit_type=="device")%}
-                    <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
-                 {% endif %}
-                
+                  {% if(edit_type=="registration")%}
+                <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+                 {%elseif(edit_type=="device")%}
+                        <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
+                 {%else%}
+                        <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
+                 {% endif%}
                 
                 
                     {{ form_widget(form.timeSpent)}}  

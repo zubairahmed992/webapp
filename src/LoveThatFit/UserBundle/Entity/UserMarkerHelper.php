@@ -163,7 +163,6 @@ class UserMarkerHelper {
        $user_marker = new $class();
        $mask_type=$this->getDefaultValuesBaseOnBodyType($user);
        $user_marker->setSvgPaths($mask_type['SvgPaths']);
-       $user_marker->setDefaultMarkerSvg($mask_type['SvgPaths']);
        $user_marker->setMaskX($mask_type['MaskX']);
        $user_marker->setMaskY($mask_type['MaskY']);
        $user_marker->setRectX($mask_type['RectX']);
