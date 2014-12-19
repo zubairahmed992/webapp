@@ -474,7 +474,7 @@ private function fillUserArray($entity, $device_type=null) {
             $userinfo['birthDate'] = $birth_date->format('Y-m-d');
         }else{$userinfo['birthDate'] = Null;}
         #this needs testing with the device
-        if ($user_device){
+        if ($device_type){
         $user_device=$entity->getDeviceSpecs($device_type);
         $userinfo['iphoneImage'] =$user_device?$user_device->getDeviceImage():'';
         }else{
