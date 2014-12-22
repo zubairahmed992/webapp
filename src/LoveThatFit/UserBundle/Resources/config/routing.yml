@@ -96,6 +96,12 @@ fitting_room_image_edit:
 registration_step_image_edit:
     pattern:  /registration/step_image_edit/{edit_type}
     defaults: { _controller: LoveThatFitUserBundle:Registration:stepImageEdit, edit_type:null }    
+
+
+registration_device_view_edit:
+    pattern:  /registration/device_view
+    defaults: { _controller: LoveThatFitUserBundle:Registration:deviceView }    
+
     
     
 #----------------------------- Profile ---------------------------------------------

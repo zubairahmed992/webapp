@@ -760,6 +760,104 @@ public function stepFourTimeSpentAction(Request $request){
     }
 }
 
+
+    #---------------------------------------------------------------------------
+    #------------ Device View - Mask Marker - new registration - Edit ----------
+    #---------------------------------------------------------------------------
+      public function deviceViewAction($edit_type=null) {
+        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->get('user.helper.user')->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+        $measurement = $user->getMeasurement();
+         $users=$this->get('user.helper.parent.child')->findByUser($user);
+        if($users)
+        {
+        if($users->getIsApproved()=='0')
+        {        // Rendering step four
+            $form = $this->createForm(new UserParentChildLinkType());
+            return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $user,      
+                    'edit_type' => 'disaprove',
+                    'isapproved'=>0,
+                ));
+        }
+        if($users->getIsApproved()==NULL or $users->getIsApproved()==null or $users->getIsApproved()=='' )
+        {        // Rendering step four
+            $form = $this->createForm(new UserParentChildLinkType());
+            return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $user,      
+                    'edit_type' => 'fitting_room',
+                    'isapproved'=>$users->getIsApproved(),
+                ));
+        }
+        
+        
+        if($users->getIsApproved()==1)
+        {        // Rendering step four
+          $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+       // return new response(json_encode($default_marker));
+                
+        $edit_type=$edit_type==null?'registration':$edit_type;
+        
+        return $this->render('LoveThatFitUserBundle:Registration:device_view.html.twig', array(
+                    'form' => $form->createView(),
+                    'form' => $form->createView(),
+                        'measurement_form' => $measurement_form->createView(),                   
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                    'entity' => $user,
+                    'measurement' => $measurement,
+                    'edit_type' => $edit_type,
+                    'marker' => $marker,
+                    'default_marker' => $default_marker,
+            ));
+        }        
+        }elseif(!$users  and $user->getAge()<15 and $user->isApproved==NULL){        
+            $form = $this->createForm(new UserParentChildLinkType());
+            return $this->render('LoveThatFitUserBundle:Registration:user_parent_child.html.twig', array(
+                    'form' => $form->createView(),                    
+                    'entity' => $user,      
+                    'edit_type' => 'registration',
+                    'isapproved'=>$user->isApproved,
+                ));
+        }else
+        {        
+        $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+        $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+        $form = $this->createForm(new RegistrationStepFourType(), $user);
+        $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+        $marker = $this->get('user.marker.helper')->getByUser($user);
+        $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+       // return new response(json_encode($default_marker));
+                
+        $edit_type=$edit_type==null?'registration':$edit_type;
+        
+        return $this->render('LoveThatFitUserBundle:Registration:device_view.html.twig', array(
+                    'form' => $form->createView(),               
+                    'measurement_form' => $measurement_form->createView(),                   
+                    'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                    'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                    'entity' => $user,
+                    'measurement' => $measurement,
+                    'edit_type' => $edit_type,
+                    'marker' => $marker,
+                    'default_marker' => $default_marker,
+            ));
+    }
+}
+
+
+
+
 }
 
 ?>
