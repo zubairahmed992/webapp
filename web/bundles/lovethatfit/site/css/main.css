@@ -5412,8 +5412,10 @@ transform: rotateX(0deg) rotateY(0deg);
 }
 
 
-.ppp{
-    background-color:#fff;
+
+
+.homicc{
+background-color:#fff;
     border:1px solid #ccc;
     width:100px;
     height:100px;
@@ -5421,9 +5423,12 @@ transform: rotateX(0deg) rotateY(0deg);
     font:1.2em Arial;
     line-height:50px;    
     position:absolute;
-    z-index:9999;
+    z-index:10000;
     top:84px;
     display:none;
     box-shadow: 0px 3px 6px -2px #333
 }
 
+.homic{
+    margin-right:5px;
+}

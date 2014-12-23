@@ -123,10 +123,14 @@ function chk_dress_applied_loaded(prod_type_applied){
     <div id="hdn_color_hldr" class="hdn_color_hldr select_color">
       <label class="lbl_color">Color:</label>
       {%for apc in product.productColors%}
-      <span id="color_id_pattern" style="display:none;">{{apc.id}}</span>         
-       <a href="javascript:void(0)" class="a_color_id"  id="a_color_id" onclick="new_product_control(false,{{product.id}},{{apc.id}},{{productSize.id}})">
-      <img width="16" height="16" src="{{asset(apc.PatternWebPath)}}" >
-      </a>
+      
+       <span id="color_id_pattern" style="display:none;">{{apc.id}}</span> 
+      <span class="homic">           
+            <a href="javascript:void(0)" class="a_color_id"  id="a_color_id" onclick="new_product_control(false,{{product.id}},{{apc.id}},{{productSize.id}})">
+            <img width="16" height="16" src="{{asset(apc.PatternWebPath)}}" >
+             </a>      
+            <div style="display:none;" class="homicc"><img width="100" height="100" src="{{asset(apc.getPatternPaths.ipad_retina)}}" ></div>
+      </span>
       
       {%endfor%}
     </div> 

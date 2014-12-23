@@ -29,7 +29,30 @@
 
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/index.js') }}"></script>
 
-<script>    
+<script> 
+    
+    
+
+$(document).ready(function(){  
+  
+$(".a_color_id").live("hover",function () {     
+   $(this).parent().find('.homicc').css("display","block"); //parent id get
+   
+   
+$('.a_color_id').mousemove(function(e){     
+   $(this).parent().find('.homicc').css({left:(e.pageX+-920) + "px"});
+   $(this).parent().find('.homicc').show();  
+});
+ });   
+    
+$(".a_color_id").live({mouseout: function(){
+    
+   $(this).parent().find('.homicc').css("display","none"); //parent id get
+}   
+});
+   
+});    
+   
     
    
 function refreshdiv() {
