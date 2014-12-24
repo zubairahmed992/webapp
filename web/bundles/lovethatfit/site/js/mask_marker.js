@@ -2,19 +2,34 @@ var hitOptions = {
 	segments: true,
 	stroke: false,
 	fill: false,
-	tolerance: 5
+	tolerance: 15
 };
 
-$(document).ready(function() {
+inc_ratio = 4;
+
+//////// From JS file
+
+croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
+
+chk_no_img_path = false;
+
+if(croped_img_path == "/webapp/web/"){
     chk_no_img_path = true;
-    
+}else{
+    if(croped_img_path == "/")
+    chk_no_img_path = true;
+}
+
+//////// From JS file --- End
+
+$(document).ready(function() {
+    //document.getElementById("canv_mask").setAttribute("height", window.screen.height);
+    //document.getElementById("canv_mask").setAttribute("width", window.screen.width);
     createBlob();
 });
 
 function createBlob() {
-    document.getElementById("canv_mask").setAttribute("height", window.screen.height - 200);
-    document.getElementById("canv_mask").setAttribute("width", window.screen.width - 200);
-    
+	
         var pathData = $("#img_path_paper").attr("value");
         if(chk_no_img_path == true){
             pathData = $("#default_user_path").html();
@@ -53,9 +68,9 @@ console.log(p_user_height);
 
 if(chk_no_img_path == true){
 
-    mid_area_path.scale(1,p_user_height);
+    mid_area_path.scale(inc_ratio,p_user_height*inc_ratio);
     //alert("in side");
-   mid_area_path.position = new Point(181,(p_user_height_px/2)+17);
+   mid_area_path.position = new Point(181,(p_user_height_px * inc_ratio /2)+17);
    
    def_shape_h = p_user_height; //65in
    
@@ -217,14 +232,54 @@ if(chk_no_img_path == true){
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
   
     
-    
+    mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
+    mid_area_path.position = new Point(181,(p_user_height_px * inc_ratio /2)+17);
    }
    else{
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
     //alert("me fine till here");
+    mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
+    mid_area_path.position = new Point(181,(p_user_height_px * inc_ratio /2)+17);
    }
 
 
+//mid_area_path.segments[0].point.x = 20;
+
+//mid_area_path.segments[15].point.y += 60;
+
+//alert(mid_area_path.segments[15].point.y);
+
+
+
+////////////////////////////////
+
+    /*
+                var sholder_left = mid_area_path.segments[6].point.y;
+                var sholder_right = mid_area_path.segments[62].point.y;
+                
+                
+                if(sholder_left <= sholder_right){
+                    $("#measurement_shoulder_height").attr("value", sholder_left);
+                }else{
+                    $("#measurement_shoulder_height").attr("value", sholder_right);
+                }
+                
+                
+                var bottom_left = mid_area_path.segments[21].point.y - 66;
+                var bottom_right = mid_area_path.segments[49].point.y - 66;
+                
+                
+                
+                //alert(sholder_right);
+                
+                if(bottom_left <= bottom_right){
+                    $("#measurement_hip_height").attr("value", bottom_left);
+                }else{
+                    $("#measurement_hip_height").attr("value", bottom_right);
+                }
+                
+          */      
+////////////////////////////////////////////////////////////// 
 
 
 var path = new CompoundPath({
@@ -248,8 +303,10 @@ path.opacity = 0.6;
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(-500,(p_user_height_px/2)+17);
+        d_adj_path.position = new Point(-500,(p_user_height_px * inc_ratio /2)+17);
         d_adj_path.opacity = 0.5;
+        
+        d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
      
       
 
@@ -259,8 +316,11 @@ path.opacity = 0.6;
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(-500,(p_user_height_px/2)+17);
+        d_adj_path.position = new Point(-500,(p_user_height_px * inc_ratio /2)+17);
         d_adj_path.opacity = 0.5;
+        
+        d_adj_path.scale(2,p_user_height * inc_ratio);
+        
     }
       return path;
 }
@@ -343,11 +403,8 @@ function getPathArrayJson(){
     return JSON.stringify(mp_array);
 }
 
-function onMouseDrag(event) {
-	if (segment) {
-        
-        
-          main_path = project.getItem({
+
+main_path = project.getItem({
             class: Path,
             segments: function(segments) {
                    return segments.length > 20;
@@ -363,6 +420,12 @@ function onMouseDrag(event) {
                     return value == 0.5;
                 }
             });
+
+function onMouseDrag(event) {
+	if (segment) {
+        
+        
+          
           
            
             
@@ -513,262 +576,7 @@ function onMouseDrag(event) {
 		console.log("Me Hit!");
 	} else if (path) {
 		path.position += event.delta;
-		
-		
-	}
-	
-
-	
-}function export_svg_data(path){
-
-
-
-
-var export_path_full = path.exportSVG({asString: true});
-        
-        
-        
-        export_path_full.toString();
-        var export_path_remove_start = export_path_full.substr(94);
-        
-        var export_path_final = export_path_remove_start.substr(0, export_path_remove_start.length - 17);
-        
-        console.log(export_path_final);
-        
-        $("#img_path_paper").attr("value", export_path_final);
-        $("#default_marker_svg").attr("value", export_path_final);
-        
-        main_path = project.getItem({
-            class: Path,
-            segments: function(segments) {
-                   return segments.length > 20;
-            }
-            });
-            
-            $("#mask_x").attr("value", main_path.position.x);
-            $("#mask_y").attr("value", main_path.position.y);
-}
-
-
-var segment;
-var movePath = false;
-function onMouseDown(event) {
-	segment = path = null;
-	var hitResult = project.hitTest(event.point, hitOptions);
-	if (!hitResult)
-		return;
-
-	if (event.modifiers.shift) {
-		if (hitResult.type == 'segment') {
-			//hitResult.segment.remove();
-			
-		};
-		return;
-	}
-
-	if (hitResult) {
-                
-		path = hitResult.item;
-		if (hitResult.type == 'segment') {
-			segment = hitResult.segment;
-		} else if (hitResult.type == 'stroke') {
-			
-		}
-	}
-	//movePath = hitResult.type == 'fill';
-	//if (movePath)
-		//project.activeLayer.addChild(hitResult.item);
-}
-
-
-
-
-
-function onMouseUp(event){
-  if (segment) {
-        $("#img_path_json").attr("value", getPathArrayJson());
-    }   
-}
-function getPathArrayJson(){
-    var mp_array=[];
-    for(var i = 0; i < path.segments.length; i++) {
-        mp_array.push([path.segments[i].point.x, path.segments[i].point.y]);            
-    };
-    return JSON.stringify(mp_array);
-}
-
-function onMouseDrag(event) {
-	if (segment) {
-        
-        
-          main_path = project.getItem({
-            class: Path,
-            segments: function(segments) {
-                   return segments.length > 20;
-            }
-            });
-        
-            
-        
-          //main_path = path;
-            
-            def_path = project.getItem({
-            opacity: function(value) {
-                    return value == 0.5;
-                }
-            });
-          
-           
-            
-        function get_index_num(){
-            for(var i = 0; i < path.segments.length; i++) {
-                if(segment == path.segments[i]){
-                    return i;
-                }
-            }
-        }
-        curr_dragged_seg = get_index_num();
-        //alert(curr_dragged_seg);
-        
-        
-        
-        var def_segment = def_path.segments[curr_dragged_seg].point.x;
-        
-        
-        
-        def_segment = def_segment + 500 + 181;
-        //alert(def_segment);
-        
-        //var def_segment = 200;
-            var px_range = 10;
-            var active_segment = segment.point.x;
-            
-            if(active_segment > (def_segment + px_range)){
-                    path.segments[curr_dragged_seg].point.x = def_segment + px_range;
-               }else{
-                   if(active_segment < (def_segment - px_range)){
-                    path.segments[curr_dragged_seg].point.x = def_segment - px_range;
-                   }else {
-                    segment.point += event.delta;
-                   }
-               }
-               
-        var active_segment_y = path.segments[curr_dragged_seg].point.y;
-        
-        
-            if(curr_dragged_seg == 68 || curr_dragged_seg == 67 || curr_dragged_seg == 66 || curr_dragged_seg == 65 || curr_dragged_seg == 64 || curr_dragged_seg == 63 || curr_dragged_seg == 61 || curr_dragged_seg == 60 || curr_dragged_seg == 52 || curr_dragged_seg == 51 || curr_dragged_seg == 50 || curr_dragged_seg == 49 || curr_dragged_seg == 48 || curr_dragged_seg == 47 || curr_dragged_seg == 46 || curr_dragged_seg == 45 || curr_dragged_seg == 44 || curr_dragged_seg == 43 || curr_dragged_seg == 42 || curr_dragged_seg == 33 || curr_dragged_seg == 32 || curr_dragged_seg == 31 || curr_dragged_seg == 30 || curr_dragged_seg == 14 || curr_dragged_seg == 13 ){
-                    
-                    var active_segment_top = path.segments[curr_dragged_seg - 1].point.y - 5;
-                    var active_segment_bottom = path.segments[curr_dragged_seg + 1].point.y + 5;
-            
-            
-                    if(active_segment_y >= active_segment_top){
-                            path.segments[curr_dragged_seg].point.y = active_segment_top;
-                    }else{
-                    }
-                    if(active_segment_y <= active_segment_bottom){
-                            path.segments[curr_dragged_seg].point.y = active_segment_bottom;
-                    }else{
-                    }
-                    console.log("Not me! " + curr_dragged_seg);
-               }else{
-               
-                        var active_segment_top = path.segments[curr_dragged_seg - 1].point.y + 5;
-                        var active_segment_bottom = path.segments[curr_dragged_seg + 1].point.y - 5;
-                        
-                        
-                        if(curr_dragged_seg == 54 || curr_dragged_seg == 55 || curr_dragged_seg == 38 || curr_dragged_seg == 37 || curr_dragged_seg == 36 || curr_dragged_seg == 35 || curr_dragged_seg == 26 || curr_dragged_seg == 25 || curr_dragged_seg == 24 || curr_dragged_seg == 23 || curr_dragged_seg == 22 || curr_dragged_seg == 21 || curr_dragged_seg == 20 || curr_dragged_seg == 19 || curr_dragged_seg == 18 || curr_dragged_seg == 17 || curr_dragged_seg == 16 || curr_dragged_seg == 8 || curr_dragged_seg == 7 || curr_dragged_seg == 4 || curr_dragged_seg == 3 || curr_dragged_seg == 2 || curr_dragged_seg == 1){
-
-                                if(active_segment_y <= active_segment_top){
-                                        path.segments[curr_dragged_seg].point.y = active_segment_top;
-                                }else{
-                                }
-                                if(active_segment_y >= active_segment_bottom){
-                                        path.segments[curr_dragged_seg].point.y = active_segment_bottom;
-                                }else{
-                                }
-
-                        }else{
-                        
-                                    var def_segment = def_path.segments[curr_dragged_seg].point.y;
-                                    //def_segment = def_segment + 500 + 181;
-                                    var px_range = 20;
-                                    var active_segment = segment.point.y;
-            
-            
-                                if(active_segment > (def_segment + px_range)){
-                                        path.segments[curr_dragged_seg].point.y = def_segment + px_range;
-                                }else{
-                                    if(active_segment < (def_segment - px_range)){
-                                        path.segments[curr_dragged_seg].point.y = def_segment - px_range;
-                                    }else {
-                                        segment.point += event.delta;
-                                    }
-                                }
-                        }
-                        
-                        
-                console.log("Not me! " + curr_dragged_seg);
-               }
-               
-        
-        
-        var export_path_full = path.exportSVG({asString: true});
-        export_path_full.toString();
-        var export_path_remove_start = export_path_full.substr(44);
-        
-        var export_path_final = export_path_remove_start.substr(0, export_path_remove_start.length - 15);
-        
-        //$("#default_user_path").html(export_path_final);
-        
-        $("#img_path_paper").attr("value", export_path_final);
-       
-        
-       
-       
-            
-            $("#mask_x").attr("value", main_path.position.x);
-            $("#mask_y").attr("value", main_path.position.y);
-       
-            
-                
-                
-                var sholder_left = path.segments[6].point.y - 22;
-                var sholder_right = path.segments[62].point.y - 22;
-                
-                
-                
-                //alert(sholder_left);
-                
-                if(sholder_left <= sholder_right){
-                    $("#measurement_shoulder_height").attr("value", sholder_left);
-                }else{
-                    $("#measurement_shoulder_height").attr("value", sholder_right);
-                }
-                
-                
-                var bottom_left = path.segments[20].point.y - 66;
-                var bottom_right = path.segments[48].point.y - 66;
-                                
-                //alert(bottom_right);
-                
-                if(bottom_left <= bottom_right){
-                    $("#measurement_hip_height").attr("value", bottom_left);
-                }else{
-                    $("#measurement_hip_height").attr("value", bottom_right);
-                }
-                
-                
-                
-		//path.smooth();
-		
-		
-		
-		console.log("Me Hit!");
-	} else if (path) {
-		path.position += event.delta;
-		
-		
+		def_path.position += event.delta;
 	}
 	
 
