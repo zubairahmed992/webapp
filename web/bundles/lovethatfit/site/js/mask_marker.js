@@ -1,11 +1,20 @@
 var hitOptions = {
 	segments: true,
 	stroke: false,
-	fill: false,
-	tolerance: 15
+	fill: true,
+	tolerance: 15,
+        pixel: false
 };
 
-inc_ratio = 4;
+inc_ratio = 2.4;
+center_pos = 300;
+def_pos_x = -500;
+def_path_diff = 500;
+
+
+
+
+
 
 //////// From JS file
 
@@ -41,7 +50,7 @@ function createBlob() {
         
 mid_area_path = new Path(pathData);
 mid_area_path.opacity = 0.6;
-trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 1000));
+trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 2000));
 trans_bg.style = {
 	fillColor: '#666666',
 	stroke: 2,
@@ -49,9 +58,12 @@ trans_bg.style = {
 };
 
 
-var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
 
-//var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+
+
+//var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
+
+var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
 p_user_height = p_user_height * 6;
 //alert(p_user_height);
@@ -64,13 +76,17 @@ p_user_height = p_user_height / 100;
 
 console.log(p_user_height);
 
-//alert(p_user_height);
+var user_img_url = $("#hdn_user_cropped_image_url").attr("value");
+var user_image = new Raster(user_img_url);
+
+user_image.scale(inc_ratio,p_user_height*inc_ratio);
+user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
 
 if(chk_no_img_path == true){
 
     mid_area_path.scale(inc_ratio,p_user_height*inc_ratio);
     //alert("in side");
-   mid_area_path.position = new Point(181,(p_user_height_px * inc_ratio /2)+17);
+   mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
    
    def_shape_h = p_user_height; //65in
    
@@ -233,13 +249,13 @@ if(chk_no_img_path == true){
   
     
     mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
-    mid_area_path.position = new Point(181,(p_user_height_px * inc_ratio /2)+17);
+    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
    }
    else{
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
     //alert("me fine till here");
     mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
-    mid_area_path.position = new Point(181,(p_user_height_px * inc_ratio /2)+17);
+    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
    }
 
 
@@ -289,7 +305,7 @@ var path = new CompoundPath({
                 mid_area_path
     ],
     fillColor: '#666666',
-    selected: true
+    selected: false
 	//strokeColor: '#ffcc00'
 });
 
@@ -303,7 +319,7 @@ path.opacity = 0.6;
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(-500,(p_user_height_px * inc_ratio /2)+17);
+        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+17);
         d_adj_path.opacity = 0.5;
         
         d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
@@ -316,10 +332,10 @@ path.opacity = 0.6;
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(-500,(p_user_height_px * inc_ratio /2)+17);
+        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+17);
         d_adj_path.opacity = 0.5;
         
-        d_adj_path.scale(2,p_user_height * inc_ratio);
+        d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
         
     }
       return path;
@@ -359,6 +375,7 @@ var export_path_full = path.exportSVG({asString: true});
 var segment;
 var movePath = false;
 function onMouseDown(event) {
+    
 	segment = path = null;
 	var hitResult = project.hitTest(event.point, hitOptions);
 	if (!hitResult)
@@ -375,6 +392,7 @@ function onMouseDown(event) {
 	if (hitResult) {
                 
 		path = hitResult.item;
+                
 		if (hitResult.type == 'segment') {
 			segment = hitResult.segment;
 		} else if (hitResult.type == 'stroke') {
@@ -422,6 +440,7 @@ main_path = project.getItem({
             });
 
 function onMouseDrag(event) {
+
 	if (segment) {
         
         
@@ -445,7 +464,7 @@ function onMouseDrag(event) {
         
         
         
-        def_segment = def_segment + 500 + 181;
+        def_segment = def_segment + def_path_diff + center_pos;
         //alert(def_segment);
         
         //var def_segment = 200;
@@ -500,7 +519,7 @@ function onMouseDrag(event) {
                         }else{
                         
                                     var def_segment = def_path.segments[curr_dragged_seg].point.y;
-                                    //def_segment = def_segment + 500 + 181;
+                                    //def_segment = def_segment + 500 + center_pos;
                                     var px_range = 20;
                                     var active_segment = segment.point.y;
             
@@ -574,9 +593,11 @@ function onMouseDrag(event) {
 		
 		
 		console.log("Me Hit!");
-	} else if (path) {
+	} else if (path || def_path) {
+            alert(this.type);
 		path.position += event.delta;
 		def_path.position += event.delta;
+                
 	}
 	
 
