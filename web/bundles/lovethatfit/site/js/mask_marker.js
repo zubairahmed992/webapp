@@ -448,7 +448,7 @@ function onMouseDown(event) {
                             trans_bg.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             def_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            user_image.position.y += 80;
+                            user_image.position.y += 66;
                         }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
                             curr_view = "normal";
                             hitOptions.fill = true;
@@ -457,7 +457,7 @@ function onMouseDown(event) {
                             trans_bg.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
                             def_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
                             user_image.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
-                            user_image.position.y -= 80;
+                            user_image.position.y -= 66;
                         }
                         else if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
