@@ -1,18 +1,19 @@
-var hitOptions = {
+hitOptions = {
 	segments: true,
 	stroke: false,
-	fill: true,
-	tolerance: 15,
-        pixel: false
+	fill: false,
+	tolerance: 20
 };
 
-inc_ratio = 2.4;
-center_pos = 300;
+inc_ratio = 1;
+curr_screen_height = 500;
+center_pos = 181;
 def_pos_x = -500;
 def_path_diff = 500;
 
+gap_top_head = -20;
 
-
+curr_view = "normal";
 
 
 
@@ -63,30 +64,33 @@ trans_bg.style = {
 
 //var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
 
-var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
-p_user_height = p_user_height * 6;
+
+var final_user_height_ratio = curr_screen_height / p_user_height;
+
+p_user_height = p_user_height * final_user_height_ratio;
 //alert(p_user_height);
-var p_user_height_px = p_user_height;
+p_user_height_px = p_user_height;
 
-p_user_height = p_user_height * 100 / 450;
+p_user_height = p_user_height * 100 / curr_screen_height;
 
 p_user_height = p_user_height / 100;
 
 
 console.log(p_user_height);
 
-var user_img_url = $("#hdn_user_cropped_image_url").attr("value");
-var user_image = new Raster(user_img_url);
+user_img_url = $("#hdn_user_cropped_image_url").attr("value");
+user_image = new Raster(user_img_url);
 
 user_image.scale(inc_ratio,p_user_height*inc_ratio);
-user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
+user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
 
 if(chk_no_img_path == true){
 
     mid_area_path.scale(inc_ratio,p_user_height*inc_ratio);
     //alert("in side");
-   mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
+   mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
    
    def_shape_h = p_user_height; //65in
    
@@ -249,13 +253,13 @@ if(chk_no_img_path == true){
   
     
     mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
-    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
+    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
    }
    else{
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
     //alert("me fine till here");
     mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
-    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+17);
+    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
    }
 
 
@@ -305,7 +309,7 @@ var path = new CompoundPath({
                 mid_area_path
     ],
     fillColor: '#666666',
-    selected: false
+    selected: true
 	//strokeColor: '#ffcc00'
 });
 
@@ -319,7 +323,7 @@ path.opacity = 0.6;
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+17);
+        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
         d_adj_path.opacity = 0.5;
         
         d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
@@ -332,7 +336,7 @@ path.opacity = 0.6;
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+17);
+        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
         d_adj_path.opacity = 0.5;
         
         d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
@@ -372,12 +376,49 @@ var export_path_full = path.exportSVG({asString: true});
 }
 
 
+var but_zoom_in_url = "/webapp/web/bundles/lovethatfit/site/images/zoom_inw.png";
+var but_zoom_in = new Raster(but_zoom_in_url);
+
+but_zoom_in.position = new Point(24, 24);
+
+var but_zoom_out_url = "/webapp/web/bundles/lovethatfit/site/images/zoom_out.png";
+var but_zoom_out = new Raster(but_zoom_out_url);
+
+but_zoom_out.position = new Point(24, 68);
+
+var but_move_left_url = "/webapp/web/bundles/lovethatfit/site/images/move_left.png";
+var but_move_left = new Raster(but_move_left_url);
+
+but_move_left.position = new Point(24, 112);
+
+var but_move_right_url = "/webapp/web/bundles/lovethatfit/site/images/move_right.png";
+var but_move_right = new Raster(but_move_right_url);
+
+but_move_right.position = new Point(24, 156);
+
+var but_move_up_url = "/webapp/web/bundles/lovethatfit/site/images/move_up.png";
+var but_move_up = new Raster(but_move_up_url);
+
+but_move_up.position = new Point(24, 200);
+
+var but_move_down_url = "/webapp/web/bundles/lovethatfit/site/images/move_down.png";
+var but_move_down = new Raster(but_move_down_url);
+
+but_move_down.position = new Point(24, 244);
+
+
+
+
+
+
+
 var segment;
 var movePath = false;
 function onMouseDown(event) {
     
 	segment = path = null;
 	var hitResult = project.hitTest(event.point, hitOptions);
+        
 	if (!hitResult)
 		return;
 
@@ -388,20 +429,61 @@ function onMouseDown(event) {
 		};
 		return;
 	}
-
-	if (hitResult) {
+        
+	if (hitResult && hitResult.item != user_image) {
                 
 		path = hitResult.item;
                 
 		if (hitResult.type == 'segment') {
 			segment = hitResult.segment;
-		} else if (hitResult.type == 'stroke') {
-			
+		} else if (hitResult.type == 'pixel') {
+			//segment = null;
+                        if(hitResult.item == user_image){
+                            
+                        }else if(hitResult.item == but_zoom_in){
+                            curr_view = "zoomed";
+                            hitOptions.fill = true;
+                            main_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            mid_area_path.selected = true;
+                            trans_bg.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            def_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            user_image.position.y += 80;
+                        }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
+                            curr_view = "normal";
+                            hitOptions.fill = true;
+                            main_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
+                            mid_area_path.selected = true;
+                            trans_bg.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
+                            def_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
+                            user_image.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
+                            user_image.position.y -= 80;
+                        }
+                        else if(hitResult.item == but_move_left){
+                            user_image.position.x -= 1;
+                        }
+                        else if(hitResult.item == but_move_right){
+                            user_image.position.x += 1;
+                        }
+                        else if(hitResult.item == but_move_up){
+                            user_image.position.y -= 1;
+                        }
+                        else if(hitResult.item == but_move_down){
+                            user_image.position.y += 1;
+                        }
 		}
 	}
 	//movePath = hitResult.type == 'fill';
 	//if (movePath)
 		//project.activeLayer.addChild(hitResult.item);
+       //project.activeLayer.addChild(main_path);           
+       
+       if(hitResult.item == main_path){
+              console.log("Its me lala");
+          }         
+       
+                
+                
 }
 
 
@@ -593,13 +675,21 @@ function onMouseDrag(event) {
 		
 		
 		console.log("Me Hit!");
-	} else if (path || def_path) {
-            alert(this.type);
+	} else if (curr_view == "zoomed") {
+            //alert(this.type);
 		path.position += event.delta;
 		def_path.position += event.delta;
-                
+                user_image.position += event.delta;
 	}
 	
 
 	
 }
+
+//var rectangle = new Rectangle(new Point(20, 20), new Size(60, 60));
+//var cornerSize = new Size(10, 10);
+//var but_zoom = new Shape.Rectangle(rectangle, cornerSize);
+
+
+
+
