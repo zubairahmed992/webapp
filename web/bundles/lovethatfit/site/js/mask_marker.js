@@ -14,6 +14,7 @@ def_path_diff = 500;
 gap_top_head = -20;
 
 curr_view = "normal";
+curr_crop = "normal";
 
 
 
@@ -302,7 +303,7 @@ if(chk_no_img_path == true){
 ////////////////////////////////////////////////////////////// 
 
 
-var path = new CompoundPath({
+path_com = new CompoundPath({
     children: [
 		trans_bg,
                 //default_path,
@@ -314,11 +315,11 @@ var path = new CompoundPath({
 });
 
 
-path.opacity = 0.6;
+path_com.opacity = 0.6;
 
      if(chk_no_img_path == true){      
      
-        export_svg_data(path);
+        export_svg_data(path_com);
      
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         d_adj_path = new Path(default_adjusted_path_data);
@@ -342,10 +343,10 @@ path.opacity = 0.6;
         d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
         
     }
-      return path;
+      return path_com;
 }
 
-function export_svg_data(path){
+function export_svg_data(path_com){
 
 
 
@@ -406,6 +407,21 @@ var but_move_down = new Raster(but_move_down_url);
 
 but_move_down.position = new Point(24, 244);
 
+var but_rotate_left_url = "/webapp/web/bundles/lovethatfit/site/images/rotate_left.png";
+var but_rotate_left = new Raster(but_rotate_left_url);
+
+but_rotate_left.position = new Point(24, 288);
+
+var but_rotate_right_url = "/webapp/web/bundles/lovethatfit/site/images/rotate_right.png";
+var but_rotate_right = new Raster(but_rotate_right_url);
+
+but_rotate_right.position = new Point(24, 332);
+
+var but_crop_icon_url = "/webapp/web/bundles/lovethatfit/site/images/crop_icon.png";
+var but_crop_icon = new Raster(but_crop_icon_url);
+
+but_crop_icon.position = new Point(24, 432);
+
 
 
 
@@ -440,7 +456,7 @@ function onMouseDown(event) {
 			//segment = null;
                         if(hitResult.item == user_image){
                             
-                        }else if(hitResult.item == but_zoom_in){
+                        }else if(curr_view == "normal" && hitResult.item == but_zoom_in){
                             curr_view = "zoomed";
                             hitOptions.fill = true;
                             main_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
@@ -470,6 +486,27 @@ function onMouseDown(event) {
                         }
                         else if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
+                        }
+                        else if(hitResult.item == but_rotate_left){
+                            user_image.rotate(-0.5); 
+                        }
+                        else if(hitResult.item == but_rotate_right){
+                            user_image.rotate(0.5);
+                        }
+                        else if(curr_crop == "normal" && hitResult.item == but_crop_icon){
+                            curr_crop = "checked";
+                            mid_area_path.selected = false;
+                            path_com.selected = false;
+                            path_com.fillColor = "#fff";
+                            path_com.opacity = 1;
+                            alert("ddd");
+                        }else if(curr_crop == "checked" && hitResult.item == but_crop_icon){
+                            curr_crop = "normal";
+                            mid_area_path.selected = true;
+                            trans_bg.fillColor = '#666666';
+                            mid_area_path.opacity = 0.6;
+                            
+                            
                         }
 		}
 	}
