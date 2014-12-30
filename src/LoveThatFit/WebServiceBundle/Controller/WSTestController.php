@@ -22,9 +22,8 @@ class WSTestController extends Controller {
 
 #--------------------Login User -----------------------------------------------#     
     public function loginAction() {
-        $decoded  = $this->process_request();                 
-        $user_helper = $this->get('webservice.helper.user');
-        $user_info = $user_helper->loginWebService($decoded, $this->getRequest());
+        $decoded  = $this->process_request();                         
+        $user_info = $this->get('webservice.helper.user')->loginWebService($decoded, $this->getRequest());
         return new response(json_encode($user_info));      
     }
 

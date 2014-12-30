@@ -362,14 +362,12 @@ class UserHelper {
 
 #---------------------------------------------Login Web Service -----------------------------------#
 
-
+# this method is not being used
+    /*
     public function loginWebService($request_array, $request) {
         $email = $request_array['email'];
         $password = $request_array['password'];
         $deviceType=$request_array['deviceType'];
-        /*$email ='oldnavywomen0@ltf.com';
-        $password ='123456'; 
-        $deviceType="iphone4s";*/
         $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
                 $device_type=array();
@@ -389,7 +387,7 @@ class UserHelper {
             return array('Message' => 'Invalid Email');
         }
     }
-
+*/
 #---------------------------------Web Service For Registration--------------------#
 
     public function registerWithReqestArray(Request $request, $request_array) {
@@ -459,7 +457,8 @@ class UserHelper {
         }
         $userinfo['image'] = $entity->getImage();
         $userinfo['avatar'] = $entity->getAvatar();
-        $userinfo['iphoneImage'] = $entity->getIphoneImage();
+        #$userinfo['iphoneImage'] = $entity->getIphoneImage();
+        $userinfo['iphoneImage'] = '';
         $userinfo['heightPerInch']= $entity->getDeviceUserPerInchPixelHeight();
         $userinfo['postDeviceType']= $entity->getDeviceType();
         $userinfo['preDeviceType']= $entity->getDeviceType();

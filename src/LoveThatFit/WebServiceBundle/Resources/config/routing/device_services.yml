@@ -2,6 +2,4 @@ dws_constants:
    pattern:  /dws/constants
    defaults: { _controller: LoveThatFitWebServiceBundle:Device:Constants}
 
-dws_image_upload:
-   pattern:  /dws/image_upload
-   defaults: { _controller: LoveThatFitWebServiceBundle:Device:deviceImageUpload}       
+   

@@ -1669,5 +1669,31 @@ class User implements UserInterface, \Serializable {
         else
             return null;
     }
-
+ #---------------------------------------------------
+    public function toArray(){
+        
+        $obj = array();
+        $obj['id'] = $this->getId();
+        $obj['salt'] = $this->getSalt();
+        $obj['password'] = $this->getPassword();
+        $obj['email'] = $this->getEmail();
+        $obj['first_name'] = $this->getFirstName();
+        $obj['last_name'] = $this->getLastName();
+        $obj['zipcode'] = $this->getZipcode();
+        $obj['gender'] = $this->getGender();        
+        $obj['image'] = $this->getImage();
+        $obj['avatar'] = $this->getAvatar();                
+        $obj['web_path'] = $this->getDirWebPath();
+        $obj['auth_token'] = $this->getAuthToken();
+        $obj['auth_token_web_service'] = $this->getAuthTokenWebService();
+        $obj['secret_question'] = $this->getSecretQuestion();
+        $obj['secret_answer'] = $this->getSecretAnswer();
+        $obj['time_spent'] = $this->getTimeSpent();
+        $obj['birth_date']=$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null;        
+        $obj['created_at']=$this->getCreatedAt()?$this->getCreatedAt()->format('Y-m-d'):null;        
+        $obj['updated_at']=$this->getUpdatedAt()?$this->getUpdatedAt()->format('Y-m-d'):null;        
+        $obj['image_updated_at']=$this->getImageUpdatedAt()?$this->getImageUpdatedAt()->format('Y-m-d'):null;                
+        return $obj;
+        
+    }
 }

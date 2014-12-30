@@ -25,10 +25,8 @@ class UserController extends Controller {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-     //  $decoded=array('email'=>'','password'=>'Apple2013','deviceType'=>'');
-        $user_helper = $this->get('webservice.helper.user');
-        $user_info = $user_helper->loginWebService($decoded,$request);
-      // $user_info = $user_helper->loginWebService($decoded,$request);
+     //  $decoded=array('email'=>'','password'=>'Apple2013','deviceType'=>'');        
+        $user_info = $this->get('webservice.helper.user')->loginWebService($decoded,$request);      
         return new response(json_encode($user_info));
       
     }
@@ -102,6 +100,7 @@ public function editProfileAction()
     else {return new Response(json_encode(array('Message' => 'We can not find user')));}
 }        
 
+/*
 #------------------------------User Profile-------------------------------------#
 public function userProfileAction()
 {       $request = $this->getRequest();
@@ -116,8 +115,6 @@ public function userProfileAction()
          }else{
         $email = $decoded['email'];
          }
-      /*  $email='oldnavywomen0@ltf.com';*/
-      //  return new response(json_encode($email));
         $user = $this->get('webservice.helper.user');
          $chk_email = $user->findOneBy($email);
          //return new response(json_encode(count($chk_email)));
@@ -130,7 +127,7 @@ public function userProfileAction()
             return new Response(json_encode(array('Message' => 'Invalid Email')));
         }
 }
-
+*/
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
 # SAVE_MARKING_URL	/web_service/iphone_shoulder_outseam
  public function shoulderOutseamEditAction() {
@@ -237,6 +234,7 @@ public function userProfileAction()
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     #UPLOAD_MANNEQUIN_URL	/web_service/image_upload
 #------------------------    
+    
  public function imageUploadAction() {
          $request = $this->getRequest();
         $email = $_POST['email'];
@@ -280,6 +278,43 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    #UPLOAD_MANNEQUIN_URL	/web_service/image_upload
+#-----------------------------------
+    public function deviceImageUploadAction() {
+                
+        $email = $_POST['email'];
+        $device_type = $_POST['deviceType'];
+        $device_name = $_POST['deviceName'];
+        $heightPerInch = $_POST['heightPerInch'];
+        $user = $email != null ? $this->get('user.helper.user')->findByEmail($email) : null;
+        if (!$user) {
+            return new response(json_encode(array('Message' => 'Email Not Found')));
+        }
+        $user_device = $this->get('user.helper.userdevices')->findOneByDeviceTypeAndUser($user->getId(), $device_type);
+        if (!$user_device) {
+            $user_device = $this->get('user.helper.userdevices')->createNew($user);
+            $user_device->setDeviceType($device_type);            
+        }
+        $user_device->setDeviceName($device_name);
+        $user_device->file = $_FILES["file"];
+
+        if ($heightPerInch) {
+            $user_device->setDeviceUserPerInchPixelHeight($heightPerInch);
+        }
+
+        $user_device->upload();
+        $this->get('user.helper.userdevices')->saveUserDevices($user_device);
+        $userinfo = array();
+        $request = $this->getRequest();
+        $image_path = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() .'/'. $user_device->getWebPath();
+        $userinfo['heightPerInch'] = $user_device->getDeviceUserPerInchPixelHeight();
+        $userinfo['iphoneImage'] = $user_device->getDeviceImage();
+        $userinfo['path'] = $image_path;
+        
+        return new Response(json_encode($userinfo));
+    }    
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     #AVATAR_URL	/web_service/upload_avatar
@@ -330,54 +365,6 @@ public function avatarUploadAction() {
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
-    
-#-----------------------------------Upload image in Device Table ---------------#
-    public function deviceImageUploadAction() {
-        $request = $this->getRequest();
-        $email = $_POST['email'];
-        $deviceType = $_POST['deviceType'];
-        $heightPerInch = $_POST['heightPerInch'];
-
-        if ($email) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('LoveThatFitUserBundle:User')->findOneBy(array('email' => $email));
-        } else {
-            return new response(json_encode(array('Message' => 'Email Not Found')));
-        }
-        if (count($entity) > 0) {
-            $user_id = $entity->getId();
-            $file_name = $_FILES["file"]["name"];
-            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-           $newFilename = 'iphone' . "." . $ext;
-            $entity->setIphoneImage($newFilename);
-            if (!is_dir($entity->getUploadRootDir())) {
-                @mkdir($entity->getUploadRootDir(), 0700);
-            }
-   if (move_uploaded_file($_FILES["file"]["tmp_name"], $entity->getAbsoluteIphonePath())) {
-       $this->get('webservice.helper.user')->setMarkingDeviceType($entity, $deviceType,$heightPerInch);
-             //   $entity->setDeviceType($deviceType);
-             //   $entity->setDeviceUserPerInchPixelHeight($heightPerInch);
-
-                 $em->persist($entity);
-                 $em->flush();
-                //  $image_path = $entity->getWebPath(); 
-                 $userinfo = array();
-                 $userimage = $entity->getIphoneImage();
-                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user_id . "/";
-                 $userinfo['heightPerInch']= $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($entity,$deviceType);//$entity->getDeviceUserPerInchPixelHeight();
-                 $userinfo['iphoneImage'] = $userimage;
-                 $userinfo['path'] = $baseurl;
-                return new Response(json_encode($userinfo));
-          } else {
-              return new response(json_encode(array('Message' => 'Image not uploaded')));
-            }
-        } else {
-            return new response(json_encode(array('Message' => 'We can not find user')));
-        }
-    }  
-   
-    
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     # CONSTANT_URL	/web_service/constant_values
 #---------------------------------------------------

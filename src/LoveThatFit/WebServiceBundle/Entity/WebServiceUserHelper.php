@@ -200,15 +200,14 @@ public function registerUser(User $user) {
     }
 #------------\------------------------------------------------------------------#
     public function getArrayByEmail($email, $device_type=null) {//getUserArrayByEmail
-        $entity = $this->repo->findOneBy(array('email' => $email));
-        $userinfo = array();
+        $entity = $this->repo->findOneBy(array('email' => $email));        
         $userinfo = $this->fillUserArray($entity, $device_type);
         return $userinfo;
     }
 #------------------------------------------------------------------------------#    
-   public function getDetailArrayByEmail($email) {
+   public function getDetailArrayByEmail($email, $device_type=null) {
         $entity = $this->repo->findOneBy(array('email' => $email));
-        $userinfo = $this->fillUserArray($entity);
+        $userinfo = $this->fillUserArray($entity, $device_type);
         $user_measurment = $this->fillMeasurementArray($entity->getMeasurement());
         return array_merge($userinfo, $user_measurment);
     }
@@ -273,22 +272,12 @@ public function registerUser(User $user) {
         $email = $request_array['email'];
         $password = $request_array['password'];
         $deviceType=$request_array['deviceType'];
-        /*$email ='amrani192@gmail.com';
-        $password =''; 
-        $deviceType="iphone4s";*/
        
         $entity = $this->findOneBy($email);
         if (count($entity) > 0) {
-            
-           
             if ($this->matchPassword($entity, $password)) {
-                
-           $device_type=$this->getUserDeviceTypeAndMarking($entity,$deviceType);
-           
-            
-            //$pre_device_type=$entity->getDeviceType();
-               
-                
+                $device_type=$this->getUserDeviceTypeAndMarking($entity,$deviceType);
+                //$pre_device_type=$entity->getDeviceType();
                 // $entity->setDeviceType($deviceType);
                  $this->saveUser($entity);
                  $user_info=$this->gettingUserDetailArray($entity, $request);
@@ -370,7 +359,7 @@ public function updateMeasurementWithReqestArray($id, $request_array,$request) {
         
         $entity = $this->repo->findOneBy(array('email' => $email));// has to be change to getByEmail
         if (count($entity) > 0) {
-            $userinfo = $this->fillUserArray($entity);
+            $userinfo = $this->fillUserArray($entity, $request_array['deviceType']);
             $userinfo['authTokenWebService'] = $entity->getAuthToken();
           //  $userinfo['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $userinfo['id'] . "/";             
                 
@@ -478,9 +467,13 @@ private function fillUserArray($entity, $device_type=null) {
         $user_device=$entity->getDeviceSpecs($device_type);
         $userinfo['iphoneImage'] =$user_device?$user_device->getDeviceImage():'';
         }else{
-           if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
+            $userinfo['iphoneImage'] ='';
         }
-        if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
+        
+        /*else{
+           if($entity->getIphoneImage()){$userinfo['iphoneImage'] = $entity->getIphoneImage();}else{$userinfo['iphoneImage']='';}
+        }*/
+        #if($entity->getImage()){$userinfo['image'] = $entity->getImage();}else{$userinfo['image']='';}
         if($entity->getAvatar()){$userinfo['avatar'] = $entity->getAvatar();}else{ $userinfo['avatar']='';}
         
      

@@ -833,7 +833,7 @@ class ProductRepository extends EntityRepository {
        } else {
             $query = $this->getEntityManager()
                     ->createQuery("
-            SELECT p FROM LoveThatFitAdminBundle:Product p 
+            SELECT p,uih FROM LoveThatFitAdminBundle:Product p 
              JOIN p.brand b
             JOIN p.user_item_try_history uih
             LEFT JOIN p.retailer r
