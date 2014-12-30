@@ -95,7 +95,11 @@ fitting_room_image_edit:
     #----------------------- masked marker related 
 registration_step_image_edit:
     pattern:  /registration/step_image_edit/{edit_type}
-    defaults: { _controller: LoveThatFitUserBundle:Registration:stepImageEdit, edit_type:null }    
+    defaults: { _controller: LoveThatFitUserBundle:Registration:stepImageEdit, edit_type:null }
+    
+registration_device_view:
+    pattern:  /registration/device_view/{edit_type}
+    defaults: { _controller: LoveThatFitUserBundle:Registration:deviceView, edit_type:null }
 
 
 registration_device_view_edit:

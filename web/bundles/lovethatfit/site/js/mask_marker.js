@@ -377,12 +377,12 @@ var export_path_full = path.exportSVG({asString: true});
 }
 
 
-var but_zoom_in_url = "/webapp/web/bundles/lovethatfit/site/images/zoom_inw.png";
+var but_zoom_in_url = "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
 
 but_zoom_in.position = new Point(24, 24);
 
-var but_zoom_out_url = "/webapp/web/bundles/lovethatfit/site/images/zoom_out.png";
+var but_zoom_out_url = "/bundles/lovethatfit/site/images/zoom_out.png";
 var but_zoom_out = new Raster(but_zoom_out_url);
 
 but_zoom_out.position = new Point(24, 68);
