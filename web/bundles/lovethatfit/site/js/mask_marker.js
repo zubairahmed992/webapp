@@ -498,16 +498,12 @@ function onMouseDown(event) {
                         }
                         else if(curr_crop == "normal" && hitResult.item == but_crop_icon){
                             curr_crop = "checked";
-                            mid_area_path.selected = false;
-                            path_com.selected = false;
                             path_com.fillColor = "#fff";
                             path_com.opacity = 1;
-                            alert("ddd");
                         }else if(curr_crop == "checked" && hitResult.item == but_crop_icon){
                             curr_crop = "normal";
-                            mid_area_path.selected = true;
-                            trans_bg.fillColor = '#666666';
-                            mid_area_path.opacity = 0.6;
+                            path_com.fillColor = "#666";
+                            path_com.opacity = 0.6;
                             
                             
                         }
