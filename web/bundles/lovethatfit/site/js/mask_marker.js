@@ -17,7 +17,6 @@ curr_view = "normal";
 curr_crop = "normal";
 
 
-
 //////// From JS file
 
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
@@ -458,7 +457,6 @@ function onMouseDown(event) {
 		} else if (hitResult.type == 'pixel') {
 			//segment = null;
                         if(hitResult.item == user_image){
-                            
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in){
                             curr_view = "zoomed";
                             hitOptions.fill = true;
@@ -507,6 +505,7 @@ function onMouseDown(event) {
                             
                             
                         }
+                        
 		}
 	}
 	//movePath = hitResult.type == 'fill';
@@ -713,7 +712,7 @@ function onMouseDrag(event) {
 		console.log("Me Hit!");
 	} else if (curr_view == "zoomed") {
             //alert(this.type);
-		path.position += event.delta;
+		path_com.position += event.delta;
 		def_path.position += event.delta;
                 user_image.position += event.delta;
 	}
