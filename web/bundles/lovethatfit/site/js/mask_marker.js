@@ -376,48 +376,51 @@ var export_path_full = path.exportSVG({asString: true});
             $("#mask_y").attr("value", main_path.position.y);
 }
 
+var curr_path_prefix = $("#hdn_serverpath").attr("value");
 
-var but_zoom_in_url = "bundles/lovethatfit/site/images/zoom_inw.png";
+console.log(curr_path_prefix);
+
+var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
 
 but_zoom_in.position = new Point(24, 24);
 
-var but_zoom_out_url = "/bundles/lovethatfit/site/images/zoom_out.png";
+var but_zoom_out_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_out.png";
 var but_zoom_out = new Raster(but_zoom_out_url);
 
 but_zoom_out.position = new Point(24, 68);
 
-var but_move_left_url = "/webapp/web/bundles/lovethatfit/site/images/move_left.png";
+var but_move_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_left.png";
 var but_move_left = new Raster(but_move_left_url);
 
 but_move_left.position = new Point(24, 112);
 
-var but_move_right_url = "/webapp/web/bundles/lovethatfit/site/images/move_right.png";
+var but_move_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
 var but_move_right = new Raster(but_move_right_url);
 
 but_move_right.position = new Point(24, 156);
 
-var but_move_up_url = "/webapp/web/bundles/lovethatfit/site/images/move_up.png";
+var but_move_up_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_up.png";
 var but_move_up = new Raster(but_move_up_url);
 
 but_move_up.position = new Point(24, 200);
 
-var but_move_down_url = "/webapp/web/bundles/lovethatfit/site/images/move_down.png";
+var but_move_down_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_down.png";
 var but_move_down = new Raster(but_move_down_url);
 
 but_move_down.position = new Point(24, 244);
 
-var but_rotate_left_url = "/webapp/web/bundles/lovethatfit/site/images/rotate_left.png";
+var but_rotate_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_left.png";
 var but_rotate_left = new Raster(but_rotate_left_url);
 
 but_rotate_left.position = new Point(24, 288);
 
-var but_rotate_right_url = "/webapp/web/bundles/lovethatfit/site/images/rotate_right.png";
+var but_rotate_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_right.png";
 var but_rotate_right = new Raster(but_rotate_right_url);
 
 but_rotate_right.position = new Point(24, 332);
 
-var but_crop_icon_url = "/webapp/web/bundles/lovethatfit/site/images/crop_icon.png";
+var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
 var but_crop_icon = new Raster(but_crop_icon_url);
 
 but_crop_icon.position = new Point(24, 432);
