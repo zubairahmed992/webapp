@@ -193,3 +193,47 @@ image_category:
       height: 250
       width: 220
       dir:  'uploads/ltf/users'
+
+
+image_map:
+  brand:
+    web:
+      height: 80
+      width: 205
+    phone:
+      width: 120
+      height: 120      
+    tab:
+      width: 120
+      height: 120
+  retailer:
+    web:
+      height: 80
+      width: 205
+    phone:
+      width: 120
+      height: 120      
+    tab:
+      width: 120
+      height: 120
+  products:
+    web:
+      height: 108
+      width: 100
+    phone:
+      width: 120
+      height: 120      
+    tab:
+      width: 120
+      height: 120
+  products_pattern:
+    web:
+      height: 16
+      width: 16
+    phone:
+      width: 50
+      height: 50      
+    tab:
+      width: 100
+      height: 100
+  products_item:

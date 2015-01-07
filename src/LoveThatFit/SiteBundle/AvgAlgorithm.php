@@ -26,11 +26,15 @@ class AvgAlgorithm {
     function getFeedBack() {
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->array_mix();
-            $rc = $this->getFittingSize($cm['feedback']);
-            return array(
-                'feedback' => $cm['feedback'],
-                'recommendation' => $rc,
-            );
+            $rc = $this->getRecommendation($cm['feedback']);
+            if ($rc){
+                return array(
+                    'feedback' => $cm['feedback'],
+                    'recommendation' => $rc,
+                );
+            }else{
+                return $this->generateFakeFeedback($cm['feedback']);
+            }
         } else {
             return array(
                 'message' => 'Fit Priority is not set for this product.',
@@ -39,14 +43,14 @@ class AvgAlgorithm {
     }
 
 #-----------------------------------------------------
-    function getRecommendation($sizes = null) {
-        if ($sizes) {
-            return $this->getFittingSize($sizes);
-        } else {
+    function getRecommendation($sizes = null) {        
+        if(!$sizes){
             $cm = $this->array_mix();
-            return $this->getFittingSize($cm['feedback']);
+            $sizes = $cm['feedback'];
         }
+        return $this->getFittingSize($sizes);        
     }
+    
     
 #--------------------------------------------------------
     private function getFittingSize($sizes) {
@@ -69,6 +73,53 @@ class AvgAlgorithm {
         }
         return $best_fit;
     }    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>*Fake 1
+    private function generateFakeFeedback($sizes){
+        $min_size=$this->getSizeWithLowestVarience($sizes);
+        $floated = $this->floatMinimumMeasurement($min_size);
+        $sizes[$floated['description']]=$floated;
+         return array(
+                'feedback' => $sizes,
+                'recommendation' => $floated,
+            );
+    }
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>*Fake 2   
+    private function getSizeWithLowestVarience($sizes) {
+        if ($sizes == null)
+            return;
+        $lowest_variance = null;        
+        $best_fit = null;
+
+        foreach ($sizes as $size) {
+            #if ($size['status'] != $this->status['beyond_max'] && $size['status'] != $this->status['below_min']) {
+            if (!($size['status'] <= $this->status['beyond_max'])) {
+                if ($lowest_variance == null || $lowest_variance > $size['variance']) {
+                    $lowest_variance = $size['variance'];
+                    $best_fit = $size;
+                } elseif($lowest_variance == $size['variance']){                    
+                    $best_fit = $size;
+                }
+            }
+        }
+        return $best_fit;
+    }    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>*Fake 3
+    private function floatMinimumMeasurement($size){
+        foreach ($size['fit_points'] as $k=>$v) {
+            if ($v['body_measurement']<=$v['min_body_measurement']){
+                #1) change min_body_measurement
+                $size['fit_points'][$k]['min_body_measurement'] = $size['fit_points'][$k]['body_measurement'];
+                #2) calculate fp min_variance
+                $size['fit_points'][$k]['min_variance'] = '';
+            }
+        }
+        # calculate accumulated variance
+        # calculate max_variance
+        # calculate fit_index
+        # $body_specs = $this->user->getMeasurement()->getArray();
+        return $size;
+    }
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>*Fake 4
 #-----------------------------------------------------    
     function getSizeFeedBack($size) {
 
