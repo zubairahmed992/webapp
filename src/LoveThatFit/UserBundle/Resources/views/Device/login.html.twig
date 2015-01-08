@@ -1,0 +1,51 @@
+{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+{% block action_block_content %}
+<section class="reg_blk">
+    <div class="action_cnt step_1">
+        <h2>Log In</h2>
+        <p>LoveThatFit provides the most realistic shopping experience like you were shopping in the store.</p>
+        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return validates()">
+            <div class="frm_ele">            
+                <input type="text" id="email" name="_username" value="{{ last_username }}" placeholder="Email" />
+                          </div>
+            <div class="frm_ele">
+                <input type="password" id="password" name="_password" placeholder="Password" />
+              <div class="login_error" >
+                  <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
+    text-align:left">
+                      Enter Valid User name and password
+                  </div>
+              </div>
+  {% if error %}
+        <div class="login_error" >          
+        <div id="error_content">{{ error.message  | replace({
+        "Bad credentials": "Invalid Log-in credentials"
+    })}}</div>
+        
+        </div>
+{% endif %}
+                <input type="hidden" name="_target_path" value="/device_browser/image_edit_web" />
+            </div>
+                 
+            <div class="frm_ele">
+                <input id="sbmt_bnt" type="submit" value="Login" class="reg_next_step" />
+            </div>
+        </form>
+        
+        
+        
+        
+        
+
+        
+
+        <ul class="row with_sep">
+            <li><a href="{{path('forgot_password_form')}}">forgot</a></li>
+            
+            <li><a href="{{path('registration')}}">create</a></li>
+        </ul>
+        <!--/.action_cnt--></div>
+    <!--/.action_blk--></section>
+{% endblock %}
+
+

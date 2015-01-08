@@ -1,3 +1,8 @@
+admin_product_routes:
+    resource: "@LoveThatFitUserBundle/Resources/config/routing/device.yml"
+    prefix:   /
+#---------------------------------------------------------------
+
 registration_step_image_editajax_size_chart_title_json:
     pattern:  /ajax/size_chart_title/{brand_id}/{gender}/{target}/{body_type}
     defaults: { _controller: LoveThatFitUserBundle:Ajax:sizeChartSizesByBrandJSON ,_format: json}

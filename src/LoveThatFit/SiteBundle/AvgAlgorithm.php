@@ -80,11 +80,18 @@ class AvgAlgorithm {
     private function generateFakeFeedback($sizes){
         $min_size=$this->getSizeWithLowestVarience($sizes);
         $floated = $this->floatMinimumMeasurement($min_size);
+        if (is_array($floated) && array_key_exists('description', $floated)){
         $sizes[$floated['description']]=$floated;
          return array(
                 'feedback' => $sizes,
                 'recommendation' => $floated,
             );
+        }else{
+            return array(
+                'feedback' => $sizes,
+                'recommendation' => null,
+            );
+        }
     }
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>*Fake 2   
     private function getSizeWithLowestVarience($sizes) {
@@ -112,6 +119,7 @@ class AvgAlgorithm {
         $size['variance']=0;
         $size['max_variance'] =0;
         $fit_index_sum=0;
+        if (array_key_exists('fit_points', $size)){
         foreach ($size['fit_points'] as $k=>$v) {
             if ($v['body_measurement']<=$v['min_body_measurement']){
                 #1) change min_body_measurement
@@ -135,6 +143,7 @@ class AvgAlgorithm {
         # calculate fit_index
         #$size['fit_index'] = $this->grade_to_scale($size['variance'], $size['max_variance']);
         $size['fit_index'] = $fit_index_sum/count($size['fit_points']);
+        }
         return $size;
     }
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>*Fake 4
