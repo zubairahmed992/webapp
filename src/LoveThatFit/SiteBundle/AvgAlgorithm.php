@@ -26,7 +26,7 @@ class AvgAlgorithm {
     function getFeedBack() {
         if ($this->product->fitPriorityAvailable()) {
             $cm = $this->array_mix();
-            #return $this->generateFakeFeedback($cm['feedback']);
+            return $this->generateFakeFeedback($cm['feedback']);
             $rc = $this->getRecommendation($cm['feedback']);
             if ($rc){
                 return array(
@@ -111,26 +111,30 @@ class AvgAlgorithm {
         
         $size['variance']=0;
         $size['max_variance'] =0;
+        $fit_index_sum=0;
         foreach ($size['fit_points'] as $k=>$v) {
             if ($v['body_measurement']<=$v['min_body_measurement']){
                 #1) change min_body_measurement
-                $min=$size['fit_points'][$k]['body_measurement'];
+                $min=$size['fit_points'][$k]['body_measurement']-0.1;
                 $size['fit_points'][$k]['min_body_measurement'] = $min;
                 #2) calculate fp min_variance
                 $min_variance = $this->calculate_variance($min, $v['mid_low_high'], $v['fit_priority']);
+                $min_variance = $min_variance[0];
                 $size['fit_points'][$k]['min_variance'] = $min_variance ;
                 #3) fit point fit index
-                $size['fit_points'][$k]['fit_index'] =  $this->grade_to_scale($v['variance'], $min_variance);
+                $size['fit_points'][$k]['fit_index'] =  $this->grade_to_scale($v['variance'], $min_variance);                
             }
+            $fit_index_sum=$fit_index_sum + $size['fit_points'][$k]['fit_index'];
         #4) calculate accumulated variance
             $accumulated = $this->calculate_accumulated_variance($v,$size['variance']);
             $size['variance'] = $accumulated['variance'] ;
         #5) calculate max_variance
-            $size['max_variance'] = $size['max_variance'] + $accumulated['max_variance'];
+            $size['max_variance'] = $size['max_variance'] + $accumulated['max_variance'];            
         }
         
         # calculate fit_index
-        $size['fit_index'] = $this->grade_to_scale($size['variance'], $size['max_variance']);
+        #$size['fit_index'] = $this->grade_to_scale($size['variance'], $size['max_variance']);
+        $size['fit_index'] = $fit_index_sum/count($size['fit_points']);
         return $size;
     }
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>*Fake 4
