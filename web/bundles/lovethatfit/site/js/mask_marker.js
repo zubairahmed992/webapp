@@ -257,9 +257,10 @@ if(chk_no_img_path == true){
    }
    else{
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
-    //alert("me fine till here");
     mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
     mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
+    
+    
    }
 
 
@@ -426,6 +427,100 @@ but_crop_icon.position = new Point(24, 432);
 
 
 
+//////////////////////////////////  Dragable Bigger Points - Step One ///////////////////////////////////
+
+var bigger_point_url = curr_path_prefix + "bundles/lovethatfit/site/images/bigger_point.png";
+
+
+var but_bp_head_top = new Raster(bigger_point_url);
+but_bp_head_top.position = new Point(mid_area_path.segments[69].point);
+
+var but_bp_lft_shoulder = new Raster(bigger_point_url);
+but_bp_lft_shoulder.position = new Point(mid_area_path.segments[62].point);
+
+var but_bp_rgt_shoulder = new Raster(bigger_point_url);
+but_bp_rgt_shoulder.position = new Point(mid_area_path.segments[6].point);
+
+var but_bp_lft_arm_pit = new Raster(bigger_point_url);
+but_bp_lft_arm_pit.position = new Point(mid_area_path.segments[53].point);
+
+var but_bp_rgt_arm_pit = new Raster(bigger_point_url);
+but_bp_rgt_arm_pit.position = new Point(mid_area_path.segments[15].point);
+
+var but_bp_lft_waist = new Raster(bigger_point_url);
+but_bp_lft_waist.position = new Point(mid_area_path.segments[51].point);
+
+var but_bp_rgt_waist = new Raster(bigger_point_url);
+but_bp_rgt_waist.position = new Point(mid_area_path.segments[17].point);
+
+var but_bp_lft_hip = new Raster(bigger_point_url);
+but_bp_lft_hip.position = new Point(mid_area_path.segments[48].point);
+
+var but_bp_rgt_hip = new Raster(bigger_point_url);
+but_bp_rgt_hip.position = new Point(mid_area_path.segments[20].point);
+
+
+var but_bp_lft_hand = new Raster(bigger_point_url);
+but_bp_lft_hand.position = new Point(mid_area_path.segments[10].point);
+
+var but_bp_rgt_hand = new Raster(bigger_point_url);
+but_bp_rgt_hand.position = new Point(mid_area_path.segments[58].point);
+
+
+
+var but_bp_inseam = new Raster(bigger_point_url);
+but_bp_inseam.position = new Point(mid_area_path.segments[34].point);
+
+
+
+
+var but_bp_lft_foot = new Raster(bigger_point_url);
+but_bp_lft_foot.position = new Point(mid_area_path.segments[40].point);
+
+var but_bp_rgt_foot = new Raster(bigger_point_url);
+but_bp_rgt_foot.position = new Point(mid_area_path.segments[28].point);
+
+
+
+var single_item = null;
+function hide_big_points(){
+    
+    but_bp_head_top.position = new Point(-500, -500);
+    but_bp_lft_shoulder.position = new Point(-500, -500);
+    but_bp_rgt_shoulder.position = new Point(-500, -500);
+    but_bp_lft_arm_pit.position = new Point(-500, -500);
+    but_bp_rgt_arm_pit.position = new Point(-500, -500);
+    but_bp_lft_waist.position = new Point(-500, -500);
+    but_bp_rgt_waist.position = new Point(-500, -500);
+    but_bp_lft_hip.position = new Point(-500, -500);
+    but_bp_rgt_hip.position = new Point(-500, -500);
+    but_bp_lft_hand.position = new Point(-500, -500);
+    but_bp_rgt_hand.position = new Point(-500, -500);
+    but_bp_inseam.position = new Point(-500, -500);
+    but_bp_lft_foot.position = new Point(-500, -500);
+    but_bp_rgt_foot.position = new Point(-500, -500);
+}
+function set_big_points(single_item){
+    if(single_item != null){
+        single_item.position = new Point(-500, -500);
+    }else{
+        but_bp_head_top.position = new Point(mid_area_path.segments[69].point);
+        but_bp_lft_shoulder.position = new Point(mid_area_path.segments[62].point);
+        but_bp_rgt_shoulder.position = new Point(mid_area_path.segments[6].point);
+        but_bp_lft_arm_pit.position = new Point(mid_area_path.segments[53].point);
+        but_bp_rgt_arm_pit.position = new Point(mid_area_path.segments[15].point);
+        but_bp_lft_waist.position = new Point(mid_area_path.segments[51].point);
+        but_bp_rgt_waist.position = new Point(mid_area_path.segments[17].point);
+        but_bp_lft_hip.position = new Point(mid_area_path.segments[48].point);
+        but_bp_rgt_hip.position = new Point(mid_area_path.segments[20].point);
+        but_bp_lft_hand.position = new Point(mid_area_path.segments[10].point);
+        but_bp_rgt_hand.position = new Point(mid_area_path.segments[58].point);
+        but_bp_inseam.position = new Point(mid_area_path.segments[34].point);
+        but_bp_lft_foot.position = new Point(mid_area_path.segments[40].point);
+        but_bp_rgt_foot.position = new Point(mid_area_path.segments[28].point);
+    }
+}
+
 
 
 
@@ -448,6 +543,13 @@ function onMouseDown(event) {
 		return;
 	}
         
+        if (hitResult.type == 'segment') {
+            if(curr_view == "normal"){
+                console.log("Normal hay bhai");
+		return false;
+            }
+	};
+        
 	if (hitResult && hitResult.item != user_image) {
                 
 		path = hitResult.item;
@@ -461,11 +563,12 @@ function onMouseDown(event) {
                             curr_view = "zoomed";
                             hitOptions.fill = true;
                             main_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            mid_area_path.selected = true;
                             trans_bg.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             def_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            mid_area_path.selected = true;
                             user_image.position.y += 66;
+                            hide_big_points();
                         }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
                             curr_view = "normal";
                             hitOptions.fill = true;
@@ -475,6 +578,7 @@ function onMouseDown(event) {
                             def_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
                             user_image.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
                             user_image.position.y -= 66;
+                            set_big_points();
                         }
                         else if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
@@ -502,8 +606,6 @@ function onMouseDown(event) {
                             curr_crop = "normal";
                             path_com.fillColor = "#666";
                             path_com.opacity = 0.6;
-                            
-                            
                         }
                         
 		}
@@ -715,7 +817,11 @@ function onMouseDrag(event) {
 		path_com.position += event.delta;
 		def_path.position += event.delta;
                 user_image.position += event.delta;
-	}
+	}else if(hitResult.item == but_bp_head_top){
+            alert("Me");
+            but_bp_head_top.position += event.delta;
+            
+            }
 	
 
 	
