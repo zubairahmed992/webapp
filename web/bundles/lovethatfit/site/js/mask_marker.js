@@ -551,7 +551,7 @@ function onMouseDown(event) {
 	};
         
 	if (hitResult && hitResult.item != user_image) {
-                
+                var ratio_zoom_value = 1/3;
 		path = hitResult.item;
                 
 		if (hitResult.type == 'segment') {
@@ -560,6 +560,18 @@ function onMouseDown(event) {
 			//segment = null;
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in){
+                            
+                            x_pos_main_path = main_path.position.x;
+                            x_pos_trans_bg = trans_bg.position.x;
+                            x_pos_def_path = def_path.position.x;
+                            x_pos_user_image = user_image.position.x;
+                            
+                            y_pos_main_path = main_path.position.y;
+                            y_pos_trans_bg = trans_bg.position.y;
+                            y_pos_def_path = def_path.position.y;
+                            y_pos_user_image = user_image.position.y;
+                            
+                            
                             curr_view = "zoomed";
                             hitOptions.fill = true;
                             main_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
@@ -568,8 +580,14 @@ function onMouseDown(event) {
                             user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             mid_area_path.selected = true;
                             user_image.position.y += 66;
+                            
+                            
+                            
                             hide_big_points();
                         }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
+                            
+                            
+                            
                             curr_view = "normal";
                             hitOptions.fill = true;
                             main_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
@@ -578,19 +596,49 @@ function onMouseDown(event) {
                             def_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
                             user_image.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
                             user_image.position.y -= 66;
+                            
+                            main_path.position.x = x_pos_main_path;
+                            trans_bg.position.x = x_pos_trans_bg;
+                            def_path.position.x = x_pos_def_path;
+                            user_image.position.x = x_pos_user_image;
+                            
+                            main_path.position.y = y_pos_main_path;
+                            trans_bg.position.y = y_pos_trans_bg;
+                            def_path.position.y = y_pos_def_path;
+                            user_image.position.y = y_pos_user_image;
+                     
+                            
                             set_big_points();
                         }
                         else if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
+                            
+                            if(curr_view == "zoomed"){
+                                x_pos_user_image -= ratio_zoom_value;
+                            }
+                            
                         }
                         else if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
+                            
+                            if(curr_view == "zoomed"){
+                                x_pos_user_image += ratio_zoom_value;
+                            }
                         }
                         else if(hitResult.item == but_move_up){
                             user_image.position.y -= 1;
+                            
+                            if(curr_view == "zoomed"){
+                                y_pos_user_image -= ratio_zoom_value;
+                            }
                         }
                         else if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
+                            
+                            if(curr_view == "zoomed"){
+                                y_pos_user_image += ratio_zoom_value;
+                            }
+                            
                         }
                         else if(hitResult.item == but_rotate_left){
                             user_image.rotate(-0.5); 
@@ -817,11 +865,7 @@ function onMouseDrag(event) {
 		path_com.position += event.delta;
 		def_path.position += event.delta;
                 user_image.position += event.delta;
-	}else if(hitResult.item == but_bp_head_top){
-            alert("Me");
-            but_bp_head_top.position += event.delta;
-            
-            }
+	}
 	
 
 	
