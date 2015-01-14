@@ -235,25 +235,38 @@
             {% if colorform.regular is defined %}
             <div class="row-fluid show-grid">    
             <div class="span3"> Regular Sizes</div>
-            <div>{{ form_widget(colorform.regular) }}</div>
+            <div>{{ form_widget(colorform.regular) }}
+            
+            <input type="checkbox" name='product_color_regular' onclick="for(c in document.getElementsByName('product_color[regular][]')) document.getElementsByName('product_color[regular][]').item(c).checked = this.checked">                
+                <label for="product_color_regular">All</label>
+            </div>
             </div> 
             {% endif %}           
             {% if colorform.petite is defined %}
            <div class="row-fluid show-grid">    
             <div class="span3"> Petite Sizes</div>
-            <div>{{ form_widget(colorform.petite) }}</div>
+            <div>{{ form_widget(colorform.petite) }}
+               <input type="checkbox" name='product_color_petite' onclick="for(c in document.getElementsByName('product_color[regular][]')) document.getElementsByName('product_color[petite][]').item(c).checked = this.checked">                
+                <label for="product_color_petite">All</label>
+            </div>
             </div>      
             {% endif %}           
             {% if colorform.tall is defined %}
            <div class="row-fluid show-grid">    
             <div class="span3"> Tall Sizes</div>
-            <div>{{ form_widget(colorform.tall) }}</div>
+            <div>{{ form_widget(colorform.tall) }}
+                 <input type="checkbox" name='product_color_tall' onclick="for(c in document.getElementsByName('product_color[tall][]')) document.getElementsByName('product_color[tall][]').item(c).checked = this.checked">                
+                <label for="product_color_tall">All</label>
+            </div>
             </div>      
             {% endif %}           
             {% if colorform.plus is defined %}
             <div class="row-fluid show-grid">    
             <div class="span3"> Plus Sizes</div>
-            <div>{{ form_widget(colorform.plus) }}</div>
+            <div>{{ form_widget(colorform.plus) }}
+               <input type="checkbox" name='product_color_plus' onclick="for(c in document.getElementsByName('product_color[plus][]')) document.getElementsByName('product_color[plus][]').item(c).checked = this.checked">                
+                <label for="product_color_plus">All</label>
+            </div>
             </div>     
             {% endif %}           
             
@@ -264,27 +277,39 @@
             {% if colorform.regular is defined %}
             <div class="row-fluid show-grid">    
             <div class="span3"> Regular Sizes</div>
-            <div>{{ form_widget(colorform.regular) }}</div>
+            <div>{{ form_widget(colorform.regular) }}
+                <input type="checkbox" name='product_color_regular' onclick="for(c in document.getElementsByName('product_color[regular][]')) document.getElementsByName('product_color[regular][]').item(c).checked = this.checked">                
+                <label for="product_color_regular">All</label>
+            </div>
             </div>         
             {% endif %}           
             {% if colorform.athletic is defined %}
              <div class="row-fluid show-grid">    
             <div class="span3"> Athletic Sizes</div>
-            <div>{{ form_widget(colorform.athletic) }}</div>
+            <div>{{ form_widget(colorform.athletic) }}
+                <input type="checkbox" name='product_color_athletic' onclick="for(c in document.getElementsByName('product_color[athletic][]')) document.getElementsByName('product_color[athletic][]').item(c).checked = this.checked">                
+                <label for="product_color_athletic">All</label>
+            </div>
             </div> 
             {% endif %}           
             
             {% if(colorform.portley is defined)%}
             <div class="row-fluid show-grid">    
             <div class="span3"> Portley Sizes</div>
-            <div>{{ form_widget(colorform.portley) }}</div>
+            <div>{{ form_widget(colorform.portley) }}
+                  <input type="checkbox" name='product_color_portly' onclick="for(c in document.getElementsByName('product_color[portly][]')) document.getElementsByName('product_color[portly][]').item(c).checked = this.checked">                
+                <label for="product_color_portly">All</label>
+            </div>
             </div>     
             {%endif%}
           
             {% if colorform.tall is defined %}
                 <div class="row-fluid show-grid">    
             <div class="span3"> Tall Sizes</div>
-            <div>{{ form_widget(colorform.tall) }}</div>
+            <div>{{ form_widget(colorform.tall) }}
+                <input type="checkbox" name='product_color_tall' onclick="for(c in document.getElementsByName('product_color[tall][]')) document.getElementsByName('product_color[tall][]').item(c).checked = this.checked">                
+                <label for="product_color_tall">All</label>
+            </div>
             </div>  
             {% endif %}           
             
@@ -339,7 +364,9 @@
           {% if colorform.regular is defined %}
             <div class="row-fluid show-grid">    
             <div class="span3"> Regular Sizes</div>
-            <div>{{ form_widget(colorform.regular) }}</div>
+            <div>{{ form_widget(colorform.regular) }}
+            
+            </div>
             </div> 
             {% endif %}           
             {% if colorform.petite is defined %}
