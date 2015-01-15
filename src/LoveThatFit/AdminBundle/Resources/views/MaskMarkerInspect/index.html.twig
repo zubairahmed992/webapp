@@ -7,8 +7,9 @@
 <form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }}>
     <div class="row-fluid show-grid">
         <div class="span3">User</div>
-        <div class="span3">{{ form_widget(form.User) }}{{ form_errors(form.User) }}
+        <div class="span4">{{ form_widget(form.User) }}{{ form_errors(form.User) }}
             &nbsp;<input type='checkbox' name='chk_json' id='chk_json' value="json"> JSON
+            &nbsp;|&nbsp;<input type='checkbox' name='chk_path_axis' id='chk_path_axis' value="chk_path_axis"> axis
         </div>
         
     </div>
@@ -23,12 +24,15 @@ $(document).ready(function(){
     
 $( "select[id='user_User']" ).change(function() {
     var chk_json = document.getElementById('chk_json');
+    var chk_path_axis = document.getElementById('chk_path_axis');
     var mode = chk_json.checked?chk_json.value:null;
     var user_id = $("#user_User").val();   
     var user_url = "../mask_marker_inspect/user/" + user_id+"/"+mode;         
 
     if(chk_json.checked){
         window.open(user_url);
+    }else if(chk_path_axis.checked){
+        window.open("../mask_marker_inspect/path_axis/" + user_id);        
     }else{
         $.ajax({
              url: user_url

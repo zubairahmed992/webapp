@@ -6,6 +6,10 @@ admin_mask_marker_inspect_user:
     pattern:  /admin/mask_marker_inspect/user/{id}/{mode}
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:user, mode:null}
 
+admin_mask_marker_inspect_path_axis:
+    pattern:  /admin/mask_marker_inspect/path_axis/{id}
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:pathAxisArray}
+
 admin_mask_marker_inspect_sim:
     pattern:  /admin/mask_marker_inspect/sim/{id}
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:sim, id:6}

@@ -32,7 +32,15 @@ class MaskMarkerInspectController extends Controller {
                     'body_measurement'=>$ub_specs,
                     'specs_comparison'=>$user_mm_comparison,
                 ));
-    }   
+    }  
+    
+     public function pathAxisArrayAction($id){
+        $user = $this->get('user.helper.user')->find($id);
+        $mm_specs=$this->getMaskedMarkerSpecs();        
+        $mm_cordinates = $this->get('user.marker.helper')->getAxisArray($user, $mm_specs);
+        return new Response(json_encode($mm_cordinates));
+        
+    }  
     
     private function getMaskedMarkerSpecs() {
         $yaml = new Parser();
