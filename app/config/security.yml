@@ -79,6 +79,7 @@ security:
                 #realm: "Secured Demo Area"
 
     access_control:
+        - { path: ^/device_browser/image_edit/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /admin/, roles: ROLE_ADMIN }
         - { path: /admin, roles: IS_AUTHENTICATED_ANONYMOUSLY }

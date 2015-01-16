@@ -1,12 +1,12 @@
 device_browser_login:
-    pattern:   /device_browser_test/login
+    pattern:   /device_browser/login
     defaults: { _controller: LoveThatFitUserBundle:Device:login }
 
-device_browser_image_edit_web:
-    pattern:   /device_browser/image_edit_web
-    defaults: { _controller: LoveThatFitUserBundle:Device:editImage }
+device_browser_image_edit_auth:
+    pattern:   /device_browser/image_edit_auth
+    defaults: { _controller: LoveThatFitUserBundle:Device:editImageAuth }
 
 device_browser_image_edit:
-    pattern:   /device_browser/image_edit
-    defaults: { _controller: LoveThatFitUserBundle:Device:editImageAuth }
+    pattern:   /device_browser/image_edit/{auth_token}/{edit_type}
+    defaults: { _controller: LoveThatFitUserBundle:Device:editImage, auth_token: null, edit_type: null }
 
