@@ -501,7 +501,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 chk_no_img_path = false;
 
-if(croped_img_path == "/webapp/web/"){
+if(croped_img_path == "/webapp/web/" || croped_img_path == "/cs-ltf-webapp/web/"){
     chk_no_img_path = true;
 }else{
     if(croped_img_path == "/")

@@ -316,7 +316,6 @@ path_com = new CompoundPath({
 
 
 path_com.opacity = 0.6;
-
      if(chk_no_img_path == true){      
      
         export_svg_data(path_com);
@@ -518,10 +517,18 @@ function set_big_points(single_item){
         but_bp_inseam.position = new Point(mid_area_path.segments[34].point);
         but_bp_lft_foot.position = new Point(mid_area_path.segments[40].point);
         but_bp_rgt_foot.position = new Point(mid_area_path.segments[28].point);
+        
+        
     }
 }
 
+curr_get_values = null;
 
+
+
+
+big_point = false;
+big_point_ele = false;
 
 
 
@@ -549,6 +556,10 @@ function onMouseDown(event) {
 		return false;
             }
 	};
+        
+        
+       
+        
         
 	if (hitResult && hitResult.item != user_image) {
                 var ratio_zoom_value = 1/3;
@@ -654,6 +665,79 @@ function onMouseDown(event) {
                             curr_crop = "normal";
                             path_com.fillColor = "#666";
                             path_com.opacity = 0.6;
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_head_top){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            console.log("but_bp_head_top");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_shoulder){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 62;
+                            
+                            console.log("but_bp_lft_shoulder");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_shoulder){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 6;
+                            console.log("but_bp_rgt_shoulder");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_arm_pit){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 53;
+                            console.log("but_bp_lft_arm_pit");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_arm_pit){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 15;
+                            curr_range_1 = but_bp_rgt_arm_pit.position.y;
+                            curr_range_2 = but_bp_rgt_waist.position.y;
+                            big_move_adj = [16];
+                            console.log("but_bp_rgt_arm_pit");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_waist){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 51;
+                            console.log("but_bp_lft_waist");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_waist){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 17;
+                            console.log("but_bp_rgt_waist");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hip){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 48;
+                            console.log("but_bp_lft_hip");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hip){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 20;
+                            console.log("but_bp_rgt_hip");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 10;
+                            console.log("but_bp_lft_hand");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 58;
+                            console.log("but_bp_rgt_hand");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_inseam){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 34;
+                            console.log("but_bp_inseam");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 40;
+                            console.log("but_bp_lft_foot");
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_foot){
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 28;
+                            console.log("but_bp_rgt_foot");
                         }
                         
 		}
@@ -676,6 +760,8 @@ function onMouseDown(event) {
 
 
 function onMouseUp(event){
+    big_point_ele = null;
+    curr_big_seg = null;
   if (segment) {
         $("#img_path_json").attr("value", getPathArrayJson());
     }   
@@ -706,15 +792,71 @@ main_path = project.getItem({
                 }
             });
 
-function onMouseDrag(event) {
 
-	if (segment) {
+function set_pivot(curr_item,point_to_set, point_x, point_y){
+    if(point_to_set != null){
+        
+        console.log(point_to_set);
+        
+        curr_item.pivot = new Point(point_to_set);
+        
+    }else{
+        console.log(point_x +"====="+point_y);
+        curr_item.pivot = new Point(point_x,point_y);
+    }
+}
+
+function get_ele_pos(){
+    
+    total_range = curr_range_2 - curr_range_1;
+    
+    for(var i = 0; i < big_move_adj.length; i++) {
         
         
-          
-          
-           
-            
+        
+        
+        //var set_seg_bwt_v_mid = path.segments[4].point.y - path.segments[2].point.y;
+        //path.segments[3].point.y = set_seg_bwt_v_mid /2 + path.segments[2].point.y;
+        //path.segments[7].point.y = set_seg_bwt_v_mid /2 + path.segments[2].point.y;
+        
+        
+        curr_ele_pos = main_path.segments[big_move_adj[i]].point.y - curr_range_1;
+        
+        
+        
+        curr_ele_pos_per = curr_ele_pos * 100 / total_range;
+        
+        //main_path.segments[big_move_adj[i]].point.y = curr_range_1 + (curr_ele_pos_per * total_range) / 100;
+        main_path.segments[big_move_adj[i]].point.y = curr_range_1 + total_range / 2;
+        
+        //def_path.segments[big_move_adj[i]].point.y;
+        
+        
+        
+        console.log("total_range = " + total_range + "      point = " + curr_ele_pos);
+        
+    }
+    
+}
+
+function set_ele_pos_per(){
+    
+}
+function onMouseDrag(event) {
+        if(big_point_ele == but_bp_head_top){       
+            big_point_ele.position.y += event.delta.y;
+            set_pivot(main_path, main_path.segments[28].point , 50, 50);
+            //main_path.pivot = new Point(main_path.segments[28].point);
+            //main_path.height += event.delta;
+            main_path.scale(1, 0.6);
+        }else if(big_point_ele){
+            big_point_ele.position += event.delta;
+            main_path.segments[curr_big_seg].point += event.delta;
+            def_path.segments[curr_big_seg].point += event.delta;
+            big_point_ele.position.y
+            get_ele_pos();
+        }else if(segment) {
+        
         function get_index_num(){
             for(var i = 0; i < path.segments.length; i++) {
                 if(segment == path.segments[i]){
@@ -870,7 +1012,6 @@ function onMouseDrag(event) {
 
 	
 }
-
 //var rectangle = new Rectangle(new Point(20, 20), new Size(60, 60));
 //var cornerSize = new Size(10, 10);
 //var but_zoom = new Shape.Rectangle(rectangle, cornerSize);
