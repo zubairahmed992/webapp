@@ -684,34 +684,69 @@ function onMouseDown(event) {
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 53;
+                            
+                            curr_range_1 = but_bp_lft_arm_pit;
+                            curr_range_2 = but_bp_lft_waist;
+                            big_move_adj = [52, 54];
+                            get_ele_pos();
+                            
                             console.log("but_bp_lft_arm_pit");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_arm_pit){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 15;
-                            curr_range_1 = but_bp_rgt_arm_pit.position.y;
-                            curr_range_2 = but_bp_rgt_waist.position.y;
-                            big_move_adj = [16];
+                            
+                            curr_range_1 = but_bp_rgt_arm_pit;
+                            curr_range_2 = but_bp_rgt_waist;
+                            big_move_adj = [16, 14];
+                            get_ele_pos();
+                            
                             console.log("but_bp_rgt_arm_pit");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_waist){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 51;
+                            
+                            curr_range_1 = but_bp_lft_waist;
+                            curr_range_2 = but_bp_lft_hip;
+                            big_move_adj = [50,49];
+                            get_ele_pos();
+                            
                             console.log("but_bp_lft_waist");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_waist){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 17;
+                            
+                            curr_range_1 = but_bp_rgt_waist;
+                            curr_range_2 = but_bp_rgt_hip;
+                            big_move_adj = [18,19];
+                            get_ele_pos();
+                            
                             console.log("but_bp_rgt_waist");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hip){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 48;
+                            
+                            curr_range_1 = but_bp_lft_hip;
+                            curr_range_2 = but_bp_lft_foot;
+                            //big_move_adj = [47,46,45,44,43,37,36,35];
+                            big_move_adj = [47,46];
+                            get_ele_pos();
+                            
                             console.log("but_bp_lft_hip");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hip){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 20;
+                            
+                            curr_range_1 = but_bp_rgt_hip;
+                            curr_range_2 = but_bp_rgt_foot;
+                            //big_move_adj = [21,22,23,24,25,31,32,33];
+                            big_move_adj = [21];
+                            get_ele_pos();
+                            
                             console.log("but_bp_rgt_hip");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
                             big_point = true;
@@ -727,6 +762,12 @@ function onMouseDown(event) {
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 34;
+                            
+                            curr_range_1 = but_bp_inseam;
+                            curr_range_2 = but_bp_rgt_foot;
+                            big_move_adj = [21,22,23,24,25,31,32,33,47,46,45,44,43,37,36,35];
+                            get_ele_pos();
+                            
                             console.log("but_bp_inseam");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
                             big_point = true;
@@ -805,56 +846,56 @@ function set_pivot(curr_item,point_to_set, point_x, point_y){
         curr_item.pivot = new Point(point_x,point_y);
     }
 }
-
+function give_per (max_value, value_per){
+    return value_per * max_value / 100;
+}
+curr_range_1 = curr_range_2 = null;
+curr_ele_pos_per = false;
+mid_move_adj_per = [];
 function get_ele_pos(){
     
-    total_range = curr_range_2 - curr_range_1;
+    total_range = curr_range_2.position.y - curr_range_1.position.y;
     
     for(var i = 0; i < big_move_adj.length; i++) {
         
-        
-        
-        
-        //var set_seg_bwt_v_mid = path.segments[4].point.y - path.segments[2].point.y;
-        //path.segments[3].point.y = set_seg_bwt_v_mid /2 + path.segments[2].point.y;
-        //path.segments[7].point.y = set_seg_bwt_v_mid /2 + path.segments[2].point.y;
-        
-        
-        curr_ele_pos = main_path.segments[big_move_adj[i]].point.y - curr_range_1;
-        
-        
-        
+        curr_ele_pos = main_path.segments[big_move_adj[i]].point.y - curr_range_1.position.y;
         curr_ele_pos_per = curr_ele_pos * 100 / total_range;
-        
-        //main_path.segments[big_move_adj[i]].point.y = curr_range_1 + (curr_ele_pos_per * total_range) / 100;
-        main_path.segments[big_move_adj[i]].point.y = curr_range_1 + total_range / 2;
-        
-        //def_path.segments[big_move_adj[i]].point.y;
-        
-        
-        
-        console.log("total_range = " + total_range + "      point = " + curr_ele_pos);
+        mid_move_adj_per[i] = curr_ele_pos_per;
         
     }
     
 }
 
 function set_ele_pos_per(){
-    
+    if(curr_range_1 != null){
+        total_range = curr_range_2.position.y - curr_range_1.position.y;
+        for(var i = 0; i < big_move_adj.length; i++) {
+
+            main_path.segments[big_move_adj[i]].point.y = curr_range_1.position.y + mid_move_adj_per[i] * total_range / 100;
+        }
+    }
 }
 function onMouseDrag(event) {
         if(big_point_ele == but_bp_head_top){       
-            big_point_ele.position.y += event.delta.y;
-            set_pivot(main_path, main_path.segments[28].point , 50, 50);
-            //main_path.pivot = new Point(main_path.segments[28].point);
-            //main_path.height += event.delta;
-            main_path.scale(1, 0.6);
+            //big_point_ele.position.y += event.delta.y;
+            //set_pivot(main_path, main_path.segments[28].point , 50, 50);
+            
+            //main_path.scale(1, 0.6);
         }else if(big_point_ele){
             big_point_ele.position += event.delta;
             main_path.segments[curr_big_seg].point += event.delta;
             def_path.segments[curr_big_seg].point += event.delta;
-            big_point_ele.position.y
-            get_ele_pos();
+            if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder){
+                set_ele_pos_per();
+                if(big_point_ele == but_bp_inseam){
+                    main_path.segments[20].point.y += event.delta.y;
+                    def_path.segments[20].point.y += event.delta.y;
+                    main_path.segments[48].point.y += event.delta.y;
+                    def_path.segments[48].point.y += event.delta.y;
+                    but_bp_rgt_hip.position.y += event.delta.y;
+                    but_bp_lft_hip.position.y += event.delta.y;
+                }
+            }
         }else if(segment) {
         
         function get_index_num(){
