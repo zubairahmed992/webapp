@@ -387,42 +387,42 @@ but_zoom_in.position = new Point(24, 24);
 var but_zoom_out_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_out.png";
 var but_zoom_out = new Raster(but_zoom_out_url);
 
-but_zoom_out.position = new Point(24, 68);
+but_zoom_out.position = new Point(-500, 24);
 
 var but_move_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_left.png";
 var but_move_left = new Raster(but_move_left_url);
 
-but_move_left.position = new Point(24, 112);
+but_move_left.position = new Point(24, 68);
 
 var but_move_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
 var but_move_right = new Raster(but_move_right_url);
 
-but_move_right.position = new Point(24, 156);
+but_move_right.position = new Point(24, 112);
 
 var but_move_up_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_up.png";
 var but_move_up = new Raster(but_move_up_url);
 
-but_move_up.position = new Point(24, 200);
+but_move_up.position = new Point(24, 156);
 
 var but_move_down_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_down.png";
 var but_move_down = new Raster(but_move_down_url);
 
-but_move_down.position = new Point(24, 244);
+but_move_down.position = new Point(24, 200);
 
 var but_rotate_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_left.png";
 var but_rotate_left = new Raster(but_rotate_left_url);
 
-but_rotate_left.position = new Point(24, 288);
+but_rotate_left.position = new Point(24, 244);
 
 var but_rotate_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_right.png";
 var but_rotate_right = new Raster(but_rotate_right_url);
 
-but_rotate_right.position = new Point(24, 332);
+but_rotate_right.position = new Point(24, 288);
 
 var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
 var but_crop_icon = new Raster(but_crop_icon_url);
 
-but_crop_icon.position = new Point(24, 432);
+but_crop_icon.position = new Point(24, 332);
 
 
 
@@ -592,6 +592,8 @@ function onMouseDown(event) {
                             mid_area_path.selected = true;
                             user_image.position.y += 66;
                             
+                            but_zoom_in.position.x = -500;
+                            but_zoom_out.position.x = 24;
                             
                             
                             hide_big_points();
@@ -617,7 +619,9 @@ function onMouseDown(event) {
                             trans_bg.position.y = y_pos_trans_bg;
                             def_path.position.y = y_pos_def_path;
                             user_image.position.y = y_pos_user_image;
-                     
+                            
+                            but_zoom_in.position.x = 24;
+                            but_zoom_out.position.x = -500;
                             
                             set_big_points();
                         }
@@ -732,7 +736,7 @@ function onMouseDown(event) {
                             curr_range_1 = but_bp_lft_hip;
                             curr_range_2 = but_bp_lft_foot;
                             //big_move_adj = [47,46,45,44,43,37,36,35];
-                            big_move_adj = [47,46];
+                            big_move_adj = [47];
                             get_ele_pos();
                             
                             console.log("but_bp_lft_hip");
