@@ -2,7 +2,7 @@ hitOptions = {
 	segments: true,
 	stroke: false,
 	fill: false,
-	tolerance: 20
+	tolerance: 16
 };
 
 inc_ratio = 1;
@@ -23,7 +23,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 chk_no_img_path = false;
 
-if(croped_img_path == "/webapp/web/"){
+if(croped_img_path == "/webapp/web/" || croped_img_path == "/cs-ltf-webapp/web/"){
     chk_no_img_path = true;
 }else{
     if(croped_img_path == "/")
@@ -433,6 +433,7 @@ var bigger_point_url = curr_path_prefix + "bundles/lovethatfit/site/images/bigge
 
 var but_bp_head_top = new Raster(bigger_point_url);
 but_bp_head_top.position = new Point(mid_area_path.segments[69].point);
+but_bp_head_top.opacity = 0;
 
 var but_bp_lft_shoulder = new Raster(bigger_point_url);
 but_bp_lft_shoulder.position = new Point(mid_area_path.segments[62].point);
@@ -880,7 +881,7 @@ function set_ele_pos_per(){
     }
 }
 function onMouseDrag(event) {
-        if(big_point_ele == but_bp_head_top){       
+        if(big_point_ele == but_bp_head_top || big_point_ele == but_bp_rgt_foot || big_point_ele == but_bp_lft_foot){       
             //big_point_ele.position.y += event.delta.y;
             //set_pivot(main_path, main_path.segments[28].point , 50, 50);
             
