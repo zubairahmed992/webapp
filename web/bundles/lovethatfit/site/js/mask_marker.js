@@ -2,7 +2,7 @@ hitOptions = {
 	segments: true,
 	stroke: false,
 	fill: false,
-	tolerance: 16
+	tolerance: 20
 };
 
 inc_ratio = 1;
