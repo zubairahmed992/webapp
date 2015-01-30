@@ -39,7 +39,9 @@ $(document).ready(function() {
 });
 
 function createBlob() {
-	
+
+    var rgt_arm_ref = $("#rgt_arm_ref").attr("value");
+
         var pathData = $("#img_path_paper").attr("value");
         if(chk_no_img_path == true){
             pathData = $("#default_user_path").html();
