@@ -10,3 +10,6 @@ device_browser_image_edit:
     pattern:   /device_browser/image_edit/{auth_token}/{edit_type}
     defaults: { _controller: LoveThatFitUserBundle:Device:editImage, auth_token: null, edit_type: null }
 
+ajax_fitting_room_bg_cropped_image_update:
+    pattern:  /ajax/fitting_room/bg_cropped_image_update
+    defaults: { _controller: LoveThatFitUserBundle:Registration:bgCroppedImageUpload }

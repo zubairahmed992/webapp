@@ -57,6 +57,21 @@ class DeviceController extends Controller {
             ));
     
 }
+
+   //--------------------------------- write bgcropped image from canvas
+    public function bgCroppedImageUploadAction() {
+        $id = $_POST['id'];
+        $entity = $this->get('user.helper.user')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+        $response = $entity->writeImageFromCanvas($_POST['imageData']);
+        $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+        return new Response($response);
+        
+    }
+
 #----------------------------------------------------------------------------
    public function editImageAuthAction() {
         $securityContext = $this->container->get('security.context');

@@ -833,7 +833,7 @@ class User implements UserInterface, \Serializable {
         }
     }
     
-    
+    //-------------------------------------------------
     public function getAccuracyIndicator() {
         $accuracy=0;
         if($this->firstName)
@@ -987,9 +987,7 @@ class User implements UserInterface, \Serializable {
         } 
         return round(($accuracy/38)*100,2);
     }
-    
-
-    
+    //-------------------------------------------------
     public function getMeasurementStatistics()
     {
         $accuracy=0;        
@@ -1110,8 +1108,7 @@ class User implements UserInterface, \Serializable {
         return round(($accuracy/29)*100,2);
     }
     
-    
-    
+    //-------------------------------------------------
     public function generateAuthenticationToken() {
         $this->authTokenCreatedAt = new \DateTime('now');
         $this->authToken = md5($this->salt . $this->email . $this->authTokenCreatedAt->format('r'));
@@ -1124,32 +1121,20 @@ class User implements UserInterface, \Serializable {
 
      public function upload() {
 
-      if (null === $this->file) {
-      return;
-      }
+        if (null === $this->file) {
+            return;
+        }
 
-      $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-
-      //$unique_number=uniqid();
-
-/*      $this->image = 'cropped.'. $ext;
-      $original_name = 'original.'. $ext;
-      $this->file->move(
-      $this->getUploadRootDir(), $this->image
-      );
-
-      $this->file = null;
-      copy($this->getAbsolutePath(),$this->getUploadRootDir().'/'.$original_name);
-*/
-      $this->image = 'cropped.'. $ext;
-      $this->temp_image  = 'original.'. $ext;
-      $this->file->move(
-      $this->getUploadRootDir(), $this->temp_image
-      );
+        $ext = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $this->image = 'cropped.' . $ext;
+        $this->temp_image = 'original.' . $ext;
+        $this->file->move(
+                $this->getUploadRootDir(), $this->temp_image
+        );
         $this->file = null;
-      return $this->temp_image;
-      } 
-      
+        return $this->temp_image;
+    }
+//----------------------------------------------------
     public function writeImageFromCanvas($raw_data) {
         $data = substr($raw_data, strpos($raw_data, ",") + 1);
         $decodedData = base64_decode($data);
@@ -1157,12 +1142,22 @@ class User implements UserInterface, \Serializable {
         @fwrite($fp, $decodedData);
         @fclose($fp);
         $this->copyTempToOriginalImage();
-       $cropped_image_url=$this->getWebPath();
-        
+        $cropped_image_url=$this->getWebPath();        
        return json_encode(array("status"=>"check", "url"=>$cropped_image_url));
         
     }
-    
+    //----------------------------------------------------
+    public function writeBGCroppedFromCanvas($raw_data) {
+        $data = substr($raw_data, strpos($raw_data, ",") + 1);
+        $decodedData = base64_decode($data);
+        $fp = fopen($this->getBGCroppedImageAbsolutePath(), 'wb');
+        @fwrite($fp, $decodedData);
+        @fclose($fp);
+        $cropped_image_url=$this->getBGCroppedImageWebPath();        
+       return json_encode(array("status"=>"check", "url"=>$cropped_image_url));
+        
+    }
+    //----------------------------------------------------
     private function copyTempToOriginalImage() {
         @rename($this->getTempImageAbsolutePath(), $this->getOriginalImageAbsolutePath());
     }
@@ -1226,6 +1221,17 @@ class User implements UserInterface, \Serializable {
     public function getOriginalImageWebPath() {
         $ext = pathinfo($this->image, PATHINFO_EXTENSION);
         return null === $this->image ? null : $this->getUploadDir() . '/original.' . $ext;
+    }
+  //------------------------------------------------------    
+    public function getBGCroppedImageAbsolutePath() {
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
+        return null === $this->image ? null : $this->getUploadRootDir() . '/bg_cropped.' . $ext;
+    }
+
+//----------------------------------------------------------
+    public function getBGCroppedImageWebPath() {
+        $ext = pathinfo($this->image, PATHINFO_EXTENSION);
+        return null === $this->image ? null : $this->getUploadDir() . '/bg_cropped.' . $ext;
     }
 
     //-------------------------------------------------------------------
