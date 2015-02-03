@@ -48,6 +48,10 @@ ws_image_upload:
    pattern:  /web_service/image_upload
    defaults: { _controller: LoveThatFitWebServiceBundle:User:imageUpload}
 
+ws_demo_image_upload:
+   pattern:  /web_service/demo_image_upload
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:demoImageUpload}
+
 ws_device_image_upload:
    pattern:  /web_service/device_image_upload
    defaults: { _controller: LoveThatFitWebServiceBundle:User:deviceImageUpload}

@@ -278,6 +278,57 @@ public function userProfileAction()
             return new response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+    #DEMO_UPLOAD_MANNEQUIN_URL	/web_service_demo/image_upload
+#------------------------    
+    
+    public function demoImageUploadAction() {
+        
+        $request = $this->getRequest();
+        
+        if (!array_key_exists('email', $request)){
+            return new Response('email missing');
+        }
+                
+        $email = $_POST['email'];
+        $deviceType = array_key_exists('deviceType', $request)?$_POST['deviceType']:null;
+        $heightPerInch = array_key_exists('heightPerInch', $request)?$_POST['heightPerInch']:null;
+        
+        $user = $this->get('user.helper.user')->findByEmail($email);        
+        
+        
+        if ($user) {
+            #-------- updating head & foot markers in user measurement
+            $measurement = $user->getMeasurement();
+            $measurement->setIphoneHeadHeight($_POST['iphoneHeadHeight'] );
+            $measurement->setIphoneFootHeight($_POST['iphoneFootHeight'] );            
+            $this->get('user.helper.measurement')->saveMeasurement($measurement);
+            #----------------------------
+            $file_name = $_FILES["file"]["name"];
+            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+            $newFilename = 'original' . "." . $ext;
+            $user->setIphoneImage($newFilename);
+            if (!is_dir($user->getUploadRootDir())) {
+                @mkdir($user->getUploadRootDir(), 0700);
+            }
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $user->getOriginalImageAbsolutePath())) {
+                $this->get('webservice.helper.user')->setMarkingDeviceType($user, $deviceType, $heightPerInch);
+                $em->persist($user);
+                $em->flush();
+                $userinfo = array();
+                $userimage = $user->getImage();
+                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user->getId() . "/";
+                $userinfo['heightPerInch'] = $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($user, $deviceType); 
+                $userinfo['iphoneImage'] = $userimage;
+                $userinfo['path'] = $baseurl;
+                return new Response(json_encode($userinfo));
+            } else {
+                return new response(json_encode(array('Message' => 'Image not uploaded')));
+            }
+        } else {
+            return new response(json_encode(array('Message' => 'We can not find user')));
+        }
+    }
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     #UPLOAD_MANNEQUIN_URL	/web_service/image_upload

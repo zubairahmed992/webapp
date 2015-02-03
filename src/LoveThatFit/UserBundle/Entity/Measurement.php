@@ -424,6 +424,19 @@ class Measurement {
      */
     private $iphone_outseam=0;
     /**
+     * @var float $iphone_head_height
+     *
+     * @ORM\Column(name="iphone_head_height", type="float", nullable=true)
+     * 
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "300",
+     *      minMessage = "You must have at least 0  inches  ",
+     *      maxMessage = "You cannot have more than 300 inches "
+     * )
+     */
+    private $iphone_head_height=0;
+    /**
      * @var string $bra_size
      *
      * @ORM\Column(name="bra_size", type="string", length=50, nullable=true)
@@ -1235,6 +1248,8 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
         return $this;
     }
 
+  
+
     /**
      * Get iphone_shoulder_height
      *
@@ -1246,7 +1261,29 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
 
     
+      /**
+     * Get iphone_head_height
+     *
+     * @return float 
+     */
+    public function getIphoneHeadHeight()
+    {
+        return $this->iphone_head_height;
+    }
 
+    
+  /**
+     * Set iphone_head_height
+     *
+     * @param float $iphoneHeadHeight
+     * @return Measurement
+     */
+    public function setIphoneHeadHeight($iphoneHeadHeight)
+    {
+        $this->iphone_head_height = $iphoneHeadHeight;
+    
+        return $this;
+    }
     
 
     /**
