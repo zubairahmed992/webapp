@@ -279,23 +279,18 @@ public function userProfileAction()
         }
     }   
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
-    #DEMO_UPLOAD_MANNEQUIN_URL	/web_service_demo/image_upload
+    #DEMO_UPLOAD_MANNEQUIN_URL	/web_service/demo_image_upload
 #------------------------    
     
     public function demoImageUploadAction() {
         
         $request = $this->getRequest();
-        
-        if (!array_key_exists('email', $request)){
-            return new Response('email missing');
-        }
                 
         $email = $_POST['email'];
-        $deviceType = array_key_exists('deviceType', $request)?$_POST['deviceType']:null;
-        $heightPerInch = array_key_exists('heightPerInch', $request)?$_POST['heightPerInch']:null;
-        
+        $heightPerInch = $_POST['heightPerInch'];
+        $deviceType = $_POST['deviceType'];
+                
         $user = $this->get('user.helper.user')->findByEmail($email);        
-        
         
         if ($user) {
             #-------- updating head & foot markers in user measurement
@@ -306,20 +301,19 @@ public function userProfileAction()
             #----------------------------
             $file_name = $_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $newFilename = 'original' . "." . $ext;
+            $newFilename = 'iphone' . "." . $ext;
             $user->setIphoneImage($newFilename);
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-            if (move_uploaded_file($_FILES["file"]["tmp_name"], $user->getOriginalImageAbsolutePath())) {
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $user->getAbsoluteIphonePath())) {
                 $this->get('webservice.helper.user')->setMarkingDeviceType($user, $deviceType, $heightPerInch);
-                $em->persist($user);
-                $em->flush();
+                $this->get('webservice.helper.user')->saveUser($user);
                 $userinfo = array();
-                $userimage = $user->getImage();
+                
                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user->getId() . "/";
                 $userinfo['heightPerInch'] = $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($user, $deviceType); 
-                $userinfo['iphoneImage'] = $userimage;
+                $userinfo['iphoneImage'] = $user->getIphoneImage();
                 $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
             } else {
