@@ -2,7 +2,7 @@ hitOptions = {
 	segments: true,
 	stroke: false,
 	fill: false,
-	tolerance: 20
+	tolerance: 22
 };
 
 inc_ratio = 1;
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
 function createBlob() {
 
-    var rgt_arm_ref = $("#rgt_arm_ref").attr("value");
+    
 
         var pathData = $("#img_path_paper").attr("value");
         if(chk_no_img_path == true){
@@ -377,6 +377,33 @@ var export_path_full = path.exportSVG({asString: true});
             $("#mask_y").attr("value", main_path.position.y);
 }
 
+//var rgt_arm_ref = $("#rgt_arm_ref").attr("value");
+
+rgt_arm_ref = new Path({strokeColor: 'black'});
+
+lft_arm_ref = new Path({strokeColor: 'black'});
+def_lft_arm_ref = get_path_seg(lft_arm_ref, mid_area_path, 54, 62);
+def_lft_arm_bp_x = mid_area_path.segments[58].point.x;
+
+rgt_leg_ref = new Path({strokeColor: 'black'});
+
+lft_leg_ref = new Path({strokeColor: 'black'});
+
+ function get_path_seg(ref_part_obj, obj_path_for_ref, int_seg_num, end_seg_num){  
+    
+    ref_part_obj.removeSegments();
+    
+    for(var i = int_seg_num; i < end_seg_num; i++) {
+        ref_part_obj.add(obj_path_for_ref.segments[i]);
+    }
+    
+    return ref_part_obj;
+  }  
+  
+
+  
+  
+  
 var curr_path_prefix = $("#hdn_serverpath").attr("value");
 
 console.log(curr_path_prefix);
@@ -427,6 +454,23 @@ var but_crop_icon = new Raster(but_crop_icon_url);
 but_crop_icon.position = new Point(24, 332);
 
 
+var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
+var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
+
+scr1_but_hiw_icon.position = new Point(290, 50);
+
+var scr1_but_camera_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
+var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
+
+scr1_but_camera_icon.position = new Point(290, 100);
+
+var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
+var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
+
+scr1_but_save_icon.position = new Point(290, 300);
+
+
+
 
 //////////////////////////////////  Dragable Bigger Points - Step One ///////////////////////////////////
 
@@ -462,11 +506,11 @@ var but_bp_rgt_hip = new Raster(bigger_point_url);
 but_bp_rgt_hip.position = new Point(mid_area_path.segments[20].point);
 
 
-var but_bp_lft_hand = new Raster(bigger_point_url);
-but_bp_lft_hand.position = new Point(mid_area_path.segments[10].point);
-
 var but_bp_rgt_hand = new Raster(bigger_point_url);
-but_bp_rgt_hand.position = new Point(mid_area_path.segments[58].point);
+but_bp_rgt_hand.position = new Point(mid_area_path.segments[10].point);
+
+var but_bp_lft_hand = new Raster(bigger_point_url);
+but_bp_lft_hand.position = new Point(mid_area_path.segments[58].point);
 
 
 
@@ -515,8 +559,8 @@ function set_big_points(single_item){
         but_bp_rgt_waist.position = new Point(mid_area_path.segments[17].point);
         but_bp_lft_hip.position = new Point(mid_area_path.segments[48].point);
         but_bp_rgt_hip.position = new Point(mid_area_path.segments[20].point);
-        but_bp_lft_hand.position = new Point(mid_area_path.segments[10].point);
-        but_bp_rgt_hand.position = new Point(mid_area_path.segments[58].point);
+        but_bp_rgt_hand.position = new Point(mid_area_path.segments[10].point);
+        but_bp_lft_hand.position = new Point(mid_area_path.segments[58].point);
         but_bp_inseam.position = new Point(mid_area_path.segments[34].point);
         but_bp_lft_foot.position = new Point(mid_area_path.segments[40].point);
         but_bp_rgt_foot.position = new Point(mid_area_path.segments[28].point);
@@ -755,16 +799,20 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_rgt_hip");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
-                            big_point = true;
-                            big_point_ele = hitResult.item;
-                            curr_big_seg = 10;
-                            console.log("but_bp_lft_hand");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
                             big_point = true;
                             big_point_ele = hitResult.item;
-                            curr_big_seg = 58;
+                            curr_big_seg = 10;
                             console.log("but_bp_rgt_hand");
+                            
+                             
+                            
+                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
+                            get_path_seg(lft_arm_ref, mid_area_path, 54, 62);
+                            big_point = true;
+                            big_point_ele = hitResult.item;
+                            curr_big_seg = 58;
+                            console.log("but_bp_lft_hand");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_inseam){
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -786,6 +834,21 @@ function onMouseDown(event) {
                             big_point_ele = hitResult.item;
                             curr_big_seg = 28;
                             console.log("but_bp_rgt_foot");
+                        }else if(curr_crop == "normal" && hitResult.item == scr1_but_hiw_icon){
+                            
+                            $("#scr1_but_how_it_works").trigger( "click" );
+                            alert("How It Works Button Tap");
+                            console.log("scr1_but_hiw_icon");
+                        }else if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
+                            window.location.href = window.location.href + "#camera";
+                            $("#scr1_but_camera_options").trigger( "click" );
+                            //alert("Camera Button Tap");
+                            console.log("scr1_but_camera_icon");
+                        }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
+                            
+                            $("#scr1_but_save_mask").trigger( "click" );
+                            alert("Save Button Tap");
+                            console.log("scr1_but_save_icon");
                         }
                         
 		}
@@ -813,6 +876,10 @@ function onMouseUp(event){
   if (segment) {
         $("#img_path_json").attr("value", getPathArrayJson());
     }   
+    
+    
+   
+   //alert(rgt_arm_ref);
 }
 function getPathArrayJson(){
     var mp_array=[];
@@ -882,17 +949,85 @@ function set_ele_pos_per(){
         }
     }
 }
+
+last_pos_ele = mid_area_path.segments[62].point.x;
 function onMouseDrag(event) {
+    
+    console.log(rgt_arm_ref);
+    
         if(big_point_ele == but_bp_head_top || big_point_ele == but_bp_rgt_foot || big_point_ele == but_bp_lft_foot){       
             //big_point_ele.position.y += event.delta.y;
             //set_pivot(main_path, main_path.segments[28].point , 50, 50);
             
             //main_path.scale(1, 0.6);
         }else if(big_point_ele){
-            big_point_ele.position += event.delta;
-            main_path.segments[curr_big_seg].point += event.delta;
-            def_path.segments[curr_big_seg].point += event.delta;
-            if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder){
+            
+            
+            
+            if(big_point_ele == but_bp_lft_hand){
+            
+            curr_pos_rotate = main_path.segments[curr_big_seg].point.x;
+            var rotate_min = 240;
+            var rotate_max = 280;
+            
+            final_rotate_value = rotate_max - curr_pos_rotate;
+            
+            
+            
+            if(final_rotate_value > 0 && final_rotate_value < 40){
+                console.log(final_rotate_value);
+                //alert("ds");
+                //var et =0;
+                //console.log(lft_arm_ref.rotate.angle);
+               if(event.delta.x > 0){ 
+                //lft_arm_ref = def_lft_arm_ref;
+                //console.log(mid_area_path.segments[62].point.x - last_pos_ele);
+                console.log(mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
+                lft_arm_ref.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
+                
+                for(i=0; i < lft_arm_ref.segments.length; i++){
+                    
+                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
+                    
+                }
+                
+               }else {
+                lft_arm_ref.rotate(0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
+                for(i=0; i < lft_arm_ref.segments.length; i++){
+                    
+                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
+                    
+                }
+               }
+            }else if(final_rotate_value > 40){
+                
+                lft_arm_ref.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
+                
+                for(i=0; i < lft_arm_ref.segments.length; i++){
+                    
+                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
+                    
+                }
+                                
+            }else if(final_rotate_value < 0){
+                
+                lft_arm_ref.rotate(0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
+                for(i=0; i < lft_arm_ref.segments.length; i++){
+                    
+                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
+                    
+                }
+                                
+            }
+            
+                but_bp_lft_hand.position = mid_area_path.segments[58].point;
+            
+            }else if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder){
+                
+                main_path.segments[curr_big_seg].point += event.delta;
+                def_path.segments[curr_big_seg].point += event.delta;
+                big_point_ele.position = main_path.segments[curr_big_seg].point;
+                
                 set_ele_pos_per();
                 if(big_point_ele == but_bp_inseam){
                     main_path.segments[20].point.y += event.delta.y;
