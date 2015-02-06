@@ -47,8 +47,6 @@ function createBlob() {
             pathData = $("#default_user_path").html();
             $("#measurement_shoulder_height").attr("value", "66.6");
             $("#measurement_hip_height").attr("value", "159.4");
-            
-
         }
         
 mid_area_path = new Path(pathData);
@@ -382,8 +380,6 @@ var export_path_full = path.exportSVG({asString: true});
 rgt_arm_ref = new Path({strokeColor: 'black'});
 
 lft_arm_ref = new Path({strokeColor: 'black'});
-def_lft_arm_ref = get_path_seg(lft_arm_ref, mid_area_path, 54, 62);
-def_lft_arm_bp_x = mid_area_path.segments[58].point.x;
 
 rgt_leg_ref = new Path({strokeColor: 'black'});
 
@@ -800,6 +796,7 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_rgt_hip");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
+                            get_path_seg(rgt_arm_ref, mid_area_path, 7, 15);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 10;
@@ -825,11 +822,13 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_inseam");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
+                            get_path_seg(lft_leg_ref, mid_area_path, 35, 48);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 40;
                             console.log("but_bp_lft_foot");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_foot){
+                            get_path_seg(rgt_leg_ref, mid_area_path, 21, 34);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 28;
@@ -951,11 +950,91 @@ function set_ele_pos_per(){
 }
 
 last_pos_ele = mid_area_path.segments[62].point.x;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rotate_max, seg_srt, seg_end, main_obj_seg_srt, main_obj_seg_end){
+    curr_pos_rotate = main_path.segments[curr_big_seg].point.x;
+            //var rotate_min = 240;rotate_min
+            //var rotate_max = 280;
+            final_rotate_value = rotate_max - curr_pos_rotate;
+            if(final_rotate_value > 0 && final_rotate_value < 40){
+               if(event.delta.x > 0){ 
+                //set_ref_part_obj.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
+                set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
+                for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                }
+                
+               }else {
+                set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
+                for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                }
+               }
+            }else if(final_rotate_value > 40){
+                set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
+                for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                }
+                                
+            }else if(final_rotate_value < 0){
+                set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
+                for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                }
+ 
+            }
+            
+                
+}
+
+
+
+            //set_path_seg(set_ref_part_obj, rotate_min, rotate_max, seg_srt, seg_end, pivot_x, pivot_y, main_obj_seg_srt, main_obj_seg_end);
+            //set_path_seg(set_ref_part_obj, pivot_x, pivot_y, rotate_min, rotate_max, seg_srt, seg_end, main_obj_seg_srt, main_obj_seg_end);
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function onMouseDrag(event) {
     
     console.log(rgt_arm_ref);
     
-        if(big_point_ele == but_bp_head_top || big_point_ele == but_bp_rgt_foot || big_point_ele == but_bp_lft_foot){       
+        if(big_point_ele == but_bp_head_top){       
             //big_point_ele.position.y += event.delta.y;
             //set_pivot(main_path, main_path.segments[28].point , 50, 50);
             
@@ -965,30 +1044,29 @@ function onMouseDrag(event) {
             
             
             if(big_point_ele == but_bp_lft_hand){
-            
+                set_path_seg(event, lft_arm_ref, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2), 240, 280, 54, 62, 53, 63);
+                but_bp_lft_hand.position = mid_area_path.segments[curr_big_seg].point;
+            }else if(big_point_ele == but_bp_rgt_hand){
+                set_path_seg(event, rgt_arm_ref, mid_area_path.segments[6].point.x, mid_area_path.segments[6].point.y + ((mid_area_path.segments[16].point.y - mid_area_path.segments[6].point.y)/2), 90, 130, 7, 15, 7, 16);
+                but_bp_rgt_hand.position = mid_area_path.segments[curr_big_seg].point;
+            }else if(big_point_ele == but_bp_lft_foot){
+                set_path_seg(event, lft_leg_ref, mid_area_path.segments[35].point.x + ((mid_area_path.segments[49].point.x - mid_area_path.segments[35].point.x)/2), mid_area_path.segments[35].point.y, 190, 230, 35, 48, 35, 49);
+                but_bp_lft_foot.position = mid_area_path.segments[curr_big_seg].point;
+                console.log("asf");
+            }else if(big_point_ele == but_bp_rgt_foot){
+                set_path_seg(event, rgt_leg_ref, mid_area_path.segments[21].point.x + ((mid_area_path.segments[33].point.x - mid_area_path.segments[21].point.x)/2), mid_area_path.segments[21].point.y, 120, 160, 21, 35, 20, 35);
+                but_bp_rgt_foot.position = mid_area_path.segments[curr_big_seg].point;
+                console.log("asf");
+            }else if(false){            
             curr_pos_rotate = main_path.segments[curr_big_seg].point.x;
             var rotate_min = 240;
             var rotate_max = 280;
-            
             final_rotate_value = rotate_max - curr_pos_rotate;
-            
-            
-            
             if(final_rotate_value > 0 && final_rotate_value < 40){
-                console.log(final_rotate_value);
-                //alert("ds");
-                //var et =0;
-                //console.log(lft_arm_ref.rotate.angle);
                if(event.delta.x > 0){ 
-                //lft_arm_ref = def_lft_arm_ref;
-                //console.log(mid_area_path.segments[62].point.x - last_pos_ele);
-                console.log(mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
                 lft_arm_ref.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
-                
                 for(i=0; i < lft_arm_ref.segments.length; i++){
-                    
                     mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
-                    
                 }
                 
                }else {
@@ -1000,7 +1078,6 @@ function onMouseDrag(event) {
                 }
                }
             }else if(final_rotate_value > 40){
-                
                 lft_arm_ref.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
                 
                 for(i=0; i < lft_arm_ref.segments.length; i++){
@@ -1020,7 +1097,7 @@ function onMouseDrag(event) {
                                 
             }
             
-                but_bp_lft_hand.position = mid_area_path.segments[58].point;
+                but_bp_lft_hand.position = mid_area_path.segments[curr_big_seg].point;
             
             }else if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder){
                 
