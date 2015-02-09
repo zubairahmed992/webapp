@@ -398,7 +398,7 @@ lft_leg_ref = new Path({strokeColor: 'black'});
   
 
   
-  
+var an_inc = 20;  
   
 var curr_path_prefix = $("#hdn_serverpath").attr("value");
 
@@ -407,47 +407,47 @@ console.log(curr_path_prefix);
 var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
 
-but_zoom_in.position = new Point(24, 24);
+but_zoom_in.position = new Point(24, 24 + an_inc);
 
 var but_zoom_out_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_out.png";
 var but_zoom_out = new Raster(but_zoom_out_url);
 
-but_zoom_out.position = new Point(-500, 24);
+but_zoom_out.position = new Point(-500, 24 + an_inc);
 
 var but_move_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_left.png";
 var but_move_left = new Raster(but_move_left_url);
 
-but_move_left.position = new Point(24, 68);
+but_move_left.position = new Point(24, 68 + an_inc);
 
 var but_move_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
 var but_move_right = new Raster(but_move_right_url);
 
-but_move_right.position = new Point(24, 112);
+but_move_right.position = new Point(24, 112 + an_inc);
 
 var but_move_up_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_up.png";
 var but_move_up = new Raster(but_move_up_url);
 
-but_move_up.position = new Point(24, 156);
+but_move_up.position = new Point(24, 156 + an_inc);
 
 var but_move_down_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_down.png";
 var but_move_down = new Raster(but_move_down_url);
 
-but_move_down.position = new Point(24, 200);
+but_move_down.position = new Point(24, 200 + an_inc);
 
 var but_rotate_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_left.png";
 var but_rotate_left = new Raster(but_rotate_left_url);
 
-but_rotate_left.position = new Point(24, 244);
+but_rotate_left.position = new Point(24, 244 + an_inc);
 
 var but_rotate_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_right.png";
 var but_rotate_right = new Raster(but_rotate_right_url);
 
-but_rotate_right.position = new Point(24, 288);
+but_rotate_right.position = new Point(24, 288 + an_inc);
 
 var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
 var but_crop_icon = new Raster(but_crop_icon_url);
 
-but_crop_icon.position = new Point(24, 332);
+but_crop_icon.position = new Point(24, 332 + an_inc);
 
 
 var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
@@ -573,6 +573,7 @@ curr_get_values = null;
 big_point = false;
 big_point_ele = false;
 
+ijazat = "yes";
 
 
 var segment;
@@ -613,7 +614,7 @@ function onMouseDown(event) {
 		} else if (hitResult.type == 'pixel') {
 			//segment = null;
                         if(hitResult.item == user_image){
-                        }else if(curr_view == "normal" && hitResult.item == but_zoom_in){
+                        }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                             
                             x_pos_main_path = main_path.position.x;
                             x_pos_trans_bg = trans_bg.position.x;
@@ -728,6 +729,9 @@ function onMouseDown(event) {
                             curr_big_seg = 6;
                             console.log("but_bp_rgt_shoulder");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_arm_pit){
+                            
+                            ijazat = "no";
+                            
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 53;
@@ -739,6 +743,9 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_lft_arm_pit");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_arm_pit){
+                            
+                            ijazat = "no";
+                            
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 15;
@@ -750,6 +757,9 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_rgt_arm_pit");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_waist){
+                            
+                            ijazat = "no";
+                            
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 51;
@@ -761,6 +771,9 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_lft_waist");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_waist){
+                            
+                            ijazat = "no";
+                            
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 17;
@@ -772,6 +785,9 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_rgt_waist");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hip){
+                            
+                            ijazat = "no";
+                            
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 48;
@@ -784,6 +800,9 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_lft_hip");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hip){
+                            
+                            ijazat = "no";
+                            
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 20;
@@ -796,6 +815,9 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_rgt_hip");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
+                            
+                            ijazat = "no";
+                            
                             get_path_seg(rgt_arm_ref, mid_area_path, 7, 15);
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -805,12 +827,18 @@ function onMouseDown(event) {
                              
                             
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
+                            
+                            ijazat = "no";
+                            
                             get_path_seg(lft_arm_ref, mid_area_path, 54, 62);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 58;
                             console.log("but_bp_lft_hand");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_inseam){
+                            
+                            ijazat = "no";
+                            
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 34;
@@ -822,12 +850,18 @@ function onMouseDown(event) {
                             
                             console.log("but_bp_inseam");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
+                            
+                            ijazat = "no";
+                            
                             get_path_seg(lft_leg_ref, mid_area_path, 35, 48);
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 40;
                             console.log("but_bp_lft_foot");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_foot){
+                            
+                            ijazat = "no";
+                            
                             get_path_seg(rgt_leg_ref, mid_area_path, 21, 34);
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -997,8 +1031,6 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 }
  
             }
-            
-                
 }
 
 
