@@ -233,7 +233,8 @@ class FittingRoomController extends Controller {
      #----------------------------------------------------
      
     public function canvasAction() {
-        return $this->render('LoveThatFitSiteBundle:FittingRoom:_canvas.html.twig');        
+        $fb_conf=$this->get('site.helper.socialmedia')->getConfiguration('facebook');
+        return $this->render('LoveThatFitSiteBundle:FittingRoom:_canvas.html.twig', array('facebook'=>$fb_conf));        
     }
     
 }

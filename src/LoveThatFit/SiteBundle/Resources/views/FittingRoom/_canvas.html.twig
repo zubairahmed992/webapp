@@ -4,7 +4,8 @@
         <title>Love That Fit</title>
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-    </head>
+        <script src="//connect.facebook.net/en_US/all.js"></script>
+        </head>
 
 <body>
     <img style="display: none" id='user_image' src="{{asset(app.user.webpath)}}"/>
@@ -13,8 +14,17 @@
         Your browser does not support the HTML5 canvas tag.
     </canvas>
     <input id='btn_send_params' type="button" value="send"></input>
+    <input id='btn_share' type="button" value="share"></input>
 <br>
-<span id='img_url'></span>
+<img  id='uploaded_img' src='' width="100px" height="100px">
+<br>
+<span id='fb_app_key'>{{facebook.app_id}}</span><br>
+<span id='fb_post_name'></span><br>
+<span id='fb_post_link'>{{facebook.web_link}}</span><br>
+<span id='fb_post_img_url'></span><br>
+<span id='fb_post_caption'></span><br>
+<span id='fb_post_desc'></span><br>
+
             <script>
       $(function(){ 
         var user_image = document.getElementById('user_image');
@@ -29,14 +39,48 @@
                    $.post($('#upload_canvas_path').text(), {
                       data : dataURL,                      
               }, function(data) {                  
-                  $('#img_url').text(data);
+                  $('#fb_post_name').text('merged_img');                  
+                  $('#fb_post_img_url').text(data);
+                  $('#uploaded_img').attr("src", data);
+                  $('#fb_post_caption').text('Merged Image');
+                  $('#fb_post_desc').text('testing with the description');
              
               });  
         });
         });
 
             </script>
-        </body>
+         
+            <script>
+ $("#btn_share").click(function(){                
 
+ FB.init({
+    appId      : $('#fb_app_key').text(),
+    status     : true,
+    xfbml      : true,
+    version    : 'v2.0'
+  });  
+  
+  FB.ui(
+      {
+        method: 'feed',
+        name: $('#fb_post_name').text(), // name of the product or content you want to share
+        link:  $('#fb_post_link').text(),
+        picture: $('#fb_post_img_url').text(), // path to an image you would like to share with this content
+        caption: $('#fb_post_caption').text(), // caption
+        description: $('#fb_post_desc').text() // description of your product or content
+      },
+      function(response) {
+        if (response && response.post_id) {
+          alert('Post was published.');
+        } else {
+          alert('Post was not published.');
+        }
+      }
+    )
+
+        });
+  
+</script>
 </body>
 </html>

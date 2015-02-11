@@ -22,4 +22,10 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\SiteBundle\Entity\UserFittingRoomItem
             container: "@service_container"
+  site.helper.socialmedia:
+      class: LoveThatFit\SiteBundle\DependencyInjection\SocialMediaHelper
+      arguments:
+          container: "@service_container"
+
+
       
