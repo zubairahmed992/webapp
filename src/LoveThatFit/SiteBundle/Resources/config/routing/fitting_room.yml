@@ -45,6 +45,14 @@ user_mannequin:
     pattern:  /user/profile/mannequin
     defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:userMannequin }    
     
+#------------------------------------------------------------------
+fitting_room_canvas:
+    pattern:  /fitting_room/canvas
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:canvas }
+
+fitting_room_canvas_upload:
+    pattern:  /fitting_room/canvas_upload
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:userRandomImageUpload }
 
     
     

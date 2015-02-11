@@ -203,8 +203,8 @@ class FittingRoomController extends Controller {
     #-------------------------------------------------------------------------------
     public function countMyColosetAction() {
         $user_id = $this->get('security.context')->getToken()->getUser()->getId();
-        $em = $this->getDoctrine()->getManager();
-        $entity = $this->get('admin.helper.product')->countMyCloset($user_id);
+        #$em = $this->getDoctrine()->getManager();
+        #$entity = $this->get('admin.helper.product')->countMyCloset($user_id);
         $rec_count = count($this->get('admin.helper.product')->countMyCloset($user_id));
         return new Response($rec_count);
     }
@@ -215,6 +215,25 @@ class FittingRoomController extends Controller {
         $user = $this->get('security.context')->getToken()->getUser(); 
         $manequin_size=$this->get('admin.helper.user.mannequin')->userMannequin($user);        
         return new Response(json_encode($manequin_size));
+    }
+    
+    #----------------------------------------------------
+     
+    public function userRandomImageUploadAction() {
+        $user = $this->get('security.context')->getToken()->getUser(); 
+        $entity = $this->get('user.helper.user')->find($user->getId());
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+        $response = $entity->writeImage($_REQUEST['data']);
+        $request = $this->getRequest();
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() .'/'. $response;
+        return new Response($baseurl);        
+    }
+     #----------------------------------------------------
+     
+    public function canvasAction() {
+        return $this->render('LoveThatFitSiteBundle:FittingRoom:_canvas.html.twig');        
     }
     
 }

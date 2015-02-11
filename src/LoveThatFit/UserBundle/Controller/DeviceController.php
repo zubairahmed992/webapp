@@ -66,7 +66,7 @@ class DeviceController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User.');
         }
-        $response = $entity->writeImageFromCanvas($_POST['imageData']);
+        $response = $entity->writeBGCroppedFromCanvas($_POST['imageData']);
         $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
         

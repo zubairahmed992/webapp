@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <title>Love That Fit</title>
+        <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+    </head>
+
+<body>
+    <img style="display: none" id='user_image' src="{{asset(app.user.webpath)}}"/>
+    <span id='upload_canvas_path'>{{ path('fitting_room_canvas_upload')}}</span><br>
+    <canvas id="myCanvas" width="364" height="505" style="border:1px solid #000000;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <input id='btn_send_params' type="button" value="send"></input>
+<br>
+<span id='img_url'></span>
+            <script>
+      $(function(){ 
+        var user_image = document.getElementById('user_image');
+        var context = document.getElementById('myCanvas').getContext("2d");
+        user_image.onload = function () {            
+         context.drawImage(user_image, 10, 10);         
+        }
+         $("#btn_send_params").click(function(){
+             var canvas = document.getElementById('myCanvas');             
+             var dataURL = canvas.toDataURL();
+             
+                   $.post($('#upload_canvas_path').text(), {
+                      data : dataURL,                      
+              }, function(data) {                  
+                  $('#img_url').text(data);
+             
+              });  
+        });
+        });
+
+            </script>
+        </body>
+
+</body>
+</html>

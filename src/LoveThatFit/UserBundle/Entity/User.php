@@ -1147,6 +1147,17 @@ class User implements UserInterface, \Serializable {
         
     }
     //----------------------------------------------------
+    public function writeImage($raw_data) {
+        $data = substr($raw_data, strpos($raw_data, ",") + 1);
+        $decodedData = base64_decode($data);        
+        $file_name= uniqid() . '.png';
+        $abs_path = $this->getUploadRootDir() . '/' . $file_name;        
+        $fp = fopen($abs_path, 'wb');
+        @fwrite($fp, $decodedData);
+        @fclose($fp);      
+        return $this->getUploadDir() . '/' . $file_name;        
+    }
+    //----------------------------------------------------
     public function writeBGCroppedFromCanvas($raw_data) {
         $data = substr($raw_data, strpos($raw_data, ",") + 1);
         $decodedData = base64_decode($data);
