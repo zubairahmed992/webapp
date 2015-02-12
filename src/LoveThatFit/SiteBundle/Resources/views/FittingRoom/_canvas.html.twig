@@ -15,6 +15,7 @@
     </canvas>
     <input id='btn_send_params' type="button" value="send"></input>
     <input id='btn_share' type="button" value="share"></input>
+    <input id='btn_share_upload' type="button" value="share upload"></input>
 <br>
 <img  id='uploaded_img' src='' width="100px" height="100px">
 <br>
@@ -52,9 +53,10 @@
             </script>
          
             <script>
+                 
  $("#btn_share").click(function(){                
 
- FB.init({
+FB.init({
     appId      : $('#fb_app_key').text(),
     status     : true,
     xfbml      : true,
@@ -79,6 +81,36 @@
       }
     )
 
+        });
+  
+</script>
+ <script>
+ $("#btn_share_upload").click(function(){    
+     var canvas = document.getElementById('myCanvas');             
+     var data = canvas.toDataURL();
+     
+      var encodedPng = data.substring(data.indexOf(',') + 1, data.length);
+    var decodedPng = Base64Binary.decode(encodedPng);
+FB.init({
+    appId      : $('#fb_app_key').text(),
+    status     : true,
+    xfbml      : true,
+    version    : 'v2.0'
+  });  
+
+
+FB.api(
+    "/me/photos",
+    "POST",
+    {
+        "source": decodedPng
+    },
+    function (response) {
+      if (response && !response.error) {
+        /* handle the result */
+      }
+    }
+);
         });
   
 </script>
