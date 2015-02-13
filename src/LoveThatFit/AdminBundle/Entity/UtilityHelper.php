@@ -33,8 +33,16 @@ class UtilityHelper {
         return $this->device_bootstrap;
     }
 //--------------------------------------------------------------------------------
-    public function getDeviceResolutionSpecs() {
-        return $this->device_bootstrap['resolution_scale'];
+    public function getDeviceResolutionSpecs($type=null) {
+        if ($type){
+            if (array_key_exists($type, $this->device_bootstrap['resolution_scale'])){
+                return $this->device_bootstrap['resolution_scale'][$type];
+            }else{
+                return null;
+            }                
+        }else{
+            return $this->device_bootstrap['resolution_scale'];
+        }
     }
 #-------------------------------------------------------------------------------
     public function getPageNumber($count){

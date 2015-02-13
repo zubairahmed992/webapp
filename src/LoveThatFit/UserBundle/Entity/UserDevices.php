@@ -340,8 +340,14 @@ class UserDevices  {
      *
      * @return \DateTime 
      */
-    public function getImageUpdatedAt()
-    {
+    public function getImageUpdatedAt(){
         return $this->image_updated_at;
+    }
+    
+    public function getUserPixcelHeight(){
+        if (!$this->getUser()->getMeasurement()->getHeight() or !$this->deviceUserPerInchPixelHeight)
+            return null;
+        else
+            return $this->getUser()->getMeasurement()->getHeight() * $this->deviceUserPerInchPixelHeight;
     }
 }
