@@ -27,9 +27,9 @@ class DeviceController extends Controller {
       
     #---------------------------------------------------------------------------
     
-   public function editImageAction($auth_token=null, $edit_type=null) {
+   public function editImageAction($auth_token=null, $edit_type=null, $device_type=null) {
        $user = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
-       $device_type = 'iphone5';
+       $device_type =$device_type==null? 'iphone5':$device_type;
        if(!$user){
            return new Response ('Authentication error');
        }
