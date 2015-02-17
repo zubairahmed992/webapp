@@ -6,8 +6,8 @@ hitOptions = {
 };
 
 inc_ratio = 1;
-curr_screen_height = 500;
-center_pos = 181;
+curr_screen_height = 505;
+center_pos = 161;
 def_pos_x = -500;
 def_path_diff = 500;
 
@@ -22,14 +22,20 @@ curr_crop = "normal";
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 chk_no_img_path = false;
+//alert(croped_img_path);
+
+
+
+//chk_no_img_path = true;
 
 if(croped_img_path == "/webapp/web/" || croped_img_path == "/cs-ltf-webapp/web/"){
     chk_no_img_path = true;
+    //alert("Ahoo");
 }else{
     if(croped_img_path == "/")
     chk_no_img_path = true;
 }
-
+//chk_no_img_path = false;
 //////// From JS file --- End
 
 $(document).ready(function() {
@@ -40,13 +46,15 @@ $(document).ready(function() {
 
 function createBlob() {
 
-    
 
         var pathData = $("#img_path_paper").attr("value");
+        
         if(chk_no_img_path == true){
+            
             pathData = $("#default_user_path").html();
             $("#measurement_shoulder_height").attr("value", "66.6");
             $("#measurement_hip_height").attr("value", "159.4");
+            
         }
         
 mid_area_path = new Path(pathData);
@@ -309,13 +317,22 @@ path_com = new CompoundPath({
                 //default_path,
                 mid_area_path
     ],
-    fillColor: '#666666',
-    selected: true
+    //fillColor: '#666666',
+    selected: false,
+    //strokeWidth: 1,
+    //strokeColor: '#ffcc00',
+    fillColor: '#666666'
+    
 	//strokeColor: '#ffcc00'
 });
 
+//path_com.children[0].strokeWidth = 4;
+//path_com.children[0].strokeColor = '#ffcc00';
 
-path_com.opacity = 0.6;
+mid_area_path.strokeWidth = 4;
+
+path_com.opacity = 0.85;
+
      if(chk_no_img_path == true){      
      
         export_svg_data(path_com);
@@ -377,13 +394,13 @@ var export_path_full = path.exportSVG({asString: true});
 
 //var rgt_arm_ref = $("#rgt_arm_ref").attr("value");
 
-rgt_arm_ref = new Path({strokeColor: 'black'});
+rgt_arm_ref = new Path({});
 
-lft_arm_ref = new Path({strokeColor: 'black'});
+lft_arm_ref = new Path({});
 
-rgt_leg_ref = new Path({strokeColor: 'black'});
+rgt_leg_ref = new Path({});
 
-lft_leg_ref = new Path({strokeColor: 'black'});
+lft_leg_ref = new Path({});
 
  function get_path_seg(ref_part_obj, obj_path_for_ref, int_seg_num, end_seg_num){  
     
@@ -1009,25 +1026,25 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 //set_ref_part_obj.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
                 set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                    mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                 }
                 
                }else {
                 set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                    mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                 }
                }
             }else if(final_rotate_value > 40){
                 set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                    mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                 }
                                 
             }else if(final_rotate_value < 0){
                 set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
-                    mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
+                    mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
                 }
  
             }
@@ -1073,20 +1090,21 @@ function onMouseDrag(event) {
             //main_path.scale(1, 0.6);
         }else if(big_point_ele){
             
-            
+              //alert(mid_area_path.segments[40].point.x - mid_area_path.segments[34].point.x); // 24px
+              
             
             if(big_point_ele == but_bp_lft_hand){
-                set_path_seg(event, lft_arm_ref, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2), 240, 280, 54, 62, 53, 63);
+                set_path_seg(event, lft_arm_ref, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2), mid_area_path.segments[48].point.x + 10, mid_area_path.segments[48].point.x + 50, 54, 62, 53, 63);
                 but_bp_lft_hand.position = mid_area_path.segments[curr_big_seg].point;
             }else if(big_point_ele == but_bp_rgt_hand){
-                set_path_seg(event, rgt_arm_ref, mid_area_path.segments[6].point.x, mid_area_path.segments[6].point.y + ((mid_area_path.segments[16].point.y - mid_area_path.segments[6].point.y)/2), 90, 130, 7, 15, 7, 16);
+                set_path_seg(event, rgt_arm_ref, mid_area_path.segments[6].point.x, mid_area_path.segments[6].point.y + ((mid_area_path.segments[16].point.y - mid_area_path.segments[6].point.y)/2), mid_area_path.segments[20].point.x - 50, mid_area_path.segments[20].point.x - 10, 7, 15, 7, 16);
                 but_bp_rgt_hand.position = mid_area_path.segments[curr_big_seg].point;
             }else if(big_point_ele == but_bp_lft_foot){
-                set_path_seg(event, lft_leg_ref, mid_area_path.segments[35].point.x + ((mid_area_path.segments[49].point.x - mid_area_path.segments[35].point.x)/2), mid_area_path.segments[35].point.y, 190, 230, 35, 48, 35, 49);
+                set_path_seg(event, lft_leg_ref, mid_area_path.segments[35].point.x + ((mid_area_path.segments[49].point.x - mid_area_path.segments[35].point.x)/2), mid_area_path.segments[35].point.y, mid_area_path.segments[34].point.x + 14, mid_area_path.segments[34].point.x + 54, 35, 48, 35, 49);
                 but_bp_lft_foot.position = mid_area_path.segments[curr_big_seg].point;
                 console.log("asf");
             }else if(big_point_ele == but_bp_rgt_foot){
-                set_path_seg(event, rgt_leg_ref, mid_area_path.segments[21].point.x + ((mid_area_path.segments[33].point.x - mid_area_path.segments[21].point.x)/2), mid_area_path.segments[21].point.y, 120, 160, 21, 35, 20, 35);
+                set_path_seg(event, rgt_leg_ref, mid_area_path.segments[21].point.x + ((mid_area_path.segments[33].point.x - mid_area_path.segments[21].point.x)/2), mid_area_path.segments[21].point.y, mid_area_path.segments[34].point.x - 4, mid_area_path.segments[34].point.x - 14, 21, 35, 20, 35);
                 but_bp_rgt_foot.position = mid_area_path.segments[curr_big_seg].point;
                 console.log("asf");
             }else if(false){            

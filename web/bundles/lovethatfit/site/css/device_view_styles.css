@@ -5,3 +5,6 @@
         font-family: MyCustomFont;
         outline: none;
 }
+.txt_center {
+    text-align: center;
+}
