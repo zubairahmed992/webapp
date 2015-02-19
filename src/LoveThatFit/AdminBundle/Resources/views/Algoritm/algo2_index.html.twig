@@ -28,7 +28,7 @@ $('a.json').click(function (event){
      
     var user_id = $("#algorithm_User").val();
     var product_id = $("#algorithm_Product").val();                    
-    var compare_url = "../algorithm/compare/" + user_id + "/"+ product_id + "/"+true;         
+    var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id + "/"+true;         
      $.ajax({
         url: compare_url
         ,success: function(response) {
