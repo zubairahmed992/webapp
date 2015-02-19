@@ -1,3 +1,11 @@
+admin_fit_algorithm2_index:
+    pattern:  /admin/fit_algorithm2/index
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:FitAlgorithmIndex}
+
+admin_fit_algorithm2_run:
+    pattern:  /admin/fit_algorithm2/compare/{user_id}/{product_id}/{json}
+    defaults: { _controller: LoveThatFitAdminBundle:Algorithm:FitAlgorithmCompare, user_id: 0, product_id: 0, json:false}
+#-------------------------------------------------------
 
 admin_algorithm_avg:
     pattern:  /admin/algorithm/avg
