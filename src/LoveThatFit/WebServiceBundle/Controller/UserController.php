@@ -301,19 +301,23 @@ public function userProfileAction()
             #----------------------------
             $file_name = $_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $newFilename = 'iphone' . "." . $ext;
-            $user->setIphoneImage($newFilename);
+            $newFilename = 'cropped' . "." . $ext;
+            #$user->setIphoneImage($newFilename);
+            $user->setImage($newFilename);
+            #creating abs path
+            $abs_path = $user->getUploadRootDir().'/'.$newFilename;
+            
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-            if (move_uploaded_file($_FILES["file"]["tmp_name"], $user->getAbsoluteIphonePath())) {
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $abs_path)) {
                 $this->get('webservice.helper.user')->setMarkingDeviceType($user, $deviceType, $heightPerInch);
                 $this->get('webservice.helper.user')->saveUser($user);
                 $userinfo = array();
                 
                 $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user->getId() . "/";
                 $userinfo['heightPerInch'] = $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($user, $deviceType); 
-                $userinfo['iphoneImage'] = $user->getIphoneImage();
+                $userinfo['iphoneImage'] = $user->getImage();
                 $userinfo['path'] = $baseurl;
                 return new Response(json_encode($userinfo));
             } else {
