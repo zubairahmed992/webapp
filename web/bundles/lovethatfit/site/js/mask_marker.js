@@ -6,7 +6,7 @@ hitOptions = {
 };
 
 inc_ratio = 1;
-curr_screen_height = 505;
+curr_screen_height = 505  ;
 center_pos = 161;
 def_pos_x = -500;
 def_path_diff = 500;
@@ -72,6 +72,7 @@ trans_bg.style = {
 //var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
 
 p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+
 
 
 var final_user_height_ratio = curr_screen_height / p_user_height;
@@ -911,6 +912,7 @@ function onMouseDown(event) {
                             
                             
                             post_content_of_canvas();
+                            upload();
                             window.location.href = "scr1_but_save_mask";
                             //alert("Save Button Tap");
                             //$("#scr1_but_save_mask").trigger( "click" );
@@ -1292,6 +1294,8 @@ function onMouseDrag(event) {
         
         //$("#default_user_path").html(export_path_final);
         
+        alert(export_path_final);
+        
         $("#img_path_paper").attr("value", export_path_final);
        
         
@@ -1383,4 +1387,40 @@ function post_content_of_canvas(){
                       }
               });  
   		
+}
+
+
+function upload(){
+var $url=$('#marker_update_url').attr('value');
+var value_ar = {
+rect_x: $('#p_selected_pic_x').attr('value'),
+rect_y: $('#p_selected_pic_y').attr('value'),
+rect_height: $('#p_selected_pic_h').attr('value'),
+rect_width:$('#p_selected_pic_w').attr('value'),
+mask_x: $('#mask_x').attr('value'),
+mask_y: $('#mask_y').attr('value'),
+marker_json:$('#img_path_json').attr('value'),
+default_marker_json:$('#default_marker_json').attr('value'),
+default_marker_svg:$('#default_marker_svg').attr('value'),
+svg_path:$('#img_path_paper').attr('value')};
+
+
+ $.ajax({
+        type: "POST",
+        url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
+        data: value_ar,  
+       success: function(data){//alert(data);
+           alert("Thi viyo");
+           //setTimeout(go_to_index,'500');
+     console.log(data);    
+    },
+        failure: function(errMsg) {
+            //setTimeout(go_to_index,'500');
+            alert(errMsg);
+        }
+  });
+
+//alert(JSON.stringify(value_ar));
+
+
 }

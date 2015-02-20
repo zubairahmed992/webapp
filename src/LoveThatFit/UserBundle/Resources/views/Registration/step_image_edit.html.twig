@@ -988,7 +988,7 @@ $(document).ready(function() {
     }); 
 });
 function upload(){
-var $url=$('#marker_update_url').attr('value');
+var ik_url=$('#marker_update_url').attr('value');
 var value_ar = {
 rect_x: $('#p_selected_pic_x').attr('value'),
 rect_y: $('#p_selected_pic_y').attr('value'),
@@ -1004,7 +1004,7 @@ svg_path:$('#img_path_paper').attr('value')};
 
  $.ajax({
         type: "POST",
-        url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
+        url: ik_url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,  
        success: function(data){//alert(data);
            setTimeout(go_to_index,'500');
