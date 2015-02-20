@@ -54,7 +54,6 @@ function createBlob() {
             pathData = $("#default_user_path").html();
             $("#measurement_shoulder_height").attr("value", "66.6");
             $("#measurement_hip_height").attr("value", "159.4");
-            
         }
         
 mid_area_path = new Path(pathData);
@@ -92,7 +91,8 @@ user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
 
 user_image.scale(inc_ratio,p_user_height*inc_ratio);
-user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
+//user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
+user_image.position = new Point(center_pos,568/2);
 
 if(chk_no_img_path == true){
 
@@ -262,6 +262,8 @@ if(chk_no_img_path == true){
     
     mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
     mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
+    
+    
    }
    else{
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
@@ -345,12 +347,14 @@ path_com.opacity = 0.85;
         
         d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
      
+     
       
 
     }else {
     
     
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
+        console.log(default_adjusted_path_data);
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
         d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
@@ -367,7 +371,7 @@ function export_svg_data(path_com){
 
 
 
-var export_path_full = path.exportSVG({asString: true});
+var export_path_full = path_com.exportSVG({asString: true});
         
         
         
@@ -424,7 +428,7 @@ console.log(curr_path_prefix);
 var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
 
-but_zoom_in.position = new Point(24, 24 + an_inc);
+but_zoom_in.position = new Point(26, 24 + an_inc);
 
 var but_zoom_out_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_out.png";
 var but_zoom_out = new Raster(but_zoom_out_url);
@@ -434,53 +438,53 @@ but_zoom_out.position = new Point(-500, 24 + an_inc);
 var but_move_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_left.png";
 var but_move_left = new Raster(but_move_left_url);
 
-but_move_left.position = new Point(24, 68 + an_inc);
+but_move_left.position = new Point(26, 68 + an_inc);
 
 var but_move_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_right.png";
 var but_move_right = new Raster(but_move_right_url);
 
-but_move_right.position = new Point(24, 112 + an_inc);
+but_move_right.position = new Point(26, 112 + an_inc);
 
 var but_move_up_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_up.png";
 var but_move_up = new Raster(but_move_up_url);
 
-but_move_up.position = new Point(24, 156 + an_inc);
+but_move_up.position = new Point(26, 156 + an_inc);
 
 var but_move_down_url = curr_path_prefix + "bundles/lovethatfit/site/images/move_down.png";
 var but_move_down = new Raster(but_move_down_url);
 
-but_move_down.position = new Point(24, 200 + an_inc);
+but_move_down.position = new Point(26, 200 + an_inc);
 
 var but_rotate_left_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_left.png";
 var but_rotate_left = new Raster(but_rotate_left_url);
 
-but_rotate_left.position = new Point(24, 244 + an_inc);
+but_rotate_left.position = new Point(26, 244 + an_inc);
 
 var but_rotate_right_url = curr_path_prefix + "bundles/lovethatfit/site/images/rotate_right.png";
 var but_rotate_right = new Raster(but_rotate_right_url);
 
-but_rotate_right.position = new Point(24, 288 + an_inc);
+but_rotate_right.position = new Point(26, 288 + an_inc);
 
 var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
 var but_crop_icon = new Raster(but_crop_icon_url);
 
-but_crop_icon.position = new Point(24, 332 + an_inc);
+but_crop_icon.position = new Point(26, 332 + an_inc);
 
 
-var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
+var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/how_it_works_icon.png";
 var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
 
-scr1_but_hiw_icon.position = new Point(290, 50);
+scr1_but_hiw_icon.position = new Point(294, 50);
 
-var scr1_but_camera_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
+var scr1_but_camera_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/camera_icon.png";
 var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
 
-scr1_but_camera_icon.position = new Point(290, 100);
+scr1_but_camera_icon.position = new Point(294, 100);
 
-var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop_icon.png";
+var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/scr1_next_btn.png";
 var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
 
-scr1_but_save_icon.position = new Point(290, 300);
+scr1_but_save_icon.position = new Point(281, 550);
 
 
 
@@ -885,19 +889,31 @@ function onMouseDown(event) {
                             curr_big_seg = 28;
                             console.log("but_bp_rgt_foot");
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_hiw_icon){
-                            
-                            $("#scr1_but_how_it_works").trigger( "click" );
-                            alert("How It Works Button Tap");
-                            console.log("scr1_but_hiw_icon");
+                            window.location.href = "scr1_but_how_it_works";
+                            //$("#scr1_but_how_it_works").trigger( "click" );
+                            //alert("How It Works Button Tap");
+                            //console.log("scr1_but_hiw_icon");
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
-                            window.location.href = window.location.href + "#camera";
-                            $("#scr1_but_camera_options").trigger( "click" );
+                            window.location.href = "scr1_but_camera_options";
+                            
+                            //$("#scr1_but_camera_options").trigger();
+                            
+                            //$("#scr1_but_camera_options").live('click', function() { alert("That tickles!") });
+                            //$("#scr1_but_camera_options").live('click');
+                            
+                            //alert(window.location.href);
+                            
+                            //$("#scr1_but_camera_options").trigger( "click" );
+                            
                             //alert("Camera Button Tap");
                             console.log("scr1_but_camera_icon");
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
                             
-                            $("#scr1_but_save_mask").trigger( "click" );
-                            alert("Save Button Tap");
+                            
+                            post_content_of_canvas();
+                            window.location.href = "scr1_but_save_mask";
+                            //alert("Save Button Tap");
+                            //$("#scr1_but_save_mask").trigger( "click" );
                             console.log("scr1_but_save_icon");
                         }
                         
@@ -1026,25 +1042,33 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 //set_ref_part_obj.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
                 set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
                 
                }else {
                 set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
                }
             }else if(final_rotate_value > 40){
                 set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                   // mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
                                 
             }else if(final_rotate_value < 0){
                 set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
+                    
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
  
             }
@@ -1329,3 +1353,34 @@ function onMouseDrag(event) {
 
 
 
+function post_content_of_canvas(){
+
+
+    
+    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
+    var entity_id = document.getElementById('hdn_entity_id').value;
+    var img_update_url = document.getElementById('hdn_image_update_url').value;
+
+    var canv_data = document.getElementById('canv_mask').toDataURL();
+    
+              $.post(img_update_url, {
+                      imageData : canv_data,
+                      id : entity_id
+              }, function(canv_data) {
+  
+              var obj_url = jQuery.parseJSON( canv_data );
+               
+              console.log("i am checked bhai");
+                
+                      if(obj_url.status === "check"){
+                
+                          
+                          
+                         alert("Chicken");
+                          
+                          
+                          
+                      }
+              });  
+  		
+}

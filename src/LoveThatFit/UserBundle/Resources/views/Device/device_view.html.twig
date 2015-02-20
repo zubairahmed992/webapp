@@ -17,7 +17,7 @@
 <input id="dv_per_inch_px" type="hidden" value="{{ per_inch_pixcel }}" />
 <input id="dv_type" type="hidden" value="{{ device_type }}" />
 <input id="dv_scr_h" type="hidden" value="{{ device_screen_height }}" />
-
+<input id="dv_edit_type" type="hidden" value="{{ edit_type }}" />
 
 
 <input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
@@ -39,7 +39,8 @@
 
 
 {% if(edit_type=="registration")%}
-    <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+    
+        <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getIphoneWebPath)}}"/>
     {%elseif(edit_type=="device")%}
         <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
     {%else%}
@@ -54,10 +55,11 @@
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
-                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
+                <input type="text" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 
+                <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
                 
 
                 </form>
@@ -70,13 +72,16 @@
 
 
 
-<input id="but_reload" style="position: absolute; bottom:40px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" type="button" value="Reload Page" onClick="window.location.reload();">
+<input id="re_load" style="position: absolute; bottom:40px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" type="button" value="Reload Page" onClick="window.location.reload();">
+<a class="hide_me" id="scr1_but_camera_options" style="position: absolute; bottom:160px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" onClick="window.location.reload();">asdfasdf</a>
+<a class="hide_me" id="scr1_but_save_mask" style="position: absolute; bottom:120px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" onClick="window.location.reload();">asdfasdf</a>
+
 <!--
 <input id="scr1_but_save_mask" style="position: absolute; bottom:80px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" type="button" value="Save"onClick="document.location.me_triggered();">
 
 <input id="scr1_but_how_it_works" style="position: absolute; bottom:120px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" type="button" value="How It Works"onClick="window.location.me_triggered();">
 
-<a id="scr1_but_camera_options" style="position: absolute; bottom:160px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" onClick="window.location.href">asdfasdf</a>
+
 
 
 <input id="rgt_arm_ref" type="text" value="M146.813,100.852c11.753,3.33,11.383,22.141,14.962,48.269c0.523,3.559,0.811,10.811,3.926,26.468c2.568,24.191,4.297,18.982,4.571,65.666c3.014,12.91,12.935,25.821-2.017,35.107c-1.756,1.131-13.129,11.084-4.68-10.356c-0.65-2.259-5.317-14.769-2.377-24.778c-0.454-1.316-6.086-15.189-14.012-62.175c-2.641-19.414-2.148-18.767-2.986-26.381c-0.148-1.718-3.127-21.49-4.414-21.489L146.813,100.852z"/>

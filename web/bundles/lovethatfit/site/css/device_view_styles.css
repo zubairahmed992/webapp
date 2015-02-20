@@ -8,3 +8,6 @@
 .txt_center {
     text-align: center;
 }
+.hide_me {
+    display:none;
+}
