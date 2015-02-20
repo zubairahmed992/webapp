@@ -13,7 +13,7 @@ $(document).ready(function(){
      
     var user_id = $("#algorithm_User").val();
     var product_id = $("#algorithm_Product").val();                    
-    var compare_url = "../algorithm/compare/" + user_id + "/"+ product_id;         
+    var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id;         
      $.ajax({
         url: compare_url
         ,success: function(response) {
