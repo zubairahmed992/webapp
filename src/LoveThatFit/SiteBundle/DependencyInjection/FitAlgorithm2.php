@@ -87,6 +87,8 @@ class FitAlgorithm2 {
 
         return array('fit_point' => $fp_specs['fit_point'],
             'label' => $this->getFitPointLabel($fp_specs['fit_point']),
+            'below_min_2' => $max_min['below_min_2'],
+            'below_min_1' => $max_min['below_min_1'],
             'calc_min_body_measurement' => $max_min['calc_min_body_measurement'],
             'min_body_measurement' => $fp_specs['min_body_measurement'],
             'ideal_body_size_low' => $fp_specs['ideal_body_size_low'],
@@ -98,7 +100,7 @@ class FitAlgorithm2 {
             'body_measurement' => $body,            
         );
     }
-    
+#---------------------------------------------------    
 private function calculate_maxmin($fp_specs){
       
         $ar=array();
@@ -117,8 +119,16 @@ private function calculate_maxmin($fp_specs){
             $ar['calc_max_body_measurement'] = $fp_specs['max_body_measurement'];
             $ar['calc_min_body_measurement'] = $fp_specs['min_body_measurement'];            
         }
+        $avg_min_diff=$ar['mid_low_high']-$ar['calc_min_body_measurement'];
+        $ar['below_min_1'] = $ar['calc_min_body_measurement']-$avg_min_diff;
+        $ar['below_min_2'] = $ar['below_min_1']-$avg_min_diff;
+        
         return $ar;
         
+}
+#---------------------------------------------------
+private function calculate_fitindex(){
+    
 }
     # -----------------------------------------------------
        private function limit_num($n){        
