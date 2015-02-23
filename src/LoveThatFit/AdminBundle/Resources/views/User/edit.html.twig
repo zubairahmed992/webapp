@@ -236,7 +236,22 @@
     
          <div class="clr_bth"></div>  
         
-         
+           <div>
+    
+    
+         <div class="clr_bth"></div>  
+           <div>
+       Image
+        {{ form_widget(userform.image) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(userform.image) }}</div>
+        </div>    
+      <div class="clr_bth"></div>  
+           <div>
+       iPhoneImage
+        {{ form_widget(userform.iphoneimage) }} &nbsp;<b>"</b>
+            <div class="form_vld_error"> {{ form_errors(userform.iphoneimage) }}</div>
+        </div>    
+         <div class="clr_bth"></div>           
          <div>
         Secret Question
         {{ form_widget(userform.secretQuestion) }} &nbsp;<b>"</b>

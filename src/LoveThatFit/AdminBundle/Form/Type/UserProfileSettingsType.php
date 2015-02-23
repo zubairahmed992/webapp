@@ -14,6 +14,8 @@ class UserProfileSettingsType extends AbstractType
         $builder->add('firstName', 'text');
         $builder->add('lastName', 'text');   
         $builder->add('email', 'email');   
+        $builder->add('image', 'text');   
+        $builder->add('iphoneimage', 'text');   
         $builder->add('secretQuestion', 'text');
         $builder->add('secretAnswer', 'text');
         $builder->add('gender', new GenderType(), array(               

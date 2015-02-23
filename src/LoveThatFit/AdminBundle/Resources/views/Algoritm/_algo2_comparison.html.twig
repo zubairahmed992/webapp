@@ -34,10 +34,13 @@
                                     <tr>
                                         <td></td>
                                         <td>Body</td>
-                                        <td>Fit-model</td>
+                                        <td>Cal Min</td>
+                                        <td>Min</td>
                                         <td>Low</td>
+                                        <td>Fit-model</td>                                        
                                         <td>High</td>
                                         <td>Max</td>
+                                        <td>Cal Max</td>                                        
                                     </tr>
                                 </b>
 
@@ -47,10 +50,16 @@
                                     <tr>
                                         <td>{{fp}}({{fp_specs.fit_priority}}%)</td>
                                         <td><b>{{fp_specs.body_measurement}}</b></td>
-                                        <td>({{fp_specs.mid_low_high}})</td>
+                                        
+                                        <td><b>{{fp_specs.calc_min_body_measurement}}</b></td>
+                                        <td><b>{{fp_specs.min_body_measurement}}</b></td>
                                         <td><b>{{fp_specs.ideal_body_size_low}}</b></td>
+                                        
+                                        <td>({{fp_specs.mid_low_high}})</td>
+                                        
                                         <td><b>{{fp_specs.ideal_body_size_high}}</b></td>
                                         <td><b>{{fp_specs.max_body_measurement}}</b></td>                                
+                                        <td><b>{{fp_specs.max_body_measurement}}</b></td>
                                     </tr>
 
                             {% endfor %}

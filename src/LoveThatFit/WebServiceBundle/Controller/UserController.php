@@ -423,6 +423,7 @@ public function avatarUploadAction() {
         $data=$utility_helper->getDeviceBootstrap();
         $data['body_type']=$utility_helper->getBodyTypesSearching();
         $data['body_shape']=$utility_helper->getBodyShape();
+        $data['body_shape_man']=$utility_helper->getMenBodyShape();
         $data['neck_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
         
        // $data['neck_size']=sort($data['neck_sizes']);

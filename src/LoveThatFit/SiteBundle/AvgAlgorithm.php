@@ -521,7 +521,7 @@ class AvgAlgorithm {
                 return 'close fitting';
                 break;
             case $this->status['between_low_high'] :
-                return 'Love That Fit';
+                return 'Perfect Fit';
                 break;
             case $this->status['below_low'] :
                 return 'Loose';
@@ -556,7 +556,7 @@ class AvgAlgorithm {
                 return 'close fitting (first_half_high_max)';
                 break;
             case $this->status['between_low_high'] :
-                return 'Love That Fit (between_low_high)';
+                return 'Perfect Fit (between_low_high)';
                 break;
             case $this->status['below_low'] :
                 return 'Loose (below_low)';

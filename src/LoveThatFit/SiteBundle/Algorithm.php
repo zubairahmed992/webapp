@@ -330,7 +330,7 @@ class Algorithm {
         $fits = $this->fit($this->feedback_array);
         $recomendations = $this->feedback_array;
         if ($fits) {
-            $recomendations = array("basic_fit" => array("diff" => 0, "msg" => 'Love that fit', 'fit' => true));
+            $recomendations = array("basic_fit" => array("diff" => 0, "msg" => 'Perfect Fit', 'fit' => true));
         } else {
 
             $size_that_fits = $this->getFittingSize();

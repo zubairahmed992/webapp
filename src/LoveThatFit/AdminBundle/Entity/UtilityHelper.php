@@ -189,6 +189,13 @@ public function getBodyShape(){
     
      return $this->conf["constants"]["body_shape"]['women'];
 }
+
+public function getWomenBodyShape(){    
+     return $this->conf["constants"]["body_shape"]['women'];
+}
+public function getMenBodyShape(){    
+     return $this->conf["constants"]["body_shape"]['men'];
+}
 #--------------Reading Bra Sizes--------------------------------------#
 public function getBraSize(){
     return $this->conf["constants"]["bra_size"];
