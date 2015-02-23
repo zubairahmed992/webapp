@@ -28,7 +28,7 @@
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
 <input id="mask_x" type="hidden" value="{{marker.maskX}}" />
 <input id="mask_y" type="hidden" value="{{marker.maskY}}" />
-<input id="img_path_paper" type="text" value="{{marker.SvgPaths}}" />
+<input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
 <input id="default_marker_svg" type="hidden" value="{{marker.defaultMarkerSvg}}" />
@@ -40,7 +40,8 @@
 
 {% if(edit_type=="registration")%}
     
-        <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getIphoneWebPath)}}"/>
+        <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+        <!--<input type="hidden" id="hdn_user_cropped_image_url" value="{#{ asset(entity.getIphoneWebPath)}#}"/>-->
     {%elseif(edit_type=="device")%}
         <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
     {%else%}
@@ -55,7 +56,7 @@
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
 
                 <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
-                <input type="text" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('registration_step_four_image_update')}}"/>
                 <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
                 <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
                 

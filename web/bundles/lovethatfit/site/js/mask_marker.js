@@ -587,6 +587,47 @@ function set_big_points(single_item){
     }
 }
 
+function hide_ele_img_export(){
+    hide_big_points();
+    //but_zoom_in.opacity = 0;
+    //but_zoom_out.opacity = 0;
+   // but_move_left.opacity = 0;
+   // but_move_right.opacity = 0;
+   // but_move_up.opacity = 0;
+   // but_move_down.opacity = 0;
+  //  but_rotate_left.opacity = 0;
+   // but_rotate_right.opacity = 0;
+  //  but_crop_icon.opacity = 0;
+   // scr1_but_hiw_icon.opacity = 0;
+   // scr1_but_camera_icon.opacity = 0;
+   // scr1_but_save_icon.opacity = 0;
+  //  path_com.opacity = 0;
+    
+    
+but_zoom_in.position = new Point(-1000,-1000);
+but_zoom_out.position = new Point(-1000,-1000);
+but_move_left.position = new Point(-1000,-1000);
+but_move_right.position = new Point(-1000,-1000);
+but_move_up.position = new Point(-1000,-1000);
+but_move_down.position = new Point(-1000,-1000);
+but_rotate_left.position = new Point(-1000,-1000);
+but_rotate_right.position = new Point(-1000,-1000);
+but_crop_icon.position = new Point(-1000,-1000);
+scr1_but_hiw_icon.position = new Point(-1000,-1000);
+scr1_but_camera_icon.position = new Point(-1000,-1000);
+scr1_but_save_icon.position = new Point(-1000,-1000);
+path_com.opacity = 0;
+    
+    post_content_of_canvas();
+    upload();
+    
+}
+
+function show_loader(){
+    
+}
+
+
 curr_get_values = null;
 
 
@@ -638,7 +679,7 @@ function onMouseDown(event) {
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                             
-                            x_pos_main_path = main_path.position.x;
+                            /*x_pos_main_path = main_path.position.x;
                             x_pos_trans_bg = trans_bg.position.x;
                             x_pos_def_path = def_path.position.x;
                             x_pos_user_image = user_image.position.x;
@@ -662,7 +703,11 @@ function onMouseDown(event) {
                             but_zoom_out.position.x = 24;
                             
                             
-                            hide_big_points();
+                            hide_big_points();*/
+                            
+                            window.location.href = "scr1_but_save_mask";
+                            
+                            
                         }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
                             
                             
@@ -910,10 +955,13 @@ function onMouseDown(event) {
                             console.log("scr1_but_camera_icon");
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
                             
+                            hide_ele_img_export();
+                            show_loader();
                             
-                            post_content_of_canvas();
-                            upload();
-                            window.location.href = "scr1_but_save_mask";
+                            
+                            //
+                            //
+                            //
                             //alert("Save Button Tap");
                             //$("#scr1_but_save_mask").trigger( "click" );
                             console.log("scr1_but_save_icon");
@@ -1294,7 +1342,7 @@ function onMouseDrag(event) {
         
         //$("#default_user_path").html(export_path_final);
         
-        alert(export_path_final);
+        //alert(export_path_final);
         
         $("#img_path_paper").attr("value", export_path_final);
        
@@ -1378,9 +1426,9 @@ function post_content_of_canvas(){
                 
                       if(obj_url.status === "check"){
                 
+                         //window.location.href = "scr1_but_save_mask";
                           
-                          
-                         alert("Chicken");
+                         //alert("Chicken");
                           
                           
                           
@@ -1410,7 +1458,7 @@ svg_path:$('#img_path_paper').attr('value')};
         url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,  
        success: function(data){//alert(data);
-           alert("Thi viyo");
+           //alert("Thi viyo");
            //setTimeout(go_to_index,'500');
      console.log(data);    
     },
