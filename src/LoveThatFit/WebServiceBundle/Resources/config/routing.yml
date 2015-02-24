@@ -14,6 +14,10 @@ service_interface_routes:
 ws_login:
     pattern:  /web_service/login
     defaults: { _controller: LoveThatFitWebServiceBundle:User:login }
+
+ws_user_detail:
+    pattern:  /web_service/user_detail
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:userDetail }  
   
 ws_registration_create:
    pattern:  /web_service/register

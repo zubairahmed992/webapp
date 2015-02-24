@@ -30,7 +30,18 @@ class UserController extends Controller {
         return new response(json_encode($user_info));
       
     }
-    
+    #---------------------------------------------------
+  public function userDetailAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+     //  $decoded=array('email'=>'','password'=>'Apple2013','deviceType'=>'');          
+        $user = $this->get('webservice.helper.user')->findByAuthToken($decoded['authTokenWebService']);      
+        $user_obj = $this->get('webservice.helper.user')->userDetailObject($user);
+        $user_obj['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . $user_obj['path'].'/';
+        return new response(json_encode($user_obj));      
+    }    
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     #  USER_REGISTRATION_URL	/web_service/register
 #-----------------------------------------

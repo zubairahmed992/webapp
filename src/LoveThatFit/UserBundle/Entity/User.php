@@ -1203,8 +1203,11 @@ class User implements UserInterface, \Serializable {
     }
 
 //----------------------------------------------------------
-    public function getWebPath() {
-        return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image . '?rand=' . uniqid();
+    public function getWebPath($rand=true) {
+        if ($rand)
+            return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image . '?rand=' . uniqid();
+        else
+            return null === $this->image ? null : $this->getUploadDir() . '/' . $this->image;
     }
 
     //----------------------------------------------------------

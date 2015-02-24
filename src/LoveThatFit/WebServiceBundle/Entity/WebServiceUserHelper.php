@@ -223,6 +223,16 @@ public function registerUser(User $user) {
         
         return array_merge($userinfo, $user_measurment);
     }
+    #-----------------------------------------------------------------------
+    
+    public function userDetailObject($user) {        
+        $user_array = $this->fillUserArray($user);        
+        $measurment_array = $this->fillMeasurementArray($user->getMeasurement());        
+        $user_array['authTokenWebService'] = $user->getAuthToken();  
+        $user_array['path'] = $user->getUploadDir();
+        $user_array['iphoneImage'] = $user->getImage();
+        return array_merge($user_array, $measurment_array);
+    }
 #---------------------Edit/Update Profile for Web Services---------------------#
     public function updateWithUserArray($decoded) {
         $email = $decoded['email'];
