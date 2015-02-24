@@ -85,7 +85,7 @@ class FitAlgorithm2 {
         $body = $this->get_relevant_body_measurement($fp_specs, $body_specs);
         
 
-        return array('fit_point' => $fp_specs['fit_point'],
+        $fp_measurements = array('fit_point' => $fp_specs['fit_point'],
             'label' => $this->getFitPointLabel($fp_specs['fit_point']),
             'below_min_2' => $max_min['below_min_2'],
             'below_min_1' => $max_min['below_min_1'],
@@ -97,8 +97,10 @@ class FitAlgorithm2 {
             'max_body_measurement' => $fp_specs['max_body_measurement'],
             'calc_max_body_measurement' => $max_min['calc_max_body_measurement'],
             'fit_priority' => $fp_specs['fit_priority'],
-            'body_measurement' => $body,            
+            'body_measurement' => $body,               
         );
+        $fp_measurements['message'] = $this->calculate_fitindex($fp_measurements);        
+        return $fp_measurements;
     }
 #---------------------------------------------------    
 private function calculate_maxmin($fp_specs){
@@ -127,8 +129,51 @@ private function calculate_maxmin($fp_specs){
         
 }
 #---------------------------------------------------
-private function calculate_fitindex(){
-    
+private function calculate_fitindex($fp_specs){
+    $str='';
+    if ($fp_specs['body_measurement']==$fp_specs['mid_low_high']){           
+        $str='fit model 100%';    
+    }elseif ($fp_specs['mid_low_high']>$fp_specs['body_measurement']){
+        $str='less than fit model';  
+        if ($fp_specs['body_measurement'] > $fp_specs['ideal_body_size_low']) {
+                $str='low&ideal between 80% to 100%';    
+            }elseif ($fp_specs['body_measurement'] > $fp_specs['min_body_measurement']) {
+                $str='min&ilow between 60% to 80%';    
+            }elseif ($fp_specs['body_measurement'] > $fp_specs['calc_min_body_measurement']) {
+                $str='calc&min between 40% to 60%';    
+            }    
+        /*
+        if ($fp_specs['body_measurement'] > $fp_specs['ideal_body_size_low']) {
+                $str='low&ideal between 80% to 100%';    
+            } elseif ($fp_specs['body_measurement'] > $fp_specs['min_body_measurement']) {
+                $str='min&ilow between 60% to 80%';    
+            } elseif ($fp_specs['body_measurement'] > $fp_specs['calc_min_body_measurement']) {
+                $str='calc&min between 40% to 60%';    
+            } elseif ($fp_specs['body_measurement'] > $fp_specs['below_min_1']) {
+                $str='min1&calc-min between 40% to 60%';    
+            } elseif ($fp_specs['body_measurement'] > $fp_specs['below_min_2']) {
+                $str='min2&min1 between 20% to 40%';    
+            }else{
+                $str='min2 less than 20%';    
+            }
+         * 
+         */
+    }elseif ($fp_specs['mid_low_high']<$fp_specs['body_measurement']){
+        $str='greater than fit model';    
+        /*
+        if ($fp_specs['body_measurement'] < $fp_specs['ideal_body_size_high']) {
+                $str='ideal&high between 80% to 100%';    
+            } elseif ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) {
+                $str='high&max between 60% to 80%';    
+            } elseif ($fp_specs['body_measurement'] < $fp_specs['calc_max_body_measurement']) {
+                $str='max&calc between 60% to 80%';    
+            }else{
+                $str='above calc max 0%';    
+            }
+         * 
+         */
+    }
+    return $str;
 }
     # -----------------------------------------------------
        private function limit_num($n){        
