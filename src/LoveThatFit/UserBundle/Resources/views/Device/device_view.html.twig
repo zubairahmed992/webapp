@@ -8,6 +8,38 @@
         //window.location.href = window.location.href + "#camera";
         alert(window.location.href);
     }
+    function post_img(){
+
+
+    
+    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
+    var entity_id = document.getElementById('hdn_entity_id').value;
+    var img_update_url = document.getElementById('hdn_image_update_url').value;
+
+    var canv_data = document.getElementById('canv_mask');
+    
+    //alert(canv_data.toDataURL());
+              $.post(img_update_url, {
+                      imageData : canv_data,
+                      id : entity_id
+              }, function(canv_data) {
+  
+              var obj_url = jQuery.parseJSON( canv_data );
+               
+              console.log("i am checked bhai");
+                
+                      if(obj_url.status === "check"){
+                
+                          
+                          
+                         alert("Chicken");
+                          
+                          
+                          
+                      }
+              });  
+  		
+}
 </script>
         
 
@@ -73,7 +105,7 @@
 
 
 
-<input id="re_load" style="position: absolute; bottom:40px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" type="button" value="Reload Page" onClick="window.location.reload();">
+<input id="re_load" style="position: absolute; bottom:10px; padding: 10px; left:10px; z-index: 1100; text-align: center; font-size: 16px;" type="button" value="Reload Page" onClick="window.location.reload();">
 <a class="hide_me" id="scr1_but_camera_options" style="position: absolute; bottom:160px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" onClick="window.location.reload();">asdfasdf</a>
 <a class="hide_me" id="scr1_but_save_mask" style="position: absolute; bottom:120px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" onClick="window.location.reload();">asdfasdf</a>
 

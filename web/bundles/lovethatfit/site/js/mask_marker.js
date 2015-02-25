@@ -16,12 +16,22 @@ gap_top_head = -20;
 curr_view = "normal";
 curr_crop = "normal";
 
+dv_user_px_h = parseInt($("#dv_user_px_height").attr("value"));
+dv_top_bar = parseInt($("#dv_top_bar").attr("value"));
+dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
+dv_per_inch_px = parseInt($("#dv_per_inch_px").attr("value"));
+dv_type = parseInt($("#dv_type").attr("value"));
+dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
+dv_edit_type = parseInt($("#dv_edit_type").attr("value"));
+
+
 
 //////// From JS file
 
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
-chk_no_img_path = false;
+chk_no_img_path = true;
+//true
 //alert(croped_img_path);
 
 
@@ -73,7 +83,11 @@ trans_bg.style = {
 
 p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
+//var pkpkpk = parseInt($('#dv_user_px_height').attr('value'));
 
+p_user_height_new = curr_screen_height / p_user_height;
+
+var p_user_zoom_ratio = curr_screen_height / 450;
 
 var final_user_height_ratio = curr_screen_height / p_user_height;
 
@@ -86,7 +100,7 @@ p_user_height = p_user_height * 100 / curr_screen_height;
 p_user_height = p_user_height / 100;
 
 
-console.log(p_user_height);
+
 
 user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
@@ -95,11 +109,15 @@ user_image.scale(inc_ratio,p_user_height*inc_ratio);
 //user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
 user_image.position = new Point(center_pos,568/2);
 
-if(chk_no_img_path == true){
+user_image.position = new Point(center_pos,user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75));
 
-    mid_area_path.scale(inc_ratio,p_user_height*inc_ratio);
+if(chk_no_img_path == true){
+    
+    //alert((dv_user_px_h + (((dv_user_px_h / 100) * 3.75) / 100)));
+
+    mid_area_path.scale(inc_ratio, p_user_height * ((dv_user_px_h + ((dv_user_px_h / 100) * 3.75)) / 450));
     //alert("in side");
-   mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
+   mid_area_path.position = new Point(center_pos,(dv_user_px_h /2)  + 40 + ((dv_user_px_h / 100) * 3.75) + 8);
    
    def_shape_h = p_user_height; //65in
    
@@ -173,9 +191,9 @@ if(chk_no_img_path == true){
   
   var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
   
-  user_shoulder_width = user_shoulder_width*6;
+  user_shoulder_width = user_shoulder_width * dv_per_inch_px;
   
-  //alert(user_shoulder_width);
+  //alert(dv_per_inch_px);
   
   var torso_w_adj_left = [54,53,52,51,50,49];
   var torso_w_adj_right = [16,17,18,19,20,21];
@@ -260,17 +278,27 @@ if(chk_no_img_path == true){
     mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
   
-    
-    mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
-    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
+
     
     
    }
    else{
+    
     mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
-    mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
+    
+    //mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
+    //mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
     mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
     
+    //mid_area_path.pivot = new Point(center_pos,0);
+    //mid_area_path.scale(1.15,1.15);
+    //mid_area_path.scale(1.15,1.15);
+    
+    
+    
+    //alert(parseInt($('#dv_bottom_bar').attr('value')) - parseInt($('#dv_top_bar').attr('value')));
+    //mid_area_path.position = new Point(140, -17 + 50 );
+    //alert(p_user_height_new);
     
    }
 
@@ -341,6 +369,9 @@ path_com.opacity = 0.85;
         export_svg_data(path_com);
      
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
+        
+        //alert(default_adjusted_path_data);
+        
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
         d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
@@ -377,9 +408,9 @@ var export_path_full = path_com.exportSVG({asString: true});
         
         
         export_path_full.toString();
-        var export_path_remove_start = export_path_full.substr(94);
+        var export_path_remove_start = export_path_full.substr(60);
         
-        var export_path_final = export_path_remove_start.substr(0, export_path_remove_start.length - 17);
+        var export_path_final = export_path_remove_start.substr(0, export_path_remove_start.length - 39);
         
         console.log(export_path_final);
         
@@ -618,8 +649,8 @@ scr1_but_camera_icon.position = new Point(-1000,-1000);
 scr1_but_save_icon.position = new Point(-1000,-1000);
 path_com.opacity = 0;
     
-    post_content_of_canvas();
-    upload();
+    //post_img();
+    //upload();
     
 }
 
@@ -679,7 +710,7 @@ function onMouseDown(event) {
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                             
-                            /*x_pos_main_path = main_path.position.x;
+                            x_pos_main_path = main_path.position.x;
                             x_pos_trans_bg = trans_bg.position.x;
                             x_pos_def_path = def_path.position.x;
                             x_pos_user_image = user_image.position.x;
@@ -697,15 +728,18 @@ function onMouseDown(event) {
                             def_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             mid_area_path.selected = true;
-                            user_image.position.y += 66;
+                            
+                            //user_image.position.y += 66;
+                            
+                            user_image.position = new Point(center_pos,(user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75)) + 24);
                             
                             but_zoom_in.position.x = -500;
-                            but_zoom_out.position.x = 24;
+                            but_zoom_out.position.x = 26;
                             
                             
-                            hide_big_points();*/
+                            hide_big_points();
                             
-                            window.location.href = "scr1_but_save_mask";
+                            //window.location.href = "scr1_but_save_mask";
                             
                             
                         }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
@@ -731,7 +765,7 @@ function onMouseDown(event) {
                             def_path.position.y = y_pos_def_path;
                             user_image.position.y = y_pos_user_image;
                             
-                            but_zoom_in.position.x = 24;
+                            but_zoom_in.position.x = 26;
                             but_zoom_out.position.x = -500;
                             
                             set_big_points();
@@ -797,7 +831,7 @@ function onMouseDown(event) {
                             console.log("but_bp_rgt_shoulder");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_arm_pit){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -811,7 +845,7 @@ function onMouseDown(event) {
                             console.log("but_bp_lft_arm_pit");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_arm_pit){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -825,7 +859,7 @@ function onMouseDown(event) {
                             console.log("but_bp_rgt_arm_pit");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_waist){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -839,7 +873,7 @@ function onMouseDown(event) {
                             console.log("but_bp_lft_waist");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_waist){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -853,7 +887,7 @@ function onMouseDown(event) {
                             console.log("but_bp_rgt_waist");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hip){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -868,7 +902,7 @@ function onMouseDown(event) {
                             console.log("but_bp_lft_hip");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hip){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -883,7 +917,7 @@ function onMouseDown(event) {
                             console.log("but_bp_rgt_hip");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             get_path_seg(rgt_arm_ref, mid_area_path, 7, 15);
                             big_point = true;
@@ -895,7 +929,7 @@ function onMouseDown(event) {
                             
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             get_path_seg(lft_arm_ref, mid_area_path, 54, 62);
                             big_point = true;
@@ -904,7 +938,7 @@ function onMouseDown(event) {
                             console.log("but_bp_lft_hand");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_inseam){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             big_point = true;
                             big_point_ele = hitResult.item;
@@ -918,7 +952,7 @@ function onMouseDown(event) {
                             console.log("but_bp_inseam");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             get_path_seg(lft_leg_ref, mid_area_path, 35, 48);
                             big_point = true;
@@ -927,7 +961,7 @@ function onMouseDown(event) {
                             console.log("but_bp_lft_foot");
                         }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_foot){
                             
-                            ijazat = "no";
+                            //ijazat = "no";
                             
                             get_path_seg(rgt_leg_ref, mid_area_path, 21, 34);
                             big_point = true;
@@ -955,9 +989,10 @@ function onMouseDown(event) {
                             console.log("scr1_but_camera_icon");
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
                             
-                            hide_ele_img_export();
-                            show_loader();
-                            
+                            //hide_ele_img_export();
+                            //show_loader();
+                            //post_img();
+                            window.location.href = "scr1_but_save_mask";
                             
                             //
                             //
@@ -1062,6 +1097,7 @@ function set_ele_pos_per(){
         for(var i = 0; i < big_move_adj.length; i++) {
 
             main_path.segments[big_move_adj[i]].point.y = curr_range_1.position.y + mid_move_adj_per[i] * total_range / 100;
+            def_path.segments[big_move_adj[i]].point.y = curr_range_1.position.y + mid_move_adj_per[i] * total_range / 100;
         }
     }
 }
@@ -1093,7 +1129,14 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
+                    //alert(mid_area_path.segments[seg_srt+i].point.x +" : " + def_path.segments[seg_srt+i].point.x);
+                    
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    
+                    //def_path.segments[seg_srt+i].point.x = mid_area_path.segments[seg_srt+i].point.x - 1000;
+                    //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
+                    
+                    
                     //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
                 
@@ -1102,6 +1145,11 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    //def_path.segments[seg_srt+i].point.x = set_ref_part_obj.segments[i].point.x - 500;
+                    //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
+                    
+                    
+                    
                     //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
                }
@@ -1110,6 +1158,11 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    //def_path.segments[seg_srt+i].point.x = set_ref_part_obj.segments[i].point.x - 500;
+                    //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
+                   
+                   
+                   
                    // mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
                                 
@@ -1118,6 +1171,10 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    //def_path.segments[seg_srt+i].point.x = set_ref_part_obj.segments[i].point.x - 500;
+                    //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
+                    
+                    
                     //mid_area_path.segments[seg_srt+i] = set_ref_part_obj.segments[i];
                 }
  
@@ -1239,6 +1296,12 @@ function onMouseDrag(event) {
                     but_bp_lft_hip.position.y += event.delta.y;
                 }
             }
+            
+            
+            
+            
+            
+            
         }else if(segment) {
         
         function get_index_num(){
@@ -1261,7 +1324,7 @@ function onMouseDrag(event) {
         //alert(def_segment);
         
         //var def_segment = 200;
-            var px_range = 10;
+            var px_range = 70;
             var active_segment = segment.point.x;
             
             if(active_segment > (def_segment + px_range)){
@@ -1405,37 +1468,7 @@ function onMouseDrag(event) {
 
 
 
-function post_content_of_canvas(){
 
-
-    
-    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
-    var entity_id = document.getElementById('hdn_entity_id').value;
-    var img_update_url = document.getElementById('hdn_image_update_url').value;
-
-    var canv_data = document.getElementById('canv_mask').toDataURL();
-    
-              $.post(img_update_url, {
-                      imageData : canv_data,
-                      id : entity_id
-              }, function(canv_data) {
-  
-              var obj_url = jQuery.parseJSON( canv_data );
-               
-              console.log("i am checked bhai");
-                
-                      if(obj_url.status === "check"){
-                
-                         //window.location.href = "scr1_but_save_mask";
-                          
-                         //alert("Chicken");
-                          
-                          
-                          
-                      }
-              });  
-  		
-}
 
 
 function upload(){
@@ -1472,3 +1505,4 @@ svg_path:$('#img_path_paper').attr('value')};
 
 
 }
+
