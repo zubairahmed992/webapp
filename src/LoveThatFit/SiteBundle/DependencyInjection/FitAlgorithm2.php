@@ -9,13 +9,13 @@ class FitAlgorithm2 {
     private $size_helper;
     private $scale=array(
         'below_min_2'=>array('start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>'below_min_2', 'message'=>'below_min_2'),
-        'between_min1_min2'=>array('start'=>2, 'end'=>4,'low_point'=>'below_min_2', 'high_point'=>'below_min_1',  'message'=>'between_min1_min2'),
-        'between_min1_min'=>array('start'=>4, 'end'=>6,'low_point'=>'below_min_1', 'high_point'=>'min_body_measurement',  'message'=>'between_min1_min'),
-        'between_min_low'=>array('start'=>6, 'end'=>8,'low_point'=>'min_body_measurement', 'high_point'=>'ideal_body_size_low',  'message'=>'between_min_low'),
-        'between_low_mid'=>array('start'=>8, 'end'=>10,'low_point'=>'ideal_body_size_low', 'high_point'=>'mid_low_high',  'message'=>'between_low_mid'),
-        'at_mid'=>array('start'=>10, 'end'=>10,'low_point'=>'mid_low_high', 'high_point'=>'mid_low_high',  'message'=>'at_mid'),
-        'between_mid_high'=>array('start'=>8, 'end'=>10,'low_point'=>'mid_low_high', 'high_point'=>'ideal_body_size_high',  'message'=>'between_mid_high'),
-        'between_high_max'=>array('start'=>6, 'end'=>8,'low_point'=>'ideal_body_size_high', 'high_point'=>'max_body_measurement',  'message'=>'between_high_max'),
+        'between_min1_min2'=>array('start'=>0.2, 'end'=>0.4,'low_point'=>'below_min_2', 'high_point'=>'below_min_1',  'message'=>'between_min1_min2'),
+        'between_min1_min'=>array('start'=>0.4, 'end'=>0.6,'low_point'=>'below_min_1', 'high_point'=>'min_body_measurement',  'message'=>'between_min1_min'),
+        'between_min_low'=>array('start'=>0.6, 'end'=>0.8,'low_point'=>'min_body_measurement', 'high_point'=>'ideal_body_size_low',  'message'=>'between_min_low'),
+        'between_low_mid'=>array('start'=>0.8, 'end'=>1,'low_point'=>'ideal_body_size_low', 'high_point'=>'mid_low_high',  'message'=>'between_low_mid'),
+        'at_mid'=>array('start'=>1, 'end'=>1,'low_point'=>'mid_low_high', 'high_point'=>'mid_low_high',  'message'=>'at_mid'),
+        'between_mid_high'=>array('start'=>0.8, 'end'=>1,'low_point'=>'mid_low_high', 'high_point'=>'ideal_body_size_high',  'message'=>'between_mid_high'),
+        'between_high_max'=>array('start'=>0.6, 'end'=>0.8,'low_point'=>'ideal_body_size_high', 'high_point'=>'max_body_measurement',  'message'=>'between_high_max'),
         'above_max'=>array('start'=>0, 'end'=>0,'low_point'=>'max_body_measurement', 'high_point'=>null,  'message'=>'above_max'),
     );
 #-----------------------------------------------------
@@ -57,12 +57,18 @@ class FitAlgorithm2 {
             $fb[$size_identifier]['title'] = $size->getTitle();
             $fb[$size_identifier]['body_type'] = $size->getBodyType();
             $fb[$size_identifier]['fit_index']=0;
+            $fb[$size_identifier]['min1_fx'] =0;
+            $fb[$size_identifier]['min_fx'] =0;
+            $fb[$size_identifier]['max_fx'] =0;
             if (is_array($size_specs)) {
              foreach($fpwp as $pfp_key=>$pfp_value){
                     if (array_key_exists($pfp_key, $size_specs)) {
                         $fb[$size_identifier]['fit_points'][$pfp_key] =
                                 $this->get_fit_point_array($size_specs[$pfp_key], $body_specs);                        
                         $fb[$size_identifier]['fit_index'] =$fb[$size_identifier]['fit_index']+$fb[$size_identifier]['fit_points'][$pfp_key]['fx'];
+                        $fb[$size_identifier]['min1_fx'] =$fb[$size_identifier]['min1_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['min1_fx'];
+                        $fb[$size_identifier]['min_fx'] =$fb[$size_identifier]['min_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['min_fx'];
+                        $fb[$size_identifier]['max_fx'] =$fb[$size_identifier]['max_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['max_fx'];
                         $fb[$size_identifier]['status'] ='';
                     }else{
                         $fb[$size_identifier]['status'] =$this->status['product_measurement_not_available'];
@@ -116,6 +122,9 @@ class FitAlgorithm2 {
         $fp_measurements['message'] = $message_array['message'];        
         $fp_measurements['fp_fx'] = $message_array['fp_fx'];
         $fp_measurements['fx'] = $message_array['fx'];
+        $fp_measurements['min1_fx']=$message_array['min1_fx'];
+        $fp_measurements['min_fx']=$message_array['min_fx'];
+        $fp_measurements['max_fx']=$message_array['max_fx'];
         return $fp_measurements;
     }
 #---------------------------------------------------    
@@ -196,8 +205,17 @@ private function calculate_fitindex($fp_specs){
                 #$str = 'above calc max 0%';
             }
         }
-        $fx = $ind * ($fp_specs['fit_priority']/100);
-    return array('fp_fx' => $ind, 'fx'=>$fx, 'message' => $str);
+        $fp=($fp_specs['fit_priority']/100);
+        $fx = $ind * $fp;
+        $min1_fx= $this->scale['between_min1_min']['start']  * $fp;
+        $min_fx= $this->scale['between_min_low']['start'] * $fp;
+        $max_fx= $this->scale['between_high_max']['start'] * $fp;
+    
+        return array('fp_fx' => $ind, 'fx'=>$fx, 'message' => $str,
+         'min1_fx'=>$min1_fx,
+        'min_fx'=>$min_fx,
+        'max_fx'=>$max_fx,
+            );
 }
     # -----------------------------------------------------
 

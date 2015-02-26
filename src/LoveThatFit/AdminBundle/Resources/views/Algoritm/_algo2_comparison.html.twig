@@ -32,19 +32,22 @@
                             <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
                                 <b>
                                     <tr>
-                                        <td></td>
+                                        <td>Fit Priority</td>
                                         <td>Body</td>
-                                        <td>Min-2</td>
-                                        <td>Min-1</td>
+                                        <td>FX</td>
+                                        <td>Below 2</td>
+                                        <td>BEL 1 FX</td>
+                                        <td>BELOW 1</td>                                        
                                         <td>Cal Min</td>
-                                        <td>Min</td>
-                                        <td>Low</td>
-                                        <td>Fit-model</td>                                        
-                                        <td>High</td>
-                                        <td>Max</td>
-                                        <td>Cal Max</td>
-                                        <td>fp</td>
-                                        <td>over all</td>
+                                        <td>MIN FX</td>
+                                        <td>MIN</td>                                        
+                                        <td>LOW</td>
+                                        <td>AVG FX</td>
+                                        <td>AVG</td>                                        
+                                        <td>HIGH</td>
+                                        <td>MAX</td>
+                                        <td>MAX FX</td>
+                                        <td>MAX Calc</td>
                                         <td>message</td>
                                     </tr>
                                 </b>
@@ -54,24 +57,44 @@
 
                                     <tr>
                                         <td>{{fp}}(<b>{{fp_specs.fit_priority}}</b>%)</td>
-                                        <td><b>{{fp_specs.body_measurement}}</b></td>
+                                        <td style="font-weight: bold">{{fp_specs.body_measurement}}</td>
+                                        <td style="font-weight: bold">{{fp_specs.fx}}</td>
                                         <td>{{fp_specs.below_min_2}}</td>
+                                        <td>{{fp_specs.min1_fx}}</td>
                                         <td>{{fp_specs.below_min_1}}</td>
                                         <td>{{fp_specs.calc_min_body_measurement}}</td>
-                                        <td>{{fp_specs.min_body_measurement}}</td>
-                                        <td>{{fp_specs.ideal_body_size_low}}</td>
-                                        
-                                        <td><b>{{fp_specs.mid_low_high}}</b></td>
-                                        
+                                        <td>{{fp_specs.min_fx}}</td>
+                                        <td>{{fp_specs.min_body_measurement}}</td>                                        
+                                        <td>{{fp_specs.ideal_body_size_low}}</td>                                        
+                                        <td>{{fp_specs.fit_priority}}</td>
+                                        <td><b>{{fp_specs.mid_low_high}}</b></td>                                        
                                         <td>{{fp_specs.ideal_body_size_high}}</td>
                                         <td>{{fp_specs.max_body_measurement}}</td>                                
-                                        <td>{{fp_specs.calc_max_body_measurement}}</td>
-                                        <td>{{fp_specs.fp_fx}}</td>
-                                        <td>{{fp_specs.fx}}</td>
+                                        <td>{{fp_specs.max_fx}}</td>
+                                        <td>{{fp_specs.calc_max_body_measurement}}</td>                                        
                                         <td>{{fp_specs.message}}</td>
                                     </tr>
 
                             {% endfor %}
+                                      <tr>
+                                        <td></td>                                        
+                                        <td></td>                                        
+                                        <td>{{size_specs.fit_index}}</td>
+                                        <td></td>                                        
+                                        <td>{{size_specs.min1_fx}}</td>
+                                        <td></td>                                        
+                                        <td></td>                                        
+                                        <td>{{size_specs.min_fx}}</td>
+                                        <td></td>                                        
+                                        <td></td>                                                                        
+                                        <td></td>                                        
+                                        <td></td>                                        
+                                        <td></td>                                        
+                                        <td></td>                                        
+                                        <td>{{size_specs.max_fx}}</td>
+                                        <td></td>                                        
+                                        <td></td>                                        
+                                    </tr>
                             {% if size_specs.hem_advice is defined %}
                                     <tr>
                                         <td colspan="10">
