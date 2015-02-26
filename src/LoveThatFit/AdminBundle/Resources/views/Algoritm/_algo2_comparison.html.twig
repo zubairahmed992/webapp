@@ -21,7 +21,7 @@
                 <td style="width: 50px;background-color: #FFFFDF"><b>
                         <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
                     
-                    </b>| <i></i> 
+                    </b>| <i>fit_index: {{size_specs.fit_index}}</i> 
                    
 
                         </td>            
@@ -67,7 +67,7 @@
                                         <td>{{fp_specs.max_body_measurement}}</td>                                
                                         <td>{{fp_specs.calc_max_body_measurement}}</td>
                                         <td>{{fp_specs.fp_fx}}</td>
-                                        <td></td>
+                                        <td>{{fp_specs.fx}}</td>
                                         <td>{{fp_specs.message}}</td>
                                     </tr>
 
