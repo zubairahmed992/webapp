@@ -84,7 +84,7 @@ function product_drag_limit_check(prod_type){
     
     function remove_product_applied (prod_type){       
         if($( prod_type ).css("left") != "0px" || $( prod_type ).css("top") != "0px" ){
-            $( prod_type).fadeOut(300, function (){$(prod_type).parent().addClass("hide").css("display","none")});
+            $( prod_type).fadeOut(300, function (){$(prod_type).parent().addClass("hide").css("display","none");$(prod_type).remove();});
             remove_prod_details(prod_type);            
             remove_fitting_alerts(prod_type);
             

@@ -5432,3 +5432,21 @@ background-color:#fff;
 .homic{
     margin-right:5px;
 }
+
+
+
+#fb_share_btn {
+    cursor: pointer;
+    display: none;
+}
+
+#canv_share_merge{
+    background: #fff;
+    width:364px;
+    height: 505px;
+    position: absolute;
+    left: 0px;
+    top: 200px;
+    z-index: 9000;
+    display: none;
+}

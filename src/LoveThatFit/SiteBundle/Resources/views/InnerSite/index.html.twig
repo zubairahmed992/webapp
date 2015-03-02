@@ -24,16 +24,121 @@
 <input id="remove_bottom_prod_id" type="hidden" value="" />
 <input id="remove_dress_prod_id" type="hidden" value="" />
 
+
+
+
 {% endif %}
+
+<input id="share_post_url" type="hidden" value="{{ path('fitting_room_canvas_upload')}}" />
+
+<img id="watermark" style="display:none;" src="{{ asset('bundles/lovethatfit/site/images/share_watermark.png') }}" />
 
 
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/index.js') }}"></script>
 
+
 <script> 
     
+function shift_to_share(){
     
+    var share_canvas = document.getElementById('canv_share_merge');
+    var share_canv_context = share_canvas.getContext('2d');
+    var share_user_img = document.getElementById('fr_user_image');
+    
+    share_canv_context.clearRect(0,0,364,505);
+    share_canv_context.save();
+    
+    var share_imageObj = new Image();
+    share_imageObj.onload = function() {
+        share_canv_context.drawImage(share_imageObj, 0, 0);
+    };
+    share_imageObj.src = share_user_img.src;
+    
+    
+    var top_drop_bottom = document.getElementById('bottom_dropable').style.top;
+    
+    if(document.getElementById('apply_img_bottom') != null){
+    
+top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
+
+
+        var share_bottom_img = document.getElementById('apply_img_bottom');
+        bottom_prod_left = 364/2 - document.getElementById('apply_img_bottom').width/2;
+
+        var share_bottom_imageObj = new Image();
+        share_bottom_imageObj.onload = function() {
+            share_canv_context.drawImage(share_bottom_imageObj, bottom_prod_left, top_drop_bottom);
+        };
+        share_bottom_imageObj.src = share_bottom_img.src;
+
+    }
+    
+    if(document.getElementById('apply_img_top') != null){
+        var top_drop_top = document.getElementById('top_dropable').style.top;
+        top_drop_top = parseInt(top_drop_top.slice(0,-2));
+
+
+        var share_top_img = document.getElementById('apply_img_top');
+        top_prod_left = 364/2 - document.getElementById('apply_img_top').width/2;
+
+        var share_top_imageObj = new Image();
+        share_top_imageObj.onload = function() {
+            share_canv_context.drawImage(share_top_imageObj, top_prod_left, top_drop_top);
+        };
+        share_top_imageObj.src = share_top_img.src;
+    }
+    
+    if(document.getElementById('apply_img_dress') != null){
+        var top_drop_dress = document.getElementById('full_dropable').style.top;
+        top_drop_dress = parseInt(top_drop_dress.slice(0,-2));
+
+
+        var share_dress_img = document.getElementById('apply_img_dress');
+        dress_prod_left = 364/2 - document.getElementById('apply_img_dress').width/2;
+
+        var share_dress_imageObj = new Image();
+        share_dress_imageObj.onload = function() {
+            share_canv_context.drawImage(share_dress_imageObj, dress_prod_left, top_drop_dress);
+        };
+        share_dress_imageObj.src = share_dress_img.src;
+
+    }
+    
+    if(true){
+        var top_watermark = 10;
+        var share_watermark = document.getElementById('watermark');
+        watermark_left = 20;
+
+        var watermark_imageObj = new Image();
+        watermark_imageObj.onload = function() {
+            share_canv_context.drawImage(watermark_imageObj, watermark_left, top_watermark);
+        };
+        watermark_imageObj.src = share_watermark.src;
+
+    }
+    
+    
+    //Post function will go here.
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 $(document).ready(function(){  
+    
+    $("#fb_share_btn").click(function(){
+        shift_to_share();
+    });
   
 $(".a_color_id").live("hover",function () {     
    $(this).parent().find('.homicc').css("display","block"); //parent id get
@@ -76,6 +181,7 @@ function remove_prod_state(remove_prod_item_id) {
         }})
 }
 </script>
+<canvas id="canv_share_merge" width="364" height="505"></canvas>
 <section class="products">
 
     <div id="fitting_alerts">
@@ -259,6 +365,7 @@ function remove_prod_state(remove_prod_item_id) {
                     {%endif%}
                     <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">Upload Photo</a>
                     <a href="{{ path('registration_step_image_edit') }}">Edit Shape</a>
+                    <img id="fb_share_btn" src="{{ asset('bundles/lovethatfit/site/images/share_btn.png') }}" />
                     <!--<a href="{{path('registration_device_view') }}">Device View</a>-->
                 </div>
                 <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
@@ -271,7 +378,7 @@ function remove_prod_state(remove_prod_item_id) {
                 {% if app.user.image != null %}
                 <input id="hdn_dm_status" type="hidden" value="user" />
                 <div id="user_dummy_img_hldr">
-                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123">
+                    <img id="fr_user_image" class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123" width="364" height="505">
                 </div>
                 {%else%}
                 <input id="hdn_dm_status" type="hidden" value="default" />
@@ -327,7 +434,13 @@ function remove_prod_state(remove_prod_item_id) {
                 {% endif %}
             </div> 
                
+          
+          
+          
+          
+          
            <!---/#ltf_fitting_room_inner--></div>  
+              
           <!---/#ltf_fitting_room-->
   
           
@@ -479,7 +592,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     $("#prod_accordion").accordion({ active: 0}); 
                     
                     $(main_dropable).fadeOut("200", function (){
-                        $(main_dropable).html("<img class='curr_prod' src='" + curr_prod_apply + "' />").fadeIn();
+                        $(main_dropable).html("<img id='apply_img_"+curr_prod_type+"' class='curr_prod' src='" + curr_prod_apply + "' />").fadeIn();
                         $(main_dropable + " img").draggable({
                                     start: function(){
                                     },
