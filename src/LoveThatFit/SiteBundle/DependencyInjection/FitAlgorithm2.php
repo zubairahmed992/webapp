@@ -125,6 +125,7 @@ class FitAlgorithm2 {
         $fp_measurements['min1_fx']=$message_array['min1_fx'];
         $fp_measurements['min_fx']=$message_array['min_fx'];
         $fp_measurements['max_fx']=$message_array['max_fx'];
+        $fp_measurements['avg_fx']=$message_array['avg_fx'];
         return $fp_measurements;
     }
 #---------------------------------------------------    
@@ -207,18 +208,21 @@ private function calculate_fitindex($fp_specs){
         }
         $fp=($fp_specs['fit_priority']/100);
         $fx = $ind * $fp;
-        $min1_fx= $this->scale['between_min1_min']['start']  * $fp;
-        $min_fx= $this->scale['between_min_low']['start'] * $fp;
-        $max_fx= $this->scale['between_high_max']['start'] * $fp;
-    
+        $min1_fx = $this->scale['between_min1_min']['start']  * $fp;
+        $min_fx = $this->scale['between_min_low']['start'] * $fp;
+        $max_fx = $this->scale['between_high_max']['start'] * $fp;
+        $avg_fx = 1;
+        #$avg_fx = $this->grade_to_scale($fp_specs, $this->scale['at_mid']);
         return array('fp_fx' => $ind, 'fx'=>$fx, 'message' => $str,
          'min1_fx'=>$min1_fx,
         'min_fx'=>$min_fx,
         'max_fx'=>$max_fx,
+            'avg_fx'=>$avg_fx,
             );
 }
     # -----------------------------------------------------
-
+    //avgFX-((body-avg)/(maxCALC-avg))*(avgFX-maxCALC FX)
+#y = 1 + (x-A)*(10-1)/(B-A)
  private function grade_to_scale($fp_specs, $position) {    
         $fs = 1 + (($fp_specs['body_measurement'] - $fp_specs[$position['low_point']]) * ($position['end'] - $position['start'])) / ($fp_specs[$position['high_point']] - $fp_specs[$position['low_point']]);                
         return $this->limit_num($fs);
