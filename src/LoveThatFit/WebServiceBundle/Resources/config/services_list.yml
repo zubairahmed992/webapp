@@ -41,7 +41,7 @@ login:
 user_detail:
     pattern:  /web_service/user_detail
     params:
-      auth_token:  'de81d026177b7300c97976a5d1459b2d'      
+      authTokenWebService:  'de81d026177b7300c97976a5d1459b2d'      
     request_type: post
     description: login & wuthenticate user & returns user details    
      

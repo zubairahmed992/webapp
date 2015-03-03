@@ -225,9 +225,21 @@ public function registerUser(User $user) {
     }
     #-----------------------------------------------------------------------
     
-    public function userDetailObject($user) {        
+    public function userDetailObject($user, $deviceType=null) {        
         $user_array = $this->fillUserArray($user);        
         $measurment_array = $this->fillMeasurementArray($user->getMeasurement());        
+        if ($deviceType){
+            $device_specs=$user->getDeviceSpecs($deviceType);
+            if($device_specs){
+                $user_array['preDeviceType'] = $device_specs->getDeviceType();
+                $user_array['postDeviceType'] = $device_specs->getDeviceType(); 
+                $user_array['heightPerInch'] = $device_specs->getDeviceUserPerInchPixelHeight();
+            }  else {
+                $user_array['preDeviceType'] = null;
+                $user_array['postDeviceType'] = null; 
+                $user_array['heightPerInch'] = null;
+            }
+        }
         $user_array['authTokenWebService'] = $user->getAuthToken();  
         $user_array['path'] = $user->getUploadDir();
         $user_array['iphoneImage'] = $user->getImage();
@@ -553,7 +565,8 @@ private function fillUserArray($entity, $device_type=null) {
             $userinfo['knee'] = $measurement->getKnee();
             $userinfo['calf'] = $measurement->getCalf();
             $userinfo['ankle'] = $measurement->getAnkle();
-             $userinfo['iphoneFootHeight'] = $measurement->getIphoneFootHeight();
+            $userinfo['iphoneFootHeight'] = $measurement->getIphoneFootHeight();
+            $userinfo['iphoneHeadHeight'] = $measurement->getIphoneHeadHeight();
             
             
             if($measurement->getTopBrand()){
