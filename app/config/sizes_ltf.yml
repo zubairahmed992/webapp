@@ -231,7 +231,7 @@ constants:
             low: 33 
             high: 35 
             average: 34   
-            shoulder_across_back: 15
+            shoulder_across_back: 14.625 
             index_value: 6
         28dddd:
             title: 28dddd
@@ -249,7 +249,7 @@ constants:
             low: 35 
             high: 37 
             average: 36   
-            shoulder_across_back: 0
+            shoulder_across_back: 15.125
             index_value: 8    
         28i:
             title: 28i
@@ -258,7 +258,7 @@ constants:
             low: 36 
             high: 38 
             average: 37   
-            shoulder_across_back: 0
+            shoulder_across_back: 15.375
             index_value: 9
         28j:
             title: 28j
@@ -267,7 +267,7 @@ constants:
             low: 37 
             high: 39 
             average: 38   
-            shoulder_across_back: 0 
+            shoulder_across_back: 15.525 
             index_value: 10
         28k:
             title: 28k
@@ -276,7 +276,7 @@ constants:
             low: 38 
             high: 40 
             average: 39   
-            shoulder_across_back: 0
+            shoulder_across_back: 15.775
             index_value: 11
         28l:
             title: 28l
@@ -285,7 +285,7 @@ constants:
             low: 39 
             high: 41 
             average: 40   
-            shoulder_across_back: 0
+            shoulder_across_back: 15.925
             index_value: 12
         28m:
             title: 28m
@@ -294,7 +294,7 @@ constants:
             low: 40 
             high: 42 
             average: 41   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.175
             index_value: 13
         28n:
             title: 28n
@@ -303,7 +303,7 @@ constants:
             low: 41 
             high: 43 
             average: 42   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.325
             index_value: 14         
         30a:
             title: 30a
@@ -348,7 +348,7 @@ constants:
             low: 34 
             high: 36 
             average: 35       
-            shoulder_across_back: 14.375
+            shoulder_across_back: 14.625
             index_value: 19
         30ddd:
             title: 30ddd
@@ -375,7 +375,7 @@ constants:
             low: 37 
             high: 39 
             average: 38    
-            shoulder_across_back: 0
+            shoulder_across_back: 15.525
             index_value: 22
         30i:
             title: 30i
@@ -384,7 +384,7 @@ constants:
             low: 38 
             high: 40 
             average: 39   
-            shoulder_across_back: 0
+            shoulder_across_back: 15.775
             index_value: 23
         30j:
             title: 30j
@@ -393,7 +393,7 @@ constants:
             low: 39 
             high: 41 
             average: 40   
-            shoulder_across_back: 0
+            shoulder_across_back: 15.925
             index_value: 24
         30k:
             title: 30k
@@ -402,7 +402,7 @@ constants:
             low: 40 
             high: 42 
             average: 41   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.175
             index_value: 25
         30l:
             title: 30l
@@ -411,7 +411,7 @@ constants:
             low: 41 
             high: 43 
             average: 42   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.325
             index_value: 26
         30m:
             title: 30m
@@ -420,7 +420,7 @@ constants:
             low: 42 
             high: 44 
             average: 43   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.575
             index_value: 27
         30n:
             title: 30n
@@ -429,7 +429,7 @@ constants:
             low: 43 
             high: 45 
             average: 44    
-            shoulder_across_back: 0
+            shoulder_across_back: 16.725
             index_value: 28
         32a:
             title: 32a
@@ -501,7 +501,7 @@ constants:
             low: 39 
             high: 41 
             average: 40   
-            shoulder_across_back: 0
+            shoulder_across_back: 15.925
             index_value: 36
         32i:
             title: 32i
@@ -510,7 +510,7 @@ constants:
             low: 40 
             high: 42 
             average: 41   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.175
             index_value: 37
         32j:
             title: 32j
@@ -519,7 +519,7 @@ constants:
             low: 41 
             high: 43 
             average: 42   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.325
             index_value: 38
         32k:
             title: 32k
@@ -528,7 +528,7 @@ constants:
             low: 42 
             high: 44 
             average: 43   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.575
             index_value: 39
         32l:
             title: 32l
@@ -537,7 +537,7 @@ constants:
             low: 43 
             high: 45 
             average: 44   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.725
             index_value: 40
         32m:
             title: 32m
@@ -546,7 +546,7 @@ constants:
             low: 44 
             high: 46 
             average: 45   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.975
             index_value: 41
         32n:
             title: 32n
@@ -555,7 +555,7 @@ constants:
             low: 45 
             high: 47 
             average: 46   
-            shoulder_across_back: 0
+            shoulder_across_back: 17.125
             index_value: 42 
             
         34a:
@@ -628,7 +628,7 @@ constants:
             low: 41 
             high: 43 
             average: 42   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.325
             index_value: 50  
         34i:
             title: 34i
@@ -637,7 +637,7 @@ constants:
             low: 42 
             high: 44 
             average: 43   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.575
             index_value: 51
         34j:
             title: 34j
@@ -646,7 +646,7 @@ constants:
             low: 43 
             high: 45 
             average: 44   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.725
             index_value: 52
         34k:
             title: 34k
@@ -655,7 +655,7 @@ constants:
             low: 44 
             high: 46 
             average: 45   
-            shoulder_across_back: 0
+            shoulder_across_back: 16.975
             index_value: 53
         34l:
             title: 34l
@@ -664,7 +664,7 @@ constants:
             low: 45 
             high: 47 
             average: 46   
-            shoulder_across_back: 0
+            shoulder_across_back: 17.125
             index_value: 54
         34m:
             title: 34m
@@ -673,7 +673,7 @@ constants:
             low: 46 
             high: 48 
             average: 47   
-            shoulder_across_back: 0
+            shoulder_across_back: 17.375
             index_value: 55   
         34n:
             title: 34n
@@ -681,7 +681,7 @@ constants:
             cup: n
             low: 47
             high: 49   
-            shoulder_across_back: 0
+            shoulder_across_back: 17.525
             average: 48
             index_value: 56        
         36a:
@@ -754,7 +754,7 @@ constants:
             low: 43 
             high: 45 
             average: 44       
-            shoulder_across_back: 0
+            shoulder_across_back: 16.725
             index_value: 64
         36i:
             title: 36i
@@ -763,7 +763,7 @@ constants:
             low: 44 
             high: 46 
             average: 45       
-            shoulder_across_back: 0
+            shoulder_across_back: 16.975
             index_value: 65
         36j:
             title: 36j
@@ -772,7 +772,7 @@ constants:
             low: 45 
             high: 47 
             average: 46       
-            shoulder_across_back: 0
+            shoulder_across_back: 17.125
             index_value: 66
         36k:
             title: 36k
@@ -781,7 +781,7 @@ constants:
             low: 46 
             high: 48 
             average: 47       
-            shoulder_across_back: 0
+            shoulder_across_back: 17.375
             index_value: 67
         36l:
             title: 36l
@@ -790,7 +790,7 @@ constants:
             low: 47 
             high: 49 
             average: 48       
-            shoulder_across_back: 0
+            shoulder_across_back: 17.625
             index_value: 68
         36m:
             title: 36m
@@ -799,7 +799,7 @@ constants:
             low: 48 
             high: 50 
             average: 49       
-            shoulder_across_back: 0
+            shoulder_across_back: 17.875
             index_value: 69
         36n:
             title: 36n
@@ -808,7 +808,7 @@ constants:
             low: 49 
             high: 51 
             average: 50       
-            shoulder_across_back: 0
+            shoulder_across_back: 18.025
             index_value: 70   
         38a:
             title: 38a
@@ -880,7 +880,7 @@ constants:
             low: 45 
             high: 47
             average: 46    
-            shoulder_across_back: 0
+            shoulder_across_back: 17.125
             index_value: 78
         38i:
             title: 38i
@@ -889,7 +889,7 @@ constants:
             low: 46 
             high: 48
             average: 47    
-            shoulder_across_back: 0
+            shoulder_across_back: 17.375
             index_value: 79
         38j:
             title: 38j
@@ -898,7 +898,7 @@ constants:
             low: 47 
             high: 49
             average: 48   
-            shoulder_across_back: 0
+            shoulder_across_back: 17.625
             index_value: 80
         38k:
             title: 38k
@@ -907,7 +907,7 @@ constants:
             low: 48 
             high: 50
             average: 49    
-            shoulder_across_back: 0
+            shoulder_across_back: 17.875
             index_value: 81
         38l:
             title: 38l
@@ -916,7 +916,7 @@ constants:
             low: 49 
             high: 51
             average: 50    
-            shoulder_across_back: 0
+            shoulder_across_back: 18.025
             index_value: 82
         38m:
             title: 38m
@@ -925,7 +925,7 @@ constants:
             low: 50 
             high: 52
             average: 51    
-            shoulder_across_back: 0
+            shoulder_across_back: 18.275
             index_value: 83
         38n:
             title: 38n
@@ -934,7 +934,7 @@ constants:
             low: 51 
             high: 53
             average: 52    
-            shoulder_across_back: 0
+            shoulder_across_back: 18.425
             index_value: 84    
         40a:
             title: 40a
@@ -1006,7 +1006,7 @@ constants:
             low: 47 
             high: 49
             average: 48     
-            shoulder_across_back: 0
+            shoulder_across_back: 17.625
             index_value: 92    
         40i:
             title: 40i
@@ -1015,7 +1015,7 @@ constants:
             low: 48 
             high: 50
             average: 49     
-            shoulder_across_back: 0
+            shoulder_across_back: 17.875
             index_value: 93   
         40j:
             title: 40j
@@ -1024,7 +1024,7 @@ constants:
             low: 49 
             high: 51
             average: 50  
-            shoulder_across_back: 0
+            shoulder_across_back: 18.025
             index_value: 94  
         40k:
             title: 40k
@@ -1033,7 +1033,7 @@ constants:
             low: 50 
             high: 52
             average: 51     
-            shoulder_across_back: 0
+            shoulder_across_back: 18.275
             index_value: 95    
         40l:
             title: 40l
@@ -1042,7 +1042,7 @@ constants:
             low: 51 
             high: 53
             average: 52     
-            shoulder_across_back: 0
+            shoulder_across_back: 18.425
             index_value: 96    
         40m:
             title: 40m
@@ -1051,7 +1051,7 @@ constants:
             low: 52 
             high: 54
             average: 53     
-            shoulder_across_back: 0
+            shoulder_across_back: 18.675
             index_value: 97    
         40n:
             title: 40n
@@ -1060,7 +1060,7 @@ constants:
             low: 53 
             high: 55
             average: 54     
-            shoulder_across_back: 0
+            shoulder_across_back: 18.825
             index_value: 98        
         42a:
             title: 42a
