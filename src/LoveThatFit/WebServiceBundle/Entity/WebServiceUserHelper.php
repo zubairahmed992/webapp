@@ -771,6 +771,9 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('shoulderAcrossFront', $request_array)) {
             $measurement->setShoulderAcrossFront($request_array['shoulderAcrossFront']);
         }
+        if (array_key_exists('shoulderAcrossBack', $request_array)) {
+            $measurement->setShoulderAcrossBack($request_array['shoulderAcrossBack']);
+        }
         
          if (array_key_exists('sleeve', $request_array)) {
             $measurement->setSleeve($request_array['sleeve']);
