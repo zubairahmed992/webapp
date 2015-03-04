@@ -21,6 +21,16 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      app:
+        name: loveThatfit
+        title: Love That Fit
+        url:  http://www.LoveThatFit.com
+      social_media:
+        facebook:
+          app_id: 314138425462684
+          web_link: 'http://dev.lovethatfit.com/'
+        
     
        
        #"%LoveThatFitUserBundle:Form:fields.html.twig%"
