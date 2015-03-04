@@ -342,6 +342,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $userDevice= new UserDevices();
             $userDevice->setDeviceName($user_device_name);
             $userDevice->setDeviceType($request_array['deviceType']);
+            #$userDevice->setDeviceUserPerInchPixelHeight($request_array['heightPerInch']);
             $userDevice->setUser($user);
             $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
                
@@ -350,6 +351,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $measurement->setUser($user);
             $measurement->setUpdatedAt(new \DateTime('now'));
             $measurement = $this->setMeasurmentObjectWithArray($measurement, $request_array);
+            $measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
             $user->setMeasurement($measurement);
             $this->saveUser($user);
             $user_info=$this->gettingUserDetailArray($user, $request);
