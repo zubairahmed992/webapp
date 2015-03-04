@@ -24,12 +24,27 @@
 <input id="remove_bottom_prod_id" type="hidden" value="" />
 <input id="remove_dress_prod_id" type="hidden" value="" />
 
+ <img style="display: none;" id='user_image' src="{{asset(app.user.webpath)}}"/>
+
+
+
+ <div style="display:none;">
+<img  id='uploaded_img' src='' width="100px" height="100px">
+<br>
+<span id='fb_app_key'>{{social_media.facebook.app_id}}</span><br>
+<span id='fb_post_name'>111</span><br>
+<span id='fb_post_link'>{{social_media.facebook.web_link}}</span><br>
+<span id='fb_post_img_url'></span><br>
+<span id='fb_post_caption'>333</span><br>
+<span id='fb_post_desc'>444</span><br>
+ </div>
+
 
 
 
 {% endif %}
 
-<input id="share_post_url" type="hidden" value="{{ path('fitting_room_canvas_upload')}}" />
+<span id='upload_canvas_path' style="display:none;">{{ path('fitting_room_canvas_upload')}}</span><br>
 
 <img id="watermark" style="display:none;" src="{{ asset('bundles/lovethatfit/site/images/share_watermark.png') }}" />
 
@@ -118,7 +133,84 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
     }
     
     
-    //Post function will go here.
+   
+   
+  
+  
+    
+              
+    var user_image = document.getElementById('user_image');
+    var context = document.getElementById('canv_share_merge').getContext("2d");
+    user_image.onload = function ()
+    {            
+    context.drawImage(user_image, 10, 10);         
+    }         
+      
+    $("#fb_share_btn").click(function(){        
+       
+       
+        var canvas = document.getElementById('canv_share_merge');            
+        var dataURL = canvas.toDataURL();                        
+             
+            $.post($('#upload_canvas_path').text(), {
+                      data : dataURL,                      
+              }, function(data) {                                    
+                  
+                  $('#fb_post_name').text('merged_img');                  
+                  $('#fb_post_img_url').text(data);
+                  $('#uploaded_img').attr("src", data);
+                  $('#fb_post_caption').text('Merged Image');
+                  $('#fb_post_desc').text('testing with the description');
+             
+              });          
+    
+    
+  
+   FB.init({
+    appId      : '{{social_media.facebook.app_id}}',
+    status     : true,
+    xfbml      : true,
+    version    : 'v2.0'
+  });       
+        
+        
+  FB.ui(
+      {
+        method: 'feed',
+        name: $('#fb_post_name').text(), // name of the product or content you want to share
+        link:  $('#fb_post_link').text(),
+        picture: $('#fb_post_img_url').text(), // path to an image you would like to share with this content
+        caption: $('#fb_post_caption').text(), // caption
+        description: $('#fb_post_desc').text() // description of your product or content
+      },
+      function(response) {
+       // if (response && response.post_id) {
+         // alert('Post was published.');
+       // } else {
+        //  alert('Post was not published.');
+        //}
+      }
+    );
+    
+    
+    
+        });  
+   
+
+  
+  
+  
+  
+  
+  
+   
+   
+   
+   
+   
+   
+   
+   
 
 }
 
@@ -166,6 +258,8 @@ function refreshdiv() {
         type:'POST',
         url: $('#recently_tried_on').text(),
        success: function(data) {
+          $('#fb_share_btn').show("slide", { direction: "left" }, 500);
+          
            $('#recent_prods').html('');
             $('#recent_prods').html(data);
            set_drag_drop_ele();
@@ -353,21 +447,26 @@ function remove_prod_state(remove_prod_item_id) {
    
                
                <!--/#products_details--></div>
-        
-              
-            <div class="int_fitting_room">
-                <div id="fitting_tab">
+         <div id="fitting_tab">
                     <!--path('fitting_room_image_edit)-->
                     <!--path('registration_step_image_edit')-->
                     
                     {%if (user_device) %}
                         <a href="{{ path('registration_step_image_edit', { 'edit_type': 'device' })}}">Device Photo</a>
                     {%endif%}
-                    <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">Upload Photo</a>
-                    <a href="{{ path('registration_step_image_edit') }}">Edit Shape</a>
+                    <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">
+                    <img src="{{ asset('bundles/lovethatfit/site/images/upload_icon.png') }}" alt="Upload Image" />
+                    </a>
+                    <a href="{{ path('registration_step_image_edit') }}">
+                      <img src="{{ asset('bundles/lovethatfit/site/images/edit_icon.png') }}" alt="Edit Image" />
+                    </a>
                     <img id="fb_share_btn" src="{{ asset('bundles/lovethatfit/site/images/share_btn.png') }}" />
                     <!--<a href="{{path('registration_device_view') }}">Device View</a>-->
                 </div>
+               <div class="fitting_frame">  
+                    
+            <div class="int_fitting_room">
+              
                 <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
                 <div id="full_dropable" class="hide"></div>
                 <div id="top_dropable" class="hide"></div>
@@ -433,6 +532,7 @@ function remove_prod_state(remove_prod_item_id) {
                     </div>
                 {% endif %}
             </div> 
+               </div>
                
           
           
@@ -484,6 +584,7 @@ function remove_prod_state(remove_prod_item_id) {
     
     
 function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id ){
+    
 
     open_fr();
 
@@ -712,6 +813,8 @@ function set_short_slider_buttons(){
 
 function set_droppables(){
     
+    
+    
   if($("#hdn_dm_status").attr("value") != "default"){
     var top_pos_drop = parseInt($("#hdn_prod_top_pos").attr("value"));    
     console.log("Top value = " + top_pos_drop);    
@@ -801,10 +904,12 @@ var scroll_heighting = 506;
         }        
     );        
  
-    function set_drag_drop_ele(){ 
+    function set_drag_drop_ele(){       
+       
     
     $( ".prod_wrapper li .prod_node .prod_top" ).draggable({ revert: "invalid", helper: "clone",
-        start:function (){
+        start:function (){  
+            
             $(".int_fitting_room").zIndex("-10");
             $("#fitting_alerts").zIndex("-8");
             open_fr();
@@ -815,7 +920,7 @@ var scroll_heighting = 506;
         $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
            
         },
-        drag:function(){
+        drag:function(){           
         },
         stop:function (){
             //alert($('.ui-draggable-dragging')._parent());
@@ -828,6 +933,7 @@ var scroll_heighting = 506;
     
     /// Dropable ///
     $( "#top_dropable" ).droppable({
+        
         accept: ".prod_wrapper li .prod_node .prod_top",
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
@@ -859,6 +965,7 @@ var scroll_heighting = 506;
             $( "#bottom_dropable").removeClass("top_active");
             $(".int_fitting_room").zIndex("0");
             $("#fitting_alerts").zIndex("1");
+            
         }
     });
     
@@ -899,12 +1006,14 @@ var scroll_heighting = 506;
     });
     
     /// Dropable ///
-    $( "#full_dropable" ).droppable({
+    $( "#full_dropable" ).droppable({       
         accept: ".prod_wrapper li .prod_node .featured_img .prod_dress",
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
-        drop: function( event, ui ) {            
+        drop: function( event, ui ) {
+         $('#fb_share_btn').hide("slide", { direction: "left" }, 500);
         new_product_control(ui.draggable);
+        
  
     }
     });    
@@ -969,7 +1078,8 @@ var scroll_heighting = 506;
         $(".pro_cart nav ul li ul").css("display","none");        
         $("#fchld").css("display","block");        
         $(".pro_cart nav ul li").css("display","block");
-        $(".pro_cart nav > ul > li > a").click(function (){            
+        $(".pro_cart nav > ul > li > a").click(function (){ 
+            
             $(".pro_cart nav ul li ul").slideUp().parent().removeClass("opn_link");             
             var chk_curr_ele = $(this).parent().find("ul").css("display");
             if(chk_curr_ele == "none" ){
@@ -986,7 +1096,9 @@ var scroll_heighting = 506;
                 else {  
                     var clicked_url = $(this).attr("href");
                     //alert(clicked_url);
+                    
                         $(".pro_cart nav ul li a").parent().removeClass("active");
+                       
                         $(this).parent().addClass("active");                        
                         $(".loading_now").fadeIn(100);                        
                         $.ajax({
@@ -1027,7 +1139,7 @@ var scroll_heighting = 506;
     });
 });
 
-function accordianCall(){
+function accordianCall(){   
     $("#prod_accordion").accordion({
       collapsible: true,
       heightStyle: "content",
@@ -1039,9 +1151,11 @@ accordianCall();
 
 function updateSizeColorCombo(product_id){
     new_product_control(false,product_id,7,this.value) 
+     
 }
 
 function chk_applied_loaded(chk_main_dropable){ 
+    
        
     chk_prod_img_load =  $(chk_main_dropable + " .curr_prod").width();   
      
@@ -1095,6 +1209,8 @@ function chk_dress_applied_loaded(prod_type_applied){
 }
 
 function apply_prod(size_id,product_id,color_id){    
+    
+    
     var apply_img_url = $('.ui-accordion-content-active a.apply_img').attr('href');
     var prod_type_top = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_top');
     var prod_type_bottom = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_bottom');

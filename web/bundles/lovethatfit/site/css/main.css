@@ -1806,16 +1806,17 @@ ul.prod_wrapper{
 
 #user_dummy_img_hldr {
     float:left;
-    width:364px;
+    width:364px;   
     height: 510px;
     position: relative;
     overflow: hidden;
+    
 }
 #user_dummy_img_hldr img.user_dummy_img{
    
     position: relative;
     left:0;
-    top:0;
+    top:0px;
 }
 
 
@@ -2038,12 +2039,15 @@ margin:0 auto;
 
 #fitting_tab{    
     position: absolute;
-    top:-28px;
-    left: 0;
-    width:356px;
+    top:14px;
+    left: 270px;
+    width:108px;
     text-align: center;
     padding:5px 0px 5px 0px;
     z-index: 1;
+    height: 47px;
+    background: url(../images/fitting_tab.png) center center no-repeat;
+    
 }
 
 #fitting_tab a{
@@ -2051,10 +2055,11 @@ margin:0 auto;
     color: #444444;
     display: inline-block;
     font-size: 0.80em;
-    padding-right:12px;
-    padding-left:8px;
+    padding-right:13px;
+    padding-left:12px;
     text-align:center;
-    font-family: arial;   
+    font-family: arial; 
+    padding-top:10px;
     
 }
 
@@ -3977,6 +3982,7 @@ width: 160px;
 #ltf_fitting_room .ltf_fitting_room_inner {
     display:none;
     background: url("../images/top_shade.png") center top no-repeat #ffcc00;
+    position: relative;
 }
 
 #recent_prods_area {
@@ -4497,11 +4503,13 @@ margin-left: 4px;
 /*///////// Fitting Room - Default Mannequin //////////*/
  
 #default_dummy_hldr {
-    float:left;
-    background: #fff;
+    float:left;    
     width:364px;
     height: 510px;
     position: relative;
+    -webkit-box-shadow: inset 0px 0px 13px -8px rgba(0,0,0,0.69);
+-moz-box-shadow: inset 0px 0px 13px -8px rgba(0,0,0,0.69);
+box-shadow: inset 0px 0px 13px -8px rgba(0,0,0,0.69);
 }
 #default_dummy_hldr #default_dummy_inner {
     position: relative;
@@ -5438,6 +5446,9 @@ background-color:#fff;
 #fb_share_btn {
     cursor: pointer;
     display: none;
+    left: -125px;
+    position: absolute;
+    top: 80px;
 }
 
 #canv_share_merge{
@@ -5449,4 +5460,17 @@ background-color:#fff;
     top: 200px;
     z-index: 9000;
     display: none;
+}
+
+.fitting_frame{
+    
+    background: none repeat scroll 0 0 #fff;
+    box-shadow: 0 0 13px -8px rgba(0, 0, 0, 0.69) inset;
+    height: 505px;
+    left: 146px;
+    overflow: hidden;
+    position: absolute;
+    top: 43px;
+    width: 364px;
+    z-index: -2;
 }
