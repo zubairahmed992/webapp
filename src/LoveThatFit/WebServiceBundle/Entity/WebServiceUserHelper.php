@@ -342,7 +342,7 @@ public function registerWithReqestArray(Request $request, $request_array) {
             $userDevice= new UserDevices();
             $userDevice->setDeviceName($user_device_name);
             $userDevice->setDeviceType($request_array['deviceType']);
-            #$userDevice->setDeviceUserPerInchPixelHeight($request_array['heightPerInch']);
+            $userDevice->setDeviceUserPerInchPixelHeight(7); #default value 7
             $userDevice->setUser($user);
             $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
                
