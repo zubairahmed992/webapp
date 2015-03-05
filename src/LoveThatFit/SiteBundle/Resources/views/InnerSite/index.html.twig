@@ -32,11 +32,11 @@
 <img  id='uploaded_img' src='' width="100px" height="100px">
 <br>
 <span id='fb_app_key'>{{social_media.facebook.app_id}}</span><br>
-<span id='fb_post_name'>Product Name</span><br>
+<span id='fb_post_name'>My Selfie</span><br>
 <span id='fb_post_link'>{{social_media.facebook.web_link}}</span><br>
-<span id='fb_post_img_url'></span><br>
-<span id='fb_post_caption'>Product Caption</span><br>
-<span id='fb_post_desc'>Product Description</span><br>
+<span id='fb_post_img_url'>http://dev.lovethatfit.com/bundles/lovethatfit/site/images/home_image.png</span><br>
+<span id='fb_post_caption'>Selfie Caption</span><br>
+<span id='fb_post_desc'>Selfie Description</span><br>
  </div>
 
 
@@ -89,8 +89,10 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
     }
     
     if(document.getElementById('apply_img_top') != null){
+        
         var top_drop_top = document.getElementById('top_dropable').style.top;
         top_drop_top = parseInt(top_drop_top.slice(0,-2));
+       
 
 
         var share_top_img = document.getElementById('apply_img_top');
@@ -669,9 +671,9 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                            px_variance=$(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).find('.pixel_variance').attr('value');
                            if(curr_prod_type=='top'){
                                 if(px_variance==0){
-                                    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px");
+                                    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px", "left","20px");
                                 }else{
-                                    $("#top_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value")) + parseInt(px_variance)) + "px");
+                                    $("#top_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value")) + parseInt(px_variance)) + "px", "left","20px");
                                 }
                            }
                            if(curr_prod_type=='dress'){
@@ -824,7 +826,7 @@ function set_droppables(){
     top_marg = top_marg / 100;    
     top_pos_drop = Math.round(top_marg + top_pos_drop + 1);    
     final_top_pos = top_pos_drop - 1;    
-    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px");    
+    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px", "left","20px");    
     var bottom_pos_drop = parseInt($("#hdn_prod_bottom_pos").attr("value"));    
     //bottom_pos_drop = bottom_pos_drop * 6;    
     var top_marg_btm = user_height * 48;    

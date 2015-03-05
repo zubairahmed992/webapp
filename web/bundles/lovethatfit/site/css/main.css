@@ -1764,7 +1764,7 @@ ul.prod_wrapper{
 
 #top_dropable {
    position: absolute;
-   left:0;
+   left:0px;
    top:125px;
    text-align: center;
    z-index: 6002;
@@ -1773,7 +1773,7 @@ ul.prod_wrapper{
 
 #bottom_dropable {
    position: absolute;
-   left:0;
+   left:0px;
    top:227px;
    text-align: center;
    width:364px;
@@ -1782,7 +1782,7 @@ ul.prod_wrapper{
 
 #full_dropable {
    position: absolute;
-   left:0;
+   left:0px;
    top:125px;
    text-align: center;
    z-index: 6003;
@@ -1793,7 +1793,7 @@ ul.prod_wrapper{
 #bottom_dropable img.curr_prod,
 #full_dropable img.curr_prod {
     top:0;
-    left:0;
+    left:20px;
 }
 .top_active {
     border:1px dashed #87ca2e;
