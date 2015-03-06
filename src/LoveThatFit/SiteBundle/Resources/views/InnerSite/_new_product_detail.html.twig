@@ -121,7 +121,10 @@ function chk_dress_applied_loaded(prod_type_applied){
    </select>
     </div>
     <div id="hdn_color_hldr" class="hdn_color_hldr select_color">
-      <label class="lbl_color">Color:</label>
+      <label class="lbl_color" style="float:left;">Color:</label>
+      
+      <div class="color_wrapper">
+      
       {%for apc in product.productColors%}
       
        <span id="color_id_pattern" style="display:none;">{{apc.id}}</span> 
@@ -133,7 +136,11 @@ function chk_dress_applied_loaded(prod_type_applied){
       </span>
       
       {%endfor%}
+      
+      </div>
+      
     </div> 
+      <div class="clr"></div>
      
              <div id="hdn_views_hldr" class="hdn_views_hldr select_views"  style="display:none;" >
                     <label class="lbl_views">Views:</label>

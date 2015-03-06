@@ -1589,11 +1589,11 @@ input[type=email]{
     width:790px;
 }
 
-.prod_sliding_area{
-	overflow:hidden;
+.prod_sliding_area{	
         z-index: 50;
         width:780px;
         position: relative;
+        float:left;
         
        
 }
@@ -4129,6 +4129,7 @@ width: 160px;
     width: 242px;
     height: auto;
     padding: 5px 0px 14px;  
+    overflow: hidden;
 }
 
 .prod_row h3{    
@@ -5474,4 +5475,9 @@ background-color:#fff;
     top: 43px;
     width: 364px;
     z-index: -2;
+}
+
+.color_wrapper{
+    float: left;
+    width:175px;
 }
