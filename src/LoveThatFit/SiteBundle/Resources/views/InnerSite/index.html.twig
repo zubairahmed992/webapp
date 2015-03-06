@@ -32,11 +32,11 @@
 <img  id='uploaded_img' src='' width="100px" height="100px">
 <br>
 <span id='fb_app_key'>{{social_media.facebook.app_id}}</span><br>
-<span id='fb_post_name'>My Selfie</span><br>
+<span id='fb_post_name'>SelfieStyler</span><br>
 <span id='fb_post_link'>{{social_media.facebook.web_link}}</span><br>
 <span id='fb_post_img_url'></span><br>
-<span id='fb_post_caption'>Selfie Caption</span><br>
-<span id='fb_post_desc'>Selfie Description</span><br>
+<span id='fb_post_caption'>Try it!</span><br>
+<span id='fb_post_desc'><a href="http://dev.lovethatfit.com/">This look styled by SelfieStyler</a></span><br>
  </div>
 
 
@@ -158,11 +158,11 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
                       data : dataURL,                      
               }, function(data) {                                    
                   
-                  $('#fb_post_name').text('merged_img');                  
+                  $('#fb_post_name').text();                  
                   $('#fb_post_img_url').text(data);
                   $('#uploaded_img').attr("src", data);
-                  $('#fb_post_caption').text('Merged Image');
-                  $('#fb_post_desc').text('testing with the description');
+                  $('#fb_post_caption').text();
+                  $('#fb_post_desc').text();
              
               });          
     
