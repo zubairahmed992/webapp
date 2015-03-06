@@ -150,22 +150,17 @@ function chk_dress_applied_loaded(prod_type_applied){
                         <a href="#"><img width="16" height="16" src="{{asset(pcsa.WebPath)}}" >
                         </a>
                     {%endfor%}
-                </div>
-
+                </div>       
         
-        
-     </div>
-     
-     </div>
-        
+     </div>     
+     </div>        
                                 
 <div class="but_remove_prod" onclick="remove_prod_details(this)"><img onclick="" src="{{ asset('bundles/lovethatfit/site/images/cross_icon_1.png') }}"></div>
                       <div class="lft_col">
                           <div class="prod_price">
           <a  onclick="get_compare_list('{{productItem.id}}')" href="javascript:void(0)" id="comapre_product">Compare</a>
           <span id="comapre_url{{productItem.id}}" style="display:none; ">{{path('compare_product_add',{'item_id':productItem.id})}}</span> 
-                          </div>
-                                   
+                          </div>                                   
                                     <div class="action_icons">
                                         <span class="fav_prod">
                                             <span style="display:none;"> <a href="{{path('compare_product_add',{'item_id':productItem.id})}}">Comp</a></span>

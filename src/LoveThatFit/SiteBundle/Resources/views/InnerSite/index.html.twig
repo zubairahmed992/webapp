@@ -457,10 +457,10 @@ function remove_prod_state(remove_prod_item_id) {
                         <a href="{{ path('registration_step_image_edit', { 'edit_type': 'device' })}}">Device Photo</a>
                     {%endif%}
                     <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">
-                    <img src="{{ asset('bundles/lovethatfit/site/images/upload_icon.png') }}" alt="Upload Image" />
+                    <img src="{{ asset('bundles/lovethatfit/site/images/upload_icon.png') }}" title="Upload Image" />
                     </a>
                     <a href="{{ path('registration_step_image_edit') }}">
-                      <img src="{{ asset('bundles/lovethatfit/site/images/edit_icon.png') }}" alt="Edit Image" />
+                      <img src="{{ asset('bundles/lovethatfit/site/images/edit_icon.png') }}" title="Edit Image" />
                     </a>
                     <img id="fb_share_btn" src="{{ asset('bundles/lovethatfit/site/images/share_btn.png') }}" />
                     <!--<a href="{{path('registration_device_view') }}">Device View</a>-->
