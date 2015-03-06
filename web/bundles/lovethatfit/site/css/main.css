@@ -2040,14 +2040,17 @@ margin:0 auto;
 
 #fitting_tab{    
     position: absolute;
-    top:14px;
-    left: 270px;
-    width:108px;
+    /*top:14px;*/
+    top:-6px;
+    /*left: 270px;*/
+    left: 218px;
+    /*width:108px;*/
+    width:196px;
     text-align: center;
     padding:5px 0px 5px 0px;
     z-index: 1;
     height: 47px;
-    background: url(../images/fitting_tab.png) center center no-repeat;
+    /*background: url(../images/fitting_tab.png) center center no-repeat;*/
     
 }
 
@@ -5448,7 +5451,8 @@ background-color:#fff;
 #fb_share_btn {
     cursor: pointer;
     display: none;
-    left: -125px;
+    left: -72px;
+    /*left: -125px;*/
     position: absolute;
     top: 80px;
 }
