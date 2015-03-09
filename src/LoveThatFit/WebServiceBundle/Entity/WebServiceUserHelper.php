@@ -240,6 +240,15 @@ public function registerUser(User $user) {
                 $user_array['heightPerInch'] = null;
             }
         }
+       /* 
+        $maskMarker=$this->get('user.marker.helper')->findMarkerByUser($user);
+        if ($maskMarker){
+            $user_array['defaultMarkerSvg'] =$maskMarker->setDefaultMarkerSvg();
+        }else{
+            $user_array['defaultMarkerSvg'] =null;
+        }
+        * 
+        */
         $user_array['authTokenWebService'] = $user->getAuthToken();  
         $user_array['path'] = $user->getUploadDir();
         $user_array['iphoneImage'] = $user->getImage();
