@@ -54,6 +54,42 @@ $(document).ready(function() {
     createBlob();
 });
 
+function top_btm_markers_pos(){
+    
+    
+//mid_area_path.segments[6].point.x;
+//mid_area_path.segments[62].point.x;
+//mid_area_path.segments[20].point.x;
+//mid_area_path.segments[48].point.x;
+    
+    
+    
+        var sholder_left = mid_area_path.segments[6].point.y;
+        var sholder_right = mid_area_path.segments[62].point.y;
+
+
+        if(sholder_left <= sholder_right){
+            $("#shoulder_height").attr("value", sholder_left);
+        }else{
+            $("#shoulder_height").attr("value", sholder_right);
+        }
+
+
+        var bottom_left = mid_area_path.segments[20].point.y - 66;
+        var bottom_right = mid_area_path.segments[48].point.y - 66;
+
+
+        if(bottom_left <= bottom_right){
+            $("#hip_height").attr("value", bottom_left);
+        }else{
+            $("#hip_height").attr("value", bottom_right);
+                }
+                
+                
+       //alert("SL:"+sholder_left+"    SR: "+sholder_right + "BL:"+bottom_left+"    BR: "+bottom_right);         
+                
+}
+
 function createBlob() {
 
 
@@ -62,8 +98,7 @@ function createBlob() {
         if(chk_no_img_path == true){
             
             pathData = $("#default_user_path").html();
-            $("#measurement_shoulder_height").attr("value", "66.6");
-            $("#measurement_hip_height").attr("value", "159.4");
+            
         }
         
 mid_area_path = new Path(pathData);
@@ -278,6 +313,12 @@ if(chk_no_img_path == true){
     mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
   
+mid_area_path.selected = true;
+
+
+$("#shoulder_height").attr("value", mid_area_path.segments[7].point.y);
+$("#hip_height").attr("value", mid_area_path.segments[21].point.y);
+
 
     
     
@@ -992,13 +1033,15 @@ function onMouseDown(event) {
                             //hide_ele_img_export();
                             //show_loader();
                             //post_img();
-                            window.location.href = "scr1_but_save_mask";
+                            upload();                            
                             
                             //
                             //
                             //
                             //alert("Save Button Tap");
                             //$("#scr1_but_save_mask").trigger( "click" );
+                            
+                            
                             console.log("scr1_but_save_icon");
                         }
                         
@@ -1022,6 +1065,11 @@ function onMouseDown(event) {
 
 
 function onMouseUp(event){
+    
+    
+   top_btm_markers_pos();
+    
+    
     big_point_ele = null;
     curr_big_seg = null;
   if (segment) {
@@ -1419,30 +1467,7 @@ function onMouseDrag(event) {
             
                 
                 
-                var sholder_left = path.segments[6].point.y - 22;
-                var sholder_right = path.segments[62].point.y - 22;
                 
-                
-                
-                //alert(sholder_left);
-                
-                if(sholder_left <= sholder_right){
-                    $("#measurement_shoulder_height").attr("value", sholder_left);
-                }else{
-                    $("#measurement_shoulder_height").attr("value", sholder_right);
-                }
-                
-                
-                var bottom_left = path.segments[20].point.y - 66;
-                var bottom_right = path.segments[48].point.y - 66;
-                                
-                //alert(bottom_right);
-                
-                if(bottom_left <= bottom_right){
-                    $("#measurement_hip_height").attr("value", bottom_left);
-                }else{
-                    $("#measurement_hip_height").attr("value", bottom_right);
-                }
                 
                 
                 
@@ -1483,6 +1508,8 @@ mask_y: $('#mask_y').attr('value'),
 marker_json:$('#img_path_json').attr('value'),
 default_marker_json:$('#default_marker_json').attr('value'),
 default_marker_svg:$('#default_marker_svg').attr('value'),
+shoulder_height: $("#shoulder_height").attr("value"),
+hip_height: $("#hip_height").attr("value"),
 svg_path:$('#img_path_paper').attr('value')};
 
 
@@ -1491,7 +1518,10 @@ svg_path:$('#img_path_paper').attr('value')};
         url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,  
        success: function(data){//alert(data);
+           
            //alert("Thi viyo");
+           window.location.href = "scr1_but_save_mask";
+           
            //setTimeout(go_to_index,'500');
      console.log(data);    
     },
