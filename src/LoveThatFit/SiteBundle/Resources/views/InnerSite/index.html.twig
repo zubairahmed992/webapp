@@ -14,7 +14,6 @@
 
 {% block product_slider %}
 {% if (app.user.measurement)%}
-
 <input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
 <input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
 <input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
@@ -23,28 +22,30 @@
 <input id="remove_top_prod_id" type="hidden" value="" />
 <input id="remove_bottom_prod_id" type="hidden" value="" />
 <input id="remove_dress_prod_id" type="hidden" value="" />
+{% endif %}
+
+
+
 
  <img style="display: none;" id='user_image' src="{{asset(app.user.webpath)}}"/>
+ 
 
 
 
  <div style="display:none;">
-<img  id='uploaded_img' src='' width="100px" height="100px">
+<img id='uploaded_img' src='' width="100px" height="100px">
 <br>
 <span id='fb_app_key'>{{social_media.facebook.app_id}}</span><br>
 <span id='fb_post_name'>SelfieStyler</span><br>
 <span id='fb_post_link'>{{social_media.facebook.web_link}}</span><br>
 <span id='fb_post_img_url'></span><br>
 <span id='fb_post_caption'>Try it!</span><br>
-<span id='fb_post_desc'><a href="http://dev.lovethatfit.com/">This look styled by SelfieStyler</a></span><br>
+<span id='fb_post_desc'>This look styled by SelfieStyler</span><br>
  </div>
 
 
 
-
-{% endif %}
-
-<span id='upload_canvas_path' style="display:none;">{{ path('fitting_room_canvas_upload')}}</span><br>
+<span id='upload_canvas_path' style="display: none;">{{ path('fitting_room_canvas_upload')}}</span><br>
 
 <img id="watermark" style="display:none;" src="{{ asset('bundles/lovethatfit/site/images/share_watermark.png') }}" />
 
@@ -52,9 +53,15 @@
 <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/index.js') }}"></script>
 
 
-<script> 
+
+
+
+
+
+<script>   
     
-function shift_to_share(){
+function shift_to_share(){ 
+    
     
     var share_canvas = document.getElementById('canv_share_merge');
     var share_canv_context = share_canvas.getContext('2d');
@@ -135,48 +142,68 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
     }
     
     
-   
-   
-  
-  
     
-              
+       
+        
+
+}
+
+
+
+
+//--------------------------------------------------------------------------
+  
+
+
+  
+
+
+$(document).ready(function(){ 
+    
     var user_image = document.getElementById('user_image');
-    var context = document.getElementById('canv_share_merge').getContext("2d");
-    user_image.onload = function ()
-    {            
-    context.drawImage(user_image, 10, 10);         
-    }         
-      
-    $("#fb_share_btn").click(function(){        
-       
-       
-        var canvas = document.getElementById('canv_share_merge');            
-        var dataURL = canvas.toDataURL();                        
+        var context = document.getElementById('canv_share_merge').getContext("2d");
+        user_image.onload = function () {            
+        context.drawImage(user_image, 10, 10);         
+        } 
+   
+    
+    
+    
+    
+
+   
+
+
+
+    
+    $("#fb_share_btn").click(function(){         
+        
+         var canvas = document.getElementById('canv_share_merge');             
+             var dataURL = canvas.toDataURL()        
              
-            $.post($('#upload_canvas_path').text(), {
+                   $.post($('#upload_canvas_path').text(), {
                       data : dataURL,                      
-              }, function(data) {                                    
+              }, function(data) { 
                   
-                  $('#fb_post_name').text();                  
-                  $('#fb_post_img_url').text(data);
+                
+                  
+                  $('#fb_post_name').text('SelfieStyler');                  
+                  $('#fb_post_img_url').text(data);                  
                   $('#uploaded_img').attr("src", data);
-                  $('#fb_post_caption').text();
-                  $('#fb_post_desc').text();
+                  $('#fb_post_caption').text('Try it!');
+                  $('#fb_post_desc').text('This look styled by SelfieStyler');
              
-              });          
-    
-    
-  
-   FB.init({
-    appId      : '{{social_media.facebook.app_id}}',
+              });  
+      
+        
+    FB.init({
+    appId      : 314138425462684,
     status     : true,
     xfbml      : true,
     version    : 'v2.0'
   });       
         
-        
-  FB.ui(
+       FB.ui(
       {
         method: 'feed',
         name: $('#fb_post_name').text(), // name of the product or content you want to share
@@ -186,51 +213,14 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
         description: $('#fb_post_desc').text() // description of your product or content
       },
       function(response) {
-       // if (response && response.post_id) {
-         // alert('Post was published.');
-       // } else {
-        //  alert('Post was not published.');
-        //}
+        if (response && response.post_id) {
+          alert('Post was published.');
+        } else {
+          alert('Post was not published.');
+        }
       }
-    );
-    
-    
-    
-        });  
-   
-
-  
-  
-  
-  
-  
-  
-   
-   
-   
-   
-   
-   
-   
-   
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-$(document).ready(function(){  
-    
-    $("#fb_share_btn").click(function(){
+    )
+        
         shift_to_share();
     });
   
