@@ -160,14 +160,6 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
 
 $(document).ready(function(){ 
     
-    
-    FB.init({
-    appId      : 314138425462684,
-    status     : true,
-    xfbml      : true,
-    version    : 'v2.0'
-  });       
-    
     var user_image = document.getElementById('user_image');
         var context = document.getElementById('canv_share_merge').getContext("2d");
         user_image.onload = function () {            
@@ -184,9 +176,7 @@ $(document).ready(function(){
 
 
     
-    $("#fb_share_btn").click(function(){  
-        
-        shift_to_share();
+    $("#fb_share_btn").click(function(){         
         
          var canvas = document.getElementById('canv_share_merge');             
              var dataURL = canvas.toDataURL()        
@@ -206,7 +196,12 @@ $(document).ready(function(){
               });  
       
         
-    
+    FB.init({
+    appId      : 314138425462684,
+    status     : true,
+    xfbml      : true,
+    version    : 'v2.0'
+  });       
         
        FB.ui(
       {
@@ -226,7 +221,7 @@ $(document).ready(function(){
       }
     )
         
-        
+        shift_to_share();
     });
   
 $(".a_color_id").live("hover",function () {     
@@ -273,7 +268,6 @@ function remove_prod_state(remove_prod_item_id) {
 }
 </script>
 <canvas id="canv_share_merge" width="364" height="505"></canvas>
-
 <section class="products">
 
     <div id="fitting_alerts">
