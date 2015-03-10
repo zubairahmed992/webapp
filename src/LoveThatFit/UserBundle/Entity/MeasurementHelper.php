@@ -64,7 +64,13 @@ class MeasurementHelper {
         $this->em->persist($measurement);
         $this->em->flush();
     }   
-
+    #-----------------------------------------------------------
+Public function updateWithParams($measurement, $params){
+    if(array_key_exists('shoulder_height', $params) && $params['shoulder_height']){$measurement->setShoulderHeight($params['shoulder_height']);}
+    if(array_key_exists('hip_height', $params) && $params['hip_height']){$measurement->setHipHeight($params['hip_height']);}
+    $this->saveMeasurement($measurement);
+}
+#----------------------------------------------
   /*  public function saveVerticalPositonMeasurement(Measurement $measurement) {
         $measurement->setUpdatedAt(new \DateTime('now'));
         $this->em->persist($measurement);

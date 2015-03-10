@@ -135,6 +135,18 @@ class DeviceController extends Controller {
         }
         
     }
+#----------------------------------------------------------------------------    
+     public function saveUserMarkerAction(Request $request)
+    {
+        $usermaker=$request->request->all();         
+        if (array_key_exists('auth_token', $usermaker)){
+            $user = $this->get('webservice.helper.user')->findByAuthToken($usermaker['auth_token']);
+            $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);        
+            return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
+        }else{
+            return new Response('Authentication token not provided.');
+        }
+    }
 }
 
 ?>

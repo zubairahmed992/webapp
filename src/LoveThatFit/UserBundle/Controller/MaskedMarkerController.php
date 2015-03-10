@@ -47,6 +47,7 @@ class MaskedMarkerController extends Controller {
         $usermaker=$request->request->all();
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
+        $this->get('user.helper.measurement')->updateWithParams($user->getMeasurement(), $usermaker);        
         return new Response(json_encode($this->get('user.marker.helper')->fillMarker($user,$usermaker)));
         
        

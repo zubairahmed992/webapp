@@ -1499,6 +1499,7 @@ function onMouseDrag(event) {
 function upload(){
 var $url=$('#marker_update_url').attr('value');
 var value_ar = {
+auth_token:$('#user_auth_token').attr('value'),
 rect_x: $('#p_selected_pic_x').attr('value'),
 rect_y: $('#p_selected_pic_y').attr('value'),
 rect_height: $('#p_selected_pic_h').attr('value'),
@@ -1519,7 +1520,7 @@ svg_path:$('#img_path_paper').attr('value')};
         data: value_ar,  
        success: function(data){//alert(data);
            
-           //alert("Thi viyo");
+           //alert(data);
            window.location.href = "scr1_but_save_mask";
            
            //setTimeout(go_to_index,'500');
