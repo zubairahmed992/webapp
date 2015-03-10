@@ -60,7 +60,7 @@
 
 <script>   
     
-function shift_to_share(){ 
+function shift_to_share(callback){ 
     
     
     var share_canvas = document.getElementById('canv_share_merge');
@@ -140,10 +140,8 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
         watermark_imageObj.src = share_watermark.src;
 
     }
-    
-    
-    
-       
+    //gave time to generate canvas
+    setTimeout(function () { callback(); }, 1000);
         
 
 }
@@ -159,69 +157,55 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
 
 
 $(document).ready(function(){ 
-    
-    var user_image = document.getElementById('user_image');
-        var context = document.getElementById('canv_share_merge').getContext("2d");
-        user_image.onload = function () {            
-        context.drawImage(user_image, 10, 10);         
-        } 
-   
-    
-    
-    
-    
-
-   
-
-
-
-    
-    $("#fb_share_btn").click(function(){         
+     
+     FB.init({
+        appId      : '314138425462684',
+        status     : true,
+        xfbml      : true,
+        version    : 'v2.0'
+      });   
+      
+      
+      
+    function share_upload (){ 
+        shift_to_share(function (){
         
-         var canvas = document.getElementById('canv_share_merge');             
-             var dataURL = canvas.toDataURL()        
-             
-                   $.post($('#upload_canvas_path').text(), {
+        var canvas = document.getElementById('canv_share_merge');             
+        var dataURL = canvas.toDataURL();        
+          $.post($('#upload_canvas_path').text(), {
                       data : dataURL,                      
               }, function(data) { 
-                  
-                
-                  
                   $('#fb_post_name').text('SelfieStyler');                  
-                  $('#fb_post_img_url').text(data);                  
-                  $('#uploaded_img').attr("src", data);
+                  $('#fb_post_img_url').text(data);                                    
                   $('#fb_post_caption').text('Try it!');
-                  $('#fb_post_desc').text('This look styled by SelfieStyler');
-             
-              });  
-      
-        
-    FB.init({
-    appId      : 314138425462684,
-    status     : true,
-    xfbml      : true,
-    version    : 'v2.0'
-  });       
-        
-       FB.ui(
-      {
-        method: 'feed',
-        name: $('#fb_post_name').text(), // name of the product or content you want to share
-        link:  $('#fb_post_link').text(),
-        picture: $('#fb_post_img_url').text(), // path to an image you would like to share with this content
-        caption: $('#fb_post_caption').text(), // caption
-        description: $('#fb_post_desc').text() // description of your product or content
-      },
-      function(response) {
-        if (response && response.post_id) {
-          //alert('Post was published.');
-        } else {
-         // alert('Post was not published.');
-        }
-      }
-    )
-        
-        shift_to_share();
+                  $('#fb_post_desc').text('This look styled by SelfieStyler');             
+                  
+                  //--------------------------------------------------------------
+                  
+                    FB.ui(
+                      {
+                        method: 'feed',
+                        name: $('#fb_post_name').text(), // name of the product or content you want to share
+                        link:  $('#fb_post_link').text(),
+                        picture: $('#fb_post_img_url').text(), // path to an image you would like to share with this content
+                        caption: $('#fb_post_caption').text(), // caption
+                        description: $('#fb_post_desc').text() // description of your product or content
+                      },
+                      function(response) {
+                        if (response && response.post_id) {
+                          //alert('Post was published.');
+                        } else {
+                         // alert('Post was not published.');
+                        }
+                      }
+                    )
+                  });  
+     
+    });    
+   }
+    
+    $("#fb_share_btn").click(function(){         
+      share_upload ();
     });
   
 $(".a_color_id").live("hover",function () {     
