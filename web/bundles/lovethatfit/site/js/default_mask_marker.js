@@ -18,7 +18,7 @@ dv_type = parseInt($("#dv_type").attr("value"));
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
 dv_edit_type = parseInt($("#dv_edit_type").attr("value"));
 
-fixed_px_inch_ratio = 6.10;
+fixed_px_inch_ratio = 5.878;
 
 //////// From JS file
 

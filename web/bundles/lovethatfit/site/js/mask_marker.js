@@ -407,11 +407,18 @@ path_com.opacity = 0.85;
 
      if(chk_no_img_path == true){      
      
-        export_svg_data(path_com);
+        export_svg_data();
+        default_svg_data();
+     
+     
+        //alert(path_com.children[1].pathData);
+        //alert(mid_area_path.pathData);
+     
      
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         
         //alert(default_adjusted_path_data);
+        
         
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
@@ -439,34 +446,16 @@ path_com.opacity = 0.85;
       return path_com;
 }
 
-function export_svg_data(path_com){
+function export_svg_data(){
 
-
-
-
-var export_path_full = path_com.exportSVG({asString: true});
-        
-        
-        
-        export_path_full.toString();
-        var export_path_remove_start = export_path_full.substr(60);
-        
-        var export_path_final = export_path_remove_start.substr(0, export_path_remove_start.length - 39);
-        
-        console.log(export_path_final);
-        
+var export_path_final = path_com.children[1].pathData;
         $("#img_path_paper").attr("value", export_path_final);
-        $("#default_marker_svg").attr("value", export_path_final);
-        
-        main_path = project.getItem({
-            class: Path,
-            segments: function(segments) {
-                   return segments.length > 20;
-            }
-            });
-            
-            $("#mask_x").attr("value", main_path.position.x);
-            $("#mask_y").attr("value", main_path.position.y);
+}
+
+
+function default_svg_data(){
+var default_path_final = path_com.children[1].pathData;
+     $("#default_marker_svg").attr("value", default_path_final);
 }
 
 //var rgt_arm_ref = $("#rgt_arm_ref").attr("value");
@@ -1066,14 +1055,18 @@ function onMouseDown(event) {
 
 function onMouseUp(event){
     
-    
+   export_svg_data(); 
    top_btm_markers_pos();
     
-    
+    if(big_point == true){
+        default_svg_data();
+    }
+    big_point = false;
     big_point_ele = null;
     curr_big_seg = null;
   if (segment) {
         $("#img_path_json").attr("value", getPathArrayJson());
+        
     }   
     
     

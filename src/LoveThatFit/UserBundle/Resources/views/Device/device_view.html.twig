@@ -60,10 +60,10 @@
 <input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
 <input id="mask_x" type="hidden" value="{{marker.maskX}}" />
 <input id="mask_y" type="hidden" value="{{marker.maskY}}" />
-<input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
+<input id="img_path_paper" type="text" value="{{marker.SvgPaths}}" />
 <input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
 <input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
-<input id="default_marker_svg" type="hidden" value="{{marker.defaultMarkerSvg}}" />
+<input id="default_marker_svg" type="text" value="{{marker.defaultMarkerSvg}}" />
 <input id="marker_update_url" type="hidden" value="{{ path('device_browser_save_user_marker')}}" />{#path('user_maker_save')#}
 
 <input id="btn_send_params" type="hidden" value="send" />
@@ -77,7 +77,7 @@
 <a href="{{ path('device_browser_svg_path', {'auth_token': app.request.get('auth_token')}) }}">SVG path interface</a>
 
 
-<input type="text" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+<input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
 
 
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span> 
