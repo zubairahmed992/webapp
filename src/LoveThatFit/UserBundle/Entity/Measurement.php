@@ -96,17 +96,17 @@ class Measurement {
      * 
      * 
      * @Assert\Range(
-     *      min = "0",
-     *      max = "96",
-     *      minMessage = "You must be at least 20 tall inches",
-     *      maxMessage = "You cannot taller than 96 inches",
+     *      min = "56",
+     *      max = "74",
+     *      minMessage = "You must be at least 56 inches tall",
+     *      maxMessage = "You cannot enter more than 74 inches",
      *      groups={"registration_step_two","profile_measurement"}
     
      * )      
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $height=0;
+    private $height=65;
 
     /**
      * @var float $waist
