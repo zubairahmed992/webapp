@@ -172,7 +172,7 @@
      </style>    
 <script>
 function callWebHook(){
-    $('#loading-indicator').show();
+    //$('#loading-indicator').show();
     $('#myModalCreateWebHook').hide();
     
     var webhook_address=$('#webhook_address').val();
@@ -221,7 +221,7 @@ function parseJson(json_data){
  $('#json_response').html(str);
 }
 function ListWebHook(){
- $('#loading-indicator').show();
+    //$('#loading-indicator').show();
     $.ajax({
         type:'POST',
         url: $('#list_webhook_url').text(),
@@ -236,7 +236,7 @@ function delWebHook(id){
   var r = confirm("Delete WebHook");
 if (r == true) {
     
- $('#loading-indicator').show();
+        //$('#loading-indicator').show();
         $.ajax({
         type:'GET',
         url: $('#delete_webhook_url').text()+"/"+id,

@@ -276,7 +276,7 @@ $( document ).ready(function() {
 
             return
                     array(
-                        'customer_count' => $this->getCustomerCount($specs),
+                        'customer_count' => $customer_count,
                         'status' => true,
                         'msg' => 'Total number of Customer we found'
             );
