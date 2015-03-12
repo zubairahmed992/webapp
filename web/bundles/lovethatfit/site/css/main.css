@@ -660,6 +660,8 @@ header.reg .strip_rgt {
         top:6px;
         right: 0px;
 }
+
+
 .reg_blk select {
 	width:68px;
 }

@@ -113,7 +113,7 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
     }
     
     if(document.getElementById('apply_img_dress') != null){
-        var top_drop_dress = document.getElementById('full_dropable').style.top;
+        var top_drop_dress = document.getElementById('full_dropable').style.top;       
         top_drop_dress = parseInt(top_drop_dress.slice(0,-2));
 
 
@@ -629,7 +629,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                            //$("#products_details").prepend("<div id='dress_type_select_color'></div>");
                         }
                         main_container_hldr = "#prod_type_dress_hlder";
-                        main_dropable = "#full_dropable";
+                        main_dropable = "#full_dropable";                        
                         main_select_color = "#dress_type_select_color";
                     }
                     set_select_color(curr_prod_type);
@@ -653,11 +653,13 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                            if(curr_prod_type=='dress'){
                                if(px_variance==0){
                                    $("#full_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px");
-                                   }else{
+             //console.log('1');                      
+            }else{
                                        $("#full_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value"))+ parseInt(px_variance)) + "px");                                        
-                                       }
+            //console.log('2');                            
+            }
                            }
-                           refreshdiv();
+                           //refreshdiv();
                         }
                     });  
                     
@@ -670,7 +672,12 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     
                     $(main_dropable).fadeOut("200", function (){
                         $(main_dropable).html("<img id='apply_img_"+curr_prod_type+"' class='curr_prod' src='" + curr_prod_apply + "' />").fadeIn();
-                        $(main_dropable + " img").draggable({
+                      
+          
+      
+             
+        
+                         $(main_dropable + " img").draggable({
                                     start: function(){
                                     },
                                     drag: function(){
