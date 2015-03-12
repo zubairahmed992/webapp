@@ -7,7 +7,7 @@ hitOptions = {
 
 inc_ratio = 1;
 curr_screen_height = 505  ;
-center_pos = 161;
+center_pos = 160;
 def_pos_x = -500;
 def_path_diff = 500;
 
@@ -24,6 +24,7 @@ dv_type = parseInt($("#dv_type").attr("value"));
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
 dv_edit_type = parseInt($("#dv_edit_type").attr("value"));
 
+fixed_px_inch_ratio = 6.972;    
 
 
 //////// From JS file
@@ -112,27 +113,39 @@ trans_bg.style = {
 
 
 
+var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+p_user_height_px = p_user_height * fixed_px_inch_ratio;
 
+var p_extra_foot_area = p_user_height_px * 3.75 / 100;
+
+
+p_user_height = p_user_height * fixed_px_inch_ratio;
+
+p_user_height = p_user_height + p_extra_foot_area;
+
+p_user_height = p_user_height * 100 / 450;
+
+p_user_height = p_user_height / 100;
 
 //var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
 
-p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+            //p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
 //var pkpkpk = parseInt($('#dv_user_px_height').attr('value'));
 
-p_user_height_new = curr_screen_height / p_user_height;
+                //p_user_height_new = curr_screen_height / p_user_height;
 
-var p_user_zoom_ratio = curr_screen_height / 450;
+            //var p_user_zoom_ratio = curr_screen_height / 450;
 
-var final_user_height_ratio = curr_screen_height / p_user_height;
+        //var final_user_height_ratio = curr_screen_height / p_user_height;
 
-p_user_height = p_user_height * final_user_height_ratio;
+        //p_user_height = p_user_height * final_user_height_ratio;
 //alert(p_user_height);
-p_user_height_px = p_user_height;
+        //p_user_height_px = p_user_height;
 
-p_user_height = p_user_height * 100 / curr_screen_height;
+        //p_user_height = p_user_height * 100 / curr_screen_height;
 
-p_user_height = p_user_height / 100;
+        //p_user_height = p_user_height / 100;
 
 
 
@@ -140,26 +153,25 @@ p_user_height = p_user_height / 100;
 user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
 
-user_image.scale(inc_ratio,p_user_height*inc_ratio);
+                //user_image.scale(inc_ratio,p_user_height*inc_ratio);
 //user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
-user_image.position = new Point(center_pos,568/2);
+                user_image.position = new Point(center_pos,568/2);
 
-user_image.position = new Point(center_pos,user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75));
+                //user_image.position = new Point(center_pos,user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75));
 
 if(chk_no_img_path == true){
     
     //alert((dv_user_px_h + (((dv_user_px_h / 100) * 3.75) / 100)));
 
-    mid_area_path.scale(inc_ratio, p_user_height * ((dv_user_px_h + ((dv_user_px_h / 100) * 3.75)) / 450));
+                //mid_area_path.scale(inc_ratio, p_user_height * ((dv_user_px_h + ((dv_user_px_h / 100) * 3.75)) / 450));
     //alert("in side");
-   mid_area_path.position = new Point(center_pos,(dv_user_px_h /2)  + 40 + ((dv_user_px_h / 100) * 3.75) + 8);
-   
-   def_shape_h = p_user_height; //65in
-   
-   def_head_h = (14.66 * def_shape_h) / 100;
-   def_torso_h = (35.96 * def_shape_h) / 100;
-   def_inseam_h = (47.61 * def_shape_h) / 100;
-   
+               //mid_area_path.position = new Point(center_pos,(dv_user_px_h /2)  + 40 + ((dv_user_px_h / 100) * 3.75) + 8);
+               
+   mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+
+   mid_area_path.position = new Point(160,542);
+   //mid_area_path.scale(inc_ratio, p_user_height);            
+     
    def_head_base_point = mid_area_path.segments[0].point.y;
    
   // alert("Head base: " + def_head_base_point + " User Height: "+def_shape_h);
