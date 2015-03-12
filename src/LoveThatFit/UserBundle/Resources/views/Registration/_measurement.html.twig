@@ -57,10 +57,36 @@ if(!year_select){
 return true;
 
 }
+
+//------------------------------------------------------------------------
+
+function validate_birthdate(){
+var month = $('#measurement_birthdate_month').val();
+var day = $('#measurement_birthdate_day').val();
+var big_months=['1', '3', '5', '7', '8', '10', '12'];
+var small_months=['2', '4', '6', '9', '11'];
+    if ($.inArray(month, small_months)>=0){
+       if(day=='31'){
+        $('#measurement_birthdate_day').val('30');
+    }
+    }
+}
+  
+
 // Time duration count functionality-------------------------->>>
 jQuery(document).ready(function ($) { 
 
-     var typingTimer;    //timer identifier
+  
+  $('#measurement_birthdate_month').change(function() {
+      validate_birthdate();
+});
+  $('#measurement_birthdate_day').change(function() {
+  validate_birthdate();
+});
+  
+  
+  
+  var typingTimer;    //timer identifier
      var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
      var checktime = 0;
