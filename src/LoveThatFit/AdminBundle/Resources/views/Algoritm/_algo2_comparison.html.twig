@@ -34,19 +34,16 @@
                                     <tr>
                                         <td>Fit Priority</td>
                                         <td>Body</td>
-                                        <td>FX</td>
-                                        <td>Below 2</td>
-                                        <td>BEL 1 FX</td>
-                                        <td>BELOW 1</td>                                        
-                                        <td>Cal Min</td>
-                                        <td>MIN FX</td>
-                                        <td>MIN</td>                                        
-                                        <td>LOW</td>
-                                        <td>AVG FX</td>
+                                        <td style="background-color:#A9F5D0">FX</td>                                                                             
+                                        <td style="background-color:#A9F5D0">Lowest FX</td>
+                                        <td>Lowest</td>
+                                        <td style="color:Red">MIN Actual</td>                                        
+                                        <td>Low</td>
+                                        <td style="background-color:#A9F5D0">AVG FX</td>
                                         <td>AVG</td>                                        
-                                        <td>HIGH</td>
-                                        <td>MAX</td>
-                                        <td>MAX FX</td>
+                                        <td>High</td>
+                                        <td style="color:Red">Max Actual</td>
+                                        <td style="background-color:#A9F5D0">MAX FX</td>
                                         <td>MAX Calc</td>
                                         <td>message</td>
                                     </tr>
@@ -56,21 +53,19 @@
 
 
                                     <tr>
-                                        <td>{{fp}}(<b>{{fp_specs.fit_priority}}</b>%)</td>
+                                        <td>{{fp}}(<b>{{fp_specs.fit_priority}}</b>)</td>
                                         <td style="font-weight: bold">{{fp_specs.body_measurement}}</td>
-                                        <td style="font-weight: bold">{{fp_specs.body_fx}}({{fp_specs.fp_fx}})</td>
-                                        <td>{{fp_specs.below_min_2}}</td>
-                                        <td>{{fp_specs.min1_fx}}</td>
-                                        <td>{{fp_specs.below_min_1}}</td>
+                                        <td style="font-weight: bold; background-color:#A9F5D0">{{fp_specs.body_fx}}{#fp_specs.fp_fx#}</td>
+                                        <td style="background-color:#A9F5D0">{{fp_specs.min_fx}}</td>
                                         <td>{{fp_specs.calc_min_body_measurement}}</td>
-                                        <td>{{fp_specs.min_fx}}</td>
-                                        <td>{{fp_specs.min_body_measurement}}</td>                                        
+                                        
+                                        <td style="font-weight: bold; color:Red">{{fp_specs.min_body_measurement}}</td>                                        
                                         <td>{{fp_specs.ideal_body_size_low}}</td>                                        
-                                        <td>{{fp_specs.avg_fx}}</td>
+                                        <td style="background-color:#A9F5D0">{{fp_specs.avg_fx}}</td>
                                         <td><b>{{fp_specs.mid_low_high}}</b></td>                                        
                                         <td>{{fp_specs.ideal_body_size_high}}</td>
-                                        <td>{{fp_specs.max_body_measurement}}</td>                                
-                                        <td>{{fp_specs.max_fx}}</td>
+                                        <td style="font-weight: bold; color:Red">{{fp_specs.max_body_measurement}}</td>                                
+                                        <td style="background-color:#A9F5D0">{{fp_specs.max_fx}}</td>
                                         <td>{{fp_specs.calc_max_body_measurement}}</td>                                        
                                         <td>{{fp_specs.message}}</td>
                                     </tr>
@@ -80,13 +75,10 @@
                                         <td></td>                                        
                                         <td></td>                                        
                                         <td>{{size_specs.fit_index}}</td>
-                                        <td></td>                                        
-                                        <td>{{size_specs.min1_fx}}</td>
-                                        <td></td>                                        
-                                        <td></td>                                        
                                         <td>{{size_specs.min_fx}}</td>
                                         <td></td>                                        
-                                        <td></td>                                                                        
+                                        <td></td>       
+                                        <td></td>                                        
                                         <td></td>                                        
                                         <td></td>                                        
                                         <td></td>                                        
@@ -94,6 +86,10 @@
                                         <td>{{size_specs.max_fx}}</td>
                                         <td></td>                                        
                                         <td></td>                                        
+                                        <td></td>
+                                        <td></td>                                        
+                                        <td></td>                                                                        
+                                        
                                     </tr>
                             {% if size_specs.hem_advice is defined %}
                                     <tr>

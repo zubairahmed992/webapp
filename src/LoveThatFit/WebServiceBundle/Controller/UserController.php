@@ -426,6 +426,22 @@ public function avatarUploadAction() {
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }   
+    #------------------------  ------------------------   
+    
+    public function socialMediaImageUploadAction() {        
+        $request = $this->getRequest();                
+        $auth_token = $_POST['authTokenWebService'];                
+        $user = $this->get('user.helper.user')->findByAuthToken($auth_token);                
+        if ($user) {
+            $file_name = $_FILES["file"]["name"];
+            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+            $newFilename = uniqid() . "." . $ext;
+            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user->getId() . "/";            
+            return new response($baseurl . $newFilename);
+        }else{
+            return new response(json_encode(array('Message' => 'We can not find user')));
+        }
+    }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     # CONSTANT_URL	/web_service/constant_values
 #---------------------------------------------------

@@ -120,6 +120,8 @@ class FitAlgorithm2 {
             'min1_fx'=> $this->scale['between_min1_min']['start']  * $fp,
             'min_fx' => $this->scale['between_min_low']['start'] * $fp,
             'max_fx' => $this->scale['between_high_max']['start'] * $fp,
+            'high_fx' => $this->scale['between_high_max']['start'] * $fp,
+            'low_fx' => $this->scale['between_high_max']['start'] * $fp,
             'avg_fx' => $fp,
         );
         $message_array=$this->calculate_fitindex($fp_measurements);        
@@ -131,7 +133,7 @@ class FitAlgorithm2 {
 #---------------------------------------------------    
 private function calculate_maxmin($fp_specs){
       
-        $ar=array();
+      /*  $ar=array();
         $ar['mid_low_high'] = ($fp_specs['ideal_body_size_low'] + $fp_specs['ideal_body_size_high']) / 2;
         
         $max_diff=$fp_specs['max_body_measurement']-$ar['mid_low_high'];
@@ -147,9 +149,16 @@ private function calculate_maxmin($fp_specs){
             $ar['calc_max_body_measurement'] = $fp_specs['max_body_measurement'];
             $ar['calc_min_body_measurement'] = $fp_specs['min_body_measurement'];            
         }
-        $avg_min_diff=$ar['mid_low_high']-$ar['calc_min_body_measurement'];
-        $ar['below_min_1'] = $ar['calc_min_body_measurement']-$avg_min_diff;
-        $ar['below_min_2'] = $ar['below_min_1']-$avg_min_diff;
+       * 
+       */
+        $ar['mid_low_high'] = ($fp_specs['ideal_body_size_low'] + $fp_specs['ideal_body_size_high']) / 2;
+        $grading_scale = (($fp_specs['ideal_body_size_high'] - $fp_specs['ideal_body_size_low']) * 2.5);        
+        
+        $ar['grading_scale'] = $grading_scale;
+        $ar['calc_min_body_measurement'] = $ar['mid_low_high'] - $grading_scale;
+        $ar['calc_max_body_measurement'] = $ar['mid_low_high'] + $grading_scale;
+        $ar['below_min_1'] = $ar['calc_min_body_measurement'] - $grading_scale;
+        $ar['below_min_2'] = $ar['below_min_1'] - $grading_scale;
         
         return $ar;
         
@@ -200,13 +209,14 @@ private function calculate_fitindex($fp_specs){
                 $str = $this->scale['between_high_max']['message'];
                 $fp_fx=  $this->grade_to_scale($fp_specs, $this->scale['between_high_max']);
                 #$str = 'high&max between 60% to 80%';
-            } elseif ($fp_specs['body_measurement'] < $fp_specs['calc_max_body_measurement']) {
+            /*} elseif ($fp_specs['body_measurement'] < $fp_specs['calc_max_body_measurement']) {
                 $str = $this->scale['between_high_max']['message'];
                 $fp_fx=  $this->grade_to_scale($fp_specs, $this->scale['between_high_max']);
                 #$str = 'max&calc between 60% to 80%';
+             */
             } else {
                 $str = $this->scale['above_max']['message'];
-                #$str = 'above calc max 0%';
+                $fp_fx =  0;
             }
         }        
         
@@ -228,7 +238,7 @@ private function calculate_fitindex($fp_specs){
         if($position['index']>0){
          $findex   =$fp_specs['avg_fx']-((($fp_specs['body_measurement']-$fp_specs['mid_low_high'])/($fp_specs['calc_max_body_measurement']-$fp_specs['mid_low_high']))*($fp_specs['avg_fx']-$fp_specs['max_fx']));
         }elseif ($position['index']<0) {
-         $findex   =$fp_specs['avg_fx']-((($fp_specs['body_measurement']-$fp_specs['mid_low_high'])/($fp_specs['calc_min_body_measurement']-$fp_specs['mid_low_high']))*($fp_specs['avg_fx']-$fp_specs['min_fx']));   
+         $findex   =$fp_specs['avg_fx']-((($fp_specs['mid_low_high']-$fp_specs['body_measurement'])/($fp_specs['mid_low_high']-$fp_specs['calc_min_body_measurement']))*($fp_specs['avg_fx']-$fp_specs['min_fx']));   
         }else{
          $findex   =1;   
         }

@@ -60,6 +60,9 @@ ws_device_image_upload:
    pattern:  /web_service/device_image_upload
    defaults: { _controller: LoveThatFitWebServiceBundle:User:deviceImageUpload}
 
+ws_social_media_image_upload:
+   pattern:  /web_service/social_media_image_upload
+   defaults: { _controller: LoveThatFitWebServiceBundle:User:socialMediaImageUpload}
 
 ws_check_token__forget_password:
     pattern:  /web_service/check_token_forget_password
