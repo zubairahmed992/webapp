@@ -163,6 +163,12 @@ class UserController extends Controller {
         $form=$this->createForm(new MannequinTestType());                
         $data = $request->request->all();
         $email = $data['user']['User'];
+        if (strlen($email)==0){
+            $form=$this->createForm(new MannequinTestType());
+            return $this->render('LoveThatFitAdminBundle:User:compare.html.twig', array(
+                    'form' => $form->createView(),                   
+                ));
+        }
         $entity = $this->get('user.helper.user')->find($email);       
         $manequin_size=$this->get('admin.helper.user.mannequin')->userMannequin($entity);        
         return new Response(json_encode($manequin_size));
