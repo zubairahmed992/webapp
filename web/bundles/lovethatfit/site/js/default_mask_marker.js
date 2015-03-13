@@ -5,10 +5,16 @@ hitOptions = {
 	tolerance: 22
 };
 
-curr_screen_height = 505  ;
-center_pos = 161;
-
 inc_ratio = 1;
+curr_screen_height = 505  ;
+center_pos = 160;
+def_pos_x = -500;
+def_path_diff = 500;
+
+gap_top_head = -20;
+
+curr_view = "normal";
+curr_crop = "normal";
 
 dv_user_px_h = parseInt($("#dv_user_px_height").attr("value"));
 dv_top_bar = parseInt($("#dv_top_bar").attr("value"));
@@ -16,9 +22,13 @@ dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
 dv_per_inch_px = parseInt($("#dv_per_inch_px").attr("value"));
 dv_type = parseInt($("#dv_type").attr("value"));
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
-dv_edit_type = parseInt($("#dv_edit_type").attr("value"));
+dv_edit_type = $("#dv_edit_type").attr("value");
 
-fixed_px_inch_ratio = 5.878;
+dv_gap_top = 26;
+dv_gap_bottom = 32;
+
+//Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
+fixed_px_inch_ratio = 6.891;
 
 //////// From JS file
 
@@ -36,20 +46,26 @@ mid_area_path = new Path(path_data);
 mid_area_path.opacity = 0.6;
 
 
-var p_user_height = parseInt($('#user_height_frm_3').attr('value')) + 3.375;
+var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+
+
+p_user_height_px = p_user_height * fixed_px_inch_ratio;
+
+var p_extra_foot_area = p_user_height_px * 3.75 / 100;
+
 
 p_user_height = p_user_height * fixed_px_inch_ratio;
+
+p_user_height = p_user_height + p_extra_foot_area;
 
 p_user_height = p_user_height * 100 / 450;
 
 p_user_height = p_user_height / 100;
 
-console.log(p_user_height);
-
 
 if(chk_no_img_path == true){
-            mid_area_path.pivot = new Point(0,435);
-            mid_area_path.scale(inc_ratio, p_user_height);
+            mid_area_path.scale(inc_ratio, p_user_height);            
+            
            
    ///////////Check Impect///////////
         if(parseInt($('#user_height_frm_3').attr('value')) >= 75){
@@ -199,6 +215,12 @@ if(chk_no_img_path == true){
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
     
 }
+    
+    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+    mid_area_path.position = new Point(00,410.5);
+    
+    mid_area_path.scale(0.765, 0.765);
+
     mid_area_path.selected = true;
     mid_area_path.strokeWidth = 1;
     mid_area_path.strokeColor = new Color(1, 0, 0);

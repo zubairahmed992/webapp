@@ -22,16 +22,29 @@ dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
 dv_per_inch_px = parseInt($("#dv_per_inch_px").attr("value"));
 dv_type = parseInt($("#dv_type").attr("value"));
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
-dv_edit_type = parseInt($("#dv_edit_type").attr("value"));
+dv_edit_type = $("#dv_edit_type").attr("value");
 
-fixed_px_inch_ratio = 6.972;    
+dv_gap_top = 26;
+dv_gap_bottom = 32;
+
+//Total height of iPhone5 - gap from top and bottom, devide by max height decided (74)//
+fixed_px_inch_ratio = 6.891;
 
 
 //////// From JS file
 
 croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
-chk_no_img_path = true;
+
+
+if(dv_edit_type == "registration"){
+    chk_no_img_path = true;
+}
+if(dv_edit_type == "edit"){
+    chk_no_img_path = false;
+}
+
+
 //true
 //alert(croped_img_path);
 
@@ -114,6 +127,8 @@ trans_bg.style = {
 
 
 var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
+
+
 p_user_height_px = p_user_height * fixed_px_inch_ratio;
 
 var p_extra_foot_area = p_user_height_px * 3.75 / 100;
@@ -166,11 +181,11 @@ if(chk_no_img_path == true){
                 //mid_area_path.scale(inc_ratio, p_user_height * ((dv_user_px_h + ((dv_user_px_h / 100) * 3.75)) / 450));
     //alert("in side");
                //mid_area_path.position = new Point(center_pos,(dv_user_px_h /2)  + 40 + ((dv_user_px_h / 100) * 3.75) + 8);
-               
+   mid_area_path.scale(inc_ratio, p_user_height);            
    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
 
    mid_area_path.position = new Point(160,542);
-   //mid_area_path.scale(inc_ratio, p_user_height);            
+               
      
    def_head_base_point = mid_area_path.segments[0].point.y;
    
@@ -237,8 +252,8 @@ if(chk_no_img_path == true){
   
   
   var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
-  
-  user_shoulder_width = user_shoulder_width * dv_per_inch_px;
+  alert(dv_per_inch_px);
+  user_shoulder_width = user_shoulder_width * fixed_px_inch_ratio;
   
   //alert(dv_per_inch_px);
   
