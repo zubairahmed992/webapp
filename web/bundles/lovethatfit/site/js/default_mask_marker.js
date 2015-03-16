@@ -6,7 +6,7 @@ hitOptions = {
 };
 
 inc_ratio = 1;
-curr_screen_height = 505  ;
+curr_screen_height = 505;
 center_pos = 160;
 def_pos_x = -500;
 def_path_diff = 500;
@@ -48,15 +48,21 @@ mid_area_path.opacity = 0.6;
 
 var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
+var p_user_height_add = 3.75 * p_user_height / 100;
+
+p_user_height = p_user_height + p_user_height_add;
+
 
 p_user_height_px = p_user_height * fixed_px_inch_ratio;
 
-var p_extra_foot_area = p_user_height_px * 3.75 / 100;
+p_user_height_add_px = p_user_height_add * fixed_px_inch_ratio;
+
+var p_extra_foot_area = p_user_height_add_px;
 
 
 p_user_height = p_user_height * fixed_px_inch_ratio;
 
-p_user_height = p_user_height + p_extra_foot_area;
+//p_user_height = p_user_height + p_extra_foot_area;
 
 p_user_height = p_user_height * 100 / 450;
 
@@ -215,18 +221,22 @@ if(chk_no_img_path == true){
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
     
 }
-    
-    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
-    mid_area_path.position = new Point(00,410.5);
-    
     mid_area_path.scale(0.765, 0.765);
-
+    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+    mid_area_path.position = new Point(160,410.50);
+    
+    
+    
+   // mid_area_path.position = new Point(160,0);
+    
+    
+    
     mid_area_path.selected = true;
     mid_area_path.strokeWidth = 1;
     mid_area_path.strokeColor = new Color(1, 0, 0);
     mid_area_path.opacity = 0.85;
 
     $("#svg_path_data").attr("value", mid_area_path.pathData);
-    window.location.href = "svg_path_created";
+  //  window.location.href = "svg_path_created";
     return mid_area_path;
 }

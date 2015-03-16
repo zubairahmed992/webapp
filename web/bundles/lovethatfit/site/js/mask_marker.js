@@ -252,7 +252,7 @@ if(chk_no_img_path == true){
   
   
   var user_shoulder_width = parseInt($("#user_back_frm_3").attr("value"));
-  alert(dv_per_inch_px);
+  //alert(dv_per_inch_px);
   user_shoulder_width = user_shoulder_width * fixed_px_inch_ratio;
   
   //alert(dv_per_inch_px);
@@ -1048,7 +1048,7 @@ function onMouseDown(event) {
                             
                             //hide_ele_img_export();
                             //show_loader();
-                            //post_img();
+                            post_img();
                             upload();                            
                             
                             //
@@ -1557,3 +1557,35 @@ svg_path:$('#img_path_paper').attr('value')};
 
 }
 
+function post_img(){
+
+
+    
+    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
+    var entity_id = document.getElementById('hdn_entity_id').value;
+    var img_update_url = document.getElementById('hdn_image_update_url').value;
+
+    var canv_data = document.getElementById('canv_mask');
+    
+    //alert(canv_data.toDataURL());
+              $.post(img_update_url, {
+                      imageData : canv_data,
+                      id : entity_id
+              }, function(canv_data) {
+  
+              var obj_url = jQuery.parseJSON( canv_data );
+               
+              console.log("i am checked bhai");
+                
+                      if(obj_url.status === "check"){
+                
+                          
+                          
+                         alert("Chicken");
+                          
+                          
+                          
+                      }
+              });  
+  		
+}
