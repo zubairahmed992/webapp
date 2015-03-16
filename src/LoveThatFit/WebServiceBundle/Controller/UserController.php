@@ -432,14 +432,23 @@ public function avatarUploadAction() {
         $request = $this->getRequest();                
         $auth_token = $_POST['authTokenWebService'];                
         $user = $this->get('user.helper.user')->findByAuthToken($auth_token);                
-        if ($user) {
+         if ($user) {            
             $file_name = $_FILES["file"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
             $newFilename = uniqid() . "." . $ext;
-            $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user->getId() . "/";            
-            return new response($baseurl . $newFilename);
-        }else{
-            return new response(json_encode(array('Message' => 'We can not find user')));
+            
+            if (!is_dir($user->getUploadRootDir())) {
+                @mkdir($user->getUploadRootDir(), 0700);
+            }
+            $abs_path = $user->getUploadRootDir().'/'.$newFilename;            
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $abs_path)) {
+                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user->getId() . "/";
+                return new response(json_encode(array('data' => $baseurl . $newFilename)));
+            } else {
+                return new Response(json_encode(array('Message' => 'Image not uploaded')));
+            }
+        } else {
+            return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
