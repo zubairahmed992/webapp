@@ -433,7 +433,7 @@ function remove_prod_state(remove_prod_item_id) {
                     <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">
                    Upload Image
                     </a>
-                    <a href="{{ path('registration_step_image_edit') }}">
+                    <a href="{{ path('registration_step_image_edit', { 'edit_type': 'edit_shape' }) }}">
                       Edit Shape
                     </a>
                     <img id="fb_share_btn" src="{{ asset('bundles/lovethatfit/site/images/share_btn.png') }}" />

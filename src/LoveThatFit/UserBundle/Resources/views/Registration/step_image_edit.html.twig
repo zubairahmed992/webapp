@@ -1132,7 +1132,9 @@ jQuery(document).ready(function ($) {
                 <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
                  {%elseif(edit_type=="device")%}
                         <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
-                 {%else%}
+                {%elseif(edit_type=="edit_shape")%}                 
+                        <input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+                {%else%}
                         <input type="hidden" id="hdn_user_cropped_image_url"  value="{{ asset(entity.getLatestImageFromDevices())}}"/>
                  {% endif%}
                 
@@ -1184,8 +1186,7 @@ jQuery(document).ready(function ($) {
                         <canvas id="cnv_img_crop" width="364" height="505" class="cnv_img_crop_style"></canvas>
 
                 </form>  
-            
-         
+          
             <div class="frm_ele step4_btns">
                   
                   {% if(edit_type=="registration")%}
@@ -1627,7 +1628,9 @@ jQuery(document).ready(function ($) {
                     <input class="next_step3" type="button" value="Next Step" />
                 </div>
            </div>
-            
+              {%if(edit_type=="edit_shape")%}                 
+            <a class="reg_next_step" href="{{path('inner_site_index')}}">Back</a>                 
+            {% endif%}    
             <div class="btm_buttons row save_btn_4">
                         <div class="frm_ele">
                             <input onClick="next_button_click(); return false;" class="reg_next_step2" type="button" value="" />
