@@ -237,6 +237,6 @@ if(chk_no_img_path == true){
     mid_area_path.opacity = 0.85;
 
     $("#svg_path_data").attr("value", mid_area_path.pathData);
-  //  window.location.href = "svg_path_created";
+    window.location.href = "svg_path_created";
     return mid_area_path;
 }

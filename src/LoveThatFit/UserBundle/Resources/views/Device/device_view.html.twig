@@ -8,10 +8,47 @@
         //window.location.href = window.location.href + "#camera";
         alert(window.location.href);
     }
+    function post_img(){
+
+
     
+    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
+    var entity_id = document.getElementById('hdn_entity_id').value;
+    
+    var img_update_url = document.getElementById('hdn_image_update_url').value;
+        
+    var canv_data = document.getElementById('canv_mask').toDataURL();
+    
+    var svg_manjan = project.exportSVG({asString: true});
+    
+    alert(svg_manjan);
+    alert("Testing: " + canv_data);
+    
+              $.post(img_update_url, {
+                      imageData : canv_data,
+                      id : entity_id
+              }, function(canv_data) {
+              var obj_url = jQuery.parseJSON( canv_data );
+               
+              console.log("i am checked bhai");
+                
+                      if(obj_url.status === "check"){
+                
+                          
+                         alert("Chicken");
+                         //window.location.href = "scr1_but_save_mask"; 
+                                                    
+                      }
+              });  
+  		
+}
 </script>
         
-
+<div class="canvas" style="">
+    <canvas  id="canvas-1" width="364" height="505" style="display: inline-block; -moz-user-select: none; left: -1px;"></canvas>
+    <button id="me_button" onclick="to_image()">Draw to Image</button>
+    <image id="theimage" width="320" height="568"></image>
+</div>
 <input id="dv_user_px_height" type="hidden" value="{{ user_pixcel_height }}" />
 <input id="dv_top_bar" type="hidden" value="{{ top_bar }}" />
 <input id="dv_bottom_bar" type="hidden" value="{{ bottom_bar }}" />
@@ -69,7 +106,7 @@
 
 
 
-<div class="txt_center"><canvas id="canv_mask" style="width: 320px; height: 568px; position: relative;"></canvas></div>
+<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
 
 
 
@@ -91,4 +128,52 @@
 <input id="rgt_arm_ref" type="text" value="M146.813,100.852c11.753,3.33,11.383,22.141,14.962,48.269c0.523,3.559,0.811,10.811,3.926,26.468c2.568,24.191,4.297,18.982,4.571,65.666c3.014,12.91,12.935,25.821-2.017,35.107c-1.756,1.131-13.129,11.084-4.68-10.356c-0.65-2.259-5.317-14.769-2.377-24.778c-0.454-1.316-6.086-15.189-14.012-62.175c-2.641-19.414-2.148-18.767-2.986-26.381c-0.148-1.718-3.127-21.49-4.414-21.489L146.813,100.852z"/>
 
 -->
+<script>
+	function to_image(){
+         
+ 		  var canvas = document.getElementById("canv_mask");
+                  alert(canvas.toDataURL());
+  		 document.getElementById("theimage").src = canvas.toDataURL();
+  		// Canvas2Image.saveAsPNG(canvas);
+	}
+	</script>
+
+<script type="text/paperscript" canvas="canvas-1">
+var raster = new Raster('fff.jpg');	
+	raster.position = view.center;
+	raster.visible = true;	
+
+/////=========================Extras================================================================================== 
+var myPath = new Path();
+	myPath.strokeColor = 'white';
+	myPath.add(new Point(40, 90));
+	myPath.add(new Point(90, 40));
+	myPath.add(new Point(140, 90));
+
+var myCircle = new Path.Circle(new Point(100, 70), 50);
+	myCircle.strokeColor = 'black';
+	myCircle.selected = true;
+    myCircle.removeSegment(0);
+
+var path = new CompoundPath({
+    children: [
+        new Path.Circle({
+            center: new Point(50, 50),
+            radius: 30
+        }),
+        new Path.Circle({
+            center: new Point(50, 50),
+            radius: 10
+        })
+    ],
+    fillColor: 'black',
+    selected: true
+});
+/////=========================Extras=================================================================================== 	
+</script>
+
+
+
+
+
 {% endblock %}

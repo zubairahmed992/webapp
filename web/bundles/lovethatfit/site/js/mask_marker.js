@@ -1,3 +1,5 @@
+var overall_layer = new Layer();
+overall_layer.activate();
 hitOptions = {
 	segments: true,
 	stroke: false,
@@ -39,9 +41,11 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(dv_edit_type == "registration"){
     chk_no_img_path = true;
+    alert("registration");
 }
 if(dv_edit_type == "edit"){
     chk_no_img_path = false;
+    //alert("edit");
 }
 
 
@@ -59,7 +63,7 @@ if(croped_img_path == "/webapp/web/" || croped_img_path == "/cs-ltf-webapp/web/"
     if(croped_img_path == "/")
     chk_no_img_path = true;
 }
-//chk_no_img_path = false;
+chk_no_img_path = false;
 //////// From JS file --- End
 
 $(document).ready(function() {
@@ -163,11 +167,15 @@ p_user_height = p_user_height / 100;
         //p_user_height = p_user_height / 100;
 
 
-
-
+var image_layer = new Layer();
+image_layer.activate();
 user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
 
+image_layer.remove();
+project.layers.push(image_layer); 
+overall_layer.activate();
+project.layers.push(overall_layer);
                 //user_image.scale(inc_ratio,p_user_height*inc_ratio);
 //user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
                 user_image.position = new Point(center_pos,568/2);
@@ -352,11 +360,16 @@ $("#hip_height").attr("value", mid_area_path.segments[21].point.y);
    }
    else{
     
-    mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
+    //mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
+    
+               
+    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+
+    mid_area_path.position = new Point(160,542);
     
     //mid_area_path.position = new Point(parseInt($('#mask_x').attr('value')),parseInt($('#mask_y').attr('value')));
     //mid_area_path.scale(inc_ratio,p_user_height * inc_ratio);
-    mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
+    //mid_area_path.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+gap_top_head);
     
     //mid_area_path.pivot = new Point(center_pos,0);
     //mid_area_path.scale(1.15,1.15);
@@ -677,19 +690,19 @@ function set_big_points(single_item){
 
 function hide_ele_img_export(){
     hide_big_points();
-    //but_zoom_in.opacity = 0;
-    //but_zoom_out.opacity = 0;
-   // but_move_left.opacity = 0;
-   // but_move_right.opacity = 0;
-   // but_move_up.opacity = 0;
-   // but_move_down.opacity = 0;
-  //  but_rotate_left.opacity = 0;
-   // but_rotate_right.opacity = 0;
-  //  but_crop_icon.opacity = 0;
-   // scr1_but_hiw_icon.opacity = 0;
-   // scr1_but_camera_icon.opacity = 0;
-   // scr1_but_save_icon.opacity = 0;
-  //  path_com.opacity = 0;
+    but_zoom_in.opacity = 0;
+    but_zoom_out.opacity = 0;
+    but_move_left.opacity = 0;
+    but_move_right.opacity = 0;
+    but_move_up.opacity = 0;
+    but_move_down.opacity = 0;
+    but_rotate_left.opacity = 0;
+    but_rotate_right.opacity = 0;
+    but_crop_icon.opacity = 0;
+    scr1_but_hiw_icon.opacity = 0;
+    scr1_but_camera_icon.opacity = 0;
+    scr1_but_save_icon.opacity = 0;
+    path_com.opacity = 0;
     
     
 but_zoom_in.position = new Point(-1000,-1000);
@@ -708,6 +721,7 @@ path_com.opacity = 0;
     
     //post_img();
     //upload();
+    return true;
     
 }
 
@@ -715,6 +729,18 @@ function show_loader(){
     
 }
 
+
+function supportsToDataURL()
+                            {
+                                if(document.getElementById('canv_mask').toDataURL()){
+                                    //alert(document.getElementById('canv_mask').toDataURL());
+                                }else{
+                                    alert("Illay");
+                                }
+                                var c = document.createElement("canvas");
+                                var data = c.toDataURL("image/png");
+                                return (data.indexOf("data:image/png") == 0);
+                            }
 
 curr_get_values = null;
 
@@ -1045,11 +1071,17 @@ function onMouseDown(event) {
                             //alert("Camera Button Tap");
                             console.log("scr1_but_camera_icon");
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
+                            //project.layers.push(overall_layer);
+                            //overall_layer.activate();
+                            overall_layer.visible = false;
                             
-                            //hide_ele_img_export();
-                            //show_loader();
-                            post_img();
-                            upload();                            
+                            
+                                
+                                //show_loader();
+
+                                //upload();                 
+                                //$("#me_button").trigger( "click" );
+                            //alert("Browser Support: " + supportsToDataURL());
                             
                             //
                             //
@@ -1095,6 +1127,9 @@ function onMouseUp(event){
         $("#img_path_json").attr("value", getPathArrayJson());
         
     }   
+    if(hitResult.item == scr1_but_save_icon){
+        alert("adf");
+    }
     
     
    
@@ -1109,13 +1144,7 @@ function getPathArrayJson(){
 }
 
 
-main_path = project.getItem({
-            class: Path,
-            segments: function(segments) {
-                   return segments.length > 20;
-            }
-            });
-        
+main_path = mid_area_path;
             
         
           //main_path = path;
@@ -1541,7 +1570,9 @@ svg_path:$('#img_path_paper').attr('value')};
        success: function(data){//alert(data);
            
            //alert(data);
-           window.location.href = "scr1_but_save_mask";
+           //window.location.href = "scr1_but_save_mask";
+           post_img();
+           
            
            //setTimeout(go_to_index,'500');
      console.log(data);    
@@ -1557,35 +1588,4 @@ svg_path:$('#img_path_paper').attr('value')};
 
 }
 
-function post_img(){
-
-
-    
-    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
-    var entity_id = document.getElementById('hdn_entity_id').value;
-    var img_update_url = document.getElementById('hdn_image_update_url').value;
-
-    var canv_data = document.getElementById('canv_mask');
-    
-    //alert(canv_data.toDataURL());
-              $.post(img_update_url, {
-                      imageData : canv_data,
-                      id : entity_id
-              }, function(canv_data) {
-  
-              var obj_url = jQuery.parseJSON( canv_data );
-               
-              console.log("i am checked bhai");
-                
-                      if(obj_url.status === "check"){
-                
-                          
-                          
-                         alert("Chicken");
-                          
-                          
-                          
-                      }
-              });  
-  		
-}
+alert(project.layers);
