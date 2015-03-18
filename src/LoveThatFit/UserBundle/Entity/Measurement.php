@@ -106,7 +106,7 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $height=65;
+    private $height=0;
 
     /**
      * @var float $waist
