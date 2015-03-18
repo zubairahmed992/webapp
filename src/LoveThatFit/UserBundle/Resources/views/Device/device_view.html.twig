@@ -8,46 +8,14 @@
         //window.location.href = window.location.href + "#camera";
         alert(window.location.href);
     }
-    function post_img(){
-
-
     
-    //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
-    var entity_id = document.getElementById('hdn_entity_id').value;
-    
-    var img_update_url = document.getElementById('hdn_image_update_url').value;
-        
-    var canv_data = document.getElementById('canv_mask').toDataURL();
-    
-    var svg_manjan = project.exportSVG({asString: true});
-    
-    alert(svg_manjan);
-    alert("Testing: " + canv_data);
-    
-              $.post(img_update_url, {
-                      imageData : canv_data,
-                      id : entity_id
-              }, function(canv_data) {
-              var obj_url = jQuery.parseJSON( canv_data );
-               
-              console.log("i am checked bhai");
-                
-                      if(obj_url.status === "check"){
-                
-                          
-                         alert("Chicken");
-                         //window.location.href = "scr1_but_save_mask"; 
-                                                    
-                      }
-              });  
-  		
-}
 </script>
         
-<div class="canvas" style="">
+<div class="canvas" style="display: none;">
     <canvas  id="canvas-1" width="364" height="505" style="display: inline-block; -moz-user-select: none; left: -1px;"></canvas>
     <button id="me_button" onclick="to_image()">Draw to Image</button>
     <image id="theimage" width="320" height="568"></image>
+    <textarea id="text_area" style="boder: 4px solid #ffc00;">afadfasfs</textarea>
 </div>
 <input id="dv_user_px_height" type="hidden" value="{{ user_pixcel_height }}" />
 <input id="dv_top_bar" type="hidden" value="{{ top_bar }}" />
@@ -129,13 +97,7 @@
 
 -->
 <script>
-	function to_image(){
-         
- 		  var canvas = document.getElementById("canv_mask");
-                  alert(canvas.toDataURL());
-  		 document.getElementById("theimage").src = canvas.toDataURL();
-  		// Canvas2Image.saveAsPNG(canvas);
-	}
+	
 	</script>
 
 <script type="text/paperscript" canvas="canvas-1">
