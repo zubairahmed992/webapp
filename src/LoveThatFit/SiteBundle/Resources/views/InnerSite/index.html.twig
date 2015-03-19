@@ -234,7 +234,7 @@ function refreshdiv() {
         type:'POST',
         url: $('#recently_tried_on').text(),
        success: function(data) {
-          $('#fb_share_btn').show("slide", { direction: "left" }, 500);
+          $('#social_sharing').show("slide", { direction: "left" }, 500);
           
            $('#recent_prods').html('');
             $('#recent_prods').html(data);
@@ -436,7 +436,30 @@ function remove_prod_state(remove_prod_item_id) {
                     <a href="{{ path('registration_step_image_edit', { 'edit_type': 'edit_shape' }) }}">
                       Edit Shape
                     </a>
-                    <img id="fb_share_btn" src="{{ asset('bundles/lovethatfit/site/images/share_btn.png') }}" />
+                      
+                      
+                      <div id="social_sharing">
+                          
+                          <a class="example1demo" target="_blank" id="tweeter_link_bg"
+                             href="https://twitter.com/share"
+                                data-url="http://www.lovethatfit.com"  
+                                data-text="abcd" 
+                                data-count="none" >
+      
+                          </a>
+                          <a href="#" id="fb_share_btn"></a>
+                          
+                          
+                          
+                      </div>
+                      
+
+                    
+                    
+                    
+                    
+                    
+                    
                     <!--<a href="{{path('registration_device_view') }}">Device View</a>-->
                 </div>
                <div class="fitting_frame">  
@@ -994,7 +1017,7 @@ var scroll_heighting = 506;
         activeClass: "ui-state-hover",
         hoverClass: "ui-state-active",
         drop: function( event, ui ) {
-         $('#fb_share_btn').hide("slide", { direction: "left" }, 500);
+         $('#social_sharing').hide("slide", { direction: "left" }, 500);
         new_product_control(ui.draggable);
         
  

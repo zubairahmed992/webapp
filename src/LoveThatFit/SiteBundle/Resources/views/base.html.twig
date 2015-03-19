@@ -27,7 +27,16 @@
 </script>
 
 
-
+                      <script type="text/javascript"> 
+$(document).ready(function($) {
+    jQuery('.example1demo').live('click', function(){
+        newwindow=window.open($(this).attr('href'),'','height=500,width=500');
+        if (window.focus) {newwindow.focus()}
+        return false;
+    });
+});
+ 
+</script>
 
     
     </head>

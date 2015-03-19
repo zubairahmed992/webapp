@@ -5451,14 +5451,48 @@ background-color:#fff;
 
 
 
-#fb_share_btn {
+#social_sharing {
     cursor: pointer;
     display: none;
     left: -72px;
     /*left: -125px;*/
     position: absolute;
     top: 80px;
+    width: 34px;
+    height: 142px;
+    background: url("../images/share_bg.png") no-repeat scroll 0 0 transparent;
 }
+
+#tweeter_link_bg{    
+    width: 34px;
+    height: 71px;
+    float: left;
+    padding: 0px!important;
+    background: url("../images/twitter_link_bg.png") no-repeat scroll 0 0 transparent;
+}
+
+#tweeter_link_bg:hover{    
+    width: 34px;
+    height: 71px;
+    padding: 0px!important;
+    background: url("../images/twitter_link_bg_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+#fb_share_btn{    
+    width: 34px;
+    height: 71px;
+    float: left;
+    padding: 0px!important;
+    background: url("../images/facebook_link_bg.png") no-repeat scroll 0 0 transparent;
+}
+
+#fb_share_btn:hover{    
+    width: 34px;
+    height: 71px;
+    padding: 0px!important;
+    background: url("../images/facebook_link_bg_hover.png") no-repeat scroll 0 0 transparent;
+}
+
 
 #canv_share_merge{
     background: #fff;

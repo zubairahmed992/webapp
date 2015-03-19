@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Resources/views/InnerSite/_new_product_detail.html.twig</file>
-            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Controller/FittingRoomController.php</file>
+            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Resources/views/base.html.twig</file>
             <file>file:/D:/wamp/www/cs-ltf-webapp/web/bundles/lovethatfit/site/css/main.css</file>
-            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Resources/views/InnerSite/_products.html.twig</file>
-            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Resources/views/InnerSite/_product_detail.html.twig</file>
-            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Resources/views/InnerSite/productDetail.html.twig</file>
-            <file>file:/D:/wamp/www/cs-ltf-webapp/app/config/config.yml</file>
+            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/ExternalSiteBundle/Resources/views/external_base_reg.html.twig</file>
+            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/ShopifyBundle/Controller/DefaultController.php</file>
+            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Controller/InnerSiteController.php</file>
+            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/ShopifyBundle/Resources/config/routing.yml</file>
             <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Resources/views/InnerSite/index.html.twig</file>
-            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/SiteBundle/Resources/views/FittingRoom/_canvas.html.twig</file>
+            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/ShopifyBundle/Resources/config/shopify_app.yml</file>
+            <file>file:/D:/wamp/www/cs-ltf-webapp/src/LoveThatFit/ShopifyBundle/Resources/views/Default/install_form.html.twig</file>
         </group>
     </open-files>
 </project-private>
