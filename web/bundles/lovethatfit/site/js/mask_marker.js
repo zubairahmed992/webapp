@@ -41,11 +41,11 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(dv_edit_type == "registration"){
     chk_no_img_path = true;
-    //alert("registration");
+    alert("registration");
 }
 if(dv_edit_type == "edit"){
     chk_no_img_path = false;
-    //alert("edit");
+    alert("edit");
 }
 
 //true
@@ -122,7 +122,7 @@ trans_bg.style = {
 
 
 var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
-
+alert(p_user_height);
 
 p_user_height_px = p_user_height * fixed_px_inch_ratio;
 
@@ -799,10 +799,13 @@ function onMouseDown(event) {
                             
                             curr_view = "zoomed";
                             hitOptions.fill = true;
-                            main_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            trans_bg.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            def_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            
+                            image_layer.scale(3,3);
+                            
+//                            main_path.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
+//                            trans_bg.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
+//                            def_path.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
+//                            user_image.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
                             mid_area_path.selected = true;
                             
                             //user_image.position.y += 66;
@@ -1119,8 +1122,8 @@ function onMouseUp(event){
     
     if(big_point == true){
         default_svg_data();
-        alert(mid_area_path.position.x);
-        alert(mid_area_path.position.y);
+        //alert(mid_area_path.position.x);
+        //alert(mid_area_path.position.y);
     }
     big_point = false;
     big_point_ele = null;
@@ -1569,12 +1572,43 @@ svg_path:$('#img_path_paper').attr('value')};
         data: value_ar,  
        success: function(data){//alert(data);
            
-           //alert(data);
-           post_img();
+//           alert("1");
+//           //post_img();
+//            var entity_id = document.getElementById('hdn_entity_id').value;    
+//            var img_update_url = document.getElementById('hdn_image_update_url').value;        
+//            var canv_data = document.getElementById('canv_mask').toDataURL();
+//           
+//           img_update_url = "http://192.168.0.209" + img_update_url;
+//           
+//            alert(img_update_url);
+//            $.post(img_update_url,
+//            {
+//            id: entity_id,
+//            imageData: canv_data
+//            },
+//            function(id,imageData){
+//                alert("ID: " + id + "\nImage Data: " + imageData);
+//            });
+            
+            
+//            $.ajax({
+//                        type: "POST",
+//                        url: img_update_url,
+//                        id: entity_id,
+//                        imageData: canv_data,  
+//                    success: function(data){//alert(data);
+//
+//                            alert("2");
+//                        //setTimeout(go_to_index,'500');
+//                    console.log(data);    
+//                    },
+//                        failure: function(errMsg) {
+//                            //setTimeout(go_to_index,'500');
+//                            alert(errMsg);
+//                        }
+//                });
            
-           
-           
-           
+           window.location.href = "scr1_but_save_mask";
            
            //setTimeout(go_to_index,'500');
      console.log(data);    
@@ -1595,11 +1629,12 @@ function post_img(){
 
     
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
-    var entity_id = document.getElementById('hdn_entity_id').value;
+    var entity_id = document.getElementById('hdn_entity_id').value;    
+    var img_update_url = document.getElementById('hdn_image_update_url').value;        
+    var canv_data = document.getElementById('canv_mask').toDataURL();
     
-    var img_update_url = document.getElementById('hdn_image_update_url').value;
-        
-    var canv_data = $("#text_area").val();
+    alert(canv_data);
+    //return false;
     
     //var svg_manjan = project.exportSVG({asString: true});
     
@@ -1610,17 +1645,18 @@ function post_img(){
                       imageData : canv_data,
                       id : entity_id
               }, function(canv_data) {
-              var obj_url = jQuery.parseJSON( canv_data );
+                  alert("Aho");
+             // var obj_url = jQuery.parseJSON( canv_data );
                
-              console.log("i am checked bhai");
+             // console.log("i am checked bhai");
                 
-                      if(obj_url.status === "check"){
+                      //if(obj_url.status == "check"){
                 
                           
-                         //alert("Chicken");
-                         window.location.href = "scr1_but_save_mask";
+                       // alert("Chicken");
+                       //  window.location.href = "scr1_but_save_mask";
                                                     
-                      }
+                      //}
               });  
   		
 }
@@ -1629,13 +1665,13 @@ function to_image(){
  		  var canvas = document.getElementById("canv_mask");
                   //alert(canvas.toDataURL());
                   var chikki = canvas.toDataURL();
-                  
+                  //alert(  chikki.replace(/^data:image\/(png|jpg);base64,/, ""));
                   $("#text_area").val(chikki);
                   
                   ///alert($("#text_area").val());
                   //setTimeout(function(){ alert(chikki); }, 3000);
                   
-  		  document.getElementById("theimage").src = $("#text_area").val();
+  		  document.getElementById("updated_img").src = $("#text_area").val();
                   //var chichi = document.getElementById("theimage");
                     //var pichi = chichi;
                     //alert(pichi);
