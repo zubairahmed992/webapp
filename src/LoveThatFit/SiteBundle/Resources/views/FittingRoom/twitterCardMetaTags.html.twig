@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="http://dev.lovethatfit.com">
+        <meta name="twitter:creator" content="@SelfieStyler">
+        <meta name="twitter:title" content="SelfieStyler">
+        <meta name="twitter:description" content="This look styled by SelfieStyler">
+        <meta name="twitter:image:src" content="{{image_abs_path}}">
+        <meta name="twitter:url" content="http://dev.lovethatfit.com" />
+    </head>
+    <body>
+        <div>         
+            <span style="display:none">
+            {{app.request.getSchemeAndHttpHost() ~ path('twitter_meta_tags_page',{'id':id, 'file_name':"twitter_share_file_name"})}}
+                    </span>
+            <h1>SelfieStyler</h1>
+            <p>This look styled by SelfieStyler
+            </p>
+            <a href="http://dev.lovethatfit.com">
+            <img src="{{asset(image_web_path)}}">
+            </a>
+            
+        </div>
+    </body>
+</html>

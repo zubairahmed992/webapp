@@ -86,6 +86,7 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: ^/shopify/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         
+        - { path: ^/free_share/, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: /external/registration/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: ^/external/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
         - { path: ^/external/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        

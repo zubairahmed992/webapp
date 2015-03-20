@@ -54,7 +54,11 @@ fitting_room_canvas_upload:
     pattern:  /fitting_room/canvas_upload
     defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:userRandomImageUpload }
 
-    
+#-------------------------------------------------------------------
+twitter_meta_tags_page:
+    pattern:  /free_share/twitter_card_meta_tags/{id}/{file_name}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:twitterCardMetaTags}
+ 
     
     
     

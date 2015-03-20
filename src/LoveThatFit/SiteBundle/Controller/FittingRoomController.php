@@ -236,7 +236,17 @@ class FittingRoomController extends Controller {
         $fb_conf=$this->get('site.helper.socialmedia')->getConfiguration('facebook');
         return $this->render('LoveThatFitSiteBundle:FittingRoom:_canvas.html.twig', array('facebook'=>$fb_conf));        
     }
-    
+     #----------------------------------------------------
+    public function twitterCardMetaTagsAction($id, $file_name) {
+        $request = $this->getRequest();
+        $image_web_path='uploads/ltf/users/'.$id.'/'.$file_name;
+        $image_abs_path =$request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath().'/' . $image_web_path;
+        return $this->render('LoveThatFitSiteBundle:FittingRoom:twitterCardMetaTags.html.twig', array('id'=>$id, 
+                            'file_name'=>$file_name, 
+                            'image_web_path'=>$image_web_path,
+                            'image_abs_path'=>$image_abs_path,
+                            ));        
+    }
 }
 ?>
 
