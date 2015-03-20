@@ -39,13 +39,13 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 
 
-if(dv_edit_type == "registration"){
+if(dv_edit_type == "registration" || dv_edit_type == "camera"){
     chk_no_img_path = true;
-    alert("registration");
+    alert(dv_edit_type);
 }
 if(dv_edit_type == "edit"){
     chk_no_img_path = false;
-    alert("edit");
+    //alert("edit");
 }
 
 //true
@@ -122,7 +122,7 @@ trans_bg.style = {
 
 
 var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
-alert(p_user_height);
+
 
 p_user_height_px = p_user_height * fixed_px_inch_ratio;
 
@@ -167,6 +167,8 @@ image_layer.remove();
 project.layers.push(image_layer); 
 overall_layer.activate();
 project.layers.push(overall_layer);
+
+//overall_layer.activate();
                 //user_image.scale(inc_ratio,p_user_height*inc_ratio);
 //user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
                 user_image.position = new Point(center_pos,568/2);
@@ -447,7 +449,9 @@ path_com.opacity = 0.85;
         //alert(path_com.children[1].pathData);
         //alert(mid_area_path.pathData);
      
-     
+        default_shape = new Layer();
+        default_shape.activate();
+        default_shape.sendToBack();
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         
         //alert(default_adjusted_path_data);
@@ -455,12 +459,15 @@ path_com.opacity = 0.85;
         
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
+        //d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
+        
+        d_adj_path.position = new Point(0,0);
+        
         d_adj_path.opacity = 0.5;
         
         d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
      
-     
+     overall_layer.activate();
       
 
     }else {
@@ -799,13 +806,10 @@ function onMouseDown(event) {
                             
                             curr_view = "zoomed";
                             hitOptions.fill = true;
-                            
-                            image_layer.scale(3,3);
-                            
-//                            main_path.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
-//                            trans_bg.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
-//                            def_path.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
-//                            user_image.scale(inc_ratio * 3,(parseInt($('#user_height_frm_3').attr('value'))*inc_ratio) * 3);
+                            main_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            trans_bg.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            def_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
                             mid_area_path.selected = true;
                             
                             //user_image.position.y += 66;
@@ -1069,13 +1073,14 @@ function onMouseDown(event) {
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
                             //project.layers.push(overall_layer);
                             //overall_layer.activate();
+                            $("#page_wrap").fadeIn(160);
                             overall_layer.visible = false;
                             
                             //to_image();
                                 
                                 //show_loader();
 
-                                setTimeout(function(){ to_image(); }, 0);                 
+                                setTimeout(function(){ to_image(); }, 500);                 
                                 //$("#me_button").trigger( "click" );
                             //alert("Browser Support: " + supportsToDataURL());
                             
@@ -1571,7 +1576,7 @@ svg_path:$('#img_path_paper').attr('value')};
         url: $url,//"http://localhost/cs-ltf-webapp/web/app_dev.php/user/marker/save",
         data: value_ar,  
        success: function(data){//alert(data);
-           
+           post_img();
 //           alert("1");
 //           //post_img();
 //            var entity_id = document.getElementById('hdn_entity_id').value;    
@@ -1608,7 +1613,6 @@ svg_path:$('#img_path_paper').attr('value')};
 //                        }
 //                });
            
-           window.location.href = "scr1_but_save_mask";
            
            //setTimeout(go_to_index,'500');
      console.log(data);    
@@ -1624,6 +1628,10 @@ svg_path:$('#img_path_paper').attr('value')};
 
 }
 
+
+
+
+
 function post_img(){
 
 
@@ -1631,32 +1639,24 @@ function post_img(){
     //temporary hack: not accessing assetic value for the url, placed a hidden field, holds the server path in twig template.
     var entity_id = document.getElementById('hdn_entity_id').value;    
     var img_update_url = document.getElementById('hdn_image_update_url').value;        
-    var canv_data = document.getElementById('canv_mask').toDataURL();
+    var canv_data = $("#text_area").val();
     
-    alert(canv_data);
-    //return false;
-    
-    //var svg_manjan = project.exportSVG({asString: true});
-    
-    //alert(svg_manjan);
-    //alert("Testing: " + canv_data);
     
               $.post(img_update_url, {
                       imageData : canv_data,
                       id : entity_id
               }, function(canv_data) {
-                  alert("Aho");
-             // var obj_url = jQuery.parseJSON( canv_data );
+              var obj_url = jQuery.parseJSON( canv_data );
                
              // console.log("i am checked bhai");
                 
-                      //if(obj_url.status == "check"){
+                      if(obj_url.status == "check"){
                 
                           
-                       // alert("Chicken");
-                       //  window.location.href = "scr1_but_save_mask";
+                        alert("Chicken");
+                         window.location.href = "scr1_but_save_mask";
                                                     
-                      //}
+                      }
               });  
   		
 }

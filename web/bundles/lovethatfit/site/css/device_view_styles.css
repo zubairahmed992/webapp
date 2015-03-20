@@ -11,3 +11,20 @@
 .hide_me {
     display:none;
 }
+#page_wrap {
+ margin:0 auto;
+ text-align:center;
+ position:fixed;
+ width: 100%;
+ height: 100%;
+ display: none;
+ background:url(../images/trans_dot_65.png) right top repeat;
+ z-index: 12000;
+}
+#loading_bar {
+    margin-top: 180px;
+}
+#loading_bar img {
+    width: 200px;
+    height: 12px;
+}
