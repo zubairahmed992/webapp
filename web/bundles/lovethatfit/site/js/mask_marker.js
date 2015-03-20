@@ -449,15 +449,22 @@ path_com.opacity = 0.85;
         //alert(path_com.children[1].pathData);
         //alert(mid_area_path.pathData);
      
-        default_shape = new Layer();
-        default_shape.activate();
-        default_shape.sendToBack();
+        //default_shape = new Layer();
+        
+       // default_shape.activate();
+        
+        //default_shape.sendToBack();
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
         
-        //alert(default_adjusted_path_data);
-        
-        
         d_adj_path = new Path(default_adjusted_path_data);
+        
+        d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
+        
+        d_adj_path.position = new Point(0,542);
+        
+        //default_shape.visible = false;
+        
+        
         d_adj_path.strokeColor = 'black';
         //d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
         
@@ -467,7 +474,12 @@ path_com.opacity = 0.85;
         
         d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
      
-     overall_layer.activate();
+     
+     //default_shape.remove();
+     
+     //project.layers.push(default_shape);
+     
+     //overall_layer.activate();
       
 
     }else {
@@ -1640,11 +1652,11 @@ function post_img(){
     var entity_id = document.getElementById('hdn_entity_id').value;    
     var img_update_url = document.getElementById('hdn_image_update_url').value;        
     var canv_data = $("#text_area").val();
-    
+    var auth_token = $('#user_auth_token').attr('value');
     
               $.post(img_update_url, {
                       imageData : canv_data,
-                      id : entity_id
+                      auth_token : auth_token
               }, function(canv_data) {
               var obj_url = jQuery.parseJSON( canv_data );
                
@@ -1652,10 +1664,7 @@ function post_img(){
                 
                       if(obj_url.status == "check"){
                 
-                          
-                        alert("Chicken");
                          window.location.href = "scr1_but_save_mask";
-                                                    
                       }
               });  
   		

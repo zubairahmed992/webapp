@@ -147,6 +147,19 @@ class DeviceController extends Controller {
             return new Response('Authentication token not provided.');
         }
     }
+    #--------------------------------------------------------------------------
+    
+    public function updateImageAction() {
+        $auth_token = $_POST['auth_token'];
+        $entity = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User.');
+        }
+        $response = $entity->writeImageFromCanvas($_POST['imageData']);
+        $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+        return new Response($response);
+    }
 }
 
 ?>

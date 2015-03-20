@@ -18,6 +18,11 @@ device_browser_svg_path:
     pattern:   /device_browser/svg_path/{auth_token}/{edit_type}/{device_type}
     defaults: { _controller: LoveThatFitUserBundle:Device:svgPath, auth_token: null, edit_type: null, device_type: null }
 
+device_browser_image_update:
+    pattern:   /device_browser/image_update
+    defaults: { _controller: LoveThatFitUserBundle:Device:updateImage }
+
+
 ajax_fitting_room_bg_cropped_image_update:
     pattern:  /ajax/fitting_room/bg_cropped_image_update
     defaults: { _controller: LoveThatFitUserBundle:Registration:bgCroppedImageUpload }
