@@ -1716,4 +1716,47 @@ class User implements UserInterface, \Serializable {
         return $obj;
         
     }
+    
+    #-----------------------------------------------------------
+     public function resize_image() {
+
+        $filename = $this->getAbsolutePath();
+        $image_info = @getimagesize($filename);
+        $image_type = $image_info[2];
+
+        switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                $source = imagecreatefromjpeg($filename);
+                break;
+            case IMAGETYPE_GIF:
+                $source = imagecreatefromgif($filename);
+                break;
+            case IMAGETYPE_PNG:
+                $source = imagecreatefrompng($filename);
+                break;
+        }
+        #------------ Need dimensions
+        $width=50;
+        $height=50;
+        $img_new = imagecreatetruecolor($width, $height);
+        imagealphablending($img_new, false);
+        imagesavealpha($img_new,true);
+        $transparent = imagecolorallocatealpha($img_new, 255, 255, 255, 127);
+        imagefilledrectangle($img_new, 0, 0, $width, $height, $transparent);
+        imagecopyresampled($img_new, $source, 0, 0, 0, 0, $width, $height, imagesx($source), imagesy($source));
+
+        switch ($image_type) {
+            case IMAGETYPE_JPEG:
+                imagejpeg($img_new, $filename, 75);
+                break;
+            case IMAGETYPE_GIF:
+                imagegif($img_new, $filename);
+                break;
+            case IMAGETYPE_PNG:
+                imagepng($img_new, $filename);
+                break;
+        }
+      
+        
+    }
 }
