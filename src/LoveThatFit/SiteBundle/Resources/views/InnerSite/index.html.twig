@@ -39,9 +39,13 @@
 <span id='fb_post_name'>SelfieStyler</span><br>
 <span id='fb_post_link'>{{social_media.facebook.web_link}}</span><br>
 <span id='fb_post_img_url'></span><br>
+<br>
 <span id='fb_post_caption'>Try it!</span><br>
 <span id='fb_post_desc'>This look styled by SelfieStyler</span><br>
  </div>
+
+<input type="hidden" id="twt_post_img_url">
+
 
 
 
@@ -58,8 +62,9 @@
 
 
 
-<script>   
+<script>  
     
+
 function shift_to_share(callback){ 
     
     
@@ -140,6 +145,10 @@ top_drop_bottom = parseInt(top_drop_bottom.slice(0,-2));
         watermark_imageObj.src = share_watermark.src;
 
     }
+    
+     
+    
+    
     //gave time to generate canvas
     setTimeout(function () { callback(); }, 1000);
         
@@ -207,6 +216,57 @@ $(document).ready(function(){
     $("#fb_share_btn").click(function(){         
       share_upload ();
     });
+    
+    
+    
+     function share_upload_tw (){ 
+        shift_to_share(function (){
+        
+        var canvas = document.getElementById('canv_share_merge');  
+        
+        var dataURL = canvas.toDataURL(); 
+       
+          $.post($('#upload_canvas_path').text(), {
+                      data : dataURL,                      
+              }, function(data) { 
+                                
+                  $('#twt_post_img_url').val(data); 
+                  
+                            
+                
+               });  
+               
+                var ss = $('#twt_post_img_url').val();            
+                
+                if(ss!= ''){
+             var lastFive = ss.substr(ss.length - 17);
+             alert(lastFive);  
+               }
+               
+              
+               
+     
+    });
+    
+    
+   
+   }
+    
+    
+    $("#tweeter_link_bg").click(function(){ 
+        
+      
+        
+      share_upload_tw ();
+      
+   
+      
+      
+     
+    
+      
+      
+    });
   
 $(".a_color_id").live("hover",function () {     
    $(this).parent().find('.homicc').css("display","block"); //parent id get
@@ -256,7 +316,7 @@ function remove_prod_state(remove_prod_item_id) {
 
     <div id="fitting_alerts">
         <div class="arrow_img_alerts"></div>
-        <h2>Fitting Alerts</h2>
+        <h2> {{app.request.getSchemeAndHttpHost() ~ path('twitter_meta_tags_page',{'id':app.user.id, 'file_name':"twitter_share_file_name"})}}</h2>
         <div class="fitting_alerts_cnt">
             <div id="curr_top_alerts"></div>
             <div id="curr_bottom_alerts"></div>
