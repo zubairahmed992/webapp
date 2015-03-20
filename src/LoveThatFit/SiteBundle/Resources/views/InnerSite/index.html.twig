@@ -45,6 +45,7 @@
  </div>
 
 <input type="hidden" id="twt_post_img_url">
+<input type="hidden" id="temp">
 
 
 
@@ -236,28 +237,31 @@ $(document).ready(function(){
                 
                });  
                
-                var ss = $('#twt_post_img_url').val();            
+            var ss = $('#twt_post_img_url').val();      
                 
-                if(ss!= ''){
-             var lastFive = ss.substr(ss.length - 17);
-             alert(lastFive);  
-               }
-               
-              
-               
-     
-    });
-    
-    
-   
-   }
-    
+             if(ss!= '')
+             {
+                 var strchar = ss.substr(ss.length - 17);                 
+                 var str_link = '{{app.request.getSchemeAndHttpHost() ~ path('twitter_meta_tags_page',{'id':app.user.id, 'file_name':"twitter_share_file_name"})}}';                
+                 var str_tweet_link = str_link.replace('twitter_share_file_name',strchar); 
+                 //$('#temp').val(str_tweet_link);
+                 $('#temp').val(str_tweet_link); 
+                 
+                
+             } 
+    });         
+   }    
     
     $("#tweeter_link_bg").click(function(){ 
         
       
         
       share_upload_tw ();
+      
+      var abc = $('#temp').val();     
+      
+      window.open("https://twitter.com/intent/tweet?text="+abc);
+      return false;
       
    
       
@@ -316,7 +320,7 @@ function remove_prod_state(remove_prod_item_id) {
 
     <div id="fitting_alerts">
         <div class="arrow_img_alerts"></div>
-        <h2> {{app.request.getSchemeAndHttpHost() ~ path('twitter_meta_tags_page',{'id':app.user.id, 'file_name':"twitter_share_file_name"})}}</h2>
+        <h2>Fitting Alerts</h2>
         <div class="fitting_alerts_cnt">
             <div id="curr_top_alerts"></div>
             <div id="curr_bottom_alerts"></div>
@@ -500,13 +504,16 @@ function remove_prod_state(remove_prod_item_id) {
                       
                       <div id="social_sharing">
                           
-                          <a class="example1demo" target="_blank" id="tweeter_link_bg"
-                             href="https://twitter.com/share"
-                                data-url="http://www.lovethatfit.com"  
-                                data-text="abcd" 
-                                data-count="none" >
+                      
+                                             
+                              <a class="example1demo" id="tweeter_link_bg"></a>
+                          
+                          
+                        
       
-                          </a>
+                          
+                        
+                       
                           <a href="#" id="fb_share_btn"></a>
                           
                           
