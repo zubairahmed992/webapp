@@ -157,6 +157,7 @@ class DeviceController extends Controller {
             throw $this->createNotFoundException('Unable to find User.');
         }
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
+        $entity->resize_image(); # image is being resized to 320x568
         $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
     }
