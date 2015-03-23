@@ -41,11 +41,11 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(dv_edit_type == "registration" || dv_edit_type == "camera"){
     chk_no_img_path = true;
-    //alert(dv_edit_type);
+    alert(dv_edit_type);
 }
 if(dv_edit_type == "edit"){
     chk_no_img_path = false;
-    //alert("edit");
+    alert("edit");
 }
 
 //true
@@ -164,7 +164,10 @@ user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
 
 user_image.position = new Point(160,568/2);
-user_image.pivot = new Point(0,568/2);
+
+
+
+user_image.pivot = new Point(0,(568/2) - dv_gap_bottom);
 //alert(user_image.bounds.bottomCenter);
 
 //user_image.position = new Point(center_pos,542);
@@ -192,15 +195,25 @@ if(chk_no_img_path == true){
                 //mid_area_path.scale(inc_ratio, p_user_height * ((dv_user_px_h + ((dv_user_px_h / 100) * 3.75)) / 450));
     //alert("in side");
                //mid_area_path.position = new Point(center_pos,(dv_user_px_h /2)  + 40 + ((dv_user_px_h / 100) * 3.75) + 8);
-   mid_area_path.scale(inc_ratio, p_user_height);            
+   
    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+   
+   mid_area_path.position = new Point(160,538);
+   
+   mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+   
+   mid_area_path.scale(inc_ratio, p_user_height);
+   
+   
+              
+   
    
    
    //user_image.pivot = new Point(160,542);
    //mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
 
-   mid_area_path.position = new Point(160,542);
    
+   alert(mid_area_path.pivot);
                
      
    def_head_base_point = mid_area_path.segments[0].point.y;
@@ -451,7 +464,6 @@ path_com = new CompoundPath({
 //path_com.children[0].strokeWidth = 4;
 //path_com.children[0].strokeColor = '#ffcc00';
 
-mid_area_path.strokeWidth = 4;
 
 path_com.opacity = 0.85;
 
@@ -483,12 +495,10 @@ path_com.opacity = 0.85;
         d_adj_path.strokeColor = 'black';
         //d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
         
-        d_adj_path.position = new Point(0,0);
+        //d_adj_path.position = new Point(0,0);
         
         d_adj_path.opacity = 0.5;
         
-        d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
-     
      
      //default_shape.remove();
      
@@ -504,10 +514,10 @@ path_com.opacity = 0.85;
         console.log(default_adjusted_path_data);
         d_adj_path = new Path(default_adjusted_path_data);
         d_adj_path.strokeColor = 'black';
-        d_adj_path.position = new Point(def_pos_x,(p_user_height_px * inc_ratio /2)+gap_top_head);
+        d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
         d_adj_path.opacity = 0.5;
         
-        d_adj_path.scale(inc_ratio,p_user_height * inc_ratio);
+        d_adj_path.position.x = 0;
         
     }
       return path_com;
@@ -820,7 +830,7 @@ function onMouseDown(event) {
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                             
-                            mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+                            //mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
                             //alert(user_image.bounds.bottomCenter.y - p_extra_foot_area);
                             //user_image.pivot = new Point(0,0);
                             //trans_bg.pivot = new Point(trans_bg.bounds.bottomCenter.x,trans_bg.bounds.bottomCenter.y - p_extra_foot_area);
@@ -840,10 +850,11 @@ function onMouseDown(event) {
                             hitOptions.fill = true;
                             
                             mid_area_path.scale(3,3);
+                            user_image.scale(3,3);
                             trans_bg.scale(3,3);
                             def_path.scale(3,3);
-                            user_image.position = new Point(0,0);
-                            image_layer.scale(3,3);
+                            //user_image.position = new Point(0,0);
+                            //image_layer.scale(3,3);
                             mid_area_path.selected = true;
                             
                             //user_image.position.y += 66;
@@ -1190,11 +1201,7 @@ main_path = mid_area_path;
         
           //main_path = path;
             
-            def_path = project.getItem({
-            opacity: function(value) {
-                    return value == 0.5;
-                }
-            });
+            def_path = d_adj_path;
 
 
 function set_pivot(curr_item,point_to_set, point_x, point_y){
@@ -1462,7 +1469,8 @@ function onMouseDrag(event) {
         
         
         
-        def_segment = def_segment + def_path_diff + center_pos;
+        //def_segment = def_segment + def_path_diff + center_pos;
+        def_segment = def_segment + def_path_diff;
         //alert(def_segment);
         
         //var def_segment = 200;
