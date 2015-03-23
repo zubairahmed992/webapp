@@ -41,7 +41,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(dv_edit_type == "registration" || dv_edit_type == "camera"){
     chk_no_img_path = true;
-    alert(dv_edit_type);
+    //alert(dv_edit_type);
 }
 if(dv_edit_type == "edit"){
     chk_no_img_path = false;
@@ -163,15 +163,25 @@ image_layer.activate();
 user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
 
+user_image.position = new Point(160,568/2);
+user_image.pivot = new Point(0,568/2);
+//alert(user_image.bounds.bottomCenter);
+
+//user_image.position = new Point(center_pos,542);
+//user_image.rotate(20);
+
+
 image_layer.remove();
 project.layers.push(image_layer); 
 overall_layer.activate();
 project.layers.push(overall_layer);
 
+
+
 //overall_layer.activate();
                 //user_image.scale(inc_ratio,p_user_height*inc_ratio);
 //user_image.position = new Point(center_pos,(p_user_height_px * inc_ratio /2)+10);
-                user_image.position = new Point(center_pos,568/2);
+                //user_image.position = new Point(center_pos,568/2);
 
                 //user_image.position = new Point(center_pos,user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75));
 
@@ -184,8 +194,13 @@ if(chk_no_img_path == true){
                //mid_area_path.position = new Point(center_pos,(dv_user_px_h /2)  + 40 + ((dv_user_px_h / 100) * 3.75) + 8);
    mid_area_path.scale(inc_ratio, p_user_height);            
    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+   
+   
+   //user_image.pivot = new Point(160,542);
+   //mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
 
    mid_area_path.position = new Point(160,542);
+   
                
      
    def_head_base_point = mid_area_path.segments[0].point.y;
@@ -451,7 +466,7 @@ path_com.opacity = 0.85;
      
         //default_shape = new Layer();
         
-       // default_shape.activate();
+        //default_shape.activate();
         
         //default_shape.sendToBack();
         var default_adjusted_path_data = $("#default_marker_svg").attr("value");
@@ -805,6 +820,11 @@ function onMouseDown(event) {
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                             
+                            mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
+                            //alert(user_image.bounds.bottomCenter.y - p_extra_foot_area);
+                            //user_image.pivot = new Point(0,0);
+                            //trans_bg.pivot = new Point(trans_bg.bounds.bottomCenter.x,trans_bg.bounds.bottomCenter.y - p_extra_foot_area);
+                            
                             x_pos_main_path = main_path.position.x;
                             x_pos_trans_bg = trans_bg.position.x;
                             x_pos_def_path = def_path.position.x;
@@ -818,15 +838,17 @@ function onMouseDown(event) {
                             
                             curr_view = "zoomed";
                             hitOptions.fill = true;
-                            main_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            trans_bg.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            def_path.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
-                            user_image.scale(inc_ratio * 3,(p_user_height*inc_ratio) * 3);
+                            
+                            mid_area_path.scale(3,3);
+                            trans_bg.scale(3,3);
+                            def_path.scale(3,3);
+                            user_image.position = new Point(0,0);
+                            image_layer.scale(3,3);
                             mid_area_path.selected = true;
                             
                             //user_image.position.y += 66;
                             
-                            user_image.position = new Point(center_pos,(user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75)) + 24);
+                            //user_image.position = new Point(center_pos,(user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75)) + 24);
                             
                             but_zoom_in.position.x = -500;
                             but_zoom_out.position.x = 26;
@@ -1129,7 +1151,7 @@ function onMouseUp(event){
     
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
             
-            
+             
             
             $("#mask_x").attr("value", mid_area_path.position.x);
             $("#mask_y").attr("value", mid_area_path.position.y);
