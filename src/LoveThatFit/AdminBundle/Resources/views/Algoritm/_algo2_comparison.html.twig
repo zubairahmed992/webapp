@@ -55,8 +55,7 @@
                             {% for fp, fp_specs in size_specs.fit_points %} 
 
 
-                                    <tr>
-                                        
+                                    <tr>                                        
                                         <td>{{fp}}(<b>{{fp_specs.fit_priority}}</b>)</td>
                                         <td style="font-weight: bold; background-color:#A9F5D0">{{fp_specs.body_measurement}}</td>
                                         {% if (fp_specs.body_fx<0)%}
@@ -77,7 +76,9 @@
                                         <td>-</td>
                                         <td style="background-color:#A9F5D0">{{fp_specs.calc_max_body_measurement}}</td>
                                           <td style="background-color:#A9F5D0">{{fp_specs.max_fx}}</td>
-                                        <td>{{fp_specs.message}}</td>
+                                        <td>{{fp_specs.message}}
+                                        ({{fp_specs.status}})
+                                        </td>
                                     </tr>
 
                             {% endfor %}
@@ -99,7 +100,7 @@
                                         <td></td>       
                                         <td>{{size_specs.max_fx}}</td>
                                         <td></td>
-                                        <td></td>                                        
+                                        <td>({{size_specs.status}})</td>                                        
                                         <td></td>                                                                        
                                         
                                     </tr>
