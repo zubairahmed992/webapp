@@ -5458,39 +5458,135 @@ background-color:#fff;
     /*left: -125px;*/
     position: absolute;
     top: 80px;
-    width: 34px;
-    height: 142px;
-    background: url("../images/share_bg.png") no-repeat scroll 0 0 transparent;
+    width: 27px;
+    height: 226px;
+    background: #fff;
 }
 
-#tweeter_link_bg{    
-    width: 34px;
-    height: 71px;
-    float: left;
-    padding: 0px!important;
-    background: url("../images/twitter_link_bg.png") no-repeat scroll 0 0 transparent;
+#social_sharing a{
+    margin-top: 1px;
 }
 
-#tweeter_link_bg:hover{    
-    width: 34px;
-    height: 71px;
-    padding: 0px!important;
-    background: url("../images/twitter_link_bg_hover.png") no-repeat scroll 0 0 transparent;
-}
 
 #fb_share_btn{    
-    width: 34px;
-    height: 71px;
+    width: 27px;
+    height: 31px;
     float: left;
+    display:block;
     padding: 0px!important;
     background: url("../images/facebook_link_bg.png") no-repeat scroll 0 0 transparent;
 }
 
 #fb_share_btn:hover{    
-    width: 34px;
-    height: 71px;
+    width: 27px;
+    height: 31px;
+    display:block;
     padding: 0px!important;
     background: url("../images/facebook_link_bg_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+
+#twt_share_btn{    
+    width: 27px;
+    height: 31px;
+    float: left;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/twitter_link_bg.png") no-repeat scroll 0 0 transparent;
+}
+
+#twt_share_btn:hover{    
+    width: 27px;
+    height: 31px;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/twitter_link_bg_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+#pint_share_btn{    
+    width: 27px;
+    height: 31px;
+    float: left;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/pinterest_icon.png") no-repeat scroll 0 0 transparent;
+}
+
+#pint_share_btn:hover{    
+    width: 27px;
+    height: 31px;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/pinterest_icon_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+
+#inst_share_btn{    
+    width: 27px;
+    height: 31px;
+    float: left;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/instagram_icon.png") no-repeat scroll 0 0 transparent;
+}
+
+#inst_share_btn:hover{    
+    width: 27px;
+    height: 31px;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/instagram_icon_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+#email_share_btn{    
+    width: 27px;
+    height: 31px;
+    float: left;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/email_icon.png") no-repeat scroll 0 0 transparent;
+}
+
+#email_share_btn:hover{    
+    width: 27px;
+    height: 31px;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/email_icon_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+#sms_share_btn{    
+    width: 27px;
+    height: 31px;
+    float: left;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/sms_icon.png") no-repeat scroll 0 0 transparent;
+}
+
+#sms_share_btn:hover{    
+    width: 27px;
+    height: 31px;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/sms_icon_hover.png") no-repeat scroll 0 0 transparent;
+}
+
+#save_share_btn{    
+    width: 27px;
+    height: 31px;
+    float: left;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/save_icon.png") no-repeat scroll 0 0 transparent;
+}
+
+#save_share_btn:hover{    
+    width: 27px;
+    height: 31px;
+    display:block;
+    padding: 0px!important;
+    background: url("../images/save_icon_hover.png") no-repeat scroll 0 0 transparent;
 }
 
 
