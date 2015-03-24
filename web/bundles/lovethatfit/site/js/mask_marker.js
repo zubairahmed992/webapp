@@ -1,5 +1,5 @@
-var overall_layer = new Layer();
-overall_layer.activate();
+main_layer = new Layer();
+main_layer.activate();
 hitOptions = {
 	segments: true,
 	stroke: false,
@@ -8,7 +8,7 @@ hitOptions = {
 };
 
 inc_ratio = 1;
-curr_screen_height = 505  ;
+curr_screen_height = 505;
 center_pos = 160;
 def_pos_x = -500;
 def_path_diff = 500;
@@ -41,11 +41,11 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(dv_edit_type == "registration" || dv_edit_type == "camera"){
     chk_no_img_path = true;
-    alert(dv_edit_type);
+    //alert(dv_edit_type);
 }
 if(dv_edit_type == "edit"){
     chk_no_img_path = false;
-    alert("edit");
+    //alert("edit");
 }
 
 //true
@@ -112,12 +112,7 @@ function createBlob() {
         
 mid_area_path = new Path(pathData);
 mid_area_path.opacity = 0.6;
-trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 2000));
-trans_bg.style = {
-	fillColor: '#666666',
-	stroke: 2,
-	strokeColor: '#ffcc00'
-};
+
 
 
 
@@ -158,8 +153,6 @@ p_user_height = p_user_height / 100;
         //p_user_height = p_user_height / 100;
 
 
-var image_layer = new Layer();
-image_layer.activate();
 user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
 
@@ -174,10 +167,10 @@ user_image.pivot = new Point(0,(568/2) - dv_gap_bottom);
 //user_image.rotate(20);
 
 
-image_layer.remove();
-project.layers.push(image_layer); 
-overall_layer.activate();
-project.layers.push(overall_layer);
+//image_layer.remove();
+//project.layers.push(image_layer); 
+//overall_layer.activate();
+//project.layers.push(overall_layer);
 
 
 
@@ -213,7 +206,7 @@ if(chk_no_img_path == true){
    //mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
 
    
-   alert(mid_area_path.pivot);
+   //alert(mid_area_path.pivot);
                
      
    def_head_base_point = mid_area_path.segments[0].point.y;
@@ -445,7 +438,12 @@ $("#hip_height").attr("value", mid_area_path.segments[21].point.y);
           */      
 ////////////////////////////////////////////////////////////// 
 
-
+trans_bg = new Path.Rectangle(new Point(-300, -300), new Size(1000, 2000));
+trans_bg.style = {
+	fillColor: '#666666',
+	stroke: 2,
+	strokeColor: '#ffcc00'
+};
 path_com = new CompoundPath({
     children: [
 		trans_bg,
@@ -487,7 +485,7 @@ path_com.opacity = 0.85;
         
         d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
         
-        d_adj_path.position = new Point(0,542);
+        d_adj_path.position = new Point(-100,538);
         
         //default_shape.visible = false;
         
@@ -517,11 +515,13 @@ path_com.opacity = 0.85;
         d_adj_path.pivot = new Point(d_adj_path.bounds.bottomCenter.x,d_adj_path.bounds.bottomCenter.y - p_extra_foot_area);
         d_adj_path.opacity = 0.5;
         
-        d_adj_path.position.x = 0;
+        d_adj_path.position.x = -100;
         
     }
       return path_com;
 }
+
+
 
 function export_svg_data(){
 
@@ -556,6 +556,12 @@ lft_leg_ref = new Path({});
     return ref_part_obj;
   }  
   
+main_layer.activate();
+project.layers.push(main_layer);
+
+extra_layer = new Layer();
+extra_layer.activate();
+
 
   
 var an_inc = 20;  
@@ -779,6 +785,8 @@ function supportsToDataURL()
                                 return (data.indexOf("data:image/png") == 0);
                             }
 
+project.layers.push(extra_layer);
+
 curr_get_values = null;
 
 
@@ -829,72 +837,61 @@ function onMouseDown(event) {
 			//segment = null;
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
-                            
-                            //mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
-                            //alert(user_image.bounds.bottomCenter.y - p_extra_foot_area);
-                            //user_image.pivot = new Point(0,0);
-                            //trans_bg.pivot = new Point(trans_bg.bounds.bottomCenter.x,trans_bg.bounds.bottomCenter.y - p_extra_foot_area);
-                            
-                            x_pos_main_path = main_path.position.x;
-                            x_pos_trans_bg = trans_bg.position.x;
-                            x_pos_def_path = def_path.position.x;
-                            x_pos_user_image = user_image.position.x;
-                            
-                            y_pos_main_path = main_path.position.y;
-                            y_pos_trans_bg = trans_bg.position.y;
-                            y_pos_def_path = def_path.position.y;
-                            y_pos_user_image = user_image.position.y;
-                            
-                            
-                            curr_view = "zoomed";
-                            hitOptions.fill = true;
-                            
-                            mid_area_path.scale(3,3);
-                            user_image.scale(3,3);
-                            trans_bg.scale(3,3);
-                            def_path.scale(3,3);
-                            //user_image.position = new Point(0,0);
-                            //image_layer.scale(3,3);
-                            mid_area_path.selected = true;
-                            
-                            //user_image.position.y += 66;
-                            
-                            //user_image.position = new Point(center_pos,(user_image.position.y - dv_top_bar + 40 + ((dv_user_px_h / 100) * 3.75)) + 24);
-                            
-                            but_zoom_in.position.x = -500;
-                            but_zoom_out.position.x = 26;
-                            
-                            
-                            hide_big_points();
-                            
-                            //window.location.href = "scr1_but_save_mask";
-                            
+                           
+                           
+                           
+                           main_layer.pivot = new Point(160,538);
+                           
+                           pos_main_layer = main_layer.position;
+                           
+                           
+                           main_layer.scale(2,2);
+                           mid_area_path.selected = true;
+                           curr_view = "zoomed";
+                           hitOptions.fill = true; 
+                           
+                           but_zoom_in.position.x = -500;
+                           but_zoom_out.position.x = 26;
+                           
+                           hide_big_points();
                             
                         }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
+                           
+                           zoom_out_value = 1/2;
+                           //main_layer.pivot = new Point(160,538);
+                           main_layer.position = pos_main_layer;
+                           main_layer.scale(zoom_out_value,zoom_out_value);
+                           mid_area_path.selected = false;
+                           curr_view = "normal";
+                           hitOptions.fill = false; 
+                           
+                           
+                           
+                           but_zoom_in.position.x = 26;
+                           but_zoom_out.position.x = -500;
                             
-                            
-                            
-                            curr_view = "normal";
-                            hitOptions.fill = true;
-                            main_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
-                            mid_area_path.selected = true;
-                            trans_bg.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
-                            def_path.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
-                            user_image.scale(inc_ratio / 3,(p_user_height*inc_ratio) / 3);
-                            user_image.position.y -= 66;
-                            
-                            main_path.position.x = x_pos_main_path;
-                            trans_bg.position.x = x_pos_trans_bg;
-                            def_path.position.x = x_pos_def_path;
-                            user_image.position.x = x_pos_user_image;
-                            
-                            main_path.position.y = y_pos_main_path;
-                            trans_bg.position.y = y_pos_trans_bg;
-                            def_path.position.y = y_pos_def_path;
-                            user_image.position.y = y_pos_user_image;
-                            
-                            but_zoom_in.position.x = 26;
-                            but_zoom_out.position.x = -500;
+//                            curr_view = "normal";
+//                            hitOptions.fill = true;
+//                            
+//                            main_path.scale(zoom_out_value,zoom_out_value);
+//                            mid_area_path.selected = true;
+//                            trans_bg.scale(zoom_out_value,zoom_out_value);
+//                            def_path.scale(zoom_out_value,zoom_out_value);
+//                            user_image.scale(zoom_out_value,zoom_out_value);
+//                            user_image.position.y -= 66;
+//                            
+//                            main_path.position.x = x_pos_main_path;
+//                            trans_bg.position.x = x_pos_trans_bg;
+//                            def_path.position.x = x_pos_def_path;
+//                            user_image.position.x = x_pos_user_image;
+//                            
+//                            main_path.position.y = y_pos_main_path;
+//                            trans_bg.position.y = y_pos_trans_bg;
+//                            def_path.position.y = y_pos_def_path;
+//                            user_image.position.y = y_pos_user_image;
+//                            
+//                            but_zoom_in.position.x = 26;
+//                            but_zoom_out.position.x = -500;
                             
                             set_big_points();
                         }
@@ -1717,4 +1714,11 @@ function to_image(){
   		// Canvas2Image.saveAsPNG(canvas);
                 upload();
 	}
+        console.log("mid_area_path: "+mid_area_path.position+"  user_image: "+user_image.position+"  def_path: "+def_path.position);
+        console.log("mid_area_path: "+mid_area_path.pivot+"  user_image: "+user_image.pivot+"  def_path: "+def_path.pivot);
+
+
+
+
+
 //alert(project.layers);
