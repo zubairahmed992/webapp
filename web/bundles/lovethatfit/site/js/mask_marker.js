@@ -614,7 +614,7 @@ var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop
 var but_crop_icon = new Raster(but_crop_icon_url);
 
 but_crop_icon.position = new Point(26, 332 + an_inc);
-
+but_crop_icon.visible = false;
 
 var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/how_it_works_icon.png";
 var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
@@ -838,11 +838,12 @@ function onMouseDown(event) {
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                            
-                           
+                           pos_main_layer = main_layer.position;
                            
                            main_layer.pivot = new Point(160,538);
                            
-                           pos_main_layer = main_layer.position;
+                           
+                           
                            
                            
                            main_layer.scale(2,2);
@@ -859,8 +860,14 @@ function onMouseDown(event) {
                            
                            zoom_out_value = 1/2;
                            //main_layer.pivot = new Point(160,538);
-                           main_layer.position = pos_main_layer;
+                           
+                           
+                           
+                                                     
+                           console.log(mid_area_path.segments[0].point.x);
+                           
                            main_layer.scale(zoom_out_value,zoom_out_value);
+                           console.log(main_layer.position);
                            mid_area_path.selected = false;
                            curr_view = "normal";
                            hitOptions.fill = false; 
@@ -1116,8 +1123,14 @@ function onMouseDown(event) {
                             //project.layers.push(overall_layer);
                             //overall_layer.activate();
                             $("#page_wrap").fadeIn(160);
-                            overall_layer.visible = false;
+                            //overall_layer.visible = false;
                             
+                            main_layer.visible = false;
+                            extra_layer.visible = false;
+                            hide_big_points();
+                            image_export_layer = new Layer();
+                            image_export_layer.activate();
+                            image_export_layer.addChild(user_image);
                             //to_image();
                                 
                                 //show_loader();
