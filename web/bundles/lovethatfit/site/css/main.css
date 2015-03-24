@@ -5459,7 +5459,7 @@ background-color:#fff;
     position: absolute;
     top: 80px;
     width: 27px;
-    height: 226px;
+    height: 226fxp;
     background: #fff;
 }
 
@@ -5486,7 +5486,7 @@ background-color:#fff;
 }
 
 
-#twt_share_btn{    
+#tweeter_link_bg{    
     width: 27px;
     height: 31px;
     float: left;
@@ -5495,7 +5495,7 @@ background-color:#fff;
     background: url("../images/twitter_link_bg.png") no-repeat scroll 0 0 transparent;
 }
 
-#twt_share_btn:hover{    
+#tweeter_link_bg:hover{    
     width: 27px;
     height: 31px;
     display:block;
