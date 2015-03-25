@@ -572,11 +572,18 @@ extra_layer.activate();
 
 
   
-var an_inc = 20;  
+var an_inc = 54;  
   
 var curr_path_prefix = $("#hdn_serverpath").attr("value");
 
 console.log(curr_path_prefix);
+
+
+var but_back_top_url = curr_path_prefix + "bundles/lovethatfit/site/images/back_button_app.png";
+var but_back_top = new Raster(but_back_top_url);
+
+but_back_top.position = new Point(28, 24);
+
 
 var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
 var but_zoom_in = new Raster(but_zoom_in_url);
@@ -627,12 +634,18 @@ but_crop_icon.visible = false;
 var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/how_it_works_icon.png";
 var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
 
-scr1_but_hiw_icon.position = new Point(294, 50);
+scr1_but_hiw_icon.position = new Point(294, 24 + an_inc);
 
 var scr1_but_camera_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/camera_icon.png";
 var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
 
-scr1_but_camera_icon.position = new Point(294, 100);
+scr1_but_camera_icon.position = new Point(294, 68 + an_inc);
+
+var scr1_but_reset_url = curr_path_prefix + "bundles/lovethatfit/site/images/reset_btn.png";
+var scr1_but_reset = new Raster(scr1_but_reset_url);
+
+scr1_but_reset.position = new Point(38, 550);
+
 
 var scr1_but_save_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/scr1_next_btn.png";
 var scr1_but_save_icon = new Raster(scr1_but_save_icon_url);
@@ -931,6 +944,12 @@ function onMouseDown(event) {
                                 //x_pos_user_image -= ratio_zoom_value;
                             }
                             
+                        }
+                        else if(hitResult.item == but_back_top){
+                               window.location.href = "scr1_but_back_top";                
+                        }
+                        else if(hitResult.item == scr1_but_reset){
+                            window.location.reload();                
                         }
                         else if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
@@ -1239,6 +1258,12 @@ function onMouseUp(event){
     
    
    //alert(rgt_arm_ref);
+   
+   if(curr_view == "zoomed"){
+       mid_area_path.selected = true;
+   }
+   
+   
 }
 function getPathArrayJson(){
     var mp_array=[];
