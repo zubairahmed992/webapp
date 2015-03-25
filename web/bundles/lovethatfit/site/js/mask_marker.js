@@ -44,7 +44,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(dv_edit_type == "registration" || dv_edit_type == "camera"){
     chk_no_img_path = true;
-    //alert(dv_edit_type);
+   // alert(dv_edit_type);
 }
 if(dv_edit_type == "edit"){
     chk_no_img_path = false;
@@ -928,7 +928,7 @@ function onMouseDown(event) {
                             user_image.position.x -= 1;
                             
                             if(curr_view == "zoomed"){
-                                x_pos_user_image -= ratio_zoom_value;
+                                //x_pos_user_image -= ratio_zoom_value;
                             }
                             
                         }
@@ -936,21 +936,21 @@ function onMouseDown(event) {
                             user_image.position.x += 1;
                             
                             if(curr_view == "zoomed"){
-                                x_pos_user_image += ratio_zoom_value;
+                                //x_pos_user_image += ratio_zoom_value;
                             }
                         }
                         else if(hitResult.item == but_move_up){
                             user_image.position.y -= 1;
                             
                             if(curr_view == "zoomed"){
-                                y_pos_user_image -= ratio_zoom_value;
+                                //y_pos_user_image -= ratio_zoom_value;
                             }
                         }
                         else if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
                             
                             if(curr_view == "zoomed"){
-                                y_pos_user_image += ratio_zoom_value;
+                                //y_pos_user_image += ratio_zoom_value;
                             }
                             
                         }
@@ -1146,11 +1146,26 @@ function onMouseDown(event) {
                             //overall_layer.activate();
                             
                             if(curr_view == "zoomed"){
-                                alert("Ahoooooooos");
+                                zoom_out_settings();
+                                
+                                $("#page_wrap").fadeIn(160);
+                            //overall_layer.visible = false;
+                            
+                            main_layer.visible = false;
+                            extra_layer.visible = false;
+                            hide_big_points();
+                            image_export_layer = new Layer();
+                            image_export_layer.activate();
+                            image_export_layer.addChild(user_image);
+                            //to_image();
+                                
+                                //show_loader();
+
+                                setTimeout(function(){ to_image(); }, 500);
                             }else{
                             $("#page_wrap").fadeIn(160);
                             //overall_layer.visible = false;
-                            
+                            //alert("asdf");
                             main_layer.visible = false;
                             extra_layer.visible = false;
                             hide_big_points();
