@@ -1,5 +1,6 @@
 main_layer = new Layer();
 main_layer.activate();
+
 hitOptions = {
 	segments: true,
 	stroke: false,
@@ -7,6 +8,8 @@ hitOptions = {
 	tolerance: 22
 };
 
+change_x_pos_diff = 0;
+change_y_pos_diff = 0;
 inc_ratio = 1;
 curr_screen_height = 505;
 center_pos = 160;
@@ -362,7 +365,9 @@ if(chk_no_img_path == true){
     mid_area_path.segments[31].point.x -= ((front_shoulder_diff*7.5)/100);
     mid_area_path.segments[39].point.x += ((front_shoulder_diff*7.5)/100);
   
-mid_area_path.selected = true;
+//mid_area_path.selected = true;
+
+
 
 
 $("#shoulder_height").attr("value", mid_area_path.segments[7].point.y);
@@ -496,7 +501,9 @@ path_com.opacity = 0.85;
         //d_adj_path.position = new Point(0,0);
         
         d_adj_path.opacity = 0.5;
+        //d_adj_path.fillColor = "#ffcc00";
         
+        d_adj_path.visible = false;
      
      //default_shape.remove();
      
@@ -516,6 +523,7 @@ path_com.opacity = 0.85;
         d_adj_path.opacity = 0.5;
         
         d_adj_path.position.x = -100;
+        d_adj_path.visible = false;
         
     }
       return path_com;
@@ -787,6 +795,66 @@ function supportsToDataURL()
 
 project.layers.push(extra_layer);
 
+
+function zoom_out_settings(){
+    zoom_out_value = 1/2;
+                           //main_layer.pivot = new Point(160,538);
+                           
+                           //alert(main_layer.position);
+                           
+                           
+                           //main_layer.position = mid_area_path.pivot;
+                           
+                           
+                           
+                           main_layer.scale(zoom_out_value,zoom_out_value);
+                           
+                           main_layer.position.x = main_layer.position.x - change_x_pos_diff/2;
+                           main_layer.position.y = main_layer.position.y - change_y_pos_diff/2;
+                           //def_path.position.x += change_x_pos_diff/2;
+                           //user_image.position.x += change_x_pos_diff/2;
+                           
+                           console.log(change_x_pos_diff/2);
+                           
+                           
+                           mid_area_path.selected = false;
+                           curr_view = "normal";
+                           hitOptions.fill = false; 
+                           
+                           
+                           change_x_pos_diff = 0;
+                           change_y_pos_diff = 0;
+                           
+                           but_zoom_in.position.x = 26;
+                           but_zoom_out.position.x = -500;
+                            
+//                            curr_view = "normal";
+//                            hitOptions.fill = true;
+//                            
+//                            main_path.scale(zoom_out_value,zoom_out_value);
+//                            mid_area_path.selected = true;
+//                            trans_bg.scale(zoom_out_value,zoom_out_value);
+//                            def_path.scale(zoom_out_value,zoom_out_value);
+//                            user_image.scale(zoom_out_value,zoom_out_value);
+//                            user_image.position.y -= 66;
+//                            
+//                            main_path.position.x = x_pos_main_path;
+//                            trans_bg.position.x = x_pos_trans_bg;
+//                            def_path.position.x = x_pos_def_path;
+//                            user_image.position.x = x_pos_user_image;
+//                            
+//                            main_path.position.y = y_pos_main_path;
+//                            trans_bg.position.y = y_pos_trans_bg;
+//                            def_path.position.y = y_pos_def_path;
+//                            user_image.position.y = y_pos_user_image;
+//                            
+//                            but_zoom_in.position.x = 26;
+//                            but_zoom_out.position.x = -500;
+                            
+                            set_big_points();
+}
+
+
 curr_get_values = null;
 
 
@@ -838,13 +906,10 @@ function onMouseDown(event) {
                         if(hitResult.item == user_image){
                         }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                            
-                           pos_main_layer = main_layer.position;
                            
                            main_layer.pivot = new Point(160,538);
-                           
-                           
-                           
-                           
+                           //pos_main_layer = main_layer.position;
+                           //alert(main_layer.position);
                            
                            main_layer.scale(2,2);
                            mid_area_path.selected = true;
@@ -857,50 +922,7 @@ function onMouseDown(event) {
                            hide_big_points();
                             
                         }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
-                           
-                           zoom_out_value = 1/2;
-                           //main_layer.pivot = new Point(160,538);
-                           
-                           
-                           
-                                                     
-                           console.log(mid_area_path.segments[0].point.x);
-                           
-                           main_layer.scale(zoom_out_value,zoom_out_value);
-                           console.log(main_layer.position);
-                           mid_area_path.selected = false;
-                           curr_view = "normal";
-                           hitOptions.fill = false; 
-                           
-                           
-                           
-                           but_zoom_in.position.x = 26;
-                           but_zoom_out.position.x = -500;
-                            
-//                            curr_view = "normal";
-//                            hitOptions.fill = true;
-//                            
-//                            main_path.scale(zoom_out_value,zoom_out_value);
-//                            mid_area_path.selected = true;
-//                            trans_bg.scale(zoom_out_value,zoom_out_value);
-//                            def_path.scale(zoom_out_value,zoom_out_value);
-//                            user_image.scale(zoom_out_value,zoom_out_value);
-//                            user_image.position.y -= 66;
-//                            
-//                            main_path.position.x = x_pos_main_path;
-//                            trans_bg.position.x = x_pos_trans_bg;
-//                            def_path.position.x = x_pos_def_path;
-//                            user_image.position.x = x_pos_user_image;
-//                            
-//                            main_path.position.y = y_pos_main_path;
-//                            trans_bg.position.y = y_pos_trans_bg;
-//                            def_path.position.y = y_pos_def_path;
-//                            user_image.position.y = y_pos_user_image;
-//                            
-//                            but_zoom_in.position.x = 26;
-//                            but_zoom_out.position.x = -500;
-                            
-                            set_big_points();
+                           zoom_out_settings();
                         }
                         else if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
@@ -1122,6 +1144,10 @@ function onMouseDown(event) {
                         }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
                             //project.layers.push(overall_layer);
                             //overall_layer.activate();
+                            
+                            if(curr_view == "zoomed"){
+                                alert("Ahoooooooos");
+                            }else{
                             $("#page_wrap").fadeIn(160);
                             //overall_layer.visible = false;
                             
@@ -1147,6 +1173,8 @@ function onMouseDown(event) {
                             
                             
                             console.log("scr1_but_save_icon");
+                            
+                          }
                         }
                         
 		}
@@ -1587,9 +1615,19 @@ function onMouseDrag(event) {
 		console.log("Me Hit!");
 	} else if (curr_view == "zoomed") {
             //alert(this.type);
-		path_com.position += event.delta;
-		def_path.position += event.delta;
-                user_image.position += event.delta;
+                main_layer.position.x += event.delta.x;
+                main_layer.position.y += event.delta.y;
+                
+                change_x_pos_diff += event.delta.x;
+                change_y_pos_diff += event.delta.y;
+                
+                console.log(change_x_pos_diff);
+                //console.log(main_layer.position.x);
+                //console.log(mid_area_path.segments[0].point.x);
+                
+		//path_com.position += event.delta;
+		//def_path.position += event.delta;
+                //user_image.position += event.delta;
 	}
 	
 
