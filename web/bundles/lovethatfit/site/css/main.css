@@ -5611,13 +5611,7 @@ background-color:#fff;
     position: absolute;
     top: 43px;
     width: 364px;
-    z-index: -2;
-    
-}
-@media screen and (-webkit-min-device-pixel-ratio:0)
-{ 
-
-.fitting_frame {  box-shadow: 0 0 13px -5px rgba(0, 0, 0, 0.69) inset; 
+    z-index: -2;    
 }
 
 .color_wrapper{
@@ -5632,6 +5626,13 @@ background-color:#fff;
     margin-top: 28px;
 }
 
+
 #cloth_sizes{
-    width:100px;
+    width: 100px!important;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{ 
+
+.fitting_frame {  box-shadow: 0 0 13px -5px rgba(0, 0, 0, 0.69) inset; 
 }

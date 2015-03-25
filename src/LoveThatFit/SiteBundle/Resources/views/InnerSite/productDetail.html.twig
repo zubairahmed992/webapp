@@ -97,7 +97,7 @@ function lovedItems(item_id)
                         <h3 class="selected">{{product.name}}</h3>
                         <div style="clear:both;"></div>
                         <div class="featured_sizes">                            
-                  <select name="cloth_sizes" id="cloth_sizes"   class="cloth_sizes" onchange="select_size(this,{{product.id}},{{productColor.id}})">
+                  <select name="cloth_sizes" id="cloth_sizes" class="cloth_sizes" onchange="select_size(this,{{product.id}},{{productColor.id}})">
                                 {%for key, pcsa in productColor.getSizeTitleArray%}                                    
                                 {% if(productSize.id==key)   %}
                                 <option value='{{key}}' selected="">{{pcsa}}</option>
