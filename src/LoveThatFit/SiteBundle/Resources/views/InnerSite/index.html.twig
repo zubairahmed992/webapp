@@ -230,46 +230,26 @@ $(document).ready(function(){
           $.post($('#upload_canvas_path').text(), {
                       data : dataURL,                      
               }, function(data) { 
-                                
                   $('#twt_post_img_url').val(data); 
-                  
-                            
+                    if(data.length !== 0){
+                        var strchar = data.substr(data.length - 17);  
+                        //alert(strchar);
+                        var str_link = '{{app.request.getSchemeAndHttpHost() ~ path('twitter_meta_tags_page',{'id':app.user.id, 'file_name':"twitter_share_file_name"})}}';                
+                        var str_tweet_link = str_link.replace('twitter_share_file_name',strchar); 
+                        //$('#temp').val(str_tweet_link);
+                        $('#temp').val(str_tweet_link); 
+                          window.open("https://twitter.com/intent/tweet?text="+str_tweet_link);
+                    } 
                 
                });  
                
-            var ss = $('#twt_post_img_url').val();      
-                
-             if(ss!= '')
-             {
-                 var strchar = ss.substr(ss.length - 17);                 
-                 var str_link = '{{app.request.getSchemeAndHttpHost() ~ path('twitter_meta_tags_page',{'id':app.user.id, 'file_name':"twitter_share_file_name"})}}';                
-                 var str_tweet_link = str_link.replace('twitter_share_file_name',strchar); 
-                 //$('#temp').val(str_tweet_link);
-                 $('#temp').val(str_tweet_link); 
-                 
-                
-             } 
+           
     });         
    }    
     
     $("#tweeter_link_bg").click(function(){ 
-        
-      
-        
       share_upload_tw ();
-      
-      var abc = $('#temp').val();     
-      
-      window.open("https://twitter.com/intent/tweet?text="+abc);
       return false;
-      
-   
-      
-      
-     
-    
-      
-      
     });
   
 $(".a_color_id").live("hover",function () {     
