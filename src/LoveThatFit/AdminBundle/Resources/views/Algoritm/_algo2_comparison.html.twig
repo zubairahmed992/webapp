@@ -6,14 +6,14 @@
     <div  style="color:red"> {{data.message}}</div>
 {% endif %}
     
-{% if data.recommendation is defined %}
+{% if (data.recommendation is defined) and  (data.recommendation is not null) %}
     <b>Recommendation</b> 
+    {{data.recommendation.description}}
         {# for size, size_specs in data.recommendation %}     
             {% if size_specs is not iterable %}
                 &nbsp;|&nbsp;{{size}} : {{size_specs}}
             {% endif %}
         {% endfor #}
-    {{data.recommendation.description}}
 {% endif %}
     
 {% if data.feedback is defined %}

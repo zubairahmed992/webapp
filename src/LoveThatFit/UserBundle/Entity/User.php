@@ -211,7 +211,13 @@ class User implements UserInterface, \Serializable {
      */
     private $image;
     
-    
+     /**
+     * @var string $image_device_type
+     *
+     * @ORM\Column(name="image_device_type", type="string", length=255, nullable=true)
+     * )
+     */
+    private $image_device_type;
     
     /**
      * @var string $image_updated_at
@@ -487,6 +493,27 @@ class User implements UserInterface, \Serializable {
         return $this->image;
     }
 
+        /**
+     * Set image_device_type
+     *
+     * @param string $image_device_type
+     * @return User
+     */
+    public function setImageDeviceType($image_device_type) {
+        $this->image_device_type = $image_device_type;
+
+        return $this;
+    }
+
+    /**
+     * Get image_device_type
+     *
+     * @return string 
+     */
+    public function getImageDeviceType() {
+        return $this->image_device_type;
+    }
+    
     /**
      * Set avatar
      * @param string $avatar

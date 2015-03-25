@@ -614,7 +614,7 @@ public function stepFourTimeSpentAction(Request $request){
             throw $this->createNotFoundException('Unable to find User.');
         }
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
-        $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
+        $this->get('user.helper.user')->updateImageDeviceType($entity);
         return new Response($response);
         
     }

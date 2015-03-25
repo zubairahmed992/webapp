@@ -76,7 +76,12 @@ class UserHelper {
         $user->setImageUpdatedAt(new \DateTime('now'));            
         $this->saveUser($user);
     }
-    
+    //------------------------------------------------------------
+    public function updateImageDeviceType(User $user, $deviceType=null) {
+        $user->setImageDeviceType($deviceType);          
+        $user->setImageUpdatedAt(new \DateTime('now'));            
+        $this->saveUser($user);
+    }
 //----------------------------------------------------------
     public function updateProfile(User $user) {
         $user->uploadAvatar();

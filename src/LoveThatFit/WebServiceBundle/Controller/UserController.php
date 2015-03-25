@@ -324,6 +324,7 @@ public function userProfileAction()
             }
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $abs_path)) {
                 $this->get('webservice.helper.user')->setMarkingDeviceType($user, $deviceType, $heightPerInch);
+                $user->setImageDeviceType($deviceType);
                 $this->get('webservice.helper.user')->saveUser($user);
                 $userinfo = array();
                 
