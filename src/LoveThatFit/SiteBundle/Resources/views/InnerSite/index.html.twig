@@ -12,7 +12,12 @@
 
 
 
+
 {% block product_slider %}
+
+
+
+
 {% if (app.user.measurement)%}
 <input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
 <input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
@@ -22,9 +27,10 @@
 <input id="remove_top_prod_id" type="hidden" value="" />
 <input id="remove_bottom_prod_id" type="hidden" value="" />
 <input id="remove_dress_prod_id" type="hidden" value="" />
+<input id="account_type" type="hidden" value="{{app.user.imageDeviceType}}" />
 {% endif %}
 
-
+<div id="container_{{app.user.imageDeviceType}}">
 
 
  <img style="display: none;" id='user_image' src="{{asset(app.user.webpath)}}"/>
@@ -240,16 +246,20 @@ $(document).ready(function(){
                         $('#temp').val(str_tweet_link); 
                         
                         
-                        var w = 500;
+                        
+                        //  window.open("https://twitter.com/intent/tweet?text="+str_tweet_link);
+                        
+                         var w = 500;
                         var h = 300;
                         var left = Number((screen.width/2)-(w/2));
                         var tops = Number((screen.height/2)-(h/2));
                         
                           window.open("https://twitter.com/intent/tweet?text="+str_tweet_link,"popupWindow", "width="+w+",height="+h+",scrollbars=no");
-                   
-                      
-    
-    } 
+                          
+                          
+                          
+                          
+                    } 
                 
                });  
                
@@ -478,16 +488,19 @@ function remove_prod_state(remove_prod_item_id) {
                
                <!--/#products_details--></div>
          <div id="fitting_tab">
+             
+             
+             
                     <!--path('fitting_room_image_edit)-->
                     <!--path('registration_step_image_edit')-->
                     
                     {%if (user_device) %}
-                        <a href="{{ path('registration_step_image_edit', { 'edit_type': 'device' })}}">Device Photo</a>
+                        <a class="edit_img" href="{{ path('registration_step_image_edit', { 'edit_type': 'device' })}}">Device Photo</a>
                     {%endif%}
-                    <a href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">
+                        <a class="upload_img" href="{{ path('registration_step_image_edit', { 'edit_type': 'upload_new' })}}">
                    Upload Image
                     </a>
-                    <a href="{{ path('registration_step_image_edit', { 'edit_type': 'edit_shape' }) }}">
+                    <a class="upload_img" href="{{ path('registration_step_image_edit', { 'edit_type': 'edit_shape' }) }}">
                       Edit Shape
                     </a>
                       
@@ -500,7 +513,7 @@ function remove_prod_state(remove_prod_item_id) {
                         
                        
                           <a href="#" id="fb_share_btn" title="Facebook"></a>
-                          <a href="javascript: openwindow()" id="tweeter_link_bg" class="example1demo" title="Twitter"></a>
+                          <a id="tweeter_link_bg" class="example1demo" title="Twitter"></a>
                           <a href="#" id="pint_share_btn" title="Pinterest"></a>
                           <a href="#" id="inst_share_btn" title="Instagram"></a>
                           <a href="#" id="email_share_btn" title="Email"></a>
@@ -521,6 +534,7 @@ function remove_prod_state(remove_prod_item_id) {
                     <!--<a href="{{path('registration_device_view') }}">Device View</a>-->
                 </div>
                <div class="fitting_frame">  
+                   <div id="iphone_msg">To edit you photo please log on from your mobile device.</div>
                     
             <div class="int_fitting_room">
               
@@ -534,7 +548,7 @@ function remove_prod_state(remove_prod_item_id) {
                 {% if app.user.image != null %}
                 <input id="hdn_dm_status" type="hidden" value="user" />
                 <div id="user_dummy_img_hldr">
-                    <img id="fr_user_image" class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123" width="364" height="505">
+                    <img id="fr_user_image" class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}?123">
                 </div>
                 {%else%}
                 <input id="hdn_dm_status" type="hidden" value="default" />
@@ -721,9 +735,32 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                         cache: false,
                         success: function(curr_prod_alerts){
                            $(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).html(curr_prod_alerts);
-
+                            
                            //-------- Quick fix pixcel adjustmanets for some products
                            px_variance=$(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).find('.pixel_variance').attr('value');
+                         if($("#account_type").attr("value") == "iphone5"){
+                             if(curr_prod_type=='top'){
+                                 
+                                 var top_value_initial = parseInt($("#hdn_prod_top_pos").attr("value"));
+                                 var top_value_initial = top_value_initial / 6.891;
+                                 var top_value_init_final = top_value_initial * 6;
+                                 
+                                if(px_variance==0){
+                                    $("#top_dropable").css("top", top_value_init_final  - 25 + "px", "left","20px");
+                                }else{
+                                    $("#top_dropable").css("top", (top_value_init_final - 25 + parseInt(px_variance)) + "px", "left","20px");
+                                }
+                           }
+                           if(curr_prod_type=='dress'){
+                               if(px_variance==0){
+                                   $("#full_dropable").css("top", top_value_init_final - 25 + "px");
+                                //console.log('1');                      
+                                }else{
+                                                        $("#full_dropable").css("top", (top_value_init_final - 25 + parseInt(px_variance)) + "px");                                        
+                                //console.log('2');                            
+                                }
+                           }
+                         }else{
                            if(curr_prod_type=='top'){
                                 if(px_variance==0){
                                     $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px", "left","20px");
@@ -740,6 +777,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
             //console.log('2');                            
             }
                            }
+                       }
                            refreshdiv();
                         }
                     });  
@@ -878,8 +916,7 @@ function set_short_slider_buttons(){
 function set_droppables(){
     
     
-    
-  if($("#hdn_dm_status").attr("value") != "default"){
+  if($("#hdn_dm_status").attr("value") != "default" && $("#account_type").attr("value") == ""){
     var top_pos_drop = parseInt($("#hdn_prod_top_pos").attr("value"));    
     console.log("Top value = " + top_pos_drop);    
     //top_pos_drop = top_pos_drop * 6;    
@@ -900,12 +937,18 @@ function set_droppables(){
     var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");    
     //dress_pos_drop = dress_pos_drop * 6;    
     $("#full_dropable").css({top: parseInt($("#hdn_prod_top_pos").attr("value")) + "px"});
+    
   }
   else {
+      
+      if($("#account_type").attr("value") == "iphone5"){
+      }
+      else{
       var user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
-    $("#top_dropable").css("top",((21.44*user_height)/100)-24);
-    $("#bottom_dropable").css("top", ((37*user_height)/100));
-    $("#full_dropable").css("top", ((21.44*user_height)/100)-24);
+        $("#top_dropable").css("top",((21.44*user_height)/100)-24);
+        $("#bottom_dropable").css("top", ((37*user_height)/100));
+        $("#full_dropable").css("top", ((21.44*user_height)/100)-24);
+       }
   }
 }
 
@@ -1396,4 +1439,6 @@ function get_compare_list(compare_item_id){
 }
 
 </script>   
+<div class="clr_bth"></div>
+</div>
 {% endblock %} 
