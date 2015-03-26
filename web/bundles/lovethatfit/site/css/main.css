@@ -3982,7 +3982,7 @@ width: 160px;
     padding: 8px 0 8px 26px;
     color: #406db5;
     display: none;
-    background: url("../images/but_cls_fr_bg.png") 0 0 no-repeat #fff;
+    background: url("../images/but_cls_fr_bg.png") 0 0 no-repeat;
     z-index: 5000;
 }
 
@@ -5635,4 +5635,29 @@ background-color:#fff;
 { 
 
 .fitting_frame {  box-shadow: 0 0 13px -5px rgba(0, 0, 0, 0.69) inset; 
+}
+}
+/*//////////////////////////////////////////////////////////////////*/
+#container_iphone5 #iphone_msg {
+    font-size: 10px;
+    color: #666;
+    position: absolute;
+    top:2px;
+    left:45px;
+}
+#container_iphone5 #fitting_tab a.edit_img,
+#container_iphone5 #fitting_tab a.upload_img{
+    display:none;
+}
+#container_iphone5 #fr_user_image {
+    height:492px;
+}
+#container_iphone5 #user_dummy_img_hldr {
+    text-align: center;
+}
+#container_iphone5 .fitting_frame {
+    top:-10px;
+}
+#container_iphone5 .fitting_frame {
+    height: 530px;
 }
