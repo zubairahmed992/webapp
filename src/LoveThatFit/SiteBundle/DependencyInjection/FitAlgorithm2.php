@@ -65,7 +65,7 @@ class FitAlgorithm2 {
             $fb[$size_identifier]['low_fx'] =0;
             $fb[$size_identifier]['avg_fx'] =0;
             $fb[$size_identifier]['status'] =6;
-            
+            $fb[$size_identifier]['variance']=0;
             if (is_array($size_specs)) {
              foreach($fpwp as $pfp_key=>$pfp_value){
                     if (array_key_exists($pfp_key, $size_specs)) {
@@ -76,6 +76,7 @@ class FitAlgorithm2 {
                         $fb[$size_identifier]['high_fx'] =$fb[$size_identifier]['high_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['high_fx'];
                         $fb[$size_identifier]['low_fx'] =$fb[$size_identifier]['low_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['low_fx'];
                         $fb[$size_identifier]['avg_fx'] =$fb[$size_identifier]['avg_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['avg_fx'];
+                        $fb[$size_identifier]['variance']=$fb[$size_identifier]['variance']+$this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key]['variance'], $fb[$size_identifier]['variance']);
                         
                         if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
                             $fb[$size_identifier]['status'] =$this->status['beyond_max'];
@@ -93,6 +94,9 @@ class FitAlgorithm2 {
         }
         $sorted_array=$this->array_sort($fb);
         $recommendation=$this->get_recommended_size($fb);
+        if($recommendation==null){
+            $recommendation=$this->get_recommended_loose_size($fb);
+        }
         return array('feedback' => $sorted_array, 'recommendation'=>  $recommendation);
         #return array('feedback' => $this->array_sort($fb));
     }
@@ -102,10 +106,25 @@ class FitAlgorithm2 {
         $rec_size=null;
         $fit_greatest_index=0;
         foreach ($sizes as $size) {
-            if ($fit_greatest_index<$size['fit_index']){
-                $fit_greatest_index=$size['fit_index'];
+                if ($fit_greatest_index<$size['fit_index']){
+                    $fit_greatest_index=$size['fit_index'];
+                    $rec_size=$size;
+                }            
+        }
+        return $rec_size;
+    }
+     ###################################################
+    
+    private function get_recommended_loose_size($sizes){
+        $rec_size=null;
+        $lowest_variance=999;
+        foreach ($sizes as $size) {            
+           if($size['status']!=$this->status['beyond_max']){ 
+            if ($lowest_variance>$size['variance']){
+                $lowest_variance=$size['variance'];
                 $rec_size=$size;
             }
+           }
         }
         return $rec_size;
     }
@@ -151,7 +170,8 @@ class FitAlgorithm2 {
         $message_array=$this->calculate_fitindex($fp_measurements);
         $fp_measurements['status'] = $message_array['status'];
         $fp_measurements['message'] = $message_array['message'];                
-        $fp_measurements['body_fx'] = $message_array['body_fx'];        
+        $fp_measurements['body_fx'] = $message_array['body_fx'];   
+        $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);
         return $fp_measurements;
     }
 #---------------------------------------------------    
@@ -328,5 +348,33 @@ private function calculate_fitindex($fp_specs){
         'anywhere_below_max' => 6,
     );
     
-  
+  #-------------------------------------------------------------
+  #----------------------------------------------------------
+
+    private function calculate_variance($fp_mix) {
+        $body = $fp_mix['body_measurement'];
+        $item = $fp_mix['mid_low_high'];
+        $priority =  $fp_mix['fit_priority'];
+        if ($item > 0 && $body > 0) {
+            $diff = $item - $body;
+            if ($diff == 0) {
+                $v = 0;                
+            } else {
+                $diff_percent = ($diff / $item) * 100; # how much (in %age of item measurement) the difference is?
+                $v = number_format(($priority * $diff_percent) / 100, 2, '.', '');
+            }
+            return $v;
+        }else
+            return;
+    }
+ #----------------------------------------------------------
+    private function calculate_accumulated_variance($variance, $accumulated) {        
+        if($variance<0){
+            $accumulated = $accumulated + ($variance * (-1));
+        }elseif($variance>0){
+            $accumulated = $accumulated + $variance;
+        }        
+        return $accumulated;
+    }  
+    
 }

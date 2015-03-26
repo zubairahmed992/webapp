@@ -52,6 +52,7 @@
                                         <td style="background-color:#A9F5D0">MAX Calc</td>
                                         <td style="background-color:#A9F5D0">MAX Calc FX</td>
                                         <td>message</td>
+                                        <td>variance</td>
                                     </tr>
                                 </b>
 
@@ -82,6 +83,7 @@
                                         <td>{{fp_specs.message}}
                                         ({{fp_specs.status}})
                                         </td>
+                                        <td>{{fp_specs.variance}}</td>
                                     </tr>
 
                             {% endfor %}
@@ -103,8 +105,8 @@
                                         <td></td>       
                                         <td>{{size_specs.max_fx}}</td>
                                         <td></td>
-                                        <td>({{size_specs.status}})</td>                                        
-                                        <td></td>                                                                        
+                                        <td>({{size_specs.status}})</td>                                                                                
+                                        <td>{{size_specs.variance}}</td>                
                                         
                                     </tr>
                             {% if size_specs.hem_advice is defined %}
