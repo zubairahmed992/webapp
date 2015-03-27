@@ -1532,6 +1532,7 @@ function onMouseDrag(event) {
         }else if(segment) {
         
         function get_index_num(){
+            for(var i = 0; i < path.segments.length + 1; i++) {
                 if(segment == path.segments[i]){
                     return i;
                 }
