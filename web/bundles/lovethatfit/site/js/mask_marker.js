@@ -1532,7 +1532,6 @@ function onMouseDrag(event) {
         }else if(segment) {
         
         function get_index_num(){
-            for(var i = 0; i < path.segments.length; i++) {
                 if(segment == path.segments[i]){
                     return i;
                 }
@@ -1655,11 +1654,15 @@ function onMouseDrag(event) {
 		console.log("Me Hit!");
 	} else if (curr_view == "zoomed") {
             //alert(this.type);
-                main_layer.position.x += event.delta.x;
-                main_layer.position.y += event.delta.y;
+                if(change_x_pos_diff + event.delta.x >= -160 && change_x_pos_diff + event.delta.x <= 160){
+                    main_layer.position.x += event.delta.x;
+                    change_x_pos_diff += event.delta.x;
+                }
+                if(change_y_pos_diff + event.delta.y >= -50 && change_y_pos_diff + event.delta.y <= 550){
+                    main_layer.position.y += event.delta.y;
+                    change_y_pos_diff += event.delta.y;
+                }
                 
-                change_x_pos_diff += event.delta.x;
-                change_y_pos_diff += event.delta.y;
                 
                 console.log(change_x_pos_diff);
                 //console.log(main_layer.position.x);
