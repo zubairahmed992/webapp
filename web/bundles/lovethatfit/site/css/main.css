@@ -5651,10 +5651,11 @@ background-color:#fff;
 }
 #container_iphone5 #iphone_msg {
     font-size: 10px;
-    color: #666;
+    color: #fff;
     position: absolute;
-    top:2px;
-    left:45px;
+   padding:3px 0px;
+    width:100%;
+    text-align: center;
     display: block;
 }
 #container_iphone5 #fitting_tab a.edit_img,
