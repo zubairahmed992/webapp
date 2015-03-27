@@ -5638,12 +5638,24 @@ background-color:#fff;
 }
 }
 /*//////////////////////////////////////////////////////////////////*/
+#iphone_msg {
+    display: none;
+    font-size: 10px;
+    color: #fff;
+    position: absolute;
+    padding:3px 0px;
+   width:100%;
+  text-align: center;
+    background: #416fb6;
+    
+}
 #container_iphone5 #iphone_msg {
     font-size: 10px;
     color: #666;
     position: absolute;
     top:2px;
     left:45px;
+    display: block;
 }
 #container_iphone5 #fitting_tab a.edit_img,
 #container_iphone5 #fitting_tab a.upload_img{
