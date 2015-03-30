@@ -456,7 +456,6 @@ path_com = new CompoundPath({
                 mid_area_path
     ],
     //fillColor: '#666666',
-    selected: false,
     //strokeWidth: 1,
     //strokeColor: '#ffcc00',
     fillColor: '#666666'
@@ -1222,7 +1221,9 @@ function onMouseDown(event) {
               console.log("Its me lala");
           }         
        
-                
+         if(curr_view == "zoomed"){
+       mid_area_path.selected = true;
+   }       
                 
 }
 
@@ -1435,7 +1436,9 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
 
 function onMouseDrag(event) {
     
-    
+    if(curr_view == "zoomed"){
+       mid_area_path.selected = true;
+   }
     
     
     
