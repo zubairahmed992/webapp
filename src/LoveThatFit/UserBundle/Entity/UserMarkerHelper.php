@@ -206,7 +206,7 @@ class UserMarkerHelper {
         }
          $bodyShapes = $this->getBodyShapeTitle($mask_type);
 
-        if (in_array($user->getMeasurement()->getBodyShape(),$bodyShapes)) {
+        if (in_array(strtolower($user->getMeasurement()->getBodyShape()),$bodyShapes)) {
             return $mask_type[$user->getMeasurement()->getBodyShape()];
         } else {
             if ($user->getGender() == "f") {

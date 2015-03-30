@@ -1294,7 +1294,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setBodyShape($bodyShape)
     {
-        $this->body_shape = $bodyShape;
+        $this->body_shape = strtolower($bodyShape);
     
         return $this;
     }
@@ -1317,7 +1317,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
     public function setBodyTypes($bodyTypes)
     {
-        $this->body_types = $bodyTypes;
+        $this->body_types = strtolower($bodyTypes);
     
         return $this;
     }
