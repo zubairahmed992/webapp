@@ -974,10 +974,10 @@ function onMouseDown(event) {
                             
                         }
                         else if(hitResult.item == but_rotate_left){
-                            user_image.rotate(-0.5); 
+                            user_image.rotate(-0.1); 
                         }
                         else if(hitResult.item == but_rotate_right){
-                            user_image.rotate(0.5);
+                            user_image.rotate(0.1);
                         }
                         else if(curr_crop == "normal" && hitResult.item == but_crop_icon){
                             curr_crop = "checked";
