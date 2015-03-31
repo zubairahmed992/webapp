@@ -76,7 +76,7 @@ class FitAlgorithm2 {
                         $fb[$size_identifier]['high_fx'] =$fb[$size_identifier]['high_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['high_fx'];
                         $fb[$size_identifier]['low_fx'] =$fb[$size_identifier]['low_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['low_fx'];
                         $fb[$size_identifier]['avg_fx'] =$fb[$size_identifier]['avg_fx']+$fb[$size_identifier]['fit_points'][$pfp_key]['avg_fx'];
-                        $fb[$size_identifier]['variance']=$fb[$size_identifier]['variance']+$this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key]['variance'], $fb[$size_identifier]['variance']);
+                        $fb[$size_identifier]['variance']=$this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key]['variance'], $fb[$size_identifier]['variance']);
                         
                         if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
                             $fb[$size_identifier]['status'] =$this->status['beyond_max'];
@@ -170,6 +170,7 @@ class FitAlgorithm2 {
         $message_array=$this->calculate_fitindex($fp_measurements);
         $fp_measurements['status'] = $message_array['status'];
         $fp_measurements['message'] = $message_array['message'];                
+        $fp_measurements['fitting_alert'] = $this->get_fitting_alert_message($message_array['status']);                
         $fp_measurements['body_fx'] = $message_array['body_fx'];   
         $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);
         return $fp_measurements;
@@ -377,4 +378,125 @@ private function calculate_fitindex($fp_specs){
         return $accumulated;
     }  
     
+        #----------------------------------------------------------       
+    private function get_fitting_alert_message($id) {
+        
+        switch ($id) {
+            case $this->status['fit_point_dose_not_match'] :
+                return 'Fitting point dose not exists';
+                break;
+            case $this->status['body_measurement_not_available'] :
+                return 'User measurement not provided';
+                break;
+            case $this->status['product_measurement_not_available'] :
+                return 'Product measurement missing';
+                break;
+            case $this->status['beyond_max'] :
+                return 'Too Small';
+                break;
+            case $this->status['at_max'] :
+                return 'tight fitting';
+                break;
+            case $this->status['between_max_high'] :
+                return 'close fitting';
+                break;
+            case $this->status['at_high'] :
+                return 'close fitting';
+                break;
+            case $this->status['between_high_mid'] :
+                return 'Perfect Fit';
+                break;
+            case $this->status['at_mid'] :
+                return 'Perfect Fit';
+                break;
+            case $this->status['between_mid_low'] :
+                return 'Perfect Fit';
+                break;
+            case $this->status['at_low'] :
+                return 'Loose';
+                break;
+            case $this->status['between_low_min'] :
+                return 'Loose';
+                break;
+            case $this->status['at_min'] :
+                return 'Loose';
+                break;
+            case $this->status['below_min'] :
+                return 'Extra Loose';
+                break;
+            case $this->status['anywhere_below_max'] :
+                return 'Tight at some points & loose at others';
+                break;
+        }        
+    }
+     #----------------------------------------------------------
+    private function get_accumulated_status($accumulated, $current) {
+        #accumulated is perfect fit -----------------------
+        if ($accumulated == $this->status['between_high_mid'] ||
+                $accumulated == $this->status['at_mid'] ||
+                    $accumulated == $this->status['between_mid_low'])
+            return $current;
+        
+        #current is perfect fit -----------------------
+        if ($current == $this->status['between_high_mid'] ||
+                $current == $this->status['at_mid'] ||
+                    $current == $this->status['between_mid_low'])
+            return $accumulated;
+        # body not available in either ---------------------------------
+        if ($accumulated == $this->status['body_measurement_not_available'] ||
+                $accumulated == $this->status['product_measurement_not_available']) 
+            return $accumulated;
+        # product not available in either ---------------------------------
+        if ($current == $this->status['body_measurement_not_available'] ||
+                $current == $this->status['product_measurement_not_available']) 
+            return $current;
+        # accumulated beyond Max ---------------------------------
+        if ($accumulated == $this->status['beyond_max'])
+            return $accumulated;
+        # current beyond Max ---------------------------------
+        if ($current == $this->status['beyond_max'])
+            return $current;
+
+        if ($this->is_loose_status($accumulated)) { # accumulated loose
+            if ($this->is_loose_status($current)) {
+                return $accumulated >= $current ? $accumulated : $current; # greater will be returned                 
+            } else {# Remaining b/w 1st & 2nd half of High-Max
+                return $this->status['anywhere_below_max'];
+            }
+        }
+        if ($this->is_loose_tight_status($accumulated)) { #accumulated tight or loose
+            if ($accumulated == $this->status['first_half_high_max'] ||
+                    $accumulated == $this->status['second_half_high_max']) {
+                if ($this->is_loose_status($current)) {
+                    return $this->status['anywhere_below_max'];
+                } else { # current Remaining b/w 1st & 2nd half of High-Max
+                    return $accumulated <= $current ? $accumulated : $current; # greater will be returned                 
+                }
+            } else { #accumulated=anywhere_below_max
+                return $this->status['anywhere_below_max'];
+            }
+        }
+    } 
+    
+    #----------------------------------------------------------
+    private function is_loose_status($status) {
+        if ($status == $this->status['below_low'] ||
+                $status == $this->status['below_min']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    #----------------------------------------------------------
+
+    private function is_loose_tight_status($status) {
+        if ($status == $this->status['first_half_high_max'] ||
+                $status == $this->status['second_half_high_max'] ||
+                $status == $this->status['anywhere_below_max']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
