@@ -1039,6 +1039,18 @@ class ProductController extends Controller {
 #-----------------------------------------------------------------------------
 
   #---------------Multiple Image Uploading --------------------------#
+public function _multplieImageUploadAction(Request $request){   
+   foreach ($_FILES["file"]["error"] as $key => $error){
+     if ($error == UPLOAD_ERR_OK){	  
+          $file_name = $_FILES["file"]["name"][$key]; // avoid same file name collision
+          $extracted_detail[$file_name] = $this->get('admin.helper.product')->breakFileName($file_name,$_POST['product_id']);          
+          #$extracted_detail[$file_name] = 'hooaa!';          
+       }     
+  }    
+  return new response(json_encode($extracted_detail));
+}
+#-------------------------------------------------------------------------------
+
 public function multplieImageUploadAction(Request $request){
    // return new response(json_encode($this->get('admin.helper.product')->findItemMultipleImpagesUploading(true,true)));
    $em = $this->getDoctrine()->getManager();

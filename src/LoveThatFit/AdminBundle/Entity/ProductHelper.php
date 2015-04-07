@@ -1091,7 +1091,31 @@ public function productDetailColorAdd($entity){
             }
            return $data;
        }
-             
+
+public function breakFileName($request_array,$product_id){
+    $_exploded = explode("_",$request_array);    
+    $a=array();
+    $type=Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif'); //store all the image extension types in array
+
+    if (count($_exploded)==3){
+        # image file name validation ----------------------
+       $last_bits = explode(".",$_exploded[2]);       
+       if(count($last_bits)==2 && !(in_array($last_bits[1],$type))){
+           $a['message'] = 'Invalid Format!';
+       }
+       
+       $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "Regular" : $_exploded[0];    
+       $a['file_name'] = 'temp.' . $last_bits[1];
+       $a['color'] = $last_bits[0];
+       $a['size'] = $_exploded[1];
+       $a['message'] = 'Done';
+    }else{
+       $a['message'] = 'Invalid Format!';
+     }
+        
+    return $a;
+}       
+       
               
   #------------------------Find Item for Multiple Images Uploading--------------#
  public function findItemMultipleImpagesUploading($request_array,$product_id){
