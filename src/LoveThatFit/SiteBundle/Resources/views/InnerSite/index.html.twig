@@ -667,6 +667,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
             details_base_url = $('#ajax_product_base_url').text();            
             details_base_url = details_base_url + new_prod_id + "/" + new_color_id + "/" + new_size_id;
           }
+          alert(details_base_url);
             $.ajax({
                 url: details_base_url,
                 cache: false,
@@ -729,6 +730,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     }
                     set_select_color(curr_prod_type);
                     
+                    alert(curr_prod_feedback);
                     
                      $.ajax({
                         url: curr_prod_feedback,

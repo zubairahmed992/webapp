@@ -142,11 +142,11 @@ function chk_dress_applied_loaded(prod_type_applied){
     </div> 
       <div class="clr"></div>
      
-             <div id="hdn_views_hldr" class="hdn_views_hldr select_views"  style="display:none;" >
+             <div id="hdn_views_hldr" class="hdn_views_hldr select_views"  style="display:block;" >
                     <label class="lbl_views">Views:</label>
                     {%for key, pcsa in productColor.getProductColorViews%}  
-                            <span id="color_id_view" style="display:none;">{{pcsa.id}}</span>  
-                            <span id="item_url_view" style="display:none;">{{pcsa.id}}</span>  
+                            <span id="color_id_view" style="display:block;">{{pcsa.id}}</span>  
+                            <span id="item_url_view" style="display:block;">{{pcsa.id}}</span>  
                         <a href="#"><img width="16" height="16" src="{{asset(pcsa.WebPath)}}" >
                         </a>
                     {%endfor%}

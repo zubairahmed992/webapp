@@ -926,7 +926,7 @@ function onMouseDown(event) {
                            main_layer.scale(2,2);
                            mid_area_path.selected = true;
                            curr_view = "zoomed";
-                           hitOptions.fill = true; 
+                           //hitOptions.fill = true; 
                            
                            but_zoom_in.position.x = -500;
                            but_zoom_out.position.x = 26;
@@ -1356,6 +1356,8 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                     //alert(mid_area_path.segments[seg_srt+i].point.x +" : " + def_path.segments[seg_srt+i].point.x);
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    mid_area_path.segments[seg_srt+i].handleIn = set_ref_part_obj.segments[i].handleIn;
+                    mid_area_path.segments[seg_srt+i].handleOut = set_ref_part_obj.segments[i].handleOut;
                     
                     //def_path.segments[seg_srt+i].point.x = mid_area_path.segments[seg_srt+i].point.x - 1000;
                     //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
@@ -1369,6 +1371,8 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
+                    mid_area_path.segments[seg_srt+i].handleIn = set_ref_part_obj.segments[i].handleIn;
+                    mid_area_path.segments[seg_srt+i].handleOut = set_ref_part_obj.segments[i].handleOut;
                     //def_path.segments[seg_srt+i].point.x = set_ref_part_obj.segments[i].point.x - 500;
                     //def_path.segments[seg_srt+i].point.y = set_ref_part_obj.segments[i].point.y;
                     
@@ -1628,17 +1632,7 @@ function onMouseDrag(event) {
                
         
         
-        var export_path_full = path.exportSVG({asString: true});
-        export_path_full.toString();
-        var export_path_remove_start = export_path_full.substr(44);
-        
-        var export_path_final = export_path_remove_start.substr(0, export_path_remove_start.length - 15);
-        
-        //$("#default_user_path").html(export_path_final);
-        
-        //alert(export_path_final);
-        
-        $("#img_path_paper").attr("value", export_path_final);
+       
        
         
        
