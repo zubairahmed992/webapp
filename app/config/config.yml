@@ -22,6 +22,13 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
+        app_detail: 
+            name:   'SelfieStyler'
+            contact:
+                email: 'info@SelfieStyler.com'
+                non_us_number: '(646) 926-0079'
+                us_number: '(646) 926-0079'
+                        
         social_media:
             facebook:
               app_id: 314138425462684

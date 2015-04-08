@@ -193,12 +193,12 @@ body {
 	position:relative;
 }
 .left_column .logo {
-    padding: 40px 0px 20px 0px;
+    padding: 28px 0px 20px 10px;
     text-align: center;
 }
 
 .left_column2 .logo {
-    padding: 40px 0px 20px 0px;
+    padding: 28px 0px 20px 10px;
     text-align: center;
 }
 .footer {
@@ -585,7 +585,7 @@ header.reg .strip_rgt {
 
 .reg_blk h2 {
 	font-family: 'century gothic';
-	font-size:26px;
+	font-size:24px;
 	color:#444444;
 	text-align:center;
 	margin-bottom:0;
@@ -665,10 +665,10 @@ header.reg .strip_rgt {
 .reg_blk select {
 	width:68px;
 }
-.reg_blk p {
-    margin-bottom: 15px;
-    font-size: 14px;
-    color:#A2A2A2;
+.reg_blk p {   
+    margin-bottom: 16px;
+    font-size: 16px;
+    color:#888;
 }
 /*-- Step 1 --*/
 .step_1 {
@@ -678,6 +678,7 @@ header.reg .strip_rgt {
 .step_1 h2 {
    padding-bottom: 6px;
    color:#535352;
+   font-weight: bold;
 }
 .step_1 .btm_buttons {
     bottom:-36px;
@@ -1949,6 +1950,7 @@ margin:0 auto;
    background:url(../images/about_header.png) center top no-repeat; 
    height: 239px;
    border-bottom: 8px solid #000000;
+   margin-left: 30px;
  
 }
 
@@ -1956,6 +1958,7 @@ margin:0 auto;
    background:url(../images/faqs_header.png) center top no-repeat; 
    height: 239px;
    border-bottom: 8px solid #000000;
+   margin-left: 30px;
  
 }
 
@@ -1963,6 +1966,7 @@ margin:0 auto;
    background:url(../images/contact_header.png) center top no-repeat; 
    height: 239px;
    border-bottom: 8px solid #000000;  
+   margin-left: 30px;
     
 }
 
@@ -5667,4 +5671,11 @@ background-color:#fff;
 }
 #container_iphone5 .fitting_frame {
     height: 530px;
+}
+
+#hd_image_whatwedo{
+   background:url(../images/what_we_do_header.png) center top no-repeat; 
+   height: 239px;
+   border-bottom: 8px solid #000000;
+   margin-left: 30px;
 }

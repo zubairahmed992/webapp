@@ -25,7 +25,7 @@ public function contactUsAction() {
         return $this->render('LoveThatFitSiteBundle:Home:contact_us.html.twig');
 }   
 public function whatWeDoAction(){
-    return $this->render('LoveThatFitSiteBundle:Home:_commingSoon.html.twig');
+    return $this->render('LoveThatFitSiteBundle:Home:what_we_do.html.twig');
 } 
 public function commingSoonAction(){
     return $this->render('LoveThatFitSiteBundle:Home:_commingSoon.html.twig');

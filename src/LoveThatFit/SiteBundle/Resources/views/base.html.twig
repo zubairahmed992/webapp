@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Love That Fit</title>
+        <title>{{app_detail.name}}</title>
         <link href="{{ asset('bundles/lovethatfit/site/css/main.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('bundles/lovethatfit/site/css/main_1.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('bundles/lovethatfit/site/css/product_detail_css.css') }}" rel="stylesheet" type="text/css" />
@@ -37,6 +37,9 @@ $(document).ready(function($) {
 });
  
 </script>
+
+<link rel="shortcut icon" href="{{ asset('bundles/lovethatfit/site/images/favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ asset('bundles/lovethatfit/site/images/favicon.ico') }}" type="image/x-icon">
 
     
     </head>
@@ -82,7 +85,7 @@ $(document).ready(function($) {
             <section class="site_container">
                 <div class="left_column">
                     <div class="logo">
-                        <a href="{{path('inner_site_home')}}"><img src="{{ asset('bundles/lovethatfit/site/images/logo_inner.png') }}" width="177" height="108"></a>
+                        <a href="{{path('inner_site_home')}}"><img src="{{ asset('bundles/lovethatfit/site/images/logo_inner.png') }}"></a>
                     </div>
                     {% block left_navigation %}
                     {% endblock %}
@@ -108,7 +111,7 @@ $(document).ready(function($) {
                 <!--/.holder--></div>
             <footer class="footer">
                 <div class="ftr_logo"></div>
-                <div id="copyrights_txt">Copyright 2010-2014.  All rights reserved LoveThatFit</div>
+                <div id="copyrights_txt">Copyright 2010-2014.  All rights reserved {{app_detail.name}}</div>
                {% block bottom_left_nav %}
                                 {% include 'LoveThatFitSiteBundle::_bottomNavigation.html.twig'%}
                 {% endblock %} 
