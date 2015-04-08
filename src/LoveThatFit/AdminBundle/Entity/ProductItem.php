@@ -466,8 +466,10 @@ class ProductItem
     }
 
     public function getProductItemPiecesByTitle($title) {
+        $str='';
         foreach ($this->product_item_pieces as $pip) {
-            if ($pip->getProductColorView()->getTitle() == $title) {
+            $str=$str.', '.$pip->getProductColorView()->getTitle();
+            if (strtolower($pip->getProductColorView()->getTitle()) == strtolower($title)) {
                 return $pip;
             }
         }

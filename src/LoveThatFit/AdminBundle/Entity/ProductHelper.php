@@ -1099,6 +1099,7 @@ public function findProductColorSizeItemViewByTitle($product_name_array){
 public function breakFileName($request_array,$product_id){
     #Format: Regular_XL_Darl-Gray_Front-Open.png
     #last bit, view is optional
+    $request_array=  strtolower($request_array);
     $_exploded = explode("_",$request_array);    
     $a=array('product_id'=>$product_id);
     $type=Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif'); 
@@ -1119,7 +1120,7 @@ public function breakFileName($request_array,$product_id){
            return array('message' => 'Invalid Format!');
        }       
        # no/invalid body type given then regular 
-       $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "Regular" : $_exploded[0];    
+       $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "regular" : $_exploded[0];    
        $a['file_name'] = 'item_image.' . $last_bits[1];
        $a['size_title'] = $_exploded[1];
        $a['message'] = 'Done';
