@@ -1039,19 +1039,35 @@ class ProductController extends Controller {
 #-----------------------------------------------------------------------------
 
   #---------------Multiple Image Uploading --------------------------#
-public function _multplieImageUploadAction(Request $request){   
+public function multplieImageUploadAction(Request $request){   
    foreach ($_FILES["file"]["error"] as $key => $error){
      if ($error == UPLOAD_ERR_OK){	  
           $file_name = $_FILES["file"]["name"][$key]; // avoid same file name collision
-          $extracted_detail[$file_name] = $this->get('admin.helper.product')->breakFileName($file_name,$_POST['product_id']);          
-          #$extracted_detail[$file_name] = 'hooaa!';          
+          $parsed_details = $this->get('admin.helper.product')->breakFileName($file_name,$_POST['product_id']);          
+          $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
+          $imageFile = $request->files->get('file');          
+          $product_item->file=$imageFile[$key];
+            $product_item->upload();
+            $this->get('admin.helper.productitem')->save($product_item);
+        /*    
+          if(array_key_exists($parsed_details, 'view_title')){
+              $product_item_piece=$product_item->getProductItemPiecesByTitle($parsed_details['view_title']);
+              $product_item_piece->file=$imageFile[$key];              
+              $this->get('admin.helper.productitempiece')->save($product_item_piece);
+          }else{               
+            $product_item->file=$imageFile[$key];
+            $product_item->upload();
+            $this->get('admin.helper.productitem')->save($product_item);
+          }
+          */           
+          
        }     
   }    
-  return new response(json_encode($extracted_detail));
+  return new response(json_encode($product_item->getProduct()->getName()));
 }
 #-------------------------------------------------------------------------------
 
-public function multplieImageUploadAction(Request $request){
+public function _multplieImageUploadAction(Request $request){
    // return new response(json_encode($this->get('admin.helper.product')->findItemMultipleImpagesUploading(true,true)));
    $em = $this->getDoctrine()->getManager();
    foreach ($_FILES["file"]["error"] as $key => $error){

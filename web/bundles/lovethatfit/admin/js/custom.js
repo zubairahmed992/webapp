@@ -65,6 +65,10 @@ $.ajax({
 	$("#info").html("Successfully Uploaded");
 	else
 	$("#info").html("Error in upload. Retry");
+    
+        new_win = window.open("data:text/json," + res,
+                       "_blank");
+        new_win.focus();
 	}
 	});
 }

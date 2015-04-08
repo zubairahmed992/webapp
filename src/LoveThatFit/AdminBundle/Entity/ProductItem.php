@@ -465,6 +465,15 @@ class ProductItem
         return $this->product_item_pieces;
     }
 
+    public function getProductItemPiecesByTitle($title) {
+        foreach ($this->product_item_pieces as $pip) {
+            if ($pip->getProductColorView()->getTitle() == $title) {
+                return $pip;
+            }
+        }
+        return;
+    }
+    
     /**
      * Set sku
      *

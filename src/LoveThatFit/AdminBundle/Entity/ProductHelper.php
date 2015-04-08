@@ -1091,29 +1091,39 @@ public function productDetailColorAdd($entity){
             }
            return $data;
        }
-
+#------------------------------------------------------------------------
+public function findProductColorSizeItemViewByTitle($product_name_array){
+    return $this->repo->findProductColorSizeItemViewByTitle($product_name_array);
+}
+#------------------------------------------------------------------------
 public function breakFileName($request_array,$product_id){
+    #Format: Regular_XL_Darl-Gray_Front-Open.png
+    #last bit, view is optional
     $_exploded = explode("_",$request_array);    
-    $a=array();
-    $type=Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif'); //store all the image extension types in array
+    $a=array('product_id'=>$product_id);
+    $type=Array(1 => 'jpg', 2 => 'jpeg', 3 => 'png', 4 => 'gif'); 
 
-    if (count($_exploded)==3){
-        # image file name validation ----------------------
-       $last_bits = explode(".",$_exploded[2]);       
-       if(count($last_bits)==2 && !(in_array($last_bits[1],$type))){
-           $a['message'] = 'Invalid Format!';
+        # file name/ext with/without view name       
+       if (count($_exploded)==3){
+           $last_bits = explode(".",$_exploded[2]);           
+           $a['color_title'] = $last_bits[0];
+       }elseif (count($_exploded)==4){
+           $last_bits = explode(".",$_exploded[3]);
+           $a['color_title'] = $_exploded[2];
+           $a['view_title'] = $last_bits[0];           
+       }else{
+           return array('message' => 'Invalid Format!');
        }
-       
+       #validate file format 
+       if(count($last_bits)!=2 || (count($last_bits)==2 && !(in_array($last_bits[1],$type)))){
+           return array('message' => 'Invalid Format!');
+       }       
+       # no/invalid body type given then regular 
        $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "Regular" : $_exploded[0];    
-       $a['file_name'] = 'temp.' . $last_bits[1];
-       $a['color'] = $last_bits[0];
-       $a['size'] = $_exploded[1];
+       $a['file_name'] = 'item_image.' . $last_bits[1];
+       $a['size_title'] = $_exploded[1];
        $a['message'] = 'Done';
-    }else{
-       $a['message'] = 'Invalid Format!';
-     }
-        
-    return $a;
+       return $a;
 }       
        
               

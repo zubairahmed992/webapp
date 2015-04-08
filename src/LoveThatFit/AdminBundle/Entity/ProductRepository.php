@@ -1171,6 +1171,27 @@ class ProductRepository extends EntityRepository {
         }                
  }   
     
- 
+ #---------------------------------------------------------------------
+ public function findProductColorSizeItemViewByTitle($request_array){
+   try{   return $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('pi')
+                        ->from('LoveThatFitAdminBundle:ProductItem', 'pi')
+                        ->innerJoin('pi.product','p')
+                        ->innerJoin('pi.product_color','pc')
+                        ->innerJoin('pi.product_size','ps')
+                        #->leftJoin('pi.product_item_pieces','pip')
+                        ->where('p.id = :product_id')
+                        ->andwhere('pc.title = :color_title')
+                        ->andwhere('ps.body_type = :body_type')
+                        ->andwhere('ps.title = :size_title')
+                        ->setParameters(array('product_id'=>$request_array['product_id'],'color_title'=>$request_array['color_title'],'body_type'=>$request_array['body_type'],'size_title'=>$request_array['size_title']))
+                        ->getQuery()
+                        ->getSingleResult();
+   
+   }catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }                
+ }   
  
 }
