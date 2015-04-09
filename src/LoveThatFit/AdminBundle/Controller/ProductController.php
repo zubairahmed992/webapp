@@ -1048,11 +1048,11 @@ class ProductController extends Controller {
                 $imageFile = $request->files->get('file');
                 #return new response(json_encode($parsed_details['view_title']));                               
                 if (array_key_exists('view_title', $parsed_details)) {
-                    $product_item_piece = $product_item->getProductItemPiecesByTitle($parsed_details['view_title']);
+                    $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
                   #  $product_item_piece->file = $imageFile[$key];
                   #  $this->get('admin.helper.productitempiece')->save($product_item_piece);
                     #$product_item_piece->getColorView()->getTitle();
-                    return new response(json_encode($product_item_piece));
+                    return new response(json_encode($product_color_view->getTitle()));
                 } else {
                     $product_item->file = $imageFile[$key];
                     $product_item->upload();

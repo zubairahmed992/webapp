@@ -465,12 +465,10 @@ class ProductItem
         return $this->product_item_pieces;
     }
 
-    public function getProductItemPiecesByTitle($title) {
-        $str='';
-        foreach ($this->product_item_pieces as $pip) {
-            $str=$str.', '.$pip->getProductColorView()->getTitle();
-            if (strtolower($pip->getProductColorView()->getTitle()) == strtolower($title)) {
-                return $pip;
+    public function getProductColorViewByTitle($title) {
+        foreach ($this->product_color->getProductColorViews() as $pcv) {
+            if (strtolower($pcv->getTitle()) == strtolower($title)) {
+                return $pcv;
             }
         }
         return;
