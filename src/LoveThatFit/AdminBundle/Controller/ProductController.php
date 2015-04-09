@@ -1004,9 +1004,18 @@ class ProductController extends Controller {
     }
 
 #-----------------------------------------------------------------------
-    public function fooAction($id=0) {
-        $fit_points = $this->get('admin.helper.productsizes')->getFitPointMeasurementArray($id,'waist');
-        return new Response(json_encode($fit_points));
+    public function fooAction($id = 0) {
+
+        $params = array('product_id' => 19,
+            'color_title' => 'gray',
+            'view_title' => 'front-open',
+            'body_type' => 'regular',
+            'size_title' => 'l');
+    $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($params);
+    $product_color_view = $product_item->getProductColorViewByTitle($params['view_title']); 
+    $product_item_piece = $this->get('admin.helper.product.item.piece')->createNew($product_item, $product_color_view);
+                    
+        return new response(json_encode($product_color_view->getTitle()));
     }
 #-----------------------------------------------------------------------
     public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {
@@ -1051,7 +1060,7 @@ class ProductController extends Controller {
                     #find matching color view object
                     $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
                     #create new piece & set item & color view
-                    $product_item_piece = $this->get('admin.helper.productItemPiece')->createNew($product_item, $product_color_view);
+                    $product_item_piece = $this->get('admin.helper.product.item.piece')->createNew($product_item, $product_color_view);
                     #set file
                     #$product_item_piece->file = $imageFile[$key];
                     #save & upload
