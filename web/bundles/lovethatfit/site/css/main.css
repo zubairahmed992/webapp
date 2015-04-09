@@ -1651,7 +1651,7 @@ ul.prod_wrapper{
 }
 
 .fbox{    
-    overflow: hidden;
+    /*overflow: hidden;*/
     padding: 10px 10px 0;
     margin-left: -10px;
     margin-top: -10px;
@@ -1669,7 +1669,7 @@ ul.prod_wrapper{
     visibility: hidden;
     min-height: 40px;
     max-height: 40px;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 .prod_wrapper li:hover h3 {
  visibility: visible;	
