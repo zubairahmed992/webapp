@@ -1070,8 +1070,8 @@ class ProductController extends Controller {
                     #set file
                     $product_item_piece->file = $imageFile[$key];
                     #save & upload
-                    #$this->get('admin.helper.productitempiece')->save($product_item_piece);
-                    $this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
+                    $this->get('admin.helper.product.item.piece')->save($product_item_piece);
+                    #$this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
                     return new response(json_encode($product_color_view->getTitle()));
                 } else {
                     $product_item->file = $imageFile[$key];

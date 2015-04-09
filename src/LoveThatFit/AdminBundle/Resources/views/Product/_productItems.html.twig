@@ -190,13 +190,19 @@ function editPieceView(product_id,item_id,id){
                         
                         {# <a data-toggle="modal" href="{{path("admin_product_detail_item_two_piece_edit",{"id":product.id, "item_id":pi.id,"piece_id":pp.id})}}"  data-target="#{{pi.id}}Modal">{{pp.productColorView.title}},</a>
 #}
-                        {{((pp.productColorView) ? 
-                    '<a data-toggle="modal" href="'~ path('admin_product_detail_item_two_piece_edit',{'id':product.id, 'item_id':pi.id,'piece_id':pp.id}) 
-~ 'data-target="'~pi.id~'Modal"'~ '>'
-~ pp.productColorView.title 
-~ '</a>:none')
-}}
-                            
+                        
+{%if pp.productColorView%}
+                        {#
+<a data-toggle="modal" href="{{path('admin_product_detail_item_two_piece_edit',{'id':product.id, 'item_id':pi.id,'piece_id':pp.id}) 
+}}" data-target="{{pi.id~'Modal'}}">
+{{pp.productColorView.title }}
+</a>
+                        #}
+    <a href="{{path('admin_product_detail_item_two_piece_edit',{'id':product.id, 'item_id':pi.id,'piece_id':pp.id}) 
+}}">
+{{pp.productColorView.title }}
+</a>
+{% endif %}                        
                     </span>
                           
                                      {%endfor%}                  
