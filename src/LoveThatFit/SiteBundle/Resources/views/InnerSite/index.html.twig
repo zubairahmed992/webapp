@@ -667,7 +667,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
             details_base_url = $('#ajax_product_base_url').text();            
             details_base_url = details_base_url + new_prod_id + "/" + new_color_id + "/" + new_size_id;
           }
-          alert(details_base_url);
+          //alert(details_base_url);
             $.ajax({
                 url: details_base_url,
                 cache: false,
@@ -730,7 +730,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                     }
                     set_select_color(curr_prod_type);
                     
-                    alert(curr_prod_feedback);
+                    //alert(curr_prod_feedback);
                     
                      $.ajax({
                         url: curr_prod_feedback,
@@ -1324,7 +1324,7 @@ function apply_prod(size_id,product_id,color_id){
     var prod_type_top = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_top');
     var prod_type_bottom = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_bottom');
     var prod_type_dress = $('.featured_box'+product_id+' .featured_img img').hasClass('prod_dress');
-    alert(apply_img_url);    
+    //alert(apply_img_url);    
     if(prod_type_top) {
         
        
