@@ -1006,16 +1006,22 @@ class ProductController extends Controller {
 #-----------------------------------------------------------------------
     public function fooAction($id = 0) {
 
-        $params = array('product_id' => 19,
+        $params = array('product_id' => 13,
             'color_title' => 'gray',
             'view_title' => 'front-open',
             'body_type' => 'regular',
             'size_title' => 'l');
     $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($params);
     $product_color_view = $product_item->getProductColorViewByTitle($params['view_title']); 
-    $product_item_piece = $this->get('admin.helper.product.item.piece')->createNew($product_item, $product_color_view);
-                    
-        return new response(json_encode($product_color_view->getTitle()));
+    #$product_item_piece = $this->get('admin.helper.product.item.piece')->createNew($product_item, $product_color_view);
+    $product_item_piece = $this->get('admin.helper.product.item.piece')->findOrCreateNew($product_item, $product_color_view);
+    $product_item_piece->setPieceType('strugle');
+    $this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
+    return new Response($product_item_piece->getProductColorView()->getTitle());
+      
+
+
+    return new response(json_encode($product_item_piece->getProductColorView()->getTitle()));
     }
 #-----------------------------------------------------------------------
     public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {
@@ -1060,11 +1066,12 @@ class ProductController extends Controller {
                     #find matching color view object
                     $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
                     #create new piece & set item & color view
-                    $product_item_piece = $this->get('admin.helper.product.item.piece')->createNew($product_item, $product_color_view);
+                    $product_item_piece = $this->get('admin.helper.product.item.piece')->findOrCreateNew($product_item, $product_color_view);
                     #set file
-                    #$product_item_piece->file = $imageFile[$key];
+                    $product_item_piece->file = $imageFile[$key];
                     #save & upload
                     #$this->get('admin.helper.productitempiece')->save($product_item_piece);
+                    $this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
                     return new response(json_encode($product_color_view->getTitle()));
                 } else {
                     $product_item->file = $imageFile[$key];

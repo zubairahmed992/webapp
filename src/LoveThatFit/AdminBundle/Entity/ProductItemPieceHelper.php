@@ -38,6 +38,16 @@ class ProductItemPieceHelper {
 
     //---------------------------------------------------------------------   
 
+    public function findOrCreateNew($item, $color_view){
+        $piece = $this->findByItemColorView($item->getId(), $color_view->getId());
+        if ($piece){
+            return $piece;            
+        }else{
+            return $this->createNew($item, $color_view);
+        }
+            
+    }
+    //---------------------------------------------------------------------   
     public function createNew($item=null, $color_view=null) {
         $class = $this->class;
         $piece = new $class();
@@ -60,6 +70,22 @@ class ProductItemPieceHelper {
             $this->em->persist($entity);
             $this->em->flush();    
              return array('message' => 'Piece has been succesfully created.',
+                'field' => 'all',
+                'message_type' => 'success',
+                'success' => true,
+            );
+        } else {
+            return $msg_array;
+        }
+    }
+    //-------------------------------------------------------
+
+    public function saveWithoutUpload($entity) {   
+        $msg_array =null;
+          if ($msg_array == null) {            
+            $this->em->persist($entity);
+            $this->em->flush();    
+             return array('message' => 'Piece has been succesfully saved.',
                 'field' => 'all',
                 'message_type' => 'success',
                 'success' => true,
@@ -102,6 +128,9 @@ class ProductItemPieceHelper {
 
 //-------------------------------------------------------
 
+    public function findByItemColorView($item_id, $color_view_id) {        
+        return $this->repo->findByItemColorView($item_id, $color_view_id);
+    }
     public function find($id) {
         return $this->repo->find($id);
     }

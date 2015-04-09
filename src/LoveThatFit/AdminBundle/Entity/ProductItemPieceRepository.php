@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductItemPieceRepository extends EntityRepository
 {
+    
+    public function findByItemColorView($item_id, $color_view_id){
+      $query = $this->getEntityManager()
+                    ->createQuery("SELECT pip
+                        FROM                         
+                        LoveThatFitAdminBundle:ProductItemPiece pip
+                        JOIN pip.product_item pi
+                        JOIN pip.product_color_view pcv                                                
+                        WHERE
+                        pi.id = :product_item AND 
+                        pcv.id = :product_color_view                        
+                        "                         
+       )->setParameters(array('product_item' => $item_id, 'product_color_view' => $color_view_id)) ;
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }  
+  }
 }
