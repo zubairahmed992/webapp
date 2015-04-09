@@ -1048,10 +1048,14 @@ class ProductController extends Controller {
                 $imageFile = $request->files->get('file');
                 #return new response(json_encode($parsed_details['view_title']));                               
                 if (array_key_exists('view_title', $parsed_details)) {
+                    #find matching color view object
                     $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
-                  #  $product_item_piece->file = $imageFile[$key];
-                  #  $this->get('admin.helper.productitempiece')->save($product_item_piece);
-                    #$product_item_piece->getColorView()->getTitle();
+                    #create new piece & set item & color view
+                    $product_item_piece = $this->get('admin.helper.productItemPiece')->createNew($product_item, $product_color_view);
+                    #set file
+                    #$product_item_piece->file = $imageFile[$key];
+                    #save & upload
+                    #$this->get('admin.helper.productitempiece')->save($product_item_piece);
                     return new response(json_encode($product_color_view->getTitle()));
                 } else {
                     $product_item->file = $imageFile[$key];

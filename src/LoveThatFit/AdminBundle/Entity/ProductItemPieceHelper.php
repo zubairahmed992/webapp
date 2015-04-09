@@ -38,12 +38,19 @@ class ProductItemPieceHelper {
 
     //---------------------------------------------------------------------   
 
-    public function createNew() {
+    public function createNew($item=null, $color_view=null) {
         $class = $this->class;
         $piece = new $class();
+        if($item){
+            $piece->setProductItem($item);
+        }
+        if($color_view){
+            $piece->setProductColorView($color_view);
+        }
         return $piece;
     }
 
+    
 //-------------------------------------------------------
 
     public function save($entity) {   
