@@ -1005,8 +1005,9 @@ class ProductController extends Controller {
 
 #-----------------------------------------------------------------------
     public function fooAction($id = 0) {
-
-        $params = array('product_id' => 13,
+        $product_item = $this->get('admin.helper.productitem')->find($id);
+        return new response(json_encode($product_item->getProductPieceDetailArray()));
+      /*  $params = array('product_id' => 13,
             'color_title' => 'gray',
             'view_title' => 'front-open',
             'body_type' => 'regular',
@@ -1022,6 +1023,8 @@ class ProductController extends Controller {
 
 
     return new response(json_encode($product_item_piece->getProductColorView()->getTitle()));
+       * 
+       */
     }
 #-----------------------------------------------------------------------
     public function productSizeMeasurementdeleteAction($id, $size_id, $measurement_id, $title) {

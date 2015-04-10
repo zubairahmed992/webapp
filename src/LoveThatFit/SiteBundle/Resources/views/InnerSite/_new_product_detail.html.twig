@@ -141,17 +141,16 @@ function chk_dress_applied_loaded(prod_type_applied){
       
     </div> 
       <div class="clr"></div>
-     
+            {% set pieces = productItem.getProductPieceDetailArray %}
+            {% if pieces|length>1 %}
              <div id="hdn_views_hldr" class="hdn_views_hldr select_views"  style="display:block;" >
                     <label class="lbl_views">Views:</label>
-                    {%for key, pcsa in productColor.getProductColorViews%}  
-                            <span id="color_id_view" style="display:block;">{{pcsa.id}}</span>  
-                            <span id="item_url_view" style="display:block;">{{pcsa.id}}</span>  
-                        <a href="#"><img width="16" height="16" src="{{asset(pcsa.WebPath)}}" >
-                        </a>
+                    {%for id, pip in pieces %}  
+                        <img src='{{asset(pip.product_color_view_url)}}' title="{{pip.product_color_view_type}}"  height="30" width="30">
+                        <span style="display: none">{{asset(pip.product_color_view_url)}}</span>
                     {%endfor%}
-                </div>       
-        
+              </div>       
+            {%endif%}
      </div>     
      </div>        
                                 

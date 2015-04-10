@@ -464,7 +464,7 @@ class ProductItem
     {
         return $this->product_item_pieces;
     }
-
+#-----------------------------------------------------------------
     public function getProductColorViewByTitle($title) {
         foreach ($this->product_color->getProductColorViews() as $pcv) {
             if (strtolower($pcv->getTitle()) == strtolower($title)) {
@@ -473,7 +473,23 @@ class ProductItem
         }
         return;
     }
-    
+    #-----------------------------------------------------------------
+     public function getProductPieceDetailArray() {
+         
+         $pda[0]=array('product_color_view_type'=>'default',
+                                        'product_color_view_url'=>  $this->product_color->getWebPath(),
+                                        'product_item_piece_url'=>$this->getWebPath(),
+                                        );
+         
+        foreach ($this->product_item_pieces as $pip) {
+            $pcv=$pip->getProductColorView();
+            $pda[$pip->getId()]=array('product_color_view_type'=>$pcv->getTitle(),
+                                        'product_color_view_url'=>$pcv->getWebPath(),
+                                        'product_item_piece_url'=>$pip->getWebPath(),
+                                        );
+        }
+        return $pda;
+    }
     /**
      * Set sku
      *
