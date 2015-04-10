@@ -61,14 +61,10 @@ $.ajax({
 	processData: false,
 	contentType: false,
 	success: function(res){
-	if(res!="0")
-	$("#info").html("Successfully Uploaded");
-	else
-	$("#info").html("Error in upload. Retry");
+	
+	$("#info").html(res);
     
-        new_win = window.open("data:text/json," + res,
-                       "_blank");
-        new_win.focus();
+        
 	}
 	});
 }
