@@ -1055,33 +1055,41 @@ class ProductController extends Controller {
 
   #---------------Multiple Image Uploading --------------------------#
   public function multplieImageUploadAction(Request $request) {
+        $error_str = '';
         foreach ($_FILES["file"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
                 $file_name = $_FILES["file"]["name"][$key]; // avoid same file name collision
                 $parsed_details = $this->get('admin.helper.product')->breakFileName($file_name, $_POST['product_id']);
-                $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
-                $imageFile = $request->files->get('file');
-                #return new response(json_encode($parsed_details['view_title']));                               
-                if (array_key_exists('view_title', $parsed_details)) {
-                    #find matching color view object
-                    $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
-                    #create new piece & set item & color view
-                    $product_item_piece = $this->get('admin.helper.product.item.piece')->findOrCreateNew($product_item, $product_color_view);
-                    #set file
-                    $product_item_piece->file = $imageFile[$key];
-                    #save & upload
-                    $this->get('admin.helper.product.item.piece')->save($product_item_piece);
-                    #$this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);
-                    return new response(json_encode($product_color_view->getTitle()));
+                if ($parsed_details['success'] == 'false') {
+                    #return new Response($parsed_details['message']);
+                    $error_str = $error_str . $file_name .' : ' . $parsed_details['message'] . ', ';
                 } else {
-                    $product_item->file = $imageFile[$key];
-                    $product_item->upload();
-                    $this->get('admin.helper.productitem')->save($product_item);
+                    $product_item = $this->get('admin.helper.product')->findProductColorSizeItemViewByTitle($parsed_details);
+                    $imageFile = $request->files->get('file');
+                    #return new response(json_encode($parsed_details));                               
+                    if (array_key_exists('view_title', $parsed_details)) {
+                        #find matching color view object
+                        $product_color_view = $product_item->getProductColorViewByTitle($parsed_details['view_title']);
+                        #create new piece & set item & color view
+                        $product_item_piece = $this->get('admin.helper.product.item.piece')->findOrCreateNew($product_item, $product_color_view);
+                        #set file
+                        $product_item_piece->file = $imageFile[$key];
+                        #save & upload
+                        $this->get('admin.helper.product.item.piece')->save($product_item_piece);
+                        #$this->get('admin.helper.product.item.piece')->saveWithoutUpload($product_item_piece);                    
+                    } else {
+                        $product_item->file = $imageFile[$key];
+                        $product_item->upload();
+                        $this->get('admin.helper.productitem')->save($product_item);
+                    }
                 }
-                
             }
         }
-        return new response(json_encode($product_item->getProduct()->getName()));
+        if (strlen($error_str)==0){
+            return new Response('Successfully Processed');
+        }else{
+            return new Response('Successfully Processed, except for:'.$error_str);
+        }
     }
 #-------------------------------------------------------------------------------
 

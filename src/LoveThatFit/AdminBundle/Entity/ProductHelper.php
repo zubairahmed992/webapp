@@ -1113,17 +1113,18 @@ public function breakFileName($request_array,$product_id){
            $a['color_title'] = $_exploded[2];
            $a['view_title'] = $last_bits[0];           
        }else{
-           return array('message' => 'Invalid Format!');
+           return array('message' => 'Invalid Format!', 'success'=> 'false');
        }
        #validate file format 
        if(count($last_bits)!=2 || (count($last_bits)==2 && !(in_array($last_bits[1],$type)))){
-           return array('message' => 'Invalid Format!');
+           return array('message' => 'Invalid Format!', 'success'=> 'false');
        }       
        # no/invalid body type given then regular 
        $a['body_type'] = !($this->container->get('admin.helper.utility')->isBodyType($_exploded[0])) ? "regular" : $_exploded[0];    
        $a['file_name'] = 'item_image.' . $last_bits[1];
        $a['size_title'] = $_exploded[1];
        $a['message'] = 'Done';
+       $a['success'] = 'true';
        return $a;
 }       
        
