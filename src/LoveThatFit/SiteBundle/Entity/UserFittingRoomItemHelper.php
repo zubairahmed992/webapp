@@ -68,8 +68,8 @@ class UserFittingRoomItemHelper {
 
 #------------------------------------------------------
 
-    public function add($user, $item) {
-        $fris = $this->findByUserId($user->getId());
+    public function add($user, $item, $product_item_piece = null) {
+        $fris = $this->findByUserId($user->getId());        
         $state_updated = false;
         $already_existed = false;
         if ($item) {
@@ -80,11 +80,25 @@ class UserFittingRoomItemHelper {
                         if ($item->getProduct()->getclothingType()->getTarget() == $current_item->getProduct()->getclothingType()->getTarget()) {
                             #$this->delete($fri);
                             $fri->setProductitem($item);
+                            #----------------------
+                            if($product_item_piece){
+                                $fri->setProductItemPiece($product_item_piece);
+                            }else{
+                                $fri->setProductItemPiece(null);
+                            }
+                            #----------------------
                             $this->save($fri);
                             $state_updated = true;
                             #update
                         }
                     } else {
+                        if ($product_item_piece) {
+                            if ($product_item_piece->getId() != $fri->getProductItemPiece()->getId()) {
+                                $fri->setProductItemPiece($product_item_piece);
+                                $this->save($fri);
+                                $state_updated = true;
+                            }
+                        }
                         $already_existed = true;
                     }
                 }
@@ -92,7 +106,7 @@ class UserFittingRoomItemHelper {
         }
 
         if (!$state_updated && !$already_existed) {
-            $this->createUserFittingRoomItem($user, $item);
+            $this->createUserFittingRoomItem($user, $item, $product_item_piece);
             $state_updated = true;
         }
         return $state_updated;
@@ -119,8 +133,9 @@ class UserFittingRoomItemHelper {
             array(  'product_id'=>$fri->getProductItem()->getProduct()->getId(),
                     'size_id'=>$fri->getProductItem()->getProductSize()->getId(),
                     'color_id'=>$fri->getProductItem()->getProductColor()->getId(),
-                    'item_id'=>$fri->getProductItem()->getId()
-            )
+                    'item_id'=>$fri->getProductItem()->getId(),
+                    'item_piece_id'=>$fri->getProductItemPiece()->getId(),
+                    )
                     );
         }
         return $ar;
@@ -128,11 +143,12 @@ class UserFittingRoomItemHelper {
 
 #------------------------------------------------------
 
-    public function createUserFittingRoomItem($user, $productItem) {
+    public function createUserFittingRoomItem($user, $productItem, $product_item_piece=null) {
         $userFittingRoomitem = new UserFittingRoomItem();
         $userFittingRoomitem->setCreatedAt(new \DateTime('now'));
         $userFittingRoomitem->setUpdatedAt(new \DateTime('now'));
         $userFittingRoomitem->setProductitem($productItem);
+        $userFittingRoomitem->setProductItemPiece($product_item_piece);
         $userFittingRoomitem->setUser($user);
         return $this->save($userFittingRoomitem);
     }

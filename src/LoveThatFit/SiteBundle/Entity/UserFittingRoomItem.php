@@ -27,7 +27,13 @@ class UserFittingRoomItem
      */
     protected $user;
     
+    /**
+   * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\ProductItemPiece", inversedBy="user_fitting_room_ittem")
+   * @ORM\JoinColumn(name="product_item_piece_id", referencedColumnName="id", onDelete="CASCADE")
+   */
+    protected $product_item_piece;
     
+    #---------------------------------------------------
      public function __construct()
     {
         $this->productitem = new ArrayCollection();
@@ -116,22 +122,40 @@ class UserFittingRoomItem
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt(){
         return $this->updated_at;
     }
 
-   
+ #---------------------------------------------------
+    /**
+     * Set product_item_piece
+     *
+     * @param LoveThatFit\AdminBundle\Entity\ProductItemPiece $product_item_piece
+     * @return UserFittingRoomItem
+     */
+    public function setProductItemPiece(\LoveThatFit\AdminBundle\Entity\ProductItemPiece $product_item_piece = null){
+        $this->product_item_piece = $product_item_piece;    
+        return $this;
+    }
+
+    /**
+     * Get product_item_piece
+     *
+     * @return LoveThatFit\AdminBundle\Entity\ProductItemPiece 
+     */
+    public function getProductItemPiece(){
+        return $this->product_item_piece;
+    }
+#------------------------------------------------   
    
 
     /**
      * Set productitem
      *
      * @param LoveThatFit\AdminBundle\Entity\ProductItem $productitem
-     * @return UserItemTryHistory
+     * @return UserFittingRoomItem
      */
-    public function setProductitem(\LoveThatFit\AdminBundle\Entity\ProductItem $productitem = null)
-    {
+    public function setProductitem(\LoveThatFit\AdminBundle\Entity\ProductItem $productitem = null){
         $this->productitem = $productitem;
     
         return $this;
@@ -142,21 +166,18 @@ class UserFittingRoomItem
      *
      * @return LoveThatFit\AdminBundle\Entity\ProductItem 
      */
-    public function getProductitem()
-    {
+    public function getProductitem(){
         return $this->productitem;
     }
-
+#---------------------------------------------------
     /**
      * Set user
      *
      * @param LoveThatFit\UserBundle\Entity\User $user
-     * @return UserItemTryHistory
+     * @return UserFittingRoomItem
      */
-    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-    
+    public function setUser(\LoveThatFit\UserBundle\Entity\User $user = null){
+        $this->user = $user;    
         return $this;
     }
 
@@ -165,8 +186,7 @@ class UserFittingRoomItem
      *
      * @return LoveThatFit\UserBundle\Entity\User 
      */
-    public function getUser()
-    {
+    public function getUser(){
         return $this->user;
     }
 

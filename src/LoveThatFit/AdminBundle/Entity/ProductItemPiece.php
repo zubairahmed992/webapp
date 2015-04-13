@@ -31,6 +31,11 @@ class ProductItemPiece
     protected $product_color_view;   
     
     /**
+     * @ORM\OneToMany(targetEntity="LoveThatFit\SiteBundle\Entity\UserFittingRoomItem", mappedBy="product_item_piece")
+     */
+    private $user_fitting_room_ittem;
+    
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -218,4 +223,38 @@ public function deleteImages()
     {
         return $this->product_color_view;
     }
+#--------------------------------------------------------------------------------
+     /**
+     * Add user_fitting_room_ittem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem
+     * @return ProductItem
+     */
+    public function addUserFittingRoomIttem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem)
+    {
+        $this->user_fitting_room_ittem[] = $userFittingRoomIttem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_fitting_room_ittem
+     *
+     * @param \LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem
+     */
+    public function removeUserFittingRoomIttem(\LoveThatFit\SiteBundle\Entity\UserFittingRoomItem $userFittingRoomIttem)
+    {
+        $this->user_fitting_room_ittem->removeElement($userFittingRoomIttem);
+    }
+
+    /**
+     * Get user_fitting_room_ittem
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserFittingRoomIttem()
+    {
+        return $this->user_fitting_room_ittem;
+    }
+    
 }
