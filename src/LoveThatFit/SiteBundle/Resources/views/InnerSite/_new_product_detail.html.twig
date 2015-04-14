@@ -1,5 +1,20 @@
 <script>
  
+function update_item_view(user_id, item_id, view_id){
+    url = '{{path("ajax_user_fitting_room_item_view_update", {"user_id" : "user-id", "item_id" : "item-id", "view_id" : "view-id"}) }}';
+        
+        nu=url.replace('user-id',user_id);
+        nu=nu.replace('item-id',item_id);        
+                
+    if (view_id==0){
+        nu=nu.replace('/view-id','');        
+    }else{
+        nu=nu.replace('view-id',view_id);        
+    }
+    alert(nu);    
+}
+
+
 
 function chk_applied_loaded(prod_type_applied){
     photo_width_a =  document.getElementById(prod_type_applied).width;
@@ -146,8 +161,13 @@ function chk_dress_applied_loaded(prod_type_applied){
              <div id="hdn_views_hldr" class="hdn_views_hldr select_views"  style="display:block;" >
                     <label class="lbl_views">Views:</label>
                     {%for id, pip in pieces %}  
+                    
+                    <a href="javascript:void(0)" class="a_item_view_id"  onclick="update_item_view({{app.user.id}}, {{productItem.id}}, {{id}})">
                         <img src='{{asset(pip.product_color_view_url)}}' title="{{pip.product_color_view_type}}"  height="30" width="30">
-                        <span style="display: none">{{asset(pip.product_color_view_url)}}</span>
+                    </a>      
+                        
+                        <span class="appliable_item_view_url" style="display: none">{{asset(pip.product_item_piece_url)}}</span>
+                        <span id="" style="display: none">{{asset(pip.product_item_piece_url)}}</span>
                     {%endfor%}
               </div>       
             {%endif%}
