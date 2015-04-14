@@ -138,6 +138,12 @@ class FittingRoomController extends Controller {
             }         
     }
    
+    #----------------------------Remove Fitting Room -----------------------------#
+    public function itemViewUpdateAction($user_id, $item_id, $view_id=null){
+        
+      $t =  $this->get('site.helper.userfittingroomitem')->viewUpdate($user_id, $item_id, $view_id);    
+      return new Response(json_encode($t));
+    }
 #----------------------------Remove Fitting Room -----------------------------#
     public function removeFittingRoomItemAction($user_id, $item_id){
       $t =  $this->get('site.helper.userfittingroomitem')->deleteByUserItem($user_id,$item_id);    

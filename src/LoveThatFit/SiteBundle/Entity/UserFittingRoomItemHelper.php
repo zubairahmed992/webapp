@@ -97,7 +97,31 @@ class UserFittingRoomItemHelper {
         return $state_updated;
         #$this->getArrayByUser($user);
     }
-    
+#------------------------------------------------------------------
+        public function viewUpdate($user_id, $item_id, $piece_id) {
+        #~~~~~> find fitting room item    
+        $fri = $this->findByUserItemId($user_id, $item_id);
+        #return $this->toArray($fri);                                 
+        if ($fri) {
+            $product_item_piece = $piece_id == null ? null : $this->container->get('admin.helper.product.item.piece')->find($piece_id);
+            if ($product_item_piece) {
+                #return $product_item_piece->getProductColorView()->getTitle();
+                if (!$fri->getProductItemPiece() || ($fri->getProductItemPiece() && $fri->getProductItemPiece()->getId() != $product_item_piece->getId())) {
+                    $fri->setProductItemPiece($product_item_piece);
+                    $this->save($fri);
+                    return true;
+                }
+            } else {
+                if ($fri->getProductItemPiece()) {
+                    $fri->setProductItemPiece(null);
+                    $this->save($fri);
+                    return true;
+                }
+            }
+        }
+        return;
+    }
+
     #====================================================
      public function _add($user, $item, $product_item_piece = null) {
         $fris = $this->findByUserId($user->getId());        
@@ -213,6 +237,19 @@ class UserFittingRoomItemHelper {
 
     public function findByUserId($user_id) {
         return $this->repo->findByUserId($user_id);
+    }
+    
+#----------------------------------------------------
+    public function toArray($fri){
+        if ($fri){
+        $piece_id = $fri->getProductItemPiece()?$fri->getProductItemPiece()->getId():null;
+        return array(  'product_id'=>$fri->getProductItem()->getProduct()->getId(),
+                    'size_id'=>$fri->getProductItem()->getProductSize()->getId(),
+                    'color_id'=>$fri->getProductItem()->getProductColor()->getId(),
+                    'item_id'=>$fri->getProductItem()->getId(),
+                    'item_piece_id'=>$piece_id,
+                    );
+        }
     }
 
 }

@@ -19,6 +19,10 @@ ajax_fitting_room_product_recently_tried_on:
 ajax_user_fitting_room_item_remove:
     pattern:  /ajax/fitting_room_item_remove/{user_id}/{item_id}
     defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:removeFittingRoomItem}  
+
+ajax_user_fitting_room_item_view_update:
+    pattern:  /ajax/fitting_room_item_view_update/{user_id}/{item_id}/{view_id}
+    defaults: { _controller: LoveThatFitSiteBundle:FittingRoom:itemViewUpdate, view_id: null}  
  
 ajax_user_fitting_room_item_ids:
     pattern:  /ajax/fitting_room_item_ids/{user_id}

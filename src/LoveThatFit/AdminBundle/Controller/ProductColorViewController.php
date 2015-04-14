@@ -55,7 +55,7 @@ class ProductColorViewController extends Controller {
     //------------------------Edit color view Method------------------------------------
     
     public function editAction($id) {
-        $entity=$message_array=$this->get('admin.helper.product.color.view')->find($id);
+        $entity=$this->get('admin.helper.product.color.view')->find($id);
         $form = $this->createForm(new ProductColorViewType('edit'), $entity);
         return $this->render('LoveThatFitAdminBundle:ProductColorView:_edit.html.twig',array('form' => $form->createView(),'entity'=>$entity,'product_color_id'=>$entity->getProductColor()->getId()));
     }
