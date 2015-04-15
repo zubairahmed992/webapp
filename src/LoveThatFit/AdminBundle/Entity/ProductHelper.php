@@ -750,7 +750,7 @@ public function productDetailArray($data,$entity){
 public function productClothingTypeAttribute($target_array){
     $clothing_type_id = $target_array['clothing_type'];
     $gender=$target_array['gender'];
-    if($gender=="F"){$gender="women";}
+    if($gender=="F" || $gender=='f'){$gender="women";}
     else{$gender="man";}
     $clothing_type=$this->container->get('admin.helper.clothingtype')->findById($clothing_type_id);
     $clothing_type_array=strtolower($clothing_type['target']);
