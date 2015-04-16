@@ -193,7 +193,7 @@ love_item:
    #array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','productItemId'=>12,'userId'=>17,'like'=>'like');
 
 try_history:
-   pattern:  /web_service_test/user_try_history
+   pattern:  /web_service/user_try_history
    params:
      authTokenWebService: 121c421783cd4d71d871ec16a1296091
      user_id: 13

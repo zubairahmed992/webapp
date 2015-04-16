@@ -1005,6 +1005,11 @@ class ProductController extends Controller {
 
 #-----------------------------------------------------------------------
     public function fooAction($id = 0) {
+        
+        $product_helper =  $this->get('webservice.helper.product');
+        $msg=$product_helper->getUserTryHistoryWebService('',$id);
+        return new Response(json_encode($msg));
+        
         $product_item = $this->get('admin.helper.productitem')->find($id);
         return new response(json_encode($product_item->getProductPieceDetailArray()));
       /*  $params = array('product_id' => 13,
