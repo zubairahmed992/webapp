@@ -31,6 +31,7 @@ class ProductDetailType extends AbstractType
         //$brand_list=$this->get('admin.helper.brand')->getBrandArray();
        // $builder->add('ClothingType', 'choice', array('choices' => $this->clothingType, 'required' => false,'empty_value' => 'Clothing Type',));
         $builder->add('name');
+        $builder->add('control_number');
         $builder->add('styling_type','choice', array( 'required' => false,'empty_value' => 'Select Styling Type',));
         $builder->add('hem_length','choice', array( 'required' => false,'empty_value' => 'Select Hem Length',));
         $builder->add('neckline','choice', array( 'required' => false,'empty_value' => 'Select Neck Line',));

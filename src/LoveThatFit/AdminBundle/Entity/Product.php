@@ -85,6 +85,12 @@ class Product {
      */
     protected $name;
 
+     /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(groups={"product_detail"})
+     */
+    protected $control_number;
+    
     /**
      * @var string $description
      *
@@ -236,6 +242,28 @@ class Product {
     public function getName() {
         return $this->name;
     }
+//----------------------------------------------------------
+    /**
+     * Set control_number
+     *
+     * @param string $name
+     * @return Product
+     */
+    public function setControlNumber($control_number) {
+        $this->control_number = $control_number;
+
+        return $this;
+    }
+
+    /**
+     * Get control_number
+     *
+     * @return string 
+     */
+    public function getControlNumber() {
+        return $this->control_number;
+    }
+
 
 //----------------------------------------------------------
     
