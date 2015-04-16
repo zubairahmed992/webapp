@@ -158,6 +158,9 @@ p_user_height = p_user_height / 100;
 
 user_img_url = $("#hdn_user_cropped_image_url").attr("value");
 user_image = new Raster(user_img_url);
+user_image.on('load', function() {
+    //alert(user_image.getPixel(180, 230));
+});
 
 user_image.position = new Point(160,568/2);
 
@@ -628,7 +631,6 @@ var but_crop_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/crop
 var but_crop_icon = new Raster(but_crop_icon_url);
 
 but_crop_icon.position = new Point(26, 332 + an_inc);
-but_crop_icon.visible = false;
 
 var scr1_but_hiw_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/how_it_works_icon.png";
 var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
@@ -903,7 +905,9 @@ function onMouseDown(event) {
             }
 	};
         
-        
+        if(hitResult.item == user_image){
+            
+        }
        
         
         
@@ -915,8 +919,7 @@ function onMouseDown(event) {
 			segment = hitResult.segment;
 		} else if (hitResult.type == 'pixel') {
 			//segment = null;
-                        if(hitResult.item == user_image){
-                        }else if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
+                        if(curr_view == "normal" && hitResult.item == but_zoom_in && ijazat == "yes"){
                            
                            
                            main_layer.pivot = new Point(160,538);
@@ -933,10 +936,10 @@ function onMouseDown(event) {
                            
                            hide_big_points();
                             
-                        }else if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
+                        } if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
                            zoom_out_settings();
                         }
-                        else if(hitResult.item == but_move_left){
+                         if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
                             
                             if(curr_view == "zoomed"){
@@ -944,27 +947,27 @@ function onMouseDown(event) {
                             }
                             
                         }
-                        else if(hitResult.item == but_back_top){
+                         if(hitResult.item == but_back_top){
                                window.location.href = "scr1_but_back_top";                
                         }
-                        else if(hitResult.item == scr1_but_reset){
+                         if(hitResult.item == scr1_but_reset){
                             window.location.reload();                
                         }
-                        else if(hitResult.item == but_move_right){
+                         if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
                             
                             if(curr_view == "zoomed"){
                                 //x_pos_user_image += ratio_zoom_value;
                             }
                         }
-                        else if(hitResult.item == but_move_up){
+                         if(hitResult.item == but_move_up){
                             user_image.position.y -= 1;
                             
                             if(curr_view == "zoomed"){
                                 //y_pos_user_image -= ratio_zoom_value;
                             }
                         }
-                        else if(hitResult.item == but_move_down){
+                         if(hitResult.item == but_move_down){
                             user_image.position.y += 1;
                             
                             if(curr_view == "zoomed"){
@@ -972,13 +975,13 @@ function onMouseDown(event) {
                             }
                             
                         }
-                        else if(hitResult.item == but_rotate_left){
+                         if(hitResult.item == but_rotate_left){
                             user_image.rotate(-0.1); 
                         }
-                        else if(hitResult.item == but_rotate_right){
+                         if(hitResult.item == but_rotate_right){
                             user_image.rotate(0.1);
                         }
-                        else if(curr_crop == "normal" && hitResult.item == but_crop_icon){
+                         if(curr_crop == "normal" && hitResult.item == but_crop_icon){
                             curr_crop = "checked";
                             path_com.fillColor = "#fff";
                             path_com.opacity = 1;
@@ -986,22 +989,22 @@ function onMouseDown(event) {
                             curr_crop = "normal";
                             path_com.fillColor = "#666";
                             path_com.opacity = 0.6;
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_head_top){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_head_top){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             console.log("but_bp_head_top");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_shoulder){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_lft_shoulder){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 62;
                             
                             console.log("but_bp_lft_shoulder");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_shoulder){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_shoulder){
                             big_point = true;
                             big_point_ele = hitResult.item;
                             curr_big_seg = 6;
                             console.log("but_bp_rgt_shoulder");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_arm_pit){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_lft_arm_pit){
                             
                             //ijazat = "no";
                             
@@ -1015,7 +1018,7 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_lft_arm_pit");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_arm_pit){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_arm_pit){
                             
                             //ijazat = "no";
                             
@@ -1029,7 +1032,7 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_rgt_arm_pit");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_waist){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_lft_waist){
                             
                             //ijazat = "no";
                             
@@ -1043,7 +1046,7 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_lft_waist");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_waist){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_waist){
                             
                             //ijazat = "no";
                             
@@ -1057,7 +1060,7 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_rgt_waist");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hip){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_lft_hip){
                             
                             //ijazat = "no";
                             
@@ -1072,7 +1075,7 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_lft_hip");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hip){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hip){
                             
                             //ijazat = "no";
                             
@@ -1087,7 +1090,7 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_rgt_hip");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_hand){
                             
                             //ijazat = "no";
                             
@@ -1099,7 +1102,7 @@ function onMouseDown(event) {
                             
                              
                             
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_lft_hand){
                             
                             //ijazat = "no";
                             
@@ -1108,7 +1111,7 @@ function onMouseDown(event) {
                             big_point_ele = hitResult.item;
                             curr_big_seg = 58;
                             console.log("but_bp_lft_hand");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_inseam){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_inseam){
                             
                             //ijazat = "no";
                             
@@ -1122,7 +1125,7 @@ function onMouseDown(event) {
                             get_ele_pos();
                             
                             console.log("but_bp_inseam");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_lft_foot){
                             
                             //ijazat = "no";
                             
@@ -1131,7 +1134,7 @@ function onMouseDown(event) {
                             big_point_ele = hitResult.item;
                             curr_big_seg = 40;
                             console.log("but_bp_lft_foot");
-                        }else if(curr_crop == "normal" && hitResult.item == but_bp_rgt_foot){
+                        } if(curr_crop == "normal" && hitResult.item == but_bp_rgt_foot){
                             
                             //ijazat = "no";
                             
@@ -1140,12 +1143,12 @@ function onMouseDown(event) {
                             big_point_ele = hitResult.item;
                             curr_big_seg = 28;
                             console.log("but_bp_rgt_foot");
-                        }else if(curr_crop == "normal" && hitResult.item == scr1_but_hiw_icon){
+                        } if(curr_crop == "normal" && hitResult.item == scr1_but_hiw_icon){
                             window.location.href = "scr1_but_how_it_works";
                             //$("#scr1_but_how_it_works").trigger( "click" );
                             //alert("How It Works Button Tap");
                             //console.log("scr1_but_hiw_icon");
-                        }else if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
+                        } if(curr_crop == "normal" && hitResult.item == scr1_but_camera_icon){
                             window.location.href = "scr1_but_camera_options";
                             
                             //$("#scr1_but_camera_options").trigger();
@@ -1159,7 +1162,7 @@ function onMouseDown(event) {
                             
                             //alert("Camera Button Tap");
                             console.log("scr1_but_camera_icon");
-                        }else if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
+                        } if(curr_crop == "normal" && hitResult.item == scr1_but_save_icon){
                             //project.layers.push(overall_layer);
                             //overall_layer.activate();
                             
@@ -1226,8 +1229,6 @@ function onMouseDown(event) {
    }       
                 
 }
-
-
 
 
 
@@ -1472,48 +1473,6 @@ function onMouseDrag(event) {
                 set_path_seg(event, rgt_leg_ref, mid_area_path.segments[21].point.x + ((mid_area_path.segments[33].point.x - mid_area_path.segments[21].point.x)/2), mid_area_path.segments[21].point.y, mid_area_path.segments[34].point.x - 4, mid_area_path.segments[34].point.x - 14, 21, 35, 20, 35);
                 but_bp_rgt_foot.position = mid_area_path.segments[curr_big_seg].point;
                 console.log("asf");
-            }else if(false){            
-            curr_pos_rotate = main_path.segments[curr_big_seg].point.x;
-            var rotate_min = 240;
-            var rotate_max = 280;
-            final_rotate_value = rotate_max - curr_pos_rotate;
-            if(final_rotate_value > 0 && final_rotate_value < 40){
-               if(event.delta.x > 0){ 
-                lft_arm_ref.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
-                for(i=0; i < lft_arm_ref.segments.length; i++){
-                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
-                }
-                
-               }else {
-                lft_arm_ref.rotate(0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
-                for(i=0; i < lft_arm_ref.segments.length; i++){
-                    
-                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
-                    
-                }
-               }
-            }else if(final_rotate_value > 40){
-                lft_arm_ref.rotate(-0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
-                
-                for(i=0; i < lft_arm_ref.segments.length; i++){
-                    
-                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
-                    
-                }
-                                
-            }else if(final_rotate_value < 0){
-                
-                lft_arm_ref.rotate(0.5, mid_area_path.segments[63].point.x, mid_area_path.segments[63].point.y + ((mid_area_path.segments[53].point.y - mid_area_path.segments[63].point.y)/2));
-                for(i=0; i < lft_arm_ref.segments.length; i++){
-                    
-                    mid_area_path.segments[54+i] = lft_arm_ref.segments[i];
-                    
-                }
-                                
-            }
-            
-                but_bp_lft_hand.position = mid_area_path.segments[curr_big_seg].point;
-            
             }else if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder){
                 
                 main_path.segments[curr_big_seg].point += event.delta;
@@ -1650,6 +1609,9 @@ function onMouseDrag(event) {
 		
 		
 		console.log("Me Hit!");
+                
+           //////////// - Setting Limit on canvas trag - //////////////
+                
 	} else if (curr_view == "zoomed") {
             //alert(this.type);
                 if(change_x_pos_diff + event.delta.x >= -160 && change_x_pos_diff + event.delta.x <= 160){
