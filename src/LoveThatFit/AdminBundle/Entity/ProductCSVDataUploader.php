@@ -25,6 +25,7 @@ class ProductCSVDataUploader {
 
     public function read($row_length=1000) {
         if($row_length==null)$row_length=1000;
+        
         $this->row = 0;
         $this->previous_row = '';
 
@@ -62,48 +63,48 @@ class ProductCSVDataUploader {
                 }                
                     
                 break;
-            case 4:
+            case 3:
                 $this->readClothingType($data);
                 $this->product['styling_type'] = strtolower($data[$this->clothing_type_index]);
                 break;
-            case 5:
+            case 4:
                 $this->product['neck_line'] = strtolower($data[$this->clothing_type_index]);
                 break;
-            case 6:
+            case 5:
                 $this->product['sleeve_styling'] = strtolower($data[$this->clothing_type_index]);
                 break;
-            case 7:
+            case 6:
                 $this->product['rise'] = strtolower($data[$this->clothing_type_index]);
                 break;
-            case 8:
+            case 7:
                 $this->product['hem_length'] = strtolower($data[$this->clothing_type_index]);
                 break;
-            case 10:
+            case 9:
                 $this->product['stretch_type'] = $data[1];
                 $this->product['horizontal_stretch'] = $data[3];
                 $this->product['vertical_stretch'] = $data[5];
                 break;
-            case 12:
+            case 11:
                 $this->product['fabric_weight'] = $data[1];
                 $this->product['structural_detail'] = $data[4];
                 $this->product['styling_detail'] = $data[7];
 
                 break;
-            case 14:
+            case 13:
                 $this->product['fit_type'] = $data[1];
                 $this->product['layring'] = $data[4];
 
                 break;
-            case 17:
+            case 16:
                 $this->readFitPriority($data);
                 break;
-            case 20:
+            case 19:
                 $this->product['size_title_type'] = $this->changeSizeTitleType($data[0]);         
                 break;
-            case 22:
+            case 21:
                 $this->product['body_type'] = $data[0];                
                 break;
-            case 27:
+            case 26:
                 if ($this->product['gender'] == 'f' ){
                     $this->readColors($data); //['product_color'] = array($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
                 }
@@ -231,20 +232,20 @@ class ProductCSVDataUploader {
         while (isset($data[$i]) > 0) {
             $s = explode(" ", $data[$i]);
             if(array_key_exists(1,$s)) $this->product['sizes'][$s[1]]['key'] = $i;
-            $i = $i + 10;
+            $i = $i + 13;
         }
     }
 
     #---------------------------------------------------------------
 
     private function readMeasurement($data) {
-        if ($this->row >= 5 && $this->row <= 24) {
+        if ($this->row >= 3 && $this->row <= 20) {
             $sm = array();
             foreach ($this->product['sizes'] as $k => $v) {
                 # if flat measurement or (high & low measurements available then pic the data )
-                if ($data[intval($v['key'])+1]>0 || ($data[intval($v['key'])+5]>0 && $data[intval($v['key'])+6]>0)){
-                $i = $this->fitPoint($this->row);
-                $this->product['sizes'][$k][$i] = $this->fillFitPointMeasurement($data, intval($v['key']));
+                if ($data[intval($v['key'])+1]>0 || ($data[intval($v['key'])+6]>0 && $data[intval($v['key'])+7]>0 && $data[intval($v['key'])+8]>0)){
+                    $i = $this->fitPoint($this->row);
+                    $this->product['sizes'][$k][$i] = $this->fillFitPointMeasurement($data, intval($v['key']));
                 }
             }
         }
@@ -254,6 +255,16 @@ class ProductCSVDataUploader {
 
     private function fillFitPointMeasurement($data, $i) {
         return array('garment_measurement_flat' => $this->removePercent($data[$i + 1]),
+            #'stretch_type_percentage' => $this->removePercent($data[$i + 2]),
+            'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 2]),
+            'min_body_measurement' => $data[$i + 5],
+            'ideal_body_size_low' => $data[$i + 6],
+            'fit_model' => $data[$i + 7],
+            'ideal_body_size_high' => $data[$i + 8],
+            'maximum_body_measurement' => $data[$i + 9],
+        );
+        /*
+        return array('garment_measurement_flat' => $this->removePercent($data[$i + 1]),
             'stretch_type_percentage' => $this->removePercent($data[$i + 2]),
             'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 3]),
             'maximum_body_measurement' => $data[$i + 4],
@@ -262,16 +273,18 @@ class ProductCSVDataUploader {
             'ideal_body_size_low' => $data[$i + 7],
             'min_body_measurement' => $data[$i + 8],
         );
+         * 
+         */
     }
   
     #---------------------------------------------------------------
     private function fitPoint($i){
         if ($this->product['gender']=='f'){
-        if($i==5) return 'central_front_waist';
-        if($i==6) return 'back_waist';
-        if($i==7)return 'waist_to_hip';
+        if($i==3) return 'central_front_waist';
+        if($i==4) return 'back_waist';
+        if($i==5)return 'waist_to_hip';
         
-        if($i==8){
+        if($i==6){
             if ($this->product['clothing_type'] == 'trouser' || $this->product['clothing_type'] == "jean"){
                return 'inseam';
             }else{
@@ -279,20 +292,20 @@ class ProductCSVDataUploader {
             }
         }
         
-        if($i==9)return 'arm_length';
-        if($i==10)return 'bust';
-        if($i==11)return 'waist';
-        if($i==12)return 'hip';
-        if($i==13)return 'thigh';
-        if($i==14)return 'shoulder_across_front';
-        if($i==15)return 'shoulder_across_back';
-        if($i==16)return 'shoulder_height';
-        if($i==17)return 'tricep';
-        if($i==18)return 'bicep';
-        if($i==19)return 'wrist';
-        if($i==20)return 'knee';
-        if($i==21)return 'calf';
-        if($i==22)return 'ankle';
+        if($i==7)return 'arm_length';
+        if($i==8)return 'bust';
+        if($i==9)return 'waist';
+        if($i==10)return 'hip';
+        if($i==11)return 'thigh';
+        if($i==12)return 'shoulder_across_front';
+        if($i==13)return 'shoulder_across_back';
+        if($i==14)return 'shoulder_height';
+        if($i==15)return 'tricep';
+        if($i==16)return 'bicep';
+        if($i==17)return 'wrist';
+        if($i==18)return 'knee';
+        if($i==19)return 'calf';
+        if($i==20)return 'ankle';
         }else{
         if($i==5) return 'central_front_waist';
         if($i==6) return 'back_waist';
