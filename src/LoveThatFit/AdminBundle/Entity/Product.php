@@ -86,7 +86,7 @@ class Product {
     protected $name;
 
      /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank(groups={"product_detail"})
      */
     protected $control_number;

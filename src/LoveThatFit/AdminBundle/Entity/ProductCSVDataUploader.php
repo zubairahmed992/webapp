@@ -23,18 +23,17 @@ class ProductCSVDataUploader {
 
     //------------------------------------------------------
 
-    public function read($row_length=1000) {
-        if($row_length==null)$row_length=1000;
-        
+    public function read() {
         $this->row = 0;
         $this->previous_row = '';
-
+        ini_set('auto_detect_line_endings',TRUE);
         if (($handle = fopen($this->path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, $row_length, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle)) !== FALSE) {
                 $this->readProduct($data);
                 $this->previous_row = $data;
                 $this->row++;
             }
+            ini_set('auto_detect_line_endings',FALSE);
             fclose($handle);
             
             return $this->product;

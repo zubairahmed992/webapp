@@ -199,26 +199,22 @@ class ProductDataController extends Controller {
         $form = $this->getCsvUploadForm();
         $form->bindRequest($request);
         
-        $row_length = $form->get('row_length')->getData();
         $preview_only = $form->get('preview')->getData();
         $raw_only = $form->get('raw')->getData();
         
         $file = $form->get('csvfile');
         $filename = $file->getData();
-        #$pcsv = new ProductCSVHelper($filename);        
         $pcsv = new ProductCSVDataUploader($filename);        
         
         if ($preview_only){
-            $data = $pcsv->read($row_length);
-        return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read($row_length)));        
-        //return new Response(json_encode($data));
+            $data = $pcsv->read();
+            return $this->render('LoveThatFitAdminBundle:ProductData:preview_csv.html.twig', array('product'=>$pcsv->read()));        
             
         }elseif ($raw_only){
-            //$data = $pcsv->map($row_length);
-            $data = $pcsv->read($row_length);
+            $data = $pcsv->read();
             return new Response(json_encode($data));
         }else{
-            $data = $pcsv->read($row_length);
+            $data = $pcsv->read();
             $ar = $this->savecsvdata($pcsv, $data);
         }
         #$data = $pcsv->map();
@@ -239,10 +235,8 @@ class ProductDataController extends Controller {
         $form->bindRequest($request);        
         $file = $form->get('csvfile');
         $filename = $file->getData();
-        $row_length = $form->get('row_length')->getData();                
         $pcsv = new ProductCSVHelper($filename);        
-        $data = $pcsv->read($row_length);        
-        #$data = $pcsv->map();
+        $data = $pcsv->read();        
         return new Response(json_encode($data));
     }
 
@@ -331,9 +325,9 @@ class ProductDataController extends Controller {
             $psm = new ProductSizeMeasurement;
             $psm->setTitle($key);
             $psm->setProductSize($size);
-            $psm->setGarmentMeasurementFlat($value['garment_measurement_flat']);
-            $psm->setStretchTypePercentage($value['stretch_type_percentage']);
-            $psm->setGarmentMeasurementStretchFit($value['garment_measurement_stretch_fit']);
+            array_key_exists('garment_measurement_flat',$value)?$psm->setGarmentMeasurementFlat($value['garment_measurement_flat']):null;
+            array_key_exists('stretch_type_percentage',$value)?$psm->setStretchTypePercentage($value['stretch_type_percentage']):null;
+            array_key_exists('garment_measurement_stretch_fit',$value)?$psm->setGarmentMeasurementStretchFit($value['garment_measurement_stretch_fit']):null;
             $psm->setMaxBodyMeasurement($value['maximum_body_measurement']);
             $psm->setIdealBodySizeHigh($value['ideal_body_size_high']);
             $psm->setIdealBodySizeLow($value['ideal_body_size_low']);
@@ -349,19 +343,7 @@ class ProductDataController extends Controller {
     #------------------------------------------------------
     private function getCsvUploadForm(){
            return $this->createFormBuilder()
-                ->add('csvfile', 'file')
-                     ->add('row_length', 'choice', array(
-                'choices'   => array(
-                    '500' => 500, 
-                    '700' => 700, 
-                    '800' => 800, 
-                    '1000' => 1000, 
-                    '2000' => 2000, 
-                    '3000' => 3000, 
-                    ),
-                'empty_value' => 'Choose Length',
-                'required'  => false,
-                    ))
+                ->add('csvfile', 'file')                     
                 ->add('preview', 'checkbox', array(
                   'label'     => 'preview only',
                   'required'  => false,
