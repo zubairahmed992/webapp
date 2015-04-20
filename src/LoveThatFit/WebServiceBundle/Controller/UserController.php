@@ -17,6 +17,13 @@ use LoveThatFit\UserBundle\Form\Type\RegistrationType;
 
 class UserController extends Controller {
 
+
+//-------------------------------------------------- Connection Check----------------------///   
+    public function connectionCheckAction(){
+       return new Response('yes'); 
+    }
+    
+    
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
 # USER_AUTHENTICATION_URL   /web_service/login
 #----------------------------------------------

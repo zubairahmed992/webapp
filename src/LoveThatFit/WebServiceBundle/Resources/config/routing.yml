@@ -11,6 +11,10 @@ service_interface_routes:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/service_interface.yml"
     prefix:   /
 #----------------------------- User Routes--------------------------------------#
+ws_connection_check:
+    pattern:  /web_service/connection_check
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:connectionCheck }
+
 ws_login:
     pattern:  /web_service/login
     defaults: { _controller: LoveThatFitWebServiceBundle:User:login }
