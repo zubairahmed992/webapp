@@ -8,6 +8,7 @@ hitOptions = {
 	tolerance: 22
 };
 
+
 change_x_pos_diff = 0;
 change_y_pos_diff = 0;
 inc_ratio = 1;
@@ -44,11 +45,13 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 if(dv_edit_type == "registration" || dv_edit_type == "camera"){
     chk_no_img_path = true;
-   // alert(dv_edit_type);
 }
 if(dv_edit_type == "edit"){
-    chk_no_img_path = false;
-    //alert("edit");
+    if(parseInt($("#mask_y").attr("value")) == 0){
+       chk_no_img_path = true;
+    }else{
+        chk_no_img_path = false;
+    }
 }
 
 //true
@@ -584,7 +587,7 @@ console.log(curr_path_prefix);
 var but_back_top_url = curr_path_prefix + "bundles/lovethatfit/site/images/back_button_app.png";
 var but_back_top = new Raster(but_back_top_url);
 
-but_back_top.position = new Point(28, 24);
+but_back_top.position = new Point(25, 22);
 
 
 var but_zoom_in_url = curr_path_prefix + "bundles/lovethatfit/site/images/zoom_inw.png";
@@ -1580,7 +1583,8 @@ function onMouseDrag(event) {
                                     if(active_segment < (def_segment - px_range)){
                                         path.segments[curr_dragged_seg].point.y = def_segment - px_range;
                                     }else {
-                                        segment.point += event.delta;
+                                        //console.log("kkkkkkk");
+                                        //segment.point += event.delta;
                                     }
                                 }
                         }
