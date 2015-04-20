@@ -773,8 +773,8 @@ private function setObjectWithArray($user, $request_array) {
         if (array_key_exists('neck', $request_array)) {
             $measurement->setNeck($request_array['neck']);
         }
-        if (array_key_exists('clothingFit', $request_array)) {
-            $measurement->setBodyTypes($request_array['clothingFit']);
+        if (array_key_exists('bodyType', $request_array)) {
+            $measurement->setBodyTypes($request_array['bodyType']);
         }
         if (array_key_exists('bodyShape', $request_array)) {
             $measurement->setBodyShape($request_array['bodyShape']);
