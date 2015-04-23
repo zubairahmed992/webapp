@@ -39,10 +39,22 @@ class ProductSizeMeasurement
     private $title;
     
     /**
-     * @var string $min_body_measurement
+     * @var float $grade_rule
      *
-     * @ORM\Column(name="min_body_measurement", type="string",nullable=true)
+     * @ORM\Column(name="grade_rule", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
+    
+    private $grade_rule;
+    
+    
+    /**
+     * @var float $min_body_measurement
+     *
+     * @ORM\Column(name="min_body_measurement", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    
     private $min_body_measurement;
     
 
@@ -67,6 +79,13 @@ class ProductSizeMeasurement
      * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
      */
     private $max_body_measurement=0;
+    /**
+     * @var float $max_calculated
+     *
+     * @ORM\Column(name="max_calculated", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
+    private $max_calculated=0;
     /**
      * @var float $vertical_stretch
      *
@@ -112,7 +131,7 @@ class ProductSizeMeasurement
     private $ideal_body_size_low=0;
     
     
-    
+    #-------------------------------------------------------------------
 
     /**
      * Get id
@@ -130,6 +149,7 @@ class ProductSizeMeasurement
      * @param string $title
      * @return ProductSizeMeasurement
      */
+    #-------------------------------------------------------------------
     public function setTitle($title)
     {
         $this->title = $title;
@@ -147,6 +167,30 @@ class ProductSizeMeasurement
         return $this->title;
     }
 
+    #-------------------------------------------------------------------
+    /**
+     * Set grade_rule
+     *
+     * @param float $grade_rule
+     * @return ProductSizeMeasurement
+     */
+    public function setGradeRule($grade_rule)
+    {
+        $this->grade_rule = $grade_rule;
+    
+        return $this;
+    }
+
+    /**
+     * Get GradeRule
+     *
+     * @return float 
+     */
+    public function getGradeRule()
+    {
+        return $this->grade_rule;
+    }
+    #-------------------------------------------------------------------
     /**
      * Set garment_measurement_flat
      *
@@ -159,7 +203,7 @@ class ProductSizeMeasurement
     
         return $this;
     }
-
+#-------------------------------------------------------------------
     /**
      * Get garment_measurement_flat
      *
@@ -176,6 +220,7 @@ class ProductSizeMeasurement
      * @param float $maxBodyMeasurement
      * @return ProductSizeMeasurement
      */
+    #-------------------------------------------------------------------
     public function setMaxBodyMeasurement($maxBodyMeasurement)
     {
         $this->max_body_measurement = $maxBodyMeasurement;
@@ -193,6 +238,30 @@ class ProductSizeMeasurement
         return $this->max_body_measurement;
     }
 
+    /**
+     * Set max_calculated
+     *
+     * @param float $maxCalculated
+     * @return ProductSizeMeasurement
+     */
+    #-------------------------------------------------------------------
+    public function setMaxCalculated($maxCalculated)
+    {
+        $this->max_calculated = $maxCalculated;
+    
+        return $this;
+    }
+
+    /**
+     * Get max_calculated
+     *
+     * @return float 
+     */
+    public function getMaxCalculated()
+    {
+        return $this->max_calculated;
+    }
+    #-------------------------------------------------------------------
     /**
      * Set vertical_stretch
      *
@@ -215,7 +284,7 @@ class ProductSizeMeasurement
     {
         return $this->vertical_stretch;
     }
-
+#-------------------------------------------------------------------
     /**
      * Set horizontal_stretch
      *
@@ -238,7 +307,7 @@ class ProductSizeMeasurement
     {
         return $this->horizontal_stretch;
     }
-
+#-------------------------------------------------------------------
     /**
      * Set stretch_type_percentage
      *
@@ -261,7 +330,7 @@ class ProductSizeMeasurement
     {
         return $this->stretch_type_percentage;
     }
-
+#-------------------------------------------------------------------
     /**
      * Set ideal_body_size_high
      *
@@ -284,7 +353,7 @@ class ProductSizeMeasurement
     {
         return $this->ideal_body_size_high;
     }
-
+#-------------------------------------------------------------------
     /**
      * Set ideal_body_size_low
      *
@@ -307,7 +376,7 @@ class ProductSizeMeasurement
     {
         return $this->ideal_body_size_low;
     }
-
+#-------------------------------------------------------------------
     /**
      * Set product_size
      *
@@ -330,7 +399,7 @@ class ProductSizeMeasurement
     {
         return $this->product_size;
     }
-
+#-------------------------------------------------------------------
     /**
      * Set garment_measurement_stretch_fit
      *
@@ -353,7 +422,7 @@ class ProductSizeMeasurement
     {
         return $this->garment_measurement_stretch_fit;
     }
-
+#-------------------------------------------------------------------
     /**
      * Set min_body_measurement
      *
@@ -377,7 +446,7 @@ class ProductSizeMeasurement
         return $this->min_body_measurement;
     }
     
-    
+    #-------------------------------------------------------------------
     
     /**
      * Set fit_model_measurement

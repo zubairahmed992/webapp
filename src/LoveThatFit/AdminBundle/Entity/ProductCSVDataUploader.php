@@ -261,7 +261,10 @@ class ProductCSVDataUploader {
             'fit_model' => $data[$i + 7],
             'ideal_body_size_high' => $data[$i + 8],
             'maximum_body_measurement' => $data[$i + 9],
-        );
+            'grade_rule' => $data[$i + 3],
+            'max_calculated' => $data[$i + 10],
+            
+            );
         /*
         return array('garment_measurement_flat' => $this->removePercent($data[$i + 1]),
             'stretch_type_percentage' => $this->removePercent($data[$i + 2]),
