@@ -207,21 +207,21 @@ class ProductSize
         foreach ($this->product_size_measurements as $psm) {
             if($psm->getTitle()!='key')
             $size_array[$psm->getTitle()] = array( 'id' => $psm->getId(),  
-                                                   'min_body_measurement' => $psm->getMinBodyMeasurement(), # will remove after checking usage 
                                                    'title' => $psm->getTitle(), # will remove after checking usage 
-                                                   'ideal_body_high' => $psm->getIdealBodySizeHigh(), # will remove 
-                                                   'ideal_body_low' => $psm->getIdealBodySizeLow(), # will remove 
                                                    'fit_point' => $psm->getTitle(),                                                          
-                                                   'ideal_body_size_high' => $psm->getIdealBodySizeHigh(), 
-                                                   'ideal_body_size_low' => $psm->getIdealBodySizeLow(), 
-                                                   'max_body_measurement' => $psm->getMaxBodyMeasurement(),
-                                                    'garment_measurement_flat' => $psm->getGarmentMeasurementFlat(),
                                                    'fit_priority' =>  array_key_exists($psm->getTitle(), $fp)? $fp[$psm->getTitle()]: 0,
-                                                    'grade_rule' =>  $psm->getGradeRule(),
-                                                    'max_calculated' =>  $psm->getMaxCalculated(),
-                                                    'garment_measurement_flat' =>  $psm->getGarmentMeasurementFlat(),
-                                                    'garment_measurement_stretch_fit' =>  $psm->getGarmentMeasurementStretchFit(),
-                
+                                                   'grade_rule' =>  $psm->getGradeRule(),
+                                                   'garment_measurement_flat' => $psm->getGarmentMeasurementFlat(),                
+                                                   'garment_measurement_stretch_fit' =>  $psm->getGarmentMeasurementStretchFit(),                
+                                                   'min_calculated' =>  $psm->getMinCalculated(),
+                                                   'min_body_measurement' => $psm->getMinBodyMeasurement(), # will remove after checking usage 
+                                                   'ideal_body_low' => $psm->getIdealBodySizeLow(), # will remove 
+                                                   'ideal_body_size_low' => $psm->getIdealBodySizeLow(), 
+                                                   'fit_model' => $psm->getFitModelMeasurement(), 
+                                                   'ideal_body_high' => $psm->getIdealBodySizeHigh(), # will remove 
+                                                   'ideal_body_size_high' => $psm->getIdealBodySizeHigh(), 
+                                                   'max_body_measurement' => $psm->getMaxBodyMeasurement(),
+                                                   'max_calculated' =>  $psm->getMaxCalculated(),                                                   
                                                    );
          }
          $size_array['size_title']=$this->getTitle();

@@ -226,7 +226,6 @@ class ProductCSVDataUploader {
     #---------------------------------------------------------------
 
     private function readSize($data) {
-        //$this->product['sizes'] = array($data[23], $data[31], $data[39], $data[47], $data[55], $data[63], $data[71], $data[79], $data[87], $data[95]);
         $i = 27;
         while (isset($data[$i]) > 0) {
             $s = explode(" ", $data[$i]);
@@ -253,30 +252,18 @@ class ProductCSVDataUploader {
     #---------------------------------------------------------------
 
     private function fillFitPointMeasurement($data, $i) {
-        return array('garment_measurement_flat' => $this->removePercent($data[$i + 1]),
-            #'stretch_type_percentage' => $this->removePercent($data[$i + 2]),
+        return array(
+            'garment_measurement_flat' => $this->removePercent($data[$i + 1]),
             'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 2]),
+            'grade_rule' => $data[$i + 3],
+            'min_calculated' => $data[$i + 4],
             'min_body_measurement' => $data[$i + 5],
             'ideal_body_size_low' => $data[$i + 6],
             'fit_model' => $data[$i + 7],
             'ideal_body_size_high' => $data[$i + 8],
-            'maximum_body_measurement' => $data[$i + 9],
-            'grade_rule' => $data[$i + 3],
+            'maximum_body_measurement' => $data[$i + 9],            
             'max_calculated' => $data[$i + 10],
-            
-            );
-        /*
-        return array('garment_measurement_flat' => $this->removePercent($data[$i + 1]),
-            'stretch_type_percentage' => $this->removePercent($data[$i + 2]),
-            'garment_measurement_stretch_fit' => $this->removePercent($data[$i + 3]),
-            'maximum_body_measurement' => $data[$i + 4],
-            'ideal_body_size_high' => $data[$i + 5],
-            'fit_model' => $data[$i + 6],
-            'ideal_body_size_low' => $data[$i + 7],
-            'min_body_measurement' => $data[$i + 8],
-        );
-         * 
-         */
+            );       
     }
   
     #---------------------------------------------------------------

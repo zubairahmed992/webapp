@@ -47,7 +47,14 @@ class ProductSizeMeasurement
     
     private $grade_rule;
     
+    /**
+     * @var float $min_calculated
+     *
+     * @ORM\Column(name="min_calculated", type="float",nullable=true)
+     * @Assert\Regex(pattern= "/[0-9]/",message="Require number only") 
+     */
     
+    private $min_calculated;
     /**
      * @var float $min_body_measurement
      *
@@ -245,6 +252,29 @@ class ProductSizeMeasurement
      * @return ProductSizeMeasurement
      */
     #-------------------------------------------------------------------
+    /**
+     * Set min_body_measurement
+     *
+     * @param float $minBodyMeasurement
+     * @return ProductSizeMeasurement
+     */
+    public function setMinCalculated($minCalculated)
+    {
+        $this->min_calculated = $minCalculated;
+    
+        return $this;
+    }
+
+    /**
+     * Get min_calculated
+     *
+     * @return float 
+     */
+    public function getMinCalculated()
+    {
+        return $this->min_calculated;
+    }
+#-------------------------------------------------------------------
     public function setMaxCalculated($maxCalculated)
     {
         $this->max_calculated = $maxCalculated;
