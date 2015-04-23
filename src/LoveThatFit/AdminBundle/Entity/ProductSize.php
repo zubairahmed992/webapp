@@ -217,10 +217,15 @@ class ProductSize
                                                    'max_body_measurement' => $psm->getMaxBodyMeasurement(),
                                                     'garment_measurement_flat' => $psm->getGarmentMeasurementFlat(),
                                                    'fit_priority' =>  array_key_exists($psm->getTitle(), $fp)? $fp[$psm->getTitle()]: 0,
+                                                    'grade_rule' =>  $psm->getGradeRule(),
+                                                    'max_calculated' =>  $psm->getMaxCalculated(),
+                                                    'garment_measurement_flat' =>  $psm->getGarmentMeasurementFlat(),
+                                                    'garment_measurement_stretch_fit' =>  $psm->getGarmentMeasurementStretchFit(),
+                
                                                    );
          }
          $size_array['size_title']=$this->getTitle();
-         $size_array['body_type']=$this->getBodyType();
+         $size_array['body_type']=$this->getBodyType();     
             return $size_array;
     }
       #-------------------------------------------------------------------------------

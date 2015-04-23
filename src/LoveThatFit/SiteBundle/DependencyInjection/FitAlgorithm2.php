@@ -158,7 +158,8 @@ class FitAlgorithm2 {
             'mid_low_high' => $max_min['mid_low_high'],
             'ideal_body_size_high' => $fp_specs['ideal_body_size_high'],
             'max_body_measurement' => $fp_specs['max_body_measurement'],
-            'calc_max_body_measurement' => $max_min['calc_max_body_measurement'],
+            'calc_max_body_measurement' => $fp_specs['max_calculated'],
+            'grade_rule' => $fp_specs['grade_rule'],
             'fit_priority' => $fp,
             'body_measurement' => $body,                 
             'min_fx' => $this->scale['between_min_low']['start'] * $fp,
@@ -166,6 +167,8 @@ class FitAlgorithm2 {
             'high_fx' => $this->scale['between_mid_high']['start'] * $fp,
             'low_fx' => $this->scale['between_low_mid']['start'] * $fp,
             'avg_fx' => $fp,
+            'garment_measurement_flat' => $fp_specs['garment_measurement_flat'],
+            'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],
         );
         $message_array=$this->calculate_fitindex($fp_measurements);
         $fp_measurements['status'] = $message_array['status'];
