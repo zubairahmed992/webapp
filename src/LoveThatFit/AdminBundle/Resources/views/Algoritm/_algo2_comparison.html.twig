@@ -24,7 +24,7 @@
                 <td style="width: 50px;background-color: #FFFFDF"><b>
                         <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
                     
-                    </b>| <i>fit_index: {{size_specs.fit_index}}</i> 
+                    </b> | <i>fit_index: {{size_specs.fit_index}}</i> 
                    
 
                         </td>            
@@ -103,7 +103,7 @@
                                         <td></td>                                        
                                         <td></td>       
                                         <td></td>
-                                        <td>
+                                        <td>{{size_specs.message}}
                                             ({{size_specs.status}})</td>                                                                                
                                         <td>{{size_specs.variance}}</td>                
                                         
