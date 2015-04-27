@@ -7,8 +7,14 @@
 {% endif %}
     
 {% if (data.recommendation is defined) and  (data.recommendation is not null) %}
-    <b>Recommendation</b> 
+    <blockquote>
+  <p>
+  <b>Recommendation</b> 
     {{data.recommendation.description}}
+  </p>
+</blockquote>
+    
+    
         {# for size, size_specs in data.recommendation %}     
             {% if size_specs is not iterable %}
                 &nbsp;|&nbsp;{{size}} : {{size_specs}}
@@ -18,10 +24,10 @@
     
 {% if data.feedback is defined %}
     <h5>Feedback</h5>
-    <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
+    <table class="table table-condensed table-bordered">
     {% for size, size_specs in data.feedback %} 
             <tr>
-                <td style="width: 50px;background-color: #FFFFDF"><b>
+                <td style="background-color: #FFFFDF"><b>
                         <a target="_blank" href='{{path("admin_product_detail_size_edit",{"id":product.id, "size_id":size_specs['id']})}}' > {{size}}</a>
                     
                     </b> | <i>fit_index: {{size_specs.fit_index}}</i> 
@@ -32,57 +38,69 @@
             {% if size_specs.fit_points is defined %}
                     <tr>
                         <td>
-                            <table width="100%" style="border: solid 1px #CCCCCC;" align="center">
-                                <b>
+                            <table  class="table table-bordered table-hover" data-height="299">
                                     <tr>
-                                        <td>Fit Priority</td>
-                                        <td style="background-color:#A9F5D0">Body</td>
-                                        <td style="background-color:#A9F5D0">FX</td>                                                                             
-                                        <td style="background-color:#A9F5D0">Grade Rule	</td>
-                                        <td style="background-color:#A9F5D0">Garment Dimension</td>	
-                                        <td style="background-color:#A9F5D0">Garment Stretch </td>
-
-                                        <td style="background-color:#A9F5D0">Lowest</td>
-                                        <td style="color:Red">MIN Actual</td>                                        
-                                        <td style="background-color:#A9F5D0">Low</td>                                        
-                                        
-                                        <td style="background-color:#A9F5D0">Fit Model</td>
-                                        <td style="background-color:#A9F5D0">High</td>
-                                        <td style="color:Red">Max Actual</td>
-                                        <td style="background-color:#A9F5D0">MAX Calc</td>
-                                        <td>message</td>
-                                        <td>variance</td>
+                                        <th>Fit Priority</th>
+                                        <th>Body</th>
+                                        <th>FX</th>                                                                             
+                                        <th>Grade Rule	</th>
+                                        <th>Garment Dimension</th>	
+                                        <th>Garment Stretch </th>
+                                        <th>Lowest</th>
+                                        <th>MIN Actual</th>                                        
+                                        <th>Low</th>             
+                                        <th>Fit Model</th>
+                                        <th>High</th>
+                                        <th>Max Actual</th>
+                                        <th>MAX Calc</th>
+                                        <th>message</th>
+                                        <th>variance</th>
                                     </tr>
-                                </b>
-
+                                
                             {% for fp, fp_specs in size_specs.fit_points %} 
-
-
-                                    <tr>                                        
-                                        <td>{{fp}}(<b>{{fp_specs.fit_priority}}</b>)</td>
-                                        <td style="font-weight: bold; background-color:#A9F5D0">{{fp_specs.body_measurement}}</td>
+                                    
+                                    {%if (fp_specs.status ==5) %}
+                                        <tr  style="color:#424242;font-size:12px;">
+                                    {%elseif (fp_specs.status ==4 or fp_specs.status ==3) %}
+                                        <tr style="color:#084B8A;font-size:12px;">                                    
+                                    {%elseif (fp_specs.status ==2 or fp_specs.status ==1 or fp_specs.status ==0   or  fp_specs.status ==-1 or fp_specs.status ==-2) %}
+                                        <tr style="color:#31B404;font-size:12px;">
+                                    {%elseif (fp_specs.status ==-3 or fp_specs.status ==-4) %}
+                                        <tr style="color:#61210B;font-size:12px;">
+                                    {%elseif (fp_specs.status ==-5) %}
+                                        <tr  style="color:#424242;font-size:12px;">                                                                                        
+                                    {% else %}
+                                         <tr style="font-size:12px;">
+                                    {% endif %}
+                                            
+                                    
+                                    
+                                        <td>{{fp}}&nbsp;(<b>{{fp_specs.fit_priority}}</b>)</td>
+                                        <td>{{fp_specs.body_measurement}}</td>
                                         {% if (fp_specs.body_fx<0)%}
-                                            <td style="font-weight: bold; background-color:pink">{{fp_specs.body_fx}}{#fp_specs.fp_fx#}</td>
+                                            <td>{{fp_specs.body_fx}}</td>
                                         {% else %}
-                                            <td style="font-weight: bold; background-color:#A9F5D0">{{fp_specs.body_fx}}{#fp_specs.fp_fx#}</td>
+                                            <td>{{fp_specs.body_fx}}</td>
                                         {% endif %}
                                         
-                                        <td style="background-color:#A9F5D0">{{fp_specs.grade_rule}}</td>
-                                        <td style="background-color:#A9F5D0">{{fp_specs.garment_measurement_flat}}</td>
-                                        <td style="background-color:#A9F5D0">{{fp_specs.garment_measurement_stretch_fit}}</td>
+                                        <td>{{fp_specs.grade_rule}}</td>
+                                        <td>{{fp_specs.garment_measurement_flat}}</td>
+                                        <td>{{fp_specs.garment_measurement_stretch_fit}}</td>
                                         
-                                        <td style="background-color:#A9F5D0">{{fp_specs.calc_min_body_measurement}}</td>
-                                        <td style="font-weight: bold; color:Red">{{fp_specs.min_body_measurement}}</td>                                        
-                                        <td style="background-color:#A9F5D0">{{fp_specs.ideal_body_size_low}}</td>                                        
+                                        <td>{{fp_specs.calc_min_body_measurement}}</td>
+                                        <td>{{fp_specs.min_body_measurement}}</td>                                        
+                                        <td>{{fp_specs.ideal_body_size_low}}</td>                                        
                                         
-                                        <td style="background-color:#A9F5D0"><b>{{fp_specs.fit_model}}</b></td>
-                                        <td style="background-color:#A9F5D0">{{fp_specs.ideal_body_size_high}}</td>
-                                        <td style="font-weight: bold; color:Red">{{fp_specs.max_body_measurement}}</td>                                
-                                        <td style="background-color:#A9F5D0">{{fp_specs.calc_max_body_measurement}}</td>
-                                        <td>{{fp_specs.message}}
+                                        <td><b>{{fp_specs.fit_model}}</b></td>
+                                        <td>{{fp_specs.ideal_body_size_high}}</td>
+                                        <td>{{fp_specs.max_body_measurement}}</td>                                
+                                        <td>{{fp_specs.calc_max_body_measurement}}</td>
+                                        <td> <span  style="font-size:11px;">{{fp_specs.message}}
                                         ({{fp_specs.status}})
-                                        <br>
+                                        
+                                        
                                         {{fp_specs.fitting_alert}}
+                                        </span>
                                         </td>
                                         <td>{{fp_specs.variance}}</td>
                                     </tr>
@@ -103,18 +121,22 @@
                                         <td></td>                                        
                                         <td></td>       
                                         <td></td>
-                                        <td>{{size_specs.message}}
-                                            ({{size_specs.status}})</td>                                                                                
+                                        <td> <span  style="font-size:11px;">
+                                            {{size_specs.message}}
+                                            ({{size_specs.status}})
+                                            </span>   
+                                                </td>                                                                                
                                         <td>{{size_specs.variance}}</td>                
                                         
                                     </tr>
                             {% if size_specs.hem_advice is defined %}
                                     <tr>
-                                        <td colspan="10">
+                                        <td colspan="15">
+                                            <span  style="font-size:12px;">
                                             <b>Hem Advice :</b> {{size_specs.hem_advice.message}}
-                                            
-                                            <br>
-                                            <span  style="background-color: #FFFFFF; font-size:11px;">
+                                            </span>
+                                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                                            <span  style="font-size:12px;">
                                                     <b>Body</b>&nbsp;
                                                     (&nbsp;
                                                     {{ (size_specs.hem_advice.body_outseam is defined)? 'outseam:'~size_specs.hem_advice.body_outseam~' , ' }}
@@ -124,8 +146,8 @@
                                                     {{ (size_specs.hem_advice.ankle is defined)? 'ankle:'~size_specs.hem_advice.ankle~' , ' }}
                                                     &nbsp;)
                                             </span>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span  style="background-color: #FFFFFF; font-size:11px;">
+                                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                                            <span  style="font-size:12px;">
                                                     <b>Item</b> &nbsp;
                                                     (&nbsp;
                                                     {{ (size_specs.hem_advice.item_hem_length is defined) ? 'hem length:'~size_specs.hem_advice.item_hem_length~' , '}}
