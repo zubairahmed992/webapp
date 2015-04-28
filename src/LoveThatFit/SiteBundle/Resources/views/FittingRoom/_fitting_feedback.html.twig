@@ -20,7 +20,7 @@
 {%if (data.feedback.fit_points is defined)%}
          {% for fp, fp_specs in data.feedback.fit_points %}             
             <li><b>{{fp_specs.label}}</b>            
-            {%if (fp_specs.status == -5)%}
+            {%if (fp_specs.status == -6)%}
                 <a href="{{ path('user_profile_about_me') }}" > missing measurements</a> </li>
            {%else%}
             {{' : '~fp_specs.message}}

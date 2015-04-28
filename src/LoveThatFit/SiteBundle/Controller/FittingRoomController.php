@@ -4,6 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\SiteBundle\AvgAlgorithm;
+use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class FittingRoomController extends Controller {
@@ -52,7 +53,8 @@ class FittingRoomController extends Controller {
         
         $product_size = $productItem->getProductSize();
         $product=$productItem->getProduct();
-        $comp = new AvgAlgorithm($user,$product);
+        #$comp = new AvgAlgorithm($user,$product);
+        $comp = new FitAlgorithm2($user,$product);
         $fb=$comp->getSizeFeedBack($product_size);
         $this->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user,$product->getId(), $productItem, $fb);    
         $this->get('site.helper.userfittingroomitem')->add($user,$productItem);    

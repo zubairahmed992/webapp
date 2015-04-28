@@ -19,6 +19,8 @@ class FitAlgorithm2 {
         'between_high_max' => array('status'=>-3, 'start'=>0, 'end'=>0.8,'low_point'=>'ideal_body_size_high', 'high_point'=>'calc_max_body_measurement',  'message'=>'between_high_max'),        
         'at_max' => array('status'=>-4, 'start'=>0, 'end'=>0,'low_point'=>'at_max', 'high_point'=>'at_max',  'message'=>'at_max'),        
         'beyond_max' => array('status'=>-5, 'start'=>0, 'end'=>0,'low_point'=>'at_max', 'high_point'=>null,  'message'=>'beyond_max'),        
+        'user_measurement_missing' => array('status'=>-6, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'user_measurement_missing'),        
+        'product_measurement_missing' => array('status'=>-7, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'product_measurement_missing'),        
     );
 #-----------------------------------------------------
 
@@ -41,6 +43,42 @@ class FitAlgorithm2 {
             $cm = $this->array_mix();
             return $cm;
         }
+    }
+#-----------------------------------------------------    
+    function getSizeFeedBack($size) {
+
+        if ($size == null || !isset($size))
+            return 'no size';
+
+        $this->product = $size->getProduct();
+        $fb = $this->getFeedBack();
+        if (array_key_exists('recommendation', $fb)) {
+            if ($fb['recommendation']['id'] == $size->getId()) { # if it matches best fit            
+                return array(
+                    'feedback' => $fb['recommendation'],
+                );
+            }
+        }
+        if (array_key_exists('feedback', $fb)) {
+        foreach ($fb['feedback'] as $size_fb) {
+            if ($size_fb['id'] == $size->getId()) {
+                #return array($size_fb['description'] => $size_fb);
+                  if (array_key_exists('recommendation', $fb)) {
+                        return array(
+                            'feedback' => $size_fb,
+                            'recommendation' => $fb['recommendation'],
+                        );      
+                  }else{
+                    return array(
+                          'feedback' => $size_fb,
+                      );
+                  }
+      
+                
+            }
+        }
+        }
+        return null;
     }
 
 #-----------------------------------------------------
@@ -66,6 +104,7 @@ class FitAlgorithm2 {
             $fb[$size_identifier]['avg_fx'] =0;
             $fb[$size_identifier]['status'] =6;
             $fb[$size_identifier]['variance']=0;
+            $fb[$size_identifier]['fits']=true;
             if (is_array($size_specs)) {
              foreach($fpwp as $pfp_key=>$pfp_value){
                     if (array_key_exists($pfp_key, $size_specs)) {
@@ -81,6 +120,7 @@ class FitAlgorithm2 {
                         if ($fb[$size_identifier]['fit_points'][$pfp_key]['status']==$this->status['beyond_max']){
                             $fb[$size_identifier]['status'] =$this->status['beyond_max'];
                             $fb[$size_identifier]['fit_index'] = 0;
+                            $fb[$size_identifier]['fits']=false;
                         }elseif($fb[$size_identifier]['status'] != $this->status['beyond_max']){
                             $fb[$size_identifier]['fit_index'] = $fb[$size_identifier]['fit_index']+$fb[$size_identifier]['fit_points'][$pfp_key]['body_fx'];                        
                         }
@@ -147,43 +187,9 @@ class FitAlgorithm2 {
     }
     
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    private function __get_fit_point_array($fp_specs, $body_specs) {
-        
-        $max_min=$this->calculate_maxmin($fp_specs);
-        $body = $this->get_relevant_body_measurement($fp_specs, $body_specs);
-        $fp=($fp_specs['fit_priority']/10);
-
-        $fp_measurements = array('fit_point' => $fp_specs['fit_point'],
-            'label' => $this->getFitPointLabel($fp_specs['fit_point']),
-            'calc_min_body_measurement' => $max_min['calc_min_body_measurement'],
-            'min_body_measurement' => $fp_specs['min_body_measurement'],
-            'ideal_body_size_low' => $fp_specs['ideal_body_size_low'],
-            'fit_model' => $fp_specs['fit_model'],
-            'fit_model' => $max_min['fit_model'],
-            'ideal_body_size_high' => $fp_specs['ideal_body_size_high'],
-            'max_body_measurement' => $fp_specs['max_body_measurement'],
-            'calc_max_body_measurement' => $fp_specs['max_calculated'],
-            'grade_rule' => $fp_specs['grade_rule'],
-            'fit_priority' => $fp,
-            'body_measurement' => $body,                 
-            'min_fx' => $this->scale['between_min_low']['start'] * $fp,
-            'max_fx' => $this->scale['between_high_max']['start'] * $fp,
-            'high_fx' => $this->scale['between_mid_high']['start'] * $fp,
-            'low_fx' => $this->scale['between_low_mid']['start'] * $fp,
-            'avg_fx' => $fp,
-            'garment_measurement_flat' => $fp_specs['garment_measurement_flat'],
-            'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],
-        );
-        $message_array=$this->calculate_fitindex($fp_measurements);
-        $fp_measurements['status'] = $message_array['status'];
-        $fp_measurements['message'] = $message_array['message'];                
-        $fp_measurements['fitting_alert'] = $this->get_fitting_alert_message($message_array['status']);                
-        $fp_measurements['body_fx'] = $message_array['body_fx'];   
-        $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);
-        return $fp_measurements;
-    }
     
     private function get_fit_point_array($fp_specs, $body_specs) {
+        #$max_min=$this->calculate_maxmin($fp_specs);
         $body = $this->get_relevant_body_measurement($fp_specs, $body_specs);
         $fp=($fp_specs['fit_priority']/10);
 
@@ -208,6 +214,7 @@ class FitAlgorithm2 {
             'garment_measurement_stretch_fit' => $fp_specs['garment_measurement_stretch_fit'],
         );
         $message_array=$this->calculate_fitindex($fp_measurements);
+        $fp_measurements['fits'] = $message_array['fits'];
         $fp_measurements['status'] = $message_array['status'];
         $fp_measurements['message'] = $message_array['message'];                
         $fp_measurements['fitting_alert'] = $this->get_fitting_alert_message($message_array['status']);                
@@ -229,18 +236,21 @@ private function calculate_maxmin($fp_specs){
 private function calculate_fitindex($fp_specs){
     $fp_fx=0;       
     $fp_scale=array();
-    
+    $fits=false;
     if ($fp_specs['body_measurement'] == $fp_specs['fit_model']) {
             $fp_scale = $this->scale['at_mid'];
             $fp_fx = $fp_specs['avg_fx'];
+            $fits=true;
         } elseif ($fp_specs['fit_model'] > $fp_specs['body_measurement']) {
             $fp_scale = $this->scale['below_min'];
             if ($fp_specs['body_measurement'] > $fp_specs['ideal_body_size_low']) {
                 $fp_fx = $this->grade_to_scale($fp_specs);
                 $fp_scale = $this->scale['between_low_mid'];
+                $fits=true;
             } elseif ($fp_specs['body_measurement'] > $fp_specs['calc_min_body_measurement']) {
                 $fp_fx = $this->grade_to_scale($fp_specs);
                 $fp_scale = $this->scale['between_min_low'];
+                $fits=true;
             }
         } elseif ($fp_specs['fit_model'] < $fp_specs['body_measurement']) {
             $fp_scale = $this->scale['beyond_max'];
@@ -248,14 +258,17 @@ private function calculate_fitindex($fp_specs){
             if ($fp_specs['body_measurement'] < $fp_specs['ideal_body_size_high']) {
                 $fp_fx = $this->grade_to_scale($fp_specs);
                 $fp_scale = $this->scale['between_mid_high'];
+                $fits=true;
             } elseif ($fp_specs['body_measurement'] < $fp_specs['max_body_measurement']) {
                 $fp_fx = $this->grade_to_scale($fp_specs);
                 $fp_scale = $this->scale['between_high_max'];
+                $fits=true;
             }
         }
 
         $fx = $this->limit_num($fp_fx);        
         return array('body_fx'=>$fx, 'message' => $fp_scale['message'], 'status'=>$fp_scale['status'],
+            'fits'=>$fits,
             );
 }
     # -----------------------------------------------------
@@ -665,11 +678,6 @@ private function calculate_fitindex($fp_specs){
         }
         return $str;
     }
-    
-    
-    
-    
-    
     
     
 }
