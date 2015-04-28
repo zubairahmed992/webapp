@@ -679,5 +679,102 @@ private function calculate_fitindex($fp_specs){
         return $str;
     }
     
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~> Devices Bits
+    #------------------------------------------------    
+      #-----------------------------------------------------
+    function getStrippedFeedBackJSON() {
+        return json_encode($this->getStrippedFeedBack());
+    }
+    
+    #-----------------------------------------------------    
+    
+    function getStrippedFeedBack() {
+        if ($this->product->fitPriorityAvailable()) {
+            $cm = $this->getFeedBack();
+            $recom=array_key_exists('recommendation', $cm)?$cm['recommendation']:null;
+            return array('feedback' => $this->strip_for_services($cm['feedback'], $recom),
+            );
+        }
+        return;
+    }
+    
+    # -----------------------------------------------------
+
+    private function strip_for_services($sizes, $recommendation) {
+        foreach ($sizes as $key => $value) {
+            
+            unset($sizes[$key]['min_fx']);
+            unset($sizes[$key]['max_fx']);
+            unset($sizes[$key]['high_fx']);
+            unset($sizes[$key]['low_fx']);
+            unset($sizes[$key]['avg_fx']);
+            
+            unset($sizes[$key]['variance']);
+            unset($sizes[$key]['description']);
+            if ($recommendation!=null && array_key_exists('id', $recommendation)){
+                if ($recommendation['id']==$sizes[$key]['id']){
+                    $sizes[$key]['recommended'] = true;
+                }else{
+                    $sizes[$key]['recommended'] = false;
+                }
+            }
+            if (array_key_exists('fit_points', $sizes[$key])) {
+                $sizes[$key]['fitting_alerts'] = $this->strip_fit_point_alerts($sizes[$key]);
+                $sizes[$key]['summary'] = $this->strip_fit_point_summary($sizes[$key]);
+            }else{
+                $sizes[$key]['fitting_alerts'] = null;
+                $sizes[$key]['summary'] = null;
+            }
+            if (array_key_exists('hem_advice', $sizes[$key])) {
+                unset($sizes[$key]['hem_advice']);                
+            }
+            
+            unset($sizes[$key]['fit_points']);
+        }
+
+        return $sizes;
+    }
+    
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private function strip_fit_point_alerts($size) {
+        $arr = array();        
+        foreach ($size['fit_points'] as $key => $value) {     
+            $arr[$key]=$value['message'];            
+        }
+        
+        $hem_advice=$this->strip_size_hem_advice($size);
+        if ($hem_advice!=null){            
+               $arr["hem"]=$hem_advice;            
+        }
+        return $arr;
+    }
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private function strip_fit_point_summary($size) {
+        $str = '';
+        foreach ($size['fit_points'] as $key => $value) {
+            $str.=$this->snakeToNormal($key) . ':' . $value['message'] . ', ';
+        }
+        
+        $hem_advice=$this->strip_size_hem_advice($size);
+        if ($hem_advice!=null){
+            $str.="Hem:".$hem_advice;
+        }else{
+            $str=trim($str, ", ");
+        }
+        return trim($str, ", ");
+    }
+    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+   private function strip_size_hem_advice($size) {
+        if (array_key_exists('hem_advice', $size) && array_key_exists('message', $size['hem_advice'])){
+            return $size['hem_advice']['message'];
+        }
+        return null;
+    }
+
     
 }

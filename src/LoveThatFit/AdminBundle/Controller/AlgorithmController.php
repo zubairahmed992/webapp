@@ -23,19 +23,19 @@ class AlgorithmController extends Controller {
                 ));
     }
 
-    public function avgComparisonAction($user_id, $product_id, $json) {
+    public function avgComparisonAction($user_id, $product_id, $json=0) {
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);
         $fe = new AvgAlgorithm($user, $product);
-        #return new Response(json_encode($fe->getComparison()));  
-        #return new Response(json_encode($fe->getRecommendation()));        
-        $fb = $fe->getFeedback();
-        if ($json) {
-            return new Response(json_encode($fb));
-        } else {
+        
+        if ($json==0) {
             return $this->render('LoveThatFitAdminBundle:Algoritm:_avg_comparison.html.twig', array(
-                        'product' => $product, 'user' => $user, 'data' => $fb,
+                        'product' => $product, 'user' => $user, 'data' => $fe->getFeedback(),
                     ));
+        } elseif ($json==1) {
+            return new Response(json_encode($fe->getFeedback()));            
+        } elseif ($json==2) {
+            return new Response($fe->getStrippedFeedBackJSON());            
         }
     }
 
@@ -55,17 +55,19 @@ class AlgorithmController extends Controller {
     }
 //------------------------------------------------------------------------------------------
     
-    public function fitAlgorithmCompareAction($user_id, $product_id, $json) {
+    public function fitAlgorithmCompareAction($user_id, $product_id, $json=0) {
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);
         $fe = new FitAlgorithm2($user, $product);
-        $fb = $fe->getFeedback();
-        if ($json) {
-            return new Response(json_encode($fb));
-        } else {
-           return $this->render('LoveThatFitAdminBundle:Algoritm:_algo2_comparison.html.twig', array(
-                        'product' => $product, 'user' => $user, 'data' => $fb,
+        
+        if ($json==0) {
+            return $this->render('LoveThatFitAdminBundle:Algoritm:_algo2_comparison.html.twig', array(
+                        'product' => $product, 'user' => $user, 'data' => $fe->getFeedback(),
                     ));
+        } elseif ($json==1) {
+            return new Response(json_encode($fe->getFeedback()));            
+        } elseif ($json==2) {
+            return new Response($fe->getStrippedFeedBackJSON());            
         }
     }
     //------------------------------------------------------------------------------------------
@@ -74,8 +76,13 @@ class AlgorithmController extends Controller {
     #defaults: { _controller: LoveThatFitAdminBundle:Algorithm:foo, user_id: 0, product_id: 0, size_id: 0}
 
 
-    public function fooAction($user_id=0, $product_id=0, $size_id=0) {
-        $user_id=18; $product_id=8;
+    public function fooAction($user_id=0, $product_id=0, $size_id=0, $type=0) {
+        
+        if ($user_id==0)
+            return new Response('user is not provided');
+        if ($product_id==0)
+            return new Response('product is not provided');
+        
         $product = $this->get('admin.helper.product')->find($product_id);
         $user = $this->get('user.helper.user')->find($user_id);
         $fa = new FitAlgorithm2($user, $product);                

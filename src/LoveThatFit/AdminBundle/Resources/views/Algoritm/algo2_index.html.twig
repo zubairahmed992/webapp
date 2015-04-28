@@ -22,13 +22,13 @@ $(document).ready(function(){
      })
      return false; //for good measure
 });
-
+//-----------------------------------------------------------------------------
 $('a.json').click(function (event){ 
      event.preventDefault(); 
      
     var user_id = $("#algorithm_User").val();
     var product_id = $("#algorithm_Product").val();                    
-    var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id + "/"+true;         
+    var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id + "/1";         
      $.ajax({
         url: compare_url
         ,success: function(response) {
@@ -38,7 +38,23 @@ $('a.json').click(function (event){
      })
      return false; //for good measure
 });
-
+//-----------------------------------------------------------------------------
+$('a.strip_json').click(function (event){ 
+     event.preventDefault(); 
+     
+    var user_id = $("#algorithm_User").val();
+    var product_id = $("#algorithm_Product").val();                    
+    var compare_url = "../fit_algorithm2/compare/" + user_id + "/"+ product_id + "/2";         
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {
+           
+           window.open(compare_url);
+        }
+     })
+     return false; //for good measure
+});
+//------------------------------------------------------------------
 
 $( "select[id='algorithm_User']" ).change(function() {
     var user_id = $("select[id='algorithm_User']").val();
@@ -83,7 +99,8 @@ var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
         </form>      
     </div>
     <a id='compare' class='compare' href="#">Compare</a> | 
-    <a id='json' class='json' href="#">JSON</a>
+    <a id='json' class='json' href="#">JSON</a> | 
+    <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>
     <br>
     <div id="summary_ajax" style="float: none">
     </div>

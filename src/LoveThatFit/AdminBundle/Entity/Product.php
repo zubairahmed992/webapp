@@ -1181,7 +1181,8 @@ class Product {
 //----------------------------------------------------------??? if Default color missing
     public function getComparisonUserItem($user) {
 
-        $comp = new \LoveThatFit\SiteBundle\AvgAlgorithm($user, $this);
+        #$comp = new \LoveThatFit\SiteBundle\AvgAlgorithm($user, $this);
+        $comp = new \LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2($user, $this);
         $fb = $comp->getFeedBack();
         if (array_key_exists('recommendation', $fb)){                        
             $item=$this->displayProductColor->getItemBySizeId($fb['recommendation']['id']);

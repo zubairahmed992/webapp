@@ -28,7 +28,7 @@ $('a.json').click(function (event){
      
     var user_id = $("#algorithm_User").val();
     var product_id = $("#algorithm_Product").val();                    
-    var compare_url = "../algorithm/avg_comparison/" + user_id + "/"+ product_id + "/"+true;         
+    var compare_url = "../algorithm/avg_comparison/" + user_id + "/"+ product_id + "/1";         
      $.ajax({
         url: compare_url
         ,success: function(response) {
@@ -38,6 +38,24 @@ $('a.json').click(function (event){
      })
      return false; //for good measure
 });
+//-------------------------------------------------------
+$('a.strip_json').click(function (event){ 
+     event.preventDefault(); 
+     
+    var user_id = $("#algorithm_User").val();
+    var product_id = $("#algorithm_Product").val();                    
+    var compare_url = "../algorithm/avg_comparison/" + user_id + "/"+ product_id + "/2";         
+     $.ajax({
+        url: compare_url
+        ,success: function(response) {
+           
+           window.open(compare_url);
+        }
+     })
+     return false; //for good measure
+});
+
+//-------------------------------------------------------
 //-------------------------------------------------------
 $('a.waldo').click(function (event){ 
      event.preventDefault(); 
@@ -101,7 +119,7 @@ var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
     </div>
     <a id='compare' class='compare' href="#">Compare</a> | 
     <a id='json' class='json' href="#">JSON</a> | 
-    <a id='waldo' class='waldo' href="#">find waldo</a>
+    <a id='strip_json' class='strip_json' href="#">Stripped JSON</a>
     <br>
     <div id="summary_ajax" style="float: none">
     </div>
