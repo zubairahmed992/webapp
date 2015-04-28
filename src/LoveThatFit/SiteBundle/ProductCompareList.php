@@ -2,6 +2,7 @@
 
 namespace LoveThatFit\SiteBundle;
 use LoveThatFit\SiteBundle\AvgAlgorithm;
+use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use LoveThatFit\AdminBundle\Entity\Product;
 use LoveThatFit\AdminBundle\Entity\ProductItem;
 class ProductCompareList {
@@ -27,7 +28,8 @@ class ProductCompareList {
               $item = $productItem->getProductItemById($value['item_id']);
              
              $product=$item->getProduct();
-              $fe = new AvgAlgorithm($user,$product);
+              #$fe = new AvgAlgorithm($user,$product);
+              $fe = new FitAlgorithm2($user,$product);
               $feed_back[$key]=$product->getDetailArray()+$fe->getFeedBack();
               $feed_back[$key]['current_item']=$value['item_id'];
         }

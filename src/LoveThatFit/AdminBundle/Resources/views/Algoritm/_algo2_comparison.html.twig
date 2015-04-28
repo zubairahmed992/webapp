@@ -38,8 +38,8 @@
             {% if size_specs.fit_points is defined %}
                     <tr>
                         <td>
-                            <table  class="table table-bordered table-hover" data-height="299">
-                                    <tr>
+                            <table  class="table table-bordered table-hover">
+                                    <tr style="background-color: #F2F2F2;font-size:12px;">
                                         <th>Fit Priority</th>
                                         <th>Body</th>
                                         <th>FX</th>                                                                             
@@ -130,7 +130,7 @@
                                         
                                     </tr>
                             {% if size_specs.hem_advice is defined %}
-                                    <tr>
+                                    <tr  style="background-color: #F2F2F2">
                                         <td colspan="15">
                                             <span  style="font-size:12px;">
                                             <b>Hem Advice :</b> {{size_specs.hem_advice.message}}

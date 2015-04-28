@@ -508,7 +508,7 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
         } 
    }
    
-   //---------------------------------------------------------------------
+   //----------------------add for comparison-----------------------------------------------
     private function addNewProducts($product) {
      $session = $this->get("session");
      $user = $this->get('security.context')->getToken()->getUser();
@@ -517,7 +517,8 @@ public function shopifyAfterLoginAction($sku=null,$user_id=null,$retailer_id=nul
          $compare=$session->get("product");
      }  
      
-     $fe = new AvgAlgorithm($user, $product);
+     #$fe = new AvgAlgorithm($user, $product);
+     $fe = new FitAlgorithm2($user,$product);
      $compare[$product->getId()]=array(
             'product'=>$product->getDetailArray()+$fe->getFeedBack()
     );

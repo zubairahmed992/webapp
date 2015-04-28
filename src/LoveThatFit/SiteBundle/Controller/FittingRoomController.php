@@ -28,10 +28,12 @@ class FittingRoomController extends Controller {
         $product=$productItem->getProduct();
         
         if ($type==null || $type=='low-high'){
-            $comp = new Comparison($user,$product);
+            #$comp = new AvgAlgorithm($user,$product);
+            $comp = new FitAlgorithm2($user,$product);
             $fb=$comp->getSizeFeedBack($product_size);
         }elseif ($type=='avg'){
-            $comp = new AvgAlgorithm($user,$product);
+            #$comp = new AvgAlgorithm($user,$product);
+            $comp = new FitAlgorithm2($user,$product);
             $fb=$comp->getSizeFeedBack($product_size);
         }
         
