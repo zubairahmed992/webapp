@@ -1127,4 +1127,24 @@ public function _multplieImageUploadAction(Request $request){
   }
   return new response(json_encode("Done"));
 }
+#----------------------------------------------------------------------
+
+ public function imageUploadIndexAction() {
+     return $this->render('LoveThatFitAdminBundle:Product:_image_uploader.html.twig');
+ }
+ #----------------------------------------------------------------------
+ public function imageUploadAction() {
+       $allowed = array('png', 'jpg');
+       if(isset($_FILES['upl']) && $_FILES['upl']['error'] == 0){
+               $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
+               if(!in_array(strtolower($extension), $allowed)){
+                   return new response('{"status":"error"}');                       
+               }
+               $dirpath=__DIR__ . '/../../../../web/uploads/ltf/products/display/';
+               if(move_uploaded_file($_FILES['upl']['tmp_name'], $dirpath.$_FILES['upl']['name'])){
+                       return new response('{"status":"success"}');
+               }
+       }
+       return new response('{"status":"error"}');       
+ }
 }
