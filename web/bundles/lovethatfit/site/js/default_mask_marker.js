@@ -48,23 +48,45 @@ mid_area_path.opacity = 0.6;
 
 var p_user_height = parseInt($('#user_height_frm_3').attr('value'));
 
-var p_user_height_add = 3.75 * p_user_height / 100;
 
-p_user_height = p_user_height + p_user_height_add;
+handleOut_41 = new Point(mid_area_path.segments[41].handleOut);
+handleOut_40 = new Point(mid_area_path.segments[40].handleOut);
+handleIn_29 = new Point(mid_area_path.segments[29].handleIn);
+handleIn_30 = new Point(mid_area_path.segments[30].handleIn);
+
+
+mid_area_path.segments[41].handleOut = 0;
+mid_area_path.segments[40].handleOut = 0;
+mid_area_path.segments[29].handleIn = 0;
+mid_area_path.segments[30].handleIn = 0;
+
+mid_area_path.segments[41].point.y = mid_area_path.segments[40].point.y;
+mid_area_path.segments[29].point.y = mid_area_path.segments[28].point.y;
+
+
+
+
+
+//mid_area_path.segments[29].point.y = mid_area_path.segments[28].point.y;
+//mid_area_path.segments[41].point.y -= 50;
+
+//var p_user_height_add = 3.75 * p_user_height / 100;
+
+//p_user_height = p_user_height + p_user_height_add;
 
 
 p_user_height_px = p_user_height * fixed_px_inch_ratio;
 
-p_user_height_add_px = p_user_height_add * fixed_px_inch_ratio;
+//p_user_height_add_px = p_user_height_add * fixed_px_inch_ratio;
 
-var p_extra_foot_area = p_user_height_add_px;
+var p_extra_foot_area = 0;
 
 
 p_user_height = p_user_height * fixed_px_inch_ratio;
 
 //p_user_height = p_user_height + p_extra_foot_area;
 
-p_user_height = p_user_height * 100 / 450;
+p_user_height = p_user_height * 100 / 430;
 
 p_user_height = p_user_height / 100;
 
@@ -222,8 +244,18 @@ if(chk_no_img_path == true){
     
 }
     mid_area_path.scale(0.750, 0.750);
-    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y - p_extra_foot_area);
-    mid_area_path.position = new Point(160,402.50);
+    mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
+    
+    mid_area_path.segments[41].point.y += 16.56;
+    mid_area_path.segments[41].handleOut = handleOut_41;
+    mid_area_path.segments[40].handleOut = handleOut_40;
+
+    mid_area_path.segments[29].point.y += 16.56;
+    mid_area_path.segments[29].handleIn = handleIn_29;
+    mid_area_path.segments[30].handleIn = handleIn_30;
+
+
+    mid_area_path.position = new Point(160,403.50);
     
     
     
