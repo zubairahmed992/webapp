@@ -1,7 +1,7 @@
 #-------------------------------------------------------------
 admin_product_image_upload_index:
-    pattern:  /admin/product_image_upload_index
-    defaults: { _controller: LoveThatFitAdminBundle:Product:imageUploadIndex}
+    pattern:  /admin/product_image_upload_index/{product_id}
+    defaults: { _controller: LoveThatFitAdminBundle:Product:imageUploadIndex, product_id : 0}
 #-------------------------------------------------------------
 admin_product_image_upload:
     pattern:  /admin/product_image_upload

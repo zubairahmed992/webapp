@@ -274,13 +274,14 @@ footer h2 i{
 	</head>
 
 	<body>
-
+            <h3>{{product.name}}</h3>
 		<form id="upload" method="post" action="{{ path('admin_product_image_upload')}}" enctype="multipart/form-data">
 			<div id="drop">
 				Drop Here
 
 				<a>Browse</a>
 				<input type="file" name="upl" multiple />
+                                <input type="hidden" name="product_id" value="{{product.id}}" />
 			</div>
 
 			<ul>

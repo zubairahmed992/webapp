@@ -1129,8 +1129,11 @@ public function _multplieImageUploadAction(Request $request){
 }
 #----------------------------------------------------------------------
 
- public function imageUploadIndexAction() {
-     return $this->render('LoveThatFitAdminBundle:Product:_image_uploader.html.twig');
+ public function imageUploadIndexAction($product_id=0) {
+     $product = $this->get('admin.helper.product')->find($product_id);
+     return $this->render('LoveThatFitAdminBundle:Product:_image_uploader.html.twig', array(
+                    'product' => $product,
+                ));
  }
  #----------------------------------------------------------------------
  public function imageUploadAction() {
