@@ -244,6 +244,10 @@ if(chk_no_img_path == true){
     
 }
     mid_area_path.scale(0.750, 0.750);
+    
+    mid_area_path.scale(1, 1.01);
+    
+    
     mid_area_path.pivot = new Point(mid_area_path.bounds.bottomCenter.x,mid_area_path.bounds.bottomCenter.y);
     
     mid_area_path.segments[41].point.y += 16.56;
