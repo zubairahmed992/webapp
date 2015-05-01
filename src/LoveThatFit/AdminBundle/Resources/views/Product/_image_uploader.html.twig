@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Admin ~ Love That Fit</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<head>
-		<meta charset="utf-8"/>
-		<title>Mini Ajax File Upload Form</title>
+    <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/lovethatfit/admin/css/admin.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/lovethatfit/admin/css/bootstrap-responsive.css') }}" rel="stylesheet" type="text/css" />
 
 		<!-- Google web fonts -->
 		<link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel='stylesheet' />
@@ -274,7 +281,68 @@ footer h2 i{
 	</head>
 
 	<body>
-            <h3>{{product.name}}</h3>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#"><img src="{{ asset('bundles/lovethatfit/admin/images/ltf_logo-f29cf3839961bcee3cb58b93121e379d.png') }}"></a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+                {% if app.user %}
+                    Logged in as {{ app.user.username }} {#<a href="#" class="navbar-link"></a>#}
+                {% endif %}
+           
+            </p>
+            <!-- Top Navigation Start -->
+            <ul class="nav">
+                
+              <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+              <li><a href="{{ path('admin_clothing_types') }}">Clothing Types</a></li>
+              <li><a href="{{ path('admin_brands') }}">Brands</a></li>
+              <li><a href="{{ path('admin_products') }}">Products</a></li>
+              <li><a href="{{ path('admin_survey') }}">Survey</a></li>
+              <li><a href="{{ path('admin_size_charts') }}">SizeCharts</a></li>
+              <li><a href="{{ path('admin_retailers') }}">Retailers</a></li>
+              <li><a href="{{ path('admin_users') }}">Users</a></li>
+              <li><a href="{{ path('admin_push_notification') }}">Push Notifcation</a></li>
+              <li><a href="{{ path('admin_logout') }}">Logout</a></li>        
+            </ul>
+             <!-- Top Navigation End -->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Breadcrumb Start -->
+    <ul class="breadcrumb">
+          <li><a href="{{ path('admin_dashboard') }}">Admin</a> <span class="divider">/</span></li>
+          <li><a href="{{ path('admin_products') }}" >Products</a> <span class="divider">/</span><a href="{{ path('admin_product_detail_show',{'id':product.id}) }}">{{product.name}}</a><span class="divider">/</span></li>
+          <li class="active">Batch Image Upload</li>
+    </ul>
+    <div style="float: right">
+     {% block header_right_links %}{% endblock %}
+    </div>
+    <!-- Breadcrumb End -->      
+{% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Warning!</strong>   
+ {{ app.session.flash('warning') }}    
+</div>   
+{% endif %}
+ {% if app.session.hasFlash('success') %}
+       <div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Success!</strong>   
+ {{ app.session.flash('success') }}    
+</div>   
+{% endif %}         
+   <div class="container-fluid">                  
+            <h3><a href="{{ path('admin_product_detail_show',{'id':product.id}) }}">{{product.name}}</a></h3>
 		<form id="upload" method="post" action="{{ path('admin_product_image_upload')}}" enctype="multipart/form-data">
 			<div id="drop">
 				Drop Here
@@ -305,6 +373,6 @@ footer h2 i{
                 <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/jquery.iframe-transport.js') }}"></script>
                 <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/jquery.fileupload.js') }}"></script>
                 <script src="{{ asset('bundles/lovethatfit/admin/js/image_uploader/script.js') }}"></script>
-		
+		</div>  
 	</body>
 </html>
