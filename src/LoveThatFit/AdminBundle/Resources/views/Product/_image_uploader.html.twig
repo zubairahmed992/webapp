@@ -343,6 +343,15 @@ footer h2 i{
 {% endif %}         
    <div class="container-fluid">                  
             <h3><a href="{{ path('admin_product_detail_show',{'id':product.id}) }}">{{product.name}}</a></h3>
+            
+            <blockquote>
+  <p>Format : BodyType_SizeTitle_Color (Regular_00_Black)</p>
+  <p>Format : BodyType_SizeTitle_Color_View (Regular_00_Black_Front-Open)</p>  
+  <p>Format = BodyType_SizeTitle_Color-title_View-title(Example:Regular_00_Dark-Grey_Front-Open)</p>
+  Under score is to separate each type and hyphen should be used for separating two words withn a type.
+      
+</blockquote>
+            
 		<form id="upload" method="post" action="{{ path('admin_product_image_upload')}}" enctype="multipart/form-data">
 			<div id="drop">
 				Drop Here
