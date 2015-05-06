@@ -17,7 +17,14 @@ clothingtype_brand:
 constantValue:
    pattern:  /web_service/constant_values
    request_type: get
-   #
+
+registrationSizechart:
+   pattern:  /web_service/registration_sizechart
+   request_type: get
+
+images_ul:
+   pattern:  /web_service/images_url
+   
 #-----------------------------------------
 brand_retailer:
     pattern:  /web_service/brand_retailer
@@ -44,7 +51,16 @@ user_detail:
       authTokenWebService:  'de81d026177b7300c97976a5d1459b2d'      
     request_type: post
     description: login & wuthenticate user & returns user details    
-     
+#--------------------------
+user_profile:   
+   pattern:  /web_service_test/user_profile
+   params:
+     email: abc@ltf.com
+     type:  type
+   request_type: post
+   description: gets email & return user details
+
+#----------------------------------
 registration_create:
    pattern:  /web_service_test/register
    params:
@@ -103,32 +119,6 @@ measurement_edit:
      thigh: 10
    request_type: post
    #array('email'=>'kamran@hotmail.com','authTokenWebService'=>'97fc8d115394f3f1947f315783e29e0e','deviceType'=>'4s','heightPerInch'=>'6','weight'=>'100','thigh'=>10);
-
-user_profile:   
-   pattern:  /web_service_test/user_profile
-   params:
-     email: abc@ltf.com
-     type:  type
-   request_type: post
-   description: gets email & return user details
-
-avatarUpload:
-   pattern:  /web_service_test/upload_avatar
-   params:
-     email: iphone@gmail.com
-     file: need file
-   request_type: post
-   #email,file
-   
-image_upload:
-   pattern:  /web_service_test/image_upload
-   params:
-     email: iphone@gmail.com
-     deviceType: 4s
-     heightPerInch: 6
-     file: need file
-   request_type: post
-   # email,deviceType,heightPerInch,file;    
 
 iphone_shoulder_outseam:
    pattern:  /web_service_test/iphone_shoulder_outseam
@@ -217,7 +207,7 @@ default_fittng_alert:
    request_type: post
    #array('authTokenWebService'=>'123','productId'=>11,'userId'=>17);
 product_syn:
-   pattern:  /web_service_test/product_sync
+   pattern:  /web_service/product_sync
    params:
      authTokenWebService: 121c421783cd4d71d871ec16a1296091
      date: 1388577600
@@ -290,13 +280,25 @@ size_chart:
    request_type: post
    #('gender'=>'f','body_type'=>'Petite','target_top'=>1,'top_size'=>1,'target_bottom'=>2,'bottom_size'=>2,'target_dress'=>3,'dress_size'=>3);
 
-registrationSizechart:
-   pattern:  /web_service_test/registration_sizechart
-   request_type: get
-   
-images_ul:
-   pattern:  /web_service_test/images_url
-
 product_for_user_syn:
-   pattern:  /web_service_test/product_user_sync
+   pattern:  /web_service/product_user_sync
    request_type: get
+
+
+avatarUpload:
+   pattern:  /web_service_test/upload_avatar
+   params:
+     email: iphone@gmail.com
+     file: need file
+   request_type: post
+   #email,file
+   
+image_upload:
+   pattern:  /web_service_test/image_upload
+   params:
+     email: iphone@gmail.com
+     deviceType: 4s
+     heightPerInch: 6
+     file: need file
+   request_type: post
+   # email,deviceType,heightPerInch,file;    

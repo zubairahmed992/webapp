@@ -19,6 +19,35 @@ class WSTestController extends Controller {
         
         return $decoded;
     }
+/*  
+ * Services being called from original controller  
+1.	Brands
+2.	Brand list for size charts
+3.	Clothing type brands
+4.	Constant values
+5.	Registration size charts
+6.	Images URL
+*/
+    
+    
+#####################################################################################    
+#####################################################################################
+#####################################################################################
+
+
+    #------------------------------------------------
+   public function sizeChartForRegAction(){
+       $data['sizeChart']=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
+        return new response(json_encode(($data)));
+       
+   } 
+
+    
+    
+#####################################################################################    
+#####################################################################################
+#####################################################################################
+
 
 #--------------------Login User -----------------------------------------------#     
     public function loginAction() {
@@ -36,9 +65,9 @@ class WSTestController extends Controller {
         $user = $this->get('webservice.helper.user');
         $user_info = $user->registerWithReqestArray($request,$request_array);
         return new response(json_encode($user_info));
-    }
-#--------------------------End Of Registration --------------------------------#    
-#-------------------Change Password--------------------------------------------#
+    }    
+    
+    #-------------------Change Password--------------------------------------------#
  public function changePasswordAction() {
         $handle = fopen('php://input','r');
          $jsonInput = fgets($handle);
@@ -154,6 +183,9 @@ public function userProfileAction()
 }
 #---------------------------------End of ofrgot password-----------------------#
 
+#--------------------------End Of Registration --------------------------------#    
+
+
     public function emailCheckAction(){
         
         $request = $this->getRequest();
@@ -211,6 +243,45 @@ public function userProfileAction()
             return new Response(json_encode(array('Message' => 'We can not find user')));
         }
     }
+
+  
+    #-----------------------------Check Token -------------------------------------#
+ public function  checkTokenforgetPasswordAction(){
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $authToken = $decoded['auth_token'];
+        
+        if($authToken){
+        $updatePassword=$this->get('webservice.helper.user')->checkTokenforgetPassword($authToken);
+        return new response(json_encode($updatePassword));
+ }else{
+ return new response(json_encode(array("Message"=>"Authenticated Token Missing")));
+ }
+ }
+#---------------------End of Token forgot password-----------------------------# 
+#----------------------------Update Forget Password----------------------------# 
+ public function updateForgetPasswordAction(){
+      $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        $password = $decoded['password'];
+        $email = $decoded['email'];
+        $updatePassword=$this->get('webservice.helper.user')->updateForgetPassword($email,$password);
+        return new response(json_encode($updatePassword));
+     
+ }
+ 
+ 
+#####################################################################################    
+#####################################################################################
+#####################################################################################
+
+    
+
+
 
 #-------------------------------Image Upload-----------------------------------#   
  public function imageUploadAction() {
@@ -302,60 +373,11 @@ public function avatarUploadAction() {
         }
     }   
 #--------------------------------------------End Of Image Uploading----------------------------------------#  
-#------------------------Constant Fetching Web Service-----------------------------------------------------#
-    public function ConstantValuesAction() {
-        $utility_helper = $this->get('admin.helper.utility');
-        $data=array();
-        $data=$utility_helper->getDeviceBootstrap();
-        $data['body_type']=$utility_helper->getBodyTypesSearching();
-        $data['body_shape']=$utility_helper->getBodyShape();
-        $data['neck_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=1,$sleeve=0,$waist=0,$inseam=0);
-        
-       // $data['neck_size']=sort($data['neck_sizes']);
-        $data['sleeve_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=1,$waist=0,$inseam=0);
-        $data['waist_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=1,$inseam=0);
-        $data['inseam_size']=$this->get('admin.helper.productsizes')->manSizeList($neck=0,$sleeve=0,$waist=0,$inseam=1);
-     //   $brandList=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
-        $data['fittingStatus']=$this->get('webservice.helper.product')->getFittingStatus();
-        return new response(json_encode(($data)));
-    }
-    
-   public function sizeChartForRegAction(){
-       $data['sizeChart']=$this->get('admin.helper.sizechart')->getBrandSizeTitleArray();
-        return new response(json_encode(($data)));
-       
-   } 
+
     
 
 
-#-----------------------------Check Token -------------------------------------#
- public function  checkTokenforgetPasswordAction(){
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-        $authToken = $decoded['auth_token'];
-        
-        if($authToken){
-        $updatePassword=$this->get('webservice.helper.user')->checkTokenforgetPassword($authToken);
-        return new response(json_encode($updatePassword));
- }else{
- return new response(json_encode(array("Message"=>"Authenticated Token Missing")));
- }
- }
-#---------------------End of Token forgot password-----------------------------# 
-#----------------------------Update Forget Password----------------------------# 
- public function updateForgetPasswordAction(){
-      $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-        $password = $decoded['password'];
-        $email = $decoded['email'];
-        $updatePassword=$this->get('webservice.helper.user')->updateForgetPassword($email,$password);
-        return new response(json_encode($updatePassword));
-     
- }
+
 #---------------------------Render Json--------------------------------------------------------------------#
 
     private function json_view($rec_count, $entity) {
