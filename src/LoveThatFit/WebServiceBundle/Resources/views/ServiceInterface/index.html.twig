@@ -34,11 +34,18 @@ margin: 5px;
 <div class="c_pannel">
     <form action="{{ path('si_hit') }}" method="post">
         <input id='hit' type="button" value="Result" />
-        <input id='chk_new_window' type="checkbox" /> new window
+        <input id='chk_new_window' type="checkbox" /> new window <br>
+        <span id='timer_pannel'>
+            Timer: <span id="timer">00:00:00.00</span><br>
+            <span id="timer_status" style="display:none">0</span>
+            <span id="timer_min"  style="display:none">0</span>
+            <span id="timer_sec"  style="display:none">0</span>
+            <span id="timer_mil_sec"  style="display:none">0</span>
+        </span>
         <h4 id='user_name_header'>user name</h4>
         <h4 id='user_token_header'>token</h4>
-        <h4 id='service_name_header'>service name</h4>
-        <h4 id='service_path_header'>path</h4>
+        <h4 id='service_name_header'>Select Service</h4>
+        <h4 id='service_path_header'>Select Service</h4>
         <textarea style="width: 500px; height: 200px" id='txt_request'></textarea>
         <textarea style="width: 500px; height: 200px" id='txt_response'></textarea>
                                              
@@ -108,6 +115,7 @@ function get_params_json(service_name){
 
 //-------------------------------------
 function upload(){
+    restartTimer();//~~~~~~~~~~~~~~>  
     request_json = $.trim($("#txt_request").text());    
     //alert(request_json);     
 
@@ -145,9 +153,10 @@ function upload(){
     }
 }
 function display_response(data){
+            stopTimer();//~~~~~~~~~~~~~>
             str = JSON.stringify(data);
             str = str.split("\\").join("");
-            $('#txt_response').html(str);
+            $('#txt_response').html(str);            
 }
  //-------------------------------------------------------------
    function replace_text(str, email){      
@@ -180,7 +189,9 @@ function getUserDetail(){
 
 //------------------ events -------------------
 $( "#hit" ).click(function() {
-  upload();
+ if($("#service_path_header").text()!='Select Service'){
+    upload();  
+ }
   return false;
 })
  
@@ -204,9 +215,52 @@ $("#users").click(function() {
   $("#user_token_header").text( this.value );  
   //$("#txt_request").text(replace_text($("#txt_request").val(), email));
     replace_user_data();
-    
 });
 
-    
-    
+//-----------------------------------------------------    
+function startTimer(){
+    if ($("#timer_status").text()!='-1'){
+    mil_sec=parseInt($("#timer_mil_sec").text())+1;
+    sec=parseInt($("#timer_sec").text());
+    min=parseInt($("#timer_min").text());
+    if(mil_sec==100){
+        mil_sec=0;
+        sec=sec+1;
+        if(sec==60){
+            sec=0;
+            min=min+1;
+        }
+    }
+    setTimer('0:'+min.toString()+':'+sec.toString()+'.'+mil_sec.toString());    
+    setTime(min,sec,mil_sec);
+    var timer=setTimeout(function(){startTimer()});
+    }
+}
+//-----------------------------------------------------    
+function stopTimer(){
+$("#timer_status").text(-1);
+}
+//------------------------------------
+function restartTimer(){
+    resetTimer();
+    startTimer(); 
+}
+//-----------------------------------------------------    
+function resetTimer(){
+$("#timer_status").text(0);
+setTime(0,0,0);
+setTimer("00:00:00.00");
+}    
+//------------------------------------
+function setTimer(ms){    
+    $("#timer").text(ms);
+}
+//------------------------------------
+function setTime(m,s,ms){    
+$("#timer_mil_sec").text(ms);
+$("#timer_sec").text(s);
+$("#timer_min").text(m);
+}
+
+
     </script>
