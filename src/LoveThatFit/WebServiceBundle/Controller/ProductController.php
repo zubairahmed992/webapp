@@ -350,6 +350,10 @@ public function brandListAction() {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
+         
+        if($request_array==null) #if null (to be used for web service testing))
+            $request_array  = $request->request->all();
+         
         $user = $this->get('webservice.helper.user');
       // $request_array=array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1357041600');
      // $request_array=array('authTokenWebService'=>'e4c997f574be6c6e3f8dc6bd4286ff60','date'=>'1357041600');
