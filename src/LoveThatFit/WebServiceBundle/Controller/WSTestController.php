@@ -23,9 +23,7 @@ class WSTestController extends Controller {
     private function authenticate_token($token){
     if ($token) {
             $tokenResponse = $this->get('webservice.helper.user')->authenticateToken($token);
-            if ($tokenResponse['status'] == False) {
-                return $tokenResponse;
-            }
+            return $tokenResponse;
         } else {
             return array('status'=>False, 'Message' => 'Please Enter the Authenticate Token');
         }
@@ -84,8 +82,86 @@ class WSTestController extends Controller {
             return new Response(json_encode(array('Message' => 'Invalid Email')));
         }
     }
+    #----------------------------------------------------
+      public function userDetailAction() {
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
     
+        $user = $this->get('webservice.helper.user')->findByAuthToken($decoded['authTokenWebService']);      
+        $user_obj = $this->get('webservice.helper.user')->userDetailObject($user, $decoded['deviceType']);
+        $user_obj['path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/' . $user_obj['path'].'/';
+        return new response(json_encode($user_obj));      
+    }    
 
+    #--------------------------End Of Registration --------------------------------#    
+
+
+    public function emailCheckAction(){        
+        $decoded=$this->process_request();
+        if ($decoded['email']) {            
+            $checkEmail = $this->get('webservice.helper.user')->emailCheck($decoded['email']);
+            return new response(json_encode($checkEmail));
+        } else {
+            return new Response(json_encode(array('Message' => 'Email missing')));
+        }
+    }
+    #-------------------------------------------------------------------------
+    
+      
+ #-------------------Get Brand Sync-------------------------------------------#
+# BRANDS_URL	/web_service/brand_sync
+    
+    
+ public function getBrandSyncAction() {
+        $request_array = $this->process_request();      
+        if($request_array){
+             $date_fromat=$this->get('webservice.helper.product')->returnFormattedTime($request_array);
+      
+       if($date_fromat){
+        $brand = $this->getDoctrine()
+                ->getRepository('LoveThatFitAdminBundle:Brand')
+                ->findAllBrandWebService($date_fromat);
+        }
+        $total_record = count($brand);
+         $data = array();
+        $data['data'] = $brand;
+        
+        return new Response($this->json_view($total_record, $data));
+        
+        }else{
+            return new response(json_encode(array("Message"=>"No Data Found")));
+        }
+    }
+    
+    
+     #--------------------Get product Detail Sunc-----------------------------------#
+    # PRODUCT_DETAIL_URL	/web_service/product_detail_sync
+    public function getProductDetailSynAction() {
+        $request_array = $this->process_request();
+        $check =  $this->authenticate_token($request_array['authTokenWebService']);
+        if ($check['status']==False) {
+                  return new Response(json_encode($check['status']));
+        }
+       $product_response=$this->get('webservice.helper.product')->newproductDetailWebService($this->getRequest(),$request_array);        
+       return new response(json_encode($product_response));
+    }
+
+    
+    #--------------------------------------Try On History Service----------------------------------------------#
+#RECENTLY_TRIED_URL	
+    public function userTryHistoryAction()
+    {        
+      $request_array = $this->process_request();
+      $check =  $this->authenticate_token($request_array['authTokenWebService']);
+      if ($check['status']==False) {
+                return new Response(json_encode($check['status']));
+      }
+     
+        $msg=$this->get('webservice.helper.product')->getUserTryHistoryWebService($this->getRequest(),$request_array['userId']);
+        return new Response(json_encode($msg));
+     }
     
 #####################################################################################    
 #####################################################################################
@@ -155,25 +231,7 @@ class WSTestController extends Controller {
 }
 #---------------------------------End of ofrgot password-----------------------#
 
-#--------------------------End Of Registration --------------------------------#    
 
-
-    public function emailCheckAction(){
-        
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-        $email = $decoded['email'];
-      //  $email='skamrani2002@gmail.com';
-        if ($email) {
-            $user_helper = $this->get('webservice.helper.user');
-            $checkEmail = $user_helper->emailCheck($email);
-            return new response(json_encode($checkEmail));
-        } else {
-            return new Response(json_encode(array('Message' => 'Email missing')));
-        }
-    }
   
  #-------------------------Measurement Edit Web Service-----------------------------------------------------------------------------#       
  public function measurementEditAction() {

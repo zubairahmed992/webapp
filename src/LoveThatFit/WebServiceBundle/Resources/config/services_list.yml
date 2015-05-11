@@ -32,7 +32,10 @@ brand_retailer:
       date: 1388577600
     request_type: post
     #*date
-
+#----------------------------------#----------------------------------
+#----------------------------------#----------------------------------
+#----------------------------------#----------------------------------
+#----------------------------------#----------------------------------
 
 #-------------------- User Login & registration & profile ---------------------------
 login:
@@ -59,8 +62,42 @@ user_profile:
      type:  type
    request_type: post
    description: gets email & return user details
+#----------------------------------#----------------------------------
+checkEmail:
+   pattern:  /web_service_test/checkemail
+   params:
+     email: iphone@gmail.com
+   request_type: post     
+   #email
+   
+#-----------------------------------------------------------------------
+product_syn:
+   pattern:  /web_service/product_sync
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     date: 1388577600
+   request_type: post
+   #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
 
-#----------------------------------
+#----------------------------------#----------------------------------
+brand_syn:
+   pattern:  /web_service_test/brand_sync
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     date: 1388577600
+   request_type: post
+   #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
+#----------------------------------#----------------------------------   
+product_detail_syn:
+   pattern:  /web_service_test/product_detail_sync
+   params:
+     authTokenWebService: 121c421783cd4d71d871ec16a1296091
+     date: 1388577600
+   request_type: post
+  #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');   
+#----------------------------------#----------------------------------
+#----------------------------------#----------------------------------
+#----------------------------------#----------------------------------
 registration_create:
    pattern:  /web_service_test/register
    params:
@@ -163,12 +200,7 @@ update__forget_password:
     request_type: post      
     #email,password
 
-checkEmail:
-   pattern:  /web_service_test/checkemail
-   params:
-     email: iphone@gmail.com
-   request_type: post     
-   #email
+
 
 #----------------------------- user & product -------------------------------
 
@@ -183,10 +215,10 @@ love_item:
    #array('authTokenWebService'=>'121c421783cd4d71d871ec16a1296091','productItemId'=>12,'userId'=>17,'like'=>'like');
 
 try_history:
-   pattern:  /web_service/user_try_history
+   pattern:  /web_service_test/user_try_history
    params:
      authTokenWebService: 121c421783cd4d71d871ec16a1296091
-     user_id: 13
+     userId: 13
    request_type: post
    #authTokenWebService,user_id
 
@@ -206,29 +238,9 @@ default_fittng_alert:
      user_id: 13
    request_type: post
    #array('authTokenWebService'=>'123','productId'=>11,'userId'=>17);
-product_syn:
-   pattern:  /web_service/product_sync
-   params:
-     authTokenWebService: 121c421783cd4d71d871ec16a1296091
-     date: 1388577600
-   request_type: post
-   #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
 
-brand_syn:
-   pattern:  /web_service_test/brand_sync
-   params:
-     authTokenWebService: 121c421783cd4d71d871ec16a1296091
-     date: 1388577600
-   request_type: post
-   #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
-   
-product_detail_syn:
-   pattern:  /web_service_test/product_detail_sync
-   params:
-     authTokenWebService: 121c421783cd4d71d871ec16a1296091
-     date: 1388577600
-   request_type: post
-  #array('authTokenWebService'=>'567a31256454a1dd8157eba6ddfc5447','date'=>'1388577600');
+
+
 
 #----------------------------------------------------
 new_products:

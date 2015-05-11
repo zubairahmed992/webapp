@@ -114,8 +114,7 @@ function get_params_json(service_name){
 
 
 //-------------------------------------
-function upload(){
-    restartTimer();//~~~~~~~~~~~~~~>  
+function upload(){    
     request_json = $.trim($("#txt_request").text());    
     //alert(request_json);     
 
@@ -123,7 +122,7 @@ function upload(){
         if($('#chk_new_window').is(':checked')){
                 window.open(".." + $("#service_path_header").text());
             }else{
-            
+        restartTimer();//~~~~~~~~~~~~~~>      
         $.ajax({
                type: "GET",
                url: ".." + $("#service_path_header").text(),               
@@ -137,7 +136,7 @@ function upload(){
          }
     }else{
         var value_ar = JSON.parse($("#txt_request").val());        
-        
+        restartTimer();//~~~~~~~~~~~~~~>  
         $.ajax({
                type: "POST",
                url: ".." + $("#service_path_header").text(),
@@ -154,7 +153,7 @@ function upload(){
 }
 function display_response(data){
             stopTimer();//~~~~~~~~~~~~~>
-            str = JSON.stringify(data);
+            str = JSON.stringify(data, null, 2);
             str = str.split("\\").join("");
             $('#txt_response').html(str);            
 }
@@ -198,7 +197,7 @@ $( "#hit" ).click(function() {
 
 //------------- service dropdownlist --------------------------
 
-$("#service_name").click(function() {  
+$("#service_name").change(function() {  
   $("#service_name_header").text( $('option:selected', this).html() );
   $("#service_path_header").text( this.value );    
   $("#txt_request").text(get_params_json($('option:selected', this).html()));       
@@ -209,7 +208,7 @@ $("#service_name").click(function() {
 });
 
 //------------------- user dropdownlist --------------------
-$("#users").click(function() {  
+$("#users").change(function() {  
     email=$('option:selected', this).html();
   $("#user_name_header").text( $('option:selected', this).html() );
   $("#user_token_header").text( this.value );  
