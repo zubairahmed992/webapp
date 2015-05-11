@@ -22,6 +22,8 @@ gap_top_head = -20;
 curr_view = "normal";
 curr_crop = "normal";
 
+hand_cursor = false;
+
 dv_user_px_h = parseInt($("#dv_user_px_height").attr("value"));
 dv_top_bar = parseInt($("#dv_top_bar").attr("value"));
 dv_bottom_bar = parseInt($("#dv_bottom_bar").attr("value"));
@@ -676,6 +678,19 @@ var scr1_but_hiw_icon = new Raster(scr1_but_hiw_icon_url);
 
 scr1_but_hiw_icon.position = new Point(294, 24 + an_inc);
 
+var hand_cursor_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/hand_cursor_icon.png";
+var hand_cursor_icon = new Raster(hand_cursor_icon_url);
+
+hand_cursor_icon.position = new Point(294, 24 + an_inc);
+hand_cursor_icon.visible = false;
+
+var edit_shape_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/edit_shape_icon.png";
+var edit_shape_icon = new Raster(edit_shape_icon_url);
+
+edit_shape_icon.position = new Point(294, 24 + an_inc);
+edit_shape_icon.visible = false;
+
+
 var scr1_but_camera_icon_url = curr_path_prefix + "bundles/lovethatfit/site/images/camera_icon.png";
 var scr1_but_camera_icon = new Raster(scr1_but_camera_icon_url);
 
@@ -973,11 +988,40 @@ function onMouseDown(event) {
                            but_zoom_in.position.x = -500;
                            but_zoom_out.position.x = 26;
                            
+                           scr1_but_hiw_icon.visible = false;
+                           scr1_but_camera_icon.visible = false;
+                           
+                           hand_cursor_icon.visible = true;
+                           
                            hide_big_points();
+                           
+                           
                             
                         } if(curr_view == "zoomed" && hitResult.item == but_zoom_out){
+                           scr1_but_hiw_icon.visible = true;
+                           scr1_but_camera_icon.visible = true;
+                           
+                           hand_cursor_icon.visible = false;
+                           edit_shape_icon.visible = false;
                            zoom_out_settings();
                         }
+                        
+                          if(curr_view == "zoomed" && hitResult.item == hand_cursor_icon){
+                              hand_cursor_icon.visible = false;
+                              edit_shape_icon.visible = true;
+                              
+                              hand_cursor = true;
+                              hitOptions.segments = false;
+                              
+                          }
+                          if(curr_view == "zoomed" && hitResult.item == edit_shape_icon){
+                              edit_shape_icon.visible = false;
+                              hand_cursor_icon.visible = true;
+                              
+                              hand_cursor = false;
+                              hitOptions.segments = true;
+                          }
+                        
                          if(hitResult.item == but_move_left){
                             user_image.position.x -= 1;
                             
@@ -1652,7 +1696,7 @@ function onMouseDrag(event) {
                 
            //////////// - Setting Limit on canvas trag - //////////////
                 
-	} else if (curr_view == "zoomed") {
+	} else if (curr_view == "zoomed" && hand_cursor == true) {
             //alert(this.type);
                 if(change_x_pos_diff + event.delta.x >= -160 && change_x_pos_diff + event.delta.x <= 160){
                     main_layer.position.x += event.delta.x;
