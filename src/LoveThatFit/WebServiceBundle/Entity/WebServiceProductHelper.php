@@ -308,8 +308,9 @@ public function favouriteByUser($user_id,$request){
                     $data['data'][$product_id]['brandId'] = $ind_product['brandId'];
                     $data['data'][$product_id]['retailer'] =$this->container->get('admin.helper.brand')->getRetailerTitleByBrandId($ind_product['brandId']);
                     
-                    
-                    $item = $p->getDefaultItem($user);
+                    #This has been changed Temporarly to support (get the feedback using old algo) old algorithm for the device
+                    #$item = $p->getDefaultItem($user);
+                    $item = $p->getDefaultItemForDevice($user);
                       if (isset($item)) {
                         $data['data'][$product_id]['fittingRoomImage'] = $item->getImage();
                         $data['data'][$product_id]['sizeId'] = $item->getProductSize()->getId();

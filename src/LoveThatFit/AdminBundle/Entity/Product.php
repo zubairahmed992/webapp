@@ -1214,8 +1214,20 @@ class Product {
         # incase if default color is not available?????
         return $default_item;
     }
-
-          
+    
+     #--------Temporary function to support old algorithm in devices----------------#    
+    public function getDefaultItemForDevice($user = null) {
+        $default_item = null;
+        if ($user != null) {
+            $comp = new \LoveThatFit\SiteBundle\AvgAlgorithm($user, $this);
+            $fb = $comp->getFeedBack();
+            $default_item = array_key_exists('recommendation', $fb)?$this->displayProductColor->getItemBySizeId($fb['recommendation']['id']):null;
+        }
+        if ($user == null || $default_item == null) {
+            $default_item = $this->getDefaultColorFirstItem();
+        }
+        return $default_item;
+    }
 
     //----------------------------------------------------------
     public function getRandomItem() {

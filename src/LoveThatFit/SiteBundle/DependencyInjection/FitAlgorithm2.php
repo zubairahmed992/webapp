@@ -280,13 +280,21 @@ private function calculate_fitindex($fp_specs){
     }
  # -----------------------------------------------------
     private function grade_to_scale($fp_specs) {        
-        $findex   =0;            
+            $findex   =0;            
         if($fp_specs['body_measurement']>$fp_specs['fit_model']){
-         $findex   =$fp_specs['avg_fx']-((($fp_specs['body_measurement']-$fp_specs['fit_model'])/($fp_specs['calc_max_body_measurement']-$fp_specs['fit_model']))*($fp_specs['avg_fx']-$fp_specs['max_fx']));
+            if (($fp_specs['calc_max_body_measurement']-$fp_specs['fit_model'])==0){
+                $findex=0;
+            }else{
+                $findex=$fp_specs['avg_fx']-((($fp_specs['body_measurement']-$fp_specs['fit_model'])/($fp_specs['calc_max_body_measurement']-$fp_specs['fit_model']))*($fp_specs['avg_fx']-$fp_specs['max_fx']));
+            }
          }elseif ($fp_specs['body_measurement']<$fp_specs['fit_model']) {
-         $findex   =$fp_specs['avg_fx']-((($fp_specs['fit_model']-$fp_specs['body_measurement'])/($fp_specs['fit_model']-$fp_specs['calc_min_body_measurement']))*($fp_specs['avg_fx']-$fp_specs['min_fx']));   
+             if (($fp_specs['fit_model']-$fp_specs['calc_min_body_measurement'])==0){
+                $findex=0;
+            }else{
+                $findex   =$fp_specs['avg_fx']-((($fp_specs['fit_model']-$fp_specs['body_measurement'])/($fp_specs['fit_model']-$fp_specs['calc_min_body_measurement']))*($fp_specs['avg_fx']-$fp_specs['min_fx']));   
+            }            
         }else{
-         $findex   = $fp_specs['avg_fx'];   
+            $findex   = $fp_specs['avg_fx'];   
         }
 
         return $this->limit_num($findex);
@@ -550,7 +558,37 @@ private function calculate_fitindex($fp_specs){
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~> Hem Bits
     #------------------------------------------------     
-    
+    #------------------------------------------------
+    //                  Hem Advice 
+    #------------------------------------------------
+ 
+    private function cut_to_natural_waste($hem_length) {
+        if ($hem_length == null || $hem_length == 0) {
+            return $hem_length;
+        }
+
+        if ($this->product->getClothingType() == 'skirt') {
+          $rise = $this->product->getRise();
+            switch ($rise) {
+                case 'high_rise':
+                    $hem_length = $hem_length + 2.25;
+                    break;
+                case 'mid_rise':
+                    $hem_length = $hem_length - 3.5;
+                    break;
+                case 'low_rise':
+                    $hem_length = $hem_length - 6.5;
+                    break;
+                case 'ultra_low_rise':
+                    $hem_length = $hem_length;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $hem_length;
+    }
+    #-------------------------------------------------------------
     private function get_hem_advice($item_specs, $body_specs) {
         $clothing_type = $this->product->getClothingType();
 
