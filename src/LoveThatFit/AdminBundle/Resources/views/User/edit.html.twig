@@ -291,8 +291,32 @@
                                 </form>                          
                                 
                                 
+              <div class="clr_bth"></div>         
+                           <div class="clr_bth"></div> 
+                           <div class="clr_bth"></div> 
+                           
+                           <div><h3>Change Password</h3></div>                     
+  <form action="{{ path('admin_user_password_update', {'id': entity.Id})}}"    method="post" {{ form_enctype(password_form) }}>
+          
+    <div class="clr_bth"></div>
                                 
+          <div>
+       password
+        </div>     
+     <div class="frm_ele">
+                        {{ form_widget(password_form.password.password, { 'attr': {'placeholder': 'Password'} }) }}   <br>
+                        {{ form_errors(password_form.password.password) }}                        
+                    </div>
+    
+     <div class="frm_ele">
+                        {{ form_widget(password_form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   <br>
+                        {{ form_errors(password_form.password.password) }}
+                        {{ form_errors(password_form.password.confirm) }}
+                    </div>
+    
                                 
+                                 <input type="submit" value="Update" />
+                               
            </div>      
          </div><!-- End pro_detail -->      
        </div><!-- End product_content --> 

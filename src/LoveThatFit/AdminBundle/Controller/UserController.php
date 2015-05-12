@@ -88,15 +88,43 @@ class UserController extends Controller {
         $measurement = $entity->getMeasurement();
         $measurementForm = $this->createForm(new UserMeasurementType(), $measurement);
         $userForm=$this->createForm(new UserProfileSettingsType(), $entity);
-        return $this->render('LoveThatFitAdminBundle:User:edit.html.twig', array(
+        $password_form = $this->password_update_form($entity);
+         return $this->render('LoveThatFitAdminBundle:User:edit.html.twig', array(
                     'form' => $measurementForm->createView(),
                     'userform' => $userForm->createView(),
                     'measurement' => $measurement,
                     'entity' => $entity,
+                    'password_form' => $password_form->createView(),
                 ));
     }
-    
-    //--------------------------Update User----------------------------------------------------------------
+    #----------------------------------------------------
+    private function password_update_form($user){
+        $password_form = $this->createFormBuilder($user)
+         ->add('password', 'repeated', array(
+            'first_name' => 'password',
+            'second_name' => 'confirm',
+            'type' => 'password',
+            'invalid_message' => 'The password fields must match.',
+        ))                
+        ->getForm();
+        return $password_form;
+    }
+    #---------------------------------------------------
+    public function passwordUpdateAction($id) {
+        $user = $this->get('user.helper.user')->find($id);
+        $password_form = $this->password_update_form($user);
+        $password_form->bind($this->getRequest());
+        $data = $password_form->getData();
+        return new Response($data->getPassword());
+        if ($password_form->isValid()) {            
+            $password = $this->get('user.helper.user')->encodeThisPassword($user, $data->getPassword());
+            $user->setPassword($password);            
+            $this->get('user.helper.user')->saveUser($user);
+            $this->get('session')->setFlash('Success', 'Password Updated Successfully');
+        }
+         return $this->redirect($this->generateUrl('admin_user_detail_edit', array('id' => $id)));         
+    }
+    //--------------------------Update User--------------
     public function updateAction($id) {
         $entity = $this->get('user.helper.user')->find($id);
         $measurement = $entity->getMeasurement();

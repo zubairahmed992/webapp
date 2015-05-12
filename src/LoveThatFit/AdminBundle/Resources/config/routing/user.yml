@@ -19,6 +19,13 @@ admin_user_detail_update:
     defaults: { _controller: LoveThatFitAdminBundle:User:update}
     requirements:
      _method:  POST   
+
+admin_user_password_update:
+    pattern:  /admin/user/{id}/password_update
+    defaults: { _controller: LoveThatFitAdminBundle:User:passwordUpdate}
+    requirements:
+     _method:  POST   
+
      
 admin_user_profile_detail_update:     
     pattern:  /admin/user/profile/{id}/update
