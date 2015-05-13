@@ -115,13 +115,11 @@ class UserController extends Controller {
         $password_form = $this->password_update_form($user);
         $password_form->bind($this->getRequest());
         $data = $password_form->getData();
-        return new Response($data->getPassword());
-        if ($password_form->isValid()) {            
-            $password = $this->get('user.helper.user')->encodeThisPassword($user, $data->getPassword());
-            $user->setPassword($password);            
-            $this->get('user.helper.user')->saveUser($user);
-            $this->get('session')->setFlash('Success', 'Password Updated Successfully');
-        }
+        $user->setPassword($data->getPassword());
+        $password = $this->get('user.helper.user')->encodePassword($user);
+        $user->setPassword($password);            
+        $this->get('user.helper.user')->saveUser($user);
+        $this->get('session')->setFlash('Success', 'Password Updated Successfully');        
          return $this->redirect($this->generateUrl('admin_user_detail_edit', array('id' => $id)));         
     }
     //--------------------------Update User--------------
