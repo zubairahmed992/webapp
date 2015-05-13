@@ -225,7 +225,7 @@ class SizeChartRepository extends EntityRepository {
         $query = $this->getEntityManager()
                         ->createQuery("
      SELECT
-      sc.id as size_chart_id,sc.bust as dress_bottom,sc.waist as dress_waist,sc.hip as dress_hip,sc.sleeve as dress_sleeve
+      sc.id as size_chart_id,sc.bust as dress_bust,sc.waist as dress_waist,sc.hip as dress_hip,sc.sleeve as dress_sleeve
      
      FROM LoveThatFitAdminBundle:SizeChart sc
      JOIN sc.brand b    

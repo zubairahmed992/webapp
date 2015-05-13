@@ -163,6 +163,19 @@ class WSTestController extends Controller {
         return new Response(json_encode($msg));
      }
     
+     
+#-----------------Size Chart Against The Brand Id For Registration Step2---------------------------------------------------#
+
+    public function sizeChartsAction() {
+        $request_array = $this->process_request();        
+        $size_chart = $this->get('admin.helper.sizechart')->sizeChartList($request_array);
+        if ($size_chart) {            
+            $total_record = count($size_chart);
+            return new Response($this->json_view($total_record, $size_chart));
+        } else {
+            return new response(json_encode(array('Message' => 'Can not find Size Chart')));
+        }
+    }     
 #####################################################################################    
 #####################################################################################
 #####################################################################################

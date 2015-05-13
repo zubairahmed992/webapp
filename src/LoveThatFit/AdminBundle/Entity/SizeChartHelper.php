@@ -451,13 +451,13 @@ public function sizeChartList($request_array)
 
             #----------------- WAIST AVERAGE-----------------------------------------------#
             if ($waist_dress == 0 && $waist > 0) {
-                $wasit = $waist;
+                $waist = $waist;
             }
             if ($waist_dress > 0 && $waist == 0) {
-                $wasit = $waist_dress;
+                $waist = $waist_dress;
             }
             if ($waist_dress > 0 && $waist > 0) {
-                $wasit = ($waist_dress + $wasit) / 2;
+                $waist = ($waist_dress + $waist) / 2;
             }
             #-------------------------------SLEEVE________________________________________________# 
             if ($sleeve > 0 && $sleeve_dress == 0) {

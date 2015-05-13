@@ -63,6 +63,10 @@ wst_brand_syn:
 wst_product_detail_syn:
    pattern:  /web_service_test/product_detail_sync
    defaults: { _controller: LoveThatFitWebServiceBundle:WSTest:getProductDetailSyn} 
+   
+wst_size_chart:
+   pattern:  /web_service_test/size_chart
+   defaults: { _controller: LoveThatFitWebServiceBundle:WSTest:sizeCharts}   
 #----------------------------------------------------
 constantValue:
    pattern:  /web_service_test/constant_values
