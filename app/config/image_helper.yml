@@ -151,7 +151,7 @@ image_category:
     original:
       prefix: 
       dir:  'uploads/ltf/products/fitting_room'
-      pixel_per_inch: 24      
+      pixel_per_inch: 60      
       
     web:
       prefix: 
