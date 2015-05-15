@@ -202,6 +202,69 @@ class UserController extends Controller {
                     'form' => $form->createView(),                   
          ));
     }
+   
+    
+    
+    
+    public function allUserDataAction() {
+        $users = $this->get('user.helper.user')->findAll();       
+        return $this->render('LoveThatFitAdminBundle:User:all_data.html.twig', array(
+                    'users' => $users,                   
+         ));
+    }
+     
+    public function userDataDownloadAction() {
+        $users = $this->get('user.helper.user')->findAll();
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachement; filename="user_data.csv";');
+        // open the "output" stream
+        $f = fopen('php://output', 'w');
+         $headers= array(
+            'id',
+            'email', 
+            'name',
+            'zipcode',
+            'gender',
+            'birth_date',
+            'weight',
+            'height',
+            'waist',
+            'belt',
+            'hip',
+            'bust',
+            'chest',
+            'arm',
+            'inseam',
+            'shoulder_height',
+            'outseam',
+            'sleeve',
+            'neck',
+            'thigh',
+            'center_front_waist',
+            'shoulder_across_front',
+            'shoulder_across_back',
+            'bicep',
+            'tricep',
+            'wrist',
+            'back_waist', 
+            'waist_hip',
+            'knee',
+            'calf',
+            'ankle',
+        );
+         fputcsv($f, $headers);
+        foreach ($users as $u) {
+            //generate csv lines from the inner arrays
+            fputcsv($f, $u->toDataArray(false));
+        }
+        return new Response('true');
+    }
+    
+    
+    
+    #######################################################################################
+    #######################################################################################
+    #######################################################################################
     
   //-----------------------Add New Retailer Site user---------------------------------------------------  
    public function newRetailerSiteUserAction($id)
@@ -271,7 +334,6 @@ class UserController extends Controller {
             return $this->redirect($this->getRequest()->headers->get('referer'));
         }
     }
-    
     
     
     //-------------------------------User Search Form-----------------------------------------------------------

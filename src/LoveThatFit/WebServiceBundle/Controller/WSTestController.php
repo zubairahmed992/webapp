@@ -176,6 +176,23 @@ class WSTestController extends Controller {
             return new response(json_encode(array('Message' => 'Can not find Size Chart')));
         }
     }     
+#---------------------------User Favourite Item List Return SErvice-----------------#    
+    
+    public function favouriteByUserAction(){
+        
+        $request_array = $this->process_request();
+        $user_id=$request_array['user_id'];
+        $check =  $this->authenticate_token($request_array['authTokenWebService']);
+        if ($check['status']==False) {
+                  return new Response(json_encode($check['status']));
+        }
+        if($user_id){
+            $product_list =  $this->get('webservice.helper.product')->favouriteByUser($user_id,$this->getRequest());
+            return new response(json_encode($product_list));
+        }else{
+            return new Response(json_encode(array('Message'=>'User not found')));
+        }
+    }    
 #####################################################################################    
 #####################################################################################
 #####################################################################################

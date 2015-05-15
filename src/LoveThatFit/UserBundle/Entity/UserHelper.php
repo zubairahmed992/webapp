@@ -107,6 +107,10 @@ class UserHelper {
 
 #----------------------------All Find Method -------------------------------------------------------------#    
 
+    public function findAll() {
+        return $this->repo->findAll();
+    }
+    
     public function find($id) {
         return $this->repo->findOneBy(array('id' => $id));
     }

@@ -1,0 +1,80 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Users Data</li>
+{% endblock %}       
+
+{% block body %}
+   <table  class="table table-condensed table-bordered table-hover">
+       <tr>
+        <th></th>   
+        <th></th>
+        <th>email</th>
+        <th>zip</th>        
+        <th>DOB</th>
+        <th>weight</th>
+<th>height</th>
+<th>waist</th>
+<th>belt</th>
+<th>hip</th>
+<th>bust</th>
+<th>chest</th>
+<th>arm</th>
+<th>inseam</th>
+<th>shoulder Height</th>
+<th>outseam</th>
+<th>sleeve</th>
+<th>neck</th>
+<th>thigh</th>
+<th>CF-Waist</th>
+<th>shoulder Front</th>
+<th>shoulder Back</th>
+<th>bicep</th>
+<th>tricep</th>
+<th>wrist</th>
+<th>back Waist</th>
+<th>waist Hip</th>
+<th>knee</th>
+<th>calf</th>
+<th>ankle</th>
+       </tr>
+       {% for user in users %} 
+       <tr>
+           <td>{{user.id}}</td>
+           <td>{{user.gender}}</td>
+           <td>{{user.email}}</td>
+           <td>{{user.zipcode}}</td>
+           <td>{{user.birthDate|date("m/d/Y", false)}}</td>
+           
+{%if user.measurement %}
+<td>{{user.measurement.weight}}</td>
+<td>{{user.measurement.height}}</td>
+<td>{{user.measurement.waist}}</td>
+<td>{{user.measurement.belt}}</td>
+<td>{{user.measurement.hip}}</td>
+<td>{{user.measurement.bust}}</td>
+<td>{{user.measurement.chest}}</td>
+<td>{{user.measurement.arm}}</td>
+<td>{{user.measurement.inseam}}</td>
+<td>{{user.measurement.shoulderHeight|number_format(2, '.', '')}}</td>
+<td>{{user.measurement.outseam}}</td>
+<td>{{user.measurement.sleeve}}</td>
+<td>{{user.measurement.neck}}</td>
+<td>{{user.measurement.thigh}}</td>
+<td>{{user.measurement.centerFrontWaist}}</td>
+<td>{{user.measurement.shoulderAcrossFront}}</td>
+<td>{{user.measurement.shoulderAcrossBack}}</td>
+<td>{{user.measurement.bicep}}</td>
+<td>{{user.measurement.tricep}}</td>
+<td>{{user.measurement.wrist}}</td>
+<td>{{user.measurement.backWaist}}</td>
+<td>{{user.measurement.waistHip}}</td>
+<td>{{user.measurement.knee}}</td>
+<td>{{user.measurement.calf}}</td>
+<td>{{user.measurement.ankle}}</td>
+{%else%}
+<td colspan="25"></td>
+{% endif %}
+       </tr>
+       {% endfor %}
+   </table>
+{% endblock %}

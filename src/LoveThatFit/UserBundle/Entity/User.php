@@ -1744,6 +1744,78 @@ class User implements UserInterface, \Serializable {
         
     }
     
+    public function toDataArray($key=true){
+        if($key){
+        return array(
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'name' => $this->getFullName(),
+            'zipcode' => $this->getZipcode(),
+            'gender' => $this->getGender(),        
+            'birth_date' => $this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,        
+            'weight' => $this->measurement?$this->measurement->getWeight():0,
+            'height' => $this->measurement?$this->measurement->getHeight():0,
+            'waist' => $this->measurement?$this->measurement->getWaist():0,
+            'belt' => $this->measurement?$this->measurement->getBelt():0,
+            'hip' => $this->measurement?$this->measurement->getHip():0,
+            'bust' => $this->measurement?$this->measurement->getBust():0,
+            'chest' => $this->measurement?$this->measurement->getChest():0,
+            'arm' => $this->measurement?$this->measurement->getArm():0,
+            'inseam' => $this->measurement?$this->measurement->getInseam():0,            
+            'shoulder_height' => $this->measurement?$this->measurement->getShoulderHeight():0,
+            'outseam' => $this->measurement?$this->measurement->getOutseam():0,
+            'sleeve' => $this->measurement?$this->measurement->getSleeve():0,
+            'neck' => $this->measurement?$this->measurement->getNeck():0,
+            'thigh' => $this->measurement?$this->measurement->getThigh():0,
+            'center_front_waist' => $this->measurement?$this->measurement->getCenterFrontWaist():0,
+            'shoulder_across_front' => $this->measurement?$this->measurement->getShoulderAcrossFront():0,
+            'shoulder_across_back' => $this->measurement?$this->measurement->getShoulderAcrossBack():0,
+            'bicep' => $this->measurement?$this->measurement->getBicep():0,
+            'tricep' =>$this->measurement?$this->measurement->getTricep():0,
+            'wrist' => $this->measurement?$this->measurement->getWrist():0,
+            'back_waist' => $this->measurement?$this->measurement->getBackWaist():0,
+            'waist_hip' => $this->measurement?$this->measurement->getWaistHip():0,
+            'knee' =>  $this->measurement?$this->measurement->getKnee():0,
+            'calf' =>  $this->measurement?$this->measurement->getCalf():0,
+            'ankle' => $this->measurement?$this->measurement->getAnkle():0,
+        );
+        }else{
+            return array(
+                $this->getId(),
+                $this->getEmail(),
+                $this->getFullName(),
+                $this->getZipcode(),
+                $this->getGender(),        
+                $this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,        
+                $this->measurement?$this->measurement->getWeight():0,
+                $this->measurement?$this->measurement->getHeight():0,
+                $this->measurement?$this->measurement->getWaist():0,
+                $this->measurement?$this->measurement->getBelt():0,
+                $this->measurement?$this->measurement->getHip():0,
+                $this->measurement?$this->measurement->getBust():0,
+                $this->measurement?$this->measurement->getChest():0,
+                $this->measurement?$this->measurement->getArm():0,
+                $this->measurement?$this->measurement->getInseam():0,            
+                $this->measurement?$this->measurement->getShoulderHeight():0,
+                $this->measurement?$this->measurement->getOutseam():0,
+                $this->measurement?$this->measurement->getSleeve():0,
+                $this->measurement?$this->measurement->getNeck():0,
+                $this->measurement?$this->measurement->getThigh():0,
+                $this->measurement?$this->measurement->getCenterFrontWaist():0,
+                $this->measurement?$this->measurement->getShoulderAcrossFront():0,
+                $this->measurement?$this->measurement->getShoulderAcrossBack():0,
+                $this->measurement?$this->measurement->getBicep():0,
+                $this->measurement?$this->measurement->getTricep():0,
+                $this->measurement?$this->measurement->getWrist():0,
+                $this->measurement?$this->measurement->getBackWaist():0,
+                $this->measurement?$this->measurement->getWaistHip():0,
+                $this->measurement?$this->measurement->getKnee():0,
+                $this->measurement?$this->measurement->getCalf():0,
+                $this->measurement?$this->measurement->getAnkle():0,
+            );    
+        }
+        
+    }
     #-----------------------------------------------------------
      public function resize_image() {
 
