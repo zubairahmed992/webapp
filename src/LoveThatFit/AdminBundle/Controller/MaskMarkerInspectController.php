@@ -58,4 +58,122 @@ class MaskMarkerInspectController extends Controller {
                     'marker' => $marker,
                 ));
     }   
+    
+
+###################################################################################
+###################################################################################
+#-----------------------------------------------------------------------------
+    
+      public function allUserDataAction() {
+        $users = $this->get('user.helper.user')->findAll();  
+        $user_array=array();
+         $headers= array(
+            'id',
+            'email', 
+            'name',
+            'zipcode',
+            'gender',
+            'birth_date',
+            'weight',
+            'height',
+            'waist',
+            'belt',
+            'hip',
+            'bust',
+            'chest',
+            'arm',
+            'inseam',
+            'shoulder_height',
+            'outseam',
+            'sleeve',
+            'neck',
+            'thigh',
+            'center_front_waist',
+            'shoulder_across_front',
+            'shoulder_across_back',
+            'bicep',
+            'tricep',
+            'wrist',
+            'back_waist', 
+            'waist_hip',
+            'knee',
+            'calf',
+            'ankle',
+            'bust-px',
+            'chest-px',
+            'shoulder_across_front-px',
+            'waist-px',
+            'hip-px',
+            'inseam-px',
+            'thigh-px',
+            'shoulder_length-px',
+            'bicep-px',
+            'wrist-px',
+            'knee-px',
+            'calf-px',
+            'ankle-px',
+            'elbow-px',
+            'torso-px',
+            'neck-px',
+
+        );
+        #array_push($user_array, $headers);  
+        $mm_specs=$this->getMaskedMarkerSpecs(); 
+        foreach ($users as $u) {
+            array_push($user_array, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
+           #array_push($user_array, $u->toDataArray(false));  
+        }
+        #return new Response(json_encode($user_array));
+        return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:user_array_data.html.twig', array(                    
+                    'users' => $user_array,
+         ));
+    }
+     
+    public function userDataDownloadAction() {
+        $users = $this->get('user.helper.user')->findAll();
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachement; filename="user_data.csv";');
+        // open the "output" stream
+        $f = fopen('php://output', 'w');
+         $headers= array(
+            'id',
+            'email', 
+            'name',
+            'zipcode',
+            'gender',
+            'birth_date',
+            'weight',
+            'height',
+            'waist',
+            'belt',
+            'hip',
+            'bust',
+            'chest',
+            'arm',
+            'inseam',
+            'shoulder_height',
+            'outseam',
+            'sleeve',
+            'neck',
+            'thigh',
+            'center_front_waist',
+            'shoulder_across_front',
+            'shoulder_across_back',
+            'bicep',
+            'tricep',
+            'wrist',
+            'back_waist', 
+            'waist_hip',
+            'knee',
+            'calf',
+            'ankle',
+        );
+         fputcsv($f, $headers);
+        foreach ($users as $u) {
+            //generate csv lines from the inner arrays
+            fputcsv($f, $u->toDataArray(false));
+        }
+        return new Response('true');
+    }
+    
 }

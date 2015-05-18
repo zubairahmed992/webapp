@@ -242,8 +242,7 @@ class UserMarkerHelper {
         #$m1=0;
         foreach ($mm_specs['masked_marker'] as $mms_k=>$mms_v) {
             $user_fitpoint_measurement =  array_key_exists($mms_k, $ubm)?$ubm[$mms_k]:'';
-            $m1 = $this->calculate_distance($mms_v, $mm_array);
-            
+            $m1 = $this->calculate_distance($mms_v, $mm_array);            
             $comp[$mms_k] = array(  'axis'=>$mms_v['axis'], 
                                     'type'=>$mms_v['type'], 
                                     'segments'=>$mms_v['segments'], 
@@ -322,7 +321,22 @@ class UserMarkerHelper {
         return $comp;
         
     }
-   
+    
+   #------------------------------------------------------------------ 
+   public function getMixMeasurementArray($user, $mm_specs) {
+        $mm = $user->getUserMarker();
+        $comp = array('bust_px'=>0, 'chest_px'=>0, 'shoulder_across_front_px'=>0, 'waist_px'=>0, 'hip_px'=>0, 'inseam_px'=>0, 'thigh_px'=>0, 'shoulder_length_px'=>0, 'bicep_px'=>0, 'wrist_px'=>0, 'knee_px'=>0, 'calf_px'=>0, 'ankle_px'=>0, 'elbow_px'=>0, 'torso_px'=>0, 'neck_px'=>0);
+
+        if ($mm) {
+            $mm_array = json_decode($mm->getMarkerJson());
+            foreach ($mm_specs['masked_marker'] as $mms_k => $mms_v) {
+                $m1 = $this->calculate_distance($mms_v, $mm_array);
+                $comp[$mms_k . '_px'] = $m1['s2'] == 0 ? $m1['s1'] : ($m1['s1'] + $m1['s2']) / 2;
+                $comp[$mms_k . '_px'] = number_format($comp[$mms_k . '_px'], 2, '.', '') + 0;
+            }
+        }
+        return array_merge($user->toDataArray(), $comp);        
+    }
     
 }
     

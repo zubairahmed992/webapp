@@ -13,3 +13,11 @@ admin_mask_marker_inspect_path_axis:
 admin_mask_marker_inspect_sim:
     pattern:  /admin/mask_marker_inspect/sim/{id}
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:sim, id:6}
+
+admin_users_masks_all_data:
+    pattern:  /admin/mask_marker_inspect/all_data
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:allUserData}
+
+admin_users_masks_data_download:
+    pattern:  /admin/mask_marker_inspect/data_download
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:userDataDownload}    

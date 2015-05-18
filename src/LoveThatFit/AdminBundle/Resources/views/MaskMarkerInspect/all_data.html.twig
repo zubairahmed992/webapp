@@ -43,8 +43,7 @@
            <td>{{user.gender}}</td>
            <td>{{user.email}}</td>
            <td>{{user.zipcode}}</td>
-           <td>{{user.birthDate|date("m/d/Y", false)}}</td>
-           
+           <td>{{user.birthDate|date("m/d/Y", false)}}</td>           
 {%if user.measurement %}
 <td>{{user.measurement.weight}}</td>
 <td>{{user.measurement.height}}</td>

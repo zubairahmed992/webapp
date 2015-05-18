@@ -1,11 +1,3 @@
-admin_users_all_data:
-    pattern:  /admin/users/all_data
-    defaults: { _controller: LoveThatFitAdminBundle:User:allUserData}
-
-admin_users_data_download:
-    pattern:  /admin/users/data_download
-    defaults: { _controller: LoveThatFitAdminBundle:User:userDataDownload}    
-    
 admin_users:
     pattern:  /admin/users/{page_number}/{sort}
     defaults: { _controller: LoveThatFitAdminBundle:User:index , page_number: 1, sort:id }
