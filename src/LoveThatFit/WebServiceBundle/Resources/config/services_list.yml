@@ -22,10 +22,9 @@ registrationSizechart:
    pattern:  /web_service/registration_sizechart
    request_type: get
 
-images_ul:
-   pattern:  /web_service/images_url
    
 #-----------------------------------------
+
 brand_retailer:
     pattern:  /web_service/brand_retailer
     params:
@@ -38,6 +37,11 @@ brand_retailer:
 #----------------------------------#----------------------------------
 
 #-------------------- User Login & registration & profile ---------------------------
+images_url:
+   pattern:  /web_service_test/images_url
+   params:
+      deviceType: iphone5
+   request_type: post
 login:
     pattern:  /web_service_test/login
     params:

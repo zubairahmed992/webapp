@@ -58,7 +58,14 @@ class WSTestController extends Controller {
 #####################################################################################
 #####################################################################################
 
-
+# IMAGES_URL	/web_service/images_url
+#------------------------------------------------------
+public function imagesUrlAction(){
+    $request = $this->getRequest();
+    $request_array  = $this->process_request();                         
+    $product_response =  $this->get('webservice.helper.product')->imagesUrl($request,$request_array);
+    return new response(json_encode($product_response));
+}
 #--------------------Login User -----------------------------------------------#     
     public function loginAction() {
         $decoded  = $this->process_request();                         
