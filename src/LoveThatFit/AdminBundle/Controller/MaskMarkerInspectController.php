@@ -66,58 +66,7 @@ class MaskMarkerInspectController extends Controller {
     
       public function allUserDataAction() {
         $users = $this->get('user.helper.user')->findAll();  
-        $user_array=array();
-         $headers= array(
-            'id',
-            'email', 
-            'name',
-            'zipcode',
-            'gender',
-            'birth_date',
-            'weight',
-            'height',
-            'waist',
-            'belt',
-            'hip',
-            'bust',
-            'chest',
-            'arm',
-            'inseam',
-            'shoulder_height',
-            'outseam',
-            'sleeve',
-            'neck',
-            'thigh',
-            'center_front_waist',
-            'shoulder_across_front',
-            'shoulder_across_back',
-            'bicep',
-            'tricep',
-            'wrist',
-            'back_waist', 
-            'waist_hip',
-            'knee',
-            'calf',
-            'ankle',
-            'bust-px',
-            'chest-px',
-            'shoulder_across_front-px',
-            'waist-px',
-            'hip-px',
-            'inseam-px',
-            'thigh-px',
-            'shoulder_length-px',
-            'bicep-px',
-            'wrist-px',
-            'knee-px',
-            'calf-px',
-            'ankle-px',
-            'elbow-px',
-            'torso-px',
-            'neck-px',
-
-        );
-        #array_push($user_array, $headers);  
+        $user_array=array();        
         $mm_specs=$this->getMaskedMarkerSpecs(); 
         foreach ($users as $u) {
             array_push($user_array, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
@@ -128,8 +77,32 @@ class MaskMarkerInspectController extends Controller {
                     'users' => $user_array,
          ));
     }
-     
-    public function userDataDownloadAction() {
+#----------------------------------------------------------------------------------     
+    
+      public function userDataDownloadAction() {
+        $users = $this->get('user.helper.user')->findAll();          
+        $mm_specs=$this->getMaskedMarkerSpecs(); 
+        #----------------------------------
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachement; filename="user_data.csv";');
+        $f = fopen('php://output', 'w');
+        $is_first_element=true;
+        foreach ($users as $u) {
+            if ($is_first_element){
+                $mix_measurement=$this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs);
+                fputcsv($f, array_keys($mix_measurement));
+                fputcsv($f, $mix_measurement);
+                $is_first_element=false;
+            }else{
+                fputcsv($f, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
+            }
+             
+        }
+        fclose($f);        
+        return new Response('true');
+    }
+    #############
+    public function _userDataDownloadAction() {
         $users = $this->get('user.helper.user')->findAll();
         header('Content-Type: application/csv');
         header('Content-Disposition: attachement; filename="user_data.csv";');
