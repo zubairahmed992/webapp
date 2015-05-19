@@ -253,32 +253,39 @@ class UserMarkerHelper {
         
     }
     #----------------------------------------------------------------------------
-    private function calculate_distance($mms_v, $mm_array){
-        $p1 = $mms_v['segments']['s1']['a'];
-        $p2 = $mms_v['segments']['s1']['b'];
-        $x1=round($mm_array[$p1][0],2);
-        $y1=round($mm_array[$p1][1],2);
-        $x2=round($mm_array[$p2][0],2);
-        $y2=round($mm_array[$p2][1],2);        
-        #single measurement
-        $dst_px1 =   sqrt(pow(($x2-$x1),2) + pow(($y2-$y1),2));        
-        
-        #pair measurements
-        $dst_px2 =   0;
-        
-        if($mms_v['type']=='pair'){
-            $p3 = $mms_v['segments']['s2']['a'];
-            $p4 = $mms_v['segments']['s2']['b'];
-            $x3=round($mm_array[$p3][0],2);
-            $y3=round($mm_array[$p3][1],2);
-            $x4=round($mm_array[$p4][0],2);
-            $y4=round($mm_array[$p4][1],2);        
-            $dst_px2 =   sqrt(pow(($x4-$x3),2) + pow(($y4-$y3),2));                                        
+    private function calculate_distance($mms_v, $mm_array) {
+        if (is_array($mm_array)) {
+            $dst_px1 = 0;
+            $p1 = $mms_v['segments']['s1']['a'];
+            $p2 = $mms_v['segments']['s1']['b'];
+            if (array_key_exists($p1, $mm_array) && array_key_exists($p2, $mm_array)) {
+                $x1 = round($mm_array[$p1][0], 2);
+                $y1 = round($mm_array[$p1][1], 2);            
+                $x2 = round($mm_array[$p2][0], 2);
+                $y2 = round($mm_array[$p2][1], 2);
+                #single measurement
+                $dst_px1 = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
+            }
+            
+            #pair measurements
+            $dst_px2 = 0;
+
+            if ($mms_v['type'] == 'pair') {
+                $p3 = $mms_v['segments']['s2']['a'];
+                $p4 = $mms_v['segments']['s2']['b'];
+                if (array_key_exists($p3, $mm_array) && array_key_exists($p4, $mm_array)) {                    
+                    $x3 = round($mm_array[$p3][0], 2);
+                    $y3 = round($mm_array[$p3][1], 2);
+                    $x4 = round($mm_array[$p4][0], 2);
+                    $y4 = round($mm_array[$p4][1], 2);
+                    $dst_px2 = sqrt(pow(($x4 - $x3), 2) + pow(($y4 - $y3), 2));
+                }
+            }
+
+            return array('s1' => $dst_px1, 's2' => $dst_px2);
+        } else {
+            return array('s1' => 0, 's2' => 0);
         }
-        
-        return array('s1'=>$dst_px1,
-                        's2'=>$dst_px2,
-            );
     }
     #----------------------------------------------------------------------------
     public function getAxisArray($user, $mm_specs){
