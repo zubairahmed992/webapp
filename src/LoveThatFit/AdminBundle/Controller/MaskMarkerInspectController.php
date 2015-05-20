@@ -65,18 +65,29 @@ class MaskMarkerInspectController extends Controller {
 #-----------------------------------------------------------------------------
     
       public function allUserDataAction() {
-        $users = $this->get('user.helper.user')->findAll();  
+        #$users = $this->get('user.helper.user')->findAll();  
+        $users = null;
         $user_array=array();        
         $mm_specs=$this->getMaskedMarkerSpecs(); 
+        if($users){
         foreach ($users as $u) {
             array_push($user_array, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
            #array_push($user_array, $u->toDataArray(false));  
+        }        
         }
         #return new Response(json_encode($user_array));
         return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:user_array_data.html.twig', array(                    
                     'users' => $user_array,
          ));
     }
+#-----------------------------------------------------------------------------
+    
+      public function filterUserDataAction() {          
+        $decoded  = $this->getRequest()->request->all();
+         $str = http_build_query($decoded );
+        return new Response($str);
+    }
+
 #----------------------------------------------------------------------------------     
     
       public function userDataDownloadAction() {
@@ -101,7 +112,8 @@ class MaskMarkerInspectController extends Controller {
         fclose($f);        
         return new Response('true');
     }
-    #############
+
+#############
     public function _userDataDownloadAction() {
         $users = $this->get('user.helper.user')->findAll();
         header('Content-Type: application/csv');

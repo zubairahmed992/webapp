@@ -277,5 +277,42 @@ class UserRepository extends EntityRepository {
        
   }
    
+  #----------------------------------------------------------------
+   public function findUserBy($options)
+  {
+       $str='';
+       if (!($options['male'] == true && $options['female'] == true) && !($options['male'] == false && $options['female'] == false)) {
+            if ($options['female'] == true) {
+                if (strlen($options['from_id']) > 0 && strlen($options['to_id']) > 0) {
+                    
+                } elseif (strlen($options['from_id']) > 0) {
+                    
+                } elseif (strlen($options['to_id']) > 0) {
+                    
+                }
+            } elseif ($options['male'] == true) {
+                if (strlen($options['from_id']) > 0 && strlen($options['to_id']) > 0) {
+                    
+                } elseif (strlen($options['from_id']) > 0) {
+                    
+                } elseif (strlen($options['to_id']) > 0) {
+                    
+                }
+            }
+        }
+       
+
+       $str='SELECT u,up FROM LoveThatFitUserBundle:User u';
+      $record = $this->getEntityManager()
+                        ->createQuery("SELECT u,up FROM LoveThatFitUserBundle:User u     
+                                       JOIN u.userparentchildlink up
+                                       WHERE up.parent=:child_id")
+                        ->setParameters(array('child_id' => $user));
+        try {
+            return $record->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+  }
 }
 

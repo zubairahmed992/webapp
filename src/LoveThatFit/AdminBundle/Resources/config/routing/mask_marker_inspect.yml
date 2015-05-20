@@ -21,3 +21,8 @@ admin_users_masks_all_data:
 admin_users_masks_data_download:
     pattern:  /admin/mask_marker_inspect/data_download
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:userDataDownload}    
+
+admin_users_masks_data_filter:
+    pattern:  /admin/mask_marker_inspect/data_filter
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:filterUserData}
+    
