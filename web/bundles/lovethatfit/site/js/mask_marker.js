@@ -91,9 +91,9 @@ function top_btm_markers_pos(){
             $("#shoulder_height").attr("value", sholder_right);
         }
 
-
-        var bottom_left = mid_area_path.segments[20].point.y - 66;
-        var bottom_right = mid_area_path.segments[48].point.y - 66;
+//// Remove value -66 in both lines////
+        var bottom_left = mid_area_path.segments[20].point.y;
+        var bottom_right = mid_area_path.segments[48].point.y;
 
 
         if(bottom_left <= bottom_right){
@@ -1341,8 +1341,44 @@ function onMouseUp(event){
     }   
     
     
+    /*-------------------------- Mask Index settings ------------------------------
+    
+    var sg_shoulder_rgt = mid_area_path.segments[6];
+    var sg_shoulder_lft = mid_area_path.segments[62];
+    
+    var sg_chest_rgt = mid_area_path.segments[16];
+    var sg_chest_lft = mid_area_path.segments[52];
+    
+    var sg_bust_rgt = mid_area_path.segments[16];
+    var sg_bust_lft = mid_area_path.segments[52];
+    
+    var sg_waist_rgt = mid_area_path.segments[17];
+    var sg_waist_lft = mid_area_path.segments[51];
+    
+    var sg_hip_rgt = mid_area_path.segments[20];
+    var sg_hip_lft = mid_area_path.segments[48];
+    
+    var sg_inseam = mid_area_path.segments[34];
+    
+    var sg_rgt_thigh_outer = mid_area_path.segments[21];
+    var sg_rgt_thigh_inner = mid_area_path.segments[33];
+    
+    var sg_lft_thigh_inner = mid_area_path.segments[35];
+    var sg_lft_thigh_outer = mid_area_path.segments[47];
+    
+    var sg_rgt_bicep_outer = mid_area_path.segments[7];
+    var sg_rgt_bicep_inner = mid_area_path.segments[14];
+    
+    
+    
+    
+    //mid_area_path.segments[4].point.x = 200;
+   // mid_area_path.segments[64].point.x = 200;
    
    //alert(rgt_arm_ref);
+   
+   
+   */
    
    if(curr_view == "zoomed"){
        mid_area_path.selected = true;

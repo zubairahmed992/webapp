@@ -765,17 +765,17 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                          }else{
                            if(curr_prod_type=='top'){
                                 if(px_variance==0){
-                                    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px", "left","20px");
+                                    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) - 61 + "px", "left","20px");
                                 }else{
-                                    $("#top_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value")) + parseInt(px_variance)) + "px", "left","20px");
+                                    $("#top_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value")) - 61 + parseInt(px_variance)) + "px", "left","20px");
                                 }
                            }
                            if(curr_prod_type=='dress'){
                                if(px_variance==0){
-                                   $("#full_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px");
+                                   $("#full_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) - 61 + "px");
              //console.log('1');                      
             }else{
-                                       $("#full_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value"))+ parseInt(px_variance)) + "px");                                        
+                                       $("#full_dropable").css("top", (parseInt($("#hdn_prod_top_pos").attr("value")) - 61 + parseInt(px_variance)) + "px");                                        
             //console.log('2');                            
             }
                            }
@@ -926,8 +926,10 @@ function set_droppables(){
     var top_marg = user_height * 13;    
     top_marg = top_marg / 100;    
     top_pos_drop = Math.round(top_marg + top_pos_drop + 1);    
-    final_top_pos = top_pos_drop - 1;    
-    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) + "px", "left","20px");    
+    final_top_pos = top_pos_drop - 1;   
+    
+    ////Adjusted -61px for top type product////
+    $("#top_dropable").css("top", parseInt($("#hdn_prod_top_pos").attr("value")) - 61 + "px", "left","20px");    
     var bottom_pos_drop = parseInt($("#hdn_prod_bottom_pos").attr("value"));    
     //bottom_pos_drop = bottom_pos_drop * 6;    
     var top_marg_btm = user_height * 48;    
@@ -935,10 +937,10 @@ function set_droppables(){
     bottom_pos_drop = Math.round(top_marg_btm + bottom_pos_drop + 23);    
     console.log("Check Botom = " + bottom_pos_drop);    
     bottom_final_pos = bottom_pos_drop - 99;    
-    $("#bottom_dropable").css({top: parseInt($("#hdn_prod_bottom_pos").attr("value")) + "px"});    
+    $("#bottom_dropable").css({top: parseInt($("#hdn_prod_bottom_pos").attr("value")) - 10 + "px"});    
     var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");    
     //dress_pos_drop = dress_pos_drop * 6;    
-    $("#full_dropable").css({top: parseInt($("#hdn_prod_top_pos").attr("value")) + "px"});
+    $("#full_dropable").css({top: parseInt($("#hdn_prod_top_pos").attr("value")) - 61 + "px"});
     
   }
   else {
