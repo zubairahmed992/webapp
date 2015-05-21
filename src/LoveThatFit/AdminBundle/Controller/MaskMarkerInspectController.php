@@ -87,15 +87,50 @@ class MaskMarkerInspectController extends Controller {
         $users = $this->get('user.helper.user')->findUserByOptions($decoded);
         $user_array = array();
         $mm_specs = $this->getMaskedMarkerSpecs();
-
-        foreach ($users as $u) {
-            array_push($user_array, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
-        }
-        return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:_filter_data.html.twig', array(
-                    'users' => $user_array,
-                ));
+     
+            $male_count = 0;
+            $female_count = 0;
+            foreach ($users as $u) {
+                array_push($user_array, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
+                if (strtolower($u->getGender()) == 'm') {
+                    $male_count = $male_count + 1;
+                } else {
+                    $female_count = $female_count + 1;
+                }
+            }
+            return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:_filter_data.html.twig', array(
+                        'users' => $user_array,
+                        'users_count' => count($user_array),
+                        'male_count' => $male_count,
+                        'female_count' => $female_count
+                    ));
+        
     }
-
+#----------------------------------------------------------------------------------     
+    
+      public function filterUserDataDownloadAction($male, $female, $from_id, $to_id) {
+        $params = array('male'=>$male, 'female'=>$female,'from_id'=> $from_id, 'to_id'=>$to_id);  
+        $users = $this->get('user.helper.user')->findUserByOptions($params);
+        $mm_specs=$this->getMaskedMarkerSpecs(); 
+        #----------------------------------
+        header('Content-Type: application/csv');
+        header('Content-Disposition: attachement; filename="user_data.csv";');
+        $f = fopen('php://output', 'w');
+        $is_first_element=true;
+        foreach ($users as $u) {
+            $mix_measurement=$this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs);
+            if ($is_first_element){                
+                fputcsv($f, array_keys($mix_measurement));
+                fputcsv($f, $mix_measurement);
+                $is_first_element=false;
+            }else{
+                fputcsv($f, $mix_measurement);
+            }
+             
+        }
+        fclose($f);        
+        return new Response('true');
+    }
 #----------------------------------------------------------------------------------     
     
       public function userDataDownloadAction() {
@@ -107,13 +142,13 @@ class MaskMarkerInspectController extends Controller {
         $f = fopen('php://output', 'w');
         $is_first_element=true;
         foreach ($users as $u) {
-            if ($is_first_element){
-                $mix_measurement=$this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs);
+            $mix_measurement=$this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs);
+            if ($is_first_element){                
                 fputcsv($f, array_keys($mix_measurement));
                 fputcsv($f, $mix_measurement);
                 $is_first_element=false;
             }else{
-                fputcsv($f, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
+                fputcsv($f, $mix_measurement);
             }
              
         }
