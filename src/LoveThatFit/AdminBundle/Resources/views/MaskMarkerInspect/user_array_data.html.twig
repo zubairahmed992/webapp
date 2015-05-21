@@ -7,7 +7,6 @@
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
    <script>
    function hit_service(){
-   if ($('input.checkbox_check').is(':checked')) {}       
    
    var $url='../mask_marker_inspect/data_filter';
    var value_ar = {
@@ -21,7 +20,8 @@
         url: $url,
         data: value_ar,  
        success: function(data){
-        alert(data);    
+        
+        $('#user_data_placeholder').html(data);
     },
         failure: function(errMsg) {
             alert('error');    
@@ -53,107 +53,7 @@
     </div>
    </div>
    <br>
-   <table  class="table table-bordered table-hover">
-       <tr>
-           <th>id</th>   
-           <th>Gender</th>
-           <th>email</th>           
-           <th>zip</th>
-           <th>Date of birth</th>
-           <th>weight</th>
-           <th>height</th>
-           <th>waist</th>
-           <th>belt</th>
-           <th>hip</th>
-           <th>bust</th>
-           <th>chest</th>
-           <th>arm</th>
-           <th>inseam</th>
-           <th>shoulder Height</th>
-           <th>outseam</th>
-           <th>sleeve</th>
-           <th>neck</th>
-           <th>thigh</th>
-           <th>CF-Waist</th>
-           <th>shoulder Front</th>
-           <th>shoulder Back</th>
-           <th>bicep</th>
-           <th>tricep</th>
-           <th>wrist</th>
-           <th>back Waist</th>
-           <th>waist Hip</th>
-           <th>knee</th>
-           <th>calf</th>
-           <th>ankle</th>
-           <th>bust-px</th>
-           <th>chest-px</th>
-           <th>shoulder_across_front-px</th>
-           <th>waist-px</th>
-           <th>hip-px</th>
-           <th>inseam-px</th>
-           <th>thigh-px</th>
-           <th>shoulder_length-px</th>
-           <th>bicep-px</th>
-           <th>wrist-px</th>
-           <th>knee-px	</th>
-           <th>calf-px	</th>
-           <th>ankle-px</th>
-           <th>elbow-px</th>
-           <th>torso-px</th>
-           <th>neck-px	</th>
-
-       </tr>
-       {% for user in users %} 
-       <tr>
-             <td>{{user.id}}</td>
-           <td>{{user.gender}}</td>
-           <td>{{user.email}}</td>
-           <td>{{user.zipcode}}</td>
-           <td>{{user.birth_date|date("m/d/Y", false)}}</td>           
-
-<td>{{user.weight}}</td>
-<td>{{user.height}}</td>
-<td>{{user.waist}}</td>
-<td>{{user.belt}}</td>
-<td>{{user.hip}}</td>
-<td>{{user.bust}}</td>
-<td>{{user.chest}}</td>
-<td>{{user.arm}}</td>
-<td>{{user.inseam}}</td>
-<td>{{user.shoulder_height|number_format(2, '.', '')}}</td>
-<td>{{user.outseam}}</td>
-<td>{{user.sleeve}}</td>
-<td>{{user.neck}}</td>
-<td>{{user.thigh}}</td>
-<td>{{user.center_front_waist}}</td>
-<td>{{user.shoulder_across_front}}</td>
-<td>{{user.shoulder_across_back}}</td>
-<td>{{user.bicep}}</td>
-<td>{{user.tricep}}</td>
-<td>{{user.wrist}}</td>
-<td>{{user.back_waist}}</td>
-<td>{{user.waist_hip}}</td>
-<td>{{user.knee}}</td>
-<td>{{user.calf}}</td>
-<td>{{user.ankle}}</td>
-<td>{{user.bust_px}}</td>
-<td>{{user.chest_px}}</td>	
-<td>{{user.shoulder_across_front_px}}</td>	
-<td>{{user.waist_px}}</td>	
-<td>{{user.hip_px}}</td>	
-<td>{{user.inseam_px}}</td>	
-<td>{{user.thigh_px}}</td>	
-<td>{{user.shoulder_length_px}}</td>	
-<td>{{user.bicep_px}}</td>	
-<td>{{user.wrist_px}}</td>	
-<td>{{user.knee_px}}</td>	
-<td>{{user.calf_px}}</td>	
-<td>{{user.ankle_px}}</td>	
-<td>{{user.elbow_px}}</td>	
-<td>{{user.torso_px}}</td>	
-<td>{{user.neck_px}}</td>	
-
-       </tr>
-       {% endfor %}
-   </table>
+   <div id='user_data_placeholder'>
+   
+           </div>
 {% endblock %}

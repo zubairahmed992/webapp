@@ -82,10 +82,18 @@ class MaskMarkerInspectController extends Controller {
     }
 #-----------------------------------------------------------------------------
     
-      public function filterUserDataAction() {          
-        $decoded  = $this->getRequest()->request->all();
-         $str = http_build_query($decoded );
-        return new Response($str);
+      public function filterUserDataAction() {
+        $decoded = $this->getRequest()->request->all();
+        $users = $this->get('user.helper.user')->findUserByOptions($decoded);
+        $user_array = array();
+        $mm_specs = $this->getMaskedMarkerSpecs();
+
+        foreach ($users as $u) {
+            array_push($user_array, $this->get('user.marker.helper')->getMixMeasurementArray($u, $mm_specs));
+        }
+        return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:_filter_data.html.twig', array(
+                    'users' => $user_array,
+                ));
     }
 
 #----------------------------------------------------------------------------------     

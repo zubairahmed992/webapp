@@ -124,6 +124,10 @@ class UserHelper {
     public function findOneByName($name) {
         return $this->repo->findOneByName($name);
     }
+    //-------------------------------------------------------
+    public function findUserByOptions($options) {
+        return $this->repo->findUserByOptions($options);
+    }
 
     #---------------------------------------------------------------#
 
