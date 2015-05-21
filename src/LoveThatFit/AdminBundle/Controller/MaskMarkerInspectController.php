@@ -83,6 +83,7 @@ class MaskMarkerInspectController extends Controller {
 #-----------------------------------------------------------------------------
     
       public function filterUserDataAction() {
+          
         $decoded = $this->getRequest()->request->all();
         $users = $this->get('user.helper.user')->findUserByOptions($decoded);
         $user_array = array();
@@ -108,8 +109,10 @@ class MaskMarkerInspectController extends Controller {
     }
 #----------------------------------------------------------------------------------     
     
-      public function filterUserDataDownloadAction($male, $female, $from_id, $to_id) {
-        $params = array('male'=>$male, 'female'=>$female,'from_id'=> $from_id, 'to_id'=>$to_id);  
+      public function filterUserDataDownloadAction($options=null) {
+         $ar = explode("_", $options); #array of options from string (gender_from-id_to-id) (f_10_108) (none__)
+         #none in the option string to be converted to null for gender
+        $params = array('gender'=>$ar[0]=='none'?null:$ar[0],'from_id'=> $ar[1], 'to_id'=>$ar[2]);  
         $users = $this->get('user.helper.user')->findUserByOptions($params);
         $mm_specs=$this->getMaskedMarkerSpecs(); 
         #----------------------------------

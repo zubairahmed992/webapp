@@ -280,44 +280,7 @@ class UserRepository extends EntityRepository {
   #----------------------------------------------------------------
     
     public function findUserByOptions($options) {
-        if (!($options['male'] == 'true' && $options['female'] == 'true') && !($options['male'] == 'false' && $options['female'] == 'false')) {
-            $gender = $options['female']=='true' ? 'F' : 'M';
-            #----1
-            if (strlen($options['from_id']) > 0 && strlen($options['to_id']) > 0) {
-                 $record = $this->getEntityManager()
-                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
-                                                     WHERE u.gender=:gender
-                                                     AND u.id<=:to_id 
-                                                     AND u.id>=:from_id")->setParameters(array('gender' => $gender, 'to_id' => $options['to_id'], 'from_id' => $options['from_id']));
-                            return $record->getResult();
-            
-            #----2                
-            } elseif (strlen($options['to_id']) > 0) {
-                $record = $this->getEntityManager()
-                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
-                                                             WHERE u.gender=:gender
-                                                             AND u.id<=:to_id")
-                                ->setParameters(array('gender' => $gender, 'to_id' => $options['to_id']));
-                        return $record->getResult();
-            #----3    
-            } elseif (strlen($options['from_id']) > 0) {
-                $record = $this->getEntityManager()
-                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
-                                                     WHERE u.gender=:gender
-                                                     AND u.id>=:from_id")
-                                ->setParameters(array('gender' => $gender, 'from_id' => $options['from_id']));
-                        return $record->getResult();
-                
-            #----4         
-                }else{
-                $record = $this->getEntityManager()
-                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
-                                                     WHERE u.gender=:gender")
-                                ->setParameters(array('gender' => $gender));
-                        return $record->getResult();                
-            }
-            
-        }else{
+        if ($options['gender'] == null) {
             if (strlen($options['from_id']) > 0 && strlen($options['to_id']) > 0) {
                  $record = $this->getEntityManager()
                                 ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
@@ -343,6 +306,43 @@ class UserRepository extends EntityRepository {
                                 ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u");
                         return $record->getResult();                
             }
+            
+        }else{
+            #----1
+            if (strlen($options['from_id']) > 0 && strlen($options['to_id']) > 0) {
+                 $record = $this->getEntityManager()
+                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
+                                                     WHERE u.gender=:gender
+                                                     AND u.id<=:to_id 
+                                                     AND u.id>=:from_id")->setParameters(array('gender' => $options['gender'], 'to_id' => $options['to_id'], 'from_id' => $options['from_id']));
+                            return $record->getResult();
+            
+            #----2                
+            } elseif (strlen($options['to_id']) > 0) {
+                $record = $this->getEntityManager()
+                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
+                                                             WHERE u.gender=:gender
+                                                             AND u.id<=:to_id")
+                                ->setParameters(array('gender' => $options['gender'], 'to_id' => $options['to_id']));
+                        return $record->getResult();
+            #----3    
+            } elseif (strlen($options['from_id']) > 0) {
+                $record = $this->getEntityManager()
+                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
+                                                     WHERE u.gender=:gender
+                                                     AND u.id>=:from_id")
+                                ->setParameters(array('gender' => $options['gender'], 'from_id' => $options['from_id']));
+                        return $record->getResult();
+                
+            #----4         
+                }else{
+                $record = $this->getEntityManager()
+                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
+                                                     WHERE u.gender=:gender")
+                                ->setParameters(array('gender' => $options['gender']));
+                        return $record->getResult();                
+            }
+            
         }
         
     }

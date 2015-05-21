@@ -6,40 +6,58 @@
 {% block body %}
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
    <script>
-   function hit_service(download){
+       
+   function get_selected_gender(){
+        var gender=null;
+        if($('#chk_f').is(':checked') && !$('#chk_m').is(':checked')){
+            gender='f';
+         }else if(!$('#chk_f').is(':checked') && $('#chk_m').is(':checked')){
+             gender='m';
+         }
+         return gender;
+    }    
+//------------------------------------------------------
+   function hit_service(){
    
-   var $url='../mask_marker_inspect/data_filter';
-   var value_ar = {
-   female : $('#chk_f').is(':checked'),
-   male : $('#chk_m').is(':checked'),
-   to_id : $('#txt_to_id').val(),    
-   from_id : $('#txt_from_id').val(),
-   csv_download : download
-   };
+        var $url='../mask_marker_inspect/data_filter';
+        var value_ar = {
+            gender : get_selected_gender(),
+            to_id : $('#txt_to_id').val(),    
+            from_id : $('#txt_from_id').val(),
+            };
+
+         $.ajax({
+            type: "POST",
+            url: $url,
+            data: value_ar,  
+            success: function(data){
+                $('#user_data_placeholder').html(data);
+            },
+            failure: function(errMsg) {
+                alert('error');    
+            }
+        });
+   }
+//------------------------------------------------------   
+   function download_csv(){
    
-    $.ajax({
-        type: "POST",
-        url: $url,
-        data: value_ar,  
-       success: function(data){
-        
-        $('#user_data_placeholder').html(data);
-    },
-        failure: function(errMsg) {
-            alert('error');    
-        }
-  });
+        gender=get_selected_gender()==null?'none':get_selected_gender();
+        var param_str =  gender+ '_' + $('#txt_from_id').val() + '_' + $('#txt_to_id').val();
+        var url = '../mask_marker_inspect/data_filter_download/' + param_str;
+        window.open(url,'_blank');
    }
    
+//------------------------------------------------------   
    $(document).ready(function(){
        
         $('a.a_display_users').click(function (event){            
                 event.preventDefault(); 
-                hit_service(false);
+                hit_service();
         });
+        //-------------------
         $('a.a_download_users').click(function (event){            
                 event.preventDefault(); 
-                hit_service(true);
+                download_csv();
         });
     
    });
