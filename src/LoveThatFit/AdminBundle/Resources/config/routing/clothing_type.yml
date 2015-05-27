@@ -32,4 +32,8 @@ admin_clothing_type_delete:
     pattern:  /admin/clothing_type/{id}/delete
     defaults: { _controller: LoveThatFitAdminBundle:ClothingType:delete }
     
+admin_clothing_type_standards:
+    pattern:  /admin/clothing_type/standards
+    defaults: { _controller: LoveThatFitAdminBundle:ClothingType:standards }    
+    
         

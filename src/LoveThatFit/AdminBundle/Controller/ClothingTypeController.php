@@ -123,5 +123,15 @@ class ClothingTypeController extends Controller {
     }
 
     //------------------------------------------------------------------------------------------
+    public function standardsAction(){
+       $standards = $this->get('admin.helper.size')->getDefaultArray();       
+       return $this->render('LoveThatFitAdminBundle:ClothingType:standards.html.twig', array(
+                    'specs' => $standards,
+                    ));
+       
+       return new \Symfony\Component\HttpFoundation\Response (json_encode($standards));
+    }
+    
+    
 }
 
