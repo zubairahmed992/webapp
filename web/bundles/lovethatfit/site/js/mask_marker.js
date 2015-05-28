@@ -1471,6 +1471,13 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
             
             //console.log(final_rotate_value);
             
+            if(event.delta.x > 0){
+               final_rotate_value = final_rotate_value + event.delta.x;
+            }
+            if(event.delta.x < 0){
+               final_rotate_value = final_rotate_value - event.delta.x;
+            }
+            
             if(final_rotate_value > 0 && final_rotate_value < 40){
                 
                if(event.delta.x > 0){ 
@@ -1488,7 +1495,7 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 //final_deg_val = deg_val / 100;
                 //console.log(final_deg_val);
                 
-                set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
+                set_ref_part_obj.rotate(-0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     //alert(mid_area_path.segments[seg_srt+i].point.x +" : " + def_path.segments[seg_srt+i].point.x);
@@ -1511,7 +1518,7 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 
                 //console.log(deg_val);
                 
-                set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
+                set_ref_part_obj.rotate(0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
@@ -1526,7 +1533,7 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 }
                }
             }else if(final_rotate_value > 40){
-                set_ref_part_obj.rotate(-0.5, pivot_x, pivot_y);
+                set_ref_part_obj.rotate(-0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
@@ -1539,7 +1546,7 @@ function set_path_seg(event, set_ref_part_obj, pivot_x, pivot_y, rotate_min, rot
                 }
                                 
             }else if(final_rotate_value < 0){
-                set_ref_part_obj.rotate(0.5, pivot_x, pivot_y);
+                set_ref_part_obj.rotate(0.75, pivot_x, pivot_y);
                 for(i=0; i < set_ref_part_obj.segments.length; i++){
                     
                     mid_area_path.segments[seg_srt+i].point = set_ref_part_obj.segments[i].point;
@@ -1609,18 +1616,18 @@ function onMouseDrag(event) {
                but_bp_lft_hand.position = mid_area_path.segments[curr_big_seg].point;
                
                
-            } if(big_point_ele == but_bp_rgt_hand){
+            }else if(big_point_ele == but_bp_rgt_hand){
                 set_path_seg(event, rgt_arm_ref, mid_area_path.segments[6].point.x, mid_area_path.segments[6].point.y + ((mid_area_path.segments[16].point.y - mid_area_path.segments[6].point.y)/2), mid_area_path.segments[20].point.x - 50, mid_area_path.segments[20].point.x - 10, 7, 15, 7, 16);
                 but_bp_rgt_hand.position = mid_area_path.segments[curr_big_seg].point;
-            } if(big_point_ele == but_bp_lft_foot){
+            }else if(big_point_ele == but_bp_lft_foot){
                 set_path_seg(event, lft_leg_ref, mid_area_path.segments[35].point.x + ((mid_area_path.segments[49].point.x - mid_area_path.segments[35].point.x)/2), mid_area_path.segments[35].point.y, mid_area_path.segments[34].point.x + 14, mid_area_path.segments[34].point.x + 54, 35, 48, 35, 49);
                 but_bp_lft_foot.position = mid_area_path.segments[curr_big_seg].point;
                 console.log("asf");
-            } if(big_point_ele == but_bp_rgt_foot){
+            }else if(big_point_ele == but_bp_rgt_foot){
                 set_path_seg(event, rgt_leg_ref, mid_area_path.segments[21].point.x + ((mid_area_path.segments[33].point.x - mid_area_path.segments[21].point.x)/2), mid_area_path.segments[21].point.y, mid_area_path.segments[34].point.x - 4, mid_area_path.segments[34].point.x - 14, 21, 35, 20, 35);
                 but_bp_rgt_foot.position = mid_area_path.segments[curr_big_seg].point;
                 console.log("asf");
-            } if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder || big_point_ele == but_bp_lft_hip || big_point_ele == but_bp_rgt_hip){
+            }else if(big_point_ele != but_bp_lft_shoulder || big_point_ele != but_bp_rgt_shoulder){
                 
                 main_path.segments[curr_big_seg].point += event.delta;
                 def_path.segments[curr_big_seg].point += event.delta;
