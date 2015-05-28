@@ -1,0 +1,12 @@
+ws_user_login:
+    pattern:  /ws/login
+    params:
+          email:  example@ltf.com
+          password: ltf123
+          deviceType: iphone5
+    optional_params:
+          user_detail: true
+    request_type: post
+    description: login & authenticate user & returns user details
+    backend_process: "Find user by email. match password.find device details, if not found create new. if user_detail=true, Return User detail array with device type & perinchpixel height."
+    
