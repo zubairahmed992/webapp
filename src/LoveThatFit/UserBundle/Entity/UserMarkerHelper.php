@@ -229,7 +229,13 @@ class UserMarkerHelper {
         $yaml = new Parser();
         return $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
     }
-     
+    #---------------------------------------------------------------------------#
+     private function getPixelConversionSpecs() {
+        $yaml = new Parser();
+        $mm= $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
+        return $mm['pixel_conversion'];
+        
+    }
     #----------------------------------------------------------------------------
     
     public function getComparisionArray($user, $mm_specs){
@@ -281,11 +287,24 @@ class UserMarkerHelper {
                     $dst_px2 = sqrt(pow(($x4 - $x3), 2) + pow(($y4 - $y3), 2));
                 }
             }
-
-            return array('s1' => $dst_px1, 's2' => $dst_px2);
+            #--------------
+            $dst_avg=0;
+            if ($dst_px2 == 0){
+                $dst_avg=$dst_px1;
+            }else{
+                $dst_avg=($dst_px1+$dst_px2)/2;
+            }
+                
+            #--------------------    
+            return array('s1' => $dst_px1, 's2' => $dst_px2, 'avg' => $dst_avg);
         } else {
             return array('s1' => 0, 's2' => 0);
         }
+    }
+    #----------------------------------------------------------------------------
+    private function getPixelToInch(){
+        $pc=$this->getPixelConversionSpecs();
+        
     }
     #----------------------------------------------------------------------------
     public function getAxisArray($user, $mm_specs){
