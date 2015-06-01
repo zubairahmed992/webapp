@@ -1,0 +1,3 @@
+ws_interface_index:
+    pattern:  /ws_interface/index
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:index}
