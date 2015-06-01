@@ -1106,11 +1106,11 @@ public function breakFileName($request_array,$product_id){
 
         # file name/ext with/without view name       
        if (count($_exploded)==3){
-           $last_bits = explode(".",$_exploded[2]);           
-           $a['color_title'] = $last_bits[0];
+           $last_bits = explode(".",$_exploded[2]);                      
+           $a['color_title'] = str_replace("-", " ", $last_bits[0]);
        }elseif (count($_exploded)==4){
            $last_bits = explode(".",$_exploded[3]);
-           $a['color_title'] = $_exploded[2];
+           $a['color_title'] = str_replace("-", " ", $_exploded[2]);
            $a['view_title'] = $last_bits[0];           
        }else{
            return array('message' => 'Invalid Format!', 'success'=> 'false');
