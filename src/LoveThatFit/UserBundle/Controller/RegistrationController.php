@@ -554,9 +554,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         }
         $measurement = $user->getMeasurement();
         #-----------------------------------------
-        $yaml = new Parser();
-        $mm_specs = $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));        
-        $user_mm_comparison = $this->get('user.marker.helper')->getComparisionArray($user, $mm_specs);
+        $user_mm_comparison = $this->get('user.marker.helper')->getComparisionArray($user);
         #-----------------------------------------
         
         
