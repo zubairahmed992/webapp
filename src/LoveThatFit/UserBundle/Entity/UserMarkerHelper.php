@@ -158,7 +158,21 @@ class UserMarkerHelper {
         }
     }
   
-    
+    #----------------------------------------------------------------------------    
+    public function getDefaultObject($user){
+       $class = $this->class;
+       $user_marker = new $class();
+       $mask_type=$this->getDefaultValuesBaseOnBodyType($user);
+       $user_marker->setSvgPaths($mask_type['SvgPaths']);
+       $user_marker->setMaskX($mask_type['MaskX']);
+       $user_marker->setMaskY($mask_type['MaskY']);
+       $user_marker->setRectX($mask_type['RectX']);
+       $user_marker->setRectY($mask_type['RectY']);
+       $user_marker->setRectHeight($mask_type['RectHeight']);
+       $user_marker->setRectWidth($mask_type['RectWidth']);
+       $user_marker->setUser($user);
+       return $user_marker;
+    }
     #---------------------------------------------------------------------------
     
   public function getDefaultValuesBaseOnBodyType($user){
@@ -197,14 +211,7 @@ class UserMarkerHelper {
         return $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
     }
     #---------------------------------------------------------------------------#
-     private function getPixelConversionSpecs() {
-        $yaml = new Parser();
-        $mm= $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
-        return $mm['pixel_conversion'];
-        
-    }
-    #----------------------------------------------------------------------------
-    
+     
     public function getComparisionArray($user){
         $mm_specs=  $this->getMaskedMarkerSpecs();
         $mm=$this->getByUser($user);
@@ -265,7 +272,7 @@ class UserMarkerHelper {
             }
                 
             #--------------------    
-            return array('s1' => $dst_px1, 's2' => $dst_px2, 'avg' => $dst_avg);
+            return array('s1' => $dst_px1, 's2' => $dst_px2, 'avg' => $dst_avg ); # 'avg' => $dst_avg * 2
         } else {
             return array('s1' => 0, 's2' => 0, 'avg' => 0);
         }
@@ -339,14 +346,20 @@ class UserMarkerHelper {
    #------------------------------------------------------------------ 
    public function getMixMeasurementArray($user, $mm_specs) {
         $mm = $user->getUserMarker();
-        $comp = array('bust_px'=>0, 'chest_px'=>0, 'shoulder_across_front_px'=>0, 'waist_px'=>0, 'hip_px'=>0, 'inseam_px'=>0, 'thigh_px'=>0, 'shoulder_length_px'=>0, 'bicep_px'=>0, 'wrist_px'=>0, 'knee_px'=>0, 'calf_px'=>0, 'ankle_px'=>0, 'elbow_px'=>0, 'torso_px'=>0, 'neck_px'=>0);
+        #$comp = array('bust_px'=>0, 'chest_px'=>0, 'shoulder_across_front_px'=>0, 'waist_px'=>0, 'hip_px'=>0, 'inseam_px'=>0, 'thigh_px'=>0, 'shoulder_length_px'=>0, 'bicep_px'=>0, 'wrist_px'=>0, 'knee_px'=>0, 'calf_px'=>0, 'ankle_px'=>0, 'elbow_px'=>0, 'torso_px'=>0, 'neck_px'=>0);
+        $comp = array('bust_px'=>0, 'bust_inch'=>0, 'chest_px'=>0, 'chest_inch'=>0, 'shoulder_across_front_px'=>0,  'shoulder_across_front_inch'=>0, 'waist_px'=>0, 'waist_inch'=>0, 'hip_px'=>0, 'hip_inch'=>0, 'inseam_px'=>0, 'inseam_inch'=>0, 'thigh_px'=>0, 'thigh_inch'=>0, 'shoulder_length_px'=>0, 'shoulder_length_inch'=>0, 'bicep_px'=>0, 'bicep_inch'=>0, 'wrist_px'=>0, 'wrist_inch'=>0, 'knee_px'=>0, 'knee_inch'=>0, 'calf_px'=>0, 'calf_inch'=>0, 'ankle_px'=>0, 'ankle_inch'=>0, 'elbow_px'=>0, 'elbow_inch'=>0, 'torso_px'=>0, 'torso_inch'=>0, 'neck_px'=>0,  'neck_inch'=>0);
 
         if ($mm) {
             $mm_array = json_decode($mm->getMarkerJson());
             foreach ($mm_specs['masked_marker'] as $mms_k => $mms_v) {
                 $m1 = $this->calculate_distance($mms_v, $mm_array);
-                $comp[$mms_k . '_px'] = $m1['s2'] == 0 ? $m1['s1'] : ($m1['s1'] + $m1['s2']) / 2;
-                $comp[$mms_k . '_px'] = number_format($comp[$mms_k . '_px'], 2, '.', '') + 0;
+                #$comp[$mms_k . '_px'] = $m1['s2'] == 0 ? $m1['s1'] : ($m1['s1'] + $m1['s2']) / 2;
+                #$comp[$mms_k . '_px'] = number_format($comp[$mms_k . '_px'], 2, '.', '') + 0;
+                
+                $comp[$mms_k . '_px'] = number_format($m1['avg'], 2, '.', '') + 0;
+                $inch = $this->getPixelToInch($mm_specs, $mms_k, $m1['avg']);
+                #incase of -ve number
+                $comp[$mms_k . '_inch'] = number_format(($inch<0? $inch * (-1) : $inch), 2, '.', '') + 0;
             }
         }
         return array_merge($user->toDataArray(), $comp);        

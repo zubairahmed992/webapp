@@ -1,3 +1,11 @@
+<style>
+.fixed_px {
+color: red;	
+}
+
+</style>
+
+
 <div class='col-md-9'>
     <h3>{{user.fullName }}</h3>
     
@@ -6,7 +14,7 @@
                 <th></th>    
                 <th colspan="2">Measurement 1</th>
                 <th colspan="2">Measurement 2</th>
-                <th colspan="2">Average (*5 pixel)</th>
+                <th colspan="2">Average <span class="fixed_px">(5 px)</span></th>
                 <th>Actual</th>
                 <th>Difference</th>
             </tr>
@@ -32,7 +40,7 @@
             {% set avg = seg.pixels.avg>0?seg.pixels.avg |  number_format(2):'-' %}            
             {% set predictive =seg.predicted!=0?seg.predicted | number_format(2):'-' %}            
             {% set body = seg.body>0?seg.body:'-' %}
-            {% set diff = seg.body>0?(body-avg)|  number_format(2):'-' %}
+            {% set diff = seg.body>0?(body>predictive?(body-predictive):predictive-body)|  number_format(2):'-' %}
             {% set seg1= '('~seg.segments.s1.a ~', '~ seg.segments.s1.b~')'%}                
             {% set seg2= px_dist2>0? '('~seg.segments.s2.a ~', '~ seg.segments.s2.b~')':'-' %}                
             
@@ -43,13 +51,18 @@
                 <td> {{seg2}} </td>
                 <td>{{px_dist2}}</td> 
                 <td>{{avg}}</td>
-                <td>{{predictive}}</td>
+                {%if (predictive<0)%}
+                    <td  class="fixed_px">{{predictive * (-1)}}</td>
+                {%else%}
+                    <td>{{predictive}}</td>
+                {%endif%}
+                
                 <td>{{body}}</td>
                 <td>{{diff}}</td>
           
             </tr>
  {% endfor %}   
-
+            <tr><td colspan="9"><span class="fixed_px">Red indicates fixed (5 px) per pixel measurement, fit points that do not have pixel to inch ratio charts</span></td></tr>
     
     
   
