@@ -347,7 +347,7 @@ class UserMarkerHelper {
    public function getMixMeasurementArray($user, $mm_specs) {
         $mm = $user->getUserMarker();
         #$comp = array('bust_px'=>0, 'chest_px'=>0, 'shoulder_across_front_px'=>0, 'waist_px'=>0, 'hip_px'=>0, 'inseam_px'=>0, 'thigh_px'=>0, 'shoulder_length_px'=>0, 'bicep_px'=>0, 'wrist_px'=>0, 'knee_px'=>0, 'calf_px'=>0, 'ankle_px'=>0, 'elbow_px'=>0, 'torso_px'=>0, 'neck_px'=>0);
-        $comp = array('bust_px'=>0, 'bust_inch'=>0, 'chest_px'=>0, 'chest_inch'=>0, 'shoulder_across_front_px'=>0,  'shoulder_across_front_inch'=>0, 'waist_px'=>0, 'waist_inch'=>0, 'hip_px'=>0, 'hip_inch'=>0, 'inseam_px'=>0, 'inseam_inch'=>0, 'thigh_px'=>0, 'thigh_inch'=>0, 'shoulder_length_px'=>0, 'shoulder_length_inch'=>0, 'bicep_px'=>0, 'bicep_inch'=>0, 'wrist_px'=>0, 'wrist_inch'=>0, 'knee_px'=>0, 'knee_inch'=>0, 'calf_px'=>0, 'calf_inch'=>0, 'ankle_px'=>0, 'ankle_inch'=>0, 'elbow_px'=>0, 'elbow_inch'=>0, 'torso_px'=>0, 'torso_inch'=>0, 'neck_px'=>0,  'neck_inch'=>0);
+        $comp = array('bust_px'=>0, 'bust_inch'=>0, 'chest_px'=>0, 'chest_inch'=>0, 'shoulder_across_front_px'=>0,  'shoulder_across_front_inch'=>0, 'waist_px'=>0, 'waist_inch'=>0, 'hip_px'=>0, 'hip_inch'=>0, 'inseam_px'=>0, 'inseam_inch'=>0, 'thigh_px'=>0, 'thigh_inch'=>0, 'shoulder_height_px'=>0, 'shoulder_height_inch'=>0, 'bicep_px'=>0, 'bicep_inch'=>0, 'wrist_px'=>0, 'wrist_inch'=>0, 'knee_px'=>0, 'knee_inch'=>0, 'calf_px'=>0, 'calf_inch'=>0, 'ankle_px'=>0, 'ankle_inch'=>0, 'elbow_px'=>0, 'elbow_inch'=>0, 'torso_px'=>0, 'torso_inch'=>0, 'neck_px'=>0,  'neck_inch'=>0);
 
         if ($mm) {
             $mm_array = json_decode($mm->getMarkerJson());
