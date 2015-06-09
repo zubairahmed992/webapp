@@ -19,6 +19,7 @@ services:
              dispatcher: "@event_dispatcher"
              em: "@doctrine.orm.entity_manager"
              class: LoveThatFit\UserBundle\Entity\Measurement            
+             container: "@service_container"
 
   user.helper.userdevices:
         class: LoveThatFit\UserBundle\Entity\UserDevicesHelper

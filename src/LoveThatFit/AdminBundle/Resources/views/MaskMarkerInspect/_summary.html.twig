@@ -14,12 +14,12 @@ color: red;
                 <th></th>    
                 <th colspan="2">Measurement 1</th>
                 <th colspan="2">Measurement 2</th>
-                <th colspan="2">Average <span class="fixed_px">(5 px)</span></th>
+                <th  style="background-color: #CEF6F5" colspan="2">Average <span class="fixed_px">(5 px)</span></th>
                 <th>Actual</th>
                 <th>Difference</th>
             </tr>
-            <tr>
-                <th>#</th>    
+            <tr style="background-color: #c4e3f3">
+                <th>Fit Points</th>    
                 <th>Segment</th>
                 <th>pixcel</th> 
                 <th>Segment</th>
@@ -50,11 +50,11 @@ color: red;
                 <td>{{px_dist1}}</td> 
                 <td> {{seg2}} </td>
                 <td>{{px_dist2}}</td> 
-                <td>{{avg}}</td>
+                <td style="background-color: #CEF6F5">{{avg}}</td>
                 {%if (predictive<0)%}
-                    <td  class="fixed_px">{{predictive * (-1)}}</td>
+                    <td  style="background-color: #CEF6F5" class="fixed_px">{{predictive * (-1)}}</td>
                 {%else%}
-                    <td>{{predictive}}</td>
+                    <td style="background-color: #CEF6F5">{{predictive}}</td>
                 {%endif%}
                 
                 <td>{{body}}</td>

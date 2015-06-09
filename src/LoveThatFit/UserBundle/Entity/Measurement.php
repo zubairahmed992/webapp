@@ -1390,6 +1390,36 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
         );
     }
 
+    public function setProperty($property, $value) {
+        switch (strtolower($property)) {       
+            case 'weight': $this->weight = $value; break;
+            case 'height': $this->height = $value; break;
+            case 'waist': $this->waist = $value; break;
+            case 'belt': $this->belt = $value; break;
+            case 'hip': $this->hip = $value; break;
+            case 'bust': $this->bust = $value; break;
+            case 'chest': $this->chest = $value; break;
+            case 'arm': $this->arm = $value; break;
+            case 'inseam': $this->inseam = $value; break;
+            case 'shoulder_height': $this->shoulder_height = $value; break;
+            case 'outseam': $this->outseam = $value; break;
+            case 'sleeve': $this->sleeve = $value; break;
+            case 'neck': $this->neck = $value; break;
+            case 'thigh': $this->thigh = $value; break;
+            case 'center_front_waist': $this->center_front_waist = $value; break;
+            case 'shoulder_across_front': $this->shoulder_across_front = $value; break;
+            case 'shoulder_across_back': $this->shoulder_across_back = $value; break;
+            case 'bicep': $this->bicep = $value; break;
+            case 'tricep': $this->tricep = $value; break;
+            case 'wrist': $this->wrist = $value; break;
+            case 'back_waist': $this->back_waist = $value; break;
+            case 'waist_hip': $this->waist_hip = $value; break;
+            case 'knee': $this->knee = $value; break;
+            case 'calf': $this->calf = $value; break;
+            case 'ankle': $this->ankle = $value; break;
+        }
+    }
+    
     /**
      * Set shoulder_width
      *

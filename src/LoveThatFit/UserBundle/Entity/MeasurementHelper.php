@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -36,11 +37,12 @@ class MeasurementHelper {
      * @var string
      */
     protected $class;
-
-    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class) {
+    private $container; 
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class,  Container $container) {
+        $this->container = $container;
         $this->dispatcher = $dispatcher;
         $this->em = $em;
-        $this->class = $class;
+        $this->class = $class;        
         $this->repo = $em->getRepository($class);
     }
 
@@ -67,8 +69,15 @@ class MeasurementHelper {
     #-----------------------------------------------------------
 Public function updateWithParams($measurement, $params){
     if(array_key_exists('shoulder_height', $params) && $params['shoulder_height']){$measurement->setShoulderHeight($params['shoulder_height']);}
-    if(array_key_exists('hip_height', $params) && $params['hip_height']){$measurement->setHipHeight($params['hip_height']);}
-    $this->saveMeasurement($measurement);
+    if(array_key_exists('hip_height', $params) && $params['hip_height']){$measurement->setHipHeight($params['hip_height']);}      
+    
+    if(array_key_exists('marker_json', $params) && $params['marker_json']){          
+        $pred_measurements = $this->container->get('user.marker.helper')->getPredictedMeasurement($params['marker_json']);                
+        foreach ($pred_measurements as $k=>$v) {
+            $measurement->setProperty($k,$v);
+        }
+    }
+    $this->saveMeasurement($measurement);  
 }
 #----------------------------------------------
   /*  public function saveVerticalPositonMeasurement(Measurement $measurement) {

@@ -132,7 +132,7 @@ class MaskMarkerInspectController extends Controller {
              
         }
         fclose($f);        
-        return new Response('true');
+        return new Response('');
     }
 #----------------------------------------------------------------------------------     
     
@@ -204,7 +204,7 @@ class MaskMarkerInspectController extends Controller {
             //generate csv lines from the inner arrays
             fputcsv($f, $u->toDataArray(false));
         }
-        return new Response('true');
+        return new Response('');
     }
     
 }

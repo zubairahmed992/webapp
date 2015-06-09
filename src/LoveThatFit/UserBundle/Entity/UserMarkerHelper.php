@@ -234,6 +234,21 @@ class UserMarkerHelper {
         return $comp;
         
     }
+    #---------------------------------------------------------------
+    public function getPredictedMeasurement($mask_json){                       
+        $mm_specs =  $this->getMaskedMarkerSpecs();        
+        $mm_array = json_decode($mask_json);
+        $pred_measurements=array();
+        foreach ($mm_specs['masked_marker'] as $mms_k=>$mms_v) {
+            $m1 = $this->calculate_distance($mms_v, $mm_array);                        
+            $predicted =  $this->getPixelToInch($mm_specs, $mms_k, $m1['avg']);
+            if ($predicted>0){
+                $pred_measurements[$mms_k]=$predicted;                
+            }
+        }
+        return $pred_measurements;
+    }
+    
     #----------------------------------------------------------------------------
     private function calculate_distance($mms_v, $mm_array) {
         if (is_array($mm_array)) {
