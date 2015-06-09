@@ -4,16 +4,17 @@
 {% endblock %}
 
 {% block body %}
-<form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }}>
-    <div class="row-fluid show-grid">
-        <div class="span3">User</div>
-        <div class="span4">{{ form_widget(form.User) }}{{ form_errors(form.User) }}
-            &nbsp;<input type='button' name='btn_hit' id='btn_hit' value="hit"> 
-            &nbsp;<input type='checkbox' name='chk_json' id='chk_json' value="json"> JSON
-            &nbsp;|&nbsp;<input type='checkbox' name='chk_path_axis' id='chk_path_axis' value="chk_path_axis"> axis
-        </div>
-        
+<form action="{{ path('admin_mask_marker_inspect_index')}}" method="post" {{ form_enctype(form) }} class="form-inline">
+     <div class="form-group">
+        <label for="form_user">User</label>
+        {{ form_widget(form.User) }}{{ form_errors(form.User) }}    
+        <input type='button' class="btn btn-default" name='btn_hit' id='btn_hit' value="hit">          
+        &nbsp;&nbsp;    
+        <input type='checkbox' name='chk_json' id='chk_json' value="json"> JSON
+    &nbsp;&nbsp;    <input type='checkbox' name='chk_path_axis' id='chk_path_axis' value="chk_path_axis"> Axis
     </div>
+    
+        
 </form> 
 <div><a href="{{ path('admin_users_masks_all_data')}}">All Users</a></div>
 
