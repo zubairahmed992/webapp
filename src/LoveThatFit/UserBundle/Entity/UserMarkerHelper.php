@@ -305,7 +305,13 @@ class UserMarkerHelper {
                     if ($prev_px_measure == 0) { #compare with previous measurement
                         return ($px_measure - $pixels) < 5 ? $inch_measure : 0;
                     } else {
-                        return $inch_measure;
+                        #grate to scale ~~~~~~~~>
+                        $px_diff=$px_measure-$prev_px_measure;# diff in px
+                        $inch_diff=$inch_measure-$prev_inch_measure;# diff in inches
+                        $grade_scale=$inch_diff/$px_diff; # ratio of the diff
+                        $current_inch_diff=$pixels-$prev_px_measure; # diff of the actual body px & prev item px
+                        $current_inch_measure = $prev_inch_measure + ($grade_scale * $current_inch_diff);
+                        return $current_inch_measure ;
                     }
                 }
             }
