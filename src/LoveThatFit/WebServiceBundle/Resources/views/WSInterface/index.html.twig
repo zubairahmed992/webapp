@@ -9,55 +9,72 @@
 
 <div class="p_listing">     
     <h3>Web Services Client</h3>
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="sel_service">Service</label>
-            <select id="sel_service" class="form-control">
+    <div class="row">
+        <div class="span1"></div>
+        <div class="span4">
+            <b>Service: </b>&nbsp;
+            <select id="sel_service">
                 <option>select</option>
                 {% for k,v in services %}
                 <option value="{{v['pattern']}}">{{ k }}</option>
                 {% endfor %}
             </select>
         </div>
-
-        <div class="form-group">
-            <label for="sel_user">User</label>
-            <select id="sel_user" class="form-control">
+        <div class="span4">
+            <b>User: </b>&nbsp;
+            <select id="sel_user">
                 <option>select</option>
                 {% for k,v in users  %}
                 <option value="{{v.authToken}}">{{ v.email }}</option>
                 {% endfor %}
             </select>
         </div>
-        <div class="checkbox">
-            <label>
-                <input id="chk_new_window" type="checkbox"> New
-            </label>
+        <div class="span2">
+            <button type="submit" class="btn btn-default">Submit</button>        
+
+            <input id="chk_new_window" type="checkbox"> New
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-    <br>
-    <div id='service_description'>
-        adsasdads
     </div>
-    <div id='backend_process'>
-        adsasdads
+
+
+    
+    <div class="row">
+            <div class="span1"></div>
+        <div class="span4">
+            <b>Request Params</b> <a href="#" id='btn_generate_form'>Generate form</a>
+            <textarea style="width: 500px; height: 100px" id="txt_request_params"></textarea>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="txt_request_params">Request Params</label>
-        <input type=text id="txt_request_params"/>
+    <div class="row">
+        <div class="span1"></div>
+        <div class="span4">
+            <b>Optional Params</b>
+            <textarea style="width: 500px; height: 100px" id="txt_optional_params"></textarea>
+        </div>
     </div>
-      <div class="form-group">
-        <label for="txt_optional_params">Optional Params</label>
-        <input type=text id="txt_optional_params"/>
-    </div>
-    <div class="form-group">
-        <label for="txt_response_params">Response</label>
-        <input type=text id="txt_response_params"/>
+    <div class="row">
+        <div class="span1"></div>
+        <div class="span4">
+            <b>Response</b>
+            <textarea style="width: 500px; height: 100px" id="txt_response_params"></textarea>
+        </div>
+
+    </div>   
+<div class="row">
+        <div class="span1"></div>
+        <div id='gen_form' class="span4">
+        </div>
+
     </div>   
 
-
-
+    <div class="row">
+        <div class="span1"></div>
+        <div id='service_description' class="span4"></div>
+    </div>
+    <div class="row">
+        <div class="span1"></div>
+        <div  id='backend_process' class="span4"></div>
+    </div>
 
     <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
     <script  type='text/javascript'>
@@ -79,6 +96,17 @@
     $("#sel_user").change(function() {  
       alert($('option:selected', this).html());  
     });
+
+
+    $("#btn_generate_form").click(function() {  
+      alert(service_form_gen($('option:selected', $('#sel_service')).html()));  
+    });
+
+
+    function service_form_gen(service_name){         
+        service_detail = find_service_obj(service_name);
+        return JSON.stringify(service_detail.params);
+    }
 
       //--------------------------------------------------
      function show_service_detail(service_name){         
