@@ -1,5 +1,6 @@
 ws_user_login:
     pattern:  /ws/login
+    title: user_login
     params:
           email:  example@ltf.com
           password: ltf123
