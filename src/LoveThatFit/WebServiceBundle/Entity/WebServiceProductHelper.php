@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use LoveThatFit\AdminBundle\ImageHelper;
 use LoveThatFit\SiteBundle\FitEngine;
 use LoveThatFit\SiteBundle\AvgAlgorithm;
+use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 
 class WebServiceProductHelper{
 
@@ -120,7 +121,7 @@ public function chkRecomendedItem($feedback){
     //return $feedback;
    if($feedback){       
        foreach($feedback['feedback'] as $fb){
-           if(isset($fb['recommended'])){
+           if(isset($fb['recommended']) && $fb['recommended']){
                return $fb['id'];
            }else{
                if(min($feedback['feedback'])){
@@ -135,8 +136,34 @@ public function chkRecomendedItem($feedback){
 #------------------------------------------------------------------------------#
 // chk recomend itm
 // smallest item default color 
+    public function getDefaultFittingAlerts($request_array) {
+        if ($request_array['productId']) {
+            $user = $this->container->get('user.helper.user')->find($request_array['userId']);
+            $product = $this->find($request_array['productId']);
+            $algo = new FitAlgorithm2($user, $product);
+            $fb = $algo->getFeedBack();         
+            $stripped_fb = $algo->stripFeedBack($fb);            
+            $default_size_fb=array();
+            $default_size_fb['feedback'] = FitAlgorithm2::getDefaultSizeFeedback($fb);
+            
+            if (!$default_size_fb) {
+                return (array('Message' => ' Product Can not find'));
+            }
+    
+            $product_item = $product->displayProductColor->getItemBySizeId($default_size_fb['feedback']['id']);
+            $this->container->get('site.helper.usertryitemhistory')->createUserItemTryHistory($user, $product->getId(), $product_item, $default_size_fb);
 
-public function getDefaultFittingAlerts($request_array)
+            $data = array();
+
+            $data['data'] = $stripped_fb;
+            $data['productId'] = $request_array['productId'];            
+            return $data;
+        } else {
+            return (array('Message' => ' Product Can not find'));
+        }
+    }
+
+    public function _getDefaultFittingAlerts($request_array)
 {      
           if ($request_array['productId']) { 
               $user=$this->container->get('user.helper.user')->find($request_array['userId']);

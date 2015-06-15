@@ -226,20 +226,20 @@ public function brandListAction() {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $request_array = json_decode($jsonInput, true);
-#------------------------------Authentication of Token--------------------------------------------#
-        //$request_array=array('authTokenWebService'=>'123','productId'=>11,'userId'=>17);
-        $user = $this->get('user.helper.user');
+        
+        if($request_array ==null) #if null (to be used for web service testing))
+            $request_array   = $request->request->all();
+        
         $authTokenWebService = $request_array['authTokenWebService'];
         if ($authTokenWebService) {
-            $tokenResponse = $user->authenticateToken($authTokenWebService);
+            $tokenResponse = $this->get('user.helper.user')->authenticateToken($authTokenWebService);
             if ($tokenResponse['status'] == False) {
                 return new Response(json_encode($tokenResponse));
             }
         } else {
             return new Response(json_encode(array('Message' => 'Please Enter the Authenticate Token')));
         }
-         //  $request_array=array('userId'=>117,'productId'=>4);
- #-------------------------------End Of Authentication Token--------------------------------------#
+ 
         $msg=$this->get('webservice.helper.product')->getDefaultFittingAlerts($request_array);
         return new Response(json_encode($msg));
    }  

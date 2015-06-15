@@ -235,7 +235,7 @@ userFavouriteList:
   #authTokenWebService,user_id
   
 default_fittng_alert:
-   pattern:  /web_service_test/default_fitting_alerts
+   pattern:  /web_service/default_fitting_alerts
    params:
      authTokenWebService: 121c421783cd4d71d871ec16a1296091
      product_id: 11

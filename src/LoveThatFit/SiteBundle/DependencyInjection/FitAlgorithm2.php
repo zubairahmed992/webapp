@@ -720,11 +720,17 @@ private function calculate_fitindex($fp_specs){
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~> Devices Bits
     #------------------------------------------------    
-      #-----------------------------------------------------
+    #-----------------------------------------------------
     function getStrippedFeedBackJSON() {
         return json_encode($this->getStrippedFeedBack());
     }
     
+    #---------------------------------------------------
+    function stripFeedBack($feed_back_array){
+        $recom = array_key_exists('recommendation', $feed_back_array)?$feed_back_array['recommendation']:null;
+        return array('feedback' => $this->strip_for_services($feed_back_array['feedback'], $recom),
+            );
+    }
     #-----------------------------------------------------    
     
     function getStrippedFeedBack() {
@@ -814,5 +820,21 @@ private function calculate_fitindex($fp_specs){
         return null;
     }
 
+    #-----------------------------------------------------    
+    #-----------------------------------------------------    
+    static function getDefaultSizeFeedback($fb) {
+        if (isset($fb['recommendation']) && $fb['recommendation']) {
+            return $fb['recommendation'];
+        } elseif (isset($fb['feedback']) && $fb['feedback']) {            
+            $default_size = null;
+            foreach ($fb['feedback'] as $size) {
+                if ($default_size == null || $default_size['id'] < $size['id'])
+                    $default_size = $size;
+            }
+            return $default_size;
+        }
+        return;
+    }
+    
     
 }
