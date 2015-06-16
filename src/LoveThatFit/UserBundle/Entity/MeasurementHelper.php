@@ -70,13 +70,13 @@ class MeasurementHelper {
 Public function updateWithParams($measurement, $params){
     if(array_key_exists('shoulder_height', $params) && $params['shoulder_height']){$measurement->setShoulderHeight($params['shoulder_height']);}
     if(array_key_exists('hip_height', $params) && $params['hip_height']){$measurement->setHipHeight($params['hip_height']);}      
-    
+    /*
     if(array_key_exists('marker_json', $params) && $params['marker_json']){          
         $pred_measurements = $this->container->get('user.marker.helper')->getPredictedMeasurement($params['marker_json']);                
         foreach ($pred_measurements as $k=>$v) {
             $measurement->setProperty($k,$v);
         }
-    }
+    }*/
     $this->saveMeasurement($measurement);  
 }
 #----------------------------------------------
