@@ -8,19 +8,19 @@ class FitAlgorithm2 {
     private $product;
     private $size_helper;
     private $scale=array(
-        'below_min' => array('status'=>5, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>'at_min',  'message'=>'below_min'),
-        'at_min' => array('status'=>4, 'start'=>0, 'end'=>0,'low_point'=>'at_min', 'high_point'=>'at_min',  'message'=>'at_min'),
-        'between_min_low' => array('status'=>3, 'start'=>0, 'end'=>0.8,'low_point'=>'calc_min_body_measurement', 'high_point'=>'ideal_body_size_low',  'message'=>'between_min_low'),
-        'at_low' => array('status'=>2, 'start'=>0.8, 'end'=>0.8,'low_point'=>'at_low', 'high_point'=>'at_low',  'message'=>'at_low'),
-        'between_low_mid' => array('status'=> 1 , 'start'=>0.8, 'end'=>1,'low_point'=>'ideal_body_size_low', 'high_point'=>'fit_model',  'message'=>'between_low_mid'),
-        'at_mid' => array('status'=>0, 'start'=>1, 'end'=>1,'low_point'=>'fit_model', 'high_point'=>'fit_model',  'message'=>'at_mid'),
-        'between_mid_high' => array('status'=>-1, 'start'=>0.8, 'end'=>1,'low_point'=>'fit_model', 'high_point'=>'ideal_body_size_high',  'message'=>'between_mid_high'),
-        'at_high' => array('status'=>-2, 'start'=>0.8, 'end'=>0.8,'low_point'=>'at_high', 'high_point'=>'at_high',  'message'=>'at_high'),
-        'between_high_max' => array('status'=>-3, 'start'=>0, 'end'=>0.8,'low_point'=>'ideal_body_size_high', 'high_point'=>'calc_max_body_measurement',  'message'=>'between_high_max'),        
-        'at_max' => array('status'=>-4, 'start'=>0, 'end'=>0,'low_point'=>'at_max', 'high_point'=>'at_max',  'message'=>'at_max'),        
-        'beyond_max' => array('status'=>-5, 'start'=>0, 'end'=>0,'low_point'=>'at_max', 'high_point'=>null,  'message'=>'beyond_max'),        
-        'user_measurement_missing' => array('status'=>-6, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'user_measurement_missing'),        
-        'product_measurement_missing' => array('status'=>-7, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'product_measurement_missing'),        
+        'below_min' => array('status'=>5, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>'at_min',  'message'=>'Extra Loose', 'status_text'=>'below_min'),
+        'at_min' => array('status'=>4, 'start'=>0, 'end'=>0,'low_point'=>'at_min', 'high_point'=>'at_min',  'message'=>'Extra Loose', 'status_text'=>'at_min'),
+        'between_min_low' => array('status'=>3, 'start'=>0, 'end'=>0.8,'low_point'=>'calc_min_body_measurement', 'high_point'=>'ideal_body_size_low',  'message'=>'Loose', 'status_text'=>'between_min_low'),
+        'at_low' => array('status'=>2, 'start'=>0.8, 'end'=>0.8,'low_point'=>'at_low', 'high_point'=>'at_low',  'message'=>'Loose', 'status_text'=>'at_low'),
+        'between_low_mid' => array('status'=> 1 , 'start'=>0.8, 'end'=>1,'low_point'=>'ideal_body_size_low', 'high_point'=>'fit_model',  'message'=>'Perfect Fit', 'status_text'=>'between_low_mid'),
+        'at_mid' => array('status'=>0, 'start'=>1, 'end'=>1,'low_point'=>'fit_model', 'high_point'=>'fit_model',  'message'=>'Perfect Fit', 'status_text'=>'at_mid'),
+        'between_mid_high' => array('status'=>-1, 'start'=>0.8, 'end'=>1,'low_point'=>'fit_model', 'high_point'=>'ideal_body_size_high',  'message'=>'Perfect Fit', 'status_text'=>'between_mid_high'),
+        'at_high' => array('status'=>-2, 'start'=>0.8, 'end'=>0.8,'low_point'=>'at_high', 'high_point'=>'at_high',  'message'=>'close fitting', 'status_text'=>'at_high'),
+        'between_high_max' => array('status'=>-3, 'start'=>0, 'end'=>0.8,'low_point'=>'ideal_body_size_high', 'high_point'=>'calc_max_body_measurement',  'message'=>'close fitting', 'status_text'=>'between_high_max'),        
+        'at_max' => array('status'=>-4, 'start'=>0, 'end'=>0,'low_point'=>'at_max', 'high_point'=>'at_max',  'message'=>'Too Small', 'status_text'=>'at_max'),        
+        'beyond_max' => array('status'=>-5, 'start'=>0, 'end'=>0,'low_point'=>'at_max', 'high_point'=>null,  'message'=>'Too Small', 'status_text'=>'beyond_max'),        
+        'user_measurement_missing' => array('status'=>-6, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'User measurement not provided', 'status_text'=>'user_measurement_missing'),        
+        'product_measurement_missing' => array('status'=>-7, 'start'=>0, 'end'=>0,'low_point'=>null, 'high_point'=>null,  'message'=>'Product measurement missing', 'status_text'=>'product_measurement_missing'),        
     );
 #-----------------------------------------------------
 
@@ -217,7 +217,8 @@ class FitAlgorithm2 {
         $fp_measurements['fits'] = $message_array['fits'];
         $fp_measurements['status'] = $message_array['status'];
         $fp_measurements['message'] = $message_array['message'];                
-        $fp_measurements['fitting_alert'] = $this->get_fitting_alert_message($message_array['status']);                
+        $fp_measurements['status_text'] = $message_array['status_text'];
+        $fp_measurements['fitting_alert'] = $message_array['message'];                
         $fp_measurements['body_fx'] = $message_array['body_fx'];   
         $fp_measurements['variance'] = $this->calculate_variance($fp_measurements);
         return $fp_measurements;
@@ -268,7 +269,7 @@ private function calculate_fitindex($fp_specs){
 
         $fx = $this->limit_num($fp_fx);        
         return array('body_fx'=>$fx, 'message' => $fp_scale['message'], 'status'=>$fp_scale['status'],
-            'fits'=>$fits,
+            'fits'=>$fits, 'status_text'=>$fp_scale['status_text'],
             );
 }
     # -----------------------------------------------------
