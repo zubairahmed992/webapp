@@ -11,6 +11,13 @@
         .c_pannel{
             background-color: #f5f5f5; padding: 10px;    
         }
+        .hide_pannel{
+            display: none;
+                
+            }
+         .show_pannel{
+            display: block;                
+            }            
         .service_header{
             font-size: 24px;
             font-weight: bold;
@@ -22,7 +29,7 @@
 
     <div class="p_listing">     
         <h3>Web Services Client</h3>
-        <div class="row">
+        <div id="select_pannel" class="row">
             <div class="span1"></div>
             <div class="span4">
                 <b>Service: </b>&nbsp;
@@ -48,74 +55,78 @@
                 <input id="chk_new_window" type="checkbox"> New
             </div>
         </div>
-
-        <div class="row c_pannel">
+        
+    <div id='display_pannel'>
+        <div id='service_name_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span1">Service:</div>
             <div class="span4 service_header" id="service_name"></div>
         </div>
-        <div class="row c_pannel">
+        <div id='service_url_pannel'  class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span1">URL:</div>
             <div class="span4 service_header" id="service_url"></div>
         </div>
-        <div class="row c_pannel">
+        <div  id='user_name_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span1">User:</div>
             <div class="span4 service_header" id="user_name"></div>
         </div>
-        <div class="row c_pannel">
+        <div  id='user_token_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span1">Token:</div>
             <div class="span4" id="user_auth_token"></div>
         </div>
-        <div class="row c_pannel">
+        <div  id='timmer_pannel' class="row c_pannel">
             <div class="span1"></div>
             <div class="span1">Timmer:</div>
-            <div class="span2">00:00:00.00</div>
+            <span id="timer" class="span2">00:00:00.00</span><br>
+            <span id="timer_status" style="display:none">0</span>
+            <span id="timer_min"  style="display:none">0</span>
+            <span id="timer_sec"  style="display:none">0</span>
+            <span id="timer_mil_sec"  style="display:none">0</span>
         </div>
-
-
-
-
-        <div class="row c_pannel">
+        
+        <div  id='service_request_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
                 <b>Request Params</b> <a href="#" id='btn_generate_form'>Generate form</a>
                 <textarea style="width: 500px; height: 100px" id="txt_request_params"></textarea>
             </div>
         </div>
-        <div class="row c_pannel">
+        
+        <div  id='service_optional_params_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
                 <b>Optional Params</b>
                 <textarea style="width: 500px; height: 100px" id="txt_optional_params"></textarea>
             </div>
         </div>
-        <div class="row c_pannel">
+        <div  id='service_response_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
                 <b>Response</b>
                 <textarea style="width: 500px; height: 100px" id="txt_response_params"></textarea>
             </div>
-
         </div>   
-        <div class="row c_pannel">
+        
+        <div  id='service_form_gen_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div id='gen_form' class="span4">
             </div>
 
         </div>   
 
-        <div class="row c_pannel">
+        <div  id='service_description_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div id='service_description' class="span4"></div>
         </div>
-        <div class="row c_pannel">
+        
+        <div  id='service_backend_process_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div  id='backend_process' class="span4"></div>
         </div>
-
+</div>        
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
         <script  type='text/javascript'>
         //-------------------------------------------------------
@@ -128,7 +139,7 @@
         //------------- service dropdownlist --------------------------
 
         $("#sel_service").change(function() {      
-            show_service_detail();          
+            update_service_detail();          
             replace_user_data();
         });
 
@@ -149,44 +160,53 @@ $( "#btn_hit_service" ).click(function() {
    }
 })
  
-     //--------------------------------------------------------- 
+//--------------------------------------------------------- 
         function service_form_gen(service_name){         
             service_detail = find_service_obj(service_name);
             return JSON.stringify(service_detail.params);
         }
 
-          //--------------------------------------------------
-         function show_service_detail(){     
+//--------------------------------------------------
+         function update_service_detail(){     
              tt = $('option:selected', $('#sel_service')).html();
-             if (tt=='select'){
-                 $('#service_name').html('');
-                $('#service_url').html('');
-                $('#service_description').html('');
-                $('#backend_process').html('');
-                $('#txt_request_params').val('');
-                $('#txt_response_params').val("");
-                $('#txt_optional_params').val("");
-            }else{
-                service_detail = find_service_obj(tt);          
-                $('#service_name').html(service_detail.title);
-                $('#service_url').html(service_detail.pattern);
-                $('#service_description').html(service_detail.description);
-                $('#backend_process').html(service_detail.backend_process);
-                $('#txt_request_params').val(JSON.stringify(service_detail.params));
-                $('#txt_optional_params').val(JSON.stringify(service_detail.optional_params));
-                $('#txt_response_params').val("");
-            }
+             fill_service_detail(tt=='select'?null:find_service_obj(tt));
         } 
+//---------------------------------------------------------         
+          
+          function fill_service_detail(service_detail){
+                $('#service_name').html(service_detail==null?'':service_detail.title);
+                $('#service_url').html(service_detail==null?'':service_detail.pattern);
+                $('#service_description').html(service_detail==null?'':service_detail.description);
+                $('#backend_process').html(service_detail==null?'':service_detail.backend_process);
+                $('#txt_request_params').val(service_detail==null?'':JSON.stringify(service_detail.params));
+                $('#txt_response_params').val(service_detail==null?'':JSON.stringify(service_detail.optional_params));
+                $('#txt_optional_params').val("");
+                display_service_detail(service_detail==null?'none':'block');
+        } 
+//---------------------------------------------------------         
+        function display_service_detail(display){
+                $('#service_name_pannel').css("display", display);
+                $('#service_url_pannel').css("display", display);
+                $('#service_description_pannel').css("display", display);
+                $('#service_backend_process_pannel').css("display", display);
+                $('#service_request_pannel').css("display", display);
+                $('#service_response_pannel').css("display", display);
+                $('#service_optional_params_pannel').css("display", display);
+        } 
+       
        //--------------------------------------------------
          function change_user_detail(){         
              tt = $('option:selected', $('#sel_user')).html();             
              if (tt=='select'){
                 $('#user_name').html('');
                 $('#user_auth_token').html('');                
+                $('#user_name_pannel').css("display", 'none');
+                $('#user_token_pannel').css("display", 'none');                
             }else{
                 $('#user_name').html(tt);
                 $('#user_auth_token').html($('option:selected', $('#sel_user')).val());
-                
+                $('#user_name_pannel').css("display", 'block');
+                $('#user_token_pannel').css("display", 'block');                                
             }
         } 
           //--------------------------------------------------
@@ -216,15 +236,13 @@ function replace_user_data(){
                 }
                 $("#txt_request_params").val(JSON.stringify(obj1));        
                 
-            }
-        
+            }        
 }
-    
-    
     
     //-------------------------------------
 function hit_service(){    
         var value_ar = JSON.parse($("#txt_request_params").val());        
+        restartTimer();//~~~~~~~~~~~~~~>
         $.ajax({
                type: "POST",
                url: ".." + $("#service_url").text(),
@@ -242,20 +260,62 @@ function hit_service(){
 //-------------------------------------
     
  function display_response(data){
+            stopTimer();
             str = JSON.stringify(data, null, 2);
             str = str.split("\\").join("");
             $('#txt_response_params').val(str);            
 }   
 
-        
-            
-        
-    
-            
-        
-    
-            
-        </script>
+//-----------------------------------------------------    
+//-----------------------------------------------------    
+//-----------------------------------------------------    
+
+
+function startTimer(){
+    if ($("#timer_status").text()!='-1'){
+    mil_sec=parseInt($("#timer_mil_sec").text())+1;
+    sec=parseInt($("#timer_sec").text());
+    min=parseInt($("#timer_min").text());
+    if(mil_sec==100){
+        mil_sec=0;
+        sec=sec+1;
+        if(sec==60){
+            sec=0;
+            min=min+1;
+        }
+    }
+    setTimer('0:'+min.toString()+':'+sec.toString()+'.'+mil_sec.toString());    
+    setTime(min,sec,mil_sec);
+    var timer=setTimeout(function(){startTimer()});
+    }
+}
+//-----------------------------------------------------    
+function stopTimer(){
+$("#timer_status").text(-1);
+}
+//------------------------------------
+function restartTimer(){
+    resetTimer();
+    startTimer(); 
+}
+//-----------------------------------------------------    
+function resetTimer(){
+$("#timer_status").text(0);
+setTime(0,0,0);
+setTimer("00:00:00.00");
+}    
+//------------------------------------
+function setTimer(ms){    
+    $("#timer").text(ms);
+}
+//------------------------------------
+function setTime(m,s,ms){    
+$("#timer_mil_sec").text(ms);
+$("#timer_sec").text(s);
+$("#timer_min").text(m);
+}
+
+            </script>
 
 
 
