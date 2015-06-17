@@ -565,5 +565,38 @@ public function avatarUploadAction() {
         return $this->getDoctrine()->getRepository('LoveThatFitUserBundle:User')->isDuplicateEmail($id, $email);
     }
     
+    #########################################################################################
+    #########################################################################################3
+    ##########################################################################################
+    #########################################################################################
+
+    private function process_request(){
+        $request = $this->getRequest();
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        
+        if($decoded==null) #if null (to be used for web service testing))
+            $decoded  = $request->request->all();
+        
+        return $decoded;
+    }
+    
+    
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+# ws_user_Login   /ws/login
+#----------------------------------------------
+
+    
+    public function wsLoginAction() {
+        $decoded  = $this->process_request();                         
+        $user_info = $this->get('webservice.helper.user')->loginWebService($decoded, $this->getRequest());
+        return new response(json_encode($user_info));
+      
+    }
+
+    
+    
+    
 }
 

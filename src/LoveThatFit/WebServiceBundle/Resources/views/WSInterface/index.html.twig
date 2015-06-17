@@ -43,7 +43,7 @@
                 </select>
             </div>
             <div class="span2">
-                <button type="submit" class="btn btn-default">Submit</button>        
+                <button type="submit" class="btn btn-default" id='btn_hit_service'> Hit</button>        
 
                 <input id="chk_new_window" type="checkbox"> New
             </div>
@@ -53,6 +53,11 @@
             <div class="span1"></div>
             <div class="span1">Service:</div>
             <div class="span4 service_header" id="service_name"></div>
+        </div>
+        <div class="row c_pannel">
+            <div class="span1"></div>
+            <div class="span1">URL:</div>
+            <div class="span4 service_header" id="service_url"></div>
         </div>
         <div class="row c_pannel">
             <div class="span1"></div>
@@ -124,18 +129,26 @@
 
         $("#sel_service").change(function() {      
             show_service_detail();          
+            replace_user_data();
         });
 
         //------------------- user dropdownlist --------------------
         $("#sel_user").change(function() {  
             change_user_detail();  
+            replace_user_data();
         });
      //--------------------------------------------------------- 
 
         $("#btn_generate_form").click(function() {  
           alert(service_form_gen($('option:selected', $('#sel_service')).html()));  
         });
-
+//-------------------------------------
+$( "#btn_hit_service" ).click(function() {
+       if($('#service_name').html()!='' && $('#user_name').html()!=''){
+            hit_service();
+   }
+})
+ 
      //--------------------------------------------------------- 
         function service_form_gen(service_name){         
             service_detail = find_service_obj(service_name);
@@ -147,6 +160,7 @@
              tt = $('option:selected', $('#sel_service')).html();
              if (tt=='select'){
                  $('#service_name').html('');
+                $('#service_url').html('');
                 $('#service_description').html('');
                 $('#backend_process').html('');
                 $('#txt_request_params').val('');
@@ -155,6 +169,7 @@
             }else{
                 service_detail = find_service_obj(tt);          
                 $('#service_name').html(service_detail.title);
+                $('#service_url').html(service_detail.pattern);
                 $('#service_description').html(service_detail.description);
                 $('#backend_process').html(service_detail.backend_process);
                 $('#txt_request_params').val(JSON.stringify(service_detail.params));
@@ -171,6 +186,7 @@
             }else{
                 $('#user_name').html(tt);
                 $('#user_auth_token').html($('option:selected', $('#sel_user')).val());
+                
             }
         } 
           //--------------------------------------------------
@@ -189,7 +205,7 @@
 function replace_user_data(){
           email = $("#user_name").text();
           token = $("#user_auth_token").text();
-          request_json = $.trim($("#txt_request").val());
+          request_json = $.trim($("#txt_request_params").val());
             if (request_json.indexOf("authTokenWebService")!=-1 || request_json.indexOf("email")!=-1){
                 var obj1 = JSON.parse(request_json);
                 if (request_json.indexOf("authTokenWebService")!=-1){
@@ -198,12 +214,48 @@ function replace_user_data(){
                 if (request_json.indexOf("email")!=-1){
                     obj1.email=email;    
                 }
-                $("#txt_request").text(JSON.stringify(obj1));        
+                $("#txt_request_params").val(JSON.stringify(obj1));        
+                
             }
         
 }
     
-            </script>
+    
+    
+    //-------------------------------------
+function hit_service(){    
+        var value_ar = JSON.parse($("#txt_request_params").val());        
+        $.ajax({
+               type: "POST",
+               url: ".." + $("#service_url").text(),
+               data: value_ar,  
+               dataType: "json",
+               success: function(data){
+                   display_response(data);                    
+                },
+               failure: function(errMsg) {
+                   display_response(errMsg);
+               }
+         });    
+}
+
+//-------------------------------------
+    
+ function display_response(data){
+            str = JSON.stringify(data, null, 2);
+            str = str.split("\\").join("");
+            $('#txt_response_params').val(str);            
+}   
+
+        
+            
+        
+    
+            
+        
+    
+            
+        </script>
 
 
 

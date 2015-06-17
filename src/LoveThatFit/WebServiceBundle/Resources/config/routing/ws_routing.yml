@@ -1,0 +1,3 @@
+ws_user_login:
+    pattern:  /ws/login
+    defaults: { _controller: LoveThatFitWebServiceBundle:User:wsLogin }

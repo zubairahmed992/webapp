@@ -1,3 +1,7 @@
+
+ws_routing:
+    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/ws_routing.yml"
+    prefix:   /
 wsi:
     resource: "@LoveThatFitWebServiceBundle/Resources/config/routing/ws_interface.yml"
     prefix:   /
