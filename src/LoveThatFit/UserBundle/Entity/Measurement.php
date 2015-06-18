@@ -1,6 +1,7 @@
 <?php
 
 namespace LoveThatFit\UserBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +17,7 @@ class Measurement {
     public $bra_numbers;
     public $birthdate;
     public $timespent;
-    
+
     /**
      * Bidirectional (OWNING SIDE - FK)
      * 
@@ -25,44 +26,46 @@ class Measurement {
      * */
     private $user;
 #-------------------------------------------------------------------------------------
- /**
+    /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart",inversedBy="measurement")
      * @ORM\JoinColumn(name="top_fitting_size_chart_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $top_fitting_size_chart;
 
- /** 
- * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart", inversedBy="measurement")
- * @ORM\JoinColumn(name="bottom_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
- */
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart", inversedBy="measurement")
+     * @ORM\JoinColumn(name="bottom_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
+     */
     private $bottom_fitting_size_chart;
- 
- /** 
- * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart", inversedBy="measurement")
- * @ORM\JoinColumn(name="dress_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
- */
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\SizeChart", inversedBy="measurement")
+     * @ORM\JoinColumn(name="dress_fitting_size_chart_id", onDelete="CASCADE", referencedColumnName="id")
+     */
     private $dress_fitting_size_chart;
- #-------------------------------------------------------------------------------------
- /**
+    #-------------------------------------------------------------------------------------
+    /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand")
      * @ORM\JoinColumn(name="top_brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $top_brand;
-    
-/**
+
+    /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand")
      * @ORM\JoinColumn(name="bottom_brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $bottom_brand;    
+    private $bottom_brand;
 
-/**
+    /**
      * @ORM\ManyToOne(targetEntity="LoveThatFit\AdminBundle\Entity\Brand")
      * @ORM\JoinColumn(name="dress_brand_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $dress_brand;    
+    private $dress_brand;
 
 //---------------------------------------------------------------------    
-
+//---------------------------------------------------------------------        
+//---------------------------------------------------------------------    
+    
     /**
      * @var integer $id
      *
@@ -88,7 +91,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female","profile_measurement_female"}) 
      */
-    private $weight=0;
+    private $weight = 0;
+
     /**
      * @var float $height
      *
@@ -101,12 +105,12 @@ class Measurement {
      *      minMessage = "You must be at least 56 inches tall",
      *      maxMessage = "You cannot enter more than 74 inches",
      *      groups={"registration_step_two","profile_measurement"}
-    
+
      * )      
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $height=0;
+    private $height = 0;
 
     /**
      * @var float $waist
@@ -123,7 +127,7 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $waist=0;
+    private $waist = 0;
 
     /**
      * @var float $hip
@@ -140,7 +144,7 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $hip=0;
+    private $hip = 0;
 
     /**
      * @var float $bust
@@ -157,8 +161,9 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $bust=0;
-       /**
+    private $bust = 0;
+
+    /**
      * @var float $chest
      *
      * @ORM\Column(name="chest", type="float", nullable=true,options={"default" = 0})
@@ -173,8 +178,7 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $chest=0;
-
+    private $chest = 0;
 
     /**
      * @var float $arm
@@ -191,8 +195,7 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $arm=0;
-    
+    private $arm = 0;
 
     /**
      * @var float $inseam
@@ -209,7 +212,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $inseam=0;
+    private $inseam = 0;
+
     /**
      * @var float $shoulder_height
      *
@@ -224,9 +228,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $shoulder_height=0;
-    
-    
+    private $shoulder_height = 0;
+
     /**
      * @var float $shoulder_width
      *
@@ -241,9 +244,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $shoulder_width=0;
-    
-    
+    private $shoulder_width = 0;
+
     /**
      * @var float $bust_height
      *
@@ -258,9 +260,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $bust_height=0;
-    
-    
+    private $bust_height = 0;
+
     /**
      * @var float $waist_height
      *
@@ -275,12 +276,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $waist_height=0;
-    
-    
-    
-    
-    
+    private $waist_height = 0;
+
     /**
      * @var float $hip_height
      *
@@ -295,9 +292,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $hip_height=0;
-    
-    
+    private $hip_height = 0;
+
     /**
      * @var float $bust_width
      *
@@ -312,10 +308,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $bust_width=0;
-    
-    
-    
+    private $bust_width = 0;
+
     /**
      * @var float $waist_width
      *
@@ -330,8 +324,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $waist_width=0;
-    
+    private $waist_width = 0;
+
     /**
      * @var float $hip_width
      *
@@ -346,9 +340,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $hip_width=0;
-    
-    
+    private $hip_width = 0;
+
     /**
      * @var float $outseam
      *
@@ -363,8 +356,9 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $outseam=0;
-     /**
+    private $outseam = 0;
+
+    /**
      * @var float $sleeve
      *
      * @ORM\Column(name="sleeve", type="float", nullable=true,options={"default" = 0})
@@ -379,7 +373,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $sleeve=0;
+    private $sleeve = 0;
+
     /**
      * @var float $neck
      *
@@ -395,7 +390,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $neck=0;
+    private $neck = 0;
+
     /**
      * @var float $iphone_shoulder_height
      *
@@ -408,8 +404,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300 inches "
      * )
      */
-    private $iphone_shoulder_height=0;
-    
+    private $iphone_shoulder_height = 0;
+
     /**
      * @var float $iphone_outseam
      *
@@ -422,7 +418,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300 inches "
      * )
      */
-    private $iphone_outseam=0;
+    private $iphone_outseam = 0;
+
     /**
      * @var float $iphone_head_height
      *
@@ -435,7 +432,8 @@ class Measurement {
      *      maxMessage = "You cannot have more than 300 inches "
      * )
      */
-    private $iphone_head_height=0;
+    private $iphone_head_height = 0;
+
     /**
      * @var string $bra_size
      *
@@ -443,7 +441,7 @@ class Measurement {
      * 
      */
     private $bra_size;
-    
+
     /**
      * @var string $bodyTypes
      *
@@ -451,7 +449,7 @@ class Measurement {
      * 
      */
     private $body_types;
-    
+
     /**
      * @var string $bodyShape
      *
@@ -459,8 +457,7 @@ class Measurement {
      * 
      */
     private $body_shape;
-    
-    
+
     /**
      * @var \DateTime $created_at
      */
@@ -472,7 +469,7 @@ class Measurement {
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updated_at;
-    
+
     /**
      * @var float $thigh
      *
@@ -485,13 +482,13 @@ class Measurement {
      *      minMessage = "You must be at least 20 tall inches",
      *      maxMessage = "You cannot taller than 96 inches",
      *      groups={"registration_step_two","profile_measurement"}
-    
+
      * )      
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $thigh=0;
-    
+    private $thigh = 0;
+
     /**
      * @var float $shoulderAcrossFront
      *
@@ -499,8 +496,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $shoulder_across_front=0;
-    
+    private $shoulder_across_front = 0;
+
     /**
      * @var float $shoulderAcrossBack
      *
@@ -508,7 +505,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $shoulder_across_back=0;
+    private $shoulder_across_back = 0;
+
     /**
      * @var float $bicep
      *
@@ -516,17 +514,17 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $bicep=0;
-    
-     /**
+    private $bicep = 0;
+
+    /**
      * @var float $tricep
      *
      * @ORM\Column(name="tricep", type="float", nullable=true,options={"default" = 0})
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $tricep=0;
-    
+    private $tricep = 0;
+
     /**
      * @var float $wrist
      *
@@ -534,26 +532,26 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $wrist=0;
-    
-     /**
+    private $wrist = 0;
+
+    /**
      * @var float $center_front_waist
      *
      * @ORM\Column(name="center_front_waist", type="float", nullable=true,options={"default" = 0})
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $center_front_waist=0;
-    
-     /**
+    private $center_front_waist = 0;
+
+    /**
      * @var float $back_waist
      *
      * @ORM\Column(name="backWaist", type="float", nullable=true,options={"default" = 0})
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $back_waist=0;
-    
+    private $back_waist = 0;
+
     /**
      * @var float $waist_hip
      *
@@ -561,8 +559,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $waist_hip=0;
-    
+    private $waist_hip = 0;
+
     /**
      * @var float $knee
      *
@@ -570,8 +568,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $knee=0;
-    
+    private $knee = 0;
+
     /**
      * @var float $calf
      *
@@ -579,8 +577,8 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $calf=0;
-    
+    private $calf = 0;
+
     /**
      * @var float $ankle
      *
@@ -588,25 +586,31 @@ class Measurement {
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $ankle=0;
-    
-     /**
+    private $ankle = 0;
+
+    /**
      * @var float $iphone_foot_height
      *
      * @ORM\Column(name="iphone_foot_height", type="float", nullable=true,options={"default" = 0})
      */
-    private $iphone_foot_height=0;
-    
-    
-     /**
+    private $iphone_foot_height = 0;
+
+    /**
      * @var float $belt
      *
      * @ORM\Column(name="belt", type="float", nullable=true,options={"default" = 0})
      * @Assert\Blank(groups={"registration_measurement_male","registration_measurement_female"})
      * @Assert\Regex(pattern="/[0-9]/",message="Require number only",groups={"registration_measurement_male","registration_measurement_female"}) 
      */
-    private $belt=0;
-    
+    private $belt = 0;
+
+    /**
+     * @var string $measurement_json
+     *
+     * @ORM\Column(name="measurement_json", type="text", nullable=true)
+     */
+    private $measurement_json;
+
     /**
      * Get id
      *
@@ -623,14 +627,11 @@ class Measurement {
      * @return Measurement
      */
     public function setWeight($weight) {
-        if($weight!=null)
-        {
-           $this->weight = $weight;
+        if ($weight != null) {
+            $this->weight = $weight;
             return $this;
-        }else
-        {
-          return $this->weight =0;
-        
+        } else {
+            return $this->weight = 0;
         }
     }
 
@@ -640,14 +641,11 @@ class Measurement {
      * @return float 
      */
     public function getWeight() {
-        if($this->weight!=null)
-        {
-           return $this->weight;
-        }else
-        {
-          return $this->weight =0;        
+        if ($this->weight != null) {
+            return $this->weight;
+        } else {
+            return $this->weight = 0;
         }
-        
     }
 
     /**
@@ -657,13 +655,11 @@ class Measurement {
      * @return Measurement
      */
     public function setHeight($height) {
-        if($height!=null)
-        {
-           $this->height = $height;
+        if ($height != null) {
+            $this->height = $height;
             return $this;
-        }else
-        {
-          return $this->height =0;        
+        } else {
+            return $this->height = 0;
         }
     }
 
@@ -673,15 +669,11 @@ class Measurement {
      * @return float 
      */
     public function getHeight() {
-        if($this->height!=null)
-        {
-          return $this->height;         
-        }else
-        {
-          return $this->height =0;
-        
+        if ($this->height != null) {
+            return $this->height;
+        } else {
+            return $this->height = 0;
         }
-        
     }
 
     /**
@@ -691,13 +683,11 @@ class Measurement {
      * @return Measurement
      */
     public function setWaist($waist) {
-       if($waist!=null)
-        {
-           $this->waist = $waist;
+        if ($waist != null) {
+            $this->waist = $waist;
             return $this;
-        }else
-        {
-          return $this->waist =0;        
+        } else {
+            return $this->waist = 0;
         }
     }
 
@@ -707,15 +697,11 @@ class Measurement {
      * @return float 
      */
     public function getWaist() {
-        if($this->waist!=null)
-        {
-           return $this->waist;
-        }else
-        {
-          return $this->waist =0;        
+        if ($this->waist != null) {
+            return $this->waist;
+        } else {
+            return $this->waist = 0;
         }
-        
-        
     }
 
     /**
@@ -725,15 +711,12 @@ class Measurement {
      * @return Measurement
      */
     public function setHip($hip) {
-        if($hip!=null)
-        {
-           $this->hip = $hip;
+        if ($hip != null) {
+            $this->hip = $hip;
             return $this;
-        }else
-        {
-          return $this->hip =0;
-        
-        }     
+        } else {
+            return $this->hip = 0;
+        }
     }
 
     /**
@@ -742,12 +725,10 @@ class Measurement {
      * @return float 
      */
     public function getHip() {
-        if($this->hip!=null)
-        {
-           return $this->hip;
-        }else
-        {
-          return $this->hip =0;        
+        if ($this->hip != null) {
+            return $this->hip;
+        } else {
+            return $this->hip = 0;
         }
     }
 
@@ -758,15 +739,12 @@ class Measurement {
      * @return Measurement
      */
     public function setBust($bust) {
-        if($bust!=null)
-        {
-           $this->bust = $bust;
+        if ($bust != null) {
+            $this->bust = $bust;
             return $this;
-        }else
-        {
-          return $this->bust =0;
-        
-        }       
+        } else {
+            return $this->bust = 0;
+        }
     }
 
     /**
@@ -775,12 +753,10 @@ class Measurement {
      * @return float 
      */
     public function getBust() {
-        if($this->bust!=null)
-        {
-           return $this->bust;
-        }else
-        {
-          return $this->bust =0;        
+        if ($this->bust != null) {
+            return $this->bust;
+        } else {
+            return $this->bust = 0;
         }
     }
 
@@ -791,15 +767,12 @@ class Measurement {
      * @return Measurement
      */
     public function setArm($arm) {
-        if($arm!=null)
-        {
-           $this->arm = $arm;
+        if ($arm != null) {
+            $this->arm = $arm;
             return $this;
-        }else
-        {
-          return $this->arm =0;
-        
-        }       
+        } else {
+            return $this->arm = 0;
+        }
     }
 
     /**
@@ -808,16 +781,13 @@ class Measurement {
      * @return float 
      */
     public function getArm() {
-        if($this->arm!=null)
-        {
-           return $this->arm;
-        }else
-        {
-          return $this->arm =0;        
+        if ($this->arm != null) {
+            return $this->arm;
+        } else {
+            return $this->arm = 0;
         }
     }
 
-   
     /**
      * Set inseam
      *
@@ -825,15 +795,12 @@ class Measurement {
      * @return Measurement
      */
     public function setInseam($inseam) {
-        if($inseam!=null)
-        {
-           $this->inseam = $inseam;
+        if ($inseam != null) {
+            $this->inseam = $inseam;
             return $this;
-        }else
-        {
-          return $this->inseam =0;
-        
-        }       
+        } else {
+            return $this->inseam = 0;
+        }
     }
 
     /**
@@ -842,14 +809,13 @@ class Measurement {
      * @return float 
      */
     public function getInseam() {
-        if($this->inseam!=null)
-        {
-           return $this->inseam;
-        }else
-        {
-          return $this->inseam =0;        
+        if ($this->inseam != null) {
+            return $this->inseam;
+        } else {
+            return $this->inseam = 0;
         }
     }
+
     /**
      * Set created_at
      *
@@ -913,24 +879,19 @@ class Measurement {
         return $this->user;
     }
 
-
     /**
      * Set shoulder_height
      *
      * @param float $shoulderHeight
      * @return Measurement
      */
-    public function setShoulderHeight($shoulderHeight)
-    {
-        if($shoulderHeight!=null)
-        {
-           $this->shoulder_height = $shoulderHeight;
+    public function setShoulderHeight($shoulderHeight) {
+        if ($shoulderHeight != null) {
+            $this->shoulder_height = $shoulderHeight;
             return $this;
-        }else
-        {
-          return $this->shoulder_height =0;        
+        } else {
+            return $this->shoulder_height = 0;
         }
-        
     }
 
     /**
@@ -938,38 +899,29 @@ class Measurement {
      *
      * @return float 
      */
-    public function getShoulderHeight()
-    {
-        if($this->shoulder_height!=null)
-        {
-           return $this->shoulder_height;
-        }else
-        {
-          return $this->shoulder_height =0;        
+    public function getShoulderHeight() {
+        if ($this->shoulder_height != null) {
+            return $this->shoulder_height;
+        } else {
+            return $this->shoulder_height = 0;
         }
     }
 
-   
     /*
      * 
-English BMI Formula
-BMI = ( Weight in Pounds / ( Height in inches x Height in inches ) ) x 703
-Metric BMI Formula
-BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
+      English BMI Formula
+      BMI = ( Weight in Pounds / ( Height in inches x Height in inches ) ) x 703
+      Metric BMI Formula
+      BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      */
-    
-    public function getBMI()
-    {
-        if ($this->height && $this->height > 0){
-            return round((($this->weight / ($this->height * $this->height)) * 703),2);
-        }
-        else{
+
+    public function getBMI() {
+        if ($this->height && $this->height > 0) {
+            return round((($this->weight / ($this->height * $this->height)) * 703), 2);
+        } else {
             return 0;
         }
-            
     }
-
-    
 
     /**
      * Set chest
@@ -977,17 +929,13 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $chest
      * @return Measurement
      */
-    public function setChest($chest)
-    {
-        if($chest!=null)
-        {
-           $this->chest = $chest;
+    public function setChest($chest) {
+        if ($chest != null) {
+            $this->chest = $chest;
             return $this;
-        }else
-        {
-          return $this->chest =0;
-        
-        }        
+        } else {
+            return $this->chest = 0;
+        }
     }
 
     /**
@@ -995,15 +943,12 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getChest()
-    {
-        if($this->chest!=null)
-        {
-           return $this->chest;
-        }else
-        {
-          return $this->chest =0;        
-        }       
+    public function getChest() {
+        if ($this->chest != null) {
+            return $this->chest;
+        } else {
+            return $this->chest = 0;
+        }
     }
 
     /**
@@ -1012,16 +957,12 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $sleeve
      * @return Measurement
      */
-    public function setSleeve($sleeve)
-    {
-        if($sleeve!=null)
-        {
-           $this->sleeve = $sleeve;
+    public function setSleeve($sleeve) {
+        if ($sleeve != null) {
+            $this->sleeve = $sleeve;
             return $this;
-        }else
-        {
-          return $this->sleeve =0;
-        
+        } else {
+            return $this->sleeve = 0;
         }
     }
 
@@ -1030,14 +971,11 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getSleeve()
-    {
-        if($this->sleeve!=null)
-        {
-           return $this->sleeve;
-        }else
-        {
-          return $this->sleeve =0;        
+    public function getSleeve() {
+        if ($this->sleeve != null) {
+            return $this->sleeve;
+        } else {
+            return $this->sleeve = 0;
         }
     }
 
@@ -1047,18 +985,13 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $neck
      * @return Measurement
      */
-    public function setNeck($neck)
-    {
-        if($neck!=null)
-        {
-           $this->neck = $neck;
+    public function setNeck($neck) {
+        if ($neck != null) {
+            $this->neck = $neck;
             return $this;
-        }else
-        {
-          return $this->neck =0;
-        
+        } else {
+            return $this->neck = 0;
         }
-       
     }
 
     /**
@@ -1066,14 +999,11 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getNeck()
-    {
-        if($this->neck!=null)
-        {
-           return $this->neck;
-        }else
-        {
-          return $this->neck =0;        
+    public function getNeck() {
+        if ($this->neck != null) {
+            return $this->neck;
+        } else {
+            return $this->neck = 0;
         }
     }
 
@@ -1083,16 +1013,13 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $outseam
      * @return Measurement
      */
-    public function setOutseam($outseam)
-    {
-        if($outseam!=null)
-        {
-           $this->outseam = $outseam;
+    public function setOutseam($outseam) {
+        if ($outseam != null) {
+            $this->outseam = $outseam;
             return $this;
-        }else
-        {
-          return $this->outseam =0;        
-        }        
+        } else {
+            return $this->outseam = 0;
+        }
     }
 
     /**
@@ -1100,25 +1027,22 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getOutseam()
-    {
-        if($this->outseam!=null)
-        {
-           return $this->outseam;
-        }else
-        {
-          return $this->outseam =0;        
+    public function getOutseam() {
+        if ($this->outseam != null) {
+            return $this->outseam;
+        } else {
+            return $this->outseam = 0;
         }
     }
+
 //    public $top_brand;
     //public $bottom_brand;
-   // public $dress_brand;
+    // public $dress_brand;
     public $top_size;
     public $bottom_size;
     public $dress_size;
-    //public $body_types;
 
-   
+    //public $body_types;
 
     /**
      * Set top_fitting_size_chart
@@ -1126,10 +1050,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param LoveThatFit\AdminBundle\Entity\SizeChart $topFittingSizeChart
      * @return Measurement
      */
-    public function setTopFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $topFittingSizeChart = null)
-    {
+    public function setTopFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $topFittingSizeChart = null) {
         $this->top_fitting_size_chart = $topFittingSizeChart;
-    
+
         return $this;
     }
 
@@ -1138,8 +1061,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return LoveThatFit\AdminBundle\Entity\SizeChart 
      */
-    public function getTopFittingSizeChart()
-    {
+    public function getTopFittingSizeChart() {
         return $this->top_fitting_size_chart;
     }
 
@@ -1149,10 +1071,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param LoveThatFit\AdminBundle\Entity\SizeChart $bottomFittingSizeChart
      * @return Measurement
      */
-    public function setBottomFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $bottomFittingSizeChart = null)
-    {
+    public function setBottomFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $bottomFittingSizeChart = null) {
         $this->bottom_fitting_size_chart = $bottomFittingSizeChart;
-    
+
         return $this;
     }
 
@@ -1161,8 +1082,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return LoveThatFit\AdminBundle\Entity\SizeChart 
      */
-    public function getBottomFittingSizeChart()
-    {
+    public function getBottomFittingSizeChart() {
         return $this->bottom_fitting_size_chart;
     }
 
@@ -1172,10 +1092,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param LoveThatFit\AdminBundle\Entity\SizeChart $dressFittingSizeChart
      * @return Measurement
      */
-    public function setDressFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $dressFittingSizeChart = null)
-    {
+    public function setDressFittingSizeChart(\LoveThatFit\AdminBundle\Entity\SizeChart $dressFittingSizeChart = null) {
         $this->dress_fitting_size_chart = $dressFittingSizeChart;
-    
+
         return $this;
     }
 
@@ -1184,8 +1103,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return LoveThatFit\AdminBundle\Entity\SizeChart 
      */
-    public function getDressFittingSizeChart()
-    {
+    public function getDressFittingSizeChart() {
         return $this->dress_fitting_size_chart;
     }
 
@@ -1195,10 +1113,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $iphoneNeck
      * @return Measurement
      */
-    public function setIphoneNeck($iphoneNeck)
-    {
+    public function setIphoneNeck($iphoneNeck) {
         $this->iphone_neck = $iphoneNeck;
-    
+
         return $this;
     }
 
@@ -1207,8 +1124,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getIphoneNeck()
-    {
+    public function getIphoneNeck() {
         return $this->iphone_neck;
     }
 
@@ -1218,10 +1134,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $iphoneOutseam
      * @return Measurement
      */
-    public function setIphoneOutseam($iphoneOutseam)
-    {
+    public function setIphoneOutseam($iphoneOutseam) {
         $this->iphone_outseam = $iphoneOutseam;
-    
+
         return $this;
     }
 
@@ -1230,8 +1145,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getIphoneOutseam()
-    {
+    public function getIphoneOutseam() {
         return $this->iphone_outseam;
     }
 
@@ -1241,50 +1155,41 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $iphoneShoulderHeight
      * @return Measurement
      */
-    public function setIphoneShoulderHeight($iphoneShoulderHeight)
-    {
+    public function setIphoneShoulderHeight($iphoneShoulderHeight) {
         $this->iphone_shoulder_height = $iphoneShoulderHeight;
-    
+
         return $this;
     }
-
-  
 
     /**
      * Get iphone_shoulder_height
      *
      * @return float 
      */
-    public function getIphoneShoulderHeight()
-    {
+    public function getIphoneShoulderHeight() {
         return $this->iphone_shoulder_height;
     }
 
-    
-      /**
+    /**
      * Get iphone_head_height
      *
      * @return float 
      */
-    public function getIphoneHeadHeight()
-    {
+    public function getIphoneHeadHeight() {
         return $this->iphone_head_height;
     }
 
-    
-  /**
+    /**
      * Set iphone_head_height
      *
      * @param float $iphoneHeadHeight
      * @return Measurement
      */
-    public function setIphoneHeadHeight($iphoneHeadHeight)
-    {
+    public function setIphoneHeadHeight($iphoneHeadHeight) {
         $this->iphone_head_height = $iphoneHeadHeight;
-    
+
         return $this;
     }
-    
 
     /**
      * Set body_shape
@@ -1292,10 +1197,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param string $bodyShape
      * @return Measurement
      */
-    public function setBodyShape($bodyShape)
-    {
+    public function setBodyShape($bodyShape) {
         $this->body_shape = strtolower($bodyShape);
-    
+
         return $this;
     }
 
@@ -1304,8 +1208,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return string 
      */
-    public function getBodyShape()
-    {
+    public function getBodyShape() {
         return $this->body_shape;
     }
 
@@ -1315,10 +1218,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param string $bodyTypes
      * @return Measurement
      */
-    public function setBodyTypes($bodyTypes)
-    {
+    public function setBodyTypes($bodyTypes) {
         $this->body_types = strtolower($bodyTypes);
-    
+
         return $this;
     }
 
@@ -1327,12 +1229,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return string 
      */
-    public function getBodyTypes()
-    {
+    public function getBodyTypes() {
         return $this->body_types;
     }
-
-    
 
     /**
      * Set thigh
@@ -1340,10 +1239,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $thigh
      * @return Measurement
      */
-    public function setThigh($thigh)
-    {
+    public function setThigh($thigh) {
         $this->thigh = $thigh;
-    
+
         return $this;
     }
 
@@ -1352,14 +1250,12 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getThigh()
-    {
+    public function getThigh() {
         return $this->thigh;
     }
-    
-    
+
     public function getArray() {
-        $u=$this->getUser();
+        $u = $this->getUser();
         return array(
             'gender' => $u->getGender(),
             'weight' => $this->weight,
@@ -1370,7 +1266,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
             'bust' => $this->bust,
             'chest' => $this->chest,
             'arm' => $this->arm,
-            'inseam' => $this->inseam,            
+            'inseam' => $this->inseam,
             #'shoulder_height' => $this->shoulder_height,
             'shoulder_height' => 0,
             'outseam' => $this->outseam,
@@ -1392,45 +1288,69 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
     }
 
     public function setProperty($property, $value) {
-        switch (strtolower($property)) {       
-            case 'weight': $this->weight = $value; break;
-            case 'height': $this->height = $value; break;
-            case 'waist': $this->waist = $value; break;
-            case 'belt': $this->belt = $value; break;
-            case 'hip': $this->hip = $value; break;
-            case 'bust': $this->bust = $value; break;
-            case 'chest': $this->chest = $value; break;
-            case 'arm': $this->arm = $value; break;
-            case 'inseam': $this->inseam = $value; break;
-            case 'shoulder_height': $this->shoulder_height = $value; break;
-            case 'outseam': $this->outseam = $value; break;
-            case 'sleeve': $this->sleeve = $value; break;
-            case 'neck': $this->neck = $value; break;
-            case 'thigh': $this->thigh = $value; break;
-            case 'center_front_waist': $this->center_front_waist = $value; break;
-            case 'shoulder_across_front': $this->shoulder_across_front = $value; break;
-            case 'shoulder_across_back': $this->shoulder_across_back = $value; break;
-            case 'bicep': $this->bicep = $value; break;
-            case 'tricep': $this->tricep = $value; break;
-            case 'wrist': $this->wrist = $value; break;
-            case 'back_waist': $this->back_waist = $value; break;
-            case 'waist_hip': $this->waist_hip = $value; break;
-            case 'knee': $this->knee = $value; break;
-            case 'calf': $this->calf = $value; break;
-            case 'ankle': $this->ankle = $value; break;
+        switch (strtolower($property)) {
+            case 'weight': $this->weight = $value;
+                break;
+            case 'height': $this->height = $value;
+                break;
+            case 'waist': $this->waist = $value;
+                break;
+            case 'belt': $this->belt = $value;
+                break;
+            case 'hip': $this->hip = $value;
+                break;
+            case 'bust': $this->bust = $value;
+                break;
+            case 'chest': $this->chest = $value;
+                break;
+            case 'arm': $this->arm = $value;
+                break;
+            case 'inseam': $this->inseam = $value;
+                break;
+            case 'shoulder_height': $this->shoulder_height = $value;
+                break;
+            case 'outseam': $this->outseam = $value;
+                break;
+            case 'sleeve': $this->sleeve = $value;
+                break;
+            case 'neck': $this->neck = $value;
+                break;
+            case 'thigh': $this->thigh = $value;
+                break;
+            case 'center_front_waist': $this->center_front_waist = $value;
+                break;
+            case 'shoulder_across_front': $this->shoulder_across_front = $value;
+                break;
+            case 'shoulder_across_back': $this->shoulder_across_back = $value;
+                break;
+            case 'bicep': $this->bicep = $value;
+                break;
+            case 'tricep': $this->tricep = $value;
+                break;
+            case 'wrist': $this->wrist = $value;
+                break;
+            case 'back_waist': $this->back_waist = $value;
+                break;
+            case 'waist_hip': $this->waist_hip = $value;
+                break;
+            case 'knee': $this->knee = $value;
+                break;
+            case 'calf': $this->calf = $value;
+                break;
+            case 'ankle': $this->ankle = $value;
+                break;
         }
     }
-    
+
     /**
      * Set shoulder_width
      *
      * @param float $shoulderWidth
      * @return Measurement
      */
-    public function setShoulderWidth($shoulderWidth)
-    {
+    public function setShoulderWidth($shoulderWidth) {
         $this->shoulder_width = $shoulderWidth;
-    
+
         return $this;
     }
 
@@ -1439,8 +1359,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getShoulderWidth()
-    {
+    public function getShoulderWidth() {
         return $this->shoulder_width;
     }
 
@@ -1450,10 +1369,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $bustHeight
      * @return Measurement
      */
-    public function setBustHeight($bustHeight)
-    {
+    public function setBustHeight($bustHeight) {
         $this->bust_height = $bustHeight;
-    
+
         return $this;
     }
 
@@ -1462,8 +1380,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getBustHeight()
-    {
+    public function getBustHeight() {
         return $this->bust_height;
     }
 
@@ -1473,10 +1390,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $waistHeight
      * @return Measurement
      */
-    public function setWaistHeight($waistHeight)
-    {
+    public function setWaistHeight($waistHeight) {
         $this->waist_height = $waistHeight;
-    
+
         return $this;
     }
 
@@ -1485,8 +1401,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getWaistHeight()
-    {
+    public function getWaistHeight() {
         return $this->waist_height;
     }
 
@@ -1496,10 +1411,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $hipHeight
      * @return Measurement
      */
-    public function setHipHeight($hipHeight)
-    {
+    public function setHipHeight($hipHeight) {
         $this->hip_height = $hipHeight;
-    
+
         return $this;
     }
 
@@ -1508,8 +1422,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getHipHeight()
-    {
+    public function getHipHeight() {
         return $this->hip_height;
     }
 
@@ -1519,10 +1432,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $bustWidth
      * @return Measurement
      */
-    public function setBustWidth($bustWidth)
-    {
+    public function setBustWidth($bustWidth) {
         $this->bust_width = $bustWidth;
-    
+
         return $this;
     }
 
@@ -1531,8 +1443,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getBustWidth()
-    {
+    public function getBustWidth() {
         return $this->bust_width;
     }
 
@@ -1542,10 +1453,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $waistWidth
      * @return Measurement
      */
-    public function setWaistWidth($waistWidth)
-    {
+    public function setWaistWidth($waistWidth) {
         $this->waist_width = $waistWidth;
-    
+
         return $this;
     }
 
@@ -1554,8 +1464,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getWaistWidth()
-    {
+    public function getWaistWidth() {
         return $this->waist_width;
     }
 
@@ -1565,10 +1474,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $hipWidth
      * @return Measurement
      */
-    public function setHipWidth($hipWidth)
-    {
+    public function setHipWidth($hipWidth) {
         $this->hip_width = $hipWidth;
-    
+
         return $this;
     }
 
@@ -1577,8 +1485,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getHipWidth()
-    {
+    public function getHipWidth() {
         return $this->hip_width;
     }
 
@@ -1588,10 +1495,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $shoulderAcrossFront
      * @return Measurement
      */
-    public function setShoulderAcrossFront($shoulderAcrossFront)
-    {
+    public function setShoulderAcrossFront($shoulderAcrossFront) {
         $this->shoulder_across_front = $shoulderAcrossFront;
-    
+
         return $this;
     }
 
@@ -1600,8 +1506,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getShoulderAcrossFront()
-    {
+    public function getShoulderAcrossFront() {
         return $this->shoulder_across_front;
     }
 
@@ -1611,10 +1516,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $shoulderAcrossBack
      * @return Measurement
      */
-    public function setShoulderAcrossBack($shoulderAcrossBack)
-    {
+    public function setShoulderAcrossBack($shoulderAcrossBack) {
         $this->shoulder_across_back = $shoulderAcrossBack;
-    
+
         return $this;
     }
 
@@ -1623,8 +1527,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getShoulderAcrossBack()
-    {
+    public function getShoulderAcrossBack() {
         return $this->shoulder_across_back;
     }
 
@@ -1634,10 +1537,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $bicep
      * @return Measurement
      */
-    public function setBicep($bicep)
-    {
+    public function setBicep($bicep) {
         $this->bicep = $bicep;
-    
+
         return $this;
     }
 
@@ -1646,8 +1548,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getBicep()
-    {
+    public function getBicep() {
         return $this->bicep;
     }
 
@@ -1657,10 +1558,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $tricep
      * @return Measurement
      */
-    public function setTricep($tricep)
-    {
+    public function setTricep($tricep) {
         $this->tricep = $tricep;
-    
+
         return $this;
     }
 
@@ -1669,8 +1569,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getTricep()
-    {
+    public function getTricep() {
         return $this->tricep;
     }
 
@@ -1680,10 +1579,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $wrist
      * @return Measurement
      */
-    public function setWrist($wrist)
-    {
+    public function setWrist($wrist) {
         $this->wrist = $wrist;
-    
+
         return $this;
     }
 
@@ -1692,8 +1590,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getWrist()
-    {
+    public function getWrist() {
         return $this->wrist;
     }
 
@@ -1703,10 +1600,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $centerFrontWaist
      * @return Measurement
      */
-    public function setCenterFrontWaist($centerFrontWaist)
-    {
+    public function setCenterFrontWaist($centerFrontWaist) {
         $this->center_front_waist = $centerFrontWaist;
-    
+
         return $this;
     }
 
@@ -1715,8 +1611,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getCenterFrontWaist()
-    {
+    public function getCenterFrontWaist() {
         return $this->center_front_waist;
     }
 
@@ -1726,10 +1621,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $backWaist
      * @return Measurement
      */
-    public function setBackWaist($backWaist)
-    {
+    public function setBackWaist($backWaist) {
         $this->back_waist = $backWaist;
-    
+
         return $this;
     }
 
@@ -1738,8 +1632,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getBackWaist()
-    {
+    public function getBackWaist() {
         return $this->back_waist;
     }
 
@@ -1749,10 +1642,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $waistHip
      * @return Measurement
      */
-    public function setWaistHip($waistHip)
-    {
+    public function setWaistHip($waistHip) {
         $this->waist_hip = $waistHip;
-    
+
         return $this;
     }
 
@@ -1761,8 +1653,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getWaistHip()
-    {
+    public function getWaistHip() {
         return $this->waist_hip;
     }
 
@@ -1772,10 +1663,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $knee
      * @return Measurement
      */
-    public function setKnee($knee)
-    {
+    public function setKnee($knee) {
         $this->knee = $knee;
-    
+
         return $this;
     }
 
@@ -1784,8 +1674,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getKnee()
-    {
+    public function getKnee() {
         return $this->knee;
     }
 
@@ -1795,10 +1684,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $calf
      * @return Measurement
      */
-    public function setCalf($calf)
-    {
+    public function setCalf($calf) {
         $this->calf = $calf;
-    
+
         return $this;
     }
 
@@ -1807,8 +1695,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getCalf()
-    {
+    public function getCalf() {
         return $this->calf;
     }
 
@@ -1818,10 +1705,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $ankle
      * @return Measurement
      */
-    public function setAnkle($ankle)
-    {
+    public function setAnkle($ankle) {
         $this->ankle = $ankle;
-    
+
         return $this;
     }
 
@@ -1830,11 +1716,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getAnkle()
-    {
+    public function getAnkle() {
         return $this->ankle;
     }
-    
 
     /**
      * Set bra_size
@@ -1842,10 +1726,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param string $bra_size
      * @return Measurement
      */
-    public function setBrasize($brasize)
-    {
+    public function setBrasize($brasize) {
         $this->bra_size = $brasize;
-    
+
         return $this;
     }
 
@@ -1854,45 +1737,40 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return string 
      */
-    public function getBrasize()
-    {
+    public function getBrasize() {
         return $this->bra_size;
     }
+
     /**
      * Get brasizeletters
      *
      * @return string 
      */
-    
-    
-    
-    public function getBraNumberSize()// The name changed getBraSizes to getBraNumberSize
-    {
-        if ($this->bra_size==null) return null;
-     // $bra_letters=  explode(' ',$this->bra_size);      
-        $bra_letters=preg_split('#(?<=\d)(?=[a-z])#i', $this->bra_size);
-      return $bra_letters[0];
+    public function getBraNumberSize() {// The name changed getBraSizes to getBraNumberSize
+        if ($this->bra_size == null)
+            return null;
+        // $bra_letters=  explode(' ',$this->bra_size);      
+        $bra_letters = preg_split('#(?<=\d)(?=[a-z])#i', $this->bra_size);
+        return $bra_letters[0];
     }
+
     /**
      * Get brasizeCup
      *
      * @return string 
      */
-    
-    public function getBraCup()
-    {
-        if ($this->bra_size==null) return null;
-        
-       $bra_cup=preg_split('#(?<=\d)(?=[a-z])#i', $this->bra_size);
+    public function getBraCup() {
+        if ($this->bra_size == null)
+            return null;
+
+        $bra_cup = preg_split('#(?<=\d)(?=[a-z])#i', $this->bra_size);
         //$bra_cup=  explode(' ',$this->bra_size);      
         if (array_key_exists(1, $bra_cup)) {
-        return $bra_cup[1];}
-        else{
+            return $bra_cup[1];
+        } else {
             return null;
         }
     }
-
-    
 
     /**
      * Set top_brand
@@ -1900,10 +1778,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param \LoveThatFit\AdminBundle\Entity\Brand $topBrand
      * @return Measurement
      */
-    public function setTopBrand(\LoveThatFit\AdminBundle\Entity\Brand $topBrand = null)
-    {
+    public function setTopBrand(\LoveThatFit\AdminBundle\Entity\Brand $topBrand = null) {
         $this->top_brand = $topBrand;
-    
+
         return $this;
     }
 
@@ -1912,12 +1789,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return \LoveThatFit\AdminBundle\Entity\Brand 
      */
-    public function getTopBrand()
-    {
+    public function getTopBrand() {
         return $this->top_brand;
     }
-
-    
 
     /**
      * Set bottom_brand
@@ -1925,10 +1799,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param \LoveThatFit\AdminBundle\Entity\Brand $bottomBrand
      * @return Measurement
      */
-    public function setBottomBrand(\LoveThatFit\AdminBundle\Entity\Brand $bottomBrand = null)
-    {
+    public function setBottomBrand(\LoveThatFit\AdminBundle\Entity\Brand $bottomBrand = null) {
         $this->bottom_brand = $bottomBrand;
-    
+
         return $this;
     }
 
@@ -1937,8 +1810,7 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return \LoveThatFit\AdminBundle\Entity\Brand 
      */
-    public function getBottomBrand()
-    {
+    public function getBottomBrand() {
         return $this->bottom_brand;
     }
 
@@ -1948,10 +1820,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param \LoveThatFit\AdminBundle\Entity\Brand $dressBrand
      * @return Measurement
      */
-    public function setDressBrand(\LoveThatFit\AdminBundle\Entity\Brand $dressBrand = null)
-    {
+    public function setDressBrand(\LoveThatFit\AdminBundle\Entity\Brand $dressBrand = null) {
         $this->dress_brand = $dressBrand;
-    
+
         return $this;
     }
 
@@ -1960,12 +1831,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return \LoveThatFit\AdminBundle\Entity\Brand 
      */
-    public function getDressBrand()
-    {
+    public function getDressBrand() {
         return $this->dress_brand;
     }
-
-   
 
     /**
      * Set iphone_foot_height
@@ -1973,10 +1841,9 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      * @param float $iphoneFootHeight
      * @return Measurement
      */
-    public function setIphoneFootHeight($iphoneFootHeight)
-    {
+    public function setIphoneFootHeight($iphoneFootHeight) {
         $this->iphone_foot_height = $iphoneFootHeight;
-    
+
         return $this;
     }
 
@@ -1985,21 +1852,19 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getIphoneFootHeight()
-    {
+    public function getIphoneFootHeight() {
         return $this->iphone_foot_height;
     }
-    
+
     /**
      * Set belt
      *
      * @param float $belt
      * @return Measurement
      */
-    public function setBelt($belt)
-    {
+    public function setBelt($belt) {
         $this->belt = $belt;
-    
+
         return $this;
     }
 
@@ -2008,27 +1873,48 @@ BMI = ( Weight in Kilograms / ( Height in Meters x Height in Meters ) )
      *
      * @return float 
      */
-    public function getBelt()
-    {
+    public function getBelt() {
         return $this->belt;
     }
-    
-    #--------------------------------------------------------------------------#
-        #--------------------------------------------------#
-    public function getMeasurmentArray(){
-        $arr=array();
-        
-       $arr['id']=$this->id;
-       $arr['topSizeChartId']= $this->top_fitting_size_chart? $this->top_fitting_size_chart->getId(): null;
-       $arr['bottomSizeChartId']= $this->bottom_fitting_size_chart ? $this->bottom_fitting_size_chart->getId(): null;
-       $arr['dressSizeChartId']= $this->dress_fitting_size_chart ? $this->dress_fitting_size_chart->getId(): null;
-       $arr['top_brand_id']= $this->top_brand ? $this->top_brand->getId(): null;
-       $arr['bottom_brand_id']= $this->bottom_brand ? $this->bottom_brand->getId(): null;
-       $arr['dress_brand_id']= $this->dress_brand ? $this->dress_brand->getId(): null;
-       return $arr;
-        
+
+    /**
+     * Set measurement_json
+     *
+     * @param string $measurementJson
+     * @return Measurement
+     */
+    public function setMeasurementJson($measurementJson) {
+        $this->measurement_json = $measurementJson;
+        return $this;
     }
+
+    /**
+     * Get measurement_json
+     *
+     * @return string 
+     */
+    public function getMeasurementJson() {
+        return $this->measurement_json;
+    }
+
+    #--------------------------------------------------------------------------#
+    #--------------------------------------------------#
+
+    public function getMeasurmentArray() {
+        $arr = array();
+
+        $arr['id'] = $this->id;
+        $arr['topSizeChartId'] = $this->top_fitting_size_chart ? $this->top_fitting_size_chart->getId() : null;
+        $arr['bottomSizeChartId'] = $this->bottom_fitting_size_chart ? $this->bottom_fitting_size_chart->getId() : null;
+        $arr['dressSizeChartId'] = $this->dress_fitting_size_chart ? $this->dress_fitting_size_chart->getId() : null;
+        $arr['top_brand_id'] = $this->top_brand ? $this->top_brand->getId() : null;
+        $arr['bottom_brand_id'] = $this->bottom_brand ? $this->bottom_brand->getId() : null;
+        $arr['dress_brand_id'] = $this->dress_brand ? $this->dress_brand->getId() : null;
+        return $arr;
+    }
+
 }
+
 /*
  weight;
 height;
@@ -2073,4 +1959,53 @@ updated_at;
 iphone_shoulder_height;
 iphone_outseam;
 iphone_foot_height;
+---------------------------------
+
+$waist
+hip
+bust 
+chest
+arm 
+inseam 
+shoulder height
+shoulder width
+bust height
+waist height
+hip height
+bust width
+waist width
+hip width
+outseam
+sleeve 
+neck
+iphone shoulder height
+iphone outseam
+$iphone_head_height 
+bra size
+body type
+body shape
+create/update
+thigh
+shoulder ac back
+shoulder ac front
+bicept
+tricep
+wrist
+waist hip
+knee 
+calf 
+ankle
+iphone foot height
+belt
+measurement json
+
+
+
+
+
+
+
+
+ * 
+ * 
  */

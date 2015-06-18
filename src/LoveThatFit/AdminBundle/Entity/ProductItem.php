@@ -483,10 +483,12 @@ class ProductItem
          
         foreach ($this->product_item_pieces as $pip) {
             $pcv=$pip->getProductColorView();
+            if($pcv){
             $pda[$pip->getId()]=array('product_color_view_type'=>$pcv->getTitle(),
                                         'product_color_view_url'=>$pcv->getWebPath(),
                                         'product_item_piece_url'=>$pip->getWebPath(),
                                         );
+            }
         }
         return $pda;
     }
