@@ -5661,7 +5661,28 @@ background-color:#fff;
     display:none;
 }
 #container_iphone5 #fr_user_image {
-    height:492px;
+    
+    /*/// 
+        iPhone5 height / 6.891 = 82.426
+        82.426 * web px per inch ratio (6px) = 494.55
+        
+        >>> Final image height = 494.55 <<<
+    
+        Further reduce image height based on iPhone5 fix for depth of field issue, increase products size to 0.483% per inch
+    
+        6.891 + 0.483 = 7.374
+    
+        iPhone5 screen height (568) / 7.374 = 77.027
+    
+        77.027 * 6 = 462.162
+        
+        >>> Final value 462.162 <<<
+        
+        ///*/
+    
+    /*height:492px;*/
+    
+    height:462px;
 }
 #container_iphone5 #user_dummy_img_hldr {
     text-align: center;
@@ -5670,6 +5691,8 @@ background-color:#fff;
     top:-10px;
 }
 #container_iphone5 .fitting_frame {
+    /*// Fixing the iPhone5 based ratio (reducing height of user image to keep things on 6px per inch ratio)//*/
+    
     height: 530px;
 }
 

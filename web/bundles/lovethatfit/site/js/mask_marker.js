@@ -1264,9 +1264,14 @@ function onMouseDown(event) {
                             //to_image();
                                 
                                 //show_loader();
-
+                            
+                            $("#img_path_json").attr("value", getPathArrayJson());
+                            
                                 setTimeout(function(){ to_image(); }, 500);
                             }else{
+                            
+                            $("#img_path_json").attr("value", getPathArrayJson());
+                            
                             $("#page_wrap").fadeIn(160);
                             //overall_layer.visible = false;
                             //alert("asdf");
@@ -1336,7 +1341,7 @@ function onMouseUp(event){
     big_point_ele = null;
     curr_big_seg = null;
   if (segment) {
-        $("#img_path_json").attr("value", getPathArrayJson());
+        //$("#img_path_json").attr("value", getPathArrayJson());
         
     }   
     
@@ -1388,9 +1393,12 @@ function onMouseUp(event){
 }
 function getPathArrayJson(){
     var mp_array=[];
-    for(var i = 0; i < path.segments.length; i++) {
-        mp_array.push([path.segments[i].point.x, path.segments[i].point.y]);            
+    for(var i = 0; i < mid_area_path.segments.length; i++) {
+        mp_array.push([mid_area_path.segments[i].point.x * 2, mid_area_path.segments[i].point.y * 2]);            
+        
+        console.log(mid_area_path.segments[i].point.x * 2 + " ::: "+mid_area_path.segments[i].point.y * 2);
     };
+    
     return JSON.stringify(mp_array);
 }
 

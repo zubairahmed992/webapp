@@ -743,23 +743,41 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                          if($("#account_type").attr("value") == "iphone5"){
                              if(curr_prod_type=='top'){
                                  
-                                 var top_value_initial = parseInt($("#hdn_prod_top_pos").attr("value"));
-                                 var top_value_initial = top_value_initial / 6.891;
-                                 var top_value_init_final = top_value_initial * 6;
+                                 top_value_initial = parseInt($("#hdn_prod_top_pos").attr("value"));
+                                 
+                                 //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
+                                 top_value_initial = top_value_initial / 2;
+                                 top_value_initial = top_value_initial / 7.374;
+                                 top_value_init_final = top_value_initial * 6;
                                  
                                 if(px_variance==0){
-                                    $("#top_dropable").css("top", top_value_init_final  - 25 + "px", "left","20px");
+                                    $("#top_dropable").css("top", top_value_init_final - 23 + "px", "left","20px");
                                 }else{
-                                    $("#top_dropable").css("top", (top_value_init_final - 25 + parseInt(px_variance)) + "px", "left","20px");
+                                    $("#top_dropable").css("top", (top_value_init_final - 23 + parseInt(px_variance)) + "px", "left","20px");
                                 }
                            }
                            if(curr_prod_type=='dress'){
                                if(px_variance==0){
-                                   $("#full_dropable").css("top", top_value_init_final - 25 + "px");
+                                   $("#full_dropable").css("top", top_value_init_final - 23 + "px", "left","20px");
                                 //console.log('1');                      
                                 }else{
-                                                        $("#full_dropable").css("top", (top_value_init_final - 25 + parseInt(px_variance)) + "px");                                        
+                                                        $("#full_dropable").css("top", (top_value_init_final - 23 + parseInt(px_variance)) + "px");                                        
                                 //console.log('2');                            
+                                }
+                           }
+                           if(curr_prod_type=='bottom'){
+                                 
+                                 bottom_value_initial = parseInt($("#hdn_prod_bottom_pos").attr("value"));
+                                 //alert(bottom_value_initial);
+                                 //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
+                                 bottom_value_init_final = bottom_value_initial / 2;
+                                 //bottom_value_initial = bottom_value_initial / 7.374;
+                                 //bottom_value_init_final = bottom_value_initial * 6;
+                                 
+                                 //alert(bottom_value_init_final);
+                                 
+                                if(px_variance==0){
+                                    $("#bottom_dropable").css("top", bottom_value_init_final + 23 + "px");
                                 }
                            }
                          }else{
@@ -937,6 +955,8 @@ function set_droppables(){
     bottom_pos_drop = Math.round(top_marg_btm + bottom_pos_drop + 23);    
     console.log("Check Botom = " + bottom_pos_drop);    
     bottom_final_pos = bottom_pos_drop - 99;    
+    
+    
     $("#bottom_dropable").css({top: parseInt($("#hdn_prod_bottom_pos").attr("value")) - 10 + "px"});    
     var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");    
     //dress_pos_drop = dress_pos_drop * 6;    
