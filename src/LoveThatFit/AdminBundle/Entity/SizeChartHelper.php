@@ -4,7 +4,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Yaml\Parser;
 
 
 class SizeChartHelper{
@@ -160,12 +159,56 @@ public function findOneByName($title) {
         return $measurement;
     }
    
+//------------------------------------------------------------------------------------    
+        public function measurementFromSizeCharts($measurement) {
+        
+        if (is_null($measurement)) {
+            return;
+        }
+        $sc_measurements =array();
+        
+        $bra_size_bust = $this->container->get('admin.helper.size')->getBustAverage($measurement->getBraSize());
+                if($bra_size_bust){
+                    $sc_measurements['bust'] =$bra_size_bust;
+                }
+                $top_size=$measurement->getTopFittingSizeChart();
+        if ($top_size) {
+            if ($top_size) {
+                $sc_measurements['neck'] = ($top_size->getNeck() && $top_size->getNeck() > 0) ? $top_size->getNeck() : 0;
+                $sc_measurements['bust'] = ($top_size->getBust() && $top_size->getBust() > 0) ? $top_size->getBust() : 0;
+                $sc_measurements['chest'] = ($top_size->getChest() && $top_size->getChest() > 0) ? $top_size->getChest() : 0;
+                $sc_measurements['sleeve'] = $this->eval_null($top_size->getSleeve());
+                $sc_measurements['shoulder_across_back'] = ($top_size->getShoulderAcrossBack() && $top_size->getShoulderAcrossBack() > 0) ? $top_size->getShoulderAcrossBack() : 0;
+            }
+        }
+                $bottom_size =$measurement->getBottomFittingSizeChart();
+
+        if ($bottom_size ) {
+            if ($bottom_size) {
+                $sc_measurements['waist'] = ($bottom_size->getWaist() && $bottom_size->getWaist() > 0) ? $bottom_size->getWaist() : 0;
+                $sc_measurements['hip'] = ($bottom_size->getHip() && $bottom_size->getHip() > 0) ? $bottom_size->getHip() : 0;
+                $sc_measurements['inseam'] = ($bottom_size->getInseam() && $bottom_size->getInseam() > 0) ? $bottom_size->getInseam() : 0;
+            }
+        }
+                $dress_size =$measurement->getDressFittingSizeChart();
+
+        if ($dress_size) {
+            if ($dress_size) {
+                    $sc_measurements['bust'] = ($dress_size->getBust() && $dress_size->getBust() > 0) ? $dress_size->getBust() : 0;
+                    $sc_measurements['shoulder_across_back'] = ($dress_size->getShoulderAcrossBack() && $dress_size->getShoulderAcrossBack() > 0) ? $dress_size->getShoulderAcrossBack() : 0;
+                    $sc_measurements['hip'] = ($dress_size->getHip() && $dress_size->getHip() > 0) ? $dress_size->getHip() : 0;                           
+            }
+        }
+        
+        return array('size_charts'=>$sc_measurements);
+    }
     
-    
+    private function eval_null($val){
+        return ($val && $val > 0) ? $val : 0;
+    }
 //-------------------------------------------------------------------------------------
     public function evaluateWithSizeChart($measurement) {
         
-
         if (is_null($measurement)) {
             return;
         }
@@ -283,38 +326,9 @@ public function findOneByName($title) {
         return $measurement;
     }
     
-    #---------------------------------------------
-    #---------------------------------------------
-    #---------------------------------------------
-    
-    
-     private function getPriorityArray($gender) {
-        $priority_arr= array('man' => array(
-                'neck' => array('shirt', 'top'),
-                'chest' => array('top'),
-                'sleeve' => array('shirt', 'top'),
-                'back shoulder' => array('shirt', 'top'),
-                'waist' => array('pant', 'bottom'),
-                'inseam' => array('pant', 'bottom'),
-            ),
-            'woman' => array(
-                'bust' => array('raw', 'bra', 'top', 'dress'),
-                'back shoulder' => array('bra', 'top', 'dress'),
-                'waist' => array('raw', 'bottom', 'dress', 'top'),
-                'hip' => array('raw', 'dress', 'bottom')));
-    
-        return $priority_arr[$gender];
-    }
-    #---------------------------------------------
-    private function getFieldArray($gender) {
-        $fields_arr= array(
-            'm' => array('neck','chest','sleeve','shoulder_across_back','waist','inseam'),
-            'f' => array('bust','back shoulder','waist','hip'),
-            );    
-        return $fields_arr[$gender];
-    }
-    #---------------------------------------------
-     public function fooSizeChartMeasure($entity, $request_array) {
+    #---------------------------------------------No Usage in search, refactor please
+    /* 
+    public function fooSizeChartMeasure($entity, $request_array) {
         
         $measurement = $entity->getMeasurement();
         
@@ -354,13 +368,8 @@ public function findOneByName($title) {
         return $measurement;
     }
     
-    public function fooEval($user){
-        $fe=  $this->getFieldArray($user->getGender());
-        
-        
-    }
 
-
+*/
     //------------------------------------------------------------------------
 
     public function getBrandArray($target) {
@@ -534,26 +543,7 @@ public function getBrandArraySizeChart() {
         return $brands_array;
     }
 
-//----------------------------------------------------------
-    private function alreadyExists($entity) {
-       $title = $entity->getTitle();
-       $brand = $entity->getBrand()->getId();       
-       $gender = $entity->getGender();       
-       $target = $entity->getTarget();
-       $bodytype=$entity->getBodytype();
-       $count = count($this->repo->findMatchingTitleBrandGenderBodyTypeTarget($title,$brand,$gender,$bodytype,$target));
-       
-        if ($count>0) {
-            return array('message' => 'Size Chart already exists!',
-                'field' => 'name',
-                'message_type' => 'warning',
-                'success' => false,
-            );
-        }
-        return;
-    }
 
-    
   
 //---------------------------get Size Chart By Brand----------------------------
   

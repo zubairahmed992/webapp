@@ -20,6 +20,16 @@ class UserController extends Controller {
         return $this->render('LoveThatFitAdminBundle:User:index.html.twig', array('pagination' => $size_with_pagination, 'searchform' => $this->userSearchFrom()->createView()));
     }
 
+        //--------------------------User List-------------------------------------------------------------
+    public function jsonAction($id) {
+        $user = $this->get('user.helper.user')->find($id);
+        $ar=$this->get('admin.helper.sizechart')->measurementFromSizeCharts($user->getMeasurement());
+        #$user->toDataArray()
+        return new Response(json_encode($ar));
+        
+        
+    }
+
     //-------------------------Show user detail-------------------------------------------------------
     public function showAction($id) {
         $entity = $this->get('user.helper.user')->find($id);        

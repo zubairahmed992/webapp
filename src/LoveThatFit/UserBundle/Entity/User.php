@@ -906,14 +906,7 @@ class User implements UserInterface, \Serializable {
              {
             $accuracy=$accuracy+1;
         } 
-        if($this->measurement->getBustHeight())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getShoulderWidth())
-             {
-            $accuracy=$accuracy+1;
-        } 
+         
         if($this->measurement->getThigh())
              {
             $accuracy=$accuracy+1;
@@ -941,26 +934,6 @@ class User implements UserInterface, \Serializable {
              {
             $accuracy=$accuracy+1;
         } if($this->measurement->getChest())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getWaistHeight())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getHipHeight())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getBustWidth())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getWaistWidth())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getHipWidth())
              {
             $accuracy=$accuracy+1;
         } 
@@ -1030,10 +1003,6 @@ class User implements UserInterface, \Serializable {
              {
             $accuracy=$accuracy+1;
         } 
-        if($this->measurement->getShoulderWidth())
-             {
-            $accuracy=$accuracy+1;
-        } 
         if($this->measurement->getThigh())
              {
             $accuracy=$accuracy+1;
@@ -1061,26 +1030,6 @@ class User implements UserInterface, \Serializable {
              {
             $accuracy=$accuracy+1;
         } if($this->measurement->getChest())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getWaistHeight())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getHipHeight())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getBustWidth())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getWaistWidth())
-             {
-            $accuracy=$accuracy+1;
-        } 
-        if($this->measurement->getHipWidth())
              {
             $accuracy=$accuracy+1;
         } 
