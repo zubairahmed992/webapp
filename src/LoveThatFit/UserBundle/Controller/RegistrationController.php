@@ -195,7 +195,9 @@ class RegistrationController extends Controller {
             }
 
             //$birthDate=date("Y-m-d",strtotime());
-
+            $ar=json_decode($measurement->getMeasurementJson(), true);
+            $ar['size_charts']=$this->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
+            $measurement->setMeasurementJson(json_encode($ar));
             $user->setBirthDate($measurement->birthdate);
             if ($data['measurement']['timespent']) {
                 $user_reg_time = $user->getTimeSpent() + $data['measurement']['timespent'];

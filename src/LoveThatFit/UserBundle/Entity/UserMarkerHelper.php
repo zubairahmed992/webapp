@@ -211,7 +211,16 @@ class UserMarkerHelper {
         return $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
     }
     #---------------------------------------------------------------------------#
-     
+    public function getPridictedMeasurementArray($user){
+        $ca=$this->getComparisionArray($user);
+        $pa=array();
+        foreach ($ca as $mms_k=>$mms_v) {
+            if($mms_v['predicted']>0)
+            $pa[$mms_k]=number_format($mms_v['predicted'], 2, '.', '');
+        }
+        return $pa;
+    }
+
     public function getComparisionArray($user){
         $mm_specs=  $this->getMaskedMarkerSpecs();
         $mm=$this->getByUser($user);

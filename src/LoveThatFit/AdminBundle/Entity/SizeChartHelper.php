@@ -160,49 +160,80 @@ public function findOneByName($title) {
     }
    
 //------------------------------------------------------------------------------------    
-        public function measurementFromSizeCharts($measurement) {
-        
+    public function measurementFromSizeCharts($measurement) {
+
         if (is_null($measurement)) {
             return;
         }
-        $sc_measurements =array();
-        
-        $bra_size_bust = $this->container->get('admin.helper.size')->getBustAverage($measurement->getBraSize());
-                if($bra_size_bust){
-                    $sc_measurements['bust'] =$bra_size_bust;
-                }
-                $top_size=$measurement->getTopFittingSizeChart();
+        $sc_measurements = array();
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+        # priority is given to the measurement extracted from bra size
+        $bra_size_spec = $this->container->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
+        if ($bra_size_spec != null) {
+            $sc_measurements['shoulder_across_back'] = $bra_size_spec['shoulder_across_back'];
+            $sc_measurements['bust'] = $bra_size_spec['average'];
+        }
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+        $top_size = $measurement->getTopFittingSizeChart();
         if ($top_size) {
             if ($top_size) {
                 $sc_measurements['neck'] = ($top_size->getNeck() && $top_size->getNeck() > 0) ? $top_size->getNeck() : 0;
-                $sc_measurements['bust'] = ($top_size->getBust() && $top_size->getBust() > 0) ? $top_size->getBust() : 0;
                 $sc_measurements['chest'] = ($top_size->getChest() && $top_size->getChest() > 0) ? $top_size->getChest() : 0;
                 $sc_measurements['sleeve'] = $this->eval_null($top_size->getSleeve());
-                $sc_measurements['shoulder_across_back'] = ($top_size->getShoulderAcrossBack() && $top_size->getShoulderAcrossBack() > 0) ? $top_size->getShoulderAcrossBack() : 0;
+                if (!array_key_exists('bust', $sc_measurements)) {
+                    $sc_measurements['bust'] = ($top_size->getBust() && $top_size->getBust() > 0) ? $top_size->getBust() : 0;
+                }
+                if (!array_key_exists('shoulder_across_back', $sc_measurements)) {
+                    $sc_measurements['shoulder_across_back'] = ($top_size->getShoulderAcrossBack() && $top_size->getShoulderAcrossBack() > 0) ? $top_size->getShoulderAcrossBack() : 0;
+                }
             }
         }
-                $bottom_size =$measurement->getBottomFittingSizeChart();
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+        $bottom_size = $measurement->getBottomFittingSizeChart();
 
-        if ($bottom_size ) {
+        if ($bottom_size) {
             if ($bottom_size) {
                 $sc_measurements['waist'] = ($bottom_size->getWaist() && $bottom_size->getWaist() > 0) ? $bottom_size->getWaist() : 0;
                 $sc_measurements['hip'] = ($bottom_size->getHip() && $bottom_size->getHip() > 0) ? $bottom_size->getHip() : 0;
                 $sc_measurements['inseam'] = ($bottom_size->getInseam() && $bottom_size->getInseam() > 0) ? $bottom_size->getInseam() : 0;
             }
         }
-                $dress_size =$measurement->getDressFittingSizeChart();
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
+        $dress_size = $measurement->getDressFittingSizeChart();
 
         if ($dress_size) {
             if ($dress_size) {
-                    $sc_measurements['bust'] = ($dress_size->getBust() && $dress_size->getBust() > 0) ? $dress_size->getBust() : 0;
-                    $sc_measurements['shoulder_across_back'] = ($dress_size->getShoulderAcrossBack() && $dress_size->getShoulderAcrossBack() > 0) ? $dress_size->getShoulderAcrossBack() : 0;
-                    $sc_measurements['hip'] = ($dress_size->getHip() && $dress_size->getHip() > 0) ? $dress_size->getHip() : 0;                           
+                if ($dress_size->getBust() && $dress_size->getBust() > 0) {
+                    if (!array_key_exists('bust', $sc_measurements)) {#if measurement not calculated before
+                        $sc_measurements['bust'] = $dress_size->getBust();
+                    } else {
+                        if ($bra_size_spec == null) { #if measurement did not extracted from bra size
+                            $sc_measurements['bust'] = ($sc_measurements['bust'] + $dress_size->getBust()) / 2;
+                        }
+                    }
+                }
+                if ($dress_size->getShoulderAcrossBack() && $dress_size->getShoulderAcrossBack() > 0) {
+                    if (!array_key_exists('shoulder_across_back', $sc_measurements)) {#if measurement not calculated before
+                        $sc_measurements['shoulder_across_back'] = $dress_size->getShoulderAcrossBack();
+                    } else {
+                        if ($bra_size_spec == null) {#if measurement did not extracted from bra size
+                            $sc_measurements['shoulder_across_back'] = ($sc_measurements['shoulder_across_back'] + $dress_size->getShoulderAcrossBack()) / 2;
+                        }
+                    }
+                }
+                if (array_key_exists('hip', $sc_measurements)) {
+                    if ($dress_size->getHip() && $dress_size->getHip() > 0) {
+                        $sc_measurements['hip'] = ($sc_measurements['hip'] + $dress_size->getHip()) / 2;
+                    }
+                } else {
+                    $sc_measurements['hip'] = ($dress_size->getHip() && $dress_size->getHip() > 0) ? $dress_size->getHip() : 0;
+                }
             }
         }
-        
-        return array('size_charts'=>$sc_measurements);
+        #Neck & sleeve measurements for Men required to be evaluated
+        return $sc_measurements;
     }
-    
+
     private function eval_null($val){
         return ($val && $val > 0) ? $val : 0;
     }

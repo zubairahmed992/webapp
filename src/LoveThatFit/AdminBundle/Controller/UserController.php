@@ -23,13 +23,20 @@ class UserController extends Controller {
         //--------------------------User List-------------------------------------------------------------
     public function jsonAction($id) {
         $user = $this->get('user.helper.user')->find($id);
-        $ar=$this->get('admin.helper.sizechart')->measurementFromSizeCharts($user->getMeasurement());
-        #$user->toDataArray()
+        $ar['size_charts']=$this->get('admin.helper.sizechart')->measurementFromSizeCharts($user->getMeasurement());
+        #$mm_specs=$this->getMaskedMarkerSpecs();
+        #$ub_specs=$user->getMeasurement()->getArray();
+        $ar['masked_marker'] = $this->get('user.marker.helper')->getPridictedMeasurementArray($user);
+             
+#$user->toDataArray()
         return new Response(json_encode($ar));
         
         
     }
-
+private function getMaskedMarkerSpecs() {
+        $yaml = new Parser();
+        return $yaml->parse(file_get_contents('../src/LoveThatFit/UserBundle/Resources/config/mask_marker.yml'));
+    }
     //-------------------------Show user detail-------------------------------------------------------
     public function showAction($id) {
         $entity = $this->get('user.helper.user')->find($id);        
