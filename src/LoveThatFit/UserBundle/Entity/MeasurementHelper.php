@@ -70,6 +70,15 @@ class MeasurementHelper {
 Public function updateWithParams($measurement, $params){
     if(array_key_exists('shoulder_height', $params) && $params['shoulder_height']){$measurement->setShoulderHeight($params['shoulder_height']);}
     if(array_key_exists('hip_height', $params) && $params['hip_height']){$measurement->setHipHeight($params['hip_height']);}      
+    #update json of measurements extracted from Mask, size & mannual
+    if(array_key_exists('marker_json', $params) && $params['marker_json']){          
+            $ar=json_decode($measurement->getMeasurementJson(), true);
+            #$ar['masked_marker'] = array('bust'=> 38.65, 'shoulder_across_front'=> 16.40, 'shoulder_height'=> 52.17, 'waist'=> 28.63, 'hip'=> 38.07, 'inseam'=> 31.02, 'thigh'=> 21.08);
+            #get measurement from masked----------->
+            $ar['masked_marker'] = $this->container->get('user.marker.helper')->getPredictedMeasurement($params['marker_json']);
+            $measurement->setMeasurementJson(json_encode($ar));
+    }
+        
     /*
     if(array_key_exists('marker_json', $params) && $params['marker_json']){          
         $pred_measurements = $this->container->get('user.marker.helper')->getPredictedMeasurement($params['marker_json']);                
@@ -77,6 +86,7 @@ Public function updateWithParams($measurement, $params){
             $measurement->setProperty($k,$v);
         }
     }*/
+    
     $this->saveMeasurement($measurement);  
 }
 #----------------------------------------------
