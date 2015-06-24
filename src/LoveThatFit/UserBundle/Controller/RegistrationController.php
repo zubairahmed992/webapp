@@ -152,14 +152,22 @@ class RegistrationController extends Controller {
 //--------------------------------------------------------------------------------
     public function measurementCreateAction(Request $request) {
 
-        $id = $this->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->get('security.context')->getToken()->getUser();
         $size_chart_helper = $this->get('admin.helper.sizechart');
         $brandHelper = $this->get('admin.helper.brand');
-        $user = $this->get('user.helper.user')->find($id);
+        
         $measurement = $user->getMeasurement();
         $data = $request->request->all();
-      
-      
+        #return new response(json_encode($data));
+        #---------------------------------
+        $manual_measurement=array();
+        if (array_key_exists('bust', $data['measurement']))
+            $manual_measurement['bust']=$data['measurement']['bust'];
+        if (array_key_exists('waist', $data['measurement']))
+            $manual_measurement['waist']=$data['measurement']['waist'];
+        if (array_key_exists('hip', $data['measurement']))
+            $manual_measurement['hip']=$data['measurement']['hip'];
+        #------------------------------------------------
         $sizes = $this->get('admin.helper.size')->getDefaultArray();
 
         #---------Start OF CRF Protection--------------------------------------#
@@ -173,15 +181,12 @@ class RegistrationController extends Controller {
             #-------------Evaluate Size Chart From Size Chart Helper ----------------------#
 
             $request_array = $this->getRequest()->get('measurement');
-           
-
             $measurement = $size_chart_helper->calculateMeasurements($user, $request_array);
 
             $measurement->setBraSize($measurement->bra_numbers . $measurement->bra_letters);
             if ($user->getGender() == 'f') {
-            $measurement->setBust($request_array['bust']);
-          
-                 }
+                $measurement->setBust($request_array['bust']);
+            }
             
             $bra_size_spec = $this->get('admin.helper.size')->getWomanBraSpecs($measurement->getBrasize());
             if ($bra_size_spec != null) {
@@ -194,10 +199,12 @@ class RegistrationController extends Controller {
                 $measurement->setShoulderAcrossBack($sizeBaseOnSleeveNeck['shoulder']);
             }
 
-            //$birthDate=date("Y-m-d",strtotime());
+            #------------ JSON stored
             $ar=json_decode($measurement->getMeasurementJson(), true);
             $ar['size_charts']=$this->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
+            $ar['manual']=$manual_measurement;
             $measurement->setMeasurementJson(json_encode($ar));
+            #--------------
             $user->setBirthDate($measurement->birthdate);
             if ($data['measurement']['timespent']) {
                 $user_reg_time = $user->getTimeSpent() + $data['measurement']['timespent'];
