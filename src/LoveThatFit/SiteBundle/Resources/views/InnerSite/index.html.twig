@@ -19,8 +19,8 @@
 
 
 {% if (app.user.measurement)%}
-<input id="hdn_prod_top_pos" type="text" value="{{app.user.measurement.getShoulderHeight}}" />
-<input id="hdn_prod_bottom_pos" type="text" value="{{app.user.measurement.getHipHeight}}" />
+<input id="hdn_prod_top_pos" type="hidden" value="{{app.user.measurement.getShoulderHeight}}" />
+<input id="hdn_prod_bottom_pos" type="hidden" value="{{app.user.measurement.getHipHeight}}" />
 <input id="hdn_user_height" type="hidden" value="{{app.user.measurement.height}}" />
 <span id="hdn_url_1" style="display: none">{{path('user_mannequin')}}</span>
 <input id="json_prod_data_apply" type="hidden" value="{{fitting_room_item_ids}}" />
@@ -746,11 +746,12 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
 
                             //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
                             //top_value_initial = top_value_initial / 2;
-                            //top_value_initial = top_value_initial / 7.374;
+                            top_value_initial = top_value_initial / 7.374;
                             
-                            var adj_top_value = 84 / 6;
-                            var top_value_init_final = top_value_initial - (adj_top_value * 7.374);
-                             alert(adj_top_value);
+                            top_value_initial = top_value_initial * 6.891;
+                            
+                            var adj_top_value = (840 * 7.374) / 60;
+                            var top_value_init_final = top_value_initial - adj_top_value;
                              if(curr_prod_type=='top'){
                                  
                                 if(px_variance==0){
@@ -761,8 +762,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                            }
                            if(curr_prod_type=='dress'){
                                if(px_variance==0){
-                                   alert("asdf");
-                                   $("#full_dropable").css("top", top_value_init_final - 23 + "px", "left","20px");
+                                   $("#full_dropable").css("top", top_value_init_final + "px", "left","20px");
                                 //console.log('1');                      
                                 }else{
                                                         $("#full_dropable").css("top", (top_value_init_final - 23 + parseInt(px_variance)) + "px");                                        
@@ -772,16 +772,27 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                            if(curr_prod_type=='bottom'){
                                  
                                  bottom_value_initial = parseInt($("#hdn_prod_bottom_pos").attr("value"));
+
+                                //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
+                                //top_value_initial = top_value_initial / 2;
+                               bottom_value_initial = bottom_value_initial / 7.374;
+
+                               bottom_value_initial = bottom_value_initial * 6.408;
+
+                                //var adj_btm_value = (760 * 6.891) / 60;
+                                //alert(adj_btm_value);
+                                var btm_value_init_final = bottom_value_initial - 94;
+                                 
                                  //alert(bottom_value_initial);
                                  //////// 0.483 px per inch is the static fix used in iphone, need to increase user image in this ratio to get same results on web. 
-                                 bottom_value_init_final = bottom_value_initial / 2;
+                                 //bottom_value_init_final = bottom_value_initial / 2;
                                  //bottom_value_initial = bottom_value_initial / 7.374;
                                  //bottom_value_init_final = bottom_value_initial * 6;
                                  
                                  //alert(bottom_value_init_final);
                                  
                                 if(px_variance==0){
-                                    $("#bottom_dropable").css("top", bottom_value_init_final + 23 + "px");
+                                    $("#bottom_dropable").css("top", btm_value_init_final + "px");
                                 }
                            }
                          }else{
