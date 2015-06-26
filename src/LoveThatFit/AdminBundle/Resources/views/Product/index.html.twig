@@ -345,6 +345,8 @@ $(document).ready(function(){
           {% for p in products %}
 
         <div class="row-fluid show-grid product_main space_wrap_product">
+            <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}">
+                
             <div class="span1">{{p.Id}}</div>
             <div class="span1">{% if p.Brand %} {{p.Brand.Name }} {% endif %}</div>
             <div class="span1">{% if p.ClothingType %} {{p.ClothingType.Name }} {% endif %}</div>
@@ -354,22 +356,21 @@ $(document).ready(function(){
             <div class="span1">{{p.createdAt|date('d-m-Y') }}</div>    
             <div class="span1">
                 {%if(p.disabled==1)%}
-                    
-                    
                     <div><img src="{{ asset(p.displayProductColor.WebPath) }}" style="opacity:0.2;"/> </div>
-                    
                  {%else%}   
                 {%if(p.displayProductColor)%}                  
                   <img src="{{ asset(p.displayProductColor.WebPath) }}"/>        
                     {%endif%}  
                   {%endif%}
             </div>
+            </a>
          <div class="span1 edits_btn">           
-         <a href="{{ path('admin_product_detail_show', {'id': p.Id}) }}" title="Show {{p.Name}}"><i class="icon-eye-open"></i></a>
+         <a href="#" title="price edit"><i class="icon-plus-sign"></i></a>
          <a href="{{ path('admin_product_detail_edit', {'id': p.Id}) }}" title="Edit {{p.Name}}"><i class="icon-edit"></i></a>
          <a href="#myModaldetail{{p.Id}}" title="Delete {{p.Name}}" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-         <a href="{{ path('admin_product_detail_download', {'id': p.Id}) }}" title="Download" class="icon-download-alt"></i></a>
+         
          </div>
+            
          
         </div>
    

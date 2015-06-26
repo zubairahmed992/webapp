@@ -84,39 +84,80 @@ class ProductItem
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+#----------------------------------------------------------------------------------------
     /**
      * @var string $line_number
      *
      * @ORM\Column(name="line_number", type="string", nullable=true)
      */
     private $line_number;
-
+#----------------------------------------------------------------------------------------
     /**
      * @var string $image
      *
      * @ORM\Column(name="image", type="string", nullable=true)
      */
     private $image;
-   
+   #----------------------------------------------------------------------------------------
     /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
-    
+    #----------------------------------------------------------------------------------------
      /**
      * @var string $raw_image
      *
      * @ORM\Column(name="raw_image", type="string", nullable=true)
      */
     private $raw_image;
-
+#----------------------------------------------------------------------------------------
     /**
      * @var string $sku
      *
      * @ORM\Column(name="sku", type="string", nullable=true)
      */
     private $sku;
+    #----------------------------------------------------------------------------------------
+       /**
+
+     * @var float $price
+     * @ORM\Column(name="price", type="float", nullable=true,options={"default" = 0})
+     */
+    
+    private $price = 0;
+    
+    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return Measurement
+     */
+    public function setPrice($price) {
+        if ($price != null) {
+            $this->price = $price;
+            return $this;
+        } else {
+            return $this->price = 0;
+        }
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice() {
+        if ($this->price != null) {
+            return $this->price;
+        } else {
+            return $this->price = 0;
+        }
+    }
+#----------------------------------------------------------------------------------------
     
     /**
      * Get id
