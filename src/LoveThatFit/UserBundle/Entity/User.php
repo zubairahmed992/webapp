@@ -1693,14 +1693,18 @@ class User implements UserInterface, \Serializable {
         
     }
     
-    public function toDataArray($key=true){
+    public function toDataArray($key=true,$device_type=null){
         if($key){
+            $device_specs=$this->getDeviceSpecs($device_type);
         return array(
             'id' => $this->getId(),
             'email' => $this->getEmail(),
             'name' => $this->getFullName(),
+            'first_name' => $this->getFirstName(),
+            'last_name' => $this->getLastName(),
             'zipcode' => $this->getZipcode(),
-            'gender' => $this->getGender(),        
+            'gender' => $this->getGender(),
+            'authTokenWebService' => $this->getAuthToken(),
             'birth_date' => $this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,        
             'weight' => $this->measurement?$this->measurement->getWeight():0,
             'height' => $this->measurement?$this->measurement->getHeight():0,
@@ -1728,6 +1732,26 @@ class User implements UserInterface, \Serializable {
             'knee' =>  $this->measurement?$this->measurement->getKnee():0,
             'calf' =>  $this->measurement?$this->measurement->getCalf():0,
             'ankle' => $this->measurement?$this->measurement->getAnkle():0,
+
+            'image' => $this->image,
+            'avatar' => $this->avatar,
+            'path' => $this->getUploadDir(),
+            'body_type' => $this->measurement->getBodyTypes(),
+            'body_shape' => $this->measurement->getBodyShape(),
+            'bra_size' => $this->measurement->getBraSize(),
+            'bust_height' => $this->measurement->getBustHeight(),
+            'waist_height' => $this->measurement->getWaistHeight(),
+            'hip_height' => $this->measurement->getHipHeight(), 
+            'iphone_foot_height' => $this->measurement->getIphoneFootHeight(),
+            'iphone_head_height' => $this->measurement->getIphoneHeadHeight(),
+            'top_brand_id' => $this->measurement->getTopBrand()?$this->measurement->getTopBrand()->getId():0,
+            'bottom_brand_id' => $this->measurement->getBottomBrand()?$this->measurement->getBottomBrand()->getId():0,
+            'dress_brand_id' => $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getId():0,
+            'topFittingSizeChartId' => $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getId():0,
+            'bottom_fitting_size_chart_id' => $this->measurement->getBottomFittingSizeChart()?$this->measurement->getBottomFittingSizeChart()->getId():0,
+            'dress_fitting_size_chart_id' => $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getId():0,
+            'device_type'=>$device_type,
+            'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
         );
         }else{
             return array(
@@ -1767,7 +1791,7 @@ class User implements UserInterface, \Serializable {
         }
         
     }
-    #-----------------------------------------------------------
+    #---------------------------0--------------------------------
      public function resize_image() {
 
         $filename = $this->getAbsolutePath();

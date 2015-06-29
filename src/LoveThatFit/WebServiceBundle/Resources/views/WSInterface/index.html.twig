@@ -261,9 +261,21 @@ function hit_service(){
     
  function display_response(data){
             stopTimer();
-            str = JSON.stringify(data, null, 2);
-            str = str.split("\\").join("");
-            $('#txt_response_params').val(str);            
+            if($('#chk_new_window').is(':checked')){
+                var win=window.open('about:blank');
+                    with(win.document)
+                    {
+                      open();
+                      str = JSON.stringify(data, null, 2);
+                      str = str.split("\\").join("");
+                      write(str);
+                      close();
+                    }
+            }else{
+                str = JSON.stringify(data, null, 2);
+                str = str.split("\\").join("");
+                $('#txt_response_params').val(str);            
+            }
 }   
 
 //-----------------------------------------------------    

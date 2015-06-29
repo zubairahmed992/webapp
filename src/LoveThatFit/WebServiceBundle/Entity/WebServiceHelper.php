@@ -30,7 +30,11 @@ class WebServiceHelper {
         }
         
     }
-    
+    #--------------------------------User Detail Array -----------------------------#
+ private function getBasePath($request) {
+        return $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+ }
+    #----------------------------------------------------------------------------------------
     public function response_array($success, $message=null, $json=true, $data=null){
         $ar= array(
             'data'=>  $data,
