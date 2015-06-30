@@ -22,7 +22,7 @@ class WebServiceHelper {
                     $response_array['user']=$user->toDataArray(true, $request_array['deviceType']);
                 }
                 if(array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand']=='true'){
-                    $response_array['retailer']=$this->container->get('admin.helper.brand')->getBrandRetailerList()['retailer'];
+                    $response_array['retailer']=$this->container->get('admin.helper.brand')->getBrandRetailerList();
                 }
                 
                 return $this->response_array(true, 'user found', true, $response_array);

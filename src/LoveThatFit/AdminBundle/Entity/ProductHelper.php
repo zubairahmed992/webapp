@@ -1186,5 +1186,15 @@ public function breakFileName($request_array,$product_id){
        
              
     }  
-  
+  #----------------------------------------------------
+    
+    public function updatePrice($product_id,$price){
+       $product=$this->find($product_id);
+       foreach ($product->getProductItems() as $pi) {
+           $pi->setPrice($price);
+           $this->container->get('admin.helper.productitem')->save($pi);
+       }
+       
+             return true;
+    }  
 }

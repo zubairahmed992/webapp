@@ -609,7 +609,12 @@ class ProductController extends Controller {
                     ));
         }
     }
-
+#---------------------------------------------------------------------------
+public function itemPriceUpdateAction() {        
+    $this->get('admin.helper.product')->updatePrice(309,99);
+    return new response('true');
+    }
+    
 #--------------------Product Detail Item Delete---------------------------------#
 
     public function productDetailItemDeleteAction(Request $request, $id, $item_id) {

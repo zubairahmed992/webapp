@@ -90,6 +90,9 @@ function editPieceView(product_id,item_id,id){
 </style>
 <div id="pro_clr"> 
     <h2> Product Items</h2>
+    <span style="visibility: hidden" id='update_item_price_url'>{{path('admin_product_price_update')}}</span>
+    <input type="text" id='txt_item_price_for_update' placeholder="price">&nbsp;
+    <button id='btn_update_price'>update price</button>
     
     <table style="width:50%">
 
@@ -266,3 +269,12 @@ function editPieceView(product_id,item_id,id){
 
 <a href="{{path("admin_product_image_upload_index",{"product_id":product.id})}}"  class="btn btn-primary">Batch Image upload </a>
 </div>
+
+
+<script>
+ $("#btn_update_price").click(function() {  
+url=$('#update_item_price_url').html();
+price=$('#txt_item_price_for_update').val();
+          alert(url);  
+        });
+</script>

@@ -103,6 +103,10 @@ admin_product_detail_item_update:
    pattern:  /admin/productdetail/{id}/item/{item_id}/update
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemUpdate } 
 
+admin_product_price_update:
+   pattern:  /admin/product_price/update
+   defaults: { _controller: LoveThatFitAdminBundle:Product:itemPriceUpdate } 
+
 admin_product_detail_item_delete:
    pattern:  /admin/productdetail/{id}/delete/{item_id}/edit
    defaults: { _controller: LoveThatFitAdminBundle:Product:productDetailItemDelete }   
