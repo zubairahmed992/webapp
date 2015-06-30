@@ -95,13 +95,6 @@
             </div>
         </div>
         
-        <div  id='service_optional_params_pannel' class="row c_pannel hide_pannel">
-            <div class="span1"></div>
-            <div class="span4">
-                <b>Optional Params</b>
-                <textarea style="width: 500px; height: 100px" id="txt_optional_params"></textarea>
-            </div>
-        </div>
         <div  id='service_response_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
@@ -176,11 +169,10 @@ $( "#btn_hit_service" ).click(function() {
           function fill_service_detail(service_detail){
                 $('#service_name').html(service_detail==null?'':service_detail.title);
                 $('#service_url').html(service_detail==null?'':service_detail.pattern);
-                $('#service_description').html(service_detail==null?'':service_detail.description);
+                $('#service_description').html(service_detail==null?'':service_detail.description+'. Optional params: '+JSON.stringify(service_detail.optional_params));
                 $('#backend_process').html(service_detail==null?'':service_detail.backend_process);
                 $('#txt_request_params').val(service_detail==null?'':JSON.stringify(service_detail.params));
-                $('#txt_response_params').val(service_detail==null?'':JSON.stringify(service_detail.optional_params));
-                $('#txt_optional_params').val("");
+                $('#txt_response_params').val("");
                 display_service_detail(service_detail==null?'none':'block');
         } 
 //---------------------------------------------------------         
@@ -191,7 +183,7 @@ $( "#btn_hit_service" ).click(function() {
                 $('#service_backend_process_pannel').css("display", display);
                 $('#service_request_pannel').css("display", display);
                 $('#service_response_pannel').css("display", display);
-                $('#service_optional_params_pannel').css("display", display);
+                
         } 
        
        //--------------------------------------------------
@@ -233,6 +225,9 @@ function replace_user_data(){
                 }
                 if (request_json.indexOf("email")!=-1){
                     obj1.email=email;    
+                }
+                if (email.indexOf("buf")!=-1 && request_json.indexOf("password")!=-1){
+                    obj1.password='Buffalo1';    
                 }
                 $("#txt_request_params").val(JSON.stringify(obj1));        
                 

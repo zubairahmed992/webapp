@@ -13,22 +13,25 @@ class WebServiceHelper {
     }
     #------------------------ User -----------------------
     
-    public function matchEmailPassword($request_array) {
-        $email = $request_array['email'];
-        $password = $request_array['password'];
-        $deviceType=$request_array['deviceType'];
-       
-        $user = $this->container->get('user.helper.user')->findByEmail($email);
+    public function loginService($request_array) {
+        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         if (count($user) > 0) {
-            if ($this->container->get('webservice.helper.user')->matchPassword($user, $password)) {
-                    return $this->response_array(true, 'user found', true, $user->toDataArray());
+            if ($this->container->get('webservice.helper.user')->matchPassword($user, $request_array['password'])) {
+                $response_array=null;    
+                if(array_key_exists('user_detail', $request_array) && $request_array['user_detail']=='true'){
+                    $response_array['user']=$user->toDataArray(true, $request_array['deviceType']);
+                }
+                if(array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand']=='true'){
+                    $response_array['retailer']=$this->container->get('admin.helper.brand')->getBrandRetailerList()['retailer'];
+                }
+                
+                return $this->response_array(true, 'user found', true, $response_array);
             } else {
                 return $this->response_array(false, 'Invalid Password');
             }
         } else {
             return $this->response_array(false, 'Invalid Email');            
         }
-        
     }
     #--------------------------------User Detail Array -----------------------------#
  private function getBasePath($request) {

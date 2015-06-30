@@ -22,7 +22,8 @@ class WSUserController extends Controller {
 
     public function loginAction() {
         $decoded  = $this->process_request();                         
-        $user_info = $this->get('webservice.helper')->matchEmailPassword($decoded);
+        $user_info = $this->get('webservice.helper')->loginService($decoded);
+        
         return new Response($user_info);
       
     }

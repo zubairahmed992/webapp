@@ -242,27 +242,26 @@ public function getRetailerBrandById($id)
 
   return $result;
 }
-public function getBrandRetailerList($date_fromat){
-    $data=$this->repo->getBrandRetailerList($date_fromat);
-    
-    foreach($data as $key){
-   // if($key['title']!=null){
-     // $arr[]=array('retId'=>$key['ret_id'],'name'=>$key['title'],'image'=>$key['ret_image']);
-    //}
-    if($key['brand_id']!=null){
-        if($key['ret_id']==null){
-            $key['ret_id']=0;
+public function getBrandRetailerList($date_fromat = null) {
+        $data = $this->repo->getBrandRetailerList($date_fromat);
+        foreach ($data as $key) {
+            // if($key['title']!=null){
+            // $arr[]=array('retId'=>$key['ret_id'],'name'=>$key['title'],'image'=>$key['ret_image']);
+            //}
+            if ($key['brand_id'] != null) {
+                if ($key['ret_id'] == null) {
+                    $key['ret_id'] = 0;
+                }
+                $arr2[] = array('brandId' => $key['brand_id'], 'name' => $key['brand_name'], 'image' => $key['brand_image'], 'retId' => $key['ret_id']);
+            }
         }
-      $arr2[]=array('brandId'=>$key['brand_id'],'name'=>$key['brand_name'],'image'=>$key['brand_image'],'retId'=>$key['ret_id']);
+        $retList = $this->container->get('admin.helper.retailer')->reatailerListService();
+        //$ret['retailer']=$this->super_unique($arr);
+        $ret['retailer'] = $retList;
+        $ret['brand'] = $arr2;
+        return $ret;
     }
-   
-  }
-    $retList=$this->container->get('admin.helper.retailer')->reatailerListService();
-    //$ret['retailer']=$this->super_unique($arr);
-    $ret['retailer']=$retList;
-   $ret['brand']=$arr2;
-    return $ret;
-}
+
 #------------------Get Retailer base on Brand id -----------------------------#
 #---------Get Brand id Base On Brand Name for Web SErvice---------------------#
    public function getRetailerTitleByBrandId($brandId){

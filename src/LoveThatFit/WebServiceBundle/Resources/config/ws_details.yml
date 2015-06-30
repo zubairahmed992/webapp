@@ -5,6 +5,8 @@ ws_user_login:
           email:  example@ltf.com
           password: ltf123
           deviceType: iphone5
+          user_detail: true
+          retailer_brand: true
     optional_params:
           user_detail: true
           retailer_brand: true
