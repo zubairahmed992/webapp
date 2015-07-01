@@ -92,6 +92,7 @@ function editPieceView(product_id,item_id,id){
     <h2> Product Items</h2>
     <span style="visibility: hidden" id='update_item_price_url'>{{path('admin_product_price_update')}}</span>
     <input type="text" id='txt_item_price_for_update' placeholder="price">&nbsp;
+    <input type="hidden" id='hdn_product_id' value="{{product.id}}">&nbsp;
     <button id='btn_update_price'>update price</button>
     
     <table style="width:50%">
@@ -273,8 +274,26 @@ function editPieceView(product_id,item_id,id){
 
 <script>
  $("#btn_update_price").click(function() {  
-url=$('#update_item_price_url').html();
-price=$('#txt_item_price_for_update').val();
-          alert(url);  
-        });
+    url=$('#update_item_price_url').html();
+    var value_ar = {
+    product_id:$('#hdn_product_id').val(),
+    price:$('#txt_item_price_for_update').val()
+    };      
+          
+            $.ajax({
+               type: "POST",
+               url: url,
+               data: value_ar,  
+              success: function(data){
+                  //alert(data);
+              location.reload();
+           },
+               failure: function(errMsg) {
+                   alert(errMsg);
+               }
+         });     
+    });
+    
+    
+    
 </script>

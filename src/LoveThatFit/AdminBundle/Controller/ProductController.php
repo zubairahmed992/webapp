@@ -611,8 +611,9 @@ class ProductController extends Controller {
     }
 #---------------------------------------------------------------------------
 public function itemPriceUpdateAction() {        
-    $this->get('admin.helper.product')->updatePrice(309,99);
-    return new response('true');
+    $request_array =$this->getRequest()->request->all();
+    $this->get('admin.helper.product')->updatePrice($request_array['product_id'],$request_array['price']);
+    return new response($request_array['product_id'].'  <> '.$request_array['price']);
     }
     
 #--------------------Product Detail Item Delete---------------------------------#
