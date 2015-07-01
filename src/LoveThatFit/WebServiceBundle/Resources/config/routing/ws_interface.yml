@@ -1,3 +1,7 @@
 ws_interface_index:
     pattern:  /ws_interface/index
     defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:index}
+
+ws_interface_user:
+    pattern:  /ws_interface/user/{email}
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSInterface:user}

@@ -19,5 +19,10 @@ class WSInterfaceController extends Controller {
                     'users'=>$user_list['users'],
                 ));
     }
+    #--------------------------------------------------------
+    public function userAction($email) {
+        $user=$this->get('user.helper.user')->findByEmail($email);
+        return new Response(json_encode($user->toDataArray()));
+    }
     
 }
