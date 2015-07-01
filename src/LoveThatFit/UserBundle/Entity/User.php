@@ -1744,12 +1744,20 @@ class User implements UserInterface, \Serializable {
             'hip_height' => $this->measurement->getHipHeight(), 
             'iphone_foot_height' => $this->measurement->getIphoneFootHeight(),
             'iphone_head_height' => $this->measurement->getIphoneHeadHeight(),
+            
             'top_brand_id' => $this->measurement->getTopBrand()?$this->measurement->getTopBrand()->getId():0,
+            'top_brand' => $this->measurement->getTopBrand()?$this->measurement->getTopBrand()->getName():'',
+            'top_fitting_size_chart_id' => $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getId():0,
+            'top_fitting_size' => $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getTitle():'',
             'bottom_brand_id' => $this->measurement->getBottomBrand()?$this->measurement->getBottomBrand()->getId():0,
-            'dress_brand_id' => $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getId():0,
-            'topFittingSizeChartId' => $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getId():0,
+            'bottom_brand' => $this->measurement->getBottomBrand()?$this->measurement->getBottomBrand()->getName():'',
             'bottom_fitting_size_chart_id' => $this->measurement->getBottomFittingSizeChart()?$this->measurement->getBottomFittingSizeChart()->getId():0,
+            'bottom_fitting_size' => $this->measurement->getBottomFittingSizeChart()?$this->measurement->getBottomFittingSizeChart()->getTitle():'',
+            'dress_brand_id' => $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getId():0,
+            'dress_brand' => $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getName():'',
             'dress_fitting_size_chart_id' => $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getId():0,
+            'dress_fitting_size' => $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getTitle():'',
+            
             'device_type'=>$device_type,
             'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
         );
