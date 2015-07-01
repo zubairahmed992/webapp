@@ -1,3 +1,11 @@
+ws_user_email_exists:
+    pattern:  /ws/user_email_exists
+    title: user_email_exists
+    params:
+          email:  example@ltf.com
+    request_type: post
+    description: check if user email exists in the database. This will be used at the time of registration. 
+    
 ws_user_login:
     pattern:  /ws/login
     title: user_login

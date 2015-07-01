@@ -46,5 +46,11 @@ class WebServiceHelper {
         );
         return $json?json_encode($ar):$ar;
     }
+ #----------------------------------------------------------------------------------------
+    public function emailExists($email){
+        $user = $this->container->get('user.helper.user')->findByEmail($email);
+        return $user?true:false;
+    }
+ 
     
 }

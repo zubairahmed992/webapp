@@ -28,6 +28,13 @@ class WSUserController extends Controller {
       
     }
 
+#~~~~~~~~~~~~~~~~~~~ ws_email_exists   /ws/email_exists
+
+    public function emailExistsAction() {
+        $decoded  = $this->process_request();                         
+        $exists = $this->get('webservice.helper')->emailExists($decoded['email']);
+        return new Response($exists?'true':'false');
+    }
     
     
     
