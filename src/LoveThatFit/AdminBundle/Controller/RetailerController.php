@@ -353,7 +353,7 @@ class RetailerController extends Controller {
  {    
      #$totaluser=$this->get('shopify.helper')->getArrayCustomerCount($id);
      #return new response(json_encode($totaluser));
-     return new response(json_encode('Functionality is disablled.'));
+     return new response(json_encode('Functionality is disabled.'));
  }
  
  

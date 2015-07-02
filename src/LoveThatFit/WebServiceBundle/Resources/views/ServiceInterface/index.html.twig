@@ -44,8 +44,8 @@ margin: 5px;
         </span>
         <h4 id='user_name_header'>user name</h4>
         <h4 id='user_token_header'>token</h4>
-        <h4 id='service_name_header'>Select Service</h4>
-        <h4 id='service_path_header'>Select Service</h4>
+        <h4 id='service_name_header'>Service Header</h4>
+        <h4 id='service_path_header'>Service Path</h4>
         <textarea style="width: 500px; height: 200px" id='txt_request'></textarea>
         <textarea style="width: 500px; height: 200px" id='txt_response'></textarea>
                                              
@@ -198,9 +198,17 @@ $( "#hit" ).click(function() {
 //------------- service dropdownlist --------------------------
 
 $("#service_name").change(function() {  
-  $("#service_name_header").text( $('option:selected', this).html() );
-  $("#service_path_header").text( this.value );    
-  $("#txt_request").text(get_params_json($('option:selected', this).html()));       
+    if($('option:selected', this).html()=='Select Service'){
+        $("#service_name_header").text( 'Service Header' );
+        $("#service_path_header").text( 'Service Path');    
+        $("#txt_request").text('');       
+        
+    }else{
+          $("#service_name_header").text( $('option:selected', this).html() );
+          $("#service_path_header").text( this.value );    
+          $("#txt_request").text(get_params_json($('option:selected', this).html()));       
+
+    }
   //$("#txt_request").text(replace_text($("#txt_request").val(), $("#user_name_header").text()));
   
   replace_user_data();
@@ -209,12 +217,15 @@ $("#service_name").change(function() {
 
 //------------------- user dropdownlist --------------------
 $("#users").change(function() {  
-    email=$('option:selected', this).html();
-  $("#user_name_header").text( $('option:selected', this).html() );
-  $("#user_token_header").text( this.value );  
-  //$("#txt_request").text(replace_text($("#txt_request").val(), email));
-    replace_user_data();
-});
+    if($('option:selected', this).html()=='Select User'){
+        $("#user_name_header").text('user name');
+        $("#user_token_header").text('token');  
+    }else{
+        $("#user_name_header").text( $('option:selected', this).html() );
+        $("#user_token_header").text( this.value );  
+        replace_user_data();
+    }
+    });
 
 //-----------------------------------------------------    
 function startTimer(){

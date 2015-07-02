@@ -8,6 +8,24 @@
 $(document).ready(function(){
     
  
+  $('a.product_edit_link').click(function (event){ 
+     event.preventDefault(); 
+     if($("select[id='algorithm_Product']").val()){
+        var url= '../productdetail/'+$("select[id='algorithm_Product']").val()+'';
+        window.open(url);
+    }
+     return false; //for good measure
+});
+//-----------------------------------------------------------   
+  $('a.user_edit_link').click(function (event){ 
+     event.preventDefault(); 
+     if($("select[id='algorithm_User']").val()){
+        var url = '../user/'+ $("select[id='algorithm_User']").val() +'/edit';
+        window.open(url);
+    }
+     return false; //for good measure
+});
+//-----------------------------------------------------------
  $('a.compare').click(function (event){ 
      event.preventDefault(); 
      
@@ -82,8 +100,7 @@ var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
     <h3>Algorithm 2</h3>
     <div style="float: left">
         
-        
-        <a id="user_edit_link" name='user_edit_link' href="#" target="_blank">User</a>
+        <a id="user_edit_link" class="user_edit_link" href="#">User</a>
         <form id="userForm" method="post" {{ form_enctype(userForm) }}>
         {{ form_errors(userForm) }}                                  
         {{ form_widget(userForm.User) }}{{ form_errors(userForm.User) }}
@@ -91,7 +108,7 @@ var url= '../productdetail/' + product_id + '/size/'+size_id+'/edit';
         </form>                 
     </div>
     <div style="float: left">
-        <a id="product_edit_link" name='user_edit_link' href="#" target="_blank">Product</a>
+        <a id="product_edit_link" class='product_edit_link' href="#" >Product</a>
         <form id="productForm" action="" method="post" {{ form_enctype(productForm) }}>
         {{ form_errors(productForm) }}                                            
         {{ form_widget(productForm.Product) }}{{ form_errors(productForm.Product) }}                                            
