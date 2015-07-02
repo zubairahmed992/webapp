@@ -1,0 +1,19 @@
+cart_default:
+    pattern:  /cart
+    defaults: { _controller: LoveThatFitCartBundle:Cart:index}
+
+cart_add:
+    pattern:  /cart/add
+    defaults: { _controller: LoveThatFitCartBundle:Cart:add}
+
+cart_basket:
+    pattern:  /cart/basket/{item_id}
+    defaults: { _controller: LoveThatFitCartBundle:Cart:basket}
+
+cart_basket_update:
+    pattern:  /cart/basketupdate
+    defaults: { _controller: LoveThatFitCartBundle:Cart:basketupdate}
+
+cart_show:
+    pattern:  /cart/show
+    defaults: { _controller: LoveThatFitCartBundle:Cart:show}

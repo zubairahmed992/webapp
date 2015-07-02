@@ -24,8 +24,12 @@ class User implements UserInterface, \Serializable {
      * @ORM\OneToOne(targetEntity="Measurement", mappedBy="user", cascade={"ALL"}, orphanRemoval=true)
      * */
     private $measurement;
-    
-    
+
+	/**
+	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\Cart", mappedBy="user")
+	 */
+	private $cart;
+
     /**
      * Bidirectional (INVERSE SIDE)
      * 
@@ -91,6 +95,7 @@ class User implements UserInterface, \Serializable {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->product_items = new \Doctrine\Common\Collections\ArrayCollection();
+	  	$this->cart = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 //---------------------------------------------------------------------
@@ -1846,4 +1851,38 @@ class User implements UserInterface, \Serializable {
       
         
     }
+  ####################  Cart Methods ###################################
+  /**
+   * Add cart
+   *
+   * @param \LoveThatFit\CartBundle\Entity\Cart $cart
+   * @return User
+   */
+  public function addCart(\LoveThatFit\CartBundle\Entity\Cart $cart)
+  {
+	$this->cart[] = $cart;
+
+	return $this;
+  }
+
+  /**
+   * Remove cart
+   *
+   * @param \LoveThatFit\CartBundle\Entity\Cart $cart
+   */
+  public function removeCart(\LoveThatFit\CartBundle\Entity\Cart $cart)
+  {
+	$this->cart->removeElement($cart);
+  }
+
+  /**
+   * Get cart
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getCart()
+  {
+	return $this->cart;
+  }
+  ##############################################################################
 }

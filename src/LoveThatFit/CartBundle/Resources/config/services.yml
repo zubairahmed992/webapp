@@ -1,0 +1,16 @@
+parameters:
+#    love_that_fit_cart.example.class: LoveThatFit\CartBundle\Example
+
+services:
+     kernel.listener.accessDenied:
+        class: LoveThatFit\CartBundle\Component\Event\AccessDeniedListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.exception, method: onAccessDeniedException }
+
+     cart.helper.cart:
+        class: LoveThatFit\CartBundle\Entity\CartHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\CartBundle\Entity\Cart
+            container: "@service_container"
