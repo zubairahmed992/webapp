@@ -7,7 +7,7 @@ cart_add:
     defaults: { _controller: LoveThatFitCartBundle:Cart:add}
 
 cart_basket:
-    pattern:  /cart/basket/{item_id}
+    pattern:  /cart/basket/
     defaults: { _controller: LoveThatFitCartBundle:Cart:basket}
 
 cart_basket_update:

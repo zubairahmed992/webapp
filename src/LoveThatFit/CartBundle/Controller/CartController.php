@@ -43,31 +43,35 @@ class CartController extends Controller
 
   	public function basketAction(Request $request){
 	  $user = $this->get('security.context')->getToken()->getUser();
+	  $decoded  = $request->request->all();
+	  $item_id = $decoded["item_id"];
 	  $qty = 1;
 	  $cart=$user->getCart();
-	  $entity = $this->get('cart.helper.cart')->fillCart($request->get('item_id'),$user,$qty);
-	  $get_total = $this->get('cart.helper.cart')->getCart($user);
-	  return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
-		'cart' => $cart,
-		'grand_total' => array_sum($get_total["total"])
-	  ));
+	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
+	  return $this->redirect($this->generateUrl('cart_show'));
+//	  $get_total = $this->get('cart.helper.cart')->getCart($user);
+//	  return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
+//		'cart' => $cart,
+//		'grand_total' => array_sum($get_total["total"])
+//	  ));
 	}
   	public function basketupdateAction(Request $request){
 	  $decoded  = $request->request->all();
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  if(isset($decoded['update']) == 'update'){
 	  	$entity = $this->get('cart.helper.cart')->updateCart($decoded);
-		$cart=$user->getCart();
+		//$cart=$user->getCart();
+		return $this->redirect($this->generateUrl('cart_show'));
 	  }elseif(isset($decoded['checkout']) == 'checkout'){
-		 $this->redirect($this->generateUrl('checkout'));
+		return $this->redirect($this->generateUrl('checkout'));
 	  }else{
-		$cart=$user->getCart();
+		return $this->redirect($this->generateUrl('cart_show'));
 	  }
-	  $get_total = $this->get('cart.helper.cart')->getCart($user);
-	  return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
-		'cart' => $cart,
-		'grand_total' => array_sum($get_total["total"])
-	  ));
+//	  $get_total = $this->get('cart.helper.cart')->getCart($user);
+//	  return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
+//		'cart' => $cart,
+//		'grand_total' => array_sum($get_total["total"])
+//	  ));
 	}
 //------------------------------Show Cart------------------------------------------------------------
 

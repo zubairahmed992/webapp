@@ -203,7 +203,9 @@ function chk_dress_applied_loaded(prod_type_applied){
                                             
                                             
                                            </span>
-                                        <span class="cart_prod"><img src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}"></span>
+                                        <form method="post" action="{{ path('cart_basket')}}">   <input type="hidden" name="item_id" value="{{ productItem.id }}"> <span class="cart_prod"><input type="image" src="{{ asset('bundles/lovethatfit/site/images/cart_icon_1.png') }}"></span>
+
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="rgt_col">
