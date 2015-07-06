@@ -17,3 +17,7 @@ cart_basket_update:
 cart_show:
     pattern:  /cart/show
     defaults: { _controller: LoveThatFitCartBundle:Cart:show}
+
+cart_delete:
+    pattern:  /cart/delete/{id}
+    defaults: { _controller: LoveThatFitCartBundle:Cart:delete}

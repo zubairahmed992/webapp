@@ -116,12 +116,12 @@ class CartHelper {
     public function delete($id) {
 
         $entity = $this->repo->find($id);
-        $entity_name = $entity->getName();
+        //$entity_name = $entity->getName();
         if ($entity) {
             $this->em->remove($entity);
             $this->em->flush();
             return array('cart' => $entity,
-                'message' => 'The Cart ' . $entity_name . ' has been Deleted!',
+                'message' => 'The Item has been Deleted!',
                 'message_type' => 'success',
                 'success' => true,
             );

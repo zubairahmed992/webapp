@@ -1,15 +1,17 @@
 <table border="1" width="80%" align="center">
     <tr>
-       <td></td> <td>Product</td><td>Quantity</td><td>Sub Total</td>
+       <td></td> <td>Product</td><td>Quantity</td><td>Sub Total</td><td>-</td>
     </tr>
     <form method="post" action="{{ path('cart_basket_update')}}">
     {% for c in cart %}
         <tr role="row" class="odd">
-           <td><img src="{{ asset(c.productItem.productColor.webPath) }}"> </td> <td>{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td><td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> <input type="text" name="qty[]" value="{{ c.qty }}" size="4"> </td><td><div id="grand_total">{{ c.productItem.price * c.qty}}</div></td></tr>
+           <td><img src="{{ asset(c.productItem.productColor.webPath) }}"> </td> <td>{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td><td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> <input type="text" name="qty[]" value="{{ c.qty }}" size="4"> </td><td><div id="grand_total">{{ c.productItem.price * c.qty}}</div></td>
+        <td><a href="{{ path('cart_delete', {'id': c.id}) }}">Delete</a></td>
+        </tr>
     {% else %}
-        <li><p>There are no records</p></li>
+        <tr><td align="center" colspan="5"><p>There are no records</p></td></tr>
     {% endfor %}
-        <tr><td colspan="4" align="right">Grand Total:<strong>{{ grand_total }}</strong></td></tr>
-   <tr><td colspan="4" align="right"><input type="submit" name="update" value="update"></td></tr>
+        <tr><td colspan="5" align="right">Grand Total:<strong>{{ grand_total }}</strong></td></tr>
+   <tr><td colspan="4" align="right"><input type="submit" name="update" value="update"></td><td><input type="submit" name="checkout" value="checkout"></td></tr>
     </form>
 </table>

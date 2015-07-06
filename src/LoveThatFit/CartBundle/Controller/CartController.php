@@ -58,6 +58,8 @@ class CartController extends Controller
 	  if(isset($decoded['update']) == 'update'){
 	  	$entity = $this->get('cart.helper.cart')->updateCart($decoded);
 		$cart=$user->getCart();
+	  }elseif(isset($decoded['checkout']) == 'checkout'){
+		 $this->redirect($this->generateUrl('checkout'));
 	  }else{
 		$cart=$user->getCart();
 	  }
@@ -67,15 +69,37 @@ class CartController extends Controller
 		'grand_total' => array_sum($get_total["total"])
 	  ));
 	}
+//------------------------------Show Cart------------------------------------------------------------
 
 	public function showAction(){
 		$user = $this->get('security.context')->getToken()->getUser();
 		$cart=$user->getCart();
 		$get_total = $this->get('cart.helper.cart')->getCart($user);
-
+		if(count($get_total) == 0)
+		{
+		  $grand_total=0;
+		}else{
+		  $grand_total = array_sum($get_total["total"]);
+		}
 		return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
 			'cart' => $cart,
-			'grand_total' => array_sum($get_total["total"])
+			'grand_total' => $grand_total
 		  ));
 	  }
+
+	//------------------------------Delete Cart------------------------------------------------------------
+
+	public function deleteAction($id) {
+	  try {
+
+		$message_array = $this->get('cart.helper.cart')->delete($id);
+		$this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
+		return $this->redirect($this->generateUrl('cart_show'));
+		//return $this->redirect($this->generateUrl('cart_delete'));
+	  } catch (\Doctrine\DBAL\DBALException $e) {
+
+		$this->get('session')->setFlash('warning', 'This Item cannot be deleted!');
+		return $this->redirect($this->getRequest()->headers->get('referer'));
+	  }
+	}
 }
