@@ -186,21 +186,6 @@ $( "#btn_hit_service" ).click(function() {
                 
         } 
        
-       //--------------------------------------------------
-         function change_user_detail(){         
-             tt = $('option:selected', $('#sel_user')).html();             
-             if (tt=='select'){
-                $('#user_name').html('');
-                $('#user_auth_token').html('');                
-                $('#user_name_pannel').css("display", 'none');
-                $('#user_token_pannel').css("display", 'none');                
-            }else{
-                $('#user_name').html(tt);
-                $('#user_auth_token').html($('option:selected', $('#sel_user')).val());
-                $('#user_name_pannel').css("display", 'block');
-                $('#user_token_pannel').css("display", 'block');                                
-            }
-        } 
           //--------------------------------------------------
          function find_pattern(service_name){    
             service_detail = find_service_obj(service_name);
@@ -214,27 +199,6 @@ $( "#btn_hit_service" ).click(function() {
         }
 //-------------------------------------------------------------
 
-function replace_user_data(){
-          email = $("#user_name").text();
-          token = $("#user_auth_token").text();
-          request_json = $.trim($("#txt_request_params").val());
-            if (request_json.indexOf("authTokenWebService")!=-1 || request_json.indexOf("email")!=-1){
-                var obj1 = JSON.parse(request_json);
-                if (request_json.indexOf("authTokenWebService")!=-1){
-                    obj1.authTokenWebService=token;
-                }
-                if (request_json.indexOf("email")!=-1){
-                    obj1.email=email;    
-                }
-                if (email.indexOf("buf")!=-1 && request_json.indexOf("password")!=-1){
-                    obj1.password='Buffalo1';    
-                }
-                $("#txt_request_params").val(JSON.stringify(obj1));        
-                
-            }        
-}
-    
-    //-------------------------------------
 function hit_service(){    
         var value_ar = JSON.parse($("#txt_request_params").val());        
         restartTimer();//~~~~~~~~~~~~~~>
@@ -272,6 +236,89 @@ function hit_service(){
                 $('#txt_response_params').val(str);            
             }
 }   
+//-----------------------------------------------------    
+//-----------------------------------------------------    
+//-----------------------------------------------------    
+
+function replace_user_data(){
+          email = $("#user_name").text();
+          token = $("#user_auth_token").text();
+          request_json = $.trim($("#txt_request_params").val());
+            if (request_json.indexOf("authTokenWebService")!=-1 || request_json.indexOf("email")!=-1){
+                var obj1 = JSON.parse(request_json);
+                if (request_json.indexOf("authTokenWebService")!=-1){
+                    obj1.authTokenWebService=token;
+                }
+                if (request_json.indexOf("email")!=-1){
+                    obj1.email=email;
+                    
+                }
+                if (email.indexOf("buf")!=-1 && request_json.indexOf("password")!=-1){
+                    obj1.password='Buffalo1';    
+                }
+                $("#txt_request_params").val(JSON.stringify(obj1));        
+                
+            }        
+}
+ 
+//-------------------------------------------------------------
+
+function hit_user_service(){    
+        email = $("#user_name").text();    
+        service_url='/ws_interface/user/'+email;
+        $.ajax({
+               type: "GET",
+               url: ".." + service_url,
+               success: function(data){
+                   //replace_all_user_data(data);     
+                   //$("#txt_response_params").text(data);
+                   alert(data);
+                   },
+               failure: function(errMsg) {
+                   alert(errMsg);
+               }
+         });    
+}
+//-----------------------------------------
+function replace_all_user_data(user_detail){
+    var u_obj = JSON.parse(user_detail);
+    var r_obj = JSON.parse($("#txt_request_params").val());
+    
+    for(var ukey in u_obj){
+        for(var rkey in r_obj){
+            if (rkey==ukey){
+                r_obj[rkey]=u_obj[ukey];
+            }
+        }
+    }
+    $("#txt_request_params").text(JSON.stringify(r_obj));
+}
+//var user_JSON;
+
+//--------------------------------------------------
+ 
+ 
+        function change_user_detail(){         
+             tt = $('option:selected', $('#sel_user')).html();             
+             if (tt=='select'){
+                $('#user_name').html('');
+                $('#user_auth_token').html('');                
+                $('#user_name_pannel').css("display", 'none');
+                $('#user_token_pannel').css("display", 'none');                
+            }else{
+                $('#user_name').html(tt);
+                $('#user_auth_token').html($('option:selected', $('#sel_user')).val());
+                $('#user_name_pannel').css("display", 'block');
+                $('#user_token_pannel').css("display", 'block');  
+                hit_user_service();
+            }
+        } 
+ 
+ //-------------------------------------------------------------
+ 
+ 
+    //-------------------------------------
+
 
 //-----------------------------------------------------    
 //-----------------------------------------------------    
