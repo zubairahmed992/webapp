@@ -36,7 +36,12 @@ class WSUserController extends Controller {
         return new Response($exists?'true':'false');
     }
     
-    
+#~~~~~~~~~~~~~~~~~~~ ws_user_register   /ws/user_register
+
+    public function registerAction() {
+        $decoded  = $this->process_request();                         
+        return new Response(json_encode($decoded));      
+    }    
     
 }
 
