@@ -136,16 +136,6 @@
             replace_user_data();
         });
 
-        //------------------- user dropdownlist --------------------
-        $("#sel_user").change(function() {  
-            change_user_detail();  
-            replace_user_data();
-        });
-     //--------------------------------------------------------- 
-
-        $("#btn_generate_form").click(function() {  
-          alert(service_form_gen($('option:selected', $('#sel_service')).html()));  
-        });
 //-------------------------------------
 $( "#btn_hit_service" ).click(function() {
        if($('#service_name').html()!='' && $('#user_name').html()!=''){
@@ -173,18 +163,14 @@ $( "#btn_hit_service" ).click(function() {
                 $('#backend_process').html(service_detail==null?'':service_detail.backend_process);
                 $('#txt_request_params').val(service_detail==null?'':JSON.stringify(service_detail.params));
                 $('#txt_response_params').val("");
-                display_service_detail(service_detail==null?'none':'block');
-        } 
-//---------------------------------------------------------         
-        function display_service_detail(display){
+                display=service_detail==null?'none':'block';
                 $('#service_name_pannel').css("display", display);
                 $('#service_url_pannel').css("display", display);
                 $('#service_description_pannel').css("display", display);
                 $('#service_backend_process_pannel').css("display", display);
                 $('#service_request_pannel').css("display", display);
                 $('#service_response_pannel').css("display", display);
-                
-        } 
+        }         
        
           //--------------------------------------------------
          function find_pattern(service_name){    
@@ -240,6 +226,14 @@ function hit_service(){
 //-----------------------------------------------------    
 //-----------------------------------------------------    
 
+//------------------- user dropdownlist --------------------
+        $("#sel_user").change(function() {  
+            change_user_detail();  
+            replace_user_data();
+            
+        });
+//-----------------------------------------------------    
+
 function replace_user_data(){
           email = $("#user_name").text();
           token = $("#user_auth_token").text();
@@ -257,12 +251,12 @@ function replace_user_data(){
                     obj1.password='Buffalo1';    
                 }
                 $("#txt_request_params").val(JSON.stringify(obj1));        
-                
+                hit_user_service();
             }        
 }
  
 //-------------------------------------------------------------
-
+var user_JSON;
 function hit_user_service(){    
         email = $("#user_name").text();    
         service_url='/ws_interface/user/'+email;
@@ -270,20 +264,27 @@ function hit_user_service(){
                type: "GET",
                url: ".." + service_url,
                success: function(data){
-                   //replace_all_user_data(data);     
+                   user_JSON=data;
+                   replace_all_user_data(data);     
                    //$("#txt_response_params").text(data);
-                   alert(data);
+                   //alert(data);
                    },
                failure: function(errMsg) {
                    alert(errMsg);
                }
          });    
 }
+
+     //--------------------------------------------------------- 
+
+        $("#btn_generate_form").click(function() {  
+          test_data();  
+        });
 //-----------------------------------------
+
 function replace_all_user_data(user_detail){
     var u_obj = JSON.parse(user_detail);
     var r_obj = JSON.parse($("#txt_request_params").val());
-    
     for(var ukey in u_obj){
         for(var rkey in r_obj){
             if (rkey==ukey){
@@ -291,7 +292,8 @@ function replace_all_user_data(user_detail){
             }
         }
     }
-    $("#txt_request_params").text(JSON.stringify(r_obj));
+    $("#txt_request_params").val(JSON.stringify(r_obj));
+    alert(JSON.stringify(r_obj));
 }
 //var user_JSON;
 
@@ -310,7 +312,6 @@ function replace_all_user_data(user_detail){
                 $('#user_auth_token').html($('option:selected', $('#sel_user')).val());
                 $('#user_name_pannel').css("display", 'block');
                 $('#user_token_pannel').css("display", 'block');  
-                hit_user_service();
             }
         } 
  
