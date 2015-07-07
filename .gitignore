@@ -10,3 +10,4 @@ web/uploads/ltf
 web/uploads/acme
 *.php~
 
+.idea/*
