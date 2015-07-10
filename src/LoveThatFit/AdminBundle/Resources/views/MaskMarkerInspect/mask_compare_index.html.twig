@@ -13,12 +13,20 @@
    function hit_service(){
    
         var $url='../mask_compare/filter';
-   
+   var value_ar = {
+            to_id : $('#txt_to_id').val(),    
+            from_id : $('#txt_from_id').val(),
+            };
+
          $.ajax({
             type: "POST",
             url: $url,
+            data: value_ar,  
             success: function(data){
-                $('#user_data_placeholder').html(data);
+                //$('#user_data_placeholder').html(data);
+                 var w = window.open('about:blank', 'Mask marker visual Comparison');
+                    w.document.write(data);
+                    w.document.close();
             },
             failure: function(errMsg) {
                 alert('error');    
@@ -43,12 +51,22 @@
    });
    </script>
    <h3>Masked Marker Visual Compare</h3>
+<div class="form-group">           
+          <label class="col-md-2 control-label" for="txt_to_id">From user Id </label>
+          <div class="col-md-2"> 
+              <input type="text" class="form-control" id="txt_from_id">
+          </div>
+    </div>
            
 <div class="form-group">                   
+          <label class="col-md-2 control-label" for="txt_to_id">To User Id</label>
+          <div class="col-md-2">
+              <input type="text" class="form-control" id="txt_to_id">
+          </div>
                 
-        <a id='a_display_users' class='a_display_users' href="#">Show</a> &nbsp;|&nbsp;
-        <a id='a_download_users' class='a_download_users' href="#">json new</a> 
-    </div>
+        <a id='a_display_users' class='a_display_users' href="#">Generate</a> 
+         
+    </div>           
    
    <br>
    <div id='user_data_placeholder'>
