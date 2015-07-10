@@ -183,7 +183,7 @@ public function maskCompareFilterAction(){
         $user_array = array();
      
             foreach ($users as $u) {
-                array_push($user_array, $u->toDetailArray(array('user','mask_marker')));
+                array_push($user_array, $u->toDetailArray(array('user','mask_marker', 'measurement', 'device')));
             }
         return new response(json_encode($user_array));
     }

@@ -1825,7 +1825,13 @@ class User implements UserInterface, \Serializable {
             $a=array_merge($a, $this->user_marker->toDataArray());
             }
         }
-        
+
+        if (in_array('device', $options)){
+            $ud=$this->getDeviceSpecs();
+            if ($ud){
+                $a=array_merge($a, $ud->toArray());
+            }
+        }        
         return $a;
     }
     #---------------------------0--------------------------------
