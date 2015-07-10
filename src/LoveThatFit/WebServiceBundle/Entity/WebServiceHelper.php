@@ -20,9 +20,13 @@ class WebServiceHelper {
                 $response_array=null;    
                 if(array_key_exists('user_detail', $request_array) && $request_array['user_detail']=='true'){
                     $response_array['user']=$user->toDataArray(true, $request_array['deviceType']);
+                    $response_array['user']['user_id']=$response_array['user']['id'];
+                    unset($response_array['user']['id']);        
                 }
                 if(array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand']=='true'){
-                    $response_array['retailer']=$this->container->get('admin.helper.brand')->getBrandRetailerList();
+                    $retailer_brands=$this->container->get('admin.helper.brand')->getBrandRetailerList();
+                    $response_array['retailer']=$retailer_brands['retailer'];
+                    $response_array['brand']=$retailer_brands['brand'];
                 }
                 
                 return $this->response_array(true, 'user found', true, $response_array);

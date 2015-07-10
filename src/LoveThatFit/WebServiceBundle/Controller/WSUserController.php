@@ -22,10 +22,9 @@ class WSUserController extends Controller {
 
     public function loginAction() {
         $decoded  = $this->process_request();                         
-        $user_info = $this->get('webservice.helper')->loginService($decoded);
+        $user_info = $this->get('webservice.helper')->loginService($decoded);        
         
         return new Response($user_info);
-      
     }
 
 #~~~~~~~~~~~~~~~~~~~ ws_email_exists   /ws/email_exists
