@@ -10,7 +10,10 @@
 
            <h3>Masked Marker Visual Compare</h3>
            <a href="{{path('admin_user_mask_compare_index')}}">Back <<--</a>
+           
+           
    <div id='user_data_placeholder'>
        {{user_json}}
    </div>
+           <canvas id="canv_compare" width="320" height="568" style="width:320px; height: 568px;"></canvas>
 {% endblock %}
