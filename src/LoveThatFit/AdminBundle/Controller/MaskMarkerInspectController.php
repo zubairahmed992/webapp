@@ -169,35 +169,20 @@ class MaskMarkerInspectController extends Controller {
         
     }
 #-------------------------------------------------------
-public function maskCompareFilterAction(){
-    $users = null;
-        #$users = $this->get('user.helper.user')->findAll();
-            #$decoded = $this->getRequest()->request->all();            
-    #return new response(json_encode($decoded));
-    #$decoded='1112, 1113';
-    #$ar=explode(',',$decoded);
-    #return new response($decoded);
-    #$users = $this->get('user.helper.user')->findWhereIdIn($ar);
-    
-    $user_array = array();
-     
-            
+    public function maskCompareFilterAction() {
+        $decoded = $this->getRequest()->request->all();
+        $ar = explode(',', $decoded['user_ids']);
+        $users = $this->get('user.helper.user')->findWhereIdIn($ar);
+        $user_array = array();
+
+        foreach ($users as $u) {
+            array_push($user_array, $u->toDetailArray(array('user', 'mask_marker', 'measurement', 'device')));
+        }
         return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:mask_compare_show.html.twig', array(
-                        'user_json' => json_encode($user_array),
-                    ));
+                    'user_json' => json_encode($user_array),
+                ));
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 #############
     public function _userDataDownloadAction() {
         $users = $this->get('user.helper.user')->findAll();
