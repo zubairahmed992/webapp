@@ -163,14 +163,8 @@ class MaskMarkerInspectController extends Controller {
 ###################################################################################
 
     public function maskCompareIndexAction(){
-    
-     $form = $this->createFormBuilder('user_search')
-            ->add('ids', 'text')
-            ->add('save', 'submit', array('label' => 'Generate'))
-            ->getForm();
-
         return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:mask_compare_index.html.twig', array(
-                        'user_search_form' => $form->createView(),
+    
                     ));
         
     }
@@ -178,8 +172,7 @@ class MaskMarkerInspectController extends Controller {
 public function maskCompareFilterAction(){
     
         #$users = $this->get('user.helper.user')->findAll();
-            $decoded = $this->getRequest()->request->all();
-            $s=$this->getRequest()->get("user_search")["user_ids"] ;
+            $decoded = $this->getRequest()->request->all();            
     return new response(json_encode($decoded));
     $decoded='1112';
     $ar=explode(',',$decoded);
