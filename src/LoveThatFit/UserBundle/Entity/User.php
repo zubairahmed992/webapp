@@ -1824,15 +1824,16 @@ class User implements UserInterface, \Serializable {
             if ($this->user_marker){
                $mma = $this->user_marker->toDataArray();
                 unset($mma['id']);
-               $a=array_merge($a, $this->user_marker->toDataArray());
+               $a=array_merge($a, $mma);
             }
         }
 
         if (in_array('device', $options)){
             $ud=$this->getDeviceSpecs();
             if ($ud){
-                unset($ud['id']);
-                $a=array_merge($a, $ud->toArray());
+                $ud_array= $ud->toArray();
+                unset($ud_array['id']);
+                $a=array_merge($a, $ud_array);
             }
         }        
         return $a;

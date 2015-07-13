@@ -110,11 +110,14 @@ class UserHelper {
     public function findAll() {
         return $this->repo->findAll();
     }
-    
+    #-----------------------------------------------------------
     public function find($id) {
         return $this->repo->findOneBy(array('id' => $id));
     }
-
+    #-----------------------------------------------------------
+    public function findWhereIdIn($ids) {
+        return $this->repo->findWhereIdIn($ids);
+    }
 //---------------------------------------------------------
     public function findByEmail($email) {
         return $this->repo->findOneBy(array('email' => $email));

@@ -180,8 +180,12 @@ class MaskMarkerInspectController extends Controller {
 public function maskCompareFilterAction(){
     
         #$users = $this->get('user.helper.user')->findAll();
-            $decoded = $this->getRequest()->request->all();
-        $users = $this->get('user.helper.user')->findUserByOptions($decoded);
+     #       $decoded = $this->getRequest()->request;
+    #return new response(json_encode($decoded));
+    $decoded='1112,1113,1114,1115,1116,1117,1118,1119';
+    $ar=explode(',',$decoded);
+    #return new response($decoded);
+    $users = $this->get('user.helper.user')->findWhereIdIn($ar);
     
     $user_array = array();
      
