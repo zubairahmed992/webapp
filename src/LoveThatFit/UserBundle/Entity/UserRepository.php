@@ -350,9 +350,9 @@ class UserRepository extends EntityRepository {
     
     public function findWhereIdIn($options) {
                  $record = $this->getEntityManager()
-                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u");     
-#                                                     WHERE u.id IN (':options')")
- #                               ->setParameters(array('options', 1112,1113,1114,1115,1116,1117,1118,1119));
+                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
+                                                     WHERE u.id IN (:options)")
+                                ->setParameters(array('options'=> $options));
                                     return $record->getResult();
     }
 }

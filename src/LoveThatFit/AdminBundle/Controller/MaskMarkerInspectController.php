@@ -164,15 +164,13 @@ class MaskMarkerInspectController extends Controller {
 
     public function maskCompareIndexAction(){
     
-        $users = $this->get('user.helper.user')->findAll();
-        $user_array = array();
-     
-        /*   foreach ($users as $u) {
-                array_push($user_array, $u->toDetailArray(array('user','mask_marker')));
-            }
-        return new response(json_encode($user_array));
-          */  return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:mask_compare_index.html.twig', array(
-                        'users' => $user_array,
+     $form = $this->createFormBuilder('user_search')
+            ->add('ids', 'text')
+            ->add('save', 'submit', array('label' => 'Generate'))
+            ->getForm();
+
+        return $this->render('LoveThatFitAdminBundle:MaskMarkerInspect:mask_compare_index.html.twig', array(
+                        'user_search_form' => $form->createView(),
                     ));
         
     }
@@ -180,9 +178,10 @@ class MaskMarkerInspectController extends Controller {
 public function maskCompareFilterAction(){
     
         #$users = $this->get('user.helper.user')->findAll();
-     #       $decoded = $this->getRequest()->request;
-    #return new response(json_encode($decoded));
-    $decoded='1112,1113,1114,1115,1116,1117,1118,1119';
+            $decoded = $this->getRequest()->request->all();
+            $s=$this->getRequest()->get("user_search")["user_ids"] ;
+    return new response(json_encode($decoded));
+    $decoded='1112';
     $ar=explode(',',$decoded);
     #return new response($decoded);
     $users = $this->get('user.helper.user')->findWhereIdIn($ar);
