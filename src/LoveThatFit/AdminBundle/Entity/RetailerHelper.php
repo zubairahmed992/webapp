@@ -383,6 +383,10 @@ public function reatailerListService(){
     return $this->repo->reatailerListService();
 }
 
+public function reatailerListForService(){
+    return $this->repo->reatailerListForService();
+}
+
 
 public function findRetailerBySite($retailer_site){
     return $this->repo->findRetailerBySite($retailer_site);

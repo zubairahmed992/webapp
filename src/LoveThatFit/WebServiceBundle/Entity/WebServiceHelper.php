@@ -25,7 +25,7 @@ class WebServiceHelper {
                     unset($response_array['user']['id']);
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
-                    $retailer_brands = $this->container->get('admin.helper.brand')->getBrandRetailerList();
+                    $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
                     $response_array['retailer'] = $retailer_brands['retailer'];
                     $response_array['brand'] = $retailer_brands['brand'];
                 }

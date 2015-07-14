@@ -316,5 +316,20 @@ public function getBrandRetailerList($date_fromat = null) {
         return;
     }
      
-   
+   public function getBrandListForService($date_fromat = null) {
+        $data = $this->repo->getBrandRetailerList($date_fromat);
+        foreach ($data as $key) {
+            if ($key['brand_id'] != null) {
+                if ($key['ret_id'] == null) {
+                    $key['ret_id'] = 0;
+                }
+                $arr2[] = array('brand_id' => $key['brand_id'], 'name' => $key['brand_name'], 'image' => $key['brand_image'], 'ret_id' => $key['ret_id']);
+            }
+        }
+        $retList = $this->container->get('admin.helper.retailer')->reatailerListForService();
+        //$ret['retailer']=$this->super_unique($arr);
+        $ret['retailer'] = $retList;
+        $ret['brand'] = $arr2;
+        return $ret;
+    }
 }
