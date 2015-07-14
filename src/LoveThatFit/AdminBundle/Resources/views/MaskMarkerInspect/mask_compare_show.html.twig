@@ -6,14 +6,43 @@
 {% block body %}
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
    <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/paper.js') }}"></script>
-   <script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/visual_comparison.js') }}" canvas="canv_compare"></script>
+   <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/visual_comparison.js') }}"></script>
 
+   <style>
+           #canv_compare {
+               float:left;
+           }
+           #mask_ids {
+               float:left;
+               width:420px;
+               height: 400px;
+           }
+           .mask_ref_id {
+               background: #efefef;
+               position: relative;
+               float: left;
+               margin-left: 10px;
+               margin-top: 10px;
+               padding-left: 22px;
+               padding-right: 2px;
+           }
+           .mask_spot {
+               position: absolute;
+               width: 16px;
+               height: 16px;
+               left:2px;
+               top:2px;
+           }
+   </style>
+   
            <h3>Masked Marker Visual Compare</h3>
            <a href="{{path('admin_user_mask_compare_index')}}">Back <<--</a>
            
            
-   <div id='user_data_placeholder'>
+   <div id='user_data_placeholder' style="display:none;">
        {{user_json}}
    </div>
            <canvas id="canv_compare" width="320" height="568" style="width:320px; height: 568px;"></canvas>
+           <div id="mask_ids">
+           </div>
 {% endblock %}
