@@ -361,7 +361,7 @@ public function getRetailerBrandParticular($id)
    public function reatailerListService(){
       
       $query = $this->getEntityManager()
-              ->createQuery('SELECT r.id as retId,r.title as name,r.image as image, 0 as brandId 
+              ->createQuery('SELECT r.id as retId,r.title as name,r.image as image
                             FROM LoveThatFitAdminBundle:Retailer r 
                              WHERE r.disabled=0');
         try {

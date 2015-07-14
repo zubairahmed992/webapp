@@ -39,7 +39,7 @@ class WSUserController extends Controller {
 
     public function registrationAction() {
         $decoded  = $this->process_request();
-        $json_data = $this->get('webservice.helper')->RegistrationService($decoded);
+        $json_data = $this->get('webservice.helper')->registrationService($decoded);
         return new Response($json_data);      
     }    
 #~~~~~~~~~~~~~~~~~~~ ws_size_charts   /ws/size_charts

@@ -57,12 +57,10 @@ class WebServiceHelper {
             #$user->setPassword($password);
             $user->setGender(array_key_exists('gender', $request_array)?$request_array['gender']:null);    
             $user->setZipcode(array_key_exists('zipcode', $request_array)?$request_array['zipcode']:null);
-            #$user->setFirstName($request_array['first_name']?array_key_exists('firstName', $request_array):null);
-            #$user->setLastName(array_key_exists('last_name', $request_array)?$request_array['lastName']:null);
             #$user->setBirthDate(array_key_exists('dob', $request_array)?new \DateTime($request_array['dob']):null);
             #$user->setDeviceType(array_key_exists('deviceType', $request_array)?$request_array['deviceType']:null);
        
-            return $this->response_array(true, 'Proceed', true, $user->toArray());
+            return $this->response_array(true, 'Proceed', true, array('user'=>$user->toArray()));
         }
     }
 
@@ -94,7 +92,7 @@ class WebServiceHelper {
     public function sizeChartsService($request_array) {
         $sc = $this->container->get('admin.helper.sizechart')->getBrandSizeTitleArray($request_array['gender']);
         if (count($sc) > 0) {
-                return $this->response_array(true, 'Size charts', true, $sc);
+                return $this->response_array(true, 'Size charts', true, array('size_charts'=>$sc));
         } else {
             return $this->response_array(false, 'Size Charts not found');            
         }
