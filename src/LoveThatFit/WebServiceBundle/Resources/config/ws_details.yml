@@ -23,8 +23,8 @@ ws_user_login:
     backend_process: "Find user by email. match password.find device details, if not found create new. if user_detail=true, Return User detail array with device type & perinchpixel height. if brand_retailer=true then return"
 
 ws_user_registration:
-    pattern:  /ws/user_register
-    title: user_register
+    pattern:  /ws/user_registration
+    title: user_registration
     params:
       email:  example@ltf.com
       password: ltf123

@@ -35,11 +35,12 @@ class WSUserController extends Controller {
         return new Response($exists?'true':'false');
     }
     
-#~~~~~~~~~~~~~~~~~~~ ws_user_register   /ws/user_register
+#~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
 
-    public function registerAction() {
-        $decoded  = $this->process_request();                         
-        return new Response(json_encode($decoded));      
+    public function registrationAction() {
+        $decoded  = $this->process_request();
+        $json_data = $this->get('webservice.helper')->RegistrationService($decoded);
+        return new Response($json_data);      
     }    
 #~~~~~~~~~~~~~~~~~~~ ws_size_charts   /ws/size_charts
     public function sizeChartsAction(){

@@ -38,6 +38,33 @@ class WebServiceHelper {
             return $this->response_array(false, 'Invalid Email');
         }
     }
+    #------------------------ User -----------------------
+
+    public function registrationService($request_array) {
+        
+        if (!array_key_exists('email', $request_array)) {
+            return $this->response_array(false, 'Email Not provided.');
+        }
+        
+        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+        
+        if (count($user) > 0) {
+            return $this->response_array(false, 'Email already exists.');
+        } else {
+            $user = $this->container->get('user.helper.user')->createNewUser();
+            $user->setEmail($request_array['email']);
+            #$password =  $this->container->get('user.helper.user')->encodeThisPassword($user, $request_array['password']);
+            #$user->setPassword($password);
+            $user->setGender(array_key_exists('gender', $request_array)?$request_array['gender']:null);    
+            $user->setZipcode(array_key_exists('zipcode', $request_array)?$request_array['zipcode']:null);
+            #$user->setFirstName($request_array['first_name']?array_key_exists('firstName', $request_array):null);
+            #$user->setLastName(array_key_exists('last_name', $request_array)?$request_array['lastName']:null);
+            #$user->setBirthDate(array_key_exists('dob', $request_array)?new \DateTime($request_array['dob']):null);
+            #$user->setDeviceType(array_key_exists('deviceType', $request_array)?$request_array['deviceType']:null);
+       
+            return $this->response_array(true, 'Proceed', true, $user->toArray());
+        }
+    }
 
     #--------------------------------User Detail Array -----------------------------#
 
