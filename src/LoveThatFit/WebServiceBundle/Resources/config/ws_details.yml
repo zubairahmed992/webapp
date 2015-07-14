@@ -54,3 +54,10 @@ ws_user_registration:
     description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
     backend_process: 
     
+ws_size_charts:
+    pattern:  /ws/size_charts
+    title: size_charts
+    params:
+          gender:  f
+    request_type: post
+    description: get all the size charts based on gender. 

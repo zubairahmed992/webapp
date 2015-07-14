@@ -41,6 +41,12 @@ class WSUserController extends Controller {
         $decoded  = $this->process_request();                         
         return new Response(json_encode($decoded));      
     }    
-    
+#~~~~~~~~~~~~~~~~~~~ ws_size_charts   /ws/size_charts
+    public function sizeChartsAction(){
+        $decoded  = $this->process_request();
+       $json_data=$this->get('webservice.helper')->sizeChartsService($decoded);
+        return new response($json_data);
+       
+   } 
 }
 

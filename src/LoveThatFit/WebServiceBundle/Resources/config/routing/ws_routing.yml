@@ -9,3 +9,7 @@ ws_user_email_exists:
 ws_user_register:
     pattern:  /ws/user_register
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:register }
+
+ws_size_charts:
+    pattern:  /ws/size_charts
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sizeCharts }
