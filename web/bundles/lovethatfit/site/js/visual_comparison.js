@@ -21,33 +21,52 @@ function load_user_masks(){
         ////---- Align mask markers from Top, head point////
         user_mask.pivot = new Point(user_mask.bounds.topCenter.x,user_mask.bounds.topCenter.y);
         user_mask.position = new Point(320/2, 0);
-        
-        var r_value = Math.round(Math.random() * 250/100);
-        var g_value = Math.round(Math.random() * 250/100);
-        var b_value = Math.round(Math.random() * 250/100);
-        
-        var masks_m_down = new Tool();
-        masks_m_down.onMouseDown = onMouseDown;
-        
-        $("#mask_ids").append('<div class="mask_ref_id">'+json_data[i].id+'<div class="mask_spot" style="background: rgb(' + r_value * 100 + ',' + g_value * 100 + ',' + b_value * 100 + ')"></div></div>');
         user_mask.style = {
-	stroke: 1,
-	strokeColor: new Color(r_value,g_value,b_value)
-        }    
-    //////------commenting if closing bras }
+	stroke: 1
+        }
+        
+        
+        reset_color = new Color(Math.random(1),Math.random(1),Math.random(1));
+        
+        //reset_color = new Color({
+        //                hue: Math.round(Math.random() * 360),
+	//		saturation: 1,
+	//		brightness: 1});
+        
+        user_mask.strokeColor = reset_color;
+        //var rgb_color = reset_color.convert('rgb');
+                
+        var css_color = reset_color.toCSS('rgb');
+
+        $("#mask_ids").append('<div class="mask_ref_id">'+json_data[i].id+'<div class="mask_spot" style="background: ' + css_color + '"></div></div>');
+       
+       
+       
+       //////------commenting if closing bras }
+       
+       
+       
+       
     //user_mask.strokeColor.hue += hue_value;
+    
+    
+    
     //user_mask.strokeColor.saturation = 0.5;
     //user_mask.strokeColor.brightness = 0;
     //user_mask.strokeColor.lightness 
     
     
-    function onMouseDown(event) {
-        console.log("QQQQQQQQQQQQ");
-    }
     
     
     view.update([true]);
     };
+    
+    var masks_m_down = new Tool();
+        masks_m_down.onMouseDown = onMouseDown;
+    function onMouseDown(event) {
+        console.log("QQQQQQQQQQQQ");
+    }
+    
 }
 //main_layer = new Layer();
 //main_layer.activate();
