@@ -11,7 +11,7 @@ function load_user_masks(){
         
         //if(json_data[i].email == "050315.buf.056@ltf.com" || json_data[i].email == "050315.buf.103@ltf.com" || json_data[i].email == "050315.buf.103@ltf.com"){
         user_mask = new Path(json_data[i].svg_paths);
-        
+        user_mask.name = 'usermask_'+json_data[i].id;
         ////---- Align mask markers from bottom, same as in iPhone5////
         ////var p_extra_foot_area = 22; //For foot height adjustment
         ////user_mask.pivot = new Point(user_mask.bounds.bottomCenter.x,user_mask.bounds.bottomCenter.y - p_extra_foot_area); /// Setting pivot point before x, y setting, as it is done in registration///
@@ -36,9 +36,16 @@ function load_user_masks(){
         user_mask.strokeColor = reset_color;
         //var rgb_color = reset_color.convert('rgb');
                 
+                
+        var masks_m_down = new Tool();
+        masks_m_down.onMouseDown = onMouseDown;
+        function onMouseDown(event) {
+            console.log("QQQQQQQQQQQQ");
+        }
+                
         var css_color = reset_color.toCSS('rgb');
-
-        $("#mask_ids").append('<div class="mask_ref_id">'+json_data[i].id+'<div class="mask_spot" style="background: ' + css_color + '"></div></div>');
+        var item_name = "'"+user_mask.name+"'";
+        $("#mask_ids").append('<div class="mask_ref_id"><a onclick="interact_mask('+item_name+');">'+json_data[i].id+'</a><div class="mask_spot" style="background: ' + css_color + '"></div></div>');
        
        
        
@@ -61,12 +68,18 @@ function load_user_masks(){
     view.update([true]);
     };
     
-    var masks_m_down = new Tool();
-        masks_m_down.onMouseDown = onMouseDown;
-    function onMouseDown(event) {
-        console.log("QQQQQQQQQQQQ");
-    }
     
 }
+
+function interact_mask(action_item){
+    var masks_db = project.activeLayer.children;
+    if(masks_db[action_item].selected){
+        masks_db[action_item].selected = false;
+    }else{
+        masks_db[action_item].selected = true;
+    };
+    view.update([true]);
+}
+
 //main_layer = new Layer();
 //main_layer.activate();
