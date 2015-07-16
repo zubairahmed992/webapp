@@ -1417,6 +1417,8 @@ class Measurement {
         $u = $this->getUser();
         return array(
             'gender' => $u->getGender(),
+            'body_shape' => $this->body_shape,
+            'body_type' => $this->body_types,
             'weight' => $this->weight,
             'height' => $this->height,
             'waist' => $this->waist,

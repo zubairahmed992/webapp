@@ -361,7 +361,9 @@ public function getRetailerBrandParticular($id)
    public function reatailerListService(){
       
       $query = $this->getEntityManager()
-              ->createQuery('SELECT r.id as retId,r.title as name,r.image as image FROM LoveThatFitAdminBundle:Retailer r WHERE r.disabled=0');
+              ->createQuery('SELECT r.id as retId,r.title as name,r.image as image
+                            FROM LoveThatFitAdminBundle:Retailer r 
+                             WHERE r.disabled=0');
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
@@ -369,6 +371,20 @@ public function getRetailerBrandParticular($id)
         } 
        
    }
+   #------------------------------------------------------------------
+public function reatailerListForService(){
+      
+      $query = $this->getEntityManager()
+              ->createQuery('SELECT r.id as ret_id, r.title as name,r.image as image
+                            FROM LoveThatFitAdminBundle:Retailer r 
+                             WHERE r.disabled=0');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return "null";
+        } 
+       
+   }   
  #------------------------------------------------------------------------#  
 public function getRetailerBaseToken($access_token){
       $record = $this->getEntityManager()

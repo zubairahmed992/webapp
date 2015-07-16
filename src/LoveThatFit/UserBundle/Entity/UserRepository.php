@@ -280,7 +280,7 @@ class UserRepository extends EntityRepository {
   #----------------------------------------------------------------
     
     public function findUserByOptions($options) {
-        if ($options['gender'] == null) {
+        if (!array_key_exists('gender', $options) || $options['gender'] == null) {
             if (strlen($options['from_id']) > 0 && strlen($options['to_id']) > 0) {
                  $record = $this->getEntityManager()
                                 ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
@@ -346,6 +346,14 @@ class UserRepository extends EntityRepository {
         }
         
     }
+    #-------------------------------------------------------------------
     
+    public function findWhereIdIn($options) {
+                 $record = $this->getEntityManager()
+                                ->createQuery("SELECT u FROM LoveThatFitUserBundle:User u     
+                                                     WHERE u.id IN (:options)")
+                                ->setParameters(array('options'=> $options));
+                                    return $record->getResult();
+    }
 }
 

@@ -14,6 +14,7 @@ admin_mask_marker_inspect_sim:
     pattern:  /admin/mask_marker_inspect/sim/{id}
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:sim, id:6}
 
+#----------------------------------------------------------------------------- 
 admin_users_masks_all_data:
     pattern:  /admin/mask_marker_inspect/all_data
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:allUserData}
@@ -29,4 +30,13 @@ admin_users_masks_data_filter:
 admin_users_masks_data_filter_download:
     pattern:  /admin/mask_marker_inspect/data_filter_download/{options}
     defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:filterUserDataDownload, options:null}    
-    
+
+#----------------------------------------------------------------------------- 
+
+admin_user_mask_compare_index:
+    pattern:  /admin/mask_compare/index
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:maskCompareIndex}
+
+admin_user_mask_compare_filter:
+    pattern:  /admin/mask_compare/filter
+    defaults: { _controller: LoveThatFitAdminBundle:MaskMarkerInspect:maskCompareFilter}

@@ -308,16 +308,25 @@ class UserDevices  {
         return 'uploads/ltf/users/' . $user->getId();
     }
 #----------------------------------------------------
-    public function toArray(){
-        return array(
-            'id' => $this->id, 
-            'device_name' =>  $this->device_name,
-            'deviceType' => $this->deviceType,
-            'per_inch_pixel_height' => $this->per_inch_pixel_height,
-            'device_image' => $this->device_image,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        );
+    public function toArray($details = false) {
+        if ($details) {
+            return array(
+                'id' => $this->id,
+                'device_name' => $this->device_name,
+                'deviceType' => $this->deviceType,
+                'per_inch_pixel_height' => $this->deviceUserPerInchPixelHeight,
+                'device_image' => $this->device_image,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+            );
+        } else {
+            return array(
+                'id' => $this->id,
+                'device_name' => $this->device_name,
+                'deviceType' => $this->deviceType,
+                'per_inch_pixel_height' => $this->deviceUserPerInchPixelHeight,
+            );
+        }
     }
 
     

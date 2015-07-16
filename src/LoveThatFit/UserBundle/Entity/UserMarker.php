@@ -433,4 +433,24 @@ class UserMarker
     {
         return $this->default_marker_svg;
     }
+    
+    public function toDataArray($detail = false) {
+        $a = array();
+        $a['id'] = $this->id;
+        $a['svg_paths'] = $this->svg_paths;
+        $a['marker_json'] = $this->marker_json;
+        $a['mask_x'] = $this->mask_x;
+        $a['mask_y'] = $this->mask_y;
+        $a['rect_x'] = $this->rect_x;
+        $a['rect_y'] = $this->rect_y;
+        $a['rect_height'] = $this->rect_height;
+        $a['rect_width'] = $this->rect_width;
+        if ($detail){
+        $a['default_marker_json'] = $this->default_marker_json;
+        $a['default_marker_svg'] = $this->default_marker_svg;
+        $a['created_at'] = $this->created_at;
+        $a['updated_at'] = $this->updated_at;
+        }
+        return $a;
+    }
 }
