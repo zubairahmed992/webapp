@@ -60,7 +60,15 @@ class MeasurementHelper {
     public function findMaxUserId() {
         return $this->repo->findMaxUserId();
     }
-    #-------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+   public function createNew($user=null) {
+        $measurement = new $this->class();
+        $measurement->setUser($user);
+        $measurement->setCreatedAt(new \DateTime('now'));
+        $measurement->setUpdatedAt(new \DateTime('now'));            
+        return $measurement;
+    }
+#-------------------------------------------------------------------------
     public function saveMeasurement(Measurement $measurement) {
         $measurement->setUpdatedAt(new \DateTime('now'));        
         $this->em->persist($measurement);
