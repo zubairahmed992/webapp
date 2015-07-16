@@ -588,5 +588,7 @@ public function getBrandArraySizeChart() {
 public function getBrandSizeTitleArray($gender = null) {
     return $this->repo->findSizeTitleTarget($gender);
   }
-  
+public function getBrandSizeTitleArrayByGender($gender) {
+    return $this->repo->findSizeTitleTargetByGender($gender);
+  }  
 }

@@ -462,6 +462,32 @@ class SizeChartRepository extends EntityRepository {
             }
         }
     }
+    
+public function findSizeTitleTargetByGender($gender) {
+
+        if ($gender == null) {
+            $query = $this->getEntityManager()
+                    ->createQuery("
+     SELECT sc.id as size_chart_id ,b.name as brand_name,sc.title as title,sc.gender as gender,sc.target as target,sc.bodytype as body_type FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b");
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        } else {
+            $query = $this->getEntityManager()
+                            ->createQuery("
+     SELECT sc.id as size_chart_id ,b.name as brand_name,sc.title as title,sc.gender as gender,sc.target as target,sc.bodytype as body_type FROM LoveThatFitAdminBundle:SizeChart sc
+     JOIN sc.brand b
+     WHERE sc.gender = :gender")->setParameter('gender', $gender);
+            try {
+                return $query->getResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                return null;
+            }
+        }
+    }
 
     public function findSizeChartBrand()
 {

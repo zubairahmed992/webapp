@@ -59,6 +59,8 @@ class WebServiceHelper {
             $user=$this->container->get('user.helper.user')->getPasswordEncoded($user);
             $user->generateAuthenticationToken();
             $this->container->get('user.helper.user')->saveUser($user);
+             //send registration email ....            
+            $this->container->get('mail_helper')->sendRegistrationEmail($user);
             
             #$user->setBirthDate(array_key_exists('dob', $request_array)?new \DateTime($request_array['dob']):null);
             #$user->setDeviceType(array_key_exists('deviceType', $request_array)?$request_array['deviceType']:null);
@@ -93,7 +95,7 @@ class WebServiceHelper {
     #----------------------------------------------------------------------------------------
     
     public function sizeChartsService($request_array) {
-        $sc = $this->container->get('admin.helper.sizechart')->getBrandSizeTitleArray($request_array['gender']);
+        $sc = $this->container->get('admin.helper.sizechart')->getBrandSizeTitleArrayByGender($request_array['gender']);
         if (count($sc) > 0) {
                 return $this->response_array(true, 'Size charts', true, array('size_charts'=>$sc));
         } else {
