@@ -1,11 +1,11 @@
 paper.install(window);
-
+paper.setup('canv_compare');
 $(document).ready(function() {
+    
     load_user_masks();
 });
 
 function load_user_masks(){
-    paper.setup('canv_compare');
     var json_data = jQuery.parseJSON($("#user_data_placeholder").html());    
     for(var i = 0; i < json_data.length; i++) {
         
