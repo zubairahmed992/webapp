@@ -53,14 +53,17 @@ class WebServiceHelper {
         } else {
             $user = $this->container->get('user.helper.user')->createNewUser();
             $user->setEmail($request_array['email']);
-            #$password =  $this->container->get('user.helper.user')->encodeThisPassword($user, $request_array['password']);
-            #$user->setPassword($password);
+            $user->setPassword($request_array['password']);
             $user->setGender(array_key_exists('gender', $request_array)?$request_array['gender']:null);    
             $user->setZipcode(array_key_exists('zipcode', $request_array)?$request_array['zipcode']:null);
+            $user=$this->container->get('user.helper.user')->getPasswordEncoded($user);
+            $user->generateAuthenticationToken();
+            $this->container->get('user.helper.user')->saveUser($user);
+            
             #$user->setBirthDate(array_key_exists('dob', $request_array)?new \DateTime($request_array['dob']):null);
             #$user->setDeviceType(array_key_exists('deviceType', $request_array)?$request_array['deviceType']:null);
        
-            return $this->response_array(true, 'Proceed', true, array('user'=>$user->toArray()));
+            return $this->response_array(true, 'Proceed', true, array('user'=>$user->toArray(true)));
         }
     }
 

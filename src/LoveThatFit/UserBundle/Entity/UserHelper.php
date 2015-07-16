@@ -242,6 +242,13 @@ class UserHelper {
         return $this->encodeThisPassword($user, $user->getPassword());
     }
 
+    public function getPasswordEncoded(User $user) {
+        $factory = $this->container->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($user);
+        $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+        $user->setPassword($password);
+        return $user;
+    }
 //-------------------------------------------------------
     private function encodeThisPassword(User $user, $password) {
         $factory = $this->container->get('security.encoder_factory');
@@ -249,6 +256,8 @@ class UserHelper {
         $password = $encoder->encodePassword($password, $user->getSalt());
         return $password;
     }
+
+    
 
 //-------------------------------------------------------
     public function matchPassword(User $user, $password) {
