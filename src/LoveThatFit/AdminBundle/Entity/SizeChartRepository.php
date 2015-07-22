@@ -517,5 +517,24 @@ public function findSizeTitleTargetByGender($gender) {
         }
     }
     
- 
+ #-----------------------------------------------------------------
+    //------------------------------------------------------------------------
+    public function findOneByMatchingParams($size_title, $brand_name, $gender, $body_type, $target) {      
+    $query = $this->getEntityManager()
+                        ->createQuery("SELECT sc FROM LoveThatFitAdminBundle:SizeChart sc
+                                                                                JOIN sc.brand b 
+     WHERE
+     b.name=:brand_name
+     AND sc.title=:size_title
+     AND sc.gender=:gender
+     AND sc.target=:target
+     AND sc.bodytype=:body_type"
+                        )->setParameters(array('brand_name' => $brand_name, 'size_title' =>$size_title, 'gender' => $gender, 'target' => $target,'body_type'=>$body_type));
+         
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

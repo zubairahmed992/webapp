@@ -288,7 +288,9 @@ function replace_all_user_data(user_detail){
     for(var ukey in u_obj){
         for(var rkey in r_obj){
             if (rkey==ukey){
-                r_obj[rkey]=u_obj[ukey];
+                if(u_obj[ukey]){
+                    r_obj[rkey]=u_obj[ukey];
+                }
             }
         }
     }

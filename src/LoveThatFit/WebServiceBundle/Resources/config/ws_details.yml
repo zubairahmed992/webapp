@@ -42,11 +42,11 @@ ws_user_registration:
       body_shape: pear
       bra_size: 30 b
       body_type: Regular
-      device_id: tempID
+      device_id: 4390390
       sleeve: 0
-      top_brand: Banana Republic
-      bottom_brand: CARMEN MARC VALVO
-      dress_brand: CARMEN MARC VALVO
+      top_brand: Gap
+      bottom_brand: Gap
+      dress_brand: Gap
       top_fitting_size: 0
       bottom_fitting_size: 0
       dress_fitting_size: 0

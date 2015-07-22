@@ -585,10 +585,21 @@ public function getBrandArraySizeChart() {
   
   
   #--- For Web services to sending them brand with its sizes-----#
-public function getBrandSizeTitleArray($gender = null) {
-    return $this->repo->findSizeTitleTarget($gender);
-  }
-public function getBrandSizeTitleArrayByGender($gender) {
-    return $this->repo->findSizeTitleTargetByGender($gender);
-  }  
+
+    public function getBrandSizeTitleArray($gender = null) {
+        return $this->repo->findSizeTitleTarget($gender);
+    }
+
+    #--------------------------------------------------------------
+
+    public function getBrandSizeTitleArrayByGender($gender) {
+        return $this->repo->findSizeTitleTargetByGender($gender);
+    }
+
+    #--------------------------------------------------------------
+
+    public function findOneByMatchingParams($size_title, $brand_name, $gender, $body_type, $target) {
+        return $this->repo->findOneByMatchingParams($size_title, $brand_name, $gender, $body_type, $target);
+    }
+
 }

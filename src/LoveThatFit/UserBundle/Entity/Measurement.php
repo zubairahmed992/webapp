@@ -1411,7 +1411,10 @@ class Measurement {
     }
  #--------------------------------------------------------------------
     
-   
+    public function getCompleteArray() {
+        return $this->getMeasurmentArray()+ $this->getArray();
+    }
+ #--------------------------------------------------------------------
 
     public function getArray() {
         $u = $this->getUser();
