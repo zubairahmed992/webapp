@@ -30,6 +30,11 @@ class User implements UserInterface, \Serializable {
 	 */
 	private $cart;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrder", mappedBy="user")
+	 */
+	private $user_orders;
+
     /**
      * Bidirectional (INVERSE SIDE)
      * 
@@ -1671,174 +1676,144 @@ class User implements UserInterface, \Serializable {
             return null;
     }
  #---------------------------------------------------
-    public function toArray($all=false){
-        
-        $obj = array();
-        
-        $obj['id'] = $this->getId();
-        $obj['email'] = $this->getEmail();
-        $obj['first_name'] = $this->getFirstName();
-        $obj['last_name'] = $this->getLastName();
-        $obj['zipcode'] = $this->getZipcode();
-        $obj['gender'] = $this->getGender();        
-        $obj['birth_date']=$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null;        
-        $obj['auth_token'] = $this->getAuthToken();
-        $obj['auth_token_web_service'] = $this->getAuthTokenWebService();
-        if($all){
-            $obj['salt'] = $this->getSalt();
-            $obj['password'] = $this->getPassword();
-            $obj['image'] = $this->getImage();
-            $obj['avatar'] = $this->getAvatar();                
-            $obj['web_path'] = $this->getDirWebPath();
-            $obj['secret_question'] = $this->getSecretQuestion();
-            $obj['secret_answer'] = $this->getSecretAnswer();
-            $obj['time_spent'] = $this->getTimeSpent();
-            $obj['created_at']=$this->getCreatedAt()?$this->getCreatedAt()->format('Y-m-d'):null;        
-            $obj['updated_at']=$this->getUpdatedAt()?$this->getUpdatedAt()->format('Y-m-d'):null;        
-            $obj['image_updated_at']=$this->getImageUpdatedAt()?$this->getImageUpdatedAt()->format('Y-m-d'):null;                
-            }
-        return $obj;
-        
-    }
-    
-    public function toDataArray($key=true,$device_type=null){
-        if($key){
-            $device_specs=$this->getDeviceSpecs($device_type);
-        return array(
-            'id' => $this->getId(),
-            'email' => $this->getEmail(),
-            'name' => $this->getFullName(),
-            'first_name' => $this->getFirstName(),
-            'last_name' => $this->getLastName(),
-            'zip_code' => $this->getZipcode(),
-            'gender' => $this->getGender(),
-            'auth_token' => $this->getAuthToken(),
-            'birth_date' => $this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,        
-            'weight' => $this->measurement?$this->measurement->getWeight():0,
-            'height' => $this->measurement?$this->measurement->getHeight():0,
-            'waist' => $this->measurement?$this->measurement->getWaist():0,
-            'belt' => $this->measurement?$this->measurement->getBelt():0,
-            'hip' => $this->measurement?$this->measurement->getHip():0,
-            'bust' => $this->measurement?$this->measurement->getBust():0,
-            'chest' => $this->measurement?$this->measurement->getChest():0,
-            'arm' => $this->measurement?$this->measurement->getArm():0,
-            'inseam' => $this->measurement?$this->measurement->getInseam():0,            
-            #'shoulder_height' => $this->measurement?$this->measurement->getShoulderHeight():0,
-            'shoulder_height' => 0,
-            'outseam' => $this->measurement?$this->measurement->getOutseam():0,
-            'sleeve' => $this->measurement?$this->measurement->getSleeve():0,
-            'neck' => $this->measurement?$this->measurement->getNeck():0,
-            'thigh' => $this->measurement?$this->measurement->getThigh():0,
-            'center_front_waist' => $this->measurement?$this->measurement->getCenterFrontWaist():0,
-            'shoulder_across_front' => $this->measurement?$this->measurement->getShoulderAcrossFront():0,
-            'shoulder_across_back' => $this->measurement?$this->measurement->getShoulderAcrossBack():0,
-            'bicep' => $this->measurement?$this->measurement->getBicep():0,
-            'tricep' =>$this->measurement?$this->measurement->getTricep():0,
-            'wrist' => $this->measurement?$this->measurement->getWrist():0,
-            'back_waist' => $this->measurement?$this->measurement->getBackWaist():0,
-            'waist_hip' => $this->measurement?$this->measurement->getWaistHip():0,
-            'knee' =>  $this->measurement?$this->measurement->getKnee():0,
-            'calf' =>  $this->measurement?$this->measurement->getCalf():0,
-            'ankle' => $this->measurement?$this->measurement->getAnkle():0,
+  #---------------------------------------------------
+  public function toArray($all=false){
 
-            'image' => $this->image,
-            'avatar' => $this->avatar,
-            'path' => $this->getUploadDir(),
-            'body_type' =>$this->measurement? $this->measurement->getBodyTypes():'',
-            'body_shape' => $this->measurement?$this->measurement->getBodyShape():'',
-            'bra_size' =>$this->measurement?$this->measurement->getBraSize():'',
-            'bust_height' => $this->measurement?$this->measurement->getBustHeight():0,
-            'waist_height' => $this->measurement?$this->measurement->getWaistHeight():0,
-            'hip_height' => $this->measurement?$this->measurement->getHipHeight():0, 
-            'iphone_foot_height' => $this->measurement?$this->measurement->getIphoneFootHeight():0,
-            'iphone_head_height' => $this->measurement?$this->measurement->getIphoneHeadHeight():0,
-            
-            'top_brand_id' => $this->measurement && $this->measurement->getTopBrand()?$this->measurement->getTopBrand()->getId():0,
-            'top_brand' => $this->measurement && $this->measurement->getTopBrand()?$this->measurement->getTopBrand()->getName():'',
-            'top_fitting_size_chart_id' => $this->measurement && $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getId():0,
-            'top_fitting_size' => $this->measurement && $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getTitle():'',
-            'bottom_brand_id' => $this->measurement && $this->measurement->getBottomBrand()?$this->measurement->getBottomBrand()->getId():0,
-            'bottom_brand' => $this->measurement && $this->measurement->getBottomBrand()?$this->measurement->getBottomBrand()->getName():'',
-            'bottom_fitting_size_chart_id' => $this->measurement && $this->measurement->getBottomFittingSizeChart()?$this->measurement->getBottomFittingSizeChart()->getId():0,
-            'bottom_fitting_size' => $this->measurement && $this->measurement->getBottomFittingSizeChart()?$this->measurement->getBottomFittingSizeChart()->getTitle():'',
-            'dress_brand_id' => $this->measurement && $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getId():0,
-            'dress_brand' => $this->measurement && $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getName():'',
-            'dress_fitting_size_chart_id' => $this->measurement && $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getId():0,
-            'dress_fitting_size' => $this->measurement && $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getTitle():'',
-            
-            'device_type'=>$device_type,
-            'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
-        );
-        }else{
-            return array(
-                $this->getId(),
-                $this->getEmail(),
-                $this->getFullName(),
-                $this->getZipcode(),
-                $this->getGender(),        
-                $this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,        
-                $this->measurement?$this->measurement->getWeight():0,
-                $this->measurement?$this->measurement->getHeight():0,
-                $this->measurement?$this->measurement->getWaist():0,
-                $this->measurement?$this->measurement->getBelt():0,
-                $this->measurement?$this->measurement->getHip():0,
-                $this->measurement?$this->measurement->getBust():0,
-                $this->measurement?$this->measurement->getChest():0,
-                $this->measurement?$this->measurement->getArm():0,
-                $this->measurement?$this->measurement->getInseam():0,            
-                #$this->measurement?$this->measurement->getShoulderHeight():0,
-                0,
-                $this->measurement?$this->measurement->getOutseam():0,
-                $this->measurement?$this->measurement->getSleeve():0,
-                $this->measurement?$this->measurement->getNeck():0,
-                $this->measurement?$this->measurement->getThigh():0,
-                $this->measurement?$this->measurement->getCenterFrontWaist():0,
-                $this->measurement?$this->measurement->getShoulderAcrossFront():0,
-                $this->measurement?$this->measurement->getShoulderAcrossBack():0,
-                $this->measurement?$this->measurement->getBicep():0,
-                $this->measurement?$this->measurement->getTricep():0,
-                $this->measurement?$this->measurement->getWrist():0,
-                $this->measurement?$this->measurement->getBackWaist():0,
-                $this->measurement?$this->measurement->getWaistHip():0,
-                $this->measurement?$this->measurement->getKnee():0,
-                $this->measurement?$this->measurement->getCalf():0,
-                $this->measurement?$this->measurement->getAnkle():0,
-            );    
-        }
-        
-    }
-    #------------------------------------------------------
-    public function toDetailArray($options){
-        $a=array();
-        if (in_array('user', $options)){
-            $a=array_merge($a, $this->toArray());
-        }
-        
-        if (in_array('measurement', $options)){
-            if ($this->measurement){
-            $a=array_merge($a, $this->measurement->getArray());
-            }
-        }
-        
-        if (in_array('mask_marker', $options)){
-            if ($this->user_marker){
-               $mma = $this->user_marker->toDataArray();
-                unset($mma['id']);
-               $a=array_merge($a, $mma);
-            }
-        }
+	$obj = array();
 
-        if (in_array('device', $options)){
-            $ud=$this->getDeviceSpecs();
-            if ($ud){
-                $ud_array= $ud->toArray();
-                unset($ud_array['id']);
-                $a=array_merge($a, $ud_array);
-            }
-        }        
-        return $a;
-    }
-    #---------------------------0--------------------------------
+	$obj['id'] = $this->getId();
+	$obj['email'] = $this->getEmail();
+	$obj['first_name'] = $this->getFirstName();
+	$obj['last_name'] = $this->getLastName();
+	$obj['zipcode'] = $this->getZipcode();
+	$obj['gender'] = $this->getGender();
+	$obj['birth_date']=$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null;
+	$obj['auth_token'] = $this->getAuthToken();
+	$obj['auth_token_web_service'] = $this->getAuthTokenWebService();
+	if($all){
+	  $obj['salt'] = $this->getSalt();
+	  $obj['password'] = $this->getPassword();
+	  $obj['image'] = $this->getImage();
+	  $obj['avatar'] = $this->getAvatar();
+	  $obj['web_path'] = $this->getDirWebPath();
+	  $obj['secret_question'] = $this->getSecretQuestion();
+	  $obj['secret_answer'] = $this->getSecretAnswer();
+	  $obj['time_spent'] = $this->getTimeSpent();
+	  $obj['created_at']=$this->getCreatedAt()?$this->getCreatedAt()->format('Y-m-d'):null;
+	  $obj['updated_at']=$this->getUpdatedAt()?$this->getUpdatedAt()->format('Y-m-d'):null;
+	  $obj['image_updated_at']=$this->getImageUpdatedAt()?$this->getImageUpdatedAt()->format('Y-m-d'):null;
+	}
+	return $obj;
+
+  }
+
+  public function toDataArray($key=true,$device_type=null){
+	if($key){
+	  $device_specs=$this->getDeviceSpecs($device_type);
+	  return array(
+		'id' => $this->getId(),
+		'email' => $this->getEmail(),
+		'name' => $this->getFullName(),
+		'first_name' => $this->getFirstName(),
+		'last_name' => $this->getLastName(),
+		'zip_code' => $this->getZipcode(),
+		'gender' => $this->getGender(),
+		'auth_token' => $this->getAuthToken(),
+		'birth_date' => $this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,
+		'weight' => $this->measurement?$this->measurement->getWeight():0,
+		'height' => $this->measurement?$this->measurement->getHeight():0,
+		'waist' => $this->measurement?$this->measurement->getWaist():0,
+		'belt' => $this->measurement?$this->measurement->getBelt():0,
+		'hip' => $this->measurement?$this->measurement->getHip():0,
+		'bust' => $this->measurement?$this->measurement->getBust():0,
+		'chest' => $this->measurement?$this->measurement->getChest():0,
+		'arm' => $this->measurement?$this->measurement->getArm():0,
+		'inseam' => $this->measurement?$this->measurement->getInseam():0,
+		#'shoulder_height' => $this->measurement?$this->measurement->getShoulderHeight():0,
+		'shoulder_height' => 0,
+		'outseam' => $this->measurement?$this->measurement->getOutseam():0,
+		'sleeve' => $this->measurement?$this->measurement->getSleeve():0,
+		'neck' => $this->measurement?$this->measurement->getNeck():0,
+		'thigh' => $this->measurement?$this->measurement->getThigh():0,
+		'center_front_waist' => $this->measurement?$this->measurement->getCenterFrontWaist():0,
+		'shoulder_across_front' => $this->measurement?$this->measurement->getShoulderAcrossFront():0,
+		'shoulder_across_back' => $this->measurement?$this->measurement->getShoulderAcrossBack():0,
+		'bicep' => $this->measurement?$this->measurement->getBicep():0,
+		'tricep' =>$this->measurement?$this->measurement->getTricep():0,
+		'wrist' => $this->measurement?$this->measurement->getWrist():0,
+		'back_waist' => $this->measurement?$this->measurement->getBackWaist():0,
+		'waist_hip' => $this->measurement?$this->measurement->getWaistHip():0,
+		'knee' =>  $this->measurement?$this->measurement->getKnee():0,
+		'calf' =>  $this->measurement?$this->measurement->getCalf():0,
+		'ankle' => $this->measurement?$this->measurement->getAnkle():0,
+
+		'image' => $this->image,
+		'avatar' => $this->avatar,
+		'path' => $this->getUploadDir(),
+		'body_type' =>$this->measurement? $this->measurement->getBodyTypes():'',
+		'body_shape' => $this->measurement?$this->measurement->getBodyShape():'',
+		'bra_size' =>$this->measurement?$this->measurement->getBraSize():'',
+		'bust_height' => $this->measurement?$this->measurement->getBustHeight():0,
+		'waist_height' => $this->measurement?$this->measurement->getWaistHeight():0,
+		'hip_height' => $this->measurement?$this->measurement->getHipHeight():0,
+		'iphone_foot_height' => $this->measurement?$this->measurement->getIphoneFootHeight():0,
+		'iphone_head_height' => $this->measurement?$this->measurement->getIphoneHeadHeight():0,
+
+		'top_brand_id' => $this->measurement && $this->measurement->getTopBrand()?$this->measurement->getTopBrand()->getId():0,
+		'top_brand' => $this->measurement && $this->measurement->getTopBrand()?$this->measurement->getTopBrand()->getName():'',
+		'top_fitting_size_chart_id' => $this->measurement && $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getId():0,
+		'top_fitting_size' => $this->measurement && $this->measurement->getTopFittingSizeChart()?$this->measurement->getTopFittingSizeChart()->getTitle():'',
+		'bottom_brand_id' => $this->measurement && $this->measurement->getBottomBrand()?$this->measurement->getBottomBrand()->getId():0,
+		'bottom_brand' => $this->measurement && $this->measurement->getBottomBrand()?$this->measurement->getBottomBrand()->getName():'',
+		'bottom_fitting_size_chart_id' => $this->measurement && $this->measurement->getBottomFittingSizeChart()?$this->measurement->getBottomFittingSizeChart()->getId():0,
+		'bottom_fitting_size' => $this->measurement && $this->measurement->getBottomFittingSizeChart()?$this->measurement->getBottomFittingSizeChart()->getTitle():'',
+		'dress_brand_id' => $this->measurement && $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getId():0,
+		'dress_brand' => $this->measurement && $this->measurement->getDressBrand()?$this->measurement->getDressBrand()->getName():'',
+		'dress_fitting_size_chart_id' => $this->measurement && $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getId():0,
+		'dress_fitting_size' => $this->measurement && $this->measurement->getDressFittingSizeChart()?$this->measurement->getDressFittingSizeChart()->getTitle():'',
+
+		'device_type'=>$device_type,
+		'height_per_inch'=>$device_specs?$device_specs->getDeviceUserPerInchPixelHeight():0,
+	  );
+	}else{
+	  return array(
+		$this->getId(),
+		$this->getEmail(),
+		$this->getFullName(),
+		$this->getZipcode(),
+		$this->getGender(),
+		$this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,
+		$this->measurement?$this->measurement->getWeight():0,
+		$this->measurement?$this->measurement->getHeight():0,
+		$this->measurement?$this->measurement->getWaist():0,
+		$this->measurement?$this->measurement->getBelt():0,
+		$this->measurement?$this->measurement->getHip():0,
+		$this->measurement?$this->measurement->getBust():0,
+		$this->measurement?$this->measurement->getChest():0,
+		$this->measurement?$this->measurement->getArm():0,
+		$this->measurement?$this->measurement->getInseam():0,
+		#$this->measurement?$this->measurement->getShoulderHeight():0,
+		0,
+		$this->measurement?$this->measurement->getOutseam():0,
+		$this->measurement?$this->measurement->getSleeve():0,
+		$this->measurement?$this->measurement->getNeck():0,
+		$this->measurement?$this->measurement->getThigh():0,
+		$this->measurement?$this->measurement->getCenterFrontWaist():0,
+		$this->measurement?$this->measurement->getShoulderAcrossFront():0,
+		$this->measurement?$this->measurement->getShoulderAcrossBack():0,
+		$this->measurement?$this->measurement->getBicep():0,
+		$this->measurement?$this->measurement->getTricep():0,
+		$this->measurement?$this->measurement->getWrist():0,
+		$this->measurement?$this->measurement->getBackWaist():0,
+		$this->measurement?$this->measurement->getWaistHip():0,
+		$this->measurement?$this->measurement->getKnee():0,
+		$this->measurement?$this->measurement->getCalf():0,
+		$this->measurement?$this->measurement->getAnkle():0,
+	  );
+	}
+
+  }
+  #------------------------------------------------------
      public function resize_image() {
 
         $filename = $this->getAbsolutePath();

@@ -21,3 +21,19 @@ cart_show:
 cart_delete:
     pattern:  /cart/delete/{id}
     defaults: { _controller: LoveThatFitCartBundle:Cart:delete}
+
+order_default:
+    pattern:  /billing
+    defaults: { _controller: LoveThatFitCartBundle:Order:index}
+
+order_save_billing:
+    pattern:  /billing/save
+    defaults: { _controller: LoveThatFitCartBundle:Order:savebilling}
+
+payment_default:
+    pattern:  /payment
+    defaults: { _controller: LoveThatFitCartBundle:Payment:index}
+
+payment:
+    pattern:  /paynow
+    defaults: { _controller: LoveThatFitCartBundle:Payment:pay}

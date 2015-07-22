@@ -19,7 +19,8 @@
         "sensio/generator-bundle": "2.1.*",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
-        "sandeepshetty/shopify_api": "dev-master"
+        "sandeepshetty/shopify_api": "dev-master",
+        "braintree/braintree_php": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

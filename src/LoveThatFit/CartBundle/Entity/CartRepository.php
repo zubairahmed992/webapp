@@ -68,5 +68,16 @@ class CartRepository extends EntityRepository
 	  return null;
 	}
   }
+  public function removeCartByUser($user){
+	$record = $this->getEntityManager()
+	  ->createQuery("DELETE FROM LoveThatFitCartBundle:Cart c
+                    WHERE c.user = :user")
+	  ->setParameters(array('user' => $user));
+	try {
+	  return $record->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
 
 }

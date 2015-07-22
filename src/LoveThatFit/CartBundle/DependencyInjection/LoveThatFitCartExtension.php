@@ -25,4 +25,9 @@ class LoveThatFitCartExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
+
+	public function getAlias()
+	{
+	  return 'love_that_fit_cart';
+	}
 }

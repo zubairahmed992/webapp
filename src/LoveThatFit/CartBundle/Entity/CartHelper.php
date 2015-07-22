@@ -54,6 +54,11 @@ class CartHelper {
 
 	  }
 	}
+  //------------------------------- Remove User Cart -----------------------------------------------------///////////
+  public function removeUserCart($user) {
+	return $this->repo->removeCartByUser($user);
+  }
+
 
 #------------------------------Find cart by id--------------------------------#
   public function findCartById($id){
@@ -89,6 +94,17 @@ class CartHelper {
 	foreach($user->getCart() as $ci){
 	  	$cart_array['price'][]=$ci->getProductItem()->getPrice();
 	  	$cart_array['total'][]=$ci->getProductItem()->getPrice()*$ci->getQty();
+	}
+	return $cart_array;
+  }
+#------------------------------Get Formatted Cart Data by User--------------------------------#
+  public function getFormattedCart($user){
+	$cart_array=array();
+	foreach($user->getCart() as $ci){
+	  $cart_array['price'][]=$ci->getProductItem()->getPrice();
+	  $cart_array['total'][]=$ci->getProductItem()->getPrice()*$ci->getQty();
+	  $cart_array['qty'][]=$ci->getQty();
+	  $cart_array['item_id'][]=$ci->getProductItem()->getId();
 	}
 	return $cart_array;
   }

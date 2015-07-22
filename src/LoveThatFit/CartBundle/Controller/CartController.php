@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 //use Braintree_Transaction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class CartController extends Controller
 {
@@ -57,13 +58,17 @@ class CartController extends Controller
 	}
   	public function basketupdateAction(Request $request){
 	  $decoded  = $request->request->all();
+	  $order_amount = $decoded["order_amount"];
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  if(isset($decoded['update']) == 'update'){
 	  	$entity = $this->get('cart.helper.cart')->updateCart($decoded);
 		//$cart=$user->getCart();
 		return $this->redirect($this->generateUrl('cart_show'));
 	  }elseif(isset($decoded['checkout']) == 'checkout'){
-		return $this->redirect($this->generateUrl('checkout'));
+		//echo "Next Screen will come here";die;
+		$session = $this->getRequest()->getSession();
+		$session->set('order_amount', $order_amount);
+		return $this->redirect($this->generateUrl('order_default'));
 	  }else{
 		return $this->redirect($this->generateUrl('cart_show'));
 	  }

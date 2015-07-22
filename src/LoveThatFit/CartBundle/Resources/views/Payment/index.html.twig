@@ -1,0 +1,77 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+
+{% block profile_heading %}
+
+    <h1>Order Detail</h1>
+{% endblock %}
+{% block profile_section %}
+    {% if app.session.hasFlash('warning') %}
+        <div class="alert alert-error">
+            {{ app.session.flash('warning') }}
+        </div>
+    {% endif %}
+    {% if app.session.hasFlash('success') %}
+        <div class="success_alert">
+            {{ app.session.flash('success') }}
+        </div>
+    {% endif %}
+
+
+    <table width="700" border="0" class="user_product_hd">
+        <tr>
+            <td>Image</td>
+            <td>SKU</td>
+            <td>Product</td>
+            <td>Quantity</td>
+            <td>Unit Price</td>
+            <td>Sub Total</td>
+
+
+        </tr>
+
+            {% for c in cart %}
+            <tr>
+                <td><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                <td>{{ c.productItem.sku }}</td>
+                <td>{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
+                <td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> {{ c.qty }} </td>
+                <td>${{ c.productItem.price}}</td>
+                <td>${{ c.productItem.price * c.qty}}</td>
+
+
+
+            </tr>
+
+        {% else %}
+            <tr><td align="center" colspan="5"><p>There are no records</p></td></tr>
+        {% endfor %}
+        <tr><td colspan="6" align="right">Total:<strong>${{ grand_total }} </strong></td></tr>
+
+            </table>
+
+    <table width="700" border="0" >
+        <tr><td>
+                <h1>User Detail</h1><br>
+                Name:{{ name }}
+            </td></tr>
+            <tr><td>Address:{{ address }} {{ state }} {{ city }} {{ country }} {{ postalcode }}</td></tr>
+    </table>
+        <div id="paypal-container"></div>
+        <form id="checkout" method="post" action="{{ path('payment')}}">
+            <div id="payment-form"></div>
+            <input type="hidden" name="order_amount" value="{{ grand_total }}"><input type="submit" value="Pay ${{ grand_total }}">
+        </form>
+
+        <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+        <script>
+            var clientToken = "{{ token }}";
+
+            braintree.setup(clientToken, "dropin", {
+                container: "payment-form"
+            });
+        </script>
+
+
+
+
+{% endblock %}

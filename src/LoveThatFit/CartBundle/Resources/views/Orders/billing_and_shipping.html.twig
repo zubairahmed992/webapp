@@ -1,0 +1,199 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+
+{% block profile_heading %}
+
+    {#<h1>Billing Information</h1>#}
+{% endblock %}
+{% block profile_section %}
+    <script type="text/javascript">
+     function showShipping(chkbox){
+         if(chkbox.checked == true) {
+             $('#billing_shipping_first_name').val($('#billing_billing_first_name').val());
+             $('#billing_shipping_last_name').val($('#billing_billing_last_name').val());
+             $('#billing_shipping_company').val($('#billing_billing_company').val());
+             $('#billing_shipping_address1').val($('#billing_billing_address1').val());
+             $('#billing_shipping_address2').val($('#billing_billing_address2').val());
+             $('#billing_shipping_city').val($('#billing_billing_city').val());
+             $('#billing_shipping_postcode').val($('#billing_billing_postcode').val());
+             $('#billing_shipping_country').val($('#billing_billing_country').val());
+             $('#billing_shipping_state').val($('#billing_billing_state').val());
+         }
+         if(chkbox.checked == false) {
+             $('#billing_shipping_first_name').val('');
+             $('#billing_shipping_last_name').val('');
+             $('#billing_shipping_company').val('');
+             $('#billing_shipping_address1').val('');
+             $('#billing_shipping_address2').val('');
+             $('#billing_shipping_city').val('');
+             $('#billing_shipping_postcode').val('');
+             $('#billing_shipping_country').val('');
+             $('#billing_shipping_state').val('');
+         }
+
+     }
+
+    </script>
+    {% if app.session.hasFlash('warning') %}
+        <div class="alert alert-error">
+            {{ app.session.flash('warning') }}
+        </div>
+    {% endif %}
+    {% if app.session.hasFlash('success') %}
+        <div class="success_alert">
+            {{ app.session.flash('success') }}
+        </div>
+    {% endif %}
+
+
+    <div>
+
+        {#<div class="btn_wrapper">#}
+            {#<a href="{{path('cart_show')}}" class="btn">back</a>#}
+        {#</div>#}
+        <div class="clearfix"></div>
+        <form action="{{ path('order_save_billing') }}" method="post" {{ form_enctype(form) }} onsubmit="return validates();">
+            {{ form_errors(form) }}
+
+            <div id="detail_wrapper" class="detail_wrap">
+                <div id="product_content">
+                    <div id="pro_detail">
+                        <div class="edt_container">
+                            <h1>Billing Information</h1><br>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">First Name</div>
+                                <div class="span3">{{ form_widget(form.billing_first_name) }}{{ form_errors(form.billing_first_name) }}</div>
+
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Last Name</div>
+                                <div class="span3">{{ form_widget(form.billing_last_name) }}{{ form_errors(form.billing_last_name) }}</div>
+
+                            </div>
+
+                            {#<div class="row-fluid show-grid">#}
+                                {#<div class="span3">Company</div>#}
+                                {#<div class="span3">{{ form_widget(form.billing_company) }}{{ form_errors(form.billing_company) }}</div>#}
+
+                            {#</div>#}
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Address 1</div>
+                                <div class="span3">{{ form_widget(form.billing_address1) }}{{ form_errors(form.billing_address1) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Address 2</div>
+                                <div class="span3">{{ form_widget(form.billing_address2) }}{{ form_errors(form.billing_address2) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">City</div>
+                                <div class="span3">{{ form_widget(form.billing_city) }}{{ form_errors(form.billing_city) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">PostCode</div>
+                                <div class="span3">{{ form_widget(form.billing_postcode) }}{{ form_errors(form.billing_postcode) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Country</div>
+                                <div class="span3">{{ form_widget(form.billing_country) }}{{ form_errors(form.billing_country) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">State</div>
+                                <div class="span3">{{ form_widget(form.billing_state) }}{{ form_errors(form.billing_state) }}</div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3"><input type="checkbox" name="shipping" value="1" onclick="showShipping(this)"> Shipping Information same as Billing above</div><br>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="shipping">
+                            <h1>Shipping Information</h1><br>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">First Name</div>
+                                <div class="span3">{{ form_widget(form.shipping_first_name) }}{{ form_errors(form.shipping_first_name) }}</div>
+
+                            </div>
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Last Name</div>
+                                <div class="span3">{{ form_widget(form.shipping_last_name) }}{{ form_errors(form.shipping_last_name) }}</div>
+
+                            </div>
+
+                            {#<div class="row-fluid show-grid">#}
+                                {#<div class="span3">Company</div>#}
+                                {#<div class="span3">{{ form_widget(form.shipping_company) }}{{ form_errors(form.shipping_company) }}</div>#}
+
+                            {#</div>#}
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Address 1</div>
+                                <div class="span3">{{ form_widget(form.shipping_address1) }}{{ form_errors(form.shipping_address1) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Address 2</div>
+                                <div class="span3">{{ form_widget(form.shipping_address2) }}{{ form_errors(form.shipping_address2) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">City</div>
+                                <div class="span3">{{ form_widget(form.shipping_city) }}{{ form_errors(form.shipping_city) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">PostCode</div>
+                                <div class="span3">{{ form_widget(form.shipping_postcode) }}{{ form_errors(form.shipping_postcode) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">Country</div>
+                                <div class="span3">{{ form_widget(form.shipping_country) }}{{ form_errors(form.shipping_country) }}</div>
+
+                            </div>
+
+                            <div class="row-fluid show-grid">
+                                <div class="span3">State</div>
+                                <div class="span3">{{ form_widget(form.shipping_state) }}{{ form_errors(form.shipping_state) }}</div>
+
+                            </div>
+                            </div>
+
+                            <div class="row-fluid show-grid">
+
+                                <div class="span3">&nbsp;</div>
+
+                                {{ form_rest(form) }}
+                                <div class="span3">
+
+                                    <div style="margin:0px 0px 0px 0px;"><input type="hidden" name="order_amount" value="{{ order_amount }}"> <input type="submit" value="SAVE" class="btn btn-large btn-primary"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div><!-- End pro_detail -->
+            </div><!-- End product_content -->
+
+        </form>
+    </div>
+
+
+{% endblock %}

@@ -14,3 +14,19 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\CartBundle\Entity\Cart
             container: "@service_container"
+
+     cart.helper.order:
+        class: LoveThatFit\CartBundle\Entity\OrderHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\CartBundle\Entity\UserOrder
+            container: "@service_container"
+
+     cart.helper.orderDetail:
+        class: LoveThatFit\CartBundle\Entity\OrderDetailHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\CartBundle\Entity\UserOrderDetail
+            container: "@service_container"
