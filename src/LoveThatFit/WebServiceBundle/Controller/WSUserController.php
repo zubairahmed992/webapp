@@ -49,5 +49,12 @@ class WSUserController extends Controller {
         return new response($json_data);
        
    } 
+#~~~~~~~~~~~~~~~~~~~ ws_image_upload   /ws/image_upload
+    public function imageUploadAction(){
+        $decoded  = $this->process_request();
+       
+        return new response('dooob jaa');
+       
+   }    
 }
 

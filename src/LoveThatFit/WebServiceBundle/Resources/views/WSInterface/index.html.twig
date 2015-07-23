@@ -95,6 +95,13 @@
             </div>
         </div>
         
+        <div  id='service_file_pannel' class="row c_pannel hide_pannel">
+            <div class="span1"></div>
+            <div  id='file_pannel' class="span4">
+                <input type="file" id="file_to_upload" name="file_to_upload">
+            </div>
+        </div>    
+        
         <div  id='service_response_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
@@ -119,6 +126,9 @@
             <div class="span1"></div>
             <div  id='backend_process' class="span4"></div>
         </div>
+        
+      
+            
 </div>        
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
         <script  type='text/javascript'>
@@ -170,6 +180,7 @@ $( "#btn_hit_service" ).click(function() {
                 $('#service_backend_process_pannel').css("display", display);
                 $('#service_request_pannel').css("display", display);
                 $('#service_response_pannel').css("display", display);
+                $('#service_file_pannel').css("display", (service_detail!=null && service_detail.file_upload)?'block':'none');
         }         
        
           //--------------------------------------------------
@@ -187,6 +198,26 @@ $( "#btn_hit_service" ).click(function() {
 
 function hit_service(){    
         var value_ar = JSON.parse($("#txt_request_params").val());        
+        restartTimer();//~~~~~~~~~~~~~~>
+        $.ajax({
+               type: "POST",
+               url: ".." + $("#service_url").text(),
+               data: value_ar,  
+               dataType: "json",
+               success: function(data){
+                   display_response(data);                    
+                },
+               failure: function(errMsg) {
+                   display_response(errMsg);
+               }
+         });    
+}
+//-------------------------------------------------------------
+
+function hit_file_upload_service(){    
+        var value_ar = JSON.parse($("#txt_request_params").val());        
+         input_file = document.getElementById('file_input');
+        value_ar['file']=input_file.files[0];
         restartTimer();//~~~~~~~~~~~~~~>
         $.ajax({
                type: "POST",
@@ -278,7 +309,7 @@ function hit_user_service(){
      //--------------------------------------------------------- 
 
         $("#btn_generate_form").click(function() {  
-          test_data();  
+          hit_file_upload_service();
         });
 //-----------------------------------------
 

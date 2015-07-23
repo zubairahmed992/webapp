@@ -13,3 +13,7 @@ ws_user_registration:
 ws_size_charts:
     pattern:  /ws/size_charts
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sizeCharts }
+
+ws_image_upload:
+    pattern:  /ws/image_upload
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:imageUpload }
