@@ -58,9 +58,11 @@ class WebServiceHelper {
             #---- 2) send registration email ....            
             # $this->container->get('mail_helper')->sendRegistrationEmail($user);                    
             #--- 3) Size charts
-                
+                #size charts brands & size being saved
+                //sizecharts measurement extraction
             #--- 4) Measurement
             $measurement=$this->createUserMeasurementWithParams($request_array,$user);
+            
             #--- 5) Device
             $user_device=$this->createUserDeviceWithParams($request_array,$user);
             
@@ -131,6 +133,12 @@ class WebServiceHelper {
         $measurement->setAnkle(array_key_exists('ankle', $request_array) ? $request_array['ankle'] : $measurement->getAnkle());
         $measurement->setIphoneFootHeight(array_key_exists('iphone_foot_height', $request_array) ? $request_array['iphone_foot_height'] : $measurement->getIphoneFootHeight());
         $measurement=$this->setSizeChartToUserMeasurement($measurement, $request_array);
+        
+        $ar['manual']=$measurement->getArray();
+        $ar['size_charts']=$this->container->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
+        $measurement->setMeasurementJson(json_encode($ar));
+        $measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
+            
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         return $measurement;
     }
