@@ -216,21 +216,27 @@ function hit_service(){
 
 function hit_file_upload_service(){    
         var value_ar = JSON.parse($("#txt_request_params").val());        
-         input_file = document.getElementById('file_input');
-        value_ar['file']=input_file.files[0];
-        restartTimer();//~~~~~~~~~~~~~~>
-        $.ajax({
-               type: "POST",
-               url: ".." + $("#service_url").text(),
-               data: value_ar,  
-               dataType: "json",
-               success: function(data){
-                   display_response(data);                    
-                },
-               failure: function(errMsg) {
-                   display_response(errMsg);
-               }
-         });    
+         input_file = document.getElementById('file_to_upload');
+
+        if (input_file){
+           // value_ar['file']=input_file.files[0];
+           $.ajax({
+                       type: "POST",
+                       url: ".." + $("#service_url").text(),
+                       data: value_ar,  
+                       processData: false,
+                       contentType: false, 
+                       success: function(data){
+                           display_response(data);                    
+                        },
+                       failure: function(errMsg) {
+                           display_response(errMsg);
+                       }
+                 });    
+        }else {
+            console.log("file_to_upload does not exist")
+        }
+
 }
 
 //-------------------------------------

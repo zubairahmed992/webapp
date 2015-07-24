@@ -161,6 +161,48 @@ class DeviceController extends Controller {
         $this->get('user.helper.user')->setImageUpdateTimeToCurrent($entity);
         return new Response($response);
     }
+    
+    #----------------------------------------------------------------------------
+   public function fooAction() {
+        $user = $this->get('webservice.helper.user')->find(1243);
+        $device_type = 'iphone5';$edit_type = 'registration';
+        $auth_token = $user->getAuthToken();
+        if ($auth_token) {                        
+            if (!$user) {
+                return new Response('Authentication error');
+            }
+            $measurement = $user->getMeasurement();
+            $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFormType(), $measurement);
+            $measurement_horizontal_form = $this->createForm(new MeasurementHorizantalPositionFormType(), $measurement);
+            $form = $this->createForm(new RegistrationStepFourType(), $user);
+            $measurement_form = $this->createForm(new MeasurementStepFourType(), $measurement);
+            $marker = $this->get('user.marker.helper')->getByUser($user);
+            $default_marker = $this->get('user.marker.helper')->getDefaultValuesBaseOnBodyType($user);
+            $device_spec = $user->getDeviceSpecs($device_type);
+            $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
+
+            return $this->render('LoveThatFitUserBundle:Device:device_foo.html.twig', array(
+                        'form' => $form->createView(),
+                        'measurement_form' => $measurement_form->createView(),
+                        'measurement_vertical_form' => $measurement_vertical_form->createView(),
+                        'measurement_horizontal_form' => $measurement_horizontal_form->createView(),
+                        'entity' => $user,
+                        'measurement' => $measurement,
+                        'edit_type' => $edit_type,
+                        'marker' => $marker,
+                        'default_marker' => $default_marker,
+                        'user_pixcel_height' => $device_spec->getUserPixcelHeight(),
+                        'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
+                        'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
+                        'per_inch_pixcel' => $device_spec->getDeviceUserPerInchPixelHeight(),
+                        'device_type' => $device_type,
+                        'device_screen_height' => $device_screen_height['pixel_height'],
+                    ));
+        } else {
+            return new Response('Authentication error');
+        }
+    }
+
 }
 
 ?>

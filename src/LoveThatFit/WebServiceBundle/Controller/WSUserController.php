@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WSUserController extends Controller {
 
-    
+     
     
     private function process_request(){
         $request = $this->getRequest();
@@ -49,12 +49,12 @@ class WSUserController extends Controller {
         return new response($json_data);
        
    } 
-#~~~~~~~~~~~~~~~~~~~ ws_image_upload   /ws/image_upload
-    public function imageUploadAction(){
+#~~~~~~~~~~~~~~~~~~~ ws_image_uploader   /ws/image_uploader
+    public function imageUploaderAction(){
         $decoded  = $this->process_request();
-       
-        return new response('dooob jaa');
-       
-   }    
+        
+        return new response(implode(",", $decoded));       
+   } 
+     
 }
 

@@ -62,8 +62,8 @@ ws_size_charts:
     request_type: post
     description: get all the size charts based on gender. 
 
-ws_image_upload:
-   pattern:  /ws/image_upload
+ws_image_uploader:
+   pattern:  /ws/image_uploader
    params:
      email: iphone@gmail.com
      device_type: iphone5

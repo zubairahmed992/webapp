@@ -22,6 +22,9 @@ device_browser_image_update:
     pattern:   /device_browser/image_update
     defaults: { _controller: LoveThatFitUserBundle:Device:updateImage }
 
+device_browser_foo:
+    pattern:   /device_browser/foo
+    defaults: { _controller: LoveThatFitUserBundle:Device:foo }
 
 ajax_fitting_room_bg_cropped_image_update:
     pattern:  /ajax/fitting_room/bg_cropped_image_update

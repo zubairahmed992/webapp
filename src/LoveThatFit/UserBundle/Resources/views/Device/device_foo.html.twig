@@ -1,0 +1,144 @@
+{% extends 'LoveThatFitUserBundle::base_mask_marker.html.twig' %}
+
+{% block mask_marker_view %}
+<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_marker.js') }}" canvas="canv_mask"></script>
+
+<script>
+    function me_triggered(){
+        //window.location.href = window.location.href + "#camera";
+        alert(window.location.href);
+    }
+    
+</script>
+<div id="page_wrap">
+    <div id="loading_bar"><img src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" /></div>
+</div>
+<div class="canvas" style="display: none;">
+    <canvas  id="canvas-1" width="364" height="505" style="display: inline-block; -moz-user-select: none; left: -1px;"></canvas>
+    <button id="me_button" onclick="to_image()">Draw to Image</button>
+    <image id="updated_img" width="320" height="568" />
+    <textarea id="text_area" style="boder: 4px solid #ffc00;">afadfasfs</textarea>
+</div>
+<input id="dv_user_px_height" type="hidden" value="{{ user_pixcel_height }}" />
+<input id="dv_top_bar" type="hidden" value="{{ top_bar }}" />
+<input id="dv_bottom_bar" type="hidden" value="{{ bottom_bar }}" />
+<input id="dv_per_inch_px" type="hidden" value="{{ per_inch_pixcel }}" />
+<input id="dv_type" type="hidden" value="{{ device_type }}" />
+<input id="dv_scr_h" type="hidden" value="{{ device_screen_height }}" />
+<input id="dv_edit_type" type="hidden" value="{{ edit_type }}" />
+
+<input id="user_auth_token" type="hidden" value="{{ entity.authToken }}" />
+<input id="user_height_frm_3" type="hidden" value="{{ entity.measurement.height }}" />
+<input id="user_back_frm_3" type="hidden" value="{{ entity.measurement.shoulderAcrossBack }}" />
+<input id="p_selected_pic_h" type="hidden" value="{{marker.rectHeight}}" />
+<input id="p_selected_pic_w" type="hidden" value="{{marker.rectWidth}}" />
+<input id="p_selected_pic_x" type="hidden" value="{{marker.rectX}}" />
+<input id="p_selected_pic_y" type="hidden" value="{{marker.rectY}}" />
+<input id="mask_x" type="hidden" value="{{marker.maskX}}" />
+<input id="mask_y" type="hidden" value="{{marker.maskY}}" />
+<input id="img_path_paper" type="hidden" value="{{marker.SvgPaths}}" />
+<input id="img_path_json" type="hidden" value="{{marker.markerJson}}" />
+<input id="default_marker_json" type="hidden" value="{{marker.defaultMarkerJson}}" />
+<input id="default_marker_svg" type="hidden" value="{{marker.defaultMarkerSvg}}" />
+<input id="marker_update_url" type="hidden" value="{{ path('device_browser_save_user_marker')}}" />{#path('user_maker_save')#}
+
+<input id="btn_send_params" type="hidden" value="send" />
+<div id="default_user_path" style="display:none;">{{default_marker.SvgPaths}}</div>
+<div style="display:none;" id="user_path">M151.614,270.262c-6.62,4.646-8.099,4.489-4.747-10.494c-0.07-4.79-5.163-12.409-1.999-24.485c0.053-1.571-5.985-16.437-12.714-50.684c-2.128-10.832-6.178-62.905-8.273-61.248c-2.726,2.157-2.236,7.373-2.248,8.745c-0.001,4.201-1.526,17.356-2.249,20.237c-1.276,5.093-1.967,12.611-1.998,15.241c-0.067,5.701,0.677,11.159,2.998,16.99c1.413,3.551,4.748,12.075,5.496,19.238c2.862,27.388,1.294,43.984,1.249,44.723c-0.766,7.277-8.104,48.245-10.493,60.464c-0.167,3.664-0.771,12.576-0.999,17.739c-0.101,7.295-0.117,9.695,0.499,15.74c3.127,30.661-2.252,47.058-5.246,70.957c-0.837,6.674-0.327,16.709-0.5,23.985c-0.118,4.974,1.984,8.982,2.498,11.493c13.695,19.154,3.199,18.183-2.748,18.988c-15.116,2.045-9.75-7.721-14.241-18.988c-1.546-3.879,1.579-9.416,1.499-11.493c-1.072-27.787-4.997-55.634-5.497-65.96c-0.91-12.801,2.903-25.788,1.749-30.981c-4.307-19.38-3.932-42.688-5.496-83.449c-0.066-1.712,0.872-8.745-1.999-8.745c-2.71-0.063-1.956,7.194-1.999,8.745c-1.117,40.668-1.433,62.483-5.746,83.449c-0.78,3.238,2.805,16.614,1.999,30.981c-1.673,29.808-5.862,49.721-5.497,65.96c0.071,3.174,2.115,5.71,1.749,11.493c-0.763,12.052,2.375,21.236-14.741,18.738c-12.492-3.439-7.897-9.562-3.117-18.841c1.692-3.285,3.032-6.67,2.867-11.391c0.334-9.011,0.106-20.041-0.121-23.914c-9.755-54.432-5.811-61.274-5.375-71.278c0.898-6.056,0.668-9.235,0.75-15.241c-0.5-7.161-0.75-10.827-1.249-17.988c-4.736-19.508-9.953-57.974-10.494-60.714c-1.479-7.418,0.483-35.172,1.499-44.722c1.191-11.204,3.291-13.009,4.997-18.989c0.684-2.397,2.549-3.177,3.248-16.99c0.204-4.032-1.087-11.003-1.999-15.241c-1.207-5.608-2.332-15.49-2.249-20.237c0.083-2.152,0.233-6.398-2.499-8.745c-1.91-0.397-6.483,53.751-8.042,61.36c-8.189,39.967-12.969,50.416-12.508,50.628c2.855,11.759-1.935,19.697-2.005,24.489c3.362,14.985,1.878,15.142-4.762,10.495c-17.464-12.221-2.39-22.442-2.004-35.484c0.366-12.408,0.802-42.319,4.761-67.221c0.833-5.236,5.724-38.381,6.245-44.461c2.396-27.968,10.081-25.894,16.567-29.039c0.546-0.097,22.023-5.233,25.235-9.994c2.171-2.912,2.273-8.37,2.499-13.242c-0.457-1.17-2.579-5.746-3.498-12.493c-2.62,1.118-3.647-5.756-3.998-5.996c-2.605-8.126-0.082-6.169,0.25-6.746c-3.309-10.197-3.853-26.484,19.238-26.484c27.639,0,20.271,24.2,19.238,26.484c2.799-0.126,0.349,5.03,0.25,6.746c-2.335,8.929-3.287,4.813-3.998,5.996c-0.942,5.645-1.337,8.107-3.497,12.493c0.102,2.303-0.061,10.189,2.248,13.242c3.509,4.639,22.114,9.061,25.39,9.968c7.817,2.822,13.714,2.715,16.835,29.258c1.473,12.527,5.361,39.249,6.246,44.223c4.414,24.818,4.382,54.803,4.747,67.209C153.997,247.822,169.026,258.043,151.614,270.262z</div>
+
+<input id="shoulder_height" type="hidden" value="" />
+<input id="hip_height" type="hidden" value="" />
+
+
+
+
+
+<input type="hidden" id="hdn_user_cropped_image_url" value="{{ asset(entity.getWebPath)}}"/>
+
+
+<span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span> 
+
+
+
+<form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
+
+                <input type="hidden" id="hdn_serverpath" value="{{asset('')}}"/>
+                <input type="hidden" id="hdn_image_update_url" value="{{ path('device_browser_image_update')}}"/>
+                <input type="hidden" id="hdn_inner_site_index_url" value="{{ path('inner_site_index')}}"/>
+                <input type="hidden" id="hdn_user_original_image_url" value="{{ asset(entity.getOriginalImageWebPath)}}"/>
+                
+                <input type="hidden" id="hdn_entity_id" value="{{entity.id}}"/>
+                
+
+                </form>
+
+
+
+
+
+<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
+
+
+
+<input class="hide_me" id="re_load" style="position: absolute; bottom:10px; padding: 10px; left:10px; z-index: 13100; text-align: center; font-size: 16px;" type="button" value="Reload Page" onClick="window.location.reload();">
+<a class="hide_me" id="scr1_but_camera_options" style="position: absolute; bottom:160px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" onClick="window.location.reload();">asdfasdf</a>
+<a class="hide_me" id="scr1_but_save_mask" style="position: absolute; bottom:120px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" onClick="window.location.reload();">asdfasdf</a>
+<input type="text" class="hide_me" id="svg_path_data" value="" />
+
+
+
+<!--
+<a href="{{ path('device_browser_svg_path', {'auth_token': app.request.get('auth_token')}) }}">SVG path interface</a>
+<input id="scr1_but_save_mask" style="position: absolute; bottom:80px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" type="button" value="Save"onClick="document.location.me_triggered();">
+
+<input id="scr1_but_how_it_works" style="position: absolute; bottom:120px; padding: 10px; right:20px; z-index: 1100; text-align: center; font-size: 20px;" type="button" value="How It Works"onClick="window.location.me_triggered();">
+
+
+
+
+<input id="rgt_arm_ref" type="text" value="M146.813,100.852c11.753,3.33,11.383,22.141,14.962,48.269c0.523,3.559,0.811,10.811,3.926,26.468c2.568,24.191,4.297,18.982,4.571,65.666c3.014,12.91,12.935,25.821-2.017,35.107c-1.756,1.131-13.129,11.084-4.68-10.356c-0.65-2.259-5.317-14.769-2.377-24.778c-0.454-1.316-6.086-15.189-14.012-62.175c-2.641-19.414-2.148-18.767-2.986-26.381c-0.148-1.718-3.127-21.49-4.414-21.489L146.813,100.852z"/>
+
+-->
+<script>
+	
+	</script>
+
+<script type="text/paperscript" canvas="canvas-1">
+var raster = new Raster('fff.jpg');	
+	raster.position = view.center;
+	raster.visible = true;	
+
+/////=========================Extras================================================================================== 
+var myPath = new Path();
+	myPath.strokeColor = 'white';
+	myPath.add(new Point(40, 90));
+	myPath.add(new Point(90, 40));
+	myPath.add(new Point(140, 90));
+
+var myCircle = new Path.Circle(new Point(100, 70), 50);
+	myCircle.strokeColor = 'black';
+	myCircle.selected = true;
+    myCircle.removeSegment(0);
+
+var path = new CompoundPath({
+    children: [
+        new Path.Circle({
+            center: new Point(50, 50),
+            radius: 30
+        }),
+        new Path.Circle({
+            center: new Point(50, 50),
+            radius: 10
+        })
+    ],
+    fillColor: 'black',
+    selected: true
+});
+/////=========================Extras=================================================================================== 	
+</script>
+
+
+
+
+
+{% endblock %}
