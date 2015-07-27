@@ -44,7 +44,7 @@ class WSUserController extends Controller {
     }    
 #~~~~~~~~~~~~~~~~~~~ ws_size_charts   /ws/size_charts
     public function sizeChartsAction(){
-        $decoded  = $this->process_request();
+       $decoded  = $this->process_request();
        $json_data=$this->get('webservice.helper')->sizeChartsService($decoded);
         return new response($json_data);
        
@@ -52,8 +52,23 @@ class WSUserController extends Controller {
 #~~~~~~~~~~~~~~~~~~~ ws_image_uploader   /ws/image_uploader
     public function imageUploaderAction(){
         $decoded  = $this->process_request();
-        
-        return new response(implode(",", $decoded));       
+        $user = $this->container->get('user.helper.user')->findByEmail($decoded['email']); 
+        if($user){
+            $file_name = $decoded["image"];
+            return new response($file_name);       
+            
+            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+            $newFilename = 'iphone' . "." . $ext;
+            $user->setIphoneImage($newFilename);
+            
+            if (!is_dir($user->getUploadRootDir())) {
+                @mkdir($user->getUploadRootDir(), 0700);
+            }
+        }else{
+            return new response($this->get('webservice.helper')->response_array(false, 'user not found'));
+        }
+        #return new response('roll on..');       
+            return new response($decoded['upload_type']);       
    } 
      
 }

@@ -49,8 +49,8 @@ class WebServiceHelper {
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
         
         if (count($user) > 0) {
-            $measurement=$this->createUserMeasurementWithParams($request_array,$user);
-            return $this->response_array(true, 'moka', true, $measurement->getCompleteArray());
+            #$measurement=$this->createUserMeasurementWithParams($request_array,$user);
+            #return $this->response_array(true, 'moka', true, $measurement->getCompleteArray());
             return $this->response_array(false, 'Email already exists.');
         } else {
             #--- 1) User

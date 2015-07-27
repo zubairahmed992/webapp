@@ -95,13 +95,6 @@
             </div>
         </div>
         
-        <div  id='service_file_pannel' class="row c_pannel hide_pannel">
-            <div class="span1"></div>
-            <div  id='file_pannel' class="span4">
-                <input type="file" id="file_to_upload" name="file_to_upload">
-            </div>
-        </div>    
-        
         <div  id='service_response_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
@@ -126,8 +119,22 @@
             <div class="span1"></div>
             <div  id='backend_process' class="span4"></div>
         </div>
-        
-      
+
+        <div  id='service_image_pannel'>
+            <div class="span1"></div>
+            <div  id='image_pannel' class="span4">image:::
+                <input type="file" id="image_to_upload" name="image_to_upload">
+            </div>
+        </div>        
+            
+<form onsubmit="get_upload_action(this);" id="frm_file_upload">
+      <div  id='service_file_pannel' class="row c_pannel hide_pannel">
+            <div class="span1"></div>
+            <div  id='file_pannel' class="span4">
+                <input type="file" id="file_to_upload" name="file_to_upload">
+            </div>
+        </div>    
+</form>        
             
 </div>        
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
@@ -194,6 +201,7 @@ $( "#btn_hit_service" ).click(function() {
                if(key==service_name)
                     return services_obj[key];                     
         }
+
 //-------------------------------------------------------------
 
 function hit_service(){    
@@ -213,7 +221,10 @@ function hit_service(){
          });    
 }
 //-------------------------------------------------------------
-
+ function get_upload_action(form) {
+        form.action = ".." + $("#service_url").text();
+    }
+    
 function hit_file_upload_service(){    
         var value_ar = JSON.parse($("#txt_request_params").val());        
          input_file = document.getElementById('file_to_upload');
@@ -225,7 +236,8 @@ function hit_file_upload_service(){
                        url: ".." + $("#service_url").text(),
                        data: value_ar,  
                        processData: false,
-                       contentType: false, 
+                       //contentType: false,
+                       dataType: "json",
                        success: function(data){
                            display_response(data);                    
                         },
@@ -237,6 +249,46 @@ function hit_file_upload_service(){
             console.log("file_to_upload does not exist")
         }
 
+}
+  //--------------------------------------------------------- 
+
+        $("#btn_generate_form").click(function() {  
+          hit_image_upload_service();
+        });
+        
+//-----------------------------------------------------------        
+function hit_image_upload_service(){    
+        
+        var value_ar = JSON.parse($("#txt_request_params").val());        
+        input_file = document.getElementById('file_to_upload');
+        var data= false;
+
+        if (window.FormData) {
+             data= new FormData();
+        }
+
+        if (data) {
+            data.append("image", input_file.files[0]);
+            data.append("email",value_ar['email']);
+            data.append("pixel_per_inch",value_ar['pixel_per_inch']);
+            data.append("device_type",value_ar['device_type']);
+            data.append("upload_type",value_ar['upload_type']);            
+         }
+
+           $.ajax({
+                    type: "POST",
+                    url: ".." + $("#service_url").text(),
+                    data: data,  
+                    processData: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    success: function(data){
+                        display_response(data);                    
+                     },
+                    failure: function(errMsg) {
+                        display_response(errMsg);
+                    }
+                 });    
 }
 
 //-------------------------------------
@@ -312,11 +364,7 @@ function hit_user_service(){
          });    
 }
 
-     //--------------------------------------------------------- 
-
-        $("#btn_generate_form").click(function() {  
-          hit_file_upload_service();
-        });
+   
 //-----------------------------------------
 
 function replace_all_user_data(user_detail){
