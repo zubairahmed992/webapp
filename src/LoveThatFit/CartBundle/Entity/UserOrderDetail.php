@@ -65,7 +65,7 @@ class UserOrderDetail
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="sku", type="string")
+	 * @ORM\Column(name="sku", type="string", nullable=true)
 	 */
 	private $sku;
 

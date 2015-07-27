@@ -26,11 +26,12 @@ class PaymentController extends Controller
 	}else{
 	  $grand_total = array_sum($get_total["total"]);
 	}
-
-	Braintree_Configuration::environment('sandbox');
-	Braintree_Configuration::merchantId('kd89skdzjcfz7m8r');
-	Braintree_Configuration::publicKey('n5d4yjgb57379mq3');
-	Braintree_Configuration::privateKey('5684c67cd5d7c71a6ed393a38ec140bd');
+	$yaml = new Parser();
+	$parse = $yaml->parse(file_get_contents('../src/LoveThatFit/CartBundle/Resources/config/config.yml'));
+	Braintree_Configuration::environment($parse["love_that_fit_cart"]["environment"]);
+	Braintree_Configuration::merchantId($parse["love_that_fit_cart"]["merchant_id"]);
+	Braintree_Configuration::publicKey($parse["love_that_fit_cart"]["public_key"]);
+	Braintree_Configuration::privateKey($parse["love_that_fit_cart"]["private_key"]);
 
 	$clientToken = Braintree_ClientToken::generate();
 
@@ -58,6 +59,12 @@ class PaymentController extends Controller
 	  $order_id = $session->get('order_id');
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  $user_id = $this->get('security.context')->getToken()->getUser()->getId();
+
+	  ######### Mail Code ###########
+	  $val = $this->get('mail_helper')->sendOrderConfirmationEmail($user);
+	  ########## End Mail Code ########
+	  //print_r($val);
+	  //die;
 	  $result = Braintree_Transaction::sale(array(
 		  "amount" => $_POST['order_amount'],
 		  "paymentMethodNonce" => $_POST['payment_method_nonce'],

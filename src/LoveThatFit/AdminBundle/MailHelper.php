@@ -79,4 +79,16 @@ class MailHelper {
         
     }
 
+	public function sendOrderConfirmationEmail($user) {
+
+	  $from = $this->conf['parameters']['mailer_user'];
+	  //$to = $user->getEmail();
+	  $to = "ovaisrafiq@gmail.com";
+	  $body = "LoveThatFitAdminBundle::email/order_receipt.html.twig";
+	  $subject = 'LoveThatFit: Thank you for the order. ';
+	  //return 'emailing is currently disabled';
+	  return $this->sendEmail($from, $to, $body, $subject, $user);
+
+	}
+
 }

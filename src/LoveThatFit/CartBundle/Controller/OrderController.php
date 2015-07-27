@@ -34,9 +34,9 @@ class OrderController extends Controller
 	  $user_cart = $this->get('cart.helper.cart')->getFormattedCart($user);
 	  $response = $this->get('cart.helper.orderDetail')->saveOrderDetail($user_cart,$order_id);
 	  if($response == 'saved'){
-		echo "Order detail has been saved";
-		die;
-		//return $this->redirect($this->generateUrl('payment_default'));
+		//echo "Order detail has been saved";
+		//die;
+		return $this->redirect($this->generateUrl('payment_default'));
 	  }
 	}
 
