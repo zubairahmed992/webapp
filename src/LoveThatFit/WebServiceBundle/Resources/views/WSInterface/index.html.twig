@@ -260,35 +260,28 @@ function hit_file_upload_service(){
 function hit_image_upload_service(){    
         
         var value_ar = JSON.parse($("#txt_request_params").val());        
-        input_file = document.getElementById('file_to_upload');
-        var data= false;
+        input_file = document.getElementById('image_to_upload');
+        data= new FormData();
+        data.append("image", input_file.files[0]);
+        data.append("email",value_ar['email']);
+        data.append("pixel_per_inch",value_ar['pixel_per_inch']);
+        data.append("device_type",value_ar['device_type']);
+        data.append("upload_type",value_ar['upload_type']);            
 
-        if (window.FormData) {
-             data= new FormData();
-        }
-
-        if (data) {
-            data.append("image", input_file.files[0]);
-            data.append("email",value_ar['email']);
-            data.append("pixel_per_inch",value_ar['pixel_per_inch']);
-            data.append("device_type",value_ar['device_type']);
-            data.append("upload_type",value_ar['upload_type']);            
-         }
-
-           $.ajax({
-                    type: "POST",
-                    url: ".." + $("#service_url").text(),
-                    data: data,  
-                    processData: false,
-                    contentType: false,
-                    enctype: 'multipart/form-data',
-                    success: function(data){
-                        display_response(data);                    
-                     },
-                    failure: function(errMsg) {
-                        display_response(errMsg);
-                    }
-                 });    
+        $.ajax({
+                 type: "POST",
+                 url: ".." + $("#service_url").text(),
+                 data: data,  
+                 processData: false,
+                 contentType: false,
+                 enctype: 'multipart/form-data',
+                 success: function(data){
+                     display_response(data);                    
+                  },
+                 failure: function(errMsg) {
+                     display_response(errMsg);
+                 }
+              });    
 }
 
 //-------------------------------------

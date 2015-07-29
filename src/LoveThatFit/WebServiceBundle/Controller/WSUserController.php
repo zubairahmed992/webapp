@@ -50,26 +50,46 @@ class WSUserController extends Controller {
        
    } 
 #~~~~~~~~~~~~~~~~~~~ ws_image_uploader   /ws/image_uploader
-    public function imageUploaderAction(){
-        $decoded  = $this->process_request();
-        $user = $this->container->get('user.helper.user')->findByEmail($decoded['email']); 
-        if($user){
-            $file_name = $decoded["image"];
-            return new response($file_name);       
-            
+    public function imageUploaderAction() {
+        $decoded = $this->process_request();
+        $request = $this->getRequest();
+        $decoded['base_path'] = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/';
+        return new Response($this->get('webservice.helper')->uploadUserImage($decoded, $_FILES));
+    }
+
+    public function __imageUploaderAction() {
+        $decoded = $this->process_request();
+        $user = $this->container->get('user.helper.user')->findByEmail($decoded['email']);
+
+        if ($user) {
+            $file_name = $_FILES["image"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $newFilename = 'iphone' . "." . $ext;
-            $user->setIphoneImage($newFilename);
-            
+            $newFilename = 'original' . "." . $ext;
+            $user->setImage($newFilename);
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-        }else{
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $user->getAbsoluteIphonePath())) {
+                $this->get('webservice.helper.user')->setMarkingDeviceType($user, $decoded['device_type'], $decoded['pixel_per_inch']);
+
+                $em->persist($user);
+                $em->flush();
+                //  $image_path = $entity->getWebPath(); 
+                $userinfo = array();
+                $userimage = $user->getIphoneImage();
+                $request = $this->getRequest();
+                $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath() . '/uploads/ltf/users/' . $user->getId() . "/";
+                $userinfo['heightPerInch'] = $this->get('webservice.helper.user')->getUserDeviceTypeAndMarking($user, $decoded['device_type']); //$entity->getDeviceUserPerInchPixelHeight();
+                $userinfo['iphoneImage'] = $userimage;
+                $userinfo['path'] = $baseurl;
+                return new Response(json_encode($userinfo));
+            } else {
+                return new response(json_encode(array('Message' => 'Image not uploaded')));
+            }
+        } else {
             return new response($this->get('webservice.helper')->response_array(false, 'user not found'));
         }
-        #return new response('roll on..');       
-            return new response($decoded['upload_type']);       
-   } 
-     
+    }
+
 }
 

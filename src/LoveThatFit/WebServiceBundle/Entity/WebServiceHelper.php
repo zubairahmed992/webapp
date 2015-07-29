@@ -212,5 +212,32 @@ class WebServiceHelper {
             return $this->response_array(false, 'Size Charts not found');            
         }
     }
+     #----------------------------------------------------------------------------------------
     
+    public function uploadUserImage($request_array, $files) {
+        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+        if ($user) {
+            $file_name = $files["image"]["name"];
+            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+            $newFilename = 'original' . "." . $ext;
+            $user->setImage($newFilename);
+            if (!is_dir($user->getUploadRootDir())) {
+                @mkdir($user->getUploadRootDir(), 0700);
+            }
+            if (move_uploaded_file($files["image"]["tmp_name"], $user->getAbsolutePath())) {
+                $this->container->get('webservice.helper.user')->setMarkingDeviceType($user, $request_array['device_type'], $request_array['pixel_per_inch']);
+                $this->container->get('user.helper.user')->saveUser($user);
+                $userinfo = array();
+                $userinfo['heightPerInch'] = $this->container->get('webservice.helper.user')->getUserDeviceTypeAndMarking($user, $request_array['device_type']); 
+                $userinfo['iphoneImage'] = $user->getIphoneImage();
+                $userinfo['path'] =  $request_array['base_path'] . $user->getId() . "/";                
+                return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
+            } else {                
+                return $this->response_array(false, 'Image not uploaded');
+            }
+        } else {
+            return $this->response_array(false, 'user not found');
+        }
+        
+    }
 }
