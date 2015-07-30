@@ -64,6 +64,7 @@ ws_size_charts:
 
 ws_image_uploader:
    pattern:  /ws/image_uploader
+   title: image_uploader
    params:
      email: iphone@gmail.com
      device_type: iphone5

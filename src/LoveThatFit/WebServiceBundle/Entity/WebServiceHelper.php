@@ -214,8 +214,7 @@ class WebServiceHelper {
     }
      #----------------------------------------------------------------------------------------
     
-    public function uploadUserImage($request_array, $files) {
-        $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
+    public function uploadUserImage($user, $request_array, $files) {
         if ($user) {
             $file_name = $files["image"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
@@ -226,11 +225,13 @@ class WebServiceHelper {
             }
             if (move_uploaded_file($files["image"]["tmp_name"], $user->getAbsolutePath())) {
                 $this->container->get('webservice.helper.user')->setMarkingDeviceType($user, $request_array['device_type'], $request_array['pixel_per_inch']);
+                $device_type=$this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $request_array['device_type'], $request_array['pixel_per_inch']);
                 $this->container->get('user.helper.user')->saveUser($user);
                 $userinfo = array();
-                $userinfo['heightPerInch'] = $this->container->get('webservice.helper.user')->getUserDeviceTypeAndMarking($user, $request_array['device_type']); 
-                $userinfo['iphoneImage'] = $user->getIphoneImage();
-                $userinfo['path'] =  $request_array['base_path'] . $user->getId() . "/";                
+                $userinfo['height_per_inch'] = $device_type->getDeviceUserPerInchPixelHeight();
+                $userinfo['device_type'] = $device_type->getDeviceUserPerInchPixelHeight();
+                $userinfo['image'] = $user->getImage();
+                $userinfo['path'] =  $request_array['base_path'];                
                 return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
             } else {                
                 return $this->response_array(false, 'Image not uploaded');

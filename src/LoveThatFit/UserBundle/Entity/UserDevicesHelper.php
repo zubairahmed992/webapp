@@ -55,8 +55,9 @@ class UserDevicesHelper {
 
 //-------------------------------------------------------
 
-    public function saveUserDevices(UserDevices $UserDevices) {
-       $this->em->persist($UserDevices);
+    public function saveUserDevices(UserDevices $user_device) {
+        $user_device->setUpdatedAt(new \DateTime('now'));            
+       $this->em->persist($user_device);
         $this->em->flush();
     }
 //-------------------------------------------------------
@@ -83,5 +84,17 @@ class UserDevicesHelper {
         return $this->repo->findOneBy(array('user' => $user_id, 'deviceType' => $device_type));
     }
  
+    #-------------------------------------------------------------------------
+    
+    public function updateDeviceDetails($user, $device_type, $height_per_inch){
+        $device = $this->repo->findOneBy(array('user' => $user->getId(), 'deviceType' => $device_type));
+        if(!$device){
+            $device=$this->createNew($user);
+        }
+        $device->setDeviceUserPerInchPixelHeight($height_per_inch);
+        $this->saveUserDevices($device);
+        return $device;
+   } 
+
 
 }

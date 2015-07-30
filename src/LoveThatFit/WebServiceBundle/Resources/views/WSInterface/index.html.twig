@@ -95,6 +95,13 @@
             </div>
         </div>
         
+        <div  id='service_image_pannel'  class="row c_pannel hide_pannel">
+            <div class="span1"></div>
+            <div  id='image_pannel' class="span4">select image to upload:
+                <input type="file" id="image_to_upload" name="image_to_upload">
+            </div>
+        </div>
+            
         <div  id='service_response_pannel' class="row c_pannel hide_pannel">
             <div class="span1"></div>
             <div class="span4">
@@ -119,22 +126,8 @@
             <div class="span1"></div>
             <div  id='backend_process' class="span4"></div>
         </div>
-
-        <div  id='service_image_pannel'>
-            <div class="span1"></div>
-            <div  id='image_pannel' class="span4">image:::
-                <input type="file" id="image_to_upload" name="image_to_upload">
-            </div>
-        </div>        
+        
             
-<form onsubmit="get_upload_action(this);" id="frm_file_upload">
-      <div  id='service_file_pannel' class="row c_pannel hide_pannel">
-            <div class="span1"></div>
-            <div  id='file_pannel' class="span4">
-                <input type="file" id="file_to_upload" name="file_to_upload">
-            </div>
-        </div>    
-</form>        
             
 </div>        
         <script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/jquery-1.8.3.min.js') }}"></script> 
@@ -156,7 +149,13 @@
 //-------------------------------------
 $( "#btn_hit_service" ).click(function() {
        if($('#service_name').html()!='' && $('#user_name').html()!=''){
-            hit_service();
+             tt = $('option:selected', $('#sel_service')).html();
+             service_detail=(tt=='select'?null:find_service_obj(tt));
+            if(service_detail!=null && service_detail.file_upload){
+                hit_image_upload_service();
+            }else{
+                hit_service();
+            }
    }
 })
  
@@ -187,7 +186,7 @@ $( "#btn_hit_service" ).click(function() {
                 $('#service_backend_process_pannel').css("display", display);
                 $('#service_request_pannel').css("display", display);
                 $('#service_response_pannel').css("display", display);
-                $('#service_file_pannel').css("display", (service_detail!=null && service_detail.file_upload)?'block':'none');
+                $('#service_image_pannel').css("display", (service_detail!=null && service_detail.file_upload)?'block':'none');
         }         
        
           //--------------------------------------------------
@@ -221,39 +220,11 @@ function hit_service(){
          });    
 }
 //-------------------------------------------------------------
- function get_upload_action(form) {
-        form.action = ".." + $("#service_url").text();
-    }
-    
-function hit_file_upload_service(){    
-        var value_ar = JSON.parse($("#txt_request_params").val());        
-         input_file = document.getElementById('file_to_upload');
-
-        if (input_file){
-           // value_ar['file']=input_file.files[0];
-           $.ajax({
-                       type: "POST",
-                       url: ".." + $("#service_url").text(),
-                       data: value_ar,  
-                       processData: false,
-                       //contentType: false,
-                       dataType: "json",
-                       success: function(data){
-                           display_response(data);                    
-                        },
-                       failure: function(errMsg) {
-                           display_response(errMsg);
-                       }
-                 });    
-        }else {
-            console.log("file_to_upload does not exist")
-        }
-
-}
+ 
   //--------------------------------------------------------- 
 
         $("#btn_generate_form").click(function() {  
-          hit_image_upload_service();
+          alert('generate form');
         });
         
 //-----------------------------------------------------------        
