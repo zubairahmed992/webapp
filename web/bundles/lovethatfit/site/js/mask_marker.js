@@ -9,6 +9,7 @@ hitOptions = {
 };
 
 
+
 change_x_pos_diff = 0;
 change_y_pos_diff = 0;
 inc_ratio = 1;
@@ -32,6 +33,7 @@ dv_type = parseInt($("#dv_type").attr("value"));
 dv_scr_h = parseInt($("#dv_scr_h").attr("value"));
 dv_edit_type = $("#dv_edit_type").attr("value");
 
+
 dv_gap_top = 26;
 dv_gap_bottom = 32;
 
@@ -45,7 +47,7 @@ croped_img_path = $("#hdn_user_cropped_image_url").attr('value');
 
 
 
-if(dv_edit_type == "registration" || dv_edit_type == "camera"){
+if(dv_edit_type == "registration" || dv_edit_type == "camera" || dv_edit_type == "reset"){
     chk_no_img_path = true;
 }
 if(dv_edit_type == "edit"){
@@ -107,15 +109,48 @@ function top_btm_markers_pos(){
                 
 }
 
+function reset_mask() {
+    main_layer.activate();
+    chk_no_img_path = true;
+    $('#user_height_frm_3').attr('value', '72')
+    path_com.remove();
+    createBlob();
+    
+    user_image.opacity = 0.5;
+    
+    
+    
+    
+    //reset_mask_seg();
+}
+
+function reset_mask_seg(){  
+    
+    
+    var pathData = $("#default_user_path").html();
+    mid_area_new_path = new Path(pathData);
+    
+    alert(mid_area_new_path.segments.length);
+    
+    for(var i = 0; i < mid_area_new_path.segments.length; i++) {
+        
+        mid_area_path.segments[i].point = mid_area_new_path.segments[i].point;
+        mid_area_path.segments[i].handleIn = mid_area_new_path.segments[i].handleIn;
+        mid_area_path.segments[i].handleOut = mid_area_new_path.segments[i].handleOut;
+        
+        //mid_area_path.segments[i].(mid_area_new_path.segments[i]);
+    }
+    
+    return mid_area_path;
+  }  
+
 function createBlob() {
 
-
-        var pathData = $("#img_path_paper").attr("value");
-        
+        if(chk_no_img_path == false){
+            var pathData = $("#img_path_paper").attr("value");
+        }
         if(chk_no_img_path == true){
-            
-            pathData = $("#default_user_path").html();
-            
+            var pathData = $("#default_user_path").html();
         }
         
 mid_area_path = new Path(pathData);
@@ -191,6 +226,8 @@ user_image.position = new Point(160,568/2);
 
 
 user_image.pivot = new Point(0,(568/2) - dv_gap_bottom);
+
+
 //alert(user_image.bounds.bottomCenter);
 
 //user_image.position = new Point(center_pos,542);
@@ -1034,7 +1071,9 @@ function onMouseDown(event) {
                                window.location.href = "scr1_but_back_top";                
                         }
                          if(hitResult.item == scr1_but_reset){
-                            window.location.reload();                
+                            //window.location.reload();                
+                            //reset_mask();
+                            window.location.href = "scr1_but_reset";
                         }
                          if(hitResult.item == but_move_right){
                             user_image.position.x += 1;
