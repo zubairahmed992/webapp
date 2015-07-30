@@ -225,13 +225,12 @@ class WebServiceHelper {
             }
             if (move_uploaded_file($files["image"]["tmp_name"], $user->getAbsolutePath())) {
                 $this->container->get('webservice.helper.user')->setMarkingDeviceType($user, $request_array['device_type'], $request_array['pixel_per_inch']);
-                $device_type=$this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $request_array['device_type'], $request_array['pixel_per_inch']);
+                $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $request_array['device_type'], $request_array['pixel_per_inch']);
                 $this->container->get('user.helper.user')->saveUser($user);
                 $userinfo = array();
-                $userinfo['height_per_inch'] = $device_type->getDeviceUserPerInchPixelHeight();
-                $userinfo['device_type'] = $device_type->getDeviceUserPerInchPixelHeight();
-                $userinfo['image'] = $user->getImage();
-                $userinfo['path'] =  $request_array['base_path'];                
+                $userinfo['user'] = $user->toDataArray(true, $request_array['device_type']);
+                $userinfo['user']['path']=$request_array['base_path'];                
+                
                 return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
             } else {                
                 return $this->response_array(false, 'Image not uploaded');
