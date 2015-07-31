@@ -83,7 +83,7 @@ class MailHelper {
 
 	  $from = $this->conf['parameters']['mailer_user'];
 	  //$to = $user->getEmail();
-	  $to = "ovaisrafiq@gmail.com";
+	  $to = "ovais.rafique@centricsource.com";
 	  $body = "LoveThatFitAdminBundle::email/order_receipt.html.twig";
 	  $subject = 'LoveThatFit: Thank you for the order. ';
 	  //return 'emailing is currently disabled';

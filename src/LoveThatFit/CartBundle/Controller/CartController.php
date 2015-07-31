@@ -13,35 +13,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class CartController extends Controller
 {
-//    public function indexAction()
-//    {
-//	  Braintree_Configuration::environment('sandbox');
-//	  Braintree_Configuration::merchantId('kd89skdzjcfz7m8r');
-//	  Braintree_Configuration::publicKey('n5d4yjgb57379mq3');
-//	  Braintree_Configuration::privateKey('5684c67cd5d7c71a6ed393a38ec140bd');
-//
-//	  $clientToken = Braintree_ClientToken::generate();
-//	  //echo $clientToken;
-//	   //die;
-//		$name = 'ovais';
-//		return $this->render('LoveThatFitCartBundle:Cart:index.html.twig', array('token' => $clientToken,'name' => $name));
-//    }
-//
-//  	public function addAction(){
-//	  Braintree_Configuration::environment('sandbox');
-//	  Braintree_Configuration::merchantId('kd89skdzjcfz7m8r');
-//	  Braintree_Configuration::publicKey('n5d4yjgb57379mq3');
-//	  Braintree_Configuration::privateKey('5684c67cd5d7c71a6ed393a38ec140bd');
-//
-//	  $result = Braintree_Transaction::sale(array(
-//		  "amount" => '11',
-//		  "paymentMethodNonce" => $_POST['payment_method_nonce'],
-//	  ));
-//	  echo "<pre>";
-//	  print_r($result);
-//	  echo "</pre>";
-//	}
-
   	public function basketAction(Request $request){
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  $decoded  = $request->request->all();
@@ -50,11 +21,6 @@ class CartController extends Controller
 	  $cart=$user->getCart();
 	  $entity = $this->get('cart.helper.cart')->fillCart($item_id,$user,$qty);
 	  return $this->redirect($this->generateUrl('cart_show'));
-//	  $get_total = $this->get('cart.helper.cart')->getCart($user);
-//	  return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
-//		'cart' => $cart,
-//		'grand_total' => array_sum($get_total["total"])
-//	  ));
 	}
   	public function basketupdateAction(Request $request){
 	  $decoded  = $request->request->all();
@@ -62,21 +28,14 @@ class CartController extends Controller
 	  $user = $this->get('security.context')->getToken()->getUser();
 	  if(isset($decoded['update']) == 'update'){
 	  	$entity = $this->get('cart.helper.cart')->updateCart($decoded);
-		//$cart=$user->getCart();
 		return $this->redirect($this->generateUrl('cart_show'));
 	  }elseif(isset($decoded['checkout']) == 'checkout'){
-		//echo "Next Screen will come here";die;
 		$session = $this->getRequest()->getSession();
 		$session->set('order_amount', $order_amount);
 		return $this->redirect($this->generateUrl('order_default'));
 	  }else{
 		return $this->redirect($this->generateUrl('cart_show'));
 	  }
-//	  $get_total = $this->get('cart.helper.cart')->getCart($user);
-//	  return $this->render('LoveThatFitCartBundle:Cart:show.html.twig', array(
-//		'cart' => $cart,
-//		'grand_total' => array_sum($get_total["total"])
-//	  ));
 	}
 //------------------------------Show Cart------------------------------------------------------------
 
@@ -100,13 +59,10 @@ class CartController extends Controller
 
 	public function deleteAction($id) {
 	  try {
-
 		$message_array = $this->get('cart.helper.cart')->delete($id);
 		$this->get('session')->setFlash($message_array['message_type'], $message_array['message']);
 		return $this->redirect($this->generateUrl('cart_show'));
-		//return $this->redirect($this->generateUrl('cart_delete'));
 	  } catch (\Doctrine\DBAL\DBALException $e) {
-
 		$this->get('session')->setFlash('warning', 'This Item cannot be deleted!');
 		return $this->redirect($this->getRequest()->headers->get('referer'));
 	  }

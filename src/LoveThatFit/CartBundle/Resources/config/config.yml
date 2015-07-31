@@ -1,9 +1,9 @@
 love_that_fit_cart:
-#  environment: sandbox
-#  merchant_id: kd89skdzjcfz7m8r
-#  public_key:  n5d4yjgb57379mq3
-#  private_key: 5684c67cd5d7c71a6ed393a38ec140bd
+#    environment: sandbox
+#    merchant_id: kd89skdzjcfz7m8r
+#    public_key:  n5d4yjgb57379mq3
+#    private_key: 5684c67cd5d7c71a6ed393a38ec140bd
    environment: sandbox
-   merchant_id: kpqfhyv54hgs7rhp
-   public_key:  bzmnndrb2yt8kw44
-   private_key: 165af3efe71f95ba8aa384afde399123
+   merchant_id: 999xtbqc2s55bx9c
+   public_key:  jg2z77t3jkp43j8g
+   private_key: 18fee97bc8564dfec7d0c1670f592386

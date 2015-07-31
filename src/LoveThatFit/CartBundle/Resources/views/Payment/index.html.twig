@@ -52,9 +52,10 @@
     <table width="700" border="0" >
         <tr><td>
                 <h1>User Detail</h1><br>
-                Name:{{ name }}
+                Name:{{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}
             </td></tr>
-            <tr><td>Address:{{ address }} {{ state }} {{ city }} {{ country }} {{ postalcode }}</td></tr>
+
+            <tr><td>Address:{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }}</td></tr>
     </table>
         <div id="paypal-container"></div>
         <form id="checkout" method="post" action="{{ path('payment')}}">
