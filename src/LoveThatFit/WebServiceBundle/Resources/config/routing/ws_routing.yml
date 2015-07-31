@@ -14,6 +14,13 @@ ws_size_charts:
     pattern:  /ws/size_charts
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sizeCharts }
 
-ws_image_uploader:
-    pattern:  /ws/image_uploader
+ws_user_image_uploader:
+    pattern:  /ws/user_image_uploader
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:imageUploader }
+
+
+#------------------------------------------------------------------------------------
+
+nws_products:
+    pattern:  /ws/products
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:products }
