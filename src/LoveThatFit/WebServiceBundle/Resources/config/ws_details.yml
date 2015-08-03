@@ -76,6 +76,7 @@ ws_user_image_uploader:
 nws_products:
    pattern:  /ws/products
    title: products
-   request_type: post
-   file_upload: true
+   params:
+     auth_token: 56565656566
+     
    

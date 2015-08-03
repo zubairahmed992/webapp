@@ -291,14 +291,13 @@ function replace_user_data(){
           email = $("#user_name").text();
           token = $("#user_auth_token").text();
           request_json = $.trim($("#txt_request_params").val());
-            if (request_json.indexOf("authTokenWebService")!=-1 || request_json.indexOf("email")!=-1){
+            if (request_json.indexOf("auth_token")!=-1 || request_json.indexOf("email")!=-1){
                 var obj1 = JSON.parse(request_json);
-                if (request_json.indexOf("authTokenWebService")!=-1){
-                    obj1.authTokenWebService=token;
+                if (request_json.indexOf("auth_token")!=-1){
+                    obj1.auth_token=token;
                 }
                 if (request_json.indexOf("email")!=-1){
-                    obj1.email=email;
-                    
+                    obj1.email=email;                    
                 }
                 if (email.indexOf("buf")!=-1 && request_json.indexOf("password")!=-1){
                     obj1.password='Buffalo1';    

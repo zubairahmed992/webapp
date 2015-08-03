@@ -189,7 +189,10 @@ class AvgAlgorithm {
         if ($sizes == null) {
             $sizes = $this->product->getProductSizes();
         }
-        $body_specs = $this->user->getMeasurement()->getArray();
+        $body_specs=null;
+        if($this->user->getMeasurement()){
+            $body_specs = $this->user->getMeasurement()->getArray();
+        }
         $fb = array();
         $fpwp = $this->product->getFitPointsWithPriority();
         foreach ($sizes as $size) {
@@ -207,7 +210,7 @@ class AvgAlgorithm {
              foreach($fpwp as $pfp_key=>$pfp_value){
                     if (array_key_exists($pfp_key, $size_specs)) {
                         $fb[$size_identifier]['fit_points'][$pfp_key] =
-                                $this->get_fit_point_array($size_specs[$pfp_key], $body_specs);
+                                $body_specs?$this->get_fit_point_array($size_specs[$pfp_key], $body_specs):null;
                         
                         $accumulated = $this->calculate_accumulated_variance($fb[$size_identifier]['fit_points'][$pfp_key],
                                         $fb[$size_identifier]['variance']);

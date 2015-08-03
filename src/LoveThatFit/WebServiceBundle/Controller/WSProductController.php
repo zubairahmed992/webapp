@@ -18,17 +18,19 @@ class WSProductController extends Controller {
         return $decoded;
     }
     #---------------------------  
-    public function authenticateUser($token) {        
-        return $this->container->get('')->findByAuthToken($token);               
+    private function authenticateUser($token) {        
+        return $this->container->get('user.helper.user')->findByAuthToken($token);               
     }
 #---------------------------  
     public function productsAction() {
         $decoded = $this->process_request();
-        $user = $this->authenticateUser($decoded['auth_token']);
+        $user = array_key_exists('auth_token', $decoded)?$this->authenticateUser($decoded['auth_token']):null;        
         if ($user) {
-            $res = $this->response_array(false, 'User not authenticated.');
+            $this->container->get('admin.helper.product')->findByAuthToken($token);               
+            
+            $res = $this->response_array(true, 'User Authenticated.', true, $user->toArray());            
         } else {
-            $res = $this->response_array(true, 'User Authenticated.');
+            $res = $this->response_array(false, 'User not authenticated.');
         }
         return new Response($res);
     }
