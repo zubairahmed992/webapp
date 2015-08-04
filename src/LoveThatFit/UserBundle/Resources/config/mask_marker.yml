@@ -276,7 +276,7 @@ pixel_conversion:
     207: 17.5
     212: 18.0
     
-  shoulder_height:
+  shoulder_height_ground_up:
     650: 45
     660: 46
     672: 47

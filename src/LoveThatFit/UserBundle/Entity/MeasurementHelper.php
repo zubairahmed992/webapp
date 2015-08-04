@@ -87,13 +87,13 @@ Public function updateWithParams($measurement, $params){
             $measurement->setMeasurementJson(json_encode($ar));
     }
         
-    /*
+    
     if(array_key_exists('marker_json', $params) && $params['marker_json']){          
         $pred_measurements = $this->container->get('user.marker.helper')->getPredictedMeasurement($params['marker_json']);                
         foreach ($pred_measurements as $k=>$v) {
             $measurement->setProperty($k,$v);
         }
-    }*/
+    }
     
     $this->saveMeasurement($measurement);  
 }
