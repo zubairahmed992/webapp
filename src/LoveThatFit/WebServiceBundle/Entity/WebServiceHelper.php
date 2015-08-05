@@ -243,7 +243,7 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
     
     public function productSync($user, $date=null) {        
-        $products = $this->container->get('admin.helper.product')->productSync($user->getGender(),$date);
+        $products = $this->container->get('webservice.repo')->productSync($user->getGender(),$date);
         return $this->response_array(true,"products list",true,$products);        
     }
     
@@ -262,6 +262,6 @@ class WebServiceHelper {
     #-------------------------------------------------------------
     
      public function findUserByAuthToken($token) {        
-        return $this->get('user.helper.user')->findByAuthToken($token);               
+        return $this->container->get('user.helper.user')->findByAuthToken($token);               
     }
 }

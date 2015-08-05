@@ -11,6 +11,11 @@ services:
           arguments:
             container: "@service_container"
    
+    webservice.repo:
+          class:  LoveThatFit\WebServiceBundle\Entity\WSRepo
+          arguments: 
+            em: "@doctrine.orm.entity_manager"
+            
     push_notification_helper:
           class:  LoveThatFit\WebServiceBundle\PushNotificationHelper
           arguments:
