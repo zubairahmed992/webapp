@@ -8,22 +8,13 @@ class WSUserController extends Controller {
      
     
     private function process_request(){
-        $request = $this->getRequest();
-        $handle = fopen('php://input', 'r');
-        $jsonInput = fgets($handle);
-        $decoded = json_decode($jsonInput, true);
-        
-        if($decoded==null) #if null (to be used for web service testing))
-            $decoded  = $request->request->all();
-        
-        return $decoded;
+        return $this->get('webservice.helper')->processRequest($this->getRequest());        
     }
 #~~~~~~~~~~~~~~~~~~~ ws_user_Login   /ws/login
 
     public function loginAction() {
         $decoded  = $this->process_request();                         
-        $user_info = $this->get('webservice.helper')->loginService($decoded);        
-        
+        $user_info = $this->get('webservice.helper')->loginService($decoded);                
         return new Response($user_info);
     }
 

@@ -240,4 +240,28 @@ class WebServiceHelper {
         }
         
     }
+    #------------------------------------------------------------------------------
+    
+    public function productSync($user, $date=null) {        
+        $products = $this->container->get('admin.helper.product')->productSync($user->getGender(),$date);
+        return $this->response_array(true,"products list",true,$products);        
+    }
+    
+     #--------------------------------------------------------------------
+     
+     public function processRequest($request){         
+        $handle = fopen('php://input', 'r');
+        $jsonInput = fgets($handle);
+        $decoded = json_decode($jsonInput, true);
+        
+        if($decoded==null) #if null (to be used for web service testing))
+            $decoded  = $request->request->all();
+        
+        return $decoded;
+    }
+    #-------------------------------------------------------------
+    
+     public function findUserByAuthToken($token) {        
+        return $this->get('user.helper.user')->findByAuthToken($token);               
+    }
 }

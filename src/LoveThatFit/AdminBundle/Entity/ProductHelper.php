@@ -1186,6 +1186,7 @@ public function breakFileName($request_array,$product_id){
        
              
     }  
+     
   #----------------------------------------------------
     
     public function updatePrice($product_id,$price){
@@ -1197,4 +1198,9 @@ public function breakFileName($request_array,$product_id){
        
              return true;
     }  
+    #----------------------------------------------------
+    public function productSync($gender, $formated_date){
+       return $this->repo->newproductListingWebService($gender,$formated_date);
+    }  
+    
 }
