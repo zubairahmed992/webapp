@@ -1,3 +1,7 @@
+ws_foo:
+    pattern:  /ws/foo
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:foo }
+
 ws_user_login:
     pattern:  /ws/login
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:login }

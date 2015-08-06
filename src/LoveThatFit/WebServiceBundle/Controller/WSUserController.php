@@ -49,6 +49,13 @@ class WSUserController extends Controller {
         return new Response($this->get('webservice.helper')->uploadUserImage($user, $decoded, $_FILES));
     }
 
+#---------------------------------------------
+    public function fooAction() {
+        $decoded = $this->process_request();
+        $user = $this->container->get('webservice.repo')->findUser($decoded['param1']);
+        $res = $this->container->get('webservice.helper')->response_array(true,"user found",true,$user);
+        return new Response($res);
+    }
 
 
 }
