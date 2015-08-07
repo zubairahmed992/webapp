@@ -1813,7 +1813,29 @@ class User implements UserInterface, \Serializable {
 	}
 
   }
-  #------------------------------------------------------
+  #-------------------------------------------------------
+      public function toDetailArray($options){
+        $a=array();
+        if (in_array('user', $options)){
+            $a=array_merge($a, $this->toArray());
+        }
+        
+        if (in_array('measurement', $options)){
+            if ($this->measurement){
+            $a=array_merge($a, $this->measurement->getArray());
+            }
+        }
+        
+        if (in_array('mask_marker', $options)){
+            if ($this->user_marker){
+               $mma = $this->user_marker->toDataArray();
+                unset($mma['id']);
+               $a=array_merge($a, $mma);
+            }
+        }
+      }
+  #---------------------------
+  //---------------------------
      public function resize_image() {
 
         $filename = $this->getAbsolutePath();
