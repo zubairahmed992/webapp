@@ -318,6 +318,8 @@ class UserDevices  {
                 'device_image' => $this->device_image,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
+                'device_type' => $this->deviceType,
+                'height_per_inch' => $this->deviceUserPerInchPixelHeight,
             );
         } else {
             return array(
@@ -325,6 +327,8 @@ class UserDevices  {
                 'device_name' => $this->device_name,
                 'deviceType' => $this->deviceType,
                 'per_inch_pixel_height' => $this->deviceUserPerInchPixelHeight,
+                'device_type' => $this->deviceType,
+                'height_per_inch' => $this->deviceUserPerInchPixelHeight,
             );
         }
     }

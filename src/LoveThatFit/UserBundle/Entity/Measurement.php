@@ -1451,6 +1451,53 @@ class Measurement {
         );
     }
 #--------------------------------------------------------------------
+
+    public function toArray() {
+        return array(            
+            'body_shape' => $this->body_shape,
+            'body_type' => $this->body_types,
+            'weight' => $this->weight,
+            'height' => $this->height,
+            'waist' => $this->waist,
+            'belt' => $this->belt,
+            'hip' => $this->hip,
+            'bust' => $this->bust,
+            'chest' => $this->chest,
+            'arm' => $this->arm,
+            'inseam' => $this->inseam,
+            'shoulder_height' => $this->shoulder_height,
+            'outseam' => $this->outseam,
+            'sleeve' => $this->sleeve,
+            'neck' => $this->neck,
+            'thigh' => $this->thigh,
+            'center_front_waist' => $this->center_front_waist,
+            'shoulder_across_front' => $this->shoulder_across_front,
+            'shoulder_across_back' => $this->shoulder_across_back,
+            'bicep' => $this->bicep,
+            'tricep' => $this->tricep,
+            'wrist' => $this->wrist,
+            'back_waist' => $this->back_waist,
+            'waist_hip' => $this->waist_hip,
+            'knee' => $this->knee,
+            'calf' => $this->calf,
+            'ankle' => $this->ankle,
+            'top_fitting_size_chart_id' => $this->top_fitting_size_chart ? $this->top_fitting_size_chart->getId() : null,
+            'top_fitting_size' => $this->top_fitting_size_chart ? $this->top_fitting_size_chart->getTitle() : null,
+            'bottom_fitting_size_chart_id' => $this->bottom_fitting_size_chart ? $this->bottom_fitting_size_chart->getId() : null,
+            'bottom_fitting_size' => $this->bottom_fitting_size_chart ? $this->bottom_fitting_size_chart->getTitle() : null,
+            'dress_fitting_size_chart_id' => $this->dress_fitting_size_chart ? $this->dress_fitting_size_chart->getId() : null,
+            'dress_fitting_size' => $this->dress_fitting_size_chart ? $this->dress_fitting_size_chart->getTitle() : null,
+            'top_brand_id' => $this->top_brand ? $this->top_brand->getId() : null,
+            'top_brand' => $this->top_brand ? $this->top_brand->getName() : null,
+            'bottom_brand_id' => $this->bottom_brand ? $this->bottom_brand->getId() : null,
+            'bottom_brand' => $this->bottom_brand ? $this->bottom_brand->getName() : null,
+            'dress_brand_id' => $this->dress_brand ? $this->dress_brand->getId() : null,
+            'dress_brand' => $this->dress_brand ? $this->dress_brand->getName() : null,
+        );
+    }
+        
+    #----------------------------------------------------------------------------------    
+    
     public function setProperty($property, $value) {
         switch (strtolower($property)) {
             case 'weight': $this->weight = $value;

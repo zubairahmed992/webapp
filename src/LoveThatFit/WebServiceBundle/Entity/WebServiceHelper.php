@@ -20,9 +20,7 @@ class WebServiceHelper {
             if ($this->container->get('webservice.helper.user')->matchPassword($user, $request_array['password'])) {
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
-                    $response_array['user'] = $user->toDataArray(true, $request_array['deviceType']);
-                    $response_array['user']['user_id'] = $response_array['user']['id'];
-                    unset($response_array['user']['id']);
+                    $response_array['user'] = $user->toDataArray(true, $request_array['deviceType']);                    
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
@@ -65,13 +63,30 @@ class WebServiceHelper {
             
             #--- 5) Device
             $user_device=$this->createUserDeviceWithParams($request_array,$user);
-            
-            #$user->setBirthDate(array_key_exists('dob', $request_array)?new \DateTime($request_array['dob']):null);
-            #$user->setDeviceType(array_key_exists('deviceType', $request_array)?$request_array['deviceType']:null);
-       
-            return $this->response_array(true, 'Proceed', true, array('user'=>$user->toArray(true)));
+            $detail_array=array_merge($user->toArray(true), $measurement->toArray(), $user_device->toArray());
+            unset($detail_array['per_inch_pixel_height']);
+            unset($detail_array['deviceType']);
+            unset($detail_array['auth_token_web_service']);
+            return $this->response_array(true, 'Proceed', true, array('user'=>$detail_array));
         }
     }
+    #-------------------------------------------------------
+    private function merge_objects_to_array($objs){
+        $ar=array();        
+        
+        if(array_key_exists('user', $objs)){
+            $ar=array_merge($ar,$objs['user']);
+            unset($ar['auth_token_web_service']);
+        }elseif(array_key_exists('measurement', $objs)){
+            $ar=array_merge($ar,$objs['measurement']);            
+        }elseif(array_key_exists('device', $objs)){
+            $ar=array_merge($ar,$objs['device']);
+            unset($ar['per_inch_pixel_height']);
+            unset($ar['deviceType']);            
+        }
+        return $ar;
+    }
+    #-------------------------------------------------------
     private function createUserWithParams($request_array){
             $user = $this->container->get('user.helper.user')->createNewUser();
             $user->setEmail($request_array['email']);

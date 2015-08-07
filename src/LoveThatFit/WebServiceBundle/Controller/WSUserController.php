@@ -52,8 +52,10 @@ class WSUserController extends Controller {
 #---------------------------------------------
     public function fooAction() {
         $decoded = $this->process_request();
-        $user = $this->container->get('webservice.repo')->findUser($decoded['param1']);
-        $res = $this->container->get('webservice.helper')->response_array(true,"user found",true,$user);
+        #return new Response($decoded['param1']);
+        #$user = $this->container->get('webservice.repo')->findUser($decoded['param1']);
+        $user = $this->container->get('user.helper.user')->find($decoded['param1']);
+        $res = $this->container->get('webservice.helper')->response_array(true,"user found",true,$user->toDataArray(true,$decoded['param2']));
         return new Response($res);
     }
 

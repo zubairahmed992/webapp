@@ -1585,7 +1585,7 @@ class User implements UserInterface, \Serializable {
     #---------------------------------
     public function getDeviceSpecs($device_type = null) {
         $us = $this->getUserDevices();
-        
+
         if ($device_type == null) {
             if ($us) {
                 return $us->first();
@@ -1593,9 +1593,11 @@ class User implements UserInterface, \Serializable {
                 return null;
             }
         } else {
-            foreach ($us as $userdevice) {
-                if ($device_type == $userdevice->getDeviceType()) {
-                    return $userdevice;
+            if ($us) {
+                foreach ($us as $userdevice) {
+                    if ($device_type == $userdevice->getDeviceType()) {
+                        return $userdevice;
+                    }
                 }
             }
             return null;
@@ -1691,14 +1693,11 @@ class User implements UserInterface, \Serializable {
 	$obj['auth_token'] = $this->getAuthToken();
 	$obj['auth_token_web_service'] = $this->getAuthTokenWebService();
 	if($all){
-	  $obj['salt'] = $this->getSalt();
-	  $obj['password'] = $this->getPassword();
 	  $obj['image'] = $this->getImage();
 	  $obj['avatar'] = $this->getAvatar();
 	  $obj['web_path'] = $this->getDirWebPath();
 	  $obj['secret_question'] = $this->getSecretQuestion();
 	  $obj['secret_answer'] = $this->getSecretAnswer();
-	  $obj['time_spent'] = $this->getTimeSpent();
 	  $obj['created_at']=$this->getCreatedAt()?$this->getCreatedAt()->format('Y-m-d'):null;
 	  $obj['updated_at']=$this->getUpdatedAt()?$this->getUpdatedAt()->format('Y-m-d'):null;
 	  $obj['image_updated_at']=$this->getImageUpdatedAt()?$this->getImageUpdatedAt()->format('Y-m-d'):null;
@@ -1712,6 +1711,7 @@ class User implements UserInterface, \Serializable {
 	  $device_specs=$this->getDeviceSpecs($device_type);
 	  return array(
 		'id' => $this->getId(),
+                'user_id' => $this->getId(),
 		'email' => $this->getEmail(),
 		'name' => $this->getFullName(),
 		'first_name' => $this->getFirstName(),
