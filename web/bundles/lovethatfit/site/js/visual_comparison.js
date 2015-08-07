@@ -1,7 +1,6 @@
 paper.install(window);
-paper.setup('canv_compare');
 $(document).ready(function() {
-    
+    paper.setup('canv_compare');
     load_user_masks();
 });
 

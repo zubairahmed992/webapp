@@ -1,7 +1,7 @@
 {% extends 'LoveThatFitUserBundle::base_mask_marker.html.twig' %}
 
 {% block mask_marker_view %}
-<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_marker.js') }}" canvas="canv_mask"></script>
+<script type="text/paperscript" src="{{ asset('bundles/lovethatfit/site/js/mask_marker_6.js') }}" canvas="canv_mask"></script>
 
 <script>
     function me_triggered(){
@@ -58,6 +58,9 @@
 
 <span style="display:none" id='spn_image_update_url'>"{{ path('registration_step_four_image_update', { 'id': entity.id })}}"</span> 
 
+<div class="txt_center"><canvas id="canv_mask" width="375" height="667"></canvas></div>
+<!--<div class="txt_center"><canvas id="canv_mask" width="320" height="568"></canvas></div>-->
+
 
 
 <form id="frmUserImage" action="{{ path('registration_step_four_create', { 'id': entity.id })}}" method="post" {{ form_enctype(form) }} onsubmit="return validateStepFourImageName();">
@@ -76,7 +79,7 @@
 
 
 
-<div class="txt_center"><canvas id="canv_mask" width="320" height="568" style="width: 320px; height: 568px; position: relative;"></canvas></div>
+
 
 
 
