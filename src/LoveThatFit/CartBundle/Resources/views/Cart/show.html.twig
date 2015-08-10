@@ -19,13 +19,13 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-
         $('#cart').validate({ // initialize plugin within DOM ready
             // other options,
             rules: {
                 'qty[]': {
                     required: true,
-                    minlength: 1
+                    min:1,
+                    number: true
                 }
             }
         });
@@ -49,11 +49,11 @@
                 <td><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
                 <td>{{ c.productItem.sku}}</td>
                 <td>{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
-                <td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> <input type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" > </td>
+                <td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> <input type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" > </td>
                 <td>${{ c.productItem.price}}</td>
                 <td>${{ c.productItem.price * c.qty}}</td>
 
-                <td><a href="{{ path('cart_delete', {'id': c.id}) }}">Delete</a></td>
+                <td><a href="{{ path('cart_delete', {'id': c.id}) }}">Delete</a><br> <input type="button" style="background: #426eb6 none repeat scroll 0 0;color:#fff;padding:5px 20px" value="Add to Wishlist"> </td>
 
             </tr>
 
@@ -61,7 +61,7 @@
             <tr><td align="center" colspan="6"><p>No Items</p></td></tr>
         {% endfor %}
         <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
-        <tr><td colspan="3" align="right"><input type="submit" name="update" value="update"></td><td><input type="submit" name="checkout" value="checkout"></td></tr>
+        <tr><td colspan="6" align="right"><input type="submit" name="update" value="update"></td><td align="left"><input style="margin-left:0px" type="submit" name="checkout" value="checkout"></td></tr>
         </form>
     </table>
 

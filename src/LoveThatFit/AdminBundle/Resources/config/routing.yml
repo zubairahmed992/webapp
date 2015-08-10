@@ -23,6 +23,14 @@ admin_brand_routes:
     resource: "@LoveThatFitAdminBundle/Resources/config/routing/brand.yml"
     prefix:   /
 
+#-------------- ORDER ------------------------
+
+admin_order_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/order.yml"
+    prefix:   /
+
+
+
     #-------------- CLOTHING TYPE ------------------------
     
 admin_clothing_type_routes:

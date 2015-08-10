@@ -17,7 +17,7 @@ class UserOrder
 	/**
 	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrderDetail", mappedBy="user_order")
 	 */
-	protected $user_order;
+	protected $user_order_detail;
 
   	/**
 	 * @ORM\ManyToOne(targetEntity="LoveThatFit\UserBundle\Entity\User", inversedBy="user_orders")
@@ -28,7 +28,7 @@ class UserOrder
 	public function __construct()
 	{
 	  $this->user = new ArrayCollection();
-	  $this->user_order = new ArrayCollection();
+	  $this->user_order_detail = new ArrayCollection();
 	}
     /**
      * @var integer
@@ -683,9 +683,9 @@ class UserOrder
      * @param \LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrder
      * @return UserOrder
      */
-    public function addUserOrder(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrder)
+    public function addUserOrder(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail)
     {
-        $this->user_order[] = $userOrder;
+        $this->user_order_detail[] = $userOrderDetail;
     
         return $this;
     }
@@ -695,9 +695,9 @@ class UserOrder
      *
      * @param \LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrder
      */
-    public function removeUserOrder(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrder)
+    public function removeUserOrder(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail)
     {
-        $this->user_order->removeElement($userOrder);
+        $this->user_order_detail->removeElement($userOrderDetail);
     }
 
     /**
@@ -707,7 +707,7 @@ class UserOrder
      */
     public function getUserOrder()
     {
-        return $this->user_order;
+        return $this->user_order_detail;
     }
 
     /**

@@ -1,0 +1,90 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+{% block breadcrumb %}
+   <li class="active">Orders</li>
+{% endblock %}
+
+
+
+{% block body %}
+  
+<div class="p_listing">     
+    <h1>Orders</h1>
+    
+ 
+    
+    <div class="btn_wrapper2">
+     
+     <div id="chart_figures" class="brand_chart_figures">
+         <div class="facts">
+                    <div><span>Total Orders:</span>{{rec_count}}</div>                   
+     </div>
+     </div>
+    
+   
+      </div>
+    
+     <div class="clearfix"></div> 
+     
+    <div class="bs-docs-grid">              
+
+        <div class="row-fluid">
+            <div class="span1 hds"><a href="{{  path('admin_order')~'/'~ 1~'/'~'id' }}" style=" text-decoration: none;">ID</a></div>
+		<div class="span1 hds">Transaction ID</div>   
+	      <div class="span1 hds">Name</div>
+	      <div class="span1 hds">Order Date</div>
+	      <div class="span1 hds">State</div>
+	      <div class="span1 hds">Payment Method</div>  
+            <div class="span1 hds">Actions</div>
+ 
+            
+        </div>  
+
+          {% for b in order %}
+
+        <div class="row-fluid show-grid">
+            <div class="span1">{{b.Id}}</div>
+	    <div class="span1">{{b.TransactionId}}</div>
+	    <div class="span1">{{b.BillingFirstName}} {{b.BillingLastName}}</div>
+	    <div class="span1">{{b.OrderDate|date('d-m-Y')}}</div>
+	    <div class="span1">{{b.BillingState}}</div>
+	    <div class="span1">{{b.PaymentMethod}}</div>
+	    <div class="span1">
+            <div>                    
+                    <a href="{{ path('admin_order_show', {'id': b.Id}) }}" title="Show {{b.TransactionId}}"><i class="icon-eye-open"></i></a>
+
+                </div> 
+            </div>  
+
+
+         
+            
+        </div>
+        <!-- Modal -->
+<div id="myModal{{b.Id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete Order</h3>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to Delete this Order <b>{{b.Id}}</b>?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="{{ path('admin_order_delete', {'id': b.Id}) }}"  class="btn btn-primary">Delete</a>
+    
+  </div>
+</div>
+{% endfor %}
+
+
+
+    </div>
+
+ {% include 'LoveThatFitAdminBundle::_pagination.html.twig'
+  with {'rec_count':rec_count,'limit':limit,'per_page_limit':per_page_limit,'no_of_pagination':no_of_pagination
+,'controller_name':'admin_order','sort':sort}
+        %}  
+</div>
+
+
+{% endblock %}

@@ -37,3 +37,7 @@ payment_default:
 payment:
     pattern:  /paynow
     defaults: { _controller: LoveThatFitCartBundle:Payment:pay}
+
+my_order:
+    pattern:  /myorder
+    defaults: { _controller: LoveThatFitCartBundle:MyOrder:index}

@@ -1,0 +1,16 @@
+admin_order_show:
+    pattern:  /admin/order/{id}/show
+    defaults: { _controller: LoveThatFitAdminBundle:Order:show }
+admin_order_update:
+    pattern:  /admin/order/{id}/update
+    defaults: { _controller: LoveThatFitAdminBundle:Order:update }
+    requirements:
+        _method:  POST
+        
+admin_order_delete:
+    pattern:  /admin/order/{id}/delete
+    defaults: { _controller: LoveThatFitAdminBundle:Order:delete }
+    
+admin_order:
+    pattern:  /admin/order/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitAdminBundle:Order:index ,page_number: 1, sort:id }

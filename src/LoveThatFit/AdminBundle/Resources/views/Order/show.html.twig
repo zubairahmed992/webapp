@@ -1,0 +1,208 @@
+{% extends 'LoveThatFitAdminBundle::base.html.twig' %}
+
+{% block breadcrumb %}
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/admin/colorpicker/js/jquery.js')}}"></script>
+<li><a href="{{ path('admin_order') }}" >Brands</a> <span class="divider">/</span></li>
+<li class="active">Show</li>
+{% endblock %}
+
+{% block h1 %}Orders{% endblock %}
+
+{% block title %}Orders{% endblock %}
+
+{% block body %}
+
+<div>      
+    <h1 style="float:left;">Order Details</h1>
+     <div class="btn_wrapper">     
+      <a href="{{ path('admin_order',{'page_number':page_number}) }}" class="btn">back</a>      <a href="{{ path('admin_user_detail_show', {'id': order.Id}) }}" class="btn">User Detail</a>
+      </div>
+      <div class="clearfix"></div>   
+            <div id="detail_wrapper">
+
+                <div id="p_hd">Order Detail</div>
+
+                    <div id="product_content">
+                        <div id="pro_detail">
+                            <div class="edt_container">         
+                                <div class="row-fluid show-grid edt_span">
+                                    <div class="span8">
+                                    <div class="span3">Id</div>
+                                    <div class="span3">{{order.id }}</div>
+                                    </div>
+
+                                        
+                                    <div class="span8">
+                                    <div class="span3">Order Date</div>
+                                    <div class="span3">{{order.OrderDate|date('d-m-Y') }}
+                                    </div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Name</div>
+                                        <div class="span3">{{order.BillingFirstName }} {{order.BillingLastName }}
+                                        </div>
+                                    </div>
+                                    <div class="span8">
+                                        <div class="span3">User</div>
+                                        <div class="span3">{{order.user.Email }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                    <div class="span3">Billing Detail</div>
+                                    </div>
+
+
+                                    <div class="span8">
+                                        <div class="span3">Address 1</div>
+                                        <div class="span3">{{order.BillingAddress1 }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Address 2</div>
+                                        <div class="span3">{{order.BillingAddress2 }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Country</div>
+                                        <div class="span3">{{order.BillingCountry }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">State</div>
+                                        <div class="span3">{{order.BillingState }}</div>
+                                    </div>
+
+
+                                    <div class="span8">
+                                        <div class="span3">City</div>
+                                        <div class="span3">{{order.BillingCity }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Post Code</div>
+                                        <div class="span3">{{order.BillingPostcode }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Shipping Detail</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Address 1</div>
+                                        <div class="span3">{{order.ShippingAddress1 }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Address 2</div>
+                                        <div class="span3">{{order.ShippingAddress2 }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Country</div>
+                                        <div class="span3">{{order.ShippingCountry }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">State</div>
+                                        <div class="span3">{{order.ShippingState }}</div>
+                                    </div>
+
+
+                                    <div class="span8">
+                                        <div class="span3">City</div>
+                                        <div class="span3">{{order.ShippingCity }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Post Code</div>
+                                        <div class="span3">{{order.ShippingPostcode }}</div>
+                                    </div>
+
+                                    <div class="span8">
+                                        <div class="span3">Item Order</div>
+                                        <div class="span3">
+                                            </div>
+                                    </div>
+                                    {% for c in user_order.userOrder %}
+                                        <div class="span8">
+                                            <div class="span3">Order ID</div>
+                                            <div class="span3">{{ order_id }}</div>
+                                        </div>
+                                        <div class="span8">
+                                            <div class="span3">Item Ordered</div>
+                                            <div class="span3"><img src="{{ asset(c.productItem.productColor.webPath) }}">
+                                            </div>
+                                        </div>
+
+
+                                    <div class="span8">
+                                        <div class="span3">SKU</div>
+                                        <div class="span3">{{ c.productItem.sku}}</div>
+                                    </div>
+                                    <div class="span8">
+                                        <div class="span3">Product Detail</div>
+                                        <div class="span3">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</div>
+                                    </div>
+                                    <div class="span8">
+                                        <div class="span3">Quantity</div>
+                                        <div class="span3">{{ c.qty }}</div>
+                                    </div>
+                                        <div class="span8">
+                                            <div class="span3">Price</div>
+                                            <div class="span3">${{ c.productItem.price}}</div>
+                            </div>
+                                    <div class="span8">
+                                        <div class="span3">Sub Total</div>
+                                        <div class="span3">${{ c.productItem.price * c.qty}}</div>
+                                    </div>
+
+                                        <div class="span8">
+                                            <div class="span3"></div>
+                                        </div>
+                                    {% endfor %}
+                                    <div class="span8">
+                                        <div class="span3">Total</div>
+                                        <div class="span3">${{ order.orderAmount}}</div>
+                                    </div>
+
+                                    <form action="{{ path('admin_order_update', {'id': order.Id})}}" method="post">
+                                        <div class="span8">
+                                            <div class="span3">Update Order Status</div>
+                                         </div>
+                                        <div class="span8">
+                                            <div class="span3"><input type="hidden" name="order_id" value="{{ order_id }}">
+                    <select name="order_status">
+                        <option {% if(order.orderStatus == 'Pending') %} selected
+                        {%endif%} value="Pending">Pending</option>
+                        <option {% if(order.orderStatus == 'Approved') %} selected {%endif%} value="Approved">Approved</option>
+                        <option {% if(order.orderStatus == 'Processed') %} selected {%endif%} value="Processed">Processed</option>
+                        <option {% if(order.orderStatus == 'Shipping') %} selected {%endif%} value="Shipping">Shipping</option>
+                      <option {% if(order.orderStatus == 'Returned') %} selected {%endif%} value="Returned">Returned</option>
+                        <option {% if(order.orderStatus == 'Canceled') %} selected {%endif%} value="Canceled">Canceled</option>
+                    </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="span8">
+                                            <div class="span3">
+                                        <input name="update" type="submit" value="Update Status">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                        
+                                </div> 
+
+                                </div> 
+                                </div>
+                            </div><!-- End pro_detail -->      
+                        </div><!-- End product_content --> 
+                    </div> <!-- End detail_wrapper -->
+                </form>  
+
+            </div>      
+
+{% endblock %}
+

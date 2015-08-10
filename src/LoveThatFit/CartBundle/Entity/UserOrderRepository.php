@@ -28,4 +28,42 @@ class UserOrderRepository extends EntityRepository
 	  return null;
 	}
   }
+
+  public function countAllRecord() {
+	$total_record = $this->getEntityManager()
+	  ->createQuery('SELECT o FROM LoveThatFitCartBundle:UserOrder o');
+	try {
+	  return $total_record->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
+  public function listAllOrders($page_number = 0, $limit = 0, $sort = 'id') {
+	if ($page_number <= 0 || $limit <= 0) {
+	  $query = $this->getEntityManager()
+		->createQuery('SELECT o FROM LoveThatFitCartBundle:UserOrder o ORDER BY o.' . $sort . ' ASC');
+	} else {
+	  $query = $this->getEntityManager()
+		->createQuery('SELECT o FROM LoveThatFitCartBundle:UserOrder o ORDER BY o.' . $sort . ' ASC')
+		->setFirstResult($limit * ($page_number - 1))
+		->setMaxResults($limit);
+	}
+	try {
+	  return $query->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return "null";
+	}
+  }
+
+  public function getRecordsCountWithCurrentOrderLimit($order_id){
+
+	$query = $this->getEntityManager()
+	  ->createQuery("SELECT count(o.id) as id FROM LoveThatFitCartBundle:UserOrder o WHERE o.id <=:order_id")
+	  ->setParameters(array('order_id' => $order_id));
+	try {
+	  return $query->getResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
 }

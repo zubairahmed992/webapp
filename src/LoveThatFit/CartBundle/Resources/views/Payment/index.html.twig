@@ -25,6 +25,7 @@
             <td>Quantity</td>
             <td>Unit Price</td>
             <td>Sub Total</td>
+            <td>-</td>
 
 
         </tr>
@@ -37,25 +38,26 @@
                 <td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" name="product_item[]" value="{{ c.productItem.id }}"> {{ c.qty }} </td>
                 <td>${{ c.productItem.price}}</td>
                 <td>${{ c.productItem.price * c.qty}}</td>
+                <td><a href="{{ path('cart_show')}}">Edit Order</a></td>
 
 
 
             </tr>
 
         {% else %}
-            <tr><td align="center" colspan="5"><p>There are no records</p></td></tr>
+            <tr><td align="center" colspan="6"><p>There are no records</p></td></tr>
         {% endfor %}
-        <tr><td colspan="6" align="right">Total:<strong>${{ grand_total }} </strong></td></tr>
+        <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }} </strong></td></tr>
 
             </table>
 
     <table width="700" border="0" >
         <tr><td>
-                <h1>User Detail</h1><br>
+                <h1>Customer Detail</h1><br>
                 Name:{{ billing_shipping_info.billing.billing_first_name  }} {{ billing_shipping_info.billing.billing_last_name  }}
             </td></tr>
 
-            <tr><td>Address:{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }}</td></tr>
+            <tr><td>Address:{{ billing_shipping_info.billing.billing_address1 }} {{ billing_shipping_info.billing.billing_state }} {{ billing_shipping_info.billing.billing_city }} {{ billing_shipping_info.billing.billing_country }} {{ billing_shipping_info.billing.billing_postcode }} <a href="{{ path('order_default')}}">Edit Address</a></td></tr>
     </table>
         <div id="paypal-container"></div>
         <form id="checkout" method="post" action="{{ path('payment')}}">

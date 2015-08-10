@@ -42,7 +42,6 @@ class OrderHelper {
 	  	$user_billing_shipping_info->setUser($user);
 		$user_billing_shipping_info->setBillingFirstName($billing["billing_first_name"]);
 		$user_billing_shipping_info->setBillingLastName($billing["billing_last_name"]);
-		//$user_billing_shipping_info->setBillingCompany($billing["billing_company"]);
 		$user_billing_shipping_info->setBillingAddress1($billing["billing_address1"]);
 		$user_billing_shipping_info->setBillingAddress2($billing["billing_address2"]);
 		$user_billing_shipping_info->setBillingCity($billing["billing_city"]);
@@ -52,7 +51,6 @@ class OrderHelper {
 
 	$user_billing_shipping_info->setShippingFirstName($billing["shipping_first_name"]);
 		$user_billing_shipping_info->setShippingLastName($billing["shipping_last_name"]);
-		//$user_billing_shipping_info->setShippingCompany($billing["shipping_company"]);
 		$user_billing_shipping_info->setShippingAddress1($billing["shipping_address1"]);
 		$user_billing_shipping_info->setShippingAddress2($billing["shipping_address2"]);
 		$user_billing_shipping_info->setShippingCity($billing["shipping_city"]);
@@ -78,6 +76,14 @@ class OrderHelper {
   public function findOrderById($id){
 	return $this->repo->find($id);
   }
+//------------------------------- Update Order Status-----------------------------------------------------///////////
+  public function updateOrderStatus($order_status,$order_id) {
+	$order=$this->findOrderById($order_id);
+	$order->setOrderStatus($order_status);
+	$this->save($order);
+  }
+
+
 
   //-------- update Payment transaction status of order ----------------------------------------////////////
   public function updateUserTransaction($order_id,$transaction_id,$transaction_status,$payment_method,$payment_json) {
@@ -88,6 +94,36 @@ class OrderHelper {
 	  $order->setPaymentJson($payment_json);
 	  $this->save($order);
   }
+
+  public function getListWithPagination($page_number, $sort) {
+	$yaml = new Parser();
+	$pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+	$limit = $pagination_constants["constants"]["pagination"]["limit"];
+
+	$entity = $this->repo->listAllOrders($page_number, $limit, $sort);
+	$rec_count = count($this->repo->countAllRecord());
+	$cur_page = $page_number;
+
+	if ($page_number == 0 || $limit == 0) {
+	  $no_of_paginations = 0;
+	} else {
+	  $no_of_paginations = ceil($rec_count / $limit);
+	}
+	return array('order' => $entity,
+	  'rec_count' => $rec_count,
+	  'no_of_pagination' => $no_of_paginations,
+	  'limit' => $cur_page,
+	  'per_page_limit' => $limit,
+	  'sort'=>$sort,
+	);
+  }
+
+
+  public function getRecordsCountWithCurrentOrderLimit($brand_id){
+
+	return $this->repo->getRecordsCountWithCurrentOrderLimit($brand_id);
+  }
+
 #------------------------------ Get Cart Grand Total--------------------------------#
 //  public function getCartGrandTotal($decoded){
 //		print_r($decoded);die;
