@@ -6,6 +6,10 @@ ws_user_login:
     pattern:  /ws/login
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:login }
 
+nws_user_detail:
+    pattern:  /ws/user_detail
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:detail }
+    
 ws_user_email_exists:
     pattern:  /ws/user_email_exists
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:emailExists }

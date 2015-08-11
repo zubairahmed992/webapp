@@ -25,6 +25,14 @@ class WSUserController extends Controller {
         $exists = $this->get('webservice.helper')->emailExists($decoded['email']);
         return new Response($exists?'true':'false');
     }
+#~~~~~~~~~~~~~~~~~~~ ws_user_detail   /ws/user_detail
+
+    public function detailAction() {
+        $decoded  = $this->process_request();                         
+        $decoded['base_path'] = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->getRequest()->getBasePath() . '/';
+        $json_data = $this->get('webservice.helper')->userDetail($decoded);
+        return new Response($json_data);
+    }
     
 #~~~~~~~~~~~~~~~~~~~ ws_user_registeration   /ws/user_registeration
 

@@ -36,6 +36,19 @@ class WebServiceHelper {
             return $this->response_array(false, 'Invalid Email');
         }
     }
+       #------------------------ User -----------------------
+
+    public function userDetail($request_array) {
+        $user = $this->findUserByAuthToken($request_array['auth_token']);
+        $data=array();
+        if ($user) {
+            $data['user'] = $user->toDataArray(true, $request_array['device_type']);                                 
+            $data['user']['path'] =$request_array['base_path'] . $data['user']['path'] .'/';
+            return $this->response_array(true, 'user found', true, $data);
+        } else {
+            return $this->response_array(false, 'User not found');
+        }
+    }
     #------------------------ User -----------------------
 
     public function registrationService($request_array) {
@@ -239,8 +252,8 @@ class WebServiceHelper {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
             if (move_uploaded_file($files["image"]["tmp_name"], $user->getAbsolutePath())) {
-                $this->container->get('webservice.helper.user')->setMarkingDeviceType($user, $request_array['device_type'], $request_array['pixel_per_inch']);
-                $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $request_array['device_type'], $request_array['pixel_per_inch']);
+                $this->container->get('webservice.helper.user')->setMarkingDeviceType($user, $request_array['device_type'], $request_array['height_per_inch']);
+                $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $request_array['device_type'], $request_array['height_per_inch']);
                 $this->container->get('user.helper.user')->saveUser($user);
                 $userinfo = array();
                 $userinfo['user'] = $user->toDataArray(true, $request_array['device_type']);

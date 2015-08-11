@@ -8,6 +8,15 @@ ws_foo:
     request_type: post
     description: For testing functionalities & work in progress. 
 
+nws_user_detail:
+    pattern:  /ws/user_detail
+    title: user_detail
+    params:
+          auth_token: 00000000000000000000000000000
+          device_type: iphone5
+    request_type: post
+    description: return user detail against authentication token 
+
 ws_user_email_exists:
     pattern:  /ws/user_email_exists
     title: user_email_exists
@@ -22,7 +31,7 @@ ws_user_login:
     params:
           email:  example@ltf.com
           password: ltf123
-          deviceType: iphone5
+          device_type: iphone5
           user_detail: true
           retailer_brand: true
     optional_params:
@@ -78,7 +87,7 @@ ws_user_image_uploader:
    params:
      email: iphone@gmail.com
      device_type: iphone5
-     pixel_per_inch: 6     
+     height_per_inch: 6     
      upload_type: fitting_room
    request_type: post
    file_upload: true
