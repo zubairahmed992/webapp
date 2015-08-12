@@ -85,9 +85,21 @@ class DeviceController extends Controller {
        // return new response(json_encode($default_marker));
         $device_spec = $user->getDeviceSpecs($device_type);
         $device_screen_height = $this->get('admin.helper.utility')->getDeviceResolutionSpecs($device_type);
-        
-        $edit_type=$edit_type==null?'registration':$edit_type;
-        
+        /*
+        $edit_type=$edit_type==null || strtolower($edit_type)=='reg'?'registration':$edit_type;
+         return new Response(json_encode(array(
+                    'entity' => $user,
+                    'measurement' => $measurement,
+                    'edit_type' => $edit_type,
+                    'marker' => $marker,
+                    'default_marker' => $default_marker,
+                    'user_pixcel_height' =>  $device_spec->getUserPixcelHeight(),
+                    'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
+                    'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
+                    'per_inch_pixcel' => $device_spec->getDeviceUserPerInchPixelHeight(),
+                    'device_type' => $device_type,
+                    'device_screen_height' => $device_screen_height['pixel_height'],
+            )));*/
         return $this->render('LoveThatFitUserBundle:Device:svg_path.html.twig', array(
                     'form' => $form->createView(),               
                     'measurement_form' => $measurement_form->createView(),                   
@@ -98,10 +110,10 @@ class DeviceController extends Controller {
                     'edit_type' => $edit_type,
                     'marker' => $marker,
                     'default_marker' => $default_marker,
-                    'user_pixcel_height' =>  $device_spec->getUserPixcelHeight(),
+                    'user_pixcel_height' => $device_spec==null?0:$device_spec->getUserPixcelHeight(),
                     'top_bar' => $user->getMeasurement()->getIphoneHeadHeight(),
                     'bottom_bar' => $user->getMeasurement()->getIphoneFootHeight(),
-                    'per_inch_pixcel' => $device_spec->getDeviceUserPerInchPixelHeight(),
+                    'per_inch_pixcel' => $device_spec==null?0:$device_spec->getDeviceUserPerInchPixelHeight(),
                     'device_type' => $device_type,
                     'device_screen_height' => $device_screen_height['pixel_height'],
             ));

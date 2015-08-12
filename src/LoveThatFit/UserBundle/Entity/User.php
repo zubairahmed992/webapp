@@ -1595,7 +1595,7 @@ class User implements UserInterface, \Serializable {
         } else {
             if ($us) {
                 foreach ($us as $userdevice) {
-                    if ($device_type == $userdevice->getDeviceType()) {
+                    if (strtolower($device_type) == strtolower($userdevice->getDeviceType())) {
                         return $userdevice;
                     }
                 }
