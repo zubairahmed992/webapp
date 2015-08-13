@@ -20,7 +20,7 @@ class WebServiceHelper {
             if ($this->container->get('webservice.helper.user')->matchPassword($user, $request_array['password'])) {
                 $response_array = null;
                 if (array_key_exists('user_detail', $request_array) && $request_array['user_detail'] == 'true') {
-                    $response_array['user'] = $user->toDataArray(true, $request_array['deviceType']);                    
+                    $response_array['user'] = $user->toDataArray(true, $request_array['deviceType']);
                 }
                 if (array_key_exists('retailer_brand', $request_array) && $request_array['retailer_brand'] == 'true') {
                     $retailer_brands = $this->container->get('admin.helper.brand')->getBrandListForService();
@@ -36,29 +36,31 @@ class WebServiceHelper {
             return $this->response_array(false, 'Invalid Email');
         }
     }
-       #------------------------ User -----------------------
+
+    #------------------------ User -----------------------
 
     public function userDetail($request_array) {
         $user = $this->findUserByAuthToken($request_array['auth_token']);
-        $data=array();
+        $data = array();
         if ($user) {
-            $data['user'] = $user->toDataArray(true, $request_array['device_type']);                                 
-            $data['user']['path'] =$request_array['base_path'] . $data['user']['path'] .'/';
+            $data['user'] = $user->toDataArray(true, $request_array['device_type']);
+            $data['user']['path'] = $request_array['base_path'] . $data['user']['path'] . '/';
             return $this->response_array(true, 'user found', true, $data);
         } else {
             return $this->response_array(false, 'User not found');
         }
     }
+
     #------------------------ User -----------------------
 
     public function registrationService($request_array) {
-        
+
         if (!array_key_exists('email', $request_array)) {
             return $this->response_array(false, 'Email Not provided.');
         }
-        
+
         $user = $this->container->get('user.helper.user')->findByEmail($request_array['email']);
-        
+
         if (count($user) > 0) {
             #$measurement=$this->createUserMeasurementWithParams($request_array,$user);
             #return $this->response_array(true, 'moka', true, $measurement->getCompleteArray());
@@ -69,65 +71,69 @@ class WebServiceHelper {
             #---- 2) send registration email ....            
             # $this->container->get('mail_helper')->sendRegistrationEmail($user);                    
             #--- 3) Size charts
-                #size charts brands & size being saved
-                //sizecharts measurement extraction
+            #size charts brands & size being saved
+            //sizecharts measurement extraction
             #--- 4) Measurement
-            $measurement=$this->createUserMeasurementWithParams($request_array,$user);
-            
+            $measurement = $this->createUserMeasurementWithParams($request_array, $user);
+
             #--- 5) Device
-            $user_device=$this->createUserDeviceWithParams($request_array,$user);
-            $detail_array=array_merge($user->toArray(true), $measurement->toArray(), $user_device->toArray());
+            $user_device = $this->createUserDeviceWithParams($request_array, $user);
+            $detail_array = array_merge($user->toArray(true), $measurement->toArray(), $user_device->toArray());
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
-            return $this->response_array(true, 'Proceed', true, array('user'=>$detail_array));
+            return $this->response_array(true, 'Proceed', true, array('user' => $detail_array));
         }
     }
+
     #-------------------------------------------------------
-    private function merge_objects_to_array($objs){
-        $ar=array();        
-        
-        if(array_key_exists('user', $objs)){
-            $ar=array_merge($ar,$objs['user']);
+
+    private function merge_objects_to_array($objs) {
+        $ar = array();
+
+        if (array_key_exists('user', $objs)) {
+            $ar = array_merge($ar, $objs['user']);
             unset($ar['auth_token_web_service']);
-        }elseif(array_key_exists('measurement', $objs)){
-            $ar=array_merge($ar,$objs['measurement']);            
-        }elseif(array_key_exists('device', $objs)){
-            $ar=array_merge($ar,$objs['device']);
+        } elseif (array_key_exists('measurement', $objs)) {
+            $ar = array_merge($ar, $objs['measurement']);
+        } elseif (array_key_exists('device', $objs)) {
+            $ar = array_merge($ar, $objs['device']);
             unset($ar['per_inch_pixel_height']);
-            unset($ar['deviceType']);            
+            unset($ar['deviceType']);
         }
         return $ar;
     }
+
     #-------------------------------------------------------
-    private function createUserWithParams($request_array){
-            $user = $this->container->get('user.helper.user')->createNewUser();
-            $user->setEmail($request_array['email']);
-            $user->setPassword($request_array['password']);
-            $user->setGender(array_key_exists('gender', $request_array)?$request_array['gender']:null);    
-            $user->setZipcode(array_key_exists('zipcode', $request_array)?$request_array['zipcode']:null);
-            $user=$this->container->get('user.helper.user')->getPasswordEncoded($user);
-            $user->generateAuthenticationToken();
-            $this->container->get('user.helper.user')->saveUser($user);             
-            return $user;
+
+    private function createUserWithParams($request_array) {
+        $user = $this->container->get('user.helper.user')->createNewUser();
+        $user->setEmail($request_array['email']);
+        $user->setPassword($request_array['password']);
+        $user->setGender(array_key_exists('gender', $request_array) ? $request_array['gender'] : null);
+        $user->setZipcode(array_key_exists('zipcode', $request_array) ? $request_array['zipcode'] : null);
+        $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
+        $user->generateAuthenticationToken();
+        $this->container->get('user.helper.user')->saveUser($user);
+        return $user;
     }
-    
-    private function createUserDeviceWithParams($request_array, $user){            
-            $userDevice= $this->container->get('user.helper.userdevices')->createNew($user);
-            $userDevice->setDeviceName($request_array['device_id']);
-            $userDevice->setDeviceType($request_array['device_type']);
-            $userDevice->setDeviceUserPerInchPixelHeight(7); #default value 7            
-            $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
-            return $userDevice;
+
+    private function createUserDeviceWithParams($request_array, $user) {
+        $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
+        $userDevice->setDeviceName($request_array['device_id']);
+        $userDevice->setDeviceType($request_array['device_type']);
+        $userDevice->setDeviceUserPerInchPixelHeight(7); #default value 7            
+        $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
+        return $userDevice;
     }
-    
+
     private function createUserMeasurementWithParams($request_array, $user) {
-        if($user->getMeasurement()){
+        if ($user->getMeasurement()) {
             $measurement = $user->getMeasurement();
-        }else{
+        } else {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
-        
+
         $measurement->setWeight(array_key_exists('weight', $request_array) ? $request_array['weight'] : $measurement->getWeight());
         $measurement->setHeight(array_key_exists('height', $request_array) ? $request_array['height'] : $measurement->getHeight());
         $measurement->setWaist(array_key_exists('waist', $request_array) ? $request_array['waist'] : $measurement->getWaist());
@@ -160,17 +166,19 @@ class WebServiceHelper {
         $measurement->setCalf(array_key_exists('calf', $request_array) ? $request_array['calf'] : $measurement->getCalf());
         $measurement->setAnkle(array_key_exists('ankle', $request_array) ? $request_array['ankle'] : $measurement->getAnkle());
         $measurement->setIphoneFootHeight(array_key_exists('iphone_foot_height', $request_array) ? $request_array['iphone_foot_height'] : $measurement->getIphoneFootHeight());
-        $measurement=$this->setSizeChartToUserMeasurement($measurement, $request_array);
-        
-        $ar['manual']=$measurement->getArray();
-        $ar['size_charts']=$this->container->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
+        $measurement = $this->setSizeChartToUserMeasurement($measurement, $request_array);
+
+        $ar['manual'] = $measurement->getArray();
+        $ar['size_charts'] = $this->container->get('admin.helper.sizechart')->measurementFromSizeCharts($measurement);
         $measurement->setMeasurementJson(json_encode($ar));
         $measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
-            
+
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
         return $measurement;
     }
+
     #---------------------------------------------------------------------
+
     private function setSizeChartToUserMeasurement($measurement, $request_array) {
         $gender = $request_array['gender'];
         $body_type = isset($request_array['bodyType']) ? $request_array['bodyType'] : 'regular';
@@ -207,6 +215,7 @@ class WebServiceHelper {
         }
         return $measurement;
     }
+
     #--------------------------------User Detail Array -----------------------------#
 
     private function getBasePath($request) {
@@ -230,18 +239,20 @@ class WebServiceHelper {
         $user = $this->container->get('user.helper.user')->findByEmail($email);
         return $user ? true : false;
     }
+
     #----------------------------------------------------------------------------------------
-    
+
     public function sizeChartsService($request_array) {
         $sc = $this->container->get('admin.helper.sizechart')->getBrandSizeTitleArrayByGender($request_array['gender']);
         if (count($sc) > 0) {
-                return $this->response_array(true, 'Size charts', true, array('size_charts'=>$sc));
+            return $this->response_array(true, 'Size charts', true, array('size_charts' => $sc));
         } else {
-            return $this->response_array(false, 'Size Charts not found');            
+            return $this->response_array(false, 'Size Charts not found');
         }
     }
-     #----------------------------------------------------------------------------------------
-    
+
+    #----------------------------------------------------------------------------------------
+
     public function uploadUserImage($user, $request_array, $files) {
         if ($user) {
             $file_name = $files["image"]["name"];
@@ -257,49 +268,71 @@ class WebServiceHelper {
                 $this->container->get('user.helper.user')->saveUser($user);
                 $userinfo = array();
                 $userinfo['user'] = $user->toDataArray(true, $request_array['device_type']);
-                $userinfo['user']['path']=$request_array['base_path'];                
-                
+                $userinfo['user']['path'] = $request_array['base_path'];
+
                 return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
-            } else {                
+            } else {
                 return $this->response_array(false, 'Image not uploaded');
             }
         } else {
             return $this->response_array(false, 'user not found');
         }
-        
     }
-    
-    
-     #--------------------------------------------------------------------
-     
-     public function processRequest($request){         
+
+    #--------------------------------------------------------------------
+
+    public function processRequest($request) {
         $handle = fopen('php://input', 'r');
         $jsonInput = fgets($handle);
         $decoded = json_decode($jsonInput, true);
-        
-        if($decoded==null) #if null (to be used for web service testing))
-            $decoded  = $request->request->all();
-        
+
+        if ($decoded == null) #if null (to be used for web service testing))
+            $decoded = $request->request->all();
+
         return $decoded;
     }
+
     #-------------------------------------------------------------
-     public function findUserByAuthToken($token) {        
-        return $this->container->get('user.helper.user')->findByAuthToken($token);               
+
+    public function findUserByAuthToken($token) {
+        return $this->container->get('user.helper.user')->findByAuthToken($token);
     }
-    
+
     #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
-    
-    public function productSync($user, $date=null) {        
-        $products = $this->container->get('webservice.repo')->productSync($user->getGender(),$date);
-        return $this->response_array(true,"products list",true,$products);        
+
+    public function productSync($user, $date = null) {
+        $products = $this->container->get('webservice.repo')->productSync($user->getGender(), $date);
+        return $this->response_array(true, "products list", true, $products);
     }
+
     #------------------------------------------------------------------------------
-    public function productList($user, $list_type=null) {        
+
+    public function productList($user, $list_type = null) {
         $products = $this->container->get('webservice.repo')->productList($user, $list_type);
-        return $this->response_array(true,"products list",true,$products);
+        return $this->response_array(true, "products list", true, $products);
     }
-    
-    
+
+    #------------------------------------------------------------------------------
+
+    public function loveItem($user, $request_array) {
+        /*
+         * #----------------------------------------------------------------------------------------
+
+          public function productListAction() {
+          $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+          $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+          if ($user) {
+          $res = $this->get('webservice.helper')->productList($user, array_key_exists('list_type', $decoded) ? $decoded['list_type'] : null);
+          } else {
+          $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+          }
+          return new Response($res);
+
+          }
+
+         */
+    }
+
 }
