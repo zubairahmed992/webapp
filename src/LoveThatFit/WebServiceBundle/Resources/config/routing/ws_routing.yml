@@ -32,3 +32,7 @@ ws_user_image_uploader:
 nws_products:
     pattern:  /ws/products
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:products }
+
+ws_product_list:
+    pattern:  /ws/product_list
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:productList }

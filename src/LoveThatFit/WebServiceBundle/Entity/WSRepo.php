@@ -18,7 +18,7 @@ class WSRepo {
         if($date_format){         
             return $this->em
                         ->createQueryBuilder()
-                        ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.title as retailer_title,r.id as retailer_id')
+                        ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, b.id as brand_id')
                         ->from('LoveThatFitAdminBundle:Product', 'p')
                         ->innerJoin('p.product_colors', 'pc')
                         ->innerJoin('p.clothing_type', 'ct')
@@ -37,7 +37,7 @@ class WSRepo {
          
         return $this->em
                         ->createQueryBuilder()
-                        ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,b.name as brand_name,b.id as brandId')
+                        ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, b.id as brand_id')
                         ->from('LoveThatFitAdminBundle:Product', 'p')
                         ->innerJoin('p.product_colors', 'pc')
                         ->innerJoin('p.clothing_type', 'ct')
@@ -52,6 +52,30 @@ class WSRepo {
     }}
     
 #-------------------------------------------------------
+
+#-------------------------------------------------------------------
+    public function productList($user, $list_type = null) {
+        switch ($list_type) {
+
+            default:
+                $query = $this->em
+                                ->createQuery("
+            SELECT p.id product_id, p.name, p.description
+            FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.user_item_try_history uih
+            WHERE uih.user=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
+            ORDER BY uih.count DESC"
+                                )->setParameters(array('user_id' => $user->getId()));
+                break;
+        };
+        try {
+                    return $query->getResult();
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                    return null;
+                }
+
+    }
+
 ############################################################
 #################################################################
     

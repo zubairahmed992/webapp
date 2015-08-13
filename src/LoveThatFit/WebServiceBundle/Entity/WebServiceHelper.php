@@ -268,12 +268,7 @@ class WebServiceHelper {
         }
         
     }
-    #------------------------------------------------------------------------------
     
-    public function productSync($user, $date=null) {        
-        $products = $this->container->get('webservice.repo')->productSync($user->getGender(),$date);
-        return $this->response_array(true,"products list",true,$products);        
-    }
     
      #--------------------------------------------------------------------
      
@@ -288,8 +283,23 @@ class WebServiceHelper {
         return $decoded;
     }
     #-------------------------------------------------------------
-    
      public function findUserByAuthToken($token) {        
         return $this->container->get('user.helper.user')->findByAuthToken($token);               
     }
+    
+    #------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------
+    
+    public function productSync($user, $date=null) {        
+        $products = $this->container->get('webservice.repo')->productSync($user->getGender(),$date);
+        return $this->response_array(true,"products list",true,$products);        
+    }
+    #------------------------------------------------------------------------------
+    public function productList($user, $list_type=null) {        
+        $products = $this->container->get('webservice.repo')->productList($user, $list_type);
+        return $this->response_array(true,"products list",true,$products);
+    }
+    
+    
 }
