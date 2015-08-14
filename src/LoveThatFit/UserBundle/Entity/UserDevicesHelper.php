@@ -90,6 +90,7 @@ class UserDevicesHelper {
         $device = $this->repo->findOneBy(array('user' => $user->getId(), 'deviceType' => $device_type));
         if(!$device){
             $device=$this->createNew($user);
+            $device->setDeviceType($device_type);
         }
         $device->setDeviceUserPerInchPixelHeight($height_per_inch);
         $this->saveUserDevices($device);
