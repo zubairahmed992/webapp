@@ -58,7 +58,12 @@ class WSProductController extends Controller {
         return new Response($res);
         
     }
-    
-    
+    #------------------------------------------------------------------------
+      public function brandRetailerAction() {
+          #return new Response('dddddddd');
+        $brand_retailer = $this->container->get('admin.helper.brand')->getBrandListForService();
+        $res = $this->get('webservice.helper')->response_array(true, 'list of brand & retailers', true, $brand_retailer);                    
+        return new Response($res);
+    }
 }
 
