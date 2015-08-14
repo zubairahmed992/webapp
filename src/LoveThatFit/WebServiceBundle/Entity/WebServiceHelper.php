@@ -302,8 +302,8 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
 
-    public function productSync($user, $date = null) {
-        $products = $this->container->get('webservice.repo')->productSync($user->getGender(), $date);
+    public function productSync($gender, $date = null) {
+        $products = $this->container->get('webservice.repo')->productSync($gender, $date);
         return $this->response_array(true, "products list", true, $products);
     }
 

@@ -42,6 +42,7 @@ class WSRepo {
                         ->innerJoin('p.product_colors', 'pc')
                         ->innerJoin('p.clothing_type', 'ct')
                         ->innerJoin('p.brand', 'b')
+                        ->leftJoin('p.retailer', 'r')
                         ->where('p.gender=:gender')
                         ->andWhere("p.displayProductColor!=''")
                         ->andWhere ('p.disabled=0')
