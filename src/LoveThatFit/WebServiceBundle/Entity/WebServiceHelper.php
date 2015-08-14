@@ -257,14 +257,15 @@ class WebServiceHelper {
         if ($user) {
             $file_name = $files["image"]["name"];
             $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $newFilename = 'original' . "." . $ext;
-            $user->setImage($newFilename);
+            $user->setImage('cropped' . "." . $ext);            
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-            if (move_uploaded_file($files["image"]["tmp_name"], $user->getAbsolutePath())) {
+            if (move_uploaded_file($files["image"]["tmp_name"], $user->getOriginalImageAbsolutePath())) {
                 $this->container->get('webservice.helper.user')->setMarkingDeviceType($user, $request_array['device_type'], $request_array['height_per_inch']);
                 $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $request_array['device_type'], $request_array['height_per_inch']);
+                
+                copy($user->getOriginalImageAbsolutePath(), $user->getAbsolutePath());                
                 $this->container->get('user.helper.user')->saveUser($user);
                 $userinfo = array();
                 $userinfo['user'] = $user->toDataArray(true, $request_array['device_type']);
