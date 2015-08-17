@@ -45,9 +45,9 @@ class WebServiceHelper {
         if ($user) {
             $data['user'] = $user->toDataArray(true, $request_array['device_type']);
             $data['user']['path'] = $request_array['base_path'] . $data['user']['path'] . '/';
-            return $this->response_array(true, 'user found', true, $data);
+            return $this->response_array(true, 'member found', true, $data);
         } else {
-            return $this->response_array(false, 'User not found');
+            return $this->response_array(false, 'Member not found');
         }
     }
 
@@ -82,7 +82,7 @@ class WebServiceHelper {
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
-            return $this->response_array(true, 'Proceed', true, array('user' => $detail_array));
+            return $this->response_array(true, 'Proceed', true, array('member' => $detail_array));
         }
     }
 
@@ -277,7 +277,7 @@ class WebServiceHelper {
                 return $this->response_array(false, 'Image not uploaded');
             }
         } else {
-            return $this->response_array(false, 'user not found');
+            return $this->response_array(false, 'member not found');
         }
     }
 

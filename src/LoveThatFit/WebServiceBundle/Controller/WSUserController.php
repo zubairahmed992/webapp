@@ -63,7 +63,7 @@ class WSUserController extends Controller {
         #return new Response($decoded['param1']);
         #$user = $this->container->get('webservice.repo')->findUser($decoded['param1']);
         $user = $this->container->get('user.helper.user')->find($decoded['param1']);
-        $res = $this->container->get('webservice.helper')->response_array(true,"user found",true,$user->toDataArray(true,$decoded['param2']));
+        $res = $this->container->get('webservice.helper')->response_array(true,"member found",true,$user->toDataArray(true,$decoded['param2']));
         return new Response($res);
     }
 

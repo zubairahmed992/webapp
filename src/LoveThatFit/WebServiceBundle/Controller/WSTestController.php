@@ -197,7 +197,7 @@ public function imagesUrlAction(){
             $product_list =  $this->get('webservice.helper.product')->favouriteByUser($user_id,$this->getRequest());
             return new response(json_encode($product_list));
         }else{
-            return new Response(json_encode(array('Message'=>'User not found')));
+            return new Response(json_encode(array('Message'=>'Member not found')));
         }
     }    
 #####################################################################################    
@@ -234,7 +234,7 @@ public function imagesUrlAction(){
         }
 
         $entity = $this->get('webservice.helper.user')->updateWithUserArray($decoded);
-        $msg=$entity?'Update Sucessfully':'We could not find the user';
+        $msg=$entity?'Update Sucessfully':'We could not find the member';
         return new Response(json_encode(array('Message' => $msg)));
     }
 
@@ -307,7 +307,7 @@ public function imagesUrlAction(){
            
              return new Response(json_encode($msg));
         } else {
-            return new Response(json_encode(array('Message' => 'We can not find user')));
+            return new Response(json_encode(array('Message' => 'We can not find member')));
         }
     }
 
