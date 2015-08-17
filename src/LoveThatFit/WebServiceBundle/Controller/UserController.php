@@ -295,7 +295,7 @@ public function userProfileAction()
             }
         } else {
             return new response(json_encode(array('Message' => 'We can not find member')));
-        }user
+        }
     }   
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     #DEMO_UPLOAD_MANNEQUIN_URL	/web_service/demo_image_upload
