@@ -559,7 +559,7 @@ $measurement_vertical_form = $this->createForm(new MeasurementVerticalPositionFo
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         if (!$user) {
-            throw $this->createNotFoundException('Unable to find User.');
+            throw $this->createNotFoundException('Unable to find Member.');
         }
         $measurement = $user->getMeasurement();
         #-----------------------------------------
@@ -618,7 +618,7 @@ public function stepFourTimeSpentAction(Request $request){
         $entity = $this->get('user.helper.user')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User.');
+            throw $this->createNotFoundException('Unable to find Member.');
         }
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
         $this->get('user.helper.user')->updateImageDeviceType($entity);
@@ -680,7 +680,7 @@ public function stepFourTimeSpentAction(Request $request){
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         if (!$user) {
-            throw $this->createNotFoundException('Unable to find User.');
+            throw $this->createNotFoundException('Unable to find Member.');
         }
         $measurement = $user->getMeasurement();
          $users=$this->get('user.helper.parent.child')->findByUser($user);
@@ -775,7 +775,7 @@ public function stepFourTimeSpentAction(Request $request){
         $id = $this->get('security.context')->getToken()->getUser()->getId();
         $user = $this->get('user.helper.user')->find($id);
         if (!$user) {
-            throw $this->createNotFoundException('Unable to find User.');
+            throw $this->createNotFoundException('Unable to find Member.');
         }
         $measurement = $user->getMeasurement();
          $users=$this->get('user.helper.parent.child')->findByUser($user);

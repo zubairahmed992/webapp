@@ -116,7 +116,7 @@ public function editProfileAction()
 #------------------------------End Of Authentication Token----------------------#
     $entity=$user->updateWithUserArray($decoded);   
     if ($entity) {return new Response(json_encode(array('Message' => 'Update Sucessfully')));}
-    else {return new Response(json_encode(array('Message' => 'We can not find user')));}
+    else {return new Response(json_encode(array('Message' => 'We can not find member')));}
 }        
 
 /*
@@ -294,8 +294,8 @@ public function userProfileAction()
               return new response(json_encode(array('Message' => 'Image not uploaded')));
             }
         } else {
-            return new response(json_encode(array('Message' => 'We can not find user')));
-        }
+            return new response(json_encode(array('Message' => 'We can not find member')));
+        }user
     }   
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
     #DEMO_UPLOAD_MANNEQUIN_URL	/web_service/demo_image_upload

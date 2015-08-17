@@ -161,14 +161,14 @@ class UserHelper {
             $entity = $this->createNewUser();
             return array(
                 'entity' => $entity,
-                'message' => 'User not found.',
+                'message' => 'Member not found.',
                 'message_type' => 'warning',
                 'success' => false,
             );
         } else {
             return array(
                 'entity' => $entity,
-                'message' => 'User found!',
+                'message' => 'Member found!',
                 'message_type' => 'success',
                 'success' => true,
             );
@@ -705,7 +705,7 @@ class UserHelper {
         } else {
 
             return array('users' => $entity,
-                'message' => 'user not found!',
+                'message' => 'Member not found!',
                 'message_type' => 'warning',
                 'success' => false,
             );

@@ -547,7 +547,7 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
                 return 'Fitting point dose not exists';
                 break;
             case $this->status['body_measurement_not_available'] :
-                return 'User measurement not provided';
+                return 'Member measurement not provided';
                 break;
             case $this->status['product_measurement_not_available'] :
                 return 'Product measurement missing';
@@ -589,7 +589,7 @@ If it is a long list precomputing c = 2/(max - min) and scaling with 'c * x - 1`
                 return 'Fitting point dose not exists';
                 break;
             case $this->status['body_measurement_not_available'] :
-                return 'User measurement not provided';
+                return 'Member measurement not provided';
                 break;
             case $this->status['product_measurement_not_available'] :
                 return 'Product measurement missing';

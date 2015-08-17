@@ -442,7 +442,7 @@ private function calculate_fitindex($fp_specs){
                 return 'Fitting point dose not exists';
                 break;
             case $this->status['body_measurement_not_available'] :
-                return 'User measurement not provided';
+                return 'Member measurement not provided';
                 break;
             case $this->status['product_measurement_not_available'] :
                 return 'Product measurement missing';

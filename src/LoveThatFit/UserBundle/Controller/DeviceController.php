@@ -166,7 +166,7 @@ class DeviceController extends Controller {
         $entity = $this->get('webservice.helper.user')->findByAuthToken($auth_token);
         
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User.');
+            throw $this->createNotFoundException('Unable to find Member.');
         }
         $response = $entity->writeImageFromCanvas($_POST['imageData']);
         $entity->resize_image(); # image is being resized to 320x568

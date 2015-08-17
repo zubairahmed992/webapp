@@ -22,7 +22,7 @@ class FittingRoomController extends Controller {
     public function getFeedBackJSONAction($user_id, $product_item_id, $type=null) {
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
-        if (!is_object($this->get('security.context')->getToken()->getUser())) return new Response("User Not found, Log in required!");
+        if (!is_object($this->get('security.context')->getToken()->getUser())) return new Response("Member Not found, Log in required!");
         if (!$productItem) return new Response("Product not found!");
         $product_size = $productItem->getProductSize();
         $product=$productItem->getProduct();
@@ -49,7 +49,7 @@ class FittingRoomController extends Controller {
    public function getFeedBackListAction($product_item_id) {         
         $user = $this->get('security.context')->getToken()->getUser();
         $productItem = $this->get('admin.helper.productitem')->getProductItemById($product_item_id);
-        if (!is_object($this->get('security.context')->getToken()->getUser())) return new Response("User Not found, Log in required!");
+        if (!is_object($this->get('security.context')->getToken()->getUser())) return new Response("Member Not found, Log in required!");
         if (!$productItem) return new Response("Product not found!");
         
         
