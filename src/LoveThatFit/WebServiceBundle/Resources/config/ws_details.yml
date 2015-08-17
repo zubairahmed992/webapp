@@ -91,6 +91,18 @@ ws_user_image_uploader:
      upload_type: fitting_room
    request_type: post
    file_upload: true
+
+ws_user_password_change:
+   pattern:  /ws/user_password_change
+   title: password_change
+   params:
+     email: kamran@ltf.com
+     auth_token: 97fc8d115394f3f1947f315783e29e0e
+     password: 12345
+     new_password: 67890
+   request_type: post
+   
+   
 #---------------------------------------------------------------------------
 nws_products:
    pattern:  /ws/products

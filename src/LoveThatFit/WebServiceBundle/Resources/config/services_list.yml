@@ -139,13 +139,15 @@ edit_profile:
      firstName: test
      password: 123456
      gender: f
-     zipcode: 123
+     zip: 123
      sc_top_id: 2
      sc_bottom_id: 2
      sc_dress_id: 2
      weight: 4
      neck: 4
      bust: 5
+     lastName: lllllllll     
+     authTokenWebService: 4444444444444444444444
    request_type: post
    # $decoded=array('email'=>'oldnavywomen0@ltf.com','firstName'=>'test','password'=>'123456','gender'=>'f','zipcode'=>'123','sc_top_id'=>'2','sc_bottom_id'=>'2','sc_dress_id'=>'2','weight'=>4,'neck'=>4,'bust'=>5);
 

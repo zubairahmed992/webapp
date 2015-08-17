@@ -67,6 +67,11 @@ class WSUserController extends Controller {
         return new Response($res);
     }
 
+#------------------------- ws_image_uploader   /ws/image_uploader
+    
+    public function passwordChangeAction() {
+       return new response($this->container->get('webservice.helper')->changePassword($this->process_request()));
+    }
 
 }
 
