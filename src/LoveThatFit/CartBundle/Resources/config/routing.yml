@@ -38,6 +38,14 @@ payment:
     pattern:  /paynow
     defaults: { _controller: LoveThatFitCartBundle:Payment:pay}
 
-my_order:
-    pattern:  /myorder
-    defaults: { _controller: LoveThatFitCartBundle:MyOrder:index}
+user_profile_order_show:
+    pattern:  /profile/order/{id}/show
+    defaults: { _controller: LoveThatFitCartBundle:MyOrder:show }
+
+user_profile_order_list:
+    pattern:  /profile/order/{page_number}/{sort}
+    defaults: { _controller: LoveThatFitCartBundle:MyOrder:index,page_number: 1, sort:id}
+
+
+
+

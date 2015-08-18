@@ -1,0 +1,129 @@
+
+                        <table cellspacing="0" cellpadding="0" width="655" align="center" style="border:1px solid #ccc;">
+                            <tr>
+                                <td><table border="0" cellspacing="0" cellpadding="0" width="655">
+                                        <tr>
+                                            <td align="center"><br />
+                                                <a href="https://news2.forever21.com/pub/cc?_ri_=X0Gzc2X%3DWQpglLjHJlTQGs9wnoI7NiNibIwmzfWzcXwyjWI4DlHakUpo5VXtpKX%3DWTDCY&amp;_ei_=EolaGGF4SNMvxFF7KucKuWN49T2KGLE_Vl9CrwZ0g1hmJ5wbL-sPtuzFsjCw3eUvgg-k7T9vV5Te_VvvqsCuzLgzoaS1fVzsEfBqFveJIIhl7cUrsl_jKu-5dmDJRAI." target="_blank"><img border="0" id="_x0000_i1025" src="selfie_styler_logo.png" alt="SelfieStyler" /></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div align="center">
+                                                    <table border="0" cellspacing="0" cellpadding="0" width="600">
+                                                        <tr>
+                                                            <td><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order #:</strong></font></td>
+                                                            <td><font face="Arial, Helvetica, sans-serif" size="2">{{order.Id }}</font></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" height="5">&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order Date:</strong></font></td>
+                                                            <td width="500"><font face="Arial, Helvetica, sans-serif" size="2">{{order.OrderDate|date('Y-m-d H:i:s') }}</font></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">&nbsp;</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div align="center">
+                                                    <table border="0" cellspacing="0" cellpadding="0" width="600">
+                                                        <tr>
+                                                            <td width="200"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Billing to</strong></font></td>
+                                                            <td width="200"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Shipping to</strong></font></td>
+                                                            <td width="200"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" height="2"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top">{{order.BillingFirstName }} {{order.BillingLastName }}<br />{{order.BillingAddress1 }}<br> {{order.BillingAddress2 }}<br />{{order.BillingCity }}, {{order.BillingState }} {{order.BillingPostcode }}</td>
+                                                            <td valign="top">{{order.ShippingFirstName }} {{order.ShippingLastName }}<br />{{order.ShippingAddress1 }}<br />{{order.ShippingAddress2 }}<br />{{order.ShippingState }}, {{order.ShippingState }} {{order.ShippingPostcode }}</td>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                            <td valign="top">&nbsp;</td>
+                                                            <td>&nbsp;</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div align="center">
+                                                    <table border="0" cellspacing="0" cellpadding="0" width="600">
+                                                        <tr>
+                                                            <td bgcolor="#efefef" style="padding:8px;"><font face="Arial, Helvetica, sans-serif" size="2"><strong>Order Summary</strong></font></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div align="center">
+                                                    <table border="0" cellspacing="0" cellpadding="0" width="600" height="25">
+                                                        <tr>
+                                                            <td width="450" align="center">&nbsp;</td>
+                                                            <td width="100">&nbsp;</td>
+                                                            <td width="50">&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">item(s)</font></td>
+                                                            <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">price</font></td>
+                                                            <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">Qty</font></td>
+                                                        </tr>
+
+                                                        {% for c in order.userOrder %}
+                                                        <tr>
+                                                            <td width="450">
+                                                                <table border="0" cellspacing="0" cellpadding="0" width="450">
+
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>
+                                                                            <table cellpadding="0" cellspacing="0">
+                                                                                <tr>
+                                                                                    <td style="border:1px solid #ccc; width:82px;"><img width="72" src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td>&nbsp;</td>
+
+                                                                        <td><strong><font face="Arial, Helvetica, sans-serif" size="2">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</font></strong></td>
+                                                                    </tr>
+                                                                </table></td>
+                                                            <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">${{ c.productItem.price}}</font></td>
+                                                            <td align="center"><font face="Arial, Helvetica, sans-serif" size="2">{{ c.qty }}</font></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">&nbsp;</td>
+                                                        </tr>
+                                                        {%endfor%}
+
+                                                        <tr>
+                                                            <td>&nbsp;</td>
+                                                            <td align="center">&nbsp;</td>
+                                                            <td align="center">&nbsp;</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="3">&nbsp;</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">&nbsp;</td>
+                                                        </tr>
+                                                    </table>
+                                                    <table width="600" border="0" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td><table border="0" cellspacing="0" cellpadding="0" align="right" width="400">
+                                                                    <tr>
+                                                                        <td align="right"><strong>Total</strong></td>
+                                                                        <td width="80" align="right"><strong>${{ order.orderAmount}}</strong></td>
+                                                                    </tr>
+
+                                                                </table></td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div></td>
+                                        </tr>
+                                    </table></td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                        <tr><td colspan="3" align="center"><input type="button" value="Print Order" name="print" onclick="javascript:print()"> </td></tr>
+                        </table>

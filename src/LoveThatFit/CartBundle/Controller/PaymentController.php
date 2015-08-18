@@ -71,6 +71,7 @@ class PaymentController extends Controller
 		//print_r("success!: " . $result->transaction->id);
 
 		$entity = $this->get('cart.helper.order')->saveBillingShipping($billing_shipping_info,$user);
+		$this->get('cart.helper.userAddresses')->saveAddress($billing_shipping_info,$user);
 		$order_id = $entity->getId();
 		$user_cart = $this->get('cart.helper.cart')->getFormattedCart($user);
 		$response = $this->get('cart.helper.orderDetail')->saveOrderDetail($user_cart,$order_id);

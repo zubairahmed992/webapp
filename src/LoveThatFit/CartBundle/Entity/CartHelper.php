@@ -64,6 +64,11 @@ class CartHelper {
   public function findCartById($id){
 	return $this->repo->find($id);
   }
+
+  #------------------------------Count Items cart by user id--------------------------------#
+  public function countCartItems($user){
+	return $this->repo->countCartByUser($user);
+  }
 #------------------------------ Get Cart Grand Total--------------------------------#
 //  public function getCartGrandTotal($decoded){
 //		print_r($decoded);die;
@@ -137,7 +142,7 @@ class CartHelper {
             $this->em->remove($entity);
             $this->em->flush();
             return array('cart' => $entity,
-                'message' => 'The Item has been Deleted!',
+                'message' => 'The Item has been Removed!',
                 'message_type' => 'success',
                 'success' => true,
             );

@@ -30,3 +30,12 @@ services:
             em: "@doctrine.orm.entity_manager"
             class: LoveThatFit\CartBundle\Entity\UserOrderDetail
             container: "@service_container"
+
+
+     cart.helper.userAddresses:
+        class: LoveThatFit\CartBundle\Entity\UserAddressesHelper
+        arguments:
+            dispatcher: "@event_dispatcher"
+            em: "@doctrine.orm.entity_manager"
+            class: LoveThatFit\CartBundle\Entity\UserAddresses
+            container: "@service_container"

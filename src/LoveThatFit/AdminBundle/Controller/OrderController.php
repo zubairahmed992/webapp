@@ -14,6 +14,7 @@ class OrderController extends Controller {
     //----------------All Orders Display List --------------------------------------------------------------------------
     public function indexAction($page_number, $sort = 'id') {
         $orders_with_pagination = $this->get('cart.helper.order')->getListWithPagination($page_number, $sort);
+	 // print_r($orders_with_pagination);die;
         return $this->render('LoveThatFitAdminBundle:Order:index.html.twig', $orders_with_pagination);
     }
 

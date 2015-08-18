@@ -70,9 +70,16 @@ class UserOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="billing_address2", type="string", length=255)
+     * @ORM\Column(name="billing_address2", type="string", length=255 ,nullable=true)
      */
     private $billing_address2;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="billing_phone", type="string", length=20)
+	 */
+	private $billing_phone;
 
     /**
      * @var string
@@ -127,9 +134,16 @@ class UserOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="shipping_address2", type="string", length=255)
+     * @ORM\Column(name="shipping_address2", type="string", length=255 ,nullable=true)
      */
     private $shipping_address2;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="shipping_phone", type="string", length=20)
+	 */
+	private $shipping_phone;
 
     /**
      * @var string
@@ -328,6 +342,29 @@ class UserOrder
         return $this->billing_address2;
     }
 
+	/**
+	 * Set billing_phone
+	 *
+	 * @param string $billingPhone
+	 * @return UserOrder
+	 */
+	public function setBillingPhone($billingPhone)
+	{
+	  $this->billing_phone = $billingPhone;
+
+	  return $this;
+	}
+
+	/**
+	 * Get billing_phone
+	 *
+	 * @return string
+	 */
+	public function getBillingPhone()
+	{
+	  return $this->billing_phone;
+	}
+
     /**
      * Set billing_city
      *
@@ -513,7 +550,30 @@ class UserOrder
         return $this->shipping_address2;
     }
 
-    /**
+	/**
+	 * Set shipping_phone
+	 *
+	 * @param string $shippingPhone
+	 * @return UserOrder
+	 */
+	public function setShippingPhone($shippingPhone)
+	{
+	  $this->shipping_phone = $shippingPhone;
+
+	  return $this;
+	}
+
+	/**
+	 * Get shipping_phone
+	 *
+	 * @return string
+	 */
+	public function getShippingPhone()
+	{
+	  return $this->shipping_phone;
+	}
+
+  /**
      * Set shipping_city
      *
      * @param string $shippingCity

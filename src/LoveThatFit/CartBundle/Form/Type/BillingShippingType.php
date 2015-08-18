@@ -21,7 +21,10 @@ class BillingShippingType extends AbstractType {
         $builder->add('billing_address1', 'text', array(
 		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_address1"])?$this->billing_shipping_info["billing"]["billing_address1"]:''));
 		$builder->add('billing_address2', 'text', array(
+		  'required' => false,
 		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_address2"])?$this->billing_shipping_info["billing"]["billing_address2"]:''));
+	  $builder->add('billing_phone', 'text', array(
+		'data'	=> isset($this->billing_shipping_info["billing"]["billing_phone"])?$this->billing_shipping_info["billing"]["billing_phone"]:''));
 		$builder->add('billing_city', 'text', array(
 		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_city"])?$this->billing_shipping_info["billing"]["billing_city"]:''));
 		$builder->add('billing_postcode', 'text', array(
@@ -43,7 +46,12 @@ class BillingShippingType extends AbstractType {
 		$builder->add('shipping_address1', 'text', array(
 		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_address1"])?$this->billing_shipping_info["billing"]["shipping_address1"]:''));
 		$builder->add('shipping_address2', 'text', array(
-		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_address2"])?$this->billing_shipping_info["billing"]["shipping_address2"]:''));
+		  'required' => false,
+		'data'	=> isset($this->billing_shipping_info["billing"]["shipping_address2"])?$this->billing_shipping_info["billing"]["shipping_address2"]:''));
+
+	  $builder->add('shipping_phone', 'text', array(
+		'data'	=> isset($this->billing_shipping_info["billing"]["shipping_phone"])?$this->billing_shipping_info["billing"]["shipping_phone"]:''));
+
 		$builder->add('shipping_city', 'text', array(
 		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_city"])?$this->billing_shipping_info["billing"]["shipping_city"]:''));
 		$builder->add('shipping_postcode', 'text', array(

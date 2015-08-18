@@ -62,15 +62,24 @@
         <div id="paypal-container"></div>
         <form id="checkout" method="post" action="{{ path('payment')}}">
             <div id="payment-form"></div>
-            <input type="hidden" name="order_amount" value="{{ grand_total }}"><input type="submit" value="Pay ${{ grand_total }}">
+            <input type="hidden" name="order_amount" value="{{ grand_total }}"><input id="pay" type="submit" value="Pay ${{ grand_total }}"><img  src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}" style="display: none;padding-left:200px" alt="loading" id="loading_image"><div id="process" style="display: none;padding-left:200px">please wait while your order is being processed...</div>
         </form>
 
         <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
-        <script>
+        <script language="javascript" type="text/javascript">
             var clientToken = "{{ token }}";
-
+            $('#pay').click(function() {
+                $(this).hide();
+            });
             braintree.setup(clientToken, "dropin", {
-                container: "payment-form"
+                container: "payment-form",
+                paymentMethodNonceReceived: function (event, nonce) {
+                    $('#checkout').append("<input type='hidden' name='payment_method_nonce' value='" + nonce + "'></input>");
+                    $('#pay').css('display','none');
+                    $('#loading_image').show();
+                    $('#process').show();
+                    $('#checkout').submit();
+                }
             });
         </script>
 

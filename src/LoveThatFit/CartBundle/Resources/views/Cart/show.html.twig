@@ -6,7 +6,7 @@
 {% endblock %}
 {% block profile_section %}
     {% if app.session.hasFlash('warning') %}
-        <div class="alert alert-error">
+        <div class="alert alert-error" style="text-align: center;color:#ff0000">
             {{ app.session.flash('warning') }}
         </div>
     {% endif %}
@@ -53,15 +53,17 @@
                 <td>${{ c.productItem.price}}</td>
                 <td>${{ c.productItem.price * c.qty}}</td>
 
-                <td><a href="{{ path('cart_delete', {'id': c.id}) }}">Delete</a><br> <input type="button" style="background: #426eb6 none repeat scroll 0 0;color:#fff;padding:5px 20px" value="Add to Wishlist"> </td>
+                <td><a href="{{ path('cart_delete', {'id': c.id}) }}">Remove</a><br> <input type="button" style="background: #426eb6 none repeat scroll 0 0;color:#fff;padding:5px 20px" value="Add to Wishlist"> </td>
 
             </tr>
+                <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
+            {% endfor %}
+            {% if(itemscounter != 0 ) %}
+                <tr><td colspan="6" align="right"><input type="submit" name="update" value="update"></td><td align="left"><input style="margin-left:0px" type="submit" name="checkout" value="checkout"></td></tr>
+            {% else %}
+                <tr><td align="center" colspan="6"><p>Currently there are no items in the cart. Click <a href="{{path('inner_site_index')}}">here</a> to add items</p></td></tr>
+            {% endif %}
 
-        {% else %}
-            <tr><td align="center" colspan="6"><p>No Items</p></td></tr>
-        {% endfor %}
-        <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
-        <tr><td colspan="6" align="right"><input type="submit" name="update" value="update"></td><td align="left"><input style="margin-left:0px" type="submit" name="checkout" value="checkout"></td></tr>
         </form>
     </table>
 

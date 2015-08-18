@@ -44,6 +44,7 @@ class OrderHelper {
 		$user_billing_shipping_info->setBillingLastName($billing["billing_last_name"]);
 		$user_billing_shipping_info->setBillingAddress1($billing["billing_address1"]);
 		$user_billing_shipping_info->setBillingAddress2($billing["billing_address2"]);
+		$user_billing_shipping_info->setBillingPhone($billing["billing_phone"]);
 		$user_billing_shipping_info->setBillingCity($billing["billing_city"]);
 		$user_billing_shipping_info->setBillingPostCode($billing["billing_postcode"]);
 		$user_billing_shipping_info->setBillingCountry($billing["billing_country"]);
@@ -53,6 +54,7 @@ class OrderHelper {
 		$user_billing_shipping_info->setShippingLastName($billing["shipping_last_name"]);
 		$user_billing_shipping_info->setShippingAddress1($billing["shipping_address1"]);
 		$user_billing_shipping_info->setShippingAddress2($billing["shipping_address2"]);
+		$user_billing_shipping_info->setShippingPhone($billing["shipping_phone"]);
 		$user_billing_shipping_info->setShippingCity($billing["shipping_city"]);
 	 	$user_billing_shipping_info->setShippingPostCode($billing["shipping_postcode"]);
 		$user_billing_shipping_info->setShippingCountry($billing["shipping_country"]);
@@ -71,7 +73,15 @@ class OrderHelper {
   public function getUserBillingAddress($user){
 	return $this->repo->findOneByUserAddress($user);
   }
+#-------------------------- Check Valid user for an order -----------------#
+  public function HasUserOrder($order_id,$user){
+	return $this->findOrderByUserId($order_id,$user);
+  }
 
+#------------------------------Find cart by id--------------------------------#
+  public function findOrderByUserId($order_id,$user){
+	return $this->repo->findOneByUser($order_id,$user);
+  }
 #------------------------------Find order by id--------------------------------#
   public function findOrderById($id){
 	return $this->repo->find($id);
@@ -118,6 +128,30 @@ class OrderHelper {
 	);
   }
 
+  // my orders frontend display user's order
+  public function getListWithPaginationByUser($page_number, $sort,$user) {
+	$yaml = new Parser();
+	$pagination_constants = $yaml->parse(file_get_contents('../app/config/config_ltf_app.yml'));
+	$limit = $pagination_constants["constants"]["pagination"]["limit"];
+
+	$entity = $this->repo->listAllOrdersByUser($page_number, $limit,$user, $sort);
+	$rec_count = count($this->repo->countAllRecordByUser($user));
+	//$rec_count = $rec_count[0]["id"];
+	$cur_page = $page_number;
+
+	if ($page_number == 0 || $limit == 0) {
+	  $no_of_paginations = 0;
+	} else {
+	  $no_of_paginations = ceil($rec_count / $limit);
+	}
+	return array('order' => $entity,
+	  'rec_count' => $rec_count,
+	  'no_of_pagination' => $no_of_paginations,
+	  'limit' => $cur_page,
+	  'per_page_limit' => $limit,
+	  'sort'=>$sort,
+	);
+  }
 
   public function getRecordsCountWithCurrentOrderLimit($brand_id){
 
