@@ -72,6 +72,11 @@ class WSUserController extends Controller {
     public function passwordChangeAction() {
        return new response($this->container->get('webservice.helper')->changePassword($this->process_request()));
     }
+#------------------------- ws_update_profile   /ws/update_profile
+    
+    public function profileUpdateAction() {       
+       return new response($this->container->get('webservice.helper')->updateProfile($this->process_request()));
+    }    
 
 }
 

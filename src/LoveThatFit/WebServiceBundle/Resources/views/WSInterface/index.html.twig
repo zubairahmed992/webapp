@@ -204,7 +204,10 @@ $( "#btn_hit_service" ).click(function() {
 //-------------------------------------------------------------
 
 function hit_service(){    
-        var value_ar = JSON.parse($("#txt_request_params").val());        
+    var value_ar = "";
+        if($("#txt_request_params").val()){
+            value_ar = JSON.parse($("#txt_request_params").val());        
+        }
         restartTimer();//~~~~~~~~~~~~~~>
         $.ajax({
                type: "POST",

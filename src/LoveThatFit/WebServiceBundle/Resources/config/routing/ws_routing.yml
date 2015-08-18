@@ -30,6 +30,10 @@ nws_user_password_change:
     pattern:  /ws/user_password_change
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:passwordChange }
 
+ws_user_profile_update:
+    pattern:  /ws/user_profile_update
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:profileUpdate }
+
 #------------------------------------------------------------------------------------
 
 nws_products:

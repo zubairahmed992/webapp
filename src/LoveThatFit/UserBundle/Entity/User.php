@@ -1716,7 +1716,7 @@ class User implements UserInterface, \Serializable {
 		'name' => $this->getFullName(),
 		'first_name' => $this->getFirstName(),
 		'last_name' => $this->getLastName(),
-		'zip_code' => $this->getZipcode(),
+		'zipcode' => $this->getZipcode(),
 		'gender' => $this->getGender(),
 		'auth_token' => $this->getAuthToken(),
 		'birth_date' => $this->getBirthDate()?$this->getBirthDate()->format('Y-m-d'):null,

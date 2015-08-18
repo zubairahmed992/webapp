@@ -7,7 +7,7 @@ ws_foo:
           param3:  6cec8a8067b6d5811ba953e40f834d7d
     request_type: post
     description: For testing functionalities & work in progress. 
-
+#______________________
 nws_user_detail:
     pattern:  /ws/user_detail
     title: user_detail
@@ -16,7 +16,7 @@ nws_user_detail:
           device_type: iphone5
     request_type: post
     description: return user detail against authentication token 
-
+#______________________
 ws_user_email_exists:
     pattern:  /ws/user_email_exists
     title: user_email_exists
@@ -24,7 +24,7 @@ ws_user_email_exists:
           email:  example@ltf.com
     request_type: post
     description: check if user email exists in the database. This will be used at the time of registration. 
-    
+#______________________    
 ws_user_login:
     pattern:  /ws/login
     title: user_login
@@ -40,7 +40,7 @@ ws_user_login:
     request_type: post
     description: login & authenticate user & returns user details
     backend_process: "Find user by email. match password.find device details, if not found create new. if user_detail=true, Return User detail array with device type & perinchpixel height. if brand_retailer=true then return"
-
+#______________________
 ws_user_registration:
     pattern:  /ws/user_registration
     title: user_registration
@@ -48,7 +48,7 @@ ws_user_registration:
       email:  example@ltf.com
       password: ltf123
       gender: f
-      zipcode: 123456
+      zipcode: 
       weight: 80.00
       height: 61.00
       bust: 0.00
@@ -72,7 +72,7 @@ ws_user_registration:
     request_type: post
     description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
     backend_process: 
-    
+#______________________    
 ws_size_charts:
     pattern:  /ws/size_charts
     title: size_charts
@@ -80,7 +80,7 @@ ws_size_charts:
           gender:  f
     request_type: post
     description: get all the size charts based on gender. 
-
+#______________________
 ws_user_image_uploader:
    pattern:  /ws/user_image_uploader
    title: user_image_uploader
@@ -91,7 +91,7 @@ ws_user_image_uploader:
      upload_type: fitting_room
    request_type: post
    file_upload: true
-
+#______________________
 ws_user_password_change:
    pattern:  /ws/user_password_change
    title: password_change
@@ -101,23 +101,40 @@ ws_user_password_change:
      password: 12345
      new_password: 67890
    request_type: post
-   
-   
+#______________________   
+ws_user_profile_update:
+    pattern:  /ws/user_profile_update
+    title: user_profile_update
+    params:
+      email:  kamran@ltf.com
+      first_name:
+      last_name:
+      birth_date:
+      zipcode:
+      auth_token: 97fc8d115394f3f1947f315783e29e0e
+    request_type: post
+    description: This service will be used to update users basic information.    
+    backend_process: 
+       
 #---------------------------------------------------------------------------
+#---------------------------------------------------------------------------
+#---------------------------------------------------------------------------
+
+
 nws_products:
    pattern:  /ws/products
    title: products
    params:
      gender: f
      date: 1388577600
-     
+#______________________     
 ws_product_list:
    pattern:  /ws/product_list
    title: product_list
    params:
      auth_token: 56565656566
      list_type: 'recent'
-
+#______________________
 ws_brand_retailer:
    pattern:  /ws/brand_retailer
    title: brand_retailer

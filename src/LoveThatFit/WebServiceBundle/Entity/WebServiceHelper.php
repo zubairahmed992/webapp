@@ -82,11 +82,22 @@ class WebServiceHelper {
             unset($detail_array['per_inch_pixel_height']);
             unset($detail_array['deviceType']);
             unset($detail_array['auth_token_web_service']);
-            return $this->response_array(true, 'Proceed', true, array('member' => $detail_array));
+            return $this->response_array(true, 'User created', true, array('user' => $detail_array));
         }
     }
 
     #-------------------------------------------------------
+    public function updateProfile($ra) {
+        $user = $this->findUserByAuthToken($ra['auth_token']);        
+         if ($user) {
+             $user = $this->setUserWithParams($user, $ra);
+             $this->container->get('user.helper.user')->saveUser($user);             
+             return $this->response_array(true, 'Member profile updated', true, array('user' => $user->toArray(true)));
+        } else {
+            return $this->response_array(false, 'Member not found');
+        }
+    }
+        #-------------------------------------------------------
 
     private function merge_objects_to_array($objs) {
         $ar = array();
@@ -117,7 +128,18 @@ class WebServiceHelper {
         $this->container->get('user.helper.user')->saveUser($user);
         return $user;
     }
+    #-------------------------------------------------------
 
+    private function setUserWithParams($user, $request_array) {
+        array_key_exists('email', $request_array)?$user->setEmail($request_array['email']) : null;
+        array_key_exists('gender', $request_array) ? $user->setGender($request_array['gender']) :  null;
+        array_key_exists('zipcode', $request_array) ? $user->setZipcode($request_array['zipcode']) :  null;
+        array_key_exists('first_name', $request_array) ? $user->setFirstName($request_array['first_name']) :  null;
+        array_key_exists('last_name', $request_array) ? $user->setLastName($request_array['last_name']) :  null;        
+        return $user;
+    }
+
+#-------------------------------------------------------
     private function createUserDeviceWithParams($request_array, $user) {
         $userDevice = $this->container->get('user.helper.userdevices')->createNew($user);
         $userDevice->setDeviceName($request_array['device_id']);
@@ -126,7 +148,7 @@ class WebServiceHelper {
         $this->container->get('user.helper.userdevices')->saveUserDevices($userDevice);
         return $userDevice;
     }
-
+#-------------------------------------------------------
     private function createUserMeasurementWithParams($request_array, $user) {
         if ($user->getMeasurement()) {
             $measurement = $user->getMeasurement();
