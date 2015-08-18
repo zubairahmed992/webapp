@@ -362,23 +362,14 @@ class WebServiceHelper {
 
     #------------------------------------------------------------------------------
 
-    public function loveItem($user, $request_array) {
-        /*
-         * #----------------------------------------------------------------------------------------
-
-          public function productListAction() {
-          $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
-          $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
-          if ($user) {
-          $res = $this->get('webservice.helper')->productList($user, array_key_exists('list_type', $decoded) ? $decoded['list_type'] : null);
-          } else {
-          $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
-          }
-          return new Response($res);
-
-          }
-
-         */
+    public function loveItem($user, $ra) {
+        $p=$this->container->get('admin.helper.product')->find($ra['product_id']);
+        $default_item = $p->getDefaultItem($user);
+        $user->addProductItem($default_item);   
+        $default_item->addUser($user);
+        $this->container->get('admin.helper.productitem')->save($default_item);       
+        $this->container->get('user.helper.user')->saveUser($user);        
+        return $this->response_array(true, "products list", true, $default_item->getProductSize()->getTitle());
     }
 
 }

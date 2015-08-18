@@ -47,8 +47,9 @@ class WSProductController extends Controller {
     
     #----------------------------------------------------------------------------------------
     
-    public function loveItemAction() {
+    public function productLikeDefaultItemAction() {
         $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        
         $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
         if ($user) {
             $res = $this->get('webservice.helper')->loveItem($user, $decoded);

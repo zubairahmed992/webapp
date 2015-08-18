@@ -138,4 +138,14 @@ ws_product_list:
 ws_brand_retailer:
    pattern:  /ws/brand_retailer
    title: brand_retailer
+#______________________
+ws_product_like_default_item:
+   pattern:  /ws/product_like_default_item
+   title: product_like_default_item
+   params:
+     auth_token: 121c421783cd4d71d871ec16a1296091
+     product_id: 12     
+     like: true
+   request_type: post   
+   
    
