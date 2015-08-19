@@ -37,7 +37,7 @@ class WSRepo {
          
         return $this->em
                         ->createQueryBuilder()
-                        ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, b.id as brand_id')
+                        ->select('p.id product_id,p.name,p.description,ct.target as target,ct.name as clothing_type ,pc.image as product_image,r.id as retailer_id, r.title as retailer_title, b.id as brand_id, b.name as brand_name')
                         ->from('LoveThatFitAdminBundle:Product', 'p')
                         ->innerJoin('p.product_colors', 'pc')
                         ->innerJoin('p.clothing_type', 'ct')
