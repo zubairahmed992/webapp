@@ -85,7 +85,14 @@ class WebServiceHelper {
             return $this->response_array(true, 'User created', true, array('user' => $detail_array));
         }
     }
+  #------------------------ measurementUpdate -----------------------
 
+    public function measurementUpdate($ra) {
+        $user = $this->findUserByAuthToken($ra['auth_token']);
+        $measurement = $this->setUserMeasurementWithParams($ra, $user);
+        $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+        return $this->response_array(true, 'measurement updated');
+    }
     #-------------------------------------------------------
     public function updateProfile($ra) {
         $user = $this->findUserByAuthToken($ra['auth_token']);        
@@ -196,6 +203,52 @@ class WebServiceHelper {
         $measurement = $this->container->get('admin.helper.sizechart')->evaluateWithSizeChart($measurement);
 
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
+        return $measurement;
+    }
+#-------------------------------------------------------
+    private function setUserMeasurementWithParams($request_array, $user) {
+        $measurement = $user->getMeasurement();
+        if (!$measurement) {
+            $measurement = $this->container->get('user.helper.measurement')->createNew($user);
+        }
+
+        if (array_key_exists('bra_size', $request_array) && array_key_exists('cup_size', $request_array)) {
+            $measurement->setBraSize($request_array['bra_size'] . ' ' . $request_array['cup_size']);
+        }
+        array_key_exists('body_type', $request_array) ? $measurement->setBodyTypes($request_array['body_type']) : '';
+        array_key_exists('body_shape', $request_array) ? $measurement->setBodyShape($request_array['body_shape']) : '';
+        array_key_exists('weight', $request_array) ? $measurement->setWeight($request_array['weight']) : '';
+        array_key_exists('height', $request_array) ? $measurement->setHeight($request_array['height']) : '';
+        array_key_exists('neck', $request_array) ? $measurement->setNeck($request_array['neck']) : '';
+        array_key_exists('shoulder_across_front', $request_array) ? $measurement->setShoulderAcrossFront($request_array['shoulder_across_front']) : '';
+        array_key_exists('shoulder_across_back', $request_array) ? $measurement->setShoulderAcrossBack($request_array['shoulder_across_back']) : '';
+        array_key_exists('shoulder_height', $request_array) ? $measurement->setShoulderHeight($request_array['shoulder_height']) : '';
+        array_key_exists('center_front_waist', $request_array) ? $measurement->setCenterFrontWaist($request_array['center_front_waist']) : '';
+        array_key_exists('back_waist', $request_array) ? $measurement->setBackWaist($request_array['back_waist']) : '';
+        array_key_exists('chest', $request_array) ? $measurement->setChest($request_array['chest']) : '';
+        array_key_exists('bust', $request_array) ? $measurement->setBust($request_array['bust']) : '';
+        array_key_exists('bicep', $request_array) ? $measurement->setBicep($request_array['bicep']) : '';
+        array_key_exists('tricep', $request_array) ? $measurement->setTricep($request_array['tricep']) : '';
+        array_key_exists('sleeve', $request_array) ? $measurement->setSleeve($request_array['sleeve']) : '';
+        array_key_exists('arm', $request_array) ? $measurement->setArm($request_array['arm']) : '';
+        array_key_exists('wrist', $request_array) ? $measurement->setWrist($request_array['wrist']) : '';
+        array_key_exists('waist', $request_array) ? $measurement->setWaist($request_array['waist']) : '';
+        array_key_exists('waist_hip', $request_array) ? $measurement->setWaistHip($request_array['waist_hip']) : '';
+        array_key_exists('hip', $request_array) ? $measurement->setHip($request_array['hip']) : '';
+        array_key_exists('inseam', $request_array) ? $measurement->setInseam($request_array['inseam']) : '';
+        array_key_exists('thigh', $request_array) ? $measurement->setThigh($request_array['thigh']) : '';
+        array_key_exists('bust_height', $request_array) ? $measurement->setBustHeight($request_array['bust_height']) : '';
+        array_key_exists('waist_height', $request_array) ? $measurement->setWaistHeight($request_array['waist_height']) : '';
+        array_key_exists('hip_height', $request_array) ? $measurement->setHipHeight($request_array['hip_height']) : '';
+        array_key_exists('knee', $request_array) ? $measurement->setKnee($request_array['knee']) : '';
+        array_key_exists('calf', $request_array) ? $measurement->setCalf($request_array['calf']) : '';
+        array_key_exists('ankle', $request_array) ? $measurement->setAnkle($request_array['ankle']) : '';
+        array_key_exists('iphone_foot_height', $request_array) ? $measurement->setIphoneFootHeight($request_array['iphone_foot_height']) : '';
+
+        #$ar = json_decode($measurement->getMeasurementJson());
+        #$ar['manual'] = $measurement->getArray();
+        #$measurement->setMeasurementJson(json_encode($ar));
+
         return $measurement;
     }
 
@@ -363,13 +416,18 @@ class WebServiceHelper {
     #------------------------------------------------------------------------------
 
     public function loveItem($user, $ra) {
-        $p=$this->container->get('admin.helper.product')->find($ra['product_id']);
-        $default_item = $p->getDefaultItem($user);
-        $user->addProductItem($default_item);   
-        $default_item->addUser($user);
-        $this->container->get('admin.helper.productitem')->save($default_item);       
-        $this->container->get('user.helper.user')->saveUser($user);        
-        return $this->response_array(true, "products list", true, $default_item->getProductSize()->getTitle());
+        $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
+        if ($ra['like'] == 'true') {
+            $default_item = $p->getDefaultItem($user);
+            $user->addProductItem($default_item);
+            $default_item->addUser($user);
+            $this->container->get('admin.helper.productitem')->save($default_item);
+            $this->container->get('user.helper.user')->saveUser($user);
+            return $this->response_array(true, "product added", true);
+        } else {
+            return $this->response_array(true, "product removed", true);
+        }
+        
     }
 
 }

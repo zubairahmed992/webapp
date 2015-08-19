@@ -72,6 +72,42 @@ ws_user_registration:
     request_type: post
     description: This will check the email availability & create/register the  user, & return user detail with brands & retailers lists.    
     backend_process: 
+#______________________
+ws_user_measurement_update:
+    pattern:  /ws/user_measurement_update
+    title: user_measurement_update
+    params:
+      auth_token:  
+      body_shape: pear
+      body_type: Regular            
+      bra_size: 
+      cup_size:      
+      weight: 0
+      height: 0
+      neck: 0
+      shoulder_across_front:
+      shoulder_across_back:      
+      shoulder_height:
+      center_front_waist:
+      back_waist:        
+      chest: 0
+      bust: 0      
+      bicep:
+      tricep:
+      sleeve: 0
+      arm:
+      wrist:        
+      waist: 0      
+      waist_hip:      
+      hip: 0
+      inseam: 0
+      thigh:
+      knee:
+      calf:
+      ankle:    
+    request_type: post
+    description: This will update the user measurements.    
+    backend_process:       
 #______________________    
 ws_size_charts:
     pattern:  /ws/size_charts

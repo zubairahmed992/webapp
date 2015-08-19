@@ -18,6 +18,10 @@ ws_user_registration:
     pattern:  /ws/user_registration
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:registration }
 
+ws_user_measurement_update:
+    pattern:  /ws/user_measurement_update
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:measurementUpdate }
+
 ws_size_charts:
     pattern:  /ws/size_charts
     defaults: { _controller: LoveThatFitWebServiceBundle:WSUser:sizeCharts }
