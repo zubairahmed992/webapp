@@ -80,7 +80,7 @@ class WSUserController extends Controller {
     }
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
-#    FORGET_PASSWORD_SENDEMAIL	/ws/forget_password_send_code
+#    FORGET_PASSWORD_SENDEMAIL	/ws/forget_password
  public function forgotPasswordAction(){
      $decoded=$this->process_request();
      $res='';
@@ -91,8 +91,10 @@ class WSUserController extends Controller {
       $this->get('user.helper.user')->saveUser($user) ;
       $baseurl = $this->getRequest()->getHost();
       $link = $baseurl . "/" . $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $user->getAuthToken()));
+      return new Response($this->get('webservice.helper')->response_array(true, " Email has been sent with reset password link (".$link .") to " . $user->getEmail()));    
+
       $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmail($user, $link);
-          
+      
       if ($defaultData[0]) {
           $res= $this->get('webservice.helper')->response_array(true, " Email has been sent with reset password link to " . $user->getEmail());
       }else { 
@@ -106,7 +108,10 @@ class WSUserController extends Controller {
         }
         return new Response($res);
 }
-    
+#----------------------------------------------------------
+ public function  forgotPasswordUpdateAction(){
+     return new response($this->get('webservice.helper')->forgotPasswordUpdate($this->process_request()));
+ }
 #------------------------- ws_update_profile   /ws/update_profile
     
     public function profileUpdateAction() {       

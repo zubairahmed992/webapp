@@ -378,7 +378,25 @@ class WebServiceHelper {
             return $this->response_array(false, 'Member not found');
         }
      }
-    #--------------------------------------------------------------------
+#-------------------------------------------------------------
+    public function forgotPasswordUpdate($ra) {
+        $user = $this->findUserByAuthToken($ra['auth_token']);
+
+        if ($user) {
+            if (array_key_exists('password', $ra)) {
+                $user->setPassword($ra['password']);
+                $user = $this->container->get('user.helper.user')->getPasswordEncoded($user);
+                $this->container->get('user.helper.user')->saveUser($user);
+                return $this->response_array(true, 'Password changed');
+            } else {
+                return $this->response_array(false, 'password not provided');
+            }
+        } else {
+            return $this->response_array(false, 'Member not found');
+        }
+    }
+
+#--------------------------------------------------------------------
 
     public function processRequest($request) {
         $handle = fopen('php://input', 'r');

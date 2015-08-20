@@ -144,6 +144,14 @@ ws_user_forgot_password:
    params:
      email: kamran@ltf.com
    request_type: post
+#______________________
+ws_user_forgot_password_update:
+   pattern:  /ws/user_forgot_password_update
+   title: forgot_password_update
+   params:
+     auth_token: 
+     password:
+   request_type: post
 
 #______________________   
 ws_user_profile_update:
