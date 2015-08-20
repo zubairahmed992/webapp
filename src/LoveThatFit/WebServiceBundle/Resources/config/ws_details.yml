@@ -187,6 +187,14 @@ ws_product_list:
      auth_token: 56565656566
      list_type: 'recent'
 #______________________
+ws_product_detail:
+   pattern:  /ws/product_detail
+   title: product_detail
+   params:
+     auth_token: 56565656566
+     product_id: 505
+
+#______________________
 ws_brand_retailer:
    pattern:  /ws/brand_retailer
    title: brand_retailer

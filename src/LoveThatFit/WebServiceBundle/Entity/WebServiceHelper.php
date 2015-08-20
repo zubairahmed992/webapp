@@ -430,6 +430,12 @@ class WebServiceHelper {
         $products = $this->container->get('webservice.repo')->productList($user, $list_type);
         return $this->response_array(true, "products list", true, $products);
     }
+#------------------------------------------------------------------------------
+
+    public function productDetail($id,$user) {
+        $products = $this->container->get('webservice.repo')->productDetail($id, $user);
+        return $this->response_array(true, "products list", true, $products);
+    }
 
     #------------------------------------------------------------------------------
 
@@ -447,5 +453,4 @@ class WebServiceHelper {
         }
         
     }
-
 }

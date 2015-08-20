@@ -52,6 +52,10 @@ nws_products:
     pattern:  /ws/products
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:products }
 
+nws_product_detail:
+    pattern:  /ws/product_detail
+    defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:productDetail }
+
 ws_product_list:
     pattern:  /ws/product_list
     defaults: { _controller: LoveThatFitWebServiceBundle:WSProduct:productList }

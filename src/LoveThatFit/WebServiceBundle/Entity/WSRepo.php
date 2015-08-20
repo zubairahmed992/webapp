@@ -104,6 +104,32 @@ class WSRepo {
                 }
 
     }
+#--------------------------------------------------------------
+    public function productDetail($id, $user) {
+        $query = $this->em
+                                ->createQuery("
+            SELECT p.id product_id, p.name, p.description,p.description,
+            ct.target as target,ct.name as clothing_type ,
+            pc.image as product_image,
+            r.id as retailer_id, r.title as retailer_title, 
+            b.id as brand_id, b.name as brand_name
+            FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.product_colors pc            
+            JOIN p.brand b
+            LEFT JOIN p.retailer r
+            JOIN p.clothing_type ct
+            
+            WHERE p.id=:product_id AND p.disabled=0 AND p.displayProductColor!=''  
+            "
+                                )->setParameters(array('product_id' => $id));
+                return $query->getResult();
+        try {
+                    
+                } catch (\Doctrine\ORM\NoResultException $e) {
+                    return null;
+                }
+
+    }
 
 ############################################################
 #################################################################

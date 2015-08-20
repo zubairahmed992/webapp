@@ -61,10 +61,23 @@ class WSProductController extends Controller {
     }
     #------------------------------------------------------------------------
       public function brandRetailerAction() {
-          #return new Response('dddddddd');
         $brand_retailer = $this->container->get('admin.helper.brand')->getBrandListForService();
         $res = $this->get('webservice.helper')->response_array(true, 'list of brand & retailers', true, $brand_retailer);                    
         return new Response($res);
     }
+    #----------------------------------------------------
+    public function productDetailAction() {
+        $decoded = $this->get('webservice.helper')->processRequest($this->getRequest());
+        
+        $user = array_key_exists('auth_token', $decoded) ? $this->get('webservice.helper')->findUserByAuthToken($decoded['auth_token']) : null;
+        if ($user) {
+            $res = $this->get('webservice.helper')->productDetail($decoded['product_id'], $user);
+         } else {
+            $res = $this->get('webservice.helper')->response_array(false, 'User not authenticated.');
+        }
+        return new Response($res);
+        
+    }
+    
 }
 
