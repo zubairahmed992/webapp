@@ -76,8 +76,37 @@ class WSUserController extends Controller {
 #------------------------- ws_image_uploader   /ws/image_uploader
     
     public function passwordChangeAction() {
-       return new response($this->container->get('webservice.helper')->changePassword($this->process_request()));
+       return new response($this->get('webservice.helper')->changePassword($this->process_request()));
     }
+    
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>  
+#    FORGET_PASSWORD_SENDEMAIL	/ws/forget_password_send_code
+ public function forgotPasswordAction(){
+     $decoded=$this->process_request();
+     $res='';
+     $user = $this->get('user.helper.user')->findByEmail($decoded['email']);
+     
+     if($user){
+      $user->setAuthToken(uniqid());
+      $this->get('user.helper.user')->saveUser($user) ;
+      $baseurl = $this->getRequest()->getHost();
+      $link = $baseurl . "/" . $this->generateUrl('forgot_password_reset_form', array('email_auth_token' => $user->getAuthToken()));
+      $defaultData = $this->get('mail_helper')->sendPasswordResetLinkEmail($user, $link);
+          
+      if ($defaultData[0]) {
+          $res= $this->get('webservice.helper')->response_array(true, " Email has been sent with reset password link to " . $user->getEmail());
+      }else { 
+          
+        $res= $this->get('webservice.helper')->response_array(false, " Email not sent due to some problem, please try again later.");  
+          }
+        
+    }else{
+        $res= $this->get('webservice.helper')->response_array(false, " User not found.");
+        
+        }
+        return new Response($res);
+}
+    
 #------------------------- ws_update_profile   /ws/update_profile
     
     public function profileUpdateAction() {       

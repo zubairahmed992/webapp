@@ -137,6 +137,14 @@ ws_user_password_change:
      password: 12345
      new_password: 67890
    request_type: post
+#______________________
+ws_user_forgot_password:
+   pattern:  /ws/user_forgot_password
+   title: forgot_password
+   params:
+     email: kamran@ltf.com
+   request_type: post
+
 #______________________   
 ws_user_profile_update:
     pattern:  /ws/user_profile_update
