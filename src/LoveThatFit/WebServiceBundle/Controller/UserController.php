@@ -279,7 +279,7 @@ public function userProfileAction()
        $this->get('webservice.helper.user')->setMarkingDeviceType($entity, $deviceType,$heightPerInch);
              //   $entity->setDeviceType($deviceType);
              //   $entity->setDeviceUserPerInchPixelHeight($heightPerInch);
-
+                 $entity->setImageDeviceType($deviceType);
                  $em->persist($entity);
                  $em->flush();
                 //  $image_path = $entity->getWebPath(); 
