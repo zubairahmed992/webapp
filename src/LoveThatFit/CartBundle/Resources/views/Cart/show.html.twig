@@ -1,7 +1,15 @@
 {% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
 
 {% block profile_heading %}
-
+    <div id="breadcrumb">
+        <ul>
+            <li class="active"><a href="#">Shopping Cart</a></li>
+            <li>>></li>
+            <li><a href="#">Delivery &amp; Shopping</a></li>
+            <li>>></li>
+            <li><a href="#">Billing Methods</a></li>
+        </ul>
+    </div><br>
     <h1>Shopping Cart</h1>
 {% endblock %}
 {% block profile_section %}
@@ -15,7 +23,40 @@
             {{ app.session.flash('success') }}
         </div>
     {% endif %}
+<style>
+    #breadcrumb{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:0.75em;
+    }
 
+    #breadcrumb ul{
+        margin:0px;
+        padding:0px;
+    }
+
+    #breadcrumb ul li{
+        margin-right:10px;
+        display:inline-block;
+        list-style:none;
+        padding-top:5px;
+    }
+
+    #breadcrumb ul li a{
+        color:#524e4e;
+        text-decoration:none;
+
+    }
+
+    #breadcrumb ul li.active{
+        border-top:3px solid #426eb6;
+        display:inline-block;
+    }
+
+    #breadcrumb ul li.active a{
+        color:#426eb6;
+        font-weight:bold;
+    }
+</style>
 <script type="text/javascript">
 
     $(document).ready(function() {
@@ -56,9 +97,12 @@
                 <td><a href="{{ path('cart_delete', {'id': c.id}) }}">Remove</a><br> <input type="button" style="background: #426eb6 none repeat scroll 0 0;color:#fff;padding:5px 20px" value="Add to Wishlist"> </td>
 
             </tr>
-                <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
+
             {% endfor %}
-            {% if(itemscounter != 0 ) %}
+            {% if(grand_total!=0) %}
+            <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
+            {% endif %}
+                {% if(itemscounter != 0 ) %}
                 <tr><td colspan="6" align="right"><input type="submit" name="update" value="update"></td><td align="left"><input style="margin-left:0px" type="submit" name="checkout" value="checkout"></td></tr>
             {% else %}
                 <tr><td align="center" colspan="6"><p>Currently there are no items in the cart. Click <a href="{{path('inner_site_index')}}">here</a> to add items</p></td></tr>
