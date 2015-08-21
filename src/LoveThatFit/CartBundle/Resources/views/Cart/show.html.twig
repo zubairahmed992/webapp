@@ -1,16 +1,16 @@
-{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% extends 'LoveThatFitCartBundle:Cart:baseCart.html.twig' %}
 
 {% block profile_heading %}
     <div id="breadcrumb">
         <ul>
             <li class="active"><a href="#">Shopping Cart</a></li>
-            <li>>></li>
+            <li class="bd_sep">>></li>
             <li><a href="#">Delivery &amp; Shopping</a></li>
-            <li>>></li>
+             <li class="bd_sep">>></li>
             <li><a href="#">Billing Methods</a></li>
         </ul>
     </div><br>
-    <h1>Shopping Cart</h1>
+    <h1 class="cart_hd">Shopping Cart</h1>
 {% endblock %}
 {% block profile_section %}
     {% if app.session.hasFlash('warning') %}
@@ -40,7 +40,7 @@
 
     });
 </script>
-    <table width="700" border="0" class="user_product_hd">
+    <table width="745" border="0" class="cart_tbl" cellpadding="0" cellspacing="0">
         <tr>
             <td>Image</td>
             <td>SKU</td>
@@ -48,31 +48,67 @@
             <td>Quantity</td>
             <td>Unit Price</td>
             <td>Sub Total</td>
-            <td>-</td>
+            <td>Actions</td>
 
         </tr>
         <form method="post" action="{{ path('cart_basket_update')}}" id="cart" onsubmit="return validates();">
             {% for c in cart %}
             <tr>
-                <td><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
+                <td align="center" valign="middle"><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
                 <td>{{ c.productItem.sku}}</td>
-                <td>{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
-                <td><input type="hidden" name="id[]" value="{{ c.id }}"><input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> <input type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" > </td>
-                <td>${{ c.productItem.price}}</td>
-                <td>${{ c.productItem.price * c.qty}}</td>
+                <td align="left">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
+                <td align="center" >
+                    <input type="hidden" name="id[]" value="{{ c.id }}">
+                    <input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> 
+                    <input id="quantity_box" type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" > 
+                    <input id="update_btn" type="image" title="Update Quantity" src="{{ asset('bundles/lovethatfit/site/images/update_icon.png') }}" >             
+                </td>
+                <td align="center">${{ c.productItem.price}}</td>
+                <td align="center">${{ c.productItem.price * c.qty}}</td>
 
-                <td><a href="{{ path('cart_delete', {'id': c.id}) }}">Remove</a><br> <input type="button" style="background: #426eb6 none repeat scroll 0 0;color:#fff;padding:5px 20px" value="Add to Wishlist"> </td>
+                <td align="center">
+                    <ul class="cart_act" >
+                       
+                        
+                     
+                      
+                        <li>
+                    <!-- <input type="button" style="background: #426eb6 none repeat scroll 0 0;color:#fff;padding:5px 20px" value="Add to Wishlist">-->
+                    <input style="border:none;" type="image" title="Add to Wish List" src="{{ asset('bundles/lovethatfit/site/images/wishlist_icon.png') }}">
+                        </li>
+                        
+                           <li>|</li>
+                        
+                         <li>
+                    <a href="{{ path('cart_delete', {'id': c.id}) }}" title="Delete">  <img alt="Delete" src="{{ asset('bundles/lovethatfit/site/images/delete_icon.png') }}"></a>
+                        </li>
+                    </ul>
+                    </td>
 
             </tr>
 
             {% endfor %}
             {% if(grand_total!=0) %}
-            <tr><td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
+            <tr>
+                <td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
             {% endif %}
                 {% if(itemscounter != 0 ) %}
-                <tr><td colspan="6" align="right"><input type="submit" name="update" value="update"></td><td align="left"><input style="margin-left:0px" type="submit" name="checkout" value="checkout"></td></tr>
+                <tr>
+                    <td colspan="7" align="right" style="text-align: right;">
+                    <a href="{{path('inner_site_index')}}" class="update_btn">Continue Shopping</a>                   
+                    <input style="margin-left:0px" class="checkout_btn" type="submit" name="checkout" value="Proceed to Checkout"></td></tr>
             {% else %}
-                <tr><td align="center" colspan="6"><p>Currently there are no items in the cart. Click <a href="{{path('inner_site_index')}}">here</a> to add items</p></td></tr>
+                <tr>
+                    <td align="center" colspan="6">
+                        <p class="no_item_wrapper">
+                            Currently there are no items in the cart.
+                             <div class="add_prod">
+                                 <a href="{{path('inner_site_index')}}">Click here to add items</a>
+                             </div>
+                            
+                        </p>
+                    </td>
+                </tr>
             {% endif %}
 
         </form>
