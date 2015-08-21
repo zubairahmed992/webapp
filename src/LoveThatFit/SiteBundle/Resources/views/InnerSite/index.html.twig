@@ -740,7 +740,7 @@ function new_product_control(prod_thumb, new_prod_id, new_color_id, new_size_id 
                             
                            //-------- Quick fix pixcel adjustmanets for some products
                            px_variance=$(main_container_hldr + " #fitting_alerts_ul_"+new_prod_id).find('.pixel_variance').attr('value');
-                         if($("#account_type").attr("value") == "iphone5"){
+                         if($("#account_type").attr("value") == "iphone5" || $("#account_type").attr("value") == "iPhone5" ){
                              
                             var top_value_initial = parseInt($("#hdn_prod_top_pos").attr("value"));
 
@@ -980,7 +980,7 @@ function set_droppables(){
   }
   else {
       
-      if($("#account_type").attr("value") == "iphone5"){
+      if($("#account_type").attr("value") == "iphone5" || $("#account_type").attr("value") == "iPhone5"){
       }
       else{
       var user_height = parseInt($("#hdn_user_height").attr("value")) * 6;
