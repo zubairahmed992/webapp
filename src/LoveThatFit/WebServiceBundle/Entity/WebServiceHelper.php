@@ -328,33 +328,47 @@ class WebServiceHelper {
 
     #----------------------------------------------------------------------------------------
 
-    public function uploadUserImage($user, $request_array, $files) {
+    public function uploadUserImage($user, $ra, $files) {
         if ($user) {
-            $file_name = $files["image"]["name"];
-            $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $user->setImage('cropped' . "." . $ext);            
-            $user->setImageDeviceType($request_array['device_type']);
+            #----get file name & create dir
+            
+            $ext = pathinfo($files["image"]["name"], PATHINFO_EXTENSION);
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-            if (move_uploaded_file($files["image"]["tmp_name"], $user->getOriginalImageAbsolutePath())) {
-                #$this->container->get('webservice.helper.user')->setMarkingDeviceType($user, $request_array['device_type'], $request_array['height_per_inch']);
-                $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $request_array['device_type'], $request_array['height_per_inch']);
-                
-                copy($user->getOriginalImageAbsolutePath(), $user->getAbsolutePath());                
-                $this->container->get('user.helper.user')->saveUser($user);
-                $userinfo = array();
-                $userinfo['user'] = $user->toDataArray(true, $request_array['device_type']);
-                $userinfo['user']['path'] = $request_array['base_path'];
 
-                return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
-            } else {
-                return $this->response_array(false, 'Image not uploaded');
+            if ($ra['upload_type'] == 'fitting_room') {#~~~~~~~~~> Fitting Room image
+
+                $user->setImage('cropped' . "." . $ext);
+                $user->setImageDeviceType($ra['device_type']);
+
+                if (move_uploaded_file($files["image"]["tmp_name"], $user->getOriginalImageAbsolutePath())) {
+                    $this->container->get('user.helper.userdevices')->updateDeviceDetails($user, $ra['device_type'], $ra['height_per_inch']);
+                    copy($user->getOriginalImageAbsolutePath(), $user->getAbsolutePath());
+                } else {
+                    return $this->response_array(false, 'Image not uploaded');
+                }
+            } elseif ($ra['upload_type'] == 'avatar') {#~~~~~~~~~> Avatar
+                $user->setAvatar('avatar' . "." . $ext);
+                if (!move_uploaded_file($_FILES["image"]["tmp_name"], $user->getAbsoluteAvatarPath())) {
+                    return new Response(json_encode(array('Message' => 'Image not uploaded')));
+                }                
+            } else {#~~~~~~~~~~~~~> anyother image type
+                return $this->response_array(false, 'invalid upload type');
             }
+
+            $this->container->get('user.helper.user')->saveUser($user);
+            $userinfo = array();
+            $userinfo['user'] = $user->toDataArray(true, $ra['device_type']);
+            $userinfo['user']['path'] = $ra['base_path'];
+            return $this->response_array(true, 'User Image Uploaded', true, $userinfo);
         } else {
             return $this->response_array(false, 'member not found');
         }
     }
+    
+    #-------------------------------------------------------------
+    private function uploadFittingRoomImage(){}
     #-------------------------------------------------------------
      public function changePassword($ra) {
          $user = $this->findUserByAuthToken($ra['auth_token']);
