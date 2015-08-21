@@ -1,7 +1,7 @@
 <?php
 
 namespace LoveThatFit\WebServiceBundle\Entity;
-
+use LoveThatFit\SiteBundle\DependencyInjection\FitAlgorithm2;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class WebServiceHelper {
@@ -336,8 +336,8 @@ class WebServiceHelper {
             if (!is_dir($user->getUploadRootDir())) {
                 @mkdir($user->getUploadRootDir(), 0700);
             }
-
-            if ($ra['upload_type'] == 'fitting_room') {#~~~~~~~~~> Fitting Room image
+                #______________________________________> Fitting Room image
+            if ($ra['upload_type'] == 'fitting_room') {
 
                 $user->setImage('cropped' . "." . $ext);
                 $user->setImageDeviceType($ra['device_type']);
@@ -348,7 +348,8 @@ class WebServiceHelper {
                 } else {
                     return $this->response_array(false, 'Image not uploaded');
                 }
-            } elseif ($ra['upload_type'] == 'avatar') {#~~~~~~~~~> Avatar
+                #______________________________________> Avatar
+            } elseif ($ra['upload_type'] == 'avatar') {
                 $user->setAvatar('avatar' . "." . $ext);
                 if (!move_uploaded_file($_FILES["image"]["tmp_name"], $user->getAbsoluteAvatarPath())) {
                     return new Response(json_encode(array('Message' => 'Image not uploaded')));
@@ -366,9 +367,7 @@ class WebServiceHelper {
             return $this->response_array(false, 'member not found');
         }
     }
-    
-    #-------------------------------------------------------------
-    private function uploadFittingRoomImage(){}
+   
     #-------------------------------------------------------------
      public function changePassword($ra) {
          $user = $this->findUserByAuthToken($ra['auth_token']);
@@ -447,8 +446,27 @@ class WebServiceHelper {
 #------------------------------------------------------------------------------
 
     public function productDetail($id,$user) {
-        $products = $this->container->get('webservice.repo')->productDetail($id, $user);
-        return $this->response_array(true, "products list", true, $products);
+        $product = $this->container->get('admin.helper.product')->find($id);
+        $p=array();
+        foreach ($product->getProductColors() as $pc) {
+            $p['colors'][$pc->getId()]=array(
+                 'title'=>$pc->getTitle(),
+                'image'=>$pc->getImage(),
+                );
+        }
+        foreach ($product->getProductItems() as $pi) {
+            $p['items'][$pi->getId()]=array(
+                'sku'=>$pi->getSku(),
+                'image'=>$pi->getImage(),
+                'color_id'=>$pi->getProductColor()->getId(),
+                'size_id'=>$pi->getProductSize()->getId(),
+                );
+        }
+        $algo = new FitAlgorithm2($user,$product);
+        $fb=$algo->getStrippedFeedBack();
+        $p['sizes']=$fb['feedback'];
+        
+        return $this->response_array(true, "Product Detail ", true, $p);
     }
 
     #------------------------------------------------------------------------------
