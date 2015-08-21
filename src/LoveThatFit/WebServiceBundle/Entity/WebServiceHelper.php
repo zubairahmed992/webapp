@@ -91,7 +91,7 @@ class WebServiceHelper {
         $user = $this->findUserByAuthToken($ra['auth_token']);
         $measurement = $this->setUserMeasurementWithParams($ra, $user);
         $this->container->get('user.helper.measurement')->saveMeasurement($measurement);
-        return $this->response_array(true, 'measurement updated');
+        return $this->response_array(true, 'measurement updated', true, array('user' => $user->toDataArray()));        
     }
     #-------------------------------------------------------
     public function updateProfile($ra) {
