@@ -81,7 +81,6 @@ ws_user_measurement_update:
       body_shape: pear
       body_type: Regular            
       bra_size: 
-      cup_size:      
       weight: 0
       height: 0
       neck: 0
@@ -127,6 +126,8 @@ ws_user_image_uploader:
      upload_type: fitting_room
    request_type: post
    file_upload: true
+   description: This is image upload service for user. Images can be of types fitting_room, avatar or social_media which will be determined by the parameters (image_type) passed. Parameters device_type & height_per_inch are for fitting_room image only.
+   
 #______________________
 ws_user_password_change:
    pattern:  /ws/user_password_change

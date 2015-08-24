@@ -212,8 +212,8 @@ class WebServiceHelper {
             $measurement = $this->container->get('user.helper.measurement')->createNew($user);
         }
 
-        if (array_key_exists('bra_size', $request_array) && array_key_exists('cup_size', $request_array)) {
-            $measurement->setBraSize($request_array['bra_size'] . ' ' . $request_array['cup_size']);
+        if (array_key_exists('bra_size', $request_array)) {
+            $measurement->setBraSize($request_array['bra_size']);
         }
         array_key_exists('body_type', $request_array) ? $measurement->setBodyTypes($request_array['body_type']) : '';
         array_key_exists('body_shape', $request_array) ? $measurement->setBodyShape($request_array['body_shape']) : '';
@@ -354,6 +354,15 @@ class WebServiceHelper {
                 if (!move_uploaded_file($_FILES["image"]["tmp_name"], $user->getAbsoluteAvatarPath())) {
                     return new Response(json_encode(array('Message' => 'Image not uploaded')));
                 }                
+                #---------------------------------------->Social Media
+            } elseif ($ra['upload_type'] == 'social_media') {                                
+                $random_name = uniqid() . "." . $ext;            
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $user->getUploadRootDir().'/'.$random_name)) {                
+                    return $this->response_array(true, 'Image uploaded',true, $ra['base_path'] . $random_name);
+                } else {                
+                    return $this->response_array(false, 'Image not uploaded');
+                }                
+                
             } else {#~~~~~~~~~~~~~> anyother image type
                 return $this->response_array(false, 'invalid upload type');
             }
