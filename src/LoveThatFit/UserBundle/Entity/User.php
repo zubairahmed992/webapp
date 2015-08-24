@@ -31,6 +31,11 @@ class User implements UserInterface, \Serializable {
 	private $cart;
 
 	/**
+	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserAddresses", mappedBy="user")
+	 */
+	private $user_addresses;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="LoveThatFit\CartBundle\Entity\UserOrder", mappedBy="user")
 	 */
 	private $user_orders;

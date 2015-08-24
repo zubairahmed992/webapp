@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserAddressesRepository extends EntityRepository
 {
+  public function findAddressByUserId($user,$is_billing) {
+	$record = $this->getEntityManager()
+	  ->createQuery(
+		"SELECT a.id,a.address1
+		 FROM LoveThatFitCartBundle:UserAddresses a
+
+		 where a.user=:user and a.is_billing=:is_billing
+		 ")->setParameter('user',$user)
+	  ->setParameter('is_billing', $is_billing);
+
+	try {
+	  return $record->getArrayResult();
+	} catch (\Doctrine\ORM\NoResultException $e) {
+	  return null;
+	}
+  }
 }

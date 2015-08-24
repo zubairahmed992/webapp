@@ -36,8 +36,9 @@ class UserAddressesHelper {
         $this->repo = $em->getRepository($class);
     }
 //------------------------------- Add to Cart clicked -----------------------------------------------------///////////
-	public function saveAddress($decoded,$user) {
+	public function saveAddress($decoded,$user,$bill_info,$ship_info) {
 	  $address = $decoded["billing"];
+	  if($bill_info == 1){
 	  $address_info = $this->createNew();
 	  $address_info->setUser($user);
 	  $address_info->setFirstName($address["billing_first_name"]);
@@ -51,7 +52,8 @@ class UserAddressesHelper {
 	  $address_info->setState($address["billing_state"]);
 	  $address_info->setIsBilling('1');
 	  $this->save($address_info);
-
+	  }
+	  if($ship_info == 1){
 	  $address_info = $this->createNew();
 	  $address_info->setUser($user);
 	  $address_info->setFirstName($address["shipping_first_name"]);
@@ -65,7 +67,7 @@ class UserAddressesHelper {
 	  $address_info->setState($address["shipping_state"]);
 	  $address_info->setIsBilling('0');
 	  return $this->save($address_info);
-
+	  }
 	}
 
 
@@ -73,7 +75,10 @@ class UserAddressesHelper {
   public function findAddressById($id){
 	return $this->repo->find($id);
   }
-
+#------------------------------Find All address by user id--------------------------------#
+  public function getUserAddresses($user,$is_billing=1){
+	return $this->repo->findAddressByUserId($user,$is_billing);
+  }
 	//-------------------------
 	public function save($user_addresses) {
 	  $class = $this->class;

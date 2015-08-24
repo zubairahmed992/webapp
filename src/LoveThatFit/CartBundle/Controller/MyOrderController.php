@@ -24,6 +24,10 @@ class MyOrderController extends Controller
 
   public function showAction($id) {
 	$entity = $this->get('cart.helper.order')->find($id);
+//	foreach($entity->getUserOrderDetail() as $ci){
+//	  echo $ci->getQty();
+//	}
+	//echo $entity->UserOrder()->getUserOrderDetail()->getQty();
 	$user = $this->get('security.context')->getToken()->getUser();
 	$valid_user = $this->get('cart.helper.order')->HasUserOrder($id,$user);
 	if($valid_user["counter"] == 0){

@@ -96,12 +96,13 @@ class OrderHelper {
 
 
   //-------- update Payment transaction status of order ----------------------------------------////////////
-  public function updateUserTransaction($order_id,$transaction_id,$transaction_status,$payment_method,$payment_json) {
+  public function updateUserTransaction($order_id,$transaction_id,$transaction_status,$payment_method,$payment_json,$order_number) {
 	  $order=$this->findOrderById($order_id);
 	  $order->setTransactionId($transaction_id);
 	  $order->setTransactionStatus($transaction_status);
 	  $order->setPaymentMethod($payment_method);
 	  $order->setPaymentJson($payment_json);
+	  $order->setOrderNumber($order_number);
 	  $this->save($order);
   }
 

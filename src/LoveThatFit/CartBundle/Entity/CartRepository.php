@@ -49,7 +49,6 @@ class CartRepository extends EntityRepository
 					JOIN pi.users u
                     WHERE c.user = :user")
 	  ->setParameters(array('user' => $user));
-	echo $record->get();
 	try {
 	  return $record->getResult();
 	} catch (\Doctrine\ORM\NoResultException $e) {

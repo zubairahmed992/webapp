@@ -361,4 +361,23 @@ class UserAddresses
 	{
 	  return $this->user;
 	}
+
+	#---------------------------------------------------
+	public function toArray(){
+
+	  $obj = array();
+	  $obj['id'] = $this->getId();
+	  $obj['first_name'] = $this->getFirstName();
+	  $obj['last_name'] = $this->getLastName();
+	  $obj['address1'] = $this->getAddress1();
+	  $obj['address2'] = $this->getAddress2();
+	  $obj['phone'] = $this->getPhone();
+	  $obj['city'] = $this->getCity();
+	  $obj['state'] = $this->getState();
+	  $obj['postcode'] = $this->getPostcode();
+	  $obj['country'] = $this->getCountry();
+	  $obj['user'] = $this->getUser();
+	  return $obj;
+
+	}
 }

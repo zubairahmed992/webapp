@@ -30,6 +30,12 @@ order_save_billing:
     pattern:  /billing/save
     defaults: { _controller: LoveThatFitCartBundle:Order:savebilling}
 
+order_address:
+    pattern:  /order/get_address/{address_id}
+    defaults: { _controller: LoveThatFitCartBundle:Order:getaddress}
+    requirements:
+        _method:  GET
+
 payment_default:
     pattern:  /payment
     defaults: { _controller: LoveThatFitCartBundle:Payment:index}

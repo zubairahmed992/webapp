@@ -19,7 +19,7 @@
 
     <table width="700" border="0" class="user_product_hd">
             {% if(transaction_status == 'authorized') %}
-            <tr><td align="center"><p>Your Order has been placed successfully, your transaction id is : {{ transaction_id }}</p></td></tr>
+            <tr><td align="center"><p>Your Order has been placed successfully, your order number is : {{ order_number }}</p></td></tr>
             {% else %}
                 <tr><td align="center"><p>There is some error occured while payment, Your Transaction has been Declined</p></td></tr>
             {% endif %}

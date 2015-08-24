@@ -216,6 +216,14 @@ class UserOrder
 	private $payment_json;
 
 
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="order_number", type="integer", length=20, nullable=true)
+	 */
+	private $order_number;
+
+
 
   /**
      * Get id
@@ -751,21 +759,21 @@ class UserOrder
     }
 
     /**
-     * Remove user_order
+     * Remove user_order_detail
      *
      * @param \LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrder
      */
-    public function removeUserOrder(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail)
+    public function removeUserOrderDetail(\LoveThatFit\CartBundle\Entity\UserOrderDetail $userOrderDetail)
     {
         $this->user_order_detail->removeElement($userOrderDetail);
     }
 
     /**
-     * Get user_order
+     * Get user_order_detail
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUserOrder()
+    public function getUserOrderDetail()
     {
         return $this->user_order_detail;
     }
@@ -861,4 +869,27 @@ class UserOrder
     {
         return $this->payment_json;
     }
+
+  /**
+   * Set order_number
+   *
+   * @param integer $orderNumber
+   * @return UserOrder
+   */
+	public function setOrderNumber($orderNumber)
+	{
+	  $this->order_number = $orderNumber;
+
+	  return $this;
+	}
+
+	/**
+	 * Get order_number
+	 *
+	 * @return integer
+	 */
+	public function getOrderNumber()
+	{
+	  return $this->order_number;
+	}
 }
