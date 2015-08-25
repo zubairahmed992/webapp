@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% extends 'LoveThatFitCartBundle::basecart.html.twig' %}
 
 {% block profile_heading %}
 
@@ -95,152 +95,224 @@
             <div id="detail_wrapper" class="detail_wrap">
                 <div id="product_content">
                     <div id="pro_detail">
-                        <div class="edt_container">
-                            <h1>Billing Information</h1><br>
-                            <div class="row-fluid show-grid">
-                                <div class="span3"></div>
-                                <div class="span3">
-                                    <select name="addresses" id="addresses" style="width:250px ;" onchange="getUserDetail(this,'1');">
-                                <option value="">Select From Saved Address</option>
-                                {% for c in user_addresses %}
-                                <option value="{{ c.id }}">{{ c.address1 }}</option>
-                                {% endfor %}
-                                </select>
-                                </div>
+                        <div class="edt_container billing">
+                             <div id="breadcrumb">
+        <ul>
+            <li><a href="#">Shopping Cart</a></li>
+            <li class="bd_sep">>></li>
+            <li class="active"><a href="#">Delivery &amp; Shopping</a></li>
+             <li class="bd_sep">>></li>
+            <li><a href="#">Billing Methods</a></li>
+        </ul>
+    </div><br>
+    
+                            <h1>Billing Information</h1>
+                            
+                          
+                            <br>
+                            
+                            
+                            <table cellspacing="0" cellpadding="0" border="1" class="billing_tbl">
+                                
+                               
+                                
+                                
+                                
+                                
+                                
+                                
+                                <tr>
+                                    <td> 
+                                        
+                                        
+                                      <select name="addresses" class="address_focus" id="addresses" style="width:250px ;" onchange="getUserDetail(this,'1');">
+                                    <option value="">Select From Saved Address</option>
+                                    {% for c in user_addresses %}
+                                    <option value="{{ c.id }}">{{ c.address1 }}</option>
+                                    {% endfor %}
+                                    </select>
+                                    </td>                       
+                                
+                                
+                                
+                                    <td>
+                                        <div class="span3">First Name</div>
+                                        <div class="span3">{{ form_widget(form.billing_first_name) }}{{ form_errors(form.billing_first_name) }}</div>
 
-                            </div>
-                            <div class="row-fluid show-grid">
-                                <div class="span3">First Name</div>
-                                <div class="span3">{{ form_widget(form.billing_first_name) }}{{ form_errors(form.billing_first_name) }}</div>
-
-                            </div>
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Last Name</div>
-                                <div class="span3">{{ form_widget(form.billing_last_name) }}{{ form_errors(form.billing_last_name) }}</div>
-
-                            </div>
-
-                            {#<div class="row-fluid show-grid">#}
-                                {#<div class="span3">Company</div>#}
-                                {#<div class="span3">{{ form_widget(form.billing_company) }}{{ form_errors(form.billing_company) }}</div>#}
-
-                            {#</div>#}
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Address 1</div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                 <div class="span3">Last Name</div>
+                                <div class="span3">{{ form_widget(form.billing_last_name) }}{{ form_errors(form.billing_last_name) }}</div>   
+                                    
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                        <div class="span3">Address 1</div>
                                 <div class="span3">{{ form_widget(form.billing_address1) }}{{ form_errors(form.billing_address1) }}</div>
 
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Address 2</div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        
+                                        <div class="span3">Address 2</div>
                                 <div class="span3">{{ form_widget(form.billing_address2) }}{{ form_errors(form.billing_address2) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Phone</div>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="span3">Phone</div>
                                 <div class="span3">{{ form_widget(form.billing_phone) }}{{ form_errors(form.billing_phone) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">City</div>
+                                        
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                         <div class="span3">City</div>
                                 <div class="span3">{{ form_widget(form.billing_city) }}{{ form_errors(form.billing_city) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Postal Code</div>
+                                    </td>
+                                    
+                                    <td>
+                                         <div class="span3">Postal Code</div>
                                 <div class="span3">{{ form_widget(form.billing_postcode) }}{{ form_errors(form.billing_postcode) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Country</div>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    
+                                    <td>
+                                        <div class="span3">Country</div>
                                 <div class="span3">{{ form_widget(form.billing_country) }}{{ form_errors(form.billing_country) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">State</div>
+                                        
+                                    </td>
+                                    <td>
+                                        <div class="span3">State</div>
                                 <div class="span3">{{ form_widget(form.billing_state) }}{{ form_errors(form.billing_state) }}</div>
-
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="row-fluid show-grid">
-                                <div class="span3"><input type="checkbox" name="shipping" value="1" onclick="showShipping(this)"> Shipping Information same as Billing above</div><br>
-                            </div>
-                            <div class="clearfix"></div>
+                                        
+                                    </td>
+                                </tr>
+                                
+                                 <tr>
+                                    
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                                
+                                
+                                
+                                
+                                <tr>
+                                    
+                                    <td colspan="2"><div class="span3"><input type="checkbox" name="shipping" value="1" onclick="showShipping(this)"> <span style="font-size: 0.8em;">Shipping Information same as Billing above</span></div></td>
+                                </tr>
+                                
+                            </table>                          
+                            
+                            
+                                                     
+                            <div class="clearfix">&nbsp;</div>
                             <div id="shipping">
-                            <h1>Shipping Information</h1><br>
-                                <div class="row-fluid show-grid">
-                                    <div class="span3"></div>
-                                    <div class="span3">
-                                        <select name="addresses2" id="addresses2" style="width:250px ;" onchange="getUserDetail(this,'0');">
+                            <h1>Shipping Information</h1>
+                            
+                           
+                            
+                            <br>
+                            
+                            
+                            <table cellspacing="0" cellpadding="0" border="1" class="billing_tbl">
+                                
+                                <tr>
+                                    
+                                    <td>
+                                        <select name="addresses2" class="address_focus" id="addresses2" style="width:250px ;" onchange="getUserDetail(this,'0');">
                                             <option value="">Select From Saved Address</option>
                                             {% for c in shipping_addresses %}
                                                 <option value="{{ c.id }}">{{ c.address1 }}</option>
                                             {% endfor %}
                                         </select>
-                                    </div>
-
-                                </div>
-                            <div class="row-fluid show-grid">
-                                <div class="span3">First Name</div>
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                        <div class="span3">First Name</div>
                                 <div class="span3">{{ form_widget(form.shipping_first_name) }}{{ form_errors(form.shipping_first_name) }}</div>
-
-                            </div>
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Last Name</div>
-                                <div class="span3">{{ form_widget(form.shipping_last_name) }}{{ form_errors(form.shipping_last_name) }}</div>
-
-                            </div>
-
-                            {#<div class="row-fluid show-grid">#}
-                                {#<div class="span3">Company</div>#}
-                                {#<div class="span3">{{ form_widget(form.shipping_company) }}{{ form_errors(form.shipping_company) }}</div>#}
-
-                            {#</div>#}
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Address 1</div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    
+                                    <td>
+                                      <div class="span3">Last Name</div>
+                                <div class="span3">{{ form_widget(form.shipping_last_name) }}{{ form_errors(form.shipping_last_name) }}</div>   
+                                        
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                        <div class="span3">Address 1</div>
                                 <div class="span3">{{ form_widget(form.shipping_address1) }}{{ form_errors(form.shipping_address1) }}</div>
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Address 2</div>
+                                    </td>
+                                    
+                                    
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                    <td>
+                                        <div class="span3">Address 2</div>
                                 <div class="span3">{{ form_widget(form.shipping_address2) }}{{ form_errors(form.shipping_address2) }}</div>
-                            </div>
-
-                                <div class="row-fluid show-grid">
-                                    <div class="span3">Phone</div>
+                                        
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="span3">Phone</div>
                                     <div class="span3">{{ form_widget(form.shipping_phone) }}{{ form_errors(form.shipping_phone) }}</div>
-                                </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">City</div>
-                                <div class="span3">{{ form_widget(form.shipping_city) }}{{ form_errors(form.shipping_city) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Postal Code</div>
-                                <div class="span3">{{ form_widget(form.shipping_postcode) }}{{ form_errors(form.shipping_postcode) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">Country</div>
-                                <div class="span3">{{ form_widget(form.shipping_country) }}{{ form_errors(form.shipping_country) }}</div>
-
-                            </div>
-
-                            <div class="row-fluid show-grid">
-                                <div class="span3">State</div>
+                                        
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    
+                                    <td>
+                                       <div class="span3">City</div>
+                                <div class="span3">{{ form_widget(form.shipping_city) }}{{ form_errors(form.shipping_city) }}</div>  
+                                    </td>
+                                    
+                                    <td>
+                                     <div class="span3">Postal Code</div>
+                                <div class="span3">{{ form_widget(form.shipping_postcode) }}{{ form_errors(form.shipping_postcode) }}</div>   
+                                    </td>
+                                </tr>
+                                
+                                
+                                <tr>
+                                    <td>
+                                     <div class="span3">Country</div>
+                                <div class="span3">{{ form_widget(form.shipping_country) }}{{ form_errors(form.shipping_country) }}</div>   
+                                        
+                                    </td>
+                                    <td>
+                                        <div class="span3">State</div>
                                 <div class="span3">{{ form_widget(form.shipping_state) }}{{ form_errors(form.shipping_state) }}</div>
+                                        
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+                            
+                            
+                         
 
-                            </div>
+                           
+
+                           
+
+                           
                             </div>
 
                             <div class="row-fluid show-grid">
@@ -250,7 +322,7 @@
                                 {{ form_rest(form) }}
                                 <div class="span3">
 
-                                    <div style="margin:0px 0px 0px 0px;"><input type="hidden" name="order_amount" value="{{ order_amount }}"><input type="hidden" id="bill_info" name="bill_info" value="1"> <input type="hidden" id="ship_info" name="ship_info" value="1"> <input type="submit" value="Continue" class="btn btn-large btn-primary"/>
+                                    <div style="margin:0px 0px 0px 0px;"><input type="hidden" name="order_amount" value="{{ order_amount }}"><input type="hidden" id="bill_info" name="bill_info" value="1"> <input type="hidden" id="ship_info" name="ship_info" value="1"> <input type="submit" value="Continue" class="checkout_btn"/>
                                     </div>
                                 </div>
                             </div>

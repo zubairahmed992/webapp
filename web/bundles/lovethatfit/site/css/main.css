@@ -5866,6 +5866,73 @@ background-color:#fff;
         overflow: auto;
     }
     
+    .billing_tbl{
+        font-size: 0.85em;        
+        width: 100%;  
+        overflow: auto;
+    }
+    
+    .billing_tbl input[type=text]{
+       box-shadow: none;      
+    }
+    
+    .billing_tbl select{
+      width:250px;      
+    }
+    
+    .billing h1{
+    border-bottom: 2px dotted #999;
+    font-size: 1em;
+    margin-top: 20px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    width: 630px;    
+    }
+    
+    .retain_bar{
+        background: #efefef none repeat scroll 0 0; 
+        float: right; 
+        font-size: 0.85em; 
+        margin-bottom: 20px;
+        margin-right: 123px;
+        padding: 6px; 
+        position: absolute; 
+        right: 0;
+        text-align: right; 
+        top: 79px;
+        width: 250px;
+    }
+    
+    .retain_bar:nth-child(2){
+        background: #efefef none repeat scroll 0 0; 
+        float: right; 
+        font-size: 0.85em; 
+        margin-bottom: 20px;
+        margin-right: 123px;
+        padding: 6px; 
+        position: absolute; 
+        right: 0;
+        text-align: right; 
+        top: 432px;
+        width: 250px;
+    }
+    
+    .retain_bar div{
+       display:inline-block; 
+       margin-right: 10px;
+    }
+    
+    .address_focus{
+        background: #426eb6;
+        color:#fff;
+    }
+    
+    .cart_total{
+        width:100px; 
+        float:right; 
+        margin-bottom: 5px;
+    }
+    
  
     
     

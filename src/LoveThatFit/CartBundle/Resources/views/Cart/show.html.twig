@@ -1,4 +1,4 @@
-{% extends 'LoveThatFitCartBundle:Cart:baseCart.html.twig' %}
+{% extends 'LoveThatFitCartBundle::basecart.html.twig' %}
 
 {% block profile_heading %}
     <div id="breadcrumb">
@@ -40,7 +40,7 @@
 
     });
 </script>
-    <table width="745" border="0" class="cart_tbl" cellpadding="0" cellspacing="0">
+    <table width="745" border="1" class="cart_tbl" cellpadding="0" cellspacing="0">
         <tr>
             <td>Image</td>
             <td>SKU</td>
@@ -56,7 +56,7 @@
             <tr>
                 <td align="center" valign="middle"><img src="{{ asset(c.productItem.productColor.webPath) }}"></td>
                 <td>{{ c.productItem.sku}}</td>
-                <td align="left">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
+                <td align="left" width="20%">{{ c.productItem.product.brand.name}} {{ c.productItem.product.name}} {{ c.productItem.productColor.title}} {{ c.productItem.productSize.title}}</td>
                 <td align="center" >
                     <input type="hidden" name="id[]" value="{{ c.id }}">
                     <input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> 
@@ -80,7 +80,7 @@
                            <li>|</li>
                         
                          <li>
-                    <a href="{{ path('cart_delete', {'id': c.id}) }}" title="Delete">  <img alt="Delete" src="{{ asset('bundles/lovethatfit/site/images/delete_icon.png') }}"></a>
+                    <a onclick="return confirm('Are you sure you want to remove this product?')" href="{{ path('cart_delete', {'id': c.id}) }}" title="Delete">  <img alt="Delete" src="{{ asset('bundles/lovethatfit/site/images/delete_icon.png') }}"></a>
                         </li>
                     </ul>
                     </td>
@@ -90,7 +90,13 @@
             {% endfor %}
             {% if(grand_total!=0) %}
             <tr>
-                <td colspan="7" align="right">Total:<strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></td></tr>
+                <td colspan="7" align="right">
+                    
+                    <div class="cart_total">
+                    <div style="float:left;"> Total:</div>
+                    <div style="float:left; margin-left: 10px;"><strong>${{ grand_total }}<input type="hidden" name="order_amount" value="{{ grand_total }}"> </strong></div>
+                    </div>
+                </td></tr>
             {% endif %}
                 {% if(itemscounter != 0 ) %}
                 <tr>
