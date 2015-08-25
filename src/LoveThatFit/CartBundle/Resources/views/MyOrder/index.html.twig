@@ -44,7 +44,7 @@
                                 {% for c in order %}
                                     <tr>
 
-                                        <td><a target="_blank" href="{{path('user_profile_order_show', {'id': c.Id})}}">{{c.Id}}</a></td>
+                                        <td><a target="_blank" href="{{path('user_profile_order_show', {'id': c.Id})}}">{{c.OrderNumber}}</a></td>
                                         <td>{{ c.OrderDate|date('d-m-Y')}} </td>
                                         <td>{{ c.OrderStatus}}</td>
                                         <td>${{ c.OrderAmount}}</td>

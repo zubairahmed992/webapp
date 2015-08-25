@@ -8,16 +8,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 class BillingShippingType extends AbstractType {
 
   	private $billing_shipping_info;
-    public function __construct($billing_shipping_info) {
+  	private $user;
+    public function __construct($billing_shipping_info,$user) {
 	  //print_r($billing_shipping_info);die;
         $this->billing_shipping_info = $billing_shipping_info;
+        $this->user = $user;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('billing_first_name', 'text', array(
-		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_first_name"])?$this->billing_shipping_info["billing"]["billing_first_name"]:''));
+		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_first_name"])?$this->billing_shipping_info["billing"]["billing_first_name"]:$this->user->getFirstName()));
         $builder->add('billing_last_name', 'text', array(
-		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_last_name"])?$this->billing_shipping_info["billing"]["billing_last_name"]:''));
+		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_last_name"])?$this->billing_shipping_info["billing"]["billing_last_name"]:$this->user->getLastName()));
         $builder->add('billing_address1', 'text', array(
 		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_address1"])?$this->billing_shipping_info["billing"]["billing_address1"]:''));
 		$builder->add('billing_address2', 'text', array(
@@ -39,9 +41,9 @@ class BillingShippingType extends AbstractType {
 		  'data'	=> isset($this->billing_shipping_info["billing"]["billing_state"])?$this->billing_shipping_info["billing"]["billing_state"]:''));
 
 		$builder->add('shipping_first_name', 'text', array(
-		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_first_name"])?$this->billing_shipping_info["billing"]["shipping_first_name"]:''));
+		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_first_name"])?$this->billing_shipping_info["billing"]["shipping_first_name"]:$this->user->getFirstName()));
 		$builder->add('shipping_last_name', 'text', array(
-		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_last_name"])?$this->billing_shipping_info["billing"]["shipping_last_name"]:''));
+		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_last_name"])?$this->billing_shipping_info["billing"]["shipping_last_name"]:$this->user->getLastName()));
 		//$builder->add('shipping_company','text');
 		$builder->add('shipping_address1', 'text', array(
 		  'data'	=> isset($this->billing_shipping_info["billing"]["shipping_address1"])?$this->billing_shipping_info["billing"]["shipping_address1"]:''));
