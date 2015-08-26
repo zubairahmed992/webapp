@@ -743,12 +743,22 @@ private function calculate_fitindex($fp_specs){
         }
         return;
     }
+       #-----------------------------------------------------    
     
+    public function getRecommendedFromStrippedFeedBack($striped_fb) {
+        foreach ($striped_fb['feedback'] as $size => $specs) {     
+            if ($specs['recommended']==true){
+                return $specs;
+            }
+        }        
+        return null;
+    }
     # -----------------------------------------------------
 
     private function strip_for_services($sizes, $recommendation) {
         foreach ($sizes as $key => $value) {
-            
+            $sizes[$key]['size_id']=$sizes[$key]['id'];
+            $sizes[$key]['product_id']=$this->product->getId();
             unset($sizes[$key]['min_fx']);
             unset($sizes[$key]['max_fx']);
             unset($sizes[$key]['high_fx']);

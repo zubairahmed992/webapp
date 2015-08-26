@@ -454,27 +454,38 @@ class WebServiceHelper {
     }
 #------------------------------------------------------------------------------
 
-    public function productDetail($id,$user) {
+    public function productDetail($id, $user) {
         $product = $this->container->get('admin.helper.product')->find($id);
-        $p=array();
+        $p = array();
+        $default_color_id = $product->getDisplayProductColor()->getId();
         foreach ($product->getProductColors() as $pc) {
-            $p['colors'][$pc->getId()]=array(
-                 'title'=>$pc->getTitle(),
-                'image'=>$pc->getImage(),
-                );
+            $p['colors'][$pc->getTitle()] = array(
+                'color_id' => $pc->getId(),
+                'product_id' => $product->getId(),
+                'title' => $pc->getTitle(),
+                'image' => $pc->getImage(),
+                'pattern' => $pc->getPattern(),
+                'recommended' => $default_color_id == $pc->getId() ? true : false,
+            );
         }
+
+        $algo = new FitAlgorithm2($user, $product);
+        $fb = $algo->getStrippedFeedBack();
+        $default_item = $algo->getRecommendedFromStrippedFeedBack($fb);
+        $p['sizes'] = $fb['feedback'];
         foreach ($product->getProductItems() as $pi) {
-            $p['items'][$pi->getId()]=array(
-                'sku'=>$pi->getSku(),
-                'image'=>$pi->getImage(),
-                'color_id'=>$pi->getProductColor()->getId(),
-                'size_id'=>$pi->getProductSize()->getId(),
-                );
+            $pc_id = $pi->getProductColor()->getId();
+            $ps_id = $pi->getProductSize()->getId();
+            $p['items'][$pi->getId()] = array(
+                'item_id' => $pi->getId(),
+                'product_id' => $product->getId(),
+                'color_id' => $pc_id,
+                'size_id' => $ps_id,
+                'sku' => $pi->getSku() == null ? 0 : $pi->getSku(),
+                'image' => $pi->getImage(),
+                'recommended' => $default_color_id == $pc_id && $default_item && $default_item['size_id'] == $ps_id ? true : false,
+            );
         }
-        $algo = new FitAlgorithm2($user,$product);
-        $fb=$algo->getStrippedFeedBack();
-        $p['sizes']=$fb['feedback'];
-        
         return $this->response_array(true, "Product Detail ", true, $p);
     }
 
