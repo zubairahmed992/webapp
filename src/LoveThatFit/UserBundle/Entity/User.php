@@ -1633,7 +1633,16 @@ class User implements UserInterface, \Serializable {
     public function getImageUpdatedAt()
     {
         return $this->image_updated_at;
-    }    
+    }
+    #---------------------------------------------------
+    public function isFavouriteItem($product_item){
+        foreach($this->product_items as $pi){
+            if ($pi->getId()==$product_item->getId()){
+                return true;
+            }
+        }
+        return false;
+    }
     #---------------------------------------------------
     public function compareUserDevicesDate()
     {

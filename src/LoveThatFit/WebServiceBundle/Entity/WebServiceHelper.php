@@ -493,16 +493,27 @@ class WebServiceHelper {
 
     public function loveItem($user, $ra) {
         $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
-        if ($ra['like'] == 'true') {
-            $default_item = $p->getDefaultItem($user);
-            $user->addProductItem($default_item);
-            $default_item->addUser($user);
-            $this->container->get('admin.helper.productitem')->save($default_item);
-            $this->container->get('user.helper.user')->saveUser($user);
-            return $this->response_array(true, "product added", true);
+        if ($p) {
+            if ($ra['like'] == 'true') {
+                if (count($user->getProductItems()) < 25) {
+                   $default_item = $p->getDefaultItem($user);
+                    if (!$user->isFavouriteItem($default_item)) {
+                        $user->addProductItem($default_item);
+                        $default_item->addUser($user);
+                        $this->container->get('admin.helper.productitem')->save($default_item);
+                        $this->container->get('user.helper.user')->saveUser($user);
+                        return $this->response_array(true, "product added");
+                    } else {
+                        return $this->response_array(true, "already favourite");
+                    }
+                } else {
+                    return $this->response_array(false, "Favourite items reached full limit");
+                }
+            } else {
+                return $this->response_array(true, "product removed");
+            }
         } else {
-            return $this->response_array(true, "product removed", true);
+            return $this->response_array(false, "product not found");
         }
-        
     }
 }
