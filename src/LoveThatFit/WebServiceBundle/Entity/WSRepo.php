@@ -77,6 +77,26 @@ class WSRepo {
             ORDER BY uih.count DESC"
                                 )->setParameters(array('user_id' => $user->getId()));
                 break;
+            case 'favourite':
+                $query = $this->em
+                                ->createQuery("
+            SELECT p.id product_id, p.name, p.description,p.description,
+            ct.target as target,ct.name as clothing_type ,
+            pc.image as product_image,
+            r.id as retailer_id, r.title as retailer_title, 
+            b.id as brand_id, b.name as brand_name
+            FROM LoveThatFitAdminBundle:Product p 
+            JOIN p.product_colors pc            
+            JOIN p.product_items pi
+            JOIN p.brand b
+            LEFT JOIN p.retailer r
+            JOIN pi.users u
+            JOIN p.clothing_type ct
+            
+            WHERE u.id=:user_id AND p.disabled=0 AND p.displayProductColor!=''  
+            ORDER BY p.name"
+                      )->setParameters(array('user_id' => $user->getId()));
+                break;
             default:
                 $query = $this->em
                                 ->createQuery("
@@ -98,11 +118,10 @@ class WSRepo {
                 break;
         };
         try {
-                    return $query->getResult();
-                } catch (\Doctrine\ORM\NoResultException $e) {
-                    return null;
-                }
-
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 #--------------------------------------------------------------
     public function productDetail($id, $user) {
