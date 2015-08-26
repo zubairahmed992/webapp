@@ -1869,11 +1869,11 @@ class User implements UserInterface, \Serializable {
         }
         #------------ Need dimensions
         
-        #$width = $image_info[0] * 0.50;
-        #$height = $image_info [1] * 0.50;
+        $width = $image_info[0] * 0.50;
+        $height = $image_info [1] * 0.50;
         
-        $width = 320;
-        $height = 568;
+        #$width = 320;
+        #$height = 568;
                 
         $img_new = imagecreatetruecolor($width, $height);
         imagealphablending($img_new, false);
