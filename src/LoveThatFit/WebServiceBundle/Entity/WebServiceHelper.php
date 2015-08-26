@@ -495,10 +495,10 @@ class WebServiceHelper {
         $p = $this->container->get('admin.helper.product')->find($ra['product_id']);
         if ($p) {
             if ($ra['like'] == 'true') {
-                if (count($user->getProductItems()) < 25) {
-                   $default_item = $p->getDefaultItem($user);
-                    if (!$user->isFavouriteItem($default_item)) {
-                        $user->addProductItem($default_item);
+                if (count($user->getProductItems()) < 25) {# check limit
+                   $default_item = $p->getDefaultItem($user);# run algorithm get recommended item
+                    if (!$user->isFavouriteItem($default_item)) { # check if already favourite
+                        $user->addProductItem($default_item); #make favourite
                         $default_item->addUser($user);
                         $this->container->get('admin.helper.productitem')->save($default_item);
                         $this->container->get('user.helper.user')->saveUser($user);
@@ -507,9 +507,21 @@ class WebServiceHelper {
                         return $this->response_array(true, "already favourite");
                     }
                 } else {
-                    return $this->response_array(false, "Favourite items reached full limit");
+                    return $this->response_array(false, "Favourite items reached max limit");
                 }
             } else {
+                #at the backend the item is liked, not the whole product, in device the product is made like
+                //
+                ###############################################################
+                foreach($user->getProductItems() as $pi){ 
+                    if ($pi->getProduct()->getId()==$p->getId()){ #remove all items of the same product
+                        $pi->removeUser($user);                    # hack for like an item instead of a product 
+                        $user->removeProductItem($pi);              # needs to discuss & fix
+                        $this->container->get('admin.helper.productitem')->save($pi);
+                        $this->container->get('user.helper.user')->saveUser($user);
+                    }
+                }
+                ########################################################
                 return $this->response_array(true, "product removed");
             }
         } else {
