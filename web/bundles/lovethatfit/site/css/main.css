@@ -5825,6 +5825,9 @@ background-color:#fff;
         color: #fff;
         border:0px; 
         text-decoration:none!important;
+        position: relative;
+        float:left;
+        right:-440px;
     }
     
     #quantity_box {
@@ -5835,6 +5838,7 @@ background-color:#fff;
     #update_btn{
         width:29px;
         height: 28px;
+        position: relative;
     }
     
     .cart_hd{
@@ -5933,6 +5937,48 @@ background-color:#fff;
         margin-bottom: 5px;
     }
     
+    .quantity_update2{
+        display:none;
+    }
+    
+    .cart_tbl input[type=text]{
+        box-shadow: none;
+        padding:6px;
+        
+    }
+    
+    .shopping-cart {
+    display: inline-block;  
+}
+
+
+.shopping button {
+    border: 1px solid #722A1B;
+    padding: 4px 14px;
+    background-color: #fff;
+    color: #722A1B;
+    text-transform: uppercase;
+    float: right;
+    margin: 5px 0;
+    font-weight: bold;
+    cursor: pointer;
+}
+.shopping span {
+    float: right;
+}
+    
+    
+    /*
+    
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    color: #333;
+    font-family: "Century Gothic";
+    font-size: 11px;
+    margin: 0 0 6px;
+    vertical-align: middle;
+    
+    */
  
     
     

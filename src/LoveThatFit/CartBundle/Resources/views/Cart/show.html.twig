@@ -24,8 +24,12 @@
         </div>
     {% endif %}
 
-<script type="text/javascript">
+<script type="text/javascript">   
     function updateCart(cart_id,qty,price){
+         $('#quantity_update_'+cart_id).show();
+         $('#update_btn_'+cart_id).hide();
+         $('#quantity_update_'+cart_id).css({"top":"1px","position":"relative","border":"1px solid #ccc","padding":"8px 7px 4px 6px","background":"#e9e9e9","height":"13px","width":"14px","background":"#e9e9e9"});
+     
         if(qty == 0){
             alert("Quantity can not be 0");
             return false;
@@ -39,9 +43,12 @@
             return false;
         }
         $.ajax({
+             
             type: "GET",
             url: "update_qty_ajax/"+cart_id +"/"+qty ,
             success: function(data){
+                 $('#update_btn_'+cart_id).show();
+                $('#quantity_update_'+cart_id).hide();
                 $('#subtotal_'+cart_id).html(qty*price);
                 $('#grand_total').html(data);
             },
@@ -63,6 +70,8 @@
             <td>Actions</td>
 
         </tr>
+        
+     
 
             {% for c in cart %}
             <tr>
@@ -73,7 +82,11 @@
                     <input type="hidden" name="id[]" value="{{ c.id }}">
                     <input type="hidden" id="product_item" name="product_item[]" value="{{ c.productItem.id }}"> 
                     <input id="qty_{{ c.id }}" type="text" name="qty[]" value="{{ c.qty }}" size="4" required="required" style="width: 30px;" data-min="1" >
-                    <input id="update_btn" type="image" onclick="updateCart({{ c.id }},$('#qty_'+{{ c.id }}).val(),{{ c.productItem.price }})" title="Update Quantity" src="{{ asset('bundles/lovethatfit/site/images/update_icon.png') }}" >
+                   
+                    <span id="quantity_update_{{ c.id }}" class="quantity_update2"><img src="{{ asset('bundles/lovethatfit/site/images/progress.gif') }}"></span>
+                    
+                    
+                    <input id="update_btn_{{ c.id }}" type="image" onclick="updateCart({{ c.id }},$('#qty_'+{{ c.id }}).val(),{{ c.productItem.price }})" title="Update Quantity" src="{{ asset('bundles/lovethatfit/site/images/update_icon.png') }}" >
                 </td>
                 <td align="center">${{ c.productItem.price}}</td>
                 <td align="center">$<span id="subtotal_{{ c.id }}">{{ c.productItem.price * c.qty}}</span></td>
@@ -110,12 +123,21 @@
                     </div>
                 </td></tr>
             {% endif %}
+            
+            
                 {% if(itemscounter != 0 ) %}
                 <tr>
                     <td colspan="7" align="right" style="text-align: right;">
                     <a href="{{path('inner_site_index')}}" class="update_btn">Continue Shopping</a>                   
+                   
+                    
+                    <form action="{{ path('order_default')}}" method="post">
+                    
+                    
                     <input style="margin-left:0px" class="checkout_btn" type="submit" name="checkout" value="Proceed to Checkout"></td></tr>
-            {% else %}
+          </form>
+                
+                {% else %}
                 <tr>
                     <td align="center" colspan="6">
                         <p class="no_item_wrapper">
@@ -128,7 +150,7 @@
                     </td>
                 </tr>
             {% endif %}
-
+      
     </table>
 
 {% endblock %}
